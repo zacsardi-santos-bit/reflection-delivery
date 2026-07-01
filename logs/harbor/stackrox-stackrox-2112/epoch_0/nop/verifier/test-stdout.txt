@@ -1,0 +1,11 @@
+patching file central/cve/image/datastore/datastore_impl_test.go
+patching file central/cve/image/datastore/store/postgres/store_test.go (renamed from central/cve/image/datastore/internal/store/postgres/store_test.go)
+patching file central/cve/suppress/reprocessor_postgres_test.go
+patching file central/image/datastore/datastore_impl_postgres_test.go
+patching file central/image/datastore/search/searcher_impl_test.go (renamed from central/image/datastore/internal/search/searcher_impl_test.go)
+patching file central/image/datastore/store/common/parts_test.go (renamed from central/image/datastore/internal/store/common/parts_test.go)
+patching file central/image/datastore/store/dackbox/store_impl_test.go (renamed from central/image/datastore/internal/store/dackbox/store_impl_test.go)
+patching file central/image/datastore/store/postgres/store_test.go (renamed from central/image/datastore/internal/store/postgres/store_test.go)
+package github.com/stackrox/rox/central/cve/image/datastore/store/postgres: build constraints exclude all Go files in /workspace/repo/central/cve/image/datastore/store/postgres
+package github.com/stackrox/rox/central/image/datastore/store/postgres: build constraints exclude all Go files in /workspace/repo/central/image/datastore/store/postgres
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

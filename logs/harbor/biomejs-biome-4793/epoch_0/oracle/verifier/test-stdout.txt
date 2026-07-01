@@ -1,0 +1,474 @@
+patching file crates/biome_css_analyze/tests/specs/nursery/noUnknownAtRule/valid.css
+patching file crates/biome_css_analyze/tests/specs/nursery/noUnknownAtRule/valid.css.snap
+patching file crates/biome_css_parser/tests/css_test_suite/ok/at_rule/at_rule_position_try.css
+patching file crates/biome_css_parser/tests/css_test_suite/ok/at_rule/at_rule_position_try.css.snap
+patching file crates/biome_css_parser/tests/css_test_suite/ok/at_rule/at_rule_view_transition.css
+patching file crates/biome_css_parser/tests/css_test_suite/ok/at_rule/at_rule_view_transition.css.snap
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.8
+   Compiling memchr v2.7.4
+   Compiling quote v1.0.37
+   Compiling syn v2.0.87
+   Compiling autocfg v1.1.0
+   Compiling libc v0.2.169
+   Compiling equivalent v1.0.1
+   Compiling hashbrown v0.15.0
+   Compiling once_cell v1.20.0
+   Compiling itoa v1.0.6
+   Compiling ryu v1.0.13
+   Compiling cfg-if v1.0.0
+   Compiling serde v1.0.216
+   Compiling dyn-clone v1.0.11
+   Compiling unicode-segmentation v1.12.0
+   Compiling parking_lot_core v0.9.9
+   Compiling hashbrown v0.14.5
+   Compiling serde_derive_internals v0.29.0
+   Compiling scopeguard v1.1.0
+   Compiling tracing-core v0.1.33
+   Compiling serde_derive v1.0.216
+   Compiling schemars_derive v0.8.21
+   Compiling tracing-attributes v0.1.28
+   Compiling pin-project-lite v0.2.13
+   Compiling syn v1.0.109
+   Compiling rustc-hash v2.1.0
+   Compiling smallvec v1.13.2
+   Compiling crossbeam-utils v0.8.19
+   Compiling version_check v0.9.4
+   Compiling serde_json v1.0.134
+   Compiling indexmap v2.7.0
+   Compiling indexmap v1.9.3
+   Compiling lock_api v0.4.11
+   Compiling hashbrown v0.12.3
+   Compiling log v0.4.20
+   Compiling schemars v0.8.21
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling biome_string_case v0.5.7 (/workspace/repo/crates/biome_string_case)
+   Compiling biome_text_size v0.5.7 (/workspace/repo/crates/biome_text_size)
+   Compiling thiserror v1.0.63
+   Compiling thiserror-impl v1.0.63
+   Compiling similar v2.6.0
+   Compiling dashmap v5.5.3
+   Compiling tracing v0.1.41
+   Compiling rustc-hash v1.1.0
+   Compiling biome_text_edit v0.5.7 (/workspace/repo/crates/biome_text_edit)
+   Compiling countme v3.0.1
+   Compiling unicode-width v0.1.12
+   Compiling biome_rowan v0.5.7 (/workspace/repo/crates/biome_rowan)
+   Compiling biome_markup v0.5.7 (/workspace/repo/crates/biome_markup)
+   Compiling termcolor v1.4.1
+   Compiling enumflags2_derive v0.7.10
+   Compiling json-strip-comments v1.0.2
+   Compiling gimli v0.31.0
+   Compiling void v1.0.2
+   Compiling simdutf8 v0.1.4
+   Compiling adler2 v2.0.0
+   Compiling result v1.0.0
+   Compiling miniz_oxide v0.8.0
+   Compiling bpaf_derive v0.5.13
+   Compiling addr2line v0.24.1
+   Compiling object v0.36.0
+   Compiling rustc-demangle v0.1.24
+   Compiling bpaf v0.9.15
+   Compiling biome_diagnostics_macros v0.5.7 (/workspace/repo/crates/biome_diagnostics_macros)
+   Compiling drop_bomb v0.1.5
+   Compiling unicode-bom v2.0.3
+   Compiling backtrace v0.3.74
+   Compiling biome_unicode_table v0.5.7 (/workspace/repo/crates/biome_unicode_table)
+   Compiling enumflags2 v0.7.10
+   Compiling biome_diagnostics_categories v0.5.7 (/workspace/repo/crates/biome_diagnostics_categories)
+   Compiling biome_console v0.5.7 (/workspace/repo/crates/biome_console)
+   Compiling dashmap v6.1.0
+   Compiling oxc_resolver v3.0.3
+   Compiling serde_ini v0.2.0
+   Compiling biome_diagnostics v0.5.7 (/workspace/repo/crates/biome_diagnostics)
+   Compiling biome_deserialize_macros v0.6.0 (/workspace/repo/crates/biome_deserialize_macros)
+   Compiling biome_parser v0.5.7 (/workspace/repo/crates/biome_parser)
+   Compiling aho-corasick v1.1.2
+   Compiling biome_json_syntax v0.5.7 (/workspace/repo/crates/biome_json_syntax)
+   Compiling biome_json_factory v0.5.7 (/workspace/repo/crates/biome_json_factory)
+   Compiling biome_json_parser v0.5.7 (/workspace/repo/crates/biome_json_parser)
+   Compiling biome_deserialize v0.6.0 (/workspace/repo/crates/biome_deserialize)
+   Compiling prettyplease v0.2.25
+   Compiling regex-syntax v0.8.5
+   Compiling regex-automata v0.4.8
+   Compiling biome_aria_metadata v0.5.7 (/workspace/repo/crates/biome_aria_metadata)
+   Compiling bstr v1.8.0
+   Compiling biome_suppression v0.5.7 (/workspace/repo/crates/biome_suppression)
+   Compiling crossbeam-epoch v0.9.18
+   Compiling strsim v0.10.0
+   Compiling ident_case v1.0.1
+   Compiling fnv v1.0.7
+   Compiling darling_core v0.14.4
+   Compiling crossbeam-deque v0.8.5
+   Compiling biome_aria v0.5.7 (/workspace/repo/crates/biome_aria)
+   Compiling regex v1.11.1
+   Compiling biome_js_syntax v0.5.7 (/workspace/repo/crates/biome_js_syntax)
+   Compiling darling_macro v0.14.4
+   Compiling biome_formatter v0.5.7 (/workspace/repo/crates/biome_formatter)
+   Compiling darling v0.14.4
+   Compiling biome_css_syntax v0.5.7 (/workspace/repo/crates/biome_css_syntax)
+   Compiling getrandom v0.2.15
+   Compiling num-traits v0.2.19
+   Compiling same-file v1.0.6
+   Compiling walkdir v2.5.0
+   Compiling rand_core v0.6.4
+   Compiling biome_js_factory v0.5.7 (/workspace/repo/crates/biome_js_factory)
+   Compiling derive_builder_core v0.13.1
+   Compiling globset v0.4.15
+   Compiling biome_analyze v0.5.7 (/workspace/repo/crates/biome_analyze)
+   Compiling biome_graphql_syntax v0.1.0 (/workspace/repo/crates/biome_graphql_syntax)
+   Compiling miette-derive v5.10.0
+   Compiling ppv-lite86 v0.2.17
+   Compiling either v1.13.0
+   Compiling radium v0.7.0
+   Compiling minimal-lexical v0.2.1
+   Compiling rand_chacha v0.3.1
+   Compiling nom v7.1.3
+   Compiling miette v5.10.0
+   Compiling derive_builder_macro v0.13.1
+   Compiling biome_html_syntax v0.5.7 (/workspace/repo/crates/biome_html_syntax)
+   Compiling biome_grit_syntax v0.5.7 (/workspace/repo/crates/biome_grit_syntax)
+   Compiling bytecount v0.6.7
+   Compiling rayon-core v1.12.1
+   Compiling tap v1.0.1
+   Compiling wyz v0.5.1
+   Compiling node-semver v2.1.0
+   Compiling rust-lapper v1.1.0
+   Compiling derive_builder v0.13.1
+   Compiling rand v0.8.5
+   Compiling biome_graphql_factory v0.1.0 (/workspace/repo/crates/biome_graphql_factory)
+   Compiling option-ext v0.2.0
+   Compiling stable_deref_trait v1.2.0
+   Compiling natord v1.0.9
+   Compiling funty v2.0.0
+   Compiling byteorder v1.5.0
+   Compiling bytemuck v1.16.1
+   Compiling roaring v0.10.9
+   Compiling bitvec v1.0.1
+   Compiling elsa v1.10.0
+   Compiling dirs-sys v0.4.1
+   Compiling biome_grit_factory v0.5.7 (/workspace/repo/crates/biome_grit_factory)
+   Compiling grit-util v0.4.0
+   Compiling biome_js_semantic v0.5.7 (/workspace/repo/crates/biome_js_semantic)
+   Compiling biome_project v0.5.7 (/workspace/repo/crates/biome_project)
+   Compiling itertools v0.10.5
+   Compiling biome_glob v0.1.0 (/workspace/repo/crates/biome_glob)
+   Compiling biome_css_semantic v0.0.0 (/workspace/repo/crates/biome_css_semantic)
+   Compiling biome_control_flow v0.5.7 (/workspace/repo/crates/biome_control_flow)
+   Compiling crossbeam-channel v0.5.11
+   Compiling crossbeam-queue v0.3.11
+   Compiling slotmap v1.0.7
+   Compiling path-dedot v3.1.1
+   Compiling crossbeam v0.8.4
+   Compiling path-absolutize v3.1.1
+   Compiling biome_js_analyze v0.5.7 (/workspace/repo/crates/biome_js_analyze)
+   Compiling grit-pattern-matcher v0.4.0
+   Compiling biome_css_analyze v0.5.7 (/workspace/repo/crates/biome_css_analyze)
+   Compiling rayon v1.10.0
+   Compiling biome_grit_parser v0.1.0 (/workspace/repo/crates/biome_grit_parser)
+   Compiling directories v5.0.1
+   Compiling biome_json_analyze v0.5.7 (/workspace/repo/crates/biome_json_analyze)
+   Compiling biome_graphql_analyze v0.0.1 (/workspace/repo/crates/biome_graphql_analyze)
+   Compiling biome_html_factory v0.5.7 (/workspace/repo/crates/biome_html_factory)
+   Compiling biome_js_formatter v0.5.7 (/workspace/repo/crates/biome_js_formatter)
+   Compiling biome_js_parser v0.5.7 (/workspace/repo/crates/biome_js_parser)
+   Compiling biome_css_factory v0.5.7 (/workspace/repo/crates/biome_css_factory)
+   Compiling biome_json_formatter v0.5.7 (/workspace/repo/crates/biome_json_formatter)
+   Compiling biome_flags v0.0.0 (/workspace/repo/crates/biome_flags)
+   Compiling parking_lot v0.12.3
+   Compiling biome_fs v0.5.7 (/workspace/repo/crates/biome_fs)
+   Compiling biome_configuration v0.0.1 (/workspace/repo/crates/biome_configuration)
+   Compiling biome_css_parser v0.5.7 (/workspace/repo/crates/biome_css_parser)
+   Compiling biome_grit_patterns v0.0.1 (/workspace/repo/crates/biome_grit_patterns)
+   Compiling biome_html_parser v0.0.1 (/workspace/repo/crates/biome_html_parser)
+   Compiling ignore v0.4.23
+   Compiling biome_graphql_parser v0.1.0 (/workspace/repo/crates/biome_graphql_parser)
+   Compiling biome_grit_formatter v0.0.0 (/workspace/repo/crates/biome_grit_formatter)
+   Compiling biome_html_formatter v0.0.0 (/workspace/repo/crates/biome_html_formatter)
+   Compiling biome_graphql_formatter v0.1.0 (/workspace/repo/crates/biome_graphql_formatter)
+   Compiling biome_css_formatter v0.5.7 (/workspace/repo/crates/biome_css_formatter)
+   Compiling bitflags v2.6.0
+   Compiling lazy_static v1.5.0
+   Compiling console v0.15.5
+   Compiling globwalk v0.9.1
+   Compiling linked-hash-map v0.5.6
+   Compiling case v1.0.0
+   Compiling json_comments v0.2.2
+   Compiling tests_macros v0.0.0 (/workspace/repo/crates/tests_macros)
+   Compiling biome_service v0.0.0 (/workspace/repo/crates/biome_service)
+   Compiling insta v1.41.1
+   Compiling biome_test_utils v0.0.0 (/workspace/repo/crates/biome_test_utils)
+   Compiling env_logger v0.8.4
+   Compiling quickcheck v1.0.3
+   Compiling quickcheck_macros v1.0.0
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2m 52s
+────────────
+ Nextest run ID 67db90a9-bc4c-4b4f-84d0-37a256477004 with nextest profile: default
+    Starting 263 tests across 5 binaries (3 tests skipped)
+        PASS [   0.006s] (  1/263) biome_css_analyze keywords::tests::test_a_nplus_bof_snotation_pseudo_classes_sorted
+        PASS [   0.006s] (  2/263) biome_css_analyze keywords::tests::test_a_nplus_bnotation_pseudo_classes_sorted
+        PASS [   0.005s] (  3/263) biome_css_analyze keywords::tests::test_at_rule_page_pseudo_classes_sorted
+        PASS [   0.005s] (  4/263) biome_css_analyze keywords::tests::test_basic_keywords_sorted
+        PASS [   0.005s] (  5/263) biome_css_analyze keywords::tests::test_font_family_keywords_sorted
+        PASS [   0.005s] (  6/263) biome_css_analyze keywords::tests::test_font_size_keywords_sorted
+        PASS [   0.005s] (  7/263) biome_css_analyze keywords::tests::test_font_stretch_keywords_sorted
+        PASS [   0.005s] (  8/263) biome_css_analyze keywords::tests::test_font_style_keywords_sorted
+        PASS [   0.005s] (  9/263) biome_css_analyze keywords::tests::test_font_variants_keywords_sorted
+        PASS [   0.005s] ( 10/263) biome_css_analyze keywords::tests::test_font_weight_absolute_keywords_sorted
+        PASS [   0.007s] ( 11/263) biome_css_analyze keywords::tests::test_font_weight_numeric_keywords_sorted
+        PASS [   0.007s] ( 12/263) biome_css_analyze keywords::tests::test_function_keywords_sorted
+        PASS [   0.005s] ( 13/263) biome_css_analyze keywords::tests::test_known_chrome_properties_sorted
+        PASS [   0.006s] ( 14/263) biome_css_analyze keywords::tests::test_function_keywords_unique
+        PASS [   0.005s] ( 15/263) biome_css_analyze keywords::tests::test_known_properties_order
+        PASS [   0.005s] ( 16/263) biome_css_analyze keywords::tests::test_kown_edge_properties_order
+        PASS [   0.006s] ( 17/263) biome_css_analyze keywords::tests::test_kown_explorer_properties_order
+        PASS [   0.007s] ( 18/263) biome_css_analyze keywords::tests::test_kown_firefox_properties_order
+        PASS [   0.005s] ( 19/263) biome_css_analyze keywords::tests::test_kown_safari_properties_order
+        PASS [   0.005s] ( 20/263) biome_css_analyze keywords::tests::test_kown_sumsung_internet_properties_order
+        PASS [   0.005s] ( 21/263) biome_css_analyze keywords::tests::test_kown_us_browser_properties_order
+        PASS [   0.005s] ( 22/263) biome_css_analyze keywords::tests::test_level_one_and_two_pseudo_elements_sorted
+        PASS [   0.006s] ( 23/263) biome_css_analyze keywords::tests::test_line_height_keywords_sorted
+        PASS [   0.006s] ( 24/263) biome_css_analyze keywords::tests::test_linguistic_pseudo_classes_sorted
+        PASS [   0.005s] ( 25/263) biome_css_analyze keywords::tests::test_logical_combinations_pseudo_classes_sorted
+        PASS [   0.005s] ( 26/263) biome_css_analyze keywords::tests::test_longhand_sub_properties_of_shorthand_properties_sorted
+        PASS [   0.005s] ( 27/263) biome_css_analyze keywords::tests::test_longhand_sub_properties_of_shorthand_properties_unique
+        PASS [   0.005s] ( 28/263) biome_css_analyze keywords::tests::test_math_ml_tags
+        PASS [   0.005s] ( 29/263) biome_css_analyze keywords::tests::test_media_feature_names_order
+        PASS [   0.005s] ( 30/263) biome_css_analyze keywords::tests::test_other_pseudo_classes_sorted
+        PASS [   0.005s] ( 31/263) biome_css_analyze keywords::tests::test_other_pseudo_elements_sorted
+        PASS [   0.005s] ( 32/263) biome_css_analyze keywords::tests::test_reset_to_initial_properties_by_border_sorted
+        PASS [   0.005s] ( 33/263) biome_css_analyze keywords::tests::test_reset_to_initial_properties_by_border_unique
+        PASS [   0.005s] ( 34/263) biome_css_analyze keywords::tests::test_reset_to_initial_properties_by_font_sorted
+        PASS [   0.005s] ( 35/263) biome_css_analyze keywords::tests::test_reset_to_initial_properties_by_font_unique
+        PASS [   0.006s] ( 36/263) biome_css_analyze keywords::tests::test_resource_state_pseudo_classes_sorted
+        PASS [   0.005s] ( 37/263) biome_css_analyze keywords::tests::test_shadow_tree_pseudo_elements_sorted
+        PASS [   0.009s] ( 38/263) biome_css_analyze keywords::tests::test_selector_types
+        PASS [   0.005s] ( 39/263) biome_css_analyze keywords::tests::test_shorthand_properties_and_longhand_sub_properties_correspond_correctly
+        PASS [   0.005s] ( 40/263) biome_css_analyze keywords::tests::test_shorthand_properties_sorted
+        PASS [   0.006s] ( 41/263) biome_css_analyze keywords::tests::test_shorthand_properties_unique
+        PASS [   0.006s] ( 42/263) biome_css_analyze keywords::tests::test_svg_tags
+        PASS [   0.005s] ( 43/263) biome_css_analyze keywords::tests::test_system_family_name_keywords_sorted
+        PASS [   0.005s] ( 44/263) biome_css_analyze keywords::tests::test_vendor_prefixes_sorted
+        PASS [   0.005s] ( 45/263) biome_css_analyze keywords::tests::test_vendor_specific_pseudo_elements_sorted
+        PASS [   0.005s] ( 46/263) biome_css_analyze keywords::tests::test_webkit_scrollbar_pseudo_classes_sorted
+        PASS [   0.005s] ( 47/263) biome_css_analyze keywords::tests::test_webkit_scrollbar_pseudo_elements_sorted
+        PASS [   0.297s] ( 48/263) biome_css_analyze::spec_tests no_empty_block_css
+        PASS [   0.300s] ( 49/263) biome_css_analyze::spec_tests no_duplicate_font_names_css
+        PASS [   0.183s] ( 50/263) biome_css_analyze::spec_tests specs::a11y::use_generic_font_names::invalid_css
+        PASS [   0.185s] ( 51/263) biome_css_analyze::spec_tests specs::a11y::use_generic_font_names::valid_css
+        PASS [   0.177s] ( 52/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_direction_in_linear_gradient::valid_css
+        PASS [   0.202s] ( 53/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_direction_in_linear_gradient::invalid_css
+        PASS [   0.193s] ( 54/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_grid_areas::invalid_css
+        PASS [   0.182s] ( 55/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_grid_areas::valid_css
+        PASS [   0.163s] ( 56/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::invalid_between_import_css
+        PASS [   0.161s] ( 57/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::invalid_css
+        PASS [   0.166s] ( 58/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::invalid_media_import_css
+        PASS [   0.168s] ( 59/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::invalid_media_import_upper_case_css
+        PASS [   0.172s] ( 60/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::valid_charset_comment_css
+        PASS [   0.172s] ( 61/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::valid_charset_css
+        PASS [   0.175s] ( 62/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::valid_charset_multiple_import_css
+        PASS [   0.173s] ( 63/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::valid_comment_css
+        PASS [   0.171s] ( 64/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::valid_css
+        PASS [   0.170s] ( 65/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::valid_layer_import_css
+        PASS [   0.171s] ( 66/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::valid_multiple_import_css
+        PASS [   0.170s] ( 67/263) biome_css_analyze::spec_tests specs::correctness::no_invalid_position_at_import_rule::valid_no_important_css
+        PASS [   0.167s] ( 68/263) biome_css_analyze::spec_tests specs::correctness::no_unknown_function::invalid_css
+        PASS [   0.168s] ( 69/263) biome_css_analyze::spec_tests specs::correctness::no_unknown_function::valid_css
+        PASS [   0.208s] ( 70/263) biome_css_analyze::spec_tests specs::correctness::no_unknown_media_feature_name::invalid_css
+        PASS [   0.208s] ( 71/263) biome_css_analyze::spec_tests specs::correctness::no_unknown_media_feature_name::valid_css
+        PASS [   0.170s] ( 72/263) biome_css_analyze::spec_tests specs::correctness::no_unknown_property::invalid_css
+        PASS [   0.171s] ( 73/263) biome_css_analyze::spec_tests specs::correctness::no_unknown_property::valid_css
+        PASS [   0.173s] ( 74/263) biome_css_analyze::spec_tests specs::correctness::no_unknown_unit::valid_css
+        PASS [   0.191s] ( 75/263) biome_css_analyze::spec_tests specs::correctness::no_unknown_unit::invalid_css
+        PASS [   0.165s] ( 76/263) biome_css_analyze::spec_tests specs::correctness::no_unmatchable_anb_selector::valid_css
+        PASS [   0.180s] ( 77/263) biome_css_analyze::spec_tests specs::correctness::no_unmatchable_anb_selector::invalid_css
+        PASS [   0.245s] ( 78/263) biome_css_analyze::spec_tests specs::nursery::no_descending_specificity::complex_selector_invalid_css
+        PASS [   0.245s] ( 79/263) biome_css_analyze::spec_tests specs::nursery::no_descending_specificity::function_pseudo_selector_invalid_css
+        PASS [   0.169s] ( 80/263) biome_css_analyze::spec_tests specs::nursery::no_descending_specificity::nested_invalid_css
+        PASS [   0.167s] ( 81/263) biome_css_analyze::spec_tests specs::nursery::no_descending_specificity::simple_pseudo_selector_invalid_css
+        PASS [   0.171s] ( 82/263) biome_css_analyze::spec_tests specs::nursery::no_descending_specificity::valid_css
+        PASS [   0.187s] ( 83/263) biome_css_analyze::spec_tests specs::nursery::no_duplicate_custom_properties::invalid_css
+        PASS [   0.227s] ( 84/263) biome_css_analyze::spec_tests specs::nursery::no_duplicate_custom_properties::valid_css
+        PASS [   0.239s] ( 85/263) biome_css_analyze::spec_tests specs::nursery::no_duplicate_properties::invalid_css
+        PASS [   0.195s] ( 86/263) biome_css_analyze::spec_tests specs::nursery::no_duplicate_properties::valid_css
+        PASS [   0.239s] ( 87/263) biome_css_analyze::spec_tests specs::nursery::no_irregular_whitespace::invalid_css
+        PASS [   0.227s] ( 88/263) biome_css_analyze::spec_tests specs::nursery::no_irregular_whitespace::valid_css
+        PASS [   0.227s] ( 89/263) biome_css_analyze::spec_tests specs::nursery::no_missing_var_function::invalid_css
+        PASS [   0.178s] ( 90/263) biome_css_analyze::spec_tests specs::nursery::no_missing_var_function::valid_css
+        PASS [   0.170s] ( 91/263) biome_css_analyze::spec_tests specs::nursery::no_unknown_at_rule::invalid_css
+        PASS [   0.225s] ( 92/263) biome_css_analyze::spec_tests specs::nursery::no_unknown_at_rule::valid_css
+        PASS [   0.215s] ( 93/263) biome_css_analyze::spec_tests specs::nursery::no_unknown_pseudo_class::invalid_css
+        PASS [   0.186s] ( 94/263) biome_css_analyze::spec_tests specs::nursery::no_unknown_pseudo_class::valid_css
+        PASS [   0.191s] ( 95/263) biome_css_analyze::spec_tests specs::nursery::no_unknown_pseudo_element::invalid_css
+        PASS [   0.233s] ( 96/263) biome_css_analyze::spec_tests specs::nursery::no_unknown_pseudo_element::valid_css
+        PASS [   0.213s] ( 97/263) biome_css_analyze::spec_tests specs::nursery::no_unknown_type_selector::invalid_css
+        PASS [   0.221s] ( 98/263) biome_css_analyze::spec_tests specs::nursery::no_unknown_type_selector::valid_css
+        PASS [   0.228s] ( 99/263) biome_css_analyze::spec_tests specs::nursery::no_value_at_rule::invalid_module_css
+        PASS [   0.211s] (100/263) biome_css_analyze::spec_tests specs::nursery::no_value_at_rule::valid_module_css
+        PASS [   0.210s] (101/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_at_import_rules::invalid_css
+        PASS [   0.202s] (102/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_at_import_rules::invalid_media_css
+        PASS [   0.225s] (103/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_at_import_rules::invalid_multiple_media_css
+        PASS [   0.218s] (104/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_at_import_rules::invalid_quotes_css
+        PASS [   0.194s] (105/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_at_import_rules::invalid_urls_css
+        PASS [   0.167s] (106/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_at_import_rules::valid_css
+        PASS [   0.203s] (107/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_font_names::invalid_css
+        PASS [   0.218s] (108/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_font_names::valid_css
+        PASS [   0.222s] (109/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_selectors_keyframe_block::invalid_css
+        PASS [   0.219s] (110/263) biome_css_analyze::spec_tests specs::suspicious::no_duplicate_selectors_keyframe_block::valid_css
+        PASS [   0.208s] (111/263) biome_css_analyze::spec_tests specs::suspicious::no_empty_block::invalid_css
+        PASS [   0.193s] (112/263) biome_css_analyze::spec_tests specs::suspicious::no_empty_block::valid_css
+        PASS [   0.214s] (113/263) biome_css_analyze::spec_tests specs::suspicious::no_important_in_keyframe::invalid_css
+        PASS [   0.207s] (114/263) biome_css_analyze::spec_tests specs::suspicious::no_important_in_keyframe::valid_css
+        PASS [   0.237s] (115/263) biome_css_analyze::spec_tests specs::suspicious::no_shorthand_property_overrides::invalid_css
+        PASS [   0.005s] (116/263) biome_css_parser lexer::tests::attribute
+        PASS [   0.036s] (117/263) biome_css_parser lexer::tests::block_comment
+        PASS [   0.005s] (118/263) biome_css_parser lexer::tests::cdo_and_cdc
+        PASS [   0.005s] (119/263) biome_css_parser lexer::tests::char
+        PASS [   0.006s] (120/263) biome_css_parser lexer::tests::dimension
+        PASS [   0.005s] (121/263) biome_css_parser lexer::tests::empty
+        PASS [   0.005s] (122/263) biome_css_parser lexer::tests::identifier
+        PASS [   0.199s] (123/263) biome_css_analyze::spec_tests specs::suspicious::no_shorthand_property_overrides::valid_css
+        PASS [   0.006s] (124/263) biome_css_parser lexer::tests::keywords
+        PASS [   0.005s] (125/263) biome_css_parser lexer::tests::number
+        PASS [   0.005s] (126/263) biome_css_parser lexer::tests::string
+        PASS [   0.005s] (127/263) biome_css_parser lexer::tests::wrong_line_comments
+        PASS [   0.005s] (128/263) biome_css_parser syntax::tests::try_parse_preserves_position_on_success
+        PASS [   0.005s] (129/263) biome_css_parser syntax::tests::try_parse_rewinds_to_checkpoint
+        PASS [   0.035s] (130/263) biome_css_parser tests::parser_smoke_test
+        PASS [   0.068s] (131/263) biome_css_parser lexer::tests::losslessness
+        PASS [   0.283s] (132/263) biome_css_parser::spec_tests ok::at_rule_charset_css
+        PASS [   0.355s] (133/263) biome_css_parser::spec_tests ok::at_rule_charset_error_css
+        PASS [   0.177s] (134/263) biome_css_parser::spec_tests ok::at_rule_color_profile_css
+        PASS [   0.195s] (135/263) biome_css_parser::spec_tests ok::at_rule_color_profile_error_css
+        PASS [   0.229s] (136/263) biome_css_parser::spec_tests ok::at_rule_container_complex_css
+        PASS [   0.210s] (137/263) biome_css_parser::spec_tests ok::at_rule_container_css
+        PASS [   0.219s] (138/263) biome_css_parser::spec_tests ok::at_rule_container_error_css
+        PASS [   0.200s] (139/263) biome_css_parser::spec_tests ok::at_rule_counter_style_css
+        PASS [   0.174s] (140/263) biome_css_parser::spec_tests ok::at_rule_counter_style_error_css
+        PASS [   0.202s] (141/263) biome_css_parser::spec_tests ok::at_rule_document_css
+        PASS [   0.190s] (142/263) biome_css_parser::spec_tests ok::at_rule_document_error_css
+        PASS [   0.164s] (143/263) biome_css_parser::spec_tests ok::at_rule_font_face_css
+        PASS [   0.179s] (144/263) biome_css_parser::spec_tests ok::at_rule_font_face_error_css
+        PASS [   0.232s] (145/263) biome_css_parser::spec_tests ok::at_rule_font_feature_values_css
+        PASS [   0.218s] (146/263) biome_css_parser::spec_tests ok::at_rule_font_feature_values_error_css
+        PASS [   0.209s] (147/263) biome_css_parser::spec_tests ok::at_rule_font_palette_values_css
+        PASS [   0.222s] (148/263) biome_css_parser::spec_tests ok::at_rule_font_palette_values_error_css
+        PASS [   0.245s] (149/263) biome_css_parser::spec_tests ok::at_rule_import_css
+        PASS [   0.204s] (150/263) biome_css_parser::spec_tests ok::at_rule_keyframe_css
+        PASS [   0.233s] (151/263) biome_css_parser::spec_tests ok::at_rule_keyframe_css_modules_css
+        PASS [   0.204s] (152/263) biome_css_parser::spec_tests ok::at_rule_keyframe_disabled_css_modules_css
+        PASS [   0.167s] (153/263) biome_css_parser::spec_tests ok::at_rule_keyframe_enabled_css_modules_css
+        PASS [   0.175s] (154/263) biome_css_parser::spec_tests ok::at_rule_keyframes_1_css
+        PASS [   0.211s] (155/263) biome_css_parser::spec_tests ok::at_rule_keyframes_css
+        PASS [   0.210s] (156/263) biome_css_parser::spec_tests ok::at_rule_layer_css
+        PASS [   0.175s] (157/263) biome_css_parser::spec_tests ok::at_rule_layer_error_css
+        PASS [   0.201s] (158/263) biome_css_parser::spec_tests ok::at_rule_media_complex_css
+        PASS [   0.240s] (159/263) biome_css_parser::spec_tests ok::at_rule_media_css
+        PASS [   0.208s] (160/263) biome_css_parser::spec_tests ok::at_rule_media_error_css
+        PASS [   0.214s] (161/263) biome_css_parser::spec_tests ok::at_rule_namespace_css
+        PASS [   0.201s] (162/263) biome_css_parser::spec_tests ok::at_rule_namespace_error_css
+        PASS [   0.251s] (163/263) biome_css_parser::spec_tests ok::at_rule_page_complex_css
+        PASS [   0.216s] (164/263) biome_css_parser::spec_tests ok::at_rule_page_css
+        PASS [   0.166s] (165/263) biome_css_parser::spec_tests ok::at_rule_position_try_css
+        PASS [   0.164s] (166/263) biome_css_parser::spec_tests ok::at_rule_property_css
+        PASS [   0.170s] (167/263) biome_css_parser::spec_tests ok::at_rule_property_error_css
+        PASS [   0.173s] (168/263) biome_css_parser::spec_tests ok::at_rule_scope_css
+        PASS [   0.166s] (169/263) biome_css_parser::spec_tests ok::at_rule_scope_error_css
+        PASS [   0.165s] (170/263) biome_css_parser::spec_tests ok::at_rule_starting_style_css
+        PASS [   0.189s] (171/263) biome_css_parser::spec_tests ok::at_rule_supports_complex_css
+        PASS [   0.208s] (172/263) biome_css_parser::spec_tests ok::at_rule_supports_css
+        PASS [   0.179s] (173/263) biome_css_parser::spec_tests ok::at_rule_unknown_css
+        PASS [   0.183s] (174/263) biome_css_parser::spec_tests ok::at_rule_value_css
+        PASS [   0.179s] (175/263) biome_css_parser::spec_tests ok::at_rule_value_disabled_css
+        PASS [   0.190s] (176/263) biome_css_parser::spec_tests ok::at_rule_value_error_enabled_css
+        PASS [   0.182s] (177/263) biome_css_parser::spec_tests ok::at_rule_view_transition_css
+        PASS [   0.177s] (178/263) biome_css_parser::spec_tests ok::attribute_css
+        PASS [   0.200s] (179/263) biome_css_parser::spec_tests ok::attribute_selector_css
+        PASS [   0.169s] (180/263) biome_css_parser::spec_tests ok::basic_css
+        PASS [   0.164s] (181/263) biome_css_parser::spec_tests ok::class_css
+        PASS [   0.236s] (182/263) biome_css_parser::spec_tests ok::calc_css
+        PASS [   0.170s] (183/263) biome_css_parser::spec_tests ok::class_selector_css
+        PASS [   0.198s] (184/263) biome_css_parser::spec_tests ok::class_selector_err_css
+        PASS [   0.220s] (185/263) biome_css_parser::spec_tests ok::color_error_css
+        PASS [   0.196s] (186/263) biome_css_parser::spec_tests ok::complex_css
+        PASS [   0.225s] (187/263) biome_css_parser::spec_tests ok::composes_css
+        PASS [   0.190s] (188/263) biome_css_parser::spec_tests ok::composes_error_disabled_css
+        PASS [   0.184s] (189/263) biome_css_parser::spec_tests ok::composes_error_enabled_css
+        PASS [   0.212s] (190/263) biome_css_parser::spec_tests ok::conditional_at_rule_css
+        PASS [   0.199s] (191/263) biome_css_parser::spec_tests ok::conditional_at_rule_error_css
+        PASS [   0.165s] (192/263) biome_css_parser::spec_tests ok::css_unfinished_block_css
+        PASS [   0.159s] (193/263) biome_css_parser::spec_tests ok::cue_css
+        PASS [   0.159s] (194/263) biome_css_parser::spec_tests ok::cue_region_css
+        PASS [   0.165s] (195/263) biome_css_parser::spec_tests ok::declaration_list_css
+        PASS [   0.192s] (196/263) biome_css_parser::spec_tests ok::dimension_css
+        PASS [   0.206s] (197/263) biome_css_parser::spec_tests ok::empty_css
+        PASS [   0.205s] (198/263) biome_css_parser::spec_tests ok::escaped_css
+        PASS [   0.180s] (199/263) biome_css_parser::spec_tests ok::grid_css
+        PASS [   0.186s] (200/263) biome_css_parser::spec_tests ok::grid_error_css
+        PASS [   0.205s] (201/263) biome_css_parser::spec_tests ok::highlight_css
+        PASS [   0.206s] (202/263) biome_css_parser::spec_tests ok::id_css
+        PASS [   0.213s] (203/263) biome_css_parser::spec_tests ok::id_selector_err_css
+        PASS [   0.210s] (204/263) biome_css_parser::spec_tests ok::invalid_selector_css
+        PASS [   0.199s] (205/263) biome_css_parser::spec_tests ok::linear_gradient_css
+        PASS [   0.196s] (206/263) biome_css_parser::spec_tests ok::metavar_css
+        PASS [   0.207s] (207/263) biome_css_parser::spec_tests ok::missing_identifier_css
+        PASS [   0.203s] (208/263) biome_css_parser::spec_tests ok::multiple_amp_css
+        PASS [   0.234s] (209/263) biome_css_parser::spec_tests ok::nesting_1_css
+        PASS [   0.266s] (210/263) biome_css_parser::spec_tests ok::nesting_css
+        PASS [   0.235s] (211/263) biome_css_parser::spec_tests ok::number_css
+        PASS [   0.200s] (212/263) biome_css_parser::spec_tests ok::part_css
+        PASS [   0.188s] (213/263) biome_css_parser::spec_tests ok::presudo_complex_css
+        PASS [   0.196s] (214/263) biome_css_parser::spec_tests ok::property_all_css
+        PASS [   0.219s] (215/263) biome_css_parser::spec_tests ok::property_border_css
+        PASS [   0.210s] (216/263) biome_css_parser::spec_tests ok::property_generic_css
+        PASS [   0.166s] (217/263) biome_css_parser::spec_tests ok::property_generic_error_css
+        PASS [   0.179s] (218/263) biome_css_parser::spec_tests ok::property_with_emoji_css
+        PASS [   0.180s] (219/263) biome_css_parser::spec_tests ok::property_z_index_css
+        PASS [   0.190s] (220/263) biome_css_parser::spec_tests ok::pseudo_class_an_plus_b_css
+        PASS [   0.232s] (221/263) biome_css_parser::spec_tests ok::pseudo_class_any_css
+        PASS [   0.197s] (222/263) biome_css_parser::spec_tests ok::pseudo_class_basic_css
+        PASS [   0.189s] (223/263) biome_css_parser::spec_tests ok::pseudo_class_current_css
+        PASS [   0.192s] (224/263) biome_css_parser::spec_tests ok::pseudo_class_dir_css
+        PASS [   0.203s] (225/263) biome_css_parser::spec_tests ok::pseudo_class_function_compound_selector_css
+        PASS [   0.212s] (226/263) biome_css_parser::spec_tests ok::pseudo_class_function_compound_selector_list_css
+        PASS [   0.224s] (227/263) biome_css_parser::spec_tests ok::pseudo_class_function_identifier_css
+        PASS [   0.223s] (228/263) biome_css_parser::spec_tests ok::pseudo_class_function_nth_css
+        PASS [   0.170s] (229/263) biome_css_parser::spec_tests ok::pseudo_class_function_relative_selector_list_css
+        PASS [   0.169s] (230/263) biome_css_parser::spec_tests ok::pseudo_class_function_selector_disabled_css
+        PASS [   0.195s] (231/263) biome_css_parser::spec_tests ok::pseudo_class_function_selector_enabled_css
+        PASS [   0.193s] (232/263) biome_css_parser::spec_tests ok::pseudo_class_function_selector_list_css
+        PASS [   0.169s] (233/263) biome_css_parser::spec_tests ok::pseudo_class_function_value_list_css
+        PASS [   0.186s] (234/263) biome_css_parser::spec_tests ok::pseudo_class_future_css
+        PASS [   0.188s] (235/263) biome_css_parser::spec_tests ok::pseudo_class_has_css
+        PASS [   0.162s] (236/263) biome_css_parser::spec_tests ok::pseudo_class_host_context_css
+        PASS [   0.163s] (237/263) biome_css_parser::spec_tests ok::pseudo_class_host_css
+        PASS [   0.160s] (238/263) biome_css_parser::spec_tests ok::pseudo_class_ident_css
+        PASS [   0.166s] (239/263) biome_css_parser::spec_tests ok::pseudo_class_identifier_css
+        PASS [   0.175s] (240/263) biome_css_parser::spec_tests ok::pseudo_class_is_css
+        PASS [   0.206s] (241/263) biome_css_parser::spec_tests ok::pseudo_class_lang_css
+        PASS [   0.196s] (242/263) biome_css_parser::spec_tests ok::pseudo_class_matches_css
+        PASS [   0.191s] (243/263) biome_css_parser::spec_tests ok::pseudo_class_module_css
+        PASS [   0.221s] (244/263) biome_css_parser::spec_tests ok::pseudo_class_not_css
+        PASS [   0.187s] (245/263) biome_css_parser::spec_tests ok::pseudo_class_past_css
+        PASS [   0.165s] (246/263) biome_css_parser::spec_tests ok::pseudo_class_where_css
+        PASS [   0.192s] (247/263) biome_css_parser::spec_tests ok::pseudo_element_css
+        PASS [   0.187s] (248/263) biome_css_parser::spec_tests ok::pseudo_element_function_identifier_css
+        PASS [   0.165s] (249/263) biome_css_parser::spec_tests ok::pseudo_element_function_selector_css
+        PASS [   0.177s] (250/263) biome_css_parser::spec_tests ok::relative_selector_error_css
+        PASS [   0.210s] (251/263) biome_css_parser::spec_tests ok::rgb_css
+        PASS [   0.216s] (252/263) biome_css_parser::spec_tests ok::selector_error_css
+        PASS [   0.184s] (253/263) biome_css_parser::spec_tests ok::slotted_css
+        PASS [   0.185s] (254/263) biome_css_parser::spec_tests ok::subselector_css
+        PASS [   0.210s] (255/263) biome_css_parser::spec_tests ok::traling_comma_css
+        PASS [   0.193s] (256/263) biome_css_parser::spec_tests ok::type_css
+        PASS [   0.200s] (257/263) biome_css_parser::spec_tests ok::unicode_range_css
+        PASS [   0.212s] (258/263) biome_css_parser::spec_tests ok::unicode_range_error_css
+        PASS [   0.200s] (259/263) biome_css_parser::spec_tests ok::universal_css
+        PASS [   0.180s] (260/263) biome_css_parser::spec_tests ok::unknow_css
+        PASS [   0.205s] (261/263) biome_css_parser::spec_tests ok::url_css
+        PASS [   0.212s] (262/263) biome_css_parser::spec_tests ok::url_value_css
+        PASS [   0.167s] (263/263) biome_css_parser::spec_tests ok::var_css
+────────────
+     Summary [  20.158s] 263 tests run: 263 passed, 3 skipped
+reward=1 graded=263 found=81 failed=0 parsed=263 framework=cargo-nextest exit_code=0

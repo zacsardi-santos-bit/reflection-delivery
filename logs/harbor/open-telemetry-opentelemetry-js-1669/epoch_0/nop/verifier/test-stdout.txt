@@ -1,0 +1,38 @@
+patching file packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts
+
+> @opentelemetry/resource-detector-aws@0.12.0 precompile
+> tsc --version
+
+Version 3.9.7
+
+> @opentelemetry/resource-detector-aws@0.12.0 compile
+> npm run version:update && tsc -p .
+
+
+> @opentelemetry/resource-detector-aws@0.12.0 version:update
+> node ../../scripts/version-update.js
+
+[96mtest/detectors/AwsEksDetector.test.ts[0m:[93m21[0m:[93m10[0m - [91merror[0m[90m TS2724: [0mModule '"../../src"' has no exported member 'awsEksDetector'. Did you mean 'AwsEcsDetector'?
+
+[7m21[0m import { awsEksDetector, AwsEksDetector } from '../../src';
+[7m  [0m [91m         ~~~~~~~~~~~~~~[0m
+
+  [96msrc/detectors/AwsEcsDetector.ts[0m:[93m32[0m:[93m14[0m
+    [7m32[0m export class AwsEcsDetector implements Detector {
+    [7m  [0m [96m             ~~~~~~~~~~~~~~[0m
+    'AwsEcsDetector' is declared here.
+
+[96mtest/detectors/AwsEksDetector.test.ts[0m:[93m21[0m:[93m26[0m - [91merror[0m[90m TS2724: [0mModule '"../../src"' has no exported member 'AwsEksDetector'. Did you mean 'AwsEcsDetector'?
+
+[7m21[0m import { awsEksDetector, AwsEksDetector } from '../../src';
+[7m  [0m [91m                         ~~~~~~~~~~~~~~[0m
+
+  [96msrc/detectors/AwsEcsDetector.ts[0m:[93m32[0m:[93m14[0m
+    [7m32[0m export class AwsEcsDetector implements Detector {
+    [7m  [0m [96m             ~~~~~~~~~~~~~~[0m
+    'AwsEcsDetector' is declared here.
+
+
+Found 2 errors.
+
+reward=0 graded=8 found=0 failed=0 parsed=0 framework=mocha exit_code=1

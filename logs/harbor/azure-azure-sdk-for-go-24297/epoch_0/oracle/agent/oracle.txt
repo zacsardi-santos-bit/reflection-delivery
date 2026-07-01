@@ -1,0 +1,7 @@
+patching file sdk/messaging/azservicebus/CHANGELOG.md
+patching file sdk/messaging/azservicebus/go.mod
+patching file sdk/messaging/azservicebus/go.sum
+patching file sdk/messaging/azservicebus/internal/tracing/attributes.go
+patching file sdk/messaging/azservicebus/internal/tracing/constants.go
+patching file sdk/messaging/azservicebus/internal/tracing/propagation.go
+patching file sdk/messaging/azservicebus/internal/tracing/tracing.go

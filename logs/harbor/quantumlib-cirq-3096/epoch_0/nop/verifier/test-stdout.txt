@@ -1,0 +1,1546 @@
+patching file cirq/ops/linear_combinations_test.py
+patching file cirq/ops/pauli_string_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 550 items
+
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_accepts_consistent_gates[terms0] PASSED [  0%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_accepts_consistent_gates[terms1] PASSED [  0%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_accepts_consistent_gates[terms2] PASSED [  0%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_rejects_inconsistent_gates[terms0] PASSED [  0%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_rejects_inconsistent_gates[terms1] PASSED [  0%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_rejects_inconsistent_gates[terms2] PASSED [  1%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_gates_accepts_all_gates[gate0] PASSED [  1%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_gates_accepts_all_gates[gate1] PASSED [  1%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_gates_accepts_all_gates[gate2] PASSED [  1%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_gates_accepts_all_gates[gate3] PASSED [  1%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_gates_accepts_all_gates[gate4] PASSED [  2%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_gates_accepts_all_gates[gate5] PASSED [  2%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_num_qubits[terms0-1] PASSED [  2%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_num_qubits[terms1-1] PASSED [  2%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_num_qubits[terms2-2] PASSED [  2%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_num_qubits[terms3-3] PASSED [  2%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_gates_has_no_matrix PASSED [  3%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_matrix[terms0-expected_matrix0] PASSED [  3%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_matrix[terms1-expected_matrix1] PASSED [  3%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_matrix[terms2-expected_matrix2] PASSED [  3%]
+cirq/ops/linear_combinations_test.py::test_unitary_linear_combination_of_gates_has_correct_unitary[terms0-expected_unitary0] FAILED [  3%]
+cirq/ops/linear_combinations_test.py::test_unitary_linear_combination_of_gates_has_correct_unitary[terms1-expected_unitary1] FAILED [  4%]
+cirq/ops/linear_combinations_test.py::test_non_unitary_linear_combination_of_gates_has_no_unitary[terms0] PASSED [  4%]
+cirq/ops/linear_combinations_test.py::test_non_unitary_linear_combination_of_gates_has_no_unitary[terms1] PASSED [  4%]
+cirq/ops/linear_combinations_test.py::test_non_unitary_linear_combination_of_gates_has_no_unitary[terms2] PASSED [  4%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_pauli_expansion[terms0-expected_expansion0] PASSED [  4%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_pauli_expansion[terms1-expected_expansion1] PASSED [  4%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_pauli_expansion[terms2-expected_expansion2] PASSED [  5%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_gates_has_correct_pauli_expansion[terms3-expected_expansion3] PASSED [  5%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_valid_powers[terms0-2-expected_terms0] PASSED [  5%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_valid_powers[terms1-3-expected_terms1] PASSED [  5%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_valid_powers[terms2-10-expected_terms2] PASSED [  5%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_valid_powers[terms3-11-expected_terms3] PASSED [  6%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_valid_powers[terms4-2-expected_terms4] PASSED [  6%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_valid_powers[terms5-2-expected_terms5] PASSED [  6%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_valid_powers[terms6-0-expected_terms6] PASSED [  6%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_invalid_powers[terms0-2] PASSED [  6%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_invalid_powers[terms1-2] PASSED [  6%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_invalid_powers[terms2-2] PASSED [  7%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_invalid_powers[terms3-2] PASSED [  7%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_invalid_powers[terms4--1] PASSED [  7%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_gates_invalid_powers[terms5-exponent5] PASSED [  7%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression0-expected_result0] PASSED [  7%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression1-expected_result1] PASSED [  8%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression2-expected_result2] PASSED [  8%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression3-expected_result3] PASSED [  8%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression4-expected_result4] PASSED [  8%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression5-expected_result5] PASSED [  8%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression6-expected_result6] PASSED [  8%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression7-expected_result7] PASSED [  9%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression8-expected_result8] PASSED [  9%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression9-expected_result9] PASSED [  9%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression10-expected_result10] PASSED [  9%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression11-expected_result11] PASSED [  9%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression12-expected_result12] PASSED [ 10%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression13-expected_result13] PASSED [ 10%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression14-expected_result14] PASSED [ 10%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression15-expected_result15] PASSED [ 10%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression16-expected_result16] PASSED [ 10%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression17-expected_result17] PASSED [ 10%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression18-expected_result18] PASSED [ 11%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression19-expected_result19] PASSED [ 11%]
+cirq/ops/linear_combinations_test.py::test_gate_expressions[expression20-expected_result20] PASSED [ 11%]
+cirq/ops/linear_combinations_test.py::test_in_place_manipulations_of_linear_combination_of_gates[gates0] PASSED [ 11%]
+cirq/ops/linear_combinations_test.py::test_in_place_manipulations_of_linear_combination_of_gates[gates1] PASSED [ 11%]
+cirq/ops/linear_combinations_test.py::test_in_place_manipulations_of_linear_combination_of_gates[gates2] PASSED [ 12%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_operations_accepts_all_operations[op0] PASSED [ 12%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_operations_accepts_all_operations[op1] PASSED [ 12%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_operations_accepts_all_operations[op2] PASSED [ 12%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_operations_accepts_all_operations[op3] PASSED [ 12%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_operations_accepts_all_operations[op4] PASSED [ 12%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_operations_accepts_all_operations[op5] PASSED [ 13%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_operations_accepts_all_operations[op6] PASSED [ 13%]
+cirq/ops/linear_combinations_test.py::test_empty_linear_combination_of_operations_accepts_all_operations[op7] PASSED [ 13%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_is_consistent[terms0] PASSED [ 13%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_is_consistent[terms1] PASSED [ 13%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_is_consistent[terms2] PASSED [ 14%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_is_consistent[terms3] PASSED [ 14%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_qubits[terms0-expected_qubits0] PASSED [ 14%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_qubits[terms1-expected_qubits1] PASSED [ 14%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_qubits[terms2-expected_qubits2] PASSED [ 14%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_qubits[terms3-expected_qubits3] PASSED [ 14%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_qubits[terms4-expected_qubits4] PASSED [ 15%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms0-expected_matrix0] PASSED [ 15%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms1-expected_matrix1] PASSED [ 15%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms2-expected_matrix2] PASSED [ 15%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms3-expected_matrix3] PASSED [ 15%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms4-expected_matrix4] PASSED [ 16%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms5-expected_matrix5] PASSED [ 16%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms6-expected_matrix6] PASSED [ 16%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms7-expected_matrix7] PASSED [ 16%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms8-expected_matrix8] PASSED [ 16%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms9-expected_matrix9] PASSED [ 16%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms10-expected_matrix10] PASSED [ 17%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms11-expected_matrix11] PASSED [ 17%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms12-expected_matrix12] PASSED [ 17%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms13-expected_matrix13] PASSED [ 17%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_matrix[terms14-expected_matrix14] PASSED [ 17%]
+cirq/ops/linear_combinations_test.py::test_unitary_linear_combination_of_operations_has_correct_unitary[terms0-expected_unitary0] FAILED [ 18%]
+cirq/ops/linear_combinations_test.py::test_unitary_linear_combination_of_operations_has_correct_unitary[terms1-expected_unitary1] FAILED [ 18%]
+cirq/ops/linear_combinations_test.py::test_non_unitary_linear_combination_of_operations_has_no_unitary[terms0] PASSED [ 18%]
+cirq/ops/linear_combinations_test.py::test_non_unitary_linear_combination_of_operations_has_no_unitary[terms1] PASSED [ 18%]
+cirq/ops/linear_combinations_test.py::test_non_unitary_linear_combination_of_operations_has_no_unitary[terms2] PASSED [ 18%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms0-expected_expansion0] PASSED [ 18%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms1-expected_expansion1] PASSED [ 19%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms2-expected_expansion2] PASSED [ 19%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms3-expected_expansion3] PASSED [ 19%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms4-expected_expansion4] PASSED [ 19%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms5-expected_expansion5] PASSED [ 19%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms6-expected_expansion6] PASSED [ 20%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms7-expected_expansion7] PASSED [ 20%]
+cirq/ops/linear_combinations_test.py::test_linear_combination_of_operations_has_correct_pauli_expansion[terms8-expected_expansion8] PASSED [ 20%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_valid_powers[terms0-2-expected_terms0] PASSED [ 20%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_valid_powers[terms1-3-expected_terms1] PASSED [ 20%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_valid_powers[terms2-10-expected_terms2] PASSED [ 20%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_valid_powers[terms3-11-expected_terms3] PASSED [ 21%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_valid_powers[terms4-2-expected_terms4] PASSED [ 21%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_valid_powers[terms5-2-expected_terms5] PASSED [ 21%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_valid_powers[terms6-0-expected_terms6] PASSED [ 21%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_invalid_powers[terms0-2] PASSED [ 21%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_invalid_powers[terms1-2] PASSED [ 22%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_invalid_powers[terms2-2] PASSED [ 22%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_invalid_powers[terms3-2] PASSED [ 22%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_invalid_powers[terms4-2] PASSED [ 22%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_invalid_powers[terms5--1] PASSED [ 22%]
+cirq/ops/linear_combinations_test.py::test_linear_combinations_of_operations_invalid_powers[terms6-exponent6] PASSED [ 22%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression0-expected_result0] PASSED [ 23%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression1-expected_result1] PASSED [ 23%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression2-expected_result2] PASSED [ 23%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression3-expected_result3] PASSED [ 23%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression4-expected_result4] PASSED [ 23%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression5-expected_result5] PASSED [ 24%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression6-expected_result6] PASSED [ 24%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression7-expected_result7] PASSED [ 24%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression8-expected_result8] PASSED [ 24%]
+cirq/ops/linear_combinations_test.py::test_operation_expressions[expression9-expected_result9] PASSED [ 24%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_construction PASSED [ 24%]
+cirq/ops/linear_combinations_test.py::test_unitary_pauli_sum_has_correct_unitary[psum0-expected_unitary0] FAILED [ 25%]
+cirq/ops/linear_combinations_test.py::test_unitary_pauli_sum_has_correct_unitary[psum1-expected_unitary1] FAILED [ 25%]
+cirq/ops/linear_combinations_test.py::test_non_pauli_sum_has_no_unitary[psum0] FAILED [ 25%]
+cirq/ops/linear_combinations_test.py::test_non_pauli_sum_has_no_unitary[psum1] FAILED [ 25%]
+cirq/ops/linear_combinations_test.py::test_non_pauli_sum_has_no_unitary[psum2] FAILED [ 25%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_qubits[psum0-expected_qubits0] PASSED [ 26%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_qubits[psum1-expected_qubits1] PASSED [ 26%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_qubits[psum2-expected_qubits2] PASSED [ 26%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_qubits[psum3-expected_qubits3] PASSED [ 26%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_from_single_pauli PASSED [ 26%]
+cirq/ops/linear_combinations_test.py::test_pauli_sub PASSED              [ 26%]
+cirq/ops/linear_combinations_test.py::test_pauli_sub_simplify PASSED     [ 27%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_neg PASSED          [ 27%]
+cirq/ops/linear_combinations_test.py::test_paulisum_validation PASSED    [ 27%]
+cirq/ops/linear_combinations_test.py::test_add_number_paulisum PASSED    [ 27%]
+cirq/ops/linear_combinations_test.py::test_add_number_paulistring PASSED [ 27%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_formatting PASSED   [ 28%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_repr PASSED         [ 28%]
+cirq/ops/linear_combinations_test.py::test_bad_arithmetic PASSED         [ 28%]
+cirq/ops/linear_combinations_test.py::test_paulisum_mul_paulistring PASSED [ 28%]
+cirq/ops/linear_combinations_test.py::test_paulisum_mul_paulisum PASSED  [ 28%]
+cirq/ops/linear_combinations_test.py::test_pauli_sum_pow PASSED          [ 28%]
+cirq/ops/linear_combinations_test.py::test_imul_aliasing PASSED          [ 29%]
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_invalid_input PASSED [ 29%]
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_check_preconditions PASSED [ 29%]
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_basis_states PASSED [ 29%]
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_two_qubit_states PASSED [ 29%]
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_invalid_input PASSED [ 30%]
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_check_preconditions PASSED [ 30%]
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_basis_states PASSED [ 30%]
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_two_qubit_states PASSED [ 30%]
+cirq/ops/linear_combinations_test.py::test_deprecated PASSED             [ 30%]
+cirq/ops/pauli_string_test.py::test_eq_ne_hash PASSED                    [ 30%]
+cirq/ops/pauli_string_test.py::test_equal_up_to_coefficient PASSED       [ 31%]
+cirq/ops/pauli_string_test.py::test_exponentiation_as_exponent PASSED    [ 31%]
+cirq/ops/pauli_string_test.py::test_exponentiate_single_value_as_exponent PASSED [ 31%]
+cirq/ops/pauli_string_test.py::test_exponentiation_as_base PASSED        [ 31%]
+cirq/ops/pauli_string_test.py::test_list_op_constructor_matches_mapping[pauli0] PASSED [ 31%]
+cirq/ops/pauli_string_test.py::test_list_op_constructor_matches_mapping[pauli1] PASSED [ 32%]
+cirq/ops/pauli_string_test.py::test_list_op_constructor_matches_mapping[pauli2] PASSED [ 32%]
+cirq/ops/pauli_string_test.py::test_constructor_flexibility PASSED       [ 32%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map0] PASSED     [ 32%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map1] PASSED     [ 32%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map2] PASSED     [ 32%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map3] PASSED     [ 33%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map4] PASSED     [ 33%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map5] PASSED     [ 33%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map6] PASSED     [ 33%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map7] PASSED     [ 33%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map8] PASSED     [ 34%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map9] PASSED     [ 34%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map10] PASSED    [ 34%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map11] PASSED    [ 34%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map12] PASSED    [ 34%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map13] PASSED    [ 34%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map14] PASSED    [ 35%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map15] PASSED    [ 35%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map16] PASSED    [ 35%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map17] PASSED    [ 35%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map18] PASSED    [ 35%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map19] PASSED    [ 36%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map20] PASSED    [ 36%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map21] PASSED    [ 36%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map22] PASSED    [ 36%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map23] PASSED    [ 36%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map24] PASSED    [ 36%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map25] PASSED    [ 37%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map26] PASSED    [ 37%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map27] PASSED    [ 37%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map28] PASSED    [ 37%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map29] PASSED    [ 37%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map30] PASSED    [ 38%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map31] PASSED    [ 38%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map32] PASSED    [ 38%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map33] PASSED    [ 38%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map34] PASSED    [ 38%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map35] PASSED    [ 38%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map36] PASSED    [ 39%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map37] PASSED    [ 39%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map38] PASSED    [ 39%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map39] PASSED    [ 39%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map40] PASSED    [ 39%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map41] PASSED    [ 40%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map42] PASSED    [ 40%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map43] PASSED    [ 40%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map44] PASSED    [ 40%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map45] PASSED    [ 40%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map46] PASSED    [ 40%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map47] PASSED    [ 41%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map48] PASSED    [ 41%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map49] PASSED    [ 41%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map50] PASSED    [ 41%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map51] PASSED    [ 41%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map52] PASSED    [ 42%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map53] PASSED    [ 42%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map54] PASSED    [ 42%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map55] PASSED    [ 42%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map56] PASSED    [ 42%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map57] PASSED    [ 42%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map58] PASSED    [ 43%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map59] PASSED    [ 43%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map60] PASSED    [ 43%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map61] PASSED    [ 43%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map62] PASSED    [ 43%]
+cirq/ops/pauli_string_test.py::test_getitem[qubit_pauli_map63] PASSED    [ 44%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map0] PASSED         [ 44%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map1] PASSED         [ 44%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map2] PASSED         [ 44%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map3] PASSED         [ 44%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map4] PASSED         [ 44%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map5] PASSED         [ 45%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map6] PASSED         [ 45%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map7] PASSED         [ 45%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map8] PASSED         [ 45%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map9] PASSED         [ 45%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map10] PASSED        [ 46%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map11] PASSED        [ 46%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map12] PASSED        [ 46%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map13] PASSED        [ 46%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map14] PASSED        [ 46%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map15] PASSED        [ 46%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map16] PASSED        [ 47%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map17] PASSED        [ 47%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map18] PASSED        [ 47%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map19] PASSED        [ 47%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map20] PASSED        [ 47%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map21] PASSED        [ 48%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map22] PASSED        [ 48%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map23] PASSED        [ 48%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map24] PASSED        [ 48%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map25] PASSED        [ 48%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map26] PASSED        [ 48%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map27] PASSED        [ 49%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map28] PASSED        [ 49%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map29] PASSED        [ 49%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map30] PASSED        [ 49%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map31] PASSED        [ 49%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map32] PASSED        [ 50%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map33] PASSED        [ 50%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map34] PASSED        [ 50%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map35] PASSED        [ 50%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map36] PASSED        [ 50%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map37] PASSED        [ 50%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map38] PASSED        [ 51%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map39] PASSED        [ 51%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map40] PASSED        [ 51%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map41] PASSED        [ 51%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map42] PASSED        [ 51%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map43] PASSED        [ 52%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map44] PASSED        [ 52%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map45] PASSED        [ 52%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map46] PASSED        [ 52%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map47] PASSED        [ 52%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map48] PASSED        [ 52%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map49] PASSED        [ 53%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map50] PASSED        [ 53%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map51] PASSED        [ 53%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map52] PASSED        [ 53%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map53] PASSED        [ 53%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map54] PASSED        [ 54%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map55] PASSED        [ 54%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map56] PASSED        [ 54%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map57] PASSED        [ 54%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map58] PASSED        [ 54%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map59] PASSED        [ 54%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map60] PASSED        [ 55%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map61] PASSED        [ 55%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map62] PASSED        [ 55%]
+cirq/ops/pauli_string_test.py::test_get[qubit_pauli_map63] PASSED        [ 55%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map0] PASSED    [ 55%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map1] PASSED    [ 56%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map2] PASSED    [ 56%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map3] PASSED    [ 56%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map4] PASSED    [ 56%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map5] PASSED    [ 56%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map6] PASSED    [ 56%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map7] PASSED    [ 57%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map8] PASSED    [ 57%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map9] PASSED    [ 57%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map10] PASSED   [ 57%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map11] PASSED   [ 57%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map12] PASSED   [ 58%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map13] PASSED   [ 58%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map14] PASSED   [ 58%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map15] PASSED   [ 58%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map16] PASSED   [ 58%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map17] PASSED   [ 58%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map18] PASSED   [ 59%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map19] PASSED   [ 59%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map20] PASSED   [ 59%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map21] PASSED   [ 59%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map22] PASSED   [ 59%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map23] PASSED   [ 60%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map24] PASSED   [ 60%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map25] PASSED   [ 60%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map26] PASSED   [ 60%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map27] PASSED   [ 60%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map28] PASSED   [ 60%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map29] PASSED   [ 61%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map30] PASSED   [ 61%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map31] PASSED   [ 61%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map32] PASSED   [ 61%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map33] PASSED   [ 61%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map34] PASSED   [ 62%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map35] PASSED   [ 62%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map36] PASSED   [ 62%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map37] PASSED   [ 62%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map38] PASSED   [ 62%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map39] PASSED   [ 62%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map40] PASSED   [ 63%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map41] PASSED   [ 63%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map42] PASSED   [ 63%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map43] PASSED   [ 63%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map44] PASSED   [ 63%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map45] PASSED   [ 64%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map46] PASSED   [ 64%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map47] PASSED   [ 64%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map48] PASSED   [ 64%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map49] PASSED   [ 64%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map50] PASSED   [ 64%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map51] PASSED   [ 65%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map52] PASSED   [ 65%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map53] PASSED   [ 65%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map54] PASSED   [ 65%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map55] PASSED   [ 65%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map56] PASSED   [ 66%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map57] PASSED   [ 66%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map58] PASSED   [ 66%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map59] PASSED   [ 66%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map60] PASSED   [ 66%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map61] PASSED   [ 66%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map62] PASSED   [ 67%]
+cirq/ops/pauli_string_test.py::test_contains[qubit_pauli_map63] PASSED   [ 67%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map0] PASSED [ 67%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map1] PASSED [ 67%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map2] PASSED [ 67%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map3] PASSED [ 68%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map4] PASSED [ 68%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map5] PASSED [ 68%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map6] PASSED [ 68%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map7] PASSED [ 68%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map8] PASSED [ 68%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map9] PASSED [ 69%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map10] PASSED [ 69%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map11] PASSED [ 69%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map12] PASSED [ 69%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map13] PASSED [ 69%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map14] PASSED [ 70%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map15] PASSED [ 70%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map16] PASSED [ 70%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map17] PASSED [ 70%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map18] PASSED [ 70%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map19] PASSED [ 70%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map20] PASSED [ 71%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map21] PASSED [ 71%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map22] PASSED [ 71%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map23] PASSED [ 71%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map24] PASSED [ 71%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map25] PASSED [ 72%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map26] PASSED [ 72%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map27] PASSED [ 72%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map28] PASSED [ 72%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map29] PASSED [ 72%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map30] PASSED [ 72%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map31] PASSED [ 73%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map32] PASSED [ 73%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map33] PASSED [ 73%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map34] PASSED [ 73%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map35] PASSED [ 73%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map36] PASSED [ 74%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map37] PASSED [ 74%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map38] PASSED [ 74%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map39] PASSED [ 74%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map40] PASSED [ 74%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map41] PASSED [ 74%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map42] PASSED [ 75%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map43] PASSED [ 75%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map44] PASSED [ 75%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map45] PASSED [ 75%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map46] PASSED [ 75%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map47] PASSED [ 76%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map48] PASSED [ 76%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map49] PASSED [ 76%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map50] PASSED [ 76%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map51] PASSED [ 76%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map52] PASSED [ 76%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map53] PASSED [ 77%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map54] PASSED [ 77%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map55] PASSED [ 77%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map56] PASSED [ 77%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map57] PASSED [ 77%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map58] PASSED [ 78%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map59] PASSED [ 78%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map60] PASSED [ 78%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map61] PASSED [ 78%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map62] PASSED [ 78%]
+cirq/ops/pauli_string_test.py::test_basic_functionality[qubit_pauli_map63] PASSED [ 78%]
+cirq/ops/pauli_string_test.py::test_repr PASSED                          [ 79%]
+cirq/ops/pauli_string_test.py::test_str PASSED                           [ 79%]
+cirq/ops/pauli_string_test.py::test_zip_items[map10-map20-out0] PASSED   [ 79%]
+cirq/ops/pauli_string_test.py::test_zip_items[map11-map21-out1] PASSED   [ 79%]
+cirq/ops/pauli_string_test.py::test_zip_items[map12-map22-out2] PASSED   [ 79%]
+cirq/ops/pauli_string_test.py::test_zip_items[map13-map23-out3] PASSED   [ 80%]
+cirq/ops/pauli_string_test.py::test_zip_items[map14-map24-out4] PASSED   [ 80%]
+cirq/ops/pauli_string_test.py::test_zip_items[map15-map25-out5] PASSED   [ 80%]
+cirq/ops/pauli_string_test.py::test_zip_paulis[map10-map20-out0] PASSED  [ 80%]
+cirq/ops/pauli_string_test.py::test_zip_paulis[map11-map21-out1] PASSED  [ 80%]
+cirq/ops/pauli_string_test.py::test_zip_paulis[map12-map22-out2] PASSED  [ 80%]
+cirq/ops/pauli_string_test.py::test_zip_paulis[map13-map23-out3] PASSED  [ 81%]
+cirq/ops/pauli_string_test.py::test_zip_paulis[map14-map24-out4] PASSED  [ 81%]
+cirq/ops/pauli_string_test.py::test_zip_paulis[map15-map25-out5] PASSED  [ 81%]
+cirq/ops/pauli_string_test.py::test_commutes PASSED                      [ 81%]
+cirq/ops/pauli_string_test.py::test_negate PASSED                        [ 81%]
+cirq/ops/pauli_string_test.py::test_mul_scalar PASSED                    [ 82%]
+cirq/ops/pauli_string_test.py::test_div_scalar PASSED                    [ 82%]
+cirq/ops/pauli_string_test.py::test_mul_strings PASSED                   [ 82%]
+cirq/ops/pauli_string_test.py::test_op_equivalence PASSED                [ 82%]
+cirq/ops/pauli_string_test.py::test_op_product PASSED                    [ 82%]
+cirq/ops/pauli_string_test.py::test_pos PASSED                           [ 82%]
+cirq/ops/pauli_string_test.py::test_pow PASSED                           [ 83%]
+cirq/ops/pauli_string_test.py::test_numpy_ufunc PASSED                   [ 83%]
+cirq/ops/pauli_string_test.py::test_map_qubits PASSED                    [ 83%]
+cirq/ops/pauli_string_test.py::test_to_z_basis_ops PASSED                [ 83%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_single[0--1] PASSED [ 83%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_single[0-1] PASSED [ 84%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_single[1--1] PASSED [ 84%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_single[1-1] PASSED [ 84%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_single[2--1] PASSED [ 84%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_single[2-1] PASSED [ 84%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[0-True-True-True] PASSED [ 84%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[0-True-True-False] PASSED [ 85%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[0-True-False-True] PASSED [ 85%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[0-True-False-False] PASSED [ 85%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[0-False-True-True] PASSED [ 85%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[0-False-True-False] PASSED [ 85%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[0-False-False-True] PASSED [ 86%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[0-False-False-False] PASSED [ 86%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[1-True-True-True] PASSED [ 86%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[1-True-True-False] PASSED [ 86%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[1-True-False-True] PASSED [ 86%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[1-True-False-False] PASSED [ 86%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[1-False-True-True] PASSED [ 87%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[1-False-True-False] PASSED [ 87%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[1-False-False-True] PASSED [ 87%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[1-False-False-False] PASSED [ 87%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[2-True-True-True] PASSED [ 87%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[2-True-True-False] PASSED [ 88%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[2-True-False-True] PASSED [ 88%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[2-True-False-False] PASSED [ 88%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[2-False-True-True] PASSED [ 88%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[2-False-True-False] PASSED [ 88%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[2-False-False-True] PASSED [ 88%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_double[2-False-False-False] PASSED [ 89%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_cz PASSED       [ 89%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_no_common_qubits PASSED [ 89%]
+cirq/ops/pauli_string_test.py::test_pass_unsupported_operations_over PASSED [ 89%]
+cirq/ops/pauli_string_test.py::test_with_qubits PASSED                   [ 89%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map0] PASSED [ 90%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map1] PASSED [ 90%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map2] PASSED [ 90%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map3] PASSED [ 90%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map4] PASSED [ 90%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map5] PASSED [ 90%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map6] PASSED [ 91%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map7] PASSED [ 91%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map8] PASSED [ 91%]
+cirq/ops/pauli_string_test.py::test_consistency[qubit_pauli_map9] PASSED [ 91%]
+cirq/ops/pauli_string_test.py::test_scaled_unitary_consistency PASSED    [ 91%]
+cirq/ops/pauli_string_test.py::test_bool PASSED                          [ 92%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string0-None-expected_matrix0] FAILED [ 92%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string1-qubits1-expected_matrix1] FAILED [ 92%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string2-qubits2-expected_matrix2] FAILED [ 92%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string3-None-expected_matrix3] FAILED [ 92%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string4-qubits4-expected_matrix4] FAILED [ 92%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string5-qubits5-expected_matrix5] FAILED [ 93%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string6-qubits6-expected_matrix6] FAILED [ 93%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string7-qubits7-expected_matrix7] FAILED [ 93%]
+cirq/ops/pauli_string_test.py::test_matrix[pauli_string8-qubits8-expected_matrix8] FAILED [ 93%]
+cirq/ops/pauli_string_test.py::test_unitary_matrix PASSED                [ 93%]
+cirq/ops/pauli_string_test.py::test_decompose PASSED                     [ 94%]
+cirq/ops/pauli_string_test.py::test_rejects_non_paulis PASSED            [ 94%]
+cirq/ops/pauli_string_test.py::test_cannot_multiply_by_non_paulis PASSED [ 94%]
+cirq/ops/pauli_string_test.py::test_filters_identities PASSED            [ 94%]
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_invalid_input PASSED [ 94%]
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_check_preconditions PASSED [ 94%]
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states PASSED [ 95%]
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_entangled_states PASSED [ 95%]
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_qubit_map PASSED [ 95%]
+cirq/ops/pauli_string_test.py::test_pauli_string_expectation_from_state_vector_pure_state PASSED [ 95%]
+cirq/ops/pauli_string_test.py::test_pauli_string_expectation_from_state_vector_pure_state_with_coef PASSED [ 95%]
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_invalid_input PASSED [ 96%]
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_check_preconditions PASSED [ 96%]
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_basis_states PASSED [ 96%]
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_entangled_states PASSED [ 96%]
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_qubit_map PASSED [ 96%]
+cirq/ops/pauli_string_test.py::test_pauli_string_expectation_from_density_matrix_pure_state PASSED [ 96%]
+cirq/ops/pauli_string_test.py::test_pauli_string_expectation_from_density_matrix_pure_state_with_coef PASSED [ 97%]
+cirq/ops/pauli_string_test.py::test_pauli_string_expectation_from_state_vector_mixed_state_linearity PASSED [ 97%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_normal_gates PASSED    [ 97%]
+cirq/ops/pauli_string_test.py::test_dense PASSED                         [ 97%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_incorrectly_powered_cliffords PASSED [ 97%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_global_phase PASSED    [ 98%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_composite_with_disjoint_sub_gates PASSED [ 98%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_clifford_composite PASSED [ 98%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_move_into_uninvolved PASSED [ 98%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_common_single_qubit_gates PASSED [ 98%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_common_two_qubit_gates PASSED [ 98%]
+cirq/ops/pauli_string_test.py::test_conjugated_by_ordering PASSED        [ 99%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_ordering PASSED [ 99%]
+cirq/ops/pauli_string_test.py::test_pass_operations_over_ordering_reversed PASSED [ 99%]
+cirq/ops/pauli_string_test.py::test_pretty_print PASSED                  [ 99%]
+cirq/ops/pauli_string_test.py::test_deprecated PASSED                    [ 99%]
+cirq/ops/pauli_string_test.py::test_circuit_diagram_info PASSED          [100%]
+
+=================================== FAILURES ===================================
+_ test_unitary_linear_combination_of_gates_has_correct_unitary[terms0-expected_unitary0] _
+
+terms = {cirq.X: 0.7071067811865476, cirq.Y: 0.7071067811865476}
+expected_unitary = array([[0.        +0.j        , 0.70710678-0.70710678j],
+       [0.70710678+0.70710678j, 0.        +0.j        ]])
+
+    @pytest.mark.parametrize(
+        'terms, expected_unitary',
+        (({
+            cirq.X: np.sqrt(0.5),
+            cirq.Y: np.sqrt(0.5)
+        }, np.array([[0, np.sqrt(-1j)], [np.sqrt(1j), 0]])),
+         ({
+             cirq.IdentityGate(2): np.sqrt(0.5),
+             cirq.YY: -1j * np.sqrt(0.5),
+         }, np.sqrt(0.5) *
+          np.array([[1, 0, 0, 1j], [0, 1, -1j, 0], [0, -1j, 1, 0], [1j, 0, 0, 1]])))
+    )
+    def test_unitary_linear_combination_of_gates_has_correct_unitary(
+            terms, expected_unitary):
+        combination = cirq.LinearCombinationOfGates(terms)
+>       assert cirq.has_unitary(combination)
+E       assert False
+E        +  where False = <function has_unitary at 0x7f90050679d0>(cirq.LinearCombinationOfGates({cirq.X: 0.7071067811865476, cirq.Y: 0.7071067811865476}))
+E        +    where <function has_unitary at 0x7f90050679d0> = cirq.has_unitary
+
+cirq/ops/linear_combinations_test.py:121: AssertionError
+_ test_unitary_linear_combination_of_gates_has_correct_unitary[terms1-expected_unitary1] _
+
+terms = {cirq.IdentityGate(2): 0.7071067811865476, cirq.YY: -0.7071067811865476j}
+expected_unitary = array([[0.70710678+0.j        , 0.        +0.j        ,
+        0.        +0.j        , 0.        +0.70710678j],
+     ...   ],
+       [0.        +0.70710678j, 0.        +0.j        ,
+        0.        +0.j        , 0.70710678+0.j        ]])
+
+    @pytest.mark.parametrize(
+        'terms, expected_unitary',
+        (({
+            cirq.X: np.sqrt(0.5),
+            cirq.Y: np.sqrt(0.5)
+        }, np.array([[0, np.sqrt(-1j)], [np.sqrt(1j), 0]])),
+         ({
+             cirq.IdentityGate(2): np.sqrt(0.5),
+             cirq.YY: -1j * np.sqrt(0.5),
+         }, np.sqrt(0.5) *
+          np.array([[1, 0, 0, 1j], [0, 1, -1j, 0], [0, -1j, 1, 0], [1j, 0, 0, 1]])))
+    )
+    def test_unitary_linear_combination_of_gates_has_correct_unitary(
+            terms, expected_unitary):
+        combination = cirq.LinearCombinationOfGates(terms)
+>       assert cirq.has_unitary(combination)
+E       assert False
+E        +  where False = <function has_unitary at 0x7f90050679d0>(cirq.LinearCombinationOfGates({cirq.IdentityGate(2): 0.7071067811865476, cirq.YY: -0.7071067811865476j}))
+E        +    where <function has_unitary at 0x7f90050679d0> = cirq.has_unitary
+
+cirq/ops/linear_combinations_test.py:121: AssertionError
+_ test_unitary_linear_combination_of_operations_has_correct_unitary[terms0-expected_unitary0] _
+
+terms = {cirq.X(cirq.LineQubit(0)): 0.7071067811865476, cirq.Z(cirq.LineQubit(0)): 0.7071067811865476}
+expected_unitary = array([[ 0.70710678,  0.70710678],
+       [ 0.70710678, -0.70710678]])
+
+    @pytest.mark.parametrize('terms, expected_unitary', (
+        ({
+            cirq.X(q0): np.sqrt(0.5),
+            cirq.Z(q0): np.sqrt(0.5)
+        }, np.sqrt(0.5) * np.array([[1, 1], [1, -1]])),
+        ({
+            cirq.IdentityGate(3).on(q0, q1, q2): np.sqrt(0.5),
+            cirq.CCZ(q0, q1, q2): 1j * np.sqrt(0.5)
+        },
+         np.diag([
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(-1j)
+         ])),
+    ))
+    def test_unitary_linear_combination_of_operations_has_correct_unitary(
+            terms, expected_unitary):
+        combination = cirq.LinearCombinationOfOperations(terms)
+>       assert cirq.has_unitary(combination)
+E       assert False
+E        +  where False = <function has_unitary at 0x7f90050679d0>(cirq.LinearCombinationOfOperations({cirq.X(cirq.LineQubit(0)): 0.7071067811865476, cirq.Z(cirq.LineQubit(0)): 0.7071067811865476}))
+E        +    where <function has_unitary at 0x7f90050679d0> = cirq.has_unitary
+
+cirq/ops/linear_combinations_test.py:621: AssertionError
+_ test_unitary_linear_combination_of_operations_has_correct_unitary[terms1-expected_unitary1] _
+
+terms = {cirq.IdentityGate(3)(cirq.LineQubit(0), cirq.LineQubit(1), cirq.LineQubit(2)): 0.7071067811865476, cirq.CCZ(cirq.LineQubit(0), cirq.LineQubit(1), cirq.LineQubit(2)): 0.7071067811865476j}
+expected_unitary = array([[0.70710678+0.70710678j, 0.        +0.j        ,
+        0.        +0.j        , 0.        +0.j        ,
+      ...    ,
+        0.        +0.j        , 0.        +0.j        ,
+        0.        +0.j        , 0.70710678-0.70710678j]])
+
+    @pytest.mark.parametrize('terms, expected_unitary', (
+        ({
+            cirq.X(q0): np.sqrt(0.5),
+            cirq.Z(q0): np.sqrt(0.5)
+        }, np.sqrt(0.5) * np.array([[1, 1], [1, -1]])),
+        ({
+            cirq.IdentityGate(3).on(q0, q1, q2): np.sqrt(0.5),
+            cirq.CCZ(q0, q1, q2): 1j * np.sqrt(0.5)
+        },
+         np.diag([
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(1j),
+             np.sqrt(-1j)
+         ])),
+    ))
+    def test_unitary_linear_combination_of_operations_has_correct_unitary(
+            terms, expected_unitary):
+        combination = cirq.LinearCombinationOfOperations(terms)
+>       assert cirq.has_unitary(combination)
+E       assert False
+E        +  where False = <function has_unitary at 0x7f90050679d0>(cirq.LinearCombinationOfOperations({cirq.IdentityGate(3)(cirq.LineQubit(0), cirq.LineQubit(1), cirq.LineQubit(2)): 0.7071067811865476, cirq.CCZ(cirq.LineQubit(0), cirq.LineQubit(1), cirq.LineQubit(2)): 0.7071067811865476j}))
+E        +    where <function has_unitary at 0x7f90050679d0> = cirq.has_unitary
+
+cirq/ops/linear_combinations_test.py:621: AssertionError
+_____ test_unitary_pauli_sum_has_correct_unitary[psum0-expected_unitary0] ______
+
+psum = cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(0), cirq.X)}): (0.7071067811865476+0j), frozenset({(cirq.LineQubit(0), cirq.Z)}): (0.7071067811865476+0j)}))
+expected_unitary = array([[ 0.70710678,  0.70710678],
+       [ 0.70710678, -0.70710678]])
+
+    @pytest.mark.parametrize('psum, expected_unitary', (
+        (np.sqrt(0.5) *
+         (cirq.X(q0) + cirq.Z(q0)), np.sqrt(0.5) * np.array([[1, 1], [1, -1]])),
+        (np.sqrt(0.5) * (cirq.X(q0) * cirq.X(q1) + cirq.Z(q1)), np.sqrt(0.5) *
+         np.array([[1, 0, 0, 1], [0, -1, 1, 0], [0, 1, 1, 0], [1, 0, 0, -1]])),
+    ))
+    def test_unitary_pauli_sum_has_correct_unitary(psum, expected_unitary):
+>       assert cirq.has_unitary(psum)
+E       assert False
+E        +  where False = <function has_unitary at 0x7f90050679d0>(cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(0), cirq.X)}): (0.7071067811865476+0j), frozenset({(cirq.LineQubit(0), cirq.Z)}): (0.7071067811865476+0j)})))
+E        +    where <function has_unitary at 0x7f90050679d0> = cirq.has_unitary
+
+cirq/ops/linear_combinations_test.py:879: AssertionError
+_____ test_unitary_pauli_sum_has_correct_unitary[psum1-expected_unitary1] ______
+
+psum = cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(1), cirq.X), (cirq.LineQubit(0), cirq.X)}): (0.7071067811865476+0j), frozenset({(cirq.LineQubit(1), cirq.Z)}): (0.7071067811865476+0j)}))
+expected_unitary = array([[ 0.70710678,  0.        ,  0.        ,  0.70710678],
+       [ 0.        , -0.70710678,  0.70710678,  0.       ...    [ 0.        ,  0.70710678,  0.70710678,  0.        ],
+       [ 0.70710678,  0.        ,  0.        , -0.70710678]])
+
+    @pytest.mark.parametrize('psum, expected_unitary', (
+        (np.sqrt(0.5) *
+         (cirq.X(q0) + cirq.Z(q0)), np.sqrt(0.5) * np.array([[1, 1], [1, -1]])),
+        (np.sqrt(0.5) * (cirq.X(q0) * cirq.X(q1) + cirq.Z(q1)), np.sqrt(0.5) *
+         np.array([[1, 0, 0, 1], [0, -1, 1, 0], [0, 1, 1, 0], [1, 0, 0, -1]])),
+    ))
+    def test_unitary_pauli_sum_has_correct_unitary(psum, expected_unitary):
+>       assert cirq.has_unitary(psum)
+E       assert False
+E        +  where False = <function has_unitary at 0x7f90050679d0>(cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(1), cirq.X), (cirq.LineQubit(0), cirq.X)}): (0.7071067811865476+0j), frozenset({(cirq.LineQubit(1), cirq.Z)}): (0.7071067811865476+0j)})))
+E        +    where <function has_unitary at 0x7f90050679d0> = cirq.has_unitary
+
+cirq/ops/linear_combinations_test.py:879: AssertionError
+___________________ test_non_pauli_sum_has_no_unitary[psum0] ___________________
+
+psum = cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(0), cirq.X)}): (1+0j), frozenset({(cirq.LineQubit(0), cirq.Z)}): (1+0j)}))
+
+    @pytest.mark.parametrize('psum', (
+        cirq.X(q0) + cirq.Z(q0),
+        2 * cirq.Z(q0) * cirq.X(q1) + cirq.Y(q2),
+        cirq.X(q0) * cirq.Z(q1) - cirq.Z(q1) * cirq.X(q0),
+    ))
+    def test_non_pauli_sum_has_no_unitary(psum):
+        assert isinstance(psum, cirq.PauliSum)
+        assert not cirq.has_unitary(psum)
+        with pytest.raises(ValueError):
+>           _ = cirq.unitary(psum)
+
+cirq/ops/linear_combinations_test.py:892: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+val = cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(0), cirq.X)}): (1+0j), frozenset({(cirq.LineQubit(0), cirq.Z)}): (1+0j)}))
+default = array([], dtype=float64)
+
+    def unitary(val: Any, default: TDefault = RaiseTypeErrorIfNotProvided
+               ) -> Union[np.ndarray, TDefault]:
+        """Returns a unitary matrix describing the given value.
+    
+        The matrix is determined by any one of the following techniques:
+    
+        - The value has a `_unitary_` method that returns something besides None or
+            NotImplemented. The matrix is whatever the method returned.
+        - The value has a `_decompose_` method that returns a list of operations,
+            and each operation in the list has a unitary effect. The matrix is
+            created by aggregating the sub-operations' unitary effects.
+        - The value has an `_apply_unitary_` method, and it returns something
+            besides None or NotImplemented. The matrix is created by applying
+            `_apply_unitary_` to an identity matrix.
+    
+        If none of these techniques succeeds, it is assumed that `val` doesn't have
+        a unitary effect. The order in which techniques are attempted is
+        unspecified.
+    
+        Args:
+            val: The value to describe with a unitary matrix.
+            default: Determines the fallback behavior when `val` doesn't have
+                a unitary effect. If `default` is not set, a TypeError is raised. If
+                `default` is set to a value, that value is returned.
+    
+        Returns:
+            If `val` has a unitary effect, the corresponding unitary matrix.
+            Otherwise, if `default` is specified, it is returned.
+    
+        Raises:
+            TypeError: `val` doesn't have a unitary effect and no default value was
+                specified.
+        """
+        strats = [
+            _strat_unitary_from_unitary, _strat_unitary_from_apply_unitary,
+            _strat_unitary_from_decompose
+        ]
+        for strat in strats:
+            result = strat(val)
+            if result is None:
+                break
+            if result is not NotImplemented:
+                return result
+    
+        if default is not RaiseTypeErrorIfNotProvided:
+            return default
+>       raise TypeError(
+            "cirq.unitary failed. "
+            "Value doesn't have a (non-parameterized) unitary effect.\n"
+            "\n"
+            "type: {}\n"
+            "value: {!r}\n"
+            "\n"
+            "The value failed to satisfy any of the following criteria:\n"
+            "- A `_unitary_(self)` method that returned a value "
+            "besides None or NotImplemented.\n"
+            "- A `_decompose_(self)` method that returned a "
+            "list of unitary operations.\n"
+            "- An `_apply_unitary_(self, args) method that returned a value "
+            "besides None or NotImplemented.".format(type(val), val))
+E       TypeError: cirq.unitary failed. Value doesn't have a (non-parameterized) unitary effect.
+E       
+E       type: <class 'cirq.ops.linear_combinations.PauliSum'>
+E       value: cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(0), cirq.X)}): (1+0j), frozenset({(cirq.LineQubit(0), cirq.Z)}): (1+0j)}))
+E       
+E       The value failed to satisfy any of the following criteria:
+E       - A `_unitary_(self)` method that returned a value besides None or NotImplemented.
+E       - A `_decompose_(self)` method that returned a list of unitary operations.
+E       - An `_apply_unitary_(self, args) method that returned a value besides None or NotImplemented.
+
+cirq/protocols/unitary_protocol.py:138: TypeError
+___________________ test_non_pauli_sum_has_no_unitary[psum1] ___________________
+
+psum = cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(1), cirq.X), (cirq.LineQubit(0), cirq.Z)}): (2+0j), frozenset({(cirq.LineQubit(2), cirq.Y)}): (1+0j)}))
+
+    @pytest.mark.parametrize('psum', (
+        cirq.X(q0) + cirq.Z(q0),
+        2 * cirq.Z(q0) * cirq.X(q1) + cirq.Y(q2),
+        cirq.X(q0) * cirq.Z(q1) - cirq.Z(q1) * cirq.X(q0),
+    ))
+    def test_non_pauli_sum_has_no_unitary(psum):
+        assert isinstance(psum, cirq.PauliSum)
+        assert not cirq.has_unitary(psum)
+        with pytest.raises(ValueError):
+>           _ = cirq.unitary(psum)
+
+cirq/ops/linear_combinations_test.py:892: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+val = cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(1), cirq.X), (cirq.LineQubit(0), cirq.Z)}): (2+0j), frozenset({(cirq.LineQubit(2), cirq.Y)}): (1+0j)}))
+default = array([], dtype=float64)
+
+    def unitary(val: Any, default: TDefault = RaiseTypeErrorIfNotProvided
+               ) -> Union[np.ndarray, TDefault]:
+        """Returns a unitary matrix describing the given value.
+    
+        The matrix is determined by any one of the following techniques:
+    
+        - The value has a `_unitary_` method that returns something besides None or
+            NotImplemented. The matrix is whatever the method returned.
+        - The value has a `_decompose_` method that returns a list of operations,
+            and each operation in the list has a unitary effect. The matrix is
+            created by aggregating the sub-operations' unitary effects.
+        - The value has an `_apply_unitary_` method, and it returns something
+            besides None or NotImplemented. The matrix is created by applying
+            `_apply_unitary_` to an identity matrix.
+    
+        If none of these techniques succeeds, it is assumed that `val` doesn't have
+        a unitary effect. The order in which techniques are attempted is
+        unspecified.
+    
+        Args:
+            val: The value to describe with a unitary matrix.
+            default: Determines the fallback behavior when `val` doesn't have
+                a unitary effect. If `default` is not set, a TypeError is raised. If
+                `default` is set to a value, that value is returned.
+    
+        Returns:
+            If `val` has a unitary effect, the corresponding unitary matrix.
+            Otherwise, if `default` is specified, it is returned.
+    
+        Raises:
+            TypeError: `val` doesn't have a unitary effect and no default value was
+                specified.
+        """
+        strats = [
+            _strat_unitary_from_unitary, _strat_unitary_from_apply_unitary,
+            _strat_unitary_from_decompose
+        ]
+        for strat in strats:
+            result = strat(val)
+            if result is None:
+                break
+            if result is not NotImplemented:
+                return result
+    
+        if default is not RaiseTypeErrorIfNotProvided:
+            return default
+>       raise TypeError(
+            "cirq.unitary failed. "
+            "Value doesn't have a (non-parameterized) unitary effect.\n"
+            "\n"
+            "type: {}\n"
+            "value: {!r}\n"
+            "\n"
+            "The value failed to satisfy any of the following criteria:\n"
+            "- A `_unitary_(self)` method that returned a value "
+            "besides None or NotImplemented.\n"
+            "- A `_decompose_(self)` method that returned a "
+            "list of unitary operations.\n"
+            "- An `_apply_unitary_(self, args) method that returned a value "
+            "besides None or NotImplemented.".format(type(val), val))
+E       TypeError: cirq.unitary failed. Value doesn't have a (non-parameterized) unitary effect.
+E       
+E       type: <class 'cirq.ops.linear_combinations.PauliSum'>
+E       value: cirq.PauliSum(cirq.LinearDict({frozenset({(cirq.LineQubit(1), cirq.X), (cirq.LineQubit(0), cirq.Z)}): (2+0j), frozenset({(cirq.LineQubit(2), cirq.Y)}): (1+0j)}))
+E       
+E       The value failed to satisfy any of the following criteria:
+E       - A `_unitary_(self)` method that returned a value besides None or NotImplemented.
+E       - A `_decompose_(self)` method that returned a list of unitary operations.
+E       - An `_apply_unitary_(self, args) method that returned a value besides None or NotImplemented.
+
+cirq/protocols/unitary_protocol.py:138: TypeError
+___________________ test_non_pauli_sum_has_no_unitary[psum2] ___________________
+
+psum = cirq.PauliSum(cirq.LinearDict({}))
+
+    @pytest.mark.parametrize('psum', (
+        cirq.X(q0) + cirq.Z(q0),
+        2 * cirq.Z(q0) * cirq.X(q1) + cirq.Y(q2),
+        cirq.X(q0) * cirq.Z(q1) - cirq.Z(q1) * cirq.X(q0),
+    ))
+    def test_non_pauli_sum_has_no_unitary(psum):
+        assert isinstance(psum, cirq.PauliSum)
+        assert not cirq.has_unitary(psum)
+        with pytest.raises(ValueError):
+>           _ = cirq.unitary(psum)
+
+cirq/ops/linear_combinations_test.py:892: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+val = cirq.PauliSum(cirq.LinearDict({})), default = array([], dtype=float64)
+
+    def unitary(val: Any, default: TDefault = RaiseTypeErrorIfNotProvided
+               ) -> Union[np.ndarray, TDefault]:
+        """Returns a unitary matrix describing the given value.
+    
+        The matrix is determined by any one of the following techniques:
+    
+        - The value has a `_unitary_` method that returns something besides None or
+            NotImplemented. The matrix is whatever the method returned.
+        - The value has a `_decompose_` method that returns a list of operations,
+            and each operation in the list has a unitary effect. The matrix is
+            created by aggregating the sub-operations' unitary effects.
+        - The value has an `_apply_unitary_` method, and it returns something
+            besides None or NotImplemented. The matrix is created by applying
+            `_apply_unitary_` to an identity matrix.
+    
+        If none of these techniques succeeds, it is assumed that `val` doesn't have
+        a unitary effect. The order in which techniques are attempted is
+        unspecified.
+    
+        Args:
+            val: The value to describe with a unitary matrix.
+            default: Determines the fallback behavior when `val` doesn't have
+                a unitary effect. If `default` is not set, a TypeError is raised. If
+                `default` is set to a value, that value is returned.
+    
+        Returns:
+            If `val` has a unitary effect, the corresponding unitary matrix.
+            Otherwise, if `default` is specified, it is returned.
+    
+        Raises:
+            TypeError: `val` doesn't have a unitary effect and no default value was
+                specified.
+        """
+        strats = [
+            _strat_unitary_from_unitary, _strat_unitary_from_apply_unitary,
+            _strat_unitary_from_decompose
+        ]
+        for strat in strats:
+            result = strat(val)
+            if result is None:
+                break
+            if result is not NotImplemented:
+                return result
+    
+        if default is not RaiseTypeErrorIfNotProvided:
+            return default
+>       raise TypeError(
+            "cirq.unitary failed. "
+            "Value doesn't have a (non-parameterized) unitary effect.\n"
+            "\n"
+            "type: {}\n"
+            "value: {!r}\n"
+            "\n"
+            "The value failed to satisfy any of the following criteria:\n"
+            "- A `_unitary_(self)` method that returned a value "
+            "besides None or NotImplemented.\n"
+            "- A `_decompose_(self)` method that returned a "
+            "list of unitary operations.\n"
+            "- An `_apply_unitary_(self, args) method that returned a value "
+            "besides None or NotImplemented.".format(type(val), val))
+E       TypeError: cirq.unitary failed. Value doesn't have a (non-parameterized) unitary effect.
+E       
+E       type: <class 'cirq.ops.linear_combinations.PauliSum'>
+E       value: cirq.PauliSum(cirq.LinearDict({}))
+E       
+E       The value failed to satisfy any of the following criteria:
+E       - A `_unitary_(self)` method that returned a value besides None or NotImplemented.
+E       - A `_decompose_(self)` method that returned a list of unitary operations.
+E       - An `_apply_unitary_(self, args) method that returned a value besides None or NotImplemented.
+
+cirq/protocols/unitary_protocol.py:138: TypeError
+_______________ test_matrix[pauli_string0-None-expected_matrix0] _______________
+
+pauli_string = ((2+0j)*cirq.X(cirq.LineQubit(0))), qubits = None
+expected_matrix = array([[0, 2],
+       [2, 0]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+_____________ test_matrix[pauli_string1-qubits1-expected_matrix1] ______________
+
+pauli_string = (cirq.X(cirq.LineQubit(0))*cirq.Y(cirq.LineQubit(1)))
+qubits = (cirq.LineQubit(0),), expected_matrix = array([[0, 1],
+       [1, 0]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+_____________ test_matrix[pauli_string2-qubits2-expected_matrix2] ______________
+
+pauli_string = (cirq.X(cirq.LineQubit(0))*cirq.Y(cirq.LineQubit(1)))
+qubits = (cirq.LineQubit(1),)
+expected_matrix = array([[ 0.+0.j, -0.-1.j],
+       [ 0.+1.j,  0.+0.j]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+_______________ test_matrix[pauli_string3-None-expected_matrix3] _______________
+
+pauli_string = (cirq.X(cirq.LineQubit(0))*cirq.Y(cirq.LineQubit(1)))
+qubits = None
+expected_matrix = array([[ 0.+0.j,  0.+0.j,  0.+0.j, -0.-1.j],
+       [ 0.+0.j,  0.+0.j,  0.+1.j,  0.+0.j],
+       [ 0.+0.j, -0.-1.j,  0.+0.j,  0.+0.j],
+       [ 0.+1.j,  0.+0.j,  0.+0.j,  0.+0.j]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+_____________ test_matrix[pauli_string4-qubits4-expected_matrix4] ______________
+
+pauli_string = (cirq.X(cirq.LineQubit(0))*cirq.Y(cirq.LineQubit(1)))
+qubits = (cirq.LineQubit(0), cirq.LineQubit(1))
+expected_matrix = array([[ 0.+0.j,  0.+0.j,  0.+0.j, -0.-1.j],
+       [ 0.+0.j,  0.+0.j,  0.+1.j,  0.+0.j],
+       [ 0.+0.j, -0.-1.j,  0.+0.j,  0.+0.j],
+       [ 0.+1.j,  0.+0.j,  0.+0.j,  0.+0.j]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+_____________ test_matrix[pauli_string5-qubits5-expected_matrix5] ______________
+
+pauli_string = (cirq.X(cirq.LineQubit(0))*cirq.Y(cirq.LineQubit(1)))
+qubits = (cirq.LineQubit(1), cirq.LineQubit(0))
+expected_matrix = array([[ 0.+0.j,  0.+0.j,  0.+0.j, -0.-1.j],
+       [ 0.+0.j,  0.+0.j, -0.-1.j,  0.+0.j],
+       [ 0.+0.j,  0.+1.j,  0.+0.j,  0.+0.j],
+       [ 0.+1.j,  0.+0.j,  0.+0.j,  0.+0.j]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+_____________ test_matrix[pauli_string6-qubits6-expected_matrix6] ______________
+
+pauli_string = (cirq.X(cirq.LineQubit(0))*cirq.Y(cirq.LineQubit(1)))
+qubits = (cirq.LineQubit(2),)
+expected_matrix = array([[1., 0.],
+       [0., 1.]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+_____________ test_matrix[pauli_string7-qubits7-expected_matrix7] ______________
+
+pauli_string = (cirq.X(cirq.LineQubit(0))*cirq.Y(cirq.LineQubit(1)))
+qubits = (cirq.LineQubit(2), cirq.LineQubit(1))
+expected_matrix = array([[ 0.+0.j, -0.-1.j,  0.+0.j,  0.+0.j],
+       [ 0.+1.j,  0.+0.j,  0.+0.j,  0.+0.j],
+       [ 0.+0.j,  0.+0.j,  0.+0.j, -0.-1.j],
+       [ 0.+0.j,  0.+0.j,  0.+1.j,  0.+0.j]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+_____________ test_matrix[pauli_string8-qubits8-expected_matrix8] ______________
+
+pauli_string = (cirq.X(cirq.LineQubit(0))*cirq.Y(cirq.LineQubit(1)))
+qubits = (cirq.LineQubit(2), cirq.LineQubit(0), cirq.LineQubit(1))
+expected_matrix = array([[ 0.+0.j,  0.+0.j,  0.+0.j, -0.-1.j,  0.+0.j,  0.+0.j,  0.+0.j,
+         0.+0.j],
+       [ 0.+0.j,  0.+0.j,  0....j,  0.+0.j,
+         0.+0.j],
+       [ 0.+0.j,  0.+0.j,  0.+0.j,  0.+0.j,  0.+1.j,  0.+0.j,  0.+0.j,
+         0.+0.j]])
+
+    @pytest.mark.parametrize('pauli_string, qubits, expected_matrix', (
+        (cirq.X(q0) * 2, None, np.array([[0, 2], [2, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0,), np.array([[0, 1], [1, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1,), np.array([[0, -1j], [1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), None,
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q0, q1),
+         np.array([[0, 0, 0, -1j], [0, 0, 1j, 0], [0, -1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q1, q0),
+         np.array([[0, 0, 0, -1j], [0, 0, -1j, 0], [0, 1j, 0, 0], [1j, 0, 0, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2,), np.eye(2)),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q1),
+         np.array([[0, -1j, 0, 0], [1j, 0, 0, 0], [0, 0, 0, -1j], [0, 0, 1j, 0]])),
+        (cirq.X(q0) * cirq.Y(q1), (q2, q0, q1),
+         np.array([[0, 0, 0, -1j, 0, 0, 0, 0], [0, 0, 1j, 0, 0, 0, 0, 0],
+                   [0, -1j, 0, 0, 0, 0, 0, 0], [1j, 0, 0, 0, 0, 0, 0, 0],
+                   [0, 0, 0, 0, 0, 0, 0, -1j], [0, 0, 0, 0, 0, 0, 1j, 0],
+                   [0, 0, 0, 0, 0, -1j, 0, 0], [0, 0, 0, 0, 1j, 0, 0, 0]])),
+    ))
+    def test_matrix(pauli_string, qubits, expected_matrix):
+>       assert np.allclose(pauli_string.matrix(qubits), expected_matrix)
+E       AttributeError: 'PauliString' object has no attribute 'matrix'
+
+cirq/ops/pauli_string_test.py:740: AttributeError
+=============================== warnings summary ===============================
+cirq/google/engine/client/quantum_v1alpha1/gapic/quantum_engine_service_client.py:19
+  /workspace/repo/cirq/google/engine/client/quantum_v1alpha1/gapic/quantum_engine_service_client.py:19: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('mpl_toolkits')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_invalid_input
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1172: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    psum.expectation_from_state_vector(np.array([1, 0], dtype=np.int),
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1227: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    psum.expectation_from_state_vector(np.array([1, 1], dtype=np.complex) /
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1231: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    psum.expectation_from_state_vector(np.array([1, -1], dtype=np.complex) /
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1235: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    psum.expectation_from_state_vector(np.array([1, 1j], dtype=np.complex) /
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1240: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([1, -1j], dtype=np.complex) / np.sqrt(2), qubit_map=q_map),
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1243: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    psum.expectation_from_state_vector(np.array([1, 0], dtype=np.complex),
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1246: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    psum.expectation_from_state_vector(np.array([0, 1], dtype=np.complex),
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_two_qubit_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1256: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf1 = np.array([0, 1, 0, 0], dtype=np.complex)
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_two_qubit_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1267: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf2 = np.array([1, 1, 1, 1], dtype=np.complex) / 2
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_state_vector_two_qubit_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1279: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf3 = np.array([1, 1, 0, 0], dtype=np.complex) / np.sqrt(2)
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_invalid_input
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1304: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    psum.expectation_from_density_matrix(0.5 * np.eye(2, dtype=np.int),
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1373: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[1, 1], [1, 1]], dtype=np.complex) / 2, q_map), 1)
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1376: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[1, -1], [-1, 1]], dtype=np.complex) / 2, q_map), -1)
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1379: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[1, -1j], [1j, 1]], dtype=np.complex) / 2,
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1383: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[1, 1j], [-1j, 1]], dtype=np.complex) / 2,
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1387: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[1, 0], [0, 0]], dtype=np.complex), q_map), 3)
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1390: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[0, 0], [0, 1]], dtype=np.complex), q_map), -3)
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_two_qubit_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1399: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf1 = np.array([0, 1, 0, 0], dtype=np.complex)
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_two_qubit_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1407: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf2 = np.array([1, 1, 1, 1], dtype=np.complex) / 2
+
+cirq/ops/linear_combinations_test.py::test_expectation_from_density_matrix_two_qubit_states
+  /workspace/repo/cirq/ops/linear_combinations_test.py:1416: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf3 = np.array([1, 1, 0, 0], dtype=np.complex) / np.sqrt(2)
+
+cirq/ops/pauli_string_test.py: 11 warnings
+  /workspace/repo/cirq/testing/consistent_qasm.py:31: UserWarning: Skipped assert_qasm_is_consistent_with_unitary because qiskit isn't installed to verify against.
+    warnings.warn("Skipped assert_qasm_is_consistent_with_unitary because "
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_invalid_input
+  /workspace/repo/cirq/ops/pauli_string_test.py:808: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    ps.expectation_from_state_vector(np.array([1, 0], dtype=np.int), q_map)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:869: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([1, 0], dtype=np.complex), q_map),
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:873: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([0, 1], dtype=np.complex), q_map),
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:877: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([1, 1], dtype=np.complex) / np.sqrt(2), q_map),
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:881: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([1, -1], dtype=np.complex) / np.sqrt(2), q_map),
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:887: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([1, 1j], dtype=np.complex) / np.sqrt(2), q_map),
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:891: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([1, -1j], dtype=np.complex) / np.sqrt(2), q_map),
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:895: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([1, 1], dtype=np.complex) / np.sqrt(2), q_map),
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:899: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([1, -1], dtype=np.complex) / np.sqrt(2), q_map),
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_entangled_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:911: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf1 = np.array([0, 1, 1, 0], dtype=np.complex) / np.sqrt(2)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_entangled_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:918: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf2 = np.array([1, 0, 0, 1], dtype=np.complex) / np.sqrt(2)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_entangled_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:925: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf3 = np.array([1, 1, 1, 1], dtype=np.complex) / 2
+
+cirq/ops/pauli_string_test.py::test_expectation_from_state_vector_qubit_map
+  /workspace/repo/cirq/ops/pauli_string_test.py:936: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf = np.array([0, 1, 0, 1, 0, 0, 0, 0], dtype=np.complex) / np.sqrt(2)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_invalid_input
+  /workspace/repo/cirq/ops/pauli_string_test.py:1050: DeprecationWarning: `np.int` is a deprecated alias for the builtin `int`. To silence this warning, use `int` by itself. Doing this will not modify any behavior and is safe. When replacing `np.int`, you may wish to use e.g. `np.int64` or `np.int32` to specify the precision. If you wish to review your current use, check the release note link for additional information.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    ps.expectation_from_density_matrix(0.5 * np.eye(2, dtype=np.int), q_map)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:1129: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[1, 0], [0, 0]], dtype=np.complex), q_map), 0)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:1132: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[0, 0], [0, 1]], dtype=np.complex), q_map), 0)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:1135: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[1, 1], [1, 1]], dtype=np.complex) / 2, q_map), 1)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_basis_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:1138: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    np.array([[1, -1], [-1, 1]], dtype=np.complex) / 2, q_map), -1)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_entangled_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:1149: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf1 = np.array([0, 1, 1, 0], dtype=np.complex) / np.sqrt(2)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_entangled_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:1157: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf2 = np.array([1, 0, 0, 1], dtype=np.complex) / np.sqrt(2)
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_entangled_states
+  /workspace/repo/cirq/ops/pauli_string_test.py:1165: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf3 = np.array([1, 1, 1, 1], dtype=np.complex) / 2
+
+cirq/ops/pauli_string_test.py::test_expectation_from_density_matrix_qubit_map
+  /workspace/repo/cirq/ops/pauli_string_test.py:1177: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+  Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+    wf = np.array([0, 1, 0, 1, 0, 0, 0, 0], dtype=np.complex) / np.sqrt(2)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED cirq/ops/linear_combinations_test.py::test_unitary_linear_combination_of_gates_has_correct_unitary[terms0-expected_unitary0]
+FAILED cirq/ops/linear_combinations_test.py::test_unitary_linear_combination_of_gates_has_correct_unitary[terms1-expected_unitary1]
+FAILED cirq/ops/linear_combinations_test.py::test_unitary_linear_combination_of_operations_has_correct_unitary[terms0-expected_unitary0]
+FAILED cirq/ops/linear_combinations_test.py::test_unitary_linear_combination_of_operations_has_correct_unitary[terms1-expected_unitary1]
+FAILED cirq/ops/linear_combinations_test.py::test_unitary_pauli_sum_has_correct_unitary[psum0-expected_unitary0]
+FAILED cirq/ops/linear_combinations_test.py::test_unitary_pauli_sum_has_correct_unitary[psum1-expected_unitary1]
+FAILED cirq/ops/linear_combinations_test.py::test_non_pauli_sum_has_no_unitary[psum0]
+FAILED cirq/ops/linear_combinations_test.py::test_non_pauli_sum_has_no_unitary[psum1]
+FAILED cirq/ops/linear_combinations_test.py::test_non_pauli_sum_has_no_unitary[psum2]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string0-None-expected_matrix0]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string1-qubits1-expected_matrix1]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string2-qubits2-expected_matrix2]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string3-None-expected_matrix3]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string4-qubits4-expected_matrix4]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string5-qubits5-expected_matrix5]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string6-qubits6-expected_matrix6]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string7-qubits7-expected_matrix7]
+FAILED cirq/ops/pauli_string_test.py::test_matrix[pauli_string8-qubits8-expected_matrix8]
+================= 18 failed, 532 passed, 58 warnings in 3.82s ==================
+reward=0 graded=550 found=0 failed=0 parsed=86 framework=pytest exit_code=1

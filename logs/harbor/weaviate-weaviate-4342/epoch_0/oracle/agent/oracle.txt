@@ -1,0 +1,10 @@
+patching file adapters/repos/db/vector/hnsw/distancer/asm/dot_amd64.go
+patching file adapters/repos/db/vector/hnsw/distancer/asm/dot_avx512_amd64.go
+patching file adapters/repos/db/vector/hnsw/distancer/asm/dot_avx512_amd64.s
+patching file adapters/repos/db/vector/hnsw/distancer/asm/l2_amd64.go
+patching file adapters/repos/db/vector/hnsw/distancer/asm/l2_avx512_amd64.go
+patching file adapters/repos/db/vector/hnsw/distancer/asm/l2_avx512_amd64.s
+patching file adapters/repos/db/vector/hnsw/distancer/c/dot_avx512_amd64.c
+patching file adapters/repos/db/vector/hnsw/distancer/c/l2_avx512_amd64.c
+patching file adapters/repos/db/vector/hnsw/distancer/dot_product_amd64.go
+patching file adapters/repos/db/vector/hnsw/distancer/l2_amd64.go

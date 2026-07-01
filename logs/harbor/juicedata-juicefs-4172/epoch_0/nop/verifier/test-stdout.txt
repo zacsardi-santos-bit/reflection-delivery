@@ -1,0 +1,6 @@
+patching file pkg/meta/random_test.go
+go: finding module for package pgregory.net/rapid
+# github.com/juicedata/juicefs/pkg/meta
+pkg/meta/random_test.go:24:2: cannot find module providing package pgregory.net/rapid: module lookup disabled by GOPROXY=off
+FAIL	github.com/juicedata/juicefs/pkg/meta [setup failed]
+reward=0 graded=21 found=0 failed=0 parsed=0 framework=go exit_code=1

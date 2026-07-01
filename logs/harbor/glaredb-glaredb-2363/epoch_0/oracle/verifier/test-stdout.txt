@@ -1,0 +1,77 @@
+patching file crates/testing/src/slt/tests.rs (renamed from crates/testing/tests/sqllogictests/tests.rs)
+patching file testdata/sqllogictests/create_table.slt
+patching file testdata/sqllogictests/csv.slt
+patching file testdata/sqllogictests/external_table.slt
+patching file testdata/sqllogictests/functions/csv_scan.slt
+patching file testdata/sqllogictests/functions/delta_scan.slt
+patching file testdata/sqllogictests/functions/json_scan.slt
+patching file testdata/sqllogictests/functions/lance_scan.slt
+patching file testdata/sqllogictests/functions/parquet_scan.slt
+patching file testdata/sqllogictests/functions/read_csv.slt
+patching file testdata/sqllogictests/functions/read_json.slt
+patching file testdata/sqllogictests/functions/read_parquet.slt
+patching file testdata/sqllogictests/glob.slt
+patching file testdata/sqllogictests/infer.slt
+patching file testdata/sqllogictests/prql.slt
+patching file testdata/sqllogictests/rpc.slt
+patching file testdata/sqllogictests/tunnels.slt
+patching file testdata/sqllogictests/views.slt
+   Compiling protogen v0.7.1 (/workspace/repo/crates/protogen)
+   Compiling decimal v0.7.1 (/workspace/repo/crates/decimal)
+   Compiling logutil v0.7.1 (/workspace/repo/crates/logutil)
+   Compiling mysql-common-derive v0.30.2
+   Compiling telemetry v0.7.1 (/workspace/repo/crates/telemetry)
+   Compiling ioutil v0.7.1 (/workspace/repo/crates/ioutil)
+   Compiling proxyutil v0.7.1 (/workspace/repo/crates/proxyutil)
+   Compiling arrow_util v0.7.1 (/workspace/repo/crates/arrow_util)
+   Compiling enum-ordinalize v3.1.15
+   Compiling bytesutil v0.7.1 (/workspace/repo/crates/bytesutil)
+   Compiling libtest-mimic v0.6.1
+   Compiling repr v0.7.1 (/workspace/repo/crates/repr)
+   Compiling snowflake_connector v0.7.1 (/workspace/repo/crates/snowflake_connector)
+   Compiling pgrepr v0.7.1 (/workspace/repo/crates/pgrepr)
+   Compiling object_store_util v0.7.1 (/workspace/repo/crates/object_store_util)
+   Compiling educe v0.4.23
+   Compiling mysql_common v0.31.0
+   Compiling sqllogictest v0.19.1
+   Compiling catalog v0.7.1 (/workspace/repo/crates/catalog)
+   Compiling mysql_async v0.33.0
+   Compiling datafusion_ext v0.7.1 (/workspace/repo/crates/datafusion_ext)
+   Compiling datasources v0.7.1 (/workspace/repo/crates/datasources)
+   Compiling sqlbuiltins v0.7.1 (/workspace/repo/crates/sqlbuiltins)
+   Compiling metastore v0.7.1 (/workspace/repo/crates/metastore)
+   Compiling sqlexec v0.7.1 (/workspace/repo/crates/sqlexec)
+   Compiling rpcsrv v0.7.1 (/workspace/repo/crates/rpcsrv)
+   Compiling pgsrv v0.7.1 (/workspace/repo/crates/pgsrv)
+   Compiling glaredb v0.7.1 (/workspace/repo/crates/glaredb)
+   Compiling testing v0.7.1 (/workspace/repo/crates/testing)
+    Finished dev [unoptimized + debuginfo] target(s) in 2m 35s
+[2m15:48:34.951[0m [32m INFO[0m [2mmetastore::local[0m[2m:[0m starting local metastore [3mpath[0m[2m=[0m"/tmp/.tmpsdOPJ3"
+[2m15:48:34.952[0m [32m INFO[0m [2mmetastore::srv[0m[2m:[0m Creating new Metastore service [3mprocess_id[0m[2m=[0mc984c490-e7d0-4f94-a7e2-e85492c82707
+[2m15:48:34.958[0m [32m INFO[0m [2mglaredb::server[0m[2m:[0m Starting GlareDB 0.7.1
+
+Connect via Postgres protocol: postgresql://0.0.0.0:37260
+[2m15:48:34.959[0m [32m INFO[0m [2mtesting::slt::cli[0m[2m:[0m Running test: `sqllogictests/csv`
+PASS [0.000s] testing sqllogictests/csv
+[2m15:48:35.172[0m [32m INFO[0m [2mmetastore::local[0m[2m:[0m starting local metastore [3mpath[0m[2m=[0m"/tmp/.tmp55i9HA"
+[2m15:48:35.174[0m [32m INFO[0m [2mmetastore::srv[0m[2m:[0m Creating new Metastore service [3mprocess_id[0m[2m=[0m725fe619-3dcf-4a31-b7ed-3f6df67303b0
+[2m15:48:35.177[0m [32m INFO[0m [2mglaredb::server[0m[2m:[0m Starting GlareDB 0.7.1
+
+Connect via Postgres protocol: postgresql://0.0.0.0:39225
+[2m15:48:35.181[0m [32m INFO[0m [2mtesting::slt::cli[0m[2m:[0m Running test: `sqllogictests/infer`
+PASS [0.000s] testing sqllogictests/infer
+[2m15:48:35.529[0m [32m INFO[0m [2mmetastore::local[0m[2m:[0m starting local metastore [3mpath[0m[2m=[0m"/tmp/.tmpl69oEx"
+[2m15:48:35.530[0m [32m INFO[0m [2mmetastore::srv[0m[2m:[0m Creating new Metastore service [3mprocess_id[0m[2m=[0ma4547039-9c6a-4837-88a7-d27bed45ea90
+[2m15:48:35.535[0m [32m INFO[0m [2mglaredb::server[0m[2m:[0m Starting GlareDB 0.7.1
+
+Connect via Postgres protocol: postgresql://0.0.0.0:61432
+[2m15:48:35.536[0m [32m INFO[0m [2mtesting::slt::cli[0m[2m:[0m Running test: `sqllogictests/glob`
+PASS [0.000s] testing sqllogictests/glob
+[2m15:48:35.656[0m [32m INFO[0m [2mmetastore::local[0m[2m:[0m starting local metastore [3mpath[0m[2m=[0m"/tmp/.tmphj5uG6"
+[2m15:48:35.658[0m [32m INFO[0m [2mmetastore::srv[0m[2m:[0m Creating new Metastore service [3mprocess_id[0m[2m=[0m2dd66651-053e-48c3-8b71-938a8720a2fb
+[2m15:48:35.663[0m [32m INFO[0m [2mglaredb::server[0m[2m:[0m Starting GlareDB 0.7.1
+
+Connect via Postgres protocol: postgresql://0.0.0.0:34954
+[2m15:48:35.664[0m [32m INFO[0m [2mtesting::slt::cli[0m[2m:[0m Running test: `sqllogictests/create_table`
+PASS [0.000s] testing sqllogictests/create_table
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=cargo exit_code=0

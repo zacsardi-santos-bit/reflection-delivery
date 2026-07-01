@@ -1,0 +1,154 @@
+patching file test/localization/config.ts
+patching file test/localization/int.spec.ts
+  console.log
+    Wrote sqlite db adapter
+
+      at Object.log (jest.setup.js:32:9)
+
+  console.log
+    Done
+
+      at log (initDevAndTest.ts:53:13)
+
+  console.log
+    importing config /workspace/repo/test/localization/config.ts
+
+      at log (helpers/initPayloadInt.ts:18:11)
+
+  console.log
+    starting payload
+
+      at log (helpers/initPayloadInt.ts:20:11)
+
+[15:04:08] [32mINFO[39m: [36m---- DROPPING TABLES ----[39m
+[⣷] Pulling schema from database...
+[2K[1G[✓] Pulling schema from database...
+  console.log
+    SEED BEGIN
+
+      at Object.log [as onInit] (localization/config.ts:391:13)
+
+  console.log
+    INDEXES CREATED
+
+      at Object.log [as onInit] (localization/config.ts:404:13)
+
+  console.log
+    SEED 1
+
+      at Object.log [as onInit] (localization/config.ts:420:13)
+
+[15:04:08] [32mINFO[39m: [36m---- DROPPED TABLES ----[39m
+  console.log
+    SEED 2
+
+      at Object.log [as onInit] (localization/config.ts:440:13)
+
+  console.log
+    SEED 3
+
+      at Object.log [as onInit] (localization/config.ts:458:13)
+
+  console.log
+    SEED 4
+
+      at Object.log [as onInit] (localization/config.ts:475:13)
+
+  console.log
+    SEED 5
+
+      at Object.log [as onInit] (localization/config.ts:508:13)
+
+  console.log
+    SEED COMPLETE
+
+      at Object.log [as onInit] (localization/config.ts:535:13)
+
+  console.log
+    initializing rest client
+
+      at log (helpers/initPayloadInt.ts:25:11)
+
+  console.log
+    initPayloadInt done
+
+      at log (helpers/initPayloadInt.ts:27:11)
+
+PASS test/localization/int.spec.ts (24.548 s)
+  Localization
+    Localized text
+      ✓ create english (7 ms)
+      ✓ add spanish translation (26 ms)
+      ✓ should fallback to english translation when empty (25 ms)
+      fallback locales
+        ✓ should return localized fields using fallbackLocale specified in the requested locale config (3 ms)
+      querying
+        ✓ unspecified locale returns default (38 ms)
+        ✓ specific locale - same as default (37 ms)
+        ✓ specific locale - not default (41 ms)
+        ✓ all locales (37 ms)
+        ✓ by localized field value - default locale (41 ms)
+        ✓ by localized field value - alternate locale (41 ms)
+        ✓ by localized field value - opposite locale??? (40 ms)
+    Localized Sort Count
+      ✓ should have correct totalDocs when unsorted (5 ms)
+      ✓ should have correct totalDocs when sorted by localized fields (11 ms)
+    Localized Relationship
+      regular relationship
+        ✓ can query localized relationship (7 ms)
+        ✓ specific locale (5 ms)
+        ✓ all locales (5 ms)
+        ✓ populates relationships with all locales (5 ms)
+      relationship - hasMany
+        ✓ default locale (12 ms)
+        ✓ specific locale (11 ms)
+        ✓ relationship population uses locale (4 ms)
+        ✓ all locales (23 ms)
+      relationTo multi
+        ✓ by id (9 ms)
+      relationTo multi hasMany
+        ✓ by id (17 ms)
+    Localized - arrays with nested localized fields
+      ✓ should allow moving rows and retain existing row locale data (29 ms)
+    Localized - required
+      ✓ should update without passing all required fields (112 ms)
+    Localized - GraphQL
+      ✓ should allow user to login and retrieve populated localized field (399 ms)
+      ✓ should allow retrieval of populated localized fields within meUser (12 ms)
+      ✓ should create and update collections (59 ms)
+      ✓ should query multiple locales (47 ms)
+    Localized - Arrays
+      ✓ should use default locale as fallback (2 ms)
+      ✓ should use empty array as value (20 ms)
+      ✓ should use fallback value if setting null (38 ms)
+    Localized - Field Paths
+      ✓ should allow querying by non-localized field names ending in a locale (57 ms)
+    Nested To Array And Block
+      ✓ should be equal to the created document (61 ms)
+    Duplicate Collection
+      ✓ should duplicate localized document (56 ms)
+      ✓ should duplicate with localized blocks (130 ms)
+    Localized group and tabs
+      ✓ should properly create/update/read localized group field (42 ms)
+      ✓ should properly create/update/read localized field inside of group (43 ms)
+      ✓ should properly create/update/read deep localized field inside of group (96 ms)
+      ✓ should properly create/update/read localized tab field (40 ms)
+      ✓ should properly create/update/read localized field inside of tab (38 ms)
+      ✓ should properly create/update/read deep localized field inside of tab (96 ms)
+    nested localized field sanitization
+      ✓ should sanitize nested localized fields (1 ms)
+    nested blocks
+      ✓ should allow creating nested blocks per locale (76 ms)
+    nested arrays
+      ✓ should not duplicate block rows for blocks within localized array fields (121 ms)
+      ✓ should update localized relation within unLocalized array (106 ms)
+    nested fields
+      ✓ should allow for fields which could contain new tables within localized arrays to be stored (120 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       47 passed, 47 total
+Snapshots:   0 total
+Time:        24.606 s
+Ran all test suites matching /localization\/int.spec.ts/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":47,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":47,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782918228350,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["Localization","Localized text"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text create english","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"create english"},{"ancestorTitles":["Localization","Localized text"],"duration":26,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text add spanish translation","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"add spanish translation"},{"ancestorTitles":["Localization","Localized text"],"duration":25,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text should fallback to english translation when empty","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should fallback to english translation when empty"},{"ancestorTitles":["Localization","Localized text","fallback locales"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text fallback locales should return localized fields using fallbackLocale specified in the requested locale config","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return localized fields using fallbackLocale specified in the requested locale config"},{"ancestorTitles":["Localization","Localized text","querying"],"duration":38,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text querying unspecified locale returns default","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"unspecified locale returns default"},{"ancestorTitles":["Localization","Localized text","querying"],"duration":37,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text querying specific locale - same as default","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"specific locale - same as default"},{"ancestorTitles":["Localization","Localized text","querying"],"duration":41,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text querying specific locale - not default","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"specific locale - not default"},{"ancestorTitles":["Localization","Localized text","querying"],"duration":37,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text querying all locales","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"all locales"},{"ancestorTitles":["Localization","Localized text","querying"],"duration":41,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text querying by localized field value - default locale","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"by localized field value - default locale"},{"ancestorTitles":["Localization","Localized text","querying"],"duration":41,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text querying by localized field value - alternate locale","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"by localized field value - alternate locale"},{"ancestorTitles":["Localization","Localized text","querying"],"duration":40,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized text querying by localized field value - opposite locale???","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"by localized field value - opposite locale???"},{"ancestorTitles":["Localization","Localized Sort Count"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Sort Count should have correct totalDocs when unsorted","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should have correct totalDocs when unsorted"},{"ancestorTitles":["Localization","Localized Sort Count"],"duration":11,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Sort Count should have correct totalDocs when sorted by localized fields","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should have correct totalDocs when sorted by localized fields"},{"ancestorTitles":["Localization","Localized Relationship","regular relationship"],"duration":7,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship regular relationship can query localized relationship","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"can query localized relationship"},{"ancestorTitles":["Localization","Localized Relationship","regular relationship"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship regular relationship specific locale","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"specific locale"},{"ancestorTitles":["Localization","Localized Relationship","regular relationship"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship regular relationship all locales","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"all locales"},{"ancestorTitles":["Localization","Localized Relationship","regular relationship"],"duration":5,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship regular relationship populates relationships with all locales","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"populates relationships with all locales"},{"ancestorTitles":["Localization","Localized Relationship","relationship - hasMany"],"duration":12,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship relationship - hasMany default locale","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"default locale"},{"ancestorTitles":["Localization","Localized Relationship","relationship - hasMany"],"duration":11,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship relationship - hasMany specific locale","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"specific locale"},{"ancestorTitles":["Localization","Localized Relationship","relationship - hasMany"],"duration":4,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship relationship - hasMany relationship population uses locale","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"relationship population uses locale"},{"ancestorTitles":["Localization","Localized Relationship","relationship - hasMany"],"duration":23,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship relationship - hasMany all locales","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"all locales"},{"ancestorTitles":["Localization","Localized Relationship","relationTo multi"],"duration":9,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship relationTo multi by id","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"by id"},{"ancestorTitles":["Localization","Localized Relationship","relationTo multi hasMany"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized Relationship relationTo multi hasMany by id","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"by id"},{"ancestorTitles":["Localization","Localized - arrays with nested localized fields"],"duration":29,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - arrays with nested localized fields should allow moving rows and retain existing row locale data","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should allow moving rows and retain existing row locale data"},{"ancestorTitles":["Localization","Localized - required"],"duration":112,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - required should update without passing all required fields","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should update without passing all required fields"},{"ancestorTitles":["Localization","Localized - GraphQL"],"duration":399,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - GraphQL should allow user to login and retrieve populated localized field","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should allow user to login and retrieve populated localized field"},{"ancestorTitles":["Localization","Localized - GraphQL"],"duration":12,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - GraphQL should allow retrieval of populated localized fields within meUser","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should allow retrieval of populated localized fields within meUser"},{"ancestorTitles":["Localization","Localized - GraphQL"],"duration":59,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - GraphQL should create and update collections","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should create and update collections"},{"ancestorTitles":["Localization","Localized - GraphQL"],"duration":47,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - GraphQL should query multiple locales","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should query multiple locales"},{"ancestorTitles":["Localization","Localized - Arrays"],"duration":2,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - Arrays should use default locale as fallback","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should use default locale as fallback"},{"ancestorTitles":["Localization","Localized - Arrays"],"duration":20,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - Arrays should use empty array as value","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should use empty array as value"},{"ancestorTitles":["Localization","Localized - Arrays"],"duration":38,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - Arrays should use fallback value if setting null","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should use fallback value if setting null"},{"ancestorTitles":["Localization","Localized - Field Paths"],"duration":57,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized - Field Paths should allow querying by non-localized field names ending in a locale","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should allow querying by non-localized field names ending in a locale"},{"ancestorTitles":["Localization","Nested To Array And Block"],"duration":61,"failureDetails":[],"failureMessages":[],"fullName":"Localization Nested To Array And Block should be equal to the created document","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should be equal to the created document"},{"ancestorTitles":["Localization","Duplicate Collection"],"duration":56,"failureDetails":[],"failureMessages":[],"fullName":"Localization Duplicate Collection should duplicate localized document","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should duplicate localized document"},{"ancestorTitles":["Localization","Duplicate Collection"],"duration":130,"failureDetails":[],"failureMessages":[],"fullName":"Localization Duplicate Collection should duplicate with localized blocks","invocations":1,"location":null,"numPassingAsserts":9,"retryReasons":[],"status":"passed","title":"should duplicate with localized blocks"},{"ancestorTitles":["Localization","Localized group and tabs"],"duration":42,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized group and tabs should properly create/update/read localized group field","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should properly create/update/read localized group field"},{"ancestorTitles":["Localization","Localized group and tabs"],"duration":43,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized group and tabs should properly create/update/read localized field inside of group","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should properly create/update/read localized field inside of group"},{"ancestorTitles":["Localization","Localized group and tabs"],"duration":96,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized group and tabs should properly create/update/read deep localized field inside of group","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"should properly create/update/read deep localized field inside of group"},{"ancestorTitles":["Localization","Localized group and tabs"],"duration":40,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized group and tabs should properly create/update/read localized tab field","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should properly create/update/read localized tab field"},{"ancestorTitles":["Localization","Localized group and tabs"],"duration":38,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized group and tabs should properly create/update/read localized field inside of tab","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should properly create/update/read localized field inside of tab"},{"ancestorTitles":["Localization","Localized group and tabs"],"duration":96,"failureDetails":[],"failureMessages":[],"fullName":"Localization Localized group and tabs should properly create/update/read deep localized field inside of tab","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"should properly create/update/read deep localized field inside of tab"},{"ancestorTitles":["Localization","nested localized field sanitization"],"duration":1,"failureDetails":[],"failureMessages":[],"fullName":"Localization nested localized field sanitization should sanitize nested localized fields","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should sanitize nested localized fields"},{"ancestorTitles":["Localization","nested blocks"],"duration":76,"failureDetails":[],"failureMessages":[],"fullName":"Localization nested blocks should allow creating nested blocks per locale","invocations":1,"location":null,"numPassingAsserts":6,"retryReasons":[],"status":"passed","title":"should allow creating nested blocks per locale"},{"ancestorTitles":["Localization","nested arrays"],"duration":121,"failureDetails":[],"failureMessages":[],"fullName":"Localization nested arrays should not duplicate block rows for blocks within localized array fields","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should not duplicate block rows for blocks within localized array fields"},{"ancestorTitles":["Localization","nested arrays"],"duration":106,"failureDetails":[],"failureMessages":[],"fullName":"Localization nested arrays should update localized relation within unLocalized array","invocations":1,"location":null,"numPassingAsserts":6,"retryReasons":[],"status":"passed","title":"should update localized relation within unLocalized array"},{"ancestorTitles":["Localization","nested fields"],"duration":120,"failureDetails":[],"failureMessages":[],"fullName":"Localization nested fields should allow for fields which could contain new tables within localized arrays to be stored","invocations":1,"location":null,"numPassingAsserts":12,"retryReasons":[],"status":"passed","title":"should allow for fields which could contain new tables within localized arrays to be stored"}],"endTime":1782918252947,"message":"","name":"/workspace/repo/test/localization/int.spec.ts","startTime":1782918228399,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=47 found=47 failed=0 parsed=47 framework=jest exit_code=0

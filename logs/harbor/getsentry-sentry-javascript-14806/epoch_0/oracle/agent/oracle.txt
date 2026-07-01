@@ -1,0 +1,14 @@
+patching file docs/migration/v8-to-v9.md
+patching file packages/bun/src/index.ts
+patching file packages/cloudflare/src/index.ts
+patching file packages/core/src/index.ts
+patching file packages/core/src/integrations/requestdata.ts
+patching file packages/core/src/scope.ts
+patching file packages/core/src/utils-hoist/index.ts
+patching file packages/core/src/utils-hoist/requestdata.ts
+patching file packages/core/src/utils/cookie.ts (renamed from packages/core/src/utils-hoist/cookie.ts)
+patching file packages/core/src/utils/request.ts
+patching file packages/core/src/vendor/getIpAddress.ts (renamed from packages/core/src/utils-hoist/vendor/getIpAddress.ts)
+patching file packages/deno/src/index.ts
+patching file packages/node/src/integrations/http/SentryHttpInstrumentation.ts
+patching file packages/vercel-edge/src/index.ts

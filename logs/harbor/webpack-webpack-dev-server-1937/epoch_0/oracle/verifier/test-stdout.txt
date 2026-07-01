@@ -1,0 +1,31 @@
+patching file test/GetSocketServerImplementation.test.js
+patching file test/ServerMode.test.js
+patching file test/options.test.js
+Browserslist: caniuse-lite is outdated. Please run next command `npm update`
+Browserslist: caniuse-lite is outdated. Please run next command `npm update`
+PASS test/GetSocketServerImplementation.test.js
+  getSocketServerImplementation
+    ✓ should work with serverMode: 'sockjs' (3ms)
+    ✓ should work with serverMode: SockJSServer class
+    ✓ should work with serverMode: SockJSServer full path (1ms)
+    ✓ should throw with serverMode: bad path (2ms)
+
+PASS test/ServerMode.test.js
+  serverMode
+    supplying 'sockjs' as a string
+      ✓ sockjs path responds with a 200 (206ms)
+    supplying path to sockjs implementation
+      ✓ sockjs path responds with a 200 (21ms)
+    supplying sockjs implementation class
+      ✓ sockjs path responds with a 200 (15ms)
+    custom sockjs implementation
+      ✓ uses supplied server implementation (16ms)
+    supplying nonexistent path
+      ✓ should throw an error (55ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       9 passed, 9 total
+Snapshots:   0 total
+Time:        5.916s
+Ran all test suites matching /test\/GetSocketServerImplementation.test.js|test\/ServerMode.test.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":2,"numPassedTests":9,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":9,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782919189546,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["getSocketServerImplementation"],"failureMessages":[],"fullName":"getSocketServerImplementation should work with serverMode: 'sockjs'","location":null,"status":"passed","title":"should work with serverMode: 'sockjs'"},{"ancestorTitles":["getSocketServerImplementation"],"failureMessages":[],"fullName":"getSocketServerImplementation should work with serverMode: SockJSServer class","location":null,"status":"passed","title":"should work with serverMode: SockJSServer class"},{"ancestorTitles":["getSocketServerImplementation"],"failureMessages":[],"fullName":"getSocketServerImplementation should work with serverMode: SockJSServer full path","location":null,"status":"passed","title":"should work with serverMode: SockJSServer full path"},{"ancestorTitles":["getSocketServerImplementation"],"failureMessages":[],"fullName":"getSocketServerImplementation should throw with serverMode: bad path","location":null,"status":"passed","title":"should throw with serverMode: bad path"}],"endTime":1782919193674,"message":"","name":"/workspace/repo/test/GetSocketServerImplementation.test.js","startTime":1782919191247,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["serverMode","supplying 'sockjs' as a string"],"failureMessages":[],"fullName":"serverMode supplying 'sockjs' as a string sockjs path responds with a 200","location":null,"status":"passed","title":"sockjs path responds with a 200"},{"ancestorTitles":["serverMode","supplying path to sockjs implementation"],"failureMessages":[],"fullName":"serverMode supplying path to sockjs implementation sockjs path responds with a 200","location":null,"status":"passed","title":"sockjs path responds with a 200"},{"ancestorTitles":["serverMode","supplying sockjs implementation class"],"failureMessages":[],"fullName":"serverMode supplying sockjs implementation class sockjs path responds with a 200","location":null,"status":"passed","title":"sockjs path responds with a 200"},{"ancestorTitles":["serverMode","custom sockjs implementation"],"failureMessages":[],"fullName":"serverMode custom sockjs implementation uses supplied server implementation","location":null,"status":"passed","title":"uses supplied server implementation"},{"ancestorTitles":["serverMode","supplying nonexistent path"],"failureMessages":[],"fullName":"serverMode supplying nonexistent path should throw an error","location":null,"status":"passed","title":"should throw an error"}],"endTime":1782919195453,"message":"","name":"/workspace/repo/test/ServerMode.test.js","startTime":1782919191247,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=9 found=9 failed=0 parsed=9 framework=jest exit_code=0

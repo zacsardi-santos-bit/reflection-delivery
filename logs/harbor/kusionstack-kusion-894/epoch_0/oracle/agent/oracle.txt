@@ -1,0 +1,9 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 408 with fuzz 3 (offset 131 lines).
+Hunk #2 succeeded at 595 with fuzz 1 (offset 163 lines).
+Hunk #3 succeeded at 1268 with fuzz 2 (offset 301 lines).
+patching file pkg/backend/storages/local.go
+patching file pkg/backend/storages/mysql.go
+patching file pkg/backend/storages/oss.go
+patching file pkg/backend/storages/s3.go

@@ -1,0 +1,313 @@
+patching file .github/CODEOWNERS
+patching file .github/workflows/cws-btfhub-sync.yml
+patching file .gitlab-ci.yml
+patching file .gitlab/common/test_infra_version.yml
+patching file .gitlab/e2e/e2e.yml
+patching file .gitlab/e2e_pre_test/e2e_pre_test.yml
+patching file .gitlab/functional_test/security_agent.yml
+patching file .gitlab/junit_upload/junit_upload.yml
+patching file .gitlab/kernel_matrix_testing/common.yml
+patching file .gitlab/kitchen_testing/testing.yml
+patching file .gitlab/notify/notify.yml
+patching file .gitlab/package_build/windows.yml
+patching file .gitlab/setup/setup.yml
+patching file .gitlab/source_test/linux.yml
+patching file .gitlab/source_test/macos.yml
+patching file LICENSE-3rdparty.csv
+patching file cmd/agent/common/path/go.mod
+patching file cmd/agent/subcommands/run/command.go
+patching file cmd/agent/subcommands/run/command_windows.go
+patching file cmd/installer/subcommands/experiment/command.go
+patching file cmd/installer/subcommands/purge/command.go
+patching file cmd/security-agent/subcommands/start/command.go
+patching file comp/README.md
+patching file comp/api/api/apiimpl/internal/agent/agent.go
+patching file comp/core/agenttelemetry/agenttelemetryimpl/agenttelemetry.go
+patching file comp/core/agenttelemetry/agenttelemetryimpl/agenttelemetry_test.go
+patching file comp/core/agenttelemetry/agenttelemetryimpl/config.go
+patching file comp/core/agenttelemetry/agenttelemetryimpl/runner.go
+patching file comp/core/agenttelemetry/agenttelemetryimpl/sender.go
+patching file comp/core/agenttelemetry/agenttelemetryimpl/status_templates/agent-telemetry-basic.tmpl
+patching file comp/core/agenttelemetry/agenttelemetryimpl/utils.go
+patching file comp/core/agenttelemetry/component.go
+patching file comp/core/config/go.mod
+patching file comp/core/config/go.sum
+patching file comp/core/flare/types/go.mod
+patching file comp/core/gui/guiimpl/agent.go
+patching file comp/core/gui/guiimpl/views/templates/index.tmpl
+patching file comp/core/hostname/hostnameinterface/go.mod
+patching file comp/core/log/go.mod
+patching file comp/core/log/go.sum
+patching file comp/core/secrets/go.mod
+patching file comp/core/status/component.go
+patching file comp/core/status/go.mod
+patching file comp/core/status/statusimpl/go.mod
+patching file comp/core/status/statusimpl/go.sum
+patching file comp/core/status/statusimpl/status.go
+patching file comp/core/status/statusimpl/status_mock.go
+patching file comp/core/status/statusimpl/status_test.go
+patching file comp/core/telemetry/component.go
+patching file comp/core/telemetry/go.mod
+patching file comp/core/telemetry/telemetryimpl/telemetry.go
+patching file comp/core/workloadmeta/collectors/internal/ecsfargate/ecsfargate.go
+patching file comp/core/workloadmeta/collectors/internal/ecsfargate/ecsfargate_test.go
+patching file comp/core/workloadmeta/collectors/internal/ecsfargate/testdata/redis.json
+patching file comp/core/workloadmeta/collectors/internal/ecsfargate/v2parser.go
+patching file comp/core/workloadmeta/collectors/internal/ecsfargate/v2parser_test.go
+patching file comp/core/workloadmeta/collectors/internal/ecsfargate/v4parser.go
+patching file comp/core/workloadmeta/collectors/internal/ecsfargate/v4parser_test.go
+patching file comp/forwarder/defaultforwarder/go.mod
+patching file comp/forwarder/defaultforwarder/go.sum
+patching file comp/forwarder/orchestrator/orchestratorinterface/go.mod
+patching file comp/forwarder/orchestrator/orchestratorinterface/go.sum
+patching file comp/logs/agent/config/go.mod
+patching file comp/logs/agent/config/go.sum
+patching file comp/netflow/payload/go.mod
+patching file comp/otelcol/otlp/components/exporter/logsagentexporter/go.mod
+patching file comp/otelcol/otlp/components/exporter/logsagentexporter/go.sum
+patching file comp/otelcol/otlp/components/exporter/serializerexporter/go.mod
+patching file comp/otelcol/otlp/components/exporter/serializerexporter/go.sum
+patching file comp/otelcol/otlp/example/metric/go.mod
+patching file comp/otelcol/otlp/testutil/go.mod
+patching file comp/otelcol/otlp/testutil/go.sum
+patching file comp/process/agent/agentimpl/agent.go
+patching file comp/process/agent/agentimpl/agent_linux_test.go
+patching file comp/process/agent/fixtures/expvar_response.tmpl
+patching file comp/process/agent/fixtures/text_error_response.tmpl
+patching file comp/process/agent/status.go
+patching file comp/process/agent/status_templates/processcomponent.tmpl
+patching file comp/process/agent/status_test.go
+patching file comp/process/expvars/expvarsimpl/expvars.go
+patching file comp/process/expvars/expvarsimpl/expvars_test.go
+patching file comp/process/profiler/profilerimpl/profiler.go
+patching file comp/serializer/compression/go.mod
+patching file comp/serializer/compression/go.sum
+patching file comp/trace/agent/run.go
+patching file go.mod
+patching file go.sum
+patching file internal/tools/go.mod
+patching file internal/tools/independent-lint/go.mod
+patching file internal/tools/modformatter/go.mod
+patching file internal/tools/modparser/go.mod
+patching file internal/tools/modparser/testdata/patchgoversion/go.mod
+patching file internal/tools/proto/go.mod
+patching file omnibus/config/projects/installer.rb
+patching file omnibus/config/software/sds.rb
+patching file omnibus/package-scripts/installer-deb/postinst
+patching file omnibus/package-scripts/installer-deb/postrm
+patching file omnibus/package-scripts/installer-deb/preinst
+patching file pkg/aggregator/ckey/go.mod
+patching file pkg/api/go.mod
+patching file pkg/api/go.sum
+patching file pkg/cli/subcommands/check/command.go
+patching file pkg/collector/check/defaults/go.mod
+patching file pkg/collector/corechecks/network-devices/cisco-sdwan/payload/cedge_interface.go
+patching file pkg/collector/corechecks/network-devices/cisco-sdwan/payload/cedge_interface_test.go
+patching file pkg/collector/corechecks/network-devices/cisco-sdwan/payload/interfaces.go
+patching file pkg/collector/corechecks/network-devices/cisco-sdwan/payload/vedge_interface.go
+patching file pkg/collector/corechecks/network-devices/cisco-sdwan/payload/vedge_interface_test.go
+patching file pkg/collector/corechecks/telemetry/check.go
+patching file pkg/config/env/go.mod
+patching file pkg/config/env/go.sum
+patching file pkg/config/logs/go.mod
+patching file pkg/config/logs/go.sum
+patching file pkg/config/model/go.mod
+patching file pkg/config/model/go.sum
+patching file pkg/config/model/viper.go
+patching file pkg/config/remote/go.mod
+patching file pkg/config/remote/go.sum
+patching file pkg/config/settings/runtime_setting_profiling.go
+patching file pkg/config/setup/config.go
+patching file pkg/config/setup/config_test.go
+patching file pkg/config/setup/go.mod
+patching file pkg/config/setup/go.sum
+patching file pkg/config/setup/system_probe.go
+patching file pkg/config/utils/go.mod
+patching file pkg/config/utils/go.sum
+patching file pkg/config/utils/telemetry.go
+patching file pkg/errors/go.mod
+patching file pkg/gohai/go.mod
+patching file pkg/installer/download.go (renamed from pkg/installer/packages/download.go)
+patching file pkg/installer/download_test.go
+patching file pkg/installer/errors/errors.go (renamed from pkg/installer/packages/errors/errors.go)
+patching file pkg/installer/errors/errors_test.go (renamed from pkg/installer/packages/errors/errors_test.go)
+patching file pkg/installer/fixtures/README.md (renamed from pkg/installer/packages/fixtures/README.md)
+patching file pkg/installer/fixtures/oci-layout-simple-v1-linux2-amd128.tar (renamed from pkg/installer/packages/fixtures/oci-layout-simple-v1-linux2-amd128.tar)
+patching file pkg/installer/fixtures/oci-layout-simple-v1.tar (renamed from pkg/installer/packages/fixtures/oci-layout-simple-v1.tar)
+patching file pkg/installer/fixtures/oci-layout-simple-v2.tar (renamed from pkg/installer/packages/fixtures/oci-layout-simple-v2.tar)
+patching file pkg/installer/fixtures/simple-v1-config/datadog.yaml.example (renamed from pkg/installer/packages/fixtures/simple-v1-config/datadog.yaml.example)
+patching file pkg/installer/fixtures/simple-v1/executable.sh (renamed from pkg/installer/packages/fixtures/simple-v1/executable.sh)
+patching file pkg/installer/fixtures/simple-v1/file.txt (renamed from pkg/installer/packages/fixtures/simple-v1/file.txt)
+patching file pkg/installer/fixtures/simple-v2-config/datadog.yaml.example (renamed from pkg/installer/packages/fixtures/simple-v2-config/datadog.yaml.example)
+patching file pkg/installer/fixtures/simple-v2/executable-new.sh (renamed from pkg/installer/packages/fixtures/simple-v2/executable-new.sh)
+patching file pkg/installer/install.go
+patching file pkg/installer/install_test.go
+patching file pkg/installer/installer.go
+patching file pkg/installer/installer_test.go
+patching file pkg/installer/local_api.go
+patching file pkg/installer/local_api_test.go
+patching file pkg/installer/packages/download_test.go
+patching file pkg/installer/packages/fixtures/server.go
+patching file pkg/installer/packages/manager.go
+patching file pkg/installer/packages/manager_test.go
+patching file pkg/installer/packages/service/helper/go.mod
+patching file pkg/installer/packages/utils/disk.go
+patching file pkg/installer/packages/utils/tar.go
+patching file pkg/installer/remote_config.go
+patching file pkg/installer/repository/link.go (renamed from pkg/installer/packages/repository/link.go)
+patching file pkg/installer/repository/link_test.go (renamed from pkg/installer/packages/repository/link_test.go)
+patching file pkg/installer/repository/link_windows.go (renamed from pkg/installer/packages/repository/link_windows.go)
+patching file pkg/installer/repository/repositories.go (renamed from pkg/installer/packages/repository/repositories.go)
+patching file pkg/installer/repository/repositories_test.go (renamed from pkg/installer/packages/repository/repositories_test.go)
+patching file pkg/installer/repository/repository.go (renamed from pkg/installer/packages/repository/repository.go)
+patching file pkg/installer/repository/repository_test.go (renamed from pkg/installer/packages/repository/repository_test.go)
+patching file pkg/installer/service/apm_inject.go (renamed from pkg/installer/packages/service/apm_inject.go)
+patching file pkg/installer/service/apm_inject_test.go (renamed from pkg/installer/packages/service/apm_inject_test.go)
+patching file pkg/installer/service/apm_inject_windows.go (renamed from pkg/installer/packages/service/apm_inject_windows.go)
+patching file pkg/installer/service/cmd_executor.go (renamed from pkg/installer/packages/service/cmd_executor.go)
+patching file pkg/installer/service/cmd_executor_windows.go (renamed from pkg/installer/packages/service/cmd_executor_windows.go)
+patching file pkg/installer/service/datadog_agent.go (renamed from pkg/installer/packages/service/datadog_agent.go)
+patching file pkg/installer/service/datadog_agent_windows.go (renamed from pkg/installer/packages/service/datadog_agent_windows.go)
+patching file pkg/installer/service/datadog_installer.go (renamed from pkg/installer/packages/service/datadog_installer.go)
+patching file pkg/installer/service/datadog_installer_windows.go (renamed from pkg/installer/packages/service/datadog_installer_windows.go)
+patching file pkg/installer/service/docker.go (renamed from pkg/installer/packages/service/docker.go)
+patching file pkg/installer/service/docker_test.go (renamed from pkg/installer/packages/service/docker_test.go)
+patching file pkg/installer/service/helper/go.mod
+patching file pkg/installer/service/helper/main.go (renamed from pkg/installer/packages/service/helper/main.go)
+patching file pkg/installer/service/systemd.go (renamed from pkg/installer/packages/service/systemd.go)
+patching file pkg/installer/service/systemd_test.go (renamed from pkg/installer/packages/service/systemd_test.go)
+patching file pkg/installer/service/systemd_windows.go (renamed from pkg/installer/packages/service/systemd_windows.go)
+patching file pkg/logs/auditor/go.mod
+patching file pkg/logs/auditor/go.sum
+patching file pkg/logs/client/go.mod
+patching file pkg/logs/client/go.sum
+patching file pkg/logs/diagnostic/go.mod
+patching file pkg/logs/diagnostic/go.sum
+patching file pkg/logs/message/go.mod
+patching file pkg/logs/message/go.sum
+patching file pkg/logs/metrics/go.mod
+patching file pkg/logs/pipeline/go.mod
+patching file pkg/logs/pipeline/go.sum
+patching file pkg/logs/processor/go.mod
+patching file pkg/logs/processor/go.sum
+patching file pkg/logs/sds/go.mod
+patching file pkg/logs/sds/go.sum
+patching file pkg/logs/sds/rules.go
+patching file pkg/logs/sds/scanner.go
+patching file pkg/logs/sender/go.mod
+patching file pkg/logs/sender/go.sum
+patching file pkg/logs/sources/go.mod
+patching file pkg/logs/sources/go.sum
+patching file pkg/logs/status/statusinterface/go.mod
+patching file pkg/logs/status/utils/go.mod
+patching file pkg/logs/util/testutils/go.mod
+patching file pkg/logs/util/testutils/go.sum
+patching file pkg/metrics/go.mod
+patching file pkg/metrics/go.sum
+patching file pkg/network/protocols/http/etw_interface_test.go
+patching file pkg/network/tracer/tracer_windows.go
+patching file pkg/networkdevice/profile/go.mod
+patching file pkg/obfuscate/go.mod
+patching file pkg/orchestrator/model/go.mod
+patching file pkg/process/util/api/go.mod
+patching file pkg/proto/go.mod
+patching file pkg/remoteconfig/state/go.mod
+patching file pkg/sbom/collectors/mock.go
+patching file pkg/sbom/scanner/scanner.go
+patching file pkg/sbom/scanner/scanner_test.go
+patching file pkg/security/probe/discarders.go
+patching file pkg/security/probe/discarders_windows.go
+patching file pkg/security/probe/probe.go
+patching file pkg/security/probe/probe_ebpfless.go
+patching file pkg/security/probe/probe_monitor.go
+patching file pkg/security/proto/api/api.pb.go
+patching file pkg/security/proto/ebpfless/msg.go
+patching file pkg/security/ptracer/cws.go
+patching file pkg/security/ptracer/process.go
+patching file pkg/security/ptracer/span.go
+patching file pkg/security/ptracer/syscalls_amd64.go
+patching file pkg/security/ptracer/syscalls_arm64.go
+patching file pkg/security/secl/rules/opts.go
+patching file pkg/security/secl/rules/ruleset.go
+patching file pkg/security/security_profile/activity_tree/activity_tree.go
+patching file pkg/security/security_profile/activity_tree/activity_tree_stats.go
+patching file pkg/security/tests/main_linux.go
+patching file pkg/security/tests/schemas.go
+patching file pkg/security/tests/syscall_tester/c/syscall_tester.c
+patching file pkg/serializer/go.mod
+patching file pkg/serializer/go.sum
+patching file pkg/serializer/serializer.go
+patching file pkg/status/health/go.mod
+patching file pkg/tagger/types/go.mod
+patching file pkg/tagset/go.mod
+patching file pkg/telemetry/go.mod
+patching file pkg/trace/go.mod
+patching file pkg/util/backoff/go.mod
+patching file pkg/util/buf/go.mod
+patching file pkg/util/cache/go.mod
+patching file pkg/util/cgroups/go.mod
+patching file pkg/util/common/go.mod
+patching file pkg/util/executable/go.mod
+patching file pkg/util/filesystem/go.mod
+patching file pkg/util/flavor/go.mod
+patching file pkg/util/flavor/go.sum
+patching file pkg/util/fxutil/go.mod
+patching file pkg/util/grpc/go.mod
+patching file pkg/util/hostname/validate/go.mod
+patching file pkg/util/http/go.mod
+patching file pkg/util/http/go.sum
+patching file pkg/util/json/go.mod
+patching file pkg/util/log/go.mod
+patching file pkg/util/optional/go.mod
+patching file pkg/util/pointer/go.mod
+patching file pkg/util/profiling/profiling.go
+patching file pkg/util/profiling/settings.go
+patching file pkg/util/scrubber/go.mod
+patching file pkg/util/sort/go.mod
+patching file pkg/util/startstop/go.mod
+patching file pkg/util/statstracker/go.mod
+patching file pkg/util/system/go.mod
+patching file pkg/util/system/socket/go.mod
+patching file pkg/util/testutil/go.mod
+patching file pkg/util/uuid/go.mod
+patching file pkg/util/winutil/go.mod
+patching file pkg/version/go.mod
+patching file releasenotes/notes/process-component-status-66c1ce5c3a34831e.yaml
+patching file tasks/installer.py
+patching file tasks/kernel_matrix_testing/ci.py
+patching file tasks/kmt.py
+patching file tasks/libs/ciproviders/github_api.py
+patching file tasks/libs/ciproviders/gitlab.py
+patching file tasks/libs/ciproviders/gitlab_api.py
+patching file tasks/libs/common/datadog_api.py
+patching file tasks/libs/common/junit_upload_core.py
+patching file tasks/libs/common/omnibus.py
+patching file tasks/libs/common/remote_api.py
+patching file tasks/libs/pipeline/data.py
+patching file tasks/libs/pipeline/notifications.py
+patching file tasks/libs/pipeline/stats.py
+patching file tasks/libs/pipeline/tools.py
+patching file tasks/libs/types/types.py
+patching file tasks/linter.py
+patching file tasks/notify.py
+patching file tasks/pipeline.py
+patching file tasks/release.py
+patching file tasks/sds.py
+patching file tasks/unit-tests/testdata/go_mod_formatter/invalid_package/go.mod
+patching file tasks/unit-tests/testdata/go_mod_formatter/valid_package/go.mod
+patching file tasks/update_go.py
+patching file test/e2e/containers/otlp_sender/go.mod
+patching file test/fakeintake/go.mod
+patching file test/kitchen/drivers/azure-driver.yml
+patching file test/kitchen/drivers/ec2-driver.yml
+patching file test/kitchen/drivers/vagrant-driver.yml
+patching file test/new-e2e/examples/agentenv_file_permissions_test.go
+patching file test/new-e2e/go.mod
+patching file test/new-e2e/go.sum
+patching file test/new-e2e/pkg/utils/infra/stack_manager.go
+patching file test/new-e2e/tests/agent-subcommands/diagnose/diagnose_common_test.go
+patching file test/new-e2e/tests/agent-subcommands/diagnose/diagnose_nix_test.go
+patching file test/new-e2e/tests/agent-subcommands/diagnose/diagnose_win_test.go
+patching file test/new-e2e/tests/installer/linux_test.go
+patching file tools/ci/junit_upload.sh
+patching file tools/retry_file_dump/go.mod

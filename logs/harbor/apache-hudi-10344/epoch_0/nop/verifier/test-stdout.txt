@@ -1,0 +1,177 @@
+patching file hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-common:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: com.fasterxml.jackson.module:jackson-module-afterburner:jar -> duplicate declaration of version (?) @ line 142, column 17
+[[1;33mWARNING[m] 'dependencyManagement.dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: com.fasterxml.jackson.module:jackson-module-afterburner:jar -> version ${fasterxml.version} vs ${fasterxml.jackson.databind.version} @ org.apache.hudi:hudi:1.0.0-SNAPSHOT, /workspace/repo/pom.xml, line 893, column 19
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-spark-common_2.12:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.hudi:hudi-spark-common_${scala.binary.version}:1.0.0-SNAPSHOT, /workspace/repo/hudi-spark-datasource/hudi-spark-common/pom.xml, line 24, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-spark_2.12:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.hudi:hudi-spark_${scala.binary.version}:1.0.0-SNAPSHOT, /workspace/repo/hudi-spark-datasource/hudi-spark/pom.xml, line 26, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-utilities_2.12:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.hudi:hudi-utilities_${scala.binary.version}:1.0.0-SNAPSHOT, /workspace/repo/hudi-utilities/pom.xml, line 26, column 15
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.httpcomponents:httpcore:jar -> version ${aws.sdk.httpcore.version} vs (?) @ org.apache.hudi:hudi-utilities_${scala.binary.version}:1.0.0-SNAPSHOT, /workspace/repo/hudi-utilities/pom.xml, line 373, column 17
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-spark3.2-bundle_2.12:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.hudi:hudi-spark${sparkbundle.version}-bundle_${scala.binary.version}:1.0.0-SNAPSHOT, /workspace/repo/packaging/hudi-spark-bundle/pom.xml, line 26, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-utilities-bundle_2.12:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.hudi:hudi-utilities-bundle_${scala.binary.version}:1.0.0-SNAPSHOT, /workspace/repo/packaging/hudi-utilities-bundle/pom.xml, line 26, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-utilities-slim-bundle_2.12:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.hudi:hudi-utilities-slim-bundle_${scala.binary.version}:1.0.0-SNAPSHOT, /workspace/repo/packaging/hudi-utilities-slim-bundle/pom.xml, line 26, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-flink1.18-bundle:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.hudi:hudi-flink${flink.bundle.version}-bundle:1.0.0-SNAPSHOT, /workspace/repo/packaging/hudi-flink-bundle/pom.xml, line 28, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi-cli-bundle_2.12:jar:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.hudi:hudi-cli-bundle_${scala.binary.version}:1.0.0-SNAPSHOT, /workspace/repo/packaging/hudi-cli-bundle/pom.xml, line 26, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.hudi:hudi:pom:1.0.0-SNAPSHOT
+[[1;33mWARNING[m] 'dependencyManagement.dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: com.fasterxml.jackson.module:jackson-module-afterburner:jar -> version ${fasterxml.version} vs ${fasterxml.jackson.databind.version} @ line 893, column 19
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] It is highly recommended to fix these problems because they threaten the stability of your build.
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] For this reason, future Maven versions might no longer support building such malformed projects.
+[[1;33mWARNING[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36morg.apache.hudi:hudi-common[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding hudi-common 1.0.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+Downloading from repository.jboss.org: https://repository.jboss.org/nexus/content/groups/public/net/minidev/json-smart/maven-metadata.xml
+[[1;33mWARNING[m] Could not transfer metadata net.minidev:json-smart/maven-metadata.xml from/to repository.jboss.org (https://repository.jboss.org/nexus/content/groups/public/): Transfer failed for https://repository.jboss.org/nexus/content/groups/public/net/minidev/json-smart/maven-metadata.xml
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-logging)[m @ [36mhudi-common[0;1m ---[m
+[[1;33mWARNING[m] Failure to transfer net.minidev:json-smart/maven-metadata.xml from https://repository.jboss.org/nexus/content/groups/public/ was cached in the local repository, resolution will not be reattempted until the update interval of repository.jboss.org has elapsed or updates are forced. Original error: Could not transfer metadata net.minidev:json-smart/maven-metadata.xml from/to repository.jboss.org (https://repository.jboss.org/nexus/content/groups/public/): Transfer failed for https://repository.jboss.org/nexus/content/groups/public/net/minidev/json-smart/maven-metadata.xml
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mavro-maven-plugin:1.10.2:schema[m [1m(default)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieCommitMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieCompactionStrategy.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieCompactionOperation.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieSavePointMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieCompactionMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieCleanPartitionMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieCleanMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieCleanerPlan.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieInstantInfo.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieRollbackMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieRestoreMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieReplaceCommitMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodiePath.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieFSPermission.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieFileStatus.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieBootstrapIndexInfo.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieSliceInfo.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieClusteringGroup.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieClusteringStrategy.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieClusteringPlan.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieRequestedReplaceMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieIndexPartitionInfo.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieIndexPlan.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieIndexCommitMetadata.avsc
+[[1;34mINFO[m] Importing File: /workspace/repo/hudi-common/src/main/avro/HoodieArchivedMetaEntry.avsc
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 567 source files to /workspace/repo/hudi-common/target/classes
+[[1;34mINFO[m] /workspace/repo/hudi-common/src/main/java/org/apache/hudi/io/storage/HoodieHFileConfig.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/hudi-common/src/main/java/org/apache/hudi/io/storage/HoodieHFileConfig.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/hudi-common/src/main/java/org/apache/hudi/common/util/collection/Pair.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/hudi-common/src/main/java/org/apache/hudi/common/util/collection/Pair.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.0:check[m [1m(default)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mapache-rat-plugin:0.13:check[m [1m(default)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] Added 1 additional default licenses.
+[[1;34mINFO[m] Enabled default license matchers.
+[[1;34mINFO[m] Added 1 custom approved licenses.
+[[1;34mINFO[m] Will parse SCM ignores for exclusions...
+[[1;34mINFO[m] Finished adding exclusions from SCM ignore files.
+[[1;34mINFO[m] 62 implicit excludes (use -debug for more details).
+[[1;34mINFO[m] 22 explicit excludes (use -debug for more details).
+[[1;34mINFO[m] 710 resources included (use -debug for more details)
+[[1;34mINFO[m] Rat check: Summary over all files. Unapproved: 0, unknown: 0, generated: 0, approved: 709 licenses.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 36 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mhudi-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 151 source files to /workspace/repo/hudi-common/target/test-classes
+[[1;34mINFO[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/testutils/HoodieTestDataGenerator.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/testutils/HoodieTestDataGenerator.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] COMPILATION ERROR : 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[85,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[120,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[162,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[220,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[245,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[302,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[370,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[419,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[449,14] cannot infer type arguments for org.apache.hudi.common.util.collection.ExternalSpillableMap<>
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[448,84] incompatible types: try-with-resources not applicable to variable type
+    (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;34mINFO[m] 10 errors 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  46.568 s
+[[1;34mINFO[m] Finished at: 2026-07-01T14:39:06Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m on project [36mhudi-common[m: [1;31mCompilation failure[m: Compilation failure: 
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[85,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[120,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[162,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[220,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[245,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[302,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[370,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[419,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[449,14] cannot infer type arguments for org.apache.hudi.common.util.collection.ExternalSpillableMap<>
+[[1;31mERROR[m] /workspace/repo/hudi-common/src/test/java/org/apache/hudi/common/util/collection/TestExternalSpillableMap.java:[448,84] incompatible types: try-with-resources not applicable to variable type
+[[1;31mERROR[m]     (org.apache.hudi.common.util.collection.ExternalSpillableMap<java.lang.String,org.apache.hudi.common.model.HoodieRecord<? extends org.apache.hudi.common.model.HoodieRecordPayload>> cannot be converted to java.lang.AutoCloseable)
+[[1;31mERROR[m] -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+reward=0 graded=32 found=0 failed=0 parsed=1 framework=maven exit_code=1

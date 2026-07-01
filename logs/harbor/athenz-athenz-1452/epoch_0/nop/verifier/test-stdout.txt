@@ -1,0 +1,107 @@
+patching file libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/token/AccessTokenTest.java
+patching file libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java
+patching file servers/zts/src/test/java/com/yahoo/athenz/zts/ZTSImplTest.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------< [0;36mcom.yahoo.athenz:athenz-auth-core[0;1m >------------------[m
+[[1;34mINFO[m] [1mBuilding athenz-auth-core 1.10.13-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.8.5:prepare-agent[m [1m(default)[m @ [36mathenz-auth-core[0;1m ---[m
+[[1;34mINFO[m] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.5/org.jacoco.agent-0.8.5-runtime.jar=destfile=/workspace/repo/libs/java/auth_core/target/jacoco.exec -Dlogback.configurationFile=src/test/resources/sd_logback.xml
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(validate)[m @ [36mathenz-auth-core[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/impl/CertificateIdentityParser.java:72:5: warning: Cyclomatic Complexity is 14 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/impl/RoleAuthority.java:85:5: warning: Cyclomatic Complexity is 12 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/oauth/OAuthCertBoundJwtAccessTokenAuthority.java:113:5: warning: Cyclomatic Complexity is 12 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/oauth/parser/KeyStoreJwkKeyResolver.java:58:5: warning: Cyclomatic Complexity is 15 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/token/PrincipalToken.java:124:5: warning: Cyclomatic Complexity is 12 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/token/PrincipalToken.java:185:5: warning: Cyclomatic Complexity is 35 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/token/RoleToken.java:119:5: warning: Cyclomatic Complexity is 13 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/token/RoleToken.java:189:5: warning: Cyclomatic Complexity is 26 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/token/Token.java:103:5: warning: Cyclomatic Complexity is 15 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/util/Crypto.java:513:5: warning: Cyclomatic Complexity is 11 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/util/Crypto.java:677:5: warning: Cyclomatic Complexity is 17 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/util/Crypto.java:1223:5: warning: Cyclomatic Complexity is 16 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/util/Crypto.java:1369:5: warning: Cyclomatic Complexity is 12 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/util/StringUtils.java:25:5: warning: Cyclomatic Complexity is 11 (max allowed is 10).
+/workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/util/YBase64.java:148:5: warning: Cyclomatic Complexity is 18 (max allowed is 10).
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:resources[m [1m(default-resources)[m @ [36mathenz-auth-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/libs/java/auth_core/src/main/resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.5.1:compile[m [1m(default-compile)[m @ [36mathenz-auth-core[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 56 source files to /workspace/repo/libs/java/auth_core/target/classes
+[[1;34mINFO[m] /workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/impl/FilePrivateKeyStore.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/impl/FilePrivateKeyStore.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/token/AccessToken.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/libs/java/auth_core/src/main/java/com/yahoo/athenz/auth/token/AccessToken.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.5.1:compile[m [1m(jdk11)[m @ [36mathenz-auth-core[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:2.6:testResources[m [1m(default-testResources)[m @ [36mathenz-auth-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 73 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.5.1:testCompile[m [1m(default-testCompile)[m @ [36mathenz-auth-core[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 51 source files to /workspace/repo/libs/java/auth_core/target/test-classes
+[[1;34mINFO[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/PrivateKeyStoreTest.java: /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/PrivateKeyStoreTest.java uses or overrides a deprecated API.
+[[1;34mINFO[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/PrivateKeyStoreTest.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/token/AccessTokenTest.java: /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/token/AccessTokenTest.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/token/AccessTokenTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] COMPILATION ERROR : 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[873,30] cannot find symbol
+  symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+  location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[884,30] cannot find symbol
+  symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+  location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[900,32] cannot find symbol
+  symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+  location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[917,30] cannot find symbol
+  symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+  location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[934,30] cannot find symbol
+  symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+  location: class com.yahoo.athenz.auth.util.Crypto
+[[1;34mINFO[m] 5 errors 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  11.692 s
+[[1;34mINFO[m] Finished at: 2026-07-01T14:35:57Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-compiler-plugin:3.5.1:testCompile[m [1m(default-testCompile)[m on project [36mathenz-auth-core[m: [1;31mCompilation failure[m: Compilation failure: 
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[873,30] cannot find symbol
+[[1;31mERROR[m]   symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+[[1;31mERROR[m]   location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[884,30] cannot find symbol
+[[1;31mERROR[m]   symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+[[1;31mERROR[m]   location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[900,32] cannot find symbol
+[[1;31mERROR[m]   symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+[[1;31mERROR[m]   location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[917,30] cannot find symbol
+[[1;31mERROR[m]   symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+[[1;31mERROR[m]   location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] /workspace/repo/libs/java/auth_core/src/test/java/com/yahoo/athenz/auth/util/CryptoTest.java:[934,30] cannot find symbol
+[[1;31mERROR[m]   symbol:   method extractX509CertSpiffeUri(java.security.cert.X509Certificate)
+[[1;31mERROR[m]   location: class com.yahoo.athenz.auth.util.Crypto
+[[1;31mERROR[m] -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+reward=0 graded=438 found=0 failed=0 parsed=1 framework=maven exit_code=1

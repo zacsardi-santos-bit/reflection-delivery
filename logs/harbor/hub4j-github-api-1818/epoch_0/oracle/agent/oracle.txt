@@ -1,0 +1,6 @@
+patching file src/main/java/org/kohsuke/github/GHEventPayload.java
+patching file src/main/java/org/kohsuke/github/GHMemberChanges.java
+patching file src/main/java/org/kohsuke/github/GHOrganization.java
+patching file src/main/java/org/kohsuke/github/GHRepository.java
+patching file src/main/java/org/kohsuke/github/GHTeam.java
+patching file src/main/java/org/kohsuke/github/GHTeamChanges.java

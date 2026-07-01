@@ -1,0 +1,460 @@
+patching file internal/artifact/artifact_test.go
+patching file internal/builders/deno/build_test.go
+patching file internal/static/config_test.go
+patching file pkg/healthcheck/healthcheck_test.go
+{"Time":"2026-07-01T14:45:06.900409248Z","Action":"start","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact"}
+{"Time":"2026-07-01T14:45:06.911693488Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestAdd"}
+{"Time":"2026-07-01T14:45:06.911727993Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestAdd","Output":"=== RUN   TestAdd\n"}
+{"Time":"2026-07-01T14:45:06.915418521Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestAdd","Output":"  • removed trailing whitespaces from artifact name  name= whitespaces .zip new name=whitespaces.zip type=Archive path=/workspace/repo/internal/artifact/foo/bar.tgz\n"}
+{"Time":"2026-07-01T14:45:06.915441794Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestAdd","Output":"  • removed trailing whitespaces from artifact name  name= whitespaces  new name=whitespaces type=Binary path=\n"}
+{"Time":"2026-07-01T14:45:06.91545415Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestAdd","Output":"--- PASS: TestAdd (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915460412Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestAdd","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915468505Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestFilter"}
+{"Time":"2026-07-01T14:45:06.915473179Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestFilter","Output":"=== RUN   TestFilter\n"}
+{"Time":"2026-07-01T14:45:06.915479119Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestFilter","Output":"--- PASS: TestFilter (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915483855Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestFilter","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915488251Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove"}
+{"Time":"2026-07-01T14:45:06.915494269Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove","Output":"=== RUN   TestRemove\n"}
+{"Time":"2026-07-01T14:45:06.915498965Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove/null_filter"}
+{"Time":"2026-07-01T14:45:06.915502948Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove/null_filter","Output":"=== RUN   TestRemove/null_filter\n"}
+{"Time":"2026-07-01T14:45:06.915510283Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove/null_filter","Output":"--- PASS: TestRemove/null_filter (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915515741Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove/null_filter","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915520387Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove/removing"}
+{"Time":"2026-07-01T14:45:06.915524411Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove/removing","Output":"=== RUN   TestRemove/removing\n"}
+{"Time":"2026-07-01T14:45:06.915529575Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove/removing","Output":"--- PASS: TestRemove/removing (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915534425Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove/removing","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915540056Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove","Output":"--- PASS: TestRemove (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915544785Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRemove","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915554554Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByID"}
+{"Time":"2026-07-01T14:45:06.915560486Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByID","Output":"=== RUN   TestGroupByID\n"}
+{"Time":"2026-07-01T14:45:06.915566511Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByID","Output":"--- PASS: TestGroupByID (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915571119Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByID","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915575719Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByPlatform"}
+{"Time":"2026-07-01T14:45:06.915580865Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByPlatform","Output":"=== RUN   TestGroupByPlatform\n"}
+{"Time":"2026-07-01T14:45:06.91558624Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByPlatform","Output":"--- PASS: TestGroupByPlatform (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915590524Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByPlatform","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915595432Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByPlatform_mixingBuilders"}
+{"Time":"2026-07-01T14:45:06.915599889Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByPlatform_mixingBuilders","Output":"=== RUN   TestGroupByPlatform_mixingBuilders\n"}
+{"Time":"2026-07-01T14:45:06.915606621Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByPlatform_mixingBuilders","Output":"--- PASS: TestGroupByPlatform_mixingBuilders (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915611636Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestGroupByPlatform_mixingBuilders","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915615892Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum"}
+{"Time":"2026-07-01T14:45:06.915620414Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum","Output":"=== RUN   TestChecksum\n"}
+{"Time":"2026-07-01T14:45:06.915624764Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha512"}
+{"Time":"2026-07-01T14:45:06.915629317Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha512","Output":"=== RUN   TestChecksum/sha512\n"}
+{"Time":"2026-07-01T14:45:06.915634515Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha512","Output":"--- PASS: TestChecksum/sha512 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915639286Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha512","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915643598Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha1"}
+{"Time":"2026-07-01T14:45:06.915648036Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha1","Output":"=== RUN   TestChecksum/sha1\n"}
+{"Time":"2026-07-01T14:45:06.91565288Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha1","Output":"--- PASS: TestChecksum/sha1 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915657396Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha1","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915661832Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/crc32"}
+{"Time":"2026-07-01T14:45:06.915668102Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/crc32","Output":"=== RUN   TestChecksum/crc32\n"}
+{"Time":"2026-07-01T14:45:06.915673429Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/crc32","Output":"--- PASS: TestChecksum/crc32 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915678442Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/crc32","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915682568Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-384"}
+{"Time":"2026-07-01T14:45:06.915686232Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-384","Output":"=== RUN   TestChecksum/sha3-384\n"}
+{"Time":"2026-07-01T14:45:06.915690852Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-384","Output":"--- PASS: TestChecksum/sha3-384 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915694948Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-384","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915699265Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha256"}
+{"Time":"2026-07-01T14:45:06.915703022Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha256","Output":"=== RUN   TestChecksum/sha256\n"}
+{"Time":"2026-07-01T14:45:06.915708173Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha256","Output":"--- PASS: TestChecksum/sha256 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915712108Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha256","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915716136Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/md5"}
+{"Time":"2026-07-01T14:45:06.915719836Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/md5","Output":"=== RUN   TestChecksum/md5\n"}
+{"Time":"2026-07-01T14:45:06.915724988Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/md5","Output":"--- PASS: TestChecksum/md5 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915728975Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/md5","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915732742Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha224"}
+{"Time":"2026-07-01T14:45:06.915736446Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha224","Output":"=== RUN   TestChecksum/sha224\n"}
+{"Time":"2026-07-01T14:45:06.915742622Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha224","Output":"--- PASS: TestChecksum/sha224 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.91574675Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha224","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915750604Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha384"}
+{"Time":"2026-07-01T14:45:06.915754212Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha384","Output":"=== RUN   TestChecksum/sha384\n"}
+{"Time":"2026-07-01T14:45:06.915760498Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha384","Output":"--- PASS: TestChecksum/sha384 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915764789Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha384","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915771194Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-256"}
+{"Time":"2026-07-01T14:45:06.915774779Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-256","Output":"=== RUN   TestChecksum/sha3-256\n"}
+{"Time":"2026-07-01T14:45:06.915780173Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-256","Output":"--- PASS: TestChecksum/sha3-256 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915784766Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-256","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915788722Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-512"}
+{"Time":"2026-07-01T14:45:06.915792365Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-512","Output":"=== RUN   TestChecksum/sha3-512\n"}
+{"Time":"2026-07-01T14:45:06.915797306Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-512","Output":"--- PASS: TestChecksum/sha3-512 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915801432Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-512","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915805292Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-224"}
+{"Time":"2026-07-01T14:45:06.915808935Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-224","Output":"=== RUN   TestChecksum/sha3-224\n"}
+{"Time":"2026-07-01T14:45:06.915814461Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-224","Output":"--- PASS: TestChecksum/sha3-224 (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915818659Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/sha3-224","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915822433Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/blake2s"}
+{"Time":"2026-07-01T14:45:06.915826677Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/blake2s","Output":"=== RUN   TestChecksum/blake2s\n"}
+{"Time":"2026-07-01T14:45:06.915831995Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/blake2s","Output":"--- PASS: TestChecksum/blake2s (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915836562Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/blake2s","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915840342Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/blake2b"}
+{"Time":"2026-07-01T14:45:06.915844216Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/blake2b","Output":"=== RUN   TestChecksum/blake2b\n"}
+{"Time":"2026-07-01T14:45:06.915849726Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/blake2b","Output":"--- PASS: TestChecksum/blake2b (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915854211Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum/blake2b","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915859565Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum","Output":"--- PASS: TestChecksum (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915864125Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksum","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915874581Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksumFileDoesntExist"}
+{"Time":"2026-07-01T14:45:06.915879535Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksumFileDoesntExist","Output":"=== RUN   TestChecksumFileDoesntExist\n"}
+{"Time":"2026-07-01T14:45:06.915884686Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksumFileDoesntExist","Output":"--- PASS: TestChecksumFileDoesntExist (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915888906Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestChecksumFileDoesntExist","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915893307Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestInvalidAlgorithm"}
+{"Time":"2026-07-01T14:45:06.915897351Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestInvalidAlgorithm","Output":"=== RUN   TestInvalidAlgorithm\n"}
+{"Time":"2026-07-01T14:45:06.915902313Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestInvalidAlgorithm","Output":"--- PASS: TestInvalidAlgorithm (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.91590705Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestInvalidAlgorithm","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915911174Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra"}
+{"Time":"2026-07-01T14:45:06.915915441Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra","Output":"=== RUN   TestExtra\n"}
+{"Time":"2026-07-01T14:45:06.915920028Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/string"}
+{"Time":"2026-07-01T14:45:06.915923848Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/string","Output":"=== RUN   TestExtra/string\n"}
+{"Time":"2026-07-01T14:45:06.915929065Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/string","Output":"--- PASS: TestExtra/string (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915932955Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/string","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915937033Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/missing_field"}
+{"Time":"2026-07-01T14:45:06.915941865Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/missing_field","Output":"=== RUN   TestExtra/missing_field\n"}
+{"Time":"2026-07-01T14:45:06.915946642Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/missing_field","Output":"--- PASS: TestExtra/missing_field (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915951297Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/missing_field","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915955244Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/complex"}
+{"Time":"2026-07-01T14:45:06.915959218Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/complex","Output":"=== RUN   TestExtra/complex\n"}
+{"Time":"2026-07-01T14:45:06.915963786Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/complex","Output":"--- PASS: TestExtra/complex (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.915967946Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/complex","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915972764Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/array"}
+{"Time":"2026-07-01T14:45:06.91597921Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/array","Output":"=== RUN   TestExtra/array\n"}
+{"Time":"2026-07-01T14:45:06.915983768Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/array","Output":"--- PASS: TestExtra/array (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.9159884Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/array","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.915992443Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/unmarshal_error"}
+{"Time":"2026-07-01T14:45:06.91599616Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/unmarshal_error","Output":"=== RUN   TestExtra/unmarshal_error\n"}
+{"Time":"2026-07-01T14:45:06.916003998Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/unmarshal_error","Output":"--- PASS: TestExtra/unmarshal_error (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916008347Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/unmarshal_error","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916012278Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/marshal_error"}
+{"Time":"2026-07-01T14:45:06.916015802Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/marshal_error","Output":"=== RUN   TestExtra/marshal_error\n"}
+{"Time":"2026-07-01T14:45:06.916020062Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/marshal_error","Output":"--- PASS: TestExtra/marshal_error (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916024032Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra/marshal_error","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916030356Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra","Output":"--- PASS: TestExtra (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916034382Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestExtra","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916038195Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByIDs"}
+{"Time":"2026-07-01T14:45:06.916042262Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByIDs","Output":"=== RUN   TestByIDs\n"}
+{"Time":"2026-07-01T14:45:06.916048235Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByIDs","Output":"--- PASS: TestByIDs (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916051909Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByIDs","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916056328Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByExts"}
+{"Time":"2026-07-01T14:45:06.916060158Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByExts","Output":"=== RUN   TestByExts\n"}
+{"Time":"2026-07-01T14:45:06.916065226Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByExts","Output":"--- PASS: TestByExts (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916069934Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByExts","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916073738Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByFormats"}
+{"Time":"2026-07-01T14:45:06.916077925Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByFormats","Output":"=== RUN   TestByFormats\n"}
+{"Time":"2026-07-01T14:45:06.916084426Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByFormats","Output":"--- PASS: TestByFormats (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916088401Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestByFormats","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916092121Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestPaths"}
+{"Time":"2026-07-01T14:45:06.916095476Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestPaths","Output":"=== RUN   TestPaths\n"}
+{"Time":"2026-07-01T14:45:06.916100197Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestPaths","Output":"--- PASS: TestPaths (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916104675Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestPaths","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916109024Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher"}
+{"Time":"2026-07-01T14:45:06.916114596Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher","Output":"=== RUN   TestRefresher\n"}
+{"Time":"2026-07-01T14:45:06.916118747Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/ok"}
+{"Time":"2026-07-01T14:45:06.916123252Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/ok","Output":"=== RUN   TestRefresher/ok\n"}
+{"Time":"2026-07-01T14:45:06.916128902Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/ok","Output":"--- PASS: TestRefresher/ok (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916132982Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/ok","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916138008Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/nok"}
+{"Time":"2026-07-01T14:45:06.916141477Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/nok","Output":"=== RUN   TestRefresher/nok\n"}
+{"Time":"2026-07-01T14:45:06.916146399Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/nok","Output":"--- PASS: TestRefresher/nok (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916154071Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/nok","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916158239Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/not_a_checksum"}
+{"Time":"2026-07-01T14:45:06.916163995Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/not_a_checksum","Output":"=== RUN   TestRefresher/not_a_checksum\n"}
+{"Time":"2026-07-01T14:45:06.916170327Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/not_a_checksum","Output":"--- PASS: TestRefresher/not_a_checksum (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.91617488Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher/not_a_checksum","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916180115Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher","Output":"--- PASS: TestRefresher (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916184624Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestRefresher","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916189426Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit"}
+{"Time":"2026-07-01T14:45:06.91619352Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit","Output":"=== RUN   TestVisit\n"}
+{"Time":"2026-07-01T14:45:06.9162008Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit/ok"}
+{"Time":"2026-07-01T14:45:06.916204424Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit/ok","Output":"=== RUN   TestVisit/ok\n"}
+{"Time":"2026-07-01T14:45:06.916209575Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit/ok","Output":"--- PASS: TestVisit/ok (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916213674Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit/ok","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916217927Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit/nok"}
+{"Time":"2026-07-01T14:45:06.916221767Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit/nok","Output":"=== RUN   TestVisit/nok\n"}
+{"Time":"2026-07-01T14:45:06.916226378Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit/nok","Output":"--- PASS: TestVisit/nok (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916231242Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit/nok","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916235756Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit","Output":"--- PASS: TestVisit (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916239925Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestVisit","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916244699Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestMarshalJSON"}
+{"Time":"2026-07-01T14:45:06.91624848Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestMarshalJSON","Output":"=== RUN   TestMarshalJSON\n"}
+{"Time":"2026-07-01T14:45:06.916253575Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestMarshalJSON","Output":"--- PASS: TestMarshalJSON (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916257645Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestMarshalJSON","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916262615Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts"}
+{"Time":"2026-07-01T14:45:06.916266384Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts","Output":"=== RUN   Test_ByBinaryLikeArtifacts\n"}
+{"Time":"2026-07-01T14:45:06.916270949Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keep_all_unique_paths"}
+{"Time":"2026-07-01T14:45:06.916274592Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keep_all_unique_paths","Output":"=== RUN   Test_ByBinaryLikeArtifacts/keep_all_unique_paths\n"}
+{"Time":"2026-07-01T14:45:06.91628139Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keep_all_unique_paths","Output":"--- PASS: Test_ByBinaryLikeArtifacts/keep_all_unique_paths (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916287456Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keep_all_unique_paths","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916292881Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/duplicate_path_between_binaries_ignored_(odd_configuration)"}
+{"Time":"2026-07-01T14:45:06.916296902Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/duplicate_path_between_binaries_ignored_(odd_configuration)","Output":"=== RUN   Test_ByBinaryLikeArtifacts/duplicate_path_between_binaries_ignored_(odd_configuration)\n"}
+{"Time":"2026-07-01T14:45:06.916305196Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/duplicate_path_between_binaries_ignored_(odd_configuration)","Output":"--- PASS: Test_ByBinaryLikeArtifacts/duplicate_path_between_binaries_ignored_(odd_configuration) (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916309782Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/duplicate_path_between_binaries_ignored_(odd_configuration)","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916313943Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_duplicate_binary"}
+{"Time":"2026-07-01T14:45:06.916317841Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_duplicate_binary","Output":"=== RUN   Test_ByBinaryLikeArtifacts/remove_duplicate_binary\n"}
+{"Time":"2026-07-01T14:45:06.916322836Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_duplicate_binary","Output":"--- PASS: Test_ByBinaryLikeArtifacts/remove_duplicate_binary (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916327329Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_duplicate_binary","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916331605Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_duplicate_universal_binary"}
+{"Time":"2026-07-01T14:45:06.916336742Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_duplicate_universal_binary","Output":"=== RUN   Test_ByBinaryLikeArtifacts/remove_duplicate_universal_binary\n"}
+{"Time":"2026-07-01T14:45:06.916342071Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_duplicate_universal_binary","Output":"--- PASS: Test_ByBinaryLikeArtifacts/remove_duplicate_universal_binary (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916346241Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_duplicate_universal_binary","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916350211Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_multiple_duplicates"}
+{"Time":"2026-07-01T14:45:06.916353964Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_multiple_duplicates","Output":"=== RUN   Test_ByBinaryLikeArtifacts/remove_multiple_duplicates\n"}
+{"Time":"2026-07-01T14:45:06.916358793Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_multiple_duplicates","Output":"--- PASS: Test_ByBinaryLikeArtifacts/remove_multiple_duplicates (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916363395Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/remove_multiple_duplicates","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916367335Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keep_duplicate_uploadable_binaries_(odd_configuration)"}
+{"Time":"2026-07-01T14:45:06.916371192Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keep_duplicate_uploadable_binaries_(odd_configuration)","Output":"=== RUN   Test_ByBinaryLikeArtifacts/keep_duplicate_uploadable_binaries_(odd_configuration)\n"}
+{"Time":"2026-07-01T14:45:06.916380191Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keep_duplicate_uploadable_binaries_(odd_configuration)","Output":"--- PASS: Test_ByBinaryLikeArtifacts/keep_duplicate_uploadable_binaries_(odd_configuration) (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916384729Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keep_duplicate_uploadable_binaries_(odd_configuration)","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916389433Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keeps_duplicates_when_there_is_no_uploadable_binary"}
+{"Time":"2026-07-01T14:45:06.916393333Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keeps_duplicates_when_there_is_no_uploadable_binary","Output":"=== RUN   Test_ByBinaryLikeArtifacts/keeps_duplicates_when_there_is_no_uploadable_binary\n"}
+{"Time":"2026-07-01T14:45:06.916398469Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keeps_duplicates_when_there_is_no_uploadable_binary","Output":"--- PASS: Test_ByBinaryLikeArtifacts/keeps_duplicates_when_there_is_no_uploadable_binary (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916403061Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts/keeps_duplicates_when_there_is_no_uploadable_binary","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916408097Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts","Output":"--- PASS: Test_ByBinaryLikeArtifacts (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.91641537Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"Test_ByBinaryLikeArtifacts","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916419966Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactStringer"}
+{"Time":"2026-07-01T14:45:06.916423871Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactStringer","Output":"=== RUN   TestArtifactStringer\n"}
+{"Time":"2026-07-01T14:45:06.916429192Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactStringer","Output":"--- PASS: TestArtifactStringer (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916433548Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactStringer","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916437506Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer"}
+{"Time":"2026-07-01T14:45:06.916440885Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer","Output":"=== RUN   TestArtifactTypeStringer\n"}
+{"Time":"2026-07-01T14:45:06.916518284Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-1-Archive"}
+{"Time":"2026-07-01T14:45:06.916534777Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-1-Archive","Output":"=== RUN   TestArtifactTypeStringer/type-1-Archive\n"}
+{"Time":"2026-07-01T14:45:06.916546146Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-1-Archive","Output":"--- PASS: TestArtifactTypeStringer/type-1-Archive (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916553763Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-1-Archive","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916560039Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-2-Binary"}
+{"Time":"2026-07-01T14:45:06.916574352Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-2-Binary","Output":"=== RUN   TestArtifactTypeStringer/type-2-Binary\n"}
+{"Time":"2026-07-01T14:45:06.916611301Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-2-Binary","Output":"--- PASS: TestArtifactTypeStringer/type-2-Binary (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916617391Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-2-Binary","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916624713Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-3-File"}
+{"Time":"2026-07-01T14:45:06.916628711Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-3-File","Output":"=== RUN   TestArtifactTypeStringer/type-3-File\n"}
+{"Time":"2026-07-01T14:45:06.916635541Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-3-File","Output":"--- PASS: TestArtifactTypeStringer/type-3-File (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916643901Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-3-File","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916648698Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-4-Binary"}
+{"Time":"2026-07-01T14:45:06.916653038Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-4-Binary","Output":"=== RUN   TestArtifactTypeStringer/type-4-Binary\n"}
+{"Time":"2026-07-01T14:45:06.916661058Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-4-Binary","Output":"--- PASS: TestArtifactTypeStringer/type-4-Binary (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916667323Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-4-Binary","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.91667439Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-5-Binary"}
+{"Time":"2026-07-01T14:45:06.916679511Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-5-Binary","Output":"=== RUN   TestArtifactTypeStringer/type-5-Binary\n"}
+{"Time":"2026-07-01T14:45:06.91669349Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-5-Binary","Output":"--- PASS: TestArtifactTypeStringer/type-5-Binary (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916698529Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-5-Binary","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.91670358Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-6-Linux_Package"}
+{"Time":"2026-07-01T14:45:06.916708598Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-6-Linux_Package","Output":"=== RUN   TestArtifactTypeStringer/type-6-Linux_Package\n"}
+{"Time":"2026-07-01T14:45:06.916716381Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-6-Linux_Package","Output":"--- PASS: TestArtifactTypeStringer/type-6-Linux_Package (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916721493Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-6-Linux_Package","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916731425Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-7-Snap"}
+{"Time":"2026-07-01T14:45:06.916736873Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-7-Snap","Output":"=== RUN   TestArtifactTypeStringer/type-7-Snap\n"}
+{"Time":"2026-07-01T14:45:06.916744676Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-7-Snap","Output":"--- PASS: TestArtifactTypeStringer/type-7-Snap (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916750831Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-7-Snap","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916757015Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-8-Snap"}
+{"Time":"2026-07-01T14:45:06.916761141Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-8-Snap","Output":"=== RUN   TestArtifactTypeStringer/type-8-Snap\n"}
+{"Time":"2026-07-01T14:45:06.916768015Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-8-Snap","Output":"--- PASS: TestArtifactTypeStringer/type-8-Snap (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916775081Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-8-Snap","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916780223Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-9-Docker_Image"}
+{"Time":"2026-07-01T14:45:06.916784554Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-9-Docker_Image","Output":"=== RUN   TestArtifactTypeStringer/type-9-Docker_Image\n"}
+{"Time":"2026-07-01T14:45:06.916810038Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-9-Docker_Image","Output":"--- PASS: TestArtifactTypeStringer/type-9-Docker_Image (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916816801Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-9-Docker_Image","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916823729Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-10-Published_Docker_Image"}
+{"Time":"2026-07-01T14:45:06.916834977Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-10-Published_Docker_Image","Output":"=== RUN   TestArtifactTypeStringer/type-10-Published_Docker_Image\n"}
+{"Time":"2026-07-01T14:45:06.916843165Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-10-Published_Docker_Image","Output":"--- PASS: TestArtifactTypeStringer/type-10-Published_Docker_Image (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916848275Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-10-Published_Docker_Image","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916852946Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-11-Docker_Manifest"}
+{"Time":"2026-07-01T14:45:06.916857041Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-11-Docker_Manifest","Output":"=== RUN   TestArtifactTypeStringer/type-11-Docker_Manifest\n"}
+{"Time":"2026-07-01T14:45:06.916864655Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-11-Docker_Manifest","Output":"--- PASS: TestArtifactTypeStringer/type-11-Docker_Manifest (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916873826Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-11-Docker_Manifest","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916878692Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-12-Checksum"}
+{"Time":"2026-07-01T14:45:06.916883509Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-12-Checksum","Output":"=== RUN   TestArtifactTypeStringer/type-12-Checksum\n"}
+{"Time":"2026-07-01T14:45:06.91689118Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-12-Checksum","Output":"--- PASS: TestArtifactTypeStringer/type-12-Checksum (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916895989Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-12-Checksum","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.91690263Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-13-Signature"}
+{"Time":"2026-07-01T14:45:06.916907055Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-13-Signature","Output":"=== RUN   TestArtifactTypeStringer/type-13-Signature\n"}
+{"Time":"2026-07-01T14:45:06.916914899Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-13-Signature","Output":"--- PASS: TestArtifactTypeStringer/type-13-Signature (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916920035Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-13-Signature","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916924965Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-14-Certificate"}
+{"Time":"2026-07-01T14:45:06.916929224Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-14-Certificate","Output":"=== RUN   TestArtifactTypeStringer/type-14-Certificate\n"}
+{"Time":"2026-07-01T14:45:06.916936218Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-14-Certificate","Output":"--- PASS: TestArtifactTypeStringer/type-14-Certificate (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916947398Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-14-Certificate","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916963966Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-15-Source"}
+{"Time":"2026-07-01T14:45:06.916968394Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-15-Source","Output":"=== RUN   TestArtifactTypeStringer/type-15-Source\n"}
+{"Time":"2026-07-01T14:45:06.916975379Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-15-Source","Output":"--- PASS: TestArtifactTypeStringer/type-15-Source (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.916980386Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-15-Source","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.916986485Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-16-Brew_Tap"}
+{"Time":"2026-07-01T14:45:06.916990522Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-16-Brew_Tap","Output":"=== RUN   TestArtifactTypeStringer/type-16-Brew_Tap\n"}
+{"Time":"2026-07-01T14:45:06.916999918Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-16-Brew_Tap","Output":"--- PASS: TestArtifactTypeStringer/type-16-Brew_Tap (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917004658Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-16-Brew_Tap","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.91701045Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-17-Nixpkg"}
+{"Time":"2026-07-01T14:45:06.917014338Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-17-Nixpkg","Output":"=== RUN   TestArtifactTypeStringer/type-17-Nixpkg\n"}
+{"Time":"2026-07-01T14:45:06.917026251Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-17-Nixpkg","Output":"--- PASS: TestArtifactTypeStringer/type-17-Nixpkg (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917032705Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-17-Nixpkg","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917037646Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-18-Winget_Manifest"}
+{"Time":"2026-07-01T14:45:06.917041885Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-18-Winget_Manifest","Output":"=== RUN   TestArtifactTypeStringer/type-18-Winget_Manifest\n"}
+{"Time":"2026-07-01T14:45:06.91704899Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-18-Winget_Manifest","Output":"--- PASS: TestArtifactTypeStringer/type-18-Winget_Manifest (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.9170538Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-18-Winget_Manifest","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917059821Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-19-Winget_Manifest"}
+{"Time":"2026-07-01T14:45:06.917064312Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-19-Winget_Manifest","Output":"=== RUN   TestArtifactTypeStringer/type-19-Winget_Manifest\n"}
+{"Time":"2026-07-01T14:45:06.917097684Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-19-Winget_Manifest","Output":"--- PASS: TestArtifactTypeStringer/type-19-Winget_Manifest (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917105245Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-19-Winget_Manifest","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917137992Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-20-Winget_Manifest"}
+{"Time":"2026-07-01T14:45:06.917142671Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-20-Winget_Manifest","Output":"=== RUN   TestArtifactTypeStringer/type-20-Winget_Manifest\n"}
+{"Time":"2026-07-01T14:45:06.917150577Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-20-Winget_Manifest","Output":"--- PASS: TestArtifactTypeStringer/type-20-Winget_Manifest (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917174933Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-20-Winget_Manifest","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917181715Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-21-PKGBUILD"}
+{"Time":"2026-07-01T14:45:06.917189081Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-21-PKGBUILD","Output":"=== RUN   TestArtifactTypeStringer/type-21-PKGBUILD\n"}
+{"Time":"2026-07-01T14:45:06.91719897Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-21-PKGBUILD","Output":"--- PASS: TestArtifactTypeStringer/type-21-PKGBUILD (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917215715Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-21-PKGBUILD","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917223179Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-22-SRCINFO"}
+{"Time":"2026-07-01T14:45:06.91722719Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-22-SRCINFO","Output":"=== RUN   TestArtifactTypeStringer/type-22-SRCINFO\n"}
+{"Time":"2026-07-01T14:45:06.917234941Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-22-SRCINFO","Output":"--- PASS: TestArtifactTypeStringer/type-22-SRCINFO (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917241571Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-22-SRCINFO","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917246362Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-23-Krew_Plugin_Manifest"}
+{"Time":"2026-07-01T14:45:06.917250874Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-23-Krew_Plugin_Manifest","Output":"=== RUN   TestArtifactTypeStringer/type-23-Krew_Plugin_Manifest\n"}
+{"Time":"2026-07-01T14:45:06.917257999Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-23-Krew_Plugin_Manifest","Output":"--- PASS: TestArtifactTypeStringer/type-23-Krew_Plugin_Manifest (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917262904Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-23-Krew_Plugin_Manifest","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917269071Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-24-Scoop_Manifest"}
+{"Time":"2026-07-01T14:45:06.917273508Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-24-Scoop_Manifest","Output":"=== RUN   TestArtifactTypeStringer/type-24-Scoop_Manifest\n"}
+{"Time":"2026-07-01T14:45:06.917280523Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-24-Scoop_Manifest","Output":"--- PASS: TestArtifactTypeStringer/type-24-Scoop_Manifest (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917285531Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-24-Scoop_Manifest","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917290968Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-25-SBOM"}
+{"Time":"2026-07-01T14:45:06.91729517Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-25-SBOM","Output":"=== RUN   TestArtifactTypeStringer/type-25-SBOM\n"}
+{"Time":"2026-07-01T14:45:06.917327141Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-25-SBOM","Output":"--- PASS: TestArtifactTypeStringer/type-25-SBOM (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.91737665Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-25-SBOM","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917423024Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-26-Chocolatey"}
+{"Time":"2026-07-01T14:45:06.917430565Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-26-Chocolatey","Output":"=== RUN   TestArtifactTypeStringer/type-26-Chocolatey\n"}
+{"Time":"2026-07-01T14:45:06.917445046Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-26-Chocolatey","Output":"--- PASS: TestArtifactTypeStringer/type-26-Chocolatey (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917451399Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-26-Chocolatey","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917456425Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-27-C_Header"}
+{"Time":"2026-07-01T14:45:06.917462489Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-27-C_Header","Output":"=== RUN   TestArtifactTypeStringer/type-27-C_Header\n"}
+{"Time":"2026-07-01T14:45:06.91747074Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-27-C_Header","Output":"--- PASS: TestArtifactTypeStringer/type-27-C_Header (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917475446Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-27-C_Header","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917479606Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-28-C_Archive_Library"}
+{"Time":"2026-07-01T14:45:06.917483658Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-28-C_Archive_Library","Output":"=== RUN   TestArtifactTypeStringer/type-28-C_Archive_Library\n"}
+{"Time":"2026-07-01T14:45:06.917528372Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-28-C_Archive_Library","Output":"--- PASS: TestArtifactTypeStringer/type-28-C_Archive_Library (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917534413Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-28-C_Archive_Library","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917540672Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-29-C_Shared_Library"}
+{"Time":"2026-07-01T14:45:06.917544725Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-29-C_Shared_Library","Output":"=== RUN   TestArtifactTypeStringer/type-29-C_Shared_Library\n"}
+{"Time":"2026-07-01T14:45:06.917565255Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-29-C_Shared_Library","Output":"--- PASS: TestArtifactTypeStringer/type-29-C_Shared_Library (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917570154Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-29-C_Shared_Library","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917576075Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-30-Metadata"}
+{"Time":"2026-07-01T14:45:06.917579928Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-30-Metadata","Output":"=== RUN   TestArtifactTypeStringer/type-30-Metadata\n"}
+{"Time":"2026-07-01T14:45:06.917586481Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-30-Metadata","Output":"--- PASS: TestArtifactTypeStringer/type-30-Metadata (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917597056Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/type-30-Metadata","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.91760327Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/unknown"}
+{"Time":"2026-07-01T14:45:06.917606729Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/unknown","Output":"=== RUN   TestArtifactTypeStringer/unknown\n"}
+{"Time":"2026-07-01T14:45:06.917613579Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/unknown","Output":"--- PASS: TestArtifactTypeStringer/unknown (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917618721Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer/unknown","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917624105Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer","Output":"--- PASS: TestArtifactTypeStringer (0.00s)\n"}
+{"Time":"2026-07-01T14:45:06.917628832Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Test":"TestArtifactTypeStringer","Elapsed":0}
+{"Time":"2026-07-01T14:45:06.917634977Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Output":"PASS\n"}
+{"Time":"2026-07-01T14:45:06.918218708Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Output":"ok  \tgithub.com/goreleaser/goreleaser/v2/internal/artifact\t0.018s\n"}
+{"Time":"2026-07-01T14:45:06.918233255Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/artifact","Elapsed":0.018}
+{"Time":"2026-07-01T14:45:18.09239611Z","Action":"start","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno"}
+{"Time":"2026-07-01T14:45:18.092459774Z","Action":"start","Package":"github.com/goreleaser/goreleaser/v2/internal/static"}
+{"Time":"2026-07-01T14:45:18.095842498Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestGoExampleConfig"}
+{"Time":"2026-07-01T14:45:18.095864117Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestGoExampleConfig","Output":"=== RUN   TestGoExampleConfig\n"}
+{"Time":"2026-07-01T14:45:18.096226979Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestGoExampleConfig","Output":"--- PASS: TestGoExampleConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.096242825Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestGoExampleConfig","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.096250123Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestZigExampleConfig"}
+{"Time":"2026-07-01T14:45:18.096254699Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestZigExampleConfig","Output":"=== RUN   TestZigExampleConfig\n"}
+{"Time":"2026-07-01T14:45:18.096458623Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestZigExampleConfig","Output":"--- PASS: TestZigExampleConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.096469746Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestZigExampleConfig","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.096477072Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestBunExampleConfig"}
+{"Time":"2026-07-01T14:45:18.096489878Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestBunExampleConfig","Output":"=== RUN   TestBunExampleConfig\n"}
+{"Time":"2026-07-01T14:45:18.09668219Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestBunExampleConfig","Output":"--- PASS: TestBunExampleConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.096691458Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestBunExampleConfig","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.09669827Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestRustExampleConfig"}
+{"Time":"2026-07-01T14:45:18.096702609Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestRustExampleConfig","Output":"=== RUN   TestRustExampleConfig\n"}
+{"Time":"2026-07-01T14:45:18.09690949Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestRustExampleConfig","Output":"--- PASS: TestRustExampleConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.096919296Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestRustExampleConfig","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.096925218Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestDenoExampleConfig"}
+{"Time":"2026-07-01T14:45:18.096929468Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestDenoExampleConfig","Output":"=== RUN   TestDenoExampleConfig\n"}
+{"Time":"2026-07-01T14:45:18.09715013Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestDenoExampleConfig","Output":"--- PASS: TestDenoExampleConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.097179714Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Test":"TestDenoExampleConfig","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.097203422Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Output":"PASS\n"}
+{"Time":"2026-07-01T14:45:18.097637455Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Output":"ok  \tgithub.com/goreleaser/goreleaser/v2/internal/static\t0.005s\n"}
+{"Time":"2026-07-01T14:45:18.097650914Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/static","Elapsed":0.005}
+{"Time":"2026-07-01T14:45:18.106286948Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestDependencies"}
+{"Time":"2026-07-01T14:45:18.106321856Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestDependencies","Output":"=== RUN   TestDependencies\n"}
+{"Time":"2026-07-01T14:45:18.106329829Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestDependencies","Output":"--- PASS: TestDependencies (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106334303Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestDependencies","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106339918Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse"}
+{"Time":"2026-07-01T14:45:18.106345643Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse","Output":"=== RUN   TestParse\n"}
+{"Time":"2026-07-01T14:45:18.106350836Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/x86_64-pc-windows-msvc"}
+{"Time":"2026-07-01T14:45:18.106354728Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/x86_64-pc-windows-msvc","Output":"=== RUN   TestParse/x86_64-pc-windows-msvc\n"}
+{"Time":"2026-07-01T14:45:18.106361209Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/x86_64-pc-windows-msvc","Output":"--- PASS: TestParse/x86_64-pc-windows-msvc (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106365979Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/x86_64-pc-windows-msvc","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106373283Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/aarch64-apple-darwin"}
+{"Time":"2026-07-01T14:45:18.106377396Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/aarch64-apple-darwin","Output":"=== RUN   TestParse/aarch64-apple-darwin\n"}
+{"Time":"2026-07-01T14:45:18.106384185Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/aarch64-apple-darwin","Output":"--- PASS: TestParse/aarch64-apple-darwin (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106387609Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/aarch64-apple-darwin","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.10639051Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/invalid"}
+{"Time":"2026-07-01T14:45:18.106393219Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/invalid","Output":"=== RUN   TestParse/invalid\n"}
+{"Time":"2026-07-01T14:45:18.106400409Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/invalid","Output":"--- PASS: TestParse/invalid (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.10640387Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse/invalid","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106407933Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse","Output":"--- PASS: TestParse (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106411236Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestParse","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106415846Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults"}
+{"Time":"2026-07-01T14:45:18.106419679Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults","Output":"=== RUN   TestWithDefaults\n"}
+{"Time":"2026-07-01T14:45:18.106424063Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults/valid"}
+{"Time":"2026-07-01T14:45:18.106427901Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults/valid","Output":"=== RUN   TestWithDefaults/valid\n"}
+{"Time":"2026-07-01T14:45:18.106434266Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults/valid","Output":"--- PASS: TestWithDefaults/valid (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106439221Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults/valid","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106443648Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults/invalid_target"}
+{"Time":"2026-07-01T14:45:18.106447672Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults/invalid_target","Output":"=== RUN   TestWithDefaults/invalid_target\n"}
+{"Time":"2026-07-01T14:45:18.106451923Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults/invalid_target","Output":"--- PASS: TestWithDefaults/invalid_target (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106454981Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults/invalid_target","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106458343Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults","Output":"--- PASS: TestWithDefaults (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106463159Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestWithDefaults","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106467369Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestBuild"}
+{"Time":"2026-07-01T14:45:18.106470504Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestBuild","Output":"=== RUN   TestBuild\n"}
+{"Time":"2026-07-01T14:45:18.106473551Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestBuild","Output":"    build_test.go:74: deno not in PATH\n"}
+{"Time":"2026-07-01T14:45:18.106479477Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestBuild","Output":"--- SKIP: TestBuild (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106482549Z","Action":"skip","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestBuild","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106485348Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid"}
+{"Time":"2026-07-01T14:45:18.106488146Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid","Output":"=== RUN   TestIsValid\n"}
+{"Time":"2026-07-01T14:45:18.106491197Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-pc-windows-msvc"}
+{"Time":"2026-07-01T14:45:18.106493732Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-pc-windows-msvc","Output":"=== RUN   TestIsValid/x86_64-pc-windows-msvc\n"}
+{"Time":"2026-07-01T14:45:18.106498026Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-pc-windows-msvc","Output":"--- PASS: TestIsValid/x86_64-pc-windows-msvc (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.10650178Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-pc-windows-msvc","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106505109Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-apple-darwin"}
+{"Time":"2026-07-01T14:45:18.106507811Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-apple-darwin","Output":"=== RUN   TestIsValid/x86_64-apple-darwin\n"}
+{"Time":"2026-07-01T14:45:18.106511204Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-apple-darwin","Output":"--- PASS: TestIsValid/x86_64-apple-darwin (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.10651412Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-apple-darwin","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106517036Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/aarch64-apple-darwin"}
+{"Time":"2026-07-01T14:45:18.106520643Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/aarch64-apple-darwin","Output":"=== RUN   TestIsValid/aarch64-apple-darwin\n"}
+{"Time":"2026-07-01T14:45:18.106524024Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/aarch64-apple-darwin","Output":"--- PASS: TestIsValid/aarch64-apple-darwin (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.10652728Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/aarch64-apple-darwin","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106530326Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-unknown-linux-gnu"}
+{"Time":"2026-07-01T14:45:18.106532926Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-unknown-linux-gnu","Output":"=== RUN   TestIsValid/x86_64-unknown-linux-gnu\n"}
+{"Time":"2026-07-01T14:45:18.106538377Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-unknown-linux-gnu","Output":"--- PASS: TestIsValid/x86_64-unknown-linux-gnu (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106541685Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/x86_64-unknown-linux-gnu","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106546813Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/aarch64-unknown-linux-gnu"}
+{"Time":"2026-07-01T14:45:18.106550017Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/aarch64-unknown-linux-gnu","Output":"=== RUN   TestIsValid/aarch64-unknown-linux-gnu\n"}
+{"Time":"2026-07-01T14:45:18.106553763Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/aarch64-unknown-linux-gnu","Output":"--- PASS: TestIsValid/aarch64-unknown-linux-gnu (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106557249Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/aarch64-unknown-linux-gnu","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106560089Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/invalid"}
+{"Time":"2026-07-01T14:45:18.106562856Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/invalid","Output":"=== RUN   TestIsValid/invalid\n"}
+{"Time":"2026-07-01T14:45:18.106566127Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/invalid","Output":"--- PASS: TestIsValid/invalid (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106569378Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid/invalid","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106573114Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid","Output":"--- PASS: TestIsValid (0.00s)\n"}
+{"Time":"2026-07-01T14:45:18.106575989Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Test":"TestIsValid","Elapsed":0}
+{"Time":"2026-07-01T14:45:18.106578764Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Output":"PASS\n"}
+{"Time":"2026-07-01T14:45:18.106598912Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Output":"ok  \tgithub.com/goreleaser/goreleaser/v2/internal/builders/deno\t0.014s\n"}
+{"Time":"2026-07-01T14:45:18.106603976Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/internal/builders/deno","Elapsed":0.014}
+{"Time":"2026-07-01T14:45:27.720372647Z","Action":"start","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck"}
+{"Time":"2026-07-01T14:45:27.723782247Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestSystemDependencies"}
+{"Time":"2026-07-01T14:45:27.723799839Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestSystemDependencies","Output":"=== RUN   TestSystemDependencies\n"}
+{"Time":"2026-07-01T14:45:27.723839629Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestSystemDependencies","Output":"--- PASS: TestSystemDependencies (0.00s)\n"}
+{"Time":"2026-07-01T14:45:27.723847891Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestSystemDependencies","Elapsed":0}
+{"Time":"2026-07-01T14:45:27.723855139Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestSystemStringer"}
+{"Time":"2026-07-01T14:45:27.723859502Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestSystemStringer","Output":"=== RUN   TestSystemStringer\n"}
+{"Time":"2026-07-01T14:45:27.723867537Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestSystemStringer","Output":"--- PASS: TestSystemStringer (0.00s)\n"}
+{"Time":"2026-07-01T14:45:27.723872333Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestSystemStringer","Elapsed":0}
+{"Time":"2026-07-01T14:45:27.723875231Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestBuildDependencies"}
+{"Time":"2026-07-01T14:45:27.723877822Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestBuildDependencies","Output":"=== RUN   TestBuildDependencies\n"}
+{"Time":"2026-07-01T14:45:27.723884553Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestBuildDependencies","Output":"--- PASS: TestBuildDependencies (0.00s)\n"}
+{"Time":"2026-07-01T14:45:27.723890328Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestBuildDependencies","Elapsed":0}
+{"Time":"2026-07-01T14:45:27.723894399Z","Action":"run","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestBuildStringer"}
+{"Time":"2026-07-01T14:45:27.723897817Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestBuildStringer","Output":"=== RUN   TestBuildStringer\n"}
+{"Time":"2026-07-01T14:45:27.723904936Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestBuildStringer","Output":"--- PASS: TestBuildStringer (0.00s)\n"}
+{"Time":"2026-07-01T14:45:27.723909254Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Test":"TestBuildStringer","Elapsed":0}
+{"Time":"2026-07-01T14:45:27.723917417Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Output":"PASS\n"}
+{"Time":"2026-07-01T14:45:27.724260059Z","Action":"output","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Output":"ok  \tgithub.com/goreleaser/goreleaser/v2/pkg/healthcheck\t0.004s\n"}
+{"Time":"2026-07-01T14:45:27.724278556Z","Action":"pass","Package":"github.com/goreleaser/goreleaser/v2/pkg/healthcheck","Elapsed":0.004}
+reward=1 graded=108 found=108 failed=0 parsed=109 framework=go exit_code=0

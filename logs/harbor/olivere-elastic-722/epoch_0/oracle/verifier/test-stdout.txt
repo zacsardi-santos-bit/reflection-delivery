@@ -1,0 +1,241 @@
+patching file search_shards_test.go
+{"Time":"2026-07-01T14:59:04.216066097Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestZeroBackoff"}
+{"Time":"2026-07-01T14:59:04.216260545Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestZeroBackoff","Output":"=== RUN   TestZeroBackoff\n"}
+{"Time":"2026-07-01T14:59:04.216278772Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestZeroBackoff","Output":"--- PASS: TestZeroBackoff (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.216464655Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestZeroBackoff","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.216471382Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestStopBackoff"}
+{"Time":"2026-07-01T14:59:04.216474691Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestStopBackoff","Output":"=== RUN   TestStopBackoff\n"}
+{"Time":"2026-07-01T14:59:04.216480011Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestStopBackoff","Output":"--- PASS: TestStopBackoff (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.216638662Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestStopBackoff","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.216642654Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestConstantBackoff"}
+{"Time":"2026-07-01T14:59:04.216645455Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestConstantBackoff","Output":"=== RUN   TestConstantBackoff\n"}
+{"Time":"2026-07-01T14:59:04.216651Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestConstantBackoff","Output":"--- PASS: TestConstantBackoff (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.217066501Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestConstantBackoff","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.217072917Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestSimpleBackoff"}
+{"Time":"2026-07-01T14:59:04.217075845Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestSimpleBackoff","Output":"=== RUN   TestSimpleBackoff\n"}
+{"Time":"2026-07-01T14:59:04.217081088Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestSimpleBackoff","Output":"--- PASS: TestSimpleBackoff (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.217246416Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestSimpleBackoff","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.217250743Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestExponentialBackoff"}
+{"Time":"2026-07-01T14:59:04.217256192Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestExponentialBackoff","Output":"=== RUN   TestExponentialBackoff\n"}
+{"Time":"2026-07-01T14:59:04.217269844Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestExponentialBackoff","Output":"--- PASS: TestExponentialBackoff (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.217308154Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestExponentialBackoff","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.217311653Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestBulkDeleteRequestSerialization"}
+{"Time":"2026-07-01T14:59:04.217314561Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestBulkDeleteRequestSerialization","Output":"=== RUN   TestBulkDeleteRequestSerialization\n"}
+{"Time":"2026-07-01T14:59:04.217379695Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestBulkDeleteRequestSerialization","Output":"--- PASS: TestBulkDeleteRequestSerialization (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.217428167Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestBulkDeleteRequestSerialization","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.217433915Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestBulkIndexRequestSerialization"}
+{"Time":"2026-07-01T14:59:04.217436826Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestBulkIndexRequestSerialization","Output":"=== RUN   TestBulkIndexRequestSerialization\n"}
+{"Time":"2026-07-01T14:59:04.217544048Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestBulkIndexRequestSerialization","Output":"--- PASS: TestBulkIndexRequestSerialization (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.221873167Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestBulkIndexRequestSerialization","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.221894398Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFailedBulkRequests"}
+{"Time":"2026-07-01T14:59:04.221898646Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFailedBulkRequests","Output":"=== RUN   TestFailedBulkRequests\n"}
+{"Time":"2026-07-01T14:59:04.222059705Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFailedBulkRequests","Output":"--- PASS: TestFailedBulkRequests (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.22260234Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFailedBulkRequests","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.222607363Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestBulkContentType"}
+{"Time":"2026-07-01T14:59:04.22261232Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestBulkContentType","Output":"=== RUN   TestBulkContentType\n"}
+{"Time":"2026-07-01T14:59:04.223438034Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestBulkContentType","Output":"--- PASS: TestBulkContentType (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.223554131Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestBulkContentType","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.223559549Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestBulkUpdateRequestSerialization"}
+{"Time":"2026-07-01T14:59:04.223562717Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestBulkUpdateRequestSerialization","Output":"=== RUN   TestBulkUpdateRequestSerialization\n"}
+{"Time":"2026-07-01T14:59:04.22366782Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestBulkUpdateRequestSerialization","Output":"--- PASS: TestBulkUpdateRequestSerialization (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.22373398Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestBulkUpdateRequestSerialization","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.223737783Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestCanonicalize"}
+{"Time":"2026-07-01T14:59:04.223740833Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestCanonicalize","Output":"=== RUN   TestCanonicalize\n"}
+{"Time":"2026-07-01T14:59:04.223764077Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestCanonicalize","Output":"--- PASS: TestCanonicalize (0.00s)\n"}
+{"Time":"2026-07-01T14:59:04.226660548Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestCanonicalize","Elapsed":0}
+{"Time":"2026-07-01T14:59:04.226678838Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientSniffFailure"}
+{"Time":"2026-07-01T14:59:04.226684708Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSniffFailure","Output":"=== RUN   TestClientSniffFailure\n"}
+{"Time":"2026-07-01T14:59:09.229001507Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSniffFailure","Output":"--- PASS: TestClientSniffFailure (5.00s)\n"}
+{"Time":"2026-07-01T14:59:09.229677596Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientSniffFailure","Elapsed":5}
+{"Time":"2026-07-01T14:59:09.22969615Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientWillMarkConnectionsAsAliveWhenAllAreDead"}
+{"Time":"2026-07-01T14:59:09.229704694Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientWillMarkConnectionsAsAliveWhenAllAreDead","Output":"=== RUN   TestClientWillMarkConnectionsAsAliveWhenAllAreDead\n"}
+{"Time":"2026-07-01T14:59:09.229910276Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientWillMarkConnectionsAsAliveWhenAllAreDead","Output":"--- PASS: TestClientWillMarkConnectionsAsAliveWhenAllAreDead (0.00s)\n"}
+{"Time":"2026-07-01T14:59:09.230525872Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientWillMarkConnectionsAsAliveWhenAllAreDead","Elapsed":0}
+{"Time":"2026-07-01T14:59:09.230544594Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientHealthcheckStartupTimeout"}
+{"Time":"2026-07-01T14:59:09.230550428Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientHealthcheckStartupTimeout","Output":"=== RUN   TestClientHealthcheckStartupTimeout\n"}
+{"Time":"2026-07-01T14:59:14.233666785Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientHealthcheckStartupTimeout","Output":"--- PASS: TestClientHealthcheckStartupTimeout (5.00s)\n"}
+{"Time":"2026-07-01T14:59:14.233736897Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientHealthcheckStartupTimeout","Elapsed":5}
+{"Time":"2026-07-01T14:59:14.233746293Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientHealthcheckTimeoutLeak"}
+{"Time":"2026-07-01T14:59:14.23375154Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientHealthcheckTimeoutLeak","Output":"=== RUN   TestClientHealthcheckTimeoutLeak\n"}
+{"Time":"2026-07-01T14:59:15.737831115Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientHealthcheckTimeoutLeak","Output":"--- PASS: TestClientHealthcheckTimeoutLeak (1.50s)\n"}
+{"Time":"2026-07-01T14:59:15.738125369Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientHealthcheckTimeoutLeak","Elapsed":1.5}
+{"Time":"2026-07-01T14:59:15.738135527Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestSimpleClientDefaults"}
+{"Time":"2026-07-01T14:59:15.738138999Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestSimpleClientDefaults","Output":"=== RUN   TestSimpleClientDefaults\n"}
+{"Time":"2026-07-01T14:59:15.738149056Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestSimpleClientDefaults","Output":"--- PASS: TestSimpleClientDefaults (0.00s)\n"}
+{"Time":"2026-07-01T14:59:15.738673054Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestSimpleClientDefaults","Elapsed":0}
+{"Time":"2026-07-01T14:59:15.738678962Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientStartAndStopWithSnifferAndHealthchecksDisabled"}
+{"Time":"2026-07-01T14:59:15.738683431Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientStartAndStopWithSnifferAndHealthchecksDisabled","Output":"=== RUN   TestClientStartAndStopWithSnifferAndHealthchecksDisabled\n"}
+{"Time":"2026-07-01T14:59:15.738689212Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientStartAndStopWithSnifferAndHealthchecksDisabled","Output":"--- PASS: TestClientStartAndStopWithSnifferAndHealthchecksDisabled (0.00s)\n"}
+{"Time":"2026-07-01T14:59:15.739547687Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientStartAndStopWithSnifferAndHealthchecksDisabled","Elapsed":0}
+{"Time":"2026-07-01T14:59:15.739553498Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientSniffTimeoutLeak"}
+{"Time":"2026-07-01T14:59:15.739557905Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSniffTimeoutLeak","Output":"=== RUN   TestClientSniffTimeoutLeak\n"}
+{"Time":"2026-07-01T14:59:17.242550944Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSniffTimeoutLeak","Output":"--- PASS: TestClientSniffTimeoutLeak (1.50s)\n"}
+{"Time":"2026-07-01T14:59:17.242746085Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientSniffTimeoutLeak","Elapsed":1.5}
+{"Time":"2026-07-01T14:59:17.242764883Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientExtractHostname"}
+{"Time":"2026-07-01T14:59:17.242771037Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientExtractHostname","Output":"=== RUN   TestClientExtractHostname\n"}
+{"Time":"2026-07-01T14:59:17.24278472Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientExtractHostname","Output":"--- PASS: TestClientExtractHostname (0.00s)\n"}
+{"Time":"2026-07-01T14:59:17.242865471Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientExtractHostname","Elapsed":0}
+{"Time":"2026-07-01T14:59:17.242871907Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnHealthy"}
+{"Time":"2026-07-01T14:59:17.242875026Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnHealthy","Output":"=== RUN   TestClientSelectConnHealthy\n"}
+{"Time":"2026-07-01T14:59:17.242880226Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnHealthy","Output":"--- PASS: TestClientSelectConnHealthy (0.00s)\n"}
+{"Time":"2026-07-01T14:59:17.242978482Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnHealthy","Elapsed":0}
+{"Time":"2026-07-01T14:59:17.242984464Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnHealthyAndDead"}
+{"Time":"2026-07-01T14:59:17.242987448Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnHealthyAndDead","Output":"=== RUN   TestClientSelectConnHealthyAndDead\n"}
+{"Time":"2026-07-01T14:59:17.242994012Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnHealthyAndDead","Output":"--- PASS: TestClientSelectConnHealthyAndDead (0.00s)\n"}
+{"Time":"2026-07-01T14:59:17.243072545Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnHealthyAndDead","Elapsed":0}
+{"Time":"2026-07-01T14:59:17.243077754Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnDeadAndHealthy"}
+{"Time":"2026-07-01T14:59:17.243081498Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnDeadAndHealthy","Output":"=== RUN   TestClientSelectConnDeadAndHealthy\n"}
+{"Time":"2026-07-01T14:59:17.243086799Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnDeadAndHealthy","Output":"--- PASS: TestClientSelectConnDeadAndHealthy (0.00s)\n"}
+{"Time":"2026-07-01T14:59:17.243161304Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnDeadAndHealthy","Elapsed":0}
+{"Time":"2026-07-01T14:59:17.243169101Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnAllDead"}
+{"Time":"2026-07-01T14:59:17.243172196Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnAllDead","Output":"=== RUN   TestClientSelectConnAllDead\n"}
+{"Time":"2026-07-01T14:59:17.243177237Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnAllDead","Output":"--- PASS: TestClientSelectConnAllDead (0.00s)\n"}
+{"Time":"2026-07-01T14:59:17.247090873Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClientSelectConnAllDead","Elapsed":0}
+{"Time":"2026-07-01T14:59:17.247109764Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestPerformRequestWithCancel"}
+{"Time":"2026-07-01T14:59:17.247114906Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestPerformRequestWithCancel","Output":"=== RUN   TestPerformRequestWithCancel\n"}
+{"Time":"2026-07-01T14:59:18.247234178Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestPerformRequestWithCancel","Output":"--- PASS: TestPerformRequestWithCancel (1.00s)\n"}
+{"Time":"2026-07-01T14:59:18.247670929Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestPerformRequestWithCancel","Elapsed":1}
+{"Time":"2026-07-01T14:59:18.24768356Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestPerformRequestWithTimeout"}
+{"Time":"2026-07-01T14:59:18.247688527Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestPerformRequestWithTimeout","Output":"=== RUN   TestPerformRequestWithTimeout\n"}
+{"Time":"2026-07-01T14:59:19.247835615Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestPerformRequestWithTimeout","Output":"--- PASS: TestPerformRequestWithTimeout (1.00s)\n"}
+{"Time":"2026-07-01T14:59:19.249804593Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestPerformRequestWithTimeout","Elapsed":1}
+{"Time":"2026-07-01T14:59:19.249824016Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClusterHealthURLs"}
+{"Time":"2026-07-01T14:59:19.249828378Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClusterHealthURLs","Output":"=== RUN   TestClusterHealthURLs\n"}
+{"Time":"2026-07-01T14:59:19.24983899Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClusterHealthURLs","Output":"--- PASS: TestClusterHealthURLs (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.250542769Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClusterHealthURLs","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.250549859Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClusterStateURLs"}
+{"Time":"2026-07-01T14:59:19.250553713Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClusterStateURLs","Output":"=== RUN   TestClusterStateURLs\n"}
+{"Time":"2026-07-01T14:59:19.250600178Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClusterStateURLs","Output":"--- PASS: TestClusterStateURLs (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.250966228Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClusterStateURLs","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.250971845Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestClusterStatsURLs"}
+{"Time":"2026-07-01T14:59:19.250975556Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClusterStatsURLs","Output":"=== RUN   TestClusterStatsURLs\n"}
+{"Time":"2026-07-01T14:59:19.251000284Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestClusterStatsURLs","Output":"--- PASS: TestClusterStatsURLs (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.253600911Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestClusterStatsURLs","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.253616266Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestResponseError"}
+{"Time":"2026-07-01T14:59:19.253620379Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestResponseError","Output":"=== RUN   TestResponseError\n"}
+{"Time":"2026-07-01T14:59:19.253704979Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestResponseError","Output":"--- PASS: TestResponseError (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.253995961Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestResponseError","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.254002062Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestResponseErrorHTML"}
+{"Time":"2026-07-01T14:59:19.254005201Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestResponseErrorHTML","Output":"=== RUN   TestResponseErrorHTML\n"}
+{"Time":"2026-07-01T14:59:19.254015103Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestResponseErrorHTML","Output":"--- PASS: TestResponseErrorHTML (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.254296484Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestResponseErrorHTML","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.254302163Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestResponseErrorWithIgnore"}
+{"Time":"2026-07-01T14:59:19.254305843Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestResponseErrorWithIgnore","Output":"=== RUN   TestResponseErrorWithIgnore\n"}
+{"Time":"2026-07-01T14:59:19.254313103Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestResponseErrorWithIgnore","Output":"--- PASS: TestResponseErrorWithIgnore (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.254562208Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestResponseErrorWithIgnore","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.254567915Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestIsNotFound"}
+{"Time":"2026-07-01T14:59:19.254579478Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestIsNotFound","Output":"=== RUN   TestIsNotFound\n"}
+{"Time":"2026-07-01T14:59:19.254590087Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestIsNotFound","Output":"--- PASS: TestIsNotFound (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.254820786Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestIsNotFound","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.254826328Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestIsTimeout"}
+{"Time":"2026-07-01T14:59:19.254830298Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestIsTimeout","Output":"=== RUN   TestIsTimeout\n"}
+{"Time":"2026-07-01T14:59:19.254835917Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestIsTimeout","Output":"--- PASS: TestIsTimeout (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.255091992Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestIsTimeout","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.255097111Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestIsConflict"}
+{"Time":"2026-07-01T14:59:19.255101631Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestIsConflict","Output":"=== RUN   TestIsConflict\n"}
+{"Time":"2026-07-01T14:59:19.255109061Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestIsConflict","Output":"--- PASS: TestIsConflict (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.255341545Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestIsConflict","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.255346378Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestIsStatusCode"}
+{"Time":"2026-07-01T14:59:19.25535069Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestIsStatusCode","Output":"=== RUN   TestIsStatusCode\n"}
+{"Time":"2026-07-01T14:59:19.255357712Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestIsStatusCode","Output":"--- PASS: TestIsStatusCode (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.256240773Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestIsStatusCode","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.256246395Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextNoFetchSource"}
+{"Time":"2026-07-01T14:59:19.25624942Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextNoFetchSource","Output":"=== RUN   TestFetchSourceContextNoFetchSource\n"}
+{"Time":"2026-07-01T14:59:19.256254552Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextNoFetchSource","Output":"--- PASS: TestFetchSourceContextNoFetchSource (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.256412794Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextNoFetchSource","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.256419347Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextNoFetchSourceIgnoreIncludesAndExcludes"}
+{"Time":"2026-07-01T14:59:19.256429654Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextNoFetchSourceIgnoreIncludesAndExcludes","Output":"=== RUN   TestFetchSourceContextNoFetchSourceIgnoreIncludesAndExcludes\n"}
+{"Time":"2026-07-01T14:59:19.256437958Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextNoFetchSourceIgnoreIncludesAndExcludes","Output":"--- PASS: TestFetchSourceContextNoFetchSourceIgnoreIncludesAndExcludes (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.256687034Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextNoFetchSourceIgnoreIncludesAndExcludes","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.25670867Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSource"}
+{"Time":"2026-07-01T14:59:19.256714815Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSource","Output":"=== RUN   TestFetchSourceContextFetchSource\n"}
+{"Time":"2026-07-01T14:59:19.256846092Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSource","Output":"--- PASS: TestFetchSourceContextFetchSource (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.2572028Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSource","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.257218073Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSourceWithIncludesOnly"}
+{"Time":"2026-07-01T14:59:19.257223157Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSourceWithIncludesOnly","Output":"=== RUN   TestFetchSourceContextFetchSourceWithIncludesOnly\n"}
+{"Time":"2026-07-01T14:59:19.257231565Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSourceWithIncludesOnly","Output":"--- PASS: TestFetchSourceContextFetchSourceWithIncludesOnly (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.25751841Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSourceWithIncludesOnly","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.257525531Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSourceWithIncludesAndExcludes"}
+{"Time":"2026-07-01T14:59:19.257535078Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSourceWithIncludesAndExcludes","Output":"=== RUN   TestFetchSourceContextFetchSourceWithIncludesAndExcludes\n"}
+{"Time":"2026-07-01T14:59:19.257543575Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSourceWithIncludesAndExcludes","Output":"--- PASS: TestFetchSourceContextFetchSourceWithIncludesAndExcludes (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.25808239Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextFetchSourceWithIncludesAndExcludes","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.258096622Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryDefaults"}
+{"Time":"2026-07-01T14:59:19.258102132Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryDefaults","Output":"=== RUN   TestFetchSourceContextQueryDefaults\n"}
+{"Time":"2026-07-01T14:59:19.258110843Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryDefaults","Output":"--- PASS: TestFetchSourceContextQueryDefaults (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.258313879Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryDefaults","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.258318794Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryNoFetchSource"}
+{"Time":"2026-07-01T14:59:19.258324505Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryNoFetchSource","Output":"=== RUN   TestFetchSourceContextQueryNoFetchSource\n"}
+{"Time":"2026-07-01T14:59:19.258333259Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryNoFetchSource","Output":"--- PASS: TestFetchSourceContextQueryNoFetchSource (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.258505104Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryNoFetchSource","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.258509586Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryFetchSourceWithIncludesAndExcludes"}
+{"Time":"2026-07-01T14:59:19.258512616Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryFetchSourceWithIncludesAndExcludes","Output":"=== RUN   TestFetchSourceContextQueryFetchSourceWithIncludesAndExcludes\n"}
+{"Time":"2026-07-01T14:59:19.258519411Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryFetchSourceWithIncludesAndExcludes","Output":"--- PASS: TestFetchSourceContextQueryFetchSourceWithIncludesAndExcludes (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.258728799Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFetchSourceContextQueryFetchSourceWithIncludesAndExcludes","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.258732906Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFieldCapsURLs"}
+{"Time":"2026-07-01T14:59:19.258736666Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFieldCapsURLs","Output":"=== RUN   TestFieldCapsURLs\n"}
+{"Time":"2026-07-01T14:59:19.258759873Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFieldCapsURLs","Output":"--- PASS: TestFieldCapsURLs (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.258946665Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFieldCapsURLs","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.258951009Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFieldCapsRequestSerialize"}
+{"Time":"2026-07-01T14:59:19.258953927Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFieldCapsRequestSerialize","Output":"=== RUN   TestFieldCapsRequestSerialize\n"}
+{"Time":"2026-07-01T14:59:19.258992917Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFieldCapsRequestSerialize","Output":"--- PASS: TestFieldCapsRequestSerialize (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.259186946Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFieldCapsRequestSerialize","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.259191102Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFieldCapsRequestDeserialize"}
+{"Time":"2026-07-01T14:59:19.259194156Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFieldCapsRequestDeserialize","Output":"=== RUN   TestFieldCapsRequestDeserialize\n"}
+{"Time":"2026-07-01T14:59:19.259217278Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFieldCapsRequestDeserialize","Output":"--- PASS: TestFieldCapsRequestDeserialize (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.259414634Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFieldCapsRequestDeserialize","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.25941871Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestFieldCapsResponseUnmarshalling"}
+{"Time":"2026-07-01T14:59:19.259422025Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFieldCapsResponseUnmarshalling","Output":"=== RUN   TestFieldCapsResponseUnmarshalling\n"}
+{"Time":"2026-07-01T14:59:19.259493876Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestFieldCapsResponseUnmarshalling","Output":"--- PASS: TestFieldCapsResponseUnmarshalling (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.259963305Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestFieldCapsResponseUnmarshalling","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.259968387Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestGeoPointSource"}
+{"Time":"2026-07-01T14:59:19.259971196Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestGeoPointSource","Output":"=== RUN   TestGeoPointSource\n"}
+{"Time":"2026-07-01T14:59:19.25999141Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestGeoPointSource","Output":"--- PASS: TestGeoPointSource (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.261619027Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestGeoPointSource","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.261636165Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestHighlighterField"}
+{"Time":"2026-07-01T14:59:19.261641489Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlighterField","Output":"=== RUN   TestHighlighterField\n"}
+{"Time":"2026-07-01T14:59:19.26165079Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlighterField","Output":"--- PASS: TestHighlighterField (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.261869867Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestHighlighterField","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.261881296Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestHighlighterFieldWithOptions"}
+{"Time":"2026-07-01T14:59:19.261884384Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlighterFieldWithOptions","Output":"=== RUN   TestHighlighterFieldWithOptions\n"}
+{"Time":"2026-07-01T14:59:19.261891279Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlighterFieldWithOptions","Output":"--- PASS: TestHighlighterFieldWithOptions (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.262100755Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestHighlighterFieldWithOptions","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.262106866Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestHighlightWithStringField"}
+{"Time":"2026-07-01T14:59:19.262109793Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlightWithStringField","Output":"=== RUN   TestHighlightWithStringField\n"}
+{"Time":"2026-07-01T14:59:19.262133927Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlightWithStringField","Output":"--- PASS: TestHighlightWithStringField (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.262349819Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestHighlightWithStringField","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.262355668Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestHighlightWithFields"}
+{"Time":"2026-07-01T14:59:19.262358885Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlightWithFields","Output":"=== RUN   TestHighlightWithFields\n"}
+{"Time":"2026-07-01T14:59:19.262366012Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlightWithFields","Output":"--- PASS: TestHighlightWithFields (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.262594415Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestHighlightWithFields","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.262599994Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestHighlightWithMultipleFields"}
+{"Time":"2026-07-01T14:59:19.262602878Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlightWithMultipleFields","Output":"=== RUN   TestHighlightWithMultipleFields\n"}
+{"Time":"2026-07-01T14:59:19.262610908Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlightWithMultipleFields","Output":"--- PASS: TestHighlightWithMultipleFields (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.262852825Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestHighlightWithMultipleFields","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.262858572Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestHighlighterWithExplicitFieldOrder"}
+{"Time":"2026-07-01T14:59:19.262861507Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlighterWithExplicitFieldOrder","Output":"=== RUN   TestHighlighterWithExplicitFieldOrder\n"}
+{"Time":"2026-07-01T14:59:19.262879337Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlighterWithExplicitFieldOrder","Output":"--- PASS: TestHighlighterWithExplicitFieldOrder (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.263095723Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestHighlighterWithExplicitFieldOrder","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.26310173Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestHighlightWithBoundarySettings"}
+{"Time":"2026-07-01T14:59:19.263105036Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlightWithBoundarySettings","Output":"=== RUN   TestHighlightWithBoundarySettings\n"}
+{"Time":"2026-07-01T14:59:19.263110906Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestHighlightWithBoundarySettings","Output":"--- PASS: TestHighlightWithBoundarySettings (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.273610357Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestHighlightWithBoundarySettings","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.273652522Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestAliasAddAction"}
+{"Time":"2026-07-01T14:59:19.273657047Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestAliasAddAction","Output":"=== RUN   TestAliasAddAction\n"}
+{"Time":"2026-07-01T14:59:19.273692927Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestAliasAddAction","Output":"--- PASS: TestAliasAddAction (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.273709456Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestAliasAddAction","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.273714686Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestAliasRemoveAction"}
+{"Time":"2026-07-01T14:59:19.273718846Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestAliasRemoveAction","Output":"=== RUN   TestAliasRemoveAction\n"}
+{"Time":"2026-07-01T14:59:19.273751584Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestAliasRemoveAction","Output":"--- PASS: TestAliasRemoveAction (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.28023187Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestAliasRemoveAction","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.280254425Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestInnerHitEmpty"}
+{"Time":"2026-07-01T14:59:19.28025827Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestInnerHitEmpty","Output":"=== RUN   TestInnerHitEmpty\n"}
+{"Time":"2026-07-01T14:59:19.280266688Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestInnerHitEmpty","Output":"--- PASS: TestInnerHitEmpty (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.280505545Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestInnerHitEmpty","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.280511579Z","Action":"run","Package":"github.com/olivere/elastic","Test":"TestInnerHitWithName"}
+{"Time":"2026-07-01T14:59:19.280515685Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestInnerHitWithName","Output":"=== RUN   TestInnerHitWithName\n"}
+{"Time":"2026-07-01T14:59:19.280520753Z","Action":"output","Package":"github.com/olivere/elastic","Test":"TestInnerHitWithName","Output":"--- PASS: TestInnerHitWithName (0.00s)\n"}
+{"Time":"2026-07-01T14:59:19.409948949Z","Action":"pass","Package":"github.com/olivere/elastic","Test":"TestInnerHitWithName","Elapsed":0}
+{"Time":"2026-07-01T14:59:19.409995596Z","Action":"output","Package":"github.com/olivere/elastic","Output":"PASS\n"}
+{"Time":"2026-07-01T14:59:19.410670579Z","Action":"output","Package":"github.com/olivere/elastic","Output":"ok  \tgithub.com/olivere/elastic\t15.198s\n"}
+{"Time":"2026-07-01T14:59:19.410692158Z","Action":"pass","Package":"github.com/olivere/elastic","Elapsed":15.198}
+reward=1 graded=59 found=59 failed=0 parsed=59 framework=go exit_code=0

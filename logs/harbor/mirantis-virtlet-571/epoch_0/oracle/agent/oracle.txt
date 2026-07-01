@@ -1,0 +1,4 @@
+patching file pkg/image/download.go
+patching file pkg/image/image.go
+patching file pkg/manager/manager.go
+patching file pkg/utils/testing/https.go

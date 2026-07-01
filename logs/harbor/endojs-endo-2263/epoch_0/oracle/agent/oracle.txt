@@ -1,0 +1,11 @@
+patching file packages/trampoline/LICENSE
+patching file packages/trampoline/README.md
+patching file packages/trampoline/SECURITY.md
+patching file packages/trampoline/index.js
+patching file packages/trampoline/package.json
+patching file packages/trampoline/src/trampoline.js
+patching file packages/trampoline/src/types.ts
+patching file packages/trampoline/tsconfig.build.json
+patching file packages/trampoline/tsconfig.json
+patching file packages/trampoline/types.d.ts
+patching file yarn.lock

@@ -1,0 +1,57 @@
+patching file test/test_mixed_null_assertions.cpp
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_replication.cpp.o
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_set.cpp.o
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_shared.cpp.o
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_string_data.cpp.o
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_table_view.cpp.o
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_transactions.cpp.o
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_transactions_lasse.cpp.o
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_typed_links.cpp.o
+[ 81%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_unresolved_links.cpp.o
+[ 84%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_upgrade_database.cpp.o
+[ 84%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_util_chunked_binary.cpp.o
+[ 84%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_uuid.cpp.o
+[ 84%] Building CXX object test/CMakeFiles/CoreTestLib.dir/large_tests/test_column_large.cpp.o
+[ 86%] Building CXX object test/CMakeFiles/CoreTestLib.dir/large_tests/test_strings.cpp.o
+[ 86%] Building CXX object test/CMakeFiles/CoreTestLib.dir/fuzz_group.cpp.o
+[100%] Built target CoreTestLib
+Consolidate compiler generated dependencies of target CoreTests
+[100%] Building CXX object test/CMakeFiles/CoreTests.dir/test_all.cpp.o
+[100%] Linking CXX executable realm-tests
+[100%] Built target CoreTests
+
+Realm version: 14.10.2 with Debug Enabled
+Platform: Linux Linux 4.14.355-282.733.amzn2.x86_64 #1 SMP Mon Jun 1 08:18:47 UTC 2026 x86_64
+Encryption: Disabled at compile-time
+
+REALM_MAX_BPNODE_SIZE = 1000
+REALM_MEMDEBUG = Disabled
+
+sizeof (size_t) * 8 = 64
+
+Compiler supported SSE (auto detect):       Yes
+This CPU supports SSE (auto detect):        4.2
+Compiler supported AVX (auto detect):       Yes
+This CPU supports AVX (AVX1) (auto detect): Yes
+
+UNITTEST_RANDOM_SEED:                       2750665663
+Test path prefix:                           /workspace/repo/build/test/
+Test resource path:                         /workspace/repo/build/test/resources/
+
+Number of test threads: 4 (default)
+(Use UNITTEST_THREADS=1 to serialize testing) 
+
+Configuring jUnit reporter to store test results in /workspace/test-results/output.xml
+Realm - Success: All 15 tests passed (257042 checks).
+Realm - Test time: 3.11s
+Realm - Note: 1608 tests were excluded!
+
+Top 5 time usage:
+-------------------------------------------------------------------
+Mixed_RemoveRecursiveSingleLink<NestedDictOfDicts>            1.91s
+Mixed_RemoveRecursiveSingleLink<NestedListOfLists>            1.47s
+Mixed_RemoveRecursiveSingleLink<NestedDictionary>             1.10s
+Mixed_ContainerOfLinksFromLargeCluster<NestedListOfLists>     1.10s
+Mixed_RemoveRecursiveSingleLink<NestedList>                970.60ms
+
+reward=1 graded=15 found=15 failed=0 parsed=15 framework=ctest exit_code=0

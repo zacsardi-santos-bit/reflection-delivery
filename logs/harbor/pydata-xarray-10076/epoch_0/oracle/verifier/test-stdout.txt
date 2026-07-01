@@ -1,0 +1,77 @@
+patching file xarray/tests/test_assertions.py
+patching file xarray/tests/test_coordinate_transform.py
+patching file xarray/tests/test_range_index.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: timeout-2.4.0, env-1.6.0, mypy-plugins-4.0.3
+collecting ... collected 63 items
+
+xarray/tests/test_assertions.py::test_allclose_regression PASSED         [  1%]
+xarray/tests/test_assertions.py::test_assert_allclose[Variable] PASSED   [  3%]
+xarray/tests/test_assertions.py::test_assert_allclose[DataArray] PASSED  [  4%]
+xarray/tests/test_assertions.py::test_assert_allclose[Dataset] PASSED    [  6%]
+xarray/tests/test_assertions.py::test_assert_allclose[DataArray_with_character_dtype] PASSED [  7%]
+xarray/tests/test_assertions.py::test_assert_allclose[Coordinates] PASSED [  9%]
+xarray/tests/test_assertions.py::test_assert_allclose_equal_transpose[assert_equal] PASSED [ 11%]
+xarray/tests/test_assertions.py::test_assert_allclose_equal_transpose[assert_allclose] PASSED [ 12%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[both arrays-numpy] PASSED [ 14%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[both arrays-dask] SKIPPED [ 15%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[both arrays-pint] SKIPPED [ 17%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[second scalar-numpy] PASSED [ 19%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[second scalar-dask] SKIPPED [ 20%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[second scalar-pint] SKIPPED [ 22%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[first scalar-numpy] PASSED [ 23%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[first scalar-dask] SKIPPED [ 25%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal_failing[first scalar-pint] SKIPPED [ 26%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[both arrays-numpy] PASSED [ 28%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[both arrays-dask] SKIPPED [ 30%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[both arrays-pint] SKIPPED [ 31%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[second scalar-numpy] PASSED [ 33%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[second scalar-dask] SKIPPED [ 34%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[second scalar-pint] SKIPPED [ 36%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[first scalar-numpy] PASSED [ 38%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[first scalar-dask] SKIPPED [ 39%]
+xarray/tests/test_assertions.py::test_assert_duckarray_equal[first scalar-pint] SKIPPED [ 41%]
+xarray/tests/test_assertions.py::test_ensure_warnings_not_elevated[assert_equal] PASSED [ 42%]
+xarray/tests/test_assertions.py::test_ensure_warnings_not_elevated[assert_identical] PASSED [ 44%]
+xarray/tests/test_assertions.py::test_ensure_warnings_not_elevated[assert_allclose] PASSED [ 46%]
+xarray/tests/test_assertions.py::test_ensure_warnings_not_elevated[assert_duckarray_equal] PASSED [ 47%]
+xarray/tests/test_assertions.py::test_ensure_warnings_not_elevated[assert_duckarray_allclose] PASSED [ 49%]
+xarray/tests/test_coordinate_transform.py::test_abstract_coordinate_transform PASSED [ 50%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_init PASSED [ 52%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_generate_coords[None] PASSED [ 53%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_generate_coords[dims1] PASSED [ 55%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_variable PASSED [ 57%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_variable_repr_inline PASSED [ 58%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_variable_basic_outer_indexing PASSED [ 60%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_variable_vectorized_indexing PASSED [ 61%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_setitem_error PASSED [ 63%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_transpose PASSED [ 65%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_equals PASSED [ 66%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_sel PASSED [ 68%]
+xarray/tests/test_coordinate_transform.py::test_coordinate_transform_rename PASSED [ 69%]
+xarray/tests/test_range_index.py::test_range_index_arange[args0-kwargs0] PASSED [ 71%]
+xarray/tests/test_range_index.py::test_range_index_arange[args1-kwargs1] PASSED [ 73%]
+xarray/tests/test_range_index.py::test_range_index_arange[args2-kwargs2] PASSED [ 74%]
+xarray/tests/test_range_index.py::test_range_index_arange[args3-kwargs3] PASSED [ 76%]
+xarray/tests/test_range_index.py::test_range_index_arange[args4-kwargs4] PASSED [ 77%]
+xarray/tests/test_range_index.py::test_range_index_arange[args5-kwargs5] PASSED [ 79%]
+xarray/tests/test_range_index.py::test_range_index_arange[args6-kwargs6] PASSED [ 80%]
+xarray/tests/test_range_index.py::test_range_index_arange_error PASSED   [ 82%]
+xarray/tests/test_range_index.py::test_range_index_arange_start_as_stop PASSED [ 84%]
+xarray/tests/test_range_index.py::test_range_index_arange_properties PASSED [ 85%]
+xarray/tests/test_range_index.py::test_range_index_linspace PASSED       [ 87%]
+xarray/tests/test_range_index.py::test_range_index_dtype PASSED          [ 88%]
+xarray/tests/test_range_index.py::test_range_index_set_xindex PASSED     [ 90%]
+xarray/tests/test_range_index.py::test_range_index_isel PASSED           [ 92%]
+xarray/tests/test_range_index.py::test_range_index_sel PASSED            [ 93%]
+xarray/tests/test_range_index.py::test_range_index_to_pandas_index PASSED [ 95%]
+xarray/tests/test_range_index.py::test_range_index_rename PASSED         [ 96%]
+xarray/tests/test_range_index.py::test_range_index_repr PASSED           [ 98%]
+xarray/tests/test_range_index.py::test_range_index_repr_inline PASSED    [100%]
+
+======================== 51 passed, 12 skipped in 0.20s ========================
+reward=1 graded=51 found=0 failed=0 parsed=24 framework=pytest exit_code=0

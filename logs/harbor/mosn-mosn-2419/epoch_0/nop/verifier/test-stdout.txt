@@ -1,0 +1,11 @@
+patching file pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory_test.go
+patching file pkg/filter/stream/flowcontrol/stream_filter_test.go
+# mosn.io/mosn/pkg/filter/stream/flowcontrol [mosn.io/mosn/pkg/filter/stream/flowcontrol.test]
+pkg/filter/stream/flowcontrol/stream_filter_test.go:383:46: undefined: base.WithBlockType
+FAIL	mosn.io/mosn/pkg/filter/stream/flowcontrol [build failed]
+# mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source [mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source.test]
+pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory_test.go:32:33: undefined: NacosDataSourceFactoryCreator
+pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory_test.go:33:18: undefined: NacosDataSourceConfig
+pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory_test.go:51:82: undefined: NacosDataSource
+FAIL	mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source [build failed]
+reward=0 graded=16 found=16 failed=16 parsed=2 framework=go exit_code=2

@@ -1,0 +1,6 @@
+patching file cli/go.mod
+patching file cli/go.sum
+Hunk #1 succeeded at 387 with fuzz 3.
+patching file cli/internal/publish/addons.go
+patching file cli/internal/publish/images/images.go
+patching file cli/internal/publish/plugins.go

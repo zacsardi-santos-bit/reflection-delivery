@@ -1,16 +1,16 @@
 {
     "task": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/risingwavelabs-risingwave-7438",
+        "path": "/home/ubuntu/staging_reflection/tasks/risingwavelabs-risingwave-7438",
         "git_url": null,
         "git_commit_id": null,
         "name": null,
         "ref": null,
         "overwrite": false,
         "download_dir": null,
-        "source": "harbor"
+        "source": null
     },
-    "trial_name": "risingwavelabs-risingwave-7438__3EKc98h",
-    "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04",
+    "trial_name": "risingwavelabs-risingwave-7438__kX43CY2",
+    "trials_dir": "/home/ubuntu/staging_reflection/logs/val_residual20/oracle/risingwavelabs-risingwave-7438/2026-07-01__15-35-32",
     "timeout_multiplier": 1.0,
     "agent_timeout_multiplier": null,
     "verifier_timeout_multiplier": null,
@@ -46,5 +46,5 @@
         "disable": false
     },
     "artifacts": [],
-    "job_id": "8d8c11e2-61bb-4d33-b502-02a799419317"
+    "job_id": "87969596-81d3-47d3-bf35-4a89a7512666"
 }

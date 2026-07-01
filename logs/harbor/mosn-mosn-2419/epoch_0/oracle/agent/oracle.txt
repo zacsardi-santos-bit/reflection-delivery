@@ -1,0 +1,208 @@
+patching file examples/cn_readme/flowcontrol-sample/README.md
+patching file examples/cn_readme/flowcontrol-sample/dynamic-data-source/README.md
+patching file examples/codes/flowcontrol-sample/datasource-nacos/server_config_nacos.json
+patching file examples/codes/flowcontrol-sample/datasource-nacos/tls_server_config_nacos.json
+patching file examples/en_readme/flowcontrol-sample/README.md
+patching file examples/en_readme/flowcontrol-sample/dynamic-data-source/README.md
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 198 with fuzz 3 (offset 136 lines).
+Hunk #2 succeeded at 230 with fuzz 3 (offset 136 lines).
+Hunk #3 succeeded at 321 with fuzz 3 (offset 136 lines).
+Hunk #4 succeeded at 338 with fuzz 3 (offset 136 lines).
+Hunk #5 succeeded at 418 with fuzz 2 (offset 197 lines).
+Hunk #6 FAILED at 395.
+Hunk #7 FAILED at 474.
+Hunk #8 succeeded at 730 with fuzz 3 (offset 197 lines).
+Hunk #9 succeeded at 975 with fuzz 3 (offset 331 lines).
+Hunk #10 FAILED at 678.
+Hunk #11 succeeded at 1278 (offset 369 lines).
+Hunk #12 succeeded at 1298 (offset 369 lines).
+Hunk #13 succeeded at 1326 (offset 369 lines).
+Hunk #14 FAILED at 1179.
+4 out of 14 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/filter/stream/flowcontrol/data_source/data_source_factory.go
+patching file pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory.go
+patching file pkg/filter/stream/flowcontrol/stream_filter_factory.go
+patching file examples/cn_readme/flowcontrol-sample/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file examples/cn_readme/flowcontrol-sample/README.md.rej
+The next patch would create the file examples/cn_readme/flowcontrol-sample/dynamic-data-source/README.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file examples/codes/flowcontrol-sample/datasource-nacos/server_config_nacos.json,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file examples/codes/flowcontrol-sample/datasource-nacos/tls_server_config_nacos.json,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file examples/en_readme/flowcontrol-sample/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file examples/en_readme/flowcontrol-sample/README.md.rej
+The next patch would create the file examples/en_readme/flowcontrol-sample/dynamic-data-source/README.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file go.sum.rej
+The next patch would create the file pkg/filter/stream/flowcontrol/data_source/data_source_factory.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file pkg/filter/stream/flowcontrol/stream_filter_factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file pkg/filter/stream/flowcontrol/stream_filter_factory.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/cn_readme/flowcontrol-sample/README.md b/examples/cn_readme/flowcontrol-sample/README.md
+|index 3d3c97012..d10ce92f4 100644
+|--- a/examples/cn_readme/flowcontrol-sample/README.md
+|+++ b/examples/cn_readme/flowcontrol-sample/README.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/examples/cn_readme/flowcontrol-sample/dynamic-data-source/README.md
+patching file b/examples/codes/flowcontrol-sample/datasource-nacos/server_config_nacos.json
+patching file b/examples/codes/flowcontrol-sample/datasource-nacos/tls_server_config_nacos.json
+can't find file to patch at input line 409
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/examples/en_readme/flowcontrol-sample/README.md b/examples/en_readme/flowcontrol-sample/README.md
+|index 8d94d0474..671a8edb4 100644
+|--- a/examples/en_readme/flowcontrol-sample/README.md
+|+++ b/examples/en_readme/flowcontrol-sample/README.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/examples/en_readme/flowcontrol-sample/dynamic-data-source/README.md
+can't find file to patch at input line 590
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 8762e1a58..b0d48ff6f 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 678
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 37ef82c7f..54f1238d3 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+14 out of 14 hunks ignored
+patching file b/pkg/filter/stream/flowcontrol/data_source/data_source_factory.go
+patching file b/pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory.go
+can't find file to patch at input line 1041
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/filter/stream/flowcontrol/stream_filter_factory.go b/pkg/filter/stream/flowcontrol/stream_filter_factory.go
+|index c7bdcd496..ad6ad8692 100644
+|--- a/pkg/filter/stream/flowcontrol/stream_filter_factory.go
+|+++ b/pkg/filter/stream/flowcontrol/stream_filter_factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+patching file examples/cn_readme/flowcontrol-sample/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file examples/cn_readme/flowcontrol-sample/README.md.rej
+The next patch would create the file examples/cn_readme/flowcontrol-sample/dynamic-data-source/README.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file examples/codes/flowcontrol-sample/datasource-nacos/server_config_nacos.json,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file examples/codes/flowcontrol-sample/datasource-nacos/tls_server_config_nacos.json,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file examples/en_readme/flowcontrol-sample/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file examples/en_readme/flowcontrol-sample/README.md.rej
+The next patch would create the file examples/en_readme/flowcontrol-sample/dynamic-data-source/README.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file go.sum.rej
+The next patch would create the file pkg/filter/stream/flowcontrol/data_source/data_source_factory.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file pkg/filter/stream/flowcontrol/stream_filter_factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file pkg/filter/stream/flowcontrol/stream_filter_factory.go.rej
+ERROR: golden patch failed to apply by all strategies

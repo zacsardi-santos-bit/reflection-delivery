@@ -1,0 +1,40 @@
+patching file pkg/iac/scanners/terraformplan/tfjson/scanner_test.go
+patching file pkg/iac/scanners/terraformplan/tfjson/test/parser_test.go
+patching file pkg/iac/scanners/terraformplan/tfjson/test/testdata/plan_with_template.json
+{"Time":"2026-07-01T14:35:52.618210953Z","Action":"start","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson"}
+{"Time":"2026-07-01T14:35:53.690089337Z","Action":"run","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner"}
+{"Time":"2026-07-01T14:35:53.690129479Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner","Output":"=== RUN   Test_TerraformScanner\n"}
+{"Time":"2026-07-01T14:35:53.690161884Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner","Output":"=== PAUSE Test_TerraformScanner\n"}
+{"Time":"2026-07-01T14:35:53.69016904Z","Action":"pause","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner"}
+{"Time":"2026-07-01T14:35:53.690174596Z","Action":"cont","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner"}
+{"Time":"2026-07-01T14:35:53.690178547Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner","Output":"=== CONT  Test_TerraformScanner\n"}
+{"Time":"2026-07-01T14:35:53.690183183Z","Action":"run","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/old_rego_metadata"}
+{"Time":"2026-07-01T14:35:53.690186363Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/old_rego_metadata","Output":"=== RUN   Test_TerraformScanner/old_rego_metadata\n"}
+{"Time":"2026-07-01T14:35:53.701367965Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/old_rego_metadata","Output":"--- PASS: Test_TerraformScanner/old_rego_metadata (0.01s)\n"}
+{"Time":"2026-07-01T14:35:53.701409474Z","Action":"pass","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/old_rego_metadata","Elapsed":0.01}
+{"Time":"2026-07-01T14:35:53.701424033Z","Action":"run","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/with_user_namespace"}
+{"Time":"2026-07-01T14:35:53.701429472Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/with_user_namespace","Output":"=== RUN   Test_TerraformScanner/with_user_namespace\n"}
+{"Time":"2026-07-01T14:35:53.777263276Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/with_user_namespace","Output":"--- PASS: Test_TerraformScanner/with_user_namespace (0.08s)\n"}
+{"Time":"2026-07-01T14:35:53.777300372Z","Action":"pass","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/with_user_namespace","Elapsed":0.08}
+{"Time":"2026-07-01T14:35:53.777329602Z","Action":"run","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/with_templated_plan_json"}
+{"Time":"2026-07-01T14:35:53.777335888Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/with_templated_plan_json","Output":"=== RUN   Test_TerraformScanner/with_templated_plan_json\n"}
+{"Time":"2026-07-01T14:35:53.821927336Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/with_templated_plan_json","Output":"--- PASS: Test_TerraformScanner/with_templated_plan_json (0.04s)\n"}
+{"Time":"2026-07-01T14:35:53.821955898Z","Action":"pass","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner/with_templated_plan_json","Elapsed":0.04}
+{"Time":"2026-07-01T14:35:53.821970405Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner","Output":"--- PASS: Test_TerraformScanner (0.13s)\n"}
+{"Time":"2026-07-01T14:35:53.821986041Z","Action":"pass","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Test":"Test_TerraformScanner","Elapsed":0.13}
+{"Time":"2026-07-01T14:35:53.82199149Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Output":"PASS\n"}
+{"Time":"2026-07-01T14:35:53.82670933Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Output":"ok  \tgithub.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson\t1.208s\n"}
+{"Time":"2026-07-01T14:35:53.826739578Z","Action":"pass","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson","Elapsed":1.209}
+{"Time":"2026-07-01T14:35:54.190186127Z","Action":"start","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test"}
+{"Time":"2026-07-01T14:35:54.957180708Z","Action":"run","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Test":"Test_Parse_Plan_File"}
+{"Time":"2026-07-01T14:35:54.957211819Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Test":"Test_Parse_Plan_File","Output":"=== RUN   Test_Parse_Plan_File\n"}
+{"Time":"2026-07-01T14:35:54.957809247Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Test":"Test_Parse_Plan_File","Output":"--- PASS: Test_Parse_Plan_File (0.00s)\n"}
+{"Time":"2026-07-01T14:35:54.957819325Z","Action":"pass","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Test":"Test_Parse_Plan_File","Elapsed":0}
+{"Time":"2026-07-01T14:35:54.957832977Z","Action":"run","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Test":"Test_Scanning_Plan"}
+{"Time":"2026-07-01T14:35:54.95783623Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Test":"Test_Scanning_Plan","Output":"=== RUN   Test_Scanning_Plan\n"}
+{"Time":"2026-07-01T14:35:55.703563794Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Test":"Test_Scanning_Plan","Output":"--- PASS: Test_Scanning_Plan (0.75s)\n"}
+{"Time":"2026-07-01T14:35:55.703605857Z","Action":"pass","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Test":"Test_Scanning_Plan","Elapsed":0.75}
+{"Time":"2026-07-01T14:35:55.703613706Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Output":"PASS\n"}
+{"Time":"2026-07-01T14:35:55.707256813Z","Action":"output","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Output":"ok  \tgithub.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test\t1.517s\n"}
+{"Time":"2026-07-01T14:35:55.707287631Z","Action":"pass","Package":"github.com/aquasecurity/trivy/pkg/iac/scanners/terraformplan/tfjson/test","Elapsed":1.517}
+reward=1 graded=6 found=6 failed=0 parsed=6 framework=go exit_code=0

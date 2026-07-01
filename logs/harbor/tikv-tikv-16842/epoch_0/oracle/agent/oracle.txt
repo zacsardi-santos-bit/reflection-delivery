@@ -1,0 +1,6 @@
+patching file components/raftstore/src/store/fsm/peer.rs
+patching file components/raftstore/src/store/metrics.rs
+patching file components/raftstore/src/store/peer.rs
+patching file metrics/grafana/tikv_details.dashboard.py
+patching file metrics/grafana/tikv_details.json
+patching file metrics/grafana/tikv_details.json.sha256

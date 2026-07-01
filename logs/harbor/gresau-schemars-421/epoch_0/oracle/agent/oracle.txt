@@ -1,0 +1,6 @@
+patching file docs/_includes/examples/schemars_attrs.schema.json
+patching file docs/_includes/examples/serde_attrs.schema.json
+patching file schemars/examples/schemars_attrs.schema.json
+patching file schemars/examples/serde_attrs.schema.json
+patching file schemars/src/generate.rs
+patching file schemars_derive/src/schema_exprs.rs

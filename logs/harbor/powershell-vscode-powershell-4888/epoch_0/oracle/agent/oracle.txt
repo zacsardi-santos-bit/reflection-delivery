@@ -1,0 +1,16 @@
+patching file package.json
+patching file src/features/CodeActions.ts
+patching file src/features/Console.ts
+patching file src/features/DebugSession.ts
+patching file src/features/ExpandAlias.ts
+patching file src/features/ExtensionCommands.ts
+patching file src/features/ExternalApi.ts
+patching file src/features/GetCommands.ts
+patching file src/features/HelpCompletion.ts
+patching file src/features/ISECompatibility.ts
+patching file src/features/NewFileOrProject.ts
+patching file src/features/RemoteFiles.ts
+patching file src/features/ShowHelp.ts
+patching file src/languageClientConsumer.ts
+patching file src/main.ts
+patching file src/session.ts

@@ -1,0 +1,336 @@
+patching file .golangci.ci.yaml
+patching file LICENSES
+patching file cmd/controller/LICENSES
+patching file cmd/controller/go.mod
+patching file cmd/controller/go.sum
+Hunk #1 FAILED at 3.
+Hunk #2 succeeded at 65 with fuzz 3.
+Hunk #3 succeeded at 411 with fuzz 2 (offset 297 lines).
+Hunk #4 succeeded at 530 with fuzz 3 (offset 297 lines).
+Hunk #5 succeeded at 564 with fuzz 3 (offset 297 lines).
+Hunk #6 succeeded at 750 with fuzz 1 (offset 433 lines).
+Hunk #7 succeeded at 826 (offset 447 lines).
+Hunk #8 succeeded at 852 (offset 450 lines).
+Hunk #9 succeeded at 875 (offset 450 lines).
+Hunk #10 succeeded at 894 (offset 450 lines).
+1 out of 10 hunks FAILED -- saving rejects to file cmd/controller/go.sum.rej
+patching file deploy/crds/crd-challenges.yaml
+patching file deploy/crds/crd-clusterissuers.yaml
+patching file deploy/crds/crd-issuers.yaml
+patching file go.mod
+patching file go.sum
+Hunk #1 FAILED at 3.
+Hunk #2 succeeded at 74 with fuzz 3.
+Hunk #3 succeeded at 418 with fuzz 2 (offset 288 lines).
+Hunk #4 succeeded at 547 with fuzz 3 (offset 288 lines).
+Hunk #5 succeeded at 586 with fuzz 3 (offset 288 lines).
+Hunk #6 succeeded at 854 (offset 440 lines).
+Hunk #7 succeeded at 880 (offset 441 lines).
+Hunk #8 succeeded at 904 (offset 441 lines).
+Hunk #9 succeeded at 924 (offset 441 lines).
+1 out of 9 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/apis/acme/v1/types_issuer.go
+patching file pkg/issuer/acme/dns/azuredns/azuredns.go
+patching file .golangci.ci.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .golangci.ci.yaml.rej
+patching file LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file LICENSES.rej
+patching file cmd/controller/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/controller/LICENSES.rej
+patching file cmd/controller/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/controller/go.mod.rej
+patching file cmd/controller/go.sum
+Hunk #1 FAILED at 3.
+Hunk #2 succeeded at 65 with fuzz 3.
+Hunk #3 FAILED at 114.
+Hunk #4 succeeded at 232 with fuzz 3.
+Hunk #5 succeeded at 266 with fuzz 3.
+Hunk #6 FAILED at 316.
+Hunk #7 FAILED at 379.
+Hunk #8 FAILED at 404.
+Hunk #9 FAILED at 428.
+Hunk #10 FAILED at 447.
+7 out of 10 hunks FAILED -- saving rejects to file cmd/controller/go.sum.rej
+patching file deploy/crds/crd-challenges.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file deploy/crds/crd-challenges.yaml.rej
+patching file deploy/crds/crd-clusterissuers.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file deploy/crds/crd-clusterissuers.yaml.rej
+patching file deploy/crds/crd-issuers.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file deploy/crds/crd-issuers.yaml.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 3.
+Hunk #2 succeeded at 74 with fuzz 3.
+Hunk #3 FAILED at 130.
+Hunk #4 succeeded at 258 with fuzz 3.
+Hunk #5 succeeded at 297 with fuzz 3.
+Hunk #6 FAILED at 413.
+Hunk #7 FAILED at 440.
+Hunk #8 FAILED at 465.
+Hunk #9 FAILED at 485.
+6 out of 9 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/apis/acme/v1/types_issuer.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/apis/acme/v1/types_issuer.go.rej
+patching file pkg/issuer/acme/dns/azuredns/azuredns.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file pkg/issuer/acme/dns/azuredns/azuredns.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.golangci.ci.yaml b/.golangci.ci.yaml
+|index 44d8a05c2..e0564514d 100644
+|--- a/.golangci.ci.yaml
+|+++ b/.golangci.ci.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 15
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/LICENSES b/LICENSES
+|index 606e0c418..49bbf8765 100644
+|--- a/LICENSES
+|+++ b/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 63
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/controller/LICENSES b/cmd/controller/LICENSES
+|index ff0aead53..b71930040 100644
+|--- a/cmd/controller/LICENSES
+|+++ b/cmd/controller/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 111
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/controller/go.mod b/cmd/controller/go.mod
+|index 02824bcf0..4770892c7 100644
+|--- a/cmd/controller/go.mod
+|+++ b/cmd/controller/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 162
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/controller/go.sum b/cmd/controller/go.sum
+|index 0bf4dfc6e..253c26abe 100644
+|--- a/cmd/controller/go.sum
+|+++ b/cmd/controller/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+10 out of 10 hunks ignored
+can't find file to patch at input line 289
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/deploy/crds/crd-challenges.yaml b/deploy/crds/crd-challenges.yaml
+|index 9ed5bab73..3d18907d7 100644
+|--- a/deploy/crds/crd-challenges.yaml
+|+++ b/deploy/crds/crd-challenges.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 332
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/deploy/crds/crd-clusterissuers.yaml b/deploy/crds/crd-clusterissuers.yaml
+|index 694481b48..1cc17b7fe 100644
+|--- a/deploy/crds/crd-clusterissuers.yaml
+|+++ b/deploy/crds/crd-clusterissuers.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 375
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/deploy/crds/crd-issuers.yaml b/deploy/crds/crd-issuers.yaml
+|index 71028bcca..999b88dac 100644
+|--- a/deploy/crds/crd-issuers.yaml
+|+++ b/deploy/crds/crd-issuers.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 418
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 9e0034955..16384111e 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 476
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 9727e5ae2..84f4d3874 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+9 out of 9 hunks ignored
+can't find file to patch at input line 595
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/apis/acme/v1/types_issuer.go b/pkg/apis/acme/v1/types_issuer.go
+|index cc9ca3386..f20251563 100644
+|--- a/pkg/apis/acme/v1/types_issuer.go
+|+++ b/pkg/apis/acme/v1/types_issuer.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 652
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/acme/dns/azuredns/azuredns.go b/pkg/issuer/acme/dns/azuredns/azuredns.go
+|index 77eb55231..e07ce67b3 100644
+|--- a/pkg/issuer/acme/dns/azuredns/azuredns.go
+|+++ b/pkg/issuer/acme/dns/azuredns/azuredns.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+patching file .golangci.ci.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .golangci.ci.yaml.rej
+patching file LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file LICENSES.rej
+patching file cmd/controller/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/controller/LICENSES.rej
+patching file cmd/controller/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/controller/go.mod.rej
+patching file cmd/controller/go.sum
+Hunk #1 FAILED at 3.
+Hunk #2 succeeded at 65 with fuzz 3.
+Hunk #3 FAILED at 114.
+Hunk #4 succeeded at 232 with fuzz 3.
+Hunk #5 succeeded at 266 with fuzz 3.
+Hunk #6 FAILED at 316.
+Hunk #7 FAILED at 379.
+Hunk #8 FAILED at 404.
+Hunk #9 FAILED at 428.
+Hunk #10 FAILED at 447.
+7 out of 10 hunks FAILED -- saving rejects to file cmd/controller/go.sum.rej
+patching file deploy/crds/crd-challenges.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file deploy/crds/crd-challenges.yaml.rej
+patching file deploy/crds/crd-clusterissuers.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file deploy/crds/crd-clusterissuers.yaml.rej
+patching file deploy/crds/crd-issuers.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file deploy/crds/crd-issuers.yaml.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 3.
+Hunk #2 succeeded at 74 with fuzz 3.
+Hunk #3 FAILED at 130.
+Hunk #4 succeeded at 258 with fuzz 3.
+Hunk #5 succeeded at 297 with fuzz 3.
+Hunk #6 FAILED at 413.
+Hunk #7 FAILED at 440.
+Hunk #8 FAILED at 465.
+Hunk #9 FAILED at 485.
+6 out of 9 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/apis/acme/v1/types_issuer.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file pkg/apis/acme/v1/types_issuer.go.rej
+patching file pkg/issuer/acme/dns/azuredns/azuredns.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file pkg/issuer/acme/dns/azuredns/azuredns.go.rej
+ERROR: golden patch failed to apply by all strategies

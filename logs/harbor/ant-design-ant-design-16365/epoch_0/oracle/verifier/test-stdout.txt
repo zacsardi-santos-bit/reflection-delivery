@@ -1,0 +1,292 @@
+patching file components/collapse/__tests__/__snapshots__/demo.test.js.snap
+patching file components/collapse/__tests__/__snapshots__/index.test.js.snap
+patching file components/config-provider/__tests__/__snapshots__/components.test.js.snap
+PASS components/collapse/__tests__/index.test.js (10.894s)
+  Collapse
+    ✓ should support remove expandIcon (198ms)
+    ✓ should render extra node of panel (92ms)
+
+PASS components/collapse/__tests__/demo.test.js (13.085s)
+  ✓ renders ./components/collapse/demo/accordion.md correctly (8715ms)
+  ✓ renders ./components/collapse/demo/basic.md correctly (97ms)
+  ✓ renders ./components/collapse/demo/borderless.md correctly (170ms)
+  ✓ renders ./components/collapse/demo/custom.md correctly (107ms)
+  ✓ renders ./components/collapse/demo/extra.md correctly (1104ms)
+  ✓ renders ./components/collapse/demo/mix.md correctly (104ms)
+  ✓ renders ./components/collapse/demo/noarrow.md correctly (92ms)
+
+  console.warn node_modules/react-dom/cjs/react-dom-server.node.development.js:102
+    Warning: componentWillMount has been renamed, and is not recommended for use. See https://fb.me/react-unsafe-component-lifecycles for details.
+    
+    * Move code from componentWillMount to componentDidMount (preferred in most cases) or the constructor.
+    
+    Please update the following components: Slider
+        in Slider
+        in div
+        in Context.Consumer
+        in Carousel
+
+  console.warn node_modules/react-dom/cjs/react-dom-server.node.development.js:102
+    Warning: componentWillMount has been renamed, and is not recommended for use. See https://fb.me/react-unsafe-component-lifecycles for details.
+    
+    * Move code from componentWillMount to componentDidMount (preferred in most cases) or the constructor.
+    
+    Please update the following components: InnerSlider
+        in InnerSlider
+        in Slider
+        in div
+        in Context.Consumer
+        in Carousel
+
+  console.warn node_modules/react-dom/cjs/react-dom-server.node.development.js:102
+    Warning: componentWillMount has been renamed, and is not recommended for use. See https://fb.me/react-unsafe-component-lifecycles for details.
+    
+    * Move code from componentWillMount to componentDidMount (preferred in most cases) or the constructor.
+    
+    Please update the following components: EditorCore
+        in EditorCore
+        in div
+        in Mention
+        in Context.Consumer
+        in Mention
+
+  console.warn node_modules/react-dom/cjs/react-dom-server.node.development.js:102
+    Warning: componentWillMount has been renamed, and is not recommended for use. See https://fb.me/react-unsafe-component-lifecycles for details.
+    
+    * Move code from componentWillMount to componentDidMount (preferred in most cases) or the constructor.
+    
+    Please update the following components: Dialog
+        in Dialog
+        in Portal
+        in DialogWrap
+        in Context.Consumer
+        in Modal
+        in div
+
+PASS components/config-provider/__tests__/components.test.js (26.541s)
+  ConfigProvider
+    components
+      Alert
+        ✓ normal (12ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (3ms)
+      Anchor
+        ✓ normal (5ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (2ms)
+      AutoComplete
+        ✓ normal (11ms)
+        ✓ prefixCls (4ms)
+        ✓ configProvider (5ms)
+      Avatar
+        ✓ normal (10ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      BackTop
+        ✓ normal (1ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Badge
+        ✓ normal (6ms)
+        ✓ prefixCls (4ms)
+        ✓ configProvider (3ms)
+      Breadcrumb
+        ✓ normal (2ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (2ms)
+      Button
+        ✓ normal (2ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (2ms)
+      Calendar
+        ✓ normal (42ms)
+        ✓ prefixCls (42ms)
+        ✓ configProvider (33ms)
+      Card
+        ✓ normal (4ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (2ms)
+      Carousel
+        ✓ normal (46ms)
+        ✓ prefixCls (3ms)
+        ✓ configProvider (3ms)
+      Cascader
+        ✓ normal (3ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (2ms)
+      Checkbox
+        ✓ normal (2ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Collapse
+        ✓ normal (3ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (1ms)
+      Comment
+        ✓ normal (2ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      DatePicker
+        DatePicker
+          ✓ normal (4ms)
+          ✓ prefixCls (2ms)
+          ✓ configProvider (2ms)
+        RangePicker
+          ✓ normal (4ms)
+          ✓ prefixCls (3ms)
+          ✓ configProvider (3ms)
+        MonthPicker
+          ✓ normal (1ms)
+          ✓ prefixCls (2ms)
+          ✓ configProvider (2ms)
+        WeekPicker
+          ✓ normal (3ms)
+          ✓ prefixCls (1ms)
+          ✓ configProvider (2ms)
+      Divider
+        ✓ normal (1ms)
+        ✓ prefixCls
+        ✓ configProvider (1ms)
+      Drawer
+        ✓ normal (3ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (1ms)
+      Dropdown
+        ✓ normal (5ms)
+        ✓ prefixCls (3ms)
+        ✓ configProvider (2ms)
+      Form
+        ✓ normal (4ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (18ms)
+      Grid
+        ✓ normal (1ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Input
+        ✓ normal (6ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (2ms)
+      InputNumber
+        ✓ normal (4ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (2ms)
+      Layout
+        ✓ normal (2ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (1ms)
+      List
+        ✓ normal (4ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (4ms)
+      Mention
+        ✓ normal (14ms)
+        ✓ prefixCls (4ms)
+        ✓ configProvider (2ms)
+      Menu
+        ✓ normal (9ms)
+        ✓ prefixCls (4ms)
+        ✓ configProvider (3ms)
+      Modal
+        ✓ normal (29ms)
+        ✓ prefixCls (3ms)
+        ✓ configProvider (3ms)
+      Pagination
+        ✓ normal (10ms)
+        ✓ prefixCls (8ms)
+        ✓ configProvider (7ms)
+      Popconfirm
+        ✓ normal (6ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (3ms)
+      Popover
+        ✓ normal (3ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (2ms)
+      Progress
+        ✓ normal (2ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Radio
+        ✓ normal (2ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (1ms)
+      Rate
+        ✓ normal (38ms)
+        ✓ prefixCls (9ms)
+        ✓ configProvider (8ms)
+      Select
+        ✓ normal (5ms)
+        ✓ prefixCls (7ms)
+        ✓ configProvider (6ms)
+      Skeleton
+        ✓ normal (2ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Slider
+        ✓ normal (4ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (2ms)
+      Spin
+        ✓ normal (1ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Statistic
+        ✓ normal (1ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Steps
+        ✓ normal (2ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Switch
+        ✓ normal (1ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Table
+        ✓ normal (38ms)
+        ✓ prefixCls (8ms)
+        ✓ configProvider (14ms)
+      Tabs
+        ✓ normal (8ms)
+        ✓ prefixCls (4ms)
+        ✓ configProvider (3ms)
+      Tags
+        ✓ normal (2ms)
+        ✓ prefixCls
+        ✓ configProvider (1ms)
+      TimePicker
+        ✓ normal (15ms)
+        ✓ prefixCls (66ms)
+        ✓ configProvider (10ms)
+      Timeline
+        ✓ normal (2ms)
+        ✓ prefixCls (1ms)
+        ✓ configProvider (1ms)
+      Tooltip
+        ✓ normal (4ms)
+        ✓ prefixCls (3ms)
+        ✓ configProvider (58ms)
+      Transfer
+        ✓ normal (6ms)
+        ✓ prefixCls (5ms)
+        ✓ configProvider (4ms)
+      Tree
+        ✓ normal (8ms)
+        ✓ prefixCls (2ms)
+        ✓ configProvider (3ms)
+      TreeSelect
+        ✓ normal (6ms)
+        ✓ prefixCls (4ms)
+        ✓ configProvider (4ms)
+      Upload
+        ✓ normal (3ms)
+        ✓ prefixCls (6ms)
+        ✓ configProvider (5ms)
+
+Test Suites: 3 passed, 3 total
+Tests:       171 passed, 171 total
+Snapshots:   171 passed, 171 total
+Time:        34.085s
+Ran all test suites matching /components\/collapse\/__tests__\/demo.test.js|components\/collapse\/__tests__\/index.test.js|components\/config-provider\/__tests__\/components.test.js/i.
+reward=1 graded=171 found=0 failed=0 parsed=0 framework=jest exit_code=0

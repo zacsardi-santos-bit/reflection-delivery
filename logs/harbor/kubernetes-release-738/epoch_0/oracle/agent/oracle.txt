@@ -1,0 +1,9 @@
+patching file OWNERS
+patching file OWNERS_ALIASES
+patching file build/OWNERS
+patching file debian/OWNERS
+patching file debian/build.go
+patching file rpm/10-kubeadm-post-1.8.conf
+patching file rpm/10-kubeadm-pre-1.8.conf
+patching file rpm/OWNERS
+patching file rpm/kubelet.spec

@@ -1,0 +1,6 @@
+patching file test/connection-manager/index.node.js
+patching file test/peer-store/address-book.spec.js
+patching file test/record/envelope.spec.js
+patching file test/record/peer-record.spec.js
+patching file test/upgrading/upgrader.spec.js
+reward=0 graded=13 found=0 failed=0 parsed=0 framework=mocha exit_code=1

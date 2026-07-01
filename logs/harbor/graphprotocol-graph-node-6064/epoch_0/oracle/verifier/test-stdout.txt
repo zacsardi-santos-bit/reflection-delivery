@@ -1,0 +1,255 @@
+patching file store/test-store/tests/postgres/store.rs
+Starting PostgreSQL 17 database server: main.
+localhost:5432 - accepting connections
+warning: /workspace/repo/graph/Cargo.toml: unused manifest key: dependencies.stable-hash_legacy.doc
+   Compiling graph v0.36.0 (/workspace/repo/graph)
+warning: unused import: `slog::error`
+ --> graph/src/components/network_provider/provider_manager.rs:8:5
+  |
+8 | use slog::error;
+  |     ^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `error`
+  --> graph/src/blockchain/mod.rs:41:12
+   |
+41 | use slog::{error, Logger};
+   |            ^^^^^
+
+warning: value captured by `skip_backoff` is never read
+   --> graph/src/blockchain/firehose_block_stream.rs:231:13
+    |
+231 |             skip_backoff = false;
+    |             ^^^^^^^^^^^^
+    |
+    = help: did you mean to capture by reference instead?
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: value captured by `skip_backoff` is never read
+   --> graph/src/blockchain/substreams_block_stream.rs:202:13
+    |
+202 |             skip_backoff = false;
+    |             ^^^^^^^^^^^^
+    |
+    = help: did you mean to capture by reference instead?
+
+warning: struct `PoI` is never constructed
+  --> graph/src/components/subgraph/proof_of_indexing/reference.rs:12:12
+   |
+12 | pub struct PoI<'a> {
+   |            ^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `h256_as_bytes` is never used
+  --> graph/src/components/subgraph/proof_of_indexing/reference.rs:19:4
+   |
+19 | fn h256_as_bytes(val: &H256) -> AsBytes<&[u8]> {
+   |    ^^^^^^^^^^^^^
+
+warning: function `indexer_opt_as_bytes` is never used
+  --> graph/src/components/subgraph/proof_of_indexing/reference.rs:23:4
+   |
+23 | fn indexer_opt_as_bytes(val: &Option<Address>) -> Option<AsBytes<&[u8]>> {
+   |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> graph/src/components/store/write.rs:148:17
+    |
+148 |     fn as_write(&self) -> Option<EntityWrite> {
+    |                 ^^^^^            ^^^^^^^^^^^ the same lifetime is hidden here
+    |                 |
+    |                 the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+148 |     fn as_write(&self) -> Option<EntityWrite<'_>> {
+    |                                             ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> graph/src/components/store/write.rs:823:9
+    |
+823 |         &self,
+    |         ^^^^^ the lifetime is elided here
+...
+826 |     ) -> impl Iterator<Item = EntityOp> {
+    |                               ^^^^^^^^ the same lifetime is hidden here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+826 |     ) -> impl Iterator<Item = EntityOp<'_>> {
+    |                                       ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> graph/src/util/timed_rw_lock.rs:23:18
+   |
+23 |     pub fn write(&self, logger: &Logger) -> parking_lot::RwLockWriteGuard<T> {
+   |                  ^^^^^                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                  |
+   |                  the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+23 |     pub fn write(&self, logger: &Logger) -> parking_lot::RwLockWriteGuard<'_, T> {
+   |                                                                           +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> graph/src/util/timed_rw_lock.rs:39:21
+   |
+39 |     pub fn try_read(&self) -> Option<parking_lot::RwLockReadGuard<T>> {
+   |                     ^^^^^            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                     |
+   |                     the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+39 |     pub fn try_read(&self) -> Option<parking_lot::RwLockReadGuard<'_, T>> {
+   |                                                                   +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> graph/src/util/timed_rw_lock.rs:43:17
+   |
+43 |     pub fn read(&self, logger: &Logger) -> parking_lot::RwLockReadGuard<T> {
+   |                 ^^^^^                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+43 |     pub fn read(&self, logger: &Logger) -> parking_lot::RwLockReadGuard<'_, T> {
+   |                                                                         +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> graph/src/util/timed_rw_lock.rs:76:17
+   |
+76 |     pub fn lock(&self, logger: &Logger) -> parking_lot::MutexGuard<T> {
+   |                 ^^^^^                      ^^^^^^^^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                 |
+   |                 the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+76 |     pub fn lock(&self, logger: &Logger) -> parking_lot::MutexGuard<'_, T> {
+   |                                                                    +++
+
+warning: `Eq::assert_receiver_is_total_eq` should never be implemented by hand
+   --> graph/src/util/intern.rs:510:5
+    |
+510 |     fn assert_receiver_is_total_eq(&self) {}
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: this method was used to add checks to the `Eq` derive macro
+    = warning: this was previously accepted by the compiler but is being phased out; it will become a hard error in a future release!
+    = note: for more information, see issue #152336 <https://github.com/rust-lang/rust/issues/152336>
+    = note: `#[warn(internal_eq_trait_method_impls)]` (part of `#[warn(future_incompatible)]`) on by default
+
+   Compiling graph-runtime-wasm v0.36.0 (/workspace/repo/runtime/wasm)
+warning: enum `AscSubgraphEntityOp` is never used
+   --> runtime/wasm/src/to_from/external.rs:469:10
+    |
+469 | pub enum AscSubgraphEntityOp {
+    |          ^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> runtime/wasm/src/module/instance.rs:144:32
+    |
+144 |     pub(crate) fn instance_ctx(&mut self) -> WasmInstanceContext {
+    |                                ^^^^^^^^^     ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                                |
+    |                                the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+144 |     pub(crate) fn instance_ctx(&mut self) -> WasmInstanceContext<'_> {
+    |                                                                 ++++
+
+warning: `graph-runtime-wasm` (lib) generated 2 warnings (run `cargo fix --lib -p graph-runtime-wasm` to apply 1 suggestion)
+   Compiling graph-chain-near v0.36.0 (/workspace/repo/chain/near)
+warning: `graph` (lib) generated 14 warnings (run `cargo fix --lib -p graph` to apply 8 suggestions)
+   Compiling graph-chain-ethereum v0.36.0 (/workspace/repo/chain/ethereum)
+   Compiling graph-chain-substreams v0.36.0 (/workspace/repo/chain/substreams)
+   Compiling graph-graphql v0.36.0 (/workspace/repo/graphql)
+   Compiling graph-store-postgres v0.36.0 (/workspace/repo/store/postgres)
+warning: struct `CopyVid` is never constructed
+    --> store/postgres/src/relational_queries.rs:4967:12
+     |
+4967 | pub struct CopyVid {
+     |            ^^^^^^^
+     |
+     = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> store/postgres/src/relational/dsl.rs:179:17
+    |
+179 |     fn bind<ST>(&self, name: &str) -> Option<BoundColumn<ST>> {
+    |                 ^^^^^                        ^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                 |
+    |                 the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+179 |     fn bind<ST>(&self, name: &str) -> Option<BoundColumn<'_, ST>> {
+    |                                                          +++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> store/postgres/src/subgraph_store.rs:792:32
+    |
+792 |     pub(crate) fn primary_conn(&self) -> Result<primary::Connection, StoreError> {
+    |                                ^^^^^            ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+    |                                |
+    |                                the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+    |
+792 |     pub(crate) fn primary_conn(&self) -> Result<primary::Connection<'_>, StoreError> {
+    |                                                                    ++++
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+  --> store/postgres/src/writable.rs:52:21
+   |
+52 |     fn primary_conn(&self) -> Result<primary::Connection, StoreError> {
+   |                     ^^^^^            ^^^^^^^^^^^^^^^^^^^ the same lifetime is hidden here
+   |                     |
+   |                     the lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: use `'_` for type paths
+   |
+52 |     fn primary_conn(&self) -> Result<primary::Connection<'_>, StoreError> {
+   |                                                         ++++
+
+   Compiling graph-core v0.36.0 (/workspace/repo/core)
+   Compiling graph-server-index-node v0.36.0 (/workspace/repo/server/index-node)
+   Compiling graphman v0.36.0 (/workspace/repo/core/graphman)
+   Compiling graphman-server v0.36.0 (/workspace/repo/server/graphman)
+   Compiling graph-server-http v0.36.0 (/workspace/repo/server/http)
+   Compiling graph-server-json-rpc v0.36.0 (/workspace/repo/server/json-rpc)
+   Compiling graph-server-metrics v0.36.0 (/workspace/repo/server/metrics)
+   Compiling graph-node v0.36.0 (/workspace/repo/node)
+warning: `graph-store-postgres` (lib) generated 4 warnings (run `cargo fix --lib -p graph-store-postgres` to apply 3 suggestions)
+   Compiling test-store v0.36.0 (/workspace/repo/store/test-store)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 30s
+────────────
+ Nextest run ID 0ccceec3-a516-4691-b68e-2246c7b080d3 with nextest profile: default
+    Starting 3 tests across 1 binary (82 tests skipped)
+        PASS [   1.392s] (1/3) test-store::postgres postgres::store::parse_timestamp
+        PASS [   1.720s] (2/3) test-store::postgres postgres::store::parse_null_timestamp
+        PASS [   1.019s] (3/3) test-store::postgres postgres::store::parse_timestamp_firehose
+────────────
+     Summary [   2.416s] 3 tests run: 3 passed, 82 skipped
+reward=1 graded=3 found=1 failed=0 parsed=3 framework=cargo exit_code=0

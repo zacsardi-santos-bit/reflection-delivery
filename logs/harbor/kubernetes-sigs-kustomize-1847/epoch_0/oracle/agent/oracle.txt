@@ -1,0 +1,5 @@
+patching file api/filesys/file.go
+patching file api/filesys/fileinfo.go
+patching file api/filesys/filesystem.go
+patching file api/filesys/fsinmemory.go
+patching file api/filesys/util.go (renamed from api/filesys/rpath.go)

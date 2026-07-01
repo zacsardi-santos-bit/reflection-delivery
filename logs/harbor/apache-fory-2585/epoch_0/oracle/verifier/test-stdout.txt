@@ -1,0 +1,51 @@
+patching file java/fory-core/src/test/java/org/apache/fory/RustXlangTest.java
+patching file java/fory-test-core/src/main/java/org/apache/fory/test/TestUtils.java
+patching file rust/tests/tests/test_buffer.rs
+patching file rust/tests/tests/test_compatible.rs
+patching file rust/tests/tests/test_complex_struct.rs
+patching file rust/tests/tests/test_cross_language.rs
+patching file rust/tests/tests/test_util.rs
+   Compiling fory-core v0.13.0 (/workspace/repo/rust/fory-core)
+   Compiling fory-derive v0.13.0 (/workspace/repo/rust/fory-derive)
+   Compiling fory-tests v0.13.0 (/workspace/repo/rust/tests)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.52s
+────────────
+ Nextest run ID d686ee8a-4bff-4689-947d-7d7dbb08643e with nextest profile: default
+    Starting 34 tests across 7 binaries (6 tests skipped)
+        PASS [   0.006s] ( 1/34) fory-tests::test_buffer test_var_uint36_small
+        PASS [   0.006s] ( 2/34) fory-tests::test_buffer test_var_int32
+        PASS [   0.006s] ( 3/34) fory-tests::test_compatible inner_nullable
+        PASS [   0.006s] ( 4/34) fory-tests::test_compatible nonexistent_struct
+        PASS [   0.005s] ( 5/34) fory-tests::test_compatible nullable
+        PASS [   0.005s] ( 6/34) fory-tests::test_compatible nullable_container
+        PASS [   0.005s] ( 7/34) fory-tests::test_compatible nullable_struct
+        PASS [   0.005s] ( 8/34) fory-tests::test_compatible option
+        PASS [   0.006s] ( 9/34) fory-tests::test_compatible skip_option
+        PASS [   0.007s] (10/34) fory-tests::test_compatible simple
+        PASS [   0.005s] (11/34) fory-tests::test_complex_struct complex_struct
+        PASS [   0.004s] (12/34) fory-tests::test_complex_struct encode_to_obin
+        PASS [   0.006s] (13/34) fory-tests::test_meta_string test_all_to_upper_special_encoding
+        PASS [   0.006s] (14/34) fory-tests::test_complex_struct enum_without_payload
+        PASS [   0.005s] (15/34) fory-tests::test_meta_string test_empty_string
+        PASS [   0.005s] (16/34) fory-tests::test_meta_string test_ascii_encoding
+        PASS [   0.004s] (17/34) fory-tests::test_meta_string test_encode_empty_string
+        PASS [   0.004s] (18/34) fory-tests::test_meta_string test_encode_characters_outside_of_lower_special
+        PASS [   0.006s] (19/34) fory-tests::test_meta_string test_encode_meta_string_lower_special
+        PASS [   0.006s] (20/34) fory-tests::test_meta_string test_encode_meta_string_lower_upper_digit_special
+        PASS [   0.006s] (21/34) fory-tests::test_meta_string test_first_to_lower_special_encoding
+        PASS [   0.008s] (22/34) fory-tests::test_meta_string test_meta_string
+        PASS [   0.004s] (23/34) fory-tests::test_meta_string test_non_ascii_encoding
+        PASS [   0.006s] (24/34) fory-tests::test_meta_string test_non_ascii_encoding_and_non_utf8
+        PASS [   0.006s] (25/34) fory-tests::test_meta_string test_strip_last_char
+        PASS [   0.004s] (26/34) fory-tests::test_meta_string test_utf8_encoding
+        PASS [   0.004s] (27/34) fory-tests::test_row row
+        PASS [   0.004s] (28/34) fory-tests::test_util test_get_latin1_length
+        PASS [   0.004s] (29/34) fory-tests::test_util test_is_latin
+        PASS [   0.005s] (30/34) fory-tests::test_util test_to_utf8
+        PASS [   0.005s] (31/34) fory-tests::test_util test_to_utf8_3byte
+        PASS [   0.004s] (32/34) fory-tests::test_util test_to_utf8_endian
+        PASS [   0.005s] (33/34) fory-tests::test_util test_to_utf8_missing_surrogate_pair
+        PASS [   0.005s] (34/34) fory-tests::test_util test_to_utf8_surrogate_pair
+────────────
+     Summary [   0.092s] 34 tests run: 34 passed, 6 skipped
+reward=1 graded=34 found=7 failed=0 parsed=34 framework=cargo exit_code=0

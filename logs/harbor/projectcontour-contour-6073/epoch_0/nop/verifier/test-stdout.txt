@@ -1,0 +1,29 @@
+patching file apis/projectcontour/v1/httpproxy_helpers_test.go
+patching file internal/provisioner/objects/deployment/deployment_test.go
+patching file internal/provisioner/objects/rbac/clusterrole/cluster_role_test.go
+patching file internal/provisioner/objects/rbac/role/role_test.go
+patching file internal/provisioner/objects/rbac/rolebinding/role_binding_test.go
+patching file test/e2e/gatewayapi_predicates.go
+patching file test/e2e/provisioner/provisioner_test.go
+# github.com/projectcontour/contour/apis/projectcontour/v1 [github.com/projectcontour/contour/apis/projectcontour/v1.test]
+apis/projectcontour/v1/httpproxy_helpers_test.go:24:19: undefined: Namespace
+apis/projectcontour/v1/httpproxy_helpers_test.go:29:21: undefined: Namespace
+apis/projectcontour/v1/httpproxy_helpers_test.go:34:21: undefined: Namespace
+apis/projectcontour/v1/httpproxy_helpers_test.go:41:26: undefined: NamespacesToStrings
+apis/projectcontour/v1/httpproxy_helpers_test.go:42:63: undefined: NamespacesToStrings
+FAIL	github.com/projectcontour/contour/apis/projectcontour/v1 [build failed]
+# github.com/projectcontour/contour/internal/provisioner/objects/rbac/rolebinding [github.com/projectcontour/contour/internal/provisioner/objects/rbac/rolebinding.test]
+internal/provisioner/objects/rbac/rolebinding/role_binding_test.go:98:10: undefined: desiredRoleBindingInNamespace
+# github.com/projectcontour/contour/internal/provisioner/objects/rbac/clusterrole [github.com/projectcontour/contour/internal/provisioner/objects/rbac/clusterrole.test]
+internal/provisioner/objects/rbac/clusterrole/cluster_role_test.go:78:41: too many arguments in call to desiredClusterRole
+	have (string, *model.Contour, bool)
+	want (string, *model.Contour)
+# github.com/projectcontour/contour/internal/provisioner/objects/deployment [github.com/projectcontour/contour/internal/provisioner/objects/deployment.test]
+internal/provisioner/objects/deployment/deployment_test.go:238:14: cntr.Spec.WatchNamespaces undefined (type model.ContourSpec has no field or method WatchNamespaces)
+FAIL	github.com/projectcontour/contour/internal/provisioner/objects/deployment [build failed]
+FAIL	github.com/projectcontour/contour/internal/provisioner/objects/rbac/clusterrole [build failed]
+# github.com/projectcontour/contour/internal/provisioner/objects/rbac/role [github.com/projectcontour/contour/internal/provisioner/objects/rbac/role.test]
+internal/provisioner/objects/rbac/role/role_test.go:87:12: undefined: desiredRoleForResourceInNamespace
+FAIL	github.com/projectcontour/contour/internal/provisioner/objects/rbac/role [build failed]
+FAIL	github.com/projectcontour/contour/internal/provisioner/objects/rbac/rolebinding [build failed]
+reward=0 graded=28 found=28 failed=28 parsed=5 framework=go exit_code=1

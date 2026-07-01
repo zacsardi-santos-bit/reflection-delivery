@@ -1,0 +1,94 @@
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+patching file test/Ssh.Tests.ps1
+Pester v4.10.1
+Executing all tests in '/workspace/repo/test/Ssh.Tests.ps1'
+
+Executing script /workspace/repo/test/Ssh.Tests.ps1
+[31;1mGet-Command: [0m/workspace/repo/src/GitUtils.ps1:424[0m
+[31;1m[0m[36;1mLine |[0m
+[31;1m[0m[36;1m[36;1m 424 | [0m         $executableMatches = [36;1mGet-Command ssh.exe[0m | ForEach-Object Fil …[0m
+[31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m                              ~~~~~~~~~~~~~~~~~~~[0m
+[31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mThe term 'ssh.exe' is not recognized as a name of a cmdlet, function,[0m
+[31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m[31;1m[36;1m     | [31;1mscript file, or executable program. Check the spelling of the name, or[0m
+[31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m[31;1m[36;1m[31;1m[36;1m     | [31;1mif a path was included, verify that the path is correct and try again.[0m
+
+  Describing SSH Function Tests
+
+    Context Get-SshPath Tests
+      [+] Returns the correct default path 95ms
+      [+] Returns the correct path for a given filename 4ms
+      [+] Returns the correct path, given $Env:Home is not defined ($null) 15ms
+
+    Context Win32-OpenSSH Tests
+      [+] Finds the service 448ms
+      [+] Starts the service when stopped and user is admin 398ms
+      [+] Starts and Enables the service when disabled and user is admin 255ms
+      [+] Doesn't enable the service when user is not an admin 146ms
+      [+] Adds keys if not already added 188ms
+      [+] Doesn't add keys if already added 140ms
+      [+] Sets the sshCommand in .gitconfig 111ms
+      [+] Doesn't set the sshCommand in .gitconfig if it's already populated 75ms
+Tests completed in 2.62s
+Tests Passed: 11, Failed: 0, Skipped: 0, Pending: 0, Inconclusive: 0 
+
+[32;1mTagFilter         : [0m
+[32;1mExcludeTagFilter  : [0m
+[32;1mTestNameFilter    : [0m
+[32;1mScriptBlockFilter : [0m
+[32;1mTotalCount        : [0m11
+[32;1mPassedCount       : [0m11
+[32;1mFailedCount       : [0m0
+[32;1mSkippedCount      : [0m0
+[32;1mPendingCount      : [0m0
+[32;1mInconclusiveCount : [0m0
+[32;1mTime              : [0m00:00:02.6193991
+[32;1mTestResult        : [0m{@{Parameters=System.Collections.Specialized.OrderedDiction
+                    ary; Show=All; Describe=SSH Function Tests; 
+                    ParameterizedSuiteName=; Passed=True; Context=Get-SshPath 
+                    Tests; Result=Passed; FailureMessage=; Name=Returns the 
+                    correct default path; StackTrace=; ErrorRecord=; 
+                    Time=00:00:00.0956174}, @{Parameters=System.Collections.Spe
+                    cialized.OrderedDictionary; Show=All; Describe=SSH 
+                    Function Tests; ParameterizedSuiteName=; Passed=True; 
+                    Context=Get-SshPath Tests; Result=Passed; FailureMessage=; 
+                    Name=Returns the correct path for a given filename; 
+                    StackTrace=; ErrorRecord=; Time=00:00:00.0046329}, @{Parame
+                    ters=System.Collections.Specialized.OrderedDictionary; 
+                    Show=All; Describe=SSH Function Tests; 
+                    ParameterizedSuiteName=; Passed=True; Context=Get-SshPath 
+                    Tests; Result=Passed; FailureMessage=; Name=Returns the 
+                    correct path, given $Env:Home is not defined ($null); 
+                    StackTrace=; ErrorRecord=; Time=00:00:00.0154666}, @{Parame
+                    ters=System.Collections.Specialized.OrderedDictionary; 
+                    Show=All; Describe=SSH Function Tests; 
+                    ParameterizedSuiteName=; Passed=True; 
+                    Context=Win32-OpenSSH Tests; Result=Passed; 
+                    FailureMessage=; Name=Finds the service; StackTrace=; 
+                    ErrorRecord=; Time=00:00:00.4485291}…}
+
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<testsuites xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="junit_schema_4.xsd" name="Pester" tests="11" errors="0" failures="0" disabled="0" time="2.619">
+  <testsuite name="/workspace/repo/test/Ssh.Tests.ps1" tests="11" errors="0" failures="0" hostname="0bea0bee08aa" id="0" skipped="0" disabled="0" package="/workspace/repo/test/Ssh.Tests.ps1" time="2.619">
+    <properties>
+      <property name="machine-name" value="0bea0bee08aa" />
+      <property name="clr-version" value="Unknown" />
+      <property name="platform" value="Linux" />
+      <property name="user" value="root" />
+      <property name="os-version" value="4.14.355-282.733.amzn2.x86_64" />
+      <property name="cwd" value="/workspace/repo" />
+      <property name="user-domain" value="" />
+      <property name="junit-version" value="4" />
+    </properties>
+    <testcase name="SSH Function Tests.Get-SshPath Tests.Returns the correct default path" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.096" />
+    <testcase name="SSH Function Tests.Get-SshPath Tests.Returns the correct path for a given filename" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.005" />
+    <testcase name="SSH Function Tests.Get-SshPath Tests.Returns the correct path, given $Env:Home is not defined ($null)" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.015" />
+    <testcase name="SSH Function Tests.Win32-OpenSSH Tests.Finds the service" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.449" />
+    <testcase name="SSH Function Tests.Win32-OpenSSH Tests.Starts the service when stopped and user is admin" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.399" />
+    <testcase name="SSH Function Tests.Win32-OpenSSH Tests.Starts and Enables the service when disabled and user is admin" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.255" />
+    <testcase name="SSH Function Tests.Win32-OpenSSH Tests.Doesn't enable the service when user is not an admin" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.147" />
+    <testcase name="SSH Function Tests.Win32-OpenSSH Tests.Adds keys if not already added" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.189" />
+    <testcase name="SSH Function Tests.Win32-OpenSSH Tests.Doesn't add keys if already added" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.140" />
+    <testcase name="SSH Function Tests.Win32-OpenSSH Tests.Sets the sshCommand in .gitconfig" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.111" />
+    <testcase name="SSH Function Tests.Win32-OpenSSH Tests.Doesn't set the sshCommand in .gitconfig if it's already populated" status="Passed" classname="/workspace/repo/test/Ssh.Tests.ps1" assertions="0" time="0.075" />
+  </testsuite>
+</testsuites>reward=1 graded=11 found=11 failed=0 parsed=11 framework=junit exit_code=0

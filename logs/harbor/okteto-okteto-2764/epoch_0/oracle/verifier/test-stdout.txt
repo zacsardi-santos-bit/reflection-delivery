@@ -1,0 +1,80 @@
+patching file cmd/deploy/deploy_test.go
+{"Time":"2026-07-01T15:01:12.185258536Z","Action":"start","Package":"github.com/okteto/okteto/cmd/deploy"}
+{"Time":"2026-07-01T15:01:12.206361467Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorChangingKubeConfig"}
+{"Time":"2026-07-01T15:01:12.206391407Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorChangingKubeConfig","Output":"=== RUN   TestDeployWithErrorChangingKubeConfig\n"}
+{"Time":"2026-07-01T15:01:12.206525425Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorChangingKubeConfig","Output":"--- PASS: TestDeployWithErrorChangingKubeConfig (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.20653818Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorChangingKubeConfig","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.206548544Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestGetConfigMapFromData"}
+{"Time":"2026-07-01T15:01:12.206554489Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestGetConfigMapFromData","Output":"=== RUN   TestGetConfigMapFromData\n"}
+{"Time":"2026-07-01T15:01:12.206658166Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestGetConfigMapFromData","Output":"--- PASS: TestGetConfigMapFromData (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.206669941Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestGetConfigMapFromData","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.206676312Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorReadingManifestFile"}
+{"Time":"2026-07-01T15:01:12.20668049Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorReadingManifestFile","Output":"=== RUN   TestDeployWithErrorReadingManifestFile\n"}
+{"Time":"2026-07-01T15:01:12.206764955Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorReadingManifestFile","Output":"--- PASS: TestDeployWithErrorReadingManifestFile (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.20677508Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorReadingManifestFile","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.20678013Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestCreateConfigMapWithBuildError"}
+{"Time":"2026-07-01T15:01:12.206785499Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestCreateConfigMapWithBuildError","Output":"=== RUN   TestCreateConfigMapWithBuildError\n"}
+{"Time":"2026-07-01T15:01:12.20687117Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestCreateConfigMapWithBuildError","Output":" i  Building image for service 'service1'\n"}
+{"Time":"2026-07-01T15:01:12.206963035Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestCreateConfigMapWithBuildError","Output":"--- PASS: TestCreateConfigMapWithBuildError (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.206971809Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestCreateConfigMapWithBuildError","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.206980328Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorExecutingCommands"}
+{"Time":"2026-07-01T15:01:12.206984436Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorExecutingCommands","Output":"=== RUN   TestDeployWithErrorExecutingCommands\n"}
+{"Time":"2026-07-01T15:01:12.207078861Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorExecutingCommands","Output":" i  Images were already built. To rebuild your images run 'okteto build' or 'okteto deploy --build'\n"}
+{"Time":"2026-07-01T15:01:12.207184283Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorExecutingCommands","Output":" i  Running printenv\n"}
+{"Time":"2026-07-01T15:01:12.207250812Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorExecutingCommands","Output":"--- PASS: TestDeployWithErrorExecutingCommands (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.207263284Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorExecutingCommands","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.207270466Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorBecauseOtherPipelineRunning"}
+{"Time":"2026-07-01T15:01:12.207275178Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorBecauseOtherPipelineRunning","Output":"=== RUN   TestDeployWithErrorBecauseOtherPipelineRunning\n"}
+{"Time":"2026-07-01T15:01:12.207394493Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorBecauseOtherPipelineRunning","Output":"--- PASS: TestDeployWithErrorBecauseOtherPipelineRunning (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.207400639Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorBecauseOtherPipelineRunning","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.207403753Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy"}
+{"Time":"2026-07-01T15:01:12.207406401Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy","Output":"=== RUN   TestDeployWithErrorShuttingdownProxy\n"}
+{"Time":"2026-07-01T15:01:12.207481289Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy","Output":" i  Images were already built. To rebuild your images run 'okteto build' or 'okteto deploy --build'\n"}
+{"Time":"2026-07-01T15:01:12.207499695Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy","Output":" i  Running printenv\n"}
+{"Time":"2026-07-01T15:01:12.20750389Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy","Output":" i  Running ls -la\n"}
+{"Time":"2026-07-01T15:01:12.207507928Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy","Output":" i  Running cat /tmp/test.txt\n"}
+{"Time":"2026-07-01T15:01:12.20765104Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy","Output":"\u001b[?25l\u001b[?25h\r\u001b[KThere are no available endpoints for 'movies'\n"}
+{"Time":"2026-07-01T15:01:12.207693797Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy","Output":"--- PASS: TestDeployWithErrorShuttingdownProxy (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.207700025Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithErrorShuttingdownProxy","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.207706617Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors"}
+{"Time":"2026-07-01T15:01:12.207709417Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors","Output":"=== RUN   TestDeployWithoutErrors\n"}
+{"Time":"2026-07-01T15:01:12.207823399Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors","Output":" i  Images were already built. To rebuild your images run 'okteto build' or 'okteto deploy --build'\n"}
+{"Time":"2026-07-01T15:01:12.207834009Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors","Output":" i  Running printenv\n"}
+{"Time":"2026-07-01T15:01:12.207837075Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors","Output":" i  Running ls -la\n"}
+{"Time":"2026-07-01T15:01:12.207840889Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors","Output":" i  Running cat /tmp/test.txt\n"}
+{"Time":"2026-07-01T15:01:12.207927427Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors","Output":"\u001b[?25l\u001b[?25h\r\u001b[KThere are no available endpoints for 'movies'\n"}
+{"Time":"2026-07-01T15:01:12.207971119Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors","Output":"--- PASS: TestDeployWithoutErrors (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.207977471Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"TestDeployWithoutErrors","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.207982951Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest"}
+{"Time":"2026-07-01T15:01:12.207986715Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest","Output":"=== RUN   Test_mergeServicesToDeployFromOptionsAndManifest\n"}
+{"Time":"2026-07-01T15:01:12.208016969Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/no_manifest_services_to_deploy"}
+{"Time":"2026-07-01T15:01:12.208022303Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/no_manifest_services_to_deploy","Output":"=== RUN   Test_mergeServicesToDeployFromOptionsAndManifest/no_manifest_services_to_deploy\n"}
+{"Time":"2026-07-01T15:01:12.20804334Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/no_manifest_services_to_deploy","Output":"--- PASS: Test_mergeServicesToDeployFromOptionsAndManifest/no_manifest_services_to_deploy (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.208046993Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/no_manifest_services_to_deploy","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.208052462Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/no_options_services_to_deploy"}
+{"Time":"2026-07-01T15:01:12.208056079Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/no_options_services_to_deploy","Output":"=== RUN   Test_mergeServicesToDeployFromOptionsAndManifest/no_options_services_to_deploy\n"}
+{"Time":"2026-07-01T15:01:12.208061519Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/no_options_services_to_deploy","Output":"--- PASS: Test_mergeServicesToDeployFromOptionsAndManifest/no_options_services_to_deploy (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.208064623Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/no_options_services_to_deploy","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.208068057Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/both"}
+{"Time":"2026-07-01T15:01:12.208071441Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/both","Output":"=== RUN   Test_mergeServicesToDeployFromOptionsAndManifest/both\n"}
+{"Time":"2026-07-01T15:01:12.208081515Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/both","Output":" !  overwriting manifest's `services to deploy` with command line arguments\n"}
+{"Time":"2026-07-01T15:01:12.208088483Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/both","Output":"--- PASS: Test_mergeServicesToDeployFromOptionsAndManifest/both (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.2080951Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest/both","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.208103497Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest","Output":"--- PASS: Test_mergeServicesToDeployFromOptionsAndManifest (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.208108459Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_mergeServicesToDeployFromOptionsAndManifest","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.208111664Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars"}
+{"Time":"2026-07-01T15:01:12.20811471Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars","Output":"=== RUN   Test_ValidateVars\n"}
+{"Time":"2026-07-01T15:01:12.20813024Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars/correct_assingnament"}
+{"Time":"2026-07-01T15:01:12.208133673Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars/correct_assingnament","Output":"=== RUN   Test_ValidateVars/correct_assingnament\n"}
+{"Time":"2026-07-01T15:01:12.208151023Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars/correct_assingnament","Output":"--- PASS: Test_ValidateVars/correct_assingnament (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.208155493Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars/correct_assingnament","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.208159589Z","Action":"run","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars/bas_assingnament"}
+{"Time":"2026-07-01T15:01:12.208162185Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars/bas_assingnament","Output":"=== RUN   Test_ValidateVars/bas_assingnament\n"}
+{"Time":"2026-07-01T15:01:12.208187533Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars/bas_assingnament","Output":"--- PASS: Test_ValidateVars/bas_assingnament (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.20819305Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars/bas_assingnament","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.208196831Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars","Output":"--- PASS: Test_ValidateVars (0.00s)\n"}
+{"Time":"2026-07-01T15:01:12.208202187Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Test":"Test_ValidateVars","Elapsed":0}
+{"Time":"2026-07-01T15:01:12.208205971Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Output":"PASS\n"}
+{"Time":"2026-07-01T15:01:12.209606559Z","Action":"output","Package":"github.com/okteto/okteto/cmd/deploy","Output":"ok  \tgithub.com/okteto/okteto/cmd/deploy\t0.024s\n"}
+{"Time":"2026-07-01T15:01:12.209624991Z","Action":"pass","Package":"github.com/okteto/okteto/cmd/deploy","Elapsed":0.024}
+reward=1 graded=15 found=15 failed=0 parsed=15 framework=go exit_code=0

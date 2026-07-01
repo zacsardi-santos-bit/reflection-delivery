@@ -1,0 +1,7 @@
+patching file aws/src/main/java/org/apache/iceberg/aws/s3/S3FileIO.java
+patching file core/src/main/java/org/apache/iceberg/CatalogUtil.java
+patching file core/src/main/java/org/apache/iceberg/io/ResolvingFileIO.java
+patching file core/src/main/java/org/apache/iceberg/io/StorageCredential.java
+patching file core/src/main/java/org/apache/iceberg/io/SupportsStorageCredentials.java
+patching file core/src/main/java/org/apache/iceberg/rest/RESTSessionCatalog.java
+patching file gcp/src/main/java/org/apache/iceberg/gcp/gcs/GCSFileIO.java

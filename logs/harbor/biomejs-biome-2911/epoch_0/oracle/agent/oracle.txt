@@ -1,0 +1,9 @@
+patching file Cargo.lock
+patching file crates/biome_configuration/src/linter/rules.rs
+patching file crates/biome_css_analyze/Cargo.toml
+patching file crates/biome_css_analyze/src/lint/nursery.rs
+patching file crates/biome_css_analyze/src/lint/nursery/no_invalid_direction_in_linear_gradient.rs
+patching file crates/biome_css_analyze/src/options.rs
+patching file crates/biome_diagnostics_categories/src/categories.rs
+patching file packages/@biomejs/backend-jsonrpc/src/workspace.ts
+patching file packages/@biomejs/biome/configuration_schema.json

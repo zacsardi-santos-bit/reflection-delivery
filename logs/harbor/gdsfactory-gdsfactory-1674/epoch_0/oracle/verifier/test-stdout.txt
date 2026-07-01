@@ -1,0 +1,476 @@
+patching file tests/test_all_angle_routing.py
+patching file tests/test_component_from_yaml/test_netlists_sample_different_link_factory_.yml
+patching file tests/test_component_from_yaml/test_netlists_sample_waypoints_.yml
+patching file tests/test_components/test_settings_add_grating_couplers_with_loopback_fiber_array_.yml
+patching file tests/test_components/test_settings_add_grating_couplers_with_loopback_fiber_single_.yml
+patching file tests/test_components/test_settings_bend_straight_bend_.yml
+patching file tests/test_components/test_settings_cdc_.yml
+patching file tests/test_components/test_settings_disk_heater_.yml
+patching file tests/test_components/test_settings_ring_crow_.yml
+patching file tests/test_components/test_settings_ring_crow_couplers_.yml
+patching file tests/test_components/test_settings_ring_double_pn_.yml
+patching file tests/test_components/test_settings_ring_single_pn_.yml
+patching file tests/test_components/test_settings_straight_heater_doped_rib_.yml
+patching file tests/test_components/test_settings_straight_heater_doped_strip_.yml
+patching file tests/test_components/test_settings_straight_rib_.yml
+patching file tests/test_components/test_settings_straight_rib_tapered_.yml
+patching file tests/test_components/test_settings_taper_cross_section_linear_.yml
+patching file tests/test_components/test_settings_taper_cross_section_parabolic_.yml
+patching file tests/test_components/test_settings_taper_cross_section_sine_.yml
+patching file tests/test_containers/test_settings_add_grating_couplers_with_loopback_fiber_single_.yml
+patching file tests/test_get_route_auto_widen.py
+patching file tests/test_serialize/test_settings.yml
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: xdoctest-1.3.2, datadir-1.8.0, cov-7.1.0, regressions-2.11.0
+collecting ... collected 285 items
+
+tests/test_components.py::test_settings[grating_coupler_rectangular] PASSED [  0%]
+tests/test_components.py::test_settings[via1] PASSED                     [  0%]
+tests/test_components.py::test_settings[taper_w11_l200] PASSED           [  1%]
+tests/test_components.py::test_settings[mmi2x2] PASSED                   [  1%]
+tests/test_components.py::test_settings[cutback_bend180circular] PASSED  [  1%]
+tests/test_components.py::test_settings[compass] PASSED                  [  2%]
+tests/test_components.py::test_settings[mzi] PASSED                      [  2%]
+tests/test_components.py::test_settings[wire_corner45] PASSED            [  2%]
+tests/test_components.py::test_settings[coupler_straight_asymmetric] PASSED [  3%]
+tests/test_components.py::test_settings[coupler_trenches] PASSED         [  3%]
+tests/test_components.py::test_settings[ring_single_trenches] PASSED     [  3%]
+tests/test_components.py::test_settings[pixel] PASSED                    [  4%]
+tests/test_components.py::test_settings[grating_coupler_elliptical_te] PASSED [  4%]
+tests/test_components.py::test_settings[array] PASSED                    [  4%]
+tests/test_components.py::test_settings[spiral_inner_io] PASSED          [  5%]
+tests/test_components.py::test_settings[taper_w10_l100] PASSED           [  5%]
+tests/test_components.py::test_settings[ring_single_bend_coupler] PASSED [  5%]
+tests/test_components.py::test_settings[logo] PASSED                     [  6%]
+tests/test_components.py::test_settings[mzi_coupler] PASSED              [  6%]
+tests/test_components.py::test_settings[mode_converter] PASSED           [  7%]
+tests/test_components.py::test_settings[mzm] PASSED                      [  7%]
+tests/test_components.py::test_settings[cutback_2x2] PASSED              [  7%]
+tests/test_components.py::test_settings[straight_array] PASSED           [  8%]
+tests/test_components.py::test_settings[viac] PASSED                     [  8%]
+tests/test_components.py::test_settings[coupler_ring] PASSED             [  8%]
+tests/test_components.py::test_settings[greek_cross] PASSED              [  9%]
+tests/test_components.py::test_settings[marker_te] PASSED                [  9%]
+tests/test_components.py::test_settings[delay_snake] PASSED              [  9%]
+tests/test_components.py::test_settings[via_corner] PASSED               [ 10%]
+tests/test_components.py::test_settings[mzi_phase_shifter] PASSED        [ 10%]
+tests/test_components.py::test_settings[optimal_step] PASSED             [ 10%]
+tests/test_components.py::test_settings[array_with_fanout_2d] PASSED     [ 11%]
+tests/test_components.py::test_settings[splitter_chain] PASSED           [ 11%]
+tests/test_components.py::test_settings[taper_sc_nc] PASSED              [ 11%]
+tests/test_components.py::test_settings[resistance_sheet] PASSED         [ 12%]
+tests/test_components.py::test_settings[die_bbox] PASSED                 [ 12%]
+tests/test_components.py::test_settings[straight_heater_meander_doped] PASSED [ 12%]
+tests/test_components.py::test_settings[pad_array] PASSED                [ 13%]
+tests/test_components.py::test_settings[marker_tm] PASSED                [ 13%]
+tests/test_components.py::test_settings[greek_cross_with_pads] PASSED    [ 14%]
+tests/test_components.py::test_settings[litho_steps] PASSED              [ 14%]
+tests/test_components.py::test_settings[taper_adiabatic] PASSED          [ 14%]
+tests/test_components.py::test_settings[ring_double_heater] PASSED       [ 15%]
+tests/test_components.py::test_settings[spiral_racetrack_fixed_length] PASSED [ 15%]
+tests/test_components.py::test_settings[litho_ruler] PASSED              [ 15%]
+tests/test_components.py::test_settings[wafer] PASSED                    [ 16%]
+tests/test_components.py::test_settings[coh_rx_dual_pol] PASSED          [ 16%]
+tests/test_components.py::test_settings[array_with_via] PASSED           [ 16%]
+tests/test_components.py::test_settings[grating_coupler_loss_fiber_array] PASSED [ 17%]
+tests/test_components.py::test_settings[add_trenches] PASSED             [ 17%]
+tests/test_components.py::test_settings[crossing_from_taper] PASSED      [ 17%]
+tests/test_components.py::test_settings[taper_w10_l200] PASSED           [ 18%]
+tests/test_components.py::test_settings[mzi_lattice_mmi] PASSED          [ 18%]
+tests/test_components.py::test_settings[coupler_full] PASSED             [ 18%]
+tests/test_components.py::test_settings[grating_coupler_elliptical_arbitrary] PASSED [ 19%]
+tests/test_components.py::test_settings[polarization_splitter_rotator] PASSED [ 19%]
+tests/test_components.py::test_settings[staircase] PASSED                [ 20%]
+tests/test_components.py::test_settings[delay_snake2] PASSED             [ 20%]
+tests/test_components.py::test_settings[bend_euler180] PASSED            [ 20%]
+tests/test_components.py::test_settings[interdigital_capacitor] PASSED   [ 21%]
+tests/test_components.py::test_settings[crossing45] PASSED               [ 21%]
+tests/test_components.py::test_settings[loss_deembedding_ch13_24] PASSED [ 21%]
+tests/test_components.py::test_settings[via_stack_slab_m3] PASSED        [ 22%]
+tests/test_components.py::test_settings[cdsem_all] PASSED                [ 22%]
+tests/test_components.py::test_settings[triangle] PASSED                 [ 22%]
+tests/test_components.py::test_settings[taper_w10_l150] PASSED           [ 23%]
+tests/test_components.py::test_settings[dbr_tapered] PASSED              [ 23%]
+tests/test_components.py::test_settings[pad_array180] PASSED             [ 23%]
+tests/test_components.py::test_settings[array_with_via_2d] PASSED        [ 24%]
+tests/test_components.py::test_settings[optimal_hairpin] PASSED          [ 24%]
+tests/test_components.py::test_settings[ring_single_array] PASSED        [ 24%]
+tests/test_components.py::test_settings[bend_circular180] PASSED         [ 25%]
+tests/test_components.py::test_settings[bend_circular_heater] PASSED     [ 25%]
+tests/test_components.py::test_settings[add_trenches90] PASSED           [ 25%]
+tests/test_components.py::test_settings[cutback_bend] PASSED             [ 26%]
+tests/test_components.py::test_settings[cutback_bend90] PASSED           [ 26%]
+tests/test_components.py::test_settings[pad_gsg_open] PASSED             [ 27%]
+tests/test_components.py::test_settings[die] PASSED                      [ 27%]
+tests/test_components.py::test_settings[coupler_asymmetric] PASSED       [ 27%]
+tests/test_components.py::test_settings[straight_pin] PASSED             [ 28%]
+tests/test_components.py::test_settings[ring_double_trenches] PASSED     [ 28%]
+tests/test_components.py::test_settings[via_stack_from_rules] PASSED     [ 28%]
+tests/test_components.py::test_settings[grating_coupler_elliptical] PASSED [ 29%]
+tests/test_components.py::test_settings[align_wafer] PASSED              [ 29%]
+tests/test_components.py::test_settings[cavity] PASSED                   [ 29%]
+tests/test_components.py::test_settings[array_with_fanout] PASSED        [ 30%]
+tests/test_components.py::test_settings[bend_euler] PASSED               [ 30%]
+tests/test_components.py::test_settings[add_fiducials_offsets] PASSED    [ 30%]
+tests/test_components.py::test_settings[ramp] PASSED                     [ 31%]
+tests/test_components.py::test_settings[straight_heater_metal_undercut_90_90] PASSED [ 31%]
+tests/test_components.py::test_settings[die_bbox_frame] PASSED           [ 31%]
+tests/test_components.py::test_settings[mmi_90degree_hybrid] PASSED      [ 32%]
+tests/test_components.py::test_settings[snspd] PASSED                    [ 32%]
+tests/test_components.py::test_settings[spiral_external_io] PASSED       [ 32%]
+tests/test_components.py::test_settings[add_grating_couplers] PASSED     [ 33%]
+tests/test_components.py::test_settings[coupler90circular] PASSED        [ 33%]
+tests/test_components.py::test_settings[seal_ring] PASSED                [ 34%]
+tests/test_components.py::test_settings[taper_w12_l200] PASSED           [ 34%]
+tests/test_components.py::test_settings[coh_tx_single_pol] PASSED        [ 34%]
+tests/test_components.py::test_settings[splitter_tree] PASSED            [ 35%]
+tests/test_components.py::test_settings[straight_heater_metal_undercut] PASSED [ 35%]
+tests/test_components.py::test_settings[bend_straight_bend] PASSED       [ 35%]
+tests/test_components.py::test_settings[grating_coupler_tm] PASSED       [ 36%]
+tests/test_components.py::test_settings[switch_tree] PASSED              [ 36%]
+tests/test_components.py::test_settings[fiber_array] PASSED              [ 36%]
+tests/test_components.py::test_settings[spiral_inner_io_fiber_single] PASSED [ 37%]
+tests/test_components.py::test_settings[straight_heater_meander] PASSED  [ 37%]
+tests/test_components.py::test_settings[via_stack_slot_m1_m2] PASSED     [ 37%]
+tests/test_components.py::test_settings[taper_cross_section_parabolic] PASSED [ 38%]
+tests/test_components.py::test_settings[straight_heater_metal] PASSED    [ 38%]
+tests/test_components.py::test_settings[mzi1x2_2x2] PASSED               [ 38%]
+tests/test_components.py::test_settings[add_grating_couplers_with_loopback_fiber_array] PASSED [ 39%]
+tests/test_components.py::test_settings[coupler_straight] PASSED         [ 39%]
+tests/test_components.py::test_settings[text_rectangular_multi_layer] PASSED [ 40%]
+tests/test_components.py::test_settings[terminator] PASSED               [ 40%]
+tests/test_components.py::test_settings[wire_straight] PASSED            [ 40%]
+tests/test_components.py::test_settings[text_lines] PASSED               [ 41%]
+tests/test_components.py::test_settings[taper_strip_to_ridge] PASSED     [ 41%]
+tests/test_components.py::test_settings[grating_coupler_elliptical_lumerical] PASSED [ 41%]
+tests/test_components.py::test_settings[coh_tx_dual_pol] PASSED          [ 42%]
+tests/test_components.py::test_settings[hline] PASSED                    [ 42%]
+tests/test_components.py::test_settings[mzi_lattice] PASSED              [ 42%]
+tests/test_components.py::test_settings[coupler_adiabatic] PASSED        [ 43%]
+tests/test_components.py::test_settings[taper] PASSED                    [ 43%]
+tests/test_components.py::test_settings[via_stack_heater_mtop] PASSED    [ 43%]
+tests/test_components.py::test_settings[taper_cross_section_sine] PASSED [ 44%]
+tests/test_components.py::test_settings[taper_from_csv] PASSED           [ 44%]
+tests/test_components.py::test_settings[grating_coupler_rectangular_arbitrary] PASSED [ 44%]
+tests/test_components.py::test_settings[grating_coupler_tree] PASSED     [ 45%]
+tests/test_components.py::test_settings[via_cutback] PASSED              [ 45%]
+tests/test_components.py::test_settings[add_fiducials] PASSED            [ 45%]
+tests/test_components.py::test_settings[disk_heater] PASSED              [ 46%]
+tests/test_components.py::test_settings[grating_coupler_elliptical_uniform] PASSED [ 46%]
+tests/test_components.py::test_settings[via_stack_heater_m3] PASSED      [ 47%]
+tests/test_components.py::test_settings[bend_circular] PASSED            [ 47%]
+tests/test_components.py::test_settings[add_grating_couplers_with_loopback_fiber_single] PASSED [ 47%]
+tests/test_components.py::test_settings[cross] PASSED                    [ 48%]
+tests/test_components.py::test_settings[grating_coupler_loss_fiber_single] PASSED [ 48%]
+tests/test_components.py::test_settings[text_freetype] PASSED            [ 48%]
+tests/test_components.py::test_settings[via_stack] PASSED                [ 49%]
+tests/test_components.py::test_settings[grating_coupler_elliptical_tm] PASSED [ 49%]
+tests/test_components.py::test_settings[via] PASSED                      [ 49%]
+tests/test_components.py::test_settings[loss_deembedding_ch14_23] PASSED [ 50%]
+tests/test_components.py::test_settings[ring_single_pn] PASSED           [ 50%]
+tests/test_components.py::test_settings[mmi1x2_with_sbend] PASSED        [ 50%]
+tests/test_components.py::test_settings[mzi_pads_center] PASSED          [ 51%]
+tests/test_components.py::test_settings[wire_sbend] PASSED               [ 51%]
+tests/test_components.py::test_settings[bend_euler_s] PASSED             [ 51%]
+tests/test_components.py::test_settings[qrcode] PASSED                   [ 52%]
+tests/test_components.py::test_settings[ring_double] PASSED              [ 52%]
+tests/test_components.py::test_settings[grating_coupler_rectangular_arbitrary_slab] PASSED [ 52%]
+tests/test_components.py::test_settings[mzit_lattice] PASSED             [ 53%]
+tests/test_components.py::test_settings[straight_heater_metal_90_90] PASSED [ 53%]
+tests/test_components.py::test_settings[straight_rib] PASSED             [ 54%]
+tests/test_components.py::test_settings[crossing_arm] PASSED             [ 54%]
+tests/test_components.py::test_settings[ring_single] PASSED              [ 54%]
+tests/test_components.py::test_settings[ring_double_pn] PASSED           [ 55%]
+tests/test_components.py::test_settings[pad_gsg_short] PASSED            [ 55%]
+tests/test_components.py::test_settings[dbr] PASSED                      [ 55%]
+tests/test_components.py::test_settings[straight_rib_tapered] PASSED     [ 56%]
+tests/test_components.py::test_settings[mmi2x2_with_sbend] PASSED        [ 56%]
+tests/test_components.py::test_settings[ellipse] PASSED                  [ 56%]
+tests/test_components.py::test_settings[delay_snake3] PASSED             [ 57%]
+tests/test_components.py::test_settings[cutback_splitter] PASSED         [ 57%]
+tests/test_components.py::test_settings[cdc] PASSED                      [ 57%]
+tests/test_components.py::test_settings[straight_pn] PASSED              [ 58%]
+tests/test_components.py::test_settings[text_rectangular] PASSED         [ 58%]
+tests/test_components.py::test_settings[coupler90bend] PASSED            [ 58%]
+tests/test_components.py::test_settings[grating_coupler_dual_pol] PASSED [ 59%]
+tests/test_components.py::test_settings[compensation_path] PASSED        [ 59%]
+tests/test_components.py::test_settings[ring_crow] PASSED                [ 60%]
+tests/test_components.py::test_settings[extend_ports] PASSED             [ 60%]
+tests/test_components.py::test_settings[bbox] PASSED                     [ 60%]
+tests/test_components.py::test_settings[fiducial_squares] PASSED         [ 61%]
+tests/test_components.py::test_settings[L] PASSED                        [ 61%]
+tests/test_components.py::test_settings[edge_coupler_array] PASSED       [ 61%]
+tests/test_components.py::test_settings[taper_strip_to_ridge_trenches] PASSED [ 62%]
+tests/test_components.py::test_settings[ring] PASSED                     [ 62%]
+tests/test_components.py::test_settings[text] PASSED                     [ 62%]
+tests/test_components.py::test_settings[taper_cross_section_linear] PASSED [ 63%]
+tests/test_components.py::test_settings[mzi2x2_2x2] PASSED               [ 63%]
+tests/test_components.py::test_settings[straight_heater_doped_rib] PASSED [ 63%]
+tests/test_components.py::test_settings[add_frame] PASSED                [ 64%]
+tests/test_components.py::test_settings[cutback_bend180] PASSED          [ 64%]
+tests/test_components.py::test_settings[pad_array90] PASSED              [ 64%]
+tests/test_components.py::test_settings[pad] PASSED                      [ 65%]
+tests/test_components.py::test_settings[spiral_racetrack_heater_metal] PASSED [ 65%]
+tests/test_components.py::test_settings[taper_parabolic] PASSED          [ 65%]
+tests/test_components.py::test_settings[cutback_component] PASSED        [ 66%]
+tests/test_components.py::test_settings[mzi_arms] PASSED                 [ 66%]
+tests/test_components.py::test_settings[disk] PASSED                     [ 67%]
+tests/test_components.py::test_settings[via_stack_with_offset] PASSED    [ 67%]
+tests/test_components.py::test_settings[mmi1x2] PASSED                   [ 67%]
+tests/test_components.py::test_settings[C] PASSED                        [ 68%]
+tests/test_components.py::test_settings[bend_s] PASSED                   [ 68%]
+tests/test_components.py::test_settings[loop_mirror] PASSED              [ 68%]
+tests/test_components.py::test_settings[mzi_phase_shifter_top_heater_metal] PASSED [ 69%]
+tests/test_components.py::test_settings[spiral_racetrack_heater_doped] PASSED [ 69%]
+tests/test_components.py::test_settings[resistance_meander] PASSED       [ 69%]
+tests/test_components.py::test_settings[delay_snake_sbend] PASSED        [ 70%]
+tests/test_components.py::test_settings[loss_deembedding_ch12_34] PASSED [ 70%]
+tests/test_components.py::test_settings[coupler_symmetric] PASSED        [ 70%]
+tests/test_components.py::test_settings[ring_single_heater] PASSED       [ 71%]
+tests/test_components.py::test_settings[straight_heater_doped_strip] PASSED [ 71%]
+tests/test_components.py::test_settings[straight_pin_slot] PASSED        [ 71%]
+tests/test_components.py::test_settings[coupler90] PASSED                [ 72%]
+tests/test_components.py::test_settings[coupler] PASSED                  [ 72%]
+tests/test_components.py::test_settings[edge_coupler_silicon] PASSED     [ 72%]
+tests/test_components.py::test_settings[verniers] PASSED                 [ 73%]
+tests/test_components.py::test_settings[pads_shorted] PASSED             [ 73%]
+tests/test_components.py::test_settings[regular_polygon] PASSED          [ 74%]
+tests/test_components.py::test_settings[wire_corner] PASSED              [ 74%]
+tests/test_components.py::test_settings[optimal_90deg] PASSED            [ 74%]
+tests/test_components.py::test_settings[bend_port] PASSED                [ 75%]
+tests/test_components.py::test_settings[ge_detector_straight_si_contacts] PASSED [ 75%]
+tests/test_components.py::test_settings[taper_0p5_to_3_l36] PASSED       [ 75%]
+tests/test_components.py::test_settings[cutback_component_mirror] PASSED [ 76%]
+tests/test_components.py::test_settings[ring_crow_couplers] PASSED       [ 76%]
+tests/test_components.py::test_settings[edge_coupler_array_with_loopback] PASSED [ 76%]
+tests/test_components.py::test_settings[rectangle_with_slits] PASSED     [ 77%]
+tests/test_components.py::test_settings[ring_single_dut] PASSED          [ 77%]
+tests/test_components.py::test_settings[via_stack_slot] PASSED           [ 77%]
+tests/test_components.py::test_settings[grating_coupler_elliptical_trenches] PASSED [ 78%]
+tests/test_components.py::test_settings[mzit] PASSED                     [ 78%]
+tests/test_components.py::test_settings[pad_rectangular] PASSED          [ 78%]
+tests/test_components.py::test_settings[straight] PASSED                 [ 79%]
+tests/test_components.py::test_settings[coh_rx_single_pol] PASSED        [ 79%]
+tests/test_components.py::test_settings[crossing_etched] PASSED          [ 80%]
+tests/test_components.py::test_settings[circle] PASSED                   [ 80%]
+tests/test_components.py::test_settings[dicing_lane] PASSED              [ 80%]
+tests/test_components.py::test_settings[litho_calipers] PASSED           [ 81%]
+tests/test_components.py::test_settings[grating_coupler_loss_fiber_array4] PASSED [ 81%]
+tests/test_components.py::test_settings[pad_array270] PASSED             [ 81%]
+tests/test_components.py::test_settings[bend_euler_trenches] PASSED      [ 82%]
+tests/test_components.py::test_settings[cutback_bend90circular] PASSED   [ 82%]
+tests/test_components.py::test_settings[nxn] PASSED                      [ 82%]
+tests/test_components.py::test_settings[grating_coupler_array] PASSED    [ 83%]
+tests/test_components.py::test_settings[component_lattice] PASSED        [ 83%]
+tests/test_components.py::test_settings[rectangle] PASSED                [ 83%]
+tests/test_components.py::test_settings[spiral_double] PASSED            [ 84%]
+tests/test_components.py::test_settings[taper2] PASSED                   [ 84%]
+tests/test_components.py::test_settings[via2] PASSED                     [ 84%]
+tests/test_components.py::test_settings[fiber] PASSED                    [ 85%]
+tests/test_components.py::test_settings[awg] PASSED                      [ 85%]
+tests/test_components.py::test_settings[grating_coupler_te] PASSED       [ 85%]
+tests/test_components.py::test_settings[greek_cross_offset_pads] PASSED  [ 86%]
+tests/test_components.py::test_settings[coupler_bend] PASSED             [ 86%]
+tests/test_components.py::test_settings[bezier] PASSED                   [ 87%]
+tests/test_components.py::test_settings[pad_array0] PASSED               [ 87%]
+tests/test_components.py::test_settings[copy_layers] PASSED              [ 87%]
+tests/test_component_from_yaml.py::test_settings[yaml_anchor] PASSED     [ 88%]
+tests/test_component_from_yaml.py::test_settings[sample_docstring] PASSED [ 88%]
+tests/test_component_from_yaml.py::test_settings[sample_waypoints] PASSED [ 88%]
+tests/test_component_from_yaml.py::test_settings[sample_different_link_factory] PASSED [ 89%]
+tests/test_component_from_yaml.py::test_settings[sample_mirror_simple] PASSED [ 89%]
+tests/test_component_from_yaml.py::test_settings[sample_connections] PASSED [ 89%]
+tests/test_component_from_yaml.py::test_settings[sample_mmis] PASSED     [ 90%]
+tests/test_component_from_yaml.py::test_settings[sample_doe] PASSED      [ 90%]
+tests/test_component_from_yaml.py::test_settings[sample_doe_function] PASSED [ 90%]
+tests/test_component_from_yaml.py::test_settings[sample_rotation] PASSED [ 91%]
+tests/test_component_from_yaml.py::test_netlists[yaml_anchor] PASSED     [ 91%]
+tests/test_component_from_yaml.py::test_netlists[sample_docstring] PASSED [ 91%]
+tests/test_component_from_yaml.py::test_netlists[sample_waypoints] PASSED [ 92%]
+tests/test_component_from_yaml.py::test_netlists[sample_different_link_factory] PASSED [ 92%]
+tests/test_component_from_yaml.py::test_netlists[sample_mirror_simple] PASSED [ 92%]
+tests/test_component_from_yaml.py::test_netlists[sample_connections] PASSED [ 93%]
+tests/test_component_from_yaml.py::test_netlists[sample_mmis] PASSED     [ 93%]
+tests/test_component_from_yaml.py::test_netlists[sample_doe] PASSED      [ 94%]
+tests/test_component_from_yaml.py::test_netlists[sample_doe_function] PASSED [ 94%]
+tests/test_component_from_yaml.py::test_netlists[sample_rotation] PASSED [ 94%]
+tests/test_containers.py::test_settings[add_fiber_array] PASSED          [ 95%]
+tests/test_containers.py::test_settings[array] PASSED                    [ 95%]
+tests/test_containers.py::test_settings[extend_ports] PASSED             [ 95%]
+tests/test_containers.py::test_settings[add_electrical_pads_top] PASSED  [ 96%]
+tests/test_containers.py::test_settings[add_grating_couplers_with_loopback_fiber_single] PASSED [ 96%]
+tests/test_containers.py::test_settings[add_termination] PASSED          [ 96%]
+tests/test_containers.py::test_settings[fanout2x2] PASSED                [ 97%]
+tests/test_containers.py::test_settings[cavity] PASSED                   [ 97%]
+tests/test_containers.py::test_settings[add_padding_container] PASSED    [ 97%]
+tests/test_containers.py::test_settings[add_grating_couplers] PASSED     [ 98%]
+tests/test_containers.py::test_settings[add_electrical_pads_shortest] PASSED [ 98%]
+tests/test_containers.py::test_settings[rotate] PASSED                   [ 98%]
+tests/test_containers.py::test_settings[add_fiber_single] PASSED         [ 99%]
+tests/test_containers.py::test_settings[ring_single_dut] PASSED          [ 99%]
+tests/test_serialize.py::test_settings PASSED                            [100%]
+
+=============================== warnings summary ===============================
+gdsfactory/path.py:1128: 8 warnings
+tests/test_components.py: 120 warnings
+tests/test_component_from_yaml.py: 48 warnings
+  /workspace/repo/gdsfactory/path.py:1128: DeprecationWarning: `np.math` is a deprecated alias for the standard library `math` module (Deprecated Numpy 1.25). Replace usages of `np.math` with `math`
+    x += (-1) ** n * t ** (4 * n + 1) / (np.math.factorial(2 * n) * (4 * n + 1))
+
+gdsfactory/path.py:1129: 8 warnings
+tests/test_components.py: 120 warnings
+tests/test_component_from_yaml.py: 48 warnings
+  /workspace/repo/gdsfactory/path.py:1129: DeprecationWarning: `np.math` is a deprecated alias for the standard library `math` module (Deprecated Numpy 1.25). Replace usages of `np.math` with `math`
+    y += (-1) ** n * t ** (4 * n + 3) / (np.math.factorial(2 * n + 1) * (4 * n + 3))
+
+gdsfactory/pdk.py:456
+  /workspace/repo/gdsfactory/pdk.py:456: UserWarning: Got 3 layers, 3 layer_offsets, 2 vias
+    return cell(**kwargs)
+
+tests/test_components.py::test_settings[ring_double_heater]
+  /workspace/repo/gdsfactory/pdk.py:446: UserWarning: Got 3 layers, 3 layer_offsets, 2 vias
+    return component(**kwargs)
+
+tests/test_components.py::test_settings[via_cutback]
+  /workspace/repo/gdsfactory/components/via_cutback.py:99: UserWarning: Got 3 layers, 3 layer_offsets, 2 vias
+    pad_component = pad(size=pad_size)
+
+tests/test_components.py::test_settings[via_cutback]
+  /workspace/repo/gdsfactory/components/via_cutback.py:103: UserWarning: Got 3 layers, 3 layer_offsets, 2 vias
+    nub = c.add_ref(pad(size=(3 * wire_width, wire_width)))
+
+tests/test_components.py::test_settings[via_cutback]
+  /workspace/repo/gdsfactory/components/via_cutback.py:104: UserWarning: Got 3 layers, 3 layer_offsets, 2 vias
+    head = c.add_ref(pad(size=(wire_width, wire_width)))
+
+tests/test_components.py::test_settings[straight_pin_slot]
+  /workspace/repo/gdsfactory/components/via_stack_slot.py:93: UserWarning: Got 1 layers, 2 layer_offsetsx, 2 layer_offsetsy.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[yaml_anchor]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[yaml_anchor] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_docstring]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_docstring] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_waypoints]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_waypoints] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_different_link_factory]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_different_link_factory] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_mirror_simple]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_mirror_simple] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_connections]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_connections] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_mmis]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_mmis] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_doe]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_doe] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_doe_function]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_doe_function] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_settings[sample_rotation]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_settings[sample_rotation] returned <class 'gdsfactory.component.Component'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[yaml_anchor]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[yaml_anchor] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_docstring]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_docstring] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_waypoints]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_waypoints] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_different_link_factory]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_different_link_factory] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_mirror_simple]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_mirror_simple] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_connections]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_connections] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_mmis]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_mmis] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_doe]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_doe] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_doe_function]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_doe_function] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+tests/test_component_from_yaml.py::test_netlists[sample_rotation]
+  /usr/local/lib/python3.11/site-packages/_pytest/python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but tests/test_component_from_yaml.py::test_netlists[sample_rotation] returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+====================== 285 passed, 378 warnings in 10.84s ======================
+reward=1 graded=285 found=0 failed=0 parsed=1 framework=pytest exit_code=0

@@ -1,0 +1,27 @@
+patching file code/lib/cli/src/autoblock/index.test.ts
+patching file code/lib/cli/src/automigrate/fixes/nodejs-requirement.test.ts
+[33mThe CJS build of Vite's Node API is deprecated. See https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+3:16:40 PM [vite-plugin-svelte] Your are using Svelte 5.0.0-next.28. Svelte 5 support is experimental, breaking changes can occur in any release until this notice is removed.
+work in progress:
+ - svelte-inspector is disabled until dev mode implements node to code mapping
+ - hmr for .svelte files is disabled until hmr api is implemented
+
+
+ RUN  v1.2.2 /workspace/repo/code
+
+ ❯ |lib/cli| src/autoblock/index.test.ts  (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |lib/cli| src/autoblock/index.test.ts [ lib/cli/src/autoblock/index.test.ts ]
+Error: Failed to load url ./index (resolved id: ./index) in /workspace/repo/code/lib/cli/src/autoblock/index.test.ts. Does the file exist?
+ ❯ loadAndTransform ../../node_modules/vitest/node_modules/vite/dist/node/chunks/dep-R0I0XnyH.js:49376:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  15:16:37
+   Duration  1.65s (transform 89ms, setup 133ms, collect 0ms, tests 0ms, environment 0ms, prepare 96ms)
+
+reward=0 graded=4 found=0 failed=0 parsed=0 framework=vitest exit_code=1

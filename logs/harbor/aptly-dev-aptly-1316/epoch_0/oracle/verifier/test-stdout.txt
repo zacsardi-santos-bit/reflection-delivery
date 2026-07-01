@@ -1,0 +1,11 @@
+patching file utils/utils_test.go
+{"Time":"2026-07-01T14:32:09.236984756Z","Action":"start","Package":"github.com/aptly-dev/aptly/utils"}
+{"Time":"2026-07-01T14:32:09.239075369Z","Action":"run","Package":"github.com/aptly-dev/aptly/utils","Test":"Test"}
+{"Time":"2026-07-01T14:32:09.23910114Z","Action":"output","Package":"github.com/aptly-dev/aptly/utils","Test":"Test","Output":"=== RUN   Test\n"}
+{"Time":"2026-07-01T14:32:09.244777356Z","Action":"output","Package":"github.com/aptly-dev/aptly/utils","Test":"Test","Output":"OK: 16 passed\n"}
+{"Time":"2026-07-01T14:32:09.244814355Z","Action":"output","Package":"github.com/aptly-dev/aptly/utils","Test":"Test","Output":"--- PASS: Test (0.01s)\n"}
+{"Time":"2026-07-01T14:32:09.244824134Z","Action":"pass","Package":"github.com/aptly-dev/aptly/utils","Test":"Test","Elapsed":0.01}
+{"Time":"2026-07-01T14:32:09.244833061Z","Action":"output","Package":"github.com/aptly-dev/aptly/utils","Output":"PASS\n"}
+{"Time":"2026-07-01T14:32:09.245208956Z","Action":"output","Package":"github.com/aptly-dev/aptly/utils","Output":"ok  \tgithub.com/aptly-dev/aptly/utils\t0.008s\n"}
+{"Time":"2026-07-01T14:32:09.245219532Z","Action":"pass","Package":"github.com/aptly-dev/aptly/utils","Elapsed":0.008}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

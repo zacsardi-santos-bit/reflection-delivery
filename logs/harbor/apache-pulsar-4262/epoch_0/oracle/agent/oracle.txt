@@ -1,0 +1,3 @@
+patching file pulsar-broker/src/main/java/org/apache/pulsar/broker/service/Topic.java
+patching file pulsar-broker/src/main/java/org/apache/pulsar/broker/service/nonpersistent/NonPersistentTopic.java
+patching file pulsar-broker/src/main/java/org/apache/pulsar/broker/service/persistent/PersistentTopic.java

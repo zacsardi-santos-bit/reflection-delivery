@@ -1,3 +1,1 @@
-Trial tensorchord-pgvecto.rs-350__Sh6v4eC failed: Image build for im-tE5pNuC9qhsljByfiZSs1n failed. See build logs for more details. (Hint: Use `modal.enable_output()` to see logs from the process building the Image.)
-Failed to download logs to /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/tensorchord-pgvecto.rs-350__Sh6v4eC/agent
 Convention artifacts dir not found or download failed (best-effort)

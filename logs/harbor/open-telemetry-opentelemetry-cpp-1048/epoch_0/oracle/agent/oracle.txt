@@ -1,0 +1,13 @@
+patching file CHANGELOG.md
+patching file cmake/opentelemetry-cpp-config.cmake.in
+patching file cmake/opentelemetry-proto.cmake
+patching file examples/otlp/README.md
+patching file examples/otlp/opentelemetry-collector-config/config.dev.yaml
+patching file exporters/otlp/BUILD
+patching file exporters/otlp/CMakeLists.txt
+patching file exporters/otlp/include/opentelemetry/exporters/otlp/otlp_grpc_exporter.h
+patching file exporters/otlp/include/opentelemetry/exporters/otlp/otlp_grpc_exporter_options.h
+patching file exporters/otlp/include/opentelemetry/exporters/otlp/otlp_grpc_log_exporter.h
+patching file exporters/otlp/include/opentelemetry/exporters/otlp/otlp_log_recordable.h
+patching file exporters/otlp/src/otlp_grpc_exporter.cc
+patching file exporters/otlp/src/otlp_grpc_log_exporter.cc

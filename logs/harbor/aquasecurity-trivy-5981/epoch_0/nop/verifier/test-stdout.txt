@@ -1,0 +1,18 @@
+patching file pkg/rekortest/server.go
+patching file pkg/sbom/cyclonedx/core/cyclonedx_test.go
+patching file pkg/sbom/cyclonedx/marshal_test.go
+# github.com/aquasecurity/trivy/pkg/rekortest
+pkg/rekortest/server.go:57:24: undefined: cyclonedx.ToolsChoice
+pkg/rekortest/server.go:181:24: undefined: cyclonedx.ToolsChoice
+# github.com/aquasecurity/trivy/pkg/sbom/cyclonedx_test [github.com/aquasecurity/trivy/pkg/sbom/cyclonedx.test]
+pkg/sbom/cyclonedx/marshal_test.go:245:18: undefined: cdx.ToolsChoice
+pkg/sbom/cyclonedx/marshal_test.go:880:18: undefined: cdx.ToolsChoice
+pkg/sbom/cyclonedx/marshal_test.go:1264:18: undefined: cdx.ToolsChoice
+pkg/sbom/cyclonedx/marshal_test.go:1557:18: undefined: cdx.ToolsChoice
+pkg/sbom/cyclonedx/marshal_test.go:1743:18: undefined: cdx.ToolsChoice
+pkg/sbom/cyclonedx/marshal_test.go:1831:18: undefined: cdx.ToolsChoice
+# github.com/aquasecurity/trivy/pkg/sbom/cyclonedx/core_test [github.com/aquasecurity/trivy/pkg/sbom/cyclonedx/core.test]
+pkg/sbom/cyclonedx/core/cyclonedx_test.go:185:18: undefined: cdx.ToolsChoice
+FAIL	github.com/aquasecurity/trivy/pkg/sbom/cyclonedx [build failed]
+FAIL	github.com/aquasecurity/trivy/pkg/sbom/cyclonedx/core [build failed]
+reward=0 graded=22 found=22 failed=22 parsed=2 framework=go exit_code=1

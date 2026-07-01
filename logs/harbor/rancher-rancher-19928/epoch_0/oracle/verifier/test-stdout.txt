@@ -1,0 +1,23 @@
+patching file pkg/api/store/cluster/cluster_store_test.go
+patching file tests/integration/test_password_store.py
+{"Time":"2026-07-01T15:09:19.068958534Z","Action":"start","Package":"github.com/rancher/rancher/pkg/api/store/cluster"}
+{"Time":"2026-07-01T15:09:19.1744159Z","Action":"run","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestAzureCloudProviderPasswordFieldsUpdate"}
+{"Time":"2026-07-01T15:09:19.174445623Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestAzureCloudProviderPasswordFieldsUpdate","Output":"=== RUN   TestAzureCloudProviderPasswordFieldsUpdate\n"}
+{"Time":"2026-07-01T15:09:19.17446708Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestAzureCloudProviderPasswordFieldsUpdate","Output":"--- PASS: TestAzureCloudProviderPasswordFieldsUpdate (0.00s)\n"}
+{"Time":"2026-07-01T15:09:19.174474886Z","Action":"pass","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestAzureCloudProviderPasswordFieldsUpdate","Elapsed":0}
+{"Time":"2026-07-01T15:09:19.174482484Z","Action":"run","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestVSphereCloudProviderGlobalPasswordFieldsUpdate"}
+{"Time":"2026-07-01T15:09:19.174485419Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestVSphereCloudProviderGlobalPasswordFieldsUpdate","Output":"=== RUN   TestVSphereCloudProviderGlobalPasswordFieldsUpdate\n"}
+{"Time":"2026-07-01T15:09:19.174488964Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestVSphereCloudProviderGlobalPasswordFieldsUpdate","Output":"--- PASS: TestVSphereCloudProviderGlobalPasswordFieldsUpdate (0.00s)\n"}
+{"Time":"2026-07-01T15:09:19.174493126Z","Action":"pass","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestVSphereCloudProviderGlobalPasswordFieldsUpdate","Elapsed":0}
+{"Time":"2026-07-01T15:09:19.174498168Z","Action":"run","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestVSphereVCenterPasswordFieldsUpdate"}
+{"Time":"2026-07-01T15:09:19.174501046Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestVSphereVCenterPasswordFieldsUpdate","Output":"=== RUN   TestVSphereVCenterPasswordFieldsUpdate\n"}
+{"Time":"2026-07-01T15:09:19.174543655Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestVSphereVCenterPasswordFieldsUpdate","Output":"--- PASS: TestVSphereVCenterPasswordFieldsUpdate (0.00s)\n"}
+{"Time":"2026-07-01T15:09:19.174551859Z","Action":"pass","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestVSphereVCenterPasswordFieldsUpdate","Elapsed":0}
+{"Time":"2026-07-01T15:09:19.17455699Z","Action":"run","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestOpenStackCloudProviderGlobalPasswordFieldUpdate"}
+{"Time":"2026-07-01T15:09:19.174560169Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestOpenStackCloudProviderGlobalPasswordFieldUpdate","Output":"=== RUN   TestOpenStackCloudProviderGlobalPasswordFieldUpdate\n"}
+{"Time":"2026-07-01T15:09:19.174580792Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestOpenStackCloudProviderGlobalPasswordFieldUpdate","Output":"--- PASS: TestOpenStackCloudProviderGlobalPasswordFieldUpdate (0.00s)\n"}
+{"Time":"2026-07-01T15:09:19.174585759Z","Action":"pass","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Test":"TestOpenStackCloudProviderGlobalPasswordFieldUpdate","Elapsed":0}
+{"Time":"2026-07-01T15:09:19.17458996Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Output":"PASS\n"}
+{"Time":"2026-07-01T15:09:19.176177117Z","Action":"output","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Output":"ok  \tgithub.com/rancher/rancher/pkg/api/store/cluster\t0.107s\n"}
+{"Time":"2026-07-01T15:09:19.176200426Z","Action":"pass","Package":"github.com/rancher/rancher/pkg/api/store/cluster","Elapsed":0.107}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=go exit_code=0

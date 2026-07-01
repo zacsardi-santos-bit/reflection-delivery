@@ -1,0 +1,175 @@
+patching file cli/test/lib/exec/spawn_spec.js
+patching file cli/test/lib/tasks/download_spec.js
+patching file cli/test/lib/tasks/install_spec.js
+patching file cli/test/lib/tasks/verify_spec.js
+patching file cli/test/spec_helper.js
+patching file cli/test/support/spawn-mock.js
+
+
+  lib/tasks/download
+---------------------------------------------------------------------
+lib/tasks/download / saves example.zip to options.downloadDestination
+---------------------------------------------------------------------
+    ✓ saves example.zip to options.downloadDestination (59ms)
+----------------------------------------------------------------
+lib/tasks/download / resolves with response x-version if present
+----------------------------------------------------------------
+    ✓ resolves with response x-version if present
+------------------------------------------------------------------------------------------------
+lib/tasks/download / handles quadruple redirect with response x-version to the latest if present
+------------------------------------------------------------------------------------------------
+    ✓ handles quadruple redirect with response x-version to the latest if present
+-------------------------------------------------
+lib/tasks/download / errors on too many redirects
+-------------------------------------------------
+    ✓ errors on too many redirects (40ms)
+-------------------------------------------------------------
+lib/tasks/download / can specify cypress version in arguments
+-------------------------------------------------------------
+    ✓ can specify cypress version in arguments
+-------------------------------------------------------------
+lib/tasks/download / catches download status errors and exits
+-------------------------------------------------------------
+Error: The Cypress App could not be downloaded.
+
+Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration
+
+Otherwise, please check network connectivity and try again:
+
+----------
+
+URL: https://download.cypress.io/desktop?platform=OS&arch=x64
+404 - Not Found
+
+----------
+
+Platform: OS-x64 (Foo-OsVersion)
+Cypress Version: 1.2.3
+    ✓ catches download status errors and exits
+    download url
+-----------------------------------------------
+lib/tasks/download / download url / returns url
+-----------------------------------------------
+      ✓ returns url
+--------------------------------------------------------------
+lib/tasks/download / download url / returns latest desktop url
+--------------------------------------------------------------
+      ✓ returns latest desktop url
+------------------------------------------------------------------------
+lib/tasks/download / download url / returns specific desktop version url
+------------------------------------------------------------------------
+      ✓ returns specific desktop version url
+--------------------------------------------------------------------
+lib/tasks/download / download url / returns custom url from template
+--------------------------------------------------------------------
+      ✓ returns custom url from template
+---------------------------------------------------------------------------------------------
+lib/tasks/download / download url / returns custom url from template with escaped dollar sign
+---------------------------------------------------------------------------------------------
+      ✓ returns custom url from template with escaped dollar sign
+-------------------------------------------------------------------------------------
+lib/tasks/download / download url / returns custom url from template wrapped in quote
+-------------------------------------------------------------------------------------
+      ✓ returns custom url from template wrapped in quote
+--------------------------------------------------------------------------------------------------------------
+lib/tasks/download / download url / returns custom url from template with escaped dollar sign wrapped in quote
+--------------------------------------------------------------------------------------------------------------
+      ✓ returns custom url from template with escaped dollar sign wrapped in quote
+--------------------------------------------------------------------------------
+lib/tasks/download / download url / returns input if it is already an https link
+--------------------------------------------------------------------------------
+      ✓ returns input if it is already an https link
+-------------------------------------------------------------------------------
+lib/tasks/download / download url / returns input if it is already an http link
+-------------------------------------------------------------------------------
+      ✓ returns input if it is already an http link
+    download base url from CYPRESS_DOWNLOAD_MIRROR env var
+-------------------------------------------------------------------------------------
+lib/tasks/download / download base url from CYPRESS_DOWNLOAD_MIRROR env var / env var
+-------------------------------------------------------------------------------------
+      ✓ env var
+---------------------------------------------------------------------------------------------------------
+lib/tasks/download / download base url from CYPRESS_DOWNLOAD_MIRROR env var / env var with trailing slash
+---------------------------------------------------------------------------------------------------------
+      ✓ env var with trailing slash
+-------------------------------------------------------------------------------------------------------
+lib/tasks/download / download base url from CYPRESS_DOWNLOAD_MIRROR env var / env var with subdirectory
+-------------------------------------------------------------------------------------------------------
+      ✓ env var with subdirectory
+--------------------------------------------------------------------------------------------------------------------------
+lib/tasks/download / download base url from CYPRESS_DOWNLOAD_MIRROR env var / env var with subdirectory and trailing slash
+--------------------------------------------------------------------------------------------------------------------------
+      ✓ env var with subdirectory and trailing slash
+    verify downloaded file
+--------------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / throws if file size is different from expected
+--------------------------------------------------------------------------------------------
+      ✓ throws if file size is different from expected
+------------------------------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / throws if file size is different from expected x-amz-meta-size
+------------------------------------------------------------------------------------------------------------
+      ✓ throws if file size is different from expected x-amz-meta-size
+-------------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / throws if checksum is different from expected
+-------------------------------------------------------------------------------------------
+      ✓ throws if checksum is different from expected
+----------------------------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / throws if checksum and file size are different from expected
+----------------------------------------------------------------------------------------------------------
+      ✓ throws if checksum and file size are different from expected
+--------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / passes when checksum and file size match
+--------------------------------------------------------------------------------------
+      ✓ passes when checksum and file size match
+    architecture detection
+--------------------------------------------------------------------------
+lib/tasks/download / architecture detection / downloads darwin-arm64 on M1
+--------------------------------------------------------------------------
+      ✓ downloads darwin-arm64 on M1
+------------------------------------------------------------------------------------------------
+lib/tasks/download / architecture detection / downloads darwin-arm64 on M1 translated by Rosetta
+------------------------------------------------------------------------------------------------
+      ✓ downloads darwin-arm64 on M1 translated by Rosetta
+    with proxy env vars
+--------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / uses http_proxy on http request
+--------------------------------------------------------------------------
+      ✓ uses http_proxy on http request
+------------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / ignores http_proxy on https request
+------------------------------------------------------------------------------
+      ✓ ignores http_proxy on https request
+-------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / falls back to npm_config_proxy
+-------------------------------------------------------------------------
+      ✓ falls back to npm_config_proxy
+---------------------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / respects no_proxy on http and https requests
+---------------------------------------------------------------------------------------
+      ✓ respects no_proxy on http and https requests
+----------------------------------------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / ignores no_proxy for npm proxy configs, prefers https over http
+----------------------------------------------------------------------------------------------------------
+      ✓ ignores no_proxy for npm proxy configs, prefers https over http
+    with CA and CAFILE env vars
+-------------------------------------------------------------------------------
+lib/tasks/download / with CA and CAFILE env vars / returns undefined if not set
+-------------------------------------------------------------------------------
+      ✓ returns undefined if not set
+--------------------------------------------------------------------------------
+lib/tasks/download / with CA and CAFILE env vars / returns CA from npm_config_ca
+--------------------------------------------------------------------------------
+      ✓ returns CA from npm_config_ca
+------------------------------------------------------------------------------------
+lib/tasks/download / with CA and CAFILE env vars / returns CA from npm_config_cafile
+------------------------------------------------------------------------------------
+      ✓ returns CA from npm_config_cafile
+--------------------------------------------------------------------------------------------------------
+lib/tasks/download / with CA and CAFILE env vars / returns undefined if failed reading npm_config_cafile
+--------------------------------------------------------------------------------------------------------
+      ✓ returns undefined if failed reading npm_config_cafile
+
+
+  35 passing (239ms)
+
+reward=1 graded=35 found=35 failed=0 parsed=35 framework=mocha exit_code=0

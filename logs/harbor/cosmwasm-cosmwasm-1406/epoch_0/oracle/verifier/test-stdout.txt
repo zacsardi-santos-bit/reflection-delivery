@@ -1,0 +1,470 @@
+patching file packages/vm/src/cache.rs
+Hunk #1 succeeded at 524 (offset -6 lines).
+   Compiling proc-macro2 v1.0.37
+   Compiling unicode-xid v0.2.3
+   Compiling syn v1.0.92
+   Compiling cfg-if v1.0.0
+   Compiling version_check v0.9.4
+   Compiling libc v0.2.125
+   Compiling autocfg v1.1.0
+   Compiling serde_derive v1.0.137
+   Compiling serde v1.0.137
+   Compiling once_cell v1.10.0
+   Compiling memchr v2.5.0
+   Compiling typenum v1.15.0
+   Compiling lazy_static v1.4.0
+   Compiling fallible-iterator v0.2.0
+   Compiling stable_deref_trait v1.2.0
+   Compiling crc32fast v1.3.2
+   Compiling fnv v1.0.7
+   Compiling ident_case v1.0.1
+   Compiling bytecheck v0.6.8
+   Compiling cc v1.0.73
+   Compiling rustversion v1.0.6
+   Compiling subtle v2.4.1
+   Compiling rend v0.3.6
+   Compiling target-lexicon v0.12.3
+   Compiling smallvec v1.8.0
+   Compiling rkyv v0.7.38
+   Compiling adler v1.0.2
+   Compiling scopeguard v1.1.0
+   Compiling seahash v4.1.0
+   Compiling rustc-demangle v0.1.21
+   Compiling more-asserts v0.2.2
+   Compiling zeroize v1.5.5
+   Compiling wasmparser v0.83.0
+   Compiling crossbeam-utils v0.8.8
+   Compiling bitflags v1.3.2
+   Compiling either v1.6.1
+   Compiling log v0.4.17
+   Compiling byteorder v1.4.3
+   Compiling rayon-core v1.9.2
+   Compiling const-oid v0.9.0
+   Compiling cranelift-codegen-shared v0.82.3
+   Compiling base64ct v1.5.0
+   Compiling getrandom v0.1.16
+   Compiling semver v1.0.9
+   Compiling cranelift-entity v0.82.3
+   Compiling cpufeatures v0.2.2
+   Compiling base16ct v0.1.1
+   Compiling ryu v1.0.9
+   Compiling rustc-hash v1.1.0
+   Compiling leb128 v0.2.5
+   Compiling serde_json v1.0.81
+   Compiling pin-project-lite v0.2.9
+   Compiling itoa v1.0.1
+   Compiling hex v0.4.3
+   Compiling opaque-debug v0.3.0
+   Compiling wasmer-compiler-cranelift v2.3.0
+   Compiling fastrand v1.7.0
+   Compiling unicode-width v0.1.9
+   Compiling crunchy v0.2.2
+   Compiling remove_dir_all v0.5.3
+   Compiling schemars v0.8.8
+   Compiling regex-automata v0.1.10
+   Compiling static_assertions v1.1.0
+   Compiling dyn-clone v1.0.5
+   Compiling plotters-backend v0.3.2
+   Compiling vec_map v0.8.2
+   Compiling base64 v0.13.0
+   Compiling half v1.8.2
+   Compiling itoa v0.4.8
+   Compiling same-file v1.0.6
+   Compiling ppv-lite86 v0.2.16
+   Compiling strsim v0.8.0
+   Compiling ansi_term v0.12.1
+   Compiling regex-syntax v0.6.25
+   Compiling forward_ref v1.0.0
+   Compiling oorandom v11.1.3
+   Compiling clru v0.4.0
+   Compiling parity-wasm v0.42.2
+   Compiling hex-literal v0.3.4
+   Compiling libloading v0.7.3
+   Compiling ahash v0.7.6
+   Compiling generic-array v0.14.5
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling indexmap v1.8.1
+   Compiling memoffset v0.6.5
+   Compiling crossbeam-epoch v0.9.8
+   Compiling corosensei v0.1.3
+   Compiling rayon v1.5.2
+   Compiling num-traits v0.2.15
+   Compiling tracing-core v0.1.26
+   Compiling backtrace v0.3.65
+   Compiling miniz_oxide v0.5.1
+   Compiling itertools v0.10.3
+   Compiling der v0.6.0
+   Compiling cranelift-codegen-meta v0.82.3
+   Compiling cranelift-bforest v0.82.3
+   Compiling textwrap v0.11.0
+   Compiling plotters-svg v0.3.1
+   Compiling walkdir v2.3.2
+   Compiling regex v1.5.5
+   Compiling spki v0.6.0
+   Compiling cranelift-codegen v0.82.3
+   Compiling quote v1.0.18
+   Compiling getrandom v0.2.6
+   Compiling memmap2 v0.5.3
+   Compiling num_cpus v1.13.1
+   Compiling region v3.0.0
+   Compiling which v4.2.5
+   Compiling tempfile v3.3.0
+   Compiling atty v0.2.14
+   Compiling csv-core v0.1.10
+   Compiling wast v40.0.0
+   Compiling regalloc v0.0.34
+   Compiling crossbeam-channel v0.5.4
+   Compiling pkcs8 v0.9.0
+   Compiling uint v0.9.3
+   Compiling rustc_version v0.4.0
+   Compiling rand_core v0.6.3
+   Compiling rand_core v0.5.1
+   Compiling clap v2.34.0
+   Compiling plotters v0.3.1
+   Compiling block-buffer v0.10.2
+   Compiling crypto-common v0.1.6
+   Compiling digest v0.9.0
+   Compiling block-buffer v0.9.0
+   Compiling wat v1.0.42
+   Compiling sec1 v0.3.0
+   Compiling cast v0.2.7
+   Compiling hashbrown v0.11.2
+   Compiling hashbrown v0.12.1
+   Compiling ff v0.12.0
+   Compiling crypto-bigint v0.4.8
+   Compiling rand_chacha v0.3.1
+   Compiling darling_core v0.13.4
+   Compiling serde_derive_internals v0.25.0
+   Compiling crossbeam-deque v0.8.1
+   Compiling thiserror-impl v1.0.31
+   Compiling ptr_meta_derive v0.1.4
+   Compiling bytecheck_derive v0.6.8
+   Compiling loupe-derive v0.1.3
+   Compiling rkyv_derive v0.7.38
+   Compiling enum-iterator-derive v0.7.0
+   Compiling tracing-attributes v0.1.21
+   Compiling derivative v2.2.0
+   Compiling cosmwasm-derive v1.1.6 (/workspace/repo/packages/derive)
+   Compiling digest v0.10.3
+   Compiling curve25519-dalek v3.2.0
+   Compiling sha2 v0.9.9
+   Compiling group v0.12.0
+   Compiling rand v0.8.5
+   Compiling dynasm v1.2.3
+   Compiling wasmer-derive v2.3.0
+   Compiling schemars_derive v0.8.8
+   Compiling darling_macro v0.13.4
+   Compiling thiserror v1.0.31
+   Compiling ptr_meta v0.1.4
+   Compiling enum-iterator v0.7.0
+   Compiling tracing v0.1.34
+   Compiling hmac v0.12.1
+   Compiling signature v1.5.0
+   Compiling sha2 v0.10.3
+   Compiling elliptic-curve v0.12.2
+   Compiling darling v0.13.4
+   Compiling dynasmrt v1.2.3
+   Compiling rfc6979 v0.3.0
+   Compiling criterion-plot v0.4.4
+   Compiling serde_bytes v0.11.6
+   Compiling ed25519-zebra v3.0.0
+   Compiling bstr v0.2.17
+   Compiling serde-json-wasm v0.4.1
+   Compiling serde_cbor v0.11.2
+   Compiling enumset_derive v0.6.0
+   Compiling ecdsa v0.14.3
+   Compiling gimli v0.26.1
+   Compiling object v0.28.3
+   Compiling loupe v0.1.3
+   Compiling tinytemplate v1.2.1
+   Compiling csv v1.1.6
+   Compiling k256 v0.11.3
+   Compiling enumset v1.0.11
+   Compiling addr2line v0.17.0
+   Compiling criterion v0.3.5
+   Compiling cosmwasm-crypto v1.1.6 (/workspace/repo/packages/crypto)
+   Compiling cranelift-frontend v0.82.3
+   Compiling cosmwasm-std v1.1.6 (/workspace/repo/packages/std)
+   Compiling wasmer-types v2.3.0
+   Compiling wasmer-compiler v2.3.0
+   Compiling wasmer-artifact v2.3.0
+   Compiling wasmer-object v2.3.0
+   Compiling wasmer-compiler-singlepass v2.3.0
+   Compiling wasmer-vm v2.3.0
+   Compiling wasmer-engine-universal-artifact v2.3.0
+   Compiling wasmer-engine v2.3.0
+   Compiling wasmer-engine-universal v2.3.0
+   Compiling wasmer-engine-dylib v2.3.0
+   Compiling wasmer v2.3.0
+   Compiling wasmer-middlewares v2.3.0
+   Compiling cosmwasm-vm v1.1.6 (/workspace/repo/packages/vm)
+    Finished test [unoptimized + debuginfo] target(s) in 2m 42s
+────────────
+ Nextest run ID 3cdb05c0-ab91-4bda-89e1-c4fee0aeab11 with nextest profile: default
+    Starting 262 tests across 1 binary
+        PASS [   0.006s] (  1/262) cosmwasm-vm backend::tests::backend_err_foreign_panic
+        PASS [   0.007s] (  2/262) cosmwasm-vm backend::tests::backend_err_bad_argument
+        PASS [   0.006s] (  3/262) cosmwasm-vm backend::tests::backend_err_unknown
+        PASS [   0.006s] (  4/262) cosmwasm-vm backend::tests::backend_err_out_of_gas
+        PASS [   0.006s] (  5/262) cosmwasm-vm backend::tests::convert_from_fromutf8error
+        PASS [   0.006s] (  6/262) cosmwasm-vm backend::tests::backend_err_user_err
+        PASS [   0.006s] (  7/262) cosmwasm-vm backend::tests::gas_info_free_works
+        PASS [   0.006s] (  8/262) cosmwasm-vm backend::tests::gas_info_implements_add_assign
+        PASS [   0.006s] (  9/262) cosmwasm-vm backend::tests::gas_info_with_externally_used_works
+        PASS [   0.006s] ( 10/262) cosmwasm-vm backend::tests::gas_info_with_cost_works
+        PASS [   0.004s] ( 11/262) cosmwasm-vm backend::tests::iterator_does_not_exist_works
+        PASS [   2.831s] ( 12/262) cosmwasm-vm cache::tests::call_execute_on_cached_contract
+        PASS [   5.738s] ( 13/262) cosmwasm-vm cache::tests::analyze_works
+        PASS [   2.941s] ( 14/262) cosmwasm-vm cache::tests::call_instantiate_on_cached_contract
+        PASS [   2.639s] ( 15/262) cosmwasm-vm cache::tests::get_instance_finds_cached_module
+        PASS [   0.007s] ( 16/262) cosmwasm-vm cache::tests::load_wasm_error_is_os_independent
+        PASS [   2.628s] ( 17/262) cosmwasm-vm cache::tests::get_instance_finds_cached_modules_and_stores_to_memory
+        PASS [   0.006s] ( 18/262) cosmwasm-vm cache::tests::load_wasm_errors_for_non_existent_id
+        PASS [   0.005s] ( 19/262) cosmwasm-vm cache::tests::load_wasm_from_disk_works
+        PASS [   0.005s] ( 20/262) cosmwasm-vm cache::tests::load_wasm_from_disk_works_in_subfolder
+        PASS [   2.451s] ( 21/262) cosmwasm-vm cache::tests::load_wasm_errors_for_corrupted_wasm
+        PASS [   2.490s] ( 22/262) cosmwasm-vm cache::tests::load_wasm_works
+        PASS [   2.480s] ( 23/262) cosmwasm-vm cache::tests::load_wasm_works_across_multiple_cache_instances
+        PASS [   2.817s] ( 24/262) cosmwasm-vm cache::tests::pin_unpin_works
+        PASS [   2.560s] ( 25/262) cosmwasm-vm cache::tests::recovers_from_out_of_gas
+        PASS [   2.497s] ( 26/262) cosmwasm-vm cache::tests::resets_gas_when_reusing_instance
+        PASS [   2.814s] ( 27/262) cosmwasm-vm cache::tests::save_wasm_fills_file_system_but_not_memory_cache
+        PASS [   0.008s] ( 28/262) cosmwasm-vm cache::tests::save_wasm_rejects_invalid_contract
+        PASS [   0.005s] ( 29/262) cosmwasm-vm cache::tests::save_wasm_to_disk_fails_on_non_existent_dir
+        PASS [   0.044s] ( 30/262) cosmwasm-vm cache::tests::save_wasm_to_disk_works_for_same_data_multiple_times
+        PASS [   4.736s] ( 31/262) cosmwasm-vm cache::tests::save_wasm_allows_saving_multiple_times
+        PASS [   2.746s] ( 32/262) cosmwasm-vm cache::tests::save_wasm_works
+        PASS [   2.460s] ( 33/262) cosmwasm-vm cache::tests::use_multiple_cached_instances_of_same_contract
+        PASS [   1.320s] ( 34/262) cosmwasm-vm calls::tests::call_execute_works
+        PASS [   2.065s] ( 35/262) cosmwasm-vm calls::tests::call_instantiate_works
+        PASS [   2.070s] ( 36/262) cosmwasm-vm calls::tests::call_migrate_works
+        PASS [   0.007s] ( 37/262) cosmwasm-vm capabilities::tests::capabilities_from_csv_skips_empty
+        PASS [   0.006s] ( 38/262) cosmwasm-vm capabilities::tests::capabilities_from_csv_works
+        PASS [   0.007s] ( 39/262) cosmwasm-vm capabilities::tests::required_capabilities_from_module_works
+        PASS [   0.006s] ( 40/262) cosmwasm-vm capabilities::tests::required_capabilities_from_module_works_without_exports_section
+        PASS [   0.006s] ( 41/262) cosmwasm-vm checksum::tests::generate_works
+        PASS [   0.035s] ( 42/262) cosmwasm-vm checksum::tests::implemented_display
+        PASS [   0.007s] ( 43/262) cosmwasm-vm checksum::tests::into_vec_works
+        PASS [   0.007s] ( 44/262) cosmwasm-vm checksum::tests::to_hex_works
+        PASS [   0.009s] ( 45/262) cosmwasm-vm compatibility::tests::check_interface_version_works
+        PASS [   0.009s] ( 46/262) cosmwasm-vm compatibility::tests::check_wasm_capabilities_fails_for_missing
+        PASS [   0.008s] ( 47/262) cosmwasm-vm compatibility::tests::check_wasm_capabilities_ok
+        PASS [   0.059s] ( 48/262) cosmwasm-vm compatibility::tests::check_wasm_exports_of_old_contract
+        PASS [   0.008s] ( 49/262) cosmwasm-vm compatibility::tests::check_wasm_exports_works
+        PASS [   0.008s] ( 50/262) cosmwasm-vm compatibility::tests::check_wasm_imports_missing
+        PASS [   0.026s] ( 51/262) cosmwasm-vm compatibility::tests::check_wasm_imports_of_old_contract
+        PASS [   0.007s] ( 52/262) cosmwasm-vm compatibility::tests::check_wasm_imports_ok
+        PASS [   0.006s] ( 53/262) cosmwasm-vm compatibility::tests::check_wasm_imports_wrong_type
+        PASS [   0.047s] ( 54/262) cosmwasm-vm compatibility::tests::check_wasm_memories_initial_size
+        PASS [   0.006s] ( 55/262) cosmwasm-vm compatibility::tests::check_wasm_memories_maximum_size
+        PASS [   0.006s] ( 56/262) cosmwasm-vm compatibility::tests::check_wasm_memories_no_memory
+        PASS [   0.006s] ( 57/262) cosmwasm-vm compatibility::tests::check_wasm_memories_ok
+        PASS [   0.006s] ( 58/262) cosmwasm-vm compatibility::tests::check_wasm_memories_two_memories
+        PASS [   0.006s] ( 59/262) cosmwasm-vm compatibility::tests::check_wasm_memories_zero_memories
+        PASS [   0.214s] ( 60/262) cosmwasm-vm compatibility::tests::check_wasm_old_contract
+        PASS [   0.087s] ( 61/262) cosmwasm-vm compatibility::tests::check_wasm_passes_for_latest_contract
+        PASS [   0.006s] ( 62/262) cosmwasm-vm conversion::tests::ref_to_u32_works
+        PASS [   0.006s] ( 63/262) cosmwasm-vm conversion::tests::to_i32_works_for_i64
+        PASS [   0.006s] ( 64/262) cosmwasm-vm conversion::tests::to_i32_works_for_usize
+        PASS [   0.006s] ( 65/262) cosmwasm-vm conversion::tests::to_u32_works_for_i32
+        PASS [   0.042s] ( 66/262) cosmwasm-vm conversion::tests::to_u32_works_for_u64
+        PASS [   0.006s] ( 67/262) cosmwasm-vm conversion::tests::to_u32_works_for_usize
+        PASS [   1.788s] ( 68/262) cosmwasm-vm calls::tests::call_query_works
+        PASS [   1.851s] ( 69/262) cosmwasm-vm environment::tests::call_function0_errors_for_wrong_result_count
+        PASS [   2.106s] ( 70/262) cosmwasm-vm environment::tests::call_function0_works
+        PASS [   1.955s] ( 71/262) cosmwasm-vm environment::tests::call_function1_errors_for_wrong_result_count
+        PASS [   1.997s] ( 72/262) cosmwasm-vm environment::tests::call_function1_works
+        PASS [   2.090s] ( 73/262) cosmwasm-vm environment::tests::call_function_fails_for_missing_function
+        PASS [   2.076s] ( 74/262) cosmwasm-vm environment::tests::call_function_fails_for_missing_instance
+        PASS [   2.032s] ( 75/262) cosmwasm-vm environment::tests::call_function_works
+        PASS [   2.030s] ( 76/262) cosmwasm-vm environment::tests::is_storage_readonly_defaults_to_true
+        PASS [   2.063s] ( 77/262) cosmwasm-vm environment::tests::move_out_works
+        PASS [   2.195s] ( 78/262) cosmwasm-vm environment::tests::process_gas_info_works_correctly_with_gas_consumption_in_wasmer
+        PASS [   2.039s] ( 79/262) cosmwasm-vm environment::tests::process_gas_info_works_for_cost
+        PASS [   1.969s] ( 80/262) cosmwasm-vm environment::tests::process_gas_info_works_for_cost_and_externally_used
+        PASS [   1.660s] ( 81/262) cosmwasm-vm environment::tests::process_gas_info_works_for_externally_used
+        PASS [   2.112s] ( 82/262) cosmwasm-vm environment::tests::set_storage_readonly_can_change_flag
+        PASS [   4.077s] ( 83/262) cosmwasm-vm environment::tests::process_gas_info_zeros_gas_left_when_exceeded
+        PASS [   2.113s] ( 84/262) cosmwasm-vm environment::tests::with_querier_from_context_handles_panics
+        PASS [   1.839s] ( 85/262) cosmwasm-vm environment::tests::with_querier_from_context_works
+        PASS [   2.183s] ( 86/262) cosmwasm-vm environment::tests::with_storage_from_context_handles_panics
+        PASS [   0.006s] ( 87/262) cosmwasm-vm errors::communication_error::tests::deref_err
+        PASS [   0.006s] ( 88/262) cosmwasm-vm errors::communication_error::tests::invalid_order
+        PASS [   0.006s] ( 89/262) cosmwasm-vm errors::communication_error::tests::invalid_utf8
+        PASS [   0.006s] ( 90/262) cosmwasm-vm errors::communication_error::tests::region_length_too_big_works
+        PASS [   0.006s] ( 91/262) cosmwasm-vm errors::communication_error::tests::region_too_small_works
+        PASS [   0.006s] ( 92/262) cosmwasm-vm errors::communication_error::tests::zero_address
+        PASS [   0.006s] ( 93/262) cosmwasm-vm errors::region_validation_error::tests::length_exceeds_capacity_works
+        PASS [   0.006s] ( 94/262) cosmwasm-vm errors::region_validation_error::tests::out_of_range_works
+        PASS [   0.006s] ( 95/262) cosmwasm-vm errors::region_validation_error::tests::zero_offset
+        PASS [   0.042s] ( 96/262) cosmwasm-vm errors::vm_error::tests::backend_err_works
+        PASS [   0.006s] ( 97/262) cosmwasm-vm errors::vm_error::tests::cache_err_works
+        PASS [   0.006s] ( 98/262) cosmwasm-vm errors::vm_error::tests::compile_err_works
+        PASS [   0.006s] ( 99/262) cosmwasm-vm errors::vm_error::tests::conversion_err_works
+        PASS [   0.006s] (100/262) cosmwasm-vm errors::vm_error::tests::cyrpto_err_works
+        PASS [   0.006s] (101/262) cosmwasm-vm errors::vm_error::tests::gas_depletion_works
+        PASS [   0.006s] (102/262) cosmwasm-vm errors::vm_error::tests::generic_err_works
+        PASS [   0.006s] (103/262) cosmwasm-vm errors::vm_error::tests::instantiation_err_works
+        PASS [   0.006s] (104/262) cosmwasm-vm errors::vm_error::tests::integrity_err_works
+        PASS [   0.006s] (105/262) cosmwasm-vm errors::vm_error::tests::parse_err_works
+        PASS [   0.006s] (106/262) cosmwasm-vm errors::vm_error::tests::resolve_err_works
+        PASS [   0.039s] (107/262) cosmwasm-vm errors::vm_error::tests::result_mismatch_works
+        PASS [   0.006s] (108/262) cosmwasm-vm errors::vm_error::tests::runtime_err_works
+        PASS [   0.006s] (109/262) cosmwasm-vm errors::vm_error::tests::serialize_err_works
+        PASS [   0.006s] (110/262) cosmwasm-vm errors::vm_error::tests::static_validation_err_works
+        PASS [   0.006s] (111/262) cosmwasm-vm errors::vm_error::tests::uninitialized_context_data_works
+        PASS [   0.006s] (112/262) cosmwasm-vm errors::vm_error::tests::write_access_denied
+        PASS [   0.006s] (113/262) cosmwasm-vm filesystem::tests::mkdir_p_works
+        PASS [   1.891s] (114/262) cosmwasm-vm environment::tests::with_storage_from_context_set_get
+        PASS [   1.683s] (115/262) cosmwasm-vm imports::tests::do_addr_canonicalize_fails_for_broken_backend
+        PASS [   2.241s] (116/262) cosmwasm-vm imports::tests::do_addr_canonicalize_fails_for_large_inputs
+        PASS [   1.836s] (117/262) cosmwasm-vm imports::tests::do_addr_canonicalize_fails_for_small_destination_region
+        PASS [   1.971s] (118/262) cosmwasm-vm imports::tests::do_addr_canonicalize_reports_invalid_input_back_to_contract
+        PASS [   2.088s] (119/262) cosmwasm-vm imports::tests::do_addr_canonicalize_works
+        PASS [   2.011s] (120/262) cosmwasm-vm imports::tests::do_addr_humanize_fails_for_broken_backend
+        PASS [   2.072s] (121/262) cosmwasm-vm imports::tests::do_addr_humanize_fails_for_destination_region_too_small
+        PASS [   2.003s] (122/262) cosmwasm-vm imports::tests::do_addr_humanize_fails_for_input_too_long
+        PASS [   2.037s] (123/262) cosmwasm-vm imports::tests::do_addr_humanize_reports_invalid_input_back_to_contract
+        PASS [   2.000s] (124/262) cosmwasm-vm imports::tests::do_addr_humanize_works
+        PASS [   2.054s] (125/262) cosmwasm-vm imports::tests::do_addr_validate_fails_for_broken_backend
+        PASS [   2.016s] (126/262) cosmwasm-vm imports::tests::do_addr_validate_fails_for_large_inputs
+        PASS [   2.007s] (127/262) cosmwasm-vm imports::tests::do_addr_validate_reports_invalid_input_back_to_contract
+        PASS [   2.057s] (128/262) cosmwasm-vm imports::tests::do_addr_validate_works
+        PASS [   2.088s] (129/262) cosmwasm-vm imports::tests::do_db_next_fails_for_non_existent_id
+        PASS [   2.051s] (130/262) cosmwasm-vm imports::tests::do_db_next_works
+        PASS [   2.111s] (131/262) cosmwasm-vm imports::tests::do_db_read_fails_for_large_key
+        PASS [   2.088s] (132/262) cosmwasm-vm imports::tests::do_db_read_works
+        PASS [   2.021s] (133/262) cosmwasm-vm imports::tests::do_db_read_works_for_non_existent_key
+        PASS [   2.162s] (134/262) cosmwasm-vm imports::tests::do_db_remove_fails_for_large_key
+        PASS [   1.618s] (135/262) cosmwasm-vm imports::tests::do_db_remove_is_prohibited_in_readonly_contexts
+        PASS [   2.036s] (136/262) cosmwasm-vm imports::tests::do_db_remove_works
+        PASS [   2.062s] (137/262) cosmwasm-vm imports::tests::do_db_remove_works_for_non_existent_key
+        PASS [   2.029s] (138/262) cosmwasm-vm imports::tests::do_db_scan_bound_works
+        PASS [   2.049s] (139/262) cosmwasm-vm imports::tests::do_db_scan_errors_for_invalid_order_value
+        PASS [   2.063s] (140/262) cosmwasm-vm imports::tests::do_db_scan_multiple_iterators
+        PASS [   2.186s] (141/262) cosmwasm-vm imports::tests::do_db_scan_unbound_descending_works
+        PASS [   2.074s] (142/262) cosmwasm-vm imports::tests::do_db_scan_unbound_works
+        PASS [   1.807s] (143/262) cosmwasm-vm imports::tests::do_db_write_can_override
+        PASS [   2.106s] (144/262) cosmwasm-vm imports::tests::do_db_write_fails_for_large_key
+        PASS [   2.116s] (145/262) cosmwasm-vm imports::tests::do_db_write_fails_for_large_value
+        PASS [   2.090s] (146/262) cosmwasm-vm imports::tests::do_db_write_is_prohibited_in_readonly_contexts
+        PASS [   2.082s] (147/262) cosmwasm-vm imports::tests::do_db_write_works
+        PASS [   2.048s] (148/262) cosmwasm-vm imports::tests::do_db_write_works_for_empty_value
+        PASS [   2.023s] (149/262) cosmwasm-vm imports::tests::do_ed25519_verify_empty_pubkey_fails
+        PASS [   2.098s] (150/262) cosmwasm-vm imports::tests::do_ed25519_verify_larger_pubkey_fails
+        PASS [   2.121s] (151/262) cosmwasm-vm imports::tests::do_ed25519_verify_larger_msg_fails
+        PASS [   2.039s] (152/262) cosmwasm-vm imports::tests::do_ed25519_verify_shorter_pubkey_fails
+        PASS [   2.065s] (153/262) cosmwasm-vm imports::tests::do_ed25519_verify_larger_sig_fails
+        PASS [   2.033s] (154/262) cosmwasm-vm imports::tests::do_ed25519_verify_works
+        PASS [   2.062s] (155/262) cosmwasm-vm imports::tests::do_ed25519_verify_shorter_sig_fails
+        PASS [   2.091s] (156/262) cosmwasm-vm imports::tests::do_ed25519_verify_wrong_data_fails
+        PASS [   2.087s] (157/262) cosmwasm-vm imports::tests::do_ed25519_verify_wrong_msg_verify_fails
+        PASS [   2.056s] (158/262) cosmwasm-vm imports::tests::do_ed25519_verify_wrong_sig_verify_fails
+        PASS [   2.062s] (159/262) cosmwasm-vm imports::tests::do_ed25519_verify_wrong_pubkey_verify_fails
+        PASS [   2.081s] (160/262) cosmwasm-vm imports::tests::do_query_chain_fails_for_missing_contract
+        PASS [   2.111s] (161/262) cosmwasm-vm imports::tests::do_query_chain_fails_for_broken_request
+        PASS [   2.039s] (162/262) cosmwasm-vm imports::tests::do_query_chain_works
+        PASS [   2.037s] (163/262) cosmwasm-vm imports::tests::do_secp256k1_recover_pubkey_works
+        PASS [   2.040s] (164/262) cosmwasm-vm imports::tests::do_secp256k1_verify_empty_pubkey_fails
+        PASS [   2.062s] (165/262) cosmwasm-vm imports::tests::do_secp256k1_verify_larger_hash_fails
+        PASS [   2.047s] (166/262) cosmwasm-vm imports::tests::do_secp256k1_verify_larger_pubkey_fails
+        PASS [   2.029s] (167/262) cosmwasm-vm imports::tests::do_secp256k1_verify_larger_sig_fails
+        PASS [   2.029s] (168/262) cosmwasm-vm imports::tests::do_secp256k1_verify_shorter_hash_fails
+        PASS [   2.039s] (169/262) cosmwasm-vm imports::tests::do_secp256k1_verify_shorter_pubkey_fails
+        PASS [   2.083s] (170/262) cosmwasm-vm imports::tests::do_secp256k1_verify_shorter_sig_fails
+        PASS [   2.071s] (171/262) cosmwasm-vm imports::tests::do_secp256k1_verify_works
+        PASS [   2.087s] (172/262) cosmwasm-vm imports::tests::do_secp256k1_verify_wrong_data_fails
+        PASS [   2.128s] (173/262) cosmwasm-vm imports::tests::do_secp256k1_verify_wrong_hash_verify_fails
+        PASS [   2.064s] (174/262) cosmwasm-vm imports::tests::do_secp256k1_verify_wrong_pubkey_fails
+        PASS [   2.054s] (175/262) cosmwasm-vm imports::tests::do_secp256k1_verify_wrong_pubkey_format_fails
+        PASS [   2.069s] (176/262) cosmwasm-vm imports::tests::do_secp256k1_verify_wrong_sig_verify_fails
+        PASS [   2.038s] (177/262) cosmwasm-vm instance::tests::allocate_deallocate_works
+        PASS [   2.111s] (178/262) cosmwasm-vm instance::tests::call_function0_works
+        PASS [   2.120s] (179/262) cosmwasm-vm instance::tests::call_function1_works
+        PASS [   2.073s] (180/262) cosmwasm-vm instance::tests::contract_deducts_gas_init
+        PASS [   2.128s] (181/262) cosmwasm-vm instance::tests::contract_deducts_gas_execute
+        PASS [   2.087s] (182/262) cosmwasm-vm instance::tests::create_gas_report_works
+        PASS [   2.118s] (183/262) cosmwasm-vm instance::tests::contract_enforces_gas_limit
+        PASS [   0.009s] (184/262) cosmwasm-vm instance::tests::extra_imports_get_added
+        PASS [   2.109s] (185/262) cosmwasm-vm instance::tests::errors_in_imports
+        PASS [   2.106s] (186/262) cosmwasm-vm instance::tests::get_gas_left_works
+        PASS [   0.010s] (187/262) cosmwasm-vm instance::tests::memory_pages_returns_min_memory_size_by_default
+        PASS [   2.088s] (188/262) cosmwasm-vm instance::tests::memory_pages_grows_with_usage
+        PASS [   2.128s] (189/262) cosmwasm-vm instance::tests::query_works_with_gas_metering
+        PASS [   2.058s] (190/262) cosmwasm-vm instance::tests::read_memory_errors_when_when_length_is_too_long
+        PASS [   0.008s] (191/262) cosmwasm-vm instance::tests::required_capabilities_works_for_many_exports
+        PASS [   2.045s] (192/262) cosmwasm-vm instance::tests::required_capabilities_works
+        PASS [   2.147s] (193/262) cosmwasm-vm instance::tests::set_storage_readonly_works
+        PASS [   2.106s] (194/262) cosmwasm-vm instance::tests::with_querier_allows_updating_balances
+        PASS [   2.106s] (195/262) cosmwasm-vm instance::tests::with_querier_works_readonly
+        PASS [   2.106s] (196/262) cosmwasm-vm instance::tests::with_storage_safe_for_panic
+        PASS [   2.153s] (197/262) cosmwasm-vm instance::tests::with_storage_works
+        PASS [   0.005s] (198/262) cosmwasm-vm limited::tests::panics_if_limit_is_too_small_empty
+        PASS [   0.005s] (199/262) cosmwasm-vm limited::tests::panics_if_limit_is_too_small_nonempty
+        PASS [   0.005s] (200/262) cosmwasm-vm limited::tests::works_for_btreeset
+        PASS [   0.005s] (201/262) cosmwasm-vm limited::tests::works_for_hashset
+        PASS [   0.005s] (202/262) cosmwasm-vm limited::tests::works_for_vectors
+        PASS [   0.004s] (203/262) cosmwasm-vm memory::tests::validate_region_fails_for_length_exceeding_capacity
+        PASS [   0.008s] (204/262) cosmwasm-vm memory::tests::validate_region_fails_for_zero_offset
+        PASS [   0.004s] (205/262) cosmwasm-vm memory::tests::validate_region_fails_when_exceeding_address_space
+        PASS [   0.004s] (206/262) cosmwasm-vm memory::tests::validate_region_passes_for_valid_region
+        PASS [   0.009s] (207/262) cosmwasm-vm modules::file_system_cache::tests::file_system_cache_run
+        PASS [   0.008s] (208/262) cosmwasm-vm modules::file_system_cache::tests::file_system_cache_store_uses_expected_path
+        PASS [   0.005s] (209/262) cosmwasm-vm modules::in_memory_cache::tests::check_element_sizes
+        PASS [   0.008s] (210/262) cosmwasm-vm modules::in_memory_cache::tests::in_memory_cache_run
+        PASS [   0.011s] (211/262) cosmwasm-vm modules::in_memory_cache::tests::len_works
+        PASS [   0.009s] (212/262) cosmwasm-vm modules::in_memory_cache::tests::size_works
+        PASS [   0.009s] (213/262) cosmwasm-vm modules::pinned_memory_cache::tests::has_works
+        PASS [   0.008s] (214/262) cosmwasm-vm modules::pinned_memory_cache::tests::len_works
+        PASS [   0.008s] (215/262) cosmwasm-vm modules::pinned_memory_cache::tests::pinned_memory_cache_run
+        PASS [   0.010s] (216/262) cosmwasm-vm modules::pinned_memory_cache::tests::size_works
+        PASS [   0.011s] (217/262) cosmwasm-vm modules::versioning::tests::current_wasmer_module_header_works
+        PASS [   0.008s] (218/262) cosmwasm-vm modules::versioning::tests::current_wasmer_module_version_works
+        PASS [   0.005s] (219/262) cosmwasm-vm sections::tests::decode_sections_works_for_empty_sections
+        PASS [   0.005s] (220/262) cosmwasm-vm sections::tests::decode_sections_works_for_multiple_elements
+        PASS [   0.005s] (221/262) cosmwasm-vm sections::tests::decode_sections_works_for_one_element
+        PASS [   0.005s] (222/262) cosmwasm-vm sections::tests::decode_sections_works_for_two_elements
+        PASS [   0.006s] (223/262) cosmwasm-vm sections::tests::encode_sections_works_for_empty_sections
+        PASS [   0.005s] (224/262) cosmwasm-vm sections::tests::encode_sections_works_for_multiple_elements
+        PASS [   0.005s] (225/262) cosmwasm-vm sections::tests::encode_sections_works_for_one_element
+        PASS [   0.005s] (226/262) cosmwasm-vm serde::tests::from_slice_errors_when_exceeding_deserialization_limit
+        PASS [   0.006s] (227/262) cosmwasm-vm serde::tests::from_slice_works
+        PASS [   0.005s] (228/262) cosmwasm-vm serde::tests::from_slice_works_for_special_chars
+        PASS [   0.004s] (229/262) cosmwasm-vm serde::tests::to_vec_works
+        PASS [   0.006s] (230/262) cosmwasm-vm serde::tests::to_vec_works_for_special_chars
+        PASS [   0.004s] (231/262) cosmwasm-vm size::tests::constructors_work
+        PASS [   0.006s] (232/262) cosmwasm-vm size::tests::implements_debug
+        PASS [   0.005s] (233/262) cosmwasm-vm static_analysis::tests::deserialize_wasm_corrupted_data
+        PASS [   0.037s] (234/262) cosmwasm-vm static_analysis::tests::deserialize_wasm_works
+        PASS [   0.006s] (235/262) cosmwasm-vm static_analysis::tests::exported_function_names_works_for_parity_with_no_prefix
+        PASS [   0.005s] (236/262) cosmwasm-vm static_analysis::tests::exported_function_names_works_for_parity_with_prefix
+        PASS [   0.009s] (237/262) cosmwasm-vm static_analysis::tests::exported_function_names_works_for_wasmer_with_no_prefix
+        PASS [   0.009s] (238/262) cosmwasm-vm static_analysis::tests::exported_function_names_works_for_wasmer_with_prefix
+        PASS [   0.006s] (239/262) cosmwasm-vm static_analysis::tests::has_ibc_entry_points_works
+        PASS [   0.004s] (240/262) cosmwasm-vm testing::mock::tests::canonical_address_max_input_length
+        PASS [   0.004s] (241/262) cosmwasm-vm testing::mock::tests::canonical_address_min_input_length
+        PASS [   0.004s] (242/262) cosmwasm-vm testing::mock::tests::canonical_address_works
+        PASS [   0.006s] (243/262) cosmwasm-vm testing::mock::tests::canonicalize_and_humanize_restores_original
+        PASS [   0.004s] (244/262) cosmwasm-vm testing::mock::tests::human_address_input_length
+        PASS [   0.006s] (245/262) cosmwasm-vm testing::mock::tests::mock_info_works
+        PASS [   0.009s] (246/262) cosmwasm-vm testing::querier::tests::bank_querier_all_balances
+        PASS [   0.006s] (247/262) cosmwasm-vm testing::querier::tests::bank_querier_missing_account
+        PASS [   0.005s] (248/262) cosmwasm-vm testing::querier::tests::bank_querier_one_balance
+        PASS [   0.006s] (249/262) cosmwasm-vm testing::querier::tests::query_raw_fails_when_out_of_gas
+        PASS [   0.004s] (250/262) cosmwasm-vm testing::storage::tests::delete
+        PASS [   0.004s] (251/262) cosmwasm-vm testing::storage::tests::get_and_set
+        PASS [   0.006s] (252/262) cosmwasm-vm testing::storage::tests::iterator
+        PASS [   0.886s] (253/262) cosmwasm-vm wasm_backend::compile::tests::contract_with_floats_fails_check
+        PASS [   0.007s] (254/262) cosmwasm-vm wasm_backend::gatekeeper::tests::bulk_operations_not_supported
+        PASS [   0.007s] (255/262) cosmwasm-vm wasm_backend::gatekeeper::tests::parser_floats_are_not_supported
+        PASS [   0.009s] (256/262) cosmwasm-vm wasm_backend::gatekeeper::tests::valid_wasm_instance_sanity
+        PASS [   0.005s] (257/262) cosmwasm-vm wasm_backend::limiting_tunables::tests::adjust_memory_works
+        PASS [   0.004s] (258/262) cosmwasm-vm wasm_backend::limiting_tunables::tests::validate_memory_works
+        PASS [   0.004s] (259/262) cosmwasm-vm wasm_backend::store::tests::limit_to_pages_works
+        PASS [   0.006s] (260/262) cosmwasm-vm wasm_backend::store::tests::make_compile_time_store_applies_memory_limit
+        PASS [   0.007s] (261/262) cosmwasm-vm wasm_backend::store::tests::make_runtime_store_applies_memory_limit
+        PASS [   3.487s] (262/262) cosmwasm-vm instance::tests::write_and_read_memory_works
+────────────
+     Summary [ 131.433s] 262 tests run: 262 passed, 0 skipped
+reward=1 graded=262 found=10 failed=0 parsed=262 framework=cargo exit_code=0

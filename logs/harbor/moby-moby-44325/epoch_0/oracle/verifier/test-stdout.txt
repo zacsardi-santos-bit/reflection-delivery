@@ -1,0 +1,146 @@
+patching file builder/remotecontext/git/gitutils_test.go
+{"Time":"2026-07-01T14:56:26.550027273Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL"}
+{"Time":"2026-07-01T14:56:26.550117658Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL","Output":"=== RUN   TestParseRemoteURL\n"}
+{"Time":"2026-07-01T14:56:26.550128328Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme_uppercase,_no_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550132744Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme_uppercase,_no_url-fragment","Output":"=== RUN   TestParseRemoteURL/git_scheme_uppercase,_no_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.550137025Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme,_no_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550141451Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme,_no_url-fragment","Output":"=== RUN   TestParseRemoteURL/git_scheme,_no_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.550150287Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme,_with_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550153645Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme,_with_url-fragment","Output":"=== RUN   TestParseRemoteURL/git_scheme,_with_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.550208937Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/https_scheme,_no_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550215327Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/https_scheme,_no_url-fragment","Output":"=== RUN   TestParseRemoteURL/https_scheme,_no_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.550241482Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/https_scheme,_with_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550245539Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/https_scheme,_with_url-fragment","Output":"=== RUN   TestParseRemoteURL/https_scheme,_with_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.550285318Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git@,_no_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550291554Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git@,_no_url-fragment","Output":"=== RUN   TestParseRemoteURL/git@,_no_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.55031514Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git@,_with_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550318725Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git@,_with_url-fragment","Output":"=== RUN   TestParseRemoteURL/git@,_with_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.550365314Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_no_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550384879Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_no_url-fragment","Output":"=== RUN   TestParseRemoteURL/ssh,_no_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.55039416Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_with_url-fragment"}
+{"Time":"2026-07-01T14:56:26.550399129Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_with_url-fragment","Output":"=== RUN   TestParseRemoteURL/ssh,_with_url-fragment\n"}
+{"Time":"2026-07-01T14:56:26.550422089Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_with_url-fragment_and_user"}
+{"Time":"2026-07-01T14:56:26.550427607Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_with_url-fragment_and_user","Output":"=== RUN   TestParseRemoteURL/ssh,_with_url-fragment_and_user\n"}
+{"Time":"2026-07-01T14:56:26.550485414Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL","Output":"--- PASS: TestParseRemoteURL (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550499174Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme_uppercase,_no_url-fragment","Output":"    --- PASS: TestParseRemoteURL/git_scheme_uppercase,_no_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550504748Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme_uppercase,_no_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550510726Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme,_no_url-fragment","Output":"    --- PASS: TestParseRemoteURL/git_scheme,_no_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550515429Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme,_no_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550519749Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme,_with_url-fragment","Output":"    --- PASS: TestParseRemoteURL/git_scheme,_with_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550524608Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git_scheme,_with_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550528556Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/https_scheme,_no_url-fragment","Output":"    --- PASS: TestParseRemoteURL/https_scheme,_no_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550533535Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/https_scheme,_no_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550537838Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/https_scheme,_with_url-fragment","Output":"    --- PASS: TestParseRemoteURL/https_scheme,_with_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550543351Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/https_scheme,_with_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.55054834Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git@,_no_url-fragment","Output":"    --- PASS: TestParseRemoteURL/git@,_no_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550553922Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git@,_no_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550558151Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git@,_with_url-fragment","Output":"    --- PASS: TestParseRemoteURL/git@,_with_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550563398Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/git@,_with_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550568084Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_no_url-fragment","Output":"    --- PASS: TestParseRemoteURL/ssh,_no_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550579465Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_no_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550584276Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_with_url-fragment","Output":"    --- PASS: TestParseRemoteURL/ssh,_with_url-fragment (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550589031Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_with_url-fragment","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550593199Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_with_url-fragment_and_user","Output":"    --- PASS: TestParseRemoteURL/ssh,_with_url-fragment_and_user (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.550602484Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL/ssh,_with_url-fragment_and_user","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.55060793Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestParseRemoteURL","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.550612159Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsSmartHttp"}
+{"Time":"2026-07-01T14:56:26.550616623Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsSmartHttp","Output":"=== RUN   TestCloneArgsSmartHttp\n"}
+{"Time":"2026-07-01T14:56:26.551113476Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsSmartHttp","Output":"--- PASS: TestCloneArgsSmartHttp (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.551128811Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsSmartHttp","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.551133155Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsDumbHttp"}
+{"Time":"2026-07-01T14:56:26.551136173Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsDumbHttp","Output":"=== RUN   TestCloneArgsDumbHttp\n"}
+{"Time":"2026-07-01T14:56:26.551586416Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsDumbHttp","Output":"--- PASS: TestCloneArgsDumbHttp (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.551601494Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsDumbHttp","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.551606077Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsGit"}
+{"Time":"2026-07-01T14:56:26.551609467Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsGit","Output":"=== RUN   TestCloneArgsGit\n"}
+{"Time":"2026-07-01T14:56:26.551615353Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsGit","Output":"--- PASS: TestCloneArgsGit (0.00s)\n"}
+{"Time":"2026-07-01T14:56:26.551618574Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCloneArgsGit","Elapsed":0}
+{"Time":"2026-07-01T14:56:26.551621347Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit"}
+{"Time":"2026-07-01T14:56:26.551626713Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"=== RUN   TestCheckoutGit\n"}
+{"Time":"2026-07-01T14:56:26.552812178Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:180: git version 2.39.5\n"}
+{"Time":"2026-07-01T14:56:26.556122245Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:239: Initialized empty Git repository in /tmp/TestCheckoutGit594898602/001/repo/.git/\n"}
+{"Time":"2026-07-01T14:56:26.564141614Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:254: [master (root-commit) aec004b] First commit\n"}
+{"Time":"2026-07-01T14:56:26.564164454Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         4 files changed, 5 insertions(+)\n"}
+{"Time":"2026-07-01T14:56:26.564170611Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         create mode 100644 Dockerfile\n"}
+{"Time":"2026-07-01T14:56:26.564175963Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         create mode 120000 absolutelink\n"}
+{"Time":"2026-07-01T14:56:26.56417982Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         create mode 120000 parentlink\n"}
+{"Time":"2026-07-01T14:56:26.564183148Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         create mode 100644 subdir/Dockerfile\n"}
+{"Time":"2026-07-01T14:56:26.565716514Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:255: Switched to a new branch 'test'\n"}
+{"Time":"2026-07-01T14:56:26.574303274Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:261: [test 1424959] Branch commit\n"}
+{"Time":"2026-07-01T14:56:26.574326291Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         2 files changed, 3 insertions(+), 2 deletions(-)\n"}
+{"Time":"2026-07-01T14:56:26.576344422Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:262: Switched to branch 'master'\n"}
+{"Time":"2026-07-01T14:56:26.579615726Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:266: Initialized empty Git repository in /tmp/TestCheckoutGit594898602/001/subrepo/.git/\n"}
+{"Time":"2026-07-01T14:56:26.586915243Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:273: [master (root-commit) 2b37eed] Subrepo initial\n"}
+{"Time":"2026-07-01T14:56:26.586938395Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         1 file changed, 1 insertion(+)\n"}
+{"Time":"2026-07-01T14:56:26.586943957Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         create mode 100644 subfile\n"}
+{"Time":"2026-07-01T14:56:26.648098556Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:275: Cloning into '/tmp/TestCheckoutGit594898602/001/repo/sub'...\n"}
+{"Time":"2026-07-01T14:56:26.660813009Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"    gitutils_test.go:277: [master 29e4497] With submodule\n"}
+{"Time":"2026-07-01T14:56:26.660840997Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         2 files changed, 4 insertions(+)\n"}
+{"Time":"2026-07-01T14:56:26.660845156Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         create mode 100644 .gitmodules\n"}
+{"Time":"2026-07-01T14:56:26.660851899Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"         create mode 160000 sub\n"}
+{"Time":"2026-07-01T14:56:26.660861915Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/#00"}
+{"Time":"2026-07-01T14:56:26.660865383Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/#00","Output":"=== RUN   TestCheckoutGit/#00\n"}
+{"Time":"2026-07-01T14:56:26.758720847Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master"}
+{"Time":"2026-07-01T14:56:26.758749257Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master","Output":"=== RUN   TestCheckoutGit/master\n"}
+{"Time":"2026-07-01T14:56:26.857912178Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:subdir"}
+{"Time":"2026-07-01T14:56:26.857951771Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:subdir","Output":"=== RUN   TestCheckoutGit/:subdir\n"}
+{"Time":"2026-07-01T14:56:26.952441065Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:nosubdir"}
+{"Time":"2026-07-01T14:56:26.952481903Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:nosubdir","Output":"=== RUN   TestCheckoutGit/:nosubdir\n"}
+{"Time":"2026-07-01T14:56:26.989350212Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:Dockerfile"}
+{"Time":"2026-07-01T14:56:26.989373218Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:Dockerfile","Output":"=== RUN   TestCheckoutGit/:Dockerfile\n"}
+{"Time":"2026-07-01T14:56:27.02484687Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:nosubdir"}
+{"Time":"2026-07-01T14:56:27.024872418Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:nosubdir","Output":"=== RUN   TestCheckoutGit/master:nosubdir\n"}
+{"Time":"2026-07-01T14:56:27.060401931Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:subdir"}
+{"Time":"2026-07-01T14:56:27.060438971Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:subdir","Output":"=== RUN   TestCheckoutGit/master:subdir\n"}
+{"Time":"2026-07-01T14:56:27.152101607Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:../subdir"}
+{"Time":"2026-07-01T14:56:27.152129391Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:../subdir","Output":"=== RUN   TestCheckoutGit/master:../subdir\n"}
+{"Time":"2026-07-01T14:56:27.188716952Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test"}
+{"Time":"2026-07-01T14:56:27.188741435Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test","Output":"=== RUN   TestCheckoutGit/test\n"}
+{"Time":"2026-07-01T14:56:27.242869046Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test:"}
+{"Time":"2026-07-01T14:56:27.24289976Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test:","Output":"=== RUN   TestCheckoutGit/test:\n"}
+{"Time":"2026-07-01T14:56:27.297096089Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test:subdir"}
+{"Time":"2026-07-01T14:56:27.297126893Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test:subdir","Output":"=== RUN   TestCheckoutGit/test:subdir\n"}
+{"Time":"2026-07-01T14:56:27.349365188Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:absolutelink"}
+{"Time":"2026-07-01T14:56:27.349404636Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:absolutelink","Output":"=== RUN   TestCheckoutGit/master:absolutelink\n"}
+{"Time":"2026-07-01T14:56:27.440464991Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:parentlink"}
+{"Time":"2026-07-01T14:56:27.440489083Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:parentlink","Output":"=== RUN   TestCheckoutGit/master:parentlink\n"}
+{"Time":"2026-07-01T14:56:27.534386857Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Output":"--- PASS: TestCheckoutGit (0.98s)\n"}
+{"Time":"2026-07-01T14:56:27.534419453Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/#00","Output":"    --- PASS: TestCheckoutGit/#00 (0.10s)\n"}
+{"Time":"2026-07-01T14:56:27.534426089Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/#00","Elapsed":0.1}
+{"Time":"2026-07-01T14:56:27.534434079Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master","Output":"    --- PASS: TestCheckoutGit/master (0.10s)\n"}
+{"Time":"2026-07-01T14:56:27.534440234Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master","Elapsed":0.1}
+{"Time":"2026-07-01T14:56:27.534445346Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:subdir","Output":"    --- PASS: TestCheckoutGit/:subdir (0.09s)\n"}
+{"Time":"2026-07-01T14:56:27.534451154Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:subdir","Elapsed":0.09}
+{"Time":"2026-07-01T14:56:27.534456459Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:nosubdir","Output":"    --- PASS: TestCheckoutGit/:nosubdir (0.04s)\n"}
+{"Time":"2026-07-01T14:56:27.534461896Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:nosubdir","Elapsed":0.04}
+{"Time":"2026-07-01T14:56:27.534466888Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:Dockerfile","Output":"    --- PASS: TestCheckoutGit/:Dockerfile (0.04s)\n"}
+{"Time":"2026-07-01T14:56:27.534471839Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/:Dockerfile","Elapsed":0.04}
+{"Time":"2026-07-01T14:56:27.534476552Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:nosubdir","Output":"    --- PASS: TestCheckoutGit/master:nosubdir (0.04s)\n"}
+{"Time":"2026-07-01T14:56:27.534482136Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:nosubdir","Elapsed":0.04}
+{"Time":"2026-07-01T14:56:27.534491744Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:subdir","Output":"    --- PASS: TestCheckoutGit/master:subdir (0.09s)\n"}
+{"Time":"2026-07-01T14:56:27.534497052Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:subdir","Elapsed":0.09}
+{"Time":"2026-07-01T14:56:27.534501733Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:../subdir","Output":"    --- PASS: TestCheckoutGit/master:../subdir (0.04s)\n"}
+{"Time":"2026-07-01T14:56:27.534507093Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:../subdir","Elapsed":0.04}
+{"Time":"2026-07-01T14:56:27.534512472Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test","Output":"    --- PASS: TestCheckoutGit/test (0.05s)\n"}
+{"Time":"2026-07-01T14:56:27.534524068Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test","Elapsed":0.05}
+{"Time":"2026-07-01T14:56:27.534529558Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test:","Output":"    --- PASS: TestCheckoutGit/test: (0.05s)\n"}
+{"Time":"2026-07-01T14:56:27.534534798Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test:","Elapsed":0.05}
+{"Time":"2026-07-01T14:56:27.534539625Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test:subdir","Output":"    --- PASS: TestCheckoutGit/test:subdir (0.05s)\n"}
+{"Time":"2026-07-01T14:56:27.534548576Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/test:subdir","Elapsed":0.05}
+{"Time":"2026-07-01T14:56:27.534553847Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:absolutelink","Output":"    --- PASS: TestCheckoutGit/master:absolutelink (0.09s)\n"}
+{"Time":"2026-07-01T14:56:27.534559351Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:absolutelink","Elapsed":0.09}
+{"Time":"2026-07-01T14:56:27.534564688Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:parentlink","Output":"    --- PASS: TestCheckoutGit/master:parentlink (0.09s)\n"}
+{"Time":"2026-07-01T14:56:27.534570369Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit/master:parentlink","Elapsed":0.09}
+{"Time":"2026-07-01T14:56:27.534581367Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestCheckoutGit","Elapsed":0.98}
+{"Time":"2026-07-01T14:56:27.534587598Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestValidGitTransport"}
+{"Time":"2026-07-01T14:56:27.534591767Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestValidGitTransport","Output":"=== RUN   TestValidGitTransport\n"}
+{"Time":"2026-07-01T14:56:27.534600766Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestValidGitTransport","Output":"--- PASS: TestValidGitTransport (0.00s)\n"}
+{"Time":"2026-07-01T14:56:27.534607612Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestValidGitTransport","Elapsed":0}
+{"Time":"2026-07-01T14:56:27.534612059Z","Action":"run","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestGitInvalidRef"}
+{"Time":"2026-07-01T14:56:27.534616081Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestGitInvalidRef","Output":"=== RUN   TestGitInvalidRef\n"}
+{"Time":"2026-07-01T14:56:27.539242413Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestGitInvalidRef","Output":"--- PASS: TestGitInvalidRef (0.00s)\n"}
+{"Time":"2026-07-01T14:56:27.539263267Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Test":"TestGitInvalidRef","Elapsed":0}
+{"Time":"2026-07-01T14:56:27.539269983Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Output":"PASS\n"}
+{"Time":"2026-07-01T14:56:27.539891311Z","Action":"output","Package":"github.com/docker/docker/builder/remotecontext/git","Output":"ok  \tgithub.com/docker/docker/builder/remotecontext/git\t0.993s\n"}
+{"Time":"2026-07-01T14:56:27.539904121Z","Action":"pass","Package":"github.com/docker/docker/builder/remotecontext/git","Elapsed":0.993}
+reward=1 graded=30 found=30 failed=0 parsed=30 framework=go exit_code=0

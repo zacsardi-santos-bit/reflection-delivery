@@ -1,0 +1,281 @@
+patching file crates/runtime/tests/endpoint_auth/flight.rs
+patching file crates/runtime/tests/endpoint_auth/http.rs
+patching file crates/runtime/tests/flight/do_put.rs
+   Compiling spicepod v1.0.0-rc.4 (/workspace/repo/crates/spicepod)
+   Compiling flight_client v1.0.0-rc.4 (/workspace/repo/crates/flight_client)
+   Compiling util v1.0.0-rc.4 (/workspace/repo/crates/util)
+   Compiling llms v1.0.0-rc.4 (/workspace/repo/crates/llms)
+   Compiling document_parse v1.0.0-rc.4 (/workspace/repo/crates/document_parse)
+   Compiling otel-arrow v1.0.0-rc.4 (/workspace/repo/crates/otel-arrow)
+   Compiling arrow_sql_gen v1.0.0-rc.4 (/workspace/repo/crates/arrow_sql_gen)
+   Compiling ns_lookup v1.0.0-rc.4 (/workspace/repo/crates/ns_lookup)
+   Compiling arrow_tools v1.0.0-rc.4 (/workspace/repo/crates/arrow_tools)
+   Compiling db_connection_pool v1.0.0-rc.4 (/workspace/repo/crates/db_connection_pool)
+   Compiling telemetry v1.0.0-rc.4 (/workspace/repo/crates/telemetry)
+   Compiling data_components v1.0.0-rc.4 (/workspace/repo/crates/data_components)
+   Compiling app v1.0.0-rc.4 (/workspace/repo/crates/app)
+   Compiling cache v1.0.0-rc.4 (/workspace/repo/crates/cache)
+   Compiling package v1.0.0-rc.4 (/workspace/repo/crates/package)
+   Compiling model_components v1.0.0-rc.4 (/workspace/repo/crates/model_components)
+   Compiling runtime-auth v1.0.0-rc.4 (/workspace/repo/crates/runtime-auth)
+warning: associated function `new` is never used
+  --> crates/telemetry/src/exporter.rs:30:18
+   |
+29 | impl AnonymousTelemetryExporter {
+   | ------------------------------- associated function in this implementation
+30 |     pub async fn new(url: Arc<str>) -> Self {
+   |                  ^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `telemetry` (lib) generated 1 warning
+   Compiling flightrepl v1.0.0-rc.4 (/workspace/repo/crates/flightrepl)
+   Compiling runtime v1.0.0-rc.4 (/workspace/repo/crates/runtime)
+warning: unused imports: `path::Path` and `sync::Arc`
+  --> crates/runtime/src/dataaccelerator/spice_sys.rs:19:11
+   |
+19 | use std::{path::Path, sync::Arc};
+   |           ^^^^^^^^^^  ^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `super::get_accelerator_engine`
+  --> crates/runtime/src/dataaccelerator/spice_sys.rs:38:5
+   |
+38 | use super::get_accelerator_engine;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused variable: `schema`
+   --> crates/runtime/src/dataaccelerator/spice_sys/dataset_checkpoint/mod.rs:109:36
+    |
+109 |     pub async fn checkpoint(&self, schema: &SchemaRef) -> Result<()> {
+    |                                    ^^^^^^ help: if this is intentional, prefix it with an underscore: `_schema`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: unused variable: `create_table_if_not_exists`
+  --> crates/runtime/src/dataaccelerator/spice_sys.rs:58:5
+   |
+58 |     create_table_if_not_exists: bool,
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_create_table_if_not_exists`
+
+warning: unreachable statement
+  --> crates/runtime/src/dataaccelerator/spice_sys/dataset_checkpoint/mod.rs:69:9
+   |
+57 | /         match connection {
+58 | |             #[cfg(feature = "duckdb")]
+59 | |             AccelerationConnection::DuckDB(pool) => Self::init_duckdb(pool)?,
+60 | |             #[cfg(feature = "postgres")]
+...  |
+65 | |             _ => return Err("No acceleration connection available".into()),
+66 | |         };
+   | |_________- any code following this `match` expression is unreachable, as all arms diverge
+...
+69 | /         match connection {
+70 | |             #[cfg(feature = "duckdb")]
+71 | |             AccelerationConnection::DuckDB(pool) => Self::migrate_duckdb(pool)?,
+72 | |             #[cfg(feature = "postgres")]
+...  |
+77 | |             _ => return Err("No acceleration connection available".into()),
+78 | |         };
+   | |__________^ unreachable statement
+   |
+   = note: `#[warn(unreachable_code)]` on by default
+
+warning: unused variable: `ds`
+   --> crates/runtime/src/http/v1/datasets.rs:429:23
+    |
+429 | fn dataset_properties(ds: &Dataset) -> HashMap<String, Value> {
+    |                       ^^ help: if this is intentional, prefix it with an underscore: `_ds`
+
+warning: variable does not need to be mutable
+   --> crates/runtime/src/http/v1/datasets.rs:430:9
+    |
+430 |     let mut properties = HashMap::new();
+    |         ----^^^^^^^^^^
+    |         |
+    |         help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` on by default
+
+warning: function `make_spice_data_directory` is never used
+   --> crates/runtime/src/lib.rs:586:15
+    |
+586 | pub(crate) fn make_spice_data_directory() -> Result<()> {
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: constant `CHECKPOINT_TABLE_NAME` is never used
+  --> crates/runtime/src/dataaccelerator/spice_sys/dataset_checkpoint/mod.rs:29:7
+   |
+29 | const CHECKPOINT_TABLE_NAME: &str = "spice_sys_dataset_checkpoint";
+   |       ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `SCHEMA_MIGRATION_01_STMT` is never used
+  --> crates/runtime/src/dataaccelerator/spice_sys/dataset_checkpoint/mod.rs:30:7
+   |
+30 | const SCHEMA_MIGRATION_01_STMT: &str =
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `dataset_name` is never read
+  --> crates/runtime/src/dataaccelerator/spice_sys/dataset_checkpoint/mod.rs:41:5
+   |
+40 | pub struct DatasetCheckpoint {
+   |            ----------------- field in this struct
+41 |     dataset_name: String,
+   |     ^^^^^^^^^^^^
+
+warning: associated functions `serialize_schema` and `deserialize_schema` are never used
+  --> crates/runtime/src/dataaccelerator/spice_sys/dataset_checkpoint/mod.rs:83:8
+   |
+45 | impl DatasetCheckpoint {
+   | ---------------------- associated functions in this implementation
+...
+83 |     fn serialize_schema(schema: &SchemaRef) -> Result<String> {
+   |        ^^^^^^^^^^^^^^^^
+...
+87 |     fn deserialize_schema(schema_json: &str) -> Result<SchemaRef> {
+   |        ^^^^^^^^^^^^^^^^^^
+
+warning: associated function `get_initialized_datasets` is never used
+   --> crates/runtime/src/init/dataset.rs:676:25
+    |
+49  | impl Runtime {
+    | ------------ associated function in this implementation
+...
+676 |     pub(crate) async fn get_initialized_datasets(
+    |                         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+   Compiling spice-cloud v1.0.0-rc.4 (/workspace/repo/crates/spice_cloud)
+warning: `runtime` (lib) generated 13 warnings (run `cargo fix --lib -p runtime` to apply 3 suggestions)
+warning: unused import: `std::time::Duration`
+  --> crates/runtime/tests/acceleration/query_push_down.rs:17:5
+   |
+17 | use std::time::Duration;
+   |     ^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `app::AppBuilder`
+  --> crates/runtime/tests/acceleration/query_push_down.rs:19:5
+   |
+19 | use app::AppBuilder;
+   |     ^^^^^^^^^^^^^^^
+
+warning: unused import: `datafusion::assert_batches_eq`
+  --> crates/runtime/tests/acceleration/query_push_down.rs:20:5
+   |
+20 | use datafusion::assert_batches_eq;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `futures::StreamExt`
+  --> crates/runtime/tests/acceleration/query_push_down.rs:21:5
+   |
+21 | use futures::StreamExt;
+   |     ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `futures::TryStreamExt`
+  --> crates/runtime/tests/acceleration/query_push_down.rs:22:5
+   |
+22 | use futures::TryStreamExt;
+   |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `Runtime` and `datafusion::query`
+  --> crates/runtime/tests/acceleration/query_push_down.rs:23:15
+   |
+23 | use runtime::{datafusion::query, Runtime};
+   |               ^^^^^^^^^^^^^^^^^  ^^^^^^^
+
+warning: unused imports: `Dataset`, `acceleration::Acceleration`, and `params::Params`
+  --> crates/runtime/tests/acceleration/query_push_down.rs:25:15
+   |
+25 |     dataset::{acceleration::Acceleration, Dataset},
+   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^
+26 |     params::Params,
+   |     ^^^^^^^^^^^^^^
+
+warning: unused imports: `init_tracing`, `test_request_context`, and `wait_until_true`
+  --> crates/runtime/tests/acceleration/query_push_down.rs:30:5
+   |
+30 |     init_tracing,
+   |     ^^^^^^^^^^^^
+31 |     utils::{test_request_context, wait_until_true},
+   |             ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^
+
+warning: function `get_tpch_lineitem` is never used
+   --> crates/runtime/tests/integration.rs:105:10
+    |
+105 | async fn get_tpch_lineitem() -> Result<Vec<RecordBatch>, anyhow::Error> {
+    |          ^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: type alias `PlanCheckFn` is never used
+   --> crates/runtime/tests/integration.rs:180:6
+    |
+180 | type PlanCheckFn = Box<dyn Fn(&str) -> bool>;
+    |      ^^^^^^^^^^^
+
+warning: function `run_query_and_check_results_with_plan_checks` is never used
+   --> crates/runtime/tests/integration.rs:182:10
+    |
+182 | async fn run_query_and_check_results_with_plan_checks<F>(
+    |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `container_registry` is never used
+   --> crates/runtime/tests/integration.rs:259:4
+    |
+259 | fn container_registry() -> String {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: static `ACCELERATION_MUTEX` is never used
+  --> crates/runtime/tests/acceleration/mod.rs:38:12
+   |
+38 | pub static ACCELERATION_MUTEX: LazyLock<Mutex<()>> = LazyLock::new(|| Mutex::new(()));
+   |            ^^^^^^^^^^^^^^^^^^
+
+warning: function `get_params` is never used
+  --> crates/runtime/tests/acceleration/mod.rs:40:4
+   |
+40 | fn get_params(mode: &Mode, file: Option<String>, engine: &str) -> Option<Params> {
+   |    ^^^^^^^^^^
+
+warning: method `start` is never used
+  --> crates/runtime/tests/docker/mod.rs:30:18
+   |
+21 | impl<'a> RunningContainer<'a> {
+   | ----------------------------- method in this implementation
+...
+30 |     pub async fn start(&self) -> Result<(), anyhow::Error> {
+   |                  ^^^^^
+
+warning: function `start` is never used
+  --> crates/runtime/tests/docker/mod.rs:51:14
+   |
+51 | pub async fn start(docker: &Docker, name: &str) -> Result<(), anyhow::Error> {
+   |              ^^^^^
+
+warning: method `add_env_var` is never used
+  --> crates/runtime/tests/docker/mod.rs:86:12
+   |
+65 | impl<'a> ContainerRunnerBuilder<'a> {
+   | ----------------------------------- method in this implementation
+...
+86 |     pub fn add_env_var(mut self, key: &str, value: &str) -> Self {
+   |            ^^^^^^^^^^^
+
+warning: `runtime` (test "integration") generated 17 warnings (run `cargo fix --test "integration"` to apply 8 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3m 14s
+────────────
+ Nextest run ID 88a077c5-6930-48c4-b912-ab1908241d9e with nextest profile: default
+    Starting 6 tests across 1 binary (18 tests skipped)
+        PASS [   0.188s] (1/6) runtime::integration flight::do_put::test_flight_do_put_no_auth
+        PASS [   0.189s] (2/6) runtime::integration flight::do_put::test_flight_do_put_ro_key
+        PASS [   0.195s] (3/6) runtime::integration endpoint_auth::flight::test_flight_auth
+        PASS [   0.233s] (4/6) runtime::integration endpoint_auth::http::test_http_auth
+        PASS [   0.287s] (5/6) runtime::integration flight::do_put::test_flight_do_put_basic
+        PASS [   3.255s] (6/6) runtime::integration flight::do_put::test_do_put_stream_error
+────────────
+     Summary [   3.256s] 6 tests run: 6 passed, 18 skipped
+reward=1 graded=6 found=4 failed=0 parsed=6 framework=cargo exit_code=0

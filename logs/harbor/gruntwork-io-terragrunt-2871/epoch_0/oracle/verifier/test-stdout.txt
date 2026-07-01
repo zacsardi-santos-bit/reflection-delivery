@@ -1,0 +1,44 @@
+patching file configstack/module_test.go
+patching file test/fixture-graph/dependency-graph.png
+patching file test/fixture-graph/eks/main.tf
+patching file test/fixture-graph/eks/terragrunt.hcl
+patching file test/fixture-graph/lambda/main.tf
+patching file test/fixture-graph/lambda/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-1/main.tf
+patching file test/fixture-graph/services/eks-service-1/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-2-v2/main.tf
+patching file test/fixture-graph/services/eks-service-2-v2/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-2/main.tf
+patching file test/fixture-graph/services/eks-service-2/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-3-v2/main.tf
+patching file test/fixture-graph/services/eks-service-3-v2/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-3-v3/main.tf
+patching file test/fixture-graph/services/eks-service-3-v3/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-3/main.tf
+patching file test/fixture-graph/services/eks-service-3/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-4/main.tf
+patching file test/fixture-graph/services/eks-service-4/terragrunt.hcl
+patching file test/fixture-graph/services/eks-service-5/main.tf
+patching file test/fixture-graph/services/eks-service-5/terragrunt.hcl
+patching file test/fixture-graph/services/lambda-service-1/main.tf
+patching file test/fixture-graph/services/lambda-service-1/terragrunt.hcl
+patching file test/fixture-graph/services/lambda-service-2/main.tf
+patching file test/fixture-graph/services/lambda-service-2/terragrunt.hcl
+patching file test/integration_test.go
+{"Time":"2026-07-01T14:47:53.652952914Z","Action":"start","Package":"github.com/gruntwork-io/terragrunt/configstack"}
+{"Time":"2026-07-01T14:47:53.667022922Z","Action":"run","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestBasicDependency"}
+{"Time":"2026-07-01T14:47:53.667051713Z","Action":"output","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestBasicDependency","Output":"=== RUN   TestBasicDependency\n"}
+{"Time":"2026-07-01T14:47:53.6670685Z","Action":"output","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestBasicDependency","Output":"--- PASS: TestBasicDependency (0.00s)\n"}
+{"Time":"2026-07-01T14:47:53.667072931Z","Action":"pass","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestBasicDependency","Elapsed":0}
+{"Time":"2026-07-01T14:47:53.667078922Z","Action":"run","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestNestedDependencies"}
+{"Time":"2026-07-01T14:47:53.66708266Z","Action":"output","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestNestedDependencies","Output":"=== RUN   TestNestedDependencies\n"}
+{"Time":"2026-07-01T14:47:53.667090731Z","Action":"output","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestNestedDependencies","Output":"--- PASS: TestNestedDependencies (0.00s)\n"}
+{"Time":"2026-07-01T14:47:53.667093878Z","Action":"pass","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestNestedDependencies","Elapsed":0}
+{"Time":"2026-07-01T14:47:53.667121865Z","Action":"run","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestCircularDependencies"}
+{"Time":"2026-07-01T14:47:53.66712616Z","Action":"output","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestCircularDependencies","Output":"=== RUN   TestCircularDependencies\n"}
+{"Time":"2026-07-01T14:47:53.667158803Z","Action":"output","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestCircularDependencies","Output":"--- PASS: TestCircularDependencies (0.00s)\n"}
+{"Time":"2026-07-01T14:47:53.667166483Z","Action":"pass","Package":"github.com/gruntwork-io/terragrunt/configstack","Test":"TestCircularDependencies","Elapsed":0}
+{"Time":"2026-07-01T14:47:53.667848847Z","Action":"output","Package":"github.com/gruntwork-io/terragrunt/configstack","Output":"PASS\n"}
+{"Time":"2026-07-01T14:47:53.669029549Z","Action":"output","Package":"github.com/gruntwork-io/terragrunt/configstack","Output":"ok  \tgithub.com/gruntwork-io/terragrunt/configstack\t0.016s\n"}
+{"Time":"2026-07-01T14:47:53.669048092Z","Action":"pass","Package":"github.com/gruntwork-io/terragrunt/configstack","Elapsed":0.016}
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=go exit_code=0

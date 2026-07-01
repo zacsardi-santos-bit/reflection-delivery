@@ -1,16 +1,16 @@
 {
     "task": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/aquasecurity-trivy-5981",
+        "path": "aquasecurity-trivy-5981",
         "git_url": null,
         "git_commit_id": null,
         "name": null,
         "ref": null,
         "overwrite": false,
         "download_dir": null,
-        "source": "harbor"
+        "source": "src"
     },
-    "trial_name": "aquasecurity-trivy-5981__bmATusn",
-    "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/oracle_jobs_all/2026-06-29__15-12-04",
+    "trial_name": "aquasecurity-trivy-5981__5b9jov2",
+    "trials_dir": "/tmp/oracle/2026-07-01__14-30-43",
     "timeout_multiplier": 1.0,
     "agent_timeout_multiplier": null,
     "verifier_timeout_multiplier": null,
@@ -27,10 +27,10 @@
         "env": {}
     },
     "environment": {
-        "type": "modal",
+        "type": "docker",
         "import_path": null,
         "force_build": false,
-        "delete": false,
+        "delete": true,
         "override_cpus": null,
         "override_memory_mb": null,
         "override_storage_mb": null,
@@ -46,5 +46,5 @@
         "disable": false
     },
     "artifacts": [],
-    "job_id": "8d8c11e2-61bb-4d33-b502-02a799419317"
+    "job_id": "11e9f396-1359-444c-a597-30ae3ff6c02e"
 }

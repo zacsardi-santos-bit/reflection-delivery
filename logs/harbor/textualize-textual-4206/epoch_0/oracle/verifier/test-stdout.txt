@@ -1,0 +1,23 @@
+patching file tests/snapshot_tests/__snapshots__/test_snapshots.ambr
+patching file tests/snapshot_tests/snapshot_apps/recompose.py
+patching file tests/snapshot_tests/test_snapshots.py
+patching file tests/test_query.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.4.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.2.0, syrupy-3.0.6, asyncio-0.23.4, cov-2.12.1, textual-snapshot-0.4.0
+asyncio: mode=Mode.AUTO
+collecting ... collected 5 items
+
+tests/snapshot_tests/test_snapshots.py::test_recompose PASSED            [ 20%]
+tests/test_query.py::test_query_refresh[args0] PASSED                    [ 40%]
+tests/test_query.py::test_query_refresh[args1] PASSED                    [ 60%]
+tests/test_query.py::test_query_refresh[args2] PASSED                    [ 80%]
+tests/test_query.py::test_query_refresh[args3] PASSED                    [100%]
+
+--------------------------- snapshot report summary ----------------------------
+1 snapshot passed.
+============================== 5 passed in 1.00s ===============================
+reward=1 graded=5 found=0 failed=0 parsed=1 framework=pytest exit_code=0

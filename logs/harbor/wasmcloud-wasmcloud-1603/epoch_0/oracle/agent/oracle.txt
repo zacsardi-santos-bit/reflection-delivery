@@ -1,0 +1,11 @@
+patching file Cargo.lock
+patching file Cargo.toml
+patching file crates/provider-wit-bindgen-macro/src/lib.rs
+patching file crates/wrpc-transport-derive-macro/Cargo.toml
+patching file crates/wrpc-transport-derive-macro/src/lib.rs
+patching file crates/wrpc-transport-derive-macro/src/rust.rs
+patching file crates/wrpc-transport-derive-macro/src/wrpc_transport/encode_sync.rs
+patching file crates/wrpc-transport-derive-macro/src/wrpc_transport/mod.rs
+patching file crates/wrpc-transport-derive-macro/src/wrpc_transport/receive.rs
+patching file crates/wrpc-transport-derive/Cargo.toml
+patching file crates/wrpc-transport-derive/src/lib.rs

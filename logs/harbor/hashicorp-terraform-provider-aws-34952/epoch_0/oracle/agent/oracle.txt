@@ -1,0 +1,16 @@
+patching file .changelog/34952.txt
+patching file .ci/scripts/changelog.tmpl
+patching file .ci/scripts/release-note.tmpl
+patching file .ci/tools/go.mod
+patching file .ci/tools/go.sum
+patching file .ci/tools/main.go
+patching file .github/workflows/acctest-terraform-lint.yml
+patching file .github/workflows/website.yml
+patching file GNUmakefile
+patching file docs/add-a-new-function.md
+patching file internal/function/arn_build_function.go
+patching file internal/function/arn_parse_function.go
+patching file internal/provider/fwprovider/provider.go
+patching file mkdocs.yml
+patching file website/docs/functions/arn_build.html.markdown
+patching file website/docs/functions/arn_parse.html.markdown

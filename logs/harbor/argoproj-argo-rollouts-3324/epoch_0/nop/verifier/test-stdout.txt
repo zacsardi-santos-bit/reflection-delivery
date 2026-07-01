@@ -1,0 +1,16 @@
+patching file analysis/analysis_test.go
+patching file analysis/controller_test.go
+# github.com/argoproj/argo-rollouts/analysis [github.com/argoproj/argo-rollouts/analysis.test]
+analysis/analysis_test.go:2003:25: undefined: v1alpha1.TTLStrategy
+analysis/analysis_test.go:2013:5: unknown field TTLStrategy in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".AnalysisRunSpec
+analysis/analysis_test.go:2025:6: unknown field TTLStrategy in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".AnalysisRunSpec
+analysis/analysis_test.go:2046:31: undefined: v1alpha1.TTLStrategy
+analysis/analysis_test.go:2049:3: unknown field CompletedAt in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".AnalysisRunStatus
+analysis/analysis_test.go:2052:3: unknown field CompletedAt in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".AnalysisRunStatus
+analysis/analysis_test.go:2055:31: undefined: v1alpha1.TTLStrategy
+analysis/analysis_test.go:2058:3: unknown field CompletedAt in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".AnalysisRunStatus
+analysis/analysis_test.go:2061:3: unknown field CompletedAt in struct literal of type "github.com/argoproj/argo-rollouts/pkg/apis/rollouts/v1alpha1".AnalysisRunStatus
+analysis/analysis_test.go:2064:31: undefined: v1alpha1.TTLStrategy
+analysis/analysis_test.go:2064:31: too many errors
+FAIL	github.com/argoproj/argo-rollouts/analysis [build failed]
+reward=0 graded=64 found=64 failed=64 parsed=1 framework=go exit_code=1

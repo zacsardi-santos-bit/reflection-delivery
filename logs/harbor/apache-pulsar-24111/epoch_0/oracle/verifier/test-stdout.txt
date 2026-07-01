@@ -1,0 +1,319 @@
+patching file pulsar-broker/src/test/java/org/apache/pulsar/broker/service/BrokerDispatchRateLimiterTest.java
+patching file pulsar-broker/src/test/java/org/apache/pulsar/broker/service/TopicDispatchRateLimiterTest.java
+patching file pulsar-broker/src/test/java/org/apache/pulsar/broker/stats/SubscriptionStatsTest.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] Detecting the operating system and CPU architecture
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] os.detected.name: linux
+[[1;34mINFO[m] os.detected.arch: x86_64
+[[1;34mINFO[m] os.detected.bitness: 64
+[[1;34mINFO[m] os.detected.version: 4.14
+[[1;34mINFO[m] os.detected.version.major: 4
+[[1;34mINFO[m] os.detected.version.minor: 14
+[[1;34mINFO[m] os.detected.release: ubuntu
+[[1;34mINFO[m] os.detected.release.version: 24.04
+[[1;34mINFO[m] os.detected.release.like.ubuntu: true
+[[1;34mINFO[m] os.detected.release.like.debian: true
+[[1;34mINFO[m] os.detected.classifier: linux-x86_64
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Build Order:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Pulsar Client Admin :: API                                         [jar]
+[[1;34mINFO[m] Pulsar Common                                                      [jar]
+[[1;34mINFO[m] Pulsar Broker                                                      [jar]
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.pulsar:pulsar-client-admin-api[0;1m >--------------[m
+[[1;34mINFO[m] [1mBuilding Pulsar Client Admin :: API 4.0.4-SNAPSHOT                 [1/3][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven-version)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-java-version)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[[1;34mINFO[m] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:1.0:directory-of[m [1m(directories)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.pulsar:pulsar set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mgit-commit-id-plugin:4.9.10:revision[m [1m(git-info)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mproperties-maven-plugin:1.1.0:set-system-properties[m [1m(default)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] Set 2 system properties
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.7.0:process[m [1m(process-resource-bundles)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache:apache-jar-resource-bundle:1.4
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:resources[m [1m(default-resources)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/pulsar-client-admin-api/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] Compiling 1 source file with javac [debug deprecation release 8] to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:testResources[m [1m(default-testResources)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/pulsar-client-admin-api/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.0:test[m [1m(default-test)[m @ [36mpulsar-client-admin-api[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.apache.pulsar:pulsar-common[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding Pulsar Common 4.0.4-SNAPSHOT                              [2/3][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven-version)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-java-version)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:1.0:directory-of[m [1m(directories)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.pulsar:pulsar set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mgit-commit-id-plugin:4.9.10:revision[m [1m(git-info)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mproperties-maven-plugin:1.1.0:set-system-properties[m [1m(default)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Set 2 system properties
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mtemplating-maven-plugin:1.0.0:filter-sources[m [1m(filtering-java-templates)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Coping files with filtering to temporary directory.
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copied 1 files to output directory: /workspace/repo/pulsar-common/target/generated-sources/java-templates
+[[1;34mINFO[m] Source directory: /workspace/repo/pulsar-common/target/generated-sources/java-templates added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mlightproto-maven-plugin:0.4:generate[m [1m(default)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CompressionType.java
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/ProducerAccessMode.java
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/ServerError.java
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/AuthMethod.java
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/ProtocolVersion.java
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/KeySharedMode.java
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/TxnAction.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/Schema.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/MessageIdData.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/KeyValue.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/KeyLongValue.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/IntRange.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/EncryptionKeys.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/MessageMetadata.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/SingleMessageMetadata.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/BrokerEntryMetadata.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandConnect.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/FeatureFlags.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandConnected.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandAuthResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandAuthChallenge.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/AuthData.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/KeySharedMeta.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandSubscribe.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandPartitionedTopicMetadata.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandPartitionedTopicMetadataResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandLookupTopic.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandLookupTopicResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandProducer.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandSend.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandSendReceipt.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandSendError.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandMessage.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandAck.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandAckResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandActiveConsumerChange.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandFlow.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandUnsubscribe.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandSeek.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandReachedEndOfTopic.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandTopicMigrated.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandCloseProducer.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandCloseConsumer.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandRedeliverUnacknowledgedMessages.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandSuccess.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandProducerSuccess.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandError.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandPing.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandPong.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandConsumerStats.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandConsumerStatsResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandGetLastMessageId.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandGetLastMessageIdResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandGetTopicsOfNamespace.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandGetTopicsOfNamespaceResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandWatchTopicList.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandWatchTopicListSuccess.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandWatchTopicUpdate.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandWatchTopicListClose.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandGetSchema.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandGetSchemaResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandGetOrCreateSchema.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandGetOrCreateSchemaResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandTcClientConnectRequest.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandTcClientConnectResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandNewTxn.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandNewTxnResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandAddPartitionToTxn.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandAddPartitionToTxnResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/Subscription.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandAddSubscriptionToTxn.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandAddSubscriptionToTxnResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandEndTxn.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandEndTxnResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandEndTxnOnPartition.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandEndTxnOnPartitionResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandEndTxnOnSubscription.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/CommandEndTxnOnSubscriptionResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/BaseCommand.java
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/MarkerType.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/ReplicatedSubscriptionsSnapshotRequest.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/ReplicatedSubscriptionsSnapshotResponse.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/ReplicatedSubscriptionsSnapshot.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/ReplicatedSubscriptionsUpdate.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/ClusterMessageId.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-sources/protobuf/java/org/apache/pulsar/common/api/proto/MarkersMessageIdData.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-common/target/generated-test-sources/protobuf/java/org/apache/pulsar/common/api/proto/test/TestMessageIdData.java
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper-maven-plugin:3.6.0:add-source[m [1m(add-source)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Source directory: /workspace/repo/pulsar-common/target/generated-sources/protobuf/java added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper-maven-plugin:3.6.0:add-test-source[m [1m(add-test-source)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Test Source directory: /workspace/repo/pulsar-common/target/generated-test-sources/protobuf/java added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.7.0:process[m [1m(process-resource-bundles)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache:apache-jar-resource-bundle:1.4
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:resources[m [1m(default-resources)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Compiling 89 source files with javac [debug deprecation release 8] to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:testResources[m [1m(default-testResources)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Copying 7 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Compiling 2 source files with javac [debug deprecation release 8] to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:copy-resources[m [1m(copy-resources)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] Copying 87 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.0:test[m [1m(default-test)[m @ [36mpulsar-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.apache.pulsar:pulsar-broker[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding Pulsar Broker 4.0.4-SNAPSHOT                              [3/3][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven-version)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-java-version)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:1.0:directory-of[m [1m(directories)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.pulsar:pulsar set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mgit-commit-id-plugin:4.9.10:revision[m [1m(git-info)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mproperties-maven-plugin:1.1.0:set-system-properties[m [1m(default)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Set 2 system properties
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.6.1:compile[m [1m(default)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Skipping compilation because target directory newer than sources.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.6.1:test-compile[m [1m(default)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Skipping compilation because target directory newer than sources.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mlightproto-maven-plugin:0.4:generate[m [1m(default)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] LightProto generated enum /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/transaction/pendingack/proto/PendingAckOp.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/transaction/pendingack/proto/PendingAckMetadata.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/transaction/pendingack/proto/PendingAckMetadataEntry.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/transaction/pendingack/proto/BatchedPendingAckMetadataEntry.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/service/resource/usage/NetworkUsage.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/service/resource/usage/StorageUsage.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/service/resource/usage/ResourceUsage.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/service/resource/usage/ResourceUsageInfo.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/delayed/proto/DelayedIndex.java
+[[1;34mINFO[m] LightProto generated class /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java/org/apache/pulsar/broker/delayed/proto/SnapshotSegment.java
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper-maven-plugin:3.6.0:add-source[m [1m(add-source)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Source directory: /workspace/repo/pulsar-broker/target/generated-sources/lightproto/java added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.7.0:process[m [1m(process-resource-bundles)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache:apache-jar-resource-bundle:1.4
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:resources[m [1m(default-resources)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/pulsar-broker/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Compiling 21 source files with javac [debug deprecation release 17] to target/classes
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/AbstractBaseDispatcher.java:[293,28] beforeSendMessage(org.apache.pulsar.broker.service.Subscription,org.apache.bookkeeper.mledger.Entry,long[],org.apache.pulsar.common.api.proto.MessageMetadata) in org.apache.pulsar.broker.intercept.BrokerInterceptor has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/persistent/PersistentSubscription.java:[1272,79] lastConsumedTimestamp in org.apache.pulsar.common.policies.data.stats.ConsumerStatsImpl has been deprecated
+[[1;33mWARNING[m] /workspace/repo/pulsar-broker/src/main/java/org/apache/pulsar/broker/service/persistent/PersistentSubscription.java:[1273,98] lastAckedTimestamp in org.apache.pulsar.common.policies.data.stats.ConsumerStatsImpl has been deprecated
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-dependency-plugin:3.5.0:copy[m [1m(copy-pulsar-io-connectors)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Configured Artifact: org.apache.pulsar:pulsar-io-data-generator:4.0.4-SNAPSHOT:jar
+[[1;34mINFO[m] Configured Artifact: org.apache.pulsar:pulsar-io-batch-data-generator:4.0.4-SNAPSHOT:jar
+[[1;34mINFO[m] Configured Artifact: org.apache.pulsar:pulsar-functions-api-examples:4.0.4-SNAPSHOT:jar
+[[1;34mINFO[m] Configured Artifact: org.apache.pulsar:pulsar-functions-api-examples-builtin:4.0.4-SNAPSHOT:jar
+[[1;34mINFO[m] Copying pulsar-io-data-generator-4.0.4-SNAPSHOT.jar to /workspace/repo/pulsar-broker/target/pulsar-io-data-generator.nar
+[[1;34mINFO[m] Copying pulsar-io-batch-data-generator-4.0.4-SNAPSHOT.jar to /workspace/repo/pulsar-broker/target/pulsar-io-batch-data-generator.nar
+[[1;34mINFO[m] Copying pulsar-functions-api-examples-4.0.4-SNAPSHOT.jar to /workspace/repo/pulsar-broker/target/pulsar-functions-api-examples.jar
+[[1;34mINFO[m] Copying pulsar-functions-api-examples-builtin-4.0.4-SNAPSHOT.jar to /workspace/repo/pulsar-broker/target/pulsar-functions-api-examples.nar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:testResources[m [1m(default-testResources)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Copying 23 resources
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Compiling 3 source files with javac [debug deprecation release 17] to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:copy-resources[m [1m(copy-resources)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Copying 87 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.0:test[m [1m(default-test)[m @ [36mpulsar-broker[0;1m ---[m
+[[1;34mINFO[m] Using configured provider org.apache.maven.surefire.testng.TestNGProvider
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.pulsar.broker.service.[1mBrokerDispatchRateLimiterTest[m
+[[1;34mINFO[m] Running org.apache.pulsar.broker.service.[1mTopicDispatchRateLimiterTest[m
+[[1;34mINFO[m] Running org.apache.pulsar.broker.stats.[1mSubscriptionStatsTest[m
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 96.718 s - in org.apache.pulsar.broker.service.[1mBrokerDispatchRateLimiterTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 97.399 s - in org.apache.pulsar.broker.service.[1mTopicDispatchRateLimiterTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 97.526 s - in org.apache.pulsar.broker.stats.[1mSubscriptionStatsTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 3, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Summary for Pulsar Client Admin :: API 4.0.4-SNAPSHOT:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Pulsar Client Admin :: API ......................... [1;32mSUCCESS[m [  5.107 s]
+[[1;34mINFO[m] Pulsar Common ...................................... [1;32mSUCCESS[m [ 15.829 s]
+[[1;34mINFO[m] Pulsar Broker ...................................... [1;32mSUCCESS[m [01:59 min]
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  02:26 min
+[[1;34mINFO[m] Finished at: 2026-07-01T14:46:18Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] 0 goals, 0 executed
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=maven exit_code=0

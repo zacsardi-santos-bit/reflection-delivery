@@ -1,0 +1,69 @@
+patching file crates/oxc_sourcemap/src/lib.rs
+Hunk #1 succeeded at 16 (offset -1 lines).
+   Compiling proc-macro2 v1.0.79
+   Compiling unicode-ident v1.0.12
+   Compiling crossbeam-utils v0.8.19
+   Compiling quote v1.0.35
+   Compiling crossbeam-epoch v0.9.18
+   Compiling syn v2.0.55
+   Compiling rayon-core v1.12.1
+   Compiling serde v1.0.197
+   Compiling crossbeam-deque v0.8.5
+   Compiling serde_json v1.0.115
+   Compiling outref v0.1.0
+   Compiling simd-abstraction v0.7.1
+   Compiling itoa v1.0.11
+   Compiling either v1.10.0
+   Compiling ryu v1.0.17
+   Compiling rayon v1.10.0
+   Compiling serde_derive v1.0.197
+   Compiling base64-simd v0.7.0
+   Compiling rustc-hash v1.1.0
+   Compiling oxc_sourcemap v0.11.0 (/workspace/repo/crates/oxc_sourcemap)
+    Finished test [unoptimized + debuginfo] target(s) in 9.99s
+────────────
+ Nextest run ID 0a623c5f-8cc2-4ec4-bdf4-6af4b8dc8b84 with nextest profile: default
+    Starting 8 tests across 1 binary
+        PASS [   0.005s] (1/8) oxc_sourcemap decode::test_decode_sourcemap
+        PASS [   0.005s] (2/8) oxc_sourcemap concat_sourcemap_builder::test_concat_sourcemap_builder
+        PASS [   0.005s] (3/8) oxc_sourcemap encode::test_encode
+        PASS [   0.005s] (4/8) oxc_sourcemap sourcemap::test_sourcemap_lookup_token
+        PASS [   0.006s] (5/8) oxc_sourcemap sourcemap::test_sourcemap_source_view_token
+        PASS [   0.009s] (6/8) oxc_sourcemap sourcemap_builder::test_sourcemap_builder
+        PASS [   0.005s] (7/8) oxc_sourcemap sourcemap_visualizer::test::should_work
+        FAIL [   0.005s] (8/8) oxc_sourcemap test_last_token::last_token_included_in_visualization
+  stdout ───
+
+    running 1 test
+    test test_last_token::last_token_included_in_visualization ... FAILED
+
+    failures:
+
+    failures:
+        test_last_token::last_token_included_in_visualization
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 7 filtered out; finished in 0.00s
+
+  stderr ───
+    thread 'test_last_token::last_token_included_in_visualization' panicked at crates/oxc_sourcemap/src/lib.rs:28:9:
+    Expected last token: - shared.js
+    (0:0-0:6) "const " --> (2:0-2:6) "\nconst"
+    (0:6-0:10) "a = " --> (2:6-2:10) " a ="
+    (0:10-1:0) "'shared.js'" --> (2:10-5:0) " 'shared.js';\n\n// index.js"
+    - index.js
+    (1:0-1:6) "\nconst" --> (5:0-5:6) "\nconst"
+    (1:6-1:10) " a =" --> (5:6-5:12) " a$1 ="
+    (1:10-2:0) " 'index.js'" --> (5:12-6:0) " 'index.js';"
+    (2:0-2:8) "\nconsole" --> (6:0-6:8) "\nconsole"
+    (2:8-2:12) ".log" --> (6:8-6:12) ".log"
+    (2:12-2:15) "(a," --> (6:12-6:17) "(a$1,"
+    (2:15-2:18) " a2" --> (6:17-6:19) " a"
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   0.025s] 8 tests run: 7 passed, 1 failed, 0 skipped
+        FAIL [   0.005s] (8/8) oxc_sourcemap test_last_token::last_token_included_in_visualization
+error: test run failed
+reward=0 graded=8 found=2 failed=0 parsed=8 framework=cargo exit_code=100

@@ -1,3 +1,0 @@
-Trial web-infra-dev-rsbuild-1197__F6bmSPZ failed: Image build for im-IOiRW1WPMsCul5kE6Of6kE failed. See build logs for more details. (Hint: Use `modal.enable_output()` to see logs from the process building the Image.)
-Failed to download logs to /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/web-infra-dev-rsbuild-1197__F6bmSPZ/agent
-Convention artifacts dir not found or download failed (best-effort)

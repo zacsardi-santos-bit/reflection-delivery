@@ -1,0 +1,24 @@
+patching file go-sdk/dashboard/dashboard_test.go
+patching file internal/test/dac/expected_output.json
+patching file internal/test/dac/input.cue
+{"Time":"2026-07-01T15:05:22.99673444Z","Action":"start","Package":"github.com/perses/perses/go-sdk/dashboard"}
+{"Time":"2026-07-01T15:05:23.000226087Z","Action":"run","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilder"}
+{"Time":"2026-07-01T15:05:23.000249363Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilder","Output":"=== RUN   TestDashboardBuilder\n"}
+{"Time":"2026-07-01T15:05:23.00090113Z","Action":"run","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilder/classic_dashboard"}
+{"Time":"2026-07-01T15:05:23.000909391Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilder/classic_dashboard","Output":"=== RUN   TestDashboardBuilder/classic_dashboard\n"}
+{"Time":"2026-07-01T15:05:23.001384911Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilder/classic_dashboard","Output":"--- PASS: TestDashboardBuilder/classic_dashboard (0.00s)\n"}
+{"Time":"2026-07-01T15:05:23.001391773Z","Action":"pass","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilder/classic_dashboard","Elapsed":0}
+{"Time":"2026-07-01T15:05:23.001397424Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilder","Output":"--- PASS: TestDashboardBuilder (0.00s)\n"}
+{"Time":"2026-07-01T15:05:23.001402339Z","Action":"pass","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilder","Elapsed":0}
+{"Time":"2026-07-01T15:05:23.001405669Z","Action":"run","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilderWithGroupedVariables"}
+{"Time":"2026-07-01T15:05:23.001409283Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilderWithGroupedVariables","Output":"=== RUN   TestDashboardBuilderWithGroupedVariables\n"}
+{"Time":"2026-07-01T15:05:23.001562825Z","Action":"run","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilderWithGroupedVariables/dashboard_with_grouped_variables"}
+{"Time":"2026-07-01T15:05:23.001566556Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilderWithGroupedVariables/dashboard_with_grouped_variables","Output":"=== RUN   TestDashboardBuilderWithGroupedVariables/dashboard_with_grouped_variables\n"}
+{"Time":"2026-07-01T15:05:23.002037085Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilderWithGroupedVariables/dashboard_with_grouped_variables","Output":"--- PASS: TestDashboardBuilderWithGroupedVariables/dashboard_with_grouped_variables (0.00s)\n"}
+{"Time":"2026-07-01T15:05:23.002044456Z","Action":"pass","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilderWithGroupedVariables/dashboard_with_grouped_variables","Elapsed":0}
+{"Time":"2026-07-01T15:05:23.002049851Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilderWithGroupedVariables","Output":"--- PASS: TestDashboardBuilderWithGroupedVariables (0.00s)\n"}
+{"Time":"2026-07-01T15:05:23.002055064Z","Action":"pass","Package":"github.com/perses/perses/go-sdk/dashboard","Test":"TestDashboardBuilderWithGroupedVariables","Elapsed":0}
+{"Time":"2026-07-01T15:05:23.002059835Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Output":"PASS\n"}
+{"Time":"2026-07-01T15:05:23.002483072Z","Action":"output","Package":"github.com/perses/perses/go-sdk/dashboard","Output":"ok  \tgithub.com/perses/perses/go-sdk/dashboard\t0.006s\n"}
+{"Time":"2026-07-01T15:05:23.002495654Z","Action":"pass","Package":"github.com/perses/perses/go-sdk/dashboard","Elapsed":0.006}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=go exit_code=0

@@ -1,0 +1,31 @@
+patching file tests/pytests/unit/test_minion.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+collecting ... collected 6 items
+
+tests/pytests/unit/test_minion.py::test_minion_load_grains_false PASSED  [ 16%]
+tests/pytests/unit/test_minion.py::test_minion_load_grains_true PASSED   [ 33%]
+tests/pytests/unit/test_minion.py::test_minion_load_grains_default PASSED [ 50%]
+tests/pytests/unit/test_minion.py::test_send_req_tries[req_channel0] PASSED [ 66%]
+tests/pytests/unit/test_minion.py::test_send_req_tries[req_channel1] PASSED [ 83%]
+tests/pytests/unit/test_minion.py::test_mine_send_tries PASSED           [100%]
+
+=============================== warnings summary ===============================
+salt/ext/tornado/util.py:246
+  /workspace/repo/salt/ext/tornado/util.py:246: DeprecationWarning: invalid escape sequence \d
+    """Unescape a string escaped by `re.escape`.
+
+salt/utils/jinja.py:42
+  /workspace/repo/salt/utils/jinja.py:42: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    JINJA_VERSION = LooseVersion(jinja2.__version__)
+
+salt/loader.py:48
+  /workspace/repo/salt/loader.py:48: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 6 passed, 3 warnings in 0.87s =========================
+reward=1 graded=6 found=0 failed=0 parsed=4 framework=pytest exit_code=0

@@ -1,0 +1,33 @@
+patching file tests/providers/aws/services/rds/rds_cluster_default_admin/rds_cluster_default_admin_test.py
+patching file tests/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/rds_cluster_iam_authentication_enabled_test.py
+patching file tests/providers/aws/services/rds/rds_instance_default_admin/rds_instance_default_admin_test.py
+patching file tests/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.2, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+Using --randomly-seed=3356951785
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.4.0, dash-2.17.1, cov-5.0.0, env-1.1.3, randomly-3.15.0, xdist-3.6.1
+collecting ... collected 17 items
+
+tests/providers/aws/services/rds/rds_cluster_default_admin/rds_cluster_default_admin_test.py::Test_rds_cluster_default_admin::test_rds_clustered_without_default_username PASSED [  5%]
+tests/providers/aws/services/rds/rds_cluster_default_admin/rds_cluster_default_admin_test.py::Test_rds_cluster_default_admin::test_rds_no_clusters PASSED [ 11%]
+tests/providers/aws/services/rds/rds_cluster_default_admin/rds_cluster_default_admin_test.py::Test_rds_cluster_default_admin::test_rds_clustered_with_default_username PASSED [ 17%]
+tests/providers/aws/services/rds/rds_instance_default_admin/rds_instance_default_admin_test.py::Test_rds_instance_default_admin::test_rds_instance_without_default_username PASSED [ 23%]
+tests/providers/aws/services/rds/rds_instance_default_admin/rds_instance_default_admin_test.py::Test_rds_instance_default_admin::test_rds_instance_with_default_username PASSED [ 29%]
+tests/providers/aws/services/rds/rds_instance_default_admin/rds_instance_default_admin_test.py::Test_rds_instance_default_admin::test_rds_no_instances PASSED [ 35%]
+tests/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/rds_cluster_iam_authentication_enabled_test.py::Test_rds_cluster_iam_authentication_enabled::test_rds_aurora_mysql_clustered_without_iam_auth PASSED [ 41%]
+tests/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/rds_cluster_iam_authentication_enabled_test.py::Test_rds_cluster_iam_authentication_enabled::test_rds_no_clusters PASSED [ 47%]
+tests/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/rds_cluster_iam_authentication_enabled_test.py::Test_rds_cluster_iam_authentication_enabled::test_rds_aurora_postgres_clustered_without_iam_auth PASSED [ 52%]
+tests/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/rds_cluster_iam_authentication_enabled_test.py::Test_rds_cluster_iam_authentication_enabled::test_rds_aurora_mysql_clustered_with_iam_auth PASSED [ 58%]
+tests/providers/aws/services/rds/rds_cluster_iam_authentication_enabled/rds_cluster_iam_authentication_enabled_test.py::Test_rds_cluster_iam_authentication_enabled::test_rds_aurora_postgres_clustered_with_iam_auth PASSED [ 64%]
+tests/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled_test.py::Test_rds_instance_iam_authentication_enabled::test_rds_no_instances PASSED [ 70%]
+tests/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled_test.py::Test_rds_instance_iam_authentication_enabled::test_rds_mysql_instance_with_iam_auth PASSED [ 76%]
+tests/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled_test.py::Test_rds_instance_iam_authentication_enabled::test_rds_mariadb_instance_with_iam_auth PASSED [ 82%]
+tests/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled_test.py::Test_rds_instance_iam_authentication_enabled::test_rds_postgres_instance_with_iam_auth PASSED [ 88%]
+tests/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled_test.py::Test_rds_instance_iam_authentication_enabled::test_rds_sqlserver_instance PASSED [ 94%]
+tests/providers/aws/services/rds/rds_instance_iam_authentication_enabled/rds_instance_iam_authentication_enabled_test.py::Test_rds_instance_iam_authentication_enabled::test_rds_aurora_instance_without_iam_auth PASSED [100%]
+
+============================== 17 passed in 8.78s ==============================
+reward=1 graded=17 found=0 failed=0 parsed=17 framework=pytest exit_code=0

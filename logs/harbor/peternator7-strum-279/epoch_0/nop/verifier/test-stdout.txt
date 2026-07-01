@@ -1,0 +1,201 @@
+patching file strum_tests/tests/enum_table.rs
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.46
+   Compiling proc-macro2 v0.4.30
+   Compiling libc v0.2.186
+   Compiling unicode-xid v0.1.0
+   Compiling bitflags v1.2.1
+   Compiling syn v1.0.109
+   Compiling rustversion v1.0.22
+   Compiling syn v0.15.44
+   Compiling quote v0.6.13
+   Compiling unicode-width v0.1.14
+   Compiling unicode-segmentation v1.13.3
+   Compiling heck v0.3.3
+   Compiling textwrap v0.11.0
+   Compiling atty v0.2.14
+   Compiling syn v2.0.118
+   Compiling ansi_term v0.11.0
+   Compiling heck v0.4.1
+   Compiling vec_map v0.8.2
+   Compiling strsim v0.8.0
+   Compiling clap v2.33.0
+   Compiling strum_macros v0.25.3 (/workspace/repo/strum_macros)
+warning: unused import: `CaseStyleHelpers`
+ --> strum_macros/src/helpers/mod.rs:1:28
+  |
+1 | pub use self::case_style::{CaseStyleHelpers, snakify};
+  |                            ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: field `kw` is never read
+  --> strum_macros/src/helpers/metadata.rs:79:14
+   |
+79 |     Derive { kw: kw::derive, paths: Vec<Path> },
+   |     ------   ^^
+   |     |
+   |     field in this variant
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: field `kw` is never read
+   --> strum_macros/src/helpers/metadata.rs:146:9
+    |
+145 |     Serialize {
+    |     --------- field in this variant
+146 |         kw: kw::serialize,
+    |         ^^
+
+warning: field `kw` is never read
+   --> strum_macros/src/helpers/metadata.rs:163:9
+    |
+162 |     Props {
+    |     ----- field in this variant
+163 |         kw: kw::props,
+    |         ^^
+
+warning: `strum_macros` (lib) generated 4 warnings (run `cargo fix --lib -p strum_macros` to apply 1 suggestion)
+   Compiling structopt-derive v0.2.18
+   Compiling proc_macro_roids v0.7.0
+   Compiling enum_variant_type v0.2.0
+   Compiling structopt v0.2.18
+   Compiling strum v0.25.0 (/workspace/repo/strum)
+   Compiling strum_tests v0.25.0 (/workspace/repo/strum_tests)
+error[E0432]: unresolved import `strum::EnumTable`
+ --> strum_tests/tests/enum_table.rs:1:5
+  |
+1 | use strum::EnumTable;
+  |     ^^^^^^^^^^^^^^^^ no `EnumTable` in the root
+
+error: cannot find attribute `strum` in this scope
+ --> strum_tests/tests/enum_table.rs:8:7
+  |
+8 |     #[strum(disabled)]
+  |       ^^^^^
+  |
+  = note: `strum` is in scope, but it is a crate, not an attribute
+
+error: cannot find attribute `strum` in this scope
+  --> strum_tests/tests/enum_table.rs:11:7
+   |
+11 |     #[strum(disabled)]
+   |       ^^^^^
+   |
+   = note: `strum` is in scope, but it is a crate, not an attribute
+
+error[E0412]: cannot find type `ColorTable` in this scope
+  --> strum_tests/tests/enum_table.rs:75:18
+   |
+75 |     let mut map: ColorTable<Option<u8>> = ColorTable::filled(None);
+   |                  ^^^^^^^^^^ not found in this scope
+
+error[E0412]: cannot find type `ColorTable` in this scope
+  --> strum_tests/tests/enum_table.rs:88:18
+   |
+88 |     let mut map: ColorTable<Result<u8, u8>> = ColorTable::filled(Ok(4));
+   |                  ^^^^^^^^^^ not found in this scope
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:24:16
+   |
+24 |     assert_eq!(ColorTable::default(), ColorTable::new(0, 0, 0, 0));
+   |                ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:24:39
+   |
+24 |     assert_eq!(ColorTable::default(), ColorTable::new(0, 0, 0, 0));
+   |                                       ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:30:13
+   |
+30 |     let _ = ColorTable::<u8>::default()[Color::Indigo];
+   |             ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:35:16
+   |
+35 |     assert_eq!(ColorTable::filled(42), ColorTable::new(42, 42, 42, 42));
+   |                ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:35:40
+   |
+35 |     assert_eq!(ColorTable::filled(42), ColorTable::new(42, 42, 42, 42));
+   |                                        ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:41:9
+   |
+41 |         ColorTable::from_closure(|color| match color {
+   |         ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:45:9
+   |
+45 |         ColorTable::new(1, 2, 2, 2)
+   |         ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:51:14
+   |
+51 |     let cm = ColorTable::filled(String::from("Some Text Data"));
+   |              ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:57:15
+   |
+57 |     let map = ColorTable::new(18, 25, 7, 2);
+   |               ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:66:19
+   |
+66 |     let mut map = ColorTable::new(18, 25, 7, 2);
+   |                   ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:75:43
+   |
+75 |     let mut map: ColorTable<Option<u8>> = ColorTable::filled(None);
+   |                                           ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:83:32
+   |
+83 |     assert_eq!(map.all(), Some(ColorTable::new(64, 8, 32, 16)));
+   |                                ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:88:47
+   |
+88 |     let mut map: ColorTable<Result<u8, u8>> = ColorTable::filled(Ok(4));
+   |                                               ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:89:41
+   |
+89 |     assert_eq!(map.clone().all_ok(), Ok(ColorTable::filled(4)));
+   |                                         ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+  --> strum_tests/tests/enum_table.rs:99:19
+   |
+99 |     let all_two = ColorTable::filled(2);
+   |                   ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+error[E0433]: failed to resolve: use of undeclared type `ColorTable`
+   --> strum_tests/tests/enum_table.rs:100:50
+    |
+100 |     assert_eq!(all_two.transform(|_, n| *n * 2), ColorTable::filled(4));
+    |                                                  ^^^^^^^^^^ use of undeclared type `ColorTable`
+
+Some errors have detailed explanations: E0412, E0432, E0433.
+For more information about an error, try `rustc --explain E0412`.
+error: could not compile `strum_tests` (test "enum_table") due to 21 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package strum_tests --test enum_table` exited with code 101
+reward=0 graded=10 found=0 failed=0 parsed=0 framework=cargo exit_code=101

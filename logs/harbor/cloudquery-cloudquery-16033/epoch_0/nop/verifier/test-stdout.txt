@@ -1,0 +1,15 @@
+patching file cli/internal/publish/images/images_test.go
+# github.com/cloudquery/cloudquery/cli/internal/publish/images [github.com/cloudquery/cloudquery/cli/internal/publish/images.test]
+internal/publish/images/images_test.go:17:28: undefined: reference
+internal/publish/images/images_test.go:32:25: undefined: reference
+internal/publish/images/images_test.go:38:25: undefined: reference
+internal/publish/images/images_test.go:44:25: undefined: reference
+internal/publish/images/images_test.go:50:25: undefined: reference
+internal/publish/images/images_test.go:56:25: undefined: reference
+internal/publish/images/images_test.go:62:25: undefined: reference
+internal/publish/images/images_test.go:357:47: undefined: reference
+internal/publish/images/images_test.go:357:62: undefined: listKey
+internal/publish/images/images_test.go:357:72: undefined: reference
+internal/publish/images/images_test.go:62:25: too many errors
+FAIL	github.com/cloudquery/cloudquery/cli/internal/publish/images [build failed]
+reward=0 graded=33 found=33 failed=33 parsed=1 framework=go exit_code=1

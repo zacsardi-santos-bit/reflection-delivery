@@ -1,0 +1,6 @@
+patching file services/writer/service_test.go
+go: finding module for package github.com/openGemini/opengemini-client-go/proto
+# github.com/openGemini/openGemini/services/writer
+services/writer/service_test.go:27:2: cannot find module providing package github.com/openGemini/opengemini-client-go/proto: module lookup disabled by GOPROXY=off
+FAIL	github.com/openGemini/openGemini/services/writer [setup failed]
+reward=0 graded=3 found=0 failed=0 parsed=0 framework=go exit_code=1

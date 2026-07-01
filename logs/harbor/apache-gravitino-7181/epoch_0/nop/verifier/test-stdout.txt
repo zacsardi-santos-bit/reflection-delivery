@@ -1,0 +1,284 @@
+patching file core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.2/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Skipping filesystem-fuse module since enableFuse is set to false
+
+> Configure project :
+checkDockerStatus failed: Cannot run program "docker": error=2, No such file or directory
+------------------ Check Docker environment ---------------------
+Docker server status ............................................ [[31mstop[0m]
+Run test cases without `gravitino-docker-test` tag .............. [embedded test]
+-----------------------------------------------------------------
+Tip: Please make sure to start the [31mDocker server[0m before running the integration tests.
+
+> Configure project :docs
+Kotlin DSL property assignment is an incubating feature.
+
+> Configure project :trino-connector
+Path for java installation '/usr/lib/jvm/openjdk-17' (Common Linux Locations) does not contain a java executable
+
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :api:spotlessJava UP-TO-DATE
+> Task :api:spotlessJavaCheck UP-TO-DATE
+> Task :api:spotlessKotlinGradle UP-TO-DATE
+> Task :api:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :api:spotlessCheck UP-TO-DATE
+> Task :api:compileJava UP-TO-DATE
+> Task :api:processResources UP-TO-DATE
+> Task :api:classes UP-TO-DATE
+> Task :api:jar UP-TO-DATE
+> Task :common:spotlessJava UP-TO-DATE
+> Task :common:spotlessJavaCheck UP-TO-DATE
+> Task :common:spotlessKotlinGradle UP-TO-DATE
+> Task :common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :common:spotlessCheck UP-TO-DATE
+> Task :common:compileJava UP-TO-DATE
+> Task :common:processResources
+> Task :common:classes
+> Task :common:jar
+> Task :core:spotlessJava
+> Task :core:spotlessJavaCheck
+> Task :core:spotlessKotlinGradle UP-TO-DATE
+> Task :core:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :core:spotlessCheck
+> Task :catalogs:catalog-common:spotlessJava UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessJavaCheck UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessKotlinGradle UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :catalogs:catalog-common:spotlessCheck UP-TO-DATE
+> Task :catalogs:catalog-common:compileJava UP-TO-DATE
+> Task :catalogs:catalog-common:processResources NO-SOURCE
+> Task :catalogs:catalog-common:classes UP-TO-DATE
+> Task :catalogs:catalog-common:jar UP-TO-DATE
+> Task :core:compileJava UP-TO-DATE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :integration-test-common:spotlessJava UP-TO-DATE
+> Task :integration-test-common:spotlessJavaCheck UP-TO-DATE
+> Task :integration-test-common:spotlessKotlinGradle UP-TO-DATE
+> Task :integration-test-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :integration-test-common:spotlessCheck UP-TO-DATE
+> Task :integration-test-common:compileJava NO-SOURCE
+> Task :integration-test-common:processResources NO-SOURCE
+> Task :integration-test-common:classes UP-TO-DATE
+> Task :lineage:spotlessJava UP-TO-DATE
+> Task :lineage:spotlessJavaCheck UP-TO-DATE
+> Task :lineage:spotlessKotlinGradle UP-TO-DATE
+> Task :lineage:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :lineage:spotlessCheck UP-TO-DATE
+> Task :server-common:spotlessJava UP-TO-DATE
+> Task :server-common:spotlessJavaCheck UP-TO-DATE
+> Task :server-common:spotlessKotlinGradle UP-TO-DATE
+> Task :server-common:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :server-common:spotlessCheck UP-TO-DATE
+> Task :server-common:compileJava UP-TO-DATE
+> Task :server-common:processResources NO-SOURCE
+> Task :server-common:classes UP-TO-DATE
+> Task :server-common:jar UP-TO-DATE
+> Task :lineage:compileJava UP-TO-DATE
+> Task :lineage:processResources NO-SOURCE
+> Task :lineage:classes UP-TO-DATE
+> Task :lineage:jar UP-TO-DATE
+> Task :server:spotlessJava UP-TO-DATE
+> Task :server:spotlessJavaCheck UP-TO-DATE
+> Task :server:spotlessKotlinGradle UP-TO-DATE
+> Task :server:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :server:spotlessCheck UP-TO-DATE
+> Task :server:compileJava UP-TO-DATE
+> Task :server:processResources NO-SOURCE
+> Task :server:classes UP-TO-DATE
+> Task :server:jar UP-TO-DATE
+> Task :clients:client-java:spotlessJava UP-TO-DATE
+> Task :clients:client-java:spotlessJavaCheck UP-TO-DATE
+> Task :clients:client-java:spotlessKotlinGradle UP-TO-DATE
+> Task :clients:client-java:spotlessKotlinGradleCheck UP-TO-DATE
+> Task :clients:client-java:spotlessCheck UP-TO-DATE
+> Task :clients:client-java:compileJava UP-TO-DATE
+> Task :clients:client-java:processResources NO-SOURCE
+> Task :clients:client-java:classes UP-TO-DATE
+> Task :clients:client-java:jar UP-TO-DATE
+> Task :integration-test-common:compileTestJava UP-TO-DATE
+> Task :integration-test-common:processTestResources UP-TO-DATE
+> Task :integration-test-common:testClasses UP-TO-DATE
+> Task :integration-test-common:testJar UP-TO-DATE
+
+> Task :core:compileTestJava
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:35: error: cannot find symbol
+    EntityCacheKey key =
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:36: error: cannot find symbol
+        EntityCacheKey.of(
+        ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:45: error: cannot find symbol
+    EntityCacheKey key2 = EntityCacheKey.of(ident, Entity.EntityType.ROLE, null);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:45: error: cannot find symbol
+    EntityCacheKey key2 = EntityCacheKey.of(ident, Entity.EntityType.ROLE, null);
+                          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:59: error: cannot find symbol
+          EntityCacheKey.of(
+          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:65: error: cannot find symbol
+          EntityCacheKey.of(ident, null, SupportsRelationOperations.Type.ROLE_GROUP_REL);
+          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:69: error: cannot find symbol
+          EntityCacheKey.of(ident, Entity.EntityType.ROLE, null);
+          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:78: error: cannot find symbol
+    EntityCacheKey key1 = EntityCacheKey.of(ident1, type);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:78: error: cannot find symbol
+    EntityCacheKey key1 = EntityCacheKey.of(ident1, type);
+                          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:79: error: cannot find symbol
+    EntityCacheKey key2 = EntityCacheKey.of(NameIdentifier.of("ns", "db", "tbl"), type);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:79: error: cannot find symbol
+    EntityCacheKey key2 = EntityCacheKey.of(NameIdentifier.of("ns", "db", "tbl"), type);
+                          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:92: error: cannot find symbol
+    EntityCacheKey key1 = EntityCacheKey.of(ident, type, relType);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:92: error: cannot find symbol
+    EntityCacheKey key1 = EntityCacheKey.of(ident, type, relType);
+                          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:93: error: cannot find symbol
+    EntityCacheKey key2 = EntityCacheKey.of(NameIdentifier.of("ns", "db", "tbl"), type, relType);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:93: error: cannot find symbol
+    EntityCacheKey key2 = EntityCacheKey.of(NameIdentifier.of("ns", "db", "tbl"), type, relType);
+                          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:103: error: cannot find symbol
+    EntityCacheKey key1 =
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:104: error: cannot find symbol
+        EntityCacheKey.of(NameIdentifier.of("ns", "db", "tbl1"), Entity.EntityType.TABLE);
+        ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:105: error: cannot find symbol
+    EntityCacheKey key2 =
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:106: error: cannot find symbol
+        EntityCacheKey.of(NameIdentifier.of("ns", "db", "tbl2"), Entity.EntityType.TABLE);
+        ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:114: error: cannot find symbol
+    EntityCacheKey key1 = EntityCacheKey.of(ident, Entity.EntityType.TABLE);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:114: error: cannot find symbol
+    EntityCacheKey key1 = EntityCacheKey.of(ident, Entity.EntityType.TABLE);
+                          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:115: error: cannot find symbol
+    EntityCacheKey key2 = EntityCacheKey.of(ident, Entity.EntityType.FILESET);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:115: error: cannot find symbol
+    EntityCacheKey key2 = EntityCacheKey.of(ident, Entity.EntityType.FILESET);
+                          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:125: error: cannot find symbol
+    EntityCacheKey key1 = EntityCacheKey.of(ident, type, SupportsRelationOperations.Type.OWNER_REL);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:125: error: cannot find symbol
+    EntityCacheKey key1 = EntityCacheKey.of(ident, type, SupportsRelationOperations.Type.OWNER_REL);
+                          ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:126: error: cannot find symbol
+    EntityCacheKey key2 =
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:127: error: cannot find symbol
+        EntityCacheKey.of(ident, type, SupportsRelationOperations.Type.ROLE_USER_REL);
+        ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:138: error: cannot find symbol
+    EntityCacheKey key = EntityCacheKey.of(ident, type);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:138: error: cannot find symbol
+    EntityCacheKey key = EntityCacheKey.of(ident, type);
+                         ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:149: error: cannot find symbol
+    EntityCacheKey key = EntityCacheKey.of(ident, type, relationType);
+    ^
+  symbol:   class EntityCacheKey
+  location: class TestEntityCacheKey
+/workspace/repo/core/src/test/java/org/apache/gravitino/cache/TestEntityCacheKey.java:149: error: cannot find symbol
+    EntityCacheKey key = EntityCacheKey.of(ident, type, relationType);
+                         ^
+  symbol:   variable EntityCacheKey
+  location: class TestEntityCacheKey
+31 errors
+
+> Task :core:compileTestJava FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':core:compileTestJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --info option to get more log output.
+> Run with --scan to get full insights.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.2/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 38s
+59 actionable tasks: 5 executed, 54 up-to-date
+reward=0 graded=9 found=0 failed=0 parsed=0 framework=maven exit_code=1

@@ -1,0 +1,8 @@
+patching file hack/scripts/releaser/releaser_test.go
+# github.com/nuclio/nuclio/hack/scripts/releaser [github.com/nuclio/nuclio/hack/scripts/releaser.test]
+hack/scripts/releaser/releaser_test.go:92:17: suite.releaser.releaseInfoPath undefined (type *Release has no field or method releaseInfoPath)
+hack/scripts/releaser/releaser_test.go:100:23: suite.releaser.saveReleaseInfo undefined (type *Release has no field or method saveReleaseInfo)
+{"Time":"2026-07-01T15:02:42.984150465Z","Action":"start","Package":"github.com/nuclio/nuclio/hack/scripts/releaser"}
+{"Time":"2026-07-01T15:02:42.984198322Z","Action":"output","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Output":"FAIL\tgithub.com/nuclio/nuclio/hack/scripts/releaser [build failed]\n"}
+{"Time":"2026-07-01T15:02:42.984205322Z","Action":"fail","Package":"github.com/nuclio/nuclio/hack/scripts/releaser","Elapsed":0}
+reward=0 graded=3 found=0 failed=0 parsed=1 framework=go exit_code=1

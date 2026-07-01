@@ -1,0 +1,14 @@
+patching file docs/LICENSE_OF_DEPENDENCIES.md
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 1051 with fuzz 2 (offset 279 lines).
+Hunk #2 succeeded at 1758 with fuzz 3 (offset 279 lines).
+patching file internal/snmp/config.go
+patching file plugins/processors/all/snmp_lookup.go
+patching file plugins/processors/ifname/ifname.go
+patching file plugins/processors/snmp_lookup/README.md
+patching file plugins/processors/snmp_lookup/backlog.go
+patching file plugins/processors/snmp_lookup/lookup.go
+patching file plugins/processors/snmp_lookup/sample.conf
+patching file plugins/processors/snmp_lookup/store.go
+patching file testutil/testutil.go

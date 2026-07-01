@@ -1,0 +1,76 @@
+patching file appdatabase/node_config_test.go
+patching file services/connector/api_test.go
+patching file services/connector/service_test.go
+{"Time":"2026-07-01T15:14:35.332266856Z","Action":"start","Package":"github.com/status-im/status-go/appdatabase"}
+{"Time":"2026-07-01T15:14:35.372390906Z","Action":"run","Package":"github.com/status-im/status-go/appdatabase","Test":"Test_GetDBFilename"}
+{"Time":"2026-07-01T15:14:35.372420033Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"Test_GetDBFilename","Output":"=== RUN   Test_GetDBFilename\n"}
+{"Time":"2026-07-01T15:14:37.558282697Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"Test_GetDBFilename","Output":"--- PASS: Test_GetDBFilename (2.19s)\n"}
+{"Time":"2026-07-01T15:14:37.55840332Z","Action":"pass","Package":"github.com/status-im/status-go/appdatabase","Test":"Test_GetDBFilename","Elapsed":2.19}
+{"Time":"2026-07-01T15:14:37.558464324Z","Action":"run","Package":"github.com/status-im/status-go/appdatabase","Test":"TestMigrateWalletJsonBlobs"}
+{"Time":"2026-07-01T15:14:37.558470547Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestMigrateWalletJsonBlobs","Output":"=== RUN   TestMigrateWalletJsonBlobs\n"}
+{"Time":"2026-07-01T15:14:37.943915605Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestMigrateWalletJsonBlobs","Output":"--- PASS: TestMigrateWalletJsonBlobs (0.39s)\n"}
+{"Time":"2026-07-01T15:14:37.944017291Z","Action":"pass","Package":"github.com/status-im/status-go/appdatabase","Test":"TestMigrateWalletJsonBlobs","Elapsed":0.39}
+{"Time":"2026-07-01T15:14:37.944063967Z","Action":"run","Package":"github.com/status-im/status-go/appdatabase","Test":"TestGetNodeConfig"}
+{"Time":"2026-07-01T15:14:37.944069791Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestGetNodeConfig","Output":"=== RUN   TestGetNodeConfig\n"}
+{"Time":"2026-07-01T15:14:39.331171704Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestGetNodeConfig","Output":"--- PASS: TestGetNodeConfig (1.39s)\n"}
+{"Time":"2026-07-01T15:14:39.331222692Z","Action":"pass","Package":"github.com/status-im/status-go/appdatabase","Test":"TestGetNodeConfig","Elapsed":1.39}
+{"Time":"2026-07-01T15:14:39.331233843Z","Action":"run","Package":"github.com/status-im/status-go/appdatabase","Test":"TestSaveNodeConfig"}
+{"Time":"2026-07-01T15:14:39.331238431Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestSaveNodeConfig","Output":"=== RUN   TestSaveNodeConfig\n"}
+{"Time":"2026-07-01T15:14:40.344653653Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestSaveNodeConfig","Output":"--- PASS: TestSaveNodeConfig (1.01s)\n"}
+{"Time":"2026-07-01T15:14:40.344749026Z","Action":"pass","Package":"github.com/status-im/status-go/appdatabase","Test":"TestSaveNodeConfig","Elapsed":1.01}
+{"Time":"2026-07-01T15:14:40.344814401Z","Action":"run","Package":"github.com/status-im/status-go/appdatabase","Test":"TestMigrateNodeConfig"}
+{"Time":"2026-07-01T15:14:40.344822387Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestMigrateNodeConfig","Output":"=== RUN   TestMigrateNodeConfig\n"}
+{"Time":"2026-07-01T15:14:41.333874789Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestMigrateNodeConfig","Output":"--- PASS: TestMigrateNodeConfig (0.99s)\n"}
+{"Time":"2026-07-01T15:14:41.334007449Z","Action":"pass","Package":"github.com/status-im/status-go/appdatabase","Test":"TestMigrateNodeConfig","Elapsed":0.99}
+{"Time":"2026-07-01T15:14:41.334088641Z","Action":"run","Package":"github.com/status-im/status-go/appdatabase","Test":"TestConfigValidate"}
+{"Time":"2026-07-01T15:14:41.334096224Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestConfigValidate","Output":"=== RUN   TestConfigValidate\n"}
+{"Time":"2026-07-01T15:14:42.659911673Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestConfigValidate","Output":"--- PASS: TestConfigValidate (1.33s)\n"}
+{"Time":"2026-07-01T15:14:42.659956974Z","Action":"pass","Package":"github.com/status-im/status-go/appdatabase","Test":"TestConfigValidate","Elapsed":1.33}
+{"Time":"2026-07-01T15:14:42.659976696Z","Action":"run","Package":"github.com/status-im/status-go/appdatabase","Test":"TestRepairLoadedTorrentConfig"}
+{"Time":"2026-07-01T15:14:42.659981217Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestRepairLoadedTorrentConfig","Output":"=== RUN   TestRepairLoadedTorrentConfig\n"}
+{"Time":"2026-07-01T15:14:43.861624057Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Test":"TestRepairLoadedTorrentConfig","Output":"--- PASS: TestRepairLoadedTorrentConfig (1.20s)\n"}
+{"Time":"2026-07-01T15:14:43.86166593Z","Action":"pass","Package":"github.com/status-im/status-go/appdatabase","Test":"TestRepairLoadedTorrentConfig","Elapsed":1.2}
+{"Time":"2026-07-01T15:14:43.861677784Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Output":"PASS\n"}
+{"Time":"2026-07-01T15:14:43.864324994Z","Action":"output","Package":"github.com/status-im/status-go/appdatabase","Output":"ok  \tgithub.com/status-im/status-go/appdatabase\t8.532s\n"}
+{"Time":"2026-07-01T15:14:43.864364718Z","Action":"pass","Package":"github.com/status-im/status-go/appdatabase","Elapsed":8.532}
+{"Time":"2026-07-01T15:14:59.89685721Z","Action":"start","Package":"github.com/status-im/status-go/services/connector"}
+{"Time":"2026-07-01T15:14:59.916556236Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC"}
+{"Time":"2026-07-01T15:14:59.91658467Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC","Output":"=== RUN   TestCallRPC\n"}
+{"Time":"2026-07-01T15:15:00.164008558Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/{\"method\":_\"eth_blockNumber\",_\"params\":_[]}"}
+{"Time":"2026-07-01T15:15:00.164045386Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/{\"method\":_\"eth_blockNumber\",_\"params\":_[]}","Output":"=== RUN   TestCallRPC/{\"method\":_\"eth_blockNumber\",_\"params\":_[]}\n"}
+{"Time":"2026-07-01T15:15:00.165022439Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/{\"method\":_\"eth_blockNumber\",_\"params\":_[]}","Output":"--- PASS: TestCallRPC/{\"method\":_\"eth_blockNumber\",_\"params\":_[]} (0.00s)\n"}
+{"Time":"2026-07-01T15:15:00.165039363Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/{\"method\":_\"eth_blockNumber\",_\"params\":_[]}","Elapsed":0}
+{"Time":"2026-07-01T15:15:00.165046853Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/{\"method\":_\"eth_blockNumbers\",_\"params\":_[]}"}
+{"Time":"2026-07-01T15:15:00.165051961Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/{\"method\":_\"eth_blockNumbers\",_\"params\":_[]}","Output":"=== RUN   TestCallRPC/{\"method\":_\"eth_blockNumbers\",_\"params\":_[]}\n"}
+{"Time":"2026-07-01T15:15:00.165176314Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/{\"method\":_\"eth_blockNumbers\",_\"params\":_[]}","Output":"--- PASS: TestCallRPC/{\"method\":_\"eth_blockNumbers\",_\"params\":_[]} (0.00s)\n"}
+{"Time":"2026-07-01T15:15:00.1651937Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/{\"method\":_\"eth_blockNumbers\",_\"params\":_[]}","Elapsed":0}
+{"Time":"2026-07-01T15:15:00.165198936Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/#00"}
+{"Time":"2026-07-01T15:15:00.165202064Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/#00","Output":"=== RUN   TestCallRPC/#00\n"}
+{"Time":"2026-07-01T15:15:00.165208238Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/#00","Output":"--- PASS: TestCallRPC/#00 (0.00s)\n"}
+{"Time":"2026-07-01T15:15:00.165219194Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC/#00","Elapsed":0}
+{"Time":"2026-07-01T15:15:00.172494538Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC","Output":"--- PASS: TestCallRPC (0.26s)\n"}
+{"Time":"2026-07-01T15:15:00.172510299Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestCallRPC","Elapsed":0.26}
+{"Time":"2026-07-01T15:15:00.172516774Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestNewService"}
+{"Time":"2026-07-01T15:15:00.172519663Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestNewService","Output":"=== RUN   TestNewService\n"}
+{"Time":"2026-07-01T15:15:00.415757882Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestNewService","Output":"--- PASS: TestNewService (0.24s)\n"}
+{"Time":"2026-07-01T15:15:00.415792998Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestNewService","Elapsed":0.24}
+{"Time":"2026-07-01T15:15:00.415801432Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Start"}
+{"Time":"2026-07-01T15:15:00.415806277Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Start","Output":"=== RUN   TestService_Start\n"}
+{"Time":"2026-07-01T15:15:00.415817597Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Start","Output":"--- PASS: TestService_Start (0.00s)\n"}
+{"Time":"2026-07-01T15:15:00.415823151Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Start","Elapsed":0}
+{"Time":"2026-07-01T15:15:00.415826275Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Stop"}
+{"Time":"2026-07-01T15:15:00.415857483Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Stop","Output":"=== RUN   TestService_Stop\n"}
+{"Time":"2026-07-01T15:15:00.415866081Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Stop","Output":"--- PASS: TestService_Stop (0.00s)\n"}
+{"Time":"2026-07-01T15:15:00.415869246Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Stop","Elapsed":0}
+{"Time":"2026-07-01T15:15:00.415872287Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_APIs"}
+{"Time":"2026-07-01T15:15:00.415875189Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_APIs","Output":"=== RUN   TestService_APIs\n"}
+{"Time":"2026-07-01T15:15:00.664608869Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_APIs","Output":"--- PASS: TestService_APIs (0.25s)\n"}
+{"Time":"2026-07-01T15:15:00.664645805Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_APIs","Elapsed":0.25}
+{"Time":"2026-07-01T15:15:00.664658772Z","Action":"run","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Protocols"}
+{"Time":"2026-07-01T15:15:00.66466344Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Protocols","Output":"=== RUN   TestService_Protocols\n"}
+{"Time":"2026-07-01T15:15:00.66466977Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Protocols","Output":"--- PASS: TestService_Protocols (0.00s)\n"}
+{"Time":"2026-07-01T15:15:00.664675007Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Test":"TestService_Protocols","Elapsed":0}
+{"Time":"2026-07-01T15:15:00.664679772Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Output":"PASS\n"}
+{"Time":"2026-07-01T15:15:00.666315656Z","Action":"output","Package":"github.com/status-im/status-go/services/connector","Output":"ok  \tgithub.com/status-im/status-go/services/connector\t0.769s\n"}
+{"Time":"2026-07-01T15:15:00.666339564Z","Action":"pass","Package":"github.com/status-im/status-go/services/connector","Elapsed":0.769}
+reward=1 graded=16 found=16 failed=0 parsed=16 framework=go exit_code=0

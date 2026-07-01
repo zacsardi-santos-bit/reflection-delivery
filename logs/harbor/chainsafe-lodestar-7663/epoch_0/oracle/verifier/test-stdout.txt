@@ -1,0 +1,56 @@
+patching file packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts
+patching file scripts/vitest/setupFiles/customMatchers.ts
+patching file types/vitest/index.d.ts
+yarn run v1.22.22
+warning You don't appear to have an internet connection. Try the --offline flag to use the cache for registry queries.
+$ /workspace/repo/node_modules/.bin/vitest run --project unit packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts
+
+ RUN  v3.0.6 /workspace/repo
+
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > fromString > should create a HierarchicalLayers instance from a string
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > fromString > should throw an error for invalid string format
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > fromString > should throw an error for empty string
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > fromString > should throw an error for minimum epoch
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > fromString > should throw an error for negative layer epoch
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > fromString > should throw an error for zero layer epoch
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > fromString > should throw an error for non-integer layer epoch
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > fromString > should throw an error for invalid order of epochs
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > toString > should be same as initialized string
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > totalLayers > should return valid number of layers
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'genesis slot'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot after genesis slot'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot before the epoch 1'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot at epoch 1'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot after epoch 1'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot before epoch 2'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot at epoch 2'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot after epoch 2'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot before epoch 3'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot at epoch 3'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot after epoch 3'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot before epoch 7'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot at epoch 7'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot after epoch 7'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot before epoch 8'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot at epoch 8'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot after epoch 8'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'genesis slot'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'slot after genesis slot'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'one slot before first diff layer'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'at slot of first diff layer'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'after slot of first diff layer'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'one slot before second diff layer'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'at slot of second diff layer'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'after slot of second diff layer'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'one slot before first snapshot'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'at slot of second diff layer'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'after slot of second diff layer'
+ ✓ |unit| packages/beacon-node/test/unit/chain/archiveStore/utils/hierarchicalLayers.test.ts > HierarchicalLayers > getArchiveLayers > 'at start of the 12 epoch'
+
+ Test Files  1 passed (1)
+      Tests  39 passed (39)
+   Start at  14:36:14
+   Duration  3.21s (transform 1.51s, setup 614ms, collect 1.56s, tests 9ms, environment 0ms, prepare 133ms)
+
+Done in 4.49s.
+reward=1 graded=35 found=0 failed=0 parsed=0 framework=vitest exit_code=0

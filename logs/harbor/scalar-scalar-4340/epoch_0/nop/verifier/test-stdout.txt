@@ -1,0 +1,20 @@
+patching file packages/snippetz/src/plugins/dart/http/http.test.ts
+
+ RUN  v1.6.0 /workspace/repo/packages/snippetz
+
+ ❯ src/plugins/dart/http/http.test.ts  (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/plugins/dart/http/http.test.ts [ src/plugins/dart/http/http.test.ts ]
+Error: Failed to load url ./http (resolved id: ./http) in /workspace/repo/packages/snippetz/src/plugins/dart/http/http.test.ts. Does the file exist?
+ ❯ loadAndTransform ../../node_modules/.pnpm/vite@5.4.10_@types+node@20.17.10_terser@5.31.2/node_modules/vite/dist/node/chunks/dep-BWSbWtLw.js:51920:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  15:11:57
+   Duration  1.10s (transform 183ms, setup 0ms, collect 0ms, tests 0ms, environment 0ms, prepare 286ms)
+
+reward=0 graded=28 found=0 failed=0 parsed=0 framework=vitest exit_code=1

@@ -1,0 +1,861 @@
+patching file tests/unit/GithubUtilsTest.js
+patching file tests/unit/checkDeployBlockersTest.js
+patching file tests/unit/createOrUpdateStagingDeployTest.js
+  console.log
+    New version found from action input: 1.0.2-1
+
+      at run (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:9:13)
+
+  console.log
+    Latest StagingDeployCash is closed, creating a new one. {
+      url: 'https://api.github.com/repos/Expensify/App/issues/28',
+      title: 'Test StagingDeployCash',
+      number: 28,
+      labels: [
+        {
+          id: 2783847782,
+          node_id: 'MDU6TGFiZWwyNzgzODQ3Nzgy',
+          url: 'https://api.github.com/repos/Expensify/App/labels/StagingDeployCash',
+          name: 'StagingDeployCash',
+          color: '6FC269',
+          default: false,
+          description: ''
+        }
+      ],
+      html_url: 'https://github.com/Expensify/App/issues/29',
+      body: '**Release Version:** `1.0.1-0`\r\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\r\n' +
+        '\r\n' +
+        '**This release contains changes from the following pull requests:**\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/1\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/2\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/3\r\n' +
+        '\r\n' +
+        '\r\n' +
+        '**Deploy Blockers:**\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/1\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/4\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/5\r\n' +
+        '\r\n' +
+        'cc @Expensify/applauseleads\r\n'
+    }
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:53:25)
+
+  console.log
+    Found tag of previous StagingDeployCash: 1.0.1-0
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:68:21)
+
+  console.log
+    The following PRs have been merged between the previous StagingDeployCash (1.0.1-0) and new version (1.0.2-1): [ '6', '7', '8' ]
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:84:21)
+
+  console.log
+    Hmmm...The open StagingDeployCash does not list any pull requests, continuing...
+
+      at Function.getStagingDeployCashPRList (.github/libs/GithubUtils.js:134:21)
+
+  console.log
+    Filtering out the following automated pull requests: []
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: []
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Successfully created new StagingDeployCash! 🎉 https://github.com/Expensify/App/issues/29
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:164:21)
+
+  console.log
+    New version found from action input: 1.0.2-2
+
+      at run (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:9:13)
+
+  console.log
+    Latest StagingDeployCash is open, updating it instead of creating a new one. Current: {
+      url: 'https://api.github.com/repos/Expensify/App/issues/29',
+      title: 'Test StagingDeployCash',
+      number: 29,
+      labels: [
+        {
+          id: 2783847782,
+          node_id: 'MDU6TGFiZWwyNzgzODQ3Nzgy',
+          url: 'https://api.github.com/repos/Expensify/App/labels/StagingDeployCash',
+          name: 'StagingDeployCash',
+          color: '6FC269',
+          default: false,
+          description: ''
+        }
+      ],
+      body: '**Release Version:** `1.0.2-1`\r\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\r\n' +
+        '\r\n' +
+        '**This release contains changes from the following pull requests:**\r\n' +
+        '- [ ] https://github.com/Expensify/App/pull/6\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/7\r\n' +
+        '- [ ] https://github.com/Expensify/App/pull/8\r\n' +
+        '\r\n' +
+        '\r\n' +
+        '**Deploy Blockers:**\r\n' +
+        '- [ ] https://github.com/Expensify/App/pull/6\r\n' +
+        '- [ ] https://github.com/Expensify/App/pull/9\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/10\r\n' +
+        '\r\n' +
+        '\r\n' +
+        '**Deployer verifications:**\r\n' +
+        '- [x] I checked the [App Timing Dashboard](https://graphs.expensify.com/grafana/d/yj2EobAGz/app-timing?orgId=1) and verified this release does not cause a noticeable performance regression.\r\n' +
+        '- [x] I checked [Firebase Crashlytics](https://console.firebase.google.com/u/0/project/expensify-chat/crashlytics/app/android:com.expensify.chat/issues?state=open&time=last-seven-days&tag=all) and verified that this release does not introduce any new crashes.\r\n' +
+        '\r\n' +
+        'cc @Expensify/applauseleads\r\n',
+      state: 'open'
+    } Previous: {
+      url: 'https://api.github.com/repos/Expensify/App/issues/28',
+      title: 'Test StagingDeployCash',
+      number: 28,
+      labels: [
+        {
+          id: 2783847782,
+          node_id: 'MDU6TGFiZWwyNzgzODQ3Nzgy',
+          url: 'https://api.github.com/repos/Expensify/App/labels/StagingDeployCash',
+          name: 'StagingDeployCash',
+          color: '6FC269',
+          default: false,
+          description: ''
+        }
+      ],
+      html_url: 'https://github.com/Expensify/App/issues/29',
+      body: '**Release Version:** `1.0.1-0`\r\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\r\n' +
+        '\r\n' +
+        '**This release contains changes from the following pull requests:**\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/1\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/2\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/3\r\n' +
+        '\r\n' +
+        '\r\n' +
+        '**Deploy Blockers:**\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/1\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/4\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/5\r\n' +
+        '\r\n' +
+        'cc @Expensify/applauseleads\r\n'
+    }
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:55:25)
+
+  console.log
+    Found tag of previous StagingDeployCash: 1.0.1-0
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:68:21)
+
+  console.log
+    Parsed the following data from the current StagingDeployCash: {
+      title: 'Test StagingDeployCash',
+      url: 'https://api.github.com/repos/Expensify/App/issues/29',
+      number: 29,
+      labels: [
+        {
+          id: 2783847782,
+          node_id: 'MDU6TGFiZWwyNzgzODQ3Nzgy',
+          url: 'https://api.github.com/repos/Expensify/App/labels/StagingDeployCash',
+          name: 'StagingDeployCash',
+          color: '6FC269',
+          default: false,
+          description: ''
+        }
+      ],
+      PRList: [
+        {
+          url: 'https://github.com/Expensify/App/pull/6',
+          number: 6,
+          isVerified: false
+        },
+        {
+          url: 'https://github.com/Expensify/App/pull/7',
+          number: 7,
+          isVerified: true
+        },
+        {
+          url: 'https://github.com/Expensify/App/pull/8',
+          number: 8,
+          isVerified: false
+        }
+      ],
+      deployBlockers: [
+        {
+          url: 'https://github.com/Expensify/App/pull/6',
+          number: 6,
+          isResolved: false
+        },
+        {
+          url: 'https://github.com/Expensify/App/pull/9',
+          number: 9,
+          isResolved: false
+        },
+        {
+          url: 'https://github.com/Expensify/App/pull/10',
+          number: 10,
+          isResolved: true
+        }
+      ],
+      internalQAPRList: [],
+      isTimingDashboardChecked: true,
+      isFirebaseChecked: true,
+      tag: '1.0.2-1'
+    }
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:76:21)
+
+  console.log
+    The following PRs have been merged between the previous StagingDeployCash (1.0.1-0) and new version (1.0.2-2): [ '6', '7', '8', '9', '10' ]
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:84:21)
+
+  console.log
+    Filtering out the following automated pull requests: []
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: []
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Successfully updated StagingDeployCash! 🎉 https://github.com/Expensify/App/issues/29
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:164:21)
+
+  console.log
+    New version found from action input: undefined
+
+      at run (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:9:13)
+
+  console.log
+    Latest StagingDeployCash is open, updating it instead of creating a new one. Current: {
+      url: 'https://api.github.com/repos/Expensify/App/issues/29',
+      title: 'Test StagingDeployCash',
+      number: 29,
+      labels: [
+        {
+          id: 2783847782,
+          node_id: 'MDU6TGFiZWwyNzgzODQ3Nzgy',
+          url: 'https://api.github.com/repos/Expensify/App/labels/StagingDeployCash',
+          name: 'StagingDeployCash',
+          color: '6FC269',
+          default: false,
+          description: ''
+        }
+      ],
+      body: '**Release Version:** `1.0.2-1`\r\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\r\n' +
+        '\r\n' +
+        '**This release contains changes from the following pull requests:**\r\n' +
+        '- [ ] https://github.com/Expensify/App/pull/6\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/7\r\n' +
+        '- [ ] https://github.com/Expensify/App/pull/8\r\n' +
+        '\r\n' +
+        '\r\n' +
+        '**Deploy Blockers:**\r\n' +
+        '- [ ] https://github.com/Expensify/App/pull/6\r\n' +
+        '- [ ] https://github.com/Expensify/App/pull/9\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/10\r\n' +
+        '\r\n' +
+        '\r\n' +
+        '**Deployer verifications:**\r\n' +
+        '- [x] I checked the [App Timing Dashboard](https://graphs.expensify.com/grafana/d/yj2EobAGz/app-timing?orgId=1) and verified this release does not cause a noticeable performance regression.\r\n' +
+        '- [x] I checked [Firebase Crashlytics](https://console.firebase.google.com/u/0/project/expensify-chat/crashlytics/app/android:com.expensify.chat/issues?state=open&time=last-seven-days&tag=all) and verified that this release does not introduce any new crashes.\r\n' +
+        '\r\n' +
+        'cc @Expensify/applauseleads\r\n',
+      state: 'open'
+    } Previous: {
+      url: 'https://api.github.com/repos/Expensify/App/issues/28',
+      title: 'Test StagingDeployCash',
+      number: 28,
+      labels: [
+        {
+          id: 2783847782,
+          node_id: 'MDU6TGFiZWwyNzgzODQ3Nzgy',
+          url: 'https://api.github.com/repos/Expensify/App/labels/StagingDeployCash',
+          name: 'StagingDeployCash',
+          color: '6FC269',
+          default: false,
+          description: ''
+        }
+      ],
+      html_url: 'https://github.com/Expensify/App/issues/29',
+      body: '**Release Version:** `1.0.1-0`\r\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\r\n' +
+        '\r\n' +
+        '**This release contains changes from the following pull requests:**\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/1\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/2\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/3\r\n' +
+        '\r\n' +
+        '\r\n' +
+        '**Deploy Blockers:**\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/1\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/4\r\n' +
+        '- [x] https://github.com/Expensify/App/pull/5\r\n' +
+        '\r\n' +
+        'cc @Expensify/applauseleads\r\n'
+    }
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:55:25)
+
+  console.log
+    Found tag of previous StagingDeployCash: 1.0.1-0
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:68:21)
+
+  console.log
+    Parsed the following data from the current StagingDeployCash: {
+      title: 'Test StagingDeployCash',
+      url: 'https://api.github.com/repos/Expensify/App/issues/29',
+      number: 29,
+      labels: [
+        {
+          id: 2783847782,
+          node_id: 'MDU6TGFiZWwyNzgzODQ3Nzgy',
+          url: 'https://api.github.com/repos/Expensify/App/labels/StagingDeployCash',
+          name: 'StagingDeployCash',
+          color: '6FC269',
+          default: false,
+          description: ''
+        }
+      ],
+      PRList: [
+        {
+          url: 'https://github.com/Expensify/App/pull/6',
+          number: 6,
+          isVerified: false
+        },
+        {
+          url: 'https://github.com/Expensify/App/pull/7',
+          number: 7,
+          isVerified: true
+        },
+        {
+          url: 'https://github.com/Expensify/App/pull/8',
+          number: 8,
+          isVerified: false
+        }
+      ],
+      deployBlockers: [
+        {
+          url: 'https://github.com/Expensify/App/pull/6',
+          number: 6,
+          isResolved: false
+        },
+        {
+          url: 'https://github.com/Expensify/App/pull/9',
+          number: 9,
+          isResolved: false
+        },
+        {
+          url: 'https://github.com/Expensify/App/pull/10',
+          number: 10,
+          isResolved: true
+        }
+      ],
+      internalQAPRList: [],
+      isTimingDashboardChecked: true,
+      isFirebaseChecked: true,
+      tag: '1.0.2-1'
+    }
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:76:21)
+
+  console.log
+    The following PRs have been merged between the previous StagingDeployCash (1.0.1-0) and new version (undefined): []
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:84:21)
+
+  console.log
+    Filtering out the following automated pull requests: []
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: []
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Successfully updated StagingDeployCash! 🎉 https://github.com/Expensify/App/issues/29
+
+      at fn (.github/actions/javascript/createOrUpdateStagingDeploy/createOrUpdateStagingDeploy.js:164:21)
+
+PASS tests/unit/createOrUpdateStagingDeployTest.js (56.204 s)
+  createOrUpdateStagingDeployCash
+    ✓ creates new issue when there is none open (397 ms)
+    updates existing issue when there is one open
+      ✓ with NPM_VERSION input, pull requests, and deploy blockers (79 ms)
+      ✓ without NPM_VERSION input, just a new deploy blocker (12 ms)
+
+  console.log
+    Fetching issue number 1
+
+      at run (.github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:8:13)
+
+  console.log
+    Checking for unverified PRs or unresolved deploy blockers {
+      number: 1,
+      title: "Scott's QA Checklist",
+      body: '\n' +
+        '**Release Version:** `1.1.31-2`\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\n' +
+        '\n' +
+        '**This release contains changes from the following pull requests:**\n' +
+        '\n' +
+        '- [x] https://github.com/Expensify/App/pull/6882\n' +
+        '\n' +
+        '  \n' +
+        '\n' +
+        'cc @Expensify/applauseleads\n'
+    }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:16:21
+
+  console.log
+    Checking the last comment for the :shipit: seal of approval { data: [ { body: 'foo' }, { body: 'bar' }, { body: ':shipit:' } ] }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:34:21
+
+  console.log
+    Verifying that the last comment is the :shipit: seal of approval
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:49:21
+
+  console.log
+    Everything looks good, there are no deploy blockers!
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:56:25
+
+  console.log
+    Fetching issue number 1
+
+      at run (.github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:8:13)
+
+  console.log
+    Checking for unverified PRs or unresolved deploy blockers {
+      number: 1,
+      title: "Scott's QA Checklist",
+      body: '\n' +
+        '**Release Version:** `1.1.31-2`\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\n' +
+        '\n' +
+        '**This release contains changes from the following pull requests:**\n' +
+        '\n' +
+        '- [x] https://github.com/Expensify/App/pull/6882\n' +
+        '\n' +
+        '  \n' +
+        '\n' +
+        'cc @Expensify/applauseleads\n'
+    }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:16:21
+
+  console.log
+    Checking the last comment for the :shipit: seal of approval {
+      data: [
+        { body: 'foo' },
+        { body: 'bar' },
+        { body: ':shipit:' },
+        {
+          body: 'This issue either has unchecked QA steps or has not yet been stamped with a :shipit: comment. Reopening!'
+        }
+      ]
+    }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:34:21
+
+  console.log
+    Verifying that the last comment is the :shipit: seal of approval
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:49:21
+
+  console.log
+    The last comment on the issue was not :shipit
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:53:25
+
+  console.log
+    Fetching issue number 1
+
+      at run (.github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:8:13)
+
+  console.log
+    Checking for unverified PRs or unresolved deploy blockers {
+      number: 1,
+      title: "Scott's QA Checklist",
+      body: '\n' +
+        '**Release Version:** `1.1.31-2`\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\n' +
+        '\n' +
+        '**This release contains changes from the following pull requests:**\n' +
+        '\n' +
+        '- [x] https://github.com/Expensify/App/pull/6882\n' +
+        '\n' +
+        '  \n' +
+        '\n' +
+        'cc @Expensify/applauseleads\n'
+    }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:16:21
+
+  console.log
+    Checking the last comment for the :shipit: seal of approval { data: [] }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:34:21
+
+  console.log
+    No comments found on issue
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:44:25
+
+  console.log
+    Fetching issue number 1
+
+      at run (.github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:8:13)
+
+  console.log
+    Checking for unverified PRs or unresolved deploy blockers {
+      number: 1,
+      title: "Scott's QA Checklist",
+      body: '\n' +
+        '**Release Version:** `1.1.31-2`\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\n' +
+        '\n' +
+        '**This release contains changes from the following pull requests:**\n' +
+        '\n' +
+        '- [x] https://github.com/Expensify/App/pull/6882\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '**Deploy Blockers:**  \n' +
+        '\n' +
+        '- [ ] https://github.com/Expensify/App/pull/6883\n' +
+        '\n' +
+        'cc @Expensify/applauseleads\n'
+    }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:16:21
+
+  console.log
+    An unverified PR or unresolved deploy blocker was found.
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:21:25
+
+  console.log
+    Checking the last comment for the :shipit: seal of approval undefined
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:34:21
+
+  console.log
+    Fetching issue number 1
+
+      at run (.github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:8:13)
+
+  console.log
+    Checking for unverified PRs or unresolved deploy blockers {
+      number: 1,
+      title: "Scott's QA Checklist",
+      body: '\n' +
+        '**Release Version:** `1.1.31-2`\n' +
+        '**Compare Changes:** https://github.com/Expensify/App/compare/production...staging\n' +
+        '\n' +
+        '**This release contains changes from the following pull requests:**\n' +
+        '\n' +
+        '- [x] https://github.com/Expensify/App/pull/6882\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '**Deploy Blockers:**  \n' +
+        '\n' +
+        '- [x] https://github.com/Expensify/App/pull/6883\n' +
+        '\n' +
+        'cc @Expensify/applauseleads\n'
+    }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:16:21
+
+  console.log
+    Checking the last comment for the :shipit: seal of approval { data: [ { body: 'foo' }, { body: 'bar' }, { body: ':shipit:' } ] }
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:34:21
+
+  console.log
+    Verifying that the last comment is the :shipit: seal of approval
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:49:21
+
+  console.log
+    Everything looks good, there are no deploy blockers!
+
+      at .github/actions/javascript/checkDeployBlockers/checkDeployBlockers.js:56:25
+
+PASS tests/unit/checkDeployBlockersTest.js (56.407 s)
+  checkDeployBlockers
+    checkDeployBlockers
+      ✓ Test an issue with all checked items and :shipit: (111 ms)
+      ✓ Test an issue with all boxes checked but no :shipit: (4 ms)
+      ✓ Test an issue with all boxes checked but no comments (4 ms)
+      ✓ Test an issue with all QA checked but not all deploy blockers (71 ms)
+      ✓ Test an issue with all QA checked and all deploy blockers resolved (5 ms)
+
+  console.log
+    Filtering out the following automated pull requests: [ 'https://github.com/Expensify/App/pull/4' ]
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: [
+      'https://github.com/Expensify/App/pull/5',
+      'https://github.com/Expensify/App/pull/6'
+    ]
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Filtering out the following automated pull requests: [ 'https://github.com/Expensify/App/pull/4' ]
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: [
+      'https://github.com/Expensify/App/pull/5',
+      'https://github.com/Expensify/App/pull/6'
+    ]
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Filtering out the following automated pull requests: [ 'https://github.com/Expensify/App/pull/4' ]
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: [
+      'https://github.com/Expensify/App/pull/5',
+      'https://github.com/Expensify/App/pull/6'
+    ]
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Filtering out the following automated pull requests: [ 'https://github.com/Expensify/App/pull/4' ]
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: [
+      'https://github.com/Expensify/App/pull/5',
+      'https://github.com/Expensify/App/pull/6'
+    ]
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Filtering out the following automated pull requests: [ 'https://github.com/Expensify/App/pull/4' ]
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: [
+      'https://github.com/Expensify/App/pull/5',
+      'https://github.com/Expensify/App/pull/6'
+    ]
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Filtering out the following automated pull requests: [ 'https://github.com/Expensify/App/pull/4' ]
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {}
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: [
+      'https://github.com/Expensify/App/pull/5',
+      'https://github.com/Expensify/App/pull/6'
+    ]
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Filtering out the following automated pull requests: [ 'https://github.com/Expensify/App/pull/4' ]
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {
+      'https://github.com/Expensify/App/pull/7': [ 'octocat', 'hubot' ],
+      'https://github.com/Expensify/App/pull/8': [ 'octocat', 'hubot' ]
+    }
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: [
+      'https://github.com/Expensify/App/pull/5',
+      'https://github.com/Expensify/App/pull/6'
+    ]
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Found the following verified Internal QA PRs: []
+
+      at .github/libs/GithubUtils.js:280:29
+
+  console.log
+    Filtering out the following automated pull requests: [ 'https://github.com/Expensify/App/pull/4' ]
+
+      at .github/libs/GithubUtils.js:228:25
+
+  console.log
+    Found the following Internal QA PRs: {
+      'https://github.com/Expensify/App/pull/7': [ 'octocat', 'hubot' ],
+      'https://github.com/Expensify/App/pull/8': [ 'octocat', 'hubot' ]
+    }
+
+      at .github/libs/GithubUtils.js:244:25
+
+  console.log
+    Found the following NO QA PRs: [
+      'https://github.com/Expensify/App/pull/5',
+      'https://github.com/Expensify/App/pull/6'
+    ]
+
+      at .github/libs/GithubUtils.js:250:25
+
+  console.log
+    Found the following verified Internal QA PRs: [ 'https://github.com/Expensify/App/pull/7' ]
+
+      at .github/libs/GithubUtils.js:280:29
+
+PASS tests/unit/GithubUtilsTest.js (56.715 s)
+  GithubUtils
+    getStagingDeployCash
+      ✓ Test finding an open issue with no PRs successfully (193 ms)
+      ✓ Test finding an open issue successfully (11 ms)
+      ✓ Test finding an open issue successfully and parsing with deploy blockers (93 ms)
+      ✓ Test finding an open issue successfully and parsing with blockers w/o carriage returns (11 ms)
+      ✓ Test finding an open issue without a body (81 ms)
+      ✓ Test finding more than one issue (5 ms)
+      ✓ Test finding no issues (6 ms)
+    getPullRequestNumberFromURL
+      valid pull requests
+        ✓ getPullRequestNumberFromURL("https://github.com/Expensify/Expensify/pull/156369") (10 ms)
+        ✓ getPullRequestNumberFromURL("https://github.com/Expensify/App/pull/1644") (7 ms)
+        ✓ getPullRequestNumberFromURL("https://github.com/Expensify/expensify-common/pull/346") (80 ms)
+        ✓ getPullRequestNumberFromURL("https://api.github.com/repos/Expensify/Expensify/pull/156369") (5 ms)
+        ✓ getPullRequestNumberFromURL("https://api.github.com/repos/Expensify/App/pull/1644") (4 ms)
+        ✓ getPullRequestNumberFromURL("https://api.github.com/repos/Expensify/expensify-common/pull/346") (4 ms)
+      invalid pull requests
+        ✓ getPullRequestNumberFromURL("https://www.google.com/") (87 ms)
+        ✓ getPullRequestNumberFromURL("https://github.com/Expensify/Expensify/issues/156481") (4 ms)
+        ✓ getPullRequestNumberFromURL("https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#") (8 ms)
+    getIssueNumberFromURL
+      valid issues
+        ✓ getIssueNumberFromURL("https://github.com/Expensify/Expensify/issues/156369") (4 ms)
+        ✓ getIssueNumberFromURL("https://github.com/Expensify/App/issues/1644") (4 ms)
+        ✓ getIssueNumberFromURL("https://github.com/Expensify/expensify-common/issues/346") (4 ms)
+        ✓ getIssueNumberFromURL("https://api.github.com/repos/Expensify/Expensify/issues/156369") (4 ms)
+        ✓ getIssueNumberFromURL("https://api.github.com/repos/Expensify/App/issues/1644") (4 ms)
+        ✓ getIssueNumberFromURL("https://api.github.com/repos/Expensify/expensify-common/issues/346") (4 ms)
+      invalid issues
+        ✓ getIssueNumberFromURL("https://www.google.com/") (4 ms)
+        ✓ getIssueNumberFromURL("https://github.com/Expensify/Expensify/pull/156481") (4 ms)
+        ✓ getIssueNumberFromURL("https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#") (5 ms)
+    getIssueOrPullRequestNumberFromURL
+      valid issues and pull requests
+        ✓ getIssueOrPullRequestNumberFromURL("https://github.com/Expensify/Expensify/issues/156369") (4 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://github.com/Expensify/App/issues/1644") (5 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://github.com/Expensify/expensify-common/issues/346") (31 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://github.com/Expensify/Expensify/pull/156369") (4 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://github.com/Expensify/App/pull/1644") (4 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://github.com/Expensify/expensify-common/pull/346") (4 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://api.github.com/repos/Expensify/Expensify/issues/156369") (4 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://api.github.com/repos/Expensify/App/issues/1644") (4 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://api.github.com/repos/Expensify/expensify-common/issues/346") (3 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://api.github.com/repos/Expensify/Expensify/pull/156369") (4 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://api.github.com/repos/Expensify/App/pull/1644") (4 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://api.github.com/repos/Expensify/expensify-common/pull/346") (4 ms)
+      invalid issues/pull requests
+        ✓ getIssueOrPullRequestNumberFromURL("https://www.google.com/") (6 ms)
+        ✓ getIssueOrPullRequestNumberFromURL("https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#") (4 ms)
+    generateStagingDeployCashBody
+      ✓ Test no verified PRs (10 ms)
+      ✓ Test some verified PRs (6 ms)
+      ✓ Test all verified PRs (6 ms)
+      ✓ Test no resolved deploy blockers (6 ms)
+      ✓ Test some resolved deploy blockers (6 ms)
+      ✓ Test all resolved deploy blockers (6 ms)
+      ✓ Test internalQA PRs (6 ms)
+      ✓ Test some verified internalQA PRs (11 ms)
+    getPullRequestURLFromNumber
+      ✓ getPullRequestNumberFromURL("1234") (6 ms)
+      ✓ getPullRequestNumberFromURL("54321") (4 ms)
+    getReleaseBody
+      ✓ getReleaseBody("[ 1, 2, 3 ]") (4 ms)
+      ✓ getReleaseBody("[]") (3 ms)
+      ✓ getReleaseBody("[ 12345 ]") (3 ms)
+
+Test Suites: 3 passed, 3 total
+Tests:       60 passed, 60 total
+Snapshots:   0 total
+Time:        57.697 s
+Ran all test suites matching /tests\/unit\/GithubUtilsTest.js|tests\/unit\/checkDeployBlockersTest.js|tests\/unit\/createOrUpdateStagingDeployTest.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":3,"numPassedTests":60,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":3,"numTotalTests":60,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782917263568,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["createOrUpdateStagingDeployCash"],"failureMessages":[],"fullName":"createOrUpdateStagingDeployCash creates new issue when there is none open","location":null,"status":"passed","title":"creates new issue when there is none open"},{"ancestorTitles":["createOrUpdateStagingDeployCash","updates existing issue when there is one open"],"failureMessages":[],"fullName":"createOrUpdateStagingDeployCash updates existing issue when there is one open with NPM_VERSION input, pull requests, and deploy blockers","location":null,"status":"passed","title":"with NPM_VERSION input, pull requests, and deploy blockers"},{"ancestorTitles":["createOrUpdateStagingDeployCash","updates existing issue when there is one open"],"failureMessages":[],"fullName":"createOrUpdateStagingDeployCash updates existing issue when there is one open without NPM_VERSION input, just a new deploy blocker","location":null,"status":"passed","title":"without NPM_VERSION input, just a new deploy blocker"}],"endTime":1782917320657,"message":"","name":"/workspace/repo/tests/unit/createOrUpdateStagingDeployTest.js","startTime":1782917264453,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["checkDeployBlockers","checkDeployBlockers"],"failureMessages":[],"fullName":"checkDeployBlockers checkDeployBlockers Test an issue with all checked items and :shipit:","location":null,"status":"passed","title":"Test an issue with all checked items and :shipit:"},{"ancestorTitles":["checkDeployBlockers","checkDeployBlockers"],"failureMessages":[],"fullName":"checkDeployBlockers checkDeployBlockers Test an issue with all boxes checked but no :shipit:","location":null,"status":"passed","title":"Test an issue with all boxes checked but no :shipit:"},{"ancestorTitles":["checkDeployBlockers","checkDeployBlockers"],"failureMessages":[],"fullName":"checkDeployBlockers checkDeployBlockers Test an issue with all boxes checked but no comments","location":null,"status":"passed","title":"Test an issue with all boxes checked but no comments"},{"ancestorTitles":["checkDeployBlockers","checkDeployBlockers"],"failureMessages":[],"fullName":"checkDeployBlockers checkDeployBlockers Test an issue with all QA checked but not all deploy blockers","location":null,"status":"passed","title":"Test an issue with all QA checked but not all deploy blockers"},{"ancestorTitles":["checkDeployBlockers","checkDeployBlockers"],"failureMessages":[],"fullName":"checkDeployBlockers checkDeployBlockers Test an issue with all QA checked and all deploy blockers resolved","location":null,"status":"passed","title":"Test an issue with all QA checked and all deploy blockers resolved"}],"endTime":1782917320850,"message":"","name":"/workspace/repo/tests/unit/checkDeployBlockersTest.js","startTime":1782917264443,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["GithubUtils","getStagingDeployCash"],"failureMessages":[],"fullName":"GithubUtils getStagingDeployCash Test finding an open issue with no PRs successfully","location":null,"status":"passed","title":"Test finding an open issue with no PRs successfully"},{"ancestorTitles":["GithubUtils","getStagingDeployCash"],"failureMessages":[],"fullName":"GithubUtils getStagingDeployCash Test finding an open issue successfully","location":null,"status":"passed","title":"Test finding an open issue successfully"},{"ancestorTitles":["GithubUtils","getStagingDeployCash"],"failureMessages":[],"fullName":"GithubUtils getStagingDeployCash Test finding an open issue successfully and parsing with deploy blockers","location":null,"status":"passed","title":"Test finding an open issue successfully and parsing with deploy blockers"},{"ancestorTitles":["GithubUtils","getStagingDeployCash"],"failureMessages":[],"fullName":"GithubUtils getStagingDeployCash Test finding an open issue successfully and parsing with blockers w/o carriage returns","location":null,"status":"passed","title":"Test finding an open issue successfully and parsing with blockers w/o carriage returns"},{"ancestorTitles":["GithubUtils","getStagingDeployCash"],"failureMessages":[],"fullName":"GithubUtils getStagingDeployCash Test finding an open issue without a body","location":null,"status":"passed","title":"Test finding an open issue without a body"},{"ancestorTitles":["GithubUtils","getStagingDeployCash"],"failureMessages":[],"fullName":"GithubUtils getStagingDeployCash Test finding more than one issue","location":null,"status":"passed","title":"Test finding more than one issue"},{"ancestorTitles":["GithubUtils","getStagingDeployCash"],"failureMessages":[],"fullName":"GithubUtils getStagingDeployCash Test finding no issues","location":null,"status":"passed","title":"Test finding no issues"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","valid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL valid pull requests getPullRequestNumberFromURL(\"https://github.com/Expensify/Expensify/pull/156369\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://github.com/Expensify/Expensify/pull/156369\")"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","valid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL valid pull requests getPullRequestNumberFromURL(\"https://github.com/Expensify/App/pull/1644\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://github.com/Expensify/App/pull/1644\")"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","valid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL valid pull requests getPullRequestNumberFromURL(\"https://github.com/Expensify/expensify-common/pull/346\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://github.com/Expensify/expensify-common/pull/346\")"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","valid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL valid pull requests getPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/Expensify/pull/156369\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/Expensify/pull/156369\")"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","valid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL valid pull requests getPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/App/pull/1644\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/App/pull/1644\")"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","valid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL valid pull requests getPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/expensify-common/pull/346\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/expensify-common/pull/346\")"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","invalid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL invalid pull requests getPullRequestNumberFromURL(\"https://www.google.com/\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://www.google.com/\")"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","invalid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL invalid pull requests getPullRequestNumberFromURL(\"https://github.com/Expensify/Expensify/issues/156481\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://github.com/Expensify/Expensify/issues/156481\")"},{"ancestorTitles":["GithubUtils","getPullRequestNumberFromURL","invalid pull requests"],"failureMessages":[],"fullName":"GithubUtils getPullRequestNumberFromURL invalid pull requests getPullRequestNumberFromURL(\"https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","valid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL valid issues getIssueNumberFromURL(\"https://github.com/Expensify/Expensify/issues/156369\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://github.com/Expensify/Expensify/issues/156369\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","valid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL valid issues getIssueNumberFromURL(\"https://github.com/Expensify/App/issues/1644\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://github.com/Expensify/App/issues/1644\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","valid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL valid issues getIssueNumberFromURL(\"https://github.com/Expensify/expensify-common/issues/346\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://github.com/Expensify/expensify-common/issues/346\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","valid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL valid issues getIssueNumberFromURL(\"https://api.github.com/repos/Expensify/Expensify/issues/156369\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://api.github.com/repos/Expensify/Expensify/issues/156369\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","valid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL valid issues getIssueNumberFromURL(\"https://api.github.com/repos/Expensify/App/issues/1644\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://api.github.com/repos/Expensify/App/issues/1644\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","valid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL valid issues getIssueNumberFromURL(\"https://api.github.com/repos/Expensify/expensify-common/issues/346\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://api.github.com/repos/Expensify/expensify-common/issues/346\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","invalid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL invalid issues getIssueNumberFromURL(\"https://www.google.com/\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://www.google.com/\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","invalid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL invalid issues getIssueNumberFromURL(\"https://github.com/Expensify/Expensify/pull/156481\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://github.com/Expensify/Expensify/pull/156481\")"},{"ancestorTitles":["GithubUtils","getIssueNumberFromURL","invalid issues"],"failureMessages":[],"fullName":"GithubUtils getIssueNumberFromURL invalid issues getIssueNumberFromURL(\"https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#\")","location":null,"status":"passed","title":"getIssueNumberFromURL(\"https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/Expensify/issues/156369\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/Expensify/issues/156369\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/App/issues/1644\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/App/issues/1644\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/expensify-common/issues/346\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/expensify-common/issues/346\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/Expensify/pull/156369\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/Expensify/pull/156369\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/App/pull/1644\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/App/pull/1644\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/expensify-common/pull/346\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://github.com/Expensify/expensify-common/pull/346\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/Expensify/issues/156369\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/Expensify/issues/156369\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/App/issues/1644\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/App/issues/1644\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/expensify-common/issues/346\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/expensify-common/issues/346\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/Expensify/pull/156369\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/Expensify/pull/156369\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/App/pull/1644\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/App/pull/1644\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","valid issues and pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL valid issues and pull requests getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/expensify-common/pull/346\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://api.github.com/repos/Expensify/expensify-common/pull/346\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","invalid issues/pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL invalid issues/pull requests getIssueOrPullRequestNumberFromURL(\"https://www.google.com/\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://www.google.com/\")"},{"ancestorTitles":["GithubUtils","getIssueOrPullRequestNumberFromURL","invalid issues/pull requests"],"failureMessages":[],"fullName":"GithubUtils getIssueOrPullRequestNumberFromURL invalid issues/pull requests getIssueOrPullRequestNumberFromURL(\"https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#\")","location":null,"status":"passed","title":"getIssueOrPullRequestNumberFromURL(\"https://docs.google.com/document/d/1mMFh-m1seOES48r3zNqcvfuTvr3qOAsY6n5rP4ejdXE/edit?ts=602420d2#\")"},{"ancestorTitles":["GithubUtils","generateStagingDeployCashBody"],"failureMessages":[],"fullName":"GithubUtils generateStagingDeployCashBody Test no verified PRs","location":null,"status":"passed","title":"Test no verified PRs"},{"ancestorTitles":["GithubUtils","generateStagingDeployCashBody"],"failureMessages":[],"fullName":"GithubUtils generateStagingDeployCashBody Test some verified PRs","location":null,"status":"passed","title":"Test some verified PRs"},{"ancestorTitles":["GithubUtils","generateStagingDeployCashBody"],"failureMessages":[],"fullName":"GithubUtils generateStagingDeployCashBody Test all verified PRs","location":null,"status":"passed","title":"Test all verified PRs"},{"ancestorTitles":["GithubUtils","generateStagingDeployCashBody"],"failureMessages":[],"fullName":"GithubUtils generateStagingDeployCashBody Test no resolved deploy blockers","location":null,"status":"passed","title":"Test no resolved deploy blockers"},{"ancestorTitles":["GithubUtils","generateStagingDeployCashBody"],"failureMessages":[],"fullName":"GithubUtils generateStagingDeployCashBody Test some resolved deploy blockers","location":null,"status":"passed","title":"Test some resolved deploy blockers"},{"ancestorTitles":["GithubUtils","generateStagingDeployCashBody"],"failureMessages":[],"fullName":"GithubUtils generateStagingDeployCashBody Test all resolved deploy blockers","location":null,"status":"passed","title":"Test all resolved deploy blockers"},{"ancestorTitles":["GithubUtils","generateStagingDeployCashBody"],"failureMessages":[],"fullName":"GithubUtils generateStagingDeployCashBody Test internalQA PRs","location":null,"status":"passed","title":"Test internalQA PRs"},{"ancestorTitles":["GithubUtils","generateStagingDeployCashBody"],"failureMessages":[],"fullName":"GithubUtils generateStagingDeployCashBody Test some verified internalQA PRs","location":null,"status":"passed","title":"Test some verified internalQA PRs"},{"ancestorTitles":["GithubUtils","getPullRequestURLFromNumber"],"failureMessages":[],"fullName":"GithubUtils getPullRequestURLFromNumber getPullRequestNumberFromURL(\"1234\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"1234\")"},{"ancestorTitles":["GithubUtils","getPullRequestURLFromNumber"],"failureMessages":[],"fullName":"GithubUtils getPullRequestURLFromNumber getPullRequestNumberFromURL(\"54321\")","location":null,"status":"passed","title":"getPullRequestNumberFromURL(\"54321\")"},{"ancestorTitles":["GithubUtils","getReleaseBody"],"failureMessages":[],"fullName":"GithubUtils getReleaseBody getReleaseBody(\"[ 1, 2, 3 ]\")","location":null,"status":"passed","title":"getReleaseBody(\"[ 1, 2, 3 ]\")"},{"ancestorTitles":["GithubUtils","getReleaseBody"],"failureMessages":[],"fullName":"GithubUtils getReleaseBody getReleaseBody(\"[]\")","location":null,"status":"passed","title":"getReleaseBody(\"[]\")"},{"ancestorTitles":["GithubUtils","getReleaseBody"],"failureMessages":[],"fullName":"GithubUtils getReleaseBody getReleaseBody(\"[ 12345 ]\")","location":null,"status":"passed","title":"getReleaseBody(\"[ 12345 ]\")"}],"endTime":1782917321167,"message":"","name":"/workspace/repo/tests/unit/GithubUtilsTest.js","startTime":1782917264452,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=60 found=60 failed=0 parsed=60 framework=jest exit_code=0

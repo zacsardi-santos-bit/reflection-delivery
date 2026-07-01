@@ -1,0 +1,57 @@
+patching file tests/unit_tests/helper/test_resource_helper.py
+patching file tests/unit_tests/models/test_agent.py
+patching file tests/unit_tests/models/test_agent_execution.py
+patching file tests/unit_tests/tools/email/test_send_email_attachment.py
+patching file tests/unit_tests/tools/file/test_read_file.py
+patching file tests/unit_tests/tools/twitter/test_send_tweets.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.3.2, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: anyio-3.7.0, mock-3.11.1, cov-4.1.0
+collecting ... collected 10 items / 1 error
+
+==================================== ERRORS ====================================
+________ ERROR collecting tests/unit_tests/tools/file/test_read_file.py ________
+ImportError while importing test module '/workspace/repo/tests/unit_tests/tools/file/test_read_file.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/unit_tests/tools/file/test_read_file.py:5: in <module>
+    from superagi.tools.file.read_file import ReadFileTool
+superagi/tools/file/read_file.py:7: in <module>
+    from superagi.resource_manager.file_manager import FileManager
+superagi/resource_manager/file_manager.py:4: in <module>
+    from llama_index import SimpleDirectoryReader
+/usr/local/lib/python3.11/site-packages/llama_index/__init__.py:120: in <module>
+    from llama_index.readers.download import download_loader
+/usr/local/lib/python3.11/site-packages/llama_index/readers/download.py:16: in <module>
+    import pkg_resources
+E   ModuleNotFoundError: No module named 'pkg_resources'
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/langchain/__init__.py:34
+  /usr/local/lib/python3.11/site-packages/langchain/__init__.py:34: UserWarning: Importing PromptTemplate from langchain root module is no longer supported. Please use langchain.prompts.PromptTemplate instead.
+    warnings.warn(
+
+../../usr/local/lib/python3.11/site-packages/langchain/__init__.py:34
+  /usr/local/lib/python3.11/site-packages/langchain/__init__.py:34: UserWarning: Importing BasePromptTemplate from langchain root module is no longer supported. Please use langchain.schema.prompt_template.BasePromptTemplate instead.
+    warnings.warn(
+
+../../usr/local/lib/python3.11/site-packages/langchain_core/prompts/prompt.py:200
+../../usr/local/lib/python3.11/site-packages/langchain_core/prompts/prompt.py:200
+../../usr/local/lib/python3.11/site-packages/langchain_core/prompts/prompt.py:200
+../../usr/local/lib/python3.11/site-packages/langchain_core/prompts/prompt.py:200
+  /usr/local/lib/python3.11/site-packages/langchain_core/prompts/prompt.py:200: DeprecationWarning: `input_variables' is deprecated and ignored.
+    warnings.warn(
+
+../../usr/local/lib/python3.11/site-packages/langchain/__init__.py:34
+  /usr/local/lib/python3.11/site-packages/langchain/__init__.py:34: UserWarning: Importing LLMChain from langchain root module is no longer supported. Please use langchain.chains.LLMChain instead.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/unit_tests/tools/file/test_read_file.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+========================= 7 warnings, 1 error in 2.74s =========================
+reward=0 graded=12 found=0 failed=0 parsed=0 framework=pytest exit_code=2

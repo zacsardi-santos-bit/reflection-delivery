@@ -1,0 +1,64 @@
+patching file pkg/ai/bedrock_support/completions_test.go
+patching file pkg/ai/bedrock_support/model_test.go
+patching file pkg/ai/bedrock_support/responses_test.go
+{"Time":"2026-07-01T14:52:00.32026473Z","Action":"start","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support"}
+{"Time":"2026-07-01T14:52:00.322467182Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestCohereCompletion_GetCompletion"}
+{"Time":"2026-07-01T14:52:00.3224838Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestCohereCompletion_GetCompletion","Output":"=== RUN   TestCohereCompletion_GetCompletion\n"}
+{"Time":"2026-07-01T14:52:00.322523622Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestCohereCompletion_GetCompletion","Output":"--- PASS: TestCohereCompletion_GetCompletion (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322529952Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestCohereCompletion_GetCompletion","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322539591Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAI21_GetCompletion"}
+{"Time":"2026-07-01T14:52:00.322543004Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAI21_GetCompletion","Output":"=== RUN   TestAI21_GetCompletion\n"}
+{"Time":"2026-07-01T14:52:00.322567519Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAI21_GetCompletion","Output":"--- PASS: TestAI21_GetCompletion (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.32257538Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAI21_GetCompletion","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322580399Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetDefaultCompletion"}
+{"Time":"2026-07-01T14:52:00.322584101Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetDefaultCompletion","Output":"=== RUN   TestAmazonCompletion_GetDefaultCompletion\n"}
+{"Time":"2026-07-01T14:52:00.322603351Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetDefaultCompletion","Output":"--- PASS: TestAmazonCompletion_GetDefaultCompletion (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322610666Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetDefaultCompletion","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322615925Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetNovaCompletion"}
+{"Time":"2026-07-01T14:52:00.322620706Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetNovaCompletion","Output":"=== RUN   TestAmazonCompletion_GetNovaCompletion\n"}
+{"Time":"2026-07-01T14:52:00.322661195Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetNovaCompletion","Output":"--- PASS: TestAmazonCompletion_GetNovaCompletion (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322669331Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetNovaCompletion","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322673946Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_Nova"}
+{"Time":"2026-07-01T14:52:00.322677797Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_Nova","Output":"=== RUN   TestAmazonCompletion_GetCompletion_Nova\n"}
+{"Time":"2026-07-01T14:52:00.322720234Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_Nova","Output":"--- PASS: TestAmazonCompletion_GetCompletion_Nova (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322728089Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_Nova","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322738739Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_Default"}
+{"Time":"2026-07-01T14:52:00.322742498Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_Default","Output":"=== RUN   TestAmazonCompletion_GetCompletion_Default\n"}
+{"Time":"2026-07-01T14:52:00.32275949Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_Default","Output":"--- PASS: TestAmazonCompletion_GetCompletion_Default (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322766292Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_Default","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322770381Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_UnsupportedModel"}
+{"Time":"2026-07-01T14:52:00.322774192Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_UnsupportedModel","Output":"=== RUN   TestAmazonCompletion_GetCompletion_UnsupportedModel\n"}
+{"Time":"2026-07-01T14:52:00.322780714Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_UnsupportedModel","Output":"--- PASS: TestAmazonCompletion_GetCompletion_UnsupportedModel (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322790276Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonCompletion_GetCompletion_UnsupportedModel","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322796918Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"Test_isModelSupported"}
+{"Time":"2026-07-01T14:52:00.322800989Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"Test_isModelSupported","Output":"=== RUN   Test_isModelSupported\n"}
+{"Time":"2026-07-01T14:52:00.322807558Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"Test_isModelSupported","Output":"--- PASS: Test_isModelSupported (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322811806Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"Test_isModelSupported","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322817851Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestBedrockModelConfig"}
+{"Time":"2026-07-01T14:52:00.322821151Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestBedrockModelConfig","Output":"=== RUN   TestBedrockModelConfig\n"}
+{"Time":"2026-07-01T14:52:00.322826528Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestBedrockModelConfig","Output":"--- PASS: TestBedrockModelConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322832512Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestBedrockModelConfig","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322836798Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestBedrockModel"}
+{"Time":"2026-07-01T14:52:00.322840437Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestBedrockModel","Output":"=== RUN   TestBedrockModel\n"}
+{"Time":"2026-07-01T14:52:00.322847911Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestBedrockModel","Output":"--- PASS: TestBedrockModel (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322855946Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestBedrockModel","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.32286334Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestCohereResponse_ParseResponse"}
+{"Time":"2026-07-01T14:52:00.322867926Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestCohereResponse_ParseResponse","Output":"=== RUN   TestCohereResponse_ParseResponse\n"}
+{"Time":"2026-07-01T14:52:00.322904687Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestCohereResponse_ParseResponse","Output":"--- PASS: TestCohereResponse_ParseResponse (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322911473Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestCohereResponse_ParseResponse","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322915829Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAI21Response_ParseResponse"}
+{"Time":"2026-07-01T14:52:00.322918703Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAI21Response_ParseResponse","Output":"=== RUN   TestAI21Response_ParseResponse\n"}
+{"Time":"2026-07-01T14:52:00.322981159Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAI21Response_ParseResponse","Output":"--- PASS: TestAI21Response_ParseResponse (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.322988401Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAI21Response_ParseResponse","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.322992836Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonResponse_ParseResponse"}
+{"Time":"2026-07-01T14:52:00.322996609Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonResponse_ParseResponse","Output":"=== RUN   TestAmazonResponse_ParseResponse\n"}
+{"Time":"2026-07-01T14:52:00.323049511Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonResponse_ParseResponse","Output":"--- PASS: TestAmazonResponse_ParseResponse (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.323056046Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestAmazonResponse_ParseResponse","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.323060279Z","Action":"run","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestNovaResponse_ParseResponse"}
+{"Time":"2026-07-01T14:52:00.32306405Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestNovaResponse_ParseResponse","Output":"=== RUN   TestNovaResponse_ParseResponse\n"}
+{"Time":"2026-07-01T14:52:00.323139973Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestNovaResponse_ParseResponse","Output":"--- PASS: TestNovaResponse_ParseResponse (0.00s)\n"}
+{"Time":"2026-07-01T14:52:00.323146205Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Test":"TestNovaResponse_ParseResponse","Elapsed":0}
+{"Time":"2026-07-01T14:52:00.323149938Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Output":"PASS\n"}
+{"Time":"2026-07-01T14:52:00.323430229Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Output":"ok  \tgithub.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support\t0.003s\n"}
+{"Time":"2026-07-01T14:52:00.323446783Z","Action":"pass","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Elapsed":0.003}
+reward=1 graded=14 found=14 failed=0 parsed=14 framework=go exit_code=0

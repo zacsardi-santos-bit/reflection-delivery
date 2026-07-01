@@ -1,26 +1,26 @@
 {
-    "id": "314ecf52-0c67-42ba-8de8-091bedf39745",
+    "id": "c4904cff-8202-4ceb-bd08-083b0986dbe7",
     "task_name": "offline/seek-oss-braid-design-system-82",
-    "trial_name": "seek-oss-braid-design-system-82__zeCianu",
-    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/seek-oss-braid-design-system-82__zeCianu",
+    "trial_name": "seek-oss-braid-design-system-82__RzjLLfS",
+    "trial_uri": "file:///tmp/nop/2026-07-01__15-11-35/seek-oss-braid-design-system-82__RzjLLfS",
     "task_id": {
-        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/seek-oss-braid-design-system-82"
+        "path": "seek-oss-braid-design-system-82"
     },
-    "source": "harbor",
-    "task_checksum": "928413cb8635ceb2eb635c8ba8261e128893e8a3503d00fdfe8f0b58c4833b99",
+    "source": "src",
+    "task_checksum": "deba6434ba8d27238750eab319fb1ab2b98a2bcf8145d0cb91e0c0b24318cc7b",
     "config": {
         "task": {
-            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/seek-oss-braid-design-system-82",
+            "path": "seek-oss-braid-design-system-82",
             "git_url": null,
             "git_commit_id": null,
             "name": null,
             "ref": null,
             "overwrite": false,
             "download_dir": null,
-            "source": "harbor"
+            "source": "src"
         },
-        "trial_name": "seek-oss-braid-design-system-82__zeCianu",
-        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+        "trial_name": "seek-oss-braid-design-system-82__RzjLLfS",
+        "trials_dir": "/tmp/nop/2026-07-01__15-11-35",
         "timeout_multiplier": 1.0,
         "agent_timeout_multiplier": null,
         "verifier_timeout_multiplier": null,
@@ -37,10 +37,10 @@
             "env": {}
         },
         "environment": {
-            "type": "modal",
+            "type": "docker",
             "import_path": null,
             "force_build": false,
-            "delete": false,
+            "delete": true,
             "override_cpus": null,
             "override_memory_mb": null,
             "override_storage_mb": null,
@@ -56,7 +56,7 @@
             "disable": false
         },
         "artifacts": [],
-        "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+        "job_id": "d1d0c79f-668b-4e2f-abe8-21e0d83be21f"
     },
     "agent_info": {
         "name": "nop",
@@ -71,29 +71,28 @@
         "rollout_details": null,
         "metadata": null
     },
-    "verifier_result": null,
-    "exception_info": {
-        "exception_type": "RewardFileEmptyError",
-        "exception_message": "Reward file is empty at /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/seek-oss-braid-design-system-82__zeCianu/verifier/reward.txt",
-        "exception_traceback": "Traceback (most recent call last):\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 562, in run\n    await self._run_verification()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 306, in _run_verification\n    await self._verify_with_retry()\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 193, in async_wrapped\n    return await copy(fn, *args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 112, in __call__\n    do = await self.iter(retry_state=retry_state)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 157, in iter\n    result = await action(retry_state)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/_utils.py\", line 111, in inner\n    return call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/__init__.py\", line 393, in <lambda>\n    self._add_action_func(lambda rs: rs.outcome.result())\n                                     ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 449, in result\n    return self.__get_result()\n           ^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/concurrent/futures/_base.py\", line 401, in __get_result\n    raise self._exception\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/tenacity/asyncio/__init__.py\", line 116, in __call__\n    result = await fn(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/trial/trial.py\", line 324, in _verify_with_retry\n    self.result.verifier_result = await asyncio.wait_for(\n                                  ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/asyncio/tasks.py\", line 520, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 143, in verify\n    rewards = self._parse_reward_text()\n              ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/ubuntu/cli-baselining/Harbor-gen/.venv/lib/python3.12/site-packages/harbor/verifier/verifier.py\", line 48, in _parse_reward_text\n    raise RewardFileEmptyError(\nharbor.verifier.verifier.RewardFileEmptyError: Reward file is empty at /home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/seek-oss-braid-design-system-82__zeCianu/verifier/reward.txt\n",
-        "occurred_at": "2026-06-29T15:28:45.414981"
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
     },
-    "started_at": "2026-06-29T15:26:16.067000Z",
-    "finished_at": "2026-06-29T15:29:18.117852Z",
+    "exception_info": null,
+    "started_at": "2026-07-01T15:11:39.516780Z",
+    "finished_at": "2026-07-01T15:12:30.960920Z",
     "environment_setup": {
-        "started_at": "2026-06-29T15:26:16.072368Z",
-        "finished_at": "2026-06-29T15:26:30.988908Z"
+        "started_at": "2026-07-01T15:11:39.517885Z",
+        "finished_at": "2026-07-01T15:11:41.446452Z"
     },
     "agent_setup": {
-        "started_at": "2026-06-29T15:26:30.988914Z",
-        "finished_at": "2026-06-29T15:26:30.988942Z"
+        "started_at": "2026-07-01T15:11:41.446485Z",
+        "finished_at": "2026-07-01T15:11:41.446530Z"
     },
     "agent_execution": {
-        "started_at": "2026-06-29T15:26:30.988972Z",
-        "finished_at": "2026-06-29T15:26:30.988999Z"
+        "started_at": "2026-07-01T15:11:41.446581Z",
+        "finished_at": "2026-07-01T15:11:41.446609Z"
     },
     "verifier": {
-        "started_at": "2026-06-29T15:26:37.135436Z",
-        "finished_at": "2026-06-29T15:28:45.413916Z"
+        "started_at": "2026-07-01T15:11:41.446705Z",
+        "finished_at": "2026-07-01T15:12:20.626148Z"
     }
 }

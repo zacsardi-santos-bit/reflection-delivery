@@ -1,0 +1,9 @@
+patching file docs/CHANGELOG.md
+patching file docs/sd_configs.md
+patching file docs/vmagent.md
+patching file lib/promscrape/config.go
+patching file lib/promscrape/discovery/hetzner/api.go
+patching file lib/promscrape/discovery/hetzner/hcloud.go
+patching file lib/promscrape/discovery/hetzner/hetzner.go
+patching file lib/promscrape/discovery/hetzner/robot.go
+patching file lib/promscrape/scraper.go

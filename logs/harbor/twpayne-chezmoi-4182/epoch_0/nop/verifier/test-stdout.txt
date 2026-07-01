@@ -1,0 +1,7 @@
+patching file README.md
+--- FAIL: TestScript (0.00s)
+    main_test.go:89: no test scripts match regex "^issue4181"
+FAIL
+FAIL	github.com/twpayne/chezmoi/v2/internal/cmd	0.358s
+FAIL
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=go exit_code=1

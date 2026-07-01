@@ -1,0 +1,993 @@
+patching file tests/sqlparser_bigquery.rs
+patching file tests/sqlparser_clickhouse.rs
+patching file tests/sqlparser_common.rs
+patching file tests/sqlparser_databricks.rs
+patching file tests/sqlparser_duckdb.rs
+patching file tests/sqlparser_hive.rs
+patching file tests/sqlparser_mssql.rs
+patching file tests/sqlparser_mysql.rs
+patching file tests/sqlparser_postgres.rs
+patching file tests/sqlparser_redshift.rs
+patching file tests/sqlparser_snowflake.rs
+patching file tests/sqlparser_sqlite.rs
+   Compiling sqlparser v0.53.0 (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.45s
+────────────
+ Nextest run ID a623ccf3-2205-4547-b509-b7200f25f285 with nextest profile: default
+    Starting 973 tests across 15 binaries
+        PASS [   0.006s] (  1/973) sqlparser ast::helpers::stmt_create_table::tests::test_from_valid_statement
+        PASS [   0.006s] (  2/973) sqlparser ast::helpers::stmt_create_table::tests::test_from_invalid_statement
+        PASS [   0.004s] (  3/973) sqlparser ast::spans::tests::test_join
+        PASS [   0.005s] (  4/973) sqlparser ast::spans::tests::test_cte
+        PASS [   0.004s] (  5/973) sqlparser ast::spans::tests::test_snowflake_lateral_flatten
+        PASS [   0.004s] (  6/973) sqlparser ast::spans::tests::test_subquery
+        PASS [   0.004s] (  7/973) sqlparser ast::spans::tests::test_union
+        PASS [   0.004s] (  8/973) sqlparser ast::spans::tests::test_wildcard_from_cte
+        PASS [   0.004s] (  9/973) sqlparser ast::tests::test_cube_display
+        PASS [   0.006s] ( 10/973) sqlparser ast::tests::test_grouping_sets_display
+        PASS [   0.004s] ( 11/973) sqlparser ast::tests::test_interval_display
+        PASS [   0.004s] ( 12/973) sqlparser ast::tests::test_one_or_many_with_parens_as_ref
+        PASS [   0.004s] ( 13/973) sqlparser ast::tests::test_one_or_many_with_parens_deref
+        PASS [   0.004s] ( 14/973) sqlparser ast::tests::test_one_or_many_with_parens_ref_into_iter
+        PASS [   0.004s] ( 15/973) sqlparser ast::tests::test_one_or_many_with_parens_value_into_iter
+        PASS [   0.005s] ( 16/973) sqlparser ast::tests::test_rollup_display
+        PASS [   0.005s] ( 17/973) sqlparser ast::tests::test_window_frame_default
+        PASS [   0.004s] ( 18/973) sqlparser dialect::tests::identifier_quote_style
+        PASS [   0.005s] ( 19/973) sqlparser dialect::tests::parse_with_wrapped_dialect
+        PASS [   0.004s] ( 20/973) sqlparser dialect::tests::test_dialect_from_str
+        PASS [   0.004s] ( 21/973) sqlparser dialect::tests::test_is_dialect
+        PASS [   0.004s] ( 22/973) sqlparser parser::tests::mysql_parse_index_table_constraint
+        PASS [   0.004s] ( 23/973) sqlparser parser::tests::test_mysql_partition_selection
+        PASS [   0.004s] ( 24/973) sqlparser parser::tests::test_nested_explain_error
+        PASS [   0.004s] ( 25/973) sqlparser parser::tests::test_parse_data_type::test_ansii_character_large_object_types
+        PASS [   0.004s] ( 26/973) sqlparser parser::tests::test_parse_data_type::test_ansii_character_string_types
+        PASS [   0.004s] ( 27/973) sqlparser parser::tests::test_parse_data_type::test_ansii_date_type
+        PASS [   0.004s] ( 28/973) sqlparser parser::tests::test_parse_data_type::test_ansii_exact_numeric_types
+        PASS [   0.005s] ( 29/973) sqlparser parser::tests::test_parse_data_type::test_parse_custom_types
+        PASS [   0.005s] ( 30/973) sqlparser parser::tests::test_parse_multipart_identifier_negative
+        PASS [   0.004s] ( 31/973) sqlparser parser::tests::test_parse_multipart_identifier_positive
+        PASS [   0.004s] ( 32/973) sqlparser parser::tests::test_parse_schema_name
+        PASS [   0.004s] ( 33/973) sqlparser parser::tests::test_parser_error_loc
+        PASS [   0.004s] ( 34/973) sqlparser parser::tests::test_peek_tokens
+        PASS [   0.004s] ( 35/973) sqlparser parser::tests::test_prev_index
+        PASS [   0.004s] ( 36/973) sqlparser parser::tests::test_replace_incomplete
+        PASS [   0.004s] ( 37/973) sqlparser parser::tests::test_replace_into_placeholders
+        PASS [   0.005s] ( 38/973) sqlparser parser::tests::test_replace_into_set
+        PASS [   0.005s] ( 39/973) sqlparser parser::tests::test_replace_into_set_placeholder
+        PASS [   0.004s] ( 40/973) sqlparser parser::tests::test_tokenizer_error_loc
+        PASS [   0.004s] ( 41/973) sqlparser tokenizer::tests::test_unescape
+        PASS [   0.005s] ( 42/973) sqlparser tokenizer::tests::tokenize_bitwise_op
+        PASS [   0.004s] ( 43/973) sqlparser tokenizer::tests::tokenize_clickhouse_double_equal
+        PASS [   0.004s] ( 44/973) sqlparser tokenizer::tests::tokenize_comment
+        PASS [   0.004s] ( 45/973) sqlparser tokenizer::tests::tokenize_comment_at_eof
+        PASS [   0.005s] ( 46/973) sqlparser tokenizer::tests::tokenize_dollar_quoted_string_tagged
+        PASS [   0.004s] ( 47/973) sqlparser tokenizer::tests::tokenize_dollar_quoted_string_tagged_unterminated
+        PASS [   0.004s] ( 48/973) sqlparser tokenizer::tests::tokenize_dollar_quoted_string_untagged
+        PASS [   0.004s] ( 49/973) sqlparser tokenizer::tests::tokenize_dollar_quoted_string_untagged_unterminated
+        PASS [   0.004s] ( 50/973) sqlparser tokenizer::tests::tokenize_explain_analyze_select
+        PASS [   0.004s] ( 51/973) sqlparser tokenizer::tests::tokenize_explain_select
+        PASS [   0.004s] ( 52/973) sqlparser tokenizer::tests::tokenize_invalid_string
+        PASS [   0.004s] ( 53/973) sqlparser tokenizer::tests::tokenize_invalid_string_cols
+        PASS [   0.005s] ( 54/973) sqlparser tokenizer::tests::tokenize_is_null
+        PASS [   0.005s] ( 55/973) sqlparser tokenizer::tests::tokenize_logical_xor
+        PASS [   0.004s] ( 56/973) sqlparser tokenizer::tests::tokenize_mismatched_quotes
+        PASS [   0.004s] ( 57/973) sqlparser tokenizer::tests::tokenize_mssql_top
+        PASS [   0.005s] ( 58/973) sqlparser tokenizer::tests::tokenize_multiline_comment
+        PASS [   0.006s] ( 59/973) sqlparser tokenizer::tests::tokenize_multiline_comment_with_even_asterisks
+        PASS [   0.004s] ( 60/973) sqlparser tokenizer::tests::tokenize_nested_multiline_comment
+        PASS [   0.004s] ( 61/973) sqlparser tokenizer::tests::tokenize_newline_in_string_literal
+        PASS [   0.004s] ( 62/973) sqlparser tokenizer::tests::tokenize_newlines
+        PASS [   0.004s] ( 63/973) sqlparser tokenizer::tests::tokenize_numeric_prefix_trait
+        PASS [   0.004s] ( 64/973) sqlparser tokenizer::tests::tokenize_pg_like_match
+        PASS [   0.004s] ( 65/973) sqlparser tokenizer::tests::tokenize_pg_regex_match
+        PASS [   0.004s] ( 66/973) sqlparser tokenizer::tests::tokenize_quoted_identifier
+        PASS [   0.004s] ( 67/973) sqlparser tokenizer::tests::tokenize_quoted_identifier_with_no_escape
+        PASS [   0.004s] ( 68/973) sqlparser tokenizer::tests::tokenize_quoted_string_escape
+        PASS [   0.004s] ( 69/973) sqlparser tokenizer::tests::tokenize_right_arrow
+        PASS [   0.004s] ( 70/973) sqlparser tokenizer::tests::tokenize_scalar_function
+        PASS [   0.004s] ( 71/973) sqlparser tokenizer::tests::tokenize_select_1
+        PASS [   0.004s] ( 72/973) sqlparser tokenizer::tests::tokenize_select_exponent
+        PASS [   0.004s] ( 73/973) sqlparser tokenizer::tests::tokenize_select_float
+        PASS [   0.004s] ( 74/973) sqlparser tokenizer::tests::tokenize_simple_select
+        PASS [   0.005s] ( 75/973) sqlparser tokenizer::tests::tokenize_snowflake_div
+        PASS [   0.004s] ( 76/973) sqlparser tokenizer::tests::tokenize_string_predicate
+        PASS [   0.004s] ( 77/973) sqlparser tokenizer::tests::tokenize_string_string_concat
+        PASS [   0.005s] ( 78/973) sqlparser tokenizer::tests::tokenize_triple_quoted_string
+        PASS [   0.004s] ( 79/973) sqlparser tokenizer::tests::tokenize_unicode_whitespace
+        PASS [   0.004s] ( 80/973) sqlparser tokenizer::tests::tokenize_unterminated_string_literal
+        PASS [   0.005s] ( 81/973) sqlparser tokenizer::tests::tokenize_unterminated_string_literal_utf8
+        PASS [   0.005s] ( 82/973) sqlparser tokenizer::tests::tokenize_with_location
+        PASS [   0.004s] ( 83/973) sqlparser tokenizer::tests::tokenizer_error_impl
+        PASS [   0.005s] ( 84/973) sqlparser::sqlparser_bigquery parse_array_agg_func
+        PASS [   0.005s] ( 85/973) sqlparser::sqlparser_bigquery parse_big_query_declare
+        PASS [   0.008s] ( 86/973) sqlparser::sqlparser_bigquery parse_cast_bytes_to_string_format
+        PASS [   0.013s] ( 87/973) sqlparser::sqlparser_bigquery parse_byte_literal
+        PASS [   0.005s] ( 88/973) sqlparser::sqlparser_bigquery parse_cast_date_format
+        PASS [   0.005s] ( 89/973) sqlparser::sqlparser_bigquery parse_cast_string_to_bytes_format
+        PASS [   0.005s] ( 90/973) sqlparser::sqlparser_bigquery parse_cast_time_format
+        PASS [   0.004s] ( 91/973) sqlparser::sqlparser_bigquery parse_cast_timestamp_format_tz
+        PASS [   0.004s] ( 92/973) sqlparser::sqlparser_bigquery parse_cast_type
+        PASS [   0.005s] ( 93/973) sqlparser::sqlparser_bigquery parse_create_table_with_options
+        PASS [   0.005s] ( 94/973) sqlparser::sqlparser_bigquery parse_create_table_with_unquoted_hyphen
+        PASS [   0.005s] ( 95/973) sqlparser::sqlparser_bigquery parse_create_view_if_not_exists
+        PASS [   0.005s] ( 96/973) sqlparser::sqlparser_bigquery parse_create_view_with_options
+        PASS [   0.004s] ( 97/973) sqlparser::sqlparser_bigquery parse_create_view_with_unquoted_hyphen
+        PASS [   0.004s] ( 98/973) sqlparser::sqlparser_bigquery parse_delete_statement
+        PASS [   0.004s] ( 99/973) sqlparser::sqlparser_bigquery parse_extract_weekday
+        PASS [   0.004s] (100/973) sqlparser::sqlparser_bigquery parse_hyphenated_table_identifiers
+        PASS [   0.004s] (101/973) sqlparser::sqlparser_bigquery parse_invalid_brackets
+        PASS [   0.005s] (102/973) sqlparser::sqlparser_bigquery parse_join_constraint_unnest_alias
+        PASS [   0.005s] (103/973) sqlparser::sqlparser_bigquery parse_literal_string
+        PASS [   0.005s] (104/973) sqlparser::sqlparser_bigquery parse_map_access_expr
+        PASS [   0.006s] (105/973) sqlparser::sqlparser_bigquery parse_merge
+        PASS [   0.007s] (106/973) sqlparser::sqlparser_bigquery parse_merge_invalid_statements
+        PASS [   0.005s] (107/973) sqlparser::sqlparser_bigquery parse_nested_data_types
+        PASS [   0.004s] (108/973) sqlparser::sqlparser_bigquery parse_raw_literal
+        PASS [   0.005s] (109/973) sqlparser::sqlparser_bigquery parse_table_identifiers
+        PASS [   0.004s] (110/973) sqlparser::sqlparser_bigquery parse_table_time_travel
+        PASS [   0.005s] (111/973) sqlparser::sqlparser_bigquery parse_trailing_comma
+        PASS [   0.005s] (112/973) sqlparser::sqlparser_bigquery parse_tuple_struct_literal
+        PASS [   0.005s] (113/973) sqlparser::sqlparser_bigquery parse_typed_struct_syntax_bigquery
+        PASS [   0.005s] (114/973) sqlparser::sqlparser_bigquery parse_typed_struct_syntax_bigquery_and_generic
+        PASS [   0.004s] (115/973) sqlparser::sqlparser_bigquery parse_typed_struct_with_field_name_bigquery
+        PASS [   0.005s] (116/973) sqlparser::sqlparser_bigquery parse_typed_struct_with_field_name_bigquery_and_generic
+        PASS [   0.005s] (117/973) sqlparser::sqlparser_bigquery parse_typeless_struct_syntax
+        PASS [   0.005s] (118/973) sqlparser::sqlparser_bigquery test_any_value
+        PASS [   0.006s] (119/973) sqlparser::sqlparser_bigquery test_array_agg
+        PASS [   0.005s] (120/973) sqlparser::sqlparser_bigquery test_bigquery_create_function
+        PASS [   0.004s] (121/973) sqlparser::sqlparser_bigquery test_bigquery_trim
+        PASS [   0.004s] (122/973) sqlparser::sqlparser_bigquery test_select_as_struct
+        PASS [   0.005s] (123/973) sqlparser::sqlparser_bigquery test_select_as_value
+        PASS [   0.005s] (124/973) sqlparser::sqlparser_clickhouse explain_desc
+        PASS [   0.005s] (125/973) sqlparser::sqlparser_clickhouse explain_describe
+        PASS [   0.004s] (126/973) sqlparser::sqlparser_clickhouse parse_alter_table_attach_and_detach_partition
+        PASS [   0.009s] (127/973) sqlparser::sqlparser_clickhouse parse_alter_table_add_projection
+        PASS [   0.005s] (128/973) sqlparser::sqlparser_clickhouse parse_alter_table_clear_and_materialize_projection
+        PASS [   0.005s] (129/973) sqlparser::sqlparser_clickhouse parse_alter_table_drop_projection
+        PASS [   0.004s] (130/973) sqlparser::sqlparser_clickhouse parse_array_expr
+        PASS [   0.004s] (131/973) sqlparser::sqlparser_clickhouse parse_array_fn
+        PASS [   0.005s] (132/973) sqlparser::sqlparser_clickhouse parse_clickhouse_data_types
+        PASS [   0.005s] (133/973) sqlparser::sqlparser_clickhouse parse_create_materialized_view
+        PASS [   0.005s] (134/973) sqlparser::sqlparser_clickhouse parse_create_table
+        PASS [   0.004s] (135/973) sqlparser::sqlparser_clickhouse parse_create_table_on_commit_and_as_query
+        PASS [   0.004s] (136/973) sqlparser::sqlparser_clickhouse parse_create_table_with_nested_data_types
+        PASS [   0.005s] (137/973) sqlparser::sqlparser_clickhouse parse_create_table_with_nullable
+        PASS [   0.005s] (138/973) sqlparser::sqlparser_clickhouse parse_create_table_with_primary_key
+        PASS [   0.004s] (139/973) sqlparser::sqlparser_clickhouse parse_create_table_with_variant_default_expressions
+        PASS [   0.004s] (140/973) sqlparser::sqlparser_clickhouse parse_create_view_with_fields_data_types
+        PASS [   0.004s] (141/973) sqlparser::sqlparser_clickhouse parse_delimited_identifiers
+        PASS [   0.005s] (142/973) sqlparser::sqlparser_clickhouse parse_double_equal
+        PASS [   0.004s] (143/973) sqlparser::sqlparser_clickhouse parse_explain_table
+        PASS [   0.005s] (144/973) sqlparser::sqlparser_clickhouse parse_freeze_and_unfreeze_partition
+        PASS [   0.006s] (145/973) sqlparser::sqlparser_clickhouse parse_group_by_with_modifier
+        PASS [   0.005s] (146/973) sqlparser::sqlparser_clickhouse parse_interpolate_body_with_columns
+        PASS [   0.005s] (147/973) sqlparser::sqlparser_clickhouse parse_interpolate_with_empty_body
+        PASS [   0.005s] (148/973) sqlparser::sqlparser_clickhouse parse_interpolate_without_body
+        PASS [   0.004s] (149/973) sqlparser::sqlparser_clickhouse parse_kill
+        PASS [   0.004s] (150/973) sqlparser::sqlparser_clickhouse parse_limit_by
+        PASS [   0.004s] (151/973) sqlparser::sqlparser_clickhouse parse_map_access_expr
+        PASS [   0.005s] (152/973) sqlparser::sqlparser_clickhouse parse_optimize_table
+        PASS [   0.004s] (153/973) sqlparser::sqlparser_clickhouse parse_select_order_by_interpolate_not_last
+        PASS [   0.004s] (154/973) sqlparser::sqlparser_clickhouse parse_select_order_by_with_fill_interpolate
+        PASS [   0.005s] (155/973) sqlparser::sqlparser_clickhouse parse_select_order_by_with_fill_interpolate_multi_interpolates
+        PASS [   0.005s] (156/973) sqlparser::sqlparser_clickhouse parse_select_order_by_with_fill_interpolate_multi_with_fill_interpolates
+        PASS [   0.004s] (157/973) sqlparser::sqlparser_clickhouse parse_select_parametric_function
+        PASS [   0.004s] (158/973) sqlparser::sqlparser_clickhouse parse_select_star_except
+        PASS [   0.005s] (159/973) sqlparser::sqlparser_clickhouse parse_select_star_except_no_parens
+        PASS [   0.006s] (160/973) sqlparser::sqlparser_clickhouse parse_select_table_function_settings
+        PASS [   0.005s] (161/973) sqlparser::sqlparser_clickhouse parse_settings_in_query
+        PASS [   0.004s] (162/973) sqlparser::sqlparser_clickhouse parse_table_sample
+        PASS [   0.004s] (163/973) sqlparser::sqlparser_clickhouse parse_use
+        PASS [   0.004s] (164/973) sqlparser::sqlparser_clickhouse parse_with_fill
+        PASS [   0.004s] (165/973) sqlparser::sqlparser_clickhouse parse_with_fill_missing_single_argument
+        PASS [   0.005s] (166/973) sqlparser::sqlparser_clickhouse parse_with_fill_multiple_incomplete_arguments
+        PASS [   0.009s] (167/973) sqlparser::sqlparser_clickhouse test_prewhere
+        PASS [   0.009s] (168/973) sqlparser::sqlparser_clickhouse test_query_with_format_clause
+        PASS [   0.005s] (169/973) sqlparser::sqlparser_common all_keywords_sorted
+        PASS [   0.005s] (170/973) sqlparser::sqlparser_common ensure_multiple_dialects_are_tested
+        PASS [   0.005s] (171/973) sqlparser::sqlparser_common explain_desc
+        PASS [   0.005s] (172/973) sqlparser::sqlparser_common explain_describe
+        PASS [   0.006s] (173/973) sqlparser::sqlparser_common insert_into_with_parentheses
+        PASS [   0.005s] (174/973) sqlparser::sqlparser_common interval_disallow_interval_expr_double_colon
+        PASS [   0.005s] (175/973) sqlparser::sqlparser_common interval_disallow_interval_expr_gt
+        PASS [   0.008s] (176/973) sqlparser::sqlparser_common lateral_derived
+        PASS [   0.005s] (177/973) sqlparser::sqlparser_common lateral_function
+        PASS [   0.006s] (178/973) sqlparser::sqlparser_common parse_agg_with_order_by
+        PASS [   0.006s] (179/973) sqlparser::sqlparser_common parse_aggregate_with_group_by
+        PASS [   0.004s] (180/973) sqlparser::sqlparser_common parse_alter_index
+        PASS [   0.006s] (181/973) sqlparser::sqlparser_common parse_alter_table
+        PASS [   0.005s] (182/973) sqlparser::sqlparser_common parse_alter_table_add_column
+        PASS [   0.004s] (183/973) sqlparser::sqlparser_common parse_alter_table_add_column_if_not_exists
+        PASS [   0.005s] (184/973) sqlparser::sqlparser_common parse_alter_table_alter_column_type
+        PASS [   0.006s] (185/973) sqlparser::sqlparser_common parse_alter_table_alter_column
+        PASS [   0.006s] (186/973) sqlparser::sqlparser_common parse_alter_table_drop_column
+        PASS [   0.005s] (187/973) sqlparser::sqlparser_common parse_alter_table_drop_constraint
+        PASS [   0.013s] (188/973) sqlparser::sqlparser_common parse_alter_table_constraints
+        PASS [   0.005s] (189/973) sqlparser::sqlparser_common parse_alter_view
+        PASS [   0.005s] (190/973) sqlparser::sqlparser_common parse_alter_view_with_columns
+        PASS [   0.005s] (191/973) sqlparser::sqlparser_common parse_alter_view_with_options
+        PASS [   0.006s] (192/973) sqlparser::sqlparser_common parse_array_agg_func
+        PASS [   0.005s] (193/973) sqlparser::sqlparser_common parse_assert
+        PASS [   0.005s] (194/973) sqlparser::sqlparser_common parse_assert_message
+        PASS [   0.007s] (195/973) sqlparser::sqlparser_common parse_at_timezone
+        PASS [   0.005s] (196/973) sqlparser::sqlparser_common parse_auto_increment_too_large
+        PASS [   0.006s] (197/973) sqlparser::sqlparser_common parse_bad_constraint
+        PASS [   0.006s] (198/973) sqlparser::sqlparser_common parse_bang_not
+        PASS [   0.006s] (199/973) sqlparser::sqlparser_common parse_between
+        PASS [   0.007s] (200/973) sqlparser::sqlparser_common parse_between_with_expr
+        PASS [   0.006s] (201/973) sqlparser::sqlparser_common parse_binary_all
+        PASS [   0.011s] (202/973) sqlparser::sqlparser_common parse_bignumeric_keyword
+        PASS [   0.005s] (203/973) sqlparser::sqlparser_common parse_binary_any
+        PASS [   0.005s] (204/973) sqlparser::sqlparser_common parse_bitwise_ops
+        PASS [   0.010s] (205/973) sqlparser::sqlparser_common parse_cache_table
+        PASS [   0.019s] (206/973) sqlparser::sqlparser_common parse_binary_operators_without_whitespace
+        PASS [   0.005s] (207/973) sqlparser::sqlparser_common parse_call
+        PASS [   0.009s] (208/973) sqlparser::sqlparser_common parse_ceil_datetime
+        PASS [   0.014s] (209/973) sqlparser::sqlparser_common parse_cast
+        PASS [   0.005s] (210/973) sqlparser::sqlparser_common parse_ceil_number
+        PASS [   0.005s] (211/973) sqlparser::sqlparser_common parse_ceil_number_scale
+        PASS [   0.005s] (212/973) sqlparser::sqlparser_common parse_ceil_scale
+        PASS [   0.005s] (213/973) sqlparser::sqlparser_common parse_collate
+        PASS [   0.005s] (214/973) sqlparser::sqlparser_common parse_collate_after_parens
+        PASS [   0.007s] (215/973) sqlparser::sqlparser_common parse_column_aliases
+        PASS [   0.006s] (216/973) sqlparser::sqlparser_common parse_comments
+        PASS [   0.007s] (217/973) sqlparser::sqlparser_common parse_commit
+        PASS [   0.007s] (218/973) sqlparser::sqlparser_common parse_complex_join
+        PASS [   0.005s] (219/973) sqlparser::sqlparser_common parse_compound_expr_1
+        PASS [   0.004s] (220/973) sqlparser::sqlparser_common parse_compound_expr_2
+        PASS [   0.008s] (221/973) sqlparser::sqlparser_common parse_connect_by
+        PASS [   0.007s] (222/973) sqlparser::sqlparser_common parse_count_wildcard
+        PASS [   0.005s] (223/973) sqlparser::sqlparser_common parse_create_database
+        PASS [   0.005s] (224/973) sqlparser::sqlparser_common parse_create_database_ine
+        PASS [   0.006s] (225/973) sqlparser::sqlparser_common parse_create_external_table
+        PASS [   0.006s] (226/973) sqlparser::sqlparser_common parse_create_external_table_lowercase
+        PASS [   0.005s] (227/973) sqlparser::sqlparser_common parse_create_index
+        PASS [   0.005s] (228/973) sqlparser::sqlparser_common parse_create_materialized_view
+        PASS [   0.010s] (229/973) sqlparser::sqlparser_common parse_create_or_replace_external_table
+        PASS [   0.012s] (230/973) sqlparser::sqlparser_common parse_create_materialized_view_with_cluster_by
+        PASS [   0.005s] (231/973) sqlparser::sqlparser_common parse_create_or_replace_materialized_view
+        PASS [   0.006s] (232/973) sqlparser::sqlparser_common parse_create_or_replace_table
+        PASS [   0.005s] (233/973) sqlparser::sqlparser_common parse_create_or_replace_view
+        PASS [   0.004s] (234/973) sqlparser::sqlparser_common parse_create_role
+        PASS [   0.004s] (235/973) sqlparser::sqlparser_common parse_create_schema
+        PASS [   0.004s] (236/973) sqlparser::sqlparser_common parse_create_schema_with_authorization
+        PASS [   0.004s] (237/973) sqlparser::sqlparser_common parse_create_schema_with_name_and_authorization
+        PASS [   0.006s] (238/973) sqlparser::sqlparser_common parse_create_table_as
+        PASS [   0.012s] (239/973) sqlparser::sqlparser_common parse_create_table
+        PASS [   0.005s] (240/973) sqlparser::sqlparser_common parse_create_table_as_table
+        PASS [   0.004s] (241/973) sqlparser::sqlparser_common parse_create_table_clone
+        PASS [   0.004s] (242/973) sqlparser::sqlparser_common parse_create_table_collate
+        PASS [   0.005s] (243/973) sqlparser::sqlparser_common parse_create_table_hive_array
+        PASS [   0.004s] (244/973) sqlparser::sqlparser_common parse_create_table_on_cluster
+        PASS [   0.006s] (245/973) sqlparser::sqlparser_common parse_create_table_select
+        PASS [   0.004s] (246/973) sqlparser::sqlparser_common parse_create_table_trailing_comma
+        PASS [   0.005s] (247/973) sqlparser::sqlparser_common parse_create_table_with_bit_types
+        PASS [   0.034s] (248/973) sqlparser::sqlparser_common parse_create_table_column_constraint_characteristics
+        PASS [   0.012s] (249/973) sqlparser::sqlparser_common parse_create_table_with_constraint_characteristics
+        PASS [   0.006s] (250/973) sqlparser::sqlparser_common parse_create_table_with_enum_types
+        PASS [   0.005s] (251/973) sqlparser::sqlparser_common parse_create_table_with_multiple_on_delete_fails
+        PASS [   0.005s] (252/973) sqlparser::sqlparser_common parse_create_table_with_multiple_on_delete_in_constraint_fails
+        PASS [   0.004s] (253/973) sqlparser::sqlparser_common parse_create_table_with_options
+        PASS [   0.006s] (254/973) sqlparser::sqlparser_common parse_create_table_with_on_delete_on_update_2in_any_order
+        PASS [   0.005s] (255/973) sqlparser::sqlparser_common parse_create_type
+        PASS [   0.005s] (256/973) sqlparser::sqlparser_common parse_create_view
+        PASS [   0.005s] (257/973) sqlparser::sqlparser_common parse_create_view_temporary
+        PASS [   0.005s] (258/973) sqlparser::sqlparser_common parse_create_view_with_columns
+        PASS [   0.005s] (259/973) sqlparser::sqlparser_common parse_create_view_with_options
+        PASS [   0.008s] (260/973) sqlparser::sqlparser_common parse_cross_join
+        PASS [   0.006s] (261/973) sqlparser::sqlparser_common parse_cte_renamed_columns
+        PASS [   0.004s] (262/973) sqlparser::sqlparser_common parse_cursor
+        PASS [   0.005s] (263/973) sqlparser::sqlparser_common parse_deeply_nested_expr_hits_recursion_limits
+        PASS [   0.011s] (264/973) sqlparser::sqlparser_common parse_ctes
+        PASS [   0.006s] (265/973) sqlparser::sqlparser_common parse_deeply_nested_subquery_expr_hits_recursion_limits
+        PASS [   0.008s] (266/973) sqlparser::sqlparser_common parse_deeply_nested_parens_hits_recursion_limits
+        PASS [   0.005s] (267/973) sqlparser::sqlparser_common parse_delete_statement
+        PASS [   0.008s] (268/973) sqlparser::sqlparser_common parse_deeply_nested_unary_op_hits_recursion_limits
+        PASS [   0.006s] (269/973) sqlparser::sqlparser_common parse_delete_statement_for_multi_tables
+        PASS [   0.006s] (270/973) sqlparser::sqlparser_common parse_delete_statement_for_multi_tables_with_using
+        PASS [   0.004s] (271/973) sqlparser::sqlparser_common parse_delete_without_from_error
+        PASS [   0.005s] (272/973) sqlparser::sqlparser_common parse_discard
+        PASS [   0.011s] (273/973) sqlparser::sqlparser_common parse_derived_tables
+        PASS [   0.005s] (274/973) sqlparser::sqlparser_common parse_double_colon_cast_at_timezone
+        PASS [   0.004s] (275/973) sqlparser::sqlparser_common parse_drop_database
+        PASS [   0.005s] (276/973) sqlparser::sqlparser_common parse_drop_database_if_exists
+        PASS [   0.005s] (277/973) sqlparser::sqlparser_common parse_drop_index
+        PASS [   0.005s] (278/973) sqlparser::sqlparser_common parse_drop_role
+        PASS [   0.004s] (279/973) sqlparser::sqlparser_common parse_drop_schema
+        PASS [   0.005s] (280/973) sqlparser::sqlparser_common parse_drop_table
+        PASS [   0.005s] (281/973) sqlparser::sqlparser_common parse_drop_type
+        PASS [   0.005s] (282/973) sqlparser::sqlparser_common parse_drop_view
+        PASS [   0.006s] (283/973) sqlparser::sqlparser_common parse_end
+        PASS [   0.006s] (284/973) sqlparser::sqlparser_common parse_escaped_single_quote_string_predicate_with_escape
+        PASS [   0.005s] (285/973) sqlparser::sqlparser_common parse_escaped_single_quote_string_predicate_with_no_escape
+        PASS [   0.004s] (286/973) sqlparser::sqlparser_common parse_escaped_string_with_unescape
+        PASS [   0.005s] (287/973) sqlparser::sqlparser_common parse_escaped_string_without_unescape
+        PASS [   0.005s] (288/973) sqlparser::sqlparser_common parse_execute_stored_procedure
+        PASS [   0.008s] (289/973) sqlparser::sqlparser_common parse_exists_subquery
+        PASS [   0.009s] (290/973) sqlparser::sqlparser_common parse_explain_analyze_with_simple_select
+        PASS [   0.006s] (291/973) sqlparser::sqlparser_common parse_explain_query_plan
+        PASS [   0.005s] (292/973) sqlparser::sqlparser_common parse_explain_table
+        PASS [   0.006s] (293/973) sqlparser::sqlparser_common parse_explain_with_option_list
+        PASS [   0.009s] (294/973) sqlparser::sqlparser_common parse_exponent_in_select
+        PASS [   0.005s] (295/973) sqlparser::sqlparser_common parse_factorial_operator
+        PASS [   0.021s] (296/973) sqlparser::sqlparser_common parse_extract
+        PASS [   0.013s] (297/973) sqlparser::sqlparser_common parse_fetch
+        PASS [   0.011s] (298/973) sqlparser::sqlparser_common parse_fetch_variations
+        PASS [   0.010s] (299/973) sqlparser::sqlparser_common parse_floor_datetime
+        PASS [   0.006s] (300/973) sqlparser::sqlparser_common parse_floor_number
+        PASS [   0.006s] (301/973) sqlparser::sqlparser_common parse_floor_number_scale
+        PASS [   0.005s] (302/973) sqlparser::sqlparser_common parse_floor_scale
+        PASS [   0.005s] (303/973) sqlparser::sqlparser_common parse_from_advanced
+        PASS [   0.008s] (304/973) sqlparser::sqlparser_common parse_grant
+        PASS [   0.011s] (305/973) sqlparser::sqlparser_common parse_ilike
+        PASS [   0.006s] (306/973) sqlparser::sqlparser_common parse_implicit_join
+        PASS [   0.005s] (307/973) sqlparser::sqlparser_common parse_in_error
+        PASS [   0.007s] (308/973) sqlparser::sqlparser_common parse_in_list
+        PASS [   0.007s] (309/973) sqlparser::sqlparser_common parse_in_subquery
+        PASS [   0.006s] (310/973) sqlparser::sqlparser_common parse_in_unnest
+        PASS [   0.006s] (311/973) sqlparser::sqlparser_common parse_insert_default_values
+        PASS [   0.005s] (312/973) sqlparser::sqlparser_common parse_insert_select_returning
+        PASS [   0.005s] (313/973) sqlparser::sqlparser_common parse_insert_sqlite
+        PASS [   0.009s] (314/973) sqlparser::sqlparser_common parse_insert_values
+        PASS [   0.006s] (315/973) sqlparser::sqlparser_common parse_interval_and_or_xor
+        PASS [   0.013s] (316/973) sqlparser::sqlparser_common parse_interval_all
+        PASS [   0.005s] (317/973) sqlparser::sqlparser_common parse_interval_disallow_interval_expr
+        PASS [   0.005s] (318/973) sqlparser::sqlparser_common parse_interval_dont_require_unit
+        PASS [   0.007s] (319/973) sqlparser::sqlparser_common parse_interval_require_unit
+        PASS [   0.010s] (320/973) sqlparser::sqlparser_common parse_interval_require_qualifier
+        PASS [   0.005s] (321/973) sqlparser::sqlparser_common parse_invalid_infix_not
+        PASS [   0.004s] (322/973) sqlparser::sqlparser_common parse_invalid_subquery_without_parens
+        PASS [   0.004s] (323/973) sqlparser::sqlparser_common parse_invalid_table_name
+        PASS [   0.005s] (324/973) sqlparser::sqlparser_common parse_is_distinct_from
+        PASS [   0.010s] (325/973) sqlparser::sqlparser_common parse_is_boolean
+        PASS [   0.004s] (326/973) sqlparser::sqlparser_common parse_is_not_distinct_from
+        PASS [   0.004s] (327/973) sqlparser::sqlparser_common parse_is_not_null
+        PASS [   0.004s] (328/973) sqlparser::sqlparser_common parse_is_null
+        PASS [   0.010s] (329/973) sqlparser::sqlparser_common parse_join_nesting
+        PASS [   0.012s] (330/973) sqlparser::sqlparser_common parse_join_syntax_variants
+        PASS [   0.016s] (331/973) sqlparser::sqlparser_common parse_joins_on
+        PASS [   0.012s] (332/973) sqlparser::sqlparser_common parse_joins_using
+        PASS [   0.005s] (333/973) sqlparser::sqlparser_common parse_json_keyword
+        PASS [   0.005s] (334/973) sqlparser::sqlparser_common parse_json_object
+        PASS [   0.008s] (335/973) sqlparser::sqlparser_common parse_json_ops_without_colon
+        PASS [   0.011s] (336/973) sqlparser::sqlparser_common parse_like
+        PASS [   0.006s] (337/973) sqlparser::sqlparser_common parse_limit
+        PASS [   0.006s] (338/973) sqlparser::sqlparser_common parse_limit_accepts_all
+        PASS [   0.005s] (339/973) sqlparser::sqlparser_common parse_limit_is_not_an_alias
+        PASS [   0.004s] (340/973) sqlparser::sqlparser_common parse_listen_channel
+        PASS [   0.010s] (341/973) sqlparser::sqlparser_common parse_listagg
+        PASS [   0.005s] (342/973) sqlparser::sqlparser_common parse_literal_date
+        PASS [   0.004s] (343/973) sqlparser::sqlparser_common parse_literal_datetime
+        PASS [   0.005s] (344/973) sqlparser::sqlparser_common parse_literal_decimal
+        PASS [   0.005s] (345/973) sqlparser::sqlparser_common parse_literal_integer
+        PASS [   0.006s] (346/973) sqlparser::sqlparser_common parse_literal_string
+        PASS [   0.004s] (347/973) sqlparser::sqlparser_common parse_literal_time
+        PASS [   0.009s] (348/973) sqlparser::sqlparser_common parse_literal_timestamp_with_time_zone
+        PASS [   0.009s] (349/973) sqlparser::sqlparser_common parse_literal_timestamp_without_time_zone
+        PASS [   0.005s] (350/973) sqlparser::sqlparser_common parse_load_data
+        PASS [   0.005s] (351/973) sqlparser::sqlparser_common parse_map_access_expr
+        PASS [   0.005s] (352/973) sqlparser::sqlparser_common parse_method_expr
+        PASS [   0.011s] (353/973) sqlparser::sqlparser_common parse_merge
+        PASS [   0.005s] (354/973) sqlparser::sqlparser_common parse_method_select
+        PASS [   0.004s] (355/973) sqlparser::sqlparser_common parse_mod
+        PASS [   0.004s] (356/973) sqlparser::sqlparser_common parse_mod_no_spaces
+        PASS [   0.005s] (357/973) sqlparser::sqlparser_common parse_named_argument_function
+        PASS [   0.005s] (358/973) sqlparser::sqlparser_common parse_named_argument_function_with_eq_operator
+        PASS [   0.007s] (359/973) sqlparser::sqlparser_common parse_named_window_functions
+        PASS [   0.019s] (360/973) sqlparser::sqlparser_common parse_multiple_statements
+        PASS [   0.005s] (361/973) sqlparser::sqlparser_common parse_negative_value
+        PASS [   0.007s] (362/973) sqlparser::sqlparser_common parse_natural_join
+        PASS [   0.005s] (363/973) sqlparser::sqlparser_common parse_no_table_name
+        PASS [   0.006s] (364/973) sqlparser::sqlparser_common parse_non_latin_identifiers
+        PASS [   0.005s] (365/973) sqlparser::sqlparser_common parse_not
+        PASS [   0.006s] (366/973) sqlparser::sqlparser_common parse_not_precedence
+        PASS [   0.004s] (367/973) sqlparser::sqlparser_common parse_notify_channel
+        PASS [   0.005s] (368/973) sqlparser::sqlparser_common parse_null_in_select
+        PASS [   0.006s] (369/973) sqlparser::sqlparser_common parse_null_like
+        PASS [   0.005s] (370/973) sqlparser::sqlparser_common parse_nullary_table_valued_function
+        PASS [   0.005s] (371/973) sqlparser::sqlparser_common parse_number
+        PASS [   0.006s] (372/973) sqlparser::sqlparser_common parse_odbc_scalar_function
+        PASS [   0.010s] (373/973) sqlparser::sqlparser_common parse_offset
+        PASS [   0.011s] (374/973) sqlparser::sqlparser_common parse_offset_and_limit
+        PASS [   0.008s] (375/973) sqlparser::sqlparser_common parse_overlay
+        PASS [   0.005s] (376/973) sqlparser::sqlparser_common parse_parens
+        PASS [   0.012s] (377/973) sqlparser::sqlparser_common parse_pivot_unpivot_table
+        PASS [   0.016s] (378/973) sqlparser::sqlparser_common parse_pivot_table
+        PASS [   0.005s] (379/973) sqlparser::sqlparser_common parse_position
+        PASS [   0.006s] (380/973) sqlparser::sqlparser_common parse_position_negative
+        PASS [   0.005s] (381/973) sqlparser::sqlparser_common parse_projection_nested_type
+        PASS [   0.006s] (382/973) sqlparser::sqlparser_common parse_projection_trailing_comma
+        PASS [   0.007s] (383/973) sqlparser::sqlparser_common parse_recursive_cte
+        PASS [   0.004s] (384/973) sqlparser::sqlparser_common parse_replace_into
+        PASS [   0.005s] (385/973) sqlparser::sqlparser_common parse_returning_as_column_alias
+        PASS [   0.006s] (386/973) sqlparser::sqlparser_common parse_rollback
+        PASS [   0.005s] (387/973) sqlparser::sqlparser_common parse_scalar_function_in_projection
+        PASS [   0.005s] (388/973) sqlparser::sqlparser_common parse_scalar_subqueries
+        PASS [   0.006s] (389/973) sqlparser::sqlparser_common parse_searched_case_expr
+        PASS [   0.005s] (390/973) sqlparser::sqlparser_common parse_select_all
+        PASS [   0.005s] (391/973) sqlparser::sqlparser_common parse_select_all_distinct
+        PASS [   0.007s] (392/973) sqlparser::sqlparser_common parse_select_count_distinct
+        PASS [   0.006s] (393/973) sqlparser::sqlparser_common parse_select_count_wildcard
+        PASS [   0.005s] (394/973) sqlparser::sqlparser_common parse_select_distinct
+        PASS [   0.005s] (395/973) sqlparser::sqlparser_common parse_select_distinct_missing_paren
+        PASS [   0.007s] (396/973) sqlparser::sqlparser_common parse_select_distinct_on
+        PASS [   0.006s] (397/973) sqlparser::sqlparser_common parse_select_distinct_tuple
+        PASS [   0.005s] (398/973) sqlparser::sqlparser_common parse_select_distinct_two_fields
+        PASS [   0.006s] (399/973) sqlparser::sqlparser_common parse_select_group_by
+        PASS [   0.006s] (400/973) sqlparser::sqlparser_common parse_select_group_by_all
+        PASS [   0.005s] (401/973) sqlparser::sqlparser_common parse_select_having
+        PASS [   0.006s] (402/973) sqlparser::sqlparser_common parse_select_into
+        PASS [   0.009s] (403/973) sqlparser::sqlparser_common parse_select_order_by
+        PASS [   0.006s] (404/973) sqlparser::sqlparser_common parse_select_order_by_limit
+        PASS [   0.006s] (405/973) sqlparser::sqlparser_common parse_select_order_by_nulls_order
+        PASS [   0.007s] (406/973) sqlparser::sqlparser_common parse_select_qualify
+        PASS [   0.006s] (407/973) sqlparser::sqlparser_common parse_select_string_predicate
+        PASS [   0.007s] (408/973) sqlparser::sqlparser_common parse_select_wildcard
+        PASS [   0.005s] (409/973) sqlparser::sqlparser_common parse_select_wildcard_with_except
+        PASS [   0.005s] (410/973) sqlparser::sqlparser_common parse_select_with_date_column_name
+        PASS [   0.010s] (411/973) sqlparser::sqlparser_common parse_select_with_alias_and_column_defs
+        PASS [   0.006s] (412/973) sqlparser::sqlparser_common parse_select_with_table_alias
+        PASS [   0.006s] (413/973) sqlparser::sqlparser_common parse_select_with_table_alias_as
+        PASS [   0.005s] (414/973) sqlparser::sqlparser_common parse_set_role_as_variable
+        PASS [   0.006s] (415/973) sqlparser::sqlparser_common parse_set_time_zone
+        PASS [   0.005s] (416/973) sqlparser::sqlparser_common parse_set_time_zone_alias
+        PASS [   0.006s] (417/973) sqlparser::sqlparser_common parse_set_transaction
+        PASS [   0.010s] (418/973) sqlparser::sqlparser_common parse_set_variable
+        PASS [   0.005s] (419/973) sqlparser::sqlparser_common parse_show_functions
+        PASS [   0.006s] (420/973) sqlparser::sqlparser_common parse_simple_case_expr
+        PASS [   0.009s] (421/973) sqlparser::sqlparser_common parse_similar_to
+        PASS [   0.006s] (422/973) sqlparser::sqlparser_common parse_simple_math_expr_minus
+        PASS [   0.006s] (423/973) sqlparser::sqlparser_common parse_simple_math_expr_plus
+        PASS [   0.007s] (424/973) sqlparser::sqlparser_common parse_simple_select
+        PASS [   0.005s] (425/973) sqlparser::sqlparser_common parse_sized_list
+        PASS [   0.004s] (426/973) sqlparser::sqlparser_common parse_string_agg
+        PASS [   0.007s] (427/973) sqlparser::sqlparser_common parse_start_transaction
+        PASS [   0.007s] (428/973) sqlparser::sqlparser_common parse_substring
+        PASS [   0.006s] (429/973) sqlparser::sqlparser_common parse_table_function
+        PASS [   0.007s] (430/973) sqlparser::sqlparser_common parse_top_level
+        PASS [   0.008s] (431/973) sqlparser::sqlparser_common parse_time_functions
+        PASS [   0.006s] (432/973) sqlparser::sqlparser_common parse_trailing_comma
+        PASS [   0.010s] (433/973) sqlparser::sqlparser_common parse_trim
+        PASS [   0.008s] (434/973) sqlparser::sqlparser_common parse_try_cast
+        PASS [   0.004s] (435/973) sqlparser::sqlparser_common parse_tuple_invalid
+        PASS [   0.005s] (436/973) sqlparser::sqlparser_common parse_tuples
+        PASS [   0.005s] (437/973) sqlparser::sqlparser_common parse_unary_math_with_multiply
+        PASS [   0.004s] (438/973) sqlparser::sqlparser_common parse_unary_math_with_plus
+        PASS [   0.005s] (439/973) sqlparser::sqlparser_common parse_uncache_table
+        PASS [   0.004s] (440/973) sqlparser::sqlparser_common parse_unlisten_channel
+        PASS [   0.006s] (441/973) sqlparser::sqlparser_common parse_unload
+        PASS [   0.007s] (442/973) sqlparser::sqlparser_common parse_unnest
+        PASS [   0.005s] (443/973) sqlparser::sqlparser_common parse_unnest_in_from_clause
+        PASS [   0.026s] (444/973) sqlparser::sqlparser_common parse_union_except_intersect
+        PASS [   0.007s] (445/973) sqlparser::sqlparser_common parse_unpivot_table
+        PASS [   0.006s] (446/973) sqlparser::sqlparser_common parse_update
+        PASS [   0.008s] (447/973) sqlparser::sqlparser_common parse_update_or
+        PASS [   0.006s] (448/973) sqlparser::sqlparser_common parse_update_set_from
+        PASS [   0.005s] (449/973) sqlparser::sqlparser_common parse_update_with_table_alias
+        PASS [   0.007s] (450/973) sqlparser::sqlparser_common parse_values
+        PASS [   0.005s] (451/973) sqlparser::sqlparser_common parse_where_delete_statement
+        PASS [   0.005s] (452/973) sqlparser::sqlparser_common parse_where_delete_with_alias_statement
+        PASS [   0.008s] (453/973) sqlparser::sqlparser_common parse_window_and_qualify_clause
+        PASS [   0.008s] (454/973) sqlparser::sqlparser_common parse_window_clause
+        PASS [   0.004s] (455/973) sqlparser::sqlparser_common parse_window_clause_named_window
+        PASS [   0.005s] (456/973) sqlparser::sqlparser_common parse_window_function_null_treatment_arg
+        PASS [   0.008s] (457/973) sqlparser::sqlparser_common parse_window_functions
+        PASS [   0.008s] (458/973) sqlparser::sqlparser_common parse_window_rank_function
+        PASS [   0.006s] (459/973) sqlparser::sqlparser_common parse_with_recursion_limit
+        PASS [   0.006s] (460/973) sqlparser::sqlparser_common parse_within_group
+        PASS [   0.006s] (461/973) sqlparser::sqlparser_common test_alias_equal_expr
+        PASS [   0.007s] (462/973) sqlparser::sqlparser_common test_alter_policy
+        PASS [   0.005s] (463/973) sqlparser::sqlparser_common test_alter_table_with_on_cluster
+        PASS [   0.005s] (464/973) sqlparser::sqlparser_common test_buffer_reuse
+        PASS [   0.009s] (465/973) sqlparser::sqlparser_common test_any_some_all_comparison
+        PASS [   0.005s] (466/973) sqlparser::sqlparser_common test_comment_hash_syntax
+        PASS [   0.005s] (467/973) sqlparser::sqlparser_common test_create_index_with_using_function
+        PASS [   0.005s] (468/973) sqlparser::sqlparser_common test_create_index_with_with_clause
+        PASS [   0.004s] (469/973) sqlparser::sqlparser_common test_dictionary_syntax
+        PASS [   0.012s] (470/973) sqlparser::sqlparser_common test_create_policy
+        PASS [   0.010s] (471/973) sqlparser::sqlparser_common test_drop_policy
+        PASS [   0.006s] (472/973) sqlparser::sqlparser_common test_eof_after_as
+        PASS [   0.006s] (473/973) sqlparser::sqlparser_common test_extract_seconds_err
+        PASS [   0.005s] (474/973) sqlparser::sqlparser_common test_extract_seconds_ok
+        PASS [   0.004s] (475/973) sqlparser::sqlparser_common test_extract_seconds_single_quote_err
+        PASS [   0.004s] (476/973) sqlparser::sqlparser_common test_extract_seconds_single_quote_ok
+        PASS [   0.005s] (477/973) sqlparser::sqlparser_common test_group_by_grouping_sets
+        PASS [   0.005s] (478/973) sqlparser::sqlparser_common test_group_by_nothing
+        PASS [   0.004s] (479/973) sqlparser::sqlparser_common test_load_extension
+        PASS [   0.005s] (480/973) sqlparser::sqlparser_common test_lock
+        PASS [   0.006s] (481/973) sqlparser::sqlparser_common test_lock_nonblock
+        PASS [   0.007s] (482/973) sqlparser::sqlparser_common test_lock_table
+        PASS [   0.005s] (483/973) sqlparser::sqlparser_common test_map_syntax
+        PASS [   0.006s] (484/973) sqlparser::sqlparser_common test_match_recognize
+        PASS [   0.006s] (485/973) sqlparser::sqlparser_common test_match_recognize_patterns
+        PASS [   0.005s] (486/973) sqlparser::sqlparser_common test_merge_into_using_table
+        PASS [   0.006s] (487/973) sqlparser::sqlparser_common test_merge_invalid_statements
+        PASS [   0.007s] (488/973) sqlparser::sqlparser_common test_merge_with_delimiter
+        PASS [   0.005s] (489/973) sqlparser::sqlparser_common test_no_infix_error
+        PASS [   0.005s] (490/973) sqlparser::sqlparser_common test_parse_inline_comment
+        PASS [   0.006s] (491/973) sqlparser::sqlparser_common test_parse_named_window
+        PASS [   0.005s] (492/973) sqlparser::sqlparser_common test_placeholder
+        PASS [   0.004s] (493/973) sqlparser::sqlparser_common test_release_savepoint
+        PASS [   0.005s] (494/973) sqlparser::sqlparser_common test_reserved_keywords_for_identifiers
+        PASS [   0.005s] (495/973) sqlparser::sqlparser_common test_revoke
+        PASS [   0.004s] (496/973) sqlparser::sqlparser_common test_savepoint
+        PASS [   0.005s] (497/973) sqlparser::sqlparser_common test_select_top
+        PASS [   0.008s] (498/973) sqlparser::sqlparser_common test_select_where_with_like_or_ilike_any
+        PASS [   0.006s] (499/973) sqlparser::sqlparser_common test_select_wildcard_with_replace
+        PASS [   0.005s] (500/973) sqlparser::sqlparser_common test_selective_aggregation
+        PASS [   0.007s] (501/973) sqlparser::sqlparser_common test_show_dbs_schemas_tables_views
+        PASS [   0.007s] (502/973) sqlparser::sqlparser_common test_table_sample
+        PASS [   0.005s] (503/973) sqlparser::sqlparser_common test_truncate_table_with_on_cluster
+        PASS [   0.004s] (504/973) sqlparser::sqlparser_common test_try_convert
+        PASS [   0.005s] (505/973) sqlparser::sqlparser_common tests_select_values_without_parens
+        PASS [   0.008s] (506/973) sqlparser::sqlparser_custom_dialect custom_infix_parser
+        PASS [   0.009s] (507/973) sqlparser::sqlparser_common tests_select_values_without_parens_and_set_op
+        PASS [   0.004s] (508/973) sqlparser::sqlparser_custom_dialect custom_prefix_parser
+        PASS [   0.004s] (509/973) sqlparser::sqlparser_custom_dialect custom_statement_parser
+        PASS [   0.004s] (510/973) sqlparser::sqlparser_custom_dialect test_map_syntax_not_support_default
+        PASS [   0.005s] (511/973) sqlparser::sqlparser_databricks parse_databricks_struct_function
+        PASS [   0.004s] (512/973) sqlparser::sqlparser_databricks parse_use
+        PASS [   0.004s] (513/973) sqlparser::sqlparser_databricks test_databricks_exists
+        PASS [   0.004s] (514/973) sqlparser::sqlparser_databricks test_databricks_identifiers
+        PASS [   0.005s] (515/973) sqlparser::sqlparser_databricks test_databricks_lambdas
+        PASS [   0.005s] (516/973) sqlparser::sqlparser_databricks test_values_clause
+        PASS [   0.005s] (517/973) sqlparser::sqlparser_duckdb parse_div_infix
+        PASS [   0.004s] (518/973) sqlparser::sqlparser_duckdb parse_use
+        PASS [   0.004s] (519/973) sqlparser::sqlparser_duckdb test_array_index
+        PASS [   0.005s] (520/973) sqlparser::sqlparser_duckdb test_attach_database
+        PASS [   0.005s] (521/973) sqlparser::sqlparser_duckdb test_attach_database_simple
+        PASS [   0.004s] (522/973) sqlparser::sqlparser_duckdb test_create_macro
+        PASS [   0.004s] (523/973) sqlparser::sqlparser_duckdb test_create_macro_default_args
+        PASS [   0.004s] (524/973) sqlparser::sqlparser_duckdb test_create_secret
+        PASS [   0.004s] (525/973) sqlparser::sqlparser_duckdb test_create_secret_simple
+        PASS [   0.004s] (526/973) sqlparser::sqlparser_duckdb test_create_table_macro
+        PASS [   0.004s] (527/973) sqlparser::sqlparser_duckdb test_detach_database
+        PASS [   0.004s] (528/973) sqlparser::sqlparser_duckdb test_detach_database_simple
+        PASS [   0.004s] (529/973) sqlparser::sqlparser_duckdb test_drop_secret
+        PASS [   0.004s] (530/973) sqlparser::sqlparser_duckdb test_drop_secret_simple
+        PASS [   0.004s] (531/973) sqlparser::sqlparser_duckdb test_duckdb_install
+        PASS [   0.005s] (532/973) sqlparser::sqlparser_duckdb test_duckdb_load_extension
+        PASS [   0.005s] (533/973) sqlparser::sqlparser_duckdb test_duckdb_named_argument_function_with_assignment_operator
+        PASS [   0.005s] (534/973) sqlparser::sqlparser_duckdb test_duckdb_struct_literal
+        PASS [   0.004s] (535/973) sqlparser::sqlparser_duckdb test_duckdb_union_datatype
+        PASS [   0.005s] (536/973) sqlparser::sqlparser_duckdb test_select_union_by_name
+        PASS [   0.005s] (537/973) sqlparser::sqlparser_duckdb test_select_wildcard_with_exclude
+        PASS [   0.005s] (538/973) sqlparser::sqlparser_duckdb test_struct
+        PASS [   0.005s] (539/973) sqlparser::sqlparser_hive columns_after_partition
+        PASS [   0.004s] (540/973) sqlparser::sqlparser_hive create_delimited_table
+        PASS [   0.004s] (541/973) sqlparser::sqlparser_hive create_local_directory
+        PASS [   0.004s] (542/973) sqlparser::sqlparser_hive create_table_like
+        PASS [   0.005s] (543/973) sqlparser::sqlparser_hive create_table_with_clustered_by
+        PASS [   0.005s] (544/973) sqlparser::sqlparser_hive create_table_with_comment
+        PASS [   0.004s] (545/973) sqlparser::sqlparser_hive create_temp_table
+        PASS [   0.004s] (546/973) sqlparser::sqlparser_hive decimal_precision
+        PASS [   0.008s] (547/973) sqlparser::sqlparser_hive drop_table_purge
+        PASS [   0.009s] (548/973) sqlparser::sqlparser_hive explain_describe_extended
+        PASS [   0.005s] (549/973) sqlparser::sqlparser_hive explain_describe_formatted
+        PASS [   0.005s] (550/973) sqlparser::sqlparser_hive filter_as_alias
+        PASS [   0.004s] (551/973) sqlparser::sqlparser_hive from_cte
+        PASS [   0.005s] (552/973) sqlparser::sqlparser_hive lateral_view
+        PASS [   0.005s] (553/973) sqlparser::sqlparser_hive long_numerics
+        PASS [   0.004s] (554/973) sqlparser::sqlparser_hive map_access
+        PASS [   0.005s] (555/973) sqlparser::sqlparser_hive no_join_condition
+        PASS [   0.004s] (556/973) sqlparser::sqlparser_hive parse_analyze
+        PASS [   0.004s] (557/973) sqlparser::sqlparser_hive parse_analyze_for_columns
+        PASS [   0.004s] (558/973) sqlparser::sqlparser_hive parse_create_function
+        PASS [   0.004s] (559/973) sqlparser::sqlparser_hive parse_delimited_identifiers
+        PASS [   0.004s] (560/973) sqlparser::sqlparser_hive parse_describe
+        PASS [   0.004s] (561/973) sqlparser::sqlparser_hive parse_insert_overwrite
+        PASS [   0.004s] (562/973) sqlparser::sqlparser_hive parse_msck
+        PASS [   0.004s] (563/973) sqlparser::sqlparser_hive parse_set
+        PASS [   0.004s] (564/973) sqlparser::sqlparser_hive parse_table_create
+        PASS [   0.004s] (565/973) sqlparser::sqlparser_hive parse_use
+        PASS [   0.004s] (566/973) sqlparser::sqlparser_hive parse_with_cte
+        PASS [   0.004s] (567/973) sqlparser::sqlparser_hive rename_table
+        PASS [   0.004s] (568/973) sqlparser::sqlparser_hive set_statement_with_minus
+        PASS [   0.004s] (569/973) sqlparser::sqlparser_hive sort_by
+        PASS [   0.004s] (570/973) sqlparser::sqlparser_hive test_add_multiple_partitions
+        PASS [   0.004s] (571/973) sqlparser::sqlparser_hive test_add_partition
+        PASS [   0.005s] (572/973) sqlparser::sqlparser_hive test_alter_partition
+        PASS [   0.005s] (573/973) sqlparser::sqlparser_hive test_alter_with_location
+        PASS [   0.004s] (574/973) sqlparser::sqlparser_hive test_alter_with_set_location
+        PASS [   0.004s] (575/973) sqlparser::sqlparser_hive test_cluster_by
+        PASS [   0.004s] (576/973) sqlparser::sqlparser_hive test_distribute_by
+        PASS [   0.005s] (577/973) sqlparser::sqlparser_hive test_drop_if_exists
+        PASS [   0.004s] (578/973) sqlparser::sqlparser_hive test_drop_partition
+        PASS [   0.004s] (579/973) sqlparser::sqlparser_hive test_identifier
+        PASS [   0.004s] (580/973) sqlparser::sqlparser_hive test_spaceship
+        PASS [   0.004s] (581/973) sqlparser::sqlparser_hive test_tample_sample
+        PASS [   0.005s] (582/973) sqlparser::sqlparser_hive test_truncate
+        PASS [   0.005s] (583/973) sqlparser::sqlparser_mssql dont_parse_trailing_for
+        PASS [   0.004s] (584/973) sqlparser::sqlparser_mssql parse_alter_role
+        PASS [   0.005s] (585/973) sqlparser::sqlparser_mssql parse_ampersand_arobase
+        PASS [   0.005s] (586/973) sqlparser::sqlparser_mssql parse_cast_varchar_max
+        PASS [   0.004s] (587/973) sqlparser::sqlparser_mssql parse_convert
+        PASS [   0.004s] (588/973) sqlparser::sqlparser_mssql parse_create_procedure
+        PASS [   0.004s] (589/973) sqlparser::sqlparser_mssql parse_create_table_with_identity_column
+        PASS [   0.005s] (590/973) sqlparser::sqlparser_mssql parse_create_table_with_invalid_options
+        PASS [   0.005s] (591/973) sqlparser::sqlparser_mssql parse_delimited_identifiers
+        PASS [   0.010s] (592/973) sqlparser::sqlparser_mssql parse_create_table_with_valid_options
+        PASS [   0.006s] (593/973) sqlparser::sqlparser_mssql parse_for_clause
+        PASS [   0.005s] (594/973) sqlparser::sqlparser_mssql parse_for_json_expect_ast
+        PASS [   0.004s] (595/973) sqlparser::sqlparser_mssql parse_mssql_apply_join
+        PASS [   0.004s] (596/973) sqlparser::sqlparser_mssql parse_mssql_bin_literal
+        PASS [   0.005s] (597/973) sqlparser::sqlparser_mssql parse_mssql_create_role
+        PASS [   0.006s] (598/973) sqlparser::sqlparser_mssql parse_mssql_create_procedure
+        PASS [   0.004s] (599/973) sqlparser::sqlparser_mssql parse_mssql_declare
+        PASS [   0.004s] (600/973) sqlparser::sqlparser_mssql parse_mssql_delimited_identifiers
+        PASS [   0.004s] (601/973) sqlparser::sqlparser_mssql parse_mssql_identifiers
+        PASS [   0.005s] (602/973) sqlparser::sqlparser_mssql parse_mssql_json_array
+        PASS [   0.004s] (603/973) sqlparser::sqlparser_mssql parse_mssql_json_object
+        PASS [   0.005s] (604/973) sqlparser::sqlparser_mssql parse_mssql_openjson
+        PASS [   0.004s] (605/973) sqlparser::sqlparser_mssql parse_mssql_single_quoted_aliases
+        PASS [   0.004s] (606/973) sqlparser::sqlparser_mssql parse_mssql_top
+        PASS [   0.004s] (607/973) sqlparser::sqlparser_mssql parse_mssql_top_paren
+        PASS [   0.004s] (608/973) sqlparser::sqlparser_mssql parse_mssql_top_percent
+        PASS [   0.004s] (609/973) sqlparser::sqlparser_mssql parse_mssql_top_percent_with_ties
+        PASS [   0.004s] (610/973) sqlparser::sqlparser_mssql parse_mssql_top_with_ties
+        PASS [   0.004s] (611/973) sqlparser::sqlparser_mssql parse_substring_in_select
+        PASS [   0.004s] (612/973) sqlparser::sqlparser_mssql parse_table_name_in_square_brackets
+        PASS [   0.004s] (613/973) sqlparser::sqlparser_mssql parse_table_time_travel
+        PASS [   0.004s] (614/973) sqlparser::sqlparser_mssql parse_true_false_as_identifiers
+        PASS [   0.004s] (615/973) sqlparser::sqlparser_mssql parse_use
+        PASS [   0.005s] (616/973) sqlparser::sqlparser_mysql check_roundtrip_of_escaped_string
+        PASS [   0.005s] (617/973) sqlparser::sqlparser_mysql parse_alter_table_add_column
+        PASS [   0.005s] (618/973) sqlparser::sqlparser_mysql parse_alter_table_add_columns
+        PASS [   0.004s] (619/973) sqlparser::sqlparser_mysql parse_alter_table_change_column
+        PASS [   0.004s] (620/973) sqlparser::sqlparser_mysql parse_alter_table_change_column_with_column_position
+        PASS [   0.004s] (621/973) sqlparser::sqlparser_mysql parse_alter_table_drop_primary_key
+        PASS [   0.004s] (622/973) sqlparser::sqlparser_mysql parse_alter_table_modify_column
+        PASS [   0.004s] (623/973) sqlparser::sqlparser_mysql parse_alter_table_modify_column_with_column_position
+        PASS [   0.005s] (624/973) sqlparser::sqlparser_mysql parse_begin_without_transaction
+        PASS [   0.005s] (625/973) sqlparser::sqlparser_mysql parse_bitstring_literal
+        PASS [   0.005s] (626/973) sqlparser::sqlparser_mysql parse_convert_using
+        PASS [   0.004s] (627/973) sqlparser::sqlparser_mysql parse_create_table_auto_increment
+        PASS [   0.005s] (628/973) sqlparser::sqlparser_mysql parse_create_table_auto_increment_offset
+        PASS [   0.005s] (629/973) sqlparser::sqlparser_mysql parse_create_table_both_options_and_as_query
+        PASS [   0.004s] (630/973) sqlparser::sqlparser_mysql parse_create_table_collate
+        PASS [   0.004s] (631/973) sqlparser::sqlparser_mysql parse_create_table_comment
+        PASS [   0.004s] (632/973) sqlparser::sqlparser_mysql parse_create_table_comment_character_set
+        PASS [   0.004s] (633/973) sqlparser::sqlparser_mysql parse_create_table_engine_default_charset
+        PASS [   0.008s] (634/973) sqlparser::sqlparser_mysql parse_create_table_gencol
+        PASS [   0.009s] (635/973) sqlparser::sqlparser_mysql parse_create_table_primary_and_unique_key
+        PASS [   0.005s] (636/973) sqlparser::sqlparser_mysql parse_create_table_primary_and_unique_key_characteristic_test
+        PASS [   0.005s] (637/973) sqlparser::sqlparser_mysql parse_create_table_primary_and_unique_key_with_index_options
+        PASS [   0.004s] (638/973) sqlparser::sqlparser_mysql parse_create_table_primary_and_unique_key_with_index_type
+        PASS [   0.005s] (639/973) sqlparser::sqlparser_mysql parse_create_table_set_enum
+        PASS [   0.005s] (640/973) sqlparser::sqlparser_mysql parse_create_table_unallow_constraint_then_index
+        PASS [   0.004s] (641/973) sqlparser::sqlparser_mysql parse_create_table_unsigned
+        PASS [   0.004s] (642/973) sqlparser::sqlparser_mysql parse_create_table_with_column_collate
+        PASS [   0.005s] (643/973) sqlparser::sqlparser_mysql parse_create_table_with_fulltext_definition
+        PASS [   0.005s] (644/973) sqlparser::sqlparser_mysql parse_create_table_with_fulltext_definition_should_not_accept_constraint_name
+        PASS [   0.006s] (645/973) sqlparser::sqlparser_mysql parse_create_table_with_index_definition
+        PASS [   0.005s] (646/973) sqlparser::sqlparser_mysql parse_create_table_with_minimum_display_width
+        PASS [   0.006s] (647/973) sqlparser::sqlparser_mysql parse_create_table_with_spatial_definition
+        PASS [   0.005s] (648/973) sqlparser::sqlparser_mysql parse_delete_with_limit
+        PASS [   0.004s] (649/973) sqlparser::sqlparser_mysql parse_delete_with_order_by
+        PASS [   0.004s] (650/973) sqlparser::sqlparser_mysql parse_div_infix
+        PASS [   0.004s] (651/973) sqlparser::sqlparser_mysql parse_empty_row_insert
+        PASS [   0.004s] (652/973) sqlparser::sqlparser_mysql parse_drop_temporary_table
+        PASS [   0.004s] (653/973) sqlparser::sqlparser_mysql parse_escaped_backticks_with_escape
+        PASS [   0.004s] (654/973) sqlparser::sqlparser_mysql parse_escaped_backticks_with_no_escape
+        PASS [   0.004s] (655/973) sqlparser::sqlparser_mysql parse_escaped_quote_identifiers_with_escape
+        PASS [   0.004s] (656/973) sqlparser::sqlparser_mysql parse_escaped_quote_identifiers_with_no_escape
+        PASS [   0.004s] (657/973) sqlparser::sqlparser_mysql parse_flush
+        PASS [   0.005s] (658/973) sqlparser::sqlparser_mysql parse_fulltext_expression
+        PASS [   0.004s] (659/973) sqlparser::sqlparser_mysql parse_hex_string_introducer
+        PASS [   0.004s] (660/973) sqlparser::sqlparser_mysql parse_identifiers
+        PASS [   0.004s] (661/973) sqlparser::sqlparser_mysql parse_ignore_insert
+        PASS [   0.004s] (662/973) sqlparser::sqlparser_mysql parse_insert_as
+        PASS [   0.004s] (663/973) sqlparser::sqlparser_mysql parse_insert_with_numeric_prefix_column_name
+        PASS [   0.005s] (664/973) sqlparser::sqlparser_mysql parse_insert_with_on_duplicate_update
+        PASS [   0.005s] (665/973) sqlparser::sqlparser_mysql parse_json_table
+        PASS [   0.004s] (666/973) sqlparser::sqlparser_mysql parse_kill
+        PASS [   0.004s] (667/973) sqlparser::sqlparser_mysql parse_limit_my_sql_syntax
+        PASS [   0.004s] (668/973) sqlparser::sqlparser_mysql parse_literal_string
+        PASS [   0.004s] (669/973) sqlparser::sqlparser_mysql parse_lock_tables
+        PASS [   0.004s] (670/973) sqlparser::sqlparser_mysql parse_logical_xor
+        PASS [   0.004s] (671/973) sqlparser::sqlparser_mysql parse_longblob_type
+        PASS [   0.004s] (672/973) sqlparser::sqlparser_mysql parse_priority_insert
+        PASS [   0.004s] (673/973) sqlparser::sqlparser_mysql parse_quote_identifiers
+        PASS [   0.004s] (674/973) sqlparser::sqlparser_mysql parse_replace_insert
+        PASS [   0.005s] (675/973) sqlparser::sqlparser_mysql parse_rlike_and_regexp
+        PASS [   0.009s] (676/973) sqlparser::sqlparser_mysql parse_select_with_concatenation_of_exp_number_and_numeric_prefix_column
+        PASS [   0.011s] (677/973) sqlparser::sqlparser_mysql parse_select_with_numeric_prefix_column_name
+        PASS [   0.006s] (678/973) sqlparser::sqlparser_mysql parse_set_names
+        PASS [   0.004s] (679/973) sqlparser::sqlparser_mysql parse_set_variables
+        PASS [   0.004s] (680/973) sqlparser::sqlparser_mysql parse_show_collation
+        PASS [   0.004s] (681/973) sqlparser::sqlparser_mysql parse_show_columns
+        PASS [   0.004s] (682/973) sqlparser::sqlparser_mysql parse_show_create
+        PASS [   0.005s] (683/973) sqlparser::sqlparser_mysql parse_show_extended_full
+        PASS [   0.005s] (684/973) sqlparser::sqlparser_mysql parse_show_status
+        PASS [   0.006s] (685/973) sqlparser::sqlparser_mysql parse_show_tables
+        PASS [   0.006s] (686/973) sqlparser::sqlparser_mysql parse_show_variables
+        PASS [   0.004s] (687/973) sqlparser::sqlparser_mysql parse_simple_insert
+        PASS [   0.004s] (688/973) sqlparser::sqlparser_mysql parse_string_introducers
+        PASS [   0.004s] (689/973) sqlparser::sqlparser_mysql parse_substring_in_select
+        PASS [   0.004s] (690/973) sqlparser::sqlparser_mysql parse_table_colum_option_on_update
+        PASS [   0.004s] (691/973) sqlparser::sqlparser_mysql parse_unterminated_escape
+        PASS [   0.004s] (692/973) sqlparser::sqlparser_mysql parse_update_with_joins
+        PASS [   0.004s] (693/973) sqlparser::sqlparser_mysql parse_use
+        PASS [   0.004s] (694/973) sqlparser::sqlparser_mysql parse_values
+        PASS [   0.006s] (695/973) sqlparser::sqlparser_mysql test_group_concat
+        PASS [   0.005s] (696/973) sqlparser::sqlparser_postgres arrow_cast_precedence
+        PASS [   0.004s] (697/973) sqlparser::sqlparser_postgres arrow_precedence
+        PASS [   0.004s] (698/973) sqlparser::sqlparser_postgres long_arrow_precedence
+        PASS [   0.005s] (699/973) sqlparser::sqlparser_postgres parse_alter_table_add_columns
+        PASS [   0.006s] (700/973) sqlparser::sqlparser_postgres parse_alter_role
+        PASS [   0.006s] (701/973) sqlparser::sqlparser_postgres parse_alter_table_alter_column
+        PASS [   0.006s] (702/973) sqlparser::sqlparser_postgres parse_alter_table_alter_column_add_generated
+        PASS [   0.004s] (703/973) sqlparser::sqlparser_postgres parse_alter_table_constraints_rename
+        PASS [   0.004s] (704/973) sqlparser::sqlparser_postgres parse_alter_table_constraints_unique_nulls_distinct
+        PASS [   0.004s] (705/973) sqlparser::sqlparser_postgres parse_alter_table_disable
+        PASS [   0.004s] (706/973) sqlparser::sqlparser_postgres parse_alter_table_disable_trigger
+        PASS [   0.006s] (707/973) sqlparser::sqlparser_postgres parse_alter_table_enable
+        PASS [   0.006s] (708/973) sqlparser::sqlparser_postgres parse_alter_table_owner_to
+        PASS [   0.004s] (709/973) sqlparser::sqlparser_postgres parse_ampersand_arobase
+        PASS [   0.004s] (710/973) sqlparser::sqlparser_postgres parse_array_agg
+        PASS [   0.005s] (711/973) sqlparser::sqlparser_postgres parse_array_index_expr
+        PASS [   0.004s] (712/973) sqlparser::sqlparser_postgres parse_array_multi_subscript
+        PASS [   0.004s] (713/973) sqlparser::sqlparser_postgres parse_array_subquery_expr
+        PASS [   0.005s] (714/973) sqlparser::sqlparser_postgres parse_array_subscript
+        PASS [   0.004s] (715/973) sqlparser::sqlparser_postgres parse_at_time_zone
+        PASS [   0.008s] (716/973) sqlparser::sqlparser_postgres parse_bad_if_not_exists
+        PASS [   0.008s] (717/973) sqlparser::sqlparser_postgres parse_bitstring_literal
+        PASS [   0.005s] (718/973) sqlparser::sqlparser_postgres parse_copy_from
+        PASS [   0.005s] (719/973) sqlparser::sqlparser_postgres parse_copy_from_before_v9_0
+        PASS [   0.004s] (720/973) sqlparser::sqlparser_postgres parse_copy_from_error
+        PASS [   0.006s] (721/973) sqlparser::sqlparser_postgres parse_copy_from_stdin
+        PASS [   0.005s] (722/973) sqlparser::sqlparser_postgres parse_copy_to
+        PASS [   0.004s] (723/973) sqlparser::sqlparser_postgres parse_copy_to_before_v9_0
+        PASS [   0.004s] (724/973) sqlparser::sqlparser_postgres parse_create_after_update_trigger_with_condition
+        PASS [   0.005s] (725/973) sqlparser::sqlparser_postgres parse_create_anonymous_index
+        PASS [   0.006s] (726/973) sqlparser::sqlparser_postgres parse_create_extension
+        PASS [   0.004s] (727/973) sqlparser::sqlparser_postgres parse_create_function
+        PASS [   0.005s] (728/973) sqlparser::sqlparser_postgres parse_create_function_detailed
+        PASS [   0.004s] (729/973) sqlparser::sqlparser_postgres parse_create_index
+        PASS [   0.004s] (730/973) sqlparser::sqlparser_postgres parse_create_index_concurrently
+        PASS [   0.004s] (731/973) sqlparser::sqlparser_postgres parse_create_index_with_include
+        PASS [   0.004s] (732/973) sqlparser::sqlparser_postgres parse_create_index_with_nulls_distinct
+        PASS [   0.004s] (733/973) sqlparser::sqlparser_postgres parse_create_index_with_predicate
+        PASS [   0.005s] (734/973) sqlparser::sqlparser_postgres parse_create_instead_of_delete_trigger
+        PASS [   0.005s] (735/973) sqlparser::sqlparser_postgres parse_create_role
+        PASS [   0.004s] (736/973) sqlparser::sqlparser_postgres parse_create_schema_if_not_exists
+        PASS [   0.004s] (737/973) sqlparser::sqlparser_postgres parse_create_simple_before_insert_trigger
+        PASS [   0.005s] (738/973) sqlparser::sqlparser_postgres parse_create_sequence
+        PASS [   0.004s] (739/973) sqlparser::sqlparser_postgres parse_create_table_constraints_only
+        PASS [   0.004s] (740/973) sqlparser::sqlparser_postgres parse_create_table_empty
+        PASS [   0.005s] (741/973) sqlparser::sqlparser_postgres parse_create_table_from_pg_dump
+        PASS [   0.007s] (742/973) sqlparser::sqlparser_postgres parse_create_table_generated_always_as_identity
+        PASS [   0.005s] (743/973) sqlparser::sqlparser_postgres parse_create_table_if_not_exists
+        PASS [   0.005s] (744/973) sqlparser::sqlparser_postgres parse_create_table_with_alias
+        PASS [   0.005s] (745/973) sqlparser::sqlparser_postgres parse_create_table_with_defaults
+        PASS [   0.005s] (746/973) sqlparser::sqlparser_postgres parse_create_table_with_inherit
+        PASS [   0.004s] (747/973) sqlparser::sqlparser_postgres parse_create_table_with_options
+        PASS [   0.004s] (748/973) sqlparser::sqlparser_postgres parse_create_table_with_partition_by
+        PASS [   0.004s] (749/973) sqlparser::sqlparser_postgres parse_create_trigger_invalid_cases
+        PASS [   0.004s] (750/973) sqlparser::sqlparser_postgres parse_create_trigger_with_multiple_events_and_deferrable
+        PASS [   0.004s] (751/973) sqlparser::sqlparser_postgres parse_create_trigger_with_referencing
+        PASS [   0.004s] (752/973) sqlparser::sqlparser_postgres parse_create_type_as_enum
+        PASS [   0.004s] (753/973) sqlparser::sqlparser_postgres parse_current_functions
+        PASS [   0.005s] (754/973) sqlparser::sqlparser_postgres parse_custom_operator
+        PASS [   0.004s] (755/973) sqlparser::sqlparser_postgres parse_deallocate
+        PASS [   0.005s] (756/973) sqlparser::sqlparser_postgres parse_declare
+        PASS [   0.005s] (757/973) sqlparser::sqlparser_postgres parse_delimited_identifiers
+        PASS [   0.004s] (758/973) sqlparser::sqlparser_postgres parse_drop_function
+        PASS [   0.006s] (759/973) sqlparser::sqlparser_postgres parse_dollar_quoted_string
+        PASS [   0.004s] (760/973) sqlparser::sqlparser_postgres parse_drop_schema_if_exists
+        PASS [   0.004s] (761/973) sqlparser::sqlparser_postgres parse_drop_procedure
+        PASS [   0.004s] (762/973) sqlparser::sqlparser_postgres parse_drop_sequence
+        PASS [   0.004s] (763/973) sqlparser::sqlparser_postgres parse_drop_trigger
+        PASS [   0.005s] (764/973) sqlparser::sqlparser_postgres parse_drop_trigger_invalid_cases
+        PASS [   0.006s] (765/973) sqlparser::sqlparser_postgres parse_escaped_literal_string
+        PASS [   0.004s] (766/973) sqlparser::sqlparser_postgres parse_execute
+        PASS [   0.005s] (767/973) sqlparser::sqlparser_postgres parse_fetch
+        PASS [   0.004s] (768/973) sqlparser::sqlparser_postgres parse_incorrect_create_function_parallel
+        PASS [   0.004s] (769/973) sqlparser::sqlparser_postgres parse_incorrect_dollar_quoted_string
+        PASS [   0.004s] (770/973) sqlparser::sqlparser_postgres parse_join_constraint_unnest_alias
+        PASS [   0.004s] (771/973) sqlparser::sqlparser_postgres parse_json_table_is_not_reserved
+        PASS [   0.005s] (772/973) sqlparser::sqlparser_postgres parse_local_and_global
+        PASS [   0.005s] (773/973) sqlparser::sqlparser_postgres parse_mat_cte
+        PASS [   0.005s] (774/973) sqlparser::sqlparser_postgres parse_on_commit
+        PASS [   0.005s] (775/973) sqlparser::sqlparser_postgres parse_pg_binary_ops
+        PASS [   0.004s] (776/973) sqlparser::sqlparser_postgres parse_pg_like_match_ops
+        PASS [   0.005s] (777/973) sqlparser::sqlparser_postgres parse_pg_custom_binary_ops
+        PASS [   0.004s] (778/973) sqlparser::sqlparser_postgres parse_pg_postfix_factorial
+        PASS [   0.006s] (779/973) sqlparser::sqlparser_postgres parse_pg_on_conflict
+        PASS [   0.004s] (780/973) sqlparser::sqlparser_postgres parse_pg_regex_match_ops
+        PASS [   0.007s] (781/973) sqlparser::sqlparser_postgres parse_pg_returning
+        PASS [   0.005s] (782/973) sqlparser::sqlparser_postgres parse_pg_unary_ops
+        PASS [   0.006s] (783/973) sqlparser::sqlparser_postgres parse_prepare
+        PASS [   0.005s] (784/973) sqlparser::sqlparser_postgres parse_quoted_identifier
+        PASS [   0.004s] (785/973) sqlparser::sqlparser_postgres parse_quoted_identifier_2
+        PASS [   0.004s] (786/973) sqlparser::sqlparser_postgres parse_select_group_by_cube
+        PASS [   0.004s] (787/973) sqlparser::sqlparser_postgres parse_select_group_by_grouping_sets
+        PASS [   0.004s] (788/973) sqlparser::sqlparser_postgres parse_select_group_by_rollup
+        PASS [   0.004s] (789/973) sqlparser::sqlparser_postgres parse_select_regexp_as_column_name
+        PASS [   0.005s] (790/973) sqlparser::sqlparser_postgres parse_set
+        PASS [   0.004s] (791/973) sqlparser::sqlparser_postgres parse_set_role
+        PASS [   0.004s] (792/973) sqlparser::sqlparser_postgres parse_show
+        PASS [   0.004s] (793/973) sqlparser::sqlparser_postgres parse_trigger_related_functions
+        PASS [   0.004s] (794/973) sqlparser::sqlparser_postgres parse_truncate
+        PASS [   0.004s] (795/973) sqlparser::sqlparser_postgres parse_truncate_table
+        PASS [   0.004s] (796/973) sqlparser::sqlparser_postgres parse_truncate_with_options
+        PASS [   0.004s] (797/973) sqlparser::sqlparser_postgres parse_truncate_with_table_list
+        PASS [   0.004s] (798/973) sqlparser::sqlparser_postgres parse_update_has_keyword
+        PASS [   0.004s] (799/973) sqlparser::sqlparser_postgres parse_update_in_with_subquery
+        PASS [   0.009s] (800/973) sqlparser::sqlparser_postgres test_complex_postgres_insert_with_alias
+        PASS [   0.008s] (801/973) sqlparser::sqlparser_postgres test_composite_value
+        PASS [   0.005s] (802/973) sqlparser::sqlparser_postgres test_copy_from
+        PASS [   0.004s] (803/973) sqlparser::sqlparser_postgres test_copy_to
+        PASS [   0.004s] (804/973) sqlparser::sqlparser_postgres test_escaped_string_literal
+        PASS [   0.005s] (805/973) sqlparser::sqlparser_postgres test_fn_arg_with_value_operator
+        PASS [   0.006s] (806/973) sqlparser::sqlparser_postgres test_json
+        PASS [   0.004s] (807/973) sqlparser::sqlparser_postgres test_simple_insert_with_quoted_alias
+        PASS [   0.004s] (808/973) sqlparser::sqlparser_postgres test_simple_postgres_insert_with_alias
+        PASS [   0.005s] (809/973) sqlparser::sqlparser_postgres test_table_function_with_ordinality
+        PASS [   0.005s] (810/973) sqlparser::sqlparser_postgres test_table_unnest_with_ordinality
+        PASS [   0.005s] (811/973) sqlparser::sqlparser_postgres test_transaction_statement
+        PASS [   0.005s] (812/973) sqlparser::sqlparser_postgres test_unicode_string_literal
+        PASS [   0.006s] (813/973) sqlparser::sqlparser_redshift brackets_over_db_schema_table_name_with_whites_paces
+        PASS [   0.005s] (814/973) sqlparser::sqlparser_redshift parse_delimited_identifiers
+        PASS [   0.005s] (815/973) sqlparser::sqlparser_redshift test_create_view_with_no_schema_binding
+        PASS [   0.005s] (816/973) sqlparser::sqlparser_redshift test_double_quotes_over_db_schema_table_name
+        PASS [   0.005s] (817/973) sqlparser::sqlparser_redshift test_parse_json_path_from
+        PASS [   0.004s] (818/973) sqlparser::sqlparser_redshift test_redshift_json_path
+        PASS [   0.004s] (819/973) sqlparser::sqlparser_redshift test_sharp
+        PASS [   0.004s] (820/973) sqlparser::sqlparser_redshift test_square_brackets_over_db_schema_table_name
+        PASS [   0.004s] (821/973) sqlparser::sqlparser_regression tpch_1
+        PASS [   0.004s] (822/973) sqlparser::sqlparser_regression tpch_10
+        PASS [   0.005s] (823/973) sqlparser::sqlparser_regression tpch_11
+        PASS [   0.005s] (824/973) sqlparser::sqlparser_regression tpch_12
+        PASS [   0.005s] (825/973) sqlparser::sqlparser_regression tpch_13
+        PASS [   0.005s] (826/973) sqlparser::sqlparser_regression tpch_14
+        PASS [   0.005s] (827/973) sqlparser::sqlparser_regression tpch_15
+        PASS [   0.005s] (828/973) sqlparser::sqlparser_regression tpch_16
+        PASS [   0.004s] (829/973) sqlparser::sqlparser_regression tpch_17
+        PASS [   0.004s] (830/973) sqlparser::sqlparser_regression tpch_18
+        PASS [   0.005s] (831/973) sqlparser::sqlparser_regression tpch_19
+        PASS [   0.005s] (832/973) sqlparser::sqlparser_regression tpch_2
+        PASS [   0.005s] (833/973) sqlparser::sqlparser_regression tpch_20
+        PASS [   0.005s] (834/973) sqlparser::sqlparser_regression tpch_21
+        PASS [   0.005s] (835/973) sqlparser::sqlparser_regression tpch_22
+        PASS [   0.004s] (836/973) sqlparser::sqlparser_regression tpch_3
+        PASS [   0.004s] (837/973) sqlparser::sqlparser_regression tpch_4
+        PASS [   0.005s] (838/973) sqlparser::sqlparser_regression tpch_5
+        PASS [   0.005s] (839/973) sqlparser::sqlparser_regression tpch_6
+        PASS [   0.009s] (840/973) sqlparser::sqlparser_regression tpch_7
+        PASS [   0.009s] (841/973) sqlparser::sqlparser_regression tpch_8
+        PASS [   0.005s] (842/973) sqlparser::sqlparser_regression tpch_9
+        PASS [   0.006s] (843/973) sqlparser::sqlparser_snowflake asof_joins
+        PASS [   0.005s] (844/973) sqlparser::sqlparser_snowflake explain_desc
+        PASS [   0.004s] (845/973) sqlparser::sqlparser_snowflake explain_describe
+        PASS [   0.005s] (846/973) sqlparser::sqlparser_snowflake first_value_ignore_nulls
+        PASS [   0.004s] (847/973) sqlparser::sqlparser_snowflake parse_array
+        PASS [   0.005s] (848/973) sqlparser::sqlparser_snowflake parse_comma_outer_join
+        PASS [   0.005s] (849/973) sqlparser::sqlparser_snowflake parse_delimited_identifiers
+        PASS [   0.005s] (850/973) sqlparser::sqlparser_snowflake parse_division_correctly
+        PASS [   0.004s] (851/973) sqlparser::sqlparser_snowflake parse_explain_table
+        PASS [   0.004s] (852/973) sqlparser::sqlparser_snowflake parse_extract_comma
+        PASS [   0.005s] (853/973) sqlparser::sqlparser_snowflake parse_extract_comma_quoted
+        PASS [   0.005s] (854/973) sqlparser::sqlparser_snowflake parse_extract_custom_part
+        PASS [   0.004s] (855/973) sqlparser::sqlparser_snowflake parse_insert_overwrite
+        PASS [   0.004s] (856/973) sqlparser::sqlparser_snowflake parse_lateral_flatten
+        PASS [   0.005s] (857/973) sqlparser::sqlparser_snowflake parse_pivot_of_table_factor_derived
+        PASS [   0.005s] (858/973) sqlparser::sqlparser_snowflake parse_position_not_function_columns
+        PASS [   0.004s] (859/973) sqlparser::sqlparser_snowflake parse_semi_structured_data_traversal
+        PASS [   0.004s] (860/973) sqlparser::sqlparser_snowflake parse_sf_create_or_replace_view_with_comment_missing_equal
+        PASS [   0.004s] (861/973) sqlparser::sqlparser_snowflake parse_sf_create_or_replace_with_comment_for_snowflake
+        PASS [   0.004s] (862/973) sqlparser::sqlparser_snowflake parse_snowflake_declare_cursor
+        PASS [   0.004s] (863/973) sqlparser::sqlparser_snowflake parse_snowflake_declare_exception
+        PASS [   0.004s] (864/973) sqlparser::sqlparser_snowflake parse_snowflake_declare_multi_statements
+        PASS [   0.004s] (865/973) sqlparser::sqlparser_snowflake parse_snowflake_declare_result_set
+        PASS [   0.004s] (866/973) sqlparser::sqlparser_snowflake parse_snowflake_declare_variable
+        PASS [   0.004s] (867/973) sqlparser::sqlparser_snowflake parse_subquery_function_argument
+        PASS [   0.004s] (868/973) sqlparser::sqlparser_snowflake parse_top
+        PASS [   0.004s] (869/973) sqlparser::sqlparser_snowflake parse_use
+        PASS [   0.004s] (870/973) sqlparser::sqlparser_snowflake parse_view_column_descriptions
+        PASS [   0.004s] (871/973) sqlparser::sqlparser_snowflake test_alter_table_clustering
+        PASS [   0.004s] (872/973) sqlparser::sqlparser_snowflake test_alter_table_swap_with
+        PASS [   0.004s] (873/973) sqlparser::sqlparser_snowflake test_array_agg_func
+        PASS [   0.004s] (874/973) sqlparser::sqlparser_snowflake test_copy_into
+        PASS [   0.005s] (875/973) sqlparser::sqlparser_snowflake test_copy_into_copy_options
+        PASS [   0.005s] (876/973) sqlparser::sqlparser_snowflake test_copy_into_file_format
+        PASS [   0.004s] (877/973) sqlparser::sqlparser_snowflake test_copy_into_with_files_and_pattern_and_verification
+        PASS [   0.004s] (878/973) sqlparser::sqlparser_snowflake test_copy_into_with_stage_params
+        PASS [   0.005s] (879/973) sqlparser::sqlparser_snowflake test_copy_into_with_transformations
+        PASS [   0.005s] (880/973) sqlparser::sqlparser_snowflake test_create_stage
+        PASS [   0.005s] (881/973) sqlparser::sqlparser_snowflake test_create_stage_with_copy_options
+        PASS [   0.008s] (882/973) sqlparser::sqlparser_snowflake test_create_stage_with_directory_table_params
+        PASS [   0.005s] (883/973) sqlparser::sqlparser_snowflake test_create_stage_with_file_format
+        PASS [   0.004s] (884/973) sqlparser::sqlparser_snowflake test_create_stage_with_stage_params
+        PASS [   0.004s] (885/973) sqlparser::sqlparser_snowflake test_drop_stage
+        PASS [   0.004s] (886/973) sqlparser::sqlparser_snowflake test_number_placeholder
+        PASS [   0.005s] (887/973) sqlparser::sqlparser_snowflake test_parentheses_overflow
+        PASS [   0.004s] (888/973) sqlparser::sqlparser_snowflake test_parse_double_dot_notation_wrong_position
+        PASS [   0.005s] (889/973) sqlparser::sqlparser_snowflake test_parse_position
+        PASS [   0.005s] (890/973) sqlparser::sqlparser_snowflake test_parse_show_columns_sql
+        PASS [   0.005s] (891/973) sqlparser::sqlparser_snowflake test_parse_show_schemas
+        PASS [   0.005s] (892/973) sqlparser::sqlparser_snowflake test_parse_show_tables
+        PASS [   0.005s] (893/973) sqlparser::sqlparser_snowflake test_pivot
+        PASS [   0.005s] (894/973) sqlparser::sqlparser_snowflake test_projection_with_nested_trailing_commas
+        PASS [   0.005s] (895/973) sqlparser::sqlparser_snowflake test_select_wildcard_with_exclude
+        PASS [   0.004s] (896/973) sqlparser::sqlparser_snowflake test_select_wildcard_with_exclude_and_rename
+        PASS [   0.004s] (897/973) sqlparser::sqlparser_snowflake test_select_wildcard_with_ilike
+        PASS [   0.005s] (898/973) sqlparser::sqlparser_snowflake test_select_wildcard_with_ilike_double_quote
+        PASS [   0.004s] (899/973) sqlparser::sqlparser_snowflake test_select_wildcard_with_ilike_number
+        PASS [   0.004s] (900/973) sqlparser::sqlparser_snowflake test_select_wildcard_with_ilike_replace
+        PASS [   0.004s] (901/973) sqlparser::sqlparser_snowflake test_select_wildcard_with_rename
+        PASS [   0.005s] (902/973) sqlparser::sqlparser_snowflake test_select_wildcard_with_replace_and_rename
+        PASS [   0.005s] (903/973) sqlparser::sqlparser_snowflake test_sf_derived_table_in_parenthesis
+        PASS [   0.005s] (904/973) sqlparser::sqlparser_snowflake test_sf_double_dot_notation
+        PASS [   0.004s] (905/973) sqlparser::sqlparser_snowflake test_sf_trailing_commas
+        PASS [   0.004s] (906/973) sqlparser::sqlparser_snowflake test_show_databases
+        PASS [   0.004s] (907/973) sqlparser::sqlparser_snowflake test_show_views
+        PASS [   0.004s] (908/973) sqlparser::sqlparser_snowflake test_single_table_in_parenthesis
+        PASS [   0.006s] (909/973) sqlparser::sqlparser_snowflake test_single_table_in_parenthesis_with_alias
+        PASS [   0.004s] (910/973) sqlparser::sqlparser_snowflake test_snowflake_copy_into
+        PASS [   0.004s] (911/973) sqlparser::sqlparser_snowflake test_snowflake_copy_into_stage_name_ends_with_parens
+        PASS [   0.004s] (912/973) sqlparser::sqlparser_snowflake test_snowflake_create_global_table
+        PASS [   0.004s] (913/973) sqlparser::sqlparser_snowflake test_snowflake_create_invalid_local_global_table
+        PASS [   0.005s] (914/973) sqlparser::sqlparser_snowflake test_snowflake_create_invalid_temporal_table
+        PASS [   0.004s] (915/973) sqlparser::sqlparser_snowflake test_snowflake_create_local_table
+        PASS [   0.004s] (916/973) sqlparser::sqlparser_snowflake test_snowflake_create_or_replace_table
+        PASS [   0.004s] (917/973) sqlparser::sqlparser_snowflake test_snowflake_create_or_replace_table_copy_grants
+        PASS [   0.004s] (918/973) sqlparser::sqlparser_snowflake test_snowflake_create_or_replace_table_copy_grants_at_end
+        PASS [   0.004s] (919/973) sqlparser::sqlparser_snowflake test_snowflake_create_or_replace_table_copy_grants_cta
+        PASS [   0.004s] (920/973) sqlparser::sqlparser_snowflake test_snowflake_create_table
+        PASS [   0.005s] (921/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_change_tracking
+        PASS [   0.005s] (922/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_cluster_by
+        PASS [   0.004s] (923/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_column_comment
+        PASS [   0.008s] (924/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_data_retention_time_in_days
+        PASS [   0.011s] (925/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_comment
+        PASS [   0.004s] (926/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_default_ddl_collation
+        PASS [   0.004s] (927/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_enable_schema_evolution
+        PASS [   0.004s] (928/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_if_not_exists
+        PASS [   0.004s] (929/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_incomplete_statement
+        PASS [   0.004s] (930/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_max_data_extension_time_in_days
+        PASS [   0.004s] (931/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_aggregation_policy
+        PASS [   0.004s] (932/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_autoincrement_columns
+        PASS [   0.004s] (933/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_collated_column
+        PASS [   0.004s] (934/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_columns_masking_policy
+        PASS [   0.004s] (935/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_columns_projection_policy
+        PASS [   0.005s] (936/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_row_access_policy
+        PASS [   0.006s] (937/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_columns_tags
+        PASS [   0.004s] (938/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_several_column_options
+        PASS [   0.004s] (939/973) sqlparser::sqlparser_snowflake test_snowflake_create_table_with_tag
+        PASS [   0.004s] (940/973) sqlparser::sqlparser_snowflake test_snowflake_create_transient_table
+        PASS [   0.004s] (941/973) sqlparser::sqlparser_snowflake test_snowflake_single_line_tokenize
+        PASS [   0.004s] (942/973) sqlparser::sqlparser_snowflake test_snowflake_stage_object_names
+        PASS [   0.004s] (943/973) sqlparser::sqlparser_snowflake test_snowflake_trim
+        PASS [   0.005s] (944/973) sqlparser::sqlparser_snowflake test_table_sample
+        PASS [   0.005s] (945/973) sqlparser::sqlparser_snowflake view_comment_option_should_be_after_column_list
+        PASS [   0.004s] (946/973) sqlparser::sqlparser_sqlite double_equality_operator
+        PASS [   0.004s] (947/973) sqlparser::sqlparser_sqlite invalid_empty_list
+        PASS [   0.004s] (948/973) sqlparser::sqlparser_sqlite parse_attach_database
+        PASS [   0.004s] (949/973) sqlparser::sqlparser_sqlite parse_create_sqlite_quote
+        PASS [   0.004s] (950/973) sqlparser::sqlparser_sqlite parse_create_table_auto_increment
+        PASS [   0.006s] (951/973) sqlparser::sqlparser_sqlite parse_create_table_gencol
+        PASS [   0.005s] (952/973) sqlparser::sqlparser_sqlite parse_create_table_on_conflict_col
+        PASS [   0.005s] (953/973) sqlparser::sqlparser_sqlite parse_create_table_primary_key_asc_desc
+        PASS [   0.004s] (954/973) sqlparser::sqlparser_sqlite parse_create_table_untyped
+        PASS [   0.005s] (955/973) sqlparser::sqlparser_sqlite parse_create_table_with_strict
+        PASS [   0.006s] (956/973) sqlparser::sqlparser_sqlite parse_create_table_without_rowid
+        PASS [   0.005s] (957/973) sqlparser::sqlparser_sqlite parse_create_view_temporary_if_not_exists
+        PASS [   0.004s] (958/973) sqlparser::sqlparser_sqlite parse_create_virtual_table
+        PASS [   0.004s] (959/973) sqlparser::sqlparser_sqlite parse_single_quoted_identified
+        PASS [   0.004s] (960/973) sqlparser::sqlparser_sqlite parse_start_transaction_with_modifier
+        PASS [   0.004s] (961/973) sqlparser::sqlparser_sqlite parse_substring
+        PASS [   0.005s] (962/973) sqlparser::sqlparser_sqlite parse_update_tuple_row_values
+        PASS [   0.005s] (963/973) sqlparser::sqlparser_sqlite parse_where_in_empty_list
+        PASS [   0.005s] (964/973) sqlparser::sqlparser_sqlite parse_window_function_with_filter
+        PASS [   0.004s] (965/973) sqlparser::sqlparser_sqlite pragma_eq_placeholder_style
+        PASS [   0.004s] (966/973) sqlparser::sqlparser_sqlite pragma_eq_string_style
+        PASS [   0.004s] (967/973) sqlparser::sqlparser_sqlite pragma_eq_style
+        PASS [   0.004s] (968/973) sqlparser::sqlparser_sqlite pragma_function_style
+        PASS [   0.005s] (969/973) sqlparser::sqlparser_sqlite pragma_function_string_style
+        PASS [   0.005s] (970/973) sqlparser::sqlparser_sqlite pragma_no_value
+        PASS [   0.005s] (971/973) sqlparser::sqlparser_sqlite test_dollar_identifier_as_placeholder
+        PASS [   0.004s] (972/973) sqlparser::sqlparser_sqlite test_parse_create_table_on_conflict_col_err
+        PASS [   0.004s] (973/973) sqlparser::sqlparser_sqlite test_placeholder
+────────────
+     Summary [   2.604s] 973 tests run: 973 passed, 0 skipped
+reward=1 graded=973 found=167 failed=0 parsed=973 framework=cargo exit_code=0

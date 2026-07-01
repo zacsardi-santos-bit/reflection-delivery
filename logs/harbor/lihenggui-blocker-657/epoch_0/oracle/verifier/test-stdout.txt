@@ -1,0 +1,280 @@
+patching file core/data-test/src/main/kotlin/com/merxury/blocker/core/data/test/TestDataModule.kt
+patching file core/data-test/src/main/kotlin/com/merxury/blocker/core/data/test/repository/FakeComponentDetailRepository.kt
+patching file core/domain/src/test/kotlin/com/merxury/blocker/core/domain/components/SearchComponentsUseCaseTest.kt
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.5/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+Type-safe project accessors is an incubating feature.
+> Task :build-logic:convention:checkKotlinGradlePluginConfigurationErrors
+> Task :build-logic:convention:compileKotlin UP-TO-DATE
+> Task :build-logic:convention:compileJava NO-SOURCE
+> Task :build-logic:convention:pluginDescriptors UP-TO-DATE
+> Task :build-logic:convention:processResources UP-TO-DATE
+> Task :build-logic:convention:classes UP-TO-DATE
+> Task :build-logic:convention:jar UP-TO-DATE
+> Task :core:analytics:preBuild UP-TO-DATE
+> Task :core:analytics:preFossDebugBuild UP-TO-DATE
+> Task :core:analytics:checkKotlinGradlePluginConfigurationErrors
+> Task :core:analytics:generateFossDebugResources UP-TO-DATE
+> Task :core:analytics:packageFossDebugResources UP-TO-DATE
+> Task :core:analytics:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:analytics:processFossDebugManifest UP-TO-DATE
+> Task :core:analytics:generateFossDebugRFile UP-TO-DATE
+> Task :core:analytics:kspFossDebugKotlin UP-TO-DATE
+> Task :core:analytics:compileFossDebugKotlin UP-TO-DATE
+> Task :core:analytics:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:analytics:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:analytics:transformFossDebugClassesWithAsm UP-TO-DATE
+> Task :core:analytics:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:analytics:processFossDebugJavaRes UP-TO-DATE
+> Task :core:common:preBuild UP-TO-DATE
+> Task :core:common:preFossDebugBuild UP-TO-DATE
+> Task :core:common:checkKotlinGradlePluginConfigurationErrors
+> Task :core:common:generateFossDebugResources UP-TO-DATE
+> Task :core:common:packageFossDebugResources UP-TO-DATE
+> Task :core:common:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:common:processFossDebugManifest UP-TO-DATE
+> Task :core:common:generateFossDebugRFile UP-TO-DATE
+> Task :core:model:checkKotlinGradlePluginConfigurationErrors
+> Task :core:model:generateFossDebugResources UP-TO-DATE
+> Task :core:model:preBuild UP-TO-DATE
+> Task :core:model:preFossDebugBuild UP-TO-DATE
+> Task :core:model:packageFossDebugResources UP-TO-DATE
+> Task :core:model:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:model:processFossDebugManifest UP-TO-DATE
+> Task :core:model:generateFossDebugRFile UP-TO-DATE
+> Task :core:model:compileFossDebugKotlin UP-TO-DATE
+> Task :core:model:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:model:compileFossDebugJavaWithJavac NO-SOURCE
+> Task :core:model:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:common:kspFossDebugKotlin UP-TO-DATE
+> Task :core:common:compileFossDebugKotlin UP-TO-DATE
+> Task :core:common:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:common:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:model:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:common:transformFossDebugClassesWithAsm UP-TO-DATE
+> Task :core:common:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:common:processFossDebugJavaRes UP-TO-DATE
+> Task :core:component-controller:preBuild UP-TO-DATE
+> Task :core:component-controller:preFossDebugBuild UP-TO-DATE
+> Task :core:common:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:component-controller:compileFossDebugAidl UP-TO-DATE
+> Task :core:component-controller:checkKotlinGradlePluginConfigurationErrors
+> Task :core:component-controller:generateFossDebugResources UP-TO-DATE
+> Task :core:component-controller:packageFossDebugResources UP-TO-DATE
+> Task :core:component-controller:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:component-controller:processFossDebugManifest UP-TO-DATE
+> Task :core:component-controller:generateFossDebugRFile UP-TO-DATE
+> Task :core:ifw-api:generateFossDebugResources UP-TO-DATE
+> Task :core:ifw-api:preBuild UP-TO-DATE
+> Task :core:ifw-api:preFossDebugBuild UP-TO-DATE
+> Task :core:ifw-api:packageFossDebugResources UP-TO-DATE
+> Task :core:ifw-api:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:ifw-api:processFossDebugManifest UP-TO-DATE
+> Task :core:ifw-api:generateFossDebugRFile UP-TO-DATE
+> Task :core:ifw-api:checkKotlinGradlePluginConfigurationErrors
+> Task :core:ifw-api:kspFossDebugKotlin UP-TO-DATE
+> Task :core:ifw-api:compileFossDebugKotlin UP-TO-DATE
+> Task :core:ifw-api:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:ifw-api:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:ifw-api:transformFossDebugClassesWithAsm UP-TO-DATE
+> Task :core:ifw-api:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:component-controller:kspFossDebugKotlin UP-TO-DATE
+> Task :core:component-controller:compileFossDebugKotlin UP-TO-DATE
+> Task :core:component-controller:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:component-controller:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:ifw-api:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:component-controller:transformFossDebugClassesWithAsm UP-TO-DATE
+> Task :core:component-controller:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:component-controller:processFossDebugJavaRes UP-TO-DATE
+> Task :core:data:preBuild UP-TO-DATE
+> Task :core:data:preFossDebugBuild UP-TO-DATE
+> Task :core:analytics:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:component-controller:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:data:checkKotlinGradlePluginConfigurationErrors
+> Task :core:data:generateFossDebugResources UP-TO-DATE
+> Task :core:data:packageFossDebugResources UP-TO-DATE
+> Task :core:data:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:data:processFossDebugManifest UP-TO-DATE
+> Task :core:data:generateFossDebugRFile UP-TO-DATE
+> Task :core:database:generateFossDebugResources UP-TO-DATE
+> Task :core:database:preBuild UP-TO-DATE
+> Task :core:database:preFossDebugBuild UP-TO-DATE
+> Task :core:database:packageFossDebugResources UP-TO-DATE
+> Task :core:database:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:database:processFossDebugManifest UP-TO-DATE
+> Task :core:database:generateFossDebugRFile UP-TO-DATE
+> Task :core:database:checkKotlinGradlePluginConfigurationErrors
+> Task :core:database:kspFossDebugKotlin UP-TO-DATE
+> Task :core:database:compileFossDebugKotlin UP-TO-DATE
+> Task :core:database:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:database:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:database:copyRoomSchemas NO-SOURCE
+> Task :core:database:transformFossDebugClassesWithAsm UP-TO-DATE
+> Task :core:database:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:datastore:generateFossDebugResources UP-TO-DATE
+> Task :core:datastore:preBuild UP-TO-DATE
+> Task :core:datastore:preFossDebugBuild UP-TO-DATE
+> Task :core:datastore:packageFossDebugResources UP-TO-DATE
+> Task :core:datastore:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:datastore:processFossDebugManifest UP-TO-DATE
+> Task :core:datastore:generateFossDebugRFile UP-TO-DATE
+> Task :core:datastore:checkKotlinGradlePluginConfigurationErrors
+> Task :core:datastore-proto:checkKotlinGradlePluginConfigurationErrors
+> Task :core:datastore-proto:extractDebugProto UP-TO-DATE
+> Task :core:datastore-proto:extractFossDebugProto UP-TO-DATE
+> Task :core:datastore-proto:extractFossProto UP-TO-DATE
+> Task :core:datastore-proto:extractIncludeFossDebugProto UP-TO-DATE
+> Task :core:datastore-proto:extractProto UP-TO-DATE
+> Task :core:datastore-proto:generateFossDebugProto UP-TO-DATE
+> Task :core:datastore-proto:generateFossDebugResources UP-TO-DATE
+> Task :core:datastore-proto:preBuild UP-TO-DATE
+> Task :core:datastore-proto:preFossDebugBuild UP-TO-DATE
+> Task :core:datastore-proto:packageFossDebugResources UP-TO-DATE
+> Task :core:datastore-proto:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:datastore-proto:processFossDebugManifest UP-TO-DATE
+> Task :core:datastore-proto:generateFossDebugRFile UP-TO-DATE
+> Task :core:datastore-proto:compileFossDebugKotlin UP-TO-DATE
+> Task :core:datastore-proto:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:datastore-proto:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:datastore-proto:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:datastore:kspFossDebugKotlin UP-TO-DATE
+> Task :core:datastore:compileFossDebugKotlin UP-TO-DATE
+> Task :core:datastore:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:datastore:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:datastore-proto:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:datastore:transformFossDebugClassesWithAsm UP-TO-DATE
+> Task :core:datastore:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:network:generateFossDebugResources UP-TO-DATE
+> Task :core:network:preBuild UP-TO-DATE
+> Task :core:network:preFossDebugBuild UP-TO-DATE
+> Task :core:network:packageFossDebugResources UP-TO-DATE
+> Task :core:network:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:network:processFossDebugManifest UP-TO-DATE
+> Task :core:network:generateFossDebugRFile UP-TO-DATE
+> Task :core:network:checkKotlinGradlePluginConfigurationErrors
+> Task :core:network:generateFossDebugBuildConfig UP-TO-DATE
+> Task :core:network:kspFossDebugKotlin UP-TO-DATE
+> Task :core:network:compileFossDebugKotlin UP-TO-DATE
+> Task :core:network:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:network:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:network:transformFossDebugClassesWithAsm UP-TO-DATE
+> Task :core:network:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:data:kspFossDebugKotlin
+> Task :core:data:compileFossDebugKotlin
+> Task :core:data:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:data:compileFossDebugJavaWithJavac
+> Task :core:database:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:datastore:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:network:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:data:transformFossDebugClassesWithAsm
+> Task :core:data:bundleLibRuntimeToJarFossDebug
+> Task :core:data:processFossDebugJavaRes UP-TO-DATE
+> Task :core:database:processFossDebugJavaRes UP-TO-DATE
+> Task :core:datastore:processFossDebugJavaRes UP-TO-DATE
+> Task :core:datastore-proto:processFossDebugJavaRes UP-TO-DATE
+> Task :core:designsystem:checkKotlinGradlePluginConfigurationErrors
+> Task :core:designsystem:generateFossDebugResources UP-TO-DATE
+> Task :core:designsystem:preBuild UP-TO-DATE
+> Task :core:designsystem:preFossDebugBuild UP-TO-DATE
+> Task :core:designsystem:packageFossDebugResources UP-TO-DATE
+> Task :core:designsystem:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:designsystem:processFossDebugManifest UP-TO-DATE
+> Task :core:designsystem:generateFossDebugRFile UP-TO-DATE
+> Task :core:designsystem:compileFossDebugKotlin UP-TO-DATE
+> Task :core:designsystem:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:designsystem:compileFossDebugJavaWithJavac NO-SOURCE
+> Task :core:designsystem:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:designsystem:processFossDebugJavaRes UP-TO-DATE
+> Task :core:data:bundleLibCompileToJarFossDebug
+> Task :core:domain:checkKotlinGradlePluginConfigurationErrors
+> Task :core:domain:generateFossDebugResources UP-TO-DATE
+> Task :core:domain:preBuild UP-TO-DATE
+> Task :core:domain:preFossDebugBuild UP-TO-DATE
+> Task :core:domain:packageFossDebugResources UP-TO-DATE
+> Task :core:domain:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:domain:processFossDebugManifest UP-TO-DATE
+> Task :core:domain:generateFossDebugRFile UP-TO-DATE
+> Task :core:rule:generateFossDebugResources UP-TO-DATE
+> Task :core:rule:preBuild UP-TO-DATE
+> Task :core:rule:preFossDebugBuild UP-TO-DATE
+> Task :core:rule:packageFossDebugResources UP-TO-DATE
+> Task :core:rule:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:rule:processFossDebugManifest UP-TO-DATE
+> Task :core:rule:generateFossDebugRFile UP-TO-DATE
+> Task :core:rule:checkKotlinGradlePluginConfigurationErrors
+> Task :core:rule:kspFossDebugKotlin
+> Task :core:rule:compileFossDebugKotlin
+> Task :core:rule:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:rule:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:rule:transformFossDebugClassesWithAsm
+> Task :core:rule:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:domain:kspFossDebugKotlin
+> Task :core:domain:compileFossDebugKotlin
+> Task :core:domain:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:domain:compileFossDebugJavaWithJavac
+> Task :core:domain:bundleLibRuntimeToJarFossDebug
+> Task :core:domain:bundleLibCompileToJarFossDebug
+> Task :core:domain:preFossDebugUnitTestBuild UP-TO-DATE
+> Task :core:testing:generateFossDebugResources UP-TO-DATE
+> Task :core:testing:preBuild UP-TO-DATE
+> Task :core:testing:preFossDebugBuild UP-TO-DATE
+> Task :core:testing:packageFossDebugResources UP-TO-DATE
+> Task :core:testing:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:testing:processFossDebugManifest UP-TO-DATE
+> Task :core:testing:generateFossDebugRFile UP-TO-DATE
+> Task :core:ui:generateFossDebugResources UP-TO-DATE
+> Task :core:ui:preBuild UP-TO-DATE
+> Task :core:ui:preFossDebugBuild UP-TO-DATE
+> Task :core:ui:packageFossDebugResources UP-TO-DATE
+> Task :core:ui:parseFossDebugLocalResources UP-TO-DATE
+> Task :core:ui:processFossDebugManifest UP-TO-DATE
+> Task :core:ui:generateFossDebugRFile UP-TO-DATE
+> Task :core:domain:generateFossDebugUnitTestStubRFile UP-TO-DATE
+> Task :core:designsystem:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:testing:checkKotlinGradlePluginConfigurationErrors
+> Task :core:ui:checkKotlinGradlePluginConfigurationErrors
+> Task :core:ui:compileFossDebugKotlin UP-TO-DATE
+> Task :core:ui:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:ui:compileFossDebugJavaWithJavac NO-SOURCE
+> Task :core:ui:bundleLibCompileToJarFossDebug UP-TO-DATE
+> Task :core:testing:kspFossDebugKotlin
+> Task :core:testing:compileFossDebugKotlin
+> Task :core:testing:javaPreCompileFossDebug UP-TO-DATE
+> Task :core:testing:compileFossDebugJavaWithJavac UP-TO-DATE
+> Task :core:ui:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:testing:transformFossDebugClassesWithAsm
+> Task :core:testing:bundleLibCompileToJarFossDebug
+> Task :core:domain:kspFossDebugUnitTestKotlin
+> Task :core:domain:compileFossDebugUnitTestKotlin
+> Task :core:domain:javaPreCompileFossDebugUnitTest UP-TO-DATE
+> Task :core:domain:compileFossDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :core:domain:processFossDebugJavaRes
+> Task :core:domain:processFossDebugUnitTestJavaRes
+> Task :core:ifw-api:processFossDebugJavaRes UP-TO-DATE
+> Task :core:model:processFossDebugJavaRes UP-TO-DATE
+> Task :core:network:processFossDebugJavaRes UP-TO-DATE
+> Task :core:rule:bundleLibRuntimeToJarFossDebug UP-TO-DATE
+> Task :core:rule:processFossDebugJavaRes UP-TO-DATE
+> Task :core:testing:bundleLibRuntimeToJarFossDebug
+> Task :core:testing:processFossDebugJavaRes UP-TO-DATE
+> Task :core:ui:processFossDebugJavaRes UP-TO-DATE
+> Task :core:domain:testFossDebugUnitTest
+
+BUILD SUCCESSFUL in 2m 31s
+202 actionable tasks: 40 executed, 162 up-to-date
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-07-01T15:02:33" hostname="47b1e9d15c8d" time="2.119">
+  <properties/>
+  <testcase name="givenSortByFullNameDescending_whenNoSearchKeyword_thenGetSortedList" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="1.828"/>
+  <testcase name="givenSortByNameAscending_whenNoSearchKeyword_thenReturnUnfilteredResult" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="0.084"/>
+  <testcase name="givenComponentListWithDisabledItems_whenSetShowEnabledFirst_thenGetSortedList" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="0.014"/>
+  <testcase name="givenEmptyList_whenSearchComponents_thenEmptyResult" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="0.074"/>
+  <testcase name="givenComponentListWithDisabledItems_whenSetShowDisabledFirst_thenGetSortedList" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="0.014"/>
+  <testcase name="givenComponentListWithRunningService_whenInDefault_thenShowRunningServiceOnTop" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="0.01"/>
+  <testcase name="givenSortByNameDescending_whenNoSearchKeyword_thenGetSortedList" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="0.077"/>
+  <testcase name="givenSortByFullNameAscending_whenNoSearchKeyword_thenGetSortedList" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="0.009"/>
+  <testcase name="givenComponentList_whenSearchByKeyword_thenGetFilteredList" classname="com.merxury.blocker.core.domain.components.SearchComponentsUseCaseTest" time="0.008"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=9 found=9 failed=0 parsed=9 framework=junit exit_code=0

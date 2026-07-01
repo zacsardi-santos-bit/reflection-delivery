@@ -1,0 +1,96 @@
+patching file src/cmd/logic-function.test.js
+patching file src/lib/logic-function.test.js
+patching file test/e2e/help.e2e.js
+patching file test/e2e/logic-function.e2e.js
+
+
+  LogicFunctionCommands
+    _setOrg
+      ✓ sets the organization member
+    list
+      ✓ lists Logic Functions in Sandbox account
+      ✓ lists Logic Functions in an org
+      ✓ shows help if no Logic Functions are found
+      ✓ shows help if no Logic Functions are found
+    get
+      ✓ gets a Logic Function with an specific name from Sandbox account
+      ✓ gets a Logic Function with an specific id from Sandbox account
+      ✓ shows error if Logic Function is not found
+      ✓ gets a Logic Function with an specific name from an org
+    create
+      ✓ creates a Logic Function locally for Sandbox account
+      ✓ ask to overwrite if files already exist
+    execute
+      ✓ executes a Logic Function with user provided data
+      ✓ throws an error if there is no Logic Function in the directory
+      ✓ executes a Logic Function with user provided data from file
+      ✓ executes a Logic Function with user provided data and shows error
+      ✓ prompts if found multiple Logic Functions
+      ✓ executes a Logic function with provided Logic Function name
+      ✓ executes a Logic Function with provided Logic Function id
+      ✓ prints malformed logic list when there are any and name/id params are not sent
+      ✓ prints malformed logic list when lf list is empty
+      ✓ omit print malformed logic list when there are any and name/id are sent and lf exist
+    _validatePaths
+      ✓ returns if paths do not exist
+      ✓ returns if all paths exist and not overwriting
+      ✓ prompts if any path exists and overwriting
+    _promptOverwrite
+      ✓ should return true if user chooses not to overwrite
+      ✓ should return false user chooses to overwrite
+    _selectLogicFunctionName
+      ✓ selects Logic Function from a list
+      ✓ returns error if list is empty
+    delete
+      ✓ checks for confirmation before deleting
+      ✓ process exits if user does not want to delete during confirmation
+      ✓ throws an error if deletion fails
+    deploy
+      ✓ deploys a new Logic Function
+      ✓ deploys an existent Logic Function
+      ✓ throws an error if deployement fails
+    enable/disable
+      ✓ enable a Logic Function with name
+      ✓ enable a Logic Function with id
+      ✓ fails to enable a Logic Function
+      ✓ updates the local Logic Function if it exists in the path
+
+  LogicFunction
+    list
+      ✓ returns an empty array if there are no Logic Functions
+      ✓ returns a list of Logic Functions
+      ✓ returns a list of Logic Functions from an specific org
+      ✓ propagates errors
+    getByIdOrName
+      ✓ throws an error if the Logic Function is not found
+      ✓ returns a Logic Function by name
+    saveToDisk
+      ✓ saves a Logic Function to disk
+    initFromTemplate
+      ✓ initializes a Logic Function from a template
+      ✓ throws an error if the template does not exist
+    listFromDisk
+      ✓ returns a list of Logic Functions
+      ✓ returns a list of Logic Functions with org
+      ✓ returns a list of more than one Logic Functions
+      ✓ filter out files that are not Logic Functions
+      ✓ filter out no well formed Logic Functions
+      ✓ returns a list of one element if the path is a file and it is a Logic Function
+      ✓ returns an empty list if the path is a file and it is not a Logic Function
+      ✓ returns an empty list if there are no Logic Functions
+      ✓ returns a list of Logic Functions and a list of malformed Logic Functions
+      ✓ fails if the path does not exist
+    execute
+      ✓ executes a Logic Function
+      ✓ returns status as exception and errors if the execution fails
+      ✓ propagates errors
+    deploy
+      ✓ deploys a new Logic Function
+      ✓ deploys existent Logic Function
+      ✓ propagates errors
+      ✓ propagates errors when updating
+
+
+  64 passing (218ms)
+
+reward=1 graded=63 found=63 failed=0 parsed=59 framework=mocha exit_code=0

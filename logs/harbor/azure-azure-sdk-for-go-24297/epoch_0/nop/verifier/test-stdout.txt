@@ -1,0 +1,8 @@
+patching file sdk/messaging/azservicebus/internal/tracing/attributes_test.go
+patching file sdk/messaging/azservicebus/internal/tracing/propagation_test.go
+patching file sdk/messaging/azservicebus/internal/tracing/tracing_test.go
+go: finding module for package github.com/Azure/azure-sdk-for-go/sdk/internal/test/tracingvalidator
+# github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing
+internal/tracing/tracing_test.go:10:2: cannot find module providing package github.com/Azure/azure-sdk-for-go/sdk/internal/test/tracingvalidator: module lookup disabled by GOPROXY=off
+FAIL	github.com/Azure/azure-sdk-for-go/sdk/messaging/azservicebus/internal/tracing [setup failed]
+reward=0 graded=11 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,97 @@
+patching file packages/sanity/src/core/studio/components/navbar/search/datastores/recentSearches.test.tsx
+patching file packages/sanity/src/core/studio/copyPaste/__test__/transferValue.test.ts
+patching file packages/sanity/src/core/studio/copyPaste/__test__/useCopyPaste.test.tsx
+patching file packages/sanity/test/setup/afterEnv.ts
+patching file packages/sanity/test/setup/clipboardItemPolyfill.ts
+patching file packages/sanity/test/testUtils/TestProvider.tsx
+  console.error
+    Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+      16 |   error: (...args: any[]) => {
+      17 |     if (!/flushSync/.test(args[0])) {
+    > 18 |       error(...args)
+         |       ^
+      19 |     }
+      20 |   },
+      21 | }
+
+      at Object.error (test/setup/environment.ts:18:7)
+      at printWarning (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom-test-utils.development.js:71:30)
+      at error (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom-test-utils.development.js:45:7)
+      at actWithWarning (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1736:7)
+      at ../../node_modules/.pnpm/@testing-library+react@13.4.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../node_modules/.pnpm/@testing-library+react@13.4.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../node_modules/.pnpm/@testing-library+react@13.4.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at renderHook (../../node_modules/.pnpm/@testing-library+react@13.4.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@testing-library/react/dist/pure.js:293:7)
+      at constructRecentSearchesStore (src/core/studio/components/navbar/search/datastores/recentSearches.test.tsx:67:20)
+      at Object.<anonymous> (src/core/studio/components/navbar/search/datastores/recentSearches.test.tsx:98:34)
+
+  console.error
+    Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.
+
+      16 |   error: (...args: any[]) => {
+      17 |     if (!/flushSync/.test(args[0])) {
+    > 18 |       error(...args)
+         |       ^
+      19 |     }
+      20 |   },
+      21 | }
+
+      at Object.error (test/setup/environment.ts:18:7)
+      at printWarning (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom-test-utils.development.js:71:30)
+      at error (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom-test-utils.development.js:45:7)
+      at actWithWarning (../../node_modules/.pnpm/react-dom@18.3.1_react@18.3.1/node_modules/react-dom/cjs/react-dom-test-utils.development.js:1736:7)
+      at ../../node_modules/.pnpm/@testing-library+react@13.4.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@testing-library/react/dist/act-compat.js:63:25
+      at renderRoot (../../node_modules/.pnpm/@testing-library+react@13.4.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@testing-library/react/dist/pure.js:159:26)
+      at render (../../node_modules/.pnpm/@testing-library+react@13.4.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@testing-library/react/dist/pure.js:246:10)
+      at renderHook (../../node_modules/.pnpm/@testing-library+react@13.4.0_react-dom@18.3.1_react@18.3.1__react@18.3.1/node_modules/@testing-library/react/dist/pure.js:293:7)
+      at setupUseCopyPaste (src/core/studio/copyPaste/__test__/useCopyPaste.test.tsx:73:32)
+      at Object.<anonymous> (src/core/studio/copyPaste/__test__/useCopyPaste.test.tsx:84:20)
+
+PASS sanity src/core/studio/components/navbar/search/datastores/recentSearches.test.tsx (83.989 s)
+  search-store
+    getRecentSearchTerms
+      ✓ should return empty array for empty storage (497 ms)
+      ✓ should filter out search terms with missing document types (106 ms)
+      ✓ should filter out search terms with document types hidden from omnisearch (19 ms)
+      ✓ should filter out searches that contain invalid filters (76 ms)
+      ✓ should return recent terms (22 ms)
+      ✓ should remove duplicate terms (71 ms)
+      ✓ should limit number of saved searches (36 ms)
+    addSearchTerms
+      ✓ should trim search queries before adding (68 ms)
+      ✓ should also include filters (19 ms)
+      removeSearchTerms
+        ✓ should delete all saved searches (88 ms)
+      removeSearchTermAtIndex
+        ✓ should delete saved searches by index (92 ms)
+        ✓ should no-op when deleting out of range indices (98 ms)
+
+PASS sanity src/core/studio/copyPaste/__test__/useCopyPaste.test.tsx (84.729 s)
+  useCopyPaste
+    ✓ should handle pasting correctly (436 ms)
+    ✓ should validate references when pasting (171 ms)
+    ✓ should handle pasting documents of the same type (108 ms)
+    ✓ should handle pasting arrays (104 ms)
+    ✓ should handle pasting objects (95 ms)
+    ✓ should handle pasting image objects (26 ms)
+    ✓ should validate image objects when pasting (74 ms)
+    ✓ should handle pasting weak references into hard references (23 ms)
+    ✓ should handle pasting hard references into weak references (64 ms)
+    ✓ should handle pasting arrays of references (27 ms)
+    ✓ should handle appending a single array item into another array (79 ms)
+    ✓ should handle appending a single empty ref array item into another array (21 ms)
+    ✓ should handle copying a object into an array (79 ms)
+    ✓ should handle pasting primitive values into arrays (25 ms)
+    ✓ should handle pasting a single primitive number array value into arrays (17 ms)
+    ✓ should handle copying a single primitive string array value from arrays (69 ms)
+    ✓ should handle pasting a single primitive string array value into arrays (17 ms)
+    ✓ should handle pasting between incompatible types (23 ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       30 passed, 30 total
+Snapshots:   0 total
+Time:        87.142 s
+Ran all test suites matching /src\/core\/studio\/components\/navbar\/search\/datastores\/recentSearches.test.tsx|src\/core\/studio\/copyPaste\/__test__\/useCopyPaste.test.tsx|test\/testUtils\/TestProvider.tsx/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":2,"numPassedTests":30,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":30,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782918610984,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["search-store","getRecentSearchTerms"],"duration":497,"failureDetails":[],"failureMessages":[],"fullName":"search-store getRecentSearchTerms should return empty array for empty storage","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should return empty array for empty storage"},{"ancestorTitles":["search-store","getRecentSearchTerms"],"duration":106,"failureDetails":[],"failureMessages":[],"fullName":"search-store getRecentSearchTerms should filter out search terms with missing document types","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should filter out search terms with missing document types"},{"ancestorTitles":["search-store","getRecentSearchTerms"],"duration":19,"failureDetails":[],"failureMessages":[],"fullName":"search-store getRecentSearchTerms should filter out search terms with document types hidden from omnisearch","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should filter out search terms with document types hidden from omnisearch"},{"ancestorTitles":["search-store","getRecentSearchTerms"],"duration":76,"failureDetails":[],"failureMessages":[],"fullName":"search-store getRecentSearchTerms should filter out searches that contain invalid filters","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should filter out searches that contain invalid filters"},{"ancestorTitles":["search-store","getRecentSearchTerms"],"duration":22,"failureDetails":[],"failureMessages":[],"fullName":"search-store getRecentSearchTerms should return recent terms","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should return recent terms"},{"ancestorTitles":["search-store","getRecentSearchTerms"],"duration":71,"failureDetails":[],"failureMessages":[],"fullName":"search-store getRecentSearchTerms should remove duplicate terms","invocations":1,"location":null,"numPassingAsserts":6,"retryReasons":[],"status":"passed","title":"should remove duplicate terms"},{"ancestorTitles":["search-store","getRecentSearchTerms"],"duration":36,"failureDetails":[],"failureMessages":[],"fullName":"search-store getRecentSearchTerms should limit number of saved searches","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should limit number of saved searches"},{"ancestorTitles":["search-store","addSearchTerms"],"duration":68,"failureDetails":[],"failureMessages":[],"fullName":"search-store addSearchTerms should trim search queries before adding","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should trim search queries before adding"},{"ancestorTitles":["search-store","addSearchTerms"],"duration":19,"failureDetails":[],"failureMessages":[],"fullName":"search-store addSearchTerms should also include filters","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should also include filters"},{"ancestorTitles":["search-store","addSearchTerms","removeSearchTerms"],"duration":88,"failureDetails":[],"failureMessages":[],"fullName":"search-store addSearchTerms removeSearchTerms should delete all saved searches","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should delete all saved searches"},{"ancestorTitles":["search-store","addSearchTerms","removeSearchTermAtIndex"],"duration":92,"failureDetails":[],"failureMessages":[],"fullName":"search-store addSearchTerms removeSearchTermAtIndex should delete saved searches by index","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should delete saved searches by index"},{"ancestorTitles":["search-store","addSearchTerms","removeSearchTermAtIndex"],"duration":98,"failureDetails":[],"failureMessages":[],"fullName":"search-store addSearchTerms removeSearchTermAtIndex should no-op when deleting out of range indices","invocations":1,"location":null,"numPassingAsserts":10,"retryReasons":[],"status":"passed","title":"should no-op when deleting out of range indices"}],"endTime":1782918697288,"message":"","name":"/workspace/repo/packages/sanity/src/core/studio/components/navbar/search/datastores/recentSearches.test.tsx","startTime":1782918613299,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["useCopyPaste"],"duration":436,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting correctly","invocations":1,"location":null,"numPassingAsserts":5,"retryReasons":[],"status":"passed","title":"should handle pasting correctly"},{"ancestorTitles":["useCopyPaste"],"duration":171,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should validate references when pasting","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should validate references when pasting"},{"ancestorTitles":["useCopyPaste"],"duration":108,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting documents of the same type","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should handle pasting documents of the same type"},{"ancestorTitles":["useCopyPaste"],"duration":104,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting arrays","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should handle pasting arrays"},{"ancestorTitles":["useCopyPaste"],"duration":95,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting objects","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should handle pasting objects"},{"ancestorTitles":["useCopyPaste"],"duration":26,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting image objects","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle pasting image objects"},{"ancestorTitles":["useCopyPaste"],"duration":74,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should validate image objects when pasting","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should validate image objects when pasting"},{"ancestorTitles":["useCopyPaste"],"duration":23,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting weak references into hard references","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle pasting weak references into hard references"},{"ancestorTitles":["useCopyPaste"],"duration":64,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting hard references into weak references","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle pasting hard references into weak references"},{"ancestorTitles":["useCopyPaste"],"duration":27,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting arrays of references","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle pasting arrays of references"},{"ancestorTitles":["useCopyPaste"],"duration":79,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle appending a single array item into another array","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle appending a single array item into another array"},{"ancestorTitles":["useCopyPaste"],"duration":21,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle appending a single empty ref array item into another array","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle appending a single empty ref array item into another array"},{"ancestorTitles":["useCopyPaste"],"duration":79,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle copying a object into an array","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle copying a object into an array"},{"ancestorTitles":["useCopyPaste"],"duration":25,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting primitive values into arrays","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should handle pasting primitive values into arrays"},{"ancestorTitles":["useCopyPaste"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting a single primitive number array value into arrays","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should handle pasting a single primitive number array value into arrays"},{"ancestorTitles":["useCopyPaste"],"duration":69,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle copying a single primitive string array value from arrays","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle copying a single primitive string array value from arrays"},{"ancestorTitles":["useCopyPaste"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting a single primitive string array value into arrays","invocations":1,"location":null,"numPassingAsserts":4,"retryReasons":[],"status":"passed","title":"should handle pasting a single primitive string array value into arrays"},{"ancestorTitles":["useCopyPaste"],"duration":23,"failureDetails":[],"failureMessages":[],"fullName":"useCopyPaste should handle pasting between incompatible types","invocations":1,"location":null,"numPassingAsserts":3,"retryReasons":[],"status":"passed","title":"should handle pasting between incompatible types"}],"endTime":1782918697944,"message":"","name":"/workspace/repo/packages/sanity/src/core/studio/copyPaste/__test__/useCopyPaste.test.tsx","startTime":1782918613215,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=30 found=30 failed=0 parsed=30 framework=jest exit_code=0

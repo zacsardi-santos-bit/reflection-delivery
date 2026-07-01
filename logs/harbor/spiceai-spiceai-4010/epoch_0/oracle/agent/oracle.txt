@@ -1,0 +1,11 @@
+patching file crates/runtime-auth/src/api_key/mod.rs
+patching file crates/runtime-auth/src/layer/flight.rs
+patching file crates/runtime-auth/src/layer/grpc.rs
+patching file crates/runtime-auth/src/layer/http.rs
+patching file crates/runtime-auth/src/traits.rs
+patching file crates/runtime/src/auth/mod.rs
+patching file crates/runtime/src/flight.rs
+patching file crates/runtime/src/flight/do_put.rs
+patching file crates/runtime/src/flight/middleware.rs
+patching file crates/runtime/src/request/context.rs
+patching file crates/spicepod/src/component/runtime.rs

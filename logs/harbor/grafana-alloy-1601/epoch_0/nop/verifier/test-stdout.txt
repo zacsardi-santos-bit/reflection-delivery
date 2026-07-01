@@ -1,0 +1,8 @@
+patching file internal/component/prometheus/remote/queue/filequeue/filequeue_test.go
+patching file internal/component/prometheus/remote/queue/filequeue/record_gen_test.go
+go: finding module for package github.com/vladopajic/go-actor/actor
+go: finding module for package github.com/grafana/alloy/internal/component/prometheus/remote/queue/types
+# github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue
+internal/component/prometheus/remote/queue/filequeue/filequeue_test.go:14:2: cannot find module providing package github.com/grafana/alloy/internal/component/prometheus/remote/queue/types: module lookup disabled by GOPROXY=off
+FAIL	github.com/grafana/alloy/internal/component/prometheus/remote/queue/filequeue [setup failed]
+reward=0 graded=8 found=0 failed=0 parsed=0 framework=go exit_code=1

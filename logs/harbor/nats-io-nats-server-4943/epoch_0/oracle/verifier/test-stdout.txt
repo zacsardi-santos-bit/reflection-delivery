@@ -1,0 +1,10 @@
+patching file test/ocsp_test.go
+{"Time":"2026-07-01T14:57:35.677522062Z","Action":"start","Package":"github.com/nats-io/nats-server/v2/test"}
+{"Time":"2026-07-01T14:57:35.681606716Z","Action":"run","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload"}
+{"Time":"2026-07-01T14:57:35.681641621Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload","Output":"=== RUN   TestOCSPGatewayReload\n"}
+{"Time":"2026-07-01T14:57:38.762690207Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload","Output":"--- PASS: TestOCSPGatewayReload (3.08s)\n"}
+{"Time":"2026-07-01T14:57:38.762727661Z","Action":"pass","Package":"github.com/nats-io/nats-server/v2/test","Test":"TestOCSPGatewayReload","Elapsed":3.08}
+{"Time":"2026-07-01T14:57:38.762742328Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Output":"PASS\n"}
+{"Time":"2026-07-01T14:57:38.763797814Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/test","Output":"ok  \tgithub.com/nats-io/nats-server/v2/test\t3.086s\n"}
+{"Time":"2026-07-01T14:57:38.763820869Z","Action":"pass","Package":"github.com/nats-io/nats-server/v2/test","Elapsed":3.086}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

@@ -1,0 +1,62 @@
+patching file pkg/mqtrigger/mqtmanager_test.go
+{"Time":"2026-07-01T14:43:56.778403273Z","Action":"start","Package":"github.com/fission/fission/pkg/mqtrigger"}
+{"Time":"2026-07-01T14:43:56.797316335Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"TestMqtManager"}
+{"Time":"2026-07-01T14:43:56.797337465Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"TestMqtManager","Output":"=== RUN   TestMqtManager\n"}
+{"Time":"2026-07-01T14:43:56.797369126Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"TestMqtManager","Output":"--- PASS: TestMqtManager (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797375786Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"TestMqtManager","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797385111Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar"}
+{"Time":"2026-07-01T14:43:56.797388162Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar","Output":"=== RUN   Test_toEnvVar\n"}
+{"Time":"2026-07-01T14:43:56.797393276Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/Empty_string"}
+{"Time":"2026-07-01T14:43:56.797396703Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/Empty_string","Output":"=== RUN   Test_toEnvVar/Empty_string\n"}
+{"Time":"2026-07-01T14:43:56.797400858Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/Empty_string","Output":"--- PASS: Test_toEnvVar/Empty_string (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797404044Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/Empty_string","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797407483Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/Single_word"}
+{"Time":"2026-07-01T14:43:56.797411177Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/Single_word","Output":"=== RUN   Test_toEnvVar/Single_word\n"}
+{"Time":"2026-07-01T14:43:56.797425744Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/Single_word","Output":"--- PASS: Test_toEnvVar/Single_word (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797431697Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/Single_word","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797435967Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/CamelCase"}
+{"Time":"2026-07-01T14:43:56.797438781Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/CamelCase","Output":"=== RUN   Test_toEnvVar/CamelCase\n"}
+{"Time":"2026-07-01T14:43:56.797471312Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/CamelCase","Output":"--- PASS: Test_toEnvVar/CamelCase (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797477344Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar/CamelCase","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797483368Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar","Output":"--- PASS: Test_toEnvVar (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797486364Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_toEnvVar","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797490382Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist"}
+{"Time":"2026-07-01T14:43:56.797493054Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist","Output":"=== RUN   Test_getEnvVarlist\n"}
+{"Time":"2026-07-01T14:43:56.797566733Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist/Test_kafka_example"}
+{"Time":"2026-07-01T14:43:56.797572089Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist/Test_kafka_example","Output":"=== RUN   Test_getEnvVarlist/Test_kafka_example\n"}
+{"Time":"2026-07-01T14:43:56.797635783Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist/Test_kafka_example","Output":"--- PASS: Test_getEnvVarlist/Test_kafka_example (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797644862Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist/Test_kafka_example","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797650215Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist/Test_kafka_invalid_secret"}
+{"Time":"2026-07-01T14:43:56.79765516Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist/Test_kafka_invalid_secret","Output":"=== RUN   Test_getEnvVarlist/Test_kafka_invalid_secret\n"}
+{"Time":"2026-07-01T14:43:56.797687768Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist/Test_kafka_invalid_secret","Output":"--- PASS: Test_getEnvVarlist/Test_kafka_invalid_secret (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.79769257Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist/Test_kafka_invalid_secret","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797698214Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist","Output":"--- PASS: Test_getEnvVarlist (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797702381Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getEnvVarlist","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797706515Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields"}
+{"Time":"2026-07-01T14:43:56.797709187Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields","Output":"=== RUN   Test_checkAndUpdateTriggerFields\n"}
+{"Time":"2026-07-01T14:43:56.797734538Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields/With_diff"}
+{"Time":"2026-07-01T14:43:56.797739691Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields/With_diff","Output":"=== RUN   Test_checkAndUpdateTriggerFields/With_diff\n"}
+{"Time":"2026-07-01T14:43:56.797744955Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields/With_diff","Output":"--- PASS: Test_checkAndUpdateTriggerFields/With_diff (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797752356Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields/With_diff","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.79775796Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields/With_no_diff"}
+{"Time":"2026-07-01T14:43:56.797760629Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields/With_no_diff","Output":"=== RUN   Test_checkAndUpdateTriggerFields/With_no_diff\n"}
+{"Time":"2026-07-01T14:43:56.797778027Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields/With_no_diff","Output":"--- PASS: Test_checkAndUpdateTriggerFields/With_no_diff (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797782954Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields/With_no_diff","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797787278Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields","Output":"--- PASS: Test_checkAndUpdateTriggerFields (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.79779149Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_checkAndUpdateTriggerFields","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.79779584Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec"}
+{"Time":"2026-07-01T14:43:56.797800682Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec","Output":"=== RUN   Test_getAuthTriggerSpec\n"}
+{"Time":"2026-07-01T14:43:56.797844449Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec/With_secret"}
+{"Time":"2026-07-01T14:43:56.797850525Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec/With_secret","Output":"=== RUN   Test_getAuthTriggerSpec/With_secret\n"}
+{"Time":"2026-07-01T14:43:56.797871062Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec/With_secret","Output":"--- PASS: Test_getAuthTriggerSpec/With_secret (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797876731Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec/With_secret","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797880882Z","Action":"run","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec/With_invalid_secret"}
+{"Time":"2026-07-01T14:43:56.797883532Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec/With_invalid_secret","Output":"=== RUN   Test_getAuthTriggerSpec/With_invalid_secret\n"}
+{"Time":"2026-07-01T14:43:56.797905844Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec/With_invalid_secret","Output":"--- PASS: Test_getAuthTriggerSpec/With_invalid_secret (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797911406Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec/With_invalid_secret","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797917004Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec","Output":"--- PASS: Test_getAuthTriggerSpec (0.00s)\n"}
+{"Time":"2026-07-01T14:43:56.797923394Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Test":"Test_getAuthTriggerSpec","Elapsed":0}
+{"Time":"2026-07-01T14:43:56.797929703Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:56.798882329Z","Action":"output","Package":"github.com/fission/fission/pkg/mqtrigger","Output":"ok  \tgithub.com/fission/fission/pkg/mqtrigger\t0.020s\n"}
+{"Time":"2026-07-01T14:43:56.798892765Z","Action":"pass","Package":"github.com/fission/fission/pkg/mqtrigger","Elapsed":0.02}
+reward=1 graded=14 found=14 failed=0 parsed=14 framework=go exit_code=0

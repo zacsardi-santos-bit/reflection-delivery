@@ -1,0 +1,22 @@
+patching file packages/web/__tests__/pages/user/my-account/__snapshots__/index.js.snap
+patching file packages/web/components/Authorization/__tests__/__snapshots__/Protected.js.snap
+patching file packages/web/components/Card/Share/__tests__/__snapshots__/index.js.snap
+patching file packages/web/components/Modal/__tests__/__snapshots__/BuyTechnologyModal.js.snap
+patching file packages/web/components/Modal/__tests__/__snapshots__/RegisterModal.js.snap
+patching file packages/web/components/Technology/Details/__tests__/Responsibles.test.js
+patching file packages/web/components/Technology/Details/__tests__/__snapshots__/Responsibles.test.js.snap
+patching file packages/web/components/TechnologyForm/Costs/__tests__/__snapshots__/index.js.snap
+patching file packages/web/components/TechnologyForm/Responsible/__tests__/__snapshots__/index.js.snap
+patching file packages/web/components/TechnologyForm/Review/__tests__/__snapshots__/index.js.snap
+PASS components/Technology/Details/__tests__/Responsibles.test.js (8.672 s)
+  <Responsibles />
+    ✓ should render without crashing (274 ms)
+    ✓ should render without crashing when the responsible are being passed throught (186 ms)
+    ✓ should not render the lattes information when hideLattesInfo is passed (95 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   3 passed, 3 total
+Time:        9.189 s
+Ran all test suites matching /components\/Technology\/Details\/__tests__\/Responsibles.test.js/i.
+reward=1 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=0

@@ -1,0 +1,67 @@
+patching file go.mod
+patching file go.sum
+patching file op-e2e/actions/l1_replica.go
+patching file op-e2e/actions/l2_engine.go
+patching file op-e2e/actions/l2_sequencer.go
+patching file op-e2e/actions/l2_sequencer_test.go
+patching file op-e2e/actions/l2_verifier.go
+patching file op-e2e/actions/l2_verifier_test.go
+patching file op-e2e/actions/sync_test.go
+patching file op-e2e/sequencer_failover_test.go
+patching file op-node/rollup/attributes/attributes.go
+patching file op-node/rollup/attributes/attributes_test.go
+patching file op-node/rollup/clsync/clsync.go
+patching file op-node/rollup/clsync/clsync_test.go
+patching file op-node/rollup/driver/conf_depth.go (renamed from op-node/rollup/confdepth/conf_depth.go)
+patching file op-node/rollup/driver/conf_depth_test.go (renamed from op-node/rollup/confdepth/conf_depth_test.go)
+patching file op-node/rollup/driver/driver.go
+patching file op-node/rollup/driver/metered_engine.go
+patching file op-node/rollup/driver/origin_selector.go (renamed from op-node/rollup/sequencing/origin_selector.go)
+patching file op-node/rollup/driver/origin_selector_test.go (renamed from op-node/rollup/sequencing/origin_selector_test.go)
+patching file op-node/rollup/driver/sequencer.go
+patching file op-node/rollup/driver/sequencer_test.go
+patching file op-node/rollup/driver/state.go
+patching file op-node/rollup/engine/build_cancel.go
+patching file op-node/rollup/engine/build_invalid.go
+patching file op-node/rollup/engine/build_seal.go
+patching file op-node/rollup/engine/build_sealed.go
+patching file op-node/rollup/engine/build_start.go
+patching file op-node/rollup/engine/build_started.go
+patching file op-node/rollup/engine/engine_controller.go
+patching file op-node/rollup/engine/engine_update.go
+patching file op-node/rollup/engine/events.go
+patching file op-node/rollup/engine/iface.go
+patching file op-node/rollup/engine/params.go
+patching file op-node/rollup/engine/payload_invalid.go
+patching file op-node/rollup/engine/payload_process.go
+patching file op-node/rollup/engine/payload_success.go
+patching file op-node/rollup/event/tracer_sequence.go
+patching file op-node/rollup/event/tracer_struct.go
+patching file op-node/rollup/event/tracer_timing.go
+patching file op-node/rollup/sequencing/disabled.go
+patching file op-node/rollup/sequencing/iface.go
+patching file op-node/rollup/sequencing/sequencer.go
+patching file op-node/rollup/sequencing/sequencer_chaos_test.go
+patching file op-node/rollup/sequencing/sequencer_test.go
+patching file op-program/client/driver/driver.go
+patching file op-program/client/driver/program.go
+patching file op-program/client/driver/program_test.go
+patching file op-service/clock/simple.go
+patching file op-service/clock/simple_test.go
+patching file op-service/eth/types.go
+patching file op-service/jsonutil/json.go
+patching file op-service/testutils/metrics.go
+patching file op-service/testutils/rpc_err_faker.go
+patching file op-supervisor/supervisor/backend/backend.go
+patching file op-supervisor/supervisor/backend/chain_metrics.go
+patching file op-supervisor/supervisor/backend/db/db.go
+patching file op-supervisor/supervisor/backend/db/heads/heads.go
+patching file op-supervisor/supervisor/backend/db/heads/types.go
+patching file op-supervisor/supervisor/backend/db/init.go (renamed from op-supervisor/supervisor/backend/init.go)
+patching file op-supervisor/supervisor/backend/db/logs/db.go
+patching file op-supervisor/supervisor/backend/db/logs/entries.go (renamed from op-supervisor/supervisor/backend/db/entries.go)
+patching file op-supervisor/supervisor/backend/db/logs/iterator.go (renamed from op-supervisor/supervisor/backend/db/iterator.go)
+patching file op-supervisor/supervisor/backend/file_layout.go
+patching file op-supervisor/supervisor/backend/source/chain.go
+patching file op-supervisor/supervisor/backend/source/chain_processor.go
+patching file op-supervisor/supervisor/backend/source/log_processor.go

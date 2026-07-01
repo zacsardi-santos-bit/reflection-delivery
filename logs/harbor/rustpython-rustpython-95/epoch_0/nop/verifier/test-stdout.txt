@@ -1,0 +1,1103 @@
+patching file tests/snippets/extra_bool_eval.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace/repo/tests
+collecting ... collected 82 items / 81 deselected / 1 selected
+
+test_snippets.py::SampleTestCase::test_rustpython_extra_bool_eval FAILED [100%]
+
+=================================== FAILURES ===================================
+________________ SampleTestCase.test_rustpython_extra_bool_eval ________________
+
+self = <test_snippets.SampleTestCase testMethod=test_rustpython_extra_bool_eval>
+
+    def test_function(self):
+>       perform_test(filename, method, test_type)
+
+test_snippets.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+test_snippets.py:49: in perform_test
+    run_via_rustpython(filename, test_type)
+test_snippets.py:80: in run_via_rustpython
+    subprocess.check_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+popenargs = (['cargo', 'run', '--release', '/workspace/repo/tests/snippets/extra_bool_eval.py'],)
+kwargs = {'env': {'HOSTNAME': '5813e29dc475', 'PWD': '/workspace/repo/tests', 'HOME': '/root', 'CARGO_HOME': '/usr/local/cargo', ...}}
+
+    def check_call(*popenargs, **kwargs):
+        """Run command with arguments.  Wait for command to complete.  If
+        the exit code was zero then return, otherwise raise
+        CalledProcessError.  The CalledProcessError object will have the
+        return code in the returncode attribute.
+    
+        The arguments are the same as for the call function.  Example:
+    
+        check_call(["ls", "-l"])
+        """
+        retcode = call(*popenargs, **kwargs)
+        if retcode:
+            cmd = kwargs.get("args")
+            if cmd is None:
+                cmd = popenargs[0]
+>           raise CalledProcessError(retcode, cmd)
+E           subprocess.CalledProcessError: Command '['cargo', 'run', '--release', '/workspace/repo/tests/snippets/extra_bool_eval.py']' returned non-zero exit status 101.
+
+/usr/lib/python3.11/subprocess.py:413: CalledProcessError
+----------------------------- Captured stderr call -----------------------------
+    Finished release [optimized] target(s) in 0.14s
+     Running `/workspace/repo/target/release/rustpython /workspace/repo/tests/snippets/extra_bool_eval.py`
+DEBUG 2026-07-01T15:20:12Z: rustpython: Running file /workspace/repo/tests/snippets/extra_bool_eval.py
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "BaseException"] }, RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "Exception"] }, RefCell { value: [PyObj class "BaseException"] }, RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "Exception"] }, RefCell { value: [PyObj class "BaseException"] }, RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "Exception"] }, RefCell { value: [PyObj class "BaseException"] }, RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "Exception"] }, RefCell { value: [PyObj class "BaseException"] }, RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "RuntimeError"] }, RefCell { value: [PyObj class "Exception"] }, RefCell { value: [PyObj class "BaseException"] }, RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "Exception"] }, RefCell { value: [PyObj class "BaseException"] }, RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "Exception"] }, RefCell { value: [PyObj class "BaseException"] }, RefCell { value: [PyObj class "object"] }]]
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 11, column: 1 }, Class, Location { row: 11, column: 6 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 11, column: 7 }, Name { name: "ExplodingBool" }, Location { row: 11, column: 20 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 11, column: 20 }, Lpar, Location { row: 11, column: 21 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 11, column: 21 }, Rpar, Location { row: 11, column: 22 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 11, column: 22 }, Colon, Location { row: 11, column: 23 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 11, column: 23 }, Newline, Location { row: 11, column: 24 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 5 }, Indent, Location { row: 12, column: 5 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 5 }, Def, Location { row: 12, column: 8 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 9 }, Name { name: "__init__" }, Location { row: 12, column: 17 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 17 }, Lpar, Location { row: 12, column: 18 }))), nesting=1, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 18 }, Name { name: "self" }, Location { row: 12, column: 22 }))), nesting=1, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 22 }, Comma, Location { row: 12, column: 23 }))), nesting=1, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 24 }, Name { name: "value" }, Location { row: 12, column: 29 }))), nesting=1, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 29 }, Rpar, Location { row: 12, column: 30 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 30 }, Colon, Location { row: 12, column: 31 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 12, column: 31 }, Newline, Location { row: 12, column: 32 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 13, column: 9 }, Indent, Location { row: 13, column: 9 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 13, column: 9 }, Name { name: "self" }, Location { row: 13, column: 13 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 13, column: 13 }, Dot, Location { row: 13, column: 14 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 13, column: 14 }, Name { name: "value" }, Location { row: 13, column: 19 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 13, column: 20 }, Equal, Location { row: 13, column: 21 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 13, column: 22 }, Name { name: "value" }, Location { row: 13, column: 27 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 13, column: 27 }, Newline, Location { row: 13, column: 28 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 14, column: 9 }, Name { name: "self" }, Location { row: 14, column: 13 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 14, column: 13 }, Dot, Location { row: 14, column: 14 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 14, column: 14 }, Name { name: "booled" }, Location { row: 14, column: 20 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 14, column: 21 }, Equal, Location { row: 14, column: 22 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 14, column: 23 }, False, Location { row: 14, column: 28 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 14, column: 28 }, Newline, Location { row: 14, column: 29 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 16, column: 5 }, Dedent, Location { row: 16, column: 5 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 16, column: 5 }, Def, Location { row: 16, column: 8 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 16, column: 9 }, Name { name: "__bool__" }, Location { row: 16, column: 17 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 16, column: 17 }, Lpar, Location { row: 16, column: 18 }))), nesting=1, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 16, column: 18 }, Name { name: "self" }, Location { row: 16, column: 22 }))), nesting=1, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 16, column: 22 }, Rpar, Location { row: 16, column: 23 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 16, column: 23 }, Colon, Location { row: 16, column: 24 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 16, column: 24 }, Newline, Location { row: 16, column: 25 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 17, column: 9 }, Indent, Location { row: 17, column: 9 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 17, column: 9 }, Assert, Location { row: 17, column: 15 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 17, column: 16 }, Not, Location { row: 17, column: 19 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 17, column: 20 }, Name { name: "self" }, Location { row: 17, column: 24 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 17, column: 24 }, Dot, Location { row: 17, column: 25 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 17, column: 25 }, Name { name: "booled" }, Location { row: 17, column: 31 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 17, column: 31 }, Newline, Location { row: 17, column: 32 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 18, column: 9 }, Name { name: "self" }, Location { row: 18, column: 13 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 18, column: 13 }, Dot, Location { row: 18, column: 14 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 18, column: 14 }, Name { name: "booled" }, Location { row: 18, column: 20 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 18, column: 21 }, Equal, Location { row: 18, column: 22 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 18, column: 23 }, True, Location { row: 18, column: 27 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 18, column: 27 }, Newline, Location { row: 18, column: 28 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 19, column: 9 }, Return, Location { row: 19, column: 15 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 19, column: 16 }, Name { name: "self" }, Location { row: 19, column: 20 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 19, column: 20 }, Dot, Location { row: 19, column: 21 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 19, column: 21 }, Name { name: "value" }, Location { row: 19, column: 26 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 19, column: 26 }, Newline, Location { row: 19, column: 27 }))), nesting=0, indent stack: [0, 4, 8]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 1 }, Dedent, Location { row: 21, column: 1 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 1 }, Dedent, Location { row: 21, column: 1 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 1 }, Name { name: "y" }, Location { row: 21, column: 2 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 3 }, Equal, Location { row: 21, column: 4 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 5 }, Lpar, Location { row: 21, column: 6 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 6 }, Name { name: "ExplodingBool" }, Location { row: 21, column: 19 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 19 }, Lpar, Location { row: 21, column: 20 }))), nesting=2, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 20 }, False, Location { row: 21, column: 25 }))), nesting=2, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 25 }, Rpar, Location { row: 21, column: 26 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 27 }, And, Location { row: 21, column: 30 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 31 }, False, Location { row: 21, column: 36 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 37 }, And, Location { row: 21, column: 40 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 41 }, True, Location { row: 21, column: 45 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 46 }, And, Location { row: 21, column: 49 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 50 }, False, Location { row: 21, column: 55 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 55 }, Rpar, Location { row: 21, column: 56 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 21, column: 56 }, Newline, Location { row: 21, column: 57 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 22, column: 1 }, Name { name: "print" }, Location { row: 22, column: 6 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 22, column: 6 }, Lpar, Location { row: 22, column: 7 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 22, column: 7 }, Name { name: "y" }, Location { row: 22, column: 8 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 22, column: 8 }, Rpar, Location { row: 22, column: 9 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 22, column: 9 }, Newline, Location { row: 22, column: 10 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 1 }, If, Location { row: 24, column: 3 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 4 }, Lpar, Location { row: 24, column: 5 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 5 }, Name { name: "ExplodingBool" }, Location { row: 24, column: 18 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 18 }, Lpar, Location { row: 24, column: 19 }))), nesting=2, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 19 }, True, Location { row: 24, column: 23 }))), nesting=2, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 23 }, Rpar, Location { row: 24, column: 24 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 25 }, Or, Location { row: 24, column: 27 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 28 }, False, Location { row: 24, column: 33 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 34 }, Or, Location { row: 24, column: 36 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 37 }, True, Location { row: 24, column: 41 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 42 }, Or, Location { row: 24, column: 44 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 45 }, False, Location { row: 24, column: 50 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 50 }, Rpar, Location { row: 24, column: 51 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 51 }, Colon, Location { row: 24, column: 52 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 24, column: 52 }, Newline, Location { row: 24, column: 53 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 25, column: 5 }, Indent, Location { row: 25, column: 5 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 25, column: 5 }, Pass, Location { row: 25, column: 9 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 25, column: 9 }, Newline, Location { row: 25, column: 10 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 1 }, Dedent, Location { row: 27, column: 1 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 1 }, Assert, Location { row: 27, column: 7 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 8 }, Name { name: "ExplodingBool" }, Location { row: 27, column: 21 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 21 }, Lpar, Location { row: 27, column: 22 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 22 }, True, Location { row: 27, column: 26 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 26 }, Rpar, Location { row: 27, column: 27 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 28 }, Or, Location { row: 27, column: 30 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 31 }, False, Location { row: 27, column: 36 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 27, column: 36 }, Newline, Location { row: 27, column: 37 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 1 }, While, Location { row: 29, column: 6 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 7 }, Name { name: "ExplodingBool" }, Location { row: 29, column: 20 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 20 }, Lpar, Location { row: 29, column: 21 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 21 }, False, Location { row: 29, column: 26 }))), nesting=1, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 26 }, Rpar, Location { row: 29, column: 27 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 28 }, And, Location { row: 29, column: 31 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 32 }, False, Location { row: 29, column: 37 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 37 }, Colon, Location { row: 29, column: 38 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 29, column: 38 }, Newline, Location { row: 29, column: 39 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 30, column: 5 }, Indent, Location { row: 30, column: 5 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 30, column: 5 }, Pass, Location { row: 30, column: 9 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 30, column: 9 }, Newline, Location { row: 30, column: 10 }))), nesting=0, indent stack: [0, 4]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token Some(Ok((Location { row: 34, column: 1 }, Dedent, Location { row: 34, column: 1 }))), nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_parser::lexer: Lex token None, nesting=0, indent stack: [0]
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 11, column: 1 }, node: ClassDef { name: "ExplodingBool", body: [Located { location: Location { row: 12, column: 5 }, node: FunctionDef { name: "__init__", args: ["self", "value"], body: [Located { location: Location { row: 13, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "value" }], value: Identifier { name: "value" } } }, Located { location: Location { row: 14, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "booled" }], value: False } }] } }, Located { location: Location { row: 16, column: 5 }, node: FunctionDef { name: "__bool__", args: ["self"], body: [Located { location: Location { row: 17, column: 9 }, node: Assert { test: Unop { op: Not, a: Attribute { value: Identifier { name: "self" }, name: "booled" } }, msg: None } }, Located { location: Location { row: 18, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "booled" }], value: True } }, Located { location: Location { row: 19, column: 9 }, node: Return { value: Some([Attribute { value: Identifier { name: "self" }, name: "value" }]) } }] } }], args: [] } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 12, column: 5 }, node: FunctionDef { name: "__init__", args: ["self", "value"], body: [Located { location: Location { row: 13, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "value" }], value: Identifier { name: "value" } } }, Located { location: Location { row: 14, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "booled" }], value: False } }] } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 13, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "value" }], value: Identifier { name: "value" } } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "value" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 14, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "booled" }], value: False } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 16, column: 5 }, node: FunctionDef { name: "__bool__", args: ["self"], body: [Located { location: Location { row: 17, column: 9 }, node: Assert { test: Unop { op: Not, a: Attribute { value: Identifier { name: "self" }, name: "booled" } }, msg: None } }, Located { location: Location { row: 18, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "booled" }], value: True } }, Located { location: Location { row: 19, column: 9 }, node: Return { value: Some([Attribute { value: Identifier { name: "self" }, name: "value" }]) } }] } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 17, column: 9 }, node: Assert { test: Unop { op: Not, a: Attribute { value: Identifier { name: "self" }, name: "booled" } }, msg: None } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Unop { op: Not, a: Attribute { value: Identifier { name: "self" }, name: "booled" } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Attribute { value: Identifier { name: "self" }, name: "booled" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 18, column: 9 }, node: Assign { targets: [Attribute { value: Identifier { name: "self" }, name: "booled" }], value: True } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling True
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 19, column: 9 }, node: Return { value: Some([Attribute { value: Identifier { name: "self" }, name: "value" }]) } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Attribute { value: Identifier { name: "self" }, name: "value" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 21, column: 1 }, node: Assign { targets: [Identifier { name: "y" }], value: BoolOp { a: BoolOp { a: BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [False] }, op: And, b: False }, op: And, b: True }, op: And, b: False } } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling BoolOp { a: BoolOp { a: BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [False] }, op: And, b: False }, op: And, b: True }, op: And, b: False }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling BoolOp { a: BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [False] }, op: And, b: False }, op: And, b: True }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [False] }, op: And, b: False }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Call { function: Identifier { name: "ExplodingBool" }, args: [False] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "ExplodingBool" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling True
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 22, column: 1 }, node: Expression { expression: Call { function: Identifier { name: "print" }, args: [Identifier { name: "y" }] } } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Call { function: Identifier { name: "print" }, args: [Identifier { name: "y" }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "print" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "y" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 24, column: 1 }, node: If { test: BoolOp { a: BoolOp { a: BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [True] }, op: Or, b: False }, op: Or, b: True }, op: Or, b: False }, body: [Located { location: Location { row: 25, column: 5 }, node: Pass }], orelse: None } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling BoolOp { a: BoolOp { a: BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [True] }, op: Or, b: False }, op: Or, b: True }, op: Or, b: False }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling BoolOp { a: BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [True] }, op: Or, b: False }, op: Or, b: True }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [True] }, op: Or, b: False }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Call { function: Identifier { name: "ExplodingBool" }, args: [True] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "ExplodingBool" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling True
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling True
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 25, column: 5 }, node: Pass }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 27, column: 1 }, node: Assert { test: BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [True] }, op: Or, b: False }, msg: None } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [True] }, op: Or, b: False }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Call { function: Identifier { name: "ExplodingBool" }, args: [True] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "ExplodingBool" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling True
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 29, column: 1 }, node: While { test: BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [False] }, op: And, b: False }, body: [Located { location: Location { row: 30, column: 5 }, node: Pass }], orelse: None } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling BoolOp { a: Call { function: Identifier { name: "ExplodingBool" }, args: [False] }, op: And, b: False }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Call { function: Identifier { name: "ExplodingBool" }, args: [False] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Identifier { name: "ExplodingBool" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling False
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compiling Located { location: Location { row: 30, column: 5 }, node: Pass }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::compile: Compilation completed: Code Object { 
+Inst 0: (LoadBuildClass, Location { row: 11, column: 1 })
+Inst 1: (LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "__locals__" }, Location { row: 11, column: 1 })
+Inst 1: (StoreLocals, Location { row: 11, column: 1 })
+Inst 2: (LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "value" }, Location { row: 13, column: 9 })
+Inst 1: (LoadName { name: "self" }, Location { row: 13, column: 9 })
+Inst 2: (StoreAttr { name: "value" }, Location { row: 13, column: 9 })
+Inst 3: (LoadConst { value: Boolean { value: false } }, Location { row: 14, column: 9 })
+Inst 4: (LoadName { name: "self" }, Location { row: 14, column: 9 })
+Inst 5: (StoreAttr { name: "booled" }, Location { row: 14, column: 9 })
+Inst 6: (LoadConst { value: None }, Location { row: 14, column: 9 })
+Inst 7: (ReturnValue, Location { row: 14, column: 9 })
+label_map: {} } } }, Location { row: 14, column: 9 })
+Inst 3: (LoadConst { value: String { value: "__init__" } }, Location { row: 14, column: 9 })
+Inst 4: (MakeFunction, Location { row: 14, column: 9 })
+Inst 5: (StoreName { name: "__init__" }, Location { row: 14, column: 9 })
+Inst 6: (LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "self" }, Location { row: 17, column: 9 })
+Inst 1: (LoadAttr { name: "booled" }, Location { row: 17, column: 9 })
+Inst 2: (UnaryOperation { op: Not }, Location { row: 17, column: 9 })
+Inst 3: (JumpIf { target: 0 }, Location { row: 17, column: 9 })
+Inst 4: (LoadName { name: "AssertionError" }, Location { row: 17, column: 9 })
+Inst 5: (CallFunction { count: 0 }, Location { row: 17, column: 9 })
+Inst 6: (Raise { argc: 1 }, Location { row: 17, column: 9 })
+Inst 7: (LoadConst { value: Boolean { value: true } }, Location { row: 18, column: 9 })
+Inst 8: (LoadName { name: "self" }, Location { row: 18, column: 9 })
+Inst 9: (StoreAttr { name: "booled" }, Location { row: 18, column: 9 })
+Inst 10: (LoadName { name: "self" }, Location { row: 19, column: 9 })
+Inst 11: (LoadAttr { name: "value" }, Location { row: 19, column: 9 })
+Inst 12: (ReturnValue, Location { row: 19, column: 9 })
+Inst 13: (LoadConst { value: None }, Location { row: 19, column: 9 })
+Inst 14: (ReturnValue, Location { row: 19, column: 9 })
+label_map: {0: 7} } } }, Location { row: 19, column: 9 })
+Inst 7: (LoadConst { value: String { value: "__bool__" } }, Location { row: 19, column: 9 })
+Inst 8: (MakeFunction, Location { row: 19, column: 9 })
+Inst 9: (StoreName { name: "__bool__" }, Location { row: 19, column: 9 })
+Inst 10: (LoadConst { value: None }, Location { row: 19, column: 9 })
+Inst 11: (ReturnValue, Location { row: 19, column: 9 })
+label_map: {} } } }, Location { row: 19, column: 9 })
+Inst 2: (LoadConst { value: String { value: "ExplodingBool" } }, Location { row: 19, column: 9 })
+Inst 3: (MakeFunction, Location { row: 19, column: 9 })
+Inst 4: (LoadConst { value: String { value: "ExplodingBool" } }, Location { row: 19, column: 9 })
+Inst 5: (CallFunction { count: 2 }, Location { row: 19, column: 9 })
+Inst 6: (StoreName { name: "ExplodingBool" }, Location { row: 19, column: 9 })
+Inst 7: (LoadName { name: "ExplodingBool" }, Location { row: 21, column: 1 })
+Inst 8: (LoadConst { value: Boolean { value: false } }, Location { row: 21, column: 1 })
+Inst 9: (CallFunction { count: 1 }, Location { row: 21, column: 1 })
+Inst 10: (Duplicate, Location { row: 21, column: 1 })
+Inst 11: (JumpIfFalse { target: 3 }, Location { row: 21, column: 1 })
+Inst 12: (Pop, Location { row: 21, column: 1 })
+Inst 13: (LoadConst { value: Boolean { value: false } }, Location { row: 21, column: 1 })
+Inst 14: (Duplicate, Location { row: 21, column: 1 })
+Inst 15: (JumpIfFalse { target: 2 }, Location { row: 21, column: 1 })
+Inst 16: (Pop, Location { row: 21, column: 1 })
+Inst 17: (LoadConst { value: Boolean { value: true } }, Location { row: 21, column: 1 })
+Inst 18: (Duplicate, Location { row: 21, column: 1 })
+Inst 19: (JumpIfFalse { target: 1 }, Location { row: 21, column: 1 })
+Inst 20: (Pop, Location { row: 21, column: 1 })
+Inst 21: (LoadConst { value: Boolean { value: false } }, Location { row: 21, column: 1 })
+Inst 22: (StoreName { name: "y" }, Location { row: 21, column: 1 })
+Inst 23: (LoadName { name: "print" }, Location { row: 22, column: 1 })
+Inst 24: (LoadName { name: "y" }, Location { row: 22, column: 1 })
+Inst 25: (CallFunction { count: 1 }, Location { row: 22, column: 1 })
+Inst 26: (Pop, Location { row: 22, column: 1 })
+Inst 27: (LoadName { name: "ExplodingBool" }, Location { row: 24, column: 1 })
+Inst 28: (LoadConst { value: Boolean { value: true } }, Location { row: 24, column: 1 })
+Inst 29: (CallFunction { count: 1 }, Location { row: 24, column: 1 })
+Inst 30: (Duplicate, Location { row: 24, column: 1 })
+Inst 31: (JumpIf { target: 7 }, Location { row: 24, column: 1 })
+Inst 32: (Pop, Location { row: 24, column: 1 })
+Inst 33: (LoadConst { value: Boolean { value: false } }, Location { row: 24, column: 1 })
+Inst 34: (Duplicate, Location { row: 24, column: 1 })
+Inst 35: (JumpIf { target: 6 }, Location { row: 24, column: 1 })
+Inst 36: (Pop, Location { row: 24, column: 1 })
+Inst 37: (LoadConst { value: Boolean { value: true } }, Location { row: 24, column: 1 })
+Inst 38: (Duplicate, Location { row: 24, column: 1 })
+Inst 39: (JumpIf { target: 5 }, Location { row: 24, column: 1 })
+Inst 40: (Pop, Location { row: 24, column: 1 })
+Inst 41: (LoadConst { value: Boolean { value: false } }, Location { row: 24, column: 1 })
+Inst 42: (JumpIfFalse { target: 4 }, Location { row: 24, column: 1 })
+Inst 43: (Pass, Location { row: 25, column: 5 })
+Inst 44: (LoadName { name: "ExplodingBool" }, Location { row: 27, column: 1 })
+Inst 45: (LoadConst { value: Boolean { value: true } }, Location { row: 27, column: 1 })
+Inst 46: (CallFunction { count: 1 }, Location { row: 27, column: 1 })
+Inst 47: (Duplicate, Location { row: 27, column: 1 })
+Inst 48: (JumpIf { target: 8 }, Location { row: 27, column: 1 })
+Inst 49: (Pop, Location { row: 27, column: 1 })
+Inst 50: (LoadConst { value: Boolean { value: false } }, Location { row: 27, column: 1 })
+Inst 51: (JumpIf { target: 9 }, Location { row: 27, column: 1 })
+Inst 52: (LoadName { name: "AssertionError" }, Location { row: 27, column: 1 })
+Inst 53: (CallFunction { count: 0 }, Location { row: 27, column: 1 })
+Inst 54: (Raise { argc: 1 }, Location { row: 27, column: 1 })
+Inst 55: (SetupLoop { start: 10, end: 11 }, Location { row: 29, column: 1 })
+Inst 56: (LoadName { name: "ExplodingBool" }, Location { row: 29, column: 1 })
+Inst 57: (LoadConst { value: Boolean { value: false } }, Location { row: 29, column: 1 })
+Inst 58: (CallFunction { count: 1 }, Location { row: 29, column: 1 })
+Inst 59: (Duplicate, Location { row: 29, column: 1 })
+Inst 60: (JumpIfFalse { target: 12 }, Location { row: 29, column: 1 })
+Inst 61: (Pop, Location { row: 29, column: 1 })
+Inst 62: (LoadConst { value: Boolean { value: false } }, Location { row: 29, column: 1 })
+Inst 63: (JumpIfFalse { target: 11 }, Location { row: 29, column: 1 })
+Inst 64: (Pass, Location { row: 30, column: 5 })
+Inst 65: (Jump { target: 10 }, Location { row: 30, column: 5 })
+Inst 66: (LoadConst { value: None }, Location { row: 30, column: 5 })
+Inst 67: (ReturnValue, Location { row: 30, column: 5 })
+label_map: {12: 63, 7: 34, 2: 18, 3: 14, 11: 66, 1: 22, 6: 38, 4: 44, 10: 56, 9: 55, 8: 51, 5: 42} }
+DEBUG 2026-07-01T15:20:12Z: rustpython: Code object: [PyObj code: Code Object { 
+Inst 0: (LoadBuildClass, Location { row: 11, column: 1 })
+Inst 1: (LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "__locals__" }, Location { row: 11, column: 1 })
+Inst 1: (StoreLocals, Location { row: 11, column: 1 })
+Inst 2: (LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "value" }, Location { row: 13, column: 9 })
+Inst 1: (LoadName { name: "self" }, Location { row: 13, column: 9 })
+Inst 2: (StoreAttr { name: "value" }, Location { row: 13, column: 9 })
+Inst 3: (LoadConst { value: Boolean { value: false } }, Location { row: 14, column: 9 })
+Inst 4: (LoadName { name: "self" }, Location { row: 14, column: 9 })
+Inst 5: (StoreAttr { name: "booled" }, Location { row: 14, column: 9 })
+Inst 6: (LoadConst { value: None }, Location { row: 14, column: 9 })
+Inst 7: (ReturnValue, Location { row: 14, column: 9 })
+label_map: {} } } }, Location { row: 14, column: 9 })
+Inst 3: (LoadConst { value: String { value: "__init__" } }, Location { row: 14, column: 9 })
+Inst 4: (MakeFunction, Location { row: 14, column: 9 })
+Inst 5: (StoreName { name: "__init__" }, Location { row: 14, column: 9 })
+Inst 6: (LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "self" }, Location { row: 17, column: 9 })
+Inst 1: (LoadAttr { name: "booled" }, Location { row: 17, column: 9 })
+Inst 2: (UnaryOperation { op: Not }, Location { row: 17, column: 9 })
+Inst 3: (JumpIf { target: 0 }, Location { row: 17, column: 9 })
+Inst 4: (LoadName { name: "AssertionError" }, Location { row: 17, column: 9 })
+Inst 5: (CallFunction { count: 0 }, Location { row: 17, column: 9 })
+Inst 6: (Raise { argc: 1 }, Location { row: 17, column: 9 })
+Inst 7: (LoadConst { value: Boolean { value: true } }, Location { row: 18, column: 9 })
+Inst 8: (LoadName { name: "self" }, Location { row: 18, column: 9 })
+Inst 9: (StoreAttr { name: "booled" }, Location { row: 18, column: 9 })
+Inst 10: (LoadName { name: "self" }, Location { row: 19, column: 9 })
+Inst 11: (LoadAttr { name: "value" }, Location { row: 19, column: 9 })
+Inst 12: (ReturnValue, Location { row: 19, column: 9 })
+Inst 13: (LoadConst { value: None }, Location { row: 19, column: 9 })
+Inst 14: (ReturnValue, Location { row: 19, column: 9 })
+label_map: {0: 7} } } }, Location { row: 19, column: 9 })
+Inst 7: (LoadConst { value: String { value: "__bool__" } }, Location { row: 19, column: 9 })
+Inst 8: (MakeFunction, Location { row: 19, column: 9 })
+Inst 9: (StoreName { name: "__bool__" }, Location { row: 19, column: 9 })
+Inst 10: (LoadConst { value: None }, Location { row: 19, column: 9 })
+Inst 11: (ReturnValue, Location { row: 19, column: 9 })
+label_map: {} } } }, Location { row: 19, column: 9 })
+Inst 2: (LoadConst { value: String { value: "ExplodingBool" } }, Location { row: 19, column: 9 })
+Inst 3: (MakeFunction, Location { row: 19, column: 9 })
+Inst 4: (LoadConst { value: String { value: "ExplodingBool" } }, Location { row: 19, column: 9 })
+Inst 5: (CallFunction { count: 2 }, Location { row: 19, column: 9 })
+Inst 6: (StoreName { name: "ExplodingBool" }, Location { row: 19, column: 9 })
+Inst 7: (LoadName { name: "ExplodingBool" }, Location { row: 21, column: 1 })
+Inst 8: (LoadConst { value: Boolean { value: false } }, Location { row: 21, column: 1 })
+Inst 9: (CallFunction { count: 1 }, Location { row: 21, column: 1 })
+Inst 10: (Duplicate, Location { row: 21, column: 1 })
+Inst 11: (JumpIfFalse { target: 3 }, Location { row: 21, column: 1 })
+Inst 12: (Pop, Location { row: 21, column: 1 })
+Inst 13: (LoadConst { value: Boolean { value: false } }, Location { row: 21, column: 1 })
+Inst 14: (Duplicate, Location { row: 21, column: 1 })
+Inst 15: (JumpIfFalse { target: 2 }, Location { row: 21, column: 1 })
+Inst 16: (Pop, Location { row: 21, column: 1 })
+Inst 17: (LoadConst { value: Boolean { value: true } }, Location { row: 21, column: 1 })
+Inst 18: (Duplicate, Location { row: 21, column: 1 })
+Inst 19: (JumpIfFalse { target: 1 }, Location { row: 21, column: 1 })
+Inst 20: (Pop, Location { row: 21, column: 1 })
+Inst 21: (LoadConst { value: Boolean { value: false } }, Location { row: 21, column: 1 })
+Inst 22: (StoreName { name: "y" }, Location { row: 21, column: 1 })
+Inst 23: (LoadName { name: "print" }, Location { row: 22, column: 1 })
+Inst 24: (LoadName { name: "y" }, Location { row: 22, column: 1 })
+Inst 25: (CallFunction { count: 1 }, Location { row: 22, column: 1 })
+Inst 26: (Pop, Location { row: 22, column: 1 })
+Inst 27: (LoadName { name: "ExplodingBool" }, Location { row: 24, column: 1 })
+Inst 28: (LoadConst { value: Boolean { value: true } }, Location { row: 24, column: 1 })
+Inst 29: (CallFunction { count: 1 }, Location { row: 24, column: 1 })
+Inst 30: (Duplicate, Location { row: 24, column: 1 })
+Inst 31: (JumpIf { target: 7 }, Location { row: 24, column: 1 })
+Inst 32: (Pop, Location { row: 24, column: 1 })
+Inst 33: (LoadConst { value: Boolean { value: false } }, Location { row: 24, column: 1 })
+Inst 34: (Duplicate, Location { row: 24, column: 1 })
+Inst 35: (JumpIf { target: 6 }, Location { row: 24, column: 1 })
+Inst 36: (Pop, Location { row: 24, column: 1 })
+Inst 37: (LoadConst { value: Boolean { value: true } }, Location { row: 24, column: 1 })
+Inst 38: (Duplicate, Location { row: 24, column: 1 })
+Inst 39: (JumpIf { target: 5 }, Location { row: 24, column: 1 })
+Inst 40: (Pop, Location { row: 24, column: 1 })
+Inst 41: (LoadConst { value: Boolean { value: false } }, Location { row: 24, column: 1 })
+Inst 42: (JumpIfFalse { target: 4 }, Location { row: 24, column: 1 })
+Inst 43: (Pass, Location { row: 25, column: 5 })
+Inst 44: (LoadName { name: "ExplodingBool" }, Location { row: 27, column: 1 })
+Inst 45: (LoadConst { value: Boolean { value: true } }, Location { row: 27, column: 1 })
+Inst 46: (CallFunction { count: 1 }, Location { row: 27, column: 1 })
+Inst 47: (Duplicate, Location { row: 27, column: 1 })
+Inst 48: (JumpIf { target: 8 }, Location { row: 27, column: 1 })
+Inst 49: (Pop, Location { row: 27, column: 1 })
+Inst 50: (LoadConst { value: Boolean { value: false } }, Location { row: 27, column: 1 })
+Inst 51: (JumpIf { target: 9 }, Location { row: 27, column: 1 })
+Inst 52: (LoadName { name: "AssertionError" }, Location { row: 27, column: 1 })
+Inst 53: (CallFunction { count: 0 }, Location { row: 27, column: 1 })
+Inst 54: (Raise { argc: 1 }, Location { row: 27, column: 1 })
+Inst 55: (SetupLoop { start: 10, end: 11 }, Location { row: 29, column: 1 })
+Inst 56: (LoadName { name: "ExplodingBool" }, Location { row: 29, column: 1 })
+Inst 57: (LoadConst { value: Boolean { value: false } }, Location { row: 29, column: 1 })
+Inst 58: (CallFunction { count: 1 }, Location { row: 29, column: 1 })
+Inst 59: (Duplicate, Location { row: 29, column: 1 })
+Inst 60: (JumpIfFalse { target: 12 }, Location { row: 29, column: 1 })
+Inst 61: (Pop, Location { row: 29, column: 1 })
+Inst 62: (LoadConst { value: Boolean { value: false } }, Location { row: 29, column: 1 })
+Inst 63: (JumpIfFalse { target: 11 }, Location { row: 29, column: 1 })
+Inst 64: (Pass, Location { row: 30, column: 5 })
+Inst 65: (Jump { target: 10 }, Location { row: 30, column: 5 })
+Inst 66: (LoadConst { value: None }, Location { row: 30, column: 5 })
+Inst 67: (ReturnValue, Location { row: 30, column: 5 })
+label_map: {12: 63, 7: 34, 2: 18, 3: 14, 11: 66, 1: 22, 6: 38, 4: 44, 10: 56, 9: 55, 8: 51, 5: 42} }]
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadBuildClass
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <rustfunc>
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "__locals__" }, Location { row: 11, column: 1 })
+Inst 1: (StoreLocals, Location { row: 11, column: 1 })
+Inst 2: (LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "value" }, Location { row: 13, column: 9 })
+Inst 1: (LoadName { name: "self" }, Location { row: 13, column: 9 })
+Inst 2: (StoreAttr { name: "value" }, Location { row: 13, column: 9 })
+Inst 3: (LoadConst { value: Boolean { value: false } }, Location { row: 14, column: 9 })
+Inst 4: (LoadName { name: "self" }, Location { row: 14, column: 9 })
+Inst 5: (StoreAttr { name: "booled" }, Location { row: 14, column: 9 })
+Inst 6: (LoadConst { value: None }, Location { row: 14, column: 9 })
+Inst 7: (ReturnValue, Location { row: 14, column: 9 })
+label_map: {} } } }, Location { row: 14, column: 9 })
+Inst 3: (LoadConst { value: String { value: "__init__" } }, Location { row: 14, column: 9 })
+Inst 4: (MakeFunction, Location { row: 14, column: 9 })
+Inst 5: (StoreName { name: "__init__" }, Location { row: 14, column: 9 })
+Inst 6: (LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "self" }, Location { row: 17, column: 9 })
+Inst 1: (LoadAttr { name: "booled" }, Location { row: 17, column: 9 })
+Inst 2: (UnaryOperation { op: Not }, Location { row: 17, column: 9 })
+Inst 3: (JumpIf { target: 0 }, Location { row: 17, column: 9 })
+Inst 4: (LoadName { name: "AssertionError" }, Location { row: 17, column: 9 })
+Inst 5: (CallFunction { count: 0 }, Location { row: 17, column: 9 })
+Inst 6: (Raise { argc: 1 }, Location { row: 17, column: 9 })
+Inst 7: (LoadConst { value: Boolean { value: true } }, Location { row: 18, column: 9 })
+Inst 8: (LoadName { name: "self" }, Location { row: 18, column: 9 })
+Inst 9: (StoreAttr { name: "booled" }, Location { row: 18, column: 9 })
+Inst 10: (LoadName { name: "self" }, Location { row: 19, column: 9 })
+Inst 11: (LoadAttr { name: "value" }, Location { row: 19, column: 9 })
+Inst 12: (ReturnValue, Location { row: 19, column: 9 })
+Inst 13: (LoadConst { value: None }, Location { row: 19, column: 9 })
+Inst 14: (ReturnValue, Location { row: 19, column: 9 })
+label_map: {0: 7} } } }, Location { row: 19, column: 9 })
+Inst 7: (LoadConst { value: String { value: "__bool__" } }, Location { row: 19, column: 9 })
+Inst 8: (MakeFunction, Location { row: 19, column: 9 })
+Inst 9: (StoreName { name: "__bool__" }, Location { row: 19, column: 9 })
+Inst 10: (LoadConst { value: None }, Location { row: 19, column: 9 })
+Inst 11: (ReturnValue, Location { row: 19, column: 9 })
+label_map: {} } } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <rustfunc>
+  > <code>
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: String { value: "ExplodingBool" } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <rustfunc>
+  > <code>
+  > ExplodingBool
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: MakeFunction
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <rustfunc>
+  > <func>
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: String { value: "ExplodingBool" } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <rustfunc>
+  > <func>
+  > ExplodingBool
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: CallFunction { count: 2 }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj function] }, RefCell { value: [PyObj str "ExplodingBool"] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj function] } PyFuncArgs { args: [RefCell { value: [PyObj dict] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  __locals__ = {  }
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "__locals__" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > {  }
+ Blocks:
+ Locals:
+  __locals__ = {  }
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: StoreLocals
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "value" }, Location { row: 13, column: 9 })
+Inst 1: (LoadName { name: "self" }, Location { row: 13, column: 9 })
+Inst 2: (StoreAttr { name: "value" }, Location { row: 13, column: 9 })
+Inst 3: (LoadConst { value: Boolean { value: false } }, Location { row: 14, column: 9 })
+Inst 4: (LoadName { name: "self" }, Location { row: 14, column: 9 })
+Inst 5: (StoreAttr { name: "booled" }, Location { row: 14, column: 9 })
+Inst 6: (LoadConst { value: None }, Location { row: 14, column: 9 })
+Inst 7: (ReturnValue, Location { row: 14, column: 9 })
+label_map: {} } } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <code>
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: String { value: "__init__" } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <code>
+  > __init__
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: MakeFunction
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <func>
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: StoreName { name: "__init__" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  __init__ = <func>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: Code { code: Code Object { 
+Inst 0: (LoadName { name: "self" }, Location { row: 17, column: 9 })
+Inst 1: (LoadAttr { name: "booled" }, Location { row: 17, column: 9 })
+Inst 2: (UnaryOperation { op: Not }, Location { row: 17, column: 9 })
+Inst 3: (JumpIf { target: 0 }, Location { row: 17, column: 9 })
+Inst 4: (LoadName { name: "AssertionError" }, Location { row: 17, column: 9 })
+Inst 5: (CallFunction { count: 0 }, Location { row: 17, column: 9 })
+Inst 6: (Raise { argc: 1 }, Location { row: 17, column: 9 })
+Inst 7: (LoadConst { value: Boolean { value: true } }, Location { row: 18, column: 9 })
+Inst 8: (LoadName { name: "self" }, Location { row: 18, column: 9 })
+Inst 9: (StoreAttr { name: "booled" }, Location { row: 18, column: 9 })
+Inst 10: (LoadName { name: "self" }, Location { row: 19, column: 9 })
+Inst 11: (LoadAttr { name: "value" }, Location { row: 19, column: 9 })
+Inst 12: (ReturnValue, Location { row: 19, column: 9 })
+Inst 13: (LoadConst { value: None }, Location { row: 19, column: 9 })
+Inst 14: (ReturnValue, Location { row: 19, column: 9 })
+label_map: {0: 7} } } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <code>
+ Blocks:
+ Locals:
+  __init__ = <func>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: String { value: "__bool__" } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <code>
+  > __bool__
+ Blocks:
+ Locals:
+  __init__ = <func>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: MakeFunction
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <func>
+ Blocks:
+ Locals:
+  __init__ = <func>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: StoreName { name: "__bool__" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  __bool__ = <func>
+  __init__ = <func>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: None }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > None
+ Blocks:
+ Locals:
+  __bool__ = <func>
+  __init__ = <func>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: ReturnValue
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: Linearising MRO: [[RefCell { value: [PyObj class "object"] }]]
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <class 'ExplodingBool'>
+ Blocks:
+ Locals:
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: StoreName { name: "ExplodingBool" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  ExplodingBool = <class 'ExplodingBool'>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "ExplodingBool" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <class 'ExplodingBool'>
+ Blocks:
+ Locals:
+  ExplodingBool = <class 'ExplodingBool'>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: Boolean { value: false } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <class 'ExplodingBool'>
+  > false
+ Blocks:
+ Locals:
+  ExplodingBool = <class 'ExplodingBool'>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: CallFunction { count: 1 }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj class "ExplodingBool"] } PyFuncArgs { args: [RefCell { value: [PyObj boolean false] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::objtype: get_attribute: RefCell { value: [PyObj class "type"] }, RefCell { value: [PyObj class "ExplodingBool"] }, "__call__"
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj rust function] }, RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj class "type"] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj bound-method: RefCell { value: [PyObj rust function] } of RefCell { value: [PyObj class "ExplodingBool"] }] } PyFuncArgs { args: [RefCell { value: [PyObj boolean false] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj boolean false] }] }
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: type_call: PyFuncArgs { args: [RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj boolean false] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj boolean false] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj function] } PyFuncArgs { args: [RefCell { value: [PyObj instance] }, RefCell { value: [PyObj boolean false] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  value = false
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "value" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > false
+ Blocks:
+ Locals:
+  value = false
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > false
+  > <instance>
+ Blocks:
+ Locals:
+  value = false
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: StoreAttr { name: "value" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  value = false
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: Boolean { value: false } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > false
+ Blocks:
+ Locals:
+  value = false
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > false
+  > <instance>
+ Blocks:
+ Locals:
+  value = false
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: StoreAttr { name: "booled" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  value = false
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: None }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > None
+ Blocks:
+ Locals:
+  value = false
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: ReturnValue
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <instance>
+ Blocks:
+ Locals:
+  ExplodingBool = <class 'ExplodingBool'>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: Duplicate
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <instance>
+  > <instance>
+ Blocks:
+ Locals:
+  ExplodingBool = <class 'ExplodingBool'>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: JumpIfFalse { target: 3 }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::objtype: get_attribute: RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj instance] }, "__bool__"
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj function] }, RefCell { value: [PyObj instance] }, RefCell { value: [PyObj class "ExplodingBool"] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj bound-method: RefCell { value: [PyObj function] } of RefCell { value: [PyObj instance] }] } PyFuncArgs { args: [] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj function] } PyFuncArgs { args: [RefCell { value: [PyObj instance] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <instance>
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadAttr { name: "booled" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::objtype: get_attribute: RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj instance] }, "booled"
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > false
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: UnaryOperation { op: Not }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > true
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: JumpIf { target: 0 }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: program counter from 4 to 7
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadConst { value: Boolean { value: true } }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > true
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > true
+  > <instance>
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: StoreAttr { name: "booled" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <instance>
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadAttr { name: "value" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::objtype: get_attribute: RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj instance] }, "value"
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > false
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: ReturnValue
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: program counter from 12 to 14
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <instance>
+ Blocks:
+ Locals:
+  ExplodingBool = <class 'ExplodingBool'>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: Duplicate
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <instance>
+  > <instance>
+ Blocks:
+ Locals:
+  ExplodingBool = <class 'ExplodingBool'>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: JumpIfFalse { target: 2 }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::objtype: get_attribute: RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj instance] }, "__bool__"
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj function] }, RefCell { value: [PyObj instance] }, RefCell { value: [PyObj class "ExplodingBool"] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj bound-method: RefCell { value: [PyObj function] } of RefCell { value: [PyObj instance] }] } PyFuncArgs { args: [] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj function] } PyFuncArgs { args: [RefCell { value: [PyObj instance] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "self" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <instance>
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadAttr { name: "booled" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::objtype: get_attribute: RefCell { value: [PyObj class "ExplodingBool"] }, RefCell { value: [PyObj instance] }, "booled"
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > true
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: UnaryOperation { op: Not }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > false
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: JumpIf { target: 0 }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: LoadName { name: "AssertionError" }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <class 'AssertionError'>
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: CallFunction { count: 0 }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj class "AssertionError"] } PyFuncArgs { args: [] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::objtype: get_attribute: RefCell { value: [PyObj class "type"] }, RefCell { value: [PyObj class "AssertionError"] }, "__call__"
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj rust function] }, RefCell { value: [PyObj class "AssertionError"] }, RefCell { value: [PyObj class "type"] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj bound-method: RefCell { value: [PyObj rust function] } of RefCell { value: [PyObj class "AssertionError"] }] } PyFuncArgs { args: [] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj class "AssertionError"] }] }
+DEBUG 2026-07-01T15:20:12Z: rustpython_vm::objtype: type_call: PyFuncArgs { args: [RefCell { value: [PyObj class "AssertionError"] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj class "AssertionError"] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: Invoke: RefCell { value: [PyObj rust function] } PyFuncArgs { args: [RefCell { value: [PyObj instance] }] }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Frame Object { 
+ Stack:
+  > <instance>
+ Blocks:
+ Locals:
+  self = <instance>
+}
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm:   Executing op code: Raise { argc: 1 }
+TRACE 2026-07-01T15:20:12Z: rustpython_vm::vm: =======
+ INFO 2026-07-01T15:20:12Z: rustpython_vm::vm: Exception raised: RefCell { value: [PyObj instance] }
+thread 'main' panicked at 'Exception: RefCell { value: [PyObj instance] }', src/main.rs:61:13
+stack backtrace:
+   0: std::sys::unix::backtrace::tracing::imp::unwind_backtrace
+             at libstd/sys/unix/backtrace/tracing/gcc_s.rs:49
+   1: std::sys_common::backtrace::print
+             at libstd/sys_common/backtrace.rs:71
+             at libstd/sys_common/backtrace.rs:59
+   2: std::panicking::default_hook::{{closure}}
+             at libstd/panicking.rs:211
+   3: std::panicking::default_hook
+             at libstd/panicking.rs:227
+   4: std::panicking::rust_panic_with_hook
+             at libstd/panicking.rs:475
+   5: std::panicking::continue_panic_fmt
+             at libstd/panicking.rs:390
+   6: std::panicking::begin_panic_fmt
+             at libstd/panicking.rs:345
+   7: rustpython::_run_string
+   8: rustpython::main
+   9: std::rt::lang_start::{{closure}}
+  10: std::panicking::try::do_call
+             at libstd/rt.rs:59
+             at libstd/panicking.rs:310
+  11: __rust_maybe_catch_panic
+             at libpanic_unwind/lib.rs:105
+  12: std::rt::lang_start_internal
+             at libstd/panicking.rs:289
+             at libstd/panic.rs:392
+             at libstd/rt.rs:58
+  13: main
+  14: <unknown>
+  15: __libc_start_main
+  16: _start
+=========================== short test summary info ============================
+FAILED test_snippets.py::SampleTestCase::test_rustpython_extra_bool_eval - su...
+======================= 1 failed, 81 deselected in 0.23s =======================
+reward=0 graded=1 found=0 failed=0 parsed=1 framework=pytest exit_code=1

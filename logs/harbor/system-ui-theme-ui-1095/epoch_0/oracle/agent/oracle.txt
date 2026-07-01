@@ -1,0 +1,5 @@
+patching file packages/color-modes/package.json
+patching file packages/color-modes/src/custom-properties.ts (renamed from packages/color-modes/src/custom-properties.js)
+patching file packages/color-modes/src/index.tsx (renamed from packages/color-modes/src/index.js)
+patching file packages/color-modes/tsconfig.json
+patching file packages/core/src/index.ts

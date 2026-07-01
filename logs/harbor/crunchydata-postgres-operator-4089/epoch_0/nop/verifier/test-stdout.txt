@@ -1,0 +1,31 @@
+patching file internal/collector/config_test.go
+patching file internal/collector/helpers_test.go
+patching file internal/collector/patroni_test.go
+patching file internal/collector/pgadmin_test.go
+patching file internal/collector/pgbackrest_test.go
+patching file internal/collector/pgbouncer_test.go
+patching file internal/collector/postgres_test.go
+# github.com/crunchydata/postgres-operator/internal/collector [github.com/crunchydata/postgres-operator/internal/collector.test]
+internal/collector/helpers_test.go:11:41: undefined: v1beta1.InstrumentationSpec
+internal/collector/helpers_test.go:12:18: undefined: v1beta1.InstrumentationSpec
+internal/collector/helpers_test.go:13:20: undefined: v1beta1.InstrumentationConfigSpec
+internal/collector/helpers_test.go:23:18: undefined: v1beta1.InstrumentationLogsSpec
+internal/collector/config_test.go:15:28: too many arguments in call to NewConfig
+	have (nil)
+	want ()
+internal/collector/config_test.go:39:28: too many arguments in call to NewConfig
+	have (unknown type)
+	want ()
+internal/collector/patroni_test.go:25:23: too many arguments in call to NewConfig
+	have (nil)
+	want ()
+internal/collector/patroni_test.go:107:16: cluster.Spec.Instrumentation undefined (type "github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1".PostgresClusterSpec has no field or method Instrumentation)
+internal/collector/patroni_test.go:108:23: too many arguments in call to NewConfig
+	have ("github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1".PostgresClusterSpec)
+	want ()
+internal/collector/patroni_test.go:108:36: cluster.Spec.Instrumentation undefined (type "github.com/crunchydata/postgres-operator/pkg/apis/postgres-operator.crunchydata.com/v1beta1".PostgresClusterSpec has no field or method Instrumentation)
+internal/collector/patroni_test.go:108:23: too many errors
+{"Time":"2026-07-01T14:40:50.785255968Z","Action":"start","Package":"github.com/crunchydata/postgres-operator/internal/collector"}
+{"Time":"2026-07-01T14:40:50.7853125Z","Action":"output","Package":"github.com/crunchydata/postgres-operator/internal/collector","Output":"FAIL\tgithub.com/crunchydata/postgres-operator/internal/collector [build failed]\n"}
+{"Time":"2026-07-01T14:40:50.785322802Z","Action":"fail","Package":"github.com/crunchydata/postgres-operator/internal/collector","Elapsed":0}
+reward=0 graded=18 found=0 failed=0 parsed=1 framework=go exit_code=1

@@ -1,0 +1,404 @@
+patching file CHANGELOG.md
+patching file receiver/sqlqueryreceiver/README.md
+patching file receiver/sqlqueryreceiver/config.go
+patching file receiver/sqlqueryreceiver/db_client.go
+patching file receiver/sqlqueryreceiver/factory.go
+patching file receiver/sqlqueryreceiver/go.mod
+patching file receiver/sqlqueryreceiver/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 29.
+Hunk #3 FAILED at 74.
+Hunk #4 FAILED at 110.
+Hunk #5 FAILED at 142.
+Hunk #6 FAILED at 202.
+Hunk #7 FAILED at 245.
+Hunk #8 FAILED at 314.
+8 out of 8 hunks FAILED -- saving rejects to file receiver/sqlqueryreceiver/go.sum.rej
+patching file receiver/sqlqueryreceiver/metrics.go
+patching file receiver/sqlqueryreceiver/receiver.go
+patching file receiver/sqlqueryreceiver/scraper.go
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-aggregation.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-datatype.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-missing-datasource.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-missing-driver.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-missing-metricname.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-missing-metrics.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-missing-queries.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-missing-sql.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-missing-valuecolumn.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-multierr.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-invalid-valuetype.yaml
+patching file receiver/sqlqueryreceiver/testdata/config-unnecessary-aggregation.yaml
+patching file receiver/sqlqueryreceiver/testdata/config.yaml
+patching file receiver/sqlqueryreceiver/testdata/integration/Dockerfile.postgresql
+patching file receiver/sqlqueryreceiver/testdata/integration/init.sql
+patching file CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file CHANGELOG.md.rej
+patching file receiver/sqlqueryreceiver/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file receiver/sqlqueryreceiver/README.md.rej
+patching file receiver/sqlqueryreceiver/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file receiver/sqlqueryreceiver/config.go.rej
+The next patch would create the file receiver/sqlqueryreceiver/db_client.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file receiver/sqlqueryreceiver/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file receiver/sqlqueryreceiver/factory.go.rej
+patching file receiver/sqlqueryreceiver/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file receiver/sqlqueryreceiver/go.mod.rej
+patching file receiver/sqlqueryreceiver/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 29.
+Hunk #3 FAILED at 74.
+Hunk #4 FAILED at 110.
+Hunk #5 FAILED at 142.
+Hunk #6 FAILED at 202.
+Hunk #7 FAILED at 245.
+Hunk #8 FAILED at 314.
+8 out of 8 hunks FAILED -- saving rejects to file receiver/sqlqueryreceiver/go.sum.rej
+The next patch would create the file receiver/sqlqueryreceiver/metrics.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/receiver.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/scraper.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-aggregation.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-datatype.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-datasource.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-driver.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-metricname.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-metrics.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-queries.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-sql.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-valuecolumn.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-multierr.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-valuetype.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-unnecessary-aggregation.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file receiver/sqlqueryreceiver/testdata/config.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file receiver/sqlqueryreceiver/testdata/config.yaml.rej
+The next patch would create the file receiver/sqlqueryreceiver/testdata/integration/Dockerfile.postgresql,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/integration/init.sql,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/CHANGELOG.md b/CHANGELOG.md
+|index 88a978b0ed..1f0c3aed91 100644
+|--- a/CHANGELOG.md
+|+++ b/CHANGELOG.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 26
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/receiver/sqlqueryreceiver/README.md b/receiver/sqlqueryreceiver/README.md
+|index dd8a78014d..b885bf10bd 100644
+|--- a/receiver/sqlqueryreceiver/README.md
+|+++ b/receiver/sqlqueryreceiver/README.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 105
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/receiver/sqlqueryreceiver/config.go b/receiver/sqlqueryreceiver/config.go
+|index e4e4c5bec3..8456257c16 100644
+|--- a/receiver/sqlqueryreceiver/config.go
+|+++ b/receiver/sqlqueryreceiver/config.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file b/receiver/sqlqueryreceiver/db_client.go
+can't find file to patch at input line 367
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/receiver/sqlqueryreceiver/factory.go b/receiver/sqlqueryreceiver/factory.go
+|index 159ba17276..e9cdbf08f2 100644
+|--- a/receiver/sqlqueryreceiver/factory.go
+|+++ b/receiver/sqlqueryreceiver/factory.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 401
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/receiver/sqlqueryreceiver/go.mod b/receiver/sqlqueryreceiver/go.mod
+|index 7dde720da8..71736532f0 100644
+|--- a/receiver/sqlqueryreceiver/go.mod
+|+++ b/receiver/sqlqueryreceiver/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 508
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/receiver/sqlqueryreceiver/go.sum b/receiver/sqlqueryreceiver/go.sum
+|index f1dc6c57b6..3bba53763d 100644
+|--- a/receiver/sqlqueryreceiver/go.sum
+|+++ b/receiver/sqlqueryreceiver/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+patching file b/receiver/sqlqueryreceiver/metrics.go
+patching file b/receiver/sqlqueryreceiver/receiver.go
+patching file b/receiver/sqlqueryreceiver/scraper.go
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-aggregation.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-datatype.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-missing-datasource.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-missing-driver.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-missing-metricname.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-missing-metrics.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-missing-queries.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-missing-sql.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-missing-valuecolumn.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-multierr.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-invalid-valuetype.yaml
+patching file b/receiver/sqlqueryreceiver/testdata/config-unnecessary-aggregation.yaml
+can't find file to patch at input line 2384
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/receiver/sqlqueryreceiver/testdata/config.yaml b/receiver/sqlqueryreceiver/testdata/config.yaml
+|index 837a6dfd53..a392014b58 100644
+|--- a/receiver/sqlqueryreceiver/testdata/config.yaml
+|+++ b/receiver/sqlqueryreceiver/testdata/config.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/receiver/sqlqueryreceiver/testdata/integration/Dockerfile.postgresql
+patching file b/receiver/sqlqueryreceiver/testdata/integration/init.sql
+patching file CHANGELOG.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file CHANGELOG.md.rej
+patching file receiver/sqlqueryreceiver/README.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file receiver/sqlqueryreceiver/README.md.rej
+patching file receiver/sqlqueryreceiver/config.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file receiver/sqlqueryreceiver/config.go.rej
+The next patch would create the file receiver/sqlqueryreceiver/db_client.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file receiver/sqlqueryreceiver/factory.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file receiver/sqlqueryreceiver/factory.go.rej
+patching file receiver/sqlqueryreceiver/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file receiver/sqlqueryreceiver/go.mod.rej
+patching file receiver/sqlqueryreceiver/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 29.
+Hunk #3 FAILED at 74.
+Hunk #4 FAILED at 110.
+Hunk #5 FAILED at 142.
+Hunk #6 FAILED at 202.
+Hunk #7 FAILED at 245.
+Hunk #8 FAILED at 314.
+8 out of 8 hunks FAILED -- saving rejects to file receiver/sqlqueryreceiver/go.sum.rej
+The next patch would create the file receiver/sqlqueryreceiver/metrics.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/receiver.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/scraper.go,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-aggregation.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-datatype.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-datasource.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-driver.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-metricname.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-metrics.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-queries.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-sql.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-missing-valuecolumn.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-multierr.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-invalid-valuetype.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/config-unnecessary-aggregation.yaml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file receiver/sqlqueryreceiver/testdata/config.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file receiver/sqlqueryreceiver/testdata/config.yaml.rej
+The next patch would create the file receiver/sqlqueryreceiver/testdata/integration/Dockerfile.postgresql,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file receiver/sqlqueryreceiver/testdata/integration/init.sql,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+ERROR: golden patch failed to apply by all strategies

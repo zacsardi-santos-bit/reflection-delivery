@@ -1,0 +1,8 @@
+patching file CHANGELOG.md
+patching file snapshot/sink.go
+patching file snapshot/store.go
+patching file snapshot/testdata/upgrade/v7.20.3-snapshots/2-18-1686659761026/meta.json
+patching file snapshot/testdata/upgrade/v7.20.3-snapshots/2-18-1686659761026/state.bin
+patching file snapshot/testdata/upgrade/v7.20.3-snapshots/2-8-1686659756627/meta.json
+patching file snapshot/upgrader.go
+patching file store/store.go

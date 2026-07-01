@@ -1,0 +1,59 @@
+patching file tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py
+patching file tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py
+patching file tests/providers/m365/services/defender/m365_defender_service_test.py
+patching file tests/providers/m365/services/teams/teams_security_reporting_enabled/teams_security_reporting_enabled_test.py
+patching file tests/providers/m365/services/teams/teams_service_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+Using --randomly-seed=3499172468
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.9.0, dash-2.18.2, cov-6.0.0, env-1.1.5, randomly-3.16.0, xdist-3.6.1
+collecting ... collected 2 items / 4 errors
+
+==================================== ERRORS ====================================
+_ ERROR collecting tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py _
+ImportError while importing test module '/workspace/repo/tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py:3: in <module>
+    from prowler.providers.m365.services.defender.defender_service import (
+E   ImportError: cannot import name 'ReportSubmissionPolicy' from 'prowler.providers.m365.services.defender.defender_service' (/workspace/repo/prowler/providers/m365/services/defender/defender_service.py)
+_ ERROR collecting tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py _
+ImportError while importing test module '/workspace/repo/tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py:3: in <module>
+    from prowler.providers.m365.services.defender.defender_service import (
+E   ImportError: cannot import name 'ReportSubmissionPolicy' from 'prowler.providers.m365.services.defender.defender_service' (/workspace/repo/prowler/providers/m365/services/defender/defender_service.py)
+_ ERROR collecting tests/providers/m365/services/defender/m365_defender_service_test.py _
+ImportError while importing test module '/workspace/repo/tests/providers/m365/services/defender/m365_defender_service_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/providers/m365/services/defender/m365_defender_service_test.py:5: in <module>
+    from prowler.providers.m365.services.defender.defender_service import (
+E   ImportError: cannot import name 'ReportSubmissionPolicy' from 'prowler.providers.m365.services.defender.defender_service' (/workspace/repo/prowler/providers/m365/services/defender/defender_service.py)
+__ ERROR collecting tests/providers/m365/services/teams/teams_service_test.py __
+ImportError while importing test module '/workspace/repo/tests/providers/m365/services/teams/teams_service_test.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/providers/m365/services/teams/teams_service_test.py:5: in <module>
+    from prowler.providers.m365.services.teams.teams_service import (
+E   ImportError: cannot import name 'GlobalMessagingPolicy' from 'prowler.providers.m365.services.teams.teams_service' (/workspace/repo/prowler/providers/m365/services/teams/teams_service.py)
+=========================== short test summary info ============================
+ERROR tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py
+ERROR tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py
+ERROR tests/providers/m365/services/defender/m365_defender_service_test.py
+ERROR tests/providers/m365/services/teams/teams_service_test.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!
+============================== 4 errors in 1.09s ===============================
+reward=0 graded=23 found=0 failed=0 parsed=0 framework=pytest exit_code=2

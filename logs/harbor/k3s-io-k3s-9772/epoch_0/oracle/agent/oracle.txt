@@ -1,0 +1,10 @@
+patching file cmd/cert/main.go
+patching file cmd/k3s/main.go
+patching file cmd/server/main.go
+patching file docs/adrs/cert-expiry-checks.md
+patching file go.mod
+patching file pkg/agent/run.go
+patching file pkg/certmonitor/certmonitor.go
+patching file pkg/cli/cert/cert.go
+patching file pkg/cli/cmds/certs.go
+patching file pkg/util/services/services.go

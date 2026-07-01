@@ -1,0 +1,41 @@
+patching file backend/src/agent/persistence/worker/persistence_worker_test.go
+patching file backend/src/apiserver/storage/job_store_test.go
+patching file backend/src/common/util/scheduled_workflow_test.go
+patching file backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow_test.go
+patching file backend/src/v2/driver/driver_test.go
+# github.com/kubeflow/pipelines/backend/src/agent/persistence/worker [github.com/kubeflow/pipelines/backend/src/agent/persistence/worker.test]
+backend/src/agent/persistence/worker/persistence_worker_test.go:48:87: undefined: cache.ResourceEventHandlerRegistration
+backend/src/agent/persistence/worker/persistence_worker_test.go:79:39: too many arguments in call to eventHandler.handler.OnAdd
+	have (*"github.com/kubeflow/pipelines/backend/src/common/util".Workflow, bool)
+	want (interface{})
+backend/src/agent/persistence/worker/persistence_worker_test.go:109:39: too many arguments in call to eventHandler.handler.OnAdd
+	have (*"github.com/kubeflow/pipelines/backend/src/common/util".Workflow, bool)
+	want (interface{})
+backend/src/agent/persistence/worker/persistence_worker_test.go:140:39: too many arguments in call to eventHandler.handler.OnAdd
+	have (*"github.com/kubeflow/pipelines/backend/src/common/util".Workflow, bool)
+	want (interface{})
+backend/src/agent/persistence/worker/persistence_worker_test.go:174:39: too many arguments in call to eventHandler.handler.OnAdd
+	have (*"github.com/kubeflow/pipelines/backend/src/common/util".Workflow, bool)
+	want (interface{})
+backend/src/agent/persistence/worker/persistence_worker_test.go:207:39: too many arguments in call to eventHandler.handler.OnAdd
+	have (*"github.com/kubeflow/pipelines/backend/src/common/util".Workflow, bool)
+	want (interface{})
+FAIL	github.com/kubeflow/pipelines/backend/src/agent/persistence/worker [build failed]
+# github.com/kubeflow/pipelines/backend/src/crd/controller/scheduledworkflow/util [github.com/kubeflow/pipelines/backend/src/crd/controller/scheduledworkflow/util.test]
+backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow_test.go:563:25: cannot use corev1.ConditionTrue (constant "True" of type "k8s.io/api/core/v1".ConditionStatus) as core.ConditionStatus value in struct literal
+backend/src/crd/controller/scheduledworkflow/util/scheduled_workflow_test.go:644:25: cannot use corev1.ConditionTrue (constant "True" of type "k8s.io/api/core/v1".ConditionStatus) as core.ConditionStatus value in struct literal
+# github.com/kubeflow/pipelines/backend/src/apiserver/storage [github.com/kubeflow/pipelines/backend/src/apiserver/storage.test]
+backend/src/apiserver/storage/job_store_test.go:776:26: cannot use corev1.ConditionTrue (constant "True" of type "k8s.io/api/core/v1".ConditionStatus) as core.ConditionStatus value in struct literal
+FAIL	github.com/kubeflow/pipelines/backend/src/apiserver/storage [build failed]
+# github.com/kubeflow/pipelines/backend/src/common/util [github.com/kubeflow/pipelines/backend/src/common/util.test]
+backend/src/common/util/scheduled_workflow_test.go:75:26: cannot use corev1.ConditionTrue (constant "True" of type "k8s.io/api/core/v1".ConditionStatus) as core.ConditionStatus value in struct literal
+backend/src/common/util/scheduled_workflow_test.go:92:26: cannot use corev1.ConditionTrue (constant "True" of type "k8s.io/api/core/v1".ConditionStatus) as core.ConditionStatus value in struct literal
+backend/src/common/util/scheduled_workflow_test.go:99:26: cannot use corev1.ConditionTrue (constant "True" of type "k8s.io/api/core/v1".ConditionStatus) as core.ConditionStatus value in struct literal
+FAIL	github.com/kubeflow/pipelines/backend/src/common/util [build failed]
+FAIL	github.com/kubeflow/pipelines/backend/src/crd/controller/scheduledworkflow/util [build failed]
+# github.com/kubeflow/pipelines/backend/src/v2/driver [github.com/kubeflow/pipelines/backend/src/v2/driver.test]
+backend/src/v2/driver/driver_test.go:1486:30: undefined: k8score.VolumeResourceRequirements
+backend/src/v2/driver/driver_test.go:1576:30: undefined: k8score.VolumeResourceRequirements
+backend/src/v2/driver/driver_test.go:1601:30: undefined: k8score.VolumeResourceRequirements
+FAIL	github.com/kubeflow/pipelines/backend/src/v2/driver [build failed]
+reward=0 graded=354 found=354 failed=354 parsed=5 framework=go exit_code=1

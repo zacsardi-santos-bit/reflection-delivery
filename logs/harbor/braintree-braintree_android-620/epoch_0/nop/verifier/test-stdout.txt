@@ -1,0 +1,608 @@
+patching file BraintreeCore/src/test/java/com/braintreepayments/api/BraintreeClientUnitTest.java
+patching file BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java
+patching file BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java
+patching file BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java
+patching file SharedUtils/src/androidTest/java/com/braintreepayments/api/BraintreeSharedPreferencesTest.java
+patching file Venmo/src/test/java/com/braintreepayments/api/VenmoClientUnitTest.java
+patching file Venmo/src/test/java/com/braintreepayments/api/VenmoSharedPrefsWriterUnitTest.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. See https://docs.gradle.org/7.3.3/userguide/gradle_daemon.html#sec:disabling_the_daemon.
+Daemon will be stopped at the end of the build 
+
+> Configure project :AmericanExpress
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :BraintreeCore
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :BraintreeDataCollector
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :Card
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :Demo
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:API 'BaseVariant.getApplicationIdTextResource' is obsolete and has been replaced with 'VariantProperties.applicationId'.
+It will be removed in version 7.0 of the Android Gradle plugin.
+For more information, see TBD.
+To determine what is calling BaseVariant.getApplicationIdTextResource, use -Pandroid.debug.obsoleteApi=true on the command line to display more information.
+
+> Configure project :GooglePay
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :LocalPayment
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :PayPal
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :PayPalDataCollector
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :PayPalNativeCheckout
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :SamsungPay
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :SEPADirectDebit
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :SharedUtils
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :TestUtils
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+
+> Configure project :ThreeDSecure
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :UnionPay
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :Venmo
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Configure project :VisaCheckout
+WARNING:Using flatDir should be avoided because it doesn't support any meta-data formats.
+WARNING:Software Components will not be created automatically for Maven publishing from Android Gradle Plugin 8.0. To opt-in to the future behavior, set the Gradle property android.disableAutomaticComponentCreation=true in the `gradle.properties` file or use the new publishing DSL.
+
+> Task :BraintreeCore:preBuild UP-TO-DATE
+> Task :BraintreeCore:preDebugBuild UP-TO-DATE
+> Task :SharedUtils:preBuild UP-TO-DATE
+> Task :SharedUtils:preDebugBuild UP-TO-DATE
+> Task :SharedUtils:compileDebugAidl NO-SOURCE
+> Task :BraintreeCore:compileDebugAidl NO-SOURCE
+> Task :SharedUtils:packageDebugRenderscript NO-SOURCE
+> Task :BraintreeCore:compileDebugRenderscript NO-SOURCE
+> Task :BraintreeCore:generateDebugBuildConfig UP-TO-DATE
+> Task :BraintreeCore:generateDebugResValues UP-TO-DATE
+> Task :BraintreeCore:generateDebugResources UP-TO-DATE
+> Task :BraintreeCore:packageDebugResources UP-TO-DATE
+> Task :BraintreeCore:parseDebugLocalResources UP-TO-DATE
+> Task :BraintreeCore:processDebugManifest UP-TO-DATE
+> Task :SharedUtils:compileDebugRenderscript NO-SOURCE
+> Task :SharedUtils:generateDebugResValues UP-TO-DATE
+> Task :SharedUtils:generateDebugResources UP-TO-DATE
+> Task :SharedUtils:packageDebugResources UP-TO-DATE
+> Task :SharedUtils:parseDebugLocalResources UP-TO-DATE
+> Task :SharedUtils:processDebugManifest UP-TO-DATE
+> Task :SharedUtils:generateDebugRFile UP-TO-DATE
+> Task :BraintreeCore:generateDebugRFile UP-TO-DATE
+> Task :BraintreeCore:javaPreCompileDebug UP-TO-DATE
+> Task :SharedUtils:generateDebugBuildConfig UP-TO-DATE
+> Task :SharedUtils:javaPreCompileDebug UP-TO-DATE
+> Task :SharedUtils:compileDebugJavaWithJavac UP-TO-DATE
+> Task :SharedUtils:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :BraintreeCore:compileDebugJavaWithJavac UP-TO-DATE
+> Task :BraintreeCore:processDebugJavaRes NO-SOURCE
+> Task :BraintreeCore:bundleLibResDebug UP-TO-DATE
+> Task :BraintreeCore:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :BraintreeCore:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :BraintreeCore:preDebugUnitTestBuild UP-TO-DATE
+> Task :BraintreeCore:javaPreCompileDebugUnitTest UP-TO-DATE
+> Task :BraintreeCore:writeDebugAarMetadata UP-TO-DATE
+> Task :Card:preBuild UP-TO-DATE
+> Task :Card:preDebugBuild UP-TO-DATE
+> Task :Card:writeDebugAarMetadata UP-TO-DATE
+> Task :PayPal:preBuild UP-TO-DATE
+> Task :PayPal:preDebugBuild UP-TO-DATE
+> Task :PayPal:writeDebugAarMetadata UP-TO-DATE
+> Task :PayPalDataCollector:preBuild UP-TO-DATE
+> Task :PayPalDataCollector:preDebugBuild UP-TO-DATE
+> Task :PayPalDataCollector:writeDebugAarMetadata UP-TO-DATE
+> Task :SharedUtils:writeDebugAarMetadata UP-TO-DATE
+> Task :TestUtils:preBuild UP-TO-DATE
+> Task :TestUtils:preDebugBuild UP-TO-DATE
+> Task :TestUtils:writeDebugAarMetadata UP-TO-DATE
+> Task :ThreeDSecure:preBuild UP-TO-DATE
+> Task :ThreeDSecure:preDebugBuild UP-TO-DATE
+> Task :ThreeDSecure:writeDebugAarMetadata UP-TO-DATE
+> Task :UnionPay:preBuild UP-TO-DATE
+> Task :UnionPay:preDebugBuild UP-TO-DATE
+> Task :UnionPay:writeDebugAarMetadata UP-TO-DATE
+> Task :Venmo:preBuild UP-TO-DATE
+> Task :Venmo:preDebugBuild UP-TO-DATE
+> Task :Venmo:writeDebugAarMetadata UP-TO-DATE
+> Task :BraintreeCore:checkDebugUnitTestAarMetadata UP-TO-DATE
+> Task :BraintreeCore:compileDebugLibraryResources UP-TO-DATE
+> Task :BraintreeCore:generateDebugUnitTestResValues UP-TO-DATE
+> Task :BraintreeCore:generateDebugUnitTestResources UP-TO-DATE
+> Task :BraintreeCore:packageDebugRenderscript NO-SOURCE
+> Task :Card:compileDebugRenderscript NO-SOURCE
+> Task :Card:generateDebugResValues UP-TO-DATE
+> Task :Card:generateDebugResources UP-TO-DATE
+> Task :Card:packageDebugResources UP-TO-DATE
+> Task :PayPalDataCollector:packageDebugRenderscript NO-SOURCE
+> Task :PayPal:compileDebugRenderscript NO-SOURCE
+> Task :PayPal:generateDebugResValues UP-TO-DATE
+> Task :PayPal:generateDebugResources UP-TO-DATE
+> Task :PayPal:packageDebugResources UP-TO-DATE
+> Task :PayPalDataCollector:compileDebugRenderscript NO-SOURCE
+> Task :PayPalDataCollector:generateDebugResValues UP-TO-DATE
+> Task :PayPalDataCollector:generateDebugResources UP-TO-DATE
+> Task :PayPalDataCollector:packageDebugResources UP-TO-DATE
+> Task :Card:packageDebugRenderscript NO-SOURCE
+> Task :ThreeDSecure:packageDebugRenderscript NO-SOURCE
+> Task :TestUtils:compileDebugRenderscript NO-SOURCE
+> Task :TestUtils:generateDebugResValues UP-TO-DATE
+> Task :TestUtils:generateDebugResources UP-TO-DATE
+> Task :TestUtils:packageDebugResources UP-TO-DATE
+> Task :ThreeDSecure:compileDebugRenderscript NO-SOURCE
+> Task :ThreeDSecure:generateDebugResValues UP-TO-DATE
+> Task :ThreeDSecure:generateDebugResources UP-TO-DATE
+> Task :ThreeDSecure:packageDebugResources UP-TO-DATE
+> Task :UnionPay:compileDebugRenderscript NO-SOURCE
+> Task :UnionPay:generateDebugResValues UP-TO-DATE
+> Task :UnionPay:generateDebugResources UP-TO-DATE
+> Task :UnionPay:packageDebugResources UP-TO-DATE
+> Task :Venmo:compileDebugRenderscript NO-SOURCE
+> Task :Venmo:generateDebugResValues UP-TO-DATE
+> Task :Venmo:generateDebugResources UP-TO-DATE
+> Task :Venmo:packageDebugResources UP-TO-DATE
+> Task :BraintreeCore:mergeDebugUnitTestResources UP-TO-DATE
+> Task :BraintreeCore:mapDebugUnitTestSourceSetPaths UP-TO-DATE
+> Task :BraintreeCore:extractDeepLinksDebug UP-TO-DATE
+> Task :Card:extractDeepLinksDebug UP-TO-DATE
+> Task :Card:processDebugManifest UP-TO-DATE
+> Task :PayPal:extractDeepLinksDebug UP-TO-DATE
+> Task :PayPal:processDebugManifest UP-TO-DATE
+> Task :PayPalDataCollector:extractDeepLinksDebug UP-TO-DATE
+> Task :PayPalDataCollector:processDebugManifest UP-TO-DATE
+> Task :SharedUtils:extractDeepLinksDebug UP-TO-DATE
+> Task :TestUtils:extractDeepLinksDebug UP-TO-DATE
+> Task :TestUtils:processDebugManifest UP-TO-DATE
+> Task :ThreeDSecure:extractDeepLinksDebug UP-TO-DATE
+> Task :ThreeDSecure:processDebugManifest UP-TO-DATE
+> Task :UnionPay:extractDeepLinksDebug UP-TO-DATE
+> Task :UnionPay:processDebugManifest UP-TO-DATE
+> Task :Venmo:extractDeepLinksDebug UP-TO-DATE
+> Task :Venmo:processDebugManifest UP-TO-DATE
+> Task :BraintreeCore:processDebugUnitTestManifest UP-TO-DATE
+> Task :Card:compileDebugLibraryResources UP-TO-DATE
+> Task :Card:parseDebugLocalResources UP-TO-DATE
+> Task :Card:generateDebugRFile UP-TO-DATE
+> Task :PayPal:compileDebugLibraryResources UP-TO-DATE
+> Task :PayPal:parseDebugLocalResources UP-TO-DATE
+> Task :PayPalDataCollector:parseDebugLocalResources UP-TO-DATE
+> Task :PayPalDataCollector:generateDebugRFile UP-TO-DATE
+> Task :PayPal:generateDebugRFile UP-TO-DATE
+> Task :PayPalDataCollector:compileDebugLibraryResources UP-TO-DATE
+> Task :SharedUtils:compileDebugLibraryResources UP-TO-DATE
+> Task :TestUtils:compileDebugLibraryResources UP-TO-DATE
+> Task :TestUtils:parseDebugLocalResources UP-TO-DATE
+> Task :ThreeDSecure:parseDebugLocalResources UP-TO-DATE
+> Task :ThreeDSecure:generateDebugRFile UP-TO-DATE
+> Task :TestUtils:generateDebugRFile UP-TO-DATE
+> Task :ThreeDSecure:compileDebugLibraryResources UP-TO-DATE
+> Task :UnionPay:compileDebugLibraryResources UP-TO-DATE
+> Task :UnionPay:parseDebugLocalResources UP-TO-DATE
+> Task :UnionPay:generateDebugRFile UP-TO-DATE
+> Task :Venmo:compileDebugLibraryResources UP-TO-DATE
+> Task :Venmo:parseDebugLocalResources UP-TO-DATE
+> Task :Venmo:generateDebugRFile UP-TO-DATE
+> Task :BraintreeCore:processDebugUnitTestResources UP-TO-DATE
+> Task :Card:compileDebugAidl NO-SOURCE
+> Task :Card:generateDebugBuildConfig UP-TO-DATE
+> Task :Card:compileDebugKotlin UP-TO-DATE
+> Task :Card:javaPreCompileDebug UP-TO-DATE
+> Task :Card:compileDebugJavaWithJavac UP-TO-DATE
+> Task :Card:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :PayPalDataCollector:compileDebugAidl NO-SOURCE
+> Task :PayPal:compileDebugAidl NO-SOURCE
+> Task :PayPal:generateDebugBuildConfig UP-TO-DATE
+> Task :PayPal:javaPreCompileDebug UP-TO-DATE
+> Task :PayPalDataCollector:generateDebugBuildConfig UP-TO-DATE
+> Task :PayPalDataCollector:javaPreCompileDebug UP-TO-DATE
+> Task :PayPalDataCollector:compileDebugJavaWithJavac UP-TO-DATE
+> Task :PayPalDataCollector:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :PayPal:compileDebugJavaWithJavac UP-TO-DATE
+> Task :PayPal:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :ThreeDSecure:compileDebugAidl NO-SOURCE
+> Task :TestUtils:compileDebugAidl NO-SOURCE
+> Task :TestUtils:generateDebugBuildConfig UP-TO-DATE
+> Task :ThreeDSecure:generateDebugBuildConfig UP-TO-DATE
+> Task :ThreeDSecure:javaPreCompileDebug UP-TO-DATE
+> Task :ThreeDSecure:compileDebugJavaWithJavac UP-TO-DATE
+> Task :ThreeDSecure:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :TestUtils:compileDebugKotlin UP-TO-DATE
+> Task :TestUtils:javaPreCompileDebug UP-TO-DATE
+> Task :TestUtils:compileDebugJavaWithJavac UP-TO-DATE
+> Task :TestUtils:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :UnionPay:compileDebugAidl NO-SOURCE
+> Task :UnionPay:generateDebugBuildConfig UP-TO-DATE
+> Task :UnionPay:compileDebugKotlin UP-TO-DATE
+> Task :UnionPay:javaPreCompileDebug UP-TO-DATE
+> Task :UnionPay:compileDebugJavaWithJavac UP-TO-DATE
+> Task :UnionPay:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :Venmo:compileDebugAidl NO-SOURCE
+> Task :Venmo:generateDebugBuildConfig UP-TO-DATE
+> Task :Venmo:javaPreCompileDebug UP-TO-DATE
+> Task :Venmo:compileDebugJavaWithJavac UP-TO-DATE
+> Task :Venmo:bundleLibCompileToJarDebug UP-TO-DATE
+
+> Task :BraintreeCore:compileDebugUnitTestJavaWithJavac
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:39: error: cannot find symbol
+    public void saveConfiguration_savesConfigurationInSharedPrefs() throws JSONException, BraintreeSharedPreferencesException {
+                                                                                          ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:49: error: cannot find symbol
+    public void saveConfiguration_whenSharedPreferencesFails_forwardsException() throws JSONException, BraintreeSharedPreferencesException {
+                                                                                                       ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:64: error: cannot find symbol
+    public void getConfiguration_returnsConfigurationFromSharedPrefs() throws JSONException, BraintreeSharedPreferencesException {
+                                                                                             ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:77: error: cannot find symbol
+    public void getConfiguration_whenCacheEntryExpires_returnsNull() throws JSONException, BraintreeSharedPreferencesException {
+                                                                                           ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:90: error: cannot find symbol
+    public void getConfiguration_whenSharedPreferencesFails_forwardsException() throws BraintreeSharedPreferencesException {
+                                                                                       ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:36: error: cannot find symbol
+    private ConfigurationLoaderCallback callback;
+            ^
+  symbol:   class ConfigurationLoaderCallback
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:68: error: cannot find symbol
+    public void loadConfiguration_savesFetchedConfigurationToCache() throws BraintreeSharedPreferencesException {
+                                                                            ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:140: error: cannot find symbol
+    public void loadConfiguration_whenCachedConfigurationAvailable_loadsConfigurationFromCache() throws BraintreeSharedPreferencesException {
+                                                                                                        ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:155: error: cannot find symbol
+    public void loadConfiguration_forwardsConfigurationCacheErrors() throws BraintreeSharedPreferencesException, JSONException {
+                                                                            ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:31: error: cannot find symbol
+    public void getInstallationGUID_returnsNewGUIDWhenOneDoesNotExistAndPersistsIt() throws BraintreeSharedPreferencesException {
+                                                                                            ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class UUIDHelperUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:42: error: cannot find symbol
+    public void getInstallationGUID_whenSharedPrefsFails_returnsNewGUID() throws BraintreeSharedPreferencesException {
+                                                                                 ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class UUIDHelperUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:61: error: cannot find symbol
+    public void getInstallationGUID_returnsExistingGUIDWhenOneExist() throws BraintreeSharedPreferencesException {
+                                                                             ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class UUIDHelperUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:48: error: cannot find symbol
+    @Test(expected = BraintreeSharedPreferencesException.class)
+                     ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:89: error: cannot find symbol
+    @Test(expected = BraintreeSharedPreferencesException.class)
+                     ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/BraintreeClientUnitTest.java:118: error: cannot find symbol
+        BraintreeSharedPreferencesException loadFromCacheError =
+        ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class BraintreeClientUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/BraintreeClientUnitTest.java:119: error: cannot find symbol
+            new BraintreeSharedPreferencesException("cache load error");
+                ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class BraintreeClientUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/BraintreeClientUnitTest.java:142: error: cannot find symbol
+        BraintreeSharedPreferencesException saveToCacheError =
+        ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class BraintreeClientUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/BraintreeClientUnitTest.java:143: error: cannot find symbol
+            new BraintreeSharedPreferencesException("cache save error");
+                ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class BraintreeClientUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:43: error: incompatible types: Configuration cannot be converted to Context
+        sut.saveConfiguration(configuration, "cacheKey", 123L);
+                              ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:45: error: method putStringAndLong in class BraintreeSharedPreferences cannot be applied to given types;
+        verify(braintreeSharedPreferences).putStringAndLong("cacheKey", configuration.toJson(), "cacheKey_timestamp", 123L);
+                                          ^
+  required: Context,String,String,String,long
+  found: String,String,String,long
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:54: error: cannot find symbol
+        BraintreeSharedPreferencesException sharedPrefsException =
+        ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:55: error: cannot find symbol
+            new BraintreeSharedPreferencesException("unexpected exception");
+                ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:60: error: incompatible types: Configuration cannot be converted to Context
+        sut.saveConfiguration(configuration, "cacheKey", 123);
+                              ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:66: error: method containsKey in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.containsKey("cacheKey_timestamp")).thenReturn(true);
+                                       ^
+  required: Context,String
+  found: String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:67: error: method getLong in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.getLong("cacheKey_timestamp")).thenReturn(0L);
+                                       ^
+  required: Context,String
+  found: String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:68: error: method getString in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.getString("cacheKey", "")).thenReturn(configuration.toJson());
+                                       ^
+  required: Context,String,String
+  found: String,String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:71: error: incompatible types: Configuration cannot be converted to Context
+        sut.saveConfiguration(configuration, "cacheKey", 0);
+                              ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:73: error: incompatible types: String cannot be converted to Context
+        assertEquals(configuration.toJson(), sut.getConfiguration("cacheKey", TimeUnit.MINUTES.toMillis(5) - 1));
+                                                                  ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:79: error: method containsKey in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.containsKey("cacheKey_timestamp")).thenReturn(true);
+                                       ^
+  required: Context,String
+  found: String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:80: error: method getLong in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.getLong("cacheKey_timestamp")).thenReturn(TimeUnit.MINUTES.toMillis(5));
+                                       ^
+  required: Context,String
+  found: String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:81: error: method getString in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.getString("cacheKey", "")).thenReturn(configuration.toJson());
+                                       ^
+  required: Context,String,String
+  found: String,String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:84: error: incompatible types: Configuration cannot be converted to Context
+        sut.saveConfiguration(configuration, "cacheKey", 0);
+                              ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:86: error: incompatible types: String cannot be converted to Context
+        assertNull(sut.getConfiguration("cacheKey", TimeUnit.MINUTES.toMillis(20)));
+                                        ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:91: error: cannot find symbol
+        BraintreeSharedPreferencesException sharedPrefsException =
+        ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:92: error: cannot find symbol
+            new BraintreeSharedPreferencesException("unexpected exception");
+                ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationCacheUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:93: error: method containsKey in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.containsKey(anyString())).thenThrow(sharedPrefsException);
+                                       ^
+  required: Context,String
+  found: String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:94: error: method getLong in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.getLong(anyString())).thenThrow(sharedPrefsException);
+                                       ^
+  required: Context,String
+  found: String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:95: error: method getString in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.getString(anyString(), anyString())).thenThrow(sharedPrefsException);
+                                       ^
+  required: Context,String,String
+  found: String,String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationCacheUnitTest.java:98: error: incompatible types: String cannot be converted to Context
+        assertNull(sut.getConfiguration("cacheKey", TimeUnit.MINUTES.toMillis(5) - 1));
+                                        ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:46: error: cannot find symbol
+        callback = mock(ConfigurationLoaderCallback.class);
+                        ^
+  symbol:   class ConfigurationLoaderCallback
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:64: error: cannot find symbol
+        verify(callback).onResult(any(ConfigurationLoaderResult.class), (Exception) isNull());
+                                      ^
+  symbol:   class ConfigurationLoaderResult
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:84: error: no suitable method found for saveConfiguration(Configuration,String)
+        verify(configurationCache).saveConfiguration(any(Configuration.class), eq(cacheKey));
+                                  ^
+    method ConfigurationCache.saveConfiguration(Context,Configuration,String) is not applicable
+      (actual and formal argument lists differ in length)
+    method ConfigurationCache.saveConfiguration(Context,Configuration,String,long) is not applicable
+      (actual and formal argument lists differ in length)
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:100: error: cannot find symbol
+        verify(callback).onResult((ConfigurationLoaderResult) isNull(), any(JSONException.class));
+                                   ^
+  symbol:   class ConfigurationLoaderResult
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:118: error: cannot find symbol
+        verify(callback).onResult((ConfigurationLoaderResult) isNull(), errorCaptor.capture());
+                                   ^
+  symbol:   class ConfigurationLoaderResult
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:133: error: cannot find symbol
+        verify(callback).onResult((ConfigurationLoaderResult) isNull(), captor.capture());
+                                   ^
+  symbol:   class ConfigurationLoaderResult
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:145: error: no suitable method found for getConfiguration(String)
+        when(configurationCache.getConfiguration(cacheKey)).thenReturn(Fixtures.CONFIGURATION_WITH_ACCESS_TOKEN);
+                               ^
+    method ConfigurationCache.getConfiguration(Context,String) is not applicable
+      (actual and formal argument lists differ in length)
+    method ConfigurationCache.getConfiguration(Context,String,long) is not applicable
+      (actual and formal argument lists differ in length)
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:151: error: cannot find symbol
+        verify(callback).onResult(any(ConfigurationLoaderResult.class), (Exception) isNull());
+                                      ^
+  symbol:   class ConfigurationLoaderResult
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:159: error: cannot find symbol
+        BraintreeSharedPreferencesException cacheLoadError =
+        ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:160: error: cannot find symbol
+            new BraintreeSharedPreferencesException("cache load error");
+                ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:161: error: no suitable method found for getConfiguration(String)
+        when(configurationCache.getConfiguration(anyString()))
+                               ^
+    method ConfigurationCache.getConfiguration(Context,String) is not applicable
+      (actual and formal argument lists differ in length)
+    method ConfigurationCache.getConfiguration(Context,String,long) is not applicable
+      (actual and formal argument lists differ in length)
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:164: error: cannot find symbol
+        BraintreeSharedPreferencesException cacheSaveError =
+        ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:165: error: cannot find symbol
+            new BraintreeSharedPreferencesException("cache save error");
+                ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:180: error: cannot find symbol
+        ArgumentCaptor<ConfigurationLoaderResult> resultCaptor =
+                       ^
+  symbol:   class ConfigurationLoaderResult
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:181: error: cannot find symbol
+                ArgumentCaptor.forClass(ConfigurationLoaderResult.class);
+                                        ^
+  symbol:   class ConfigurationLoaderResult
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/ConfigurationLoaderUnitTest.java:185: error: cannot find symbol
+        ConfigurationLoaderResult result = resultCaptor.getValue();
+        ^
+  symbol:   class ConfigurationLoaderResult
+  location: class ConfigurationLoaderUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:32: error: method getString in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.getString("InstallationGUID", null)).thenReturn(null);
+                                       ^
+  required: Context,String,String
+  found: String,<null>
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:36: error: incompatible types: BraintreeSharedPreferences cannot be converted to Context
+        String uuid = sut.getInstallationGUID(braintreeSharedPreferences);
+                                              ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:38: error: method putString in class BraintreeSharedPreferences cannot be applied to given types;
+        verify(braintreeSharedPreferences).putString("InstallationGUID", uuid);
+                                          ^
+  required: Context,String,String
+  found: String,String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:43: error: cannot find symbol
+        BraintreeSharedPreferencesException sharedPrefsException =
+        ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class UUIDHelperUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:44: error: cannot find symbol
+                new BraintreeSharedPreferencesException("unexpected exception");
+                    ^
+  symbol:   class BraintreeSharedPreferencesException
+  location: class UUIDHelperUnitTest
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:47: error: method getString in class BraintreeSharedPreferences cannot be applied to given types;
+                braintreeSharedPreferences.getString(anyString(), anyString())
+                                          ^
+  required: Context,String,String
+  found: String,String
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:56: error: incompatible types: BraintreeSharedPreferences cannot be converted to Context
+        String uuid = sut.getInstallationGUID(braintreeSharedPreferences);
+                                              ^
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:63: error: method getString in class BraintreeSharedPreferences cannot be applied to given types;
+        when(braintreeSharedPreferences.getString("InstallationGUID", null)).thenReturn(uuid);
+                                       ^
+  required: Context,String,String
+  found: String,<null>
+  reason: actual and formal argument lists differ in length
+/workspace/repo/BraintreeCore/src/test/java/com/braintreepayments/api/UUIDHelperUnitTest.java:67: error: incompatible types: BraintreeSharedPreferences cannot be converted to Context
+        assertEquals(uuid, sut.getInstallationGUID(braintreeSharedPreferences));
+                                                   ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+64 errors
+
+> Task :BraintreeCore:compileDebugUnitTestJavaWithJavac FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':BraintreeCore:compileDebugUnitTestJavaWithJavac'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.3.3/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD FAILED in 35s
+121 actionable tasks: 1 executed, 120 up-to-date
+reward=0 graded=117 found=0 failed=0 parsed=0 framework=junit exit_code=1

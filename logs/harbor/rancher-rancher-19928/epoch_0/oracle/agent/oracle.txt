@@ -1,0 +1,3 @@
+patching file package/Dockerfile
+patching file pkg/api/store/cluster/cluster_store.go
+patching file pkg/api/store/password/store.go

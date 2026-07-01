@@ -1,0 +1,17 @@
+patching file packages/core/test/lib/integrations/requestdata.test.ts
+patching file packages/core/test/lib/utils/cookie.test.ts (renamed from packages/core/test/utils-hoist/cookie.test.ts)
+patching file packages/core/test/lib/utils/request.test.ts
+patching file packages/core/test/lib/vendor/getClientIpAddress.test.ts (renamed from packages/core/test/utils-hoist/requestdata.test.ts)
+ts-jest[versions] (WARN) Version 5.0.4 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=3.8.0 <5.0.0-0). Please do not report issues in ts-jest if you are using unsupported versions.
+ts-jest[versions] (WARN) Version 5.0.4 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=3.8.0 <5.0.0-0). Please do not report issues in ts-jest if you are using unsupported versions.
+ts-jest[versions] (WARN) Version 5.0.4 of typescript installed has not been tested with ts-jest. If you're experiencing issues, consider using a supported version (>=3.8.0 <5.0.0-0). Please do not report issues in ts-jest if you are using unsupported versions.
+PASS test/lib/utils/cookie.test.ts (16.184 s)
+PASS test/lib/utils/request.test.ts (16.225 s)
+PASS test/lib/vendor/getClientIpAddress.test.ts (16.41 s)
+
+Test Suites: 3 passed, 3 total
+Tests:       30 passed, 30 total
+Snapshots:   0 total
+Time:        17.364 s
+Ran all test suites matching /test\/lib\/utils\/cookie.test.ts|test\/lib\/utils\/request.test.ts|test\/lib\/vendor\/getClientIpAddress.test.ts/i.
+reward=1 graded=30 found=0 failed=0 parsed=0 framework=jest exit_code=0

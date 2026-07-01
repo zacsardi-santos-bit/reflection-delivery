@@ -1,0 +1,720 @@
+patching file flink-core/src/test/java/org/apache/flink/util/FileUtilsTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/IncrementalLocalKeyedStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/IncrementalRemoteKeyedStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/KeyGroupsStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/filesystem/FileStateHandleTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/state/memory/ByteStreamStateHandleTest.java
+patching file flink-state-backends/flink-statebackend-rocksdb/src/test/java/org/apache/flink/contrib/streaming/state/snapshot/RocksIncrementalSnapshotStrategyTest.java
+patching file flink-streaming-java/src/test/java/org/apache/flink/streaming/api/operators/BackendRestorerProcedureTest.java
+patching file flink-streaming-java/src/test/java/org/apache/flink/streaming/api/operators/StreamTaskStateInitializerImplTest.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-scala_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-scala/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-scala_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-streaming-scala/pom.xml, line 30, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-hadoop-compatibility_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-hadoop-compatibility_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-connectors/flink-hadoop-compatibility/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-hive_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-hive_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-hive/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-base:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.flink:flink-streaming-java:test-jar -> duplicate declaration of version ${project.version} @ line 89, column 15
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-hive-2.3.9_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-hive-2.3.9_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-hive-2.3.9/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-hive-3.1.3_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-hive-3.1.3_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-hive-3.1.3/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-examples-table_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-examples-table_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-examples/flink-examples-table/pom.xml, line 32, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-tests:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.flink:flink-shaded-guava:jar -> duplicate declaration of version (?) @ line 235, column 15
+[[1;33mWARNING[m] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.codehaus.mojo:build-helper-maven-plugin @ line 738, column 12
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-cep-scala_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-cep-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-libraries/flink-cep-scala/pom.xml, line 32, column 17
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-table-api-scala_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-api-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-table/flink-table-api-scala/pom.xml, line 29, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-table-api-scala-bridge_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-api-scala-bridge_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-table/flink-table-api-scala-bridge/pom.xml, line 29, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-table-planner_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-planner_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-table/flink-table-planner/pom.xml, line 29, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-dist_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-dist_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-dist/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-dist-scala_2.12:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-dist-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-dist-scala/pom.xml, line 31, column 14
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.flink:flink-python:jar:1.19-SNAPSHOT
+[[1;33mWARNING[m] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.apache.maven.plugins:maven-dependency-plugin @ line 607, column 12
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] It is highly recommended to fix these problems because they threaten the stability of your build.
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] For this reason, future Maven versions might no longer support building such malformed projects.
+[[1;33mWARNING[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Build Order:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Flink :                                                            [pom]
+[[1;34mINFO[m] Flink : Annotations                                                [jar]
+[[1;34mINFO[m] Flink : Architecture Tests                                         [pom]
+[[1;34mINFO[m] Flink : Architecture Tests : Base                                  [jar]
+[[1;34mINFO[m] Flink : Test utils :                                               [pom]
+[[1;34mINFO[m] Flink : Test utils : Junit                                         [jar]
+[[1;34mINFO[m] Flink : Metrics :                                                  [pom]
+[[1;34mINFO[m] Flink : Metrics : Core                                             [jar]
+[[1;34mINFO[m] Flink : Architecture Tests : Test                                  [jar]
+[[1;34mINFO[m] Flink : Test utils : MigrationTestUtils                            [jar]
+[[1;34mINFO[m] Flink : Core                                                       [jar]
+[[1;34mINFO[m] Flink : Java                                                       [jar]
+[[1;34mINFO[m] Flink : Connectors :                                               [pom]
+[[1;34mINFO[m] Flink : Connectors : File Sink Common                              [jar]
+[[1;34mINFO[m] Flink : RPC :                                                      [pom]
+[[1;34mINFO[m] Flink : RPC : Core                                                 [jar]
+[[1;34mINFO[m] Flink : RPC : Akka                                                 [jar]
+[[1;34mINFO[m] Flink : RPC : Akka-Loader                                          [jar]
+[[1;34mINFO[m] Flink : Queryable state :                                          [pom]
+[[1;34mINFO[m] Flink : Queryable state : Client Java                              [jar]
+[[1;34mINFO[m] Flink : FileSystems :                                              [pom]
+[[1;34mINFO[m] Flink : FileSystems : Hadoop FS                                    [jar]
+[[1;34mINFO[m] Flink : Runtime                                                    [jar]
+[[1;34mINFO[m] Flink : Connectors : Datagen                                       [jar]
+[[1;34mINFO[m] Flink : Streaming Java                                             [jar]
+[[1;34mINFO[m] Flink : Optimizer                                                  [jar]
+[[1;34mINFO[m] Flink : Clients : Test Utils                                       [jar]
+[[1;34mINFO[m] Flink : Clients                                                    [jar]
+[[1;34mINFO[m] Flink : State backends :                                           [pom]
+[[1;34mINFO[m] Flink : State backends : RocksDB                                   [jar]
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------< [0;36morg.apache.flink:flink-parent[0;1m >--------------------[m
+[[1;34mINFO[m] [1mBuilding Flink : 1.19-SNAPSHOT                                    [1/30][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mapache-rat-plugin:0.13:check[m [1m(default)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Added 1 additional default licenses.
+[[1;34mINFO[m] Enabled default license matchers.
+[[1;34mINFO[m] Added 1 custom approved licenses.
+[[1;34mINFO[m] Will parse SCM ignores for exclusions...
+[[1;34mINFO[m] Parsing exclusions from /workspace/repo/.gitignore
+[[1;34mINFO[m] Finished adding exclusions from SCM ignore files.
+[[1;34mINFO[m] 124 implicit excludes (use -debug for more details).
+[[1;34mINFO[m] 110 explicit excludes (use -debug for more details).
+[[1;34mINFO[m] 17232 resources included (use -debug for more details)
+[[1;34mINFO[m] Rat check: Summary over all files. Unapproved: 0, unknown: 0, generated: 0, approved: 16868 licenses.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-parent[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-parent[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------< [0;36morg.apache.flink:flink-annotations[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding Flink : Annotations 1.19-SNAPSHOT                        [2/30][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-annotations[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-annotations/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-annotations/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-annotations[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.flink:flink-architecture-tests[0;1m >--------------[m
+[[1;34mINFO[m] [1mBuilding Flink : Architecture Tests 1.19-SNAPSHOT                 [3/30][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-architecture-tests[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------< [0;36morg.apache.flink:flink-architecture-tests-base[0;1m >-----------[m
+[[1;34mINFO[m] [1mBuilding Flink : Architecture Tests : Base 1.19-SNAPSHOT          [4/30][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-architecture-tests-base[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.flink:flink-test-utils-parent[0;1m >--------------[m
+[[1;34mINFO[m] [1mBuilding Flink : Test utils : 1.19-SNAPSHOT                       [5/30][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-test-utils-parent[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.flink:flink-test-utils-junit[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding Flink : Test utils : Junit 1.19-SNAPSHOT                 [6/30][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-test-utils-junit[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------< [0;36morg.apache.flink:flink-metrics[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding Flink : Metrics : 1.19-SNAPSHOT                          [7/30][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-metrics[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-metrics[0;1m ---[m
+[[1;34mINFO[m] No tests to run.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.flink:flink-metrics-core[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding Flink : Metrics : Core 1.19-SNAPSHOT                     [8/30][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-metrics/flink-metrics-core/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-metrics-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------< [0;36morg.apache.flink:flink-architecture-tests-test[0;1m >-----------[m
+[[1;34mINFO[m] [1mBuilding Flink : Architecture Tests : Test 1.19-SNAPSHOT          [9/30][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mflink-architecture-tests-test[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.flink:fink-migration-test-utils[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding Flink : Test utils : MigrationTestUtils 1.19-SNAPSHOT   [10/30][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.2.2:test[m [1m(default-test)[m @ [36mfink-migration-test-utils[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36morg.apache.flink:flink-core[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding Flink : Core 1.19-SNAPSHOT                              [11/30][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:3.1.2:check[m [1m(validate)[m @ [36mflink-core[0;1m ---[m
+[[1;33mWARNING[m] Old version of checkstyle detected. Consider updating to >= v8.30
+[[1;33mWARNING[m] For more information see: https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/upgrading-checkstyle.html
+[[1;34mINFO[m] You have 0 Checkstyle violations.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless-maven-plugin:2.27.1:check[m [1m(spotless-check)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven-version)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(enforce-maven)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-snakeyaml)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(ban-unsafe-jackson)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-log4j-1)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-akka-rpc-dependencies)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.1.0:enforce[m [1m(forbid-direct-table-planner-dependencies)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Skipping Rule Enforcement.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:0.1:directory-of[m [1m(directories)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:resources[m [1m(default-resources)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/flink-core/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:compile[m [1m(default-compile)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.1.0:testResources[m [1m(default-testResources)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1038 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m @ [36mflink-core[0;1m ---[m
+[[1;34mINFO[m] Compiling 1 source file to /workspace/repo/flink-core/target/test-classes
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] COMPILATION ERROR : 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;31mERROR[m] /workspace/repo/flink-core/src/test/java/org/apache/flink/util/FileUtilsTest.java:[372,45] cannot find symbol
+  symbol:   method getDirectoryFilesSize(java.nio.file.Path)
+  location: class org.apache.flink.util.FileUtils
+[[1;31mERROR[m] /workspace/repo/flink-core/src/test/java/org/apache/flink/util/FileUtilsTest.java:[376,48] cannot find symbol
+  symbol:   method getDirectoryFilesSize(java.nio.file.Path)
+  location: class org.apache.flink.util.FileUtils
+[[1;34mINFO[m] 2 errors 
+[[1;34mINFO[m] -------------------------------------------------------------
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Summary for Flink : 1.19-SNAPSHOT:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Flink : ............................................ [1;32mSUCCESS[m [  9.602 s]
+[[1;34mINFO[m] Flink : Annotations ................................ [1;32mSUCCESS[m [  2.281 s]
+[[1;34mINFO[m] Flink : Architecture Tests ......................... [1;32mSUCCESS[m [  0.231 s]
+[[1;34mINFO[m] Flink : Architecture Tests : Base .................. [1;32mSUCCESS[m [  0.692 s]
+[[1;34mINFO[m] Flink : Test utils : ............................... [1;32mSUCCESS[m [  0.206 s]
+[[1;34mINFO[m] Flink : Test utils : Junit ......................... [1;32mSUCCESS[m [  2.692 s]
+[[1;34mINFO[m] Flink : Metrics : .................................. [1;32mSUCCESS[m [  0.209 s]
+[[1;34mINFO[m] Flink : Metrics : Core ............................. [1;32mSUCCESS[m [  1.194 s]
+[[1;34mINFO[m] Flink : Architecture Tests : Test .................. [1;32mSUCCESS[m [  0.407 s]
+[[1;34mINFO[m] Flink : Test utils : MigrationTestUtils ............ [1;32mSUCCESS[m [  0.475 s]
+[[1;34mINFO[m] Flink : Core ....................................... [1;31mFAILURE[m [ 25.099 s]
+[[1;34mINFO[m] Flink : Java ....................................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Connectors : ............................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Connectors : File Sink Common .............. [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : RPC : ...................................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : RPC : Core ................................. [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : RPC : Akka ................................. [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : RPC : Akka-Loader .......................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Queryable state : .......................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Queryable state : Client Java .............. [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : FileSystems : .............................. [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : FileSystems : Hadoop FS .................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Runtime .................................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Connectors : Datagen ....................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Streaming Java ............................. [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Optimizer .................................. [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Clients : Test Utils ....................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : Clients .................................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : State backends : ........................... [1;33mSKIPPED[m
+[[1;34mINFO[m] Flink : State backends : RocksDB ................... [1;33mSKIPPED[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;31mBUILD FAILURE[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  46.401 s
+[[1;34mINFO[m] Finished at: 2026-07-01T14:42:46Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;31mERROR[m] Failed to execute goal [32morg.apache.maven.plugins:maven-compiler-plugin:3.8.0:testCompile[m [1m(default-testCompile)[m on project [36mflink-core[m: [1;31mCompilation failure[m: Compilation failure: 
+[[1;31mERROR[m] /workspace/repo/flink-core/src/test/java/org/apache/flink/util/FileUtilsTest.java:[372,45] cannot find symbol
+[[1;31mERROR[m]   symbol:   method getDirectoryFilesSize(java.nio.file.Path)
+[[1;31mERROR[m]   location: class org.apache.flink.util.FileUtils
+[[1;31mERROR[m] /workspace/repo/flink-core/src/test/java/org/apache/flink/util/FileUtilsTest.java:[376,48] cannot find symbol
+[[1;31mERROR[m]   symbol:   method getDirectoryFilesSize(java.nio.file.Path)
+[[1;31mERROR[m]   location: class org.apache.flink.util.FileUtils
+[[1;31mERROR[m] -> [1m[Help 1][m
+[[1;31mERROR[m] 
+[[1;31mERROR[m] To see the full stack trace of the errors, re-run Maven with the [1m-e[m switch.
+[[1;31mERROR[m] Re-run Maven using the [1m-X[m switch to enable full debug logging.
+[[1;31mERROR[m] 
+[[1;31mERROR[m] For more information about the errors and possible solutions, please read the following articles:
+[[1;31mERROR[m] [1m[Help 1][m http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[[1;31mERROR[m] 
+[[1;31mERROR[m] After correcting the problems, you can resume the build with the command
+[[1;31mERROR[m]   [1mmvn <args> -rf :flink-core[m
+reward=0 graded=5 found=0 failed=0 parsed=1 framework=maven exit_code=1

@@ -1,0 +1,14 @@
+patching file pkg/monitor/monitor/template_test.go
+{"Time":"2026-07-01T15:05:24.009381753Z","Action":"start","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor"}
+{"Time":"2026-07-01T15:05:24.033420722Z","Action":"run","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Test":"TestRenderPrometheusConfig"}
+{"Time":"2026-07-01T15:05:24.033449578Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Test":"TestRenderPrometheusConfig","Output":"=== RUN   TestRenderPrometheusConfig\n"}
+{"Time":"2026-07-01T15:05:24.034749909Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Test":"TestRenderPrometheusConfig","Output":"--- PASS: TestRenderPrometheusConfig (0.00s)\n"}
+{"Time":"2026-07-01T15:05:24.034767461Z","Action":"pass","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Test":"TestRenderPrometheusConfig","Elapsed":0}
+{"Time":"2026-07-01T15:05:24.034775911Z","Action":"run","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Test":"TestRenderPrometheusConfigTLSEnabled"}
+{"Time":"2026-07-01T15:05:24.034784207Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Test":"TestRenderPrometheusConfigTLSEnabled","Output":"=== RUN   TestRenderPrometheusConfigTLSEnabled\n"}
+{"Time":"2026-07-01T15:05:24.03521285Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Test":"TestRenderPrometheusConfigTLSEnabled","Output":"--- PASS: TestRenderPrometheusConfigTLSEnabled (0.00s)\n"}
+{"Time":"2026-07-01T15:05:24.035220048Z","Action":"pass","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Test":"TestRenderPrometheusConfigTLSEnabled","Elapsed":0}
+{"Time":"2026-07-01T15:05:24.035224251Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Output":"PASS\n"}
+{"Time":"2026-07-01T15:05:24.036343626Z","Action":"output","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Output":"ok  \tgithub.com/pingcap/tidb-operator/pkg/monitor/monitor\t0.027s\n"}
+{"Time":"2026-07-01T15:05:24.03636526Z","Action":"pass","Package":"github.com/pingcap/tidb-operator/pkg/monitor/monitor","Elapsed":0.027}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

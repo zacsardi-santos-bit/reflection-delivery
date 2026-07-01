@@ -1,0 +1,261 @@
+patching file streams/src/test/java/org/apache/kafka/streams/processor/internals/StreamsPartitionAssignorTest.java
+patching file streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java
+patching file streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/RankedClientTest.java
+patching file streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovementTest.java
+To honour the JVM settings for this build a new JVM will be forked. Please consider using the daemon: https://docs.gradle.org/5.6.2/userguide/gradle_daemon.html.
+Daemon will be stopped at the end of the build stopping after processing
+
+> Configure project :
+Building project 'core' with Scala version 2.12.11
+Building project 'streams-scala' with Scala version 2.12.11
+
+> Task :generator:compileJava UP-TO-DATE
+> Task :generator:processResources NO-SOURCE
+> Task :generator:classes UP-TO-DATE
+> Task :clients:processMessages UP-TO-DATE
+> Task :clients:compileJava UP-TO-DATE
+> Task :clients:processResources UP-TO-DATE
+> Task :clients:classes UP-TO-DATE
+> Task :clients:determineCommitId UP-TO-DATE
+> Task :clients:createVersionFile
+> Task :clients:jar UP-TO-DATE
+> Task :clients:processTestMessages UP-TO-DATE
+> Task :clients:compileTestJava UP-TO-DATE
+> Task :clients:processTestResources UP-TO-DATE
+> Task :clients:testClasses UP-TO-DATE
+> Task :core:compileJava UP-TO-DATE
+> Task :core:compileScala UP-TO-DATE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:copyDependantLibs UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:compileTestScala UP-TO-DATE
+> Task :core:processTestResources UP-TO-DATE
+> Task :core:testClasses UP-TO-DATE
+> Task :streams:processMessages UP-TO-DATE
+> Task :connect:api:compileJava UP-TO-DATE
+> Task :connect:api:processResources NO-SOURCE
+> Task :connect:api:classes UP-TO-DATE
+> Task :connect:api:copyDependantLibs UP-TO-DATE
+> Task :connect:api:jar UP-TO-DATE
+> Task :connect:json:compileJava UP-TO-DATE
+> Task :connect:json:processResources NO-SOURCE
+> Task :connect:json:classes UP-TO-DATE
+> Task :connect:json:copyDependantLibs UP-TO-DATE
+> Task :connect:json:jar UP-TO-DATE
+> Task :streams:compileJava UP-TO-DATE
+> Task :streams:processResources UP-TO-DATE
+> Task :streams:classes UP-TO-DATE
+> Task :streams:checkstyleMain
+> Task :streams:copyDependantLibs UP-TO-DATE
+> Task :streams:determineCommitId UP-TO-DATE
+> Task :streams:createStreamsVersionFile
+> Task :streams:jar UP-TO-DATE
+> Task :streams:test-utils:compileJava UP-TO-DATE
+> Task :streams:test-utils:processResources NO-SOURCE
+> Task :streams:test-utils:classes UP-TO-DATE
+> Task :streams:test-utils:copyDependantLibs UP-TO-DATE
+> Task :streams:test-utils:jar UP-TO-DATE
+
+> Task :streams:compileTestJava
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:44: error: cannot find symbol
+import static org.apache.kafka.streams.processor.internals.assignment.RankedClient.tasksToCaughtUpClients;
+^
+  symbol:   static tasksToCaughtUpClients
+  location: class RankedClient
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/RankedClientTest.java:30: error: cannot find symbol
+import static org.apache.kafka.streams.processor.internals.assignment.RankedClient.tasksToCaughtUpClients;
+^
+  symbol:   static tasksToCaughtUpClients
+  location: class RankedClient
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:64: error: cannot find symbol
+            tasksToCaughtUpClients(oneStatefulTasksToTwoRankedClients(rankOfClient1, rankOfClient2))
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:83: error: cannot find symbol
+            tasksToCaughtUpClients(oneStatefulTasksToTwoRankedClients(rankOfClient1, rankOfClient2))
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:102: error: cannot find symbol
+            tasksToCaughtUpClients(oneStatefulTasksToTwoRankedClients(rankOfClient1, rankOfClient2))
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:121: error: cannot find symbol
+            tasksToCaughtUpClients(oneStatefulTasksToTwoRankedClients(rankOfClient1, rankOfClient2))
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:140: error: cannot find symbol
+            tasksToCaughtUpClients(oneStatefulTasksToTwoRankedClients(rankOfClient1, rankOfClient2))
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:168: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:197: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:236: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:269: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:298: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:327: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:356: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:385: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:414: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:443: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:482: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:515: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:544: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:595: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:644: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:681: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:718: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:747: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignorTest.java:784: error: cannot find symbol
+            tasksToCaughtUpClients(statefulTasksToRankedCandidates)
+            ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class DefaultStateConstrainedBalancedAssignorTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/RankedClientTest.java:181: error: cannot find symbol
+        final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients = tasksToCaughtUpClients(statefulTasksToRankedCandidates);
+                                                                    ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class RankedClientTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/RankedClientTest.java:192: error: cannot find symbol
+        final Map<TaskId, SortedSet<UUID>> tasksToCaughtUpClients = tasksToCaughtUpClients(statefulTasksToRankedCandidates);
+                                                                    ^
+  symbol:   method tasksToCaughtUpClients(SortedMap<TaskId,SortedSet<RankedClient>>)
+  location: class RankedClientTest
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovementTest.java:79: error: method getMovements in class TaskMovement cannot be applied to given types;
+            getMovements(stateConstrainedAssignment, balancedAssignment, tasksToCaughtUpClients, maxWarmupReplicas),
+            ^
+  required: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,int
+  found: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,Map<TaskId,SortedSet<UUID>>,int
+  reason: actual and formal argument lists differ in length
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovementTest.java:106: error: method getMovements in class TaskMovement cannot be applied to given types;
+            getMovements(stateConstrainedAssignment, balancedAssignment, tasksToCaughtUpClients, maxWarmupReplicas),
+            ^
+  required: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,int
+  found: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,Map<TaskId,SortedSet<UUID>>,int
+  reason: actual and formal argument lists differ in length
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovementTest.java:133: error: method getMovements in class TaskMovement cannot be applied to given types;
+            getMovements(stateConstrainedAssignment, balancedAssignment, tasksToCaughtUpClients, maxWarmupReplicas),
+            ^
+  required: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,int
+  found: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,Map<TaskId,SortedSet<UUID>>,int
+  reason: actual and formal argument lists differ in length
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovementTest.java:148: error: method getMovements in class TaskMovement cannot be applied to given types;
+        assertTrue(getMovements(stateConstrainedAssignment, balancedAssignment, emptyMap(), maxWarmupReplicas).isEmpty());
+                   ^
+  required: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,int
+  found: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,Map<Object,Object>,int
+  reason: actual and formal argument lists differ in length
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovementTest.java:162: error: method getMovements in class TaskMovement cannot be applied to given types;
+        assertTrue(getMovements(stateConstrainedAssignment, balancedAssignment, emptyMap(), maxWarmupReplicas).isEmpty());
+                   ^
+  required: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,int
+  found: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,Map<Object,Object>,int
+  reason: actual and formal argument lists differ in length
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovementTest.java:178: error: method getMovements in class TaskMovement cannot be applied to given types;
+            () -> getMovements(stateConstrainedAssignment, balancedAssignment, emptyMap(), maxWarmupReplicas));
+                  ^
+  required: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,int
+  found: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,Map<Object,Object>,int
+  reason: actual and formal argument lists differ in length
+/workspace/repo/streams/src/test/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovementTest.java:195: error: method getMovements in class TaskMovement cannot be applied to given types;
+            () -> getMovements(stateConstrainedAssignment, balancedAssignment, emptyMap(), maxWarmupReplicas));
+                  ^
+  required: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,int
+  found: Map<UUID,List<TaskId>>,Map<UUID,List<TaskId>>,Map<Object,Object>,int
+  reason: actual and formal argument lists differ in length
+35 errors
+
+> Task :streams:compileTestJava FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':streams:compileTestJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 38s
+32 actionable tasks: 4 executed, 28 up-to-date
+reward=0 graded=152 found=0 failed=0 parsed=0 framework=junit exit_code=1

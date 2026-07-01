@@ -1,0 +1,13 @@
+patching file flink-core/src/main/java/org/apache/flink/api/common/eventtime/CombinedWatermarkStatus.java
+patching file flink-core/src/main/java/org/apache/flink/core/plugin/PluginLoader.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/api/operators/AbstractStreamOperator.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/io/RecordWriterOutput.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/streamstatus/AnnouncedStatus.java
+patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/runtime/tasks/ChainingOutput.java
+patching file flink-table/flink-table-common/src/main/java/org/apache/flink/table/factories/FactoryUtil.java
+patching file flink-table/flink-table-common/src/test/java/org/apache/flink/table/factories/FactoryUtilTest.java
+patching file flink-table/flink-table-common/src/test/java/org/apache/flink/table/factories/TestFormatFactory.java
+patching file flink-table/flink-table-planner-blink/src/main/scala/org/apache/flink/table/planner/codegen/EqualiserCodeGenerator.scala
+patching file flink-table/flink-table-planner-blink/src/test/java/org/apache/flink/table/planner/codegen/EqualiserCodeGeneratorTest.java
+patching file flink-table/flink-table-runtime-blink/src/main/java/org/apache/flink/table/runtime/operators/wmassigners/WatermarkAssignerOperator.java
+patching file flink-tests/src/test/java/org/apache/flink/test/plugin/PluginLoaderTest.java

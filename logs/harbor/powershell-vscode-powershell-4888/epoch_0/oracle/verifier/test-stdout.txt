@@ -1,0 +1,37 @@
+patching file test/features/DebugSession.test.ts
+
+> powershell@2024.0.0 build-test
+> tsc --incremental
+
+
+
+  DebugSessionFeature
+    Constructor
+      ✔ Registers debug configuration provider and factory
+    resolveDebugConfiguration
+      ✔ Defaults to LaunchCurrentFile if no request type was specified
+      ✔ Errors if current file config was specified but no file is open in the editor
+      ✔ Detects an untitled document
+    resolveDebugConfigurationWithSubstitutedVariables
+      ✔ Sets internalConsoleOptions to neverOpen
+      ✔ Rejects invalid request type
+      ✔ Uses createTemporaryIntegratedConsole config setting if not explicitly specified
+      ✔ LaunchCurrentFile: Rejects non-Powershell language active editor
+      ✔ LaunchScript: Rejects scripts without a powershell script extension
+      ✔ Prevents debugging untitled files in a temp console
+      ✔ Attach: Exits if session version details cannot be retrieved
+      ✔ Attach: Prevents attach on non-windows if not PS7.0 or higher
+      ✔ Attach: Prompts for PS Process if not specified
+      ✔ Attach: Exits if process was not selected from the picker
+      ✔ Attach: Prompts for Runspace if not specified
+      ✔ Attach: Exits if runspace was not selected from the picker
+      ✔ Starts dotnet attach debug session with default config
+      ✔ Prevents dotnet attach session if terminal is not temporary
+      ✔ Errors if dotnetDebuggerConfigName was provided but the config was not found
+    createDebugAdapterDescriptor
+      ✔ Creates a named pipe server for the debug adapter
+
+
+  20 passing (163ms)
+
+reward=1 graded=20 found=20 failed=0 parsed=20 framework=mocha exit_code=0

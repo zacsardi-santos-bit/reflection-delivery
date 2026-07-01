@@ -1,0 +1,26 @@
+patching file tests/mps_statespace_test.cc
+[==========] Running 8 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 8 tests from MPSStateSpaceTest
+[ RUN      ] MPSStateSpaceTest.Create
+[       OK ] MPSStateSpaceTest.Create (0 ms)
+[ RUN      ] MPSStateSpaceTest.BlockOffset
+[       OK ] MPSStateSpaceTest.BlockOffset (0 ms)
+[ RUN      ] MPSStateSpaceTest.SetZero
+[       OK ] MPSStateSpaceTest.SetZero (0 ms)
+[ RUN      ] MPSStateSpaceTest.Copy
+[       OK ] MPSStateSpaceTest.Copy (0 ms)
+[ RUN      ] MPSStateSpaceTest.ToWaveFunctionZero
+[       OK ] MPSStateSpaceTest.ToWaveFunctionZero (0 ms)
+[ RUN      ] MPSStateSpaceTest.ToWaveFunction3
+[       OK ] MPSStateSpaceTest.ToWaveFunction3 (0 ms)
+[ RUN      ] MPSStateSpaceTest.ToWaveFunction5
+[       OK ] MPSStateSpaceTest.ToWaveFunction5 (0 ms)
+[ RUN      ] MPSStateSpaceTest.InnerProduct4
+[       OK ] MPSStateSpaceTest.InnerProduct4 (0 ms)
+[----------] 8 tests from MPSStateSpaceTest (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 8 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 8 tests.
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=gtest exit_code=0

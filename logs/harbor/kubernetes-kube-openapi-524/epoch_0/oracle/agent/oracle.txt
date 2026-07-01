@@ -1,0 +1,5 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 29 (offset 5 lines).
+Hunk #2 succeeded at 115 (offset 20 lines).
+patching file pkg/spec3/fuzz.go

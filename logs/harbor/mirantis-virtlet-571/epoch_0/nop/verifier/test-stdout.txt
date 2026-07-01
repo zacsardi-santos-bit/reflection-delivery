@@ -1,0 +1,45 @@
+patching file pkg/image/download_test.go
+patching file pkg/image/image_test.go
+patching file pkg/imagetranslation/transport_test.go
+# github.com/Mirantis/virtlet/pkg/image [github.com/Mirantis/virtlet/pkg/image.test]
+/go/src/github.com/Mirantis/virtlet/pkg/image/image_test.go:50:20: cannot use &fakeDownloader{} (value of type *fakeDownloader) as Downloader value in variable declaration: *fakeDownloader does not implement Downloader (wrong type for method DownloadFile)
+		have DownloadFile(context.Context, Endpoint, io.Writer) error
+		want DownloadFile(Endpoint, io.Writer) error
+/go/src/github.com/Mirantis/virtlet/pkg/image/image_test.go:110:41: cannot use downloader (variable of type *fakeDownloader) as Downloader value in argument to NewImageFileStore: *fakeDownloader does not implement Downloader (wrong type for method DownloadFile)
+		have DownloadFile(context.Context, Endpoint, io.Writer) error
+		want DownloadFile(Endpoint, io.Writer) error
+/go/src/github.com/Mirantis/virtlet/pkg/image/image_test.go:220:63: too many arguments in call to tst.store.PullImage
+	have (context.Context, string, func(name string) Endpoint)
+	want (string, ImageTranslator)
+/go/src/github.com/Mirantis/virtlet/pkg/image/image_test.go:465:49: too many arguments in call to tst.store.PullImage
+	have (context.Context, string, func(name string) Endpoint)
+	want (string, ImageTranslator)
+/go/src/github.com/Mirantis/virtlet/pkg/image/download_test.go:50:62: too many arguments in call to downloader.DownloadFile
+	have (context.Context, Endpoint, *bytes.Buffer)
+	want (Endpoint, io.Writer)
+/go/src/github.com/Mirantis/virtlet/pkg/image/download_test.go:67:25: undefined: testutils.GenerateCert
+/go/src/github.com/Mirantis/virtlet/pkg/image/download_test.go:68:25: undefined: testutils.GenerateCert
+/go/src/github.com/Mirantis/virtlet/pkg/image/download_test.go:118:5: too many arguments in call to downloader.DownloadFile
+	have (context.Context, Endpoint, *bytes.Buffer)
+	want (Endpoint, io.Writer)
+FAIL	github.com/Mirantis/virtlet/pkg/image [build failed]
+# github.com/Mirantis/virtlet/pkg/imagetranslation [github.com/Mirantis/virtlet/pkg/imagetranslation.test]
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:52:91: too many arguments in call to downloader.DownloadFile
+	have (context.Context, image.Endpoint, io.Writer)
+	want (image.Endpoint, io.Writer)
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:215:91: too many arguments in call to downloader.DownloadFile
+	have (context.Context, image.Endpoint, io.Writer)
+	want (image.Endpoint, io.Writer)
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:306:89: too many arguments in call to downloader.DownloadFile
+	have (context.Context, image.Endpoint, io.Writer)
+	want (image.Endpoint, io.Writer)
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:320:25: undefined: testutils.GenerateCert
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:321:25: undefined: testutils.GenerateCert
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:351:24: undefined: testutils.EncodePEMCert
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:365:25: undefined: testutils.GenerateCert
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:366:37: undefined: testutils.GenerateCert
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:367:37: undefined: testutils.GenerateCert
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:405:24: undefined: testutils.EncodePEMCert
+/go/src/github.com/Mirantis/virtlet/pkg/imagetranslation/transport_test.go:405:24: too many errors
+FAIL	github.com/Mirantis/virtlet/pkg/imagetranslation [build failed]
+reward=0 graded=40 found=40 failed=40 parsed=2 framework=go exit_code=1

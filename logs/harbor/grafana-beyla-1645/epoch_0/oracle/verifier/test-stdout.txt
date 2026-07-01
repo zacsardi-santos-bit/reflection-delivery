@@ -1,0 +1,544 @@
+patching file pkg/internal/ebpf/common/sql_detect_transform_test.go
+patching file pkg/internal/ebpf/common/tcp_detect_transform_test.go
+patching file test/integration/components/postgresql/run_ssl.sh
+patching file test/integration/components/pythonsql/Dockerfile_ssl
+patching file test/integration/components/pythonsql/main_ssl.py
+patching file test/integration/components/pythonsql/server.crt
+patching file test/integration/components/pythonsql/server.key
+patching file test/integration/components/pythonsql/ssl_server.sh
+patching file test/integration/docker-compose-python-sql-ssl.yml
+patching file test/integration/red_test_python_sql.go
+patching file test/integration/suites_test.go
+{"Time":"2026-07-01T14:49:40.128498497Z","Action":"start","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common"}
+{"Time":"2026-07-01T14:49:40.132543002Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI"}
+{"Time":"2026-07-01T14:49:40.132603673Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI","Output":"=== RUN   TestMaybeFastCGI\n"}
+{"Time":"2026-07-01T14:49:40.132615062Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Correct_values"}
+{"Time":"2026-07-01T14:49:40.132619372Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Correct_values","Output":"=== RUN   TestMaybeFastCGI/Correct_values\n"}
+{"Time":"2026-07-01T14:49:40.132630954Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Correct_values","Output":"--- PASS: TestMaybeFastCGI/Correct_values (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132636882Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Correct_values","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132648841Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Empty"}
+{"Time":"2026-07-01T14:49:40.132651361Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Empty","Output":"=== RUN   TestMaybeFastCGI/Empty\n"}
+{"Time":"2026-07-01T14:49:40.132657486Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Empty","Output":"--- PASS: TestMaybeFastCGI/Empty (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.13266062Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Empty","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132663446Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Short"}
+{"Time":"2026-07-01T14:49:40.132665999Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Short","Output":"=== RUN   TestMaybeFastCGI/Short\n"}
+{"Time":"2026-07-01T14:49:40.132669302Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Short","Output":"--- PASS: TestMaybeFastCGI/Short (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132676953Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/Short","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132679828Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/REQUEST_METHOD_not_in_the_text"}
+{"Time":"2026-07-01T14:49:40.132682358Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/REQUEST_METHOD_not_in_the_text","Output":"=== RUN   TestMaybeFastCGI/REQUEST_METHOD_not_in_the_text\n"}
+{"Time":"2026-07-01T14:49:40.132688825Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/REQUEST_METHOD_not_in_the_text","Output":"--- PASS: TestMaybeFastCGI/REQUEST_METHOD_not_in_the_text (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132694164Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI/REQUEST_METHOD_not_in_the_text","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132699835Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI","Output":"--- PASS: TestMaybeFastCGI (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132706456Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMaybeFastCGI","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132712819Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable"}
+{"Time":"2026-07-01T14:49:40.132715885Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable","Output":"=== RUN   TestParseCGITable\n"}
+{"Time":"2026-07-01T14:49:40.132735364Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Correct_values"}
+{"Time":"2026-07-01T14:49:40.13273894Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Correct_values","Output":"=== RUN   TestParseCGITable/Correct_values\n"}
+{"Time":"2026-07-01T14:49:40.13276501Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Correct_values","Output":"--- PASS: TestParseCGITable/Correct_values (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132769846Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Correct_values","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132775222Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Empty"}
+{"Time":"2026-07-01T14:49:40.132778597Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Empty","Output":"=== RUN   TestParseCGITable/Empty\n"}
+{"Time":"2026-07-01T14:49:40.132800205Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Empty","Output":"--- PASS: TestParseCGITable/Empty (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132806796Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Empty","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132809979Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Short"}
+{"Time":"2026-07-01T14:49:40.132812455Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Short","Output":"=== RUN   TestParseCGITable/Short\n"}
+{"Time":"2026-07-01T14:49:40.132833027Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Short","Output":"--- PASS: TestParseCGITable/Short (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132837937Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Short","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132852908Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Very_Short"}
+{"Time":"2026-07-01T14:49:40.132856556Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Very_Short","Output":"=== RUN   TestParseCGITable/Very_Short\n"}
+{"Time":"2026-07-01T14:49:40.132876081Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Very_Short","Output":"--- PASS: TestParseCGITable/Very_Short (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132882283Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Very_Short","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132891612Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Broken_at_key"}
+{"Time":"2026-07-01T14:49:40.132895033Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Broken_at_key","Output":"=== RUN   TestParseCGITable/Broken_at_key\n"}
+{"Time":"2026-07-01T14:49:40.132919943Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Broken_at_key","Output":"--- PASS: TestParseCGITable/Broken_at_key (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132925316Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Broken_at_key","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132929182Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Empty_key_for_query_string"}
+{"Time":"2026-07-01T14:49:40.132931787Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Empty_key_for_query_string","Output":"=== RUN   TestParseCGITable/Empty_key_for_query_string\n"}
+{"Time":"2026-07-01T14:49:40.132957414Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Empty_key_for_query_string","Output":"--- PASS: TestParseCGITable/Empty_key_for_query_string (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132962443Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable/Empty_key_for_query_string","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132966722Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable","Output":"--- PASS: TestParseCGITable (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.132970562Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestParseCGITable","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.132974494Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI"}
+{"Time":"2026-07-01T14:49:40.132977034Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI","Output":"=== RUN   TestDetectFastCGI\n"}
+{"Time":"2026-07-01T14:49:40.133003094Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values"}
+{"Time":"2026-07-01T14:49:40.133006912Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values","Output":"=== RUN   TestDetectFastCGI/Correct_values\n"}
+{"Time":"2026-07-01T14:49:40.133036539Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values","Output":"--- PASS: TestDetectFastCGI/Correct_values (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133041175Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133045203Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values,_error"}
+{"Time":"2026-07-01T14:49:40.133047651Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values,_error","Output":"=== RUN   TestDetectFastCGI/Correct_values,_error\n"}
+{"Time":"2026-07-01T14:49:40.133075714Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values,_error","Output":"--- PASS: TestDetectFastCGI/Correct_values,_error (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133081076Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values,_error","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133085121Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values,_status_404"}
+{"Time":"2026-07-01T14:49:40.13308762Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values,_status_404","Output":"=== RUN   TestDetectFastCGI/Correct_values,_status_404\n"}
+{"Time":"2026-07-01T14:49:40.133111873Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values,_status_404","Output":"--- PASS: TestDetectFastCGI/Correct_values,_status_404 (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133118152Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Correct_values,_status_404","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133123329Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Not_enough_data"}
+{"Time":"2026-07-01T14:49:40.133125995Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Not_enough_data","Output":"=== RUN   TestDetectFastCGI/Not_enough_data\n"}
+{"Time":"2026-07-01T14:49:40.133174396Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Not_enough_data","Output":"--- PASS: TestDetectFastCGI/Not_enough_data (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133200618Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Not_enough_data","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133208372Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Empty"}
+{"Time":"2026-07-01T14:49:40.133213089Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Empty","Output":"=== RUN   TestDetectFastCGI/Empty\n"}
+{"Time":"2026-07-01T14:49:40.133219986Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Empty","Output":"--- PASS: TestDetectFastCGI/Empty (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133227845Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI/Empty","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133234356Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI","Output":"--- PASS: TestDetectFastCGI (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133240067Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDetectFastCGI","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.13324675Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection"}
+{"Time":"2026-07-01T14:49:40.133252562Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection","Output":"=== RUN   TestHTTP2QuickDetection\n"}
+{"Time":"2026-07-01T14:49:40.133259345Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Status_instead_of_start"}
+{"Time":"2026-07-01T14:49:40.133264329Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Status_instead_of_start","Output":"=== RUN   TestHTTP2QuickDetection/Status_instead_of_start\n"}
+{"Time":"2026-07-01T14:49:40.133338646Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Status_instead_of_start","Output":"--- PASS: TestHTTP2QuickDetection/Status_instead_of_start (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133348273Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Status_instead_of_start","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.13335368Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Empty"}
+{"Time":"2026-07-01T14:49:40.13335883Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Empty","Output":"=== RUN   TestHTTP2QuickDetection/Empty\n"}
+{"Time":"2026-07-01T14:49:40.133382021Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Empty","Output":"--- PASS: TestHTTP2QuickDetection/Empty (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133389954Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Empty","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133395261Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Short"}
+{"Time":"2026-07-01T14:49:40.133399531Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Short","Output":"=== RUN   TestHTTP2QuickDetection/Short\n"}
+{"Time":"2026-07-01T14:49:40.133421505Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Short","Output":"--- PASS: TestHTTP2QuickDetection/Short (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133439967Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Short","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133445277Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Regular_HTTP2/gRPC_Frame"}
+{"Time":"2026-07-01T14:49:40.133453106Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Regular_HTTP2/gRPC_Frame","Output":"=== RUN   TestHTTP2QuickDetection/Regular_HTTP2/gRPC_Frame\n"}
+{"Time":"2026-07-01T14:49:40.133463591Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Regular_HTTP2/gRPC_Frame","Output":"--- PASS: TestHTTP2QuickDetection/Regular_HTTP2/gRPC_Frame (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133472894Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Regular_HTTP2/gRPC_Frame","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133479757Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Reset_frame_before_HTTP2/gRPC_Frame"}
+{"Time":"2026-07-01T14:49:40.133483754Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Reset_frame_before_HTTP2/gRPC_Frame","Output":"=== RUN   TestHTTP2QuickDetection/Reset_frame_before_HTTP2/gRPC_Frame\n"}
+{"Time":"2026-07-01T14:49:40.133519929Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Reset_frame_before_HTTP2/gRPC_Frame","Output":"--- PASS: TestHTTP2QuickDetection/Reset_frame_before_HTTP2/gRPC_Frame (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133528175Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Reset_frame_before_HTTP2/gRPC_Frame","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133536792Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Too_short_of_input_len,_but_enough_to_parse_the_reset_frame"}
+{"Time":"2026-07-01T14:49:40.133541427Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Too_short_of_input_len,_but_enough_to_parse_the_reset_frame","Output":"=== RUN   TestHTTP2QuickDetection/Too_short_of_input_len,_but_enough_to_parse_the_reset_frame\n"}
+{"Time":"2026-07-01T14:49:40.133580137Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Too_short_of_input_len,_but_enough_to_parse_the_reset_frame","Output":"--- PASS: TestHTTP2QuickDetection/Too_short_of_input_len,_but_enough_to_parse_the_reset_frame (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133592019Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Too_short_of_input_len,_but_enough_to_parse_the_reset_frame","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133599003Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Kafka_frame_instead_of_HTTP2"}
+{"Time":"2026-07-01T14:49:40.133603262Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Kafka_frame_instead_of_HTTP2","Output":"=== RUN   TestHTTP2QuickDetection/Kafka_frame_instead_of_HTTP2\n"}
+{"Time":"2026-07-01T14:49:40.133616015Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Kafka_frame_instead_of_HTTP2","Output":"--- PASS: TestHTTP2QuickDetection/Kafka_frame_instead_of_HTTP2 (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133623357Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Kafka_frame_instead_of_HTTP2","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133629845Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/No_headers_frame_(manually_tweaked_the_type_to_fail)"}
+{"Time":"2026-07-01T14:49:40.133638337Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/No_headers_frame_(manually_tweaked_the_type_to_fail)","Output":"=== RUN   TestHTTP2QuickDetection/No_headers_frame_(manually_tweaked_the_type_to_fail)\n"}
+{"Time":"2026-07-01T14:49:40.133662037Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/No_headers_frame_(manually_tweaked_the_type_to_fail)","Output":"--- PASS: TestHTTP2QuickDetection/No_headers_frame_(manually_tweaked_the_type_to_fail) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133671062Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/No_headers_frame_(manually_tweaked_the_type_to_fail)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133678403Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Truncated_frame,_len_should_be_70_of_the_second_frame"}
+{"Time":"2026-07-01T14:49:40.133682813Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Truncated_frame,_len_should_be_70_of_the_second_frame","Output":"=== RUN   TestHTTP2QuickDetection/Truncated_frame,_len_should_be_70_of_the_second_frame\n"}
+{"Time":"2026-07-01T14:49:40.133711211Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Truncated_frame,_len_should_be_70_of_the_second_frame","Output":"--- PASS: TestHTTP2QuickDetection/Truncated_frame,_len_should_be_70_of_the_second_frame (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133719745Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection/Truncated_frame,_len_should_be_70_of_the_second_frame","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133726023Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection","Output":"--- PASS: TestHTTP2QuickDetection (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.13373359Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2QuickDetection","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.1337391Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing"}
+{"Time":"2026-07-01T14:49:40.133743564Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing","Output":"=== RUN   TestHTTP2Parsing\n"}
+{"Time":"2026-07-01T14:49:40.133788254Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing/One"}
+{"Time":"2026-07-01T14:49:40.133794237Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing/One","Output":"=== RUN   TestHTTP2Parsing/One\n"}
+{"Time":"2026-07-01T14:49:40.133816427Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing/One","Output":"--- PASS: TestHTTP2Parsing/One (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.13382412Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing/One","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133829863Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing/Two"}
+{"Time":"2026-07-01T14:49:40.133833868Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing/Two","Output":"=== RUN   TestHTTP2Parsing/Two\n"}
+{"Time":"2026-07-01T14:49:40.1338691Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing/Two","Output":"--- PASS: TestHTTP2Parsing/Two (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133877863Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing/Two","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133888641Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing","Output":"--- PASS: TestHTTP2Parsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133895384Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2Parsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133900554Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing"}
+{"Time":"2026-07-01T14:49:40.133904974Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing","Output":"=== RUN   TestHTTP2EventsParsing\n"}
+{"Time":"2026-07-01T14:49:40.133935429Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/Ignored,_buffers_reversed,_nothing_in_there"}
+{"Time":"2026-07-01T14:49:40.133941135Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/Ignored,_buffers_reversed,_nothing_in_there","Output":"=== RUN   TestHTTP2EventsParsing/Ignored,_buffers_reversed,_nothing_in_there\n"}
+{"Time":"2026-07-01T14:49:40.133982735Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/Ignored,_buffers_reversed,_nothing_in_there","Output":"--- PASS: TestHTTP2EventsParsing/Ignored,_buffers_reversed,_nothing_in_there (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.133991308Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/Ignored,_buffers_reversed,_nothing_in_there","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.133997002Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/Not_reversed"}
+{"Time":"2026-07-01T14:49:40.134001451Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/Not_reversed","Output":"=== RUN   TestHTTP2EventsParsing/Not_reversed\n"}
+{"Time":"2026-07-01T14:49:40.134033384Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/Not_reversed","Output":"--- PASS: TestHTTP2EventsParsing/Not_reversed (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134042477Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/Not_reversed","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134047475Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/New_with_concat"}
+{"Time":"2026-07-01T14:49:40.13405232Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/New_with_concat","Output":"=== RUN   TestHTTP2EventsParsing/New_with_concat\n"}
+{"Time":"2026-07-01T14:49:40.13409497Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/New_with_concat","Output":"--- PASS: TestHTTP2EventsParsing/New_with_concat (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.13410362Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing/New_with_concat","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134111246Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing","Output":"--- PASS: TestHTTP2EventsParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134118036Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTP2EventsParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.13412327Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates"}
+{"Time":"2026-07-01T14:49:40.134130972Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates","Output":"=== RUN   TestDynamicTableUpdates\n"}
+{"Time":"2026-07-01T14:49:40.134141954Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Full_path,_lots_of_headers"}
+{"Time":"2026-07-01T14:49:40.134146676Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Full_path,_lots_of_headers","Output":"=== RUN   TestDynamicTableUpdates/Full_path,_lots_of_headers\n"}
+{"Time":"2026-07-01T14:49:40.134189288Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Full_path,_lots_of_headers","Output":"--- PASS: TestDynamicTableUpdates/Full_path,_lots_of_headers (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134199816Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Full_path,_lots_of_headers","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134205236Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Full_path_only"}
+{"Time":"2026-07-01T14:49:40.134210189Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Full_path_only","Output":"=== RUN   TestDynamicTableUpdates/Full_path_only\n"}
+{"Time":"2026-07-01T14:49:40.134243947Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Full_path_only","Output":"--- PASS: TestDynamicTableUpdates/Full_path_only (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134252297Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Full_path_only","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134258015Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Index_encoded"}
+{"Time":"2026-07-01T14:49:40.134262629Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Index_encoded","Output":"=== RUN   TestDynamicTableUpdates/Index_encoded\n"}
+{"Time":"2026-07-01T14:49:40.134298514Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Index_encoded","Output":"--- PASS: TestDynamicTableUpdates/Index_encoded (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134306784Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates/Index_encoded","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134337747Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates","Output":"--- PASS: TestDynamicTableUpdates (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134347144Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestDynamicTableUpdates","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134352188Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestURL"}
+{"Time":"2026-07-01T14:49:40.134356837Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestURL","Output":"=== RUN   TestURL\n"}
+{"Time":"2026-07-01T14:49:40.134379937Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestURL","Output":"--- PASS: TestURL (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134387678Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestURL","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134392272Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMethod"}
+{"Time":"2026-07-01T14:49:40.134396917Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMethod","Output":"=== RUN   TestMethod\n"}
+{"Time":"2026-07-01T14:49:40.134425168Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMethod","Output":"--- PASS: TestMethod (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134433599Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMethod","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134444087Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHostInfo"}
+{"Time":"2026-07-01T14:49:40.134448187Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHostInfo","Output":"=== RUN   TestHostInfo\n"}
+{"Time":"2026-07-01T14:49:40.134481388Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHostInfo","Output":"--- PASS: TestHostInfo (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134490178Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHostInfo","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134494854Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestCstr"}
+{"Time":"2026-07-01T14:49:40.134499037Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestCstr","Output":"=== RUN   TestCstr\n"}
+{"Time":"2026-07-01T14:49:40.134526522Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestCstr","Output":"--- PASS: TestCstr (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134534554Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestCstr","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134539437Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTrace"}
+{"Time":"2026-07-01T14:49:40.134544059Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTrace","Output":"=== RUN   TestToRequestTrace\n"}
+{"Time":"2026-07-01T14:49:40.134603426Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTrace","Output":"--- PASS: TestToRequestTrace (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134611909Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTrace","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134616487Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTraceNoConnection"}
+{"Time":"2026-07-01T14:49:40.134620921Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTraceNoConnection","Output":"=== RUN   TestToRequestTraceNoConnection\n"}
+{"Time":"2026-07-01T14:49:40.134660487Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTraceNoConnection","Output":"--- PASS: TestToRequestTraceNoConnection (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134668911Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTraceNoConnection","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134673492Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTrace_BadHost"}
+{"Time":"2026-07-01T14:49:40.134677873Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTrace_BadHost","Output":"=== RUN   TestToRequestTrace_BadHost\n"}
+{"Time":"2026-07-01T14:49:40.134724067Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTrace_BadHost","Output":"--- PASS: TestToRequestTrace_BadHost (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134732556Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestToRequestTrace_BadHost","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134737916Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing"}
+{"Time":"2026-07-01T14:49:40.134741984Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing","Output":"=== RUN   TestHTTPInfoParsing\n"}
+{"Time":"2026-07-01T14:49:40.134778826Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_basic_parsing"}
+{"Time":"2026-07-01T14:49:40.134788588Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_basic_parsing","Output":"=== RUN   TestHTTPInfoParsing/Test_basic_parsing\n"}
+{"Time":"2026-07-01T14:49:40.134818788Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_basic_parsing","Output":"--- PASS: TestHTTPInfoParsing/Test_basic_parsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134826458Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_basic_parsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134838173Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_empty_URL"}
+{"Time":"2026-07-01T14:49:40.134842713Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_empty_URL","Output":"=== RUN   TestHTTPInfoParsing/Test_empty_URL\n"}
+{"Time":"2026-07-01T14:49:40.134877863Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_empty_URL","Output":"--- PASS: TestHTTPInfoParsing/Test_empty_URL (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134885893Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_empty_URL","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134892285Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_parsing_with_URL_parameters"}
+{"Time":"2026-07-01T14:49:40.134896831Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_parsing_with_URL_parameters","Output":"=== RUN   TestHTTPInfoParsing/Test_parsing_with_URL_parameters\n"}
+{"Time":"2026-07-01T14:49:40.134930247Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_parsing_with_URL_parameters","Output":"--- PASS: TestHTTPInfoParsing/Test_parsing_with_URL_parameters (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134938458Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing/Test_parsing_with_URL_parameters","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134944506Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing","Output":"--- PASS: TestHTTPInfoParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.134956632Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestHTTPInfoParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.134962463Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMethodURLParsing"}
+{"Time":"2026-07-01T14:49:40.134966672Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMethodURLParsing","Output":"=== RUN   TestMethodURLParsing\n"}
+{"Time":"2026-07-01T14:49:40.135008128Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMethodURLParsing","Output":"--- PASS: TestMethodURLParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135017093Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMethodURLParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135021628Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestInstrumetedLibsT"}
+{"Time":"2026-07-01T14:49:40.135025978Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestInstrumetedLibsT","Output":"=== RUN   TestInstrumetedLibsT\n"}
+{"Time":"2026-07-01T14:49:40.135060017Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestInstrumetedLibsT","Output":"--- PASS: TestInstrumetedLibsT (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135068496Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestInstrumetedLibsT","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135078065Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest"}
+{"Time":"2026-07-01T14:49:40.135082078Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest","Output":"=== RUN   TestProcessKafkaRequest\n"}
+{"Time":"2026-07-01T14:49:40.135098312Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)_truncated_-_1"}
+{"Time":"2026-07-01T14:49:40.135105263Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)_truncated_-_1","Output":"=== RUN   TestProcessKafkaRequest/Fetch_request_(v11)_truncated_-_1\n"}
+{"Time":"2026-07-01T14:49:40.135133198Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)_truncated_-_1","Output":"--- PASS: TestProcessKafkaRequest/Fetch_request_(v11)_truncated_-_1 (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135145279Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)_truncated_-_1","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135150792Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)_truncated"}
+{"Time":"2026-07-01T14:49:40.135155243Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)_truncated","Output":"=== RUN   TestProcessKafkaRequest/Fetch_request_(v11)_truncated\n"}
+{"Time":"2026-07-01T14:49:40.135178196Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)_truncated","Output":"--- PASS: TestProcessKafkaRequest/Fetch_request_(v11)_truncated (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135186454Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)_truncated","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135192613Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)"}
+{"Time":"2026-07-01T14:49:40.135197113Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)","Output":"=== RUN   TestProcessKafkaRequest/Fetch_request_(v11)\n"}
+{"Time":"2026-07-01T14:49:40.135219047Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)","Output":"--- PASS: TestProcessKafkaRequest/Fetch_request_(v11) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135227414Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v11)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135234244Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v12)"}
+{"Time":"2026-07-01T14:49:40.135238039Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v12)","Output":"=== RUN   TestProcessKafkaRequest/Fetch_request_(v12)\n"}
+{"Time":"2026-07-01T14:49:40.135271932Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v12)","Output":"--- PASS: TestProcessKafkaRequest/Fetch_request_(v12) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135281209Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v12)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135286425Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v15)"}
+{"Time":"2026-07-01T14:49:40.135295474Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v15)","Output":"=== RUN   TestProcessKafkaRequest/Fetch_request_(v15)\n"}
+{"Time":"2026-07-01T14:49:40.135304856Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v15)","Output":"--- PASS: TestProcessKafkaRequest/Fetch_request_(v15) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135311782Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Fetch_request_(v15)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135318168Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Produce_request_(v7)"}
+{"Time":"2026-07-01T14:49:40.135322201Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Produce_request_(v7)","Output":"=== RUN   TestProcessKafkaRequest/Produce_request_(v7)\n"}
+{"Time":"2026-07-01T14:49:40.135353127Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Produce_request_(v7)","Output":"--- PASS: TestProcessKafkaRequest/Produce_request_(v7) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135361867Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Produce_request_(v7)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.13536633Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Produce_request_(v9)"}
+{"Time":"2026-07-01T14:49:40.135371199Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Produce_request_(v9)","Output":"=== RUN   TestProcessKafkaRequest/Produce_request_(v9)\n"}
+{"Time":"2026-07-01T14:49:40.135399052Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Produce_request_(v9)","Output":"--- PASS: TestProcessKafkaRequest/Produce_request_(v9) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135408099Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Produce_request_(v9)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.13541307Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Invalid_request"}
+{"Time":"2026-07-01T14:49:40.135417717Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Invalid_request","Output":"=== RUN   TestProcessKafkaRequest/Invalid_request\n"}
+{"Time":"2026-07-01T14:49:40.135440531Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Invalid_request","Output":"--- PASS: TestProcessKafkaRequest/Invalid_request (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135448463Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Invalid_request","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135454917Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request"}
+{"Time":"2026-07-01T14:49:40.135459615Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request","Output":"=== RUN   TestProcessKafkaRequest/Redis_request\n"}
+{"Time":"2026-07-01T14:49:40.135488051Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request","Output":"--- PASS: TestProcessKafkaRequest/Redis_request (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135496317Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135505922Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request_2"}
+{"Time":"2026-07-01T14:49:40.135511104Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request_2","Output":"=== RUN   TestProcessKafkaRequest/Redis_request_2\n"}
+{"Time":"2026-07-01T14:49:40.135519175Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request_2","Output":"--- PASS: TestProcessKafkaRequest/Redis_request_2 (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135526507Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request_2","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135533129Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request_2,_mixed_up_data"}
+{"Time":"2026-07-01T14:49:40.135537215Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request_2,_mixed_up_data","Output":"=== RUN   TestProcessKafkaRequest/Redis_request_2,_mixed_up_data\n"}
+{"Time":"2026-07-01T14:49:40.135567672Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request_2,_mixed_up_data","Output":"--- PASS: TestProcessKafkaRequest/Redis_request_2,_mixed_up_data (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135576574Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest/Redis_request_2,_mixed_up_data","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135583207Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest","Output":"--- PASS: TestProcessKafkaRequest (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135589981Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestProcessKafkaRequest","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135594739Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestGetTopicOffsetFromProduceOperation"}
+{"Time":"2026-07-01T14:49:40.1355994Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestGetTopicOffsetFromProduceOperation","Output":"=== RUN   TestGetTopicOffsetFromProduceOperation\n"}
+{"Time":"2026-07-01T14:49:40.135639763Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestGetTopicOffsetFromProduceOperation","Output":"--- PASS: TestGetTopicOffsetFromProduceOperation (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135649027Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestGetTopicOffsetFromProduceOperation","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135655825Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestGetTopicOffsetFromFetchOperation"}
+{"Time":"2026-07-01T14:49:40.135660625Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestGetTopicOffsetFromFetchOperation","Output":"=== RUN   TestGetTopicOffsetFromFetchOperation\n"}
+{"Time":"2026-07-01T14:49:40.135692199Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestGetTopicOffsetFromFetchOperation","Output":"--- PASS: TestGetTopicOffsetFromFetchOperation (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135701122Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestGetTopicOffsetFromFetchOperation","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135717593Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsValidKafkaHeader"}
+{"Time":"2026-07-01T14:49:40.135722721Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsValidKafkaHeader","Output":"=== RUN   TestIsValidKafkaHeader\n"}
+{"Time":"2026-07-01T14:49:40.135745346Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsValidKafkaHeader","Output":"--- PASS: TestIsValidKafkaHeader (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135750389Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsValidKafkaHeader","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135758228Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint"}
+{"Time":"2026-07-01T14:49:40.135762518Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint","Output":"=== RUN   TestReadUnsignedVarint\n"}
+{"Time":"2026-07-01T14:49:40.135786358Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Valid_varint"}
+{"Time":"2026-07-01T14:49:40.135791721Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Valid_varint","Output":"=== RUN   TestReadUnsignedVarint/Valid_varint\n"}
+{"Time":"2026-07-01T14:49:40.135813376Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Valid_varint","Output":"--- PASS: TestReadUnsignedVarint/Valid_varint (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135820799Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Valid_varint","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135827499Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Valid_varint_with_multiple_bytes"}
+{"Time":"2026-07-01T14:49:40.135832092Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Valid_varint_with_multiple_bytes","Output":"=== RUN   TestReadUnsignedVarint/Valid_varint_with_multiple_bytes\n"}
+{"Time":"2026-07-01T14:49:40.135859837Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Valid_varint_with_multiple_bytes","Output":"--- PASS: TestReadUnsignedVarint/Valid_varint_with_multiple_bytes (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135868154Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Valid_varint_with_multiple_bytes","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135872786Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Illegal_varint"}
+{"Time":"2026-07-01T14:49:40.135878168Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Illegal_varint","Output":"=== RUN   TestReadUnsignedVarint/Illegal_varint\n"}
+{"Time":"2026-07-01T14:49:40.135905578Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Illegal_varint","Output":"--- PASS: TestReadUnsignedVarint/Illegal_varint (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135913954Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Illegal_varint","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135920571Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Incomplete_varint"}
+{"Time":"2026-07-01T14:49:40.135925434Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Incomplete_varint","Output":"=== RUN   TestReadUnsignedVarint/Incomplete_varint\n"}
+{"Time":"2026-07-01T14:49:40.135948354Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Incomplete_varint","Output":"--- PASS: TestReadUnsignedVarint/Incomplete_varint (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135956716Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint/Incomplete_varint","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135968639Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint","Output":"--- PASS: TestReadUnsignedVarint (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.135980198Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadUnsignedVarint","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.135985464Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic"}
+{"Time":"2026-07-01T14:49:40.135990388Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic","Output":"=== RUN   TestExtractTopic\n"}
+{"Time":"2026-07-01T14:49:40.13599664Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Valid_topic"}
+{"Time":"2026-07-01T14:49:40.136000885Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Valid_topic","Output":"=== RUN   TestExtractTopic/Valid_topic\n"}
+{"Time":"2026-07-01T14:49:40.136029977Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Valid_topic","Output":"--- PASS: TestExtractTopic/Valid_topic (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136038392Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Valid_topic","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.13604309Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Valid_topic_(without_uuid)"}
+{"Time":"2026-07-01T14:49:40.136047631Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Valid_topic_(without_uuid)","Output":"=== RUN   TestExtractTopic/Valid_topic_(without_uuid)\n"}
+{"Time":"2026-07-01T14:49:40.136077172Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Valid_topic_(without_uuid)","Output":"--- PASS: TestExtractTopic/Valid_topic_(without_uuid) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136085503Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Valid_topic_(without_uuid)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.13614237Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_format_(without__)"}
+{"Time":"2026-07-01T14:49:40.13615588Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_format_(without__)","Output":"=== RUN   TestExtractTopic/Invalid_format_(without__)\n"}
+{"Time":"2026-07-01T14:49:40.136166572Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_format_(without__)","Output":"--- PASS: TestExtractTopic/Invalid_format_(without__) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136173798Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_format_(without__)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.136183283Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_format_(without_\\x02)"}
+{"Time":"2026-07-01T14:49:40.136187922Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_format_(without_\\x02)","Output":"=== RUN   TestExtractTopic/Invalid_format_(without_\\x02)\n"}
+{"Time":"2026-07-01T14:49:40.136215315Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_format_(without_\\x02)","Output":"--- PASS: TestExtractTopic/Invalid_format_(without_\\x02) (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136224641Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_format_(without_\\x02)","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.136229851Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/No_topic"}
+{"Time":"2026-07-01T14:49:40.136239262Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/No_topic","Output":"=== RUN   TestExtractTopic/No_topic\n"}
+{"Time":"2026-07-01T14:49:40.136252146Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/No_topic","Output":"--- PASS: TestExtractTopic/No_topic (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136259686Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/No_topic","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.136265884Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_input"}
+{"Time":"2026-07-01T14:49:40.136269963Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_input","Output":"=== RUN   TestExtractTopic/Invalid_input\n"}
+{"Time":"2026-07-01T14:49:40.136301634Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_input","Output":"--- PASS: TestExtractTopic/Invalid_input (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136309367Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic/Invalid_input","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.136315352Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic","Output":"--- PASS: TestExtractTopic (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136322069Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestExtractTopic","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.136326406Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_SameNS"}
+{"Time":"2026-07-01T14:49:40.136330542Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_SameNS","Output":"=== RUN   TestFilter_SameNS\n"}
+{"Time":"2026-07-01T14:49:40.136396186Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_SameNS","Output":"--- PASS: TestFilter_SameNS (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136404868Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_SameNS","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.136409663Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_DifferentNS"}
+{"Time":"2026-07-01T14:49:40.136413571Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_DifferentNS","Output":"=== RUN   TestFilter_DifferentNS\n"}
+{"Time":"2026-07-01T14:49:40.136459381Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_DifferentNS","Output":"--- PASS: TestFilter_DifferentNS (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.136467598Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_DifferentNS","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.136472235Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_Block"}
+{"Time":"2026-07-01T14:49:40.136476563Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_Block","Output":"=== RUN   TestFilter_Block\n"}
+{"Time":"2026-07-01T14:49:40.146755743Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_Block","Output":"--- PASS: TestFilter_Block (0.01s)\n"}
+{"Time":"2026-07-01T14:49:40.146784792Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_Block","Elapsed":0.01}
+{"Time":"2026-07-01T14:49:40.146791809Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_NewNSLater"}
+{"Time":"2026-07-01T14:49:40.14679446Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_NewNSLater","Output":"=== RUN   TestFilter_NewNSLater\n"}
+{"Time":"2026-07-01T14:49:40.146815115Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_NewNSLater","Output":"--- PASS: TestFilter_NewNSLater (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.146820211Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_NewNSLater","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.146851663Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_ExportsOTelDetection"}
+{"Time":"2026-07-01T14:49:40.146856679Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_ExportsOTelDetection","Output":"=== RUN   TestFilter_ExportsOTelDetection\n"}
+{"Time":"2026-07-01T14:49:40.146873699Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_ExportsOTelDetection","Output":"--- PASS: TestFilter_ExportsOTelDetection (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.146878682Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestFilter_ExportsOTelDetection","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.146882879Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestCRLFMatching"}
+{"Time":"2026-07-01T14:49:40.146887165Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestCRLFMatching","Output":"=== RUN   TestCRLFMatching\n"}
+{"Time":"2026-07-01T14:49:40.146893653Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestCRLFMatching","Output":"--- PASS: TestCRLFMatching (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.146899443Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestCRLFMatching","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.146905847Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRedisParsing"}
+{"Time":"2026-07-01T14:49:40.146909883Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRedisParsing","Output":"=== RUN   TestRedisParsing\n"}
+{"Time":"2026-07-01T14:49:40.146946909Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRedisParsing","Output":"--- PASS: TestRedisParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.146953638Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRedisParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.146959825Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsRedis"}
+{"Time":"2026-07-01T14:49:40.146963965Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsRedis","Output":"=== RUN   TestIsRedis\n"}
+{"Time":"2026-07-01T14:49:40.146974875Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsRedis","Output":"--- PASS: TestIsRedis (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.146980983Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsRedis","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.146986756Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_CapacityFull"}
+{"Time":"2026-07-01T14:49:40.146990535Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_CapacityFull","Output":"=== RUN   TestForwardRingbuf_CapacityFull\n"}
+{"Time":"2026-07-01T14:49:40.14736657Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_CapacityFull","Output":"--- PASS: TestForwardRingbuf_CapacityFull (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.147382911Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_CapacityFull","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.147394212Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_Deadline"}
+{"Time":"2026-07-01T14:49:40.147399273Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_Deadline","Output":"=== RUN   TestForwardRingbuf_Deadline\n"}
+{"Time":"2026-07-01T14:49:40.168126979Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_Deadline","Output":"--- PASS: TestForwardRingbuf_Deadline (0.02s)\n"}
+{"Time":"2026-07-01T14:49:40.168154621Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_Deadline","Elapsed":0.02}
+{"Time":"2026-07-01T14:49:40.168164429Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_Close"}
+{"Time":"2026-07-01T14:49:40.168167599Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_Close","Output":"=== RUN   TestForwardRingbuf_Close\n"}
+{"Time":"2026-07-01T14:49:40.168418586Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_Close","Output":"--- PASS: TestForwardRingbuf_Close (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168427579Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestForwardRingbuf_Close","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168434895Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing"}
+{"Time":"2026-07-01T14:49:40.168438795Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing","Output":"=== RUN   TestRequestTraceParsing\n"}
+{"Time":"2026-07-01T14:49:40.168476834Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_basic_parsing"}
+{"Time":"2026-07-01T14:49:40.168482364Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_basic_parsing","Output":"=== RUN   TestRequestTraceParsing/Test_basic_parsing\n"}
+{"Time":"2026-07-01T14:49:40.168513401Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_basic_parsing","Output":"--- PASS: TestRequestTraceParsing/Test_basic_parsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168520358Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_basic_parsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168527961Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_empty_path_and_missing_peer_host"}
+{"Time":"2026-07-01T14:49:40.168532416Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_empty_path_and_missing_peer_host","Output":"=== RUN   TestRequestTraceParsing/Test_with_empty_path_and_missing_peer_host\n"}
+{"Time":"2026-07-01T14:49:40.168545321Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_empty_path_and_missing_peer_host","Output":"--- PASS: TestRequestTraceParsing/Test_with_empty_path_and_missing_peer_host (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168553353Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_empty_path_and_missing_peer_host","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168560078Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_missing_peer_port"}
+{"Time":"2026-07-01T14:49:40.168563923Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_missing_peer_port","Output":"=== RUN   TestRequestTraceParsing/Test_with_missing_peer_port\n"}
+{"Time":"2026-07-01T14:49:40.168586091Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_missing_peer_port","Output":"--- PASS: TestRequestTraceParsing/Test_with_missing_peer_port (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168594072Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_missing_peer_port","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168604737Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_invalid_peer_port"}
+{"Time":"2026-07-01T14:49:40.168609023Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_invalid_peer_port","Output":"=== RUN   TestRequestTraceParsing/Test_with_invalid_peer_port\n"}
+{"Time":"2026-07-01T14:49:40.168649866Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_invalid_peer_port","Output":"--- PASS: TestRequestTraceParsing/Test_with_invalid_peer_port (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168657904Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_invalid_peer_port","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168663858Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_GRPC_request"}
+{"Time":"2026-07-01T14:49:40.168669098Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_GRPC_request","Output":"=== RUN   TestRequestTraceParsing/Test_with_GRPC_request\n"}
+{"Time":"2026-07-01T14:49:40.168691764Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_GRPC_request","Output":"--- PASS: TestRequestTraceParsing/Test_with_GRPC_request (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168699552Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing/Test_with_GRPC_request","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168705241Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing","Output":"--- PASS: TestRequestTraceParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168712172Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRequestTraceParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168722832Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSpanNesting"}
+{"Time":"2026-07-01T14:49:40.168727879Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSpanNesting","Output":"=== RUN   TestSpanNesting\n"}
+{"Time":"2026-07-01T14:49:40.168752286Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSpanNesting","Output":"--- PASS: TestSpanNesting (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168759597Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSpanNesting","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168766174Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"Test_EmptyHostInfo"}
+{"Time":"2026-07-01T14:49:40.168770126Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"Test_EmptyHostInfo","Output":"=== RUN   Test_EmptyHostInfo\n"}
+{"Time":"2026-07-01T14:49:40.168798145Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"Test_EmptyHostInfo","Output":"--- PASS: Test_EmptyHostInfo (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.16880567Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"Test_EmptyHostInfo","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168811974Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing"}
+{"Time":"2026-07-01T14:49:40.168819959Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing","Output":"=== RUN   TestMySQLParsing\n"}
+{"Time":"2026-07-01T14:49:40.168848025Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_prepare"}
+{"Time":"2026-07-01T14:49:40.16885353Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_prepare","Output":"=== RUN   TestMySQLParsing/Valid_prepare\n"}
+{"Time":"2026-07-01T14:49:40.16888131Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_prepare","Output":"--- PASS: TestMySQLParsing/Valid_prepare (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168888996Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_prepare","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.16889502Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_execute"}
+{"Time":"2026-07-01T14:49:40.16889932Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_execute","Output":"=== RUN   TestMySQLParsing/Valid_execute\n"}
+{"Time":"2026-07-01T14:49:40.168917849Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_execute","Output":"--- PASS: TestMySQLParsing/Valid_execute (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168928306Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_execute","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168934808Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_Query"}
+{"Time":"2026-07-01T14:49:40.168939131Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_Query","Output":"=== RUN   TestMySQLParsing/Valid_Query\n"}
+{"Time":"2026-07-01T14:49:40.16896729Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_Query","Output":"--- PASS: TestMySQLParsing/Valid_Query (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.168974999Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Valid_Query","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.168985706Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Unknown_opcode"}
+{"Time":"2026-07-01T14:49:40.168989621Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Unknown_opcode","Output":"=== RUN   TestMySQLParsing/Unknown_opcode\n"}
+{"Time":"2026-07-01T14:49:40.169024798Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Unknown_opcode","Output":"--- PASS: TestMySQLParsing/Unknown_opcode (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169030827Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Unknown_opcode","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169037503Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Zero_size"}
+{"Time":"2026-07-01T14:49:40.169041458Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Zero_size","Output":"=== RUN   TestMySQLParsing/Zero_size\n"}
+{"Time":"2026-07-01T14:49:40.169062971Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Zero_size","Output":"--- PASS: TestMySQLParsing/Zero_size (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169069674Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing/Zero_size","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.16907534Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing","Output":"--- PASS: TestMySQLParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169084907Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestMySQLParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169089105Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing"}
+{"Time":"2026-07-01T14:49:40.169093431Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing","Output":"=== RUN   TestPostgresBindParsing\n"}
+{"Time":"2026-07-01T14:49:40.169124479Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Valid_bind"}
+{"Time":"2026-07-01T14:49:40.1691296Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Valid_bind","Output":"=== RUN   TestPostgresBindParsing/Valid_bind\n"}
+{"Time":"2026-07-01T14:49:40.169156917Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Valid_bind","Output":"--- PASS: TestPostgresBindParsing/Valid_bind (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169164429Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Valid_bind","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169170852Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Less_length_than_needed"}
+{"Time":"2026-07-01T14:49:40.169174874Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Less_length_than_needed","Output":"=== RUN   TestPostgresBindParsing/Less_length_than_needed\n"}
+{"Time":"2026-07-01T14:49:40.169206404Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Less_length_than_needed","Output":"--- PASS: TestPostgresBindParsing/Less_length_than_needed (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169214164Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Less_length_than_needed","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.16923511Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Not_a_bind"}
+{"Time":"2026-07-01T14:49:40.169240417Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Not_a_bind","Output":"=== RUN   TestPostgresBindParsing/Not_a_bind\n"}
+{"Time":"2026-07-01T14:49:40.169264907Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Not_a_bind","Output":"--- PASS: TestPostgresBindParsing/Not_a_bind (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169272176Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Not_a_bind","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169277861Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Too_long"}
+{"Time":"2026-07-01T14:49:40.169282359Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Too_long","Output":"=== RUN   TestPostgresBindParsing/Too_long\n"}
+{"Time":"2026-07-01T14:49:40.169308422Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Too_long","Output":"--- PASS: TestPostgresBindParsing/Too_long (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169316131Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Too_long","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169324233Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Too_short"}
+{"Time":"2026-07-01T14:49:40.169328698Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Too_short","Output":"=== RUN   TestPostgresBindParsing/Too_short\n"}
+{"Time":"2026-07-01T14:49:40.169343198Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Too_short","Output":"--- PASS: TestPostgresBindParsing/Too_short (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169352467Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Too_short","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.1693588Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Empty"}
+{"Time":"2026-07-01T14:49:40.169362853Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Empty","Output":"=== RUN   TestPostgresBindParsing/Empty\n"}
+{"Time":"2026-07-01T14:49:40.169390879Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Empty","Output":"--- PASS: TestPostgresBindParsing/Empty (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169398137Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Empty","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169404149Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/A_bind,_but_without_anything_reasonable"}
+{"Time":"2026-07-01T14:49:40.169408437Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/A_bind,_but_without_anything_reasonable","Output":"=== RUN   TestPostgresBindParsing/A_bind,_but_without_anything_reasonable\n"}
+{"Time":"2026-07-01T14:49:40.169438177Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/A_bind,_but_without_anything_reasonable","Output":"--- PASS: TestPostgresBindParsing/A_bind,_but_without_anything_reasonable (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169446467Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/A_bind,_but_without_anything_reasonable","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169450933Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Crazy_long_argument_length"}
+{"Time":"2026-07-01T14:49:40.169455521Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Crazy_long_argument_length","Output":"=== RUN   TestPostgresBindParsing/Crazy_long_argument_length\n"}
+{"Time":"2026-07-01T14:49:40.169484654Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Crazy_long_argument_length","Output":"--- PASS: TestPostgresBindParsing/Crazy_long_argument_length (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169492367Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing/Crazy_long_argument_length","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169498337Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing","Output":"--- PASS: TestPostgresBindParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169504862Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresBindParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169510608Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing"}
+{"Time":"2026-07-01T14:49:40.169514918Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing","Output":"=== RUN   TestPostgresQueryParsing\n"}
+{"Time":"2026-07-01T14:49:40.169550875Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_with_expanded_field_names"}
+{"Time":"2026-07-01T14:49:40.169559159Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_with_expanded_field_names","Output":"=== RUN   TestPostgresQueryParsing/Query_with_expanded_field_names\n"}
+{"Time":"2026-07-01T14:49:40.169605779Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_with_expanded_field_names","Output":"--- PASS: TestPostgresQueryParsing/Query_with_expanded_field_names (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169614135Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_with_expanded_field_names","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169620527Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_prepared_statement"}
+{"Time":"2026-07-01T14:49:40.169625354Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_prepared_statement","Output":"=== RUN   TestPostgresQueryParsing/Query_prepared_statement\n"}
+{"Time":"2026-07-01T14:49:40.169670671Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_prepared_statement","Output":"--- PASS: TestPostgresQueryParsing/Query_prepared_statement (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169677579Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_prepared_statement","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169683766Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_prepared_statement_bad_len"}
+{"Time":"2026-07-01T14:49:40.169688129Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_prepared_statement_bad_len","Output":"=== RUN   TestPostgresQueryParsing/Query_prepared_statement_bad_len\n"}
+{"Time":"2026-07-01T14:49:40.169719418Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_prepared_statement_bad_len","Output":"--- PASS: TestPostgresQueryParsing/Query_prepared_statement_bad_len (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169727071Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/Query_prepared_statement_bad_len","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169733138Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/small_len"}
+{"Time":"2026-07-01T14:49:40.16973777Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/small_len","Output":"=== RUN   TestPostgresQueryParsing/small_len\n"}
+{"Time":"2026-07-01T14:49:40.169773677Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/small_len","Output":"--- PASS: TestPostgresQueryParsing/small_len (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169779954Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/small_len","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.16978642Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/empty"}
+{"Time":"2026-07-01T14:49:40.169790411Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/empty","Output":"=== RUN   TestPostgresQueryParsing/empty\n"}
+{"Time":"2026-07-01T14:49:40.169816806Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/empty","Output":"--- PASS: TestPostgresQueryParsing/empty (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169824679Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/empty","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169835989Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/MySQL_prepared_statement"}
+{"Time":"2026-07-01T14:49:40.169840558Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/MySQL_prepared_statement","Output":"=== RUN   TestPostgresQueryParsing/MySQL_prepared_statement\n"}
+{"Time":"2026-07-01T14:49:40.169875266Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/MySQL_prepared_statement","Output":"--- PASS: TestPostgresQueryParsing/MySQL_prepared_statement (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169881324Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing/MySQL_prepared_statement","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169888031Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing","Output":"--- PASS: TestPostgresQueryParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169892686Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestPostgresQueryParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169898566Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII"}
+{"Time":"2026-07-01T14:49:40.169904142Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII","Output":"=== RUN   TestIsASCII\n"}
+{"Time":"2026-07-01T14:49:40.169914663Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Positive_test"}
+{"Time":"2026-07-01T14:49:40.169923637Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Positive_test","Output":"=== RUN   TestIsASCII/Positive_test\n"}
+{"Time":"2026-07-01T14:49:40.169945096Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Positive_test","Output":"--- PASS: TestIsASCII/Positive_test (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.169952484Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Positive_test","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.169958712Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Bad_char"}
+{"Time":"2026-07-01T14:49:40.169963266Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Bad_char","Output":"=== RUN   TestIsASCII/Bad_char\n"}
+{"Time":"2026-07-01T14:49:40.169997907Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Bad_char","Output":"--- PASS: TestIsASCII/Bad_char (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170006035Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Bad_char","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170011592Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Empty"}
+{"Time":"2026-07-01T14:49:40.170016218Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Empty","Output":"=== RUN   TestIsASCII/Empty\n"}
+{"Time":"2026-07-01T14:49:40.170054789Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Empty","Output":"--- PASS: TestIsASCII/Empty (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170060897Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII/Empty","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170067854Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII","Output":"--- PASS: TestIsASCII (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170072752Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestIsASCII","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170081526Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqSQLParsing"}
+{"Time":"2026-07-01T14:49:40.170085773Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqSQLParsing","Output":"=== RUN   TestTCPReqSQLParsing\n"}
+{"Time":"2026-07-01T14:49:40.170132326Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqSQLParsing","Output":"--- PASS: TestTCPReqSQLParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.17014047Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqSQLParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170146457Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqParsing"}
+{"Time":"2026-07-01T14:49:40.170150793Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqParsing","Output":"=== RUN   TestTCPReqParsing\n"}
+{"Time":"2026-07-01T14:49:40.170162814Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqParsing","Output":"--- PASS: TestTCPReqParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170169869Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170191772Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetection"}
+{"Time":"2026-07-01T14:49:40.170196973Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetection","Output":"=== RUN   TestSQLDetection\n"}
+{"Time":"2026-07-01T14:49:40.170312388Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetection","Output":"--- PASS: TestSQLDetection (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170318715Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetection","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170325235Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetectionFails"}
+{"Time":"2026-07-01T14:49:40.17032914Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetectionFails","Output":"=== RUN   TestSQLDetectionFails\n"}
+{"Time":"2026-07-01T14:49:40.170384725Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetectionFails","Output":"--- PASS: TestSQLDetectionFails (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170392889Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetectionFails","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170399727Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetectionDoesntFailForDetectedKind"}
+{"Time":"2026-07-01T14:49:40.17040489Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetectionDoesntFailForDetectedKind","Output":"=== RUN   TestSQLDetectionDoesntFailForDetectedKind\n"}
+{"Time":"2026-07-01T14:49:40.170436872Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetectionDoesntFailForDetectedKind","Output":"--- PASS: TestSQLDetectionDoesntFailForDetectedKind (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170444698Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestSQLDetectionDoesntFailForDetectedKind","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170451076Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadTCPRequestIntoSpan_Overflow"}
+{"Time":"2026-07-01T14:49:40.170455545Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadTCPRequestIntoSpan_Overflow","Output":"=== RUN   TestReadTCPRequestIntoSpan_Overflow\n"}
+{"Time":"2026-07-01T14:49:40.170534306Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadTCPRequestIntoSpan_Overflow","Output":"--- PASS: TestReadTCPRequestIntoSpan_Overflow (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170546111Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestReadTCPRequestIntoSpan_Overflow","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170553824Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRedisDetection"}
+{"Time":"2026-07-01T14:49:40.170557995Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRedisDetection","Output":"=== RUN   TestRedisDetection\n"}
+{"Time":"2026-07-01T14:49:40.170585848Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRedisDetection","Output":"--- PASS: TestRedisDetection (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170593326Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestRedisDetection","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170614303Z","Action":"run","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqKafkaParsing"}
+{"Time":"2026-07-01T14:49:40.170619111Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqKafkaParsing","Output":"=== RUN   TestTCPReqKafkaParsing\n"}
+{"Time":"2026-07-01T14:49:40.170653757Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqKafkaParsing","Output":"--- PASS: TestTCPReqKafkaParsing (0.00s)\n"}
+{"Time":"2026-07-01T14:49:40.170660927Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Test":"TestTCPReqKafkaParsing","Elapsed":0}
+{"Time":"2026-07-01T14:49:40.170666802Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Output":"PASS\n"}
+{"Time":"2026-07-01T14:49:40.171277089Z","Action":"output","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Output":"ok  \tgithub.com/grafana/beyla/pkg/internal/ebpf/common\t0.043s\n"}
+{"Time":"2026-07-01T14:49:40.171294722Z","Action":"pass","Package":"github.com/grafana/beyla/pkg/internal/ebpf/common","Elapsed":0.043}
+reward=1 graded=132 found=132 failed=0 parsed=132 framework=go exit_code=0

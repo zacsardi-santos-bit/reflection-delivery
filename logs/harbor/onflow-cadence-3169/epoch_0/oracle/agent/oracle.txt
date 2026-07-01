@@ -1,0 +1,10 @@
+patching file migrations/account_storage.go
+patching file migrations/address_iterator.go
+patching file migrations/capcons/capabilitymigration.go
+patching file migrations/capcons/linkmigration.go
+patching file migrations/entitlements/migration.go
+patching file migrations/migration.go
+patching file migrations/statictypes/statictype_migration.go
+patching file migrations/string_normalization/migration.go
+patching file npm-packages/cadence-parser/package.json
+patching file version.go

@@ -1,0 +1,8 @@
+patching file api-putobject-snowball.go
+patching file api.go
+patching file bucket-cache.go
+patching file create-session.go
+patching file pkg/kvcache/cache.go
+patching file pkg/s3utils/utils.go
+patching file pkg/signer/request-signature-v4.go
+patching file pkg/singleflight/singleflight.go

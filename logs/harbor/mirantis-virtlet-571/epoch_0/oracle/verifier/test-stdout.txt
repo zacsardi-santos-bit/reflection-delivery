@@ -1,0 +1,195 @@
+patching file pkg/image/download_test.go
+patching file pkg/image/image_test.go
+patching file pkg/imagetranslation/transport_test.go
+{"Time":"2026-07-01T14:57:15.073792439Z","Action":"start","Package":"github.com/Mirantis/virtlet/pkg/image"}
+{"Time":"2026-07-01T14:57:15.079010392Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestDownload"}
+{"Time":"2026-07-01T14:57:15.079038727Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestDownload","Output":"=== RUN   TestDownload\n"}
+{"Time":"2026-07-01T14:57:15.079889702Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestDownload","Output":"--- PASS: TestDownload (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.079910411Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestDownload","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.079931173Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestTLSDownload"}
+{"Time":"2026-07-01T14:57:15.079936214Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestTLSDownload","Output":"=== RUN   TestTLSDownload\n"}
+{"Time":"2026-07-01T14:57:15.376006057Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestTLSDownload","Output":"--- PASS: TestTLSDownload (0.30s)\n"}
+{"Time":"2026-07-01T14:57:15.37615442Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestTLSDownload","Elapsed":0.3}
+{"Time":"2026-07-01T14:57:15.37617603Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestCancelDownload"}
+{"Time":"2026-07-01T14:57:15.376182344Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestCancelDownload","Output":"=== RUN   TestCancelDownload\n"}
+{"Time":"2026-07-01T14:57:15.378819531Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestCancelDownload","Output":"--- PASS: TestCancelDownload (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.378836987Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestCancelDownload","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.378843366Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus"}
+{"Time":"2026-07-01T14:57:15.378847966Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus","Output":"=== RUN   TestImagePullListStatus\n"}
+{"Time":"2026-07-01T14:57:15.378852918Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus","Output":"    image_test.go:67: fakeDownloader: writing \"example.com:1234/foo/bar\" to \"/tmp/images3522670472/data/part_1125237300\"\n"}
+{"Time":"2026-07-01T14:57:15.378860624Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus","Output":"    image_test.go:67: fakeDownloader: writing \"example.com:1234/foo/bar\" to \"/tmp/images3522670472/data/part_1445176364\"\n"}
+{"Time":"2026-07-01T14:57:15.378865411Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus","Output":"    image_test.go:67: fakeDownloader: writing \"example.com:1234/foo/bar\" to \"/tmp/images3522670472/data/part_3848723717\"\n"}
+{"Time":"2026-07-01T14:57:15.378869956Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images3522670472/data/part_2476033083\"\n"}
+{"Time":"2026-07-01T14:57:15.378874796Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images3522670472/data/part_3863646101\"\n"}
+{"Time":"2026-07-01T14:57:15.37888024Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus","Output":"--- PASS: TestImagePullListStatus (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.378889789Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImagePullListStatus","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.378893986Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceImage"}
+{"Time":"2026-07-01T14:57:15.378908731Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceImage","Output":"=== RUN   TestReplaceImage\n"}
+{"Time":"2026-07-01T14:57:15.378913537Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceImage","Output":"    image_test.go:67: fakeDownloader: writing \"example.com:1234/foo/bar\" to \"/tmp/images3361641805/data/part_571333493\"\n"}
+{"Time":"2026-07-01T14:57:15.379039846Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceImage","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images3361641805/data/part_90125943\"\n"}
+{"Time":"2026-07-01T14:57:15.379841817Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceImage","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images3361641805/data/part_1380325977\"\n"}
+{"Time":"2026-07-01T14:57:15.379857646Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceImage","Output":"    image_test.go:67: fakeDownloader: writing \"xxbaz\" to \"/tmp/images3361641805/data/part_2637315325\"\n"}
+{"Time":"2026-07-01T14:57:15.382202591Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceImage","Output":"--- PASS: TestReplaceImage (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.38221517Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceImage","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.382221493Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceReferencedImage"}
+{"Time":"2026-07-01T14:57:15.38222578Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceReferencedImage","Output":"=== RUN   TestReplaceReferencedImage\n"}
+{"Time":"2026-07-01T14:57:15.38223043Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceReferencedImage","Output":"    image_test.go:67: fakeDownloader: writing \"example.com:1234/foo/bar\" to \"/tmp/images776554199/data/part_2097249500\"\n"}
+{"Time":"2026-07-01T14:57:15.382236036Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceReferencedImage","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images776554199/data/part_350208051\"\n"}
+{"Time":"2026-07-01T14:57:15.38224071Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceReferencedImage","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images776554199/data/part_3318220345\"\n"}
+{"Time":"2026-07-01T14:57:15.382245463Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceReferencedImage","Output":"    image_test.go:67: fakeDownloader: writing \"xxexample.com:1234/foo/bar\" to \"/tmp/images776554199/data/part_1736101423\"\n"}
+{"Time":"2026-07-01T14:57:15.382251571Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceReferencedImage","Output":"--- PASS: TestReplaceReferencedImage (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.382255812Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceReferencedImage","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.382260312Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceUnreferencedImage"}
+{"Time":"2026-07-01T14:57:15.382264788Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceUnreferencedImage","Output":"=== RUN   TestReplaceUnreferencedImage\n"}
+{"Time":"2026-07-01T14:57:15.382268978Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceUnreferencedImage","Output":"    image_test.go:67: fakeDownloader: writing \"example.com:1234/foo/bar\" to \"/tmp/images2467085606/data/part_3057707282\"\n"}
+{"Time":"2026-07-01T14:57:15.382273526Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceUnreferencedImage","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images2467085606/data/part_90555845\"\n"}
+{"Time":"2026-07-01T14:57:15.382284416Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceUnreferencedImage","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images2467085606/data/part_2580404744\"\n"}
+{"Time":"2026-07-01T14:57:15.382290553Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceUnreferencedImage","Output":"    image_test.go:67: fakeDownloader: writing \"xxexample.com:1234/foo/bar\" to \"/tmp/images2467085606/data/part_1528387\"\n"}
+{"Time":"2026-07-01T14:57:15.38293699Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceUnreferencedImage","Output":"--- PASS: TestReplaceUnreferencedImage (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.382980248Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestReplaceUnreferencedImage","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.383005943Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestRemoveImage"}
+{"Time":"2026-07-01T14:57:15.383011253Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestRemoveImage","Output":"=== RUN   TestRemoveImage\n"}
+{"Time":"2026-07-01T14:57:15.383169048Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestRemoveImage","Output":"    image_test.go:67: fakeDownloader: writing \"example.com:1234/foo/bar\" to \"/tmp/images2452913514/data/part_3633626683\"\n"}
+{"Time":"2026-07-01T14:57:15.383383445Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestRemoveImage","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images2452913514/data/part_2035723386\"\n"}
+{"Time":"2026-07-01T14:57:15.383539955Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestRemoveImage","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images2452913514/data/part_1569318310\"\n"}
+{"Time":"2026-07-01T14:57:15.384326924Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestRemoveImage","Output":"--- PASS: TestRemoveImage (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.384370688Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestRemoveImage","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.384397566Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageGC"}
+{"Time":"2026-07-01T14:57:15.384403038Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageGC","Output":"=== RUN   TestImageGC\n"}
+{"Time":"2026-07-01T14:57:15.384575092Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageGC","Output":"    image_test.go:67: fakeDownloader: writing \"example.com:1234/foo/bar\" to \"/tmp/images3569794200/data/part_2276077961\"\n"}
+{"Time":"2026-07-01T14:57:15.384745435Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageGC","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images3569794200/data/part_4258551304\"\n"}
+{"Time":"2026-07-01T14:57:15.384894204Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageGC","Output":"    image_test.go:67: fakeDownloader: writing \"baz\" to \"/tmp/images3569794200/data/part_759778567\"\n"}
+{"Time":"2026-07-01T14:57:15.385937392Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageGC","Output":"--- PASS: TestImageGC (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.385976383Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageGC","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.386002367Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestCancelPullImage"}
+{"Time":"2026-07-01T14:57:15.386006869Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestCancelPullImage","Output":"=== RUN   TestCancelPullImage\n"}
+{"Time":"2026-07-01T14:57:15.386236757Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestCancelPullImage","Output":"--- PASS: TestCancelPullImage (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.386269753Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestCancelPullImage","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.386295275Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageSize"}
+{"Time":"2026-07-01T14:57:15.386300549Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageSize","Output":"=== RUN   TestImageSize\n"}
+{"Time":"2026-07-01T14:57:15.429334558Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageSize","Output":"--- PASS: TestImageSize (0.04s)\n"}
+{"Time":"2026-07-01T14:57:15.429357276Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Test":"TestImageSize","Elapsed":0.04}
+{"Time":"2026-07-01T14:57:15.429364882Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Output":"PASS\n"}
+{"Time":"2026-07-01T14:57:15.430216149Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/image","Output":"ok  \tgithub.com/Mirantis/virtlet/pkg/image\t0.356s\n"}
+{"Time":"2026-07-01T14:57:15.43023106Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/image","Elapsed":0.356}
+{"Time":"2026-07-01T14:57:15.541734741Z","Action":"start","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation"}
+{"Time":"2026-07-01T14:57:15.616072677Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations"}
+{"Time":"2026-07-01T14:57:15.616099947Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations","Output":"=== RUN   TestTranslations\n"}
+{"Time":"2026-07-01T14:57:15.616110238Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/strict_translation"}
+{"Time":"2026-07-01T14:57:15.616116223Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/strict_translation","Output":"=== RUN   TestTranslations/strict_translation\n"}
+{"Time":"2026-07-01T14:57:15.616125202Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/strict_translation","Output":"--- PASS: TestTranslations/strict_translation (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616142958Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/strict_translation","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.61615096Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_strict_translation"}
+{"Time":"2026-07-01T14:57:15.616155464Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_strict_translation","Output":"=== RUN   TestTranslations/negative_strict_translation\n"}
+{"Time":"2026-07-01T14:57:15.616163814Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_strict_translation","Output":"--- PASS: TestTranslations/negative_strict_translation (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616169966Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_strict_translation","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616174954Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/strict_translation_precedes_regexps"}
+{"Time":"2026-07-01T14:57:15.616179179Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/strict_translation_precedes_regexps","Output":"=== RUN   TestTranslations/strict_translation_precedes_regexps\n"}
+{"Time":"2026-07-01T14:57:15.616191321Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/strict_translation_precedes_regexps","Output":"--- PASS: TestTranslations/strict_translation_precedes_regexps (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616202801Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/strict_translation_precedes_regexps","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616209586Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/regexp_translation"}
+{"Time":"2026-07-01T14:57:15.616213915Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/regexp_translation","Output":"=== RUN   TestTranslations/regexp_translation\n"}
+{"Time":"2026-07-01T14:57:15.616247301Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/regexp_translation","Output":"--- PASS: TestTranslations/regexp_translation (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616255179Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/regexp_translation","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616263948Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_regexp_translation"}
+{"Time":"2026-07-01T14:57:15.616270088Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_regexp_translation","Output":"=== RUN   TestTranslations/negative_regexp_translation\n"}
+{"Time":"2026-07-01T14:57:15.616324765Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_regexp_translation","Output":"--- PASS: TestTranslations/negative_regexp_translation (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616332622Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_regexp_translation","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616339674Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/translation_with_prefix"}
+{"Time":"2026-07-01T14:57:15.616344349Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/translation_with_prefix","Output":"=== RUN   TestTranslations/translation_with_prefix\n"}
+{"Time":"2026-07-01T14:57:15.616351215Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/translation_with_prefix","Output":"--- PASS: TestTranslations/translation_with_prefix (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616356446Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/translation_with_prefix","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616362854Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/regexp_translation_with_prefix"}
+{"Time":"2026-07-01T14:57:15.616367213Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/regexp_translation_with_prefix","Output":"=== RUN   TestTranslations/regexp_translation_with_prefix\n"}
+{"Time":"2026-07-01T14:57:15.616380275Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/regexp_translation_with_prefix","Output":"--- PASS: TestTranslations/regexp_translation_with_prefix (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616387997Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/regexp_translation_with_prefix","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616393035Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_translation_with_prefix"}
+{"Time":"2026-07-01T14:57:15.616397881Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_translation_with_prefix","Output":"=== RUN   TestTranslations/negative_translation_with_prefix\n"}
+{"Time":"2026-07-01T14:57:15.616411629Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_translation_with_prefix","Output":"--- PASS: TestTranslations/negative_translation_with_prefix (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616418024Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/negative_translation_with_prefix","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616423389Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/empty_string_translation"}
+{"Time":"2026-07-01T14:57:15.616427805Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/empty_string_translation","Output":"=== RUN   TestTranslations/empty_string_translation\n"}
+{"Time":"2026-07-01T14:57:15.616465864Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/empty_string_translation","Output":"--- PASS: TestTranslations/empty_string_translation (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616473684Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/empty_string_translation","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616480722Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/misleading_translation_with_prefix"}
+{"Time":"2026-07-01T14:57:15.616485488Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/misleading_translation_with_prefix","Output":"=== RUN   TestTranslations/misleading_translation_with_prefix\n"}
+{"Time":"2026-07-01T14:57:15.616522213Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/misleading_translation_with_prefix","Output":"--- PASS: TestTranslations/misleading_translation_with_prefix (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616542719Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations/misleading_translation_with_prefix","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616550484Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations","Output":"--- PASS: TestTranslations (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.616555811Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestTranslations","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.616562091Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownload"}
+{"Time":"2026-07-01T14:57:15.616566587Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownload","Output":"=== RUN   TestImageDownload\n"}
+{"Time":"2026-07-01T14:57:15.617668816Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownload","Output":"--- PASS: TestImageDownload (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.617686924Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownload","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.617692785Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects"}
+{"Time":"2026-07-01T14:57:15.617696799Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects","Output":"=== RUN   TestImageDownloadRedirects\n"}
+{"Time":"2026-07-01T14:57:15.617701459Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/0_redirects,_0_allowed"}
+{"Time":"2026-07-01T14:57:15.617706747Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/0_redirects,_0_allowed","Output":"=== RUN   TestImageDownloadRedirects/0_redirects,_0_allowed\n"}
+{"Time":"2026-07-01T14:57:15.618847484Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/0_redirects,_0_allowed","Output":"--- PASS: TestImageDownloadRedirects/0_redirects,_0_allowed (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.618856041Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/0_redirects,_0_allowed","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.618861595Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/1_redirect,_0_allowed"}
+{"Time":"2026-07-01T14:57:15.61886445Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/1_redirect,_0_allowed","Output":"=== RUN   TestImageDownloadRedirects/1_redirect,_0_allowed\n"}
+{"Time":"2026-07-01T14:57:15.619149797Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/1_redirect,_0_allowed","Output":"--- PASS: TestImageDownloadRedirects/1_redirect,_0_allowed (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.619162793Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/1_redirect,_0_allowed","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.619169002Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/1_redirect,_1_allowed"}
+{"Time":"2026-07-01T14:57:15.619177843Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/1_redirect,_1_allowed","Output":"=== RUN   TestImageDownloadRedirects/1_redirect,_1_allowed\n"}
+{"Time":"2026-07-01T14:57:15.620144501Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/1_redirect,_1_allowed","Output":"--- PASS: TestImageDownloadRedirects/1_redirect,_1_allowed (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.620197642Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/1_redirect,_1_allowed","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.620227463Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/5_redirect,_5_allowed"}
+{"Time":"2026-07-01T14:57:15.62023211Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/5_redirect,_5_allowed","Output":"=== RUN   TestImageDownloadRedirects/5_redirect,_5_allowed\n"}
+{"Time":"2026-07-01T14:57:15.621302478Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/5_redirect,_5_allowed","Output":"--- PASS: TestImageDownloadRedirects/5_redirect,_5_allowed (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.621312917Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/5_redirect,_5_allowed","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.62132912Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/2_redirect,_1_allowed"}
+{"Time":"2026-07-01T14:57:15.621332244Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/2_redirect,_1_allowed","Output":"=== RUN   TestImageDownloadRedirects/2_redirect,_1_allowed\n"}
+{"Time":"2026-07-01T14:57:15.621623978Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/2_redirect,_1_allowed","Output":"--- PASS: TestImageDownloadRedirects/2_redirect,_1_allowed (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.62163502Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/2_redirect,_1_allowed","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.621641851Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/10_redirect,_5_allowed"}
+{"Time":"2026-07-01T14:57:15.621651278Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/10_redirect,_5_allowed","Output":"=== RUN   TestImageDownloadRedirects/10_redirect,_5_allowed\n"}
+{"Time":"2026-07-01T14:57:15.622209514Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/10_redirect,_5_allowed","Output":"--- PASS: TestImageDownloadRedirects/10_redirect,_5_allowed (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.62221847Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/10_redirect,_5_allowed","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.622222217Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/9_redirect,_9_(default)_allowed"}
+{"Time":"2026-07-01T14:57:15.62222488Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/9_redirect,_9_(default)_allowed","Output":"=== RUN   TestImageDownloadRedirects/9_redirect,_9_(default)_allowed\n"}
+{"Time":"2026-07-01T14:57:15.623237681Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/9_redirect,_9_(default)_allowed","Output":"--- PASS: TestImageDownloadRedirects/9_redirect,_9_(default)_allowed (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.623249505Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/9_redirect,_9_(default)_allowed","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.623646239Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/10_redirect,_9_(default)_allowed"}
+{"Time":"2026-07-01T14:57:15.623654925Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/10_redirect,_9_(default)_allowed","Output":"=== RUN   TestImageDownloadRedirects/10_redirect,_9_(default)_allowed\n"}
+{"Time":"2026-07-01T14:57:15.624770125Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/10_redirect,_9_(default)_allowed","Output":"--- PASS: TestImageDownloadRedirects/10_redirect,_9_(default)_allowed (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.624785073Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects/10_redirect,_9_(default)_allowed","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.624937625Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects","Output":"--- PASS: TestImageDownloadRedirects (0.01s)\n"}
+{"Time":"2026-07-01T14:57:15.624947741Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadRedirects","Elapsed":0.01}
+{"Time":"2026-07-01T14:57:15.624955451Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithProxy"}
+{"Time":"2026-07-01T14:57:15.624959234Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithProxy","Output":"=== RUN   TestImageDownloadWithProxy\n"}
+{"Time":"2026-07-01T14:57:15.62530167Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithProxy","Output":"--- PASS: TestImageDownloadWithProxy (0.00s)\n"}
+{"Time":"2026-07-01T14:57:15.625309436Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithProxy","Elapsed":0}
+{"Time":"2026-07-01T14:57:15.625313892Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout"}
+{"Time":"2026-07-01T14:57:15.625318Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout","Output":"=== RUN   TestImageDownloadWithTimeout\n"}
+{"Time":"2026-07-01T14:57:15.625350964Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout/positive_test"}
+{"Time":"2026-07-01T14:57:15.62536015Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout/positive_test","Output":"=== RUN   TestImageDownloadWithTimeout/positive_test\n"}
+{"Time":"2026-07-01T14:57:15.675876605Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout/positive_test","Output":"--- PASS: TestImageDownloadWithTimeout/positive_test (0.05s)\n"}
+{"Time":"2026-07-01T14:57:15.675915619Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout/positive_test","Elapsed":0.05}
+{"Time":"2026-07-01T14:57:15.675953448Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout/negative_test"}
+{"Time":"2026-07-01T14:57:15.675958097Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout/negative_test","Output":"=== RUN   TestImageDownloadWithTimeout/negative_test\n"}
+{"Time":"2026-07-01T14:57:15.926250039Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout/negative_test","Output":"--- PASS: TestImageDownloadWithTimeout/negative_test (0.25s)\n"}
+{"Time":"2026-07-01T14:57:15.926272009Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout/negative_test","Elapsed":0.25}
+{"Time":"2026-07-01T14:57:16.026543589Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout","Output":"--- PASS: TestImageDownloadWithTimeout (0.40s)\n"}
+{"Time":"2026-07-01T14:57:16.026564567Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadWithTimeout","Elapsed":0.4}
+{"Time":"2026-07-01T14:57:16.026572764Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLS"}
+{"Time":"2026-07-01T14:57:16.026575787Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLS","Output":"=== RUN   TestImageDownloadTLS\n"}
+{"Time":"2026-07-01T14:57:16.132413414Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLS","Output":"--- PASS: TestImageDownloadTLS (0.11s)\n"}
+{"Time":"2026-07-01T14:57:16.132428711Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLS","Elapsed":0.11}
+{"Time":"2026-07-01T14:57:16.132433983Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithClientCerts"}
+{"Time":"2026-07-01T14:57:16.132436962Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithClientCerts","Output":"=== RUN   TestImageDownloadTLSWithClientCerts\n"}
+{"Time":"2026-07-01T14:57:16.287099719Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithClientCerts","Output":"--- PASS: TestImageDownloadTLSWithClientCerts (0.15s)\n"}
+{"Time":"2026-07-01T14:57:16.287118685Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithClientCerts","Elapsed":0.15}
+{"Time":"2026-07-01T14:57:16.287125836Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithServerName"}
+{"Time":"2026-07-01T14:57:16.2871305Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithServerName","Output":"=== RUN   TestImageDownloadTLSWithServerName\n"}
+{"Time":"2026-07-01T14:57:16.386160873Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithServerName","Output":"--- PASS: TestImageDownloadTLSWithServerName (0.10s)\n"}
+{"Time":"2026-07-01T14:57:16.386181846Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithServerName","Elapsed":0.1}
+{"Time":"2026-07-01T14:57:16.386188819Z","Action":"run","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithoutCertValidation"}
+{"Time":"2026-07-01T14:57:16.386193266Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithoutCertValidation","Output":"=== RUN   TestImageDownloadTLSWithoutCertValidation\n"}
+{"Time":"2026-07-01T14:57:16.389575915Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithoutCertValidation","Output":"--- PASS: TestImageDownloadTLSWithoutCertValidation (0.00s)\n"}
+{"Time":"2026-07-01T14:57:16.389591636Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Test":"TestImageDownloadTLSWithoutCertValidation","Elapsed":0}
+{"Time":"2026-07-01T14:57:16.38959723Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Output":"PASS\n"}
+{"Time":"2026-07-01T14:57:16.390564713Z","Action":"output","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Output":"ok  \tgithub.com/Mirantis/virtlet/pkg/imagetranslation\t0.849s\n"}
+{"Time":"2026-07-01T14:57:16.390588226Z","Action":"pass","Package":"github.com/Mirantis/virtlet/pkg/imagetranslation","Elapsed":0.849}
+reward=1 graded=40 found=40 failed=0 parsed=40 framework=go exit_code=0

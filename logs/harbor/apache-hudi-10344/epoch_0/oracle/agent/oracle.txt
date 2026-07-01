@@ -1,0 +1,7 @@
+patching file hudi-client/hudi-client-common/src/main/java/org/apache/hudi/io/HoodieCDCLogger.java
+patching file hudi-client/hudi-client-common/src/main/java/org/apache/hudi/io/HoodieMergeHandle.java
+patching file hudi-common/src/main/java/org/apache/hudi/common/table/view/SpillableMapBasedFileSystemView.java
+patching file hudi-common/src/main/java/org/apache/hudi/common/util/collection/BitCaskDiskMap.java
+patching file hudi-common/src/main/java/org/apache/hudi/common/util/collection/DiskMap.java
+patching file hudi-common/src/main/java/org/apache/hudi/common/util/collection/ExternalSpillableMap.java
+patching file hudi-hadoop-mr/src/main/java/org/apache/hudi/hadoop/realtime/HoodieMergeOnReadSnapshotReader.java

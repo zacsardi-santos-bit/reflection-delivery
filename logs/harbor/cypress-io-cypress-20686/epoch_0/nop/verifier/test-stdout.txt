@@ -1,0 +1,571 @@
+patching file cli/test/lib/exec/spawn_spec.js
+patching file cli/test/lib/tasks/download_spec.js
+patching file cli/test/lib/tasks/install_spec.js
+patching file cli/test/lib/tasks/verify_spec.js
+patching file cli/test/spec_helper.js
+patching file cli/test/support/spawn-mock.js
+
+
+  lib/tasks/download
+---------------------------------------------------------------------
+lib/tasks/download / saves example.zip to options.downloadDestination
+---------------------------------------------------------------------
+    ✓ saves example.zip to options.downloadDestination
+----------------------------------------------------------------
+lib/tasks/download / resolves with response x-version if present
+----------------------------------------------------------------
+    ✓ resolves with response x-version if present
+------------------------------------------------------------------------------------------------
+lib/tasks/download / handles quadruple redirect with response x-version to the latest if present
+------------------------------------------------------------------------------------------------
+    ✓ handles quadruple redirect with response x-version to the latest if present
+-------------------------------------------------
+lib/tasks/download / errors on too many redirects
+-------------------------------------------------
+    ✓ errors on too many redirects (40ms)
+-------------------------------------------------------------
+lib/tasks/download / can specify cypress version in arguments
+-------------------------------------------------------------
+    ✓ can specify cypress version in arguments
+-------------------------------------------------------------
+lib/tasks/download / catches download status errors and exits
+-------------------------------------------------------------
+Error: The Cypress App could not be downloaded.
+
+Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration
+
+Otherwise, please check network connectivity and try again:
+
+----------
+
+URL: https://download.cypress.io/desktop?platform=OS&arch=x64
+404 - Not Found
+
+----------
+
+Platform: OS-x64 (Foo-OsVersion)
+Cypress Version: 1.2.3
+Different value of snapshot "download status errors 1"
+
+----------
+Difference
+----------
+ Otherwise, please check network connectivity and try again:
+ 
+ ----------
+ 
+-URL: https://download.cypress.io/desktop?platform=OS&arch=ARCH
++URL: https://download.cypress.io/desktop?platform=OS&arch=x64
+ 404 - Not Found
+ 
+ ----------
+ 
+-Platform: darwin-x64 (Foo-OsVersion)
++Platform: OS-x64 (Foo-OsVersion)
+ Cypress Version: 1.2.3
+-------------------
+Saved snapshot text
+-------------------
+Error: The Cypress App could not be downloaded.
+
+Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration
+
+Otherwise, please check network connectivity and try again:
+
+----------
+
+URL: https://download.cypress.io/desktop?platform=OS&arch=ARCH
+404 - Not Found
+
+----------
+
+Platform: darwin-x64 (Foo-OsVersion)
+Cypress Version: 1.2.3
+------------
+Current text
+------------
+Error: The Cypress App could not be downloaded.
+
+Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration
+
+Otherwise, please check network connectivity and try again:
+
+----------
+
+URL: https://download.cypress.io/desktop?platform=OS&arch=x64
+404 - Not Found
+
+----------
+
+Platform: OS-x64 (Foo-OsVersion)
+Cypress Version: 1.2.3
+--------
+Diff end
+--------
+
+    1) catches download status errors and exits
+    download url
+-----------------------------------------------
+lib/tasks/download / download url / returns url
+-----------------------------------------------
+      ✓ returns url
+--------------------------------------------------------------
+lib/tasks/download / download url / returns latest desktop url
+--------------------------------------------------------------
+Different value of snapshot "latest desktop url 1"
+"https://download.cypress.io/desktop?platform=OS&arch=ARCH" => "https://download.cypress.io/desktop/ARCH?platform=OS&arch=x64"
+      2) returns latest desktop url
+------------------------------------------------------------------------
+lib/tasks/download / download url / returns specific desktop version url
+------------------------------------------------------------------------
+Different value of snapshot "specific version desktop url 1"
+"https://download.cypress.io/desktop/0.20.2?platform=OS&arch=ARCH" => "https://download.cypress.io/desktop/ARCH?platform=OS&arch=x64"
+      3) returns specific desktop version url
+--------------------------------------------------------------------
+lib/tasks/download / download url / returns custom url from template
+--------------------------------------------------------------------
+Different value of snapshot "desktop url from template"
+"https://download.cypress.io/desktop/0.20.2/darwin-x64/cypress.zip" => "https://download.cypress.io/desktop/ARCH/OS-x64/cypress.zip"
+      4) returns custom url from template
+---------------------------------------------------------------------------------------------
+lib/tasks/download / download url / returns custom url from template with escaped dollar sign
+---------------------------------------------------------------------------------------------
+Different value of snapshot "desktop url from template with escaped dollar sign"
+"https://download.cypress.io/desktop/0.20.2/darwin-x64/cypress.zip" => "https://download.cypress.io/desktop/ARCH/OS-x64/cypress.zip"
+      5) returns custom url from template with escaped dollar sign
+-------------------------------------------------------------------------------------
+lib/tasks/download / download url / returns custom url from template wrapped in quote
+-------------------------------------------------------------------------------------
+Different value of snapshot "desktop url from template wrapped in quote"
+"https://download.cypress.io/desktop/0.20.2/darwin-x64/cypress.zip" => "https://download.cypress.io/desktop/ARCH/OS-x64/cypress.zip"
+      6) returns custom url from template wrapped in quote
+--------------------------------------------------------------------------------------------------------------
+lib/tasks/download / download url / returns custom url from template with escaped dollar sign wrapped in quote
+--------------------------------------------------------------------------------------------------------------
+Different value of snapshot "desktop url from template with escaped dollar sign wrapped in quote"
+"https://download.cypress.io/desktop/0.20.2/darwin-x64/cypress.zip" => "https://download.cypress.io/desktop/ARCH/OS-x64/cypress.zip"
+      7) returns custom url from template with escaped dollar sign wrapped in quote
+--------------------------------------------------------------------------------
+lib/tasks/download / download url / returns input if it is already an https link
+--------------------------------------------------------------------------------
+      8) returns input if it is already an https link
+-------------------------------------------------------------------------------
+lib/tasks/download / download url / returns input if it is already an http link
+-------------------------------------------------------------------------------
+      9) returns input if it is already an http link
+    download base url from CYPRESS_DOWNLOAD_MIRROR env var
+-------------------------------------------------------------------------------------
+lib/tasks/download / download base url from CYPRESS_DOWNLOAD_MIRROR env var / env var
+-------------------------------------------------------------------------------------
+Different value of snapshot "base url from CYPRESS_DOWNLOAD_MIRROR 1"
+"https://cypress.example.com/desktop/0.20.2?platform=OS&arch=ARCH" => "https://cypress.example.com/desktop/ARCH?platform=OS&arch=x64"
+      10) env var
+---------------------------------------------------------------------------------------------------------
+lib/tasks/download / download base url from CYPRESS_DOWNLOAD_MIRROR env var / env var with trailing slash
+---------------------------------------------------------------------------------------------------------
+Different value of snapshot "base url from CYPRESS_DOWNLOAD_MIRROR with trailing slash 1"
+"https://cypress.example.com/desktop/0.20.2?platform=OS&arch=ARCH" => "https://cypress.example.com/desktop/ARCH?platform=OS&arch=x64"
+      11) env var with trailing slash
+-------------------------------------------------------------------------------------------------------
+lib/tasks/download / download base url from CYPRESS_DOWNLOAD_MIRROR env var / env var with subdirectory
+-------------------------------------------------------------------------------------------------------
+Different value of snapshot "base url from CYPRESS_DOWNLOAD_MIRROR with subdirectory 1"
+"https://cypress.example.com/example/desktop/0.20.2?platform=OS&arch=ARCH" => "https://cypress.example.com/example/desktop/ARCH?platform=OS&arch=x64"
+      12) env var with subdirectory
+--------------------------------------------------------------------------------------------------------------------------
+lib/tasks/download / download base url from CYPRESS_DOWNLOAD_MIRROR env var / env var with subdirectory and trailing slash
+--------------------------------------------------------------------------------------------------------------------------
+Different value of snapshot "base url from CYPRESS_DOWNLOAD_MIRROR with subdirectory and trailing slash 1"
+"https://cypress.example.com/example/desktop/0.20.2?platform=OS&arch=ARCH" => "https://cypress.example.com/example/desktop/ARCH?platform=OS&arch=x64"
+      13) env var with subdirectory and trailing slash
+    verify downloaded file
+--------------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / throws if file size is different from expected
+--------------------------------------------------------------------------------------------
+      ✓ throws if file size is different from expected
+------------------------------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / throws if file size is different from expected x-amz-meta-size
+------------------------------------------------------------------------------------------------------------
+      ✓ throws if file size is different from expected x-amz-meta-size
+-------------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / throws if checksum is different from expected
+-------------------------------------------------------------------------------------------
+      ✓ throws if checksum is different from expected
+----------------------------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / throws if checksum and file size are different from expected
+----------------------------------------------------------------------------------------------------------
+      ✓ throws if checksum and file size are different from expected
+--------------------------------------------------------------------------------------
+lib/tasks/download / verify downloaded file / passes when checksum and file size match
+--------------------------------------------------------------------------------------
+      ✓ passes when checksum and file size match
+    architecture detection
+--------------------------------------------------------------------------
+lib/tasks/download / architecture detection / downloads darwin-arm64 on M1
+--------------------------------------------------------------------------
+      14) downloads darwin-arm64 on M1
+------------------------------------------------------------------------------------------------
+lib/tasks/download / architecture detection / downloads darwin-arm64 on M1 translated by Rosetta
+------------------------------------------------------------------------------------------------
+      15) downloads darwin-arm64 on M1 translated by Rosetta
+    with proxy env vars
+--------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / uses http_proxy on http request
+--------------------------------------------------------------------------
+      ✓ uses http_proxy on http request
+------------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / ignores http_proxy on https request
+------------------------------------------------------------------------------
+      ✓ ignores http_proxy on https request
+-------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / falls back to npm_config_proxy
+-------------------------------------------------------------------------
+      ✓ falls back to npm_config_proxy
+---------------------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / respects no_proxy on http and https requests
+---------------------------------------------------------------------------------------
+      ✓ respects no_proxy on http and https requests
+----------------------------------------------------------------------------------------------------------
+lib/tasks/download / with proxy env vars / ignores no_proxy for npm proxy configs, prefers https over http
+----------------------------------------------------------------------------------------------------------
+      ✓ ignores no_proxy for npm proxy configs, prefers https over http
+    with CA and CAFILE env vars
+-------------------------------------------------------------------------------
+lib/tasks/download / with CA and CAFILE env vars / returns undefined if not set
+-------------------------------------------------------------------------------
+      ✓ returns undefined if not set
+--------------------------------------------------------------------------------
+lib/tasks/download / with CA and CAFILE env vars / returns CA from npm_config_ca
+--------------------------------------------------------------------------------
+      ✓ returns CA from npm_config_ca
+------------------------------------------------------------------------------------
+lib/tasks/download / with CA and CAFILE env vars / returns CA from npm_config_cafile
+------------------------------------------------------------------------------------
+      ✓ returns CA from npm_config_cafile
+--------------------------------------------------------------------------------------------------------
+lib/tasks/download / with CA and CAFILE env vars / returns undefined if failed reading npm_config_cafile
+--------------------------------------------------------------------------------------------------------
+      ✓ returns undefined if failed reading npm_config_cafile
+
+
+  20 passing (203ms)
+  15 failing
+
+  1) lib/tasks/download
+       catches download status errors and exits:
+     Error: Different value of snapshot "download status errors 1"
+
+----------
+Difference
+----------
+ Otherwise, please check network connectivity and try again:
+ 
+ ----------
+ 
+-URL: https://download.cypress.io/desktop?platform=OS&arch=ARCH
++URL: https://download.cypress.io/desktop?platform=OS&arch=x64
+ 404 - Not Found
+ 
+ ----------
+ 
+-Platform: darwin-x64 (Foo-OsVersion)
++Platform: OS-x64 (Foo-OsVersion)
+ Cypress Version: 1.2.3
+-------------------
+Saved snapshot text
+-------------------
+Error: The Cypress App could not be downloaded.
+
+Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration
+
+Otherwise, please check network connectivity and try again:
+
+----------
+
+URL: https://download.cypress.io/desktop?platform=OS&arch=ARCH
+404 - Not Found
+
+----------
+
+Platform: darwin-x64 (Foo-OsVersion)
+Cypress Version: 1.2.3
+------------
+Current text
+------------
+Error: The Cypress App could not be downloaded.
+
+Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration
+
+Otherwise, please check network connectivity and try again:
+
+----------
+
+URL: https://download.cypress.io/desktop?platform=OS&arch=x64
+404 - Not Found
+
+----------
+
+Platform: OS-x64 (Foo-OsVersion)
+Cypress Version: 1.2.3
+--------
+Diff end
+--------
+
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at /workspace/repo/cli/test/lib/tasks/download_spec.js:543:14
+      at tryCatcher (node_modules/bluebird/js/release/util.js:16:23)
+      at Promise._settlePromiseFromHandler (node_modules/bluebird/js/release/promise.js:547:31)
+      at Promise._settlePromise (node_modules/bluebird/js/release/promise.js:604:18)
+      at Promise._settlePromise0 (node_modules/bluebird/js/release/promise.js:649:10)
+      at Promise._settlePromises (node_modules/bluebird/js/release/promise.js:725:18)
+      at _drainQueueStep (node_modules/bluebird/js/release/async.js:93:12)
+      at _drainQueue (node_modules/bluebird/js/release/async.js:86:9)
+      at Async._drainQueues (node_modules/bluebird/js/release/async.js:102:5)
+      at Async.drainQueues [as _onImmediate] (node_modules/bluebird/js/release/async.js:15:14)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  2) lib/tasks/download
+       download url
+         returns latest desktop url:
+     Error: Different value of snapshot "latest desktop url 1"
+"https://download.cypress.io/desktop?platform=OS&arch=ARCH" => "https://download.cypress.io/desktop/ARCH?platform=OS&arch=x64"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:61:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  3) lib/tasks/download
+       download url
+         returns specific desktop version url:
+     Error: Different value of snapshot "specific version desktop url 1"
+"https://download.cypress.io/desktop/0.20.2?platform=OS&arch=ARCH" => "https://download.cypress.io/desktop/ARCH?platform=OS&arch=x64"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:67:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  4) lib/tasks/download
+       download url
+         returns custom url from template:
+     Error: Different value of snapshot "desktop url from template"
+"https://download.cypress.io/desktop/0.20.2/darwin-x64/cypress.zip" => "https://download.cypress.io/desktop/ARCH/OS-x64/cypress.zip"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:74:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  5) lib/tasks/download
+       download url
+         returns custom url from template with escaped dollar sign:
+     Error: Different value of snapshot "desktop url from template with escaped dollar sign"
+"https://download.cypress.io/desktop/0.20.2/darwin-x64/cypress.zip" => "https://download.cypress.io/desktop/ARCH/OS-x64/cypress.zip"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:81:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  6) lib/tasks/download
+       download url
+         returns custom url from template wrapped in quote:
+     Error: Different value of snapshot "desktop url from template wrapped in quote"
+"https://download.cypress.io/desktop/0.20.2/darwin-x64/cypress.zip" => "https://download.cypress.io/desktop/ARCH/OS-x64/cypress.zip"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:88:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  7) lib/tasks/download
+       download url
+         returns custom url from template with escaped dollar sign wrapped in quote:
+     Error: Different value of snapshot "desktop url from template with escaped dollar sign wrapped in quote"
+"https://download.cypress.io/desktop/0.20.2/darwin-x64/cypress.zip" => "https://download.cypress.io/desktop/ARCH/OS-x64/cypress.zip"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:95:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  8) lib/tasks/download
+       download url
+         returns input if it is already an https link:
+
+      AssertionError: expected 'https://download.cypress.io/desktop/ARCH?platform=OS&arch=x64' to equal 'https://somewhere.com'
+      + expected - actual
+
+      -https://download.cypress.io/desktop/ARCH?platform=OS&arch=x64
+      +https://somewhere.com
+      
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:102:25)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  9) lib/tasks/download
+       download url
+         returns input if it is already an http link:
+
+      AssertionError: expected 'https://download.cypress.io/desktop/ARCH?platform=OS&arch=x64' to equal 'http://local.com'
+      + expected - actual
+
+      -https://download.cypress.io/desktop/ARCH?platform=OS&arch=x64
+      +http://local.com
+      
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:109:25)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  10) lib/tasks/download
+       download base url from CYPRESS_DOWNLOAD_MIRROR env var
+         env var:
+     Error: Different value of snapshot "base url from CYPRESS_DOWNLOAD_MIRROR 1"
+"https://cypress.example.com/desktop/0.20.2?platform=OS&arch=ARCH" => "https://cypress.example.com/desktop/ARCH?platform=OS&arch=x64"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:118:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  11) lib/tasks/download
+       download base url from CYPRESS_DOWNLOAD_MIRROR env var
+         env var with trailing slash:
+     Error: Different value of snapshot "base url from CYPRESS_DOWNLOAD_MIRROR with trailing slash 1"
+"https://cypress.example.com/desktop/0.20.2?platform=OS&arch=ARCH" => "https://cypress.example.com/desktop/ARCH?platform=OS&arch=x64"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:125:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  12) lib/tasks/download
+       download base url from CYPRESS_DOWNLOAD_MIRROR env var
+         env var with subdirectory:
+     Error: Different value of snapshot "base url from CYPRESS_DOWNLOAD_MIRROR with subdirectory 1"
+"https://cypress.example.com/example/desktop/0.20.2?platform=OS&arch=ARCH" => "https://cypress.example.com/example/desktop/ARCH?platform=OS&arch=x64"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:132:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  13) lib/tasks/download
+       download base url from CYPRESS_DOWNLOAD_MIRROR env var
+         env var with subdirectory and trailing slash:
+     Error: Different value of snapshot "base url from CYPRESS_DOWNLOAD_MIRROR with subdirectory and trailing slash 1"
+"https://cypress.example.com/example/desktop/0.20.2?platform=OS&arch=ARCH" => "https://cypress.example.com/example/desktop/ARCH?platform=OS&arch=x64"
+      at /workspace/repo/node_modules/snap-shot-core/src/file-system.js:266:11
+      at InternalConstructor.orElse (/workspace/repo/node_modules/folktale/result/result.js:187:14)
+      at raiseIfDifferent (/workspace/repo/node_modules/snap-shot-core/src/file-system.js:257:10)
+      at setOrCheckValue (/workspace/repo/node_modules/snap-shot-core/src/index.js:368:7)
+      at core (/workspace/repo/node_modules/snap-shot-core/src/index.js:389:12)
+      at snapshot (node_modules/snap-shot-it/src/index.js:293:18)
+      at snapshot (test/support/snapshot.js:6:3)
+      at Context.<anonymous> (test/lib/tasks/download_spec.js:139:7)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  14) lib/tasks/download
+       architecture detection
+         downloads darwin-arm64 on M1:
+     Error: The Cypress App could not be downloaded.
+
+Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration
+
+Otherwise, please check network connectivity and try again:
+
+----------
+
+URL: https://download.cypress.io/desktop/1.2.3?platform=darwin&arch=x64
+404 -
+
+----------
+
+Platform: darwin-x64 (Foo-OsVersion)
+Cypress Version: 1.2.3
+      at /workspace/repo/cli/lib/errors.js:374:17
+      at tryCatcher (node_modules/bluebird/js/release/util.js:16:23)
+      at Promise._settlePromiseFromHandler (node_modules/bluebird/js/release/promise.js:547:31)
+      at Promise._settlePromise (node_modules/bluebird/js/release/promise.js:604:18)
+      at Promise._settlePromise0 (node_modules/bluebird/js/release/promise.js:649:10)
+      at Promise._settlePromises (node_modules/bluebird/js/release/promise.js:729:18)
+      at _drainQueueStep (node_modules/bluebird/js/release/async.js:93:12)
+      at _drainQueue (node_modules/bluebird/js/release/async.js:86:9)
+      at Async._drainQueues (node_modules/bluebird/js/release/async.js:102:5)
+      at Async.drainQueues [as _onImmediate] (node_modules/bluebird/js/release/async.js:15:14)
+      at process.processImmediate (node:internal/timers:476:21)
+
+  15) lib/tasks/download
+       architecture detection
+         downloads darwin-arm64 on M1 translated by Rosetta:
+     Error: The Cypress App could not be downloaded.
+
+Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration
+
+Otherwise, please check network connectivity and try again:
+
+----------
+
+URL: https://download.cypress.io/desktop/1.2.3?platform=darwin&arch=x64
+404 -
+
+----------
+
+Platform: darwin-x64 (Foo-OsVersion)
+Cypress Version: 1.2.3
+      at /workspace/repo/cli/lib/errors.js:374:17
+      at tryCatcher (node_modules/bluebird/js/release/util.js:16:23)
+      at Promise._settlePromiseFromHandler (node_modules/bluebird/js/release/promise.js:547:31)
+      at Promise._settlePromise (node_modules/bluebird/js/release/promise.js:604:18)
+      at Promise._settlePromise0 (node_modules/bluebird/js/release/promise.js:649:10)
+      at Promise._settlePromises (node_modules/bluebird/js/release/promise.js:729:18)
+      at _drainQueueStep (node_modules/bluebird/js/release/async.js:93:12)
+      at _drainQueue (node_modules/bluebird/js/release/async.js:86:9)
+      at Async._drainQueues (node_modules/bluebird/js/release/async.js:102:5)
+      at Async.drainQueues [as _onImmediate] (node_modules/bluebird/js/release/async.js:15:14)
+      at process.processImmediate (node:internal/timers:476:21)
+
+
+
+reward=0 graded=35 found=35 failed=24 parsed=36 framework=mocha exit_code=15

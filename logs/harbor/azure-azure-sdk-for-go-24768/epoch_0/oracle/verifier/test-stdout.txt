@@ -1,0 +1,10 @@
+patching file sdk/security/keyvault/azcertificates/fake/server_test.go
+{"Time":"2026-07-01T15:10:08.965600239Z","Action":"start","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake"}
+{"Time":"2026-07-01T15:10:08.968609764Z","Action":"run","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Test":"TestServer"}
+{"Time":"2026-07-01T15:10:08.968657275Z","Action":"output","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Test":"TestServer","Output":"=== RUN   TestServer\n"}
+{"Time":"2026-07-01T15:10:08.970889322Z","Action":"output","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Test":"TestServer","Output":"--- PASS: TestServer (0.00s)\n"}
+{"Time":"2026-07-01T15:10:08.970922453Z","Action":"pass","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Test":"TestServer","Elapsed":0}
+{"Time":"2026-07-01T15:10:08.970945153Z","Action":"output","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Output":"PASS\n"}
+{"Time":"2026-07-01T15:10:08.97141787Z","Action":"output","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Output":"ok  \tgithub.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake\t0.006s\n"}
+{"Time":"2026-07-01T15:10:08.971431475Z","Action":"pass","Package":"github.com/Azure/azure-sdk-for-go/sdk/security/keyvault/azcertificates/fake","Elapsed":0.006}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

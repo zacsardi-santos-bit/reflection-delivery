@@ -1,0 +1,120 @@
+patching file driver-scala/src/test/scala/org/mongodb/scala/ObservableImplicitsToGridFSUploadPublisherUnitSpec.scala
+patching file driver-scala/src/test/scala/org/mongodb/scala/gridfs/GridFSUploadPublisherSpec.scala
+patching file driver-scala/src/test/scala/org/mongodb/scala/internal/UnitObservableSpec.scala
+To honour the JVM settings for this build a single-use Daemon process will be forked. See https://docs.gradle.org/7.3/userguide/gradle_daemon.html#sec:disabling_the_daemon.
+Daemon will be stopped at the end of the build 
+> Task :bson:compileJava UP-TO-DATE
+> Task :bson:compileGroovy NO-SOURCE
+> Task :bson:processResources UP-TO-DATE
+> Task :bson:classes UP-TO-DATE
+> Task :bson:jar
+> Task :util:spock:compileJava UP-TO-DATE
+> Task :util:spock:processResources NO-SOURCE
+> Task :util:spock:classes UP-TO-DATE
+> Task :util:spock:jar UP-TO-DATE
+> Task :bson:compileTestJava NO-SOURCE
+> Task :bson:compileTestGroovy UP-TO-DATE
+> Task :bson:processTestResources UP-TO-DATE
+> Task :bson:testClasses UP-TO-DATE
+> Task :bson-kotlin:compileKotlin
+> Task :bson-kotlin:compileJava NO-SOURCE
+> Task :bson-kotlin:compileGroovy NO-SOURCE
+> Task :bson-kotlin:processResources NO-SOURCE
+> Task :bson-kotlin:classes UP-TO-DATE
+> Task :bson-kotlin:jar
+> Task :bson-kotlin:inspectClassesForKotlinIC UP-TO-DATE
+> Task :bson-kotlinx:compileKotlin
+> Task :bson-kotlinx:compileJava NO-SOURCE
+> Task :bson-kotlinx:compileGroovy NO-SOURCE
+> Task :bson-kotlinx:processResources NO-SOURCE
+> Task :bson-kotlinx:classes UP-TO-DATE
+> Task :bson-kotlinx:jar
+> Task :bson-kotlinx:inspectClassesForKotlinIC UP-TO-DATE
+> Task :bson-record-codec:compileJava UP-TO-DATE
+> Task :bson-record-codec:compileGroovy NO-SOURCE
+> Task :bson-record-codec:processResources NO-SOURCE
+> Task :bson-record-codec:classes UP-TO-DATE
+> Task :bson-record-codec:jar
+> Task :bson-scala:compileJava NO-SOURCE
+> Task :spotlessInternalRegisterDependencies UP-TO-DATE
+> Task :bson-scala:spotlessScala UP-TO-DATE
+> Task :bson-scala:spotlessScalaApply UP-TO-DATE
+> Task :bson-scala:spotlessApply UP-TO-DATE
+
+> Task :bson-scala:compileScala
+[Warn] : 17 deprecations (since 2.13.0); re-run with -deprecation for details
+one warning found
+
+> Task :bson-scala:processResources NO-SOURCE
+> Task :bson-scala:classes
+> Task :bson-scala:jar
+> Task :driver-core:generateBuildConfig
+> Task :driver-core:compileJava FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':driver-core:compileJava'.
+> Could not resolve all files for configuration ':driver-core:compileClasspath'.
+   > Could not download mongodb-crypt-1.8.0.jar (org.mongodb:mongodb-crypt:1.8.0): No cached version available for offline mode
+   > Could not download sts-2.18.9.jar (software.amazon.awssdk:sts:2.18.9): No cached version available for offline mode
+   > Could not download aws-query-protocol-2.18.9.jar (software.amazon.awssdk:aws-query-protocol:2.18.9): No cached version available for offline mode
+   > Could not download aws-core-2.18.9.jar (software.amazon.awssdk:aws-core:2.18.9): No cached version available for offline mode
+   > Could not download auth-2.18.9.jar (software.amazon.awssdk:auth:2.18.9): No cached version available for offline mode
+   > Could not download regions-2.18.9.jar (software.amazon.awssdk:regions:2.18.9): No cached version available for offline mode
+   > Could not download protocol-core-2.18.9.jar (software.amazon.awssdk:protocol-core:2.18.9): No cached version available for offline mode
+   > Could not download sdk-core-2.18.9.jar (software.amazon.awssdk:sdk-core:2.18.9): No cached version available for offline mode
+   > Could not download profiles-2.18.9.jar (software.amazon.awssdk:profiles:2.18.9): No cached version available for offline mode
+   > Could not download http-client-spi-2.18.9.jar (software.amazon.awssdk:http-client-spi:2.18.9): No cached version available for offline mode
+   > Could not download json-utils-2.18.9.jar (software.amazon.awssdk:json-utils:2.18.9): No cached version available for offline mode
+   > Could not download metrics-spi-2.18.9.jar (software.amazon.awssdk:metrics-spi:2.18.9): No cached version available for offline mode
+   > Could not download utils-2.18.9.jar (software.amazon.awssdk:utils:2.18.9): No cached version available for offline mode
+   > Could not download netty-handler-4.1.87.Final.jar (io.netty:netty-handler:4.1.87.Final): No cached version available for offline mode
+   > Could not download netty-transport-native-unix-common-4.1.87.Final.jar (io.netty:netty-transport-native-unix-common:4.1.87.Final): No cached version available for offline mode
+   > Could not download netty-codec-4.1.87.Final.jar (io.netty:netty-codec:4.1.87.Final): No cached version available for offline mode
+   > Could not download netty-transport-4.1.87.Final.jar (io.netty:netty-transport:4.1.87.Final): No cached version available for offline mode
+   > Could not download netty-buffer-4.1.87.Final.jar (io.netty:netty-buffer:4.1.87.Final): No cached version available for offline mode
+   > Could not download jnr-unixsocket-0.38.17.jar (com.github.jnr:jnr-unixsocket:0.38.17): No cached version available for offline mode
+   > Could not download aws-java-sdk-sts-1.12.337.jar (com.amazonaws:aws-java-sdk-sts:1.12.337): No cached version available for offline mode
+   > Could not download aws-java-sdk-core-1.12.337.jar (com.amazonaws:aws-java-sdk-core:1.12.337): No cached version available for offline mode
+   > Could not download snappy-java-1.1.10.3.jar (org.xerial.snappy:snappy-java:1.1.10.3): No cached version available for offline mode
+   > Could not download zstd-jni-1.5.5-3.jar (com.github.luben:zstd-jni:1.5.5-3): No cached version available for offline mode
+   > Could not download netty-resolver-4.1.87.Final.jar (io.netty:netty-resolver:4.1.87.Final): No cached version available for offline mode
+   > Could not download netty-common-4.1.87.Final.jar (io.netty:netty-common:4.1.87.Final): No cached version available for offline mode
+   > Could not download jnr-enxio-0.32.13.jar (com.github.jnr:jnr-enxio:0.32.13): No cached version available for offline mode
+   > Could not download jnr-posix-3.1.15.jar (com.github.jnr:jnr-posix:3.1.15): No cached version available for offline mode
+   > Could not download jnr-ffi-2.2.11.jar (com.github.jnr:jnr-ffi:2.2.11): No cached version available for offline mode
+   > Could not download jnr-constants-0.10.3.jar (com.github.jnr:jnr-constants:0.10.3): No cached version available for offline mode
+   > Could not download endpoints-spi-2.18.9.jar (software.amazon.awssdk:endpoints-spi:2.18.9): No cached version available for offline mode
+   > Could not download annotations-2.18.9.jar (software.amazon.awssdk:annotations:2.18.9): No cached version available for offline mode
+   > Could not download eventstream-1.0.1.jar (software.amazon.eventstream:eventstream:1.0.1): No cached version available for offline mode
+   > Could not download httpclient-4.5.13.jar (org.apache.httpcomponents:httpclient:4.5.13): No cached version available for offline mode
+   > Could not download commons-logging-1.2.jar (commons-logging:commons-logging:1.2): No cached version available for offline mode
+   > Could not download commons-codec-1.15.jar (commons-codec:commons-codec:1.15): No cached version available for offline mode
+   > Could not download ion-java-1.0.2.jar (software.amazon.ion:ion-java:1.0.2): No cached version available for offline mode
+   > Could not download jmespath-java-1.12.337.jar (com.amazonaws:jmespath-java:1.12.337): No cached version available for offline mode
+   > Could not download jackson-dataformat-cbor-2.12.7.jar (com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.12.7): No cached version available for offline mode
+   > Could not download joda-time-2.8.1.jar (joda-time:joda-time:2.8.1): No cached version available for offline mode
+   > Could not download jna-5.11.0.jar (net.java.dev.jna:jna:5.11.0): No cached version available for offline mode
+   > Could not download jffi-1.3.9.jar (com.github.jnr:jffi:1.3.9): No cached version available for offline mode
+   > Could not download asm-commons-9.2.jar (org.ow2.asm:asm-commons:9.2): No cached version available for offline mode
+   > Could not download asm-util-9.2.jar (org.ow2.asm:asm-util:9.2): No cached version available for offline mode
+   > Could not download asm-analysis-9.2.jar (org.ow2.asm:asm-analysis:9.2): No cached version available for offline mode
+   > Could not download asm-tree-9.2.jar (org.ow2.asm:asm-tree:9.2): No cached version available for offline mode
+   > Could not download asm-9.2.jar (org.ow2.asm:asm:9.2): No cached version available for offline mode
+   > Could not download jnr-a64asm-1.0.0.jar (com.github.jnr:jnr-a64asm:1.0.0): No cached version available for offline mode
+   > Could not download jnr-x86asm-1.0.2.jar (com.github.jnr:jnr-x86asm:1.0.2): No cached version available for offline mode
+   > Could not download reactive-streams-1.0.3.jar (org.reactivestreams:reactive-streams:1.0.3): No cached version available for offline mode
+   > Could not download third-party-jackson-core-2.18.9.jar (software.amazon.awssdk:third-party-jackson-core:2.18.9): No cached version available for offline mode
+   > Could not download httpcore-4.4.13.jar (org.apache.httpcomponents:httpcore:4.4.13): No cached version available for offline mode
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+BUILD FAILED in 1m 23s
+22 actionable tasks: 10 executed, 12 up-to-date
+reward=0 graded=9 found=0 failed=0 parsed=0 framework=junit exit_code=1

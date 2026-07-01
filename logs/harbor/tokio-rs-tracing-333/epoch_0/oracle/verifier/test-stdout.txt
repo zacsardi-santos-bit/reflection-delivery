@@ -65,6 +65,7 @@ warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_s
 565 |             if next.compare_and_swap(head, idx, Ordering::Release) == head {
     |                     ^^^^^^^^^^^^^^^^
 
+   Compiling syn v2.0.118
 warning: field `settings` is never read
   --> tracing-subscriber/src/fmt/mod.rs:36:5
    |
@@ -87,22 +88,21 @@ warning: field `inherit_fields` is never read
    |
    = note: `Settings` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
 
-   Compiling syn v2.0.118
 warning: `tracing-subscriber` (lib) generated 11 warnings
    Compiling tracing-attributes v0.1.31
    Compiling tracing v0.1.44
-    Finished test [unoptimized + debuginfo] target(s) in 8.75s
+    Finished test [unoptimized + debuginfo] target(s) in 7.76s
 ────────────
- Nextest run ID 9bad040b-2130-4c56-a870-3e019471d507 with nextest profile: default
+ Nextest run ID 44824de9-df7a-4796-bcf2-93b6bf1d3353 with nextest profile: default
     Starting 8 tests across 2 binaries
-        PASS [   0.030s] (1/8) tracing-subscriber::filter level_filter_event
-        PASS [   0.031s] (2/8) tracing-subscriber::filter level_filter_event_with_target
-        PASS [   0.032s] (3/8) tracing-subscriber::same_len_filters same_length_targets
-        PASS [   0.041s] (4/8) tracing-subscriber::filter field_filter_events
-        PASS [   0.042s] (5/8) tracing-subscriber::filter span_name_filter_is_dynamic
-        PASS [   0.043s] (6/8) tracing-subscriber::same_len_filters same_num_fields_and_name_len
-        PASS [   0.044s] (7/8) tracing-subscriber::same_len_filters same_num_fields_event
-        PASS [   0.045s] (8/8) tracing-subscriber::filter same_name_spans
+        PASS [   0.011s] (1/8) tracing-subscriber::filter level_filter_event
+        PASS [   0.026s] (2/8) tracing-subscriber::filter field_filter_events
+        PASS [   0.016s] (3/8) tracing-subscriber::filter level_filter_event_with_target
+        PASS [   0.020s] (4/8) tracing-subscriber::filter span_name_filter_is_dynamic
+        PASS [   0.021s] (5/8) tracing-subscriber::filter same_name_spans
+        PASS [   0.014s] (6/8) tracing-subscriber::same_len_filters same_length_targets
+        PASS [   0.025s] (7/8) tracing-subscriber::same_len_filters same_num_fields_and_name_len
+        PASS [   0.020s] (8/8) tracing-subscriber::same_len_filters same_num_fields_event
 ────────────
-     Summary [   0.046s] 8 tests run: 8 passed, 0 skipped
+     Summary [   0.081s] 8 tests run: 8 passed, 0 skipped
 reward=1 graded=8 found=2 failed=0 parsed=8 framework=cargo exit_code=0

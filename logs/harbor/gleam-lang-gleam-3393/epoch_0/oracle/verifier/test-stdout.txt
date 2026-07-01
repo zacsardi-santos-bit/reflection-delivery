@@ -1,0 +1,27 @@
+patching file compiler-core/src/type_/tests/exhaustiveness.rs
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_aliased_unqualified_value.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_alias.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_names.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_aliased_and_shadowed.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_module_when_shadowed.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_unqualified.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_prelude_module_when_shadowed.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_unqualifed_when_aliased.snap
+patching file compiler-core/src/type_/tests/snapshots/gleam_core__type___tests__exhaustiveness__case_error_prints_unqualified_value.snap
+   Compiling gleam-core v1.4.1 (/workspace/repo/compiler-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.64s
+────────────
+ Nextest run ID 9729dea1-e122-4624-9f64-4a5a2cc163fa with nextest profile: default
+    Starting 9 tests across 1 binary (2553 tests skipped)
+        PASS [   0.039s] (1/9) gleam-core type_::tests::exhaustiveness::case_error_prints_aliased_unqualified_value
+        PASS [   0.039s] (2/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_alias
+        PASS [   0.053s] (3/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_when_aliased_and_shadowed
+        PASS [   0.053s] (4/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_names
+        PASS [   0.036s] (5/9) gleam-core type_::tests::exhaustiveness::case_error_prints_prelude_module_unqualified
+        PASS [   0.043s] (6/9) gleam-core type_::tests::exhaustiveness::case_error_prints_module_when_shadowed
+        PASS [   0.041s] (7/9) gleam-core type_::tests::exhaustiveness::case_error_prints_prelude_module_when_shadowed
+        PASS [   0.043s] (8/9) gleam-core type_::tests::exhaustiveness::case_error_prints_unqualifed_when_aliased
+        PASS [   0.035s] (9/9) gleam-core type_::tests::exhaustiveness::case_error_prints_unqualified_value
+────────────
+     Summary [   0.207s] 9 tests run: 9 passed, 2553 skipped
+reward=1 graded=9 found=1 failed=0 parsed=9 framework=cargo exit_code=0

@@ -1,0 +1,4 @@
+patching file pkg/events/dependencies/manager_test.go
+github.com/aquasecurity/tracee/pkg/events/dependencies: no non-test Go files in /workspace/repo/pkg/events/dependencies
+FAIL	github.com/aquasecurity/tracee/pkg/events/dependencies [build failed]
+reward=0 graded=16 found=16 failed=16 parsed=1 framework=go exit_code=1

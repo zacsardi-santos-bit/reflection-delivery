@@ -1,0 +1,34 @@
+patching file pkg/oci/client/build_test.go
+{"Time":"2026-07-01T14:54:32.681546709Z","Action":"start","Package":"kusionstack.io/kusion/pkg/oci/client"}
+{"Time":"2026-07-01T14:54:32.684935703Z","Action":"run","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild"}
+{"Time":"2026-07-01T14:54:32.684950876Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild","Output":"=== RUN   TestBuild\n"}
+{"Time":"2026-07-01T14:54:32.685102862Z","Action":"run","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/non-existent_path"}
+{"Time":"2026-07-01T14:54:32.685107759Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/non-existent_path","Output":"=== RUN   TestBuild/non-existent_path\n"}
+{"Time":"2026-07-01T14:54:32.685265568Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/non-existent_path","Output":"--- PASS: TestBuild/non-existent_path (0.00s)\n"}
+{"Time":"2026-07-01T14:54:32.685273902Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/non-existent_path","Elapsed":0}
+{"Time":"2026-07-01T14:54:32.685279379Z","Action":"run","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/existing_path"}
+{"Time":"2026-07-01T14:54:32.685283378Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/existing_path","Output":"=== RUN   TestBuild/existing_path\n"}
+{"Time":"2026-07-01T14:54:32.686853793Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/existing_path","Output":"--- PASS: TestBuild/existing_path (0.00s)\n"}
+{"Time":"2026-07-01T14:54:32.686861047Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/existing_path","Elapsed":0}
+{"Time":"2026-07-01T14:54:32.686871641Z","Action":"run","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/absolute_directory_path"}
+{"Time":"2026-07-01T14:54:32.686875462Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/absolute_directory_path","Output":"=== RUN   TestBuild/absolute_directory_path\n"}
+{"Time":"2026-07-01T14:54:32.688136666Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/absolute_directory_path","Output":"--- PASS: TestBuild/absolute_directory_path (0.00s)\n"}
+{"Time":"2026-07-01T14:54:32.688148442Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/absolute_directory_path","Elapsed":0}
+{"Time":"2026-07-01T14:54:32.688152387Z","Action":"run","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/existing_path_with_leading_slash"}
+{"Time":"2026-07-01T14:54:32.688155852Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/existing_path_with_leading_slash","Output":"=== RUN   TestBuild/existing_path_with_leading_slash\n"}
+{"Time":"2026-07-01T14:54:32.690782927Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/existing_path_with_leading_slash","Output":"--- PASS: TestBuild/existing_path_with_leading_slash (0.00s)\n"}
+{"Time":"2026-07-01T14:54:32.690798532Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/existing_path_with_leading_slash","Elapsed":0}
+{"Time":"2026-07-01T14:54:32.690803713Z","Action":"run","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/relative_file_path"}
+{"Time":"2026-07-01T14:54:32.690806559Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/relative_file_path","Output":"=== RUN   TestBuild/relative_file_path\n"}
+{"Time":"2026-07-01T14:54:32.691422006Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/relative_file_path","Output":"--- PASS: TestBuild/relative_file_path (0.00s)\n"}
+{"Time":"2026-07-01T14:54:32.691429996Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/relative_file_path","Elapsed":0}
+{"Time":"2026-07-01T14:54:32.691436018Z","Action":"run","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/absolute_file_path"}
+{"Time":"2026-07-01T14:54:32.691444007Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/absolute_file_path","Output":"=== RUN   TestBuild/absolute_file_path\n"}
+{"Time":"2026-07-01T14:54:32.692011762Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/absolute_file_path","Output":"--- PASS: TestBuild/absolute_file_path (0.00s)\n"}
+{"Time":"2026-07-01T14:54:32.692018097Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild/absolute_file_path","Elapsed":0}
+{"Time":"2026-07-01T14:54:32.692137133Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild","Output":"--- PASS: TestBuild (0.01s)\n"}
+{"Time":"2026-07-01T14:54:32.692147804Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/oci/client","Test":"TestBuild","Elapsed":0.01}
+{"Time":"2026-07-01T14:54:32.69215317Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Output":"PASS\n"}
+{"Time":"2026-07-01T14:54:32.692553973Z","Action":"output","Package":"kusionstack.io/kusion/pkg/oci/client","Output":"ok  \tkusionstack.io/kusion/pkg/oci/client\t0.011s\n"}
+{"Time":"2026-07-01T14:54:32.692569894Z","Action":"pass","Package":"kusionstack.io/kusion/pkg/oci/client","Elapsed":0.011}
+reward=1 graded=7 found=7 failed=0 parsed=7 framework=go exit_code=0

@@ -1,0 +1,20 @@
+patching file packages/botonic-react/tests/components/__snapshots__/whatsapp-media-carousel.test.jsx.snap
+patching file packages/botonic-react/tests/components/__snapshots__/whatsapp-product-carousel.test.jsx.snap
+patching file packages/botonic-react/tests/components/__snapshots__/whatsapp-product-list.test.jsx.snap
+patching file packages/botonic-react/tests/components/__snapshots__/whatsapp-product.test.jsx.snap
+patching file packages/botonic-react/tests/components/whatsapp-media-carousel.test.jsx
+patching file packages/botonic-react/tests/components/whatsapp-product-carousel.test.jsx
+patching file packages/botonic-react/tests/components/whatsapp-product-list.test.jsx
+patching file packages/botonic-react/tests/components/whatsapp-product.test.jsx
+patching file packages/botonic-react/tests/utils.test.js
+PASS tests/components/whatsapp-product-list.test.jsx (23.319 s)
+PASS tests/components/whatsapp-media-carousel.test.jsx (23.589 s)
+PASS tests/components/whatsapp-product-carousel.test.jsx (23.489 s)
+PASS tests/components/whatsapp-product.test.jsx
+
+Test Suites: 4 passed, 4 total
+Tests:       6 passed, 6 total
+Snapshots:   6 passed, 6 total
+Time:        24.204 s
+Ran all test suites matching /tests\/components\/whatsapp-media-carousel.test.jsx|tests\/components\/whatsapp-product-carousel.test.jsx|tests\/components\/whatsapp-product-list.test.jsx|tests\/components\/whatsapp-product.test.jsx/i.
+reward=1 graded=6 found=0 failed=0 parsed=0 framework=jest exit_code=0

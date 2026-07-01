@@ -1,0 +1,307 @@
+patching file azkaban-common/src/test/java/azkaban/database/AzkabanConnectionPoolTest.java
+patching file azkaban-common/src/test/java/azkaban/project/JdbcProjectImplTest.java
+patching file azkaban-common/src/test/java/azkaban/project/ProjectManagerTest.java
+patching file azkaban-common/src/test/java/azkaban/utils/CaseInsensitiveConcurrentHashMapTest.java
+patching file azkaban-db/src/test/java/azkaban/db/AzDBTestUtility.java
+patching file azkaban-web-server/src/test/resources/quartz.test.properties
+Parallel execution with configuration on demand is an incubating feature.
+Build cache is an incubating feature.
+:az-core:compileJavaNote: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+:az-core:processResources NO-SOURCE
+:az-core:classes
+:az-core:jar
+:az-core:compileTestJava
+:az-core:processTestResources NO-SOURCE
+:az-core:testClasses
+:az-core:testJar UP-TO-DATE
+:azkaban-db:compileJava
+:azkaban-db:processResources NO-SOURCE
+:azkaban-db:classes
+:azkaban-db:jar
+:azkaban-spi:compileJava UP-TO-DATE
+:azkaban-spi:processResources NO-SOURCE
+:azkaban-spi:classes UP-TO-DATE
+:azkaban-spi:jar UP-TO-DATE
+:azkaban-common:compileJavaNote: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+:azkaban-common:processResources NO-SOURCE
+:azkaban-common:classes
+:azkaban-db:compileTestJava
+:azkaban-db:processTestResources UP-TO-DATE
+:azkaban-db:testClasses
+:azkaban-db:testJar
+:test:compileJava UP-TO-DATE
+:test:processResources NO-SOURCE
+:test:classes UP-TO-DATE
+:test:jar UP-TO-DATE
+:azkaban-common:compileTestJavaNote: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+:azkaban-common:processTestResources UP-TO-DATE
+:azkaban-common:testClasses
+:azkaban-common:test
+
+BUILD SUCCESSFUL in 43s
+17 actionable tasks: 10 executed, 7 up-to-date
+A build scan will not be published due to this build running offline.
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="azkaban.project.JdbcProjectImplTest" tests="25" skipped="0" failures="0" errors="0" timestamp="2026-07-01T14:34:17" hostname="/0:0:0:0:0:0:0:1%lo" time="1.092">
+  <properties/>
+  <testcase name="testUpdateProjectSettings" classname="azkaban.project.JdbcProjectImplTest" time="0.374"/>
+  <testcase name="testFetchProjectMetaData" classname="azkaban.project.JdbcProjectImplTest" time="0.023"/>
+  <testcase name="testDuplicateUploadProjectFile" classname="azkaban.project.JdbcProjectImplTest" time="0.084"/>
+  <testcase name="testDuplicateUploadFlowFileException" classname="azkaban.project.JdbcProjectImplTest" time="0.121"/>
+  <testcase name="testRemoveProject" classname="azkaban.project.JdbcProjectImplTest" time="0.003"/>
+  <testcase name="testGetLatestFlowVersion" classname="azkaban.project.JdbcProjectImplTest" time="0.069"/>
+  <testcase name="testUpdateFlow" classname="azkaban.project.JdbcProjectImplTest" time="0.017"/>
+  <testcase name="testCreateProjectsWithDifferentCases" classname="azkaban.project.JdbcProjectImplTest" time="0.003"/>
+  <testcase name="testUpdateDescription" classname="azkaban.project.JdbcProjectImplTest" time="0.004"/>
+  <testcase name="testFetchProjectProperties" classname="azkaban.project.JdbcProjectImplTest" time="0.078"/>
+  <testcase name="testRemovePermission" classname="azkaban.project.JdbcProjectImplTest" time="0.009"/>
+  <testcase name="testCreateProject" classname="azkaban.project.JdbcProjectImplTest" time="0.002"/>
+  <testcase name="testFetchProjectById" classname="azkaban.project.JdbcProjectImplTest" time="0.003"/>
+  <testcase name="testPostAndGetEvent" classname="azkaban.project.JdbcProjectImplTest" time="0.081"/>
+  <testcase name="testUploadFlowFile" classname="azkaban.project.JdbcProjectImplTest" time="0.013"/>
+  <testcase name="cleanOlderProjectVersion" classname="azkaban.project.JdbcProjectImplTest" time="0.018"/>
+  <testcase name="testUploadAndFetchFlow" classname="azkaban.project.JdbcProjectImplTest" time="0.069"/>
+  <testcase name="testChangeProjectVersion" classname="azkaban.project.JdbcProjectImplTest" time="0.004"/>
+  <testcase name="testUploadOrUpdateProjectProperty" classname="azkaban.project.JdbcProjectImplTest" time="0.008"/>
+  <testcase name="testFetchProjectByName" classname="azkaban.project.JdbcProjectImplTest" time="0.003"/>
+  <testcase name="testAddProjectVersion" classname="azkaban.project.JdbcProjectImplTest" time="0.006"/>
+  <testcase name="testUploadLargeFlowFileException" classname="azkaban.project.JdbcProjectImplTest" time="0.002"/>
+  <testcase name="testUpdatePermission" classname="azkaban.project.JdbcProjectImplTest" time="0.075"/>
+  <testcase name="testUploadProjectFile" classname="azkaban.project.JdbcProjectImplTest" time="0.016"/>
+  <testcase name="testFetchAllActiveProjects" classname="azkaban.project.JdbcProjectImplTest" time="0.004"/>
+  <system-out><![CDATA[2026/07/01 14:34:17.435 +0000 INFO [DatabaseSetup] Creating new table execution_logs
+2026/07/01 14:34:17.448 +0000 INFO [DatabaseSetup] Creating new table project_files
+2026/07/01 14:34:17.450 +0000 INFO [DatabaseSetup] Creating new table project_flow_files
+2026/07/01 14:34:17.451 +0000 INFO [DatabaseSetup] Creating new table projects
+2026/07/01 14:34:17.456 +0000 INFO [DatabaseSetup] Creating new table executor_events
+2026/07/01 14:34:17.457 +0000 INFO [DatabaseSetup] Creating new table execution_jobs
+2026/07/01 14:34:17.459 +0000 INFO [DatabaseSetup] Creating new table project_flows
+2026/07/01 14:34:17.460 +0000 INFO [DatabaseSetup] Creating new table triggers
+2026/07/01 14:34:17.461 +0000 INFO [DatabaseSetup] Creating new table execution_dependencies
+2026/07/01 14:34:17.462 +0000 INFO [DatabaseSetup] Creating new table project_versions
+2026/07/01 14:34:17.463 +0000 INFO [DatabaseSetup] Creating new table project_events
+2026/07/01 14:34:17.464 +0000 INFO [DatabaseSetup] Creating new table active_sla
+2026/07/01 14:34:17.465 +0000 INFO [DatabaseSetup] Creating new table active_executing_flows
+2026/07/01 14:34:17.466 +0000 INFO [DatabaseSetup] Creating new table execution_flows
+2026/07/01 14:34:17.520 +0000 INFO [DatabaseSetup] Creating new table executors
+2026/07/01 14:34:17.522 +0000 INFO [DatabaseSetup] Creating new table project_permissions
+2026/07/01 14:34:17.524 +0000 INFO [DatabaseSetup] Creating new table project_properties
+2026/07/01 14:34:17.525 +0000 INFO [DatabaseSetup] Creating new table properties
+2026/07/01 14:34:17.526 +0000 INFO [DatabaseSetup] Creating new table quartz-tables-all
+2026/07/01 14:34:17.932 +0000 INFO [JdbcProjectImpl] Uploading Project ID: 4 file: sample_flow_01.zip [1274 bytes]
+2026/07/01 14:34:17.934 +0000 INFO [JdbcProjectImpl] Creating message digest for upload sample_flow_01.zip
+2026/07/01 14:34:17.935 +0000 INFO [JdbcProjectImpl] Md5 hash created
+2026/07/01 14:34:17.944 +0000 INFO [JdbcProjectImpl] Read bytes for sample_flow_01.zip size:1274
+2026/07/01 14:34:17.944 +0000 INFO [JdbcProjectImpl] Running update for sample_flow_01.zip chunk 0
+2026/07/01 14:34:17.945 +0000 INFO [JdbcProjectImpl] Finished update for sample_flow_01.zip chunk 0
+2026/07/01 14:34:17.946 +0000 INFO [JdbcProjectImpl] Uploaded Project ID: 4 file: sample_flow_01.zip [1274 bytes] in 0 sec
+2026/07/01 14:34:17.951 +0000 INFO [JdbcProjectImpl] Uploading Project ID: 7 file: sample_flow_01.zip [1274 bytes]
+2026/07/01 14:34:17.951 +0000 INFO [JdbcProjectImpl] Creating message digest for upload sample_flow_01.zip
+2026/07/01 14:34:17.952 +0000 INFO [JdbcProjectImpl] Md5 hash created
+2026/07/01 14:34:17.955 +0000 INFO [JdbcProjectImpl] Read bytes for sample_flow_01.zip size:1274
+2026/07/01 14:34:17.955 +0000 INFO [JdbcProjectImpl] Running update for sample_flow_01.zip chunk 0
+2026/07/01 14:34:17.956 +0000 INFO [JdbcProjectImpl] Finished update for sample_flow_01.zip chunk 0
+2026/07/01 14:34:17.956 +0000 INFO [JdbcProjectImpl] Uploaded Project ID: 7 file: sample_flow_01.zip [1274 bytes] in 0 sec
+2026/07/01 14:34:17.956 +0000 INFO [JdbcProjectImpl] Uploading Project ID: 7 file: sample_flow_01.zip [1274 bytes]
+2026/07/01 14:34:17.957 +0000 INFO [JdbcProjectImpl] Creating message digest for upload sample_flow_01.zip
+2026/07/01 14:34:17.957 +0000 INFO [JdbcProjectImpl] Md5 hash created
+2026/07/01 14:34:18.021 +0000 ERROR [JdbcProjectImpl] Error initializing project id: 7 version: 1 
+java.sql.SQLException: Unique index or primary key violation: "PRIMARY_KEY_D ON PUBLIC.PROJECT_VERSIONS(PROJECT_ID, VERSION) VALUES (7, 1, 4)"; SQL statement:
+INSERT INTO project_versions (project_id, version, upload_time, uploader, file_type, file_name, md5, num_chunks, resource_id) values (?,?,?,?,?,?,?,?,?) [23505-193] Query: INSERT INTO project_versions (project_id, version, upload_time, uploader, file_type, file_name, md5, num_chunks, resource_id) values (?,?,?,?,?,?,?,?,?) Parameters: [7, 1, 1782916457957, uploadUser1, zip, sample_flow_01.zip, [-59, -26, 22, -50, -80, -101, -57, -121, -27, 46, -71, -101, -85, -115, 42, -116], 0, null]
+	at org.apache.commons.dbutils.AbstractQueryRunner.rethrow(AbstractQueryRunner.java:363)
+	at org.apache.commons.dbutils.QueryRunner.update(QueryRunner.java:490)
+	at org.apache.commons.dbutils.QueryRunner.update(QueryRunner.java:403)
+	at azkaban.db.DatabaseTransOperator.update(DatabaseTransOperator.java:101)
+	at azkaban.project.JdbcProjectImpl.addProjectToProjectVersions(JdbcProjectImpl.java:365)
+	at azkaban.project.JdbcProjectImpl.lambda$uploadProjectFile$2(JdbcProjectImpl.java:267)
+	at azkaban.db.DatabaseOperator.transaction(DatabaseOperator.java:95)
+	at azkaban.project.JdbcProjectImpl.uploadProjectFile(JdbcProjectImpl.java:280)
+	at azkaban.project.JdbcProjectImplTest.testDuplicateUploadProjectFile(JdbcProjectImplTest.java:167)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.ExpectException.evaluate(ExpectException.java:19)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecuter.runTestClass(JUnitTestClassExecuter.java:114)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecuter.execute(JUnitTestClassExecuter.java:57)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassProcessor.processTestClass(JUnitTestClassProcessor.java:66)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.processTestClass(SuiteTestClassProcessor.java:51)
+	at sun.reflect.GeneratedMethodAccessor3.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:32)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:93)
+	at com.sun.proxy.$Proxy1.processTestClass(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.processTestClass(TestWorker.java:109)
+	at sun.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:146)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:128)
+	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:404)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:63)
+	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:46)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:55)
+	at java.lang.Thread.run(Thread.java:750)
+2026/07/01 14:34:18.033 +0000 INFO [JdbcProjectImpl] Uploading flow file basic_flow.flow, version 1 for project 123, version 3, file length is [997 bytes]
+2026/07/01 14:34:18.039 +0000 INFO [JdbcProjectImpl] Read bytes for basic_flow.flow, size:997
+2026/07/01 14:34:18.133 +0000 INFO [JdbcProjectImpl] Uploading flow file basic_flow.flow, version 1 for project 123, version 3, file length is [997 bytes]
+2026/07/01 14:34:18.135 +0000 INFO [JdbcProjectImpl] Read bytes for basic_flow.flow, size:997
+2026/07/01 14:34:18.136 +0000 ERROR [DatabaseOperator] update failed
+java.sql.SQLException: Unique index or primary key violation: "PRIMARY_KEY_6 ON PUBLIC.PROJECT_FLOW_FILES(PROJECT_ID, PROJECT_VERSION, FLOW_NAME, FLOW_VERSION) VALUES (123, 3, CAST('basic_flow.flow' AS VARCHAR_IGNORECASE), 1, 1)"; SQL statement:
+INSERT INTO project_flow_files (project_id, project_version, flow_name, flow_version, modified_time, flow_file) values (?,?,?,?,?,?) [23505-193] Query: INSERT INTO project_flow_files (project_id, project_version, flow_name, flow_version, modified_time, flow_file) values (?,?,?,?,?,?) Parameters: [123, 3, basic_flow.flow, 1, 1782916458135, [45, 45, 45, 10, 35, 32, 65, 108, 108, 32, 102, 108, 111, 119, 32, 108, 101, 118, 101, 108, 32, 112, 114, 111, 112, 101, 114, 116, 105, 101, 115, 32, 104, 101, 114, 101, 10, 99, 111, 110, 102, 105, 103, 58, 10, 32, 32, 102, 108, 111, 119, 45, 108, 101, 118, 101, 108, 45, 112, 97, 114, 97, 109, 101, 116, 101, 114, 58, 32, 118, 97, 108, 117, 101, 10, 10, 35, 32, 84, 104, 105, 115, 32, 115, 101, 99, 116, 105, 111, 110, 32, 100, 101, 102, 105, 110, 101, 115, 32, 116, 104, 101, 32, 108, 105, 115, 116, 32, 111, 102, 32, 106, 111, 98, 115, 10, 35, 32, 65, 32, 110, 111, 100, 101, 32, 99, 97, 110, 32, 98, 101, 32, 97, 32, 106, 111, 98, 32, 111, 114, 32, 97, 32, 102, 108, 111, 119, 10, 35, 32, 73, 110, 32, 116, 104, 105, 115, 32, 101, 120, 97, 109, 112, 108, 101, 44, 32, 97, 108, 108, 32, 110, 111, 100, 101, 115, 32, 97, 114, 101, 32, 106, 111, 98, 115, 10, 110, 111, 100, 101, 115, 58, 10, 32, 32, 35, 32, 74, 111, 98, 32, 100, 101, 102, 105, 110, 105, 116, 105, 111, 110, 10, 32, 32, 35, 32, 84, 104, 101, 32, 106, 111, 98, 32, 100, 101, 102, 105, 110, 105, 116, 105, 111, 110, 32, 105, 115, 32, 108, 105, 107, 101, 32, 97, 32, 89, 65, 77, 76, 105, 102, 105, 101, 100, 32, 118, 101, 114, 115, 105, 111, 110, 32, 111, 102, 32, 112, 114, 111, 112, 101, 114, 116, 105, 101, 115, 32, 102, 105, 108, 101, 10, 32, 32, 35, 32, 119, 105, 116, 104, 32, 111, 110, 101, 32, 109, 97, 106, 111, 114, 32, 100, 105, 102, 102, 101, 114, 101, 110, 99, 101, 46, 32, 65, 108, 108, 32, 99, 117, 115, 116, 111, 109, 32, 112, 114, 111, 112, 101, 114, 116, 105, 101, 115, 32, 97, 114, 101, 32, 110, 111, 119, 32, 99, 108, 117, 98, 98, 101, 100, 32, 116, 111, 103, 101, 116, 104, 101, 114, 10, 32, 32, 35, 32, 105, 110, 32, 97, 32, 99, 111, 110, 102, 105, 103, 32, 115, 101, 99, 116, 105, 111, 110, 32, 105, 110, 32, 116, 104, 101, 32, 100, 101, 102, 105, 110, 105, 116, 105, 111, 110, 46, 10, 32, 32, 35, 32, 84, 104, 101, 32, 102, 105, 114, 115, 116, 32, 108, 105, 110, 101, 32, 100, 101, 115, 99, 114, 105, 98, 101, 115, 32, 116, 104, 101, 32, 110, 97, 109, 101, 32, 111, 102, 32, 116, 104, 101, 32, 106, 111, 98, 10, 32, 32, 45, 32, 110, 97, 109, 101, 58, 32, 115, 104, 101, 108, 108, 95, 101, 110, 100, 10, 32, 32, 32, 32, 35, 32, 68, 101, 115, 99, 114, 105, 98, 101, 32, 116, 104, 101, 32, 116, 121, 112, 101, 32, 111, 102, 32, 116, 104, 101, 32, 106, 111, 98, 10, 32, 32, 32, 32, 116, 121, 112, 101, 58, 32, 110, 111, 111, 112, 10, 10, 32, 32, 32, 32, 35, 32, 76, 105, 115, 116, 32, 116, 104, 101, 32, 100, 101, 112, 101, 110, 100, 101, 110, 99, 105, 101, 115, 32, 111, 102, 32, 116, 104, 101, 32, 106, 111, 98, 10, 32, 32, 32, 32, 100, 101, 112, 101, 110, 100, 115, 79, 110, 58, 10, 32, 32, 32, 32, 32, 32, 45, 32, 115, 104, 101, 108, 108, 95, 112, 119, 100, 10, 32, 32, 32, 32, 32, 32, 45, 32, 115, 104, 101, 108, 108, 95, 101, 99, 104, 111, 10, 32, 32, 32, 32, 32, 32, 45, 32, 115, 104, 101, 108, 108, 95, 98, 97, 115, 104, 10, 10, 32, 32, 45, 32, 110, 97, 109, 101, 58, 32, 115, 104, 101, 108, 108, 95, 101, 99, 104, 111, 10, 32, 32, 32, 32, 35, 32, 68, 101, 115, 99, 114, 105, 98, 101, 32, 116, 104, 101, 32, 116, 121, 112, 101, 32, 111, 102, 32, 116, 104, 101, 32, 106, 111, 98, 10, 32, 32, 32, 32, 116, 121, 112, 101, 58, 32, 99, 111, 109, 109, 97, 110, 100, 10, 32, 32, 32, 32, 99, 111, 110, 102, 105, 103, 58, 10, 32, 32, 32, 32, 32, 32, 99, 111, 109, 109, 97, 110, 100, 58, 32, 101, 99, 104, 111, 32, 34, 84, 104, 105, 115, 32, 105, 115, 32, 97, 110, 32, 101, 99, 104, 111, 101, 100, 32, 116, 101, 120, 116, 46, 34, 10, 10, 32, 32, 45, 32, 110, 97, 109, 101, 58, 32, 115, 104, 101, 108, 108, 95, 112, 119, 100, 10, 32, 32, 32, 32, 35, 32, 68, 101, 115, 99, 114, 105, 98, 101, 32, 116, 104, 101, 32, 116, 121, 112, 101, 32, 111, 102, 32, 116, 104, 101, 32, 106, 111, 98, 10, 32, 32, 32, 32, 116, 121, 112, 101, 58, 32, 99, 111, 109, 109, 97, 110, 100, 10, 32, 32, 32, 32, 99, 111, 110, 102, 105, 103, 58, 10, 32, 32, 32, 32, 32, 32, 99, 111, 109, 109, 97, 110, 100, 58, 32, 112, 119, 100, 10, 10, 32, 32, 45, 32, 110, 97, 109, 101, 58, 32, 115, 104, 101, 108, 108, 95, 98, 97, 115, 104, 10, 32, 32, 32, 32, 35, 32, 68, 101, 115, 99, 114, 105, 98, 101, 32, 116, 104, 101, 32, 116, 121, 112, 101, 32, 111, 102, 32, 116, 104, 101, 32, 106, 111, 98, 10, 32, 32, 32, 32, 116, 121, 112, 101, 58, 32, 99, 111, 109, 109, 97, 110, 100, 10, 32, 32, 32, 32, 99, 111, 110, 102, 105, 103, 58, 10, 32, 32, 32, 32, 32, 32, 99, 111, 109, 109, 97, 110, 100, 58, 32, 98, 97, 115, 104, 32, 46, 47, 115, 97, 109, 112, 108, 101, 95, 115, 99, 114, 105, 112, 116, 46, 115, 104, 10]]
+	at org.apache.commons.dbutils.AbstractQueryRunner.rethrow(AbstractQueryRunner.java:363)
+	at org.apache.commons.dbutils.QueryRunner.update(QueryRunner.java:490)
+	at org.apache.commons.dbutils.QueryRunner.update(QueryRunner.java:456)
+	at azkaban.db.DatabaseOperator.update(DatabaseOperator.java:121)
+	at azkaban.project.JdbcProjectImpl.uploadFlowFile(JdbcProjectImpl.java:1001)
+	at azkaban.project.JdbcProjectImplTest.lambda$testDuplicateUploadFlowFileException$1(JdbcProjectImplTest.java:391)
+	at org.assertj.core.api.ThrowableAssert.catchThrowable(ThrowableAssert.java:60)
+	at org.assertj.core.api.AssertionsForClassTypes.catchThrowable(AssertionsForClassTypes.java:713)
+	at org.assertj.core.api.Assertions.catchThrowable(Assertions.java:1135)
+	at org.assertj.core.api.Assertions.assertThatThrownBy(Assertions.java:1061)
+	at azkaban.project.JdbcProjectImplTest.testDuplicateUploadFlowFileException(JdbcProjectImplTest.java:390)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:50)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:47)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:325)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:78)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:57)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecuter.runTestClass(JUnitTestClassExecuter.java:114)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassExecuter.execute(JUnitTestClassExecuter.java:57)
+	at org.gradle.api.internal.tasks.testing.junit.JUnitTestClassProcessor.processTestClass(JUnitTestClassProcessor.java:66)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.processTestClass(SuiteTestClassProcessor.java:51)
+	at sun.reflect.GeneratedMethodAccessor3.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:32)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:93)
+	at com.sun.proxy.$Proxy1.processTestClass(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.processTestClass(TestWorker.java:109)
+	at sun.reflect.GeneratedMethodAccessor2.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:146)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:128)
+	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:404)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:63)
+	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:46)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:55)
+	at java.lang.Thread.run(Thread.java:750)
+2026/07/01 14:34:18.159 +0000 INFO [JdbcProjectImpl] Uploading flow file basic_flow.flow, version 1 for project 123, version 3, file length is [997 bytes]
+2026/07/01 14:34:18.223 +0000 INFO [JdbcProjectImpl] Read bytes for basic_flow.flow, size:997
+2026/07/01 14:34:18.229 +0000 INFO [JdbcProjectImpl] Uploading flows
+2026/07/01 14:34:18.234 +0000 INFO [JdbcProjectImpl] Flow upload flow1 is byte size 172
+2026/07/01 14:34:18.234 +0000 INFO [JdbcProjectImpl] Uploading flow flow1
+2026/07/01 14:34:18.238 +0000 INFO [JdbcProjectImpl] Flow upload flow1 is byte size 174
+2026/07/01 14:34:18.424 +0000 INFO [JdbcProjectImpl] Uploading flow file basic_flow.flow, version 1 for project 123, version 3, file length is [997 bytes]
+2026/07/01 14:34:18.429 +0000 INFO [JdbcProjectImpl] Read bytes for basic_flow.flow, size:997
+2026/07/01 14:34:18.441 +0000 INFO [JdbcProjectImpl] Uploading Project ID: 33 file: sample_flow_01.zip [1274 bytes]
+2026/07/01 14:34:18.441 +0000 INFO [JdbcProjectImpl] Creating message digest for upload sample_flow_01.zip
+2026/07/01 14:34:18.441 +0000 INFO [JdbcProjectImpl] Md5 hash created
+2026/07/01 14:34:18.446 +0000 INFO [JdbcProjectImpl] Read bytes for sample_flow_01.zip size:1274
+2026/07/01 14:34:18.446 +0000 INFO [JdbcProjectImpl] Running update for sample_flow_01.zip chunk 0
+2026/07/01 14:34:18.447 +0000 INFO [JdbcProjectImpl] Finished update for sample_flow_01.zip chunk 0
+2026/07/01 14:34:18.448 +0000 INFO [JdbcProjectImpl] Uploaded Project ID: 33 file: sample_flow_01.zip [1274 bytes] in 0 sec
+2026/07/01 14:34:18.450 +0000 INFO [JdbcProjectImpl] Md5 Hash is valid
+2026/07/01 14:34:18.458 +0000 INFO [JdbcProjectImpl] Uploading flows
+2026/07/01 14:34:18.461 +0000 INFO [JdbcProjectImpl] Flow upload flow1 is byte size 172
+2026/07/01 14:34:18.521 +0000 INFO [JdbcProjectImpl] Flow upload flow2 is byte size 173
+2026/07/01 14:34:18.546 +0000 INFO [JdbcProjectImpl] Uploading flow file large_file.flow, version 1 for project 123, version 3, file length is [11534336 bytes]
+2026/07/01 14:34:18.627 +0000 INFO [JdbcProjectImpl] Uploading Project ID: 54 file: sample_flow_01.zip [1274 bytes]
+2026/07/01 14:34:18.628 +0000 INFO [JdbcProjectImpl] Creating message digest for upload sample_flow_01.zip
+2026/07/01 14:34:18.629 +0000 INFO [JdbcProjectImpl] Md5 hash created
+2026/07/01 14:34:18.634 +0000 INFO [JdbcProjectImpl] Read bytes for sample_flow_01.zip size:1274
+2026/07/01 14:34:18.634 +0000 INFO [JdbcProjectImpl] Running update for sample_flow_01.zip chunk 0
+2026/07/01 14:34:18.635 +0000 INFO [JdbcProjectImpl] Finished update for sample_flow_01.zip chunk 0
+2026/07/01 14:34:18.636 +0000 INFO [JdbcProjectImpl] Uploaded Project ID: 54 file: sample_flow_01.zip [1274 bytes] in 0 sec
+2026/07/01 14:34:18.637 +0000 INFO [JdbcProjectImpl] Md5 Hash is valid
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="azkaban.database.AzkabanConnectionPoolTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-07-01T14:34:16" hostname="/0:0:0:0:0:0:0:1%lo" time="0.59">
+  <properties/>
+  <testcase name="testConnectionDefaultAutoCommit" classname="azkaban.database.AzkabanConnectionPoolTest" time="0.532"/>
+  <testcase name="testGetNewConnectionAfterClose" classname="azkaban.database.AzkabanConnectionPoolTest" time="0.055"/>
+  <testcase name="testGetNewConnectionBeforeClose" classname="azkaban.database.AzkabanConnectionPoolTest" time="0.001"/>
+  <testcase name="testConnectionDisableAutoCommit" classname="azkaban.database.AzkabanConnectionPoolTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="azkaban.utils.CaseInsensitiveConcurrentHashMapTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-07-01T14:34:19" hostname="/0:0:0:0:0:0:0:1%lo" time="0.0">
+  <properties/>
+  <testcase name="testGet" classname="azkaban.utils.CaseInsensitiveConcurrentHashMapTest" time="0.0"/>
+  <testcase name="testPut" classname="azkaban.utils.CaseInsensitiveConcurrentHashMapTest" time="0.0"/>
+  <testcase name="testRemove" classname="azkaban.utils.CaseInsensitiveConcurrentHashMapTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="azkaban.project.ProjectManagerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-07-01T14:34:18" hostname="/0:0:0:0:0:0:0:1%lo" time="1.105">
+  <properties/>
+  <testcase name="testCreateProjectsWithDifferentCases" classname="azkaban.project.ProjectManagerTest" time="1.105"/>
+  <system-out><![CDATA[2026/07/01 14:34:19.829 +0000 INFO [AzkabanProjectLoader] Using temp dir: /workspace/repo/azkaban-common/temp
+2026/07/01 14:34:19.830 +0000 INFO [AzkabanProjectLoader] Project version retention is set to 3
+2026/07/01 14:34:19.831 +0000 WARN [XmlValidatorManager] Validator directory validators does not exist or is not a directory.
+2026/07/01 14:34:19.832 +0000 WARN [XmlValidatorManager] Azkaban properties file does not contain the key project.validators.xml.file
+2026/07/01 14:34:19.839 +0000 INFO [ProjectManager] Trying to create mytestproject by user testUser1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=33 found=33 failed=0 parsed=33 framework=junit exit_code=0

@@ -1,0 +1,255 @@
+patching file src/cmd/logic-function.test.js
+patching file src/lib/logic-function.test.js
+patching file test/e2e/help.e2e.js
+patching file test/e2e/logic-function.e2e.js
+
+
+  LogicFunctionCommands
+    _setOrg
+      ✓ sets the organization member
+    list
+      ✓ lists Logic Functions in Sandbox account
+      ✓ lists Logic Functions in an org
+      ✓ shows help if no Logic Functions are found
+      ✓ shows help if no Logic Functions are found
+    get
+      ✓ gets a Logic Function with an specific name from Sandbox account
+      ✓ gets a Logic Function with an specific id from Sandbox account
+      ✓ shows error if Logic Function is not found
+      ✓ gets a Logic Function with an specific name from an org
+    create
+      ✓ creates a Logic Function locally for Sandbox account
+      ✓ ask to overwrite if files already exist
+    execute
+      1) executes a Logic Function with user provided data
+      ✓ throws an error if there is no Logic Function in the directory
+      ✓ executes a Logic Function with user provided data from file
+      2) executes a Logic Function with user provided data and shows error
+      ✓ prompts if found multiple Logic Functions
+      3) executes a Logic function with provided Logic Function name
+      4) executes a Logic Function with provided Logic Function id
+      5) prints malformed logic list when there are any and name/id params are not sent
+      ✓ prints malformed logic list when lf list is empty
+      6) omit print malformed logic list when there are any and name/id are sent and lf exist
+    _validatePaths
+      ✓ returns if paths do not exist
+      ✓ returns if all paths exist and not overwriting
+      ✓ prompts if any path exists and overwriting
+    _promptOverwrite
+      ✓ should return true if user chooses not to overwrite
+      ✓ should return false user chooses to overwrite
+    _selectLogicFunctionName
+      7) selects Logic Function from a list
+      8) returns error if list is empty
+    delete
+      ✓ checks for confirmation before deleting
+      ✓ process exits if user does not want to delete during confirmation
+      ✓ throws an error if deletion fails
+    deploy
+      9) deploys a new Logic Function
+      10) deploys an existent Logic Function
+      ✓ throws an error if deployement fails
+    enable/disable
+      ✓ enable a Logic Function with name
+      ✓ enable a Logic Function with id
+      ✓ fails to enable a Logic Function
+      ✓ updates the local Logic Function if it exists in the path
+
+  LogicFunction
+    list
+      ✓ returns an empty array if there are no Logic Functions
+      ✓ returns a list of Logic Functions
+      ✓ returns a list of Logic Functions from an specific org
+      11) propagates errors
+    getByIdOrName
+      12) throws an error if the Logic Function is not found
+      ✓ returns a Logic Function by name
+    saveToDisk
+      ✓ saves a Logic Function to disk
+    initFromTemplate
+      ✓ initializes a Logic Function from a template
+      ✓ throws an error if the template does not exist
+    listFromDisk
+      ✓ returns a list of Logic Functions
+      ✓ returns a list of Logic Functions with org
+      ✓ returns a list of more than one Logic Functions
+      ✓ filter out files that are not Logic Functions
+      ✓ filter out no well formed Logic Functions
+      ✓ returns a list of one element if the path is a file and it is a Logic Function
+      ✓ returns an empty list if the path is a file and it is not a Logic Function
+      ✓ returns an empty list if there are no Logic Functions
+      ✓ returns a list of Logic Functions and a list of malformed Logic Functions
+      ✓ fails if the path does not exist
+    execute
+      ✓ executes a Logic Function
+      ✓ returns status as exception and errors if the execution fails
+      13) propagates errors
+    deploy
+      14) deploys a new Logic Function
+      15) deploys existent Logic Function
+      16) propagates errors
+      17) propagates errors when updating
+
+
+  47 passing (220ms)
+  17 failing
+
+  1) LogicFunctionCommands
+       execute
+         executes a Logic Function with user provided data:
+     AssertionError: expected stub to have been called with arguments Executing Logic Function LF1 for your Sandbox..., [Promise] {  }
+      at Context.<anonymous> (src/cmd/logic-function.test.js:228:66)
+
+  2) LogicFunctionCommands
+       execute
+         executes a Logic Function with user provided data and shows error:
+     AssertionError: expected stub to have been called with arguments Executing Logic Function LF1 for your Sandbox..., [Promise] {  }
+      at Context.<anonymous> (src/cmd/logic-function.test.js:288:66)
+
+  3) LogicFunctionCommands
+       execute
+         executes a Logic function with provided Logic Function name:
+     AssertionError: expected stub to have been called with arguments Executing Logic Function LF1 for your Sandbox..., [Promise] {  }
+      at Context.<anonymous> (src/cmd/logic-function.test.js:350:66)
+
+  4) LogicFunctionCommands
+       execute
+         executes a Logic Function with provided Logic Function id:
+     AssertionError: expected stub to have been called with arguments Executing Logic Function LF2 for your Sandbox..., [Promise] {  }
+      at Context.<anonymous> (src/cmd/logic-function.test.js:382:66)
+
+  5) LogicFunctionCommands
+       execute
+         prints malformed logic list when there are any and name/id params are not sent:
+     AssertionError: expected stub to have been called with arguments Executing Logic Function LF1 for your Sandbox..., [Promise] {  }
+      at Context.<anonymous> (src/cmd/logic-function.test.js:408:66)
+
+  6) LogicFunctionCommands
+       execute
+         omit print malformed logic list when there are any and name/id are sent and lf exist:
+     AssertionError: expected stub to have been called with arguments Executing Logic Function LF1 for your Sandbox..., [Promise] {  }
+      at Context.<anonymous> (src/cmd/logic-function.test.js:455:66)
+
+  7) LogicFunctionCommands
+       _selectLogicFunctionName
+         selects Logic Function from a list:
+     AssertError: expected _prompt to be called once and with exact arguments 
+{
+  choices: ["logicFunc1", "logicFunc2"],
+  message: "Which logic function would you like to download?",
+  message: "Which Logic Function would you like to download?",
+  name: "logic_function",
+  nonInteractiveError: "Provide name for the logic function",
+  nonInteractiveError: "Provide name for the Logic Function",
+  type: "list"
+}
+      at Object.fail (node_modules/sinon/lib/sinon/assert.js:106:21)
+      at failAssertion (node_modules/sinon/lib/sinon/assert.js:65:16)
+      at assert.<computed> [as calledOnceWithExactly] (node_modules/sinon/lib/sinon/assert.js:91:13)
+      at Context.<anonymous> (src/cmd/logic-function.test.js:537:17)
+
+  8) LogicFunctionCommands
+       _selectLogicFunctionName
+         returns error if list is empty:
+
+      AssertionError: expected 'No logic functions found' to deeply equal 'No Logic Functions found'
+      + expected - actual
+
+      -No logic functions found
+      +No Logic Functions found
+      
+      at Context.<anonymous> (src/cmd/logic-function.test.js:557:29)
+
+  9) LogicFunctionCommands
+       deploy
+         deploys a new Logic Function:
+     AssertionError: expected stub to have been called with arguments Executing Logic Function LF1 for your Sandbox..., [Promise] {  }
+      at Context.<anonymous> (src/cmd/logic-function.test.js:667:66)
+
+  10) LogicFunctionCommands
+       deploy
+         deploys an existent Logic Function:
+     AssertionError: expected stub to have been called with arguments Executing Logic Function LF1 for your Sandbox..., [Promise] {  }
+      at Context.<anonymous> (src/cmd/logic-function.test.js:697:66)
+
+  11) LogicFunction
+       list
+         propagates errors:
+
+      AssertionError: expected 'Error listing logic functions: Internal Server Error' to equal 'Error listing Logic Functions: Internal Server Error'
+      + expected - actual
+
+      -Error listing logic functions: Internal Server Error
+      +Error listing Logic Functions: Internal Server Error
+      
+      at Context.<anonymous> (src/lib/logic-function.test.js:63:30)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  12) LogicFunction
+       getByIdOrName
+         throws an error if the Logic Function is not found:
+
+      AssertionError: expected 'Logic function not found' to equal 'Logic Function not found'
+      + expected - actual
+
+      -Logic function not found
+      +Logic Function not found
+      
+      at Context.<anonymous> (src/lib/logic-function.test.js:73:30)
+
+  13) LogicFunction
+       execute
+         propagates errors:
+
+      AssertionError: expected 'Error executing logic function: Internal Server Error' to equal 'Error executing Logic Function: Internal Server Error'
+      + expected - actual
+
+      -Error executing logic function: Internal Server Error
+      +Error executing Logic Function: Internal Server Error
+      
+      at Context.<anonymous> (src/lib/logic-function.test.js:318:30)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  14) LogicFunction
+       deploy
+         deploys a new Logic Function:
+     AssertionError: expected { Object (org, name, ...) } to have property 'id' of '1234', but got undefined
+      at Context.<anonymous> (src/lib/logic-function.test.js:334:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  15) LogicFunction
+       deploy
+         deploys existent Logic Function:
+     AssertionError: expected { Object (org, name, ...) } to have property 'version' of 1, but got undefined
+      at Context.<anonymous> (src/lib/logic-function.test.js:345:24)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  16) LogicFunction
+       deploy
+         propagates errors:
+
+      AssertionError: expected 'Error deploying logic function: Internal Server Error' to equal 'Error deploying Logic Function: Internal Server Error'
+      + expected - actual
+
+      -Error deploying logic function: Internal Server Error
+      +Error deploying Logic Function: Internal Server Error
+      
+      at Context.<anonymous> (src/lib/logic-function.test.js:356:30)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  17) LogicFunction
+       deploy
+         propagates errors when updating:
+
+      AssertionError: expected 'Error deploying logic function: Internal Server Error' to equal 'Error deploying Logic Function: Internal Server Error'
+      + expected - actual
+
+      -Error deploying logic function: Internal Server Error
+      +Error deploying Logic Function: Internal Server Error
+      
+      at Context.<anonymous> (src/lib/logic-function.test.js:369:30)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+
+
+reward=0 graded=63 found=63 failed=18 parsed=61 framework=mocha exit_code=17

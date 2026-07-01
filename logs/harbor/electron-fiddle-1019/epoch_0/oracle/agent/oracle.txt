@@ -1,0 +1,4 @@
+patching file src/less/components/commands.less
+patching file src/renderer/components/settings-electron.tsx
+patching file src/renderer/components/version-select.tsx
+patching file src/utils/disable-download.ts

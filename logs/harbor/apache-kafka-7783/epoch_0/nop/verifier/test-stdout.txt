@@ -1,0 +1,126 @@
+patching file connect/runtime/src/test/java/org/apache/kafka/connect/integration/ConnectWorkerIntegrationTest.java
+patching file connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java
+patching file connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedConnectCluster.java
+patching file connect/runtime/src/test/java/org/apache/kafka/connect/util/clusters/EmbeddedKafkaCluster.java
+To honour the JVM settings for this build a new JVM will be forked. Please consider using the daemon: https://docs.gradle.org/5.4.1/userguide/gradle_daemon.html.
+Daemon will be stopped at the end of the build stopping after processing
+
+> Configure project :
+Building project 'core' with Scala version 2.12.8
+Building project 'streams-scala' with Scala version 2.12.8
+
+> Task :generator:compileJava UP-TO-DATE
+> Task :generator:processResources NO-SOURCE
+> Task :generator:classes UP-TO-DATE
+> Task :clients:processMessages UP-TO-DATE
+> Task :clients:compileJava UP-TO-DATE
+> Task :clients:processResources UP-TO-DATE
+> Task :clients:classes UP-TO-DATE
+> Task :clients:determineCommitId UP-TO-DATE
+> Task :clients:createVersionFile
+> Task :clients:jar UP-TO-DATE
+> Task :clients:compileTestJava UP-TO-DATE
+> Task :clients:processTestResources UP-TO-DATE
+> Task :clients:testClasses UP-TO-DATE
+> Task :core:compileJava NO-SOURCE
+> Task :core:compileScala UP-TO-DATE
+> Task :core:processResources NO-SOURCE
+> Task :core:classes UP-TO-DATE
+> Task :core:copyDependantLibs UP-TO-DATE
+> Task :core:jar UP-TO-DATE
+> Task :core:compileTestJava NO-SOURCE
+> Task :core:compileTestScala UP-TO-DATE
+> Task :core:processTestResources UP-TO-DATE
+> Task :core:testClasses UP-TO-DATE
+> Task :log4j-appender:compileJava UP-TO-DATE
+> Task :log4j-appender:processResources NO-SOURCE
+> Task :log4j-appender:classes UP-TO-DATE
+> Task :log4j-appender:jar UP-TO-DATE
+> Task :tools:compileJava UP-TO-DATE
+> Task :tools:processResources NO-SOURCE
+> Task :tools:classes UP-TO-DATE
+> Task :tools:copyDependantLibs UP-TO-DATE
+> Task :tools:jar UP-TO-DATE
+> Task :connect:api:compileJava UP-TO-DATE
+> Task :connect:api:processResources NO-SOURCE
+> Task :connect:api:classes UP-TO-DATE
+> Task :connect:api:copyDependantLibs UP-TO-DATE
+> Task :connect:api:jar UP-TO-DATE
+> Task :connect:json:compileJava UP-TO-DATE
+> Task :connect:json:processResources NO-SOURCE
+> Task :connect:json:classes UP-TO-DATE
+> Task :connect:json:copyDependantLibs UP-TO-DATE
+> Task :connect:json:jar UP-TO-DATE
+> Task :connect:transforms:compileJava UP-TO-DATE
+> Task :connect:transforms:processResources NO-SOURCE
+> Task :connect:transforms:classes UP-TO-DATE
+> Task :connect:transforms:copyDependantLibs UP-TO-DATE
+> Task :connect:transforms:jar UP-TO-DATE
+> Task :connect:runtime:compileJava UP-TO-DATE
+> Task :connect:runtime:processResources UP-TO-DATE
+> Task :connect:runtime:classes UP-TO-DATE
+> Task :connect:runtime:checkstyleMain UP-TO-DATE
+
+> Task :connect:runtime:compileTestJava
+/workspace/repo/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java:162: error: cannot find symbol
+        verify(coordinator, times(rebalanceNum)).generationId();
+                                                ^
+  symbol:   method generationId()
+  location: class WorkerCoordinator
+/workspace/repo/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java:228: error: cannot find symbol
+        verify(coordinator, times(rebalanceNum)).generationId();
+                                                ^
+  symbol:   method generationId()
+  location: class WorkerCoordinator
+/workspace/repo/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java:310: error: cannot find symbol
+        verify(coordinator, times(rebalanceNum)).generationId();
+                                                ^
+  symbol:   method generationId()
+  location: class WorkerCoordinator
+/workspace/repo/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java:367: error: cannot find symbol
+        verify(coordinator, times(rebalanceNum)).generationId();
+                                                ^
+  symbol:   method generationId()
+  location: class WorkerCoordinator
+/workspace/repo/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java:438: error: cannot find symbol
+        verify(coordinator, times(rebalanceNum)).generationId();
+                                                ^
+  symbol:   method generationId()
+  location: class WorkerCoordinator
+/workspace/repo/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java:509: error: cannot find symbol
+        verify(coordinator, times(rebalanceNum)).generationId();
+                                                ^
+  symbol:   method generationId()
+  location: class WorkerCoordinator
+/workspace/repo/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java:567: error: cannot find symbol
+        verify(coordinator, times(rebalanceNum)).generationId();
+                                                ^
+  symbol:   method generationId()
+  location: class WorkerCoordinator
+/workspace/repo/connect/runtime/src/test/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignorTest.java:602: error: cannot find symbol
+        verify(coordinator, times(rebalanceNum)).generationId();
+                                                ^
+  symbol:   method generationId()
+  location: class WorkerCoordinator
+8 errors
+
+> Task :connect:runtime:compileTestJava FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':connect:runtime:compileTestJava'.
+> Compilation failed; see the compiler error output for details.
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 6.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/5.4.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD FAILED in 23s
+31 actionable tasks: 2 executed, 29 up-to-date
+reward=0 graded=15 found=0 failed=0 parsed=0 framework=maven exit_code=1
