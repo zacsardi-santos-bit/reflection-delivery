@@ -1,0 +1,21 @@
+patching file packages/core/src/config/config.test.ts
+patching file packages/core/src/core/baseLlmClient.test.ts
+patching file packages/core/src/tools/smart-edit.test.ts
+patching file packages/core/src/utils/llm-edit-fixer.test.ts
+
+ RUN  v3.2.4 /workspace/repo/packages/core
+      Coverage enabled with v8
+
+ ✓ src/utils/llm-edit-fixer.test.ts (5 tests) 10ms
+ ✓ src/core/baseLlmClient.test.ts (10 tests) 15ms
+ ✓ src/tools/smart-edit.test.ts (18 tests) 102ms
+ ✓ src/config/config.test.ts (51 tests) 152ms
+
+ Test Files  4 passed (4)
+      Tests  84 passed (84)
+   Start at  15:14:11
+   Duration  3.90s (transform 1.44s, setup 96ms, collect 7.04s, tests 279ms, environment 1ms, prepare 826ms)
+
+JUNIT report written to /workspace/repo/packages/core/junit.xml
+ % Coverage report from v8
+reward=1 graded=84 found=0 failed=0 parsed=0 framework=vitest exit_code=0

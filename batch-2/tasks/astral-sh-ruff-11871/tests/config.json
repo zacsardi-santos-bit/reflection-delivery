@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cargo nextest run -p ruff_python_parser -E 'test(invalid_syntax)'",
+  "test_files": [
+    "crates/ruff_python_parser/tests/snapshots/invalid_syntax@f_string_unclosed_lbrace.py.snap",
+    "crates/ruff_python_parser/tests/snapshots/invalid_syntax@f_string_unclosed_lbrace_in_format_spec.py.snap",
+    "crates/ruff_python_parser/tests/snapshots/invalid_syntax@re_lex_logical_token.py.snap",
+    "crates/ruff_python_parser/tests/snapshots/invalid_syntax@unterminated_fstring_newline_recovery.py.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(4/4) ruff_python_parser::fixtures invalid_syntax"
+  ],
+  "PASS_TO_PASS": [
+    "(1/4) ruff_python_parser parser::tests::test_expr_mode_invalid_syntax1",
+    "(2/4) ruff_python_parser parser::tests::test_expr_mode_invalid_syntax2",
+    "(3/4) ruff_python_parser parser::tests::test_expr_mode_invalid_syntax3"
+  ]
+}

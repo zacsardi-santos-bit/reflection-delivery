@@ -1,0 +1,904 @@
+diff --git a/src/sagemaker/jumpstart/artifacts/environment_variables.py b/src/sagemaker/jumpstart/artifacts/environment_variables.py
+index a800d06e..24bc6fb4 100644
+--- a/src/sagemaker/jumpstart/artifacts/environment_variables.py
++++ b/src/sagemaker/jumpstart/artifacts/environment_variables.py
+@@ -133,7 +133,6 @@ def _retrieve_default_environment_variables(
+             )
+ 
+             if gated_model_env_var is None and model_specs.is_gated_model():
+-
+                 possible_env_vars: Set[str] = {
+                     retrieve_gated_env_var_for_instance_type(instance_type)
+                     for instance_type in model_specs.supported_training_instance_types
+diff --git a/src/sagemaker/jumpstart/artifacts/model_packages.py b/src/sagemaker/jumpstart/artifacts/model_packages.py
+index 0a5c3b7b..b9a18960 100644
+--- a/src/sagemaker/jumpstart/artifacts/model_packages.py
++++ b/src/sagemaker/jumpstart/artifacts/model_packages.py
+@@ -84,7 +84,6 @@ def _retrieve_model_package_arn(
+     )
+ 
+     if scope == JumpStartScriptScope.INFERENCE:
+-
+         instance_specific_arn: Optional[str] = (
+             model_specs.hosting_instance_type_variants.get_model_package_arn(
+                 region=region, instance_type=instance_type
+@@ -155,7 +154,6 @@ def _retrieve_model_package_model_artifact_s3_uri(
+     """
+ 
+     if scope == JumpStartScriptScope.TRAINING:
+-
+         if region is None:
+             region = JUMPSTART_DEFAULT_REGION_NAME
+ 
+diff --git a/src/sagemaker/jumpstart/artifacts/model_uris.py b/src/sagemaker/jumpstart/artifacts/model_uris.py
+index df9e1fd5..0ae4001f 100644
+--- a/src/sagemaker/jumpstart/artifacts/model_uris.py
++++ b/src/sagemaker/jumpstart/artifacts/model_uris.py
+@@ -149,7 +149,6 @@ def _retrieve_model_uri(
+     model_artifact_key: str
+ 
+     if model_scope == JumpStartScriptScope.INFERENCE:
+-
+         is_prepacked = not model_specs.use_inference_script_uri()
+ 
+         model_artifact_key = (
+@@ -159,7 +158,6 @@ def _retrieve_model_uri(
+         )
+ 
+     elif model_scope == JumpStartScriptScope.TRAINING:
+-
+         model_artifact_key = _retrieve_training_artifact_key(model_specs, instance_type)
+ 
+     default_jumpstart_bucket: str = (
+diff --git a/src/sagemaker/jumpstart/artifacts/resource_requirements.py b/src/sagemaker/jumpstart/artifacts/resource_requirements.py
+index f2097ef8..3c8f798f 100644
+--- a/src/sagemaker/jumpstart/artifacts/resource_requirements.py
++++ b/src/sagemaker/jumpstart/artifacts/resource_requirements.py
+@@ -134,7 +134,6 @@ def _retrieve_default_resources(
+     }
+ 
+     if is_dynamic_container_deployment_supported:
+-
+         all_resource_requirement_kwargs = {}
+ 
+         for (
+diff --git a/src/sagemaker/jumpstart/cache.py b/src/sagemaker/jumpstart/cache.py
+index 417bae77..3962e63b 100644
+--- a/src/sagemaker/jumpstart/cache.py
++++ b/src/sagemaker/jumpstart/cache.py
+@@ -177,9 +177,7 @@ class JumpStartModelsCache:
+         }
+         property_name = file_mapping.get(file_type)
+         if not property_name:
+-            raise ValueError(
+-                self._file_type_error_msg(file_type, manifest_only=True)
+-            )
++            raise ValueError(self._file_type_error_msg(file_type, manifest_only=True))
+         if key != property_name:
+             setattr(self, property_name, key)
+             self.clear()
+@@ -192,9 +190,7 @@ class JumpStartModelsCache:
+             return self._manifest_file_s3_key
+         if file_type == JumpStartS3FileType.PROPRIETARY_MANIFEST:
+             return self._proprietary_manifest_s3_key
+-        raise ValueError(
+-            self._file_type_error_msg(file_type, manifest_only=True)
+-        )
++        raise ValueError(self._file_type_error_msg(file_type, manifest_only=True))
+ 
+     def set_s3_bucket_name(self, s3_bucket_name: str) -> None:
+         """Set s3 bucket used for cache."""
+@@ -247,7 +243,8 @@ class JumpStartModelsCache:
+         sm_version = utils.get_sagemaker_version()
+         manifest = self._content_cache.get(
+             JumpStartCachedContentKey(
+-                MODEL_TYPE_TO_MANIFEST_MAP[model_type], self._manifest_file_s3_map[model_type])
++                MODEL_TYPE_TO_MANIFEST_MAP[model_type], self._manifest_file_s3_map[model_type]
++            )
+         )[0].formatted_content
+ 
+         versions_compatible_with_sagemaker = [
+@@ -264,7 +261,8 @@ class JumpStartModelsCache:
+             return JumpStartVersionedModelId(model_id, sm_compatible_model_version)
+ 
+         versions_incompatible_with_sagemaker = [
+-            Version(header.version) for header in manifest.values()  # type: ignore
++            Version(header.version)
++            for header in manifest.values()  # type: ignore
+             if header.model_id == model_id
+         ]
+         sm_incompatible_model_version = self._select_version(
+@@ -294,9 +292,7 @@ class JumpStartModelsCache:
+             raise KeyError(error_msg)
+ 
+         error_msg = f"Unable to find model manifest for '{model_id}' with version '{version}'. "
+-        error_msg += (
+-            f"Visit {MODEL_ID_LIST_WEB_URL} for updated list of models. "
+-        )
++        error_msg += f"Visit {MODEL_ID_LIST_WEB_URL} for updated list of models. "
+ 
+         other_model_id_version = None
+         if model_type == JumpStartModelType.OPEN_WEIGHTS:
+@@ -305,19 +301,17 @@ class JumpStartModelsCache:
+             )  # all versions here are incompatible with sagemaker
+         elif model_type == JumpStartModelType.PROPRIETARY:
+             all_possible_model_id_version = [
+-                header.version for header in manifest.values()  # type: ignore
++                header.version
++                for header in manifest.values()  # type: ignore
+                 if header.model_id == model_id
+             ]
+             other_model_id_version = (
+-                None
+-                if not all_possible_model_id_version
+-                else all_possible_model_id_version[0]
++                None if not all_possible_model_id_version else all_possible_model_id_version[0]
+             )
+ 
+         if other_model_id_version is not None:
+             error_msg += (
+-                f"Consider using model ID '{model_id}' with version "
+-                f"'{other_model_id_version}'."
++                f"Consider using model ID '{model_id}' with version " f"'{other_model_id_version}'."
+             )
+         else:
+             possible_model_ids = [header.model_id for header in manifest.values()]  # type: ignore
+@@ -359,15 +353,15 @@ class JumpStartModelsCache:
+ 
+     def _is_local_metadata_mode(self) -> bool:
+         """Returns True if the cache should use local metadata mode, based off env variables."""
+-        return (ENV_VARIABLE_JUMPSTART_MANIFEST_LOCAL_ROOT_DIR_OVERRIDE in os.environ
+-                and os.path.isdir(os.environ[ENV_VARIABLE_JUMPSTART_MANIFEST_LOCAL_ROOT_DIR_OVERRIDE])
+-                and ENV_VARIABLE_JUMPSTART_SPECS_LOCAL_ROOT_DIR_OVERRIDE in os.environ
+-                and os.path.isdir(os.environ[ENV_VARIABLE_JUMPSTART_SPECS_LOCAL_ROOT_DIR_OVERRIDE]))
++        return (
++            ENV_VARIABLE_JUMPSTART_MANIFEST_LOCAL_ROOT_DIR_OVERRIDE in os.environ
++            and os.path.isdir(os.environ[ENV_VARIABLE_JUMPSTART_MANIFEST_LOCAL_ROOT_DIR_OVERRIDE])
++            and ENV_VARIABLE_JUMPSTART_SPECS_LOCAL_ROOT_DIR_OVERRIDE in os.environ
++            and os.path.isdir(os.environ[ENV_VARIABLE_JUMPSTART_SPECS_LOCAL_ROOT_DIR_OVERRIDE])
++        )
+ 
+     def _get_json_file(
+-        self,
+-        key: str,
+-        filetype: JumpStartS3FileType
++        self, key: str, filetype: JumpStartS3FileType
+     ) -> Tuple[Union[dict, list], Optional[str]]:
+         """Returns json file either from s3 or local file system.
+ 
+@@ -391,21 +385,19 @@ class JumpStartModelsCache:
+         return self._s3_client.head_object(Bucket=self.s3_bucket_name, Key=key)["ETag"]
+ 
+     def _get_json_file_from_local_override(
+-        self,
+-        key: str,
+-        filetype: JumpStartS3FileType
++        self, key: str, filetype: JumpStartS3FileType
+     ) -> Union[dict, list]:
+         """Reads json file from local filesystem and returns data."""
+         if filetype == JumpStartS3FileType.OPEN_WEIGHT_MANIFEST:
+-            metadata_local_root = (
+-                os.environ[ENV_VARIABLE_JUMPSTART_MANIFEST_LOCAL_ROOT_DIR_OVERRIDE]
+-            )
++            metadata_local_root = os.environ[
++                ENV_VARIABLE_JUMPSTART_MANIFEST_LOCAL_ROOT_DIR_OVERRIDE
++            ]
+         elif filetype == JumpStartS3FileType.OPEN_WEIGHT_SPECS:
+             metadata_local_root = os.environ[ENV_VARIABLE_JUMPSTART_SPECS_LOCAL_ROOT_DIR_OVERRIDE]
+         else:
+             raise ValueError(f"Unsupported file type for local override: {filetype}")
+         file_path = os.path.join(metadata_local_root, key)
+-        with open(file_path, 'r') as f:
++        with open(file_path, "r") as f:
+             data = json.load(f)
+         return data
+ 
+@@ -450,9 +442,7 @@ class JumpStartModelsCache:
+             formatted_body, _ = self._get_json_file(id_info, data_type)
+             model_specs = JumpStartModelSpecs(formatted_body)
+             utils.emit_logs_based_on_model_specs(model_specs, self.get_region(), self._s3_client)
+-            return JumpStartCachedContentValue(
+-                formatted_content=model_specs
+-            )
++            return JumpStartCachedContentValue(formatted_content=model_specs)
+ 
+         if data_type == HubContentType.MODEL:
+             hub_name, _, model_name, model_version = hub_utils.get_info_from_hub_resource_arn(
+@@ -462,21 +452,15 @@ class JumpStartModelsCache:
+                 hub_name=hub_name,
+                 hub_content_name=model_name,
+                 hub_content_version=model_version,
+-                hub_content_type=data_type
++                hub_content_type=data_type,
+             )
+ 
+             model_specs = JumpStartModelSpecs(
+                 DescribeHubContentsResponse(hub_model_description), is_hub_content=True
+             )
+ 
+-            utils.emit_logs_based_on_model_specs(
+-                model_specs,
+-                self.get_region(),
+-                self._s3_client
+-            )
+-            return JumpStartCachedContentValue(
+-                formatted_content=model_specs
+-            )
++            utils.emit_logs_based_on_model_specs(model_specs, self.get_region(), self._s3_client)
++            return JumpStartCachedContentValue(formatted_content=model_specs)
+ 
+         if data_type == HubType.HUB:
+             hub_name, _, _, _ = hub_utils.get_info_from_hub_resource_arn(id_info)
+@@ -486,9 +470,7 @@ class JumpStartModelsCache:
+                 formatted_content=DescribeHubResponse(hub_description)
+             )
+ 
+-        raise ValueError(
+-            self._file_type_error_msg(data_type)
+-        )
++        raise ValueError(self._file_type_error_msg(data_type))
+ 
+     def get_manifest(
+         self,
+@@ -497,7 +479,8 @@ class JumpStartModelsCache:
+         """Return entire JumpStart models manifest."""
+         manifest_dict = self._content_cache.get(
+             JumpStartCachedContentKey(
+-                MODEL_TYPE_TO_MANIFEST_MAP[model_type], self._manifest_file_s3_map[model_type])
++                MODEL_TYPE_TO_MANIFEST_MAP[model_type], self._manifest_file_s3_map[model_type]
++            )
+         )[0].formatted_content
+         manifest = list(manifest_dict.values())  # type: ignore
+         return manifest
+@@ -554,16 +537,14 @@ class JumpStartModelsCache:
+         except InvalidSpecifier:
+             raise KeyError(f"Bad semantic version: {version_str}")
+         available_versions_filtered = list(spec.filter(available_versions))
+-        return (
+-            str(max(available_versions_filtered)) if available_versions_filtered != [] else None
+-        )
++        return str(max(available_versions_filtered)) if available_versions_filtered != [] else None
+ 
+     def _get_header_impl(
+         self,
+         model_id: str,
+         semantic_version_str: str,
+         attempt: int = 0,
+-        model_type: JumpStartModelType = JumpStartModelType.OPEN_WEIGHTS
++        model_type: JumpStartModelType = JumpStartModelType.OPEN_WEIGHTS,
+     ) -> JumpStartModelHeader:
+         """Lower-level function to return header.
+ 
+@@ -586,7 +567,8 @@ class JumpStartModelsCache:
+ 
+         manifest = self._content_cache.get(
+             JumpStartCachedContentKey(
+-                MODEL_TYPE_TO_MANIFEST_MAP[model_type], self._manifest_file_s3_map[model_type])
++                MODEL_TYPE_TO_MANIFEST_MAP[model_type], self._manifest_file_s3_map[model_type]
++            )
+         )[0].formatted_content
+ 
+         try:
+@@ -602,7 +584,7 @@ class JumpStartModelsCache:
+         self,
+         model_id: str,
+         version_str: str,
+-        model_type: JumpStartModelType = JumpStartModelType.OPEN_WEIGHTS
++        model_type: JumpStartModelType = JumpStartModelType.OPEN_WEIGHTS,
+     ) -> JumpStartModelSpecs:
+         """Return specs for a given JumpStart model ID and semantic version.
+ 
+@@ -615,16 +597,12 @@ class JumpStartModelsCache:
+         header = self.get_header(model_id, version_str, model_type)
+         spec_key = header.spec_key
+         specs, cache_hit = self._content_cache.get(
+-            JumpStartCachedContentKey(
+-                MODEL_TYPE_TO_SPECS_MAP[model_type], spec_key
+-            )
++            JumpStartCachedContentKey(MODEL_TYPE_TO_SPECS_MAP[model_type], spec_key)
+         )
+ 
+         if not cache_hit and "*" in version_str:
+             JUMPSTART_LOGGER.warning(
+-                get_wildcard_model_version_msg(
+-                    header.model_id, version_str, header.version
+-                )
++                get_wildcard_model_version_msg(header.model_id, version_str, header.version)
+             )
+         return specs.formatted_content
+ 
+diff --git a/src/sagemaker/jumpstart/curated_hub/accessors/file_generator.py b/src/sagemaker/jumpstart/curated_hub/accessors/file_generator.py
+index e5ea072d..e2815159 100644
+--- a/src/sagemaker/jumpstart/curated_hub/accessors/file_generator.py
++++ b/src/sagemaker/jumpstart/curated_hub/accessors/file_generator.py
+@@ -21,7 +21,9 @@ from sagemaker.jumpstart.curated_hub.types import (
+     HubContentDependencyType,
+     S3ObjectLocation,
+ )
+-from sagemaker.jumpstart.curated_hub.accessors.public_model_data import PublicModelDataAccessor
++from sagemaker.jumpstart.curated_hub.accessors.public_model_data import (
++    PublicModelDataAccessor,
++)
+ from sagemaker.jumpstart.curated_hub.utils import is_gated_bucket
+ from sagemaker.jumpstart.types import JumpStartModelSpecs
+ 
+diff --git a/src/sagemaker/jumpstart/curated_hub/accessors/public_model_data.py b/src/sagemaker/jumpstart/curated_hub/accessors/public_model_data.py
+index a4e33959..c7749b1c 100644
+--- a/src/sagemaker/jumpstart/curated_hub/accessors/public_model_data.py
++++ b/src/sagemaker/jumpstart/curated_hub/accessors/public_model_data.py
+@@ -36,6 +36,7 @@ class PublicModelDataAccessor:
+         model_specs: JumpStartModelSpecs,
+         studio_specs: Dict[str, Dict[str, Any]],
+     ):
++        """Creates a PublicModelDataAccessor."""
+         self._region = region
+         self._bucket = (
+             get_jumpstart_gated_content_bucket(region)
+diff --git a/src/sagemaker/jumpstart/curated_hub/curated_hub.py b/src/sagemaker/jumpstart/curated_hub/curated_hub.py
+index a35948f1..87fe2309 100644
+--- a/src/sagemaker/jumpstart/curated_hub/curated_hub.py
++++ b/src/sagemaker/jumpstart/curated_hub/curated_hub.py
+@@ -17,7 +17,6 @@ from datetime import datetime
+ import json
+ import traceback
+ from typing import Optional, Dict, List, Any
+-
+ import boto3
+ from botocore import exceptions
+ from botocore.client import BaseClient
+@@ -36,7 +35,10 @@ from sagemaker.jumpstart.curated_hub.sync.comparator import SizeAndLastUpdatedCo
+ from sagemaker.jumpstart.curated_hub.sync.request import HubSyncRequestFactory
+ from sagemaker.jumpstart.enums import JumpStartScriptScope
+ from sagemaker.session import Session
+-from sagemaker.jumpstart.constants import DEFAULT_JUMPSTART_SAGEMAKER_SESSION, JUMPSTART_LOGGER
++from sagemaker.jumpstart.constants import (
++    DEFAULT_JUMPSTART_SAGEMAKER_SESSION,
++    JUMPSTART_LOGGER,
++)
+ from sagemaker.jumpstart.types import (
+     DescribeHubResponse,
+     DescribeHubContentsResponse,
+@@ -47,17 +49,24 @@ from sagemaker.jumpstart.curated_hub.utils import (
+     create_hub_bucket_if_it_does_not_exist,
+     generate_default_hub_bucket_name,
+     create_s3_object_reference_from_uri,
++    get_jumpstart_model_and_version,
++    find_deprecated_vulnerable_flags_for_hub_content,
+ )
+ from sagemaker.jumpstart.curated_hub.types import (
+     HubContentDocument_v2,
+     JumpStartModelInfo,
+     S3ObjectLocation,
++    HubContentSummary,
++    summary_list_from_list_api_response,
+ )
++from sagemaker.utils import TagsDict
+ 
+ 
+ class CuratedHub:
+     """Class for creating and managing a curated JumpStart hub"""
+ 
++    _list_hubs_cache: Dict[str, Any] = None
++
+     def __init__(
+         self,
+         hub_name: str,
+@@ -143,18 +152,21 @@ class CuratedHub:
+ 
+         return hub_description
+ 
+-    def list_models(self, **kwargs) -> Dict[str, Any]:
+-        """Lists the models in this Curated Hub
++    def list_models(self, clear_cache: bool = True, **kwargs) -> List[Dict[str, Any]]:
++        """Lists the models in this Curated Hub.
++
++        This function caches the models in local memory
+ 
+         **kwargs: Passed to invocation of ``Session:list_hub_contents``.
+         """
+-        # TODO: Validate kwargs and fast-fail?
+-
+-        hub_content_summaries = self._sagemaker_session.list_hub_contents(
+-            hub_name=self.hub_name, hub_content_type=HubContentType.MODEL, **kwargs
+-        )
+-        # TODO: Handle pagination
+-        return hub_content_summaries
++        if clear_cache:
++            self._list_hubs_cache = None
++        if self._list_hubs_cache is None:
++            hub_content_summaries = self._sagemaker_session.list_hub_contents(
++                hub_name=self.hub_name, hub_content_type=HubContentType.MODEL, **kwargs
++            )
++            self._list_hubs_cache = hub_content_summaries
++        return self._list_hubs_cache
+ 
+     def describe_model(
+         self, model_name: str, model_version: str = "*"
+@@ -188,6 +200,8 @@ class CuratedHub:
+ 
+         `model_list` objects must have `model_id` (str) and optional `version` (str).
+         """
++        if model_list is None:
++            return True
+         for obj in model_list:
+             if not isinstance(obj.get("model_id"), str):
+                 return True
+@@ -205,37 +219,15 @@ class CuratedHub:
+         )
+         return {"model_id": model["model_id"], "version": model_specs.version}
+ 
+-    def _get_jumpstart_models_in_hub(self) -> List[Dict[str, Any]]:
+-        """Returns list of `HubContent` that have been created from a JumpStart model."""
+-        hub_models = self.list_models()
+-
+-        js_models_in_hub = []
+-        for hub_model in hub_models["HubContentSummaries"]:
+-            # TODO: extract both in one pass
+-            jumpstart_model_id = next(
+-                (
+-                    tag
+-                    for tag in hub_model["search_keywords"]
+-                    if tag.startswith(JUMPSTART_HUB_MODEL_ID_TAG_PREFIX)
+-                ),
+-                None,
+-            )
+-            jumpstart_model_version = next(
+-                (
+-                    tag
+-                    for tag in hub_model["search_keywords"]
+-                    if tag.startswith(JUMPSTART_HUB_MODEL_VERSION_TAG_PREFIX)
+-                ),
+-                None,
+-            )
+-
+-            if jumpstart_model_id and jumpstart_model_version:
+-                js_models_in_hub.append(hub_model)
+-
+-        return js_models_in_hub
++    def _get_jumpstart_models_in_hub(self) -> List[HubContentSummary]:
++        """Retrieves all JumpStart models in a private Hub."""
++        hub_models = summary_list_from_list_api_response(self.list_models())
++        return [model for model in hub_models if get_jumpstart_model_and_version(model) is not None]
+ 
+     def _determine_models_to_sync(
+-        self, model_list: List[JumpStartModelInfo], models_in_hub: Dict[str, Any]
++        self,
++        model_list: List[JumpStartModelInfo],
++        models_in_hub: Dict[str, HubContentSummary],
+     ) -> List[JumpStartModelInfo]:
+         """Determines which models from `sync` params to sync into the CuratedHub.
+ 
+@@ -257,7 +249,7 @@ class CuratedHub:
+ 
+             if matched_model:
+                 model_version = Version(model.version)
+-                hub_model_version = Version(matched_model["version"])
++                hub_model_version = Version(matched_model.hub_content_version)
+ 
+                 # 1. Model version exists in Hub, pass
+                 if hub_model_version == model_version:
+@@ -302,11 +294,13 @@ class CuratedHub:
+             model_version_list.append(JumpStartModelInfo(model["model_id"], model["version"]))
+ 
+         js_models_in_hub = self._get_jumpstart_models_in_hub()
+-        mapped_models_in_hub = {model["name"]: model for model in js_models_in_hub}
++        mapped_models_in_hub = {model.hub_content_name: model for model in js_models_in_hub}
+ 
+         models_to_sync = self._determine_models_to_sync(model_version_list, mapped_models_in_hub)
+         JUMPSTART_LOGGER.warning(
+-            "Syncing the following models into Hub %s: %s", self.hub_name, models_to_sync
++            "Syncing the following models into Hub %s: %s",
++            self.hub_name,
++            models_to_sync,
+         )
+ 
+         # Delete old models?
+@@ -415,3 +409,55 @@ class CuratedHub:
+             Bucket=utils.get_jumpstart_content_bucket(self.region), Key=key
+         )
+         return json.loads(response["Body"].read().decode("utf-8"))
++
++    def scan_and_tag_models(self, model_ids: List[str] = None) -> None:
++        """Scans the Hub for JumpStart models and tags the HubContent.
++
++        If the scan detects a model is deprecated or vulnerable, it will tag the HubContent.
++        The tags that will be added are based off the specifications in the JumpStart public hub:
++        1. "deprecated_versions" -> If the public hub model is deprecated
++        2. "inference_vulnerable_versions" -> If the inference script has vulnerabilities
++        3. "training_vulnerable_versions" -> If the training script has vulnerabilities
++
++        The tag value will be a list of versions in the Curated Hub that fall under those keys.
++        For example, if model_a version_a is deprecated and inference is vulnerable, the
++        HubContent for `model_a` will have tags [{"deprecated_versions": [version_a]},
++        {"inference_vulnerable_versions": [version_a]}]
++
++        If models are passed in, this will only scan those models if they exist in the Curated Hub.
++        """
++        JUMPSTART_LOGGER.info("Tagging models in hub: %s", self.hub_name)
++        model_ids = model_ids if model_ids is not None else []
++        if self._is_invalid_model_list_input(model_ids):
++            raise ValueError(
++                "Model list should be a list of objects with values 'model_id',",
++                "and optional 'version'.",
++            )
++
++        models_in_hub = summary_list_from_list_api_response(self.list_models(clear_cache=False))
++
++        model_summaries_to_scan = models_in_hub
++        if model_ids:
++            model_summaries_to_scan = list(
++                filter(
++                    lambda model_summary: model_summary.hub_content_name in model_ids, models_in_hub
++                )
++            )
++
++        js_models_in_hub = [
++            model
++            for model in model_summaries_to_scan
++            if get_jumpstart_model_and_version(model) is not None
++        ]
++        for model in js_models_in_hub:
++            tags_to_add: List[TagsDict] = find_deprecated_vulnerable_flags_for_hub_content(
++                hub_name=self.hub_name,
++                hub_content_name=model.hub_content_name,
++                region=self.region,
++                session=self._sagemaker_session,
++            )
++            self._sagemaker_session.add_tags(ResourceArn=model.hub_content_arn, Tags=tags_to_add)
++            JUMPSTART_LOGGER.info(
++                "Added tags to HubContentArn %s: %s", model.hub_content_arn, tags_to_add
++            )
++        JUMPSTART_LOGGER.info("Tagging complete!")
+diff --git a/src/sagemaker/jumpstart/curated_hub/sync/__init__.py b/src/sagemaker/jumpstart/curated_hub/sync/__init__.py
+new file mode 100644
+index 00000000..e69de29b
+diff --git a/src/sagemaker/jumpstart/curated_hub/sync/request.py b/src/sagemaker/jumpstart/curated_hub/sync/request.py
+index 0e620432..a409fbe4 100644
+--- a/src/sagemaker/jumpstart/curated_hub/sync/request.py
++++ b/src/sagemaker/jumpstart/curated_hub/sync/request.py
+@@ -31,7 +31,9 @@ class HubSyncRequest:
+     destination: S3ObjectLocation
+ 
+     def __init__(
+-        self, files_to_copy: Generator[FileInfo, FileInfo, FileInfo], destination: S3ObjectLocation
++        self,
++        files_to_copy: Generator[FileInfo, FileInfo, FileInfo],
++        destination: S3ObjectLocation,
+     ):
+         """Contains information required to sync data into a Hub.
+ 
+@@ -130,8 +132,10 @@ class HubSyncRequestFactory:
+                     dest_done = True
+                 continue
+ 
+-            # Past the src file alphabetically in dest file list. Take the src file and increment src_files.
+-            # If there is an alpha-larger file name in dest as compared to src, it means there is an
++            # Past the src file alphabetically in dest file list.
++            # Take the src file and increment src_files.
++            # If there is an alpha-larger file name in dest as compared to src,
++            # it means there is an
+             # unexpected file in dest. Do nothing and continue to the next src_file
+             if self._is_alphabetically_earlier_file_name(
+                 src_file.location.key, dest_file.location.key
+diff --git a/src/sagemaker/jumpstart/curated_hub/types.py b/src/sagemaker/jumpstart/curated_hub/types.py
+index 99f9cfdc..7ea0b659 100644
+--- a/src/sagemaker/jumpstart/curated_hub/types.py
++++ b/src/sagemaker/jumpstart/curated_hub/types.py
+@@ -12,17 +12,79 @@
+ # language governing permissions and limitations under the License.
+ """This module stores types related to SageMaker JumpStart CuratedHub."""
+ from __future__ import absolute_import
+-from typing import Dict, Any, Optional
++from typing import Dict, Any, Optional, List
+ from enum import Enum
+ from dataclasses import dataclass
+ from datetime import datetime
+ 
+-from sagemaker.jumpstart.types import JumpStartDataHolderType, JumpStartModelSpecs
++from sagemaker.jumpstart.types import (
++    JumpStartDataHolderType,
++    JumpStartModelSpecs,
++    HubContentType,
++)
++
++
++class CuratedHubUnsupportedFlag(str, Enum):
++    """Enum class for Curated Hub tag names."""
++
++    DEPRECATED_VERSIONS = "deprecated_versions"
++    TRAINING_VULNERABLE_VERSIONS = "training_vulnerable_versions"
++    INFERENCE_VULNERABLE_VERSIONS = "inference_vulnerable_versions"
++
++
++@dataclass
++class HubContentSummary:
++    """Dataclass to store HubContentSummary from List APIs."""
++
++    hub_content_arn: str
++    hub_content_name: str
++    hub_content_version: str
++    hub_content_type: HubContentType
++    document_schema_version: str
++    hub_content_status: str
++    creation_time: datetime
++    hub_content_display_name: str = None
++    hub_content_description: str = None
++    hub_content_search_keywords: List[str] = None
++
++
++def summary_from_list_api_response(hub_content_summary: Dict[str, Any]) -> HubContentSummary:
++    """Creates a single HubContentSummary.
++
++    This is based on the ListHubContent or ListHubContentVersions API response.
++    """
++    return HubContentSummary(
++        hub_content_arn=hub_content_summary.get("HubContentArn"),
++        hub_content_name=hub_content_summary.get("HubContentName"),
++        hub_content_version=hub_content_summary.get("HubContentVersion"),
++        hub_content_type=hub_content_summary.get("HubContentType"),
++        document_schema_version=hub_content_summary.get("DocumentSchemaVersion"),
++        hub_content_status=hub_content_summary.get("HubContentStatus"),
++        hub_content_display_name=hub_content_summary.get("HubContentDisplayName"),
++        hub_content_description=hub_content_summary.get("HubContentDescription"),
++        hub_content_search_keywords=hub_content_summary.get("HubContentSearchKeywords"),
++        creation_time=hub_content_summary.get("CreationTime"),
++    )
++
++
++def summary_list_from_list_api_response(
++    list_hub_contents_response: Dict[str, Any]
++) -> List[HubContentSummary]:
++    """Creates a HubContentSummary list.
++
++    This is based on the ListHubContent or ListHubContentVersions API response.
++    """
++    return list(
++        map(
++            summary_from_list_api_response,
++            list_hub_contents_response["HubContentSummaries"],
++        )
++    )
+ 
+ 
+ @dataclass
+ class S3ObjectLocation:
+-    """Helper class for S3 object references"""
++    """Helper class for S3 object references."""
+ 
+     bucket: str
+     key: str
+@@ -72,6 +134,7 @@ class FileInfo(JumpStartDataHolderType):
+         last_updated: Optional[datetime],
+         dependecy_type: Optional[HubContentDependencyType] = None,
+     ):
++        """Creates a FileInfo."""
+         self.location = S3ObjectLocation(bucket, key)
+         self.size = size
+         self.last_updated = last_updated
+diff --git a/src/sagemaker/jumpstart/curated_hub/utils.py b/src/sagemaker/jumpstart/curated_hub/utils.py
+index 71008ab5..0f41955a 100644
+--- a/src/sagemaker/jumpstart/curated_hub/utils.py
++++ b/src/sagemaker/jumpstart/curated_hub/utils.py
+@@ -13,16 +13,26 @@
+ """This module contains utilities related to SageMaker JumpStart CuratedHub."""
+ from __future__ import absolute_import
+ import re
+-from typing import Optional
++from typing import Optional, Dict, List
+ from sagemaker.jumpstart.curated_hub.types import S3ObjectLocation
+ from sagemaker.s3_utils import parse_s3_url
+ from sagemaker.session import Session
+ from sagemaker.utils import aws_partition
+-from sagemaker.jumpstart.types import (
+-    HubContentType,
+-    HubArnExtractedInfo,
++from sagemaker.jumpstart.types import HubContentType, HubArnExtractedInfo
++from sagemaker.jumpstart.curated_hub.types import (
++    CuratedHubUnsupportedFlag,
++    HubContentSummary,
++    JumpStartModelInfo,
++    summary_list_from_list_api_response,
+ )
+ from sagemaker.jumpstart import constants
++from sagemaker.jumpstart import utils
++from sagemaker.jumpstart.enums import JumpStartScriptScope
++from sagemaker.jumpstart.curated_hub.constants import (
++    JUMPSTART_HUB_MODEL_ID_TAG_PREFIX,
++    JUMPSTART_HUB_MODEL_VERSION_TAG_PREFIX,
++)
++from sagemaker.utils import format_tags, TagsDict
+ 
+ 
+ def get_info_from_hub_resource_arn(
+@@ -169,6 +179,135 @@ def create_hub_bucket_if_it_does_not_exist(
+     return bucket_name
+ 
+ 
++def find_deprecated_vulnerable_flags_for_hub_content(
++    hub_name: str, hub_content_name: str, region: str, session: Session
++) -> List[TagsDict]:
++    """Finds the JumpStart public hub model for a HubContent and calculates relevant tags.
++
++    Since tags are the same for all versions of a HubContent,
++    these tags will map from the key to a list of versions impacted.
++    For example, if certain public hub model versions are deprecated,
++    this utility will return a `deprecated` tag
++    mapped to the deprecated versions for the HubContent.
++    """
++    list_versions_response = session.list_hub_content_versions(
++        hub_name=hub_name,
++        hub_content_type=HubContentType.MODEL,
++        hub_content_name=hub_content_name,
++    )
++    hub_content_versions: List[HubContentSummary] = summary_list_from_list_api_response(
++        list_versions_response
++    )
++
++    unsupported_hub_content_versions_map: Dict[str, List[str]] = {}
++    version_to_tag_map = _get_tags_for_all_versions(hub_content_versions, region, session)
++    unsupported_hub_content_versions_map = _convert_to_tag_to_versions_map(version_to_tag_map)
++
++    return format_tags(unsupported_hub_content_versions_map)
++
++
++def _get_tags_for_all_versions(
++    hub_content_versions: List[HubContentSummary],
++    region: str,
++    session: Session,
++) -> Dict[str, List[CuratedHubUnsupportedFlag]]:
++    """Helper function to create mapping between HubContent version and associated tags."""
++    version_to_tags_map: Dict[str, List[CuratedHubUnsupportedFlag]] = {}
++    for hub_content_version_summary in hub_content_versions:
++        jumpstart_model = get_jumpstart_model_and_version(hub_content_version_summary)
++        if jumpstart_model is None:
++            continue
++        tag_names_to_add: List[
++            CuratedHubUnsupportedFlag
++        ] = find_unsupported_flags_for_model_version(
++            model_id=jumpstart_model.model_id,
++            version=jumpstart_model.version,
++            region=region,
++            session=session,
++        )
++
++        version_to_tags_map[hub_content_version_summary.hub_content_version] = tag_names_to_add
++    return version_to_tags_map
++
++
++def _convert_to_tag_to_versions_map(
++    version_to_tags_map: Dict[str, List[CuratedHubUnsupportedFlag]]
++) -> Dict[CuratedHubUnsupportedFlag, List[str]]:
++    """Helper function to create tag to version map from a version to flag mapping."""
++    unsupported_hub_content_versions_map: Dict[CuratedHubUnsupportedFlag, List[str]] = {}
++    for version, tags in version_to_tags_map.items():
++        for tag in tags:
++            if tag not in unsupported_hub_content_versions_map:
++                unsupported_hub_content_versions_map[tag.value] = []
++            # Versions for a HubContent are unique
++            unsupported_hub_content_versions_map[tag.value].append(version)
++
++    return unsupported_hub_content_versions_map
++
++
++def find_unsupported_flags_for_model_version(
++    model_id: str, version: str, region: str, session: Session
++) -> List[CuratedHubUnsupportedFlag]:
++    """Finds relevant CuratedHubTags for a version of a JumpStart public hub model.
++
++    For example, if the public hub model is deprecated,
++    this utility will return a `deprecated` tag.
++    Since tags are the same for all versions of a HubContent,
++    these tags will map from the key to a list of versions impacted.
++    """
++    flags_to_add: List[CuratedHubUnsupportedFlag] = []
++    jumpstart_model_specs = utils.verify_model_region_and_return_specs(
++        model_id=model_id,
++        version=version,
++        region=region,
++        scope=JumpStartScriptScope.INFERENCE,
++        tolerate_vulnerable_model=True,
++        tolerate_deprecated_model=True,
++        sagemaker_session=session,
++    )
++
++    if jumpstart_model_specs.deprecated:
++        flags_to_add.append(CuratedHubUnsupportedFlag.DEPRECATED_VERSIONS)
++    if jumpstart_model_specs.inference_vulnerable:
++        flags_to_add.append(CuratedHubUnsupportedFlag.INFERENCE_VULNERABLE_VERSIONS)
++    if jumpstart_model_specs.training_vulnerable:
++        flags_to_add.append(CuratedHubUnsupportedFlag.TRAINING_VULNERABLE_VERSIONS)
++
++    return flags_to_add
++
++
++def get_jumpstart_model_and_version(
++    hub_content_summary: HubContentSummary,
++) -> Optional[JumpStartModelInfo]:
++    """Retrieves the JumpStart model id and version from the JumpStart tag."""
++    jumpstart_model_id_tag = next(
++        (
++            tag
++            for tag in hub_content_summary.hub_content_search_keywords
++            if tag.startswith(JUMPSTART_HUB_MODEL_ID_TAG_PREFIX)
++        ),
++        None,
++    )
++    jumpstart_model_version_tag = next(
++        (
++            tag
++            for tag in hub_content_summary.hub_content_search_keywords
++            if tag.startswith(JUMPSTART_HUB_MODEL_VERSION_TAG_PREFIX)
++        ),
++        None,
++    )
++
++    if jumpstart_model_id_tag is None or jumpstart_model_version_tag is None:
++        return None
++    jumpstart_model_id = jumpstart_model_id_tag[
++        len(JUMPSTART_HUB_MODEL_ID_TAG_PREFIX) :
++    ]  # Need to remove the tag_prefix and ":"
++    jumpstart_model_version = jumpstart_model_version_tag[
++        len(JUMPSTART_HUB_MODEL_VERSION_TAG_PREFIX) :
++    ]
++    return JumpStartModelInfo(model_id=jumpstart_model_id, version=jumpstart_model_version)
++
++
+ def is_gated_bucket(bucket_name: str) -> bool:
+     """Returns true if the bucket name is the JumpStart gated bucket."""
+     return bucket_name in constants.JUMPSTART_GATED_BUCKET_NAME_SET
+diff --git a/src/sagemaker/jumpstart/estimator.py b/src/sagemaker/jumpstart/estimator.py
+index 64069329..603e2b0e 100644
+--- a/src/sagemaker/jumpstart/estimator.py
++++ b/src/sagemaker/jumpstart/estimator.py
+@@ -734,7 +734,6 @@ class JumpStartEstimator(Estimator):
+         """
+ 
+         if model_id is None:
+-
+             model_id, model_version = get_model_id_version_from_training_job(
+                 training_job_name=training_job_name, sagemaker_session=sagemaker_session
+             )
+diff --git a/src/sagemaker/jumpstart/factory/model.py b/src/sagemaker/jumpstart/factory/model.py
+index 6f7a83ce..408b7032 100644
+--- a/src/sagemaker/jumpstart/factory/model.py
++++ b/src/sagemaker/jumpstart/factory/model.py
+@@ -330,7 +330,6 @@ def _add_entry_point_to_kwargs(kwargs: JumpStartModelInitKwargs) -> JumpStartMod
+         tolerate_vulnerable_model=kwargs.tolerate_vulnerable_model,
+         sagemaker_session=kwargs.sagemaker_session,
+     ):
+-
+         entry_point = entry_point or INFERENCE_ENTRY_POINT_SCRIPT_NAME
+ 
+     kwargs.entry_point = entry_point
+diff --git a/src/sagemaker/jumpstart/notebook_utils.py b/src/sagemaker/jumpstart/notebook_utils.py
+index 485354e8..28d4ec56 100644
+--- a/src/sagemaker/jumpstart/notebook_utils.py
++++ b/src/sagemaker/jumpstart/notebook_utils.py
+@@ -379,7 +379,6 @@ def _generate_jumpstart_model_versions(  # pylint: disable=redefined-builtin
+     is_model_type_filter = SpecialSupportedFilterKeys.MODEL_TYPE in all_keys
+ 
+     def evaluate_model(model_manifest: JumpStartModelHeader) -> Optional[Tuple[str, str]]:
+-
+         copied_filter = copy.deepcopy(filter)
+ 
+         manifest_specs_cached_values: Dict[str, Union[bool, int, float, str, dict, list]] = {}
+diff --git a/src/sagemaker/jumpstart/utils.py b/src/sagemaker/jumpstart/utils.py
+index 21054851..4cc7bed6 100644
+--- a/src/sagemaker/jumpstart/utils.py
++++ b/src/sagemaker/jumpstart/utils.py
+@@ -743,7 +743,6 @@ def resolve_estimator_sagemaker_config_field(
+     # JumpStart Estimators have certain default field values. We want
+     # sagemaker config values to take priority over the model-specific defaults.
+     if field_name == "enable_network_isolation":
+-
+         resolved_val = resolve_value_from_config(
+             direct_input=None,
+             config_path=TRAINING_JOB_ENABLE_NETWORK_ISOLATION_PATH,
+@@ -754,7 +753,6 @@ def resolve_estimator_sagemaker_config_field(
+         return resolved_val if resolved_val is not None else field_val
+ 
+     if field_name == "encrypt_inter_container_traffic":
+-
+         resolved_val = resolve_value_from_config(
+             direct_input=None,
+             config_path=TRAINING_JOB_INTER_CONTAINER_ENCRYPTION_PATH,

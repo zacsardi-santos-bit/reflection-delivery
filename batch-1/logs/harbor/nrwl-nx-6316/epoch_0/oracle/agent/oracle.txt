@@ -1,0 +1,784 @@
+patching file packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts
+patching file packages/angular/src/executors/delegate-build/delegate-build.impl.ts
+patching file packages/angular/src/executors/package/package.impl.ts
+patching file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts
+patching file packages/next/src/executors/build/build.impl.ts
+patching file packages/next/src/executors/build/lib/create-package-json.ts
+patching file packages/next/src/executors/export/export.impl.ts
+patching file packages/next/src/executors/server/server.impl.ts
+patching file packages/node/src/executors/build/build.impl.ts
+patching file packages/node/src/executors/package/package.impl.ts
+patching file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts
+patching file packages/web/src/executors/build/build.impl.ts
+patching file packages/web/src/executors/dev-server/dev-server.impl.ts
+patching file packages/web/src/executors/package/package.impl.ts
+patching file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts
+patching file packages/workspace/src/command-line/affected.ts
+patching file packages/workspace/src/command-line/dep-graph.ts
+patching file packages/workspace/src/command-line/format.ts
+patching file packages/workspace/src/command-line/lint.ts
+patching file packages/workspace/src/command-line/run-many.ts
+patching file packages/workspace/src/command-line/run-one.ts
+patching file packages/workspace/src/core/project-graph/index.ts
+patching file packages/workspace/src/core/project-graph/project-graph.ts
+patching file packages/workspace/src/generators/remove/lib/check-dependencies.ts
+patching file packages/workspace/src/generators/remove/remove.ts
+patching file packages/workspace/src/utilities/create-project-graph-from-tree.ts
+patching file packages/workspace/src/utils/ast-utils.ts
+patching file packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts.rej
+patching file packages/angular/src/executors/delegate-build/delegate-build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/executors/delegate-build/delegate-build.impl.ts.rej
+patching file packages/angular/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/angular/src/executors/package/package.impl.ts.rej
+patching file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts.rej
+patching file packages/next/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/next/src/executors/build/build.impl.ts.rej
+patching file packages/next/src/executors/build/lib/create-package-json.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/next/src/executors/build/lib/create-package-json.ts.rej
+patching file packages/next/src/executors/export/export.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/next/src/executors/export/export.impl.ts.rej
+patching file packages/next/src/executors/server/server.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/next/src/executors/server/server.impl.ts.rej
+patching file packages/node/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/node/src/executors/build/build.impl.ts.rej
+patching file packages/node/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/node/src/executors/package/package.impl.ts.rej
+patching file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts.rej
+patching file packages/web/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/web/src/executors/build/build.impl.ts.rej
+patching file packages/web/src/executors/dev-server/dev-server.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/web/src/executors/dev-server/dev-server.impl.ts.rej
+patching file packages/web/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/web/src/executors/package/package.impl.ts.rej
+patching file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts.rej
+patching file packages/workspace/src/command-line/affected.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/workspace/src/command-line/affected.ts.rej
+patching file packages/workspace/src/command-line/dep-graph.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file packages/workspace/src/command-line/dep-graph.ts.rej
+patching file packages/workspace/src/command-line/format.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/workspace/src/command-line/format.ts.rej
+patching file packages/workspace/src/command-line/lint.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/lint.ts.rej
+patching file packages/workspace/src/command-line/run-many.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/run-many.ts.rej
+patching file packages/workspace/src/command-line/run-one.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/run-one.ts.rej
+patching file packages/workspace/src/core/project-graph/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/core/project-graph/index.ts.rej
+patching file packages/workspace/src/core/project-graph/project-graph.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/core/project-graph/project-graph.ts.rej
+patching file packages/workspace/src/generators/remove/lib/check-dependencies.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/generators/remove/lib/check-dependencies.ts.rej
+patching file packages/workspace/src/generators/remove/remove.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/generators/remove/remove.ts.rej
+patching file packages/workspace/src/utilities/create-project-graph-from-tree.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/utilities/create-project-graph-from-tree.ts.rej
+patching file packages/workspace/src/utils/ast-utils.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/utils/ast-utils.ts.rej
+patching file packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts.rej
+patching file packages/angular/src/executors/delegate-build/delegate-build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/executors/delegate-build/delegate-build.impl.ts.rej
+patching file packages/angular/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/angular/src/executors/package/package.impl.ts.rej
+patching file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts.rej
+patching file packages/next/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/next/src/executors/build/build.impl.ts.rej
+patching file packages/next/src/executors/build/lib/create-package-json.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/next/src/executors/build/lib/create-package-json.ts.rej
+patching file packages/next/src/executors/export/export.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/next/src/executors/export/export.impl.ts.rej
+patching file packages/next/src/executors/server/server.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/next/src/executors/server/server.impl.ts.rej
+patching file packages/node/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/node/src/executors/build/build.impl.ts.rej
+patching file packages/node/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/node/src/executors/package/package.impl.ts.rej
+patching file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts.rej
+patching file packages/web/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/web/src/executors/build/build.impl.ts.rej
+patching file packages/web/src/executors/dev-server/dev-server.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/web/src/executors/dev-server/dev-server.impl.ts.rej
+patching file packages/web/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/web/src/executors/package/package.impl.ts.rej
+patching file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts.rej
+patching file packages/workspace/src/command-line/affected.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/workspace/src/command-line/affected.ts.rej
+patching file packages/workspace/src/command-line/dep-graph.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file packages/workspace/src/command-line/dep-graph.ts.rej
+patching file packages/workspace/src/command-line/format.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/workspace/src/command-line/format.ts.rej
+patching file packages/workspace/src/command-line/lint.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/lint.ts.rej
+patching file packages/workspace/src/command-line/run-many.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/run-many.ts.rej
+patching file packages/workspace/src/command-line/run-one.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/run-one.ts.rej
+patching file packages/workspace/src/core/project-graph/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/core/project-graph/index.ts.rej
+patching file packages/workspace/src/core/project-graph/project-graph.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/core/project-graph/project-graph.ts.rej
+patching file packages/workspace/src/generators/remove/lib/check-dependencies.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/generators/remove/lib/check-dependencies.ts.rej
+patching file packages/workspace/src/generators/remove/remove.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/generators/remove/remove.ts.rej
+patching file packages/workspace/src/utilities/create-project-graph-from-tree.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/utilities/create-project-graph-from-tree.ts.rej
+patching file packages/workspace/src/utils/ast-utils.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/utils/ast-utils.ts.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts b/packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts
+|index 3866228631..70f4c00324 100644
+|--- a/packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts
+|+++ b/packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 71
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/angular/src/executors/delegate-build/delegate-build.impl.ts b/packages/angular/src/executors/delegate-build/delegate-build.impl.ts
+|index 0593883031..424db6d7ef 100644
+|--- a/packages/angular/src/executors/delegate-build/delegate-build.impl.ts
+|+++ b/packages/angular/src/executors/delegate-build/delegate-build.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 93
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/angular/src/executors/package/package.impl.ts b/packages/angular/src/executors/package/package.impl.ts
+|index 03ed98d4d9..179252046c 100644
+|--- a/packages/angular/src/executors/package/package.impl.ts
+|+++ b/packages/angular/src/executors/package/package.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 128
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts b/packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts
+|index 03972a53ac..0aaa8a0a07 100644
+|--- a/packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts
+|+++ b/packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 154
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/next/src/executors/build/build.impl.ts b/packages/next/src/executors/build/build.impl.ts
+|index d7e7116a59..bd56e66de5 100644
+|--- a/packages/next/src/executors/build/build.impl.ts
+|+++ b/packages/next/src/executors/build/build.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 185
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/next/src/executors/build/lib/create-package-json.ts b/packages/next/src/executors/build/lib/create-package-json.ts
+|index c0a784a3b1..103527cc10 100644
+|--- a/packages/next/src/executors/build/lib/create-package-json.ts
+|+++ b/packages/next/src/executors/build/lib/create-package-json.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 209
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/next/src/executors/export/export.impl.ts b/packages/next/src/executors/export/export.impl.ts
+|index 4b93500a92..af9bc6b0c0 100644
+|--- a/packages/next/src/executors/export/export.impl.ts
+|+++ b/packages/next/src/executors/export/export.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 231
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/next/src/executors/server/server.impl.ts b/packages/next/src/executors/server/server.impl.ts
+|index 51cf1dad1c..a67b8202c5 100644
+|--- a/packages/next/src/executors/server/server.impl.ts
+|+++ b/packages/next/src/executors/server/server.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 253
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/node/src/executors/build/build.impl.ts b/packages/node/src/executors/build/build.impl.ts
+|index c428129c3e..090e0b25ae 100644
+|--- a/packages/node/src/executors/build/build.impl.ts
+|+++ b/packages/node/src/executors/build/build.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 292
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/node/src/executors/package/package.impl.ts b/packages/node/src/executors/package/package.impl.ts
+|index 8c4733d60d..35c56dff5e 100644
+|--- a/packages/node/src/executors/package/package.impl.ts
+|+++ b/packages/node/src/executors/package/package.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 312
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts b/packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts
+|index d1f884afcd..1435390c1e 100644
+|--- a/packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts
+|+++ b/packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 338
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/web/src/executors/build/build.impl.ts b/packages/web/src/executors/build/build.impl.ts
+|index 8eb2490029..99359fad87 100644
+|--- a/packages/web/src/executors/build/build.impl.ts
+|+++ b/packages/web/src/executors/build/build.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 381
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/web/src/executors/dev-server/dev-server.impl.ts b/packages/web/src/executors/dev-server/dev-server.impl.ts
+|index 0ad9c03f0e..6ced4cd2b7 100644
+|--- a/packages/web/src/executors/dev-server/dev-server.impl.ts
+|+++ b/packages/web/src/executors/dev-server/dev-server.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 421
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/web/src/executors/package/package.impl.ts b/packages/web/src/executors/package/package.impl.ts
+|index 183f4f88d2..5f69fba5bd 100644
+|--- a/packages/web/src/executors/package/package.impl.ts
+|+++ b/packages/web/src/executors/package/package.impl.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 459
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts b/packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts
+|index 81cfb264bc..7804c9f8ff 100644
+|--- a/packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts
+|+++ b/packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 479
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/command-line/affected.ts b/packages/workspace/src/command-line/affected.ts
+|index 608ca0f99a..a173273513 100644
+|--- a/packages/workspace/src/command-line/affected.ts
+|+++ b/packages/workspace/src/command-line/affected.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 510
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/command-line/dep-graph.ts b/packages/workspace/src/command-line/dep-graph.ts
+|index 258a367184..a0f7693ed8 100644
+|--- a/packages/workspace/src/command-line/dep-graph.ts
+|+++ b/packages/workspace/src/command-line/dep-graph.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+13 out of 13 hunks ignored
+can't find file to patch at input line 653
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/command-line/format.ts b/packages/workspace/src/command-line/format.ts
+|index 9123793957..a22454db19 100644
+|--- a/packages/workspace/src/command-line/format.ts
+|+++ b/packages/workspace/src/command-line/format.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 718
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/command-line/lint.ts b/packages/workspace/src/command-line/lint.ts
+|index 4b34b52737..0b3cfa6faf 100644
+|--- a/packages/workspace/src/command-line/lint.ts
+|+++ b/packages/workspace/src/command-line/lint.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 740
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/command-line/run-many.ts b/packages/workspace/src/command-line/run-many.ts
+|index 50b8a920f8..fc900de009 100644
+|--- a/packages/workspace/src/command-line/run-many.ts
+|+++ b/packages/workspace/src/command-line/run-many.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 762
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/command-line/run-one.ts b/packages/workspace/src/command-line/run-one.ts
+|index 7ff3ba92f0..cd5d93814a 100644
+|--- a/packages/workspace/src/command-line/run-one.ts
+|+++ b/packages/workspace/src/command-line/run-one.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 782
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/core/project-graph/index.ts b/packages/workspace/src/core/project-graph/index.ts
+|index 82aa1988c6..28d9346f3b 100644
+|--- a/packages/workspace/src/core/project-graph/index.ts
+|+++ b/packages/workspace/src/core/project-graph/index.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 796
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/core/project-graph/project-graph.ts b/packages/workspace/src/core/project-graph/project-graph.ts
+|index 61d08bc6f4..0cf83a3003 100644
+|--- a/packages/workspace/src/core/project-graph/project-graph.ts
+|+++ b/packages/workspace/src/core/project-graph/project-graph.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 815
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/generators/remove/lib/check-dependencies.ts b/packages/workspace/src/generators/remove/lib/check-dependencies.ts
+|index 42aaf08788..be612a0092 100644
+|--- a/packages/workspace/src/generators/remove/lib/check-dependencies.ts
+|+++ b/packages/workspace/src/generators/remove/lib/check-dependencies.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 845
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/generators/remove/remove.ts b/packages/workspace/src/generators/remove/remove.ts
+|index 1101d1e4aa..e1c8fcd5ab 100644
+|--- a/packages/workspace/src/generators/remove/remove.ts
+|+++ b/packages/workspace/src/generators/remove/remove.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 858
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/utilities/create-project-graph-from-tree.ts b/packages/workspace/src/utilities/create-project-graph-from-tree.ts
+|index 6efa99cddf..8975bedcfe 100644
+|--- a/packages/workspace/src/utilities/create-project-graph-from-tree.ts
+|+++ b/packages/workspace/src/utilities/create-project-graph-from-tree.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 871
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/workspace/src/utils/ast-utils.ts b/packages/workspace/src/utils/ast-utils.ts
+|index aeb05d7d49..308c5a1aa3 100644
+|--- a/packages/workspace/src/utils/ast-utils.ts
+|+++ b/packages/workspace/src/utils/ast-utils.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+patching file packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/builders/webpack-browser/webpack-browser.impl.ts.rej
+patching file packages/angular/src/executors/delegate-build/delegate-build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/executors/delegate-build/delegate-build.impl.ts.rej
+patching file packages/angular/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/angular/src/executors/package/package.impl.ts.rej
+patching file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/angular/src/migrations/update-10-5-0/add-template-support-and-presets-to-eslint.ts.rej
+patching file packages/next/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/next/src/executors/build/build.impl.ts.rej
+patching file packages/next/src/executors/build/lib/create-package-json.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/next/src/executors/build/lib/create-package-json.ts.rej
+patching file packages/next/src/executors/export/export.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/next/src/executors/export/export.impl.ts.rej
+patching file packages/next/src/executors/server/server.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/next/src/executors/server/server.impl.ts.rej
+patching file packages/node/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/node/src/executors/build/build.impl.ts.rej
+patching file packages/node/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/node/src/executors/package/package.impl.ts.rej
+patching file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/react/src/migrations/update-9-4-0/babelrc-9-4-0.ts.rej
+patching file packages/web/src/executors/build/build.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/web/src/executors/build/build.impl.ts.rej
+patching file packages/web/src/executors/dev-server/dev-server.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/web/src/executors/dev-server/dev-server.impl.ts.rej
+patching file packages/web/src/executors/package/package.impl.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/web/src/executors/package/package.impl.ts.rej
+patching file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/web/src/migrations/update-11-5-2/create-babelrc-for-workspace-libs.ts.rej
+patching file packages/workspace/src/command-line/affected.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/workspace/src/command-line/affected.ts.rej
+patching file packages/workspace/src/command-line/dep-graph.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file packages/workspace/src/command-line/dep-graph.ts.rej
+patching file packages/workspace/src/command-line/format.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file packages/workspace/src/command-line/format.ts.rej
+patching file packages/workspace/src/command-line/lint.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/lint.ts.rej
+patching file packages/workspace/src/command-line/run-many.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/run-many.ts.rej
+patching file packages/workspace/src/command-line/run-one.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/command-line/run-one.ts.rej
+patching file packages/workspace/src/core/project-graph/index.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/core/project-graph/index.ts.rej
+patching file packages/workspace/src/core/project-graph/project-graph.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/core/project-graph/project-graph.ts.rej
+patching file packages/workspace/src/generators/remove/lib/check-dependencies.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/generators/remove/lib/check-dependencies.ts.rej
+patching file packages/workspace/src/generators/remove/remove.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/generators/remove/remove.ts.rej
+patching file packages/workspace/src/utilities/create-project-graph-from-tree.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file packages/workspace/src/utilities/create-project-graph-from-tree.ts.rej
+patching file packages/workspace/src/utils/ast-utils.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/workspace/src/utils/ast-utils.ts.rej
+ERROR: golden patch failed to apply by all strategies

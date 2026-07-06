@@ -1,0 +1,228 @@
+patching file tests/data/placebo/test_memorydb_kms_encryption/kms.DescribeKey_1.json
+patching file tests/data/placebo/test_memorydb_kms_encryption/kms.ListAliases_1.json
+patching file tests/data/placebo/test_memorydb_kms_encryption/kms.ListAliases_2.json
+patching file tests/data/placebo/test_memorydb_kms_encryption/memory-db.DescribeClusters_1.json
+patching file tests/data/placebo/test_memorydb_kms_encryption/memory-db.ListTags_1.json
+patching file tests/data/placebo/test_memorydb_kms_encryption/memory-db.ListTags_2.json
+patching file tests/data/placebo/test_memorydb_kms_encryption/tagging.GetResources_1.json
+patching file tests/data/placebo/test_memorydb_network_location_filter/ec2.DescribeSecurityGroups_1.json
+patching file tests/data/placebo/test_memorydb_network_location_filter/ec2.DescribeSubnets_1.json
+patching file tests/data/placebo/test_memorydb_network_location_filter/memory-db.DescribeClusters_1.json
+patching file tests/data/placebo/test_memorydb_network_location_filter/memory-db.DescribeSubnetGroups_1.json
+patching file tests/data/placebo/test_memorydb_network_location_filter/memory-db.ListTags_1.json
+patching file tests/data/placebo/test_memorydb_network_location_filter/tagging.GetResources_1.json
+patching file tests/data/placebo/test_memorydb_security_group/ec2.DescribeSecurityGroups_1.json
+patching file tests/data/placebo/test_memorydb_security_group/memory-db.DescribeClusters_1.json
+patching file tests/data/placebo/test_memorydb_security_group/memory-db.ListTags_1.json
+patching file tests/data/placebo/test_memorydb_subnet_filter/ec2.DescribeSubnets_1.json
+patching file tests/data/placebo/test_memorydb_subnet_filter/memory-db.DescribeClusters_1.json
+patching file tests/data/placebo/test_memorydb_subnet_filter/memory-db.DescribeSubnetGroups_1.json
+patching file tests/data/placebo/test_memorydb_subnet_filter/memory-db.ListTags_1.json
+patching file tests/data/placebo/test_memorydb_subnet_filter/tagging.GetResources_1.json
+patching file tests/test_memorydb.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: recording-0.12.2, cov-3.0.0, terraform-0.6.6, sugar-0.9.7, xdist-3.6.1
+collecting ... collected 9 items
+
+tests/test_memorydb.py::MemoryDbTest::test_delete_memorydb PASSED        [ 11%]
+tests/test_memorydb.py::MemoryDbTest::test_delete_memorydb_exception PASSED [ 22%]
+tests/test_memorydb.py::MemoryDbTest::test_memorydb PASSED               [ 33%]
+tests/test_memorydb.py::MemoryDbTest::test_memorydb_kms_encryption FAILED [ 44%]
+tests/test_memorydb.py::MemoryDbTest::test_memorydb_mark_for_op PASSED   [ 55%]
+tests/test_memorydb.py::MemoryDbTest::test_memorydb_network_location_filter FAILED [ 66%]
+tests/test_memorydb.py::MemoryDbTest::test_memorydb_security_group FAILED [ 77%]
+tests/test_memorydb.py::MemoryDbTest::test_memorydb_subnet_filter FAILED [ 88%]
+tests/test_memorydb.py::MemoryDbTest::test_memorydb_tag_untag PASSED     [100%]
+
+=================================== FAILURES ===================================
+__________________ MemoryDbTest.test_memorydb_kms_encryption ___________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/usr/local/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/repo/tests/test_memorydb.py", line 197, in test_memorydb_kms_encryption
+    p = self.load_policy(
+        ^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/testing.py", line 96, in load_policy
+    collection = self.policy_loader.load_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/loader.py", line 135, in load_data
+    collection = self.collection_class.from_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 88, in from_data
+    policies = [Policy(p, options, session_factory=sf)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 88, in <listcomp>
+    policies = [Policy(p, options, session_factory=sf)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 1186, in __init__
+    self.resource_manager = self.load_resource_manager()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 1403, in load_resource_manager
+    return factory(self.ctx, self.data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/query.py", line 474, in __init__
+    super(QueryResourceManager, self).__init__(ctx, data)
+  File "/workspace/repo/c7n/manager.py", line 54, in __init__
+    self.filters = self.filter_registry.parse(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/filters/core.py", line 134, in parse
+    results.append(self.factory(d, manager))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/filters/core.py", line 167, in factory
+    raise PolicyValidationError(
+c7n.exceptions.PolicyValidationError: memorydb.filters Invalid filter type {'type': 'kms-key', 'key': 'c7n:AliasName', 'value': 'alias/tes/pratyush'}
+------------------------------ Captured log call -------------------------------
+DEBUG    placebo.pill:pill.py:139 attaching to session: Session(region_name='us-east-1')
+DEBUG    placebo.pill:pill.py:140 datapath: /workspace/repo/tests/data/placebo/test_memorydb_kms_encryption
+DEBUG    placebo.pill:pill.py:175 stopping, mode=playback
+______________ MemoryDbTest.test_memorydb_network_location_filter ______________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/usr/local/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/repo/tests/test_memorydb.py", line 175, in test_memorydb_network_location_filter
+    p = self.load_policy(
+        ^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/testing.py", line 96, in load_policy
+    collection = self.policy_loader.load_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/loader.py", line 135, in load_data
+    collection = self.collection_class.from_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 88, in from_data
+    policies = [Policy(p, options, session_factory=sf)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 88, in <listcomp>
+    policies = [Policy(p, options, session_factory=sf)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 1186, in __init__
+    self.resource_manager = self.load_resource_manager()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 1403, in load_resource_manager
+    return factory(self.ctx, self.data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/query.py", line 474, in __init__
+    super(QueryResourceManager, self).__init__(ctx, data)
+  File "/workspace/repo/c7n/manager.py", line 54, in __init__
+    self.filters = self.filter_registry.parse(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/filters/core.py", line 134, in parse
+    results.append(self.factory(d, manager))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/filters/core.py", line 167, in factory
+    raise PolicyValidationError(
+c7n.exceptions.PolicyValidationError: memorydb.filters Invalid filter type {'type': 'network-location', 'compare': ['resource', 'subnet'], 'key': 'tag:ASV', 'match': 'equal'}
+------------------------------ Captured log call -------------------------------
+DEBUG    placebo.pill:pill.py:139 attaching to session: Session(region_name='us-east-1')
+DEBUG    placebo.pill:pill.py:140 datapath: /workspace/repo/tests/data/placebo/test_memorydb_network_location_filter
+DEBUG    placebo.pill:pill.py:175 stopping, mode=playback
+__________________ MemoryDbTest.test_memorydb_security_group ___________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/usr/local/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/repo/tests/test_memorydb.py", line 140, in test_memorydb_security_group
+    p = self.load_policy(
+        ^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/testing.py", line 96, in load_policy
+    collection = self.policy_loader.load_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/loader.py", line 135, in load_data
+    collection = self.collection_class.from_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 88, in from_data
+    policies = [Policy(p, options, session_factory=sf)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 88, in <listcomp>
+    policies = [Policy(p, options, session_factory=sf)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 1186, in __init__
+    self.resource_manager = self.load_resource_manager()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 1403, in load_resource_manager
+    return factory(self.ctx, self.data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/query.py", line 474, in __init__
+    super(QueryResourceManager, self).__init__(ctx, data)
+  File "/workspace/repo/c7n/manager.py", line 54, in __init__
+    self.filters = self.filter_registry.parse(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/filters/core.py", line 134, in parse
+    results.append(self.factory(d, manager))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/filters/core.py", line 167, in factory
+    raise PolicyValidationError(
+c7n.exceptions.PolicyValidationError: memorydb.filters Invalid filter type {'type': 'security-group', 'key': 'tag:ASV', 'value': 'PolicyTest'}
+------------------------------ Captured log call -------------------------------
+DEBUG    placebo.pill:pill.py:139 attaching to session: Session(region_name='us-east-1')
+DEBUG    placebo.pill:pill.py:140 datapath: /workspace/repo/tests/data/placebo/test_memorydb_security_group
+DEBUG    placebo.pill:pill.py:175 stopping, mode=playback
+___________________ MemoryDbTest.test_memorydb_subnet_filter ___________________
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/usr/local/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+  File "/usr/local/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/repo/tests/test_memorydb.py", line 158, in test_memorydb_subnet_filter
+    p = self.load_policy(
+        ^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/testing.py", line 96, in load_policy
+    collection = self.policy_loader.load_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/loader.py", line 135, in load_data
+    collection = self.collection_class.from_data(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 88, in from_data
+    policies = [Policy(p, options, session_factory=sf)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 88, in <listcomp>
+    policies = [Policy(p, options, session_factory=sf)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 1186, in __init__
+    self.resource_manager = self.load_resource_manager()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/policy.py", line 1403, in load_resource_manager
+    return factory(self.ctx, self.data)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/query.py", line 474, in __init__
+    super(QueryResourceManager, self).__init__(ctx, data)
+  File "/workspace/repo/c7n/manager.py", line 54, in __init__
+    self.filters = self.filter_registry.parse(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/filters/core.py", line 134, in parse
+    results.append(self.factory(d, manager))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/repo/c7n/filters/core.py", line 167, in factory
+    raise PolicyValidationError(
+c7n.exceptions.PolicyValidationError: memorydb.filters Invalid filter type {'type': 'subnet', 'key': 'tag:Name', 'value': 'PublicSubnetA'}
+------------------------------ Captured log call -------------------------------
+DEBUG    placebo.pill:pill.py:139 attaching to session: Session(region_name='us-east-1')
+DEBUG    placebo.pill:pill.py:140 datapath: /workspace/repo/tests/data/placebo/test_memorydb_subnet_filter
+DEBUG    placebo.pill:pill.py:175 stopping, mode=playback
+=========================== short test summary info ============================
+FAILED tests/test_memorydb.py::MemoryDbTest::test_memorydb_kms_encryption - c...
+FAILED tests/test_memorydb.py::MemoryDbTest::test_memorydb_network_location_filter
+FAILED tests/test_memorydb.py::MemoryDbTest::test_memorydb_security_group - c...
+FAILED tests/test_memorydb.py::MemoryDbTest::test_memorydb_subnet_filter - c7...
+========================= 4 failed, 5 passed in 0.80s ==========================
+reward=0 graded=9 found=0 failed=0 parsed=9 framework=pytest exit_code=1

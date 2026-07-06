@@ -1,0 +1,294 @@
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_converse_with_content.yaml
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_converse_with_invalid_model.yaml
+patching file 'instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[amazon.nova].yaml'
+patching file 'instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[amazon.titan].yaml'
+patching file 'instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_content[anthropic.claude].yaml'
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/cassettes/test_invoke_model_with_invalid_model.yaml
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/conftest.py
+patching file instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: vcr-1.0.2
+collecting ... collected 6 items
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_converse_with_content PASSED [ 16%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_converse_with_invalid_model PASSED [ 33%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_invoke_model_with_content[amazon.nova] FAILED [ 50%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_invoke_model_with_content[amazon.titan] FAILED [ 66%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_invoke_model_with_content[anthropic.claude] FAILED [ 83%]
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py::test_invoke_model_with_invalid_model FAILED [100%]
+
+=================================== FAILURES ===================================
+_________________ test_invoke_model_with_content[amazon.nova] __________________
+
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2b07a38e8290>
+log_exporter = <opentelemetry.sdk._logs._internal.export.in_memory_log_exporter.InMemoryLogExporter object at 0x2b07a4fdf410>
+bedrock_runtime_client = <botocore.client.BedrockRuntime object at 0x2b07a4f969d0>
+instrument_with_content = <opentelemetry.instrumentation.botocore.BotocoreInstrumentor object at 0x2b07a576d810>
+model_family = 'amazon.nova'
+
+    @pytest.mark.parametrize(
+        "model_family",
+        ["amazon.nova", "amazon.titan", "anthropic.claude"],
+    )
+    @pytest.mark.vcr()
+    def test_invoke_model_with_content(
+        span_exporter,
+        log_exporter,
+        bedrock_runtime_client,
+        instrument_with_content,
+        model_family,
+    ):
+        llm_model_value = get_model_name_from_family(model_family)
+        max_tokens, temperature, top_p, stop_sequences = 10, 0.8, 1, ["|"]
+        body = get_invoke_model_body(
+            llm_model_value, max_tokens, temperature, top_p, stop_sequences
+        )
+        response = bedrock_runtime_client.invoke_model(
+            body=body,
+            modelId=llm_model_value,
+        )
+    
+        (span,) = span_exporter.get_finished_spans()
+>       assert_completion_attributes_from_streaming_body(
+            span,
+            llm_model_value,
+            response,
+            "text_completion" if model_family == "amazon.titan" else "chat",
+            top_p,
+            temperature,
+            max_tokens,
+            stop_sequences,
+        )
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py:78: in assert_completion_attributes_from_streaming_body
+    return assert_all_attributes(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+span = <opentelemetry.sdk.trace.ReadableSpan object at 0x2b07a5173f50>
+request_model = 'amazon.nova-micro-v1:0', input_tokens = 5, output_tokens = 10
+finish_reason = ('max_tokens',), operation_name = 'chat', request_top_p = 1
+request_temperature = 0.8, request_max_tokens = 10
+request_stop_sequences = ('|',)
+
+    def assert_all_attributes(
+        span: ReadableSpan,
+        request_model: str,
+        input_tokens: int | None = None,
+        output_tokens: int | None = None,
+        finish_reason: tuple[str] | None = None,
+        operation_name: str = "chat",
+        request_top_p: int | None = None,
+        request_temperature: int | None = None,
+        request_max_tokens: int | None = None,
+        request_stop_sequences: tuple[str] | None = None,
+    ):
+>       assert span.name == f"{operation_name} {request_model}"
+E       AssertionError
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py:150: AssertionError
+_________________ test_invoke_model_with_content[amazon.titan] _________________
+
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2b07a51a6e90>
+log_exporter = <opentelemetry.sdk._logs._internal.export.in_memory_log_exporter.InMemoryLogExporter object at 0x2b07a51a6c10>
+bedrock_runtime_client = <botocore.client.BedrockRuntime object at 0x2b07a51a77d0>
+instrument_with_content = <opentelemetry.instrumentation.botocore.BotocoreInstrumentor object at 0x2b07a576d810>
+model_family = 'amazon.titan'
+
+    @pytest.mark.parametrize(
+        "model_family",
+        ["amazon.nova", "amazon.titan", "anthropic.claude"],
+    )
+    @pytest.mark.vcr()
+    def test_invoke_model_with_content(
+        span_exporter,
+        log_exporter,
+        bedrock_runtime_client,
+        instrument_with_content,
+        model_family,
+    ):
+        llm_model_value = get_model_name_from_family(model_family)
+        max_tokens, temperature, top_p, stop_sequences = 10, 0.8, 1, ["|"]
+        body = get_invoke_model_body(
+            llm_model_value, max_tokens, temperature, top_p, stop_sequences
+        )
+        response = bedrock_runtime_client.invoke_model(
+            body=body,
+            modelId=llm_model_value,
+        )
+    
+        (span,) = span_exporter.get_finished_spans()
+>       assert_completion_attributes_from_streaming_body(
+            span,
+            llm_model_value,
+            response,
+            "text_completion" if model_family == "amazon.titan" else "chat",
+            top_p,
+            temperature,
+            max_tokens,
+            stop_sequences,
+        )
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py:78: in assert_completion_attributes_from_streaming_body
+    return assert_all_attributes(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+span = <opentelemetry.sdk.trace.ReadableSpan object at 0x2b07a50f5d90>
+request_model = 'amazon.titan-text-lite-v1', input_tokens = 5, output_tokens = 9
+finish_reason = ('FINISH',), operation_name = 'text_completion'
+request_top_p = 1, request_temperature = 0.8, request_max_tokens = 10
+request_stop_sequences = ('|',)
+
+    def assert_all_attributes(
+        span: ReadableSpan,
+        request_model: str,
+        input_tokens: int | None = None,
+        output_tokens: int | None = None,
+        finish_reason: tuple[str] | None = None,
+        operation_name: str = "chat",
+        request_top_p: int | None = None,
+        request_temperature: int | None = None,
+        request_max_tokens: int | None = None,
+        request_stop_sequences: tuple[str] | None = None,
+    ):
+>       assert span.name == f"{operation_name} {request_model}"
+E       AssertionError
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py:150: AssertionError
+_______________ test_invoke_model_with_content[anthropic.claude] _______________
+
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2b07a51d4ed0>
+log_exporter = <opentelemetry.sdk._logs._internal.export.in_memory_log_exporter.InMemoryLogExporter object at 0x2b07a51bea50>
+bedrock_runtime_client = <botocore.client.BedrockRuntime object at 0x2b07a51e2fd0>
+instrument_with_content = <opentelemetry.instrumentation.botocore.BotocoreInstrumentor object at 0x2b07a576d810>
+model_family = 'anthropic.claude'
+
+    @pytest.mark.parametrize(
+        "model_family",
+        ["amazon.nova", "amazon.titan", "anthropic.claude"],
+    )
+    @pytest.mark.vcr()
+    def test_invoke_model_with_content(
+        span_exporter,
+        log_exporter,
+        bedrock_runtime_client,
+        instrument_with_content,
+        model_family,
+    ):
+        llm_model_value = get_model_name_from_family(model_family)
+        max_tokens, temperature, top_p, stop_sequences = 10, 0.8, 1, ["|"]
+        body = get_invoke_model_body(
+            llm_model_value, max_tokens, temperature, top_p, stop_sequences
+        )
+        response = bedrock_runtime_client.invoke_model(
+            body=body,
+            modelId=llm_model_value,
+        )
+    
+        (span,) = span_exporter.get_finished_spans()
+>       assert_completion_attributes_from_streaming_body(
+            span,
+            llm_model_value,
+            response,
+            "text_completion" if model_family == "amazon.titan" else "chat",
+            top_p,
+            temperature,
+            max_tokens,
+            stop_sequences,
+        )
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py:189: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py:78: in assert_completion_attributes_from_streaming_body
+    return assert_all_attributes(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+span = <opentelemetry.sdk.trace.ReadableSpan object at 0x2b07a51b9210>
+request_model = 'anthropic.claude-v2', input_tokens = 14, output_tokens = 10
+finish_reason = ('max_tokens',), operation_name = 'chat', request_top_p = 1
+request_temperature = 0.8, request_max_tokens = 10
+request_stop_sequences = ('|',)
+
+    def assert_all_attributes(
+        span: ReadableSpan,
+        request_model: str,
+        input_tokens: int | None = None,
+        output_tokens: int | None = None,
+        finish_reason: tuple[str] | None = None,
+        operation_name: str = "chat",
+        request_top_p: int | None = None,
+        request_temperature: int | None = None,
+        request_max_tokens: int | None = None,
+        request_stop_sequences: tuple[str] | None = None,
+    ):
+>       assert span.name == f"{operation_name} {request_model}"
+E       AssertionError
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py:150: AssertionError
+_____________________ test_invoke_model_with_invalid_model _____________________
+
+span_exporter = <opentelemetry.sdk.trace.export.in_memory_span_exporter.InMemorySpanExporter object at 0x2b07a51b8910>
+log_exporter = <opentelemetry.sdk._logs._internal.export.in_memory_log_exporter.InMemoryLogExporter object at 0x2b07a51b8750>
+bedrock_runtime_client = <botocore.client.BedrockRuntime object at 0x2b07a5a05b90>
+instrument_with_content = <opentelemetry.instrumentation.botocore.BotocoreInstrumentor object at 0x2b07a576d810>
+
+    @pytest.mark.vcr()
+    def test_invoke_model_with_invalid_model(
+        span_exporter,
+        log_exporter,
+        bedrock_runtime_client,
+        instrument_with_content,
+    ):
+        llm_model_value = "does-not-exist"
+        with pytest.raises(bedrock_runtime_client.exceptions.ClientError):
+            bedrock_runtime_client.invoke_model(
+                body=b"",
+                modelId=llm_model_value,
+            )
+    
+        (span,) = span_exporter.get_finished_spans()
+>       assert_completion_attributes_from_streaming_body(
+            span,
+            llm_model_value,
+            None,
+            "chat",
+        )
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/test_botocore_bedrock.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py:78: in assert_completion_attributes_from_streaming_body
+    return assert_all_attributes(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+span = <opentelemetry.sdk.trace.ReadableSpan object at 0x2b07a5170790>
+request_model = 'does-not-exist', input_tokens = None, output_tokens = None
+finish_reason = None, operation_name = 'chat', request_top_p = None
+request_temperature = None, request_max_tokens = None
+request_stop_sequences = None
+
+    def assert_all_attributes(
+        span: ReadableSpan,
+        request_model: str,
+        input_tokens: int | None = None,
+        output_tokens: int | None = None,
+        finish_reason: tuple[str] | None = None,
+        operation_name: str = "chat",
+        request_top_p: int | None = None,
+        request_temperature: int | None = None,
+        request_max_tokens: int | None = None,
+        request_stop_sequences: tuple[str] | None = None,
+    ):
+>       assert span.name == f"{operation_name} {request_model}"
+E       AssertionError
+
+instrumentation/opentelemetry-instrumentation-botocore/tests/bedrock_utils.py:150: AssertionError
+========================= 4 failed, 2 passed in 0.42s ==========================
+reward=0 graded=6 found=0 failed=0 parsed=2 framework=pytest exit_code=1

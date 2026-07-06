@@ -1,0 +1,3532 @@
+diff --git a/packages/agent/src/app.test.ts b/packages/agent/src/app.test.ts
+index 933a4559b..20b80ebbb 100644
+--- a/packages/agent/src/app.test.ts
++++ b/packages/agent/src/app.test.ts
+@@ -3904,6 +3904,7 @@ describe('App', () => {
+       expect(app.hl7Clients.size).toBe(1);
+       const pool = app.hl7Clients.get(`mllp://localhost:${port}`);
+       expect(pool).toBeDefined();
++      expect(pool?.isTrackingStats()).toBe(true);
+       const client = pool?.getClients()[0];
+       expect(client?.stats).toBeDefined();
+       expect(client?.stats?.getSampleCount()).toBe(1);
+@@ -4023,8 +4024,12 @@ describe('App', () => {
+         await sleep(100);
+       }
+ 
+-      // Should have 2 pools
++      // Should have 2 pools with stats tracking enabled
+       expect(app.hl7Clients.size).toBe(2);
++      const pool1 = app.hl7Clients.get(`mllp://localhost:${port1}`);
++      const pool2 = app.hl7Clients.get(`mllp://localhost:${port2}`);
++      expect(pool1?.isTrackingStats()).toBe(true);
++      expect(pool2?.isTrackingStats()).toBe(true);
+ 
+       // Update agent to disable keepAlive
+       await medplum.updateResource<Agent>({
+@@ -4062,7 +4067,7 @@ describe('App', () => {
+       console.log = originalConsoleLog;
+     });
+ 
+-    test('When logStatsFreqSecs goes from on to off, pool keeps tracking stats (default-on)', async () => {
++    test('When logStatsFreqSecs goes from on to off, cleanup all stats', async () => {
+       const originalConsoleLog = console.log;
+       console.log = jest.fn();
+ 
+@@ -4139,8 +4144,10 @@ describe('App', () => {
+         await sleep(100);
+       }
+ 
+-      // Pool should exist
++      // Pool should have stats tracking enabled
+       expect(app.hl7Clients.size).toBe(1);
++      const pool = app.hl7Clients.get(`mllp://localhost:${port}`);
++      expect(pool?.isTrackingStats()).toBe(true);
+ 
+       // Update agent to disable logStatsFreqSecs
+       await medplum.updateResource<Agent>({
+@@ -4162,8 +4169,10 @@ describe('App', () => {
+         await sleep(100);
+       }
+ 
+-      // Pool should still exist (stats are collected by default)
++      // Pool should still exist but stats tracking should be disabled
+       expect(app.hl7Clients.size).toBe(1);
++      const poolAfterReload = app.hl7Clients.get(`mllp://localhost:${port}`);
++      expect(poolAfterReload?.isTrackingStats()).toBe(false);
+ 
+       await app.stop();
+       await hl7Server.stop({ forceDrainTimeoutMs: 100 });
+@@ -4174,7 +4183,7 @@ describe('App', () => {
+       console.log = originalConsoleLog;
+     });
+ 
+-    test('Pool tracks stats by default when keepAlive is on, regardless of logStatsFreqSecs', async () => {
++    test('When logStatsFreqSecs goes from off to on, start tracking stats', async () => {
+       const originalConsoleLog = console.log;
+       console.log = jest.fn();
+ 
+@@ -4248,9 +4257,10 @@ describe('App', () => {
+         await sleep(100);
+       }
+ 
+-      // Pool should exist and have stats tracking enabled by default
++      // Pool should exist but not have stats tracking enabled
+       expect(app.hl7Clients.size).toBe(1);
+       let pool = app.hl7Clients.get(`mllp://localhost:${port}`);
++      expect(pool?.isTrackingStats()).toBe(false);
+ 
+       // Update agent to enable logStatsFreqSecs
+       await medplum.updateResource<Agent>({
+@@ -4278,6 +4288,7 @@ describe('App', () => {
+       // Pool should now have stats tracking enabled
+       expect(app.hl7Clients.size).toBe(1);
+       pool = app.hl7Clients.get(`mllp://localhost:${port}`);
++      expect(pool?.isTrackingStats()).toBe(true);
+ 
+       // Send another message to verify stats tracking works
+       state.transmitResponses = [];
+@@ -4302,9 +4313,9 @@ describe('App', () => {
+         await sleep(100);
+       }
+ 
+-      // Stats should have recorded both messages (tracking is on from the start)
++      // Stats should have recorded the new message
+       const client = pool?.getClients()[0];
+-      expect(client?.stats?.getSampleCount()).toBe(2);
++      expect(client?.stats?.getSampleCount()).toBe(1);
+ 
+       await app.stop();
+       await hl7Server.stop({ forceDrainTimeoutMs: 100 });
+diff --git a/packages/agent/src/app.ts b/packages/agent/src/app.ts
+index e764d3852..239a6ed97 100644
+--- a/packages/agent/src/app.ts
++++ b/packages/agent/src/app.ts
+@@ -42,6 +42,7 @@ import WebSocket from 'ws';
+ import { AgentByteStreamChannel } from './bytestream';
+ import type { Channel } from './channel';
+ import { ChannelType, getChannelType, getChannelTypeShortName } from './channel';
++import type { ChannelStats } from './channel-stats-tracker';
+ import {
+   DEFAULT_MAX_CLIENTS_PER_REMOTE,
+   DEFAULT_PING_TIMEOUT,
+@@ -388,6 +389,11 @@ export class App {
+           this.log.error(normalizeErrorString(result.reason));
+         }
+       }
++      // We need to stop tracking stats for each client so that the heartbeat listener is removed
++      // Before clearing the clients
++      for (const pool of this.hl7Clients.values()) {
++        pool.stopTrackingStats();
++      }
+       this.hl7Clients.clear();
+     }
+ 
+@@ -418,7 +424,16 @@ export class App {
+ 
+     if (this.logStatsFreqSecs > 0) {
+       this.log.info(`Stats logging enabled. Logging stats every ${this.logStatsFreqSecs} seconds...`);
++      if (this.keepAlive) {
++        for (const pool of this.hl7Clients.values()) {
++          pool.startTrackingStats();
++        }
++      }
+       this.logStatsTimer ??= setInterval(() => this.logStats(), this.logStatsFreqSecs * 1000);
++    } else {
++      for (const pool of this.hl7Clients.values()) {
++        pool.stopTrackingStats();
++      }
+     }
+ 
+     await this.hydrateListeners();
+@@ -435,14 +450,14 @@ export class App {
+ 
+     const hl7Channels = Array.from(this.channels.values()).filter((channel) => channel instanceof AgentHl7Channel);
+     const channelStats = Object.fromEntries(
+-      hl7Channels.map((channel) => [channel.getDefinition().name, channel.stats.getStats()])
++      hl7Channels.map((channel) => [channel.getDefinition().name, channel.stats?.getStats() as ChannelStats])
+     );
+ 
+     const pools = Array.from(this.hl7Clients.values());
+     const clientStats = Object.fromEntries(
+       pools.map((pool) => [
+         `mllp://${pool.host}:${pool.port}?encoding=${pool.encoding ?? DEFAULT_ENCODING}`,
+-        pool.getPoolStats(),
++        pool.getPoolStats() as ChannelStats,
+       ])
+     );
+ 
+@@ -1090,6 +1105,7 @@ export class App {
+     if (this.hl7Clients.has(message.remote)) {
+       pool = this.hl7Clients.get(message.remote) as Hl7ClientPool;
+     } else {
++      const keepAlive = this.keepAlive;
+       pool = new Hl7ClientPool({
+         host: address.hostname,
+         port: Number.parseInt(address.port, 10),
+@@ -1100,10 +1116,14 @@ export class App {
+         heartbeatEmitter: this.heartbeatEmitter,
+       });
+       this.hl7Clients.set(message.remote, pool);
++      if (keepAlive && this.logStatsFreqSecs > 0) {
++        pool.startTrackingStats();
++      }
+       this.log.info(`Client pool created for remote '${message.remote}'`, {
+         keepAlive: this.keepAlive,
+         maxClients: this.maxClientsPerRemote,
+         encoding,
++        trackingStats: this.logStatsFreqSecs > 0,
+       });
+     }
+ 
+diff --git a/packages/agent/src/enhanced-hl7-client.test.ts b/packages/agent/src/enhanced-hl7-client.test.ts
+index 610eefac8..603b0825d 100644
+--- a/packages/agent/src/enhanced-hl7-client.test.ts
++++ b/packages/agent/src/enhanced-hl7-client.test.ts
+@@ -15,8 +15,8 @@ describe('EnhancedHl7Client', () => {
+     mockLogger = createMockLogger();
+   });
+ 
+-  describe('send', () => {
+-    test('Send records message sent', async () => {
++  describe('send with tracking off', () => {
++    test('Send does not record stats when tracking is off', async () => {
+       const port = await getFreePort();
+       const server = new Hl7Server((connection) => {
+         connection.addEventListener('message', ({ message }) => {
+@@ -29,6 +29,70 @@ describe('EnhancedHl7Client', () => {
+         host: 'localhost',
+         port,
+         log: mockLogger,
++      });
++
++      const message = Hl7Message.parse(
++        'MSH|^~\\&|ADT1|MCM|LABADT|MCM|198808181126|SECURITY|ADT^A01|MSG00001|P|2.2\r' +
++          'PID|||PATID1234^5^M11||JONES^WILLIAM^A^III||19610615|M-'
++      );
++
++      await client.send(message);
++
++      expect(client.stats).toBeUndefined();
++
++      await client.close();
++      await server.stop();
++    });
++  });
++
++  describe('sendAndWait with tracking off', () => {
++    test('SendAndWait does not record stats when tracking is off', async () => {
++      const port = await getFreePort();
++      const server = new Hl7Server((connection) => {
++        connection.addEventListener('message', ({ message }) => {
++          connection.send(message.buildAck());
++        });
++      });
++      await server.start(port);
++
++      const { client } = createTestEnhancedHl7Client({
++        host: 'localhost',
++        port,
++        log: mockLogger,
++      });
++
++      const message = Hl7Message.parse(
++        'MSH|^~\\&|ADT1|MCM|LABADT|MCM|198808181126|SECURITY|ADT^A01|MSG00001|P|2.2\r' +
++          'PID|||PATID1234^5^M11||JONES^WILLIAM^A^III||19610615|M-'
++      );
++
++      const response = await client.sendAndWait(message);
++
++      expect(response).toBeDefined();
++      expect(client.stats).toBeUndefined();
++
++      await client.close();
++      await server.stop();
++    });
++  });
++
++  describe('send with tracking on', () => {
++    test('Send records message sent when tracking is on', async () => {
++      const port = await getFreePort();
++      const server = new Hl7Server((connection) => {
++        connection.addEventListener('message', ({ message }) => {
++          connection.send(message.buildAck());
++        });
++      });
++      await server.start(port);
++
++      const { client } = createTestEnhancedHl7Client({
++        host: 'localhost',
++        port,
++        log: mockLogger,
++      });
++
++      client.startTrackingStats({
+         heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+@@ -42,8 +106,8 @@ describe('EnhancedHl7Client', () => {
+       await client.send(message);
+ 
+       // Message should be recorded as pending
+-      expect(client.stats.getPendingCount()).toBe(1);
+-      expect(client.stats.getSampleCount()).toBe(0);
++      expect(client.stats?.getPendingCount()).toBe(1);
++      expect(client.stats?.getSampleCount()).toBe(0);
+ 
+       await client.close();
+       await server.stop();
+@@ -62,6 +126,9 @@ describe('EnhancedHl7Client', () => {
+         host: 'localhost',
+         port,
+         log: mockLogger,
++      });
++
++      client.startTrackingStats({
+         heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+@@ -73,16 +140,16 @@ describe('EnhancedHl7Client', () => {
+       await client.send(message);
+ 
+       // No stats should be recorded
+-      expect(client.stats.getPendingCount()).toBe(0);
+-      expect(client.stats.getSampleCount()).toBe(0);
++      expect(client.stats?.getPendingCount()).toBe(0);
++      expect(client.stats?.getSampleCount()).toBe(0);
+ 
+       await client.close();
+       await server.stop();
+     });
+   });
+ 
+-  describe('sendAndWait', () => {
+-    test('SendAndWait records RTT', async () => {
++  describe('sendAndWait with tracking on', () => {
++    test('SendAndWait records RTT when tracking is on', async () => {
+       const port = await getFreePort();
+       const server = new Hl7Server((connection) => {
+         connection.addEventListener('message', ({ message }) => {
+@@ -95,6 +162,9 @@ describe('EnhancedHl7Client', () => {
+         host: 'localhost',
+         port,
+         log: mockLogger,
++      });
++
++      client.startTrackingStats({
+         heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+@@ -110,10 +180,10 @@ describe('EnhancedHl7Client', () => {
+       expect(response).toBeDefined();
+ 
+       // RTT should be recorded
+-      expect(client.stats.getPendingCount()).toBe(0);
+-      expect(client.stats.getSampleCount()).toBe(1);
++      expect(client.stats?.getPendingCount()).toBe(0);
++      expect(client.stats?.getSampleCount()).toBe(1);
+ 
+-      const stats = client.stats.getRttStats();
++      const stats = client.stats?.getRttStats();
+       expect(stats?.count).toBe(1);
+       expect(stats?.min).toBeGreaterThanOrEqual(0);
+       expect(stats?.max).toBeGreaterThanOrEqual(0);
+@@ -135,6 +205,9 @@ describe('EnhancedHl7Client', () => {
+         host: 'localhost',
+         port,
+         log: mockLogger,
++      });
++
++      client.startTrackingStats({
+         heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+@@ -149,11 +222,11 @@ describe('EnhancedHl7Client', () => {
+       }
+ 
+       // All RTTs should be recorded
+-      expect(client.stats.getPendingCount()).toBe(0);
+-      expect(client.stats.getSampleCount()).toBe(3);
+-      expect(client.stats.getRttSamples().length).toBe(3);
++      expect(client.stats?.getPendingCount()).toBe(0);
++      expect(client.stats?.getSampleCount()).toBe(3);
++      expect(client.stats?.getRttSamples().length).toBe(3);
+ 
+-      const stats = client.stats.getRttStats();
++      const stats = client.stats?.getRttStats();
+       expect(stats?.count).toBe(3);
+ 
+       await client.close();
+@@ -173,6 +246,9 @@ describe('EnhancedHl7Client', () => {
+         host: 'localhost',
+         port,
+         log: mockLogger,
++      });
++
++      client.startTrackingStats({
+         heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+@@ -185,31 +261,83 @@ describe('EnhancedHl7Client', () => {
+       await expect(client.sendAndWait(message)).rejects.toThrow('Required field missing: MSH.10');
+ 
+       // No stats should be recorded
+-      expect(client.stats.getPendingCount()).toBe(0);
+-      expect(client.stats.getSampleCount()).toBe(0);
++      expect(client.stats?.getPendingCount()).toBe(0);
++      expect(client.stats?.getSampleCount()).toBe(0);
+ 
+       await client.close();
+       await server.stop();
+     });
+   });
+ 
+-  describe('close', () => {
+-    test('Cleans up stats tracker on close', async () => {
++  describe('startTrackingStats', () => {
++    test('Does not start tracking if already tracking', async () => {
+       const port = await getFreePort();
+       const { client } = createTestEnhancedHl7Client({
+         host: 'localhost',
+         port,
+         log: mockLogger,
++      });
++
++      client.startTrackingStats({
+         heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+-      expect(client.stats).toBeDefined();
++      const firstStatsTracker = client.stats;
++      expect(firstStatsTracker).toBeDefined();
++      expect(mockHeartbeatEmitter.listenerCount('heartbeat')).toBe(1);
++
++      // Try to start tracking again
++      client.startTrackingStats({
++        heartbeatEmitter: mockHeartbeatEmitter,
++      });
++
++      // Should still be the same stats tracker
++      expect(client.stats).toBe(firstStatsTracker);
++      // Should not have added another listener
+       expect(mockHeartbeatEmitter.listenerCount('heartbeat')).toBe(1);
+ 
+       await client.close();
++    });
++  });
++
++  describe('stopTrackingStats', () => {
++    test('Calls cleanup on stats tracker when stopping', async () => {
++      const port = await getFreePort();
++      const { client } = createTestEnhancedHl7Client({
++        host: 'localhost',
++        port,
++        log: mockLogger,
++      });
++
++      client.startTrackingStats({
++        heartbeatEmitter: mockHeartbeatEmitter,
++      });
++
++      expect(client.stats).toBeDefined();
++      expect(mockHeartbeatEmitter.listenerCount('heartbeat')).toBe(1);
++
++      client.stopTrackingStats();
+ 
+       // Cleanup should have removed the heartbeat listener
+       expect(mockHeartbeatEmitter.listenerCount('heartbeat')).toBe(0);
++
++      await client.close();
++    });
++
++    test('Does not error when stopping tracking when not tracking', async () => {
++      const port = await getFreePort();
++      const { client } = createTestEnhancedHl7Client({
++        host: 'localhost',
++        port,
++        log: mockLogger,
++      });
++
++      expect(client.stats).toBeUndefined();
++
++      // Should not throw
++      expect(() => client.stopTrackingStats()).not.toThrow();
++
++      await client.close();
+     });
+   });
+ 
+@@ -236,7 +364,6 @@ describe('EnhancedHl7Client', () => {
+         host: 'localhost',
+         port,
+         log: mockLogger,
+-        heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+       const message = Hl7Message.parse(
+@@ -277,7 +404,6 @@ describe('EnhancedHl7Client', () => {
+         host: 'localhost',
+         port,
+         log: mockLogger,
+-        heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+       const message = Hl7Message.parse(
+@@ -315,6 +441,9 @@ describe('EnhancedHl7Client', () => {
+         host: 'localhost',
+         port,
+         log: mockLogger,
++      });
++
++      client.startTrackingStats({
+         heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
+@@ -326,8 +455,8 @@ describe('EnhancedHl7Client', () => {
+       await client.sendAndWait(message, { returnAck: ReturnAckCategory.APPLICATION });
+ 
+       // Stats should have been recorded
+-      expect(client.stats.getSampleCount()).toBe(1);
+-      expect(client.stats.getPendingCount()).toBe(0);
++      expect(client.stats?.getSampleCount()).toBe(1);
++      expect(client.stats?.getPendingCount()).toBe(0);
+ 
+       await client.close();
+       await server.stop();
+diff --git a/packages/agent/src/enhanced-hl7-client.ts b/packages/agent/src/enhanced-hl7-client.ts
+index 5528f4722..44169ec9f 100644
+--- a/packages/agent/src/enhanced-hl7-client.ts
++++ b/packages/agent/src/enhanced-hl7-client.ts
+@@ -14,22 +14,24 @@ import { ChannelStatsTracker } from './channel-stats-tracker';
+ import { Hl7MessageTracker, TrackedHl7Connection } from './hl7-message-tracker';
+ import type { HeartbeatEmitter } from './types';
+ 
++export interface ClientStatsTrackingOptions {
++  heartbeatEmitter: HeartbeatEmitter;
++}
++
+ export interface ExtendedHl7ClientOptions extends Hl7ClientOptions {
+   messageTracker?: Hl7MessageTracker;
+   log?: ILogger;
+-  heartbeatEmitter: HeartbeatEmitter;
+ }
+ 
+ export class EnhancedHl7Client extends Hl7Client {
+   readonly messageTracker: Hl7MessageTracker;
+-  readonly stats: ChannelStatsTracker;
++  stats?: ChannelStatsTracker;
+   log?: ILogger;
+ 
+   constructor(options: ExtendedHl7ClientOptions) {
+     super(options);
+     this.messageTracker = options.messageTracker ?? new Hl7MessageTracker();
+     this.log = options.log;
+-    this.stats = new ChannelStatsTracker({ log: this.log, heartbeatEmitter: options.heartbeatEmitter });
+   }
+ 
+   protected override createConnection(
+@@ -43,7 +45,7 @@ export class EnhancedHl7Client extends Hl7Client {
+ 
+   send(msg: Hl7Message): Promise<void> {
+     const msgControlId = msg.getSegment('MSH')?.getField(10)?.toString();
+-    if (msgControlId) {
++    if (this.stats && msgControlId) {
+       this.stats.recordMessageSent(msgControlId);
+     }
+     return super.send(msg);
+@@ -51,18 +53,25 @@ export class EnhancedHl7Client extends Hl7Client {
+ 
+   async sendAndWait(msg: Hl7Message, options?: SendAndWaitOptions): Promise<Hl7Message> {
+     const msgControlId = msg.getSegment('MSH')?.getField(10)?.toString();
+-    if (msgControlId) {
++    if (this.stats && msgControlId) {
+       this.stats.recordMessageSent(msgControlId);
+     }
+     const response = await super.sendAndWait(msg, options);
+-    if (msgControlId) {
++    if (this.stats && msgControlId) {
+       this.stats.recordAckReceived(msgControlId);
+     }
+     return response;
+   }
+ 
+-  override async close(): Promise<void> {
+-    this.stats.cleanup();
+-    return super.close();
++  startTrackingStats(options: ClientStatsTrackingOptions): void {
++    if (this.stats) {
++      return;
++    }
++    this.stats = new ChannelStatsTracker({ log: this.log, ...options });
++  }
++
++  stopTrackingStats(): void {
++    this.stats?.cleanup();
++    this.stats = undefined;
+   }
+ }
+diff --git a/packages/agent/src/hl7-client-pool.test.ts b/packages/agent/src/hl7-client-pool.test.ts
+index 471603b58..0b407a73a 100644
+--- a/packages/agent/src/hl7-client-pool.test.ts
++++ b/packages/agent/src/hl7-client-pool.test.ts
+@@ -59,7 +59,15 @@ function createFakeClient({
+           getPendingMessageCount: jest.fn().mockReturnValue(pendingMessages ?? 0),
+         }
+       : undefined,
+-    stats: (stats ?? { getRttSamples: () => [], getPendingCount: () => 0 }) as any,
++    startTrackingStats: jest.fn(() => {
++      if (stats) {
++        client.stats = stats as any;
++      }
++    }),
++    stopTrackingStats: jest.fn(() => {
++      client.stats = undefined;
++    }),
++    stats: stats as any,
+   } as unknown as EnhancedHl7Client;
+ 
+   return client;
+@@ -844,12 +852,15 @@ describe('Hl7ClientPool', () => {
+ 
+       const clientA = createFakeClient({ stats: clientAStats });
+       const clientB = createFakeClient({ stats: clientBStats });
++      const clientWithoutStats = createFakeClient();
++
++      pool.getClients().push(clientA, clientB, clientWithoutStats);
+ 
+-      pool.getClients().push(clientA, clientB);
++      pool.startTrackingStats();
+ 
+       const poolStats = pool.getPoolStats();
+       expect(poolStats).toBeDefined();
+-      expect(poolStats.rtt).toStrictEqual({
++      expect(poolStats?.rtt).toStrictEqual({
+         count: 3,
+         min: 100,
+         max: 200,
+diff --git a/packages/agent/src/hl7-client-pool.ts b/packages/agent/src/hl7-client-pool.ts
+index 6ab005350..e3b5b6b86 100644
+--- a/packages/agent/src/hl7-client-pool.ts
++++ b/packages/agent/src/hl7-client-pool.ts
+@@ -40,6 +40,7 @@ export class Hl7ClientPool {
+   private nextClientIdx: number = 0;
+   private readonly heartbeatEmitter: HeartbeatEmitter;
+   readonly messageTracker: Hl7MessageTracker;
++  private trackingStats = false;
+   private gcListener: (() => void) | undefined;
+ 
+   constructor(options: Hl7ClientPoolOptions) {
+@@ -246,7 +247,6 @@ export class Hl7ClientPool {
+       keepAlive: this.keepAlive,
+       log: this.log,
+       messageTracker: this.messageTracker,
+-      heartbeatEmitter: this.heartbeatEmitter,
+     });
+ 
+     // If GC is running, we should add the current timestamp as last used for this client
+@@ -254,6 +254,10 @@ export class Hl7ClientPool {
+       this.lastUsedTimestamps.set(client, Date.now());
+     }
+ 
++    if (this.trackingStats) {
++      client.startTrackingStats({ heartbeatEmitter: this.heartbeatEmitter });
++    }
++
+     this.clients.push(client);
+ 
+     // Set up event listeners
+@@ -290,11 +294,32 @@ export class Hl7ClientPool {
+     return this.maxClients;
+   }
+ 
+-  getPoolStats(): ChannelStats {
+-    const allRttSamples = this.clients.flatMap((client) => client.stats.getRttSamples());
++  startTrackingStats(): void {
++    this.trackingStats = true;
++    for (const client of this.clients) {
++      client.startTrackingStats({ heartbeatEmitter: this.heartbeatEmitter });
++    }
++  }
++
++  stopTrackingStats(): void {
++    this.trackingStats = false;
++    for (const client of this.clients) {
++      client.stopTrackingStats();
++    }
++  }
++
++  isTrackingStats(): boolean {
++    return this.trackingStats;
++  }
++
++  getPoolStats(): ChannelStats | undefined {
++    if (!this.trackingStats) {
++      return undefined;
++    }
++    const allRttSamples = this.clients.flatMap((client) => client.stats?.getRttSamples() ?? []);
+     let totalPendingCount = 0;
+     for (const client of this.clients) {
+-      totalPendingCount += client.stats.getPendingCount();
++      totalPendingCount += client.stats?.getPendingCount() ?? 0;
+     }
+     return { rtt: calculateRttStats(allRttSamples, totalPendingCount) };
+   }
+diff --git a/packages/agent/src/hl7-message-tracker.test.ts b/packages/agent/src/hl7-message-tracker.test.ts
+index 348fbf706..dc427b872 100644
+--- a/packages/agent/src/hl7-message-tracker.test.ts
++++ b/packages/agent/src/hl7-message-tracker.test.ts
+@@ -112,7 +112,6 @@ describe('Hl7MessageTracker', () => {
+         port,
+         log: mockLogger,
+         messageTracker: tracker,
+-        heartbeatEmitter: new TypedEventTarget(),
+       });
+ 
+       const message = Hl7Message.parse(
+@@ -144,7 +143,6 @@ describe('Hl7MessageTracker', () => {
+         port,
+         log: mockLogger,
+         messageTracker: tracker,
+-        heartbeatEmitter: new TypedEventTarget(),
+       });
+ 
+       // Establish the connection first to avoid timing issues
+@@ -214,7 +212,6 @@ describe('Hl7MessageTracker', () => {
+         port,
+         log: mockLogger,
+         messageTracker: tracker,
+-        heartbeatEmitter: new TypedEventTarget(),
+       });
+ 
+       // Manually register the message in the tracker with a promise we control
+@@ -242,7 +239,6 @@ describe('Hl7MessageTracker', () => {
+         port,
+         log: mockLogger,
+         messageTracker: tracker,
+-        heartbeatEmitter: new TypedEventTarget(),
+       });
+ 
+       // Send the same message on client2 — the server ACKs it
+@@ -363,7 +359,6 @@ describe('Hl7MessageTracker', () => {
+         port,
+         log: mockLogger,
+         messageTracker: tracker,
+-        heartbeatEmitter: new TypedEventTarget(),
+       });
+ 
+       // Establish connection first
+@@ -417,9 +412,10 @@ describe('Hl7MessageTracker', () => {
+         port,
+         log: mockLogger,
+         messageTracker: tracker,
+-        heartbeatEmitter: mockHeartbeatEmitter,
+       });
+ 
++      client.startTrackingStats({ heartbeatEmitter: mockHeartbeatEmitter });
++
+       const message = Hl7Message.parse(
+         'MSH|^~\\&|ADT1|MCM|LABADT|MCM|198808181126|SECURITY|ADT^A01|MSG00001|P|2.2\r' +
+           'PID|||PATID1234^5^M11||JONES^WILLIAM^A^III||19610615|M-'
+@@ -428,8 +424,8 @@ describe('Hl7MessageTracker', () => {
+       const response = await client.sendAndWait(message);
+       expect(response).toBeDefined();
+ 
+-      expect(client.stats.getSampleCount()).toBe(1);
+-      expect(client.stats.getPendingCount()).toBe(0);
++      expect(client.stats?.getSampleCount()).toBe(1);
++      expect(client.stats?.getPendingCount()).toBe(0);
+       expect(tracker.getPendingMessageCount()).toBe(0);
+ 
+       await client.close();
+diff --git a/packages/agent/src/hl7.test.ts b/packages/agent/src/hl7.test.ts
+index b52879284..98b93131f 100644
+--- a/packages/agent/src/hl7.test.ts
++++ b/packages/agent/src/hl7.test.ts
+@@ -2409,7 +2409,7 @@ describe('HL7', () => {
+       await app.stop();
+     });
+ 
+-    test('Channel should track stats by default, even when logStatsFreqSecs is not set', async () => {
++    test('When logStatsFreqSecs is not set, channel should not track stats', async () => {
+       mockServer.on('connection', (socket) => {
+         socket.on('message', (data) => {
+           const command = JSON.parse((data as Buffer).toString('utf8'));
+@@ -2475,13 +2475,13 @@ describe('HL7', () => {
+       const channel = app.channels.get('test');
+       expect(channel).toBeDefined();
+ 
+-      // Channel should have stats tracker by default
+-      expect((channel as AgentHl7Channel).stats).toBeDefined();
++      // Channel should NOT have stats tracker
++      expect((channel as AgentHl7Channel).stats).toBeUndefined();
+ 
+       await app.stop();
+     });
+ 
+-    test('When logStatsFreqSecs is set via reload, channel still has stats tracker', async () => {
++    test('When logStatsFreqSecs is set via reload, channel should start tracking', async () => {
+       const state = {
+         mySocket: undefined as Client | undefined,
+         reloadConfigResponse: null as AgentReloadConfigRequest | null,
+@@ -2534,8 +2534,8 @@ describe('HL7', () => {
+       let channel = app.channels.get('test');
+       expect(channel).toBeDefined();
+ 
+-      // Channel should have stats tracker by default
+-      expect((channel as AgentHl7Channel).stats).toBeDefined();
++      // Channel should NOT have stats tracker initially
++      expect((channel as AgentHl7Channel).stats).toBeUndefined();
+ 
+       // Update agent to enable logStatsFreqSecs
+       await medplum.updateResource<Agent>({
+@@ -2568,7 +2568,7 @@ describe('HL7', () => {
+       await app.stop();
+     });
+ 
+-    test('When logStatsFreqSecs is removed via reload, channel should keep tracking stats', async () => {
++    test('When logStatsFreqSecs is removed via reload, channel should stop tracking', async () => {
+       const state = {
+         mySocket: undefined as Client | undefined,
+         reloadConfigResponse: null as AgentReloadConfigRequest | null,
+@@ -2650,8 +2650,8 @@ describe('HL7', () => {
+       channel = app.channels.get('test');
+       expect(channel).toBeDefined();
+ 
+-      // Channel should still have stats tracker (stats are collected by default)
+-      expect((channel as AgentHl7Channel).stats).toBeDefined();
++      // Channel should NO LONGER have stats tracker
++      expect((channel as AgentHl7Channel).stats).toBeUndefined();
+ 
+       await app.stop();
+     });
+diff --git a/packages/agent/src/hl7.ts b/packages/agent/src/hl7.ts
+index 4fd62e66e..0e8ef927e 100644
+--- a/packages/agent/src/hl7.ts
++++ b/packages/agent/src/hl7.ts
+@@ -41,7 +41,7 @@ export class AgentHl7Channel extends BaseChannel {
+   readonly log: ILogger;
+   readonly channelLog: ILogger;
+   private prefix: string;
+-  stats: ChannelStatsTracker;
++  stats?: ChannelStatsTracker;
+   private appLevelAckMode: AppLevelAckMode = 'AL'; // Default app level ack mode is AL (Always)
+   private assignSeqNo: boolean = false;
+   private lastSeqNo = -1;
+@@ -56,7 +56,6 @@ export class AgentHl7Channel extends BaseChannel {
+     this.prefix = `[HL7:${definition.name}] `;
+     this.log = app.log.clone({ options: { prefix: this.prefix } });
+     this.channelLog = app.channelLog.clone({ options: { prefix: this.prefix } });
+-    this.stats = new ChannelStatsTracker({ heartbeatEmitter: app.heartbeatEmitter, log: this.log });
+   }
+ 
+   async start(): Promise<void> {
+@@ -67,7 +66,7 @@ export class AgentHl7Channel extends BaseChannel {
+ 
+     const address = new URL(this.getEndpoint().address);
+     this.log.info(`Channel starting on ${address}...`);
+-    this.stats = new ChannelStatsTracker({ heartbeatEmitter: this.app.heartbeatEmitter, log: this.log });
++    this.configureStatsTracker();
+     this.configureHl7ServerAndConnections();
+     await this.server.start(Number.parseInt(address.port, 10));
+     this.log.info('Channel started successfully');
+@@ -80,7 +79,7 @@ export class AgentHl7Channel extends BaseChannel {
+     this.log.info('Channel stopping...');
+     await Promise.allSettled(Array.from(this.connections.values()).map((connection) => connection.close()));
+     await this.server.stop();
+-    this.stats.cleanup();
++    this.stats?.cleanup();
+     this.started = false;
+     this.log.info('Channel stopped successfully');
+   }
+@@ -121,7 +120,7 @@ export class AgentHl7Channel extends BaseChannel {
+       connection.hl7Connection.send(Hl7Message.parse(msg.body));
+ 
+       if (msgControlId) {
+-        this.stats.recordAckReceived(msgControlId);
++        this.stats?.recordAckReceived(msgControlId);
+       }
+     } else {
+       this.log.warn(`Attempted to send message to disconnected remote: ${msg.remote}`);
+@@ -136,6 +135,8 @@ export class AgentHl7Channel extends BaseChannel {
+ 
+     this.log.info('Reloading config... Evaluating if channel needs to change address...');
+ 
++    this.configureStatsTracker();
++
+     if (this.needToRebindToPort(previousEndpoint, endpoint)) {
+       await this.stop();
+       await this.start();
+@@ -160,6 +161,18 @@ export class AgentHl7Channel extends BaseChannel {
+     return true;
+   }
+ 
++  private configureStatsTracker(): void {
++    const logStatsFreqSecs =
++      this.app.getAgentConfig()?.setting?.find((setting) => setting.name === 'logStatsFreqSecs')?.valueInteger ?? -1;
++
++    if (logStatsFreqSecs > 0 && !this.stats) {
++      this.stats = new ChannelStatsTracker({ heartbeatEmitter: this.app.heartbeatEmitter, log: this.log });
++    } else if (logStatsFreqSecs <= 0 && this.stats) {
++      this.stats.cleanup();
++      this.stats = undefined;
++    }
++  }
++
+   private configureHl7ServerAndConnections(): void {
+     const address = new URL(this.getEndpoint().address);
+     const encoding = address.searchParams.get('encoding') ?? undefined;
+@@ -251,7 +264,7 @@ export class AgentHl7ChannelConnection {
+ 
+       // Log stats
+       if (msgControlId) {
+-        this.channel.stats.recordMessageSent(msgControlId);
++        this.channel.stats?.recordMessageSent(msgControlId);
+       }
+     } catch (err) {
+       this.channel.log.error(`HL7 error occurred - check channel logs`);
+diff --git a/packages/agent/src/test-utils.ts b/packages/agent/src/test-utils.ts
+index 386dd280c..f82695be7 100644
+--- a/packages/agent/src/test-utils.ts
++++ b/packages/agent/src/test-utils.ts
+@@ -86,15 +86,11 @@ export function generateTestLogs(
+ }
+ 
+ export function createTestEnhancedHl7Client(
+-  options: Omit<ExtendedHl7ClientOptions, 'messageTracker' | 'heartbeatEmitter'> & {
+-    messageTracker?: Hl7MessageTracker;
+-    heartbeatEmitter?: HeartbeatEmitter;
+-  }
+-): { client: EnhancedHl7Client; messageTracker: Hl7MessageTracker; heartbeatEmitter: HeartbeatEmitter } {
++  options: Omit<ExtendedHl7ClientOptions, 'messageTracker'> & { messageTracker?: Hl7MessageTracker }
++): { client: EnhancedHl7Client; messageTracker: Hl7MessageTracker } {
+   const messageTracker = options.messageTracker ?? new Hl7MessageTracker();
+-  const heartbeatEmitter = options.heartbeatEmitter ?? new TypedEventTarget();
+-  const client = new EnhancedHl7Client({ ...options, messageTracker, heartbeatEmitter });
+-  return { client, messageTracker, heartbeatEmitter };
++  const client = new EnhancedHl7Client({ ...options, messageTracker });
++  return { client, messageTracker };
+ }
+ 
+ export function createTestHl7ClientPool(
+diff --git a/packages/app/src/admin/BotsPage.tsx b/packages/app/src/admin/BotsPage.tsx
+index 29f5ef887..95df9a526 100644
+--- a/packages/app/src/admin/BotsPage.tsx
++++ b/packages/app/src/admin/BotsPage.tsx
+@@ -1,6 +1,6 @@
+ // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
+ // SPDX-License-Identifier: Apache-2.0
+-import { Anchor, Group, Paper, Text, Title } from '@mantine/core';
++import { Group, Title } from '@mantine/core';
+ import { MedplumLink } from '@medplum/react';
+ import type { JSX } from 'react';
+ import { MemberTable } from './MembersTable';
+@@ -8,33 +8,10 @@ import { MemberTable } from './MembersTable';
+ export function BotsPage(): JSX.Element {
+   return (
+     <>
+-      <Title>ProjectMemberships by Bot</Title>
++      <Title>Bots</Title>
+       <MemberTable
+         profileTypeOptions={[{ label: 'Bot', value: 'Bot' }]}
+         fields={['user', 'profile', 'accessPolicy', 'userConfiguration', 'active', 'admin']}
+-        toolbarLeft={
+-          <Paper withBorder p="sm" radius="sm" maw={520}>
+-            <Text size="sm" c="dimmed">
+-              Please note that this list is limited to Bots that have a ProjectMembership. Bots that are run as user
+-              commonly do not have a ProjectMembership, and are not included, such as most Bots in Medplum-managed
+-              integrations. For a complete list of Bots, see <MedplumLink to="/Bot">Bots</MedplumLink>. For more
+-              information, see{' '}
+-              <Anchor
+-                href="https://www.medplum.com/docs/bots/bot-run-as-user"
+-                target="_blank"
+-                rel="noopener noreferrer"
+-              >
+-                running Bots as user
+-              </Anchor>
+-              .
+-            </Text>
+-          </Paper>
+-        }
+-        toolbarRight={
+-          <Anchor href="https://www.medplum.com/docs/bots" target="_blank" rel="noopener noreferrer" size="sm">
+-            Learn more about Bots
+-          </Anchor>
+-        }
+       />
+       <Group justify="flex-end">
+         <MedplumLink to={`/admin/bots/new`}>Create new bot</MedplumLink>
+diff --git a/packages/app/src/admin/ClientsPage.tsx b/packages/app/src/admin/ClientsPage.tsx
+index e396f8a90..7190e68b0 100644
+--- a/packages/app/src/admin/ClientsPage.tsx
++++ b/packages/app/src/admin/ClientsPage.tsx
+@@ -8,7 +8,7 @@ import { MemberTable } from './MembersTable';
+ export function ClientsPage(): JSX.Element {
+   return (
+     <>
+-      <Title>ProjectMemberships by ClientApplication</Title>
++      <Title>Client Applications</Title>
+       <MemberTable
+         profileTypeOptions={[{ label: 'ClientApplication', value: 'ClientApplication' }]}
+         fields={['user', 'profile', 'accessPolicy', 'userConfiguration', 'active', 'admin']}
+diff --git a/packages/app/src/admin/MembersTable.tsx b/packages/app/src/admin/MembersTable.tsx
+index f607708d4..d3817fc2f 100644
+--- a/packages/app/src/admin/MembersTable.tsx
++++ b/packages/app/src/admin/MembersTable.tsx
+@@ -48,21 +48,12 @@ export function MemberTable(props: MemberTableProps): JSX.Element {
+     });
+   }
+ 
+-  const showSegmentedControl = props.profileTypeOptions.length > 1;
+-  const showToolbar = showSegmentedControl || props.toolbarLeft !== undefined || props.toolbarRight !== undefined;
+-
+   return (
+     <>
+-      {showToolbar && (
++      {props.profileTypeOptions.length > 1 && (
+         <Group justify="space-between" align="center" mb="md" wrap="nowrap">
+           <Group gap="md" wrap="nowrap">
+-            {showSegmentedControl && (
+-              <SegmentedControl
+-                value={profileType}
+-                onChange={handleProfileTypeChange}
+-                data={props.profileTypeOptions}
+-              />
+-            )}
++            <SegmentedControl value={profileType} onChange={handleProfileTypeChange} data={props.profileTypeOptions} />
+             {props.toolbarLeft}
+           </Group>
+           {props.toolbarRight}
+diff --git a/packages/cdk/src/guardduty.ts b/packages/cdk/src/guardduty.ts
+new file mode 100644
+index 000000000..3730ebb71
+--- /dev/null
++++ b/packages/cdk/src/guardduty.ts
+@@ -0,0 +1,198 @@
++// SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
++// SPDX-License-Identifier: Apache-2.0
++import type { aws_s3 as s3 } from 'aws-cdk-lib';
++import { ArnFormat, Aws, Stack, aws_guardduty as guardduty, aws_iam as iam } from 'aws-cdk-lib';
++import type { Construct } from 'constructs';
++
++const malwareScanStatusTagKey = 'GuardDutyMalwareScanStatus';
++const noThreatsFoundStatus = 'NO_THREATS_FOUND';
++const servicePrincipal = 'malware-protection-plan.guardduty.amazonaws.com';
++const sessionName = 'GuardDutyMalwareProtection';
++
++export interface GuardDutyMalwareProtectionProps {
++  bucket: s3.IBucket;
++  consumerPrincipals?: iam.IPrincipal[];
++}
++
++export interface GuardDutyMalwareProtection {
++  scanRole: iam.Role;
++  plan: guardduty.CfnMalwareProtectionPlan;
++}
++
++export function buildGuardDutyMalwareProtection(
++  construct: Construct,
++  id: string,
++  props: GuardDutyMalwareProtectionProps
++): GuardDutyMalwareProtection {
++  const scanRole = new iam.Role(construct, `${id}Role`, {
++    assumedBy: new iam.ServicePrincipal(servicePrincipal),
++  });
++
++  addGuardDutyScanRolePolicy(scanRole, props.bucket);
++
++  const plan = new guardduty.CfnMalwareProtectionPlan(construct, `${id}Plan`, {
++    actions: {
++      tagging: {
++        status: 'ENABLED',
++      },
++    },
++    protectedResource: {
++      s3Bucket: {
++        bucketName: props.bucket.bucketName,
++      },
++    },
++    role: scanRole.roleArn,
++  });
++  plan.node.addDependency(scanRole);
++  const defaultPolicy = scanRole.node.tryFindChild('DefaultPolicy');
++  if (defaultPolicy) {
++    plan.node.addDependency(defaultPolicy);
++  }
++
++  if (props.consumerPrincipals && props.consumerPrincipals.length > 0) {
++    addGuardDutyMalwareProtectionReadGate(props.bucket, props.consumerPrincipals);
++  }
++  addGuardDutyTagGate(props.bucket, scanRole);
++
++  return { scanRole, plan };
++}
++
++function addGuardDutyScanRolePolicy(role: iam.Role, bucket: s3.IBucket): void {
++  const eventRuleArn = `arn:${Aws.PARTITION}:events:${Aws.REGION}:${Aws.ACCOUNT_ID}:rule/DO-NOT-DELETE-AmazonGuardDutyMalwareProtectionS3*`;
++
++  role.addToPolicy(
++    new iam.PolicyStatement({
++      sid: 'AllowManagedRuleToSendS3EventsToGuardDuty',
++      effect: iam.Effect.ALLOW,
++      actions: ['events:PutRule', 'events:DeleteRule', 'events:PutTargets', 'events:RemoveTargets'],
++      resources: [eventRuleArn],
++      conditions: {
++        StringLike: {
++          'events:ManagedBy': servicePrincipal,
++        },
++      },
++    })
++  );
++
++  role.addToPolicy(
++    new iam.PolicyStatement({
++      sid: 'AllowGuardDutyToMonitorEventBridgeManagedRule',
++      effect: iam.Effect.ALLOW,
++      actions: ['events:DescribeRule', 'events:ListTargetsByRule'],
++      resources: [eventRuleArn],
++    })
++  );
++
++  role.addToPolicy(
++    new iam.PolicyStatement({
++      sid: 'AllowPostScanTag',
++      effect: iam.Effect.ALLOW,
++      actions: [
++        's3:PutObjectTagging',
++        's3:GetObjectTagging',
++        's3:PutObjectVersionTagging',
++        's3:GetObjectVersionTagging',
++      ],
++      resources: [bucket.arnForObjects('*')],
++    })
++  );
++
++  role.addToPolicy(
++    new iam.PolicyStatement({
++      sid: 'AllowEnableS3EventBridgeEvents',
++      effect: iam.Effect.ALLOW,
++      actions: ['s3:PutBucketNotification', 's3:GetBucketNotification'],
++      resources: [bucket.bucketArn],
++    })
++  );
++
++  role.addToPolicy(
++    new iam.PolicyStatement({
++      sid: 'AllowPutValidationObject',
++      effect: iam.Effect.ALLOW,
++      actions: ['s3:PutObject'],
++      resources: [bucket.arnForObjects('malware-protection-resource-validation-object')],
++    })
++  );
++
++  role.addToPolicy(
++    new iam.PolicyStatement({
++      sid: 'AllowCheckBucketOwnership',
++      effect: iam.Effect.ALLOW,
++      actions: ['s3:ListBucket'],
++      resources: [bucket.bucketArn],
++    })
++  );
++
++  role.addToPolicy(
++    new iam.PolicyStatement({
++      sid: 'AllowMalwareScan',
++      effect: iam.Effect.ALLOW,
++      actions: ['s3:GetObject', 's3:GetObjectVersion'],
++      resources: [bucket.arnForObjects('*')],
++    })
++  );
++
++  if (bucket.encryptionKey) {
++    role.addToPolicy(
++      new iam.PolicyStatement({
++        sid: 'AllowDecryptForMalwareScan',
++        effect: iam.Effect.ALLOW,
++        actions: ['kms:GenerateDataKey', 'kms:Decrypt'],
++        resources: [bucket.encryptionKey.keyArn],
++        conditions: {
++          StringLike: {
++            'kms:ViaService': `s3.${Aws.REGION}.amazonaws.com`,
++          },
++        },
++      })
++    );
++  }
++}
++
++export function addGuardDutyMalwareProtectionReadGate(bucket: s3.IBucket, consumerPrincipals: iam.IPrincipal[]): void {
++  bucket.addToResourcePolicy(
++    new iam.PolicyStatement({
++      effect: iam.Effect.DENY,
++      principals: consumerPrincipals,
++      actions: ['s3:GetObject', 's3:GetObjectVersion'],
++      resources: [bucket.arnForObjects('*')],
++      conditions: {
++        StringNotEquals: {
++          [`s3:ExistingObjectTag/${malwareScanStatusTagKey}`]: noThreatsFoundStatus,
++        },
++      },
++    })
++  );
++}
++
++function addGuardDutyTagGate(bucket: s3.IBucket, scanRole: iam.Role): void {
++  bucket.addToResourcePolicy(
++    new iam.PolicyStatement({
++      sid: 'OnlyGuardDutyCanTagScanStatus',
++      effect: iam.Effect.DENY,
++      notPrincipals: [
++        new iam.ArnPrincipal(scanRole.roleArn),
++        new iam.ArnPrincipal(getGuardDutyAssumedRoleArn(scanRole)),
++      ],
++      actions: ['s3:PutObjectTagging', 's3:PutObjectVersionTagging'],
++      resources: [bucket.arnForObjects('*')],
++      conditions: {
++        'ForAnyValue:StringEquals': {
++          's3:RequestObjectTagKeys': malwareScanStatusTagKey,
++        },
++      },
++    })
++  );
++}
++
++function getGuardDutyAssumedRoleArn(role: iam.Role): string {
++  return Stack.of(role).formatArn({
++    service: 'sts',
++    region: '',
++    account: Aws.ACCOUNT_ID,
++    resource: 'assumed-role',
++    resourceName: `${role.roleName}/${sessionName}`,
++    arnFormat: ArnFormat.SLASH_RESOURCE_NAME,
++  });
++}
+diff --git a/packages/cdk/src/index.ts b/packages/cdk/src/index.ts
+index d4de5d576..6a0b3e2ee 100644
+--- a/packages/cdk/src/index.ts
++++ b/packages/cdk/src/index.ts
+@@ -10,6 +10,7 @@ import { MedplumStack } from './stack';
+ export * from './backend';
+ export * from './cloudtrail';
+ export * from './frontend';
++export * from './guardduty';
+ export * from './stack';
+ export * from './storage';
+ export * from './waf';
+diff --git a/packages/cdk/src/storage.ts b/packages/cdk/src/storage.ts
+index afd61b1e1..e4debbbd7 100644
+--- a/packages/cdk/src/storage.ts
++++ b/packages/cdk/src/storage.ts
+@@ -13,6 +13,7 @@ import {
+ } from 'aws-cdk-lib';
+ import { ServerlessClamscan } from 'cdk-serverless-clamscan';
+ import { Construct } from 'constructs';
++import { addGuardDutyMalwareProtectionReadGate, buildGuardDutyMalwareProtection } from './guardduty';
+ import { grantBucketAccessToOriginAccessIdentity } from './oai';
+ import { buildWaf } from './waf';
+ 
+@@ -43,6 +44,12 @@ export class Storage extends Construct {
+         versioned: true,
+       });
+ 
++      if (config.guardDutyMalwareProtectionEnabled) {
++        buildGuardDutyMalwareProtection(this, 'StorageGuardDuty', {
++          bucket: this.storageBucket,
++        });
++      }
++
+       if (config.clamscanEnabled) {
+         // ClamAV serverless scan
+         const sc = new ServerlessClamscan(this, 'ServerlessClamscan', {
+@@ -144,6 +151,10 @@ export class Storage extends Construct {
+         this.originAccessIdentity
+       );
+ 
++      if (config.guardDutyMalwareProtectionEnabled) {
++        addGuardDutyMalwareProtectionReadGate(this.storageBucket, [this.originAccessIdentity.grantPrincipal]);
++      }
++
+       // CloudFront distribution
+       this.distribution = new cloudfront.Distribution(this, 'StorageDistribution', {
+         defaultBehavior: {
+diff --git a/packages/cdk/tsconfig.json b/packages/cdk/tsconfig.json
+index 246146a52..d9bde04e1 100644
+--- a/packages/cdk/tsconfig.json
++++ b/packages/cdk/tsconfig.json
+@@ -1,6 +1,7 @@
+ {
+   "extends": "../../tsconfig.json",
+   "compilerOptions": {
++    "types": ["jest", "node"],
+     "rootDir": "src",
+     "outDir": "dist"
+   },
+diff --git a/packages/cli/src/aws/index.ts b/packages/cli/src/aws/index.ts
+index d806c348e..be8adea67 100644
+--- a/packages/cli/src/aws/index.ts
++++ b/packages/cli/src/aws/index.ts
+@@ -83,6 +83,10 @@ export function buildAwsCommand(): MedplumCommand {
+     .description('Update S3 bucket policies')
+     .argument('<tag>', 'The Medplum stack tag')
+     .option('--file [file]', 'Specifies the config file to use. If not specified, the file is based on the tag.')
++    .option(
++      '--guardduty-malware-protection',
++      'Adds the GuardDuty Malware Protection for S3 read-gating deny to the storage bucket policy.'
++    )
+     .option(
+       '--dryrun',
+       'Displays the operations that would be performed using the specified command without actually running them.'
+diff --git a/packages/cli/src/aws/update-bucket-policies.ts b/packages/cli/src/aws/update-bucket-policies.ts
+index 2497cb42b..ddb9851b5 100644
+--- a/packages/cli/src/aws/update-bucket-policies.ts
++++ b/packages/cli/src/aws/update-bucket-policies.ts
+@@ -8,6 +8,7 @@ import { createInvalidation, getStackByTag, printConfigNotFound, printStackNotFo
+ export interface UpdateBucketPoliciesOptions {
+   file?: string;
+   dryrun?: boolean;
++  guarddutyMalwareProtection?: boolean;
+ }
+ 
+ interface Policy {
+@@ -16,10 +17,12 @@ interface Policy {
+ }
+ 
+ interface PolicyStatement {
++  Sid?: string;
+   Effect?: string;
+-  Principal?: { AWS: string };
++  Principal?: { AWS?: string; CanonicalUser?: string };
+   Action?: string | string[];
+   Resource?: string | string[];
++  Condition?: Record<string, Record<string, string | string[]>>;
+ }
+ 
+ /**
+@@ -43,15 +46,29 @@ export async function updateBucketPoliciesCommand(tag: string, options: UpdateBu
+     throw new Error(`Stack not found: ${tag}`);
+   }
+ 
+-  await updateBucketPolicy('App', details.appBucket, details.appDistribution, details.appOriginAccessIdentity, options);
++  try {
++    await updateBucketPolicy(
++      'App',
++      details.appBucket,
++      details.appDistribution,
++      details.appOriginAccessIdentity,
++      options
++    );
++  } catch (err) {
++    console.error(`Error updating App bucket policy: ${(err as Error).message}`);
++  }
+ 
+-  await updateBucketPolicy(
+-    'Storage',
+-    details.storageBucket,
+-    details.storageDistribution,
+-    details.storageOriginAccessIdentity,
+-    options
+-  );
++  try {
++    await updateBucketPolicy(
++      'Storage',
++      details.storageBucket,
++      details.storageDistribution,
++      details.storageOriginAccessIdentity,
++      options
++    );
++  } catch (err) {
++    console.error(`Error updating Storage bucket policy: ${(err as Error).message}`);
++  }
+ 
+   console.log('Done');
+ }
+@@ -78,11 +95,14 @@ export async function updateBucketPolicy(
+   const bucketName = bucketResource.PhysicalResourceId;
+   const oaiId = oaiResource.PhysicalResourceId;
+   const bucketPolicy = await getPolicy(bucketName);
+-  if (policyHasStatement(bucketPolicy, bucketName, oaiId)) {
++  if (policyHasAllowStatement(bucketPolicy, bucketName, oaiId)) {
+     throw new Error(`${friendlyName} bucket already has policy statement`);
+   }
+ 
+-  addPolicyStatement(bucketPolicy, bucketName, oaiId);
++  addAllowPolicyStatement(bucketPolicy, bucketName, oaiId);
++  if (friendlyName === 'Storage' && options.guarddutyMalwareProtection) {
++    addGuardDutyReadPolicyStatement(bucketPolicy, bucketName, oaiId);
++  }
+   console.log(`${friendlyName} bucket policy:`);
+   console.log(JSON.stringify(bucketPolicy, undefined, 2));
+ 
+@@ -121,7 +141,7 @@ async function setPolicy(bucketName: string, policy: Policy): Promise<void> {
+   );
+ }
+ 
+-function policyHasStatement(policy: Policy, bucketName: string, oaiId: string): boolean {
++function policyHasAllowStatement(policy: Policy, bucketName: string, oaiId: string): boolean {
+   return !!policy?.Statement?.some((s: PolicyStatement) => {
+     return (
+       s?.Effect === 'Allow' &&
+@@ -137,7 +157,7 @@ function policyHasStatement(policy: Policy, bucketName: string, oaiId: string):
+   });
+ }
+ 
+-function addPolicyStatement(policy: Policy, bucketName: string, oaiId: string): void {
++function addAllowPolicyStatement(policy: Policy, bucketName: string, oaiId: string): void {
+   if (!policy.Version) {
+     policy.Version = '2012-10-17';
+   }
+@@ -155,3 +175,40 @@ function addPolicyStatement(policy: Policy, bucketName: string, oaiId: string):
+     Resource: [`arn:aws:s3:::${bucketName}`, `arn:aws:s3:::${bucketName}/*`],
+   });
+ }
++
++function addGuardDutyReadPolicyStatement(policy: Policy, bucketName: string, oaiId: string): void {
++  if (
++    policy.Statement?.some(
++      (s) =>
++        s?.Effect === 'Deny' &&
++        s?.Principal?.AWS === `arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${oaiId}` &&
++        statementHasAction(s, 's3:GetObject') &&
++        statementHasAction(s, 's3:GetObjectVersion') &&
++        s?.Condition?.StringNotEquals?.['s3:ExistingObjectTag/GuardDutyMalwareScanStatus'] === 'NO_THREATS_FOUND'
++    )
++  ) {
++    return;
++  }
++
++  policy.Statement?.push({
++    Sid: 'GuardDutyMalwareProtectionReadGate',
++    Effect: 'Deny',
++    Principal: {
++      AWS: `arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${oaiId}`,
++    },
++    Action: ['s3:GetObject', 's3:GetObjectVersion'],
++    Resource: `arn:aws:s3:::${bucketName}/*`,
++    Condition: {
++      StringNotEquals: {
++        's3:ExistingObjectTag/GuardDutyMalwareScanStatus': 'NO_THREATS_FOUND',
++      },
++    },
++  });
++}
++
++function statementHasAction(statement: PolicyStatement, action: string): boolean {
++  if (statement.Action === action) {
++    return true;
++  }
++  return Array.isArray(statement.Action) && statement.Action.includes(action);
++}
+diff --git a/packages/core/src/config.ts b/packages/core/src/config.ts
+index 03f12744c..df3001d85 100644
+--- a/packages/core/src/config.ts
++++ b/packages/core/src/config.ts
+@@ -94,9 +94,13 @@ export interface MedplumSourceInfraConfig {
+   loadBalancerLoggingBucket?: ValueOrExternalSecret<string>;
+   loadBalancerLoggingPrefix?: ValueOrExternalSecret<string>;
+   loadBalancerAlgorithm?: ValueOrExternalSecret<'round_robin' | 'least_outstanding_requests' | 'weighted_random'>;
+-  clamscanEnabled: ValueOrExternalSecret<boolean>;
+-  clamscanLoggingBucket: ValueOrExternalSecret<string>;
+-  clamscanLoggingPrefix: ValueOrExternalSecret<string>;
++  guardDutyMalwareProtectionEnabled?: ValueOrExternalSecret<boolean>;
++  /** @deprecated Use guardDutyMalwareProtectionEnabled instead */
++  clamscanEnabled?: ValueOrExternalSecret<boolean>;
++  /** @deprecated Use guardDutyMalwareProtectionEnabled instead */
++  clamscanLoggingBucket?: ValueOrExternalSecret<string>;
++  /** @deprecated Use guardDutyMalwareProtectionEnabled instead */
++  clamscanLoggingPrefix?: ValueOrExternalSecret<string>;
+   skipDns?: ValueOrExternalSecret<boolean>;
+   hostedZoneName?: ValueOrExternalSecret<string>;
+   wafLogGroupName?: ValueOrExternalSecret<string>;
+@@ -263,8 +267,12 @@ export interface MedplumInfraConfig {
+   loadBalancerLoggingBucket?: string;
+   loadBalancerLoggingPrefix?: string;
+   loadBalancerAlgorithm?: 'round_robin' | 'least_outstanding_requests' | 'weighted_random';
++  guardDutyMalwareProtectionEnabled?: boolean;
++  /** @deprecated Use guardDutyMalwareProtectionEnabled instead */
+   clamscanEnabled: boolean;
++  /** @deprecated Use guardDutyMalwareProtectionEnabled instead */
+   clamscanLoggingBucket: string;
++  /** @deprecated Use guardDutyMalwareProtectionEnabled instead */
+   clamscanLoggingPrefix: string;
+   skipDns?: boolean;
+   hostedZoneName?: string;
+diff --git a/packages/core/src/search/details.test.ts b/packages/core/src/search/details.test.ts
+index ae636056b..1c00aa612 100644
+--- a/packages/core/src/search/details.test.ts
++++ b/packages/core/src/search/details.test.ts
+@@ -168,7 +168,7 @@ describe('SearchParameterDetails', () => {
+     expect(details.type).toStrictEqual(SearchParameterType.DATETIME);
+     expect(details.elementDefinitions).toBeDefined();
+     expect(details.parsedExpression.toString()).toStrictEqual(
+-      '(Observation.value.ofType(dateTime) | Observation.value.ofType(Period))'
++      '((Observation.value as dateTime) | (Observation.value as Period))'
+     );
+   });
+ 
+@@ -180,7 +180,7 @@ describe('SearchParameterDetails', () => {
+     expect(details.type).toStrictEqual(SearchParameterType.QUANTITY);
+     expect(details.elementDefinitions).toBeDefined();
+     expect(details.parsedExpression.toString()).toStrictEqual(
+-      '(Observation.value.ofType(Quantity) | Observation.value.ofType(SampledData))'
++      '((Observation.value as Quantity) | (Observation.value as SampledData))'
+     );
+   });
+ 
+diff --git a/packages/core/src/search/details.ts b/packages/core/src/search/details.ts
+index 1f69d375f..7e84e12eb 100644
+--- a/packages/core/src/search/details.ts
++++ b/packages/core/src/search/details.ts
+@@ -59,10 +59,12 @@ interface SearchParameterDetailsBuilder {
+  * @returns The search parameter type details.
+  */
+ export function getSearchParameterDetails(resourceType: string, searchParam: SearchParameter): SearchParameterDetails {
+-  return (
+-    globalSchema.types[resourceType]?.searchParamsDetails?.[searchParam.code] ??
+-    buildSearchParameterDetails(resourceType, searchParam)
+-  );
++  let result: SearchParameterDetails | undefined =
++    globalSchema.types[resourceType]?.searchParamsDetails?.[searchParam.code];
++  if (!result) {
++    result = buildSearchParameterDetails(resourceType, searchParam);
++  }
++  return result;
+ }
+ 
+ function setSearchParameterDetails(resourceType: string, code: string, details: SearchParameterDetails): void {
+@@ -189,19 +191,12 @@ function crawlSearchParameterDetails(
+     details.array = true;
+   }
+ 
+-  if (nextIndex === atoms.length - 1) {
+-    // This is the penultimate atom in the expression
+-    // If the last atom is a type guard (i.e. an "as" expression or ofType() function), use that type
+-    if (nextAtom instanceof AsAtom) {
+-      details.elementDefinitions.push(elementDefinition);
+-      details.propertyTypes.add(nextAtom.right.toString());
+-      return;
+-    }
+-    if (nextAtom instanceof FunctionAtom && nextAtom.name === 'ofType') {
+-      details.elementDefinitions.push(elementDefinition);
+-      details.propertyTypes.add(nextAtom.args[0].toString());
+-      return;
+-    }
++  if (nextIndex === atoms.length - 1 && nextAtom instanceof AsAtom) {
++    // This is the 2nd to last atom in the expression
++    // And the last atom is an "as" expression
++    details.elementDefinitions.push(elementDefinition);
++    details.propertyTypes.add(nextAtom.right.toString());
++    return;
+   }
+ 
+   if (nextIndex >= atoms.length) {
+diff --git a/packages/definitions/src/fhir/r4/search-parameters.json b/packages/definitions/src/fhir/r4/search-parameters.json
+index 6303e7ff3..50b01e0f4 100644
+--- a/packages/definitions/src/fhir/r4/search-parameters.json
++++ b/packages/definitions/src/fhir/r4/search-parameters.json
+@@ -869,7 +869,7 @@
+       "code" : "context",
+       "base" : ["ActivityDefinition"],
+       "type" : "token",
+-      "expression" : "(ActivityDefinition.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(ActivityDefinition.useContext.value as CodeableConcept)",
+       "xpath" : "f:ActivityDefinition/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -906,7 +906,7 @@
+       "code" : "context-quantity",
+       "base" : ["ActivityDefinition"],
+       "type" : "quantity",
+-      "expression" : "(ActivityDefinition.useContext.value.ofType(Quantity)) | (ActivityDefinition.useContext.value.ofType(Range))",
++      "expression" : "(ActivityDefinition.useContext.value as Quantity) | (ActivityDefinition.useContext.value as Range)",
+       "xpath" : "f:ActivityDefinition/f:useContext/f:valueQuantity | f:ActivityDefinition/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -2188,7 +2188,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ActivityDefinition-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -2233,7 +2233,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ActivityDefinition-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -2868,7 +2868,7 @@
+       "Procedure",
+       "ServiceRequest"],
+       "type" : "token",
+-      "expression" : "AllergyIntolerance.code | AllergyIntolerance.reaction.substance | Condition.code | (DeviceRequest.code.ofType(CodeableConcept)) | DiagnosticReport.code | FamilyMemberHistory.condition.code | List.code | Medication.code | (MedicationAdministration.medication.ofType(CodeableConcept)) | (MedicationDispense.medication.ofType(CodeableConcept)) | (MedicationRequest.medication.ofType(CodeableConcept)) | (MedicationStatement.medication.ofType(CodeableConcept)) | Observation.code | Procedure.code | ServiceRequest.code",
++      "expression" : "AllergyIntolerance.code | AllergyIntolerance.reaction.substance | Condition.code | (DeviceRequest.code as CodeableConcept) | DiagnosticReport.code | FamilyMemberHistory.condition.code | List.code | Medication.code | (MedicationAdministration.medication as CodeableConcept) | (MedicationDispense.medication as CodeableConcept) | (MedicationRequest.medication as CodeableConcept) | (MedicationStatement.medication as CodeableConcept) | Observation.code | Procedure.code | ServiceRequest.code",
+       "xpath" : "f:AllergyIntolerance/f:code | f:AllergyIntolerance/f:reaction/f:substance | f:Condition/f:code | f:DeviceRequest/f:codeCodeableConcept | f:DiagnosticReport/f:code | f:FamilyMemberHistory/f:condition/f:code | f:List/f:code | f:Medication/f:code | f:MedicationAdministration/f:medicationCodeableConcept | f:MedicationDispense/f:medicationCodeableConcept | f:MedicationRequest/f:medicationCodeableConcept | f:MedicationStatement/f:medicationCodeableConcept | f:Observation/f:code | f:Procedure/f:code | f:ServiceRequest/f:code",
+       "xpathUsage" : "normal"
+     }
+@@ -2958,7 +2958,7 @@
+       "RiskAssessment",
+       "SupplyRequest"],
+       "type" : "date",
+-      "expression" : "AllergyIntolerance.recordedDate | CarePlan.period | CareTeam.period | ClinicalImpression.date | Composition.date | Consent.dateTime | DiagnosticReport.effective | Encounter.period | EpisodeOfCare.period | FamilyMemberHistory.date | Flag.period | Immunization.occurrence | List.date | Observation.effective | Procedure.performed | (RiskAssessment.occurrence.ofType(dateTime)) | SupplyRequest.authoredOn",
++      "expression" : "AllergyIntolerance.recordedDate | CarePlan.period | CareTeam.period | ClinicalImpression.date | Composition.date | Consent.dateTime | DiagnosticReport.effective | Encounter.period | EpisodeOfCare.period | FamilyMemberHistory.date | Flag.period | Immunization.occurrence | List.date | Observation.effective | Procedure.performed | (RiskAssessment.occurrence as dateTime) | SupplyRequest.authoredOn",
+       "xpath" : "f:AllergyIntolerance/f:recordedDate | f:CarePlan/f:period | f:CareTeam/f:period | f:ClinicalImpression/f:date | f:Composition/f:date | f:Consent/f:dateTime | f:DiagnosticReport/f:effectiveDateTime | f:DiagnosticReport/f:effectivePeriod | f:Encounter/f:period | f:EpisodeOfCare/f:period | f:FamilyMemberHistory/f:date | f:Flag/f:period | f:Immunization/f:occurrenceDateTime | f:Immunization/f:occurrenceString | f:List/f:date | f:Observation/f:effectiveDateTime | f:Observation/f:effectivePeriod | f:Observation/f:effectiveTiming | f:Observation/f:effectiveInstant | f:Procedure/f:performedDateTime | f:Procedure/f:performedPeriod | f:Procedure/f:performedString | f:Procedure/f:performedAge | f:Procedure/f:performedRange | f:RiskAssessment/f:occurrenceDateTime | f:SupplyRequest/f:authoredOn",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -6104,7 +6104,7 @@
+       "TerminologyCapabilities",
+       "ValueSet"],
+       "type" : "token",
+-      "expression" : "(CapabilityStatement.useContext.value.ofType(CodeableConcept)) | (CodeSystem.useContext.value.ofType(CodeableConcept)) | (CompartmentDefinition.useContext.value.ofType(CodeableConcept)) | (ConceptMap.useContext.value.ofType(CodeableConcept)) | (GraphDefinition.useContext.value.ofType(CodeableConcept)) | (ImplementationGuide.useContext.value.ofType(CodeableConcept)) | (MessageDefinition.useContext.value.ofType(CodeableConcept)) | (NamingSystem.useContext.value.ofType(CodeableConcept)) | (OperationDefinition.useContext.value.ofType(CodeableConcept)) | (SearchParameter.useContext.value.ofType(CodeableConcept)) | (StructureDefinition.useContext.value.ofType(CodeableConcept)) | (StructureMap.useContext.value.ofType(CodeableConcept)) | (TerminologyCapabilities.useContext.value.ofType(CodeableConcept)) | (ValueSet.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(CapabilityStatement.useContext.value as CodeableConcept) | (CodeSystem.useContext.value as CodeableConcept) | (CompartmentDefinition.useContext.value as CodeableConcept) | (ConceptMap.useContext.value as CodeableConcept) | (GraphDefinition.useContext.value as CodeableConcept) | (ImplementationGuide.useContext.value as CodeableConcept) | (MessageDefinition.useContext.value as CodeableConcept) | (NamingSystem.useContext.value as CodeableConcept) | (OperationDefinition.useContext.value as CodeableConcept) | (SearchParameter.useContext.value as CodeableConcept) | (StructureDefinition.useContext.value as CodeableConcept) | (StructureMap.useContext.value as CodeableConcept) | (TerminologyCapabilities.useContext.value as CodeableConcept) | (ValueSet.useContext.value as CodeableConcept)",
+       "xpath" : "f:CapabilityStatement/f:useContext/f:valueCodeableConcept | f:CodeSystem/f:useContext/f:valueCodeableConcept | f:CompartmentDefinition/f:useContext/f:valueCodeableConcept | f:ConceptMap/f:useContext/f:valueCodeableConcept | f:GraphDefinition/f:useContext/f:valueCodeableConcept | f:ImplementationGuide/f:useContext/f:valueCodeableConcept | f:MessageDefinition/f:useContext/f:valueCodeableConcept | f:NamingSystem/f:useContext/f:valueCodeableConcept | f:OperationDefinition/f:useContext/f:valueCodeableConcept | f:SearchParameter/f:useContext/f:valueCodeableConcept | f:StructureDefinition/f:useContext/f:valueCodeableConcept | f:StructureMap/f:useContext/f:valueCodeableConcept | f:TerminologyCapabilities/f:useContext/f:valueCodeableConcept | f:ValueSet/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -6154,7 +6154,7 @@
+       "TerminologyCapabilities",
+       "ValueSet"],
+       "type" : "quantity",
+-      "expression" : "(CapabilityStatement.useContext.value.ofType(Quantity)) | (CapabilityStatement.useContext.value.ofType(Range)) | (CodeSystem.useContext.value.ofType(Quantity)) | (CodeSystem.useContext.value.ofType(Range)) | (CompartmentDefinition.useContext.value.ofType(Quantity)) | (CompartmentDefinition.useContext.value.ofType(Range)) | (ConceptMap.useContext.value.ofType(Quantity)) | (ConceptMap.useContext.value.ofType(Range)) | (GraphDefinition.useContext.value.ofType(Quantity)) | (GraphDefinition.useContext.value.ofType(Range)) | (ImplementationGuide.useContext.value.ofType(Quantity)) | (ImplementationGuide.useContext.value.ofType(Range)) | (MessageDefinition.useContext.value.ofType(Quantity)) | (MessageDefinition.useContext.value.ofType(Range)) | (NamingSystem.useContext.value.ofType(Quantity)) | (NamingSystem.useContext.value.ofType(Range)) | (OperationDefinition.useContext.value.ofType(Quantity)) | (OperationDefinition.useContext.value.ofType(Range)) | (SearchParameter.useContext.value.ofType(Quantity)) | (SearchParameter.useContext.value.ofType(Range)) | (StructureDefinition.useContext.value.ofType(Quantity)) | (StructureDefinition.useContext.value.ofType(Range)) | (StructureMap.useContext.value.ofType(Quantity)) | (StructureMap.useContext.value.ofType(Range)) | (TerminologyCapabilities.useContext.value.ofType(Quantity)) | (TerminologyCapabilities.useContext.value.ofType(Range)) | (ValueSet.useContext.value.ofType(Quantity)) | (ValueSet.useContext.value.ofType(Range))",
++      "expression" : "(CapabilityStatement.useContext.value as Quantity) | (CapabilityStatement.useContext.value as Range) | (CodeSystem.useContext.value as Quantity) | (CodeSystem.useContext.value as Range) | (CompartmentDefinition.useContext.value as Quantity) | (CompartmentDefinition.useContext.value as Range) | (ConceptMap.useContext.value as Quantity) | (ConceptMap.useContext.value as Range) | (GraphDefinition.useContext.value as Quantity) | (GraphDefinition.useContext.value as Range) | (ImplementationGuide.useContext.value as Quantity) | (ImplementationGuide.useContext.value as Range) | (MessageDefinition.useContext.value as Quantity) | (MessageDefinition.useContext.value as Range) | (NamingSystem.useContext.value as Quantity) | (NamingSystem.useContext.value as Range) | (OperationDefinition.useContext.value as Quantity) | (OperationDefinition.useContext.value as Range) | (SearchParameter.useContext.value as Quantity) | (SearchParameter.useContext.value as Range) | (StructureDefinition.useContext.value as Quantity) | (StructureDefinition.useContext.value as Range) | (StructureMap.useContext.value as Quantity) | (StructureMap.useContext.value as Range) | (TerminologyCapabilities.useContext.value as Quantity) | (TerminologyCapabilities.useContext.value as Range) | (ValueSet.useContext.value as Quantity) | (ValueSet.useContext.value as Range)",
+       "xpath" : "f:CapabilityStatement/f:useContext/f:valueQuantity | f:CapabilityStatement/f:useContext/f:valueRange | f:CodeSystem/f:useContext/f:valueQuantity | f:CodeSystem/f:useContext/f:valueRange | f:CompartmentDefinition/f:useContext/f:valueQuantity | f:CompartmentDefinition/f:useContext/f:valueRange | f:ConceptMap/f:useContext/f:valueQuantity | f:ConceptMap/f:useContext/f:valueRange | f:GraphDefinition/f:useContext/f:valueQuantity | f:GraphDefinition/f:useContext/f:valueRange | f:ImplementationGuide/f:useContext/f:valueQuantity | f:ImplementationGuide/f:useContext/f:valueRange | f:MessageDefinition/f:useContext/f:valueQuantity | f:MessageDefinition/f:useContext/f:valueRange | f:NamingSystem/f:useContext/f:valueQuantity | f:NamingSystem/f:useContext/f:valueRange | f:OperationDefinition/f:useContext/f:valueQuantity | f:OperationDefinition/f:useContext/f:valueRange | f:SearchParameter/f:useContext/f:valueQuantity | f:SearchParameter/f:useContext/f:valueRange | f:StructureDefinition/f:useContext/f:valueQuantity | f:StructureDefinition/f:useContext/f:valueRange | f:StructureMap/f:useContext/f:valueQuantity | f:StructureMap/f:useContext/f:valueRange | f:TerminologyCapabilities/f:useContext/f:valueQuantity | f:TerminologyCapabilities/f:useContext/f:valueRange | f:ValueSet/f:useContext/f:valueQuantity | f:ValueSet/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -7060,7 +7060,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/conformance-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -7118,7 +7118,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/conformance-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -8720,7 +8720,7 @@
+       "code" : "context",
+       "base" : ["ChargeItemDefinition"],
+       "type" : "token",
+-      "expression" : "(ChargeItemDefinition.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(ChargeItemDefinition.useContext.value as CodeableConcept)",
+       "xpath" : "f:ChargeItemDefinition/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -8757,7 +8757,7 @@
+       "code" : "context-quantity",
+       "base" : ["ChargeItemDefinition"],
+       "type" : "quantity",
+-      "expression" : "(ChargeItemDefinition.useContext.value.ofType(Quantity)) | (ChargeItemDefinition.useContext.value.ofType(Range))",
++      "expression" : "(ChargeItemDefinition.useContext.value as Quantity) | (ChargeItemDefinition.useContext.value as Range)",
+       "xpath" : "f:ChargeItemDefinition/f:useContext/f:valueQuantity | f:ChargeItemDefinition/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -9237,7 +9237,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ChargeItemDefinition-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -9282,7 +9282,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ChargeItemDefinition-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -12508,7 +12508,7 @@
+       "code" : "occurrence",
+       "base" : ["CommunicationRequest"],
+       "type" : "date",
+-      "expression" : "(CommunicationRequest.occurrence.ofType(dateTime))",
++      "expression" : "(CommunicationRequest.occurrence as dateTime)",
+       "xpath" : "f:CommunicationRequest/f:occurrenceDateTime",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -13424,7 +13424,7 @@
+       "code" : "related-id",
+       "base" : ["Composition"],
+       "type" : "token",
+-      "expression" : "(Composition.relatesTo.target.ofType(Identifier))",
++      "expression" : "(Composition.relatesTo.target as Identifier)",
+       "xpath" : "f:Composition/f:relatesTo/f:targetIdentifier",
+       "xpathUsage" : "normal"
+     }
+@@ -13461,7 +13461,7 @@
+       "code" : "related-ref",
+       "base" : ["Composition"],
+       "type" : "reference",
+-      "expression" : "(Composition.relatesTo.target.ofType(Reference))",
++      "expression" : "(Composition.relatesTo.target as Reference)",
+       "xpath" : "f:Composition/f:relatesTo/f:targetReference",
+       "xpathUsage" : "normal",
+       "target" : ["Composition"]
+@@ -13904,7 +13904,7 @@
+       "code" : "source",
+       "base" : ["ConceptMap"],
+       "type" : "reference",
+-      "expression" : "(ConceptMap.source.ofType(canonical))",
++      "expression" : "(ConceptMap.source as canonical)",
+       "xpath" : "f:ConceptMap/f:sourceCanonical",
+       "xpathUsage" : "normal",
+       "target" : ["ValueSet"]
+@@ -14016,7 +14016,7 @@
+       "code" : "source-uri",
+       "base" : ["ConceptMap"],
+       "type" : "reference",
+-      "expression" : "(ConceptMap.source.ofType(uri))",
++      "expression" : "(ConceptMap.source as uri)",
+       "xpath" : "f:ConceptMap/f:sourceUri",
+       "xpathUsage" : "normal",
+       "target" : ["ValueSet"]
+@@ -14054,7 +14054,7 @@
+       "code" : "target",
+       "base" : ["ConceptMap"],
+       "type" : "reference",
+-      "expression" : "(ConceptMap.target.ofType(canonical))",
++      "expression" : "(ConceptMap.target as canonical)",
+       "xpath" : "f:ConceptMap/f:targetCanonical",
+       "xpathUsage" : "normal",
+       "target" : ["ValueSet"]
+@@ -14166,7 +14166,7 @@
+       "code" : "target-uri",
+       "base" : ["ConceptMap"],
+       "type" : "reference",
+-      "expression" : "(ConceptMap.target.ofType(uri))",
++      "expression" : "(ConceptMap.target as uri)",
+       "xpath" : "f:ConceptMap/f:targetUri",
+       "xpathUsage" : "normal",
+       "target" : ["ValueSet"]
+@@ -14204,7 +14204,7 @@
+       "code" : "abatement-age",
+       "base" : ["Condition"],
+       "type" : "quantity",
+-      "expression" : "Condition.abatement.ofType(Age) | Condition.abatement.ofType(Range)",
++      "expression" : "Condition.abatement.as(Age) | Condition.abatement.as(Range)",
+       "xpath" : "f:Condition/f:abatementAge | f:Condition/f:abatementRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -14250,7 +14250,7 @@
+       "code" : "abatement-date",
+       "base" : ["Condition"],
+       "type" : "date",
+-      "expression" : "Condition.abatement.ofType(dateTime) | Condition.abatement.ofType(Period)",
++      "expression" : "Condition.abatement.as(dateTime) | Condition.abatement.as(Period)",
+       "xpath" : "f:Condition/f:abatementDateTime | f:Condition/f:abatementPeriod",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -14296,7 +14296,7 @@
+       "code" : "abatement-string",
+       "base" : ["Condition"],
+       "type" : "string",
+-      "expression" : "Condition.abatement.ofType(string)",
++      "expression" : "Condition.abatement.as(string)",
+       "xpath" : "f:Condition/f:abatementString",
+       "xpathUsage" : "normal"
+     }
+@@ -14742,7 +14742,7 @@
+       "code" : "onset-age",
+       "base" : ["Condition"],
+       "type" : "quantity",
+-      "expression" : "Condition.onset.ofType(Age) | Condition.onset.ofType(Range)",
++      "expression" : "Condition.onset.as(Age) | Condition.onset.as(Range)",
+       "xpath" : "f:Condition/f:onsetAge | f:Condition/f:onsetRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -14788,7 +14788,7 @@
+       "code" : "onset-date",
+       "base" : ["Condition"],
+       "type" : "date",
+-      "expression" : "Condition.onset.ofType(dateTime) | Condition.onset.ofType(Period)",
++      "expression" : "Condition.onset.as(dateTime) | Condition.onset.as(Period)",
+       "xpath" : "f:Condition/f:onsetDateTime | f:Condition/f:onsetPeriod",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -14834,7 +14834,7 @@
+       "code" : "onset-info",
+       "base" : ["Condition"],
+       "type" : "string",
+-      "expression" : "Condition.onset.ofType(string)",
++      "expression" : "Condition.onset.as(string)",
+       "xpath" : "f:Condition/f:onsetString",
+       "xpathUsage" : "normal"
+     }
+@@ -18608,7 +18608,7 @@
+       "code" : "device",
+       "base" : ["DeviceRequest"],
+       "type" : "reference",
+-      "expression" : "(DeviceRequest.code.ofType(Reference))",
++      "expression" : "(DeviceRequest.code as Reference)",
+       "xpath" : "f:DeviceRequest/f:codeReference",
+       "xpathUsage" : "normal",
+       "target" : ["Device"]
+@@ -18646,7 +18646,7 @@
+       "code" : "event-date",
+       "base" : ["DeviceRequest"],
+       "type" : "date",
+-      "expression" : "(DeviceRequest.occurrence.ofType(dateTime)) | (DeviceRequest.occurrence.ofType(Period))",
++      "expression" : "(DeviceRequest.occurrence as dateTime) | (DeviceRequest.occurrence as Period)",
+       "xpath" : "f:DeviceRequest/f:occurrenceDateTime | f:DeviceRequest/f:occurrencePeriod",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -21424,7 +21424,7 @@
+       "code" : "context",
+       "base" : ["EffectEvidenceSynthesis"],
+       "type" : "token",
+-      "expression" : "(EffectEvidenceSynthesis.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(EffectEvidenceSynthesis.useContext.value as CodeableConcept)",
+       "xpath" : "f:EffectEvidenceSynthesis/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -21461,7 +21461,7 @@
+       "code" : "context-quantity",
+       "base" : ["EffectEvidenceSynthesis"],
+       "type" : "quantity",
+-      "expression" : "(EffectEvidenceSynthesis.useContext.value.ofType(Quantity)) | (EffectEvidenceSynthesis.useContext.value.ofType(Range))",
++      "expression" : "(EffectEvidenceSynthesis.useContext.value as Quantity) | (EffectEvidenceSynthesis.useContext.value as Range)",
+       "xpath" : "f:EffectEvidenceSynthesis/f:useContext/f:valueQuantity | f:EffectEvidenceSynthesis/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -21978,7 +21978,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/EffectEvidenceSynthesis-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -22023,7 +22023,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/EffectEvidenceSynthesis-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -23655,7 +23655,7 @@
+       "code" : "context",
+       "base" : ["EventDefinition"],
+       "type" : "token",
+-      "expression" : "(EventDefinition.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(EventDefinition.useContext.value as CodeableConcept)",
+       "xpath" : "f:EventDefinition/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -23692,7 +23692,7 @@
+       "code" : "context-quantity",
+       "base" : ["EventDefinition"],
+       "type" : "quantity",
+-      "expression" : "(EventDefinition.useContext.value.ofType(Quantity)) | (EventDefinition.useContext.value.ofType(Range))",
++      "expression" : "(EventDefinition.useContext.value as Quantity) | (EventDefinition.useContext.value as Range)",
+       "xpath" : "f:EventDefinition/f:useContext/f:valueQuantity | f:EventDefinition/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -24974,7 +24974,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/EventDefinition-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -25019,7 +25019,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/EventDefinition-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -25237,7 +25237,7 @@
+       "code" : "context",
+       "base" : ["Evidence"],
+       "type" : "token",
+-      "expression" : "(Evidence.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(Evidence.useContext.value as CodeableConcept)",
+       "xpath" : "f:Evidence/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -25274,7 +25274,7 @@
+       "code" : "context-quantity",
+       "base" : ["Evidence"],
+       "type" : "quantity",
+-      "expression" : "(Evidence.useContext.value.ofType(Quantity)) | (Evidence.useContext.value.ofType(Range))",
++      "expression" : "(Evidence.useContext.value as Quantity) | (Evidence.useContext.value as Range)",
+       "xpath" : "f:Evidence/f:useContext/f:valueQuantity | f:Evidence/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -26556,7 +26556,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Evidence-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -26601,7 +26601,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Evidence-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -26819,7 +26819,7 @@
+       "code" : "context",
+       "base" : ["EvidenceVariable"],
+       "type" : "token",
+-      "expression" : "(EvidenceVariable.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(EvidenceVariable.useContext.value as CodeableConcept)",
+       "xpath" : "f:EvidenceVariable/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -26856,7 +26856,7 @@
+       "code" : "context-quantity",
+       "base" : ["EvidenceVariable"],
+       "type" : "quantity",
+-      "expression" : "(EvidenceVariable.useContext.value.ofType(Quantity)) | (EvidenceVariable.useContext.value.ofType(Range))",
++      "expression" : "(EvidenceVariable.useContext.value as Quantity) | (EvidenceVariable.useContext.value as Range)",
+       "xpath" : "f:EvidenceVariable/f:useContext/f:valueQuantity | f:EvidenceVariable/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -28138,7 +28138,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/EvidenceVariable-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -28183,7 +28183,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/EvidenceVariable-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -28219,7 +28219,7 @@
+       "code" : "context",
+       "base" : ["ExampleScenario"],
+       "type" : "token",
+-      "expression" : "(ExampleScenario.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(ExampleScenario.useContext.value as CodeableConcept)",
+       "xpath" : "f:ExampleScenario/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -28256,7 +28256,7 @@
+       "code" : "context-quantity",
+       "base" : ["ExampleScenario"],
+       "type" : "quantity",
+-      "expression" : "(ExampleScenario.useContext.value.ofType(Quantity)) | (ExampleScenario.useContext.value.ofType(Range))",
++      "expression" : "(ExampleScenario.useContext.value as Quantity) | (ExampleScenario.useContext.value as Range)",
+       "xpath" : "f:ExampleScenario/f:useContext/f:valueQuantity | f:ExampleScenario/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -28653,7 +28653,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ExampleScenario-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -28698,7 +28698,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ExampleScenario-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -29819,7 +29819,7 @@
+       "code" : "start-date",
+       "base" : ["Goal"],
+       "type" : "date",
+-      "expression" : "(Goal.start.ofType(date))",
++      "expression" : "(Goal.start as date)",
+       "xpath" : "f:Goal/f:startDate",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -29905,7 +29905,7 @@
+       "code" : "target-date",
+       "base" : ["Goal"],
+       "type" : "date",
+-      "expression" : "(Goal.target.due.ofType(date))",
++      "expression" : "(Goal.target.due as date)",
+       "xpath" : "f:Goal/f:target/f:dueDate",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -30295,7 +30295,7 @@
+       "code" : "value",
+       "base" : ["Group"],
+       "type" : "token",
+-      "expression" : "(Group.characteristic.value.ofType(CodeableConcept)) | (Group.characteristic.value.ofType(boolean))",
++      "expression" : "(Group.characteristic.value as CodeableConcept) | (Group.characteristic.value as boolean)",
+       "xpath" : "f:Group/f:characteristic/f:valueCodeableConcept | f:Group/f:characteristic/f:valueBoolean | f:Group/f:characteristic/f:valueQuantity | f:Group/f:characteristic/f:valueRange | f:Group/f:characteristic/f:valueReference",
+       "xpathUsage" : "normal"
+     }
+@@ -34340,7 +34340,7 @@
+       "code" : "context",
+       "base" : ["Library"],
+       "type" : "token",
+-      "expression" : "(Library.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(Library.useContext.value as CodeableConcept)",
+       "xpath" : "f:Library/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -34377,7 +34377,7 @@
+       "code" : "context-quantity",
+       "base" : ["Library"],
+       "type" : "quantity",
+-      "expression" : "(Library.useContext.value.ofType(Quantity)) | (Library.useContext.value.ofType(Range))",
++      "expression" : "(Library.useContext.value as Quantity) | (Library.useContext.value as Range)",
+       "xpath" : "f:Library/f:useContext/f:valueQuantity | f:Library/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -35696,7 +35696,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Library-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -35741,7 +35741,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Library-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -37333,7 +37333,7 @@
+       "code" : "context",
+       "base" : ["Measure"],
+       "type" : "token",
+-      "expression" : "(Measure.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(Measure.useContext.value as CodeableConcept)",
+       "xpath" : "f:Measure/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -37370,7 +37370,7 @@
+       "code" : "context-quantity",
+       "base" : ["Measure"],
+       "type" : "quantity",
+-      "expression" : "(Measure.useContext.value.ofType(Quantity)) | (Measure.useContext.value.ofType(Range))",
++      "expression" : "(Measure.useContext.value as Quantity) | (Measure.useContext.value as Range)",
+       "xpath" : "f:Measure/f:useContext/f:valueQuantity | f:Measure/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -38652,7 +38652,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Measure-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -38697,7 +38697,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Measure-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -39875,7 +39875,7 @@
+       "code" : "ingredient",
+       "base" : ["Medication"],
+       "type" : "reference",
+-      "expression" : "(Medication.ingredient.item.ofType(Reference))",
++      "expression" : "(Medication.ingredient.item as Reference)",
+       "xpath" : "f:Medication/f:ingredient/f:itemReference",
+       "xpathUsage" : "normal",
+       "target" : ["Medication",
+@@ -39914,7 +39914,7 @@
+       "code" : "ingredient-code",
+       "base" : ["Medication"],
+       "type" : "token",
+-      "expression" : "(Medication.ingredient.item.ofType(CodeableConcept))",
++      "expression" : "(Medication.ingredient.item as CodeableConcept)",
+       "xpath" : "f:Medication/f:ingredient/f:itemCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -40189,7 +40189,7 @@
+       "MedicationRequest",
+       "MedicationStatement"],
+       "type" : "reference",
+-      "expression" : "(MedicationAdministration.medication.ofType(Reference)) | (MedicationDispense.medication.ofType(Reference)) | (MedicationRequest.medication.ofType(Reference)) | (MedicationStatement.medication.ofType(Reference))",
++      "expression" : "(MedicationAdministration.medication as Reference) | (MedicationDispense.medication as Reference) | (MedicationRequest.medication as Reference) | (MedicationStatement.medication as Reference)",
+       "xpath" : "f:MedicationAdministration/f:medicationReference | f:MedicationDispense/f:medicationReference | f:MedicationRequest/f:medicationReference | f:MedicationStatement/f:medicationReference",
+       "xpathUsage" : "normal",
+       "target" : ["Medication"]
+@@ -41012,7 +41012,7 @@
+       "code" : "ingredient",
+       "base" : ["MedicationKnowledge"],
+       "type" : "reference",
+-      "expression" : "(MedicationKnowledge.ingredient.item.ofType(Reference))",
++      "expression" : "(MedicationKnowledge.ingredient.item as Reference)",
+       "xpath" : "f:MedicationKnowledge/f:ingredient/f:itemReference",
+       "xpathUsage" : "normal",
+       "target" : ["Substance"]
+@@ -41050,7 +41050,7 @@
+       "code" : "ingredient-code",
+       "base" : ["MedicationKnowledge"],
+       "type" : "token",
+-      "expression" : "(MedicationKnowledge.ingredient.item.ofType(CodeableConcept))",
++      "expression" : "(MedicationKnowledge.ingredient.item as CodeableConcept)",
+       "xpath" : "f:MedicationKnowledge/f:ingredient/f:itemCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -44876,7 +44876,7 @@
+       "code" : "combo-value-concept",
+       "base" : ["Observation"],
+       "type" : "token",
+-      "expression" : "(Observation.value.ofType(CodeableConcept)) | (Observation.component.value.ofType(CodeableConcept))",
++      "expression" : "(Observation.value as CodeableConcept) | (Observation.component.value as CodeableConcept)",
+       "xpath" : "f:Observation/f:valueCodeableConcept | f:Observation/f:component/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -44913,7 +44913,7 @@
+       "code" : "combo-value-quantity",
+       "base" : ["Observation"],
+       "type" : "quantity",
+-      "expression" : "(Observation.value.ofType(Quantity)) | (Observation.value.ofType(SampledData)) | (Observation.component.value.ofType(Quantity)) | (Observation.component.value.ofType(SampledData))",
++      "expression" : "(Observation.value as Quantity) | (Observation.value as SampledData) | (Observation.component.value as Quantity) | (Observation.component.value as SampledData)",
+       "xpath" : "f:Observation/f:valueQuantity | f:Observation/f:valueCodeableConcept | f:Observation/f:valueString | f:Observation/f:valueBoolean | f:Observation/f:valueInteger | f:Observation/f:valueRange | f:Observation/f:valueRatio | f:Observation/f:valueSampledData | f:Observation/f:valueTime | f:Observation/f:valueDateTime | f:Observation/f:valuePeriod",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -45033,7 +45033,7 @@
+       "code" : "component-value-concept",
+       "base" : ["Observation"],
+       "type" : "token",
+-      "expression" : "(Observation.component.value.ofType(CodeableConcept))",
++      "expression" : "(Observation.component.value as CodeableConcept)",
+       "xpath" : "f:Observation/f:component/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -45070,7 +45070,7 @@
+       "code" : "component-value-quantity",
+       "base" : ["Observation"],
+       "type" : "quantity",
+-      "expression" : "(Observation.component.value.ofType(Quantity)) | (Observation.component.value.ofType(SampledData))",
++      "expression" : "(Observation.component.value as Quantity) | (Observation.component.value as SampledData)",
+       "xpath" : "f:Observation/f:component/f:valueQuantity | f:Observation/f:component/f:valueCodeableConcept | f:Observation/f:component/f:valueString | f:Observation/f:component/f:valueBoolean | f:Observation/f:component/f:valueInteger | f:Observation/f:component/f:valueRange | f:Observation/f:component/f:valueRatio | f:Observation/f:component/f:valueSampledData | f:Observation/f:component/f:valueTime | f:Observation/f:component/f:valueDateTime | f:Observation/f:component/f:valuePeriod",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -45696,7 +45696,7 @@
+       "code" : "value-concept",
+       "base" : ["Observation"],
+       "type" : "token",
+-      "expression" : "(Observation.value.ofType(CodeableConcept))",
++      "expression" : "(Observation.value as CodeableConcept)",
+       "xpath" : "f:Observation/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -45733,7 +45733,7 @@
+       "code" : "value-date",
+       "base" : ["Observation"],
+       "type" : "date",
+-      "expression" : "(Observation.value.ofType(dateTime)) | (Observation.value.ofType(Period))",
++      "expression" : "(Observation.value as dateTime) | (Observation.value as Period)",
+       "xpath" : "f:Observation/f:valueDateTime | f:Observation/f:valuePeriod",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -45779,7 +45779,7 @@
+       "code" : "value-quantity",
+       "base" : ["Observation"],
+       "type" : "quantity",
+-      "expression" : "(Observation.value.ofType(Quantity)) | (Observation.value.ofType(SampledData))",
++      "expression" : "(Observation.value as Quantity) | (Observation.value as SampledData)",
+       "xpath" : "f:Observation/f:valueQuantity | f:Observation/f:valueCodeableConcept | f:Observation/f:valueString | f:Observation/f:valueBoolean | f:Observation/f:valueInteger | f:Observation/f:valueRange | f:Observation/f:valueRatio | f:Observation/f:valueSampledData | f:Observation/f:valueTime | f:Observation/f:valueDateTime | f:Observation/f:valuePeriod",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -45825,7 +45825,7 @@
+       "code" : "value-string",
+       "base" : ["Observation"],
+       "type" : "string",
+-      "expression" : "(Observation.value.ofType(string)) | (Observation.value.ofType(CodeableConcept)).text",
++      "expression" : "(Observation.value as string) | (Observation.value as CodeableConcept).text",
+       "xpath" : "f:Observation/f:valueQuantity | f:Observation/f:valueCodeableConcept | f:Observation/f:valueString | f:Observation/f:valueBoolean | f:Observation/f:valueInteger | f:Observation/f:valueRange | f:Observation/f:valueRatio | f:Observation/f:valueSampledData | f:Observation/f:valueTime | f:Observation/f:valueDateTime | f:Observation/f:valuePeriod",
+       "xpathUsage" : "normal"
+     }
+@@ -45871,7 +45871,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Observation-value-concept",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -45916,7 +45916,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Observation-value-date",
+-        "expression" : "value.ofType(DateTime) | value.ofType(Period)"
++        "expression" : "value.as(DateTime) | value.as(Period)"
+       }]
+     }
+   },
+@@ -45961,7 +45961,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Observation-value-quantity",
+-        "expression" : "value.ofType(Quantity)"
++        "expression" : "value.as(Quantity)"
+       }]
+     }
+   },
+@@ -46006,7 +46006,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Observation-value-string",
+-        "expression" : "value.ofType(string)"
++        "expression" : "value.as(string)"
+       }]
+     }
+   },
+@@ -46051,7 +46051,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Observation-combo-value-concept",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -46096,7 +46096,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Observation-combo-value-quantity",
+-        "expression" : "value.ofType(Quantity)"
++        "expression" : "value.as(Quantity)"
+       }]
+     }
+   },
+@@ -46141,7 +46141,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Observation-component-value-concept",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -46186,7 +46186,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Observation-component-value-quantity",
+-        "expression" : "value.ofType(Quantity)"
++        "expression" : "value.as(Quantity)"
+       }]
+     }
+   },
+@@ -47862,7 +47862,7 @@
+       "code" : "death-date",
+       "base" : ["Patient"],
+       "type" : "date",
+-      "expression" : "(Patient.deceased.ofType(dateTime))",
++      "expression" : "(Patient.deceased as dateTime)",
+       "xpath" : "f:Patient/f:deceasedDateTime",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -49772,7 +49772,7 @@
+       "code" : "context",
+       "base" : ["PlanDefinition"],
+       "type" : "token",
+-      "expression" : "(PlanDefinition.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(PlanDefinition.useContext.value as CodeableConcept)",
+       "xpath" : "f:PlanDefinition/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -49809,7 +49809,7 @@
+       "code" : "context-quantity",
+       "base" : ["PlanDefinition"],
+       "type" : "quantity",
+-      "expression" : "(PlanDefinition.useContext.value.ofType(Quantity)) | (PlanDefinition.useContext.value.ofType(Range))",
++      "expression" : "(PlanDefinition.useContext.value as Quantity) | (PlanDefinition.useContext.value as Range)",
+       "xpath" : "f:PlanDefinition/f:useContext/f:valueQuantity | f:PlanDefinition/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -51168,7 +51168,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/PlanDefinition-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -51213,7 +51213,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/PlanDefinition-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -52852,7 +52852,7 @@
+       "code" : "when",
+       "base" : ["Provenance"],
+       "type" : "date",
+-      "expression" : "(Provenance.occurred.ofType(dateTime))",
++      "expression" : "(Provenance.occurred as dateTime)",
+       "xpath" : "f:Provenance/f:occurredDateTime",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -52935,7 +52935,7 @@
+       "code" : "context",
+       "base" : ["Questionnaire"],
+       "type" : "token",
+-      "expression" : "(Questionnaire.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(Questionnaire.useContext.value as CodeableConcept)",
+       "xpath" : "f:Questionnaire/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -52972,7 +52972,7 @@
+       "code" : "context-quantity",
+       "base" : ["Questionnaire"],
+       "type" : "quantity",
+-      "expression" : "(Questionnaire.useContext.value.ofType(Quantity)) | (Questionnaire.useContext.value.ofType(Range))",
++      "expression" : "(Questionnaire.useContext.value as Quantity) | (Questionnaire.useContext.value as Range)",
+       "xpath" : "f:Questionnaire/f:useContext/f:valueQuantity | f:Questionnaire/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -53563,7 +53563,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Questionnaire-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -53608,7 +53608,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/Questionnaire-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -55129,7 +55129,7 @@
+       "code" : "context",
+       "base" : ["ResearchDefinition"],
+       "type" : "token",
+-      "expression" : "(ResearchDefinition.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(ResearchDefinition.useContext.value as CodeableConcept)",
+       "xpath" : "f:ResearchDefinition/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -55166,7 +55166,7 @@
+       "code" : "context-quantity",
+       "base" : ["ResearchDefinition"],
+       "type" : "quantity",
+-      "expression" : "(ResearchDefinition.useContext.value.ofType(Quantity)) | (ResearchDefinition.useContext.value.ofType(Range))",
++      "expression" : "(ResearchDefinition.useContext.value as Quantity) | (ResearchDefinition.useContext.value as Range)",
+       "xpath" : "f:ResearchDefinition/f:useContext/f:valueQuantity | f:ResearchDefinition/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -56448,7 +56448,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ResearchDefinition-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -56493,7 +56493,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ResearchDefinition-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -56711,7 +56711,7 @@
+       "code" : "context",
+       "base" : ["ResearchElementDefinition"],
+       "type" : "token",
+-      "expression" : "(ResearchElementDefinition.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(ResearchElementDefinition.useContext.value as CodeableConcept)",
+       "xpath" : "f:ResearchElementDefinition/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -56748,7 +56748,7 @@
+       "code" : "context-quantity",
+       "base" : ["ResearchElementDefinition"],
+       "type" : "quantity",
+-      "expression" : "(ResearchElementDefinition.useContext.value.ofType(Quantity)) | (ResearchElementDefinition.useContext.value.ofType(Range))",
++      "expression" : "(ResearchElementDefinition.useContext.value as Quantity) | (ResearchElementDefinition.useContext.value as Range)",
+       "xpath" : "f:ResearchElementDefinition/f:useContext/f:valueQuantity | f:ResearchElementDefinition/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -58030,7 +58030,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ResearchElementDefinition-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -58075,7 +58075,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/ResearchElementDefinition-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -59078,7 +59078,7 @@
+       "code" : "context",
+       "base" : ["RiskEvidenceSynthesis"],
+       "type" : "token",
+-      "expression" : "(RiskEvidenceSynthesis.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(RiskEvidenceSynthesis.useContext.value as CodeableConcept)",
+       "xpath" : "f:RiskEvidenceSynthesis/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -59115,7 +59115,7 @@
+       "code" : "context-quantity",
+       "base" : ["RiskEvidenceSynthesis"],
+       "type" : "quantity",
+-      "expression" : "(RiskEvidenceSynthesis.useContext.value.ofType(Quantity)) | (RiskEvidenceSynthesis.useContext.value.ofType(Range))",
++      "expression" : "(RiskEvidenceSynthesis.useContext.value as Quantity) | (RiskEvidenceSynthesis.useContext.value as Range)",
+       "xpath" : "f:RiskEvidenceSynthesis/f:useContext/f:valueQuantity | f:RiskEvidenceSynthesis/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -59632,7 +59632,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/RiskEvidenceSynthesis-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -59677,7 +59677,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/RiskEvidenceSynthesis-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+@@ -62468,7 +62468,7 @@
+       "code" : "code",
+       "base" : ["Substance"],
+       "type" : "token",
+-      "expression" : "Substance.code | (Substance.ingredient.substance.ofType(CodeableConcept))",
++      "expression" : "Substance.code | (Substance.ingredient.substance as CodeableConcept)",
+       "xpath" : "f:Substance/f:code | f:Substance/f:ingredient/f:substanceCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -62708,7 +62708,7 @@
+       "code" : "substance-reference",
+       "base" : ["Substance"],
+       "type" : "reference",
+-      "expression" : "(Substance.ingredient.substance.ofType(Reference))",
++      "expression" : "(Substance.ingredient.substance as Reference)",
+       "xpath" : "f:Substance/f:ingredient/f:substanceReference",
+       "xpathUsage" : "normal",
+       "target" : ["Substance"]
+@@ -64509,7 +64509,7 @@
+       "code" : "context",
+       "base" : ["TestScript"],
+       "type" : "token",
+-      "expression" : "(TestScript.useContext.value.ofType(CodeableConcept))",
++      "expression" : "(TestScript.useContext.value as CodeableConcept)",
+       "xpath" : "f:TestScript/f:useContext/f:valueCodeableConcept",
+       "xpathUsage" : "normal"
+     }
+@@ -64546,7 +64546,7 @@
+       "code" : "context-quantity",
+       "base" : ["TestScript"],
+       "type" : "quantity",
+-      "expression" : "(TestScript.useContext.value.ofType(Quantity)) | (TestScript.useContext.value.ofType(Range))",
++      "expression" : "(TestScript.useContext.value as Quantity) | (TestScript.useContext.value as Range)",
+       "xpath" : "f:TestScript/f:useContext/f:valueQuantity | f:TestScript/f:useContext/f:valueRange",
+       "xpathUsage" : "normal",
+       "comparator" : ["eq",
+@@ -65054,7 +65054,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/TestScript-context-quantity",
+-        "expression" : "value.ofType(Quantity) | value.ofType(Range)"
++        "expression" : "value.as(Quantity) | value.as(Range)"
+       }]
+     }
+   },
+@@ -65099,7 +65099,7 @@
+       },
+       {
+         "definition" : "http://hl7.org/fhir/SearchParameter/TestScript-context",
+-        "expression" : "value.ofType(CodeableConcept)"
++        "expression" : "value.as(CodeableConcept)"
+       }]
+     }
+   },
+diff --git a/packages/docs/docs/access/multi-tenant-access-policy.md b/packages/docs/docs/access/multi-tenant-access-policy.md
+index 7b4f81a91..705ea4b8c 100644
+--- a/packages/docs/docs/access/multi-tenant-access-policy.md
++++ b/packages/docs/docs/access/multi-tenant-access-policy.md
+@@ -684,12 +684,6 @@ To do this, do not include the `_compartment` check in resource type criteria fo
+   {ExampleCode}
+ </MedplumCodeBlock>
+ 
+-## Optional: Building a Tenant Selector
+-
+-After you’ve granted a user access to multiple tenants, most MSO apps also need a way to decide **which tenant context the user is working in right now** (e.g., “Clinic A” vs “Clinic B”), while still supporting “cross-tenant” workflows like consolidated scheduling.
+-
+-See [Building a Tenant Selector](/docs/access/tenant-selector).
+-
+ ## Conclusion
+ 
+ Multi-tenant access control in Medplum enables you to securely partition healthcare data within a single project by leveraging FHIR compartments and parameterized access policies. The implementation follows three key steps:
+diff --git a/packages/docs/docs/access/tenant-selector.mdx b/packages/docs/docs/access/tenant-selector.mdx
+deleted file mode 100644
+index d266c5d0b..000000000
+--- a/packages/docs/docs/access/tenant-selector.mdx
++++ /dev/null
+@@ -1,259 +0,0 @@
+----
+-sidebar_position: 10
+-tags: [auth, multi-tenant]
+-keywords: [tenant selector, active tenant, allowed tenants, MSO, multi-tenant, ProjectMembership, organization, tenant context]
+----
+-
+-# Building a Tenant Selector
+-
+-import ExampleCode from '!!raw-loader!../../../examples/src/access/tenant-selector.ts';
+-import MedplumCodeBlock from '@site/src/components/MedplumCodeBlock';
+-
+-This document is a follow-up to [Multi-Tenant Access Control](/docs/access/multi-tenant-access-policy).
+-
+-In an MSO Access Control model, a single practitioner often has access to multiple tenants (for example, multiple `Organization` clinics) within the same Medplum `Project`. After login, most applications need an answer to:
+-
+-- Which tenant context is the user working in right now?
+-- When should the UI show a consolidated cross-tenant view vs. a tenant-scoped view?
+-
+-This guide describes three common approaches and how to implement a tenant selector when you need one.
+-
+-## At a Glance
+-
+-Use the decision tree to pick the option that fits your product, then jump to that section for implementation details.
+-
+-```mermaid
+-%%{init: {'theme': 'neutral', 'flowchart': {'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+-flowchart LR
+-    Q1{"Hard PHI isolation?"} -->|Yes| O1[Option 1: Strict Isolation]
+-    Q1 -->|No| Q2{"Tenant-scoped views?"}
+-    Q2 -->|Yes| O2[Option 2: Tenant Selector]
+-    Q2 -->|No| O3[Option 3: Unified View]
+-
+-    style O1 fill:#fce4ec
+-    style O2 fill:#e8f5e9
+-    style O3 fill:#e1f5ff
+-```
+-
+-| | Option 1: Strict Isolation | Option 2: Single Account + Selector | Option 3: Unified View |
+-| :--- | :--- | :--- | :--- |
+-| API-level tenant isolation | Strongest (one tenant per token) | Allowed tenants enforced; UI scopes within them | None beyond the project |
+-| Consolidated cross-tenant views | Difficult | Supported (when UI omits the filter) | Default |
+-| Tenant-scoped PHI screens | Yes (always) | Yes (when UI applies the filter) | No |
+-| Login / membership model | One membership per tenant per user | One membership covering multiple tenants | One membership covering all tenants |
+-| Tenant switching | Re-auth or saved-login swap | UI control (no re-auth) | N/A |
+-| Implementation complexity | Highest | Medium | Lowest |
+-
+-## Key Concept: Allowed Tenants vs Active Tenant
+-
+-- Allowed tenants: The set of tenant references the user is permitted to access (enforced by `ProjectMembership` + `AccessPolicy`).
+-- Active tenant: A single tenant reference that your application uses as the default filter for PHI (a UI/application concept).
+-
+-```mermaid
+-%%{init: {'theme': 'neutral' }}%%
+-flowchart TB
+-    U([Practitioner]) --> PM[ProjectMembership]
+-    PM --> OA[Org A]
+-    PM --> OB["Org B<br/>★ Active Tenant"]
+-    PM --> OC[Org C]
+-
+-    style PM fill:#e1f5ff
+-    style OB fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px
+-```
+-
+-_`ProjectMembership` defines the allowed tenants (Org A, B, C). The application picks one as the active tenant (Org B above) and uses it as the default filter on PHI queries._
+-
+-When you build a "tenant selector", you're choosing and persisting the active tenant.
+-
+-## Option 1: Strict Isolation (Separate Accounts / Separate Projects)
+-
+-Goal: Hard isolation of PHI at the API level. At any given time, the "active tenant" is the only "allowed tenant" for the user.
+-
+-### What This Looks Like
+-
+-- The user has separate logins per tenant.
+-- Each login/profile has a `ProjectMembership` that only includes access to one tenant.
+-
+-```mermaid
+-%%{init: {'theme': 'neutral' }}%%
+-flowchart TB
+-    U([Practitioner])
+-
+-    L1["Login 1<br/>ProjectMembership: Org A only"]
+-    L2["Login 2<br/>ProjectMembership: Org B only"]
+-
+-    OA[Org A patients]
+-    OB[Org B patients]
+-
+-    U --> L1
+-    U --> L2
+-    L1 --> OA
+-    L2 --> OB
+-
+-    style L1 fill:#e8f5e9
+-    style L2 fill:#e1f5ff
+-```
+-
+-_Each login is bound to a single tenant. Switching tenants requires switching the active login._
+-
+-:::note
+-In Medplum, a user/profile has a single `ProjectMembership` per `Project` (it is resolved by `project` + `profile`). If you want strict separation *within the same project*, you typically use separate user accounts (separate profiles) rather than "two memberships for one profile".
+-:::
+-
+-### Switching the Active `ProjectMembership`
+-
+-In Medplum, the "active membership" is not a client-side flag you can flip on an existing token. The OAuth login flow selects a membership, and the issued access token is bound to that membership.
+-
+-Practically, "switching memberships" means one of:
+-
+-- Switching to another existing login (you already authenticated previously and have a saved token pair).
+-- Starting a new login and selecting a different membership during the login handshake.
+-
+-#### How Membership Selection Works in the Login Flow
+-
+-- If a user only has one membership, Medplum selects it automatically.
+-- If a user has multiple memberships, the client displays a "choose profile" screen and posts the selected membership ID to `POST /auth/profile`.
+-- After that, the client exchanges the login code for tokens; the token response includes the `project` and `profile` for the selected membership.
+-
+-#### How Switching Works in the Medplum App / SDK
+-
+-The Medplum App supports "Add another account" and project switching by storing multiple login states locally and switching the active one. In the TypeScript SDK this is done with:
+-
+-- `medplum.getLogins()` to list saved logins
+-- `medplum.setActiveLogin(login)` to switch the active login (and therefore the active membership)
+-
+-
+-#### How to Configure a User with Multiple Memberships
+-
+-You need to invite the user once per membership you want in the project (for example one membership per tenant in a strict-isolation MSO model). See the [Invite User endpoint](/docs/api/project-admin/invite).
+-
+-Parameterized access policy: put the policy and its substitution values on `membership.access`. Each entry is one [`ProjectMembership.access`](/docs/api/fhir/medplum/projectmembership) rule: a `policy` reference plus an optional `parameter` array. The `name` of each parameter must match your policy placeholders (for example `%organization` uses `"name": "organization"`). A single-tenant membership has one access entry and one parameter object.
+-
+-`forceNewMembership`: set `true` when the user is already a member of this project but you need an additional `ProjectMembership` row (same email address). The first invite for that email in the project does not need it; the second and later ones do, or the server returns a conflict.
+-
+-Example: invite a practitioner with one organization-scoped policy and a single `organization` parameter (replace ids with your `AccessPolicy` and `Organization`).
+-
+-#### Creating the First `ProjectMembership`
+-
+-<MedplumCodeBlock language="ts" selectBlocks="invite-practitioner-first-membership">
+-  {ExampleCode}
+-</MedplumCodeBlock>
+-
+-#### Creating an Additional `ProjectMembership`
+-
+-<MedplumCodeBlock language="ts" selectBlocks="invite-practitioner-second-membership">
+-  {ExampleCode}
+-</MedplumCodeBlock>
+-
+-### Selector UX
+-
+-Often resembles the Medplum App profile selector: users switch "logins" to switch tenant context.
+-
+-## Option 2: Single Account, Multi-Tenant Access + UI-Level Tenant Context
+-
+-Goal: One login (`ProjectMembership`) can access one or multiple defined tenants, but the FE application chooses an "active tenant".
+-
+-### What This Looks Like
+-
+-- One `ProjectMembership` grants access to multiple tenant references (e.g., multiple `Organization` values).
+-- API level access is still enforced to "allowed tenants" only.
+-- Your UI applies a tenant-scoping to the "active tenant" by the search parameter `_compartment`, but can intentionally show consolidated views when needed.
+-
+-```mermaid
+-%%{init: {'theme': 'neutral' }}%%
+-flowchart TB
+-    U([Practitioner]) --> PM["Single ProjectMembership<br/>(Org A + Org B allowed)"]
+-    PM --> OA[Org A patients]
+-    PM --> OB["Org B patients<br/>★ Active Tenant"]
+-
+-    Sel[/"UI Selector<br/>(stored in UserConfiguration)"/] --> OB
+-
+-    style PM fill:#e1f5ff
+-    style OB fill:#e8f5e9,stroke:#2e7d32,stroke-width:3px
+-    style Sel fill:#fff4e1
+-```
+-
+-_One membership grants access to multiple tenants. The UI selector designates one as the active tenant; the user can switch it without re-authenticating._
+-
+-### How to Grant Access to Multiple Tenants
+-
+-If your `AccessPolicy` uses `%organization`:
+-
+-```json
+-{
+-  "resourceType": "ProjectMembership",
+-  "access": [
+-    {
+-      "policy": { "reference": "AccessPolicy/mso-policy" },
+-      "parameter": [
+-        { "name": "organization", "valueReference": { "reference": "Organization/clinic-a" } },
+-        { "name": "organization", "valueReference": { "reference": "Organization/clinic-b" } }
+-      ]
+-    }
+-  ]
+-}
+-```
+-
+-With that membership, an access policy criteria like `Patient?_compartment=%organization` can allow access to patients across both tenants.
+-
+-### Building the Selector
+-
+-At login (or on first use), your app decides an "active tenant" and persists it. Common patterns:
+-
+-- URL: `?tenant=Organization/clinic-a` (easy to deep-link, but must be validated server-side against allowed tenants).
+-- Local storage/session: fast, but not shared across devices.
+-- FHIR-backed preference: store the active tenant in `UserConfiguration` so it follows the user.
+-
+-#### Persisting the Active Tenant in `UserConfiguration`
+-
+-`UserConfiguration` supports per-user options. One common approach is to store a reference-valued option:
+-
+-```json
+-{
+-  "resourceType": "UserConfiguration",
+-  "option": [
+-    {
+-      "id": "activeTenant",
+-      "valueReference": { "reference": "Organization/clinic-a" }
+-    }
+-  ]
+-}
+-```
+-
+-Then reference that `UserConfiguration` from the user's `ProjectMembership` (see [User Configuration](/docs/access/user-configuration)).
+-
+-#### Enforcing the Active Tenant in Queries
+-
+-Once you have an active tenant reference (e.g., `Organization/clinic-a`), apply it as a default filter for tenant-scoped screen queries.
+-
+-Examples (MSO model using `Organization` as tenant):
+-
+-- Tenant-scoped PHI view: `Patient?_compartment=Organization/clinic-a`
+-- Consolidated schedule view (cross-tenant): omit tenant filter (or intentionally include multiple tenants)
+-
+-## Option 3: Unified View (No Tenant Context)
+-
+-Goal: Treat the project as the only boundary; the user always sees everything they're allowed to see.
+-
+-```mermaid
+-%%{init: {'theme': 'neutral' }}%%
+-flowchart TB
+-    U([Practitioner]) --> PM["Single ProjectMembership"]
+-    PM --> All["Patients across<br/>Org A + Org B + Org C<br/>(no tenant filter)"]
+-
+-    style PM fill:#e1f5ff
+-    style All fill:#e8f5e9
+-```
+-
+-_The user sees a single consolidated view of all allowed tenants. There is no active-tenant concept and no UI selector._
+-
+-### When to Choose It
+-
+-- Your product model is truly unified (e.g., one clinical ops team across all clinics).
+-- Your contracts and workflows do not require tenant-scoped PHI screens.
+-
+-## See Also
+-
+-- [Multi-Tenant Access Control](/docs/access/multi-tenant-access-policy)
+-- [Access Policies](/docs/access/access-policies)
+-- [User Configuration](/docs/access/user-configuration)
+diff --git a/packages/examples/src/access/tenant-selector.ts b/packages/examples/src/access/tenant-selector.ts
+deleted file mode 100644
+index 6de2eebd3..000000000
+--- a/packages/examples/src/access/tenant-selector.ts
++++ /dev/null
+@@ -1,48 +0,0 @@
+-// SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
+-// SPDX-License-Identifier: Apache-2.0
+-
+-import type { MedplumClient } from '@medplum/core';
+-
+-const medplum = {} as MedplumClient;
+-const projectId = 'your-project-id';
+-
+-// start-block invite-practitioner-first-membership
+-// First membership invite for this user in this project.
+-// Do NOT set forceNewMembership here.
+-await medplum.post(`admin/projects/${projectId}/invite`, {
+-  resourceType: 'Practitioner',
+-  firstName: 'George',
+-  lastName: 'Washington',
+-  email: 'dr.gw@example.gov',
+-  sendEmail: false,
+-  membership: {
+-    access: [
+-      {
+-        policy: { reference: 'AccessPolicy/mso-tenant-policy' },
+-        parameter: [{ name: 'organization', valueReference: { reference: 'Organization/clinic-a' } }],
+-      },
+-    ],
+-  },
+-});
+-// end-block invite-practitioner-first-membership
+-
+-// start-block invite-practitioner-second-membership
+-// Second membership invite for the same user in the same project.
+-// This creates an additional ProjectMembership row with a different tenant parameter.
+-await medplum.post(`admin/projects/${projectId}/invite`, {
+-  resourceType: 'Practitioner',
+-  firstName: 'George',
+-  lastName: 'Washington',
+-  email: 'dr.gw@example.gov',
+-  sendEmail: false,
+-  forceNewMembership: true,
+-  membership: {
+-    access: [
+-      {
+-        policy: { reference: 'AccessPolicy/mso-tenant-policy' },
+-        parameter: [{ name: 'organization', valueReference: { reference: 'Organization/clinic-b' } }],
+-      },
+-    ],
+-  },
+-});
+-// end-block invite-practitioner-second-membership
+diff --git a/packages/server/src/fhir/accesspolicy.test.ts b/packages/server/src/fhir/accesspolicy.test.ts
+index 6691f3e71..9b8db2dbf 100644
+--- a/packages/server/src/fhir/accesspolicy.test.ts
++++ b/packages/server/src/fhir/accesspolicy.test.ts
+@@ -27,7 +27,6 @@ import type {
+   Quantity,
+   Questionnaire,
+   ServiceRequest,
+-  SmartAppLaunch,
+   StructureDefinition,
+   Subscription,
+   Task,
+@@ -39,7 +38,6 @@ import { inviteUser } from '../admin/invite';
+ import { initAppServices, shutdownApp } from '../app';
+ import { registerNew } from '../auth/register';
+ import { loadTestConfig } from '../config/loader';
+-import { tryLogin } from '../oauth/utils';
+ import { addTestUser, createTestProject, withTestContext } from '../test.setup';
+ import { buildAccessPolicy, getRepoForLogin } from './accesspolicy';
+ import { getGlobalSystemRepo, getProjectSystemRepo, Repository } from './repo';
+@@ -3090,110 +3088,4 @@ describe('AccessPolicy', () => {
+       const membershipsB = await repoB.searchResources<ProjectMembership>({ resourceType: 'ProjectMembership' });
+       expect(membershipsB).toHaveLength(1);
+     }));
+-
+-  describe('Patient scoped access token', () => {
+-    let repo: Repository;
+-    let project: WithId<Project>;
+-    let membership: WithId<ProjectMembership>;
+-    let patient: WithId<Patient>;
+-    let email: string;
+-    let password: string;
+-
+-    let compartmentCondition: WithId<Condition>;
+-    let otherCondition: WithId<Condition>;
+-
+-    beforeAll(async () => {
+-      ({ repo, project } = await createTestProject({ withRepo: true, membership: { admin: true } }));
+-      password = randomUUID();
+-      const {
+-        membership: _membership,
+-        profile,
+-        user,
+-      } = await inviteUser({
+-        project,
+-        resourceType: 'Patient',
+-        firstName: 'Test',
+-        lastName: 'Patient',
+-        email: `patient+${randomUUID()}@example.com`,
+-        password,
+-      });
+-      patient = profile as WithId<Patient>;
+-      email = user.email as string;
+-      membership = _membership;
+-
+-      const accessPolicy = await repo.createResource<AccessPolicy>({
+-        resourceType: 'AccessPolicy',
+-        resource: [
+-          {
+-            resourceType: 'Condition',
+-            interaction: ['create', 'read'],
+-          },
+-        ],
+-      });
+-      await repo.updateResource<ProjectMembership>({ ...membership, accessPolicy: createReference(accessPolicy) });
+-
+-      compartmentCondition = await repo.createResource<Condition>({
+-        resourceType: 'Condition',
+-        subject: createReference(patient),
+-      });
+-      otherCondition = await repo.createResource<Condition>({
+-        resourceType: 'Condition',
+-        subject: { reference: `Patient/${randomUUID()}` },
+-      });
+-    });
+-
+-    test('Patient scoped token access policy with explicit launch context', async () =>
+-      withTestContext(async () => {
+-        const launch = await repo.createResource<SmartAppLaunch>({
+-          resourceType: 'SmartAppLaunch',
+-          patient: createReference(patient),
+-        });
+-        const login = await tryLogin({
+-          authMethod: 'password',
+-          email,
+-          password,
+-          projectId: project.id,
+-          launchId: launch.id,
+-          scope: 'openid launch/patient patient/*.crud',
+-          nonce: randomUUID(),
+-        });
+-
+-        expect(login.scope).toContain('patient/*.crud');
+-
+-        const patientRepo = await getRepoForLogin({
+-          login,
+-          smartAppLaunch: launch,
+-          project,
+-          membership,
+-          userConfig: { resourceType: 'UserConfiguration' },
+-        });
+-
+-        await expect(patientRepo.readResource('Condition', compartmentCondition.id)).resolves.toBeDefined();
+-        await expect(patientRepo.readResource('Condition', otherCondition.id)).rejects.toThrow('Not found');
+-      }));
+-
+-    test('Patient scoped token access policy with implicit Patient context', async () =>
+-      withTestContext(async () => {
+-        const login = await tryLogin({
+-          authMethod: 'password',
+-          email,
+-          password,
+-          projectId: project.id,
+-          scope: 'openid launch/patient patient/*.crud',
+-          nonce: randomUUID(),
+-        });
+-
+-        expect(login.scope).toContain('patient/*.crud');
+-
+-        const patientRepo = await getRepoForLogin({
+-          login,
+-          project,
+-          membership,
+-          userConfig: { resourceType: 'UserConfiguration' },
+-        });
+-
+-        await expect(patientRepo.readResource('Condition', compartmentCondition.id)).resolves.toBeDefined();
+-        await expect(patientRepo.readResource('Condition', otherCondition.id)).rejects.toThrow('Not found');
+-      }));
+-  });
+ });
+diff --git a/packages/server/src/fhir/accesspolicy.ts b/packages/server/src/fhir/accesspolicy.ts
+index 8cc0c648e..c91bb5d46 100644
+--- a/packages/server/src/fhir/accesspolicy.ts
++++ b/packages/server/src/fhir/accesspolicy.ts
+@@ -116,7 +116,7 @@ export async function getAccessPolicyForLogin(authState: AuthState): Promise<Acc
+   if (login.scope) {
+     // If the login specifies SMART scopes,
+     // then set the access policy to use those scopes
+-    accessPolicy = applySmartScopes(accessPolicy, authState);
++    accessPolicy = applySmartScopes(accessPolicy, login.scope);
+   }
+ 
+   // Apply project admin access policies
+diff --git a/packages/server/src/fhir/smart.test.ts b/packages/server/src/fhir/smart.test.ts
+index 64848d44c..f62b37f51 100644
+--- a/packages/server/src/fhir/smart.test.ts
++++ b/packages/server/src/fhir/smart.test.ts
+@@ -1,13 +1,7 @@
+ // SPDX-FileCopyrightText: Copyright Orangebot, Inc. and Medplum contributors
+ // SPDX-License-Identifier: Apache-2.0
+-import type { WithId } from '@medplum/core';
+-import type { AccessPolicy, Login, Project, ProjectMembership } from '@medplum/fhirtypes';
+-import express from 'express';
++import type { AccessPolicy } from '@medplum/fhirtypes';
+ import { randomUUID } from 'node:crypto';
+-import { initApp } from '../app';
+-import { loadTestConfig } from '../config/loader';
+-import type { AuthState } from '../oauth/middleware';
+-import { createTestProject } from '../test.setup';
+ import type { PopulatedAccessPolicy } from './accesspolicy';
+ import { applySmartScopes, parseSmartScopes } from './smart';
+ 
+@@ -83,179 +77,165 @@ describe('SMART on FHIR', () => {
+     ]);
+   });
+ 
+-  describe('applySmartScopes()', () => {
+-    let project: WithId<Project>;
+-    let login: WithId<Login>;
+-    let membership: WithId<ProjectMembership>;
+-
+-    const app = express();
+-
+-    beforeAll(async () => {
+-      const config = await loadTestConfig();
+-      await initApp(app, config);
+-      ({ project, login, membership } = await createTestProject({ withAccessToken: true, withClient: true }));
+-    });
+-
+-    test('Do not change access policy', () => {
+-      const startAccessPolicy: PopulatedAccessPolicy = {
+-        resourceType: 'AccessPolicy',
+-        resource: [
+-          { resourceType: 'Observation' },
+-          { resourceType: 'Patient' },
+-          { resourceType: 'VisionPrescription' },
+-        ],
+-      };
+-
+-      const authState: AuthState = {
+-        login: { ...login, scope: 'openid' },
+-        membership,
+-        project,
+-        userConfig: { resourceType: 'UserConfiguration' },
+-      };
+-
+-      expect(applySmartScopes(startAccessPolicy, authState)).toMatchObject({
+-        resourceType: 'AccessPolicy',
+-        resource: [
+-          { resourceType: 'Observation' },
+-          { resourceType: 'Patient' },
+-          { resourceType: 'VisionPrescription' },
+-        ],
+-      });
++  test('Do not change access policy', () => {
++    const startAccessPolicy: PopulatedAccessPolicy = {
++      resourceType: 'AccessPolicy',
++      resource: [
++        {
++          resourceType: 'Observation',
++        },
++        {
++          resourceType: 'Patient',
++        },
++        {
++          resourceType: 'VisionPrescription',
++        },
++      ],
++    };
++
++    const scope = 'openid';
++
++    expect(applySmartScopes(startAccessPolicy, scope)).toMatchObject({
++      resourceType: 'AccessPolicy',
++      resource: [
++        {
++          resourceType: 'Observation',
++        },
++        {
++          resourceType: 'Patient',
++        },
++        {
++          resourceType: 'VisionPrescription',
++        },
++      ],
+     });
++  });
+ 
+-    test('Generate access policy', () => {
+-      const authState: AuthState = {
+-        login: { ...login, scope: 'patient/Observation.cruds patient/Patient.cruds' },
+-        membership,
+-        project,
+-        userConfig: { resourceType: 'UserConfiguration' },
+-      };
+-      expect(
+-        applySmartScopes({ resourceType: 'AccessPolicy', resource: [{ resourceType: '*' }] }, authState)
+-      ).toMatchObject({
+-        resourceType: 'AccessPolicy',
+-        resource: [{ resourceType: 'Observation' }, { resourceType: 'Patient' }],
+-      });
++  test('Generate access policy', () => {
++    expect(
++      applySmartScopes(
++        { resourceType: 'AccessPolicy', resource: [{ resourceType: '*' }] },
++        'patient/Observation.cruds patient/Patient.cruds'
++      )
++    ).toMatchObject({
++      resourceType: 'AccessPolicy',
++      resource: [
++        {
++          resourceType: 'Observation',
++        },
++        {
++          resourceType: 'Patient',
++        },
++      ],
+     });
++  });
+ 
+-    test('Intersect access policy', () => {
+-      const startAccessPolicy: PopulatedAccessPolicy = {
+-        resourceType: 'AccessPolicy',
+-        resource: [
+-          { resourceType: 'Observation' },
+-          { resourceType: 'Patient' },
+-          { resourceType: 'VisionPrescription' },
+-        ],
+-      };
+-
+-      const authState: AuthState = {
+-        login: { ...login, scope: 'patient/Patient.cruds patient/ServiceRequest.cruds' },
+-        membership,
+-        project,
+-        userConfig: { resourceType: 'UserConfiguration' },
+-      };
+-
+-      expect(applySmartScopes(startAccessPolicy, authState)).toMatchObject({
+-        resourceType: 'AccessPolicy',
+-        resource: [{ resourceType: 'Patient' }],
+-      });
++  test('Intersect access policy', () => {
++    const startAccessPolicy: PopulatedAccessPolicy = {
++      resourceType: 'AccessPolicy',
++      resource: [
++        {
++          resourceType: 'Observation',
++        },
++        {
++          resourceType: 'Patient',
++        },
++        {
++          resourceType: 'VisionPrescription',
++        },
++      ],
++    };
++
++    const scope = 'patient/Patient.cruds patient/ServiceRequest.cruds';
++
++    expect(applySmartScopes(startAccessPolicy, scope)).toMatchObject({
++      resourceType: 'AccessPolicy',
++      resource: [
++        {
++          resourceType: 'Patient',
++        },
++      ],
+     });
++  });
+ 
+-    test('Intersect with wildcard access policy', () => {
+-      const startAccessPolicy: PopulatedAccessPolicy = {
+-        resourceType: 'AccessPolicy',
+-        resource: [
+-          { resourceType: 'StructureDefinition', readonly: true },
+-          { resourceType: 'SearchParameter', readonly: true },
+-          { resourceType: '*' },
+-        ],
+-      };
+-
+-      const authState: AuthState = {
+-        login: { ...login, scope: 'patient/Patient.rs patient/StructureDefinition.* patient/Practitioner.rus' },
+-        membership,
+-        project,
+-        userConfig: { resourceType: 'UserConfiguration' },
+-      };
+-
+-      expect(applySmartScopes(startAccessPolicy, authState)).toMatchObject<AccessPolicy>({
+-        resourceType: 'AccessPolicy',
+-        resource: [
+-          { resourceType: 'StructureDefinition', readonly: true },
+-          { resourceType: 'Patient', readonly: true },
+-          { resourceType: 'StructureDefinition' }, // Expanded from *
+-          { resourceType: 'Practitioner' },
+-        ],
+-      });
++  test('Intersect with wildcard access policy', () => {
++    const startAccessPolicy: PopulatedAccessPolicy = {
++      resourceType: 'AccessPolicy',
++      resource: [
++        { resourceType: 'StructureDefinition', readonly: true },
++        { resourceType: 'SearchParameter', readonly: true },
++        { resourceType: '*' },
++      ],
++    };
++
++    const scope = 'patient/Patient.rs patient/StructureDefinition.* patient/Practitioner.rus';
++
++    expect(applySmartScopes(startAccessPolicy, scope)).toMatchObject<AccessPolicy>({
++      resourceType: 'AccessPolicy',
++      resource: [
++        { resourceType: 'StructureDefinition', readonly: true },
++        { resourceType: 'Patient', readonly: true },
++        { resourceType: 'StructureDefinition' }, // Expanded from *
++        { resourceType: 'Practitioner' },
++      ],
+     });
++  });
+ 
+-    test('Intersect with granular scopes and criteria', () => {
+-      const id = randomUUID();
+-      const compartment = `Patient/${id}`;
+-      const startAccessPolicy: PopulatedAccessPolicy = {
+-        resourceType: 'AccessPolicy',
+-        resource: [
+-          { resourceType: 'Patient', readonly: true, criteria: 'Patient?_id=' + id },
+-          { resourceType: 'Practitioner', readonly: true },
+-          {
+-            resourceType: 'Goal',
+-            criteria: 'Goal?identifier=http://example.com/patientVisible|true&_compartment=' + compartment,
+-          },
+-          { resourceType: '*', criteria: '*?_compartment=' + compartment },
+-        ],
+-      };
+-
+-      const scope = [
+-        'patient/Patient.*',
+-        'patient/Practitioner.rus?identifier=http://hl7.org/fhir/sid/us-npi|1234567893',
+-        'patient/Goal.rs?category=nursing',
+-        'patient/Condition.rus?category=encounter-diagnosis',
+-        'patient/Condition.rus?category=health-concern',
+-      ].join(' ');
+-      const authState: AuthState = {
+-        login: { ...login, scope },
+-        membership,
+-        project,
+-        userConfig: { resourceType: 'UserConfiguration' },
+-      };
+-
+-      expect(applySmartScopes(startAccessPolicy, authState)).toMatchObject<AccessPolicy>({
+-        resourceType: 'AccessPolicy',
+-        resource: [
+-          { resourceType: 'Patient', readonly: true, criteria: 'Patient?_id=' + id },
+-          {
+-            resourceType: 'Practitioner',
+-            readonly: true,
+-            criteria: 'Practitioner?identifier=http://hl7.org/fhir/sid/us-npi|1234567893',
+-          },
+-          {
+-            resourceType: 'Goal',
+-            readonly: true,
+-            criteria: `Goal?identifier=http://example.com/patientVisible|true&_compartment=${compartment}&category=nursing`,
+-          },
+-          {
+-            resourceType: 'Patient',
+-            criteria: `Patient?_compartment=${compartment}`,
+-          },
+-          {
+-            resourceType: 'Practitioner',
+-            criteria: `Practitioner?_compartment=${compartment}&identifier=http://hl7.org/fhir/sid/us-npi|1234567893`,
+-          },
+-          {
+-            resourceType: 'Goal',
+-            readonly: true,
+-            criteria: `Goal?_compartment=${compartment}&category=nursing`,
+-          },
+-          {
+-            resourceType: 'Condition',
+-            criteria: `Condition?_compartment=${compartment}&category=encounter-diagnosis`,
+-          },
+-          {
+-            resourceType: 'Condition',
+-            criteria: `Condition?_compartment=${compartment}&category=health-concern`,
+-          },
+-        ],
+-      });
++  test('Intersect with granular scopes and criteria', () => {
++    const id = randomUUID();
++    const compartment = `Patient/${id}`;
++    const startAccessPolicy: PopulatedAccessPolicy = {
++      resourceType: 'AccessPolicy',
++      resource: [
++        { resourceType: 'Patient', readonly: true, criteria: 'Patient?_id=' + id },
++        { resourceType: 'Practitioner', readonly: true },
++        {
++          resourceType: 'Goal',
++          criteria: 'Goal?identifier=http://example.com/patientVisible|true&_compartment=' + compartment,
++        },
++        { resourceType: '*', criteria: '*?_compartment=' + compartment },
++      ],
++    };
++
++    const scope =
++      'patient/Patient.* patient/Practitioner.rus?identifier=http://hl7.org/fhir/sid/us-npi|1234567893 patient/Goal.rs?category=nursing patient/Condition.rus?category=encounter-diagnosis patient/Condition.rus?category=health-concern';
++
++    expect(applySmartScopes(startAccessPolicy, scope)).toMatchObject<AccessPolicy>({
++      resourceType: 'AccessPolicy',
++      resource: [
++        { resourceType: 'Patient', readonly: true, criteria: 'Patient?_id=' + id },
++        {
++          resourceType: 'Practitioner',
++          readonly: true,
++          criteria: 'Practitioner?identifier=http://hl7.org/fhir/sid/us-npi|1234567893',
++        },
++        {
++          resourceType: 'Goal',
++          readonly: true,
++          criteria: `Goal?identifier=http://example.com/patientVisible|true&_compartment=${compartment}&category=nursing`,
++        },
++        {
++          resourceType: 'Patient',
++          criteria: `Patient?_compartment=${compartment}`,
++        },
++        {
++          resourceType: 'Practitioner',
++          criteria: `Practitioner?_compartment=${compartment}&identifier=http://hl7.org/fhir/sid/us-npi|1234567893`,
++        },
++        {
++          resourceType: 'Goal',
++          readonly: true,
++          criteria: `Goal?_compartment=${compartment}&category=nursing`,
++        },
++        {
++          resourceType: 'Condition',
++          criteria: `Condition?_compartment=${compartment}&category=encounter-diagnosis`,
++        },
++        {
++          resourceType: 'Condition',
++          criteria: `Condition?_compartment=${compartment}&category=health-concern`,
++        },
++      ],
+     });
+   });
+ });
+diff --git a/packages/server/src/fhir/smart.ts b/packages/server/src/fhir/smart.ts
+index bac3d5d8d..8a6bf2d96 100644
+--- a/packages/server/src/fhir/smart.ts
++++ b/packages/server/src/fhir/smart.ts
+@@ -15,11 +15,10 @@ import {
+   OAuthTokenAuthMethod,
+   splitN,
+ } from '@medplum/core';
+-import type { AccessPolicy, AccessPolicyResource, Patient, Reference } from '@medplum/fhirtypes';
++import type { AccessPolicy, AccessPolicyResource } from '@medplum/fhirtypes';
+ import type { Request, Response } from 'express';
+ import qs from 'node:querystring';
+ import { getConfig } from '../config/loader';
+-import type { AuthState } from '../oauth/middleware';
+ import type { PopulatedAccessPolicy } from './accesspolicy';
+ 
+ const smartScopeFormat = /^(patient|user|system)\/(\w+|\*)\.(read|write|c?r?u?d?s?|\*)$/;
+@@ -182,41 +181,39 @@ function normalizeV2ScopeString(str: string): string {
+  * If there is no access policy, a new one is created.
+  * Otherwise, the AccessPolicy is modified to only include the SMART scopes.
+  * @param accessPolicy - The original access policy.
+- * @param authState - The user's authentication state.
+- * @returns Updated access policy with the OAuth scope(s) applied.
++ * @param scope - The OAuth scope string.
++ * @returns Updated access policy with the OAuth scope applied.
+  */
+-export function applySmartScopes(accessPolicy: PopulatedAccessPolicy, authState: AuthState): PopulatedAccessPolicy {
+-  const scope = authState.login.scope;
++export function applySmartScopes(
++  accessPolicy: PopulatedAccessPolicy,
++  scope: string | undefined
++): PopulatedAccessPolicy {
+   const smartScopes = parseSmartScopes(scope);
+   if (smartScopes.length === 0) {
+     // No SMART scopes, so no changes to the access policy
+     return accessPolicy;
+   }
+-  let context: Reference<Patient> | undefined;
+-  if (authState.smartAppLaunch?.patient) {
+-    context = authState.smartAppLaunch?.patient;
+-  } else if (authState.membership.profile.reference?.startsWith('Patient/')) {
+-    context = authState.membership.profile as Reference<Patient>;
+-  }
+ 
+   // Build an access policy that is the intersection of the existing access policy and the SMART scopes
+-  return intersectSmartScopes(accessPolicy, smartScopes, context);
++  return intersectSmartScopes(accessPolicy, smartScopes);
+ }
+ 
+-function intersectSmartScopes(
+-  accessPolicy: AccessPolicy,
+-  smartScope: SmartScope[],
+-  context?: Reference<Patient>
+-): PopulatedAccessPolicy {
++function intersectSmartScopes(accessPolicy: AccessPolicy, smartScope: SmartScope[]): PopulatedAccessPolicy {
++  // Build list of AccessPolicy entries
++  if (!accessPolicy.resource) {
++    // If none specified, generate an AccessPolicy from scratch
++    return generateSmartScopesPolicy(smartScope);
++  }
++
+   const result: PopulatedAccessPolicy = { ...accessPolicy, resource: [] };
+-  for (const policy of accessPolicy.resource ?? EMPTY) {
++  for (const policy of accessPolicy.resource) {
+     const scope = getScopeForResourceType(smartScope, policy.resourceType);
+     if (scope) {
+-      const merged = mergeAccessPolicyWithScope(policy, scope, context);
++      const merged = mergeAccessPolicyWithScope(policy, scope);
+       result.resource.push(merged);
+     } else if (policy.resourceType === '*') {
+       for (const scope of smartScope) {
+-        const merged = mergeAccessPolicyWithScope(policy, scope, context);
++        const merged = mergeAccessPolicyWithScope(policy, scope);
+         merged.resourceType = scope.resourceType;
+         result.resource.push(merged);
+       }
+@@ -226,11 +223,7 @@ function intersectSmartScopes(
+ }
+ 
+ const readOnlyScope = /^[rs]+$/;
+-function mergeAccessPolicyWithScope(
+-  policy: AccessPolicyResource,
+-  scope: SmartScope,
+-  context?: Reference<Patient>
+-): AccessPolicyResource {
++function mergeAccessPolicyWithScope(policy: AccessPolicyResource, scope: SmartScope): AccessPolicyResource {
+   const result = deepClone(policy);
+   if (result.criteria?.startsWith('*') && scope.resourceType !== '*') {
+     result.criteria = result.criteria.replace('*', scope.resourceType);
+@@ -240,26 +233,26 @@ function mergeAccessPolicyWithScope(
+     result.readonly = true;
+   }
+   if (scope.criteria) {
+-    appendCriteria(result, scope.criteria);
+-  }
+-  if (scope.permissionType === 'patient') {
+-    if (context) {
+-      appendCriteria(result, `_compartment=${context.reference}`);
+-    }
++    result.criteria = `${result.criteria ?? scope.resourceType + '?'}${result.criteria && !result.criteria?.endsWith('&') ? '&' : ''}${scope.criteria}`;
+   }
+   return result;
+ }
+ 
+-function appendCriteria(policy: AccessPolicyResource, criteria: string): void {
+-  if (!policy.criteria) {
+-    policy.criteria = `${policy.resourceType}?${criteria}`;
+-  } else if (policy.criteria.endsWith('&')) {
+-    policy.criteria += criteria;
+-  } else {
+-    policy.criteria += '&' + criteria;
+-  }
+-}
+-
+ function getScopeForResourceType(scopes: SmartScope[], resourceType: string): SmartScope | undefined {
+   return scopes.find((s) => s.resourceType === resourceType) ?? scopes.find((s) => s.resourceType === '*');
+ }
++
++function generateSmartScopesPolicy(smartScopes: SmartScope[]): PopulatedAccessPolicy {
++  const result: PopulatedAccessPolicy = {
++    resourceType: 'AccessPolicy',
++    resource: [],
++  };
++
++  for (const smartScope of smartScopes) {
++    result.resource.push({
++      resourceType: smartScope.resourceType,
++    });
++  }
++
++  return result;
++}
+diff --git a/packages/server/src/oauth/middleware.ts b/packages/server/src/oauth/middleware.ts
+index 660887330..749d8323e 100644
+--- a/packages/server/src/oauth/middleware.ts
++++ b/packages/server/src/oauth/middleware.ts
+@@ -2,15 +2,7 @@
+ // SPDX-License-Identifier: Apache-2.0
+ import type { ProfileResource, WithId } from '@medplum/core';
+ import { OperationOutcomeError, unauthorized } from '@medplum/core';
+-import type {
+-  Bot,
+-  ClientApplication,
+-  Login,
+-  Project,
+-  ProjectMembership,
+-  SmartAppLaunch,
+-  UserConfiguration,
+-} from '@medplum/fhirtypes';
++import type { Bot, ClientApplication, Login, Project, ProjectMembership, UserConfiguration } from '@medplum/fhirtypes';
+ import type { NextFunction, Request, Response } from 'express';
+ import type { IncomingMessage } from 'node:http';
+ import { getConfig } from '../config/loader';
+@@ -25,7 +17,6 @@ export type AuthState = {
+   profile?: WithId<ProfileResource | Bot | ClientApplication>;
+   userConfig: UserConfiguration;
+   accessToken?: string;
+-  smartAppLaunch?: WithId<SmartAppLaunch>;
+ 
+   onBehalfOf?: WithId<ProfileResource>;
+   onBehalfOfMembership?: WithId<ProjectMembership>;
+diff --git a/packages/server/src/oauth/utils.ts b/packages/server/src/oauth/utils.ts
+index 46c6b0aef..023ddca94 100644
+--- a/packages/server/src/oauth/utils.ts
++++ b/packages/server/src/oauth/utils.ts
+@@ -461,12 +461,16 @@ export async function setLoginMembership(
+     }
+   }
+ 
+-  // Check IP Access Rules
+   // TODO: Do we really need to check IP access rules inside this method?
+   // Or could this be done closer to call site?
+   // This method is used internally in a bunch of places that do not need to check IP access rules
++
+   const userConfig = await getUserConfiguration(projectSystemRepo, project, membership);
++
++  // Get the access policy
+   const accessPolicy = await getAccessPolicyForLogin({ project, login, membership, userConfig });
++
++  // Check IP Access Rules
+   await checkIpAccessRules(login, accessPolicy);
+ 
+   const auditEvent = createAuditEvent(
+@@ -1015,13 +1019,8 @@ async function makeAuthResult(
+ ): Promise<AuthenticationResult> {
+   const extendedMode = req ? isExtendedMode(req) : true;
+   const userConfig = await getUserConfiguration(systemRepo, project, membership);
+-  let smartAppLaunch: WithId<SmartAppLaunch> | undefined;
+-  if (login.launch) {
+-    smartAppLaunch = await systemRepo.readReference(login.launch);
+-  }
+   const authState: AuthState = {
+     login,
+-    smartAppLaunch,
+     project,
+     membership,
+     userConfig,

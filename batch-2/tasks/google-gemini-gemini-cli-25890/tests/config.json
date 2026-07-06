@@ -1,0 +1,30 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run --reporter=verbose --coverage.enabled=false src/utils/userStartupWarnings.test.ts",
+  "test_files": [
+    "packages/cli/src/utils/userStartupWarnings.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings home directory check should return a warning when running in home directory",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings home directory check should return a warning when home directory is a symlink and running in it",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings home directory check should not return a warning when GEMINI_CLI_HOME differs from os.homedir"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings home directory check should not return a warning when running in a project directory",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings home directory check should not return a warning when showHomeDirectoryWarning is false",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings home directory check should not return a warning when running in a subdirectory of home",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings home directory check should not return a warning when home directory is a symlink and running in a subdirectory",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings home directory check should not return a warning when folder trust is enabled and workspace is trusted",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings root directory check should return a warning when running in a root directory",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings root directory check should not return a warning when running in a non-root directory",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings error handling should handle errors when checking directory",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings folder trust check should throw FatalUntrustedWorkspaceError when untrusted in headless mode",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings folder trust check should not return a warning when trusted in headless mode",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings folder trust check should not return a warning when untrusted in interactive mode",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings compatibility warnings should include compatibility warnings by default",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings compatibility warnings should not include compatibility warnings when showCompatibilityWarnings is false",
+    "/workspace/repo/packages/cli/src/utils/userStartupWarnings.test.ts::getUserStartupWarnings compatibility warnings should correctly pass isAlternateBuffer option to getCompatibilityWarnings"
+  ]
+}

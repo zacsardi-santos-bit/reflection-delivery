@@ -1,0 +1,24 @@
+patching file deployment/clouddeploy/gke-workers/environments/oss-vdb-test/kustomization.yaml
+patching file deployment/clouddeploy/gke-workers/environments/oss-vdb-test/recoverer.yaml
+patching file gcp/workers/recoverer/recoverer_test.py
+patching file osv/pubsub_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.14.1
+collecting ... collected 9 items
+
+gcp/workers/recoverer/recoverer_test.py::RecovererTest::test_handle_gcs_gen_mismatch_aliases PASSED [ 11%]
+gcp/workers/recoverer/recoverer_test.py::RecovererTest::test_handle_gcs_gen_mismatch_upstream PASSED [ 22%]
+gcp/workers/recoverer/recoverer_test.py::RecovererTest::test_handle_gcs_missing PASSED [ 33%]
+gcp/workers/recoverer/recoverer_test.py::RecovererTest::test_handle_gcs_retry PASSED [ 44%]
+gcp/workers/recoverer/recoverer_test.py::RecovererTest::test_handle_gcs_retry_invalid_data PASSED [ 55%]
+gcp/workers/recoverer/recoverer_test.py::RecovererTest::test_handle_gcs_retry_overwritten PASSED [ 66%]
+gcp/workers/recoverer/recoverer_test.py::RecovererTest::test_handle_generic PASSED [ 77%]
+osv/pubsub_test.py::PubsubTest::test_publish_failure PASSED              [ 88%]
+osv/pubsub_test.py::PubsubTest::test_publish_failure_no_project PASSED   [100%]
+
+============================== 9 passed in 5.57s ===============================
+reward=1 graded=9 found=0 failed=0 parsed=9 framework=pytest exit_code=0

@@ -1,0 +1,98 @@
+{
+    "id": "714c9f0f-9ce6-46e0-b2df-e23bfc8efe05",
+    "task_name": "offline/apache-geode-2571",
+    "trial_name": "apache-geode-2571__MxFajBK",
+    "trial_uri": "file:///tmp/nop/2026-07-01__14-39-30/apache-geode-2571__MxFajBK",
+    "task_id": {
+        "path": "apache-geode-2571"
+    },
+    "source": "src",
+    "task_checksum": "198dc9922d3121f01223cc972f9e7765094ac75aaa320ea7bb376245c70c935f",
+    "config": {
+        "task": {
+            "path": "apache-geode-2571",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "apache-geode-2571__MxFajBK",
+        "trials_dir": "/tmp/nop/2026-07-01__14-39-30",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "ffc1cad0-5e29-4a37-8bec-912852563cb3"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T14:39:35.328888Z",
+    "finished_at": "2026-07-01T14:41:30.674849Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T14:39:35.331070Z",
+        "finished_at": "2026-07-01T14:39:37.492549Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T14:39:37.492587Z",
+        "finished_at": "2026-07-01T14:39:37.492636Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T14:39:37.492688Z",
+        "finished_at": "2026-07-01T14:39:37.492717Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T14:39:37.492822Z",
+        "finished_at": "2026-07-01T14:41:20.157094Z"
+    }
+}

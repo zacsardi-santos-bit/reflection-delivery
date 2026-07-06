@@ -1,0 +1,266 @@
+patching file packages/devtools/tests/__mocks__/chrome-launcher.ts (renamed from packages/devtools/tests/__mocks__/chrome-launcher.js)
+patching file packages/devtools/tests/__mocks__/pptrDebug.ts (renamed from packages/devtools/tests/__mocks__/pptrDebug.js)
+patching file packages/devtools/tests/__mocks__/puppeteer-core.ts (renamed from packages/devtools/tests/__mocks__/puppeteer-core.js)
+patching file packages/devtools/tests/__snapshots__/devtools.test.ts.snap (renamed from packages/devtools/tests/__snapshots__/devtools.test.js.snap)
+patching file packages/devtools/tests/__snapshots__/devtoolsdriver.test.ts.snap (renamed from packages/devtools/tests/__snapshots__/devtoolsdriver.test.js.snap)
+patching file packages/devtools/tests/__snapshots__/launcher.test.ts.snap (renamed from packages/devtools/tests/__snapshots__/launcher.test.js.snap)
+patching file packages/devtools/tests/__snapshots__/utils.test.ts.snap (renamed from packages/devtools/tests/__snapshots__/utils.test.js.snap)
+patching file packages/devtools/tests/devtools.test.ts (renamed from packages/devtools/tests/devtools.test.js)
+patching file packages/devtools/tests/devtoolsdriver.test.ts (renamed from packages/devtools/tests/devtoolsdriver.test.js)
+patching file packages/devtools/tests/elementStore.test.ts (renamed from packages/devtools/tests/elementStore.test.js)
+patching file packages/devtools/tests/finder/finder.test.ts (renamed from packages/devtools/tests/finder/finder.test.js)
+patching file packages/devtools/tests/launcher.test.ts (renamed from packages/devtools/tests/launcher.test.js)
+patching file packages/devtools/tests/utils.test.ts (renamed from packages/devtools/tests/utils.test.js)
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+DeprecationWarning: 'createNodeArray' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+DeprecationWarning: 'createNodeArray' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+FAIL packages/devtools/tests/devtoolsdriver.test.ts
+  ● Test suite failed to run
+
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m112[0m:[93m47[0m - [91merror[0m[90m TS2556: [0mA spread argument must either have a tuple type or be passed to a rest parameter.
+
+    [7m112[0m         (resolve) => setTimeout(() => resolve(...args), 100))
+    [7m   [0m [91m                                              ~~~~~~~[0m
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m216[0m:[93m47[0m - [91merror[0m[90m TS2556: [0mA spread argument must either have a tuple type or be passed to a rest parameter.
+
+    [7m216[0m         (resolve) => setTimeout(() => resolve(...args), 100))
+    [7m   [0m [91m                                              ~~~~~~~[0m
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m245[0m:[93m47[0m - [91merror[0m[90m TS2556: [0mA spread argument must either have a tuple type or be passed to a rest parameter.
+
+    [7m245[0m         (resolve) => setTimeout(() => resolve(...args), 100))
+    [7m   [0m [91m                                              ~~~~~~~[0m
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m264[0m:[93m47[0m - [91merror[0m[90m TS2556: [0mA spread argument must either have a tuple type or be passed to a rest parameter.
+
+    [7m264[0m         (resolve) => setTimeout(() => resolve(...args), 100))
+    [7m   [0m [91m                                              ~~~~~~~[0m
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m272[0m:[93m16[0m - [91merror[0m[90m TS18046: [0m'err' is of type 'unknown'.
+
+    [7m272[0m         expect(err.message).toBe('ups')
+    [7m   [0m [91m               ~~~[0m
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m294[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 0.
+
+    [7m294[0m     driver.setTimeouts()
+    [7m   [0m [91m           ~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m17[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                ~~~~~~~~~~~~~~~~[0m
+        An argument for 'implicit' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m300[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 0.
+
+    [7m300[0m     driver.setTimeouts()
+    [7m   [0m [91m           ~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m17[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                ~~~~~~~~~~~~~~~~[0m
+        An argument for 'implicit' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m301[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 1.
+
+    [7m301[0m     driver.setTimeouts(222)
+    [7m   [0m [91m           ~~~~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m35[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                                  ~~~~~~~~~~~~~~~~[0m
+        An argument for 'pageLoad' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m306[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 0.
+
+    [7m306[0m     driver.setTimeouts()
+    [7m   [0m [91m           ~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m17[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                ~~~~~~~~~~~~~~~~[0m
+        An argument for 'implicit' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m307[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 1.
+
+    [7m307[0m     driver.setTimeouts(222)
+    [7m   [0m [91m           ~~~~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m35[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                                  ~~~~~~~~~~~~~~~~[0m
+        An argument for 'pageLoad' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m308[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 2.
+
+    [7m308[0m     driver.setTimeouts(222, 333)
+    [7m   [0m [91m           ~~~~~~~~~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m53[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                                                    ~~~~~~~~~~~~~~[0m
+        An argument for 'script' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m313[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 0.
+
+    [7m313[0m     driver.setTimeouts()
+    [7m   [0m [91m           ~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m17[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                ~~~~~~~~~~~~~~~~[0m
+        An argument for 'implicit' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m314[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 1.
+
+    [7m314[0m     driver.setTimeouts(222)
+    [7m   [0m [91m           ~~~~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m35[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                                  ~~~~~~~~~~~~~~~~[0m
+        An argument for 'pageLoad' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m315[0m:[93m12[0m - [91merror[0m[90m TS2554: [0mExpected 3 arguments, but got 2.
+
+    [7m315[0m     driver.setTimeouts(222, 333)
+    [7m   [0m [91m           ~~~~~~~~~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/devtoolsdriver.ts[0m:[93m157[0m:[93m53[0m
+        [7m157[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {
+        [7m   [0m [96m                                                    ~~~~~~~~~~~~~~[0m
+        An argument for 'script' was not provided.
+    [96mpackages/devtools/tests/devtoolsdriver.test.ts[0m:[93m329[0m:[93m5[0m - [91merror[0m[90m TS2740: [0mType '{ get: Mock<any, any>; }' is missing the following properties from type 'Map<string, Page>': clear, delete, forEach, has, and 7 more.
+
+    [7m329[0m     driver.windows = { get: jest.fn().mockReturnValue(undefined) }
+    [7m   [0m [91m    ~~~~~~~~~~~~~~[0m
+
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+DeprecationWarning: 'createNodeArray' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+FAIL packages/devtools/tests/utils.test.ts
+  ● Test suite failed to run
+
+    [96mpackages/devtools/tests/utils.test.ts[0m:[93m6[0m:[93m27[0m - [91merror[0m[90m TS2307: [0mCannot find module '@wdio/utils' or its corresponding type declarations.
+
+    [7m6[0m import { canAccess } from '@wdio/utils'
+    [7m [0m [91m                          ~~~~~~~~~~~~~[0m
+
+FAIL packages/devtools/tests/launcher.test.ts
+  ● Test suite failed to run
+
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m83[0m:[93m13[0m - [91merror[0m[90m TS2322: [0mType 'string[]' is not assignable to type 'boolean | undefined'.
+
+    [7m83[0m             ignoreDefaultArgs: ['--disable-sync', '--enable-features=NetworkService,NetworkServiceInProcess']
+    [7m  [0m [91m            ~~~~~~~~~~~~~~~~~[0m
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m136[0m:[93m16[0m - [91merror[0m[90m TS18046: [0m'err' is of type 'unknown'.
+
+    [7m136[0m         expect(err.message).toContain('Only Nightly release channel is supported')
+    [7m   [0m [91m               ~~~[0m
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m152[0m:[93m17[0m - [91merror[0m[90m TS2322: [0mType '{ headless: true; defaultViewport: { width: number; height: number; }; }' is not assignable to type 'DevToolsOptions'.
+      Object literal may only specify known properties, and 'defaultViewport' does not exist in type 'DevToolsOptions'.
+
+    [7m152[0m                 defaultViewport: {
+    [7m   [0m [91m                ~~~~~~~~~~~~~~~~~~[0m
+    [7m153[0m                     width: 123,
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m154[0m                     height: 456
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m155[0m                 }
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/launcher.ts[0m:[93m34[0m:[93m5[0m
+        [7m34[0m     'wdio:devtoolsOptions'?: DevToolsOptions
+        [7m  [0m [96m    ~~~~~~~~~~~~~~~~~~~~~~[0m
+        The expected type comes from property 'wdio:devtoolsOptions' which is declared here on type 'ExtendedCapabilities'
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m159[0m:[93m16[0m - [91merror[0m[90m TS18046: [0m'err' is of type 'unknown'.
+
+    [7m159[0m         expect(err.message).toContain('Only Nightly release channel is supported')
+    [7m   [0m [91m               ~~~[0m
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m172[0m:[93m13[0m - [91merror[0m[90m TS2322: [0mType '{ headless: true; defaultViewport: { width: number; height: number; }; }' is not assignable to type 'DevToolsOptions'.
+      Object literal may only specify known properties, and 'defaultViewport' does not exist in type 'DevToolsOptions'.
+
+    [7m172[0m             defaultViewport: {
+    [7m   [0m [91m            ~~~~~~~~~~~~~~~~~~[0m
+    [7m173[0m                 width: 123,
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m174[0m                 height: 456
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m175[0m             }
+    [7m   [0m [91m~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/launcher.ts[0m:[93m34[0m:[93m5[0m
+        [7m34[0m     'wdio:devtoolsOptions'?: DevToolsOptions
+        [7m  [0m [96m    ~~~~~~~~~~~~~~~~~~~~~~[0m
+        The expected type comes from property 'wdio:devtoolsOptions' which is declared here on type 'ExtendedCapabilities'
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m196[0m:[93m13[0m - [91merror[0m[90m TS2322: [0mType '{ headless: true; defaultViewport: { width: number; height: number; }; }' is not assignable to type 'DevToolsOptions'.
+      Object literal may only specify known properties, and 'defaultViewport' does not exist in type 'DevToolsOptions'.
+
+    [7m196[0m             defaultViewport: {
+    [7m   [0m [91m            ~~~~~~~~~~~~~~~~~~[0m
+    [7m197[0m                 width: 123,
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m198[0m                 height: 456
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m199[0m             }
+    [7m   [0m [91m~~~~~~~~~~~~~[0m
+
+      [96mpackages/devtools/src/launcher.ts[0m:[93m34[0m:[93m5[0m
+        [7m34[0m     'wdio:devtoolsOptions'?: DevToolsOptions
+        [7m  [0m [96m    ~~~~~~~~~~~~~~~~~~~~~~[0m
+        The expected type comes from property 'wdio:devtoolsOptions' which is declared here on type 'ExtendedCapabilities'
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m211[0m:[93m16[0m - [91merror[0m[90m TS18046: [0m'e' is of type 'unknown'.
+
+    [7m211[0m         expect(e.message).toContain('Couldn\'t identify browserName')
+    [7m   [0m [91m               ~[0m
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m258[0m:[93m16[0m - [91merror[0m[90m TS18046: [0m'err' is of type 'unknown'.
+
+    [7m258[0m         expect(err.message).toContain('Only Nightly release channel is supported')
+    [7m   [0m [91m               ~~~[0m
+    [96mpackages/devtools/tests/launcher.test.ts[0m:[93m281[0m:[93m16[0m - [91merror[0m[90m TS18046: [0m'err' is of type 'unknown'.
+
+    [7m281[0m         expect(err.message).toContain('Only Nightly release channel is supported')
+    [7m   [0m [91m               ~~~[0m
+
+FAIL packages/devtools/tests/devtools.test.ts
+  ● Test suite failed to run
+
+    [96mpackages/devtools/tests/devtools.test.ts[0m:[93m19[0m:[93m35[0m - [91merror[0m[90m TS2554: [0mExpected 4 arguments, but got 1.
+
+    [7m 19[0m     const client = await DevTools.newSession({
+    [7m   [0m [91m                                  ~~~~~~~~~~~~[0m
+    [7m 20[0m         logLevel: 'trace',
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m...[0m 
+    [7m 23[0m         }
+    [7m   [0m [91m~~~~~~~~~[0m
+    [7m 24[0m     })
+    [7m   [0m [91m~~~~~~[0m
+
+      [96mpackages/devtools/src/index.ts[0m:[93m25[0m:[93m63[0m
+        [7m25[0m     static async newSession (options: WebDriver.Options = {}, modifier: Function, userPrototype = {}, customCommandWrapper: Function) {
+        [7m  [0m [96m                                                              ~~~~~~~~~~~~~~~~~~[0m
+        An argument for 'modifier' was not provided.
+    [96mpackages/devtools/tests/devtools.test.ts[0m:[93m41[0m:[93m35[0m - [91merror[0m[90m TS2554: [0mExpected 4 arguments, but got 1.
+
+    [7m 41[0m     const client = await DevTools.newSession({
+    [7m   [0m [91m                                  ~~~~~~~~~~~~[0m
+    [7m 42[0m         logLevel: 'trace',
+    [7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+    [7m...[0m 
+    [7m 45[0m         }
+    [7m   [0m [91m~~~~~~~~~[0m
+    [7m 46[0m     })
+    [7m   [0m [91m~~~~~~[0m
+
+      [96mpackages/devtools/src/index.ts[0m:[93m25[0m:[93m63[0m
+        [7m25[0m     static async newSession (options: WebDriver.Options = {}, modifier: Function, userPrototype = {}, customCommandWrapper: Function) {
+        [7m  [0m [96m                                                              ~~~~~~~~~~~~~~~~~~[0m
+        An argument for 'modifier' was not provided.
+
+FAIL packages/devtools/tests/finder/finder.test.ts
+  ● Test suite failed to run
+
+    [96mpackages/devtools/tests/finder/finder.test.ts[0m:[93m1[0m:[93m46[0m - [91merror[0m[90m TS2307: [0mCannot find module '@wdio/utils' or its corresponding type declarations.
+
+    [7m1[0m import { canAccess as canAccessImport } from '@wdio/utils'
+    [7m [0m [91m                                             ~~~~~~~~~~~~~[0m
+
+PASS packages/devtools/tests/elementStore.test.ts
+  ✓ should keep a map of elements (2 ms)
+  ✓ should not return element if it is not attached to the DOM
+
+Test Suites: 5 failed, 1 passed, 6 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        25.786 s
+Ran all test suites matching /packages\/devtools\/tests\/devtools.test.ts|packages\/devtools\/tests\/devtoolsdriver.test.ts|packages\/devtools\/tests\/elementStore.test.ts|packages\/devtools\/tests\/finder\/finder.test.ts|packages\/devtools\/tests\/launcher.test.ts|packages\/devtools\/tests\/utils.test.ts/i.
+{"numFailedTestSuites":5,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":2,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":5,"numTodoTests":0,"numTotalTestSuites":6,"numTotalTests":2,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782919373087,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782919398874,"message":"  ● Test suite failed to run\n\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m112\u001b[0m:\u001b[93m47\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2556: \u001b[0mA spread argument must either have a tuple type or be passed to a rest parameter.\n\n    \u001b[7m112\u001b[0m         (resolve) => setTimeout(() => resolve(...args), 100))\n    \u001b[7m   \u001b[0m \u001b[91m                                              ~~~~~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m216\u001b[0m:\u001b[93m47\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2556: \u001b[0mA spread argument must either have a tuple type or be passed to a rest parameter.\n\n    \u001b[7m216\u001b[0m         (resolve) => setTimeout(() => resolve(...args), 100))\n    \u001b[7m   \u001b[0m \u001b[91m                                              ~~~~~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m245\u001b[0m:\u001b[93m47\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2556: \u001b[0mA spread argument must either have a tuple type or be passed to a rest parameter.\n\n    \u001b[7m245\u001b[0m         (resolve) => setTimeout(() => resolve(...args), 100))\n    \u001b[7m   \u001b[0m \u001b[91m                                              ~~~~~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m264\u001b[0m:\u001b[93m47\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2556: \u001b[0mA spread argument must either have a tuple type or be passed to a rest parameter.\n\n    \u001b[7m264\u001b[0m         (resolve) => setTimeout(() => resolve(...args), 100))\n    \u001b[7m   \u001b[0m \u001b[91m                                              ~~~~~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m272\u001b[0m:\u001b[93m16\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS18046: \u001b[0m'err' is of type 'unknown'.\n\n    \u001b[7m272\u001b[0m         expect(err.message).toBe('ups')\n    \u001b[7m   \u001b[0m \u001b[91m               ~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m294\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 0.\n\n    \u001b[7m294\u001b[0m     driver.setTimeouts()\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m17\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                ~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'implicit' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m300\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 0.\n\n    \u001b[7m300\u001b[0m     driver.setTimeouts()\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m17\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                ~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'implicit' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m301\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 1.\n\n    \u001b[7m301\u001b[0m     driver.setTimeouts(222)\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m35\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                                  ~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'pageLoad' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m306\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 0.\n\n    \u001b[7m306\u001b[0m     driver.setTimeouts()\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m17\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                ~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'implicit' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m307\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 1.\n\n    \u001b[7m307\u001b[0m     driver.setTimeouts(222)\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m35\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                                  ~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'pageLoad' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m308\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 2.\n\n    \u001b[7m308\u001b[0m     driver.setTimeouts(222, 333)\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m53\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                                                    ~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'script' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m313\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 0.\n\n    \u001b[7m313\u001b[0m     driver.setTimeouts()\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m17\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                ~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'implicit' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m314\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 1.\n\n    \u001b[7m314\u001b[0m     driver.setTimeouts(222)\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m35\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                                  ~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'pageLoad' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m315\u001b[0m:\u001b[93m12\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 3 arguments, but got 2.\n\n    \u001b[7m315\u001b[0m     driver.setTimeouts(222, 333)\n    \u001b[7m   \u001b[0m \u001b[91m           ~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/devtoolsdriver.ts\u001b[0m:\u001b[93m157\u001b[0m:\u001b[93m53\u001b[0m\n        \u001b[7m157\u001b[0m     setTimeouts(implicit: number, pageLoad: number, script: number) {\n        \u001b[7m   \u001b[0m \u001b[96m                                                    ~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'script' was not provided.\n    \u001b[96mpackages/devtools/tests/devtoolsdriver.test.ts\u001b[0m:\u001b[93m329\u001b[0m:\u001b[93m5\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2740: \u001b[0mType '{ get: Mock<any, any>; }' is missing the following properties from type 'Map<string, Page>': clear, delete, forEach, has, and 7 more.\n\n    \u001b[7m329\u001b[0m     driver.windows = { get: jest.fn().mockReturnValue(undefined) }\n    \u001b[7m   \u001b[0m \u001b[91m    ~~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/packages/devtools/tests/devtoolsdriver.test.ts","startTime":1782919398874,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782919398874,"message":"  ● Test suite failed to run\n\n    \u001b[96mpackages/devtools/tests/utils.test.ts\u001b[0m:\u001b[93m6\u001b[0m:\u001b[93m27\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '@wdio/utils' or its corresponding type declarations.\n\n    \u001b[7m6\u001b[0m import { canAccess } from '@wdio/utils'\n    \u001b[7m \u001b[0m \u001b[91m                          ~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/packages/devtools/tests/utils.test.ts","startTime":1782919398874,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782919398874,"message":"  ● Test suite failed to run\n\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m83\u001b[0m:\u001b[93m13\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2322: \u001b[0mType 'string[]' is not assignable to type 'boolean | undefined'.\n\n    \u001b[7m83\u001b[0m             ignoreDefaultArgs: ['--disable-sync', '--enable-features=NetworkService,NetworkServiceInProcess']\n    \u001b[7m  \u001b[0m \u001b[91m            ~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m136\u001b[0m:\u001b[93m16\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS18046: \u001b[0m'err' is of type 'unknown'.\n\n    \u001b[7m136\u001b[0m         expect(err.message).toContain('Only Nightly release channel is supported')\n    \u001b[7m   \u001b[0m \u001b[91m               ~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m152\u001b[0m:\u001b[93m17\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2322: \u001b[0mType '{ headless: true; defaultViewport: { width: number; height: number; }; }' is not assignable to type 'DevToolsOptions'.\n      Object literal may only specify known properties, and 'defaultViewport' does not exist in type 'DevToolsOptions'.\n\n    \u001b[7m152\u001b[0m                 defaultViewport: {\n    \u001b[7m   \u001b[0m \u001b[91m                ~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m153\u001b[0m                     width: 123,\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m154\u001b[0m                     height: 456\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m155\u001b[0m                 }\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/launcher.ts\u001b[0m:\u001b[93m34\u001b[0m:\u001b[93m5\u001b[0m\n        \u001b[7m34\u001b[0m     'wdio:devtoolsOptions'?: DevToolsOptions\n        \u001b[7m  \u001b[0m \u001b[96m    ~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n        The expected type comes from property 'wdio:devtoolsOptions' which is declared here on type 'ExtendedCapabilities'\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m159\u001b[0m:\u001b[93m16\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS18046: \u001b[0m'err' is of type 'unknown'.\n\n    \u001b[7m159\u001b[0m         expect(err.message).toContain('Only Nightly release channel is supported')\n    \u001b[7m   \u001b[0m \u001b[91m               ~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m172\u001b[0m:\u001b[93m13\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2322: \u001b[0mType '{ headless: true; defaultViewport: { width: number; height: number; }; }' is not assignable to type 'DevToolsOptions'.\n      Object literal may only specify known properties, and 'defaultViewport' does not exist in type 'DevToolsOptions'.\n\n    \u001b[7m172\u001b[0m             defaultViewport: {\n    \u001b[7m   \u001b[0m \u001b[91m            ~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m173\u001b[0m                 width: 123,\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m174\u001b[0m                 height: 456\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m175\u001b[0m             }\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/launcher.ts\u001b[0m:\u001b[93m34\u001b[0m:\u001b[93m5\u001b[0m\n        \u001b[7m34\u001b[0m     'wdio:devtoolsOptions'?: DevToolsOptions\n        \u001b[7m  \u001b[0m \u001b[96m    ~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n        The expected type comes from property 'wdio:devtoolsOptions' which is declared here on type 'ExtendedCapabilities'\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m196\u001b[0m:\u001b[93m13\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2322: \u001b[0mType '{ headless: true; defaultViewport: { width: number; height: number; }; }' is not assignable to type 'DevToolsOptions'.\n      Object literal may only specify known properties, and 'defaultViewport' does not exist in type 'DevToolsOptions'.\n\n    \u001b[7m196\u001b[0m             defaultViewport: {\n    \u001b[7m   \u001b[0m \u001b[91m            ~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m197\u001b[0m                 width: 123,\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m198\u001b[0m                 height: 456\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m199\u001b[0m             }\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/launcher.ts\u001b[0m:\u001b[93m34\u001b[0m:\u001b[93m5\u001b[0m\n        \u001b[7m34\u001b[0m     'wdio:devtoolsOptions'?: DevToolsOptions\n        \u001b[7m  \u001b[0m \u001b[96m    ~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n        The expected type comes from property 'wdio:devtoolsOptions' which is declared here on type 'ExtendedCapabilities'\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m211\u001b[0m:\u001b[93m16\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS18046: \u001b[0m'e' is of type 'unknown'.\n\n    \u001b[7m211\u001b[0m         expect(e.message).toContain('Couldn\\'t identify browserName')\n    \u001b[7m   \u001b[0m \u001b[91m               ~\u001b[0m\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m258\u001b[0m:\u001b[93m16\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS18046: \u001b[0m'err' is of type 'unknown'.\n\n    \u001b[7m258\u001b[0m         expect(err.message).toContain('Only Nightly release channel is supported')\n    \u001b[7m   \u001b[0m \u001b[91m               ~~~\u001b[0m\n    \u001b[96mpackages/devtools/tests/launcher.test.ts\u001b[0m:\u001b[93m281\u001b[0m:\u001b[93m16\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS18046: \u001b[0m'err' is of type 'unknown'.\n\n    \u001b[7m281\u001b[0m         expect(err.message).toContain('Only Nightly release channel is supported')\n    \u001b[7m   \u001b[0m \u001b[91m               ~~~\u001b[0m\n","name":"/workspace/repo/packages/devtools/tests/launcher.test.ts","startTime":1782919398874,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782919398874,"message":"  ● Test suite failed to run\n\n    \u001b[96mpackages/devtools/tests/devtools.test.ts\u001b[0m:\u001b[93m19\u001b[0m:\u001b[93m35\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 4 arguments, but got 1.\n\n    \u001b[7m 19\u001b[0m     const client = await DevTools.newSession({\n    \u001b[7m   \u001b[0m \u001b[91m                                  ~~~~~~~~~~~~\u001b[0m\n    \u001b[7m 20\u001b[0m         logLevel: 'trace',\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m...\u001b[0m \n    \u001b[7m 23\u001b[0m         }\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~\u001b[0m\n    \u001b[7m 24\u001b[0m     })\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/index.ts\u001b[0m:\u001b[93m25\u001b[0m:\u001b[93m63\u001b[0m\n        \u001b[7m25\u001b[0m     static async newSession (options: WebDriver.Options = {}, modifier: Function, userPrototype = {}, customCommandWrapper: Function) {\n        \u001b[7m  \u001b[0m \u001b[96m                                                              ~~~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'modifier' was not provided.\n    \u001b[96mpackages/devtools/tests/devtools.test.ts\u001b[0m:\u001b[93m41\u001b[0m:\u001b[93m35\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2554: \u001b[0mExpected 4 arguments, but got 1.\n\n    \u001b[7m 41\u001b[0m     const client = await DevTools.newSession({\n    \u001b[7m   \u001b[0m \u001b[91m                                  ~~~~~~~~~~~~\u001b[0m\n    \u001b[7m 42\u001b[0m         logLevel: 'trace',\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n    \u001b[7m...\u001b[0m \n    \u001b[7m 45\u001b[0m         }\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~~~~\u001b[0m\n    \u001b[7m 46\u001b[0m     })\n    \u001b[7m   \u001b[0m \u001b[91m~~~~~~\u001b[0m\n\n      \u001b[96mpackages/devtools/src/index.ts\u001b[0m:\u001b[93m25\u001b[0m:\u001b[93m63\u001b[0m\n        \u001b[7m25\u001b[0m     static async newSession (options: WebDriver.Options = {}, modifier: Function, userPrototype = {}, customCommandWrapper: Function) {\n        \u001b[7m  \u001b[0m \u001b[96m                                                              ~~~~~~~~~~~~~~~~~~\u001b[0m\n        An argument for 'modifier' was not provided.\n","name":"/workspace/repo/packages/devtools/tests/devtools.test.ts","startTime":1782919398874,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782919398874,"message":"  ● Test suite failed to run\n\n    \u001b[96mpackages/devtools/tests/finder/finder.test.ts\u001b[0m:\u001b[93m1\u001b[0m:\u001b[93m46\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module '@wdio/utils' or its corresponding type declarations.\n\n    \u001b[7m1\u001b[0m import { canAccess as canAccessImport } from '@wdio/utils'\n    \u001b[7m \u001b[0m \u001b[91m                                             ~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/packages/devtools/tests/finder/finder.test.ts","startTime":1782919398874,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":[],"failureMessages":[],"fullName":"should keep a map of elements","location":null,"status":"passed","title":"should keep a map of elements"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should not return element if it is not attached to the DOM","location":null,"status":"passed","title":"should not return element if it is not attached to the DOM"}],"endTime":1782919398773,"message":"","name":"/workspace/repo/packages/devtools/tests/elementStore.test.ts","startTime":1782919397374,"status":"passed","summary":""}],"wasInterrupted":false}reward=0 graded=71 found=2 failed=0 parsed=7 framework=jest exit_code=1

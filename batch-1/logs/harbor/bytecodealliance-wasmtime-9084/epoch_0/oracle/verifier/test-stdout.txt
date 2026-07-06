@@ -1,0 +1,26 @@
+patching file cranelift/filetests/filetests/isa/riscv64/float.clif
+   Compiling cranelift-codegen v0.112.0 (/workspace/repo/cranelift/codegen)
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+warning: cranelift-codegen@0.112.0: Failed to run `rustfmt` on ISLE-generated code: Os { code: 32, kind: BrokenPipe, message: "Broken pipe" }
+   Compiling cranelift-module v0.112.0 (/workspace/repo/cranelift/module)
+   Compiling cranelift-native v0.112.0 (/workspace/repo/cranelift/native)
+   Compiling cranelift-frontend v0.112.0 (/workspace/repo/cranelift/frontend)
+   Compiling cranelift-reader v0.112.0 (/workspace/repo/cranelift/reader)
+   Compiling cranelift-interpreter v0.112.0 (/workspace/repo/cranelift/interpreter)
+   Compiling cranelift-jit v0.112.0 (/workspace/repo/cranelift/jit)
+   Compiling cranelift-object v0.112.0 (/workspace/repo/cranelift/object)
+   Compiling cranelift v0.112.0 (/workspace/repo/cranelift/umbrella)
+   Compiling cranelift-filetests v0.0.0 (/workspace/repo/cranelift/filetests)
+   Compiling cranelift-tools v0.0.0 (/workspace/repo/cranelift)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 38.02s
+     Running tests/filetests.rs (target/debug/deps/filetests-f2eb600636e06467)
+
+running 1 test
+test filetests ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.59s
+
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=lust exit_code=0

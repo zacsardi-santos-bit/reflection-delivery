@@ -1,1 +1,0 @@
-patching file state/aws/dynamodb/dynamodb.go

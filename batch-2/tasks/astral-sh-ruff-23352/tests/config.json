@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p ruff --profile ci -E 'test(required_import_set)' --no-fail-fast",
+  "test_files": [
+    "crates/ruff/tests/cli/lint.rs",
+    "crates/ruff/tests/cli/snapshots/cli__lint__required_import_set_aliased_as_abstract_set_no_conflict.snap",
+    "crates/ruff/tests/cli/snapshots/cli__lint__required_import_set_conflicts_with_pyi025.snap",
+    "crates/ruff/tests/cli/snapshots/cli__lint__required_import_set_without_pyi025_no_conflict.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/3) ruff::cli lint::required_import_set_conflicts_with_pyi025",
+    "(3/3) ruff::cli lint::required_import_set_without_pyi025_no_conflict"
+  ],
+  "PASS_TO_PASS": [
+    "(2/3) ruff::cli lint::required_import_set_aliased_as_abstract_set_no_conflict"
+  ]
+}

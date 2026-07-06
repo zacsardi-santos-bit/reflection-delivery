@@ -1,0 +1,211 @@
+patching file pkg/generators/markers_test.go
+patching file pkg/generators/openapi_test.go
+patching file test/integration/pkg/generated/openapi_generated.go
+patching file test/integration/testdata/golden.v2.json
+patching file test/integration/testdata/golden.v3.json
+patching file test/integration/testdata/valuevalidation/alpha.go
+=== RUN   TestParseEnums
+=== RUN   TestParseEnums/value_in_different_package
+=== RUN   TestParseEnums/value_in_same_package
+=== RUN   TestParseEnums/values_in_same_and_different_packages
+--- PASS: TestParseEnums (0.00s)
+    --- PASS: TestParseEnums/value_in_different_package (0.00s)
+    --- PASS: TestParseEnums/value_in_same_package (0.00s)
+    --- PASS: TestParseEnums/values_in_same_and_different_packages (0.00s)
+=== RUN   TestSingleTagExtension
+--- PASS: TestSingleTagExtension (0.00s)
+=== RUN   TestMultipleTagExtensions
+--- PASS: TestMultipleTagExtensions (0.00s)
+=== RUN   TestExtensionParseErrors
+--- PASS: TestExtensionParseErrors (0.00s)
+=== RUN   TestExtensionAllowedValues
+--- PASS: TestExtensionAllowedValues (0.00s)
+=== RUN   TestExtensionKind
+--- PASS: TestExtensionKind (0.00s)
+=== RUN   TestValidateMemberExtensions
+--- PASS: TestValidateMemberExtensions (0.00s)
+=== RUN   TestSimple
+--- PASS: TestSimple (0.00s)
+=== RUN   TestEmptyProperties
+--- PASS: TestEmptyProperties (0.00s)
+=== RUN   TestNestedStruct
+--- PASS: TestNestedStruct (0.00s)
+=== RUN   TestNestedStructPointer
+--- PASS: TestNestedStructPointer (0.00s)
+=== RUN   TestEmbeddedStruct
+--- PASS: TestEmbeddedStruct (0.00s)
+=== RUN   TestSingleEmbeddedStruct
+--- PASS: TestSingleEmbeddedStruct (0.33s)
+=== RUN   TestEmbeddedInlineStruct
+--- PASS: TestEmbeddedInlineStruct (0.00s)
+=== RUN   TestEmbeddedInlineStructPointer
+--- PASS: TestEmbeddedInlineStructPointer (0.00s)
+=== RUN   TestNestedMapString
+--- PASS: TestNestedMapString (0.00s)
+=== RUN   TestNestedMapInt
+--- PASS: TestNestedMapInt (0.00s)
+=== RUN   TestNestedMapBoolean
+--- PASS: TestNestedMapBoolean (0.00s)
+=== RUN   TestFailingSample1
+E0629 15:24:53.499281    5409 openapi.go:324] Error when generating: StringToArray, StringToArray map[string]map[string]map[int]string
+--- PASS: TestFailingSample1 (0.00s)
+=== RUN   TestFailingSample2
+E0629 15:24:53.500189    5409 openapi.go:324] Error when generating: StringToArray, StringToArray map[int]string
+--- PASS: TestFailingSample2 (0.00s)
+=== RUN   TestFailingDefaultEnforced
+=== RUN   TestFailingDefaultEnforced/0
+E0629 15:24:53.500559    5409 openapi.go:324] Error when generating: Int, Int int
+=== RUN   TestFailingDefaultEnforced/1
+E0629 15:24:53.500818    5409 openapi.go:324] Error when generating: Struct, Struct struct{foo int}
+=== RUN   TestFailingDefaultEnforced/2
+E0629 15:24:53.501158    5409 openapi.go:324] Error when generating: List, List []base/foo.Item
+=== RUN   TestFailingDefaultEnforced/3
+E0629 15:24:53.501454    5409 openapi.go:324] Error when generating: Map, Map map[string]base/foo.Item
+--- PASS: TestFailingDefaultEnforced (0.00s)
+    --- PASS: TestFailingDefaultEnforced/0 (0.00s)
+    --- PASS: TestFailingDefaultEnforced/1 (0.00s)
+    --- PASS: TestFailingDefaultEnforced/2 (0.00s)
+    --- PASS: TestFailingDefaultEnforced/3 (0.00s)
+=== RUN   TestCustomDef
+--- PASS: TestCustomDef (10.15s)
+=== RUN   TestCustomDefV3
+--- PASS: TestCustomDefV3 (9.41s)
+=== RUN   TestCustomDefV2AndV3
+--- PASS: TestCustomDefV2AndV3 (8.99s)
+=== RUN   TestCustomDefs
+--- PASS: TestCustomDefs (0.00s)
+=== RUN   TestCustomDefsV3
+--- PASS: TestCustomDefsV3 (9.14s)
+=== RUN   TestV3OneOfTypes
+--- PASS: TestV3OneOfTypes (0.00s)
+=== RUN   TestPointer
+--- PASS: TestPointer (0.00s)
+=== RUN   TestNestedLists
+--- PASS: TestNestedLists (0.00s)
+=== RUN   TestNestListOfMaps
+--- PASS: TestNestListOfMaps (0.00s)
+=== RUN   TestExtensions
+--- PASS: TestExtensions (0.00s)
+=== RUN   TestUnion
+--- PASS: TestUnion (0.00s)
+=== RUN   TestEnum
+--- PASS: TestEnum (0.00s)
+=== RUN   TestSymbolReference
+E0629 15:25:31.201687    5409 openapi.go:720] base/output.MyConst, base/foo
+E0629 15:25:31.201818    5409 openapi.go:720] base/foo.MyConst, base/foo
+E0629 15:25:31.201907    5409 openapi.go:720] base/foo.MyConst, base/foo
+E0629 15:25:31.201995    5409 openapi.go:720] k8s.io/api/v1.TerminationPathDefault, base/foo
+--- PASS: TestSymbolReference (0.00s)
+=== RUN   TestMustEnforceDefaultStruct
+--- PASS: TestMustEnforceDefaultStruct (0.00s)
+=== RUN   TestMarkerComments
+--- PASS: TestMarkerComments (0.00s)
+=== RUN   TestCELMarkerComments
+--- PASS: TestCELMarkerComments (0.00s)
+=== RUN   TestMarkerCommentsCustomDefsV3
+--- PASS: TestMarkerCommentsCustomDefsV3 (8.95s)
+=== RUN   TestMarkerCommentsV3OneOfTypes
+--- PASS: TestMarkerCommentsV3OneOfTypes (0.00s)
+=== RUN   TestParseCommentTags
+=== RUN   TestParseCommentTags/basic_example
+=== RUN   TestParseCommentTags/empty
+=== RUN   TestParseCommentTags/single
+=== RUN   TestParseCommentTags/multiple
+=== RUN   TestParseCommentTags/invalid_duplicate_key
+=== RUN   TestParseCommentTags/unrecognized_key_is_ignored
+=== RUN   TestParseCommentTags/invalid:_invalid_value
+=== RUN   TestParseCommentTags/invalid:_invalid_value#01
+=== RUN   TestParseCommentTags/ignore_refs
+=== RUN   TestParseCommentTags/cel_rule
+=== RUN   TestParseCommentTags/skipped_CEL_rule
+=== RUN   TestParseCommentTags/multiple_CEL_params
+=== RUN   TestParseCommentTags/multiple_rules_with_multiple_params
+=== RUN   TestParseCommentTags/skipped_array_index
+=== RUN   TestParseCommentTags/non-consecutive_array_index
+=== RUN   TestParseCommentTags/interjected_array_index
+=== RUN   TestParseCommentTags/interjected_array_index_with_non-prefixed_comment
+=== RUN   TestParseCommentTags/boolean_key_at_invalid_index
+=== RUN   TestParseCommentTags/boolean_key_after_non-prefixed_comment
+=== RUN   TestParseCommentTags/boolean_key_at_index_allowed
+--- PASS: TestParseCommentTags (0.00s)
+    --- PASS: TestParseCommentTags/basic_example (0.00s)
+    --- PASS: TestParseCommentTags/empty (0.00s)
+    --- PASS: TestParseCommentTags/single (0.00s)
+    --- PASS: TestParseCommentTags/multiple (0.00s)
+    --- PASS: TestParseCommentTags/invalid_duplicate_key (0.00s)
+    --- PASS: TestParseCommentTags/unrecognized_key_is_ignored (0.00s)
+    --- PASS: TestParseCommentTags/invalid:_invalid_value (0.00s)
+    --- PASS: TestParseCommentTags/invalid:_invalid_value#01 (0.00s)
+    --- PASS: TestParseCommentTags/ignore_refs (0.00s)
+    --- PASS: TestParseCommentTags/cel_rule (0.00s)
+    --- PASS: TestParseCommentTags/skipped_CEL_rule (0.00s)
+    --- PASS: TestParseCommentTags/multiple_CEL_params (0.00s)
+    --- PASS: TestParseCommentTags/multiple_rules_with_multiple_params (0.00s)
+    --- PASS: TestParseCommentTags/skipped_array_index (0.00s)
+    --- PASS: TestParseCommentTags/non-consecutive_array_index (0.00s)
+    --- PASS: TestParseCommentTags/interjected_array_index (0.00s)
+    --- PASS: TestParseCommentTags/interjected_array_index_with_non-prefixed_comment (0.00s)
+    --- PASS: TestParseCommentTags/boolean_key_at_invalid_index (0.00s)
+    --- PASS: TestParseCommentTags/boolean_key_after_non-prefixed_comment (0.00s)
+    --- PASS: TestParseCommentTags/boolean_key_at_index_allowed (0.00s)
+=== RUN   TestCommentTags_Validate
+=== RUN   TestCommentTags_Validate/invalid_minimum_type
+=== RUN   TestCommentTags_Validate/invalid_minLength_type
+=== RUN   TestCommentTags_Validate/invalid_minItems_type
+=== RUN   TestCommentTags_Validate/invalid_minProperties_type
+=== RUN   TestCommentTags_Validate/invalid_exclusiveMinimum_type
+=== RUN   TestCommentTags_Validate/invalid_maximum_type
+=== RUN   TestCommentTags_Validate/invalid_maxLength_type
+=== RUN   TestCommentTags_Validate/invalid_maxItems_type
+=== RUN   TestCommentTags_Validate/invalid_maxProperties_type
+=== RUN   TestCommentTags_Validate/invalid_exclusiveMaximum_type
+=== RUN   TestCommentTags_Validate/invalid_pattern_type
+=== RUN   TestCommentTags_Validate/invalid_multipleOf_type
+=== RUN   TestCommentTags_Validate/invalid_uniqueItems_type
+=== RUN   TestCommentTags_Validate/negative_minLength
+=== RUN   TestCommentTags_Validate/negative_minItems
+=== RUN   TestCommentTags_Validate/negative_minProperties
+=== RUN   TestCommentTags_Validate/negative_maxLength
+=== RUN   TestCommentTags_Validate/negative_maxItems
+=== RUN   TestCommentTags_Validate/negative_maxProperties
+=== RUN   TestCommentTags_Validate/minimum_>_maximum
+=== RUN   TestCommentTags_Validate/exclusiveMinimum_when_minimum_==_maximum
+=== RUN   TestCommentTags_Validate/exclusiveMaximum_when_minimum_==_maximum
+=== RUN   TestCommentTags_Validate/minLength_>_maxLength
+=== RUN   TestCommentTags_Validate/minItems_>_maxItems
+=== RUN   TestCommentTags_Validate/minProperties_>_maxProperties
+=== RUN   TestCommentTags_Validate/invalid_pattern
+=== RUN   TestCommentTags_Validate/multipleOf_=_0
+=== RUN   TestCommentTags_Validate/valid_comment_tags_with_no_invalid_validations
+--- PASS: TestCommentTags_Validate (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_minimum_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_minLength_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_minItems_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_minProperties_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_exclusiveMinimum_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_maximum_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_maxLength_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_maxItems_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_maxProperties_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_exclusiveMaximum_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_pattern_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_multipleOf_type (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_uniqueItems_type (0.00s)
+    --- PASS: TestCommentTags_Validate/negative_minLength (0.00s)
+    --- PASS: TestCommentTags_Validate/negative_minItems (0.00s)
+    --- PASS: TestCommentTags_Validate/negative_minProperties (0.00s)
+    --- PASS: TestCommentTags_Validate/negative_maxLength (0.00s)
+    --- PASS: TestCommentTags_Validate/negative_maxItems (0.00s)
+    --- PASS: TestCommentTags_Validate/negative_maxProperties (0.00s)
+    --- PASS: TestCommentTags_Validate/minimum_>_maximum (0.00s)
+    --- PASS: TestCommentTags_Validate/exclusiveMinimum_when_minimum_==_maximum (0.00s)
+    --- PASS: TestCommentTags_Validate/exclusiveMaximum_when_minimum_==_maximum (0.00s)
+    --- PASS: TestCommentTags_Validate/minLength_>_maxLength (0.00s)
+    --- PASS: TestCommentTags_Validate/minItems_>_maxItems (0.00s)
+    --- PASS: TestCommentTags_Validate/minProperties_>_maxProperties (0.00s)
+    --- PASS: TestCommentTags_Validate/invalid_pattern (0.00s)
+    --- PASS: TestCommentTags_Validate/multipleOf_=_0 (0.00s)
+    --- PASS: TestCommentTags_Validate/valid_comment_tags_with_no_invalid_validations (0.00s)
+PASS
+ok  	k8s.io/kube-openapi/pkg/generators	47.054s
+reward=1 graded=96 found=0 failed=0 parsed=0 framework=go exit_code=0

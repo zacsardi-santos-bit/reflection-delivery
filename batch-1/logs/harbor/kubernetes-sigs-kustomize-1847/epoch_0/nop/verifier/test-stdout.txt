@@ -1,0 +1,9 @@
+patching file api/filesys/fsinmemory_test.go
+patching file api/filesys/util_test.go
+# sigs.k8s.io/kustomize/api/filesys_test [sigs.k8s.io/kustomize/api/filesys.test]
+filesys/util_test.go:7:2: "sigs.k8s.io/kustomize/api/filesys" imported and not used
+filesys/util_test.go:87:10: undefined: DotDir
+filesys/util_test.go:89:10: undefined: DotDir
+filesys/util_test.go:158:10: undefined: StripTrailingSeps
+FAIL	sigs.k8s.io/kustomize/api/filesys [build failed]
+reward=0 graded=21 found=21 failed=21 parsed=1 framework=go exit_code=1

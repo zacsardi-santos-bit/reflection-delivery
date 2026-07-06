@@ -1,0 +1,17 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && pnpm install --no-frozen-lockfile > /tmp/pnpm-install.log 2>&1 && cd /workspace/repo/apps/studio && pnpm exec vitest run tests/pages/projects/logs-query.test.tsx",
+  "test_files": [
+    "apps/studio/tests/lib/custom-render.tsx",
+    "apps/studio/tests/pages/projects/logs-query.test.tsx",
+    "apps/studio/tests/vitestSetup.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/studio/tests/pages/projects/logs-query.test.tsx::q= query param will populate the query input",
+    "/workspace/repo/apps/studio/tests/pages/projects/logs-query.test.tsx::ite= and its= query param will populate the datepicker",
+    "/workspace/repo/apps/studio/tests/pages/projects/logs-query.test.tsx::field reference"
+  ],
+  "PASS_TO_PASS": []
+}

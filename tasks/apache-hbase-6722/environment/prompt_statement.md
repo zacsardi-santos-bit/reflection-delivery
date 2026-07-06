@@ -1,5 +1,0 @@
-I'm working on the HBase region balancer and need to add support for isolating the internal metadata catalog table onto its own dedicated region servers. Right now, when the balancer runs it can place metadata regions on the same server as user table regions, which can cause contention and latency problems for metadata operations.
-
-I want to add a configuration option that, when enabled, tells the balancer to ensure that the metadata table never shares a region server with any other table. The balancer should actively move regions until this isolation constraint is satisfied. I also need to make sure this isolation mode works correctly alongside the existing replica distribution feature — both constraints should be achievable at the same time.
-
-Additionally, the balancer needs a way to report whether table isolation is currently active, and some existing internal methods need to be renamed to better reflect their purpose now that this new isolation concept is distinct from earlier balancing checks. A utility method for verifying that a given table's regions are properly isolated from all others would also be useful.

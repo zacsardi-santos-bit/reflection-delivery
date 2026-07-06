@@ -1,0 +1,8 @@
+patching file .github/workflows/ci.yml
+patching file modin/__init__.py
+patching file modin/data_management/dispatcher.py
+patching file modin/pandas/__init__.py
+patching file modin/pandas/dataframe.py
+patching file modin/pandas/series.py
+patching file modin/pandas/test/test_dataframe.py
+patching file modin/pandas/test/test_series.py

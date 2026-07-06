@@ -1,0 +1,5 @@
+I'm trying to use the OpenAI Batch API from my Kotlin application, but the client library doesn't seem to have any support for it. There are no types for representing batch jobs, no way to create or cancel a batch, and no way to parse the output files that the batch API produces.
+
+I need the library to support the full batch workflow: creating a batch from an uploaded input file, retrieving or listing batches, and cancelling one if needed. Each batch input entry should carry a custom identifier, the HTTP method, target URL, and an optional request body, and should be serializable to JSONL format for upload. Batch output entries need to carry the original custom identifier plus the response, including the HTTP status code and the response body — which should be parseable as a chat completion result.
+
+The batch object itself should expose its unique ID, the endpoint it targets, and the completion window (e.g. 24 hours). All of these types need to round-trip cleanly through JSON serialization and deserialization.

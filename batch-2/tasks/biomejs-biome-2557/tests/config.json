@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_graphql_parser --test spec_tests -E 'test(schema_graphql)'",
+  "test_files": [
+    "crates/biome_graphql_parser/tests/graphql_test_suite/err/definitions/schema.graphql",
+    "crates/biome_graphql_parser/tests/graphql_test_suite/err/definitions/schema.graphql.snap",
+    "crates/biome_graphql_parser/tests/graphql_test_suite/ok/definitions/schema.graphql",
+    "crates/biome_graphql_parser/tests/graphql_test_suite/ok/definitions/schema.graphql.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_graphql_parser::spec_tests ok::schema_graphql",
+    "(2/2) biome_graphql_parser::spec_tests err::schema_graphql"
+  ],
+  "PASS_TO_PASS": []
+}

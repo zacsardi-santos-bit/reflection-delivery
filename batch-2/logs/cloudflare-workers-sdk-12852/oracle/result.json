@@ -1,0 +1,29 @@
+{
+    "id": "860c178f-d959-48e7-a34c-704bf112f013",
+    "started_at": "2026-07-06T12:19:06.439262",
+    "finished_at": "2026-07-06T12:20:04.975266",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__cloudflare-workers-sdk-12852": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "cloudflare-workers-sdk-12852__i6hTcVT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

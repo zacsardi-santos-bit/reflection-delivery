@@ -1,0 +1,30 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && python3 -m script.translations develop --integration arcam_fmj && pytest tests/components/arcam_fmj/test_config_flow.py -v",
+  "test_files": [
+    "tests/components/arcam_fmj/test_config_flow.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp_unable_to_connect[connection_failed]",
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp_unable_to_connect[connection_refused]",
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp_unable_to_connect[os_error]",
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp_unable_to_connect[gaierror]",
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp_unable_to_connect[timeout]",
+    "tests.components.arcam_fmj.test_config_flow::test_user_unable_to_connect[connection_failed]",
+    "tests.components.arcam_fmj.test_config_flow::test_user_unable_to_connect[connection_refused]",
+    "tests.components.arcam_fmj.test_config_flow::test_user_unable_to_connect[os_error]",
+    "tests.components.arcam_fmj.test_config_flow::test_user_unable_to_connect[invalid_host]",
+    "tests.components.arcam_fmj.test_config_flow::test_user_unable_to_connect[timeout_connect]"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp",
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp_abort",
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp_invalid_id",
+    "tests.components.arcam_fmj.test_config_flow::test_ssdp_update",
+    "tests.components.arcam_fmj.test_config_flow::test_user",
+    "tests.components.arcam_fmj.test_config_flow::test_invalid_ssdp",
+    "tests.components.arcam_fmj.test_config_flow::test_user_wrong"
+  ]
+}

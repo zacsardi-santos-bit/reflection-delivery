@@ -1,0 +1,258 @@
+diff --git a/src/providers/ai21.ts b/src/providers/ai21.ts
+index 0cabf830d..77ef4ec51 100644
+--- a/src/providers/ai21.ts
++++ b/src/providers/ai21.ts
+@@ -38,6 +38,8 @@ interface AI21ChatCompletionOptions {
+   max_tokens?: number;
+   response_format?: { type: 'json_object' | 'text' };
+   cost?: number;
++  inputCost?: number;
++  outputCost?: number;
+ }
+ 
+ function getTokenUsage(data: any, cached: boolean): Partial<TokenUsage> {
+diff --git a/src/providers/anthropic/generic.ts b/src/providers/anthropic/generic.ts
+index 1b816d13c..1da66e768 100644
+--- a/src/providers/anthropic/generic.ts
++++ b/src/providers/anthropic/generic.ts
+@@ -32,6 +32,8 @@ interface AnthropicBaseOptions {
+   apiKeyRequired?: boolean;
+   headers?: Record<string, string>;
+   cost?: number;
++  inputCost?: number;
++  outputCost?: number;
+ }
+ 
+ /**
+diff --git a/src/providers/anthropic/types.ts b/src/providers/anthropic/types.ts
+index dfe020615..0f205a968 100644
+--- a/src/providers/anthropic/types.ts
++++ b/src/providers/anthropic/types.ts
+@@ -88,6 +88,8 @@ export interface AnthropicMessageOptions {
+   apiKeyRequired?: boolean;
+   cache_control?: Anthropic.Messages.CacheControlEphemeral | null; // Top-level cache control - auto-applies to last cacheable block
+   cost?: number;
++  inputCost?: number;
++  outputCost?: number;
+   effort?: 'low' | 'medium' | 'high' | 'xhigh' | 'max'; // Controls output quality/speed tradeoff
+   extra_body?: Record<string, any>;
+   headers?: Record<string, string>;
+diff --git a/src/providers/anthropic/util.ts b/src/providers/anthropic/util.ts
+index 3a9c9941e..b4ceed5b7 100644
+--- a/src/providers/anthropic/util.ts
++++ b/src/providers/anthropic/util.ts
+@@ -316,7 +316,7 @@ export function calculateAnthropicCost(
+   cacheReadTokens?: number,
+   cacheCreationTokens?: number,
+ ): number | undefined {
+-  if (config.cost != null) {
++  if (config.cost != null && config.inputCost == null && config.outputCost == null) {
+     return calculateCostBase(modelName, config, promptTokens, completionTokens, ANTHROPIC_MODELS);
+   }
+ 
+@@ -346,8 +346,8 @@ export function calculateAnthropicCost(
+ 
+   if (hasTieredPricing) {
+     const isLongContext = effectiveInputTokens > 200_000;
+-    const baseInputRate = isLongContext ? 6 / 1e6 : 3 / 1e6;
+-    const outputRate = isLongContext ? 22.5 / 1e6 : 15 / 1e6;
++    const baseInputRate = config.inputCost ?? config.cost ?? (isLongContext ? 6 / 1e6 : 3 / 1e6);
++    const outputRate = config.outputCost ?? config.cost ?? (isLongContext ? 22.5 / 1e6 : 15 / 1e6);
+ 
+     return (
+       calculateCacheInputCost(baseInputRate, promptTokens, cacheRead, cacheCreation) +
+@@ -359,9 +359,11 @@ export function calculateAnthropicCost(
+   if (cacheRead || cacheCreation) {
+     const modelInfo = ANTHROPIC_MODELS.find((m) => m.id === modelName);
+     if (modelInfo) {
++      const inputCost = config.inputCost ?? config.cost ?? modelInfo.cost.input;
++      const outputCost = config.outputCost ?? config.cost ?? modelInfo.cost.output;
+       return (
+-        calculateCacheInputCost(modelInfo.cost.input, promptTokens, cacheRead, cacheCreation) +
+-        completionTokens * modelInfo.cost.output
++        calculateCacheInputCost(inputCost, promptTokens, cacheRead, cacheCreation) +
++        completionTokens * outputCost
+       );
+     }
+   }
+diff --git a/src/providers/deepseek.ts b/src/providers/deepseek.ts
+index d19140265..c841a7ff4 100644
+--- a/src/providers/deepseek.ts
++++ b/src/providers/deepseek.ts
+@@ -53,8 +53,8 @@ export function calculateDeepSeekCost(
+   }
+ 
+   const uncachedPromptTokens = cachedTokens ? promptTokens - cachedTokens : promptTokens;
+-  const inputCost = config.cost ?? model.cost.input;
+-  const outputCost = config.cost ?? model.cost.output;
++  const inputCost = config.inputCost ?? config.cost ?? model.cost.input;
++  const outputCost = config.outputCost ?? config.cost ?? model.cost.output;
+   const cacheReadCost = config.cacheReadCost ?? model.cost.cache_read;
+ 
+   const inputCostTotal = inputCost * uncachedPromptTokens;
+diff --git a/src/providers/google/types.ts b/src/providers/google/types.ts
+index e0936eaff..85140ec9b 100644
+--- a/src/providers/google/types.ts
++++ b/src/providers/google/types.ts
+@@ -118,8 +118,12 @@ export interface CompletionOptions {
+   apiKey?: string;
+   apiHost?: string;
+   apiBaseUrl?: string;
+-  /** Custom per-token cost override for cost calculation. */
++  /** Custom per-token cost override for both input and output tokens. */
+   cost?: number;
++  /** Custom per-token input cost override. Takes precedence over cost. */
++  inputCost?: number;
++  /** Custom per-token output cost override. Takes precedence over cost. */
++  outputCost?: number;
+   headers?: { [key: string]: string }; // Custom headers for the request
+   projectId?: string;
+   region?: string;
+diff --git a/src/providers/google/util.ts b/src/providers/google/util.ts
+index c0e2cce60..34945a75f 100644
+--- a/src/providers/google/util.ts
++++ b/src/providers/google/util.ts
+@@ -59,15 +59,15 @@ export function calculateGoogleCost(
+   // Check for tiered pricing (higher rates above token threshold)
+   if (promptTokens != null && completionTokens != null) {
+     if (model?.tieredCost && promptTokens > model.tieredCost.threshold) {
+-      const inputCost = config.cost ?? model.tieredCost.above.input;
+-      const outputCost = config.cost ?? model.tieredCost.above.output;
++      const inputCost = config.inputCost ?? config.cost ?? model.tieredCost.above.input;
++      const outputCost = config.outputCost ?? config.cost ?? model.tieredCost.above.output;
+       return inputCost * promptTokens + outputCost * completionTokens;
+     }
+ 
+     // Use Vertex-specific pricing when available
+     if (isVertexMode && model?.vertexCost) {
+-      const inputCost = config.cost ?? model.vertexCost.input;
+-      const outputCost = config.cost ?? model.vertexCost.output;
++      const inputCost = config.inputCost ?? config.cost ?? model.vertexCost.input;
++      const outputCost = config.outputCost ?? config.cost ?? model.vertexCost.output;
+       return inputCost * promptTokens + outputCost * completionTokens;
+     }
+   }
+diff --git a/src/providers/hyperbolic/chat.ts b/src/providers/hyperbolic/chat.ts
+index 76e5aa256..4f6cd9f9a 100644
+--- a/src/providers/hyperbolic/chat.ts
++++ b/src/providers/hyperbolic/chat.ts
+@@ -217,8 +217,8 @@ export function calculateHyperbolicCost(
+     return undefined;
+   }
+ 
+-  const inputCost = config.cost ?? model.cost.input;
+-  const outputCost = config.cost ?? model.cost.output;
++  const inputCost = config.inputCost ?? config.cost ?? model.cost.input;
++  const outputCost = config.outputCost ?? config.cost ?? model.cost.output;
+ 
+   const inputCostTotal = inputCost * promptTokens;
+   const outputCostTotal = outputCost * completionTokens;
+diff --git a/src/providers/mistral.ts b/src/providers/mistral.ts
+index 9badc1f9d..4a32063a5 100644
+--- a/src/providers/mistral.ts
++++ b/src/providers/mistral.ts
+@@ -161,6 +161,8 @@ interface MistralChatCompletionOptions {
+   random_seed?: number;
+   response_format?: { type: 'json_object' };
+   cost?: number;
++  inputCost?: number;
++  outputCost?: number;
+ }
+ 
+ function getTokenUsage(data: any, cached: boolean): Partial<TokenUsage> {
+diff --git a/src/providers/openai/types.ts b/src/providers/openai/types.ts
+index c474d70d1..4649f7078 100644
+--- a/src/providers/openai/types.ts
++++ b/src/providers/openai/types.ts
+@@ -33,7 +33,18 @@ export interface OpenAiSharedOptions {
+   apiHost?: string;
+   apiBaseUrl?: string;
+   organization?: string;
++  /** Custom per-token cost override for both input and output tokens. */
+   cost?: number;
++  /** Custom per-token input cost override. Takes precedence over cost. */
++  inputCost?: number;
++  /** Custom per-token output cost override. Takes precedence over cost. */
++  outputCost?: number;
++  /** Custom per-token audio cost override for both audio input and output tokens. */
++  audioCost?: number;
++  /** Custom per-token audio input cost override. Takes precedence over audioCost. */
++  audioInputCost?: number;
++  /** Custom per-token audio output cost override. Takes precedence over audioCost. */
++  audioOutputCost?: number;
+   headers?: { [key: string]: string };
+   /** defaults to 4; set to 0 to disable retries; negative values are clamped to 0. */
+   maxRetries?: number;
+diff --git a/src/providers/openai/util.ts b/src/providers/openai/util.ts
+index 94cbf65bd..ec7cabc96 100644
+--- a/src/providers/openai/util.ts
++++ b/src/providers/openai/util.ts
+@@ -613,13 +613,21 @@ export function calculateOpenAICost(
+ 
+   let totalCost = 0;
+ 
+-  const inputCost = config.cost ?? model.cost.input;
+-  const outputCost = config.cost ?? model.cost.output;
++  const inputCost = config.inputCost ?? config.cost ?? model.cost.input;
++  const outputCost = config.outputCost ?? config.cost ?? model.cost.output;
+   totalCost += inputCost * promptTokens + outputCost * completionTokens;
+ 
+   if ('audioInput' in model.cost || 'audioOutput' in model.cost) {
+-    const audioInputCost = config.audioCost ?? (model.cost as any).audioInput ?? 0;
+-    const audioOutputCost = config.audioCost ?? (model.cost as any).audioOutput ?? 0;
++    const modelAudioInputCost: number =
++      'audioInput' in model.cost && typeof model.cost.audioInput === 'number'
++        ? model.cost.audioInput
++        : 0;
++    const modelAudioOutputCost: number =
++      'audioOutput' in model.cost && typeof model.cost.audioOutput === 'number'
++        ? model.cost.audioOutput
++        : 0;
++    const audioInputCost = config.audioInputCost ?? config.audioCost ?? modelAudioInputCost;
++    const audioOutputCost = config.audioOutputCost ?? config.audioCost ?? modelAudioOutputCost;
+     totalCost += audioInputCost * audioPromptTokens + audioOutputCost * audioCompletionTokens;
+   }
+ 
+diff --git a/src/providers/shared.ts b/src/providers/shared.ts
+index 6427b16b8..a4a9a458b 100644
+--- a/src/providers/shared.ts
++++ b/src/providers/shared.ts
+@@ -33,7 +33,11 @@ interface ProviderModel {
+ 
+ export interface ProviderConfig {
+   cost?: number;
++  inputCost?: number;
++  outputCost?: number;
+   audioCost?: number;
++  audioInputCost?: number;
++  audioOutputCost?: number;
+ }
+ 
+ /**
+@@ -71,8 +75,9 @@ export function calculateCost(
+     model.cost.longContext && promptTokens > model.cost.longContext.threshold
+       ? model.cost.longContext
+       : undefined;
+-  const inputCost = config.cost ?? longContextCost?.input ?? model.cost.input;
+-  const outputCost = config.cost ?? longContextCost?.output ?? model.cost.output;
++  const inputCost = config.inputCost ?? config.cost ?? longContextCost?.input ?? model.cost.input;
++  const outputCost =
++    config.outputCost ?? config.cost ?? longContextCost?.output ?? model.cost.output;
+   return inputCost * promptTokens + outputCost * completionTokens;
+ }
+ 
+diff --git a/src/providers/xai/chat.ts b/src/providers/xai/chat.ts
+index b4f9785c6..09b1930e5 100644
+--- a/src/providers/xai/chat.ts
++++ b/src/providers/xai/chat.ts
+@@ -306,8 +306,8 @@ export function calculateXAICost(
+     return undefined;
+   }
+ 
+-  const inputCost = config.cost ?? model.cost.input;
+-  const outputCost = config.cost ?? model.cost.output;
++  const inputCost = config.inputCost ?? config.cost ?? model.cost.input;
++  const outputCost = config.outputCost ?? config.cost ?? model.cost.output;
+ 
+   const inputCostTotal = inputCost * promptTokens;
+   const outputCostTotal = outputCost * completionTokens;

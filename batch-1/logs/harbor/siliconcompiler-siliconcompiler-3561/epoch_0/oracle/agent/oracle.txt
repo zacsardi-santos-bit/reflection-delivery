@@ -1,0 +1,7 @@
+patching file docs/reference_manual/schema_api.rst
+patching file siliconcompiler/__init__.py
+patching file siliconcompiler/schema/schema_cfg.py
+patching file siliconcompiler/tool.py
+patching file siliconcompiler/tools/icepack/bitstream.py
+patching file siliconcompiler/tools/klayout/convert_drc_db.py
+patching file siliconcompiler/tools/nextpnr/apr.py

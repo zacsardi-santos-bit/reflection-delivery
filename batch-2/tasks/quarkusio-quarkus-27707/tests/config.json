@@ -1,0 +1,19 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl independent-projects/resteasy-reactive/server/runtime,independent-projects/resteasy-reactive/server/vertx -am -Dtest=\"SseServerBroadcasterTests,SseServerTestCase\" -DfailIfNoTests=false -Dsurefire.failIfNoSpecifiedTests=false -Dformat.skip=true -Denforcer.skip=true",
+  "test_files": [
+    "independent-projects/resteasy-reactive/server/runtime/src/test/java/org/jboss/resteasy/reactive/server/jaxrs/SseServerBroadcasterTests.java",
+    "independent-projects/resteasy-reactive/server/vertx/src/test/java/org/jboss/resteasy/reactive/server/vertx/test/sse/SseServerResource.java",
+    "independent-projects/resteasy-reactive/server/vertx/src/test/java/org/jboss/resteasy/reactive/server/vertx/test/sse/SseServerTestCase.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.jboss.resteasy.reactive.server.jaxrs.SseServerBroadcasterTests::shouldCloseRegisteredSinksWhenClosingBroadcaster",
+    "org.jboss.resteasy.reactive.server.jaxrs.SseServerBroadcasterTests::shouldNotSendToClosedSink",
+    "org.jboss.resteasy.reactive.server.jaxrs.SseServerBroadcasterTests::shouldExecuteOnClose",
+    "org.jboss.resteasy.reactive.server.vertx.test.sse.SseServerTestCase::shouldCallOnCloseOnServer",
+    "org.jboss.resteasy.reactive.server.vertx.test.sse.SseServerTestCase::shouldNotTryToSendToClosedSink"
+  ],
+  "PASS_TO_PASS": []
+}

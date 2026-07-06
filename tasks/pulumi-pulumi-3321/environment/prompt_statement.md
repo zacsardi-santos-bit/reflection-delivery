@@ -1,5 +1,0 @@
-I'd like to be able to write my Pulumi program by exporting a function as the entry point, instead of exporting an object directly at the module level. Right now, if I want to do async operations at the top level of my program — like awaiting configuration or doing dynamic setup before creating resources — there's no clean way to do it. I have to use awkward workarounds.
-
-It would be much nicer if the Pulumi runtime could detect when my module exports a function, automatically call it, wait for the result, and use the return value as my stack's outputs. This should work whether I export a regular synchronous function, a function that returns an asynchronous value, or a proper async function. Any asynchronous values nested inside the return value should also be resolved before the outputs are registered.
-
-Resources that I create inside the exported function should still be tracked and registered just as if I had created them at the top level of the module. If the function returns no value, the stack should just have no outputs. If it returns a value while also creating resources, both should work correctly.

@@ -1,0 +1,25 @@
+diff --git a/packages/flutter_tools/lib/src/macos/cocoapods_validator.dart b/packages/flutter_tools/lib/src/macos/cocoapods_validator.dart
+index 813f4544193..4983344fc3c 100644
+--- a/packages/flutter_tools/lib/src/macos/cocoapods_validator.dart
++++ b/packages/flutter_tools/lib/src/macos/cocoapods_validator.dart
+@@ -34,16 +34,16 @@ class CocoaPodsValidator extends DoctorValidator {
+           ),
+         );
+       case CocoaPodsStatus.notInstalled:
+-        status = ValidationType.missing;
++        status = ValidationType.partial;
+         messages.add(
+-          ValidationMessage.error(
++          ValidationMessage.hint(
+             _userMessages.cocoaPodsMissing(noCocoaPodsConsequence, cocoaPodsInstallInstructions),
+           ),
+         );
+       case CocoaPodsStatus.brokenInstall:
+-        status = ValidationType.missing;
++        status = ValidationType.partial;
+         messages.add(
+-          ValidationMessage.error(
++          ValidationMessage.hint(
+             _userMessages.cocoaPodsBrokenInstall(
+               brokenCocoaPodsConsequence,
+               cocoaPodsInstallInstructions,

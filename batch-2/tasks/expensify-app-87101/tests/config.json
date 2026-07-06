@@ -1,0 +1,36 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && TZ=utc NODE_OPTIONS=\"--experimental-vm-modules --max_old_space_size=8192\" npx jest tests/unit/BaseConfirmNavigateExpensifyClassicModalTest.tsx tests/unit/HybridAppActionsTest.ts tests/unit/TryNewDotUtilsTest.ts tests/unit/useRedirectToExpensifyClassicTest.ts --coverage=false --watchAll=false --json",
+  "test_files": [
+    "tests/unit/BaseConfirmNavigateExpensifyClassicModalTest.tsx",
+    "tests/unit/HybridAppActionsTest.ts",
+    "tests/unit/TryNewDotUtilsTest.ts",
+    "tests/unit/useRedirectToExpensifyClassicTest.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/unit/HybridAppActionsTest.ts::HybridApp actions blocks shouldSetNVP exits when the user is locked to NewApp",
+    "/workspace/repo/tests/unit/HybridAppActionsTest.ts::HybridApp actions blocks the GPS OldApp handoff modal when the user is locked to NewApp",
+    "/workspace/repo/tests/unit/HybridAppActionsTest.ts::HybridApp actions blocks shouldSetNVP false exits when the user is locked to NewApp",
+    "/workspace/repo/tests/unit/HybridAppActionsTest.ts::HybridApp actions re-blocks shouldSetNVP exits after tryNewDot is cleared until the next app load finishes",
+    "/workspace/repo/tests/unit/HybridAppActionsTest.ts::HybridApp actions re-blocks shouldSetNVP exits after a session switch until the new tryNewDot state resolves",
+    "/workspace/repo/tests/unit/BaseConfirmNavigateExpensifyClassicModalTest.tsx::BaseConfirmNavigateExpensifyClassicModal is hidden in HybridApp when isLockedToNewApp is set",
+    "/workspace/repo/tests/unit/useRedirectToExpensifyClassicTest.ts::useRedirectToExpensifyClassic blocks the FAB Classic redirect when HybridApp users are locked to NewApp",
+    "/workspace/repo/tests/unit/useRedirectToExpensifyClassicTest.ts::useRedirectToExpensifyClassic still allows the FAB Classic redirect when HybridApp users are not locked",
+    "/workspace/repo/tests/unit/TryNewDotUtilsTest.ts::TryNewDotUtils keeps mobile-locked HybridApp users in NewApp",
+    "/workspace/repo/tests/unit/TryNewDotUtilsTest.ts::TryNewDotUtils does not apply the mobile-only lock to web Classic gating",
+    "/workspace/repo/tests/unit/TryNewDotUtilsTest.ts::TryNewDotUtils hides HybridApp Classic entry points while tryNewDot is still loading",
+    "/workspace/repo/tests/unit/TryNewDotUtilsTest.ts::TryNewDotUtils does not hide web Classic entry points just because tryNewDot is still loading",
+    "/workspace/repo/tests/unit/TryNewDotUtilsTest.ts::TryNewDotUtils blocks Hybrid OldApp exits while tryNewDot is still unresolved",
+    "/workspace/repo/tests/unit/TryNewDotUtilsTest.ts::TryNewDotUtils keeps unlocked users unlocked once tryNewDot has resolved",
+    "/workspace/repo/tests/unit/TryNewDotUtilsTest.ts::TryNewDotUtils blocks all Hybrid OldApp exits for users locked to NewApp",
+    "/workspace/repo/tests/unit/TryNewDotUtilsTest.ts::TryNewDotUtils preserves isLockedToNewApp when nvp_tryNewDot is merged"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/tests/unit/HybridAppActionsTest.ts::HybridApp actions allows shouldSetNVP exits once tryNewDot resolves without a mobile lock",
+    "/workspace/repo/tests/unit/HybridAppActionsTest.ts::HybridApp actions preserves shouldSetNVP exits when the auth token rotates for the same session",
+    "/workspace/repo/tests/unit/HybridAppActionsTest.ts::HybridApp actions preserves shouldSetNVP false exits for existing non-force-mobile flows",
+    "/workspace/repo/tests/unit/BaseConfirmNavigateExpensifyClassicModalTest.tsx::BaseConfirmNavigateExpensifyClassicModal stays visible on web when only isLockedToNewApp is set"
+  ]
+}

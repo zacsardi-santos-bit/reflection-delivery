@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest /workspace/clickhouse_fix_test.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/04035_text_index_map_values_in.reference",
+    "tests/queries/0_stateless/04035_text_index_map_values_in.sql",
+    "tests/queries/0_stateless/04036_text_index_map_keys_values_in.reference",
+    "tests/queries/0_stateless/04036_text_index_map_keys_values_in.sql",
+    "tests/queries/0_stateless/04037_text_index_map_empty_values_in.reference",
+    "tests/queries/0_stateless/04037_text_index_map_empty_values_in.sql"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "clickhouse_fix_test::test_04035_text_index_map_values_in_support",
+    "clickhouse_fix_test::test_04036_text_index_map_keys_values_in_support",
+    "clickhouse_fix_test::test_04037_text_index_map_empty_values_in"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,7 @@
+I'm working on a CLI library that supports positional arguments, but the argument type system feels incomplete. Right now I can only define positional arguments using 64-bit integer types — there are no types for plain integers or unsigned integers of any size. I also notice there's no clean split between "capture exactly one value" and "capture a variable number of values": the same base type is being used for both cases with minimum and maximum count fields, which I'd like to separate into two distinct base types.
+
+Beyond that, the multi-value argument types use a result storage field whose name doesn't match the naming convention used by flags and single-value argument types elsewhere in the library, and I'd like them to be consistent.
+
+Finally, I'd love to be able to retrieve a positional argument's parsed value from the command by name in a type-safe way — something like calling a method on the command with the argument name and getting back the right Go type directly. When the name isn't found or the type doesn't match, it should return the zero value for scalar types and nil for slice types. When the argument has been parsed but received no values, the slice accessor should return an empty non-nil slice rather than nil.
+
+I need the full family of types to be available: signed and unsigned integers in all sizes, floats, strings, and timestamps — each with both a single-value and a multi-value variant.

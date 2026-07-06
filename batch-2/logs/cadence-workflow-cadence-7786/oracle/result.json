@@ -1,0 +1,29 @@
+{
+    "id": "195bab15-6297-4b9b-92f0-af3a3b8218e6",
+    "started_at": "2026-07-06T12:18:40.336697",
+    "finished_at": "2026-07-06T12:19:15.872106",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__cadence-workflow-cadence-7786": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "cadence-workflow-cadence-7786__Df35qNh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

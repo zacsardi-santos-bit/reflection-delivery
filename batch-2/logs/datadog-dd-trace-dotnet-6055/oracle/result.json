@@ -1,0 +1,29 @@
+{
+    "id": "8d77091e-8d80-4414-89d0-7ea5b8305dfa",
+    "started_at": "2026-07-04T15:40:33.064363",
+    "finished_at": "2026-07-04T15:41:49.994924",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__datadog-dd-trace-dotnet-6055": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "datadog-dd-trace-dotnet-6055__q8uxJjq"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

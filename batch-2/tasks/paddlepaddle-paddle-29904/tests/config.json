@@ -1,0 +1,16 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 -c \"import shutil, site, os; sp=site.getsitepackages()[0]; src='/workspace/repo/python/paddle/fluid/dygraph/'; dst=sp+'/paddle/fluid/dygraph/'; [shutil.copy(src+f, dst+f) for f in ['jit.py', 'io.py']]; st=src+'dygraph_to_static/'; dt=dst+'dygraph_to_static/'; [shutil.copy(st+f, dt+f) for f in os.listdir(st) if f.endswith('.py')]; shutil.copy('/workspace/repo/python/paddle/fluid/tests/unittests/test_jit_save_load.py', '/tmp/test_jit_save_load.py')\" && pytest /tmp/test_jit_save_load.py::TestJitSaveLoadSaveWithoutRunning /tmp/test_jit_save_load.py::TestInputSpecCompatibility -v",
+  "test_files": [
+    "python/paddle/fluid/tests/unittests/test_jit_save_load.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_jit_save_load.TestJitSaveLoadSaveWithoutRunning::test_save_load_finetune_load",
+    "test_jit_save_load.TestInputSpecCompatibility::test_jit_save_incompatible_input_sepc"
+  ],
+  "PASS_TO_PASS": [
+    "test_jit_save_load.TestInputSpecCompatibility::test_jit_save_compatible_input_sepc"
+  ]
+}

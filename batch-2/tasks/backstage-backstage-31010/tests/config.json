@@ -1,0 +1,19 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/plugins/search-backend && yarn run test -- src/actions/createQueryAction.test.ts --coverage=false --watchAll=false --forceExit",
+  "test_files": [
+    "plugins/search-backend/src/actions/createQueryAction.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/plugins/search-backend/src/actions/createQueryAction.test.ts::createQueryAction returns results from the search engine",
+    "/workspace/repo/plugins/search-backend/src/actions/createQueryAction.test.ts::createQueryAction sets hasMoreResults to false when there is no nextPageCursor",
+    "/workspace/repo/plugins/search-backend/src/actions/createQueryAction.test.ts::createQueryAction strips the authorization field from documents",
+    "/workspace/repo/plugins/search-backend/src/actions/createQueryAction.test.ts::createQueryAction accepts nested objects in filters",
+    "/workspace/repo/plugins/search-backend/src/actions/createQueryAction.test.ts::createQueryAction registers successfully when no document types are registered",
+    "/workspace/repo/plugins/search-backend/src/actions/createQueryAction.test.ts::createQueryAction forwards input to the search engine",
+    "/workspace/repo/plugins/search-backend/src/actions/createQueryAction.test.ts::createQueryAction filters out results with unsafe location protocols"
+  ],
+  "PASS_TO_PASS": []
+}

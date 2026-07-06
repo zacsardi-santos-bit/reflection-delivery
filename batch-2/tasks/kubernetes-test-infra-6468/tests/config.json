@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python -c \"import json,os,subprocess,sys,shutil; os.chdir('/workspace/repo/jobs'); d=json.load(open('config.json')); has='ci-cri-containerd-node-e2e-benchmark' in d; not has and open('env/ci-cri-containerd-fake-orphan.env','w').write('FAKE_UNUSED=unused'); has and os.path.exists('.pytest_cache') and shutil.rmtree('.pytest_cache'); args=['pytest','config_test.py','-v','-p','no:cacheprovider']+list(sys.argv[1:]); sys.exit(subprocess.call(args))\"",
+  "test_files": [
+    "jobs/config_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "config_test.JobTest::test_orphaned_env"
+  ],
+  "PASS_TO_PASS": [
+    "config_test.JobTest::test_all_bash_jobs_have_errexit",
+    "config_test.JobTest::test_all_project_are_unique",
+    "config_test.JobTest::test_bootstrap_ci_commit_yaml",
+    "config_test.JobTest::test_bootstrap_ci_dockerpush",
+    "config_test.JobTest::test_bootstrap_ci_repo_yaml",
+    "config_test.JobTest::test_bootstrap_maintenance_yaml",
+    "config_test.JobTest::test_bootstrap_pull_json_yaml",
+    "config_test.JobTest::test_bootstrap_security_match",
+    "config_test.JobTest::test_bootstrap_security_pull",
+    "config_test.JobTest::test_config_is_sorted",
+    "config_test.JobTest::test_envs_no_export",
+    "config_test.JobTest::test_envs_non_empty",
+    "config_test.JobTest::test_jobs_do_not_source_shell",
+    "config_test.JobTest::test_no_bad_vars_in_jobs",
+    "config_test.JobTest::test_non_blocking_jenkins",
+    "config_test.JobTest::test_only_jobs",
+    "config_test.JobTest::test_valid_env",
+    "config_test.JobTest::test_valid_job_config_json",
+    "config_test.JobTest::test_valid_timeout"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/core && npx jest test/indexing/chunk/code.test.ts test/walkDir.test.ts --watchAll=false",
+  "test_files": [
+    "core/test/indexing/chunk/code.test.ts",
+    "core/test/llm.test.ts",
+    "core/test/walkDir.test.ts",
+    "extensions/vscode/src/test/test-suites/ideUtils.test.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/core/test/indexing/chunk/code.test.ts::codeChunker should include entire file if smaller than max chunk size",
+    "/workspace/repo/core/test/indexing/chunk/code.test.ts::codeChunker should capture small class and function from large python file",
+    "/workspace/repo/core/test/indexing/chunk/code.test.ts::codeChunker should split large python class into methods and class with truncated methods",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should return nothing for empty dir",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should return all files in flat dir",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should ignore ignored files in flat dir",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should handle negation in flat folder",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should get all files in nested folder structure",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should ignore ignored files in nested folder structure",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should handle leading slash in gitignore",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should handle multiple .gitignore files in nested structure",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should handle wildcards in .gitignore",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should handle directory ignores in .gitignore",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should handle complex patterns in .gitignore",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should listen to both .gitignore and .continueignore",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should return dirs and only dirs in onlyDirs mode",
+    "/workspace/repo/core/test/walkDir.test.ts::walkDir should return valid paths in absolute path mode"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/core/test/indexing/chunk/code.test.ts::codeChunker should return empty array if file empty"
+  ]
+}

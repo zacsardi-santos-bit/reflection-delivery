@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/distributed/test_quick_all_reduce.py -v --noconftest",
+  "test_files": [
+    "tests/distributed/test_quick_all_reduce.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.distributed.test_quick_all_reduce::test_should_quick_allreduce_uses_builtin_min_size_when_unset",
+    "tests.distributed.test_quick_all_reduce::test_should_quick_allreduce_uses_min_size_override",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_min_size_env_unset",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_min_size_env_converts_mb_to_bytes",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_min_size_env_rejects_negative",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_min_size_env_allows_equal_to_max",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_min_size_env_rejects_larger_than_max",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_quantization_min_size_env_unset",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_quantization_min_size_env_converts_kb_to_bytes",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_quantization_min_size_env_rejects_negative",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_quantization_min_size_unset_uses_configured_codec",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_quantization_min_size_uses_fp_below_threshold",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_quantization_min_size_uses_configured_codec_at_threshold",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_quantization_min_size_does_not_change_eligibility",
+    "tests.distributed.test_quick_all_reduce::test_quick_allreduce_passes_dynamic_quant_level"
+  ],
+  "PASS_TO_PASS": []
+}

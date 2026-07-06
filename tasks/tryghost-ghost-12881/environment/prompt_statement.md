@@ -1,5 +1,0 @@
-I'm working on Ghost's membership and billing system and I need to add a direct link between member subscription records and Stripe price entries. Right now, subscriptions only store a legacy plan identifier, but Stripe's current billing model uses a separate product-and-price hierarchy. I want subscription records to also carry a dedicated Stripe price identifier that references an actual price entry in the database.
-
-To make this work, the database schema needs a new column on the subscriptions table for the price identifier. I also need to make sure the relationships between products, Stripe products, and Stripe prices don't cascade deletions. Once the schema is updated, the schema integrity hash check will need to reflect the change.
-
-The test fixtures also need to include sample data for products, Stripe products, and Stripe prices, and these need to be inserted in the right order before subscriptions are loaded. When creating subscriptions in tests, I should be able to pass both the old plan identifier and the new Stripe price identifier.

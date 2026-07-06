@@ -1,5 +1,0 @@
-I'm working with Hudi's spillable map collection and running into two problems. First, the map doesn't support automatic resource cleanup — when it spills data to disk, there's no reliable way to ensure those disk resources and file handles are properly released when we're done using the map, which can lead to resource leaks especially in error handling paths.
-
-Second, if I try to call any basic map operation — like checking whether the map is empty, iterating over it, checking if it contains a key, or streaming its values — on a freshly created map that has never had anything inserted, it crashes. It seems like the underlying disk storage is only set up lazily when the first item is written, but the map tries to access it anyway for read-only queries, even when there's nothing there yet.
-
-I need the map to properly support Java's automatic resource management pattern so resources are guaranteed to be cleaned up, and I need all standard collection operations to work correctly on an empty map without throwing exceptions. This should work regardless of which disk storage backend is configured.

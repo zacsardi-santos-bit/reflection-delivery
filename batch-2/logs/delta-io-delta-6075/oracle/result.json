@@ -1,0 +1,29 @@
+{
+    "id": "11b04272-d185-45b3-84db-2d0d6ebb2851",
+    "started_at": "2026-07-06T12:19:06.284960",
+    "finished_at": "2026-07-06T12:20:53.758261",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__delta-io-delta-6075": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "delta-io-delta-6075__Penbizy"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

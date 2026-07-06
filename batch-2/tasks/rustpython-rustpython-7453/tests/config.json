@@ -1,0 +1,46 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && cargo build --no-default-features --features stdlib,importlib,stdio,encodings,host_env,threading && PYTHONPATH=/workspace/pytest-pkgs target/debug/rustpython -m pytest -p no:legacypath -p no:doctest Lib/test/test_complex.py -v",
+  "test_files": [
+    "Lib/test/test_complex.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "Lib.test.test_complex.ComplexTest::test_from_number",
+    "Lib.test.test_complex.ComplexTest::test_from_number_subclass"
+  ],
+  "PASS_TO_PASS": [
+    "Lib.test.test_complex.ComplexTest::test___complex__",
+    "Lib.test.test_complex.ComplexTest::test_abs",
+    "Lib.test.test_complex.ComplexTest::test_add",
+    "Lib.test.test_complex.ComplexTest::test_boolcontext",
+    "Lib.test.test_complex.ComplexTest::test_conjugate",
+    "Lib.test.test_complex.ComplexTest::test_constructor_from_string",
+    "Lib.test.test_complex.ComplexTest::test_constructor_negative_nans_from_string",
+    "Lib.test.test_complex.ComplexTest::test_constructor_special_numbers",
+    "Lib.test.test_complex.ComplexTest::test_divmod",
+    "Lib.test.test_complex.ComplexTest::test_divmod_zero_division",
+    "Lib.test.test_complex.ComplexTest::test_floordiv",
+    "Lib.test.test_complex.ComplexTest::test_floordiv_zero_division",
+    "Lib.test.test_complex.ComplexTest::test_format",
+    "Lib.test.test_complex.ComplexTest::test_getnewargs",
+    "Lib.test.test_complex.ComplexTest::test_hash",
+    "Lib.test.test_complex.ComplexTest::test_mod",
+    "Lib.test.test_complex.ComplexTest::test_mod_zero_division",
+    "Lib.test.test_complex.ComplexTest::test_neg",
+    "Lib.test.test_complex.ComplexTest::test_negated_imaginary_literal",
+    "Lib.test.test_complex.ComplexTest::test_negative_zero_repr_str",
+    "Lib.test.test_complex.ComplexTest::test_overflow",
+    "Lib.test.test_complex.ComplexTest::test_plus_minus_0j",
+    "Lib.test.test_complex.ComplexTest::test_pos",
+    "Lib.test.test_complex.ComplexTest::test_pow",
+    "Lib.test.test_complex.ComplexTest::test_pow_with_small_integer_exponents",
+    "Lib.test.test_complex.ComplexTest::test_repr_roundtrip",
+    "Lib.test.test_complex.ComplexTest::test_repr_str",
+    "Lib.test.test_complex.ComplexTest::test_richcompare",
+    "Lib.test.test_complex.ComplexTest::test_sub",
+    "Lib.test.test_complex.ComplexTest::test_truediv_zero_division",
+    "Lib.test.test_complex.ComplexTest::test_underscores"
+  ]
+}

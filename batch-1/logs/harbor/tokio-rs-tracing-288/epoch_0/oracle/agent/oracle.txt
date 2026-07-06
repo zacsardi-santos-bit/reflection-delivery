@@ -1,0 +1,9 @@
+patching file tracing-core/CHANGELOG.md
+patching file tracing-core/Cargo.toml
+patching file tracing-core/README.md
+patching file tracing-core/src/lib.rs
+patching file tracing/README.md
+patching file tracing/examples/counters.rs
+patching file tracing/examples/sloggish/main.rs
+patching file tracing/src/lib.rs
+patching file tracing/src/macros.rs

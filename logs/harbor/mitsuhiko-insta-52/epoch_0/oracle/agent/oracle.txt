@@ -1,6 +1,0 @@
-patching file Cargo.toml
-patching file README.md
-patching file cargo-insta/src/inline.rs
-patching file src/lib.rs
-patching file src/runtime.rs
-patching file src/snapshot.rs

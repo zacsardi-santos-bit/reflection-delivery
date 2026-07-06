@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/backend/test_jit_footguns.py::TestJitFootguns::test_masked_select_static_size_jittable /workspace/repo/test/backend/test_jit_footguns.py::TestJitFootguns::test_nonzero_static_size_jittable /workspace/repo/test/backend/test_ops.py::TestOps::test_masked_select_size /workspace/repo/test/backend/test_ops.py::TestOps::test_nonzero_size -v",
+  "test_files": [
+    "test/backend/test_jit_footguns.py",
+    "test/backend/test_ops.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.backend.test_jit_footguns.TestJitFootguns::test_masked_select_static_size_jittable",
+    "test.backend.test_jit_footguns.TestJitFootguns::test_nonzero_static_size_jittable",
+    "test.backend.test_ops.TestOps::test_masked_select_size",
+    "test.backend.test_ops.TestOps::test_nonzero_size"
+  ],
+  "PASS_TO_PASS": []
+}

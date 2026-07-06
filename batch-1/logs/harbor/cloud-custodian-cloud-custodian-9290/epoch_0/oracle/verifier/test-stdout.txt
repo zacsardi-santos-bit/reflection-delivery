@@ -1,0 +1,29 @@
+patching file tests/apicallcaptor.py
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_1.json
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_2.json
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.DescribeMesh_3.json
+patching file tests/data/placebo/test_appmesh_mesh/appmesh.ListMeshes_1.json
+patching file tests/data/placebo/test_appmesh_mesh/tagging.GetResources_1.json
+patching file tests/data/placebo/test_appmesh_mesh_event/appmesh.DescribeMesh_1.json
+patching file tests/data/placebo/test_appmesh_mesh_event/tagging.GetResources_1.json
+patching file tests/data/placebo/test_appmesh_virtualgateway/tagging.GetResources_1.json
+patching file tests/data/placebo/test_appmesh_virtualgateway_event/appmesh.DescribeVirtualGateway_2.json
+patching file tests/data/placebo/test_appmesh_virtualgateway_event/tagging.GetResources_1.json
+patching file tests/test_appmesh.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: cov-7.1.0, recording-0.13.4, sugar-1.1.1, xdist-3.8.0
+collecting ... collected 6 items
+
+tests/test_appmesh.py::TestAppmeshMesh::test_appmesh PASSED              [ 16%]
+tests/test_appmesh.py::TestAppmeshMesh::test_appmesh_event PASSED        [ 33%]
+tests/test_appmesh.py::TestAppmeshMesh::test_reporting PASSED            [ 50%]
+tests/test_appmesh.py::TestAppmeshVirtualGateway::test_appmesh_virtualgateway PASSED [ 66%]
+tests/test_appmesh.py::TestAppmeshVirtualGateway::test_appmesh_virtualgateway_event PASSED [ 83%]
+tests/test_appmesh.py::TestAppmeshVirtualGateway::test_reporting PASSED  [100%]
+
+============================== 6 passed in 0.75s ===============================
+reward=1 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=0

@@ -1,0 +1,965 @@
+patching file tests/api_connexion/endpoints/test_user_endpoint.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-6.2.5, py-1.11.0, pluggy-1.5.0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo, configfile: pytest.ini
+plugins: cov-5.0.0, anyio-4.5.2
+collecting ... collected 43 items
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200 PASSED [  2%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_404 PASSED [  4%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_raises_401_unauthenticated PASSED [  6%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_raise_403_forbidden PASSED [  9%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsers::test_should_response_200 PASSED [ 11%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsers::test_should_raises_401_unauthenticated PASSED [ 13%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsers::test_should_raise_403_forbidden PASSED [ 16%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_0__api_v1_users_limit_1 PASSED [ 18%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_1__api_v1_users_limit_2 PASSED [ 20%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_2__api_v1_users_offset_5 PASSED [ 23%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_3__api_v1_users_offset_0 PASSED [ 25%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_4__api_v1_users_limit_1_offset_5 PASSED [ 27%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_5__api_v1_users_limit_1_offset_1 PASSED [ 30%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_handle_limit_offset_6__api_v1_users_limit_2_offset_2 PASSED [ 32%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_should_respect_page_size_limit_default PASSED [ 34%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_should_response_400_with_invalid_order_by PASSED [ 37%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_limit_of_zero_should_return_default PASSED [ 39%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUsersPagination::test_should_return_conf_max_if_req_max_above_conf PASSED [ 41%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_with_default_role FAILED [ 44%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_with_custom_roles FAILED [ 46%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_unauthenticated FAILED [ 48%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_forbidden FAILED [ 51%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_already_exists FAILED [ 53%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[missing-required] FAILED [ 55%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-user-field] FAILED [ 58%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-role-field] FAILED [ 60%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-role] FAILED [ 62%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_change FAILED [ 65%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_change_with_update_maek FAILED [ 67%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_password_hashed FAILED [ 69%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_replace_roles FAILED [ 72%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_unchanged FAILED [ 74%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_unauthenticated FAILED [ 76%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_forbidden FAILED [ 79%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_not_found FAILED [ 81%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[missing-required] FAILED [ 83%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-user-field] FAILED [ 86%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-role-field] FAILED [ 88%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-role] FAILED [ 90%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_delete FAILED [ 93%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_unauthenticated FAILED [ 95%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_forbidden FAILED [ 97%]
+tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_not_found FAILED [100%]
+
+=================================== FAILURES ===================================
+_____________________ TestPostUser.test_with_default_role ______________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdb1b1ee0>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    def test_with_default_role(self, autoclean_username, autoclean_user_payload):
+        response = self.client.post(
+            "/api/v1/users",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 200, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 200
+E         +405
+E         -200
+
+tests/api_connexion/endpoints/test_user_endpoint.py:287: AssertionError
+_____________________ TestPostUser.test_with_custom_roles ______________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdb19aee0>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    def test_with_custom_roles(self, autoclean_username, autoclean_user_payload):
+        response = self.client.post(
+            "/api/v1/users",
+            json={"roles": [{"name": "User"}, {"name": "Viewer"}], **autoclean_user_payload},
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 200, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 200
+E         +405
+E         -200
+
+tests/api_connexion/endpoints/test_user_endpoint.py:300: AssertionError
+______________________ TestPostUser.test_unauthenticated _______________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdb19bc40>
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    def test_unauthenticated(self, autoclean_user_payload):
+        response = self.client.post(
+            "/api/v1/users",
+            json=autoclean_user_payload,
+        )
+>       assert response.status_code == 401, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 401
+E         +405
+E         -401
+
+tests/api_connexion/endpoints/test_user_endpoint.py:312: AssertionError
+_________________________ TestPostUser.test_forbidden __________________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdb195460>
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    def test_forbidden(self, autoclean_user_payload):
+        response = self.client.post(
+            "/api/v1/users",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test_no_permissions"},
+        )
+>       assert response.status_code == 403, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 403
+E         +405
+E         -403
+
+tests/api_connexion/endpoints/test_user_endpoint.py:320: AssertionError
+_______________________ TestPostUser.test_already_exists _______________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdaf94190>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    def test_already_exists(self, autoclean_username, autoclean_user_payload):
+        create_user(self.app, username=autoclean_username, role_name="TestNoPermissions")
+    
+        response = self.client.post(
+            "/api/v1/users",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 409, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 409
+E         +405
+E         -409
+
+tests/api_connexion/endpoints/test_user_endpoint.py:330: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[2026-06-29 15:26:17,392] {security.py:318} INFO - Deleting role 'TestNoPermissions'
+------------------------------ Captured log call -------------------------------
+INFO     airflow.www.security.AirflowSecurityManager:security.py:318 Deleting role 'TestNoPermissions'
+_____________ TestPostUser.test_invalid_payload[missing-required] ______________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdaf7b8e0>
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+payload_converter = <function TestPostUser.<lambda> at 0x2b5fd9960820>
+error_message = "{'username': ['Missing data for required field.']}"
+
+    @pytest.mark.parametrize(
+        "payload_converter, error_message",
+        [
+            pytest.param(
+                lambda p: {k: v for k, v in p.items() if k != "username"},
+                "{'username': ['Missing data for required field.']}",
+                id="missing-required",
+            ),
+            pytest.param(
+                lambda p: {"i-am": "a typo", **p},
+                "{'i-am': ['Unknown field.']}",
+                id="unknown-user-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"also": "a typo", "name": "User"}]},
+                "{'roles': {0: {'also': ['Unknown field.']}}}",
+                id="unknown-role-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"name": "God"}, {"name": "User"}, {"name": "Overlord"}]},
+                "Unknown roles: 'God', 'Overlord'",
+                id="unknown-role",
+            ),
+        ],
+    )
+    def test_invalid_payload(self, autoclean_user_payload, payload_converter, error_message):
+        response = self.client.post(
+            "/api/v1/users",
+            json=payload_converter(autoclean_user_payload),
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 400
+E         +405
+E         -400
+
+tests/api_connexion/endpoints/test_user_endpoint.py:363: AssertionError
+____________ TestPostUser.test_invalid_payload[unknown-user-field] _____________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdaf70a60>
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+payload_converter = <function TestPostUser.<lambda> at 0x2b5fd99608b0>
+error_message = "{'i-am': ['Unknown field.']}"
+
+    @pytest.mark.parametrize(
+        "payload_converter, error_message",
+        [
+            pytest.param(
+                lambda p: {k: v for k, v in p.items() if k != "username"},
+                "{'username': ['Missing data for required field.']}",
+                id="missing-required",
+            ),
+            pytest.param(
+                lambda p: {"i-am": "a typo", **p},
+                "{'i-am': ['Unknown field.']}",
+                id="unknown-user-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"also": "a typo", "name": "User"}]},
+                "{'roles': {0: {'also': ['Unknown field.']}}}",
+                id="unknown-role-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"name": "God"}, {"name": "User"}, {"name": "Overlord"}]},
+                "Unknown roles: 'God', 'Overlord'",
+                id="unknown-role",
+            ),
+        ],
+    )
+    def test_invalid_payload(self, autoclean_user_payload, payload_converter, error_message):
+        response = self.client.post(
+            "/api/v1/users",
+            json=payload_converter(autoclean_user_payload),
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 400
+E         +405
+E         -400
+
+tests/api_connexion/endpoints/test_user_endpoint.py:363: AssertionError
+____________ TestPostUser.test_invalid_payload[unknown-role-field] _____________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdaf79eb0>
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+payload_converter = <function TestPostUser.<lambda> at 0x2b5fd9960940>
+error_message = "{'roles': {0: {'also': ['Unknown field.']}}}"
+
+    @pytest.mark.parametrize(
+        "payload_converter, error_message",
+        [
+            pytest.param(
+                lambda p: {k: v for k, v in p.items() if k != "username"},
+                "{'username': ['Missing data for required field.']}",
+                id="missing-required",
+            ),
+            pytest.param(
+                lambda p: {"i-am": "a typo", **p},
+                "{'i-am': ['Unknown field.']}",
+                id="unknown-user-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"also": "a typo", "name": "User"}]},
+                "{'roles': {0: {'also': ['Unknown field.']}}}",
+                id="unknown-role-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"name": "God"}, {"name": "User"}, {"name": "Overlord"}]},
+                "Unknown roles: 'God', 'Overlord'",
+                id="unknown-role",
+            ),
+        ],
+    )
+    def test_invalid_payload(self, autoclean_user_payload, payload_converter, error_message):
+        response = self.client.post(
+            "/api/v1/users",
+            json=payload_converter(autoclean_user_payload),
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 400
+E         +405
+E         -400
+
+tests/api_connexion/endpoints/test_user_endpoint.py:363: AssertionError
+_______________ TestPostUser.test_invalid_payload[unknown-role] ________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPostUser object at 0x2b5fdaf6b160>
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+payload_converter = <function TestPostUser.<lambda> at 0x2b5fd99609d0>
+error_message = "Unknown roles: 'God', 'Overlord'"
+
+    @pytest.mark.parametrize(
+        "payload_converter, error_message",
+        [
+            pytest.param(
+                lambda p: {k: v for k, v in p.items() if k != "username"},
+                "{'username': ['Missing data for required field.']}",
+                id="missing-required",
+            ),
+            pytest.param(
+                lambda p: {"i-am": "a typo", **p},
+                "{'i-am': ['Unknown field.']}",
+                id="unknown-user-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"also": "a typo", "name": "User"}]},
+                "{'roles': {0: {'also': ['Unknown field.']}}}",
+                id="unknown-role-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"name": "God"}, {"name": "User"}, {"name": "Overlord"}]},
+                "Unknown roles: 'God', 'Overlord'",
+                id="unknown-role",
+            ),
+        ],
+    )
+    def test_invalid_payload(self, autoclean_user_payload, payload_converter, error_message):
+        response = self.client.post(
+            "/api/v1/users",
+            json=payload_converter(autoclean_user_payload),
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 400
+E         +405
+E         -400
+
+tests/api_connexion/endpoints/test_user_endpoint.py:363: AssertionError
+__________________________ TestPatchUser.test_change ___________________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fd7600c10>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Changed', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_change(self, autoclean_username, autoclean_user_payload):
+        autoclean_user_payload["first_name"] = "Changed"
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 200, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 200
+E         +405
+E         -200
+
+tests/api_connexion/endpoints/test_user_endpoint.py:381: AssertionError
+__________________ TestPatchUser.test_change_with_update_maek __________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdb1c3700>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Changed', 'last_name': 'Overlord', 'password': 'resutsop', ...}
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_change_with_update_maek(self, autoclean_username, autoclean_user_payload):
+        autoclean_user_payload["first_name"] = "Changed"
+        autoclean_user_payload["last_name"] = "Overlord"
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}?update_mask=first_name",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 200, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 200
+E         +405
+E         -200
+
+tests/api_connexion/endpoints/test_user_endpoint.py:397: AssertionError
+______________________ TestPatchUser.test_password_hashed ______________________
+
+args = (<tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdaa0cee0>,)
+keywargs = {'autoclean_user_payload': {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}, 'autoclean_username': 'example_user'}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/usr/local/lib/python3.8/unittest/mock.py:1322: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.8/contextlib.py:113: in __enter__
+    return next(self.gen)
+/usr/local/lib/python3.8/unittest/mock.py:1304: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+/usr/local/lib/python3.8/contextlib.py:425: in enter_context
+    result = _cm_type.__enter__(cm)
+/usr/local/lib/python3.8/unittest/mock.py:1393: in __enter__
+    original, local = self.get_original()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x2b5fd982e0d0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'airflow.api_connexion.endpoints.user_endpoint' from '/workspace/repo/airflow/api_connexion/endpoints/user_endpoint.py'> does not have the attribute 'generate_password_hash'
+
+/usr/local/lib/python3.8/unittest/mock.py:1366: AttributeError
+_______________________ TestPatchUser.test_replace_roles _______________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdb195d00>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_replace_roles(self, autoclean_username, autoclean_user_payload):
+        # Patching a user's roles should replace the entire list.
+        autoclean_user_payload["roles"] = [{"name": "User"}, {"name": "Viewer"}]
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}?update_mask=roles",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 200, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 200
+E         +405
+E         -200
+
+tests/api_connexion/endpoints/test_user_endpoint.py:440: AssertionError
+_________________________ TestPatchUser.test_unchanged _________________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdb3223a0>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_unchanged(self, autoclean_username, autoclean_user_payload):
+        # Should allow a PATCH that changes nothing.
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 200, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 200
+E         +405
+E         -200
+
+tests/api_connexion/endpoints/test_user_endpoint.py:451: AssertionError
+______________________ TestPatchUser.test_unauthenticated ______________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fda403160>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_unauthenticated(self, autoclean_username, autoclean_user_payload):
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=autoclean_user_payload,
+        )
+>       assert response.status_code == 401, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 401
+E         +405
+E         -401
+
+tests/api_connexion/endpoints/test_user_endpoint.py:462: AssertionError
+_________________________ TestPatchUser.test_forbidden _________________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdb0bca90>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_forbidden(self, autoclean_username, autoclean_user_payload):
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test_no_permissions"},
+        )
+>       assert response.status_code == 403, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 403
+E         +405
+E         -403
+
+tests/api_connexion/endpoints/test_user_endpoint.py:471: AssertionError
+_________________________ TestPatchUser.test_not_found _________________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdaf7b0a0>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+
+    def test_not_found(self, autoclean_username, autoclean_user_payload):
+        # This test does not populate autoclean_admin_user into the database.
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=autoclean_user_payload,
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 404, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 404
+E         +405
+E         -404
+
+tests/api_connexion/endpoints/test_user_endpoint.py:480: AssertionError
+_____________ TestPatchUser.test_invalid_payload[missing-required] _____________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdb195190>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+payload_converter = <function TestPatchUser.<lambda> at 0x2b5fd99650d0>
+error_message = "{'username': ['Missing data for required field.']}"
+
+    @pytest.mark.parametrize(
+        "payload_converter, error_message",
+        [
+            pytest.param(
+                lambda p: {k: v for k, v in p.items() if k != "username"},
+                "{'username': ['Missing data for required field.']}",
+                id="missing-required",
+            ),
+            pytest.param(
+                lambda p: {"i-am": "a typo", **p},
+                "{'i-am': ['Unknown field.']}",
+                id="unknown-user-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"also": "a typo", "name": "User"}]},
+                "{'roles': {0: {'also': ['Unknown field.']}}}",
+                id="unknown-role-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"name": "God"}, {"name": "User"}, {"name": "Overlord"}]},
+                "Unknown roles: 'God', 'Overlord'",
+                id="unknown-role",
+            ),
+        ],
+    )
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_invalid_payload(
+        self,
+        autoclean_username,
+        autoclean_user_payload,
+        payload_converter,
+        error_message,
+    ):
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=payload_converter(autoclean_user_payload),
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 400
+E         +405
+E         -400
+
+tests/api_connexion/endpoints/test_user_endpoint.py:520: AssertionError
+____________ TestPatchUser.test_invalid_payload[unknown-user-field] ____________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdaf7b730>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+payload_converter = <function TestPatchUser.<lambda> at 0x2b5fd9965160>
+error_message = "{'i-am': ['Unknown field.']}"
+
+    @pytest.mark.parametrize(
+        "payload_converter, error_message",
+        [
+            pytest.param(
+                lambda p: {k: v for k, v in p.items() if k != "username"},
+                "{'username': ['Missing data for required field.']}",
+                id="missing-required",
+            ),
+            pytest.param(
+                lambda p: {"i-am": "a typo", **p},
+                "{'i-am': ['Unknown field.']}",
+                id="unknown-user-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"also": "a typo", "name": "User"}]},
+                "{'roles': {0: {'also': ['Unknown field.']}}}",
+                id="unknown-role-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"name": "God"}, {"name": "User"}, {"name": "Overlord"}]},
+                "Unknown roles: 'God', 'Overlord'",
+                id="unknown-role",
+            ),
+        ],
+    )
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_invalid_payload(
+        self,
+        autoclean_username,
+        autoclean_user_payload,
+        payload_converter,
+        error_message,
+    ):
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=payload_converter(autoclean_user_payload),
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 400
+E         +405
+E         -400
+
+tests/api_connexion/endpoints/test_user_endpoint.py:520: AssertionError
+____________ TestPatchUser.test_invalid_payload[unknown-role-field] ____________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdaf94f10>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+payload_converter = <function TestPatchUser.<lambda> at 0x2b5fd99651f0>
+error_message = "{'roles': {0: {'also': ['Unknown field.']}}}"
+
+    @pytest.mark.parametrize(
+        "payload_converter, error_message",
+        [
+            pytest.param(
+                lambda p: {k: v for k, v in p.items() if k != "username"},
+                "{'username': ['Missing data for required field.']}",
+                id="missing-required",
+            ),
+            pytest.param(
+                lambda p: {"i-am": "a typo", **p},
+                "{'i-am': ['Unknown field.']}",
+                id="unknown-user-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"also": "a typo", "name": "User"}]},
+                "{'roles': {0: {'also': ['Unknown field.']}}}",
+                id="unknown-role-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"name": "God"}, {"name": "User"}, {"name": "Overlord"}]},
+                "Unknown roles: 'God', 'Overlord'",
+                id="unknown-role",
+            ),
+        ],
+    )
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_invalid_payload(
+        self,
+        autoclean_username,
+        autoclean_user_payload,
+        payload_converter,
+        error_message,
+    ):
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=payload_converter(autoclean_user_payload),
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 400
+E         +405
+E         -400
+
+tests/api_connexion/endpoints/test_user_endpoint.py:520: AssertionError
+_______________ TestPatchUser.test_invalid_payload[unknown-role] _______________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestPatchUser object at 0x2b5fdaaa1190>
+autoclean_username = 'example_user'
+autoclean_user_payload = {'email': 'test@example.com', 'first_name': 'Example', 'last_name': 'User', 'password': 'resutsop', ...}
+payload_converter = <function TestPatchUser.<lambda> at 0x2b5fd9965280>
+error_message = "Unknown roles: 'God', 'Overlord'"
+
+    @pytest.mark.parametrize(
+        "payload_converter, error_message",
+        [
+            pytest.param(
+                lambda p: {k: v for k, v in p.items() if k != "username"},
+                "{'username': ['Missing data for required field.']}",
+                id="missing-required",
+            ),
+            pytest.param(
+                lambda p: {"i-am": "a typo", **p},
+                "{'i-am': ['Unknown field.']}",
+                id="unknown-user-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"also": "a typo", "name": "User"}]},
+                "{'roles': {0: {'also': ['Unknown field.']}}}",
+                id="unknown-role-field",
+            ),
+            pytest.param(
+                lambda p: {**p, "roles": [{"name": "God"}, {"name": "User"}, {"name": "Overlord"}]},
+                "Unknown roles: 'God', 'Overlord'",
+                id="unknown-role",
+            ),
+        ],
+    )
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_invalid_payload(
+        self,
+        autoclean_username,
+        autoclean_user_payload,
+        payload_converter,
+        error_message,
+    ):
+        response = self.client.patch(
+            f"/api/v1/users/{autoclean_username}",
+            json=payload_converter(autoclean_user_payload),
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 400
+E         +405
+E         -400
+
+tests/api_connexion/endpoints/test_user_endpoint.py:520: AssertionError
+__________________________ TestDeleteUser.test_delete __________________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestDeleteUser object at 0x2b5fdaf38dc0>
+autoclean_username = 'example_user'
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_delete(self, autoclean_username):
+        response = self.client.delete(
+            f"/api/v1/users/{autoclean_username}",
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 204, response.json  # NO CONTENT.
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 204
+E         +405
+E         -204
+
+tests/api_connexion/endpoints/test_user_endpoint.py:536: AssertionError
+_____________________ TestDeleteUser.test_unauthenticated ______________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestDeleteUser object at 0x2b5fdaf94430>
+autoclean_username = 'example_user'
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_unauthenticated(self, autoclean_username):
+        response = self.client.delete(
+            f"/api/v1/users/{autoclean_username}",
+        )
+>       assert response.status_code == 401, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 401
+E         +405
+E         -401
+
+tests/api_connexion/endpoints/test_user_endpoint.py:544: AssertionError
+________________________ TestDeleteUser.test_forbidden _________________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestDeleteUser object at 0x2b5fda481280>
+autoclean_username = 'example_user'
+
+    @pytest.mark.usefixtures("autoclean_admin_user")
+    def test_forbidden(self, autoclean_username):
+        response = self.client.delete(
+            f"/api/v1/users/{autoclean_username}",
+            environ_overrides={"REMOTE_USER": "test_no_permissions"},
+        )
+>       assert response.status_code == 403, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 403
+E         +405
+E         -403
+
+tests/api_connexion/endpoints/test_user_endpoint.py:553: AssertionError
+________________________ TestDeleteUser.test_not_found _________________________
+
+self = <tests.api_connexion.endpoints.test_user_endpoint.TestDeleteUser object at 0x2b5fdb1b1220>
+autoclean_username = 'example_user'
+
+    def test_not_found(self, autoclean_username):
+        # This test does not populate autoclean_admin_user into the database.
+        response = self.client.delete(
+            f"/api/v1/users/{autoclean_username}",
+            environ_overrides={"REMOTE_USER": "test"},
+        )
+>       assert response.status_code == 404, response.json
+E       AssertionError: {'detail': 'The method is not allowed for the requested URL.', 'status': 405, 'title': 'Method Not Allowed', 'type': 'about:blank'}
+E       assert 405 == 404
+E         +405
+E         -404
+
+tests/api_connexion/endpoints/test_user_endpoint.py:562: AssertionError
+--------------------------- Captured stdout teardown ---------------------------
+[2026-06-29 15:26:19,504] {security.py:318} INFO - Deleting role 'Test'
+---------------------------- Captured log teardown -----------------------------
+INFO     airflow.www.security.AirflowSecurityManager:security.py:318 Deleting role 'Test'
+=============================== warnings summary ===============================
+airflow/configuration.py:242
+  /workspace/repo/airflow/configuration.py:242: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    if StrictVersion(sqlite3.sqlite_version) < StrictVersion(min_sqlite_version):
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/utils/db.py:749: SADeprecationWarning: The Table.exists() method is deprecated and will be removed in a future release.  Please refer to Inspector.has_table(). (deprecated since: 1.4)
+    if version.exists(connection):
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/e3a246e0dc1_current_schema.py:43: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/1507a7289a2f_create_is_encrypted.py:46: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/cc1e65623dc7_add_max_tries_column_to_task_instance.py:67: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(connection)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/33ae817a1ff4_add_kubernetes_resource_checkpointing.py:41: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/92c57b58940d_add_fab_tables.py:41: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/03afc6b6f902_increase_length_of_fab_ab_view_menu_.py:41: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/cf5dc11e79ad_drop_user_and_chart.py:45: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/bbf4a7ad0465_remove_id_column_from_xcom.py:101: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/3c20cacc0044_add_dagrun_run_type.py:74: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/e38be357a868_update_schema_for_smart_sensor.py:54: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/migrations/versions/bef4f3d11e8b_drop_kuberesourceversion_and_.py:45: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(conn)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/flask_caching/__init__.py:158: DeprecationWarning: Using the initialization functions in flask_caching.backend is deprecated.  Use the a full path to backend classes directly.
+    warnings.warn(
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/flask_appbuilder/security/sqla/manager.py:92: SADeprecationWarning: The from_engine() method on Inspector is deprecated and will be removed in a future release.  Please use the sqlalchemy.inspect() function on an Engine or Connection in order to acquire an Inspector. (deprecated since: 1.4)
+    inspector = Inspector.from_engine(engine)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:571: RemovedInMarshmallow4Warning: The 'default' argument to fields is deprecated. Use 'dump_default' instead.
+    super().__init__(default=default, dump_default=dump_default, **kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:948: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:948: RemovedInMarshmallow4Warning: Passing field metadata as keyword arguments is deprecated. Use the explicit `metadata=...` argument instead. Additional metadata: {'min': 0}
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:948: RemovedInMarshmallow4Warning: Passing field metadata as keyword arguments is deprecated. Use the explicit `metadata=...` argument instead. Additional metadata: {'min': 1}
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:755: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py: 14 warnings
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1264: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1182: RemovedInMarshmallow4Warning: The 'missing' argument to fields is deprecated. Use 'load_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /usr/local/lib/python3.8/site-packages/marshmallow/fields.py:1182: RemovedInMarshmallow4Warning: The 'default' argument to fields is deprecated. Use 'dump_default' instead.
+    super().__init__(**kwargs)
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/models/serialized_dag.py:120: SAWarning: TypeDecorator UtcDateTime(timezone=True) will not produce a cache key because the ``cache_ok`` attribute is not set to True.  This can have significant performance implications including some performance degradations in comparison to prior SQLAlchemy versions.  Set this attribute to True if this type object's state is safe to use in a cache key, or False to disable this warning. (Background on this error at: https://sqlalche.me/e/14/cprf)
+    session.query(literal(True))
+
+tests/api_connexion/endpoints/test_user_endpoint.py::TestGetUser::test_should_respond_200
+  /workspace/repo/airflow/models/dag.py:2016: SAWarning: TypeDecorator UtcDateTime(timezone=True) will not produce a cache key because the ``cache_ok`` attribute is not set to True.  This can have significant performance implications including some performance degradations in comparison to prior SQLAlchemy versions.  Set this attribute to True if this type object's state is safe to use in a cache key, or False to disable this warning. (Background on this error at: https://sqlalche.me/e/14/cprf)
+    session.query(DagRun.dag_id, func.max_(DagRun.execution_date))
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ============================
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_with_default_role
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_with_custom_roles
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_unauthenticated
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_forbidden
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_already_exists
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[missing-required]
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-user-field]
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-role-field]
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPostUser::test_invalid_payload[unknown-role]
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_change
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_change_with_update_maek
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_password_hashed
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_replace_roles
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_unchanged
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_unauthenticated
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_forbidden
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_not_found
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[missing-required]
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-user-field]
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-role-field]
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestPatchUser::test_invalid_payload[unknown-role]
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_delete
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_unauthenticated
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_forbidden
+FAILED tests/api_connexion/endpoints/test_user_endpoint.py::TestDeleteUser::test_not_found
+================= 25 failed, 18 passed, 61 warnings in 11.15s ==================
+reward=0 graded=43 found=0 failed=0 parsed=35 framework=pytest exit_code=1

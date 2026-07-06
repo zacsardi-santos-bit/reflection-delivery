@@ -1,0 +1,8 @@
+patching file internal/datanode/writebuffer/bf_write_buffer_test.go
+patching file internal/datanode/writebuffer/sync_policy_test.go
+# github.com/milvus-io/milvus/internal/datanode/writebuffer [github.com/milvus-io/milvus/internal/datanode/writebuffer.test]
+internal/datanode/writebuffer/bf_write_buffer_test.go:316:5: undefined: GetSealedSegmentsPolicy
+internal/datanode/writebuffer/bf_write_buffer_test.go:397:5: undefined: GetSealedSegmentsPolicy
+internal/datanode/writebuffer/sync_policy_test.go:78:12: undefined: GetSealedSegmentsPolicy
+FAIL	github.com/milvus-io/milvus/internal/datanode/writebuffer [build failed]
+reward=0 graded=8 found=8 failed=8 parsed=1 framework=go exit_code=1

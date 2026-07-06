@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "su -s /bin/bash testuser -c 'cargo nextest run --no-fail-fast --no-default-features --features ls,chmod -E \"test(test_ls_io_errors) or test(test_ls_dangling_symlinks)\"'",
+  "test_files": [
+    "tests/by-util/test_ls.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "coreutils::tests test_ls::test_ls_io_errors"
+  ],
+  "PASS_TO_PASS": [
+    "coreutils::tests test_ls::test_ls_dangling_symlinks"
+  ]
+}

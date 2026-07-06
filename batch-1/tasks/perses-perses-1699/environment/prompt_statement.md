@@ -1,0 +1,7 @@
+I'm working on a Go CLI tool for dashboard-as-code workflows and need to add a build subcommand plus fix some inconsistencies in existing commands.
+
+Right now, to compile a dashboard definition file into JSON or YAML, users have to use an external evaluation tool and manually handle the output. I'd like a new build subcommand that does this directly: given a single definition file or a directory of files, it should evaluate each file and save the result under a dedicated output folder (preserving the relative directory structure and appending an output suffix to the filename). The output format should default to YAML but support JSON. There should also be a mode flag so users can print the output to standard output instead of writing to files, which is useful for piping directly to deploy.
+
+Additionally, the lint command currently only accepts a file flag and doesn't support a directory option, even though the apply command does. Both apply and lint should treat the file and directory flags as mutually exclusive but required — exactly one must be provided. Right now both commands produce confusing error messages when neither flag is given; they should instead show a consistent, clear message indicating that one of the two is required.
+
+The new build command should similarly require exactly one of the two flags, reject invalid file or directory paths with descriptive error messages, and handle the case where both flags are passed simultaneously.

@@ -1,2 +1,0 @@
-patching file protoc-rust/src/lib.rs
-patching file protoc-rust/src/slashes.rs

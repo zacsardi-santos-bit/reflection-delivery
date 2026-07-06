@@ -1,0 +1,29 @@
+{
+    "id": "2e100b6d-30b9-4554-a29e-c7af01b64bb1",
+    "started_at": "2026-07-06T12:18:50.296151",
+    "finished_at": "2026-07-06T12:20:31.969408",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__cosmos-cosmos-sdk-26033": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "cosmos-cosmos-sdk-26033__ErwggAM"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pinot-core,pinot-query-runtime install -DskipTests -am -q && mvn -pl pinot-spi,pinot-common,pinot-query-planner,pinot-core,pinot-query-runtime install -DskipTests -q && mvn -pl pinot-core,pinot-query-runtime test -Dtest=\"AvgAggregationFunctionTest#singleKeyAggregationWithSmallNumGroupsLimitDoesntThrowAIOOBE+multiKeyAggregationWithSmallNumGroupsLimitDoesntThrowAIOOBE,AggregateOperatorTest#testGroupTrimSizeIsDisabledByDefault+testGroupTrimSizeDependsOnContextValue+testGroupTrimHintOverridesContextValue\" -DfailIfNoTests=false",
+  "test_files": [
+    "pinot-controller/src/test/java/org/apache/pinot/controller/helix/ControllerTest.java",
+    "pinot-core/src/test/java/org/apache/pinot/core/query/aggregation/function/AvgAggregationFunctionTest.java",
+    "pinot-integration-tests/src/test/java/org/apache/pinot/integration/tests/GroupByOptionsIntegrationTest.java",
+    "pinot-query-runtime/src/test/java/org/apache/pinot/query/runtime/operator/AggregateOperatorTest.java",
+    "pinot-query-runtime/src/test/java/org/apache/pinot/query/runtime/operator/OperatorTestUtil.java"
+  ],
+  "num_test_files": 5,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4"
+  ],
+  "PASS_TO_PASS": []
+}

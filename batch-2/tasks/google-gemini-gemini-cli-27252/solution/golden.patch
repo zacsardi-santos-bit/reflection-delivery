@@ -1,0 +1,2024 @@
+diff --git a/packages/a2a-server/src/agent/executor.ts b/packages/a2a-server/src/agent/executor.ts
+index 97f4010a8..dbb826937 100644
+--- a/packages/a2a-server/src/agent/executor.ts
++++ b/packages/a2a-server/src/agent/executor.ts
+@@ -93,16 +93,10 @@ export class CoderAgentExecutor implements AgentExecutor {
+     taskId: string,
+   ): Promise<Config> {
+     const workspaceRoot = setTargetDir(agentSettings);
+-    const isTrusted = agentSettings.isTrusted ?? false;
+     loadEnvironment(); // Will override any global env with workspace envs
+-    const settings = loadSettings(workspaceRoot, isTrusted);
++    const settings = loadSettings(workspaceRoot);
+     const extensions = loadExtensions(workspaceRoot);
+-    return loadConfig(
+-      settings,
+-      new SimpleExtensionLoader(extensions),
+-      taskId,
+-      isTrusted,
+-    );
++    return loadConfig(settings, new SimpleExtensionLoader(extensions), taskId);
+   }
+ 
+   /**
+diff --git a/packages/a2a-server/src/config/config.test.ts b/packages/a2a-server/src/config/config.test.ts
+index 9f890d854..c17de943e 100644
+--- a/packages/a2a-server/src/config/config.test.ts
++++ b/packages/a2a-server/src/config/config.test.ts
+@@ -19,9 +19,7 @@ import {
+   isHeadlessMode,
+   FatalAuthenticationError,
+   PolicyDecision,
+-  ApprovalMode,
+   PRIORITY_YOLO_ALLOW_ALL,
+-  createPolicyEngineConfig,
+ } from '@google/gemini-cli-core';
+ 
+ // Mock dependencies
+@@ -55,32 +53,6 @@ vi.mock('@google/gemini-cli-core', async (importOriginal) => {
+     isHeadlessMode: vi.fn().mockReturnValue(false),
+     getCodeAssistServer: vi.fn(),
+     fetchAdminControlsOnce: vi.fn(),
+-    createPolicyEngineConfig: vi
+-      .fn()
+-      .mockImplementation(
+-        (_settings, mode, _defaultPoliciesDir, _interactive) => ({
+-          rules:
+-            mode === actual.ApprovalMode.YOLO
+-              ? [
+-                  {
+-                    toolName: '*',
+-                    decision: actual.PolicyDecision.ALLOW,
+-                    priority: actual.PRIORITY_YOLO_ALLOW_ALL,
+-                    modes: [actual.ApprovalMode.YOLO],
+-                    allowRedirection: true,
+-                  },
+-                ]
+-              : [
+-                  {
+-                    toolName: 'read_file',
+-                    decision: actual.PolicyDecision.ALLOW,
+-                    priority: 1.05,
+-                    source: 'Default: read-only.toml',
+-                  },
+-                ],
+-          checkers: [],
+-        }),
+-      ),
+     coreEvents: {
+       emitAdminSettingsChanged: vi.fn(),
+     },
+@@ -289,85 +261,6 @@ describe('loadConfig', () => {
+     expect((config as any).fileFiltering.customIgnoreFilePaths).toEqual([]);
+   });
+ 
+-  describe('policy engine configuration', () => {
+-    it('should merge V1 and V2 tool settings into policySettings', async () => {
+-      const settings: Settings = {
+-        allowedTools: ['v1-allowed'],
+-        tools: {
+-          allowed: ['v2-allowed'],
+-          exclude: ['v2-exclude'],
+-          core: ['v2-core'],
+-        },
+-        mcpServers: {
+-          test: { command: 'test', args: [] },
+-        },
+-        policyPaths: ['/path/to/policy'],
+-        adminPolicyPaths: ['/path/to/admin/policy'],
+-      };
+-
+-      await loadConfig(settings, mockExtensionLoader, taskId);
+-
+-      expect(createPolicyEngineConfig).toHaveBeenCalledWith(
+-        expect.objectContaining({
+-          tools: {
+-            core: ['v2-core'],
+-            exclude: ['v2-exclude'],
+-            allowed: ['v1-allowed'],
+-          },
+-          mcpServers: settings.mcpServers,
+-          policyPaths: settings.policyPaths,
+-          adminPolicyPaths: settings.adminPolicyPaths,
+-        }),
+-        ApprovalMode.DEFAULT,
+-        undefined,
+-        true,
+-      );
+-    });
+-
+-    it('should use V2 tool settings when V1 is missing', async () => {
+-      const settings: Settings = {
+-        tools: {
+-          allowed: ['v2-allowed'],
+-        },
+-      };
+-
+-      await loadConfig(settings, mockExtensionLoader, taskId);
+-
+-      expect(createPolicyEngineConfig).toHaveBeenCalledWith(
+-        expect.objectContaining({
+-          tools: expect.objectContaining({
+-            allowed: ['v2-allowed'],
+-          }),
+-        }),
+-        ApprovalMode.DEFAULT,
+-        undefined,
+-        true,
+-      );
+-    });
+-
+-    it('should use V1 tool settings when V2 is also present', async () => {
+-      const settings: Settings = {
+-        allowedTools: ['v1-allowed'],
+-        tools: {
+-          allowed: ['v2-allowed'],
+-        },
+-      };
+-
+-      await loadConfig(settings, mockExtensionLoader, taskId);
+-
+-      expect(createPolicyEngineConfig).toHaveBeenCalledWith(
+-        expect.objectContaining({
+-          tools: expect.objectContaining({
+-            allowed: ['v1-allowed'],
+-          }),
+-        }),
+-        ApprovalMode.DEFAULT,
+-        undefined,
+-        true,
+-      );
+-    });
+-  });
+-
+   describe('tool configuration', () => {
+     it('should pass V1 allowedTools to Config properly', async () => {
+       const settings: Settings = {
+@@ -492,19 +385,14 @@ describe('loadConfig', () => {
+         );
+       });
+ 
+-      it('should use default approval mode and load default rules when GEMINI_YOLO_MODE is not true', async () => {
++      it('should use default approval mode and empty rules when GEMINI_YOLO_MODE is not true', async () => {
+         vi.stubEnv('GEMINI_YOLO_MODE', 'false');
+         await loadConfig(mockSettings, mockExtensionLoader, taskId);
+         expect(Config).toHaveBeenCalledWith(
+           expect.objectContaining({
+             approvalMode: 'default',
+             policyEngineConfig: expect.objectContaining({
+-              rules: expect.arrayContaining([
+-                expect.objectContaining({
+-                  toolName: 'read_file',
+-                  decision: PolicyDecision.ALLOW,
+-                }),
+-              ]),
++              rules: [],
+             }),
+           }),
+         );
+diff --git a/packages/a2a-server/src/config/config.ts b/packages/a2a-server/src/config/config.ts
+index 307182724..5e882b143 100644
+--- a/packages/a2a-server/src/config/config.ts
++++ b/packages/a2a-server/src/config/config.ts
+@@ -23,8 +23,8 @@ import {
+   ExperimentFlags,
+   isHeadlessMode,
+   FatalAuthenticationError,
+-  createPolicyEngineConfig,
+-  type PolicySettings,
++  PolicyDecision,
++  PRIORITY_YOLO_ALLOW_ALL,
+   type TelemetryTarget,
+   type ConfigParameters,
+   type ExtensionLoader,
+@@ -38,7 +38,6 @@ export async function loadConfig(
+   settings: Settings,
+   extensionLoader: ExtensionLoader,
+   taskId: string,
+-  trusted: boolean = false,
+ ): Promise<Config> {
+   const workspaceDir = process.cwd();
+ 
+@@ -64,24 +63,6 @@ export async function loadConfig(
+       ? ApprovalMode.YOLO
+       : ApprovalMode.DEFAULT;
+ 
+-  const policySettings: PolicySettings = {
+-    mcpServers: settings.mcpServers,
+-    tools: {
+-      core: settings.coreTools || settings.tools?.core,
+-      exclude: settings.excludeTools || settings.tools?.exclude,
+-      allowed: settings.allowedTools || settings.tools?.allowed,
+-    },
+-    policyPaths: settings.policyPaths,
+-    adminPolicyPaths: settings.adminPolicyPaths,
+-  };
+-
+-  const policyEngineConfig = await createPolicyEngineConfig(
+-    policySettings,
+-    approvalMode,
+-    undefined,
+-    true,
+-  );
+-
+   const configParams: ConfigParameters = {
+     sessionId: taskId,
+     clientName: 'a2a-server',
+@@ -97,7 +78,20 @@ export async function loadConfig(
+     allowedTools: settings.allowedTools || settings.tools?.allowed || undefined,
+     showMemoryUsage: settings.showMemoryUsage || false,
+     approvalMode,
+-    policyEngineConfig,
++    policyEngineConfig: {
++      rules:
++        approvalMode === ApprovalMode.YOLO
++          ? [
++              {
++                toolName: '*',
++                decision: PolicyDecision.ALLOW,
++                priority: PRIORITY_YOLO_ALLOW_ALL,
++                modes: [ApprovalMode.YOLO],
++                allowRedirection: true,
++              },
++            ]
++          : [],
++    },
+     mcpServers: settings.mcpServers,
+     cwd: workspaceDir,
+     telemetry: {
+@@ -124,7 +118,7 @@ export async function loadConfig(
+     },
+     ideMode: false,
+     folderTrust,
+-    trustedFolder: trusted,
++    trustedFolder: true,
+     extensionLoader,
+     checkpointing,
+     interactive: true,
+diff --git a/packages/a2a-server/src/config/settings.test.ts b/packages/a2a-server/src/config/settings.test.ts
+index a51d39f32..ab80bced2 100644
+--- a/packages/a2a-server/src/config/settings.test.ts
++++ b/packages/a2a-server/src/config/settings.test.ts
+@@ -9,7 +9,7 @@ import * as fs from 'node:fs';
+ import * as path from 'node:path';
+ import * as os from 'node:os';
+ import { loadSettings, USER_SETTINGS_PATH } from './settings.js';
+-import { debugLogger, checkPathTrust } from '@google/gemini-cli-core';
++import { debugLogger } from '@google/gemini-cli-core';
+ 
+ const mocks = vi.hoisted(() => {
+   const suffix = Math.random().toString(36).slice(2);
+@@ -40,8 +40,6 @@ vi.mock('@google/gemini-cli-core', async (importOriginal) => {
+     },
+     getErrorMessage: (error: unknown) => String(error),
+     homedir: () => path.join(os.tmpdir(), `gemini-home-${mocks.suffix}`),
+-    checkPathTrust: vi.fn(() => ({ isTrusted: false })),
+-    isHeadlessMode: vi.fn(() => true),
+   };
+ });
+ 
+@@ -148,7 +146,7 @@ describe('loadSettings', () => {
+     );
+     fs.writeFileSync(workspaceSettingsPath, JSON.stringify(workspaceSettings));
+ 
+-    const result = loadSettings(mockWorkspaceDir, true);
++    const result = loadSettings(mockWorkspaceDir);
+     // Primitive value overwritten
+     expect(result.showMemoryUsage).toBe(true);
+ 
+@@ -156,78 +154,4 @@ describe('loadSettings', () => {
+     expect(result.fileFiltering?.respectGitIgnore).toBe(false);
+     expect(result.fileFiltering?.enableRecursiveFileSearch).toBeUndefined();
+   });
+-
+-  describe('security', () => {
+-    it('should NOT load workspace settings if workspace is NOT trusted', () => {
+-      const userSettings = { showMemoryUsage: false };
+-      fs.writeFileSync(USER_SETTINGS_PATH, JSON.stringify(userSettings));
+-
+-      const workspaceSettings = { showMemoryUsage: true };
+-      const workspaceSettingsPath = path.join(
+-        mockGeminiWorkspaceDir,
+-        'settings.json',
+-      );
+-      fs.writeFileSync(
+-        workspaceSettingsPath,
+-        JSON.stringify(workspaceSettings),
+-      );
+-
+-      // checkPathTrust is mocked to return isTrusted: false by default
+-      const result = loadSettings(mockWorkspaceDir);
+-      expect(result.showMemoryUsage).toBe(false);
+-    });
+-
+-    it('should load workspace settings if workspace IS trusted', () => {
+-      vi.mocked(checkPathTrust).mockReturnValueOnce({
+-        isTrusted: true,
+-        source: 'file',
+-      });
+-      const userSettings = { showMemoryUsage: false };
+-      fs.writeFileSync(USER_SETTINGS_PATH, JSON.stringify(userSettings));
+-
+-      const workspaceSettings = { showMemoryUsage: true };
+-      const workspaceSettingsPath = path.join(
+-        mockGeminiWorkspaceDir,
+-        'settings.json',
+-      );
+-      fs.writeFileSync(
+-        workspaceSettingsPath,
+-        JSON.stringify(workspaceSettings),
+-      );
+-
+-      const result = loadSettings(mockWorkspaceDir);
+-      expect(result.showMemoryUsage).toBe(true);
+-    });
+-
+-    it('should NOT allow workspace settings to override adminPolicyPaths or policyPaths even if trusted', () => {
+-      vi.mocked(checkPathTrust).mockReturnValueOnce({
+-        isTrusted: true,
+-        source: 'file',
+-      });
+-      const userSettings = {
+-        adminPolicyPaths: ['/trusted/admin'],
+-        policyPaths: ['/trusted/user'],
+-      };
+-      fs.writeFileSync(USER_SETTINGS_PATH, JSON.stringify(userSettings));
+-
+-      const workspaceSettings = {
+-        adminPolicyPaths: ['./malicious/admin'],
+-        policyPaths: ['./malicious/user'],
+-        showMemoryUsage: true,
+-      };
+-      const workspaceSettingsPath = path.join(
+-        mockGeminiWorkspaceDir,
+-        'settings.json',
+-      );
+-      fs.writeFileSync(
+-        workspaceSettingsPath,
+-        JSON.stringify(workspaceSettings),
+-      );
+-
+-      const result = loadSettings(mockWorkspaceDir);
+-      expect(result.showMemoryUsage).toBe(true);
+-      expect(result.adminPolicyPaths).toEqual(['/trusted/admin']);
+-      expect(result.policyPaths).toEqual(['/trusted/user']);
+-    });
+-  });
+ });
+diff --git a/packages/a2a-server/src/config/settings.ts b/packages/a2a-server/src/config/settings.ts
+index 8bb44c56c..ced11a4da 100644
+--- a/packages/a2a-server/src/config/settings.ts
++++ b/packages/a2a-server/src/config/settings.ts
+@@ -14,8 +14,6 @@ import {
+   getErrorMessage,
+   type TelemetrySettings,
+   homedir,
+-  checkPathTrust,
+-  isHeadlessMode,
+ } from '@google/gemini-cli-core';
+ import stripJsonComments from 'strip-json-comments';
+ 
+@@ -53,8 +51,6 @@ export interface Settings {
+   experimental?: {
+     enableAgents?: boolean;
+   };
+-  policyPaths?: string[];
+-  adminPolicyPaths?: string[];
+ }
+ 
+ export interface SettingsError {
+@@ -68,16 +64,13 @@ export interface CheckpointingSettings {
+ 
+ /**
+  * Loads settings from user and workspace directories.
+- * Project settings override user settings if the workspace is trusted.
++ * Project settings override user settings.
+  *
+  * How is it different to gemini-cli/cli: Returns already merged settings rather
+  * than `LoadedSettings` (unnecessary since we are not modifying users
+  * settings.json).
+  */
+-export function loadSettings(
+-  workspaceDir: string,
+-  isTrustedOverride?: boolean,
+-): Settings {
++export function loadSettings(workspaceDir: string): Settings {
+   let userSettings: Settings = {};
+   let workspaceSettings: Settings = {};
+   const settingsErrors: SettingsError[] = [];
+@@ -99,39 +92,27 @@ export function loadSettings(
+     });
+   }
+ 
+-  let isTrusted = isTrustedOverride;
+-  if (isTrusted === undefined) {
+-    const { isTrusted: trustResult } = checkPathTrust({
+-      path: workspaceDir,
+-      isFolderTrustEnabled: userSettings.folderTrust ?? true,
+-      isHeadless: isHeadlessMode(),
+-    });
+-    isTrusted = trustResult ?? false;
+-  }
+-
+   const workspaceSettingsPath = path.join(
+     workspaceDir,
+     GEMINI_DIR,
+     'settings.json',
+   );
+ 
+-  // Load workspace settings only if trusted
+-  if (isTrusted) {
+-    try {
+-      if (fs.existsSync(workspaceSettingsPath)) {
+-        const projectContent = fs.readFileSync(workspaceSettingsPath, 'utf-8');
+-        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+-        const parsedWorkspaceSettings = JSON.parse(
+-          stripJsonComments(projectContent),
+-        ) as Settings;
+-        workspaceSettings = resolveEnvVarsInObject(parsedWorkspaceSettings);
+-      }
+-    } catch (error: unknown) {
+-      settingsErrors.push({
+-        message: getErrorMessage(error),
+-        path: workspaceSettingsPath,
+-      });
++  // Load workspace settings
++  try {
++    if (fs.existsSync(workspaceSettingsPath)) {
++      const projectContent = fs.readFileSync(workspaceSettingsPath, 'utf-8');
++      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
++      const parsedWorkspaceSettings = JSON.parse(
++        stripJsonComments(projectContent),
++      ) as Settings;
++      workspaceSettings = resolveEnvVarsInObject(parsedWorkspaceSettings);
+     }
++  } catch (error: unknown) {
++    settingsErrors.push({
++      message: getErrorMessage(error),
++      path: workspaceSettingsPath,
++    });
+   }
+ 
+   if (settingsErrors.length > 0) {
+@@ -144,18 +125,10 @@ export function loadSettings(
+ 
+   // If there are overlapping keys, the values of workspaceSettings will
+   // override values from userSettings
+-  const mergedSettings = {
++  return {
+     ...userSettings,
+     ...workspaceSettings,
+   };
+-
+-  // Security: ensure policyPaths and adminPolicyPaths are only loaded from trusted, user-level
+-  // configuration and cannot be overridden by workspace-level settings, even if the
+-  // workspace is trusted.
+-  mergedSettings.policyPaths = userSettings.policyPaths;
+-  mergedSettings.adminPolicyPaths = userSettings.adminPolicyPaths;
+-
+-  return mergedSettings;
+ }
+ 
+ function resolveEnvVarsInString(value: string): string {
+diff --git a/packages/a2a-server/src/http/app.ts b/packages/a2a-server/src/http/app.ts
+index e647ecb05..35ca48949 100644
+--- a/packages/a2a-server/src/http/app.ts
++++ b/packages/a2a-server/src/http/app.ts
+@@ -30,8 +30,6 @@ import {
+   debugLogger,
+   SimpleExtensionLoader,
+   GitService,
+-  checkPathTrust,
+-  isHeadlessMode,
+ } from '@google/gemini-cli-core';
+ import type { Command, CommandArgument } from '../commands/types.js';
+ 
+@@ -199,23 +197,12 @@ export async function createApp() {
+     // Load the server configuration once on startup.
+     const workspaceRoot = setTargetDir(undefined);
+     loadEnvironment();
+-
+-    // Use a temporary settings load to check if folder trust is enabled.
+-    // This is similar to how the CLI handles the initial trust check.
+-    const initialSettings = loadSettings(workspaceRoot, false);
+-    const { isTrusted } = checkPathTrust({
+-      path: workspaceRoot,
+-      isFolderTrustEnabled: initialSettings.folderTrust ?? true,
+-      isHeadless: isHeadlessMode(),
+-    });
+-
+-    const settings = loadSettings(workspaceRoot, isTrusted ?? false);
++    const settings = loadSettings(workspaceRoot);
+     const extensions = loadExtensions(workspaceRoot);
+     const config = await loadConfig(
+       settings,
+       new SimpleExtensionLoader(extensions),
+       'a2a-server',
+-      isTrusted ?? false,
+     );
+ 
+     let git: GitService | undefined;
+diff --git a/packages/a2a-server/src/types.ts b/packages/a2a-server/src/types.ts
+index b6f397140..bce233c9d 100644
+--- a/packages/a2a-server/src/types.ts
++++ b/packages/a2a-server/src/types.ts
+@@ -47,7 +47,6 @@ export interface AgentSettings {
+   kind: CoderAgentEvent.StateAgentSettingsEvent;
+   workspacePath: string;
+   autoExecute?: boolean;
+-  isTrusted?: boolean;
+ }
+ 
+ export interface ToolCallConfirmation {
+diff --git a/packages/cli/src/acp/acpSession.ts b/packages/cli/src/acp/acpSession.ts
+index d3c0aa3c9..75ec7af49 100644
+--- a/packages/cli/src/acp/acpSession.ts
++++ b/packages/cli/src/acp/acpSession.ts
+@@ -34,6 +34,9 @@ import {
+   isNodeError,
+   REFERENCE_CONTENT_START,
+   InvalidStreamError,
++  MessageBusType,
++  PolicyDecision,
++  type ToolConfirmationRequest,
+ } from '@google/gemini-cli-core';
+ import * as acp from '@agentclientprotocol/sdk';
+ import type { Part, FunctionCall } from '@google/genai';
+@@ -61,6 +64,7 @@ export class Session {
+   private pendingPrompt: AbortController | null = null;
+   private commandHandler = new CommandHandler();
+   private callIdCounter = 0;
++  private readonly disposeController = new AbortController();
+ 
+   private generateCallId(name: string): string {
+     return `${name}-${Date.now()}-${++this.callIdCounter}`;
+@@ -77,8 +81,98 @@ export class Session {
+       CoreEvent.ApprovalModeChanged,
+       this.handleApprovalModeChanged,
+     );
++
++    // Subscribe to tool confirmation requests to handle policy checks (e.g. auto-allowing safe shell commands)
++    this.context.config
++      .getMessageBus()
++      ?.subscribe(
++        MessageBusType.TOOL_CONFIRMATION_REQUEST,
++        this.handleToolConfirmationRequest,
++        { signal: this.disposeController.signal },
++      );
+   }
+ 
++  private handleToolConfirmationRequest = async (
++    request: ToolConfirmationRequest,
++  ) => {
++    try {
++      const policyEngine = this.context.config.getPolicyEngine?.();
++      const messageBus = this.context.config.getMessageBus();
++
++      if (!messageBus) {
++        return;
++      }
++
++      if (!policyEngine) {
++        debugLogger.warn(
++          'Policy engine missing. Denying tool confirmation request.',
++        );
++        await messageBus.publish({
++          type: MessageBusType.TOOL_CONFIRMATION_RESPONSE,
++          correlationId: request.correlationId,
++          confirmed: false,
++          requiresUserConfirmation: false,
++        });
++        return;
++      }
++
++      const toolName = request.toolCall.name?.trim();
++      if (!toolName) {
++        debugLogger.warn(
++          'Tool confirmation request missing tool name. Denying.',
++        );
++        await messageBus.publish({
++          type: MessageBusType.TOOL_CONFIRMATION_RESPONSE,
++          correlationId: request.correlationId,
++          confirmed: false,
++          requiresUserConfirmation: false,
++        });
++        return;
++      }
++
++      const tool = this.context.toolRegistry.getTool(toolName);
++      if (!tool) {
++        debugLogger.warn(
++          `Tool confirmation request for unknown tool: ${toolName}. Denying.`,
++        );
++        await messageBus.publish({
++          type: MessageBusType.TOOL_CONFIRMATION_RESPONSE,
++          correlationId: request.correlationId,
++          confirmed: false,
++          requiresUserConfirmation: false,
++        });
++        return;
++      }
++
++      const serverName =
++        tool instanceof DiscoveredMCPTool ? tool.serverName : undefined;
++      const toolAnnotations = tool.toolAnnotations;
++
++      const result = await policyEngine.check(
++        request.toolCall,
++        serverName,
++        toolAnnotations,
++        request.subagent,
++      );
++
++      await messageBus.publish({
++        type: MessageBusType.TOOL_CONFIRMATION_RESPONSE,
++        correlationId: request.correlationId,
++        confirmed: result.decision === PolicyDecision.ALLOW,
++        requiresUserConfirmation: result.decision === PolicyDecision.ASK_USER,
++      });
++    } catch (error) {
++      debugLogger.error('Error handling tool confirmation request:', error);
++      // Fail closed on exception
++      await this.context.config.getMessageBus()?.publish({
++        type: MessageBusType.TOOL_CONFIRMATION_RESPONSE,
++        correlationId: request.correlationId,
++        confirmed: false,
++        requiresUserConfirmation: false,
++      });
++    }
++  };
++
+   private handleApprovalModeChanged = (payload: ApprovalModeChangedPayload) => {
+     if (payload.sessionId === this.id) {
+       void this.sendUpdate({
+@@ -96,6 +190,7 @@ export class Session {
+       CoreEvent.ApprovalModeChanged,
+       this.handleApprovalModeChanged,
+     );
++    this.disposeController.abort();
+   }
+ 
+   async cancelPendingPrompt(): Promise<void> {
+diff --git a/packages/core/src/agents/remote-session-invocation.test.ts b/packages/core/src/agents/remote-session-invocation.test.ts
+deleted file mode 100644
+index 555af74ad..000000000
+--- a/packages/core/src/agents/remote-session-invocation.test.ts
++++ /dev/null
+@@ -1,666 +0,0 @@
+-/**
+- * @license
+- * Copyright 2026 Google LLC
+- * SPDX-License-Identifier: Apache-2.0
+- */
+-
+-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+-import { RemoteSessionInvocation } from './remote-session-invocation.js';
+-import { RemoteSubagentSession } from './remote-subagent-protocol.js';
+-import {
+-  type RemoteAgentDefinition,
+-  type SubagentProgress,
+-  SubagentState,
+-} from './types.js';
+-import { createMockMessageBus } from '../test-utils/mock-message-bus.js';
+-import type { AgentLoopContext } from '../config/agent-loop-context.js';
+-import type { Config } from '../config/config.js';
+-import type { ToolResult } from '../tools/tools.js';
+-import type { AgentEvent } from '../agent/types.js';
+-
+-vi.mock('./remote-subagent-protocol.js');
+-
+-const mockDefinition: RemoteAgentDefinition = {
+-  name: 'test-agent',
+-  kind: 'remote',
+-  agentCardUrl: 'http://test-agent/card',
+-  displayName: 'Test Agent',
+-  description: 'A test agent',
+-  inputConfig: { inputSchema: { type: 'object' } },
+-};
+-
+-const mockMessageBus = createMockMessageBus();
+-
+-interface MockSessionSetupOptions {
+-  result?: ToolResult;
+-  error?: Error;
+-  progress?: SubagentProgress;
+-  sessionState?: { contextId?: string; taskId?: string };
+-}
+-
+-function setupMockSession(options: MockSessionSetupOptions = {}) {
+-  const {
+-    result = {
+-      llmContent: [{ text: 'done' }],
+-      returnDisplay: {
+-        isSubagentProgress: true,
+-        agentName: 'Test Agent',
+-        state: SubagentState.COMPLETED,
+-        result: 'done',
+-        recentActivity: [],
+-      } satisfies SubagentProgress,
+-    },
+-    error,
+-    progress,
+-    sessionState = {},
+-  } = options;
+-
+-  const subscriberCallbacks: Array<(event: AgentEvent) => void> = [];
+-
+-  const mockSession = {
+-    send: vi.fn().mockResolvedValue({ streamId: 'stream-1' }),
+-    getResult: error
+-      ? vi.fn().mockRejectedValue(error)
+-      : vi.fn().mockResolvedValue(result),
+-    getLatestProgress: vi.fn().mockReturnValue(progress),
+-    getSessionState: vi.fn().mockReturnValue(sessionState),
+-    subscribe: vi.fn((cb: (event: AgentEvent) => void) => {
+-      subscriberCallbacks.push(cb);
+-      return vi.fn(); // unsubscribe
+-    }),
+-    abort: vi.fn(),
+-  };
+-
+-  vi.mocked(RemoteSubagentSession).mockImplementation(
+-    () => mockSession as unknown as RemoteSubagentSession,
+-  );
+-
+-  return {
+-    mockSession,
+-    subscriberCallbacks,
+-    /** Fire a message event through all subscribed callbacks. */
+-    emitEvent(event: AgentEvent) {
+-      for (const cb of subscriberCallbacks) {
+-        cb(event);
+-      }
+-    },
+-  };
+-}
+-
+-describe('RemoteSessionInvocation', () => {
+-  let mockContext: AgentLoopContext;
+-
+-  beforeEach(() => {
+-    vi.clearAllMocks();
+-
+-    const mockConfig = {
+-      getA2AClientManager: vi.fn().mockReturnValue({}),
+-      injectionService: {
+-        getLatestInjectionIndex: vi.fn().mockReturnValue(0),
+-      },
+-    } as unknown as Config;
+-
+-    mockContext = { config: mockConfig } as unknown as AgentLoopContext;
+-
+-    // Clear the static sessionState map between tests
+-    (
+-      RemoteSessionInvocation as unknown as {
+-        sessionState?: Map<string, unknown>;
+-      }
+-    ).sessionState?.clear();
+-  });
+-
+-  afterEach(() => {
+-    vi.restoreAllMocks();
+-  });
+-
+-  // ---------------------------------------------------------------------------
+-  // Constructor Validation
+-  // ---------------------------------------------------------------------------
+-
+-  describe('Constructor Validation', () => {
+-    it('accepts valid input with string query', () => {
+-      expect(() => {
+-        new RemoteSessionInvocation(
+-          mockDefinition,
+-          mockContext,
+-          { query: 'hello' },
+-          mockMessageBus,
+-        );
+-      }).not.toThrow();
+-    });
+-
+-    it('accepts missing query (defaults to "Get Started!")', () => {
+-      expect(() => {
+-        new RemoteSessionInvocation(
+-          mockDefinition,
+-          mockContext,
+-          {},
+-          mockMessageBus,
+-        );
+-      }).not.toThrow();
+-    });
+-
+-    it('throws if query is not a string', () => {
+-      expect(() => {
+-        new RemoteSessionInvocation(
+-          mockDefinition,
+-          mockContext,
+-          { query: 123 },
+-          mockMessageBus,
+-        );
+-      }).toThrow("requires a string 'query' input");
+-    });
+-
+-    it('throws if A2AClientManager is not available', () => {
+-      const noA2AConfig = {
+-        getA2AClientManager: vi.fn().mockReturnValue(undefined),
+-        injectionService: {
+-          getLatestInjectionIndex: vi.fn().mockReturnValue(0),
+-        },
+-      } as unknown as Config;
+-      const noA2AContext = {
+-        config: noA2AConfig,
+-      } as unknown as AgentLoopContext;
+-
+-      expect(() => {
+-        new RemoteSessionInvocation(
+-          mockDefinition,
+-          noA2AContext,
+-          { query: 'hi' },
+-          mockMessageBus,
+-        );
+-      }).toThrow('A2AClientManager is not available');
+-    });
+-  });
+-
+-  // ---------------------------------------------------------------------------
+-  // Execution Logic
+-  // ---------------------------------------------------------------------------
+-
+-  describe('Execution Logic', () => {
+-    it('should create session and return result', async () => {
+-      const completedProgress: SubagentProgress = {
+-        isSubagentProgress: true,
+-        agentName: 'Test Agent',
+-        state: SubagentState.COMPLETED,
+-        result: 'Agent output',
+-        recentActivity: [],
+-      };
+-      const expectedResult: ToolResult = {
+-        llmContent: [{ text: 'Agent output' }],
+-        returnDisplay: completedProgress,
+-      };
+-
+-      setupMockSession({
+-        result: expectedResult,
+-        progress: completedProgress,
+-      });
+-
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'do stuff' },
+-        mockMessageBus,
+-      );
+-
+-      const result = await invocation.execute({
+-        abortSignal: new AbortController().signal,
+-      });
+-
+-      expect(RemoteSubagentSession).toHaveBeenCalledOnce();
+-      expect(result).toBe(expectedResult);
+-    });
+-
+-    it('should pass initial state from static map to session', async () => {
+-      const priorState = { contextId: 'ctx-42', taskId: 'task-42' };
+-
+-      // Seed the static map before constructing the invocation
+-      (
+-        RemoteSessionInvocation as unknown as {
+-          sessionState: Map<string, unknown>;
+-        }
+-      ).sessionState.set('test-agent::http://test-agent/card', priorState);
+-
+-      setupMockSession();
+-
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-      await invocation.execute({
+-        abortSignal: new AbortController().signal,
+-      });
+-
+-      // Verify the session constructor received the prior state
+-      expect(RemoteSubagentSession).toHaveBeenCalledWith(
+-        mockDefinition,
+-        mockContext,
+-        mockMessageBus,
+-        priorState,
+-      );
+-    });
+-
+-    it('should persist session state in finally block', async () => {
+-      const newState = { contextId: 'ctx-new', taskId: 'task-new' };
+-      setupMockSession({ sessionState: newState });
+-
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-      await invocation.execute({
+-        abortSignal: new AbortController().signal,
+-      });
+-
+-      // Verify the state was persisted in the static map
+-      const storedState = (
+-        RemoteSessionInvocation as unknown as {
+-          sessionState: Map<string, { contextId?: string; taskId?: string }>;
+-        }
+-      ).sessionState.get('test-agent::http://test-agent/card');
+-      expect(storedState).toEqual(newState);
+-    });
+-
+-    it('should persist session state across invocations', async () => {
+-      // First invocation returns state
+-      const firstState = { contextId: 'ctx-1', taskId: 'task-1' };
+-      setupMockSession({ sessionState: firstState });
+-
+-      const invocation1 = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'first' },
+-        mockMessageBus,
+-      );
+-      await invocation1.execute({
+-        abortSignal: new AbortController().signal,
+-      });
+-
+-      // Second invocation — the mock constructor should receive firstState
+-      const secondState = { contextId: 'ctx-2', taskId: 'task-2' };
+-      setupMockSession({ sessionState: secondState });
+-
+-      const invocation2 = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'second' },
+-        mockMessageBus,
+-      );
+-      await invocation2.execute({
+-        abortSignal: new AbortController().signal,
+-      });
+-
+-      // The second invocation should have received the first's state
+-      const secondCallArgs = vi.mocked(RemoteSubagentSession).mock.calls[1];
+-      expect(secondCallArgs[3]).toEqual(firstState);
+-    });
+-
+-    it('should subscribe for progress updates', async () => {
+-      const completedProgress: SubagentProgress = {
+-        isSubagentProgress: true,
+-        agentName: 'Test Agent',
+-        state: SubagentState.RUNNING,
+-        result: 'partial',
+-        recentActivity: [],
+-      };
+-      const { mockSession, emitEvent } = setupMockSession({
+-        progress: completedProgress,
+-      });
+-
+-      const updateOutput = vi.fn();
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-
+-      // Override getResult to emit a message event mid-execution
+-      mockSession.getResult.mockImplementation(async () => {
+-        emitEvent({
+-          type: 'message',
+-          id: 'e1',
+-          timestamp: new Date().toISOString(),
+-          streamId: 's1',
+-          role: 'agent',
+-          content: [{ type: 'text', text: 'hello' }],
+-        });
+-        return {
+-          llmContent: [{ text: 'done' }],
+-          returnDisplay: completedProgress,
+-        };
+-      });
+-
+-      await invocation.execute({
+-        abortSignal: new AbortController().signal,
+-        updateOutput,
+-      });
+-
+-      // subscribe should have been called (at least once for progress, possibly for parent)
+-      expect(mockSession.subscribe).toHaveBeenCalled();
+-      // updateOutput should have been called with the progress from getLatestProgress
+-      expect(updateOutput).toHaveBeenCalledWith(
+-        expect.objectContaining({
+-          isSubagentProgress: true,
+-        }),
+-      );
+-    });
+-
+-    it('should handle abort gracefully', async () => {
+-      const controller = new AbortController();
+-
+-      const partialProgress: SubagentProgress = {
+-        isSubagentProgress: true,
+-        agentName: 'Test Agent',
+-        state: SubagentState.RUNNING,
+-        result: '',
+-        recentActivity: [
+-          {
+-            id: 'a1',
+-            type: 'thought',
+-            content: 'Thinking...',
+-            status: SubagentState.RUNNING,
+-          },
+-        ],
+-      };
+-
+-      const { mockSession } = setupMockSession({ progress: partialProgress });
+-
+-      // When getResult resolves, the signal will already be aborted
+-      mockSession.getResult.mockImplementation(async () => {
+-        controller.abort();
+-        return {
+-          llmContent: [{ text: '' }],
+-          returnDisplay: '',
+-        };
+-      });
+-
+-      const updateOutput = vi.fn();
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-
+-      const result = await invocation.execute({
+-        abortSignal: controller.signal,
+-        updateOutput,
+-      });
+-
+-      expect(result.returnDisplay).toMatchObject({ state: 'cancelled' });
+-      expect(
+-        (result.returnDisplay as SubagentProgress).recentActivity[0].status,
+-      ).toBe(SubagentState.CANCELLED);
+-      expect(result.llmContent).toEqual([
+-        { text: 'Operation cancelled by user' },
+-      ]);
+-    });
+-  });
+-
+-  // ---------------------------------------------------------------------------
+-  // Error Handling
+-  // ---------------------------------------------------------------------------
+-
+-  describe('Error Handling', () => {
+-    it('should handle execution errors gracefully', async () => {
+-      setupMockSession({ error: new Error('Network failure') });
+-
+-      const updateOutput = vi.fn();
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-
+-      const result = await invocation.execute({
+-        abortSignal: new AbortController().signal,
+-        updateOutput,
+-      });
+-
+-      expect(result.returnDisplay).toMatchObject({ state: 'error' });
+-      expect((result.returnDisplay as SubagentProgress).result).toContain(
+-        'Network failure',
+-      );
+-      // updateOutput should be called with error progress
+-      expect(updateOutput).toHaveBeenCalledWith(
+-        expect.objectContaining({ state: 'error' }),
+-      );
+-    });
+-
+-    it('should include partial output in error display', async () => {
+-      const partialProgress: SubagentProgress = {
+-        isSubagentProgress: true,
+-        agentName: 'Test Agent',
+-        state: SubagentState.RUNNING,
+-        result: 'Partial work so far',
+-        recentActivity: [
+-          {
+-            id: 'a1',
+-            type: 'thought',
+-            content: 'Thinking...',
+-            status: SubagentState.RUNNING,
+-          },
+-        ],
+-      };
+-
+-      setupMockSession({
+-        error: new Error('mid-stream error'),
+-        progress: partialProgress,
+-      });
+-
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-
+-      const result = await invocation.execute({
+-        abortSignal: new AbortController().signal,
+-      });
+-
+-      const display = result.returnDisplay as SubagentProgress;
+-      // Should contain both the partial output and the error
+-      expect(display.result).toContain('Partial work so far');
+-      expect(display.result).toContain('mid-stream error');
+-      // Should preserve and update partial activity status to ERROR
+-      expect(display.recentActivity).toHaveLength(1);
+-      expect(display.recentActivity[0].content).toBe('Thinking...');
+-      expect(display.recentActivity[0].status).toBe(SubagentState.ERROR);
+-    });
+-
+-    it('should clean up listeners in finally', async () => {
+-      const { mockSession } = setupMockSession();
+-
+-      const controller = new AbortController();
+-      const removeEventListenerSpy = vi.spyOn(
+-        controller.signal,
+-        'removeEventListener',
+-      );
+-
+-      const onAgentEvent = vi.fn();
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-        { onAgentEvent },
+-      );
+-
+-      await invocation.execute({
+-        abortSignal: controller.signal,
+-      });
+-
+-      // removeEventListener should have been called for the abort listener
+-      expect(removeEventListenerSpy).toHaveBeenCalledWith(
+-        'abort',
+-        expect.any(Function),
+-      );
+-
+-      // All unsubscribe functions returned by subscribe during execute should be called
+-      const postExecuteUnsubscribes = mockSession.subscribe.mock.results.map(
+-        (r) => r.value,
+-      );
+-      for (const unsub of postExecuteUnsubscribes) {
+-        expect(unsub).toHaveBeenCalled();
+-      }
+-    });
+-  });
+-
+-  // ---------------------------------------------------------------------------
+-  // SessionState Management
+-  // ---------------------------------------------------------------------------
+-
+-  describe('SessionState Management', () => {
+-    it('should use composite name::url as session state key', async () => {
+-      const secondDefinition: RemoteAgentDefinition = {
+-        ...mockDefinition,
+-        name: 'other-agent',
+-        displayName: 'Other Agent',
+-        agentCardUrl: 'http://other-agent/card',
+-      };
+-
+-      // First agent
+-      setupMockSession({
+-        sessionState: { contextId: 'ctx-a' },
+-      });
+-      const inv1 = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-      await inv1.execute({ abortSignal: new AbortController().signal });
+-
+-      // Second agent
+-      setupMockSession({
+-        sessionState: { contextId: 'ctx-b' },
+-      });
+-      const inv2 = new RemoteSessionInvocation(
+-        secondDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-      await inv2.execute({ abortSignal: new AbortController().signal });
+-
+-      const stateMap = (
+-        RemoteSessionInvocation as unknown as {
+-          sessionState: Map<string, { contextId?: string; taskId?: string }>;
+-        }
+-      ).sessionState;
+-
+-      // Each agent should have its own entry keyed by name::url
+-      expect(stateMap.get('test-agent::http://test-agent/card')).toEqual({
+-        contextId: 'ctx-a',
+-      });
+-      expect(stateMap.get('other-agent::http://other-agent/card')).toEqual({
+-        contextId: 'ctx-b',
+-      });
+-    });
+-
+-    it('should isolate same-name agents with different URLs', async () => {
+-      const defA: RemoteAgentDefinition = {
+-        ...mockDefinition,
+-        agentCardUrl: 'http://host-a/card',
+-      };
+-      const defB: RemoteAgentDefinition = {
+-        ...mockDefinition,
+-        agentCardUrl: 'http://host-b/card',
+-      };
+-
+-      // Agent A
+-      setupMockSession({ sessionState: { contextId: 'ctx-a' } });
+-      const invA = new RemoteSessionInvocation(
+-        defA,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-      await invA.execute({ abortSignal: new AbortController().signal });
+-
+-      // Agent B (same name, different URL)
+-      setupMockSession({ sessionState: { contextId: 'ctx-b' } });
+-      const invB = new RemoteSessionInvocation(
+-        defB,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-      await invB.execute({ abortSignal: new AbortController().signal });
+-
+-      const stateMap = (
+-        RemoteSessionInvocation as unknown as {
+-          sessionState: Map<string, { contextId?: string; taskId?: string }>;
+-        }
+-      ).sessionState;
+-
+-      expect(stateMap.get('test-agent::http://host-a/card')).toEqual({
+-        contextId: 'ctx-a',
+-      });
+-      expect(stateMap.get('test-agent::http://host-b/card')).toEqual({
+-        contextId: 'ctx-b',
+-      });
+-    });
+-
+-    it('should fall back to name-only key when URL is unavailable', async () => {
+-      const noUrlDef: RemoteAgentDefinition = {
+-        ...mockDefinition,
+-        agentCardUrl: undefined,
+-      };
+-
+-      setupMockSession({ sessionState: { contextId: 'ctx-no-url' } });
+-      const inv = new RemoteSessionInvocation(
+-        noUrlDef,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-      await inv.execute({ abortSignal: new AbortController().signal });
+-
+-      const stateMap = (
+-        RemoteSessionInvocation as unknown as {
+-          sessionState: Map<string, { contextId?: string; taskId?: string }>;
+-        }
+-      ).sessionState;
+-
+-      expect(stateMap.get('test-agent')).toEqual({ contextId: 'ctx-no-url' });
+-    });
+-
+-    it('should persist state even on error', async () => {
+-      const stateOnError = { contextId: 'ctx-err', taskId: 'task-err' };
+-      setupMockSession({
+-        error: new Error('boom'),
+-        sessionState: stateOnError,
+-      });
+-
+-      const invocation = new RemoteSessionInvocation(
+-        mockDefinition,
+-        mockContext,
+-        { query: 'hi' },
+-        mockMessageBus,
+-      );
+-
+-      await invocation.execute({
+-        abortSignal: new AbortController().signal,
+-      });
+-
+-      const stateMap = (
+-        RemoteSessionInvocation as unknown as {
+-          sessionState: Map<string, { contextId?: string; taskId?: string }>;
+-        }
+-      ).sessionState;
+-
+-      expect(stateMap.get('test-agent::http://test-agent/card')).toEqual(
+-        stateOnError,
+-      );
+-    });
+-  });
+-});
+diff --git a/packages/core/src/agents/remote-session-invocation.ts b/packages/core/src/agents/remote-session-invocation.ts
+deleted file mode 100644
+index 6ff32ba41..000000000
+--- a/packages/core/src/agents/remote-session-invocation.ts
++++ /dev/null
+@@ -1,281 +0,0 @@
+-/**
+- * @license
+- * Copyright 2026 Google LLC
+- * SPDX-License-Identifier: Apache-2.0
+- */
+-
+-import {
+-  BaseToolInvocation,
+-  type ToolConfirmationOutcome,
+-  type ToolResult,
+-  type ToolCallConfirmationDetails,
+-  type ExecuteOptions,
+-} from '../tools/tools.js';
+-import {
+-  DEFAULT_QUERY_STRING,
+-  type RemoteAgentInputs,
+-  type RemoteAgentDefinition,
+-  type AgentInputs,
+-  type SubagentProgress,
+-  type SubagentActivityItem,
+-  SubagentState,
+-  getRemoteAgentTargetUrl,
+-} from './types.js';
+-import { type AgentLoopContext } from '../config/agent-loop-context.js';
+-import type { MessageBus } from '../confirmation-bus/message-bus.js';
+-import { A2AAgentError } from './a2a-errors.js';
+-import { RemoteSubagentSession } from './remote-subagent-protocol.js';
+-import type { AgentEvent } from '../agent/types.js';
+-
+-/** Optional configuration for remote agent invocations. */
+-export interface SubagentInvocationOptions {
+-  toolName?: string;
+-  toolDisplayName?: string;
+-  onAgentEvent?: (event: AgentEvent) => void;
+-}
+-
+-/**
+- * Session-based remote agent invocation.
+- *
+- * This implementation delegates execution to {@link RemoteSubagentSession},
+- * which wraps the A2A client streaming behind the AgentProtocol interface.
+- *
+- * Cross-invocation A2A session state (contextId/taskId) is persisted via a
+- * static map keyed by a composite of agent name and target URL. This ensures
+- * agents with the same name but different endpoints maintain independent state.
+- */
+-export class RemoteSessionInvocation extends BaseToolInvocation<
+-  RemoteAgentInputs,
+-  ToolResult
+-> {
+-  // Persist A2A conversation state across ephemeral invocation instances.
+-  // Keyed by composite of name + target URL so agents with the same name
+-  // but different endpoints don't share state.
+-  private static readonly sessionState = new Map<
+-    string,
+-    { contextId?: string; taskId?: string }
+-  >();
+-
+-  /**
+-   * Builds a composite key for the sessionState map.
+-   * Format: `name::targetUrl` (or just `name` if no URL can be derived).
+-   */
+-  private static sessionKey(definition: RemoteAgentDefinition): string {
+-    const url = getRemoteAgentTargetUrl(definition);
+-    return url ? `${definition.name}::${url}` : definition.name;
+-  }
+-
+-  private readonly _onAgentEvent?: (event: AgentEvent) => void;
+-
+-  constructor(
+-    private readonly definition: RemoteAgentDefinition,
+-    private readonly context: AgentLoopContext,
+-    params: AgentInputs,
+-    messageBus: MessageBus,
+-    options?: SubagentInvocationOptions,
+-  ) {
+-    const query = params['query'] ?? DEFAULT_QUERY_STRING;
+-    if (typeof query !== 'string') {
+-      throw new Error(
+-        `Remote agent '${definition.name}' requires a string 'query' input.`,
+-      );
+-    }
+-    // Safe to pass strict object to super
+-    super(
+-      { query },
+-      messageBus,
+-      options?.toolName ?? definition.name,
+-      options?.toolDisplayName ?? definition.displayName,
+-    );
+-    this._onAgentEvent = options?.onAgentEvent;
+-
+-    // Validate that A2AClientManager is available at construction time
+-    if (!this.context.config.getA2AClientManager()) {
+-      throw new Error(
+-        `Failed to initialize RemoteSessionInvocation for '${definition.name}': A2AClientManager is not available.`,
+-      );
+-    }
+-  }
+-
+-  getDescription(): string {
+-    return `Calling remote agent ${this.definition.displayName ?? this.definition.name}`;
+-  }
+-
+-  protected override async getConfirmationDetails(
+-    _abortSignal: AbortSignal,
+-  ): Promise<ToolCallConfirmationDetails | false> {
+-    return {
+-      type: 'info',
+-      title: `Call Remote Agent: ${this.definition.displayName ?? this.definition.name}`,
+-      prompt: `Calling remote agent: "${this.params.query}"`,
+-      onConfirm: async (_outcome: ToolConfirmationOutcome) => {
+-        // Policy updates are now handled centrally by the scheduler
+-      },
+-    };
+-  }
+-
+-  async execute(options: ExecuteOptions): Promise<ToolResult> {
+-    const { abortSignal: _signal, updateOutput } = options;
+-    const agentName = this.definition.displayName ?? this.definition.name;
+-    const emptyActivity: SubagentActivityItem[] = [];
+-
+-    // Seed session with prior A2A conversation state
+-    const stateKey = RemoteSessionInvocation.sessionKey(this.definition);
+-    const priorState = RemoteSessionInvocation.sessionState.get(stateKey);
+-    const session = new RemoteSubagentSession(
+-      this.definition,
+-      this.context,
+-      this.messageBus,
+-      priorState,
+-    );
+-
+-    // Wire external abort signal to session abort
+-    const abortListener = () => void session.abort();
+-    _signal?.addEventListener('abort', abortListener, { once: true });
+-
+-    // Subscribe for parent session observability
+-    let unsubscribeParent: (() => void) | undefined;
+-    if (this._onAgentEvent) {
+-      unsubscribeParent = session.subscribe(this._onAgentEvent);
+-    }
+-
+-    // Subscribe to message events for live SubagentProgress updates
+-    const unsubscribeProgress = session.subscribe((event: AgentEvent) => {
+-      if (event.type === 'message' && updateOutput) {
+-        const currentProgress = session.getLatestProgress();
+-        if (currentProgress) updateOutput(currentProgress);
+-      }
+-    });
+-
+-    try {
+-      if (updateOutput) {
+-        updateOutput({
+-          isSubagentProgress: true,
+-          agentName,
+-          state: SubagentState.RUNNING,
+-          recentActivity: [
+-            {
+-              id: 'pending',
+-              type: 'thought',
+-              content: 'Working...',
+-              status: SubagentState.RUNNING,
+-            },
+-          ],
+-        });
+-      }
+-
+-      await session.send({
+-        message: { content: [{ type: 'text', text: this.params.query }] },
+-      });
+-
+-      const result = await session.getResult();
+-
+-      // The protocol resolves aborts with an empty result rather than
+-      // rejecting. Detect this and surface proper error state.
+-      if (_signal?.aborted) {
+-        const partialProgress = session.getLatestProgress();
+-        const recentActivity = this.stopRunningActivities(
+-          partialProgress?.recentActivity ?? emptyActivity,
+-          SubagentState.CANCELLED,
+-        );
+-        const errorProgress: SubagentProgress = {
+-          isSubagentProgress: true,
+-          agentName,
+-          state: SubagentState.CANCELLED,
+-          result:
+-            typeof partialProgress?.result === 'string'
+-              ? partialProgress.result
+-              : '',
+-          recentActivity,
+-        };
+-        if (updateOutput) updateOutput(errorProgress);
+-        return {
+-          llmContent: [{ text: 'Operation cancelled by user' }],
+-          returnDisplay: errorProgress,
+-        };
+-      }
+-
+-      // Emit final completed progress
+-      if (updateOutput) {
+-        const finalProgress = session.getLatestProgress();
+-        if (finalProgress) updateOutput(finalProgress);
+-      }
+-
+-      return result;
+-    } catch (error: unknown) {
+-      const partialProgress = session.getLatestProgress();
+-      const partialOutput =
+-        typeof partialProgress?.result === 'string'
+-          ? partialProgress.result
+-          : '';
+-      const errorMessage = this.formatExecutionError(error);
+-      const fullDisplay = partialOutput
+-        ? `${partialOutput}\n\n${errorMessage}`
+-        : errorMessage;
+-
+-      const isAbort =
+-        (error instanceof Error && error.name === 'AbortError') ||
+-        errorMessage.includes('Aborted');
+-
+-      const status = isAbort ? SubagentState.CANCELLED : SubagentState.ERROR;
+-      const recentActivity = this.stopRunningActivities(
+-        partialProgress?.recentActivity ?? emptyActivity,
+-        status,
+-      );
+-
+-      const errorProgress: SubagentProgress = {
+-        isSubagentProgress: true,
+-        agentName,
+-        state: status,
+-        result: fullDisplay,
+-        recentActivity,
+-      };
+-
+-      if (updateOutput) {
+-        updateOutput(errorProgress);
+-      }
+-
+-      return {
+-        llmContent: [{ text: fullDisplay }],
+-        returnDisplay: errorProgress,
+-      };
+-    } finally {
+-      // Persist A2A state for next invocation — even on abort/error
+-      RemoteSessionInvocation.sessionState.set(
+-        stateKey,
+-        session.getSessionState(),
+-      );
+-      _signal?.removeEventListener('abort', abortListener);
+-      unsubscribeProgress();
+-      unsubscribeParent?.();
+-    }
+-  }
+-
+-  private stopRunningActivities(
+-    activity: SubagentActivityItem[],
+-    status: SubagentState,
+-  ): SubagentActivityItem[] {
+-    const result: SubagentActivityItem[] = [];
+-    for (const item of activity) {
+-      result.push(
+-        item.status === SubagentState.RUNNING ? { ...item, status } : item,
+-      );
+-    }
+-    return result;
+-  }
+-
+-  /**
+-   * Formats an execution error into a user-friendly message.
+-   * Recognizes typed A2AAgentError subclasses and falls back to
+-   * a generic message for unknown errors.
+-   */
+-  private formatExecutionError(error: unknown): string {
+-    if (error instanceof A2AAgentError) {
+-      return error.userMessage;
+-    }
+-
+-    return `Error calling remote agent: ${
+-      error instanceof Error ? error.message : String(error)
+-    }`;
+-  }
+-}
+diff --git a/packages/core/src/agents/remote-subagent-protocol.ts b/packages/core/src/agents/remote-subagent-protocol.ts
+index 379d2948b..1231b0f06 100644
+--- a/packages/core/src/agents/remote-subagent-protocol.ts
++++ b/packages/core/src/agents/remote-subagent-protocol.ts
+@@ -82,21 +82,8 @@ class RemoteSubagentProtocol implements AgentProtocol {
+     private readonly context: AgentLoopContext,
+     // Required for API parity across protocol constructors (local, remote, legacy)
+     _messageBus: MessageBus,
+-    initialState?: { contextId?: string; taskId?: string },
+   ) {
+     this._agentName = definition.displayName ?? definition.name;
+-    if (initialState) {
+-      this.contextId = initialState.contextId;
+-      this.taskId = initialState.taskId;
+-    }
+-  }
+-
+-  /**
+-   * Returns the current A2A conversation state.
+-   * Used by the invocation layer to persist state across invocations.
+-   */
+-  getSessionState(): { contextId?: string; taskId?: string } {
+-    return { contextId: this.contextId, taskId: this.taskId };
+   }
+ 
+   // ---------------------------------------------------------------------------
+@@ -407,13 +394,11 @@ export class RemoteSubagentSession extends AgentSession {
+     definition: RemoteAgentDefinition,
+     context: AgentLoopContext,
+     messageBus: MessageBus,
+-    initialState?: { contextId?: string; taskId?: string },
+   ) {
+     const protocol = new RemoteSubagentProtocol(
+       definition,
+       context,
+       messageBus,
+-      initialState,
+     );
+     super(protocol);
+     this._remoteProtocol = protocol;
+@@ -435,14 +420,6 @@ export class RemoteSubagentSession extends AgentSession {
+     return this._remoteProtocol.getLatestProgress();
+   }
+ 
+-  /**
+-   * Returns the current A2A conversation state (contextId/taskId).
+-   * Used by the invocation layer to persist state across invocations.
+-   */
+-  getSessionState(): { contextId?: string; taskId?: string } {
+-    return this._remoteProtocol.getSessionState();
+-  }
+-
+   /**
+    * Convenience: start execution with a query string.
+    * Equivalent to send({message: {content: [{type:'text', text: query}]}}).
+diff --git a/packages/core/src/code_assist/oauth-credential-storage.test.ts b/packages/core/src/code_assist/oauth-credential-storage.test.ts
+index d08af0032..3ef2de997 100644
+--- a/packages/core/src/code_assist/oauth-credential-storage.test.ts
++++ b/packages/core/src/code_assist/oauth-credential-storage.test.ts
+@@ -180,18 +180,14 @@ describe('OAuthCredentialStorage', () => {
+       expect(result).toEqual(mockCredentials);
+     });
+ 
+-    it('should return null and log a warning if the migration file contains invalid JSON', async () => {
++    it('should throw an error if the migration file contains invalid JSON', async () => {
+       vi.spyOn(mockHybridTokenStorage, 'getCredentials').mockResolvedValue(
+         null,
+       );
+       vi.spyOn(fs, 'readFile').mockResolvedValue('invalid json');
+ 
+-      const result = await OAuthCredentialStorage.loadCredentials();
+-
+-      expect(result).toBeNull();
+-      expect(coreEvents.emitFeedback).toHaveBeenCalledWith(
+-        'warning',
+-        expect.stringContaining('Corrupted OAuth credential file'),
++      await expect(OAuthCredentialStorage.loadCredentials()).rejects.toThrow(
++        'Failed to load OAuth credentials',
+       );
+     });
+ 
+diff --git a/packages/core/src/code_assist/oauth-credential-storage.ts b/packages/core/src/code_assist/oauth-credential-storage.ts
+index 6da7e3095..c924031d0 100644
+--- a/packages/core/src/code_assist/oauth-credential-storage.ts
++++ b/packages/core/src/code_assist/oauth-credential-storage.ts
+@@ -129,17 +129,8 @@ export class OAuthCredentialStorage {
+       throw error;
+     }
+ 
+-    let credentials: Credentials;
+-    try {
+-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+-      credentials = JSON.parse(credsJson);
+-    } catch {
+-      coreEvents.emitFeedback(
+-        'warning',
+-        `Corrupted OAuth credential file at ${oldFilePath}, skipping migration`,
+-      );
+-      return null;
+-    }
++    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
++    const credentials: Credentials = JSON.parse(credsJson);
+ 
+     // Save to new storage
+     await this.saveCredentials(credentials);
+diff --git a/packages/core/src/confirmation-bus/message-bus.ts b/packages/core/src/confirmation-bus/message-bus.ts
+index a14022ada..550f20716 100644
+--- a/packages/core/src/confirmation-bus/message-bus.ts
++++ b/packages/core/src/confirmation-bus/message-bus.ts
+@@ -21,9 +21,9 @@ export class MessageBus extends EventEmitter {
+   constructor(
+     private readonly policyEngine: PolicyEngine,
+     private readonly debug = false,
++    private readonly isTrusted = true,
+   ) {
+     super();
+-    this.debug = debug;
+   }
+ 
+   private isValidMessage(message: Message): boolean {
+@@ -47,18 +47,32 @@ export class MessageBus extends EventEmitter {
+ 
+   /**
+    * Derives a child message bus scoped to a specific subagent.
++   * Derived buses are untrusted.
+    */
+   derive(subagentName: string): MessageBus {
+-    const bus = new MessageBus(this.policyEngine, this.debug);
++    const bus = new MessageBus(this.policyEngine, this.debug, false);
+ 
+     bus.publish = async (message: Message) => {
+       if (message.type === MessageBusType.TOOL_CONFIRMATION_REQUEST) {
++        // Sanitization for untrusted callers:
++        // 1. Remove forcedDecision to prevent policy bypass.
++        // 2. Remove metadata (serverName, toolAnnotations, details) to prevent spoofing.
++        // 3. Enforce subagent identity by prepending/setting the scope.
++        const {
++          forcedDecision: _forcedDecision,
++          subagent: _subagent,
++          serverName: _serverName,
++          toolAnnotations: _toolAnnotations,
++          details: _details,
++          ...otherFields
++        } = message;
++
+         return this.publish({
+-          ...message,
++          ...otherFields,
+           subagent: message.subagent
+             ? `${subagentName}/${message.subagent}`
+             : subagentName,
+-        });
++        } as Message);
+       }
+       return this.publish(message);
+     };
+@@ -95,7 +109,10 @@ export class MessageBus extends EventEmitter {
+           message.subagent,
+         );
+ 
+-        const decision = message.forcedDecision ?? policyDecision;
++        // Only trust forcedDecision if it comes from a trusted bus
++        const decision =
++          (this.isTrusted ? message.forcedDecision : undefined) ??
++          policyDecision;
+ 
+         switch (decision) {
+           case PolicyDecision.ALLOW:
+diff --git a/packages/core/src/policy/config.test.ts b/packages/core/src/policy/config.test.ts
+index 01ddbc030..0d23eaaee 100644
+--- a/packages/core/src/policy/config.test.ts
++++ b/packages/core/src/policy/config.test.ts
+@@ -24,7 +24,6 @@ import {
+ import { Storage } from '../config/storage.js';
+ import * as tomlLoader from './toml-loader.js';
+ import { coreEvents } from '../utils/events.js';
+-import { MCPServerConfig } from '../config/config.js';
+ 
+ vi.unmock('../config/storage.js');
+ 
+@@ -280,145 +279,6 @@ describe('createPolicyEngineConfig', () => {
+     expect(untrustedRule).toBeUndefined();
+   });
+ 
+-  it('should NOT automatically allow configured MCP servers in non-interactive mode by default', async () => {
+-    const config = await createPolicyEngineConfig(
+-      {
+-        mcpServers: {
+-          'server-1': new MCPServerConfig('node', []),
+-        },
+-      },
+-      ApprovalMode.DEFAULT,
+-      MOCK_DEFAULT_DIR,
+-      false, // non-interactive
+-    );
+-
+-    const rule = config.rules?.find(
+-      (r) => r.mcpName === 'server-1' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    expect(rule).toBeUndefined();
+-  });
+-
+-  it('should automatically allow configured MCP servers in non-interactive mode if opted-in', async () => {
+-    const config = await createPolicyEngineConfig(
+-      {
+-        mcp: { autoAllowInHeadless: true },
+-        mcpServers: {
+-          'server-1': new MCPServerConfig('node', []),
+-          'server-2': new MCPServerConfig('python', []),
+-        },
+-      },
+-      ApprovalMode.DEFAULT,
+-      MOCK_DEFAULT_DIR,
+-      false, // non-interactive
+-    );
+-
+-    const rule1 = config.rules?.find(
+-      (r) => r.mcpName === 'server-1' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    const rule2 = config.rules?.find(
+-      (r) => r.mcpName === 'server-2' && r.decision === PolicyDecision.ALLOW,
+-    );
+-
+-    expect(rule1).toBeDefined();
+-    expect(rule1?.source).toBe('Settings (Headless MCP Auto-Allow)');
+-    expect(rule2).toBeDefined();
+-    expect(rule2?.source).toBe('Settings (Headless MCP Auto-Allow)');
+-  });
+-
+-  it('should NOT automatically allow configured MCP servers in interactive mode even if opted-in', async () => {
+-    const config = await createPolicyEngineConfig(
+-      {
+-        mcp: { autoAllowInHeadless: true },
+-        mcpServers: {
+-          'server-1': new MCPServerConfig('node', []),
+-        },
+-      },
+-      ApprovalMode.DEFAULT,
+-      MOCK_DEFAULT_DIR,
+-      true, // interactive
+-    );
+-
+-    const rule = config.rules?.find(
+-      (r) => r.mcpName === 'server-1' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    expect(rule).toBeUndefined();
+-  });
+-
+-  it('should NOT duplicate allow rules if an MCP server is already explicitly allowed, wildcard allowed, or trusted', async () => {
+-    const config = await createPolicyEngineConfig(
+-      {
+-        mcp: {
+-          autoAllowInHeadless: true,
+-          allowed: ['server-1', '*'],
+-        },
+-        mcpServers: {
+-          'server-1': new MCPServerConfig('node', []),
+-          'server-2': new MCPServerConfig('node', []),
+-          'server-3': { trust: true },
+-          'server-4': new MCPServerConfig('node', []),
+-        },
+-      },
+-      ApprovalMode.DEFAULT,
+-      MOCK_DEFAULT_DIR,
+-      false, // non-interactive
+-    );
+-
+-    // server-1: already in mcp.allowed
+-    const rules1 = config.rules?.filter(
+-      (r) => r.mcpName === 'server-1' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    expect(rules1).toHaveLength(1);
+-    expect(rules1?.[0].source).toBe('Settings (MCP Allowed)');
+-
+-    // server-2: covered by '*' in mcp.allowed
+-    // Note: the logic adds a rule for '*' which will match server-2 at runtime,
+-    // but the loop in headless auto-allow should skip adding a specific rule for server-2.
+-    const rules2 = config.rules?.filter(
+-      (r) => r.mcpName === 'server-2' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    expect(rules2).toHaveLength(0);
+-
+-    // server-3: already trusted
+-    const rules3 = config.rules?.filter(
+-      (r) => r.mcpName === 'server-3' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    expect(rules3).toHaveLength(1);
+-    expect(rules3?.[0].source).toBe('Settings (MCP Trusted)');
+-
+-    // server-4: NOT explicitly allowed or trusted, but SHOULD NOT be added because '*' exists in mcp.allowed
+-    const rules4 = config.rules?.filter(
+-      (r) => r.mcpName === 'server-4' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    expect(rules4).toHaveLength(0);
+-
+-    // Verify the wildcard rule exists
+-    const wildcardRule = config.rules?.find(
+-      (r) => r.mcpName === '*' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    expect(wildcardRule).toBeDefined();
+-    expect(wildcardRule?.toolName).toBe('mcp_*');
+-  });
+-
+-  it('should use correct tool name pattern for wildcard server in headless auto-allow', async () => {
+-    const config = await createPolicyEngineConfig(
+-      {
+-        mcp: { autoAllowInHeadless: true },
+-        mcpServers: {
+-          '*': new MCPServerConfig('node', []),
+-        },
+-      },
+-      ApprovalMode.DEFAULT,
+-      MOCK_DEFAULT_DIR,
+-      false, // non-interactive
+-    );
+-
+-    const rule = config.rules?.find(
+-      (r) => r.mcpName === '*' && r.decision === PolicyDecision.ALLOW,
+-    );
+-    expect(rule).toBeDefined();
+-    expect(rule?.toolName).toBe('mcp_*');
+-  });
+-
+   it('should handle multiple MCP server configurations together', async () => {
+     const config = await createPolicyEngineConfig(
+       {
+diff --git a/packages/core/src/policy/config.ts b/packages/core/src/policy/config.ts
+index 64af14f1c..6d978479c 100644
+--- a/packages/core/src/policy/config.ts
++++ b/packages/core/src/policy/config.ts
+@@ -600,38 +600,6 @@ export async function createPolicyEngineConfig(
+     }
+   }
+ 
+-  // In non-interactive mode, automatically allow all configured MCP servers if opted-in.
+-  // This ensures that tools provided by these servers are available without
+-  // requiring explicit entries in settings.mcp.allowed.
+-  if (
+-    !interactive &&
+-    settings.mcp?.autoAllowInHeadless &&
+-    settings.mcpServers
+-  ) {
+-    for (const serverName of Object.keys(settings.mcpServers)) {
+-      // Avoid duplicates if already explicitly allowed, allowed via wildcard, or trusted.
+-      if (
+-        settings.mcp?.allowed?.includes(serverName) ||
+-        settings.mcp?.allowed?.includes('*') ||
+-        settings.mcpServers[serverName].trust
+-      ) {
+-        continue;
+-      }
+-
+-      rules.push({
+-        toolName:
+-          serverName === '*'
+-            ? `${MCP_TOOL_PREFIX}*`
+-            : `${MCP_TOOL_PREFIX}${serverName}_*`,
+-        mcpName: serverName,
+-        decision: PolicyDecision.ALLOW,
+-        priority: ALLOWED_MCP_SERVER_PRIORITY,
+-        source: 'Settings (Headless MCP Auto-Allow)',
+-        modes: nonPlanModes,
+-      });
+-    }
+-  }
+-
+   return {
+     rules,
+     checkers,
+diff --git a/packages/core/src/policy/types.ts b/packages/core/src/policy/types.ts
+index 5af375490..672e3f841 100644
+--- a/packages/core/src/policy/types.ts
++++ b/packages/core/src/policy/types.ts
+@@ -333,7 +333,6 @@ export interface PolicySettings {
+   mcp?: {
+     excluded?: string[];
+     allowed?: string[];
+-    autoAllowInHeadless?: boolean;
+   };
+   tools?: {
+     core?: string[];
+diff --git a/scripts/copy_bundle_assets.js b/scripts/copy_bundle_assets.js
+index 7c3dae796..658c0a57c 100644
+--- a/scripts/copy_bundle_assets.js
++++ b/scripts/copy_bundle_assets.js
+@@ -54,18 +54,6 @@ for (const file of policyFiles) {
+ 
+ console.log(`Copied ${policyFiles.length} policy files to bundle/policies/`);
+ 
+-// Also copy policies to a2a-server dist directory for bundled execution
+-const a2aPolicyDir = join(root, 'packages/a2a-server/dist/policies');
+-if (!existsSync(a2aPolicyDir)) {
+-  mkdirSync(a2aPolicyDir, { recursive: true });
+-}
+-for (const file of policyFiles) {
+-  copyFileSync(join(root, file), join(a2aPolicyDir, basename(file)));
+-}
+-console.log(
+-  `Copied ${policyFiles.length} policy files to packages/a2a-server/dist/policies/`,
+-);
+-
+ // 3. Copy Documentation (docs/)
+ const docsSrc = join(root, 'docs');
+ const docsDest = join(bundleDir, 'docs');

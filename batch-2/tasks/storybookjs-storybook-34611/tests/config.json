@@ -1,0 +1,39 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && yarn vitest run --config code/core/vitest.config.ts code/core/src/core-server/utils/analyze-mdx.test.ts",
+  "test_files": [
+    "code/core/src/core-server/utils/analyze-mdx.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::extractImports single block",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::extractImports multiple blocks",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx title string literal title",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx title template literal title",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx name string literal name",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx name template literal name",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx of basic",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx of missing variable",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx of string literal",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx of multiple import blocks",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx of and name gets the name correctly",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx exported named declarations should not throw when exporting named declarations",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx summary string literal summary",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx summary template literal summary",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx isTemplate boolean implicit",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx isTemplate boolean expression, true",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx isTemplate boolean expression, false",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx isTemplate string literal",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx isTemplate other expression",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx metaTags tags",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx metaTags non-string tag elements",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx metaTags non-array tags",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx errors no title",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx errors Bad MDX formatting",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx errors duplicate meta, both title",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx errors duplicate meta, different",
+    "/workspace/repo/code/core/src/core-server/utils/analyze-mdx.test.ts::analyzeMdx errors MDX comments"
+  ],
+  "PASS_TO_PASS": []
+}

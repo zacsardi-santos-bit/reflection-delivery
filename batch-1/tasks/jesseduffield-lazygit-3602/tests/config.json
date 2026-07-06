@@ -1,0 +1,20 @@
+{
+  "test_framework": "go",
+  "test_command": "go test ./pkg/gui/controllers/helpers -run TestFixupHelper_parseDiff -count=1",
+  "test_files": [
+    "pkg/gui/controllers/helpers/fixup_helper_test.go",
+    "pkg/integration/tests/commit/find_base_commit_for_fixup_only_added_lines.go",
+    "pkg/integration/tests/test_list.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers::TestFixupHelper_parseDiff/no_diff",
+    "github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers::TestFixupHelper_parseDiff/hunk_with_only_deleted_lines",
+    "github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers::TestFixupHelper_parseDiff/hunk_with_deleted_and_added_lines",
+    "github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers::TestFixupHelper_parseDiff/hunk_with_only_added_lines",
+    "github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers::TestFixupHelper_parseDiff/several_hunks_in_different_files",
+    "github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers::TestFixupHelper_parseDiff"
+  ],
+  "PASS_TO_PASS": []
+}

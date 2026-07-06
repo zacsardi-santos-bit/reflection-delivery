@@ -1,0 +1,24 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./reposerver/repository -count=1 -run Test_populateHelmAppDetails",
+  "test_files": [
+    "reposerver/repository/repository_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetails",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetailsWithRef/success",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetailsWithRef/ref_checkout_error",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetailsWithRef/same_repo_diff_revision_error",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetailsWithRef/same_ref_repo_diff_revision_error",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetailsWithRef/ref_revision_resolution_error",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetailsWithRef/not_a_git_referenced_repo",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetailsWithRef/unused_refsource_is_not_checked_out",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetailsWithRef",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetails_values_symlinks/inbound",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetails_values_symlinks/out_of_bounds",
+    "github.com/argoproj/argo-cd/v3/reposerver/repository::Test_populateHelmAppDetails_values_symlinks"
+  ],
+  "PASS_TO_PASS": []
+}

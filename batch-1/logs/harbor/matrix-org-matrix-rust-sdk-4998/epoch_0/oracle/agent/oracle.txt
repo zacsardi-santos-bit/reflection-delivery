@@ -1,0 +1,7 @@
+patching file crates/matrix-sdk-base/Cargo.toml
+patching file crates/matrix-sdk-crypto/Cargo.toml
+patching file crates/matrix-sdk-crypto/src/machine/mod.rs
+patching file crates/matrix-sdk-crypto/src/session_manager/group_sessions/mod.rs
+patching file crates/matrix-sdk/CHANGELOG.md
+patching file crates/matrix-sdk/Cargo.toml
+patching file crates/matrix-sdk/src/encryption/mod.rs

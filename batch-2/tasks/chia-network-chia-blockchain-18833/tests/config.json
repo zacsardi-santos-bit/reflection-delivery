@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest -o \"addopts=\" chia/_tests/cmds/test_cmd_framework.py chia/_tests/pools/test_pool_cli_parsing.py chia/_tests/pools/test_pool_cmdline.py::test_plotnft_cli_misc chia/_tests/pools/test_pool_cmdline.py::test_plotnft_cli_create_errors chia/_tests/pools/test_pool_wallet.py -v",
+  "test_files": [
+    "chia/_tests/cmds/test_cmd_framework.py",
+    "chia/_tests/conftest.py",
+    "chia/_tests/pools/test_pool_cli_parsing.py",
+    "chia/_tests/pools/test_pool_cmdline.py",
+    "chia/_tests/pools/test_pool_wallet.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "chia._tests.cmds.test_cmd_framework::test_cmd_bases",
+    "chia._tests.cmds.test_cmd_framework::test_option_loading",
+    "chia._tests.cmds.test_cmd_framework::test_context_requirement",
+    "chia._tests.cmds.test_cmd_framework::test_typing",
+    "chia._tests.cmds.test_cmd_framework::test_wallet_rpc_helper[ConsensusMode.PLAIN-True-False-wallet_environments0]",
+    "chia._tests.pools.test_pool_cmdline::test_plotnft_cli_misc[ConsensusMode.PLAIN]",
+    "chia._tests.pools.test_pool_cmdline::test_plotnft_cli_create_errors[ConsensusMode.PLAIN-local state with pool url]",
+    "chia._tests.pools.test_pool_cmdline::test_plotnft_cli_create_errors[ConsensusMode.PLAIN-pool state no pool url]",
+    "chia._tests.pools.test_pool_cli_parsing::test_plotnft_command_default_parsing",
+    "chia._tests.pools.test_pool_wallet::test_update_pool_config_new_config",
+    "chia._tests.pools.test_pool_wallet::test_update_pool_config_existing_payout_instructions"
+  ],
+  "PASS_TO_PASS": []
+}

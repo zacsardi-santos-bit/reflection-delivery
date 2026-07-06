@@ -1,0 +1,16 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && npm ci && npx mocha 'src/firebaseConfigValidate.spec.ts'",
+  "test_files": [
+    "src/firebaseConfigValidate.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/firebaseConfigValidate.spec.ts::firebaseConfigValidate should accept a basic, valid config",
+    "/workspace/repo/src/firebaseConfigValidate.spec.ts::firebaseConfigValidate should report an extra top-level field",
+    "/workspace/repo/src/firebaseConfigValidate.spec.ts::firebaseConfigValidate should report a missing required field",
+    "/workspace/repo/src/firebaseConfigValidate.spec.ts::firebaseConfigValidate should report a field with an incorrect type"
+  ],
+  "PASS_TO_PASS": []
+}

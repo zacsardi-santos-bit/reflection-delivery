@@ -1,6 +1,0 @@
-patching file .travis.yml
-patching file src/client/conn.rs
-patching file src/client/mod.rs
-patching file src/proto/h1/conn.rs
-patching file src/proto/h1/role.rs
-patching file src/proto/mod.rs

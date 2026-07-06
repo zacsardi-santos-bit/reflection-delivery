@@ -1,0 +1,5 @@
+I'm working on the deploy command in our platform, and I've noticed that when the build phase fails during a deployment — for instance when a Dockerfile is missing or invalid — the pipeline's state in the cluster is never updated to show that an error occurred. The configmap that tracks pipeline status just stays at whatever it was before, rather than being marked as failed. This makes it really hard for our dashboards and integrations to know that something went wrong.
+
+I'd like the deploy flow to properly update the pipeline configmap to an error state whenever a build step fails, and also make sure the build error details are written to the log output buffer so users can see what happened. There should also be a standalone helper for creating the initial configmap from the pipeline data, which encodes the manifest content and fills in all the standard fields like name, namespace, branch, icon, repository, status, and output.
+
+Additionally, when a Dockerfile is invalid or missing, the build should produce a consistent, clearly identifiable error message that appears in the log output buffer.

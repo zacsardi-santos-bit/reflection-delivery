@@ -1,0 +1,34 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p pacquet-registry",
+  "test_files": [
+    "pacquet/crates/package-manager/src/build_snapshot/tests.rs",
+    "pacquet/crates/registry/src/package/tests.rs",
+    "pacquet/crates/resolving-default-resolver/src/tests.rs",
+    "pacquet/crates/resolving-npm-resolver/src/pick_package/tests.rs",
+    "pacquet/crates/resolving-npm-resolver/src/pick_package_from_meta/tests.rs",
+    "pacquet/crates/resolving-parse-wanted-dependency/src/tests.rs",
+    "pacquet/crates/resolving-resolver-base/src/tests.rs",
+    "resolving/npm-resolver/test/publishedBy.test.ts"
+  ],
+  "num_test_files": 8,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/15) pacquet-registry package::tests::package_version_should_include_peers",
+    "( 2/15) pacquet-registry package::tests::serialized_according_to_params",
+    "( 3/15) pacquet-registry package::tests::pinned_version_picks_highest_matching",
+    "( 4/15) pacquet-registry package::tests::package_deserializes_without_time_field",
+    "( 5/15) pacquet-registry package::tests::package_deserializes_full_provenance_packument",
+    "( 6/15) pacquet-registry package::tests::published_at_skips_reserved_unpublished_object",
+    "( 7/15) pacquet-registry package::tests::pinned_version_returns_none_when_no_match",
+    "( 8/15) pacquet-registry package::tests::package_equality_compares_by_name_only",
+    "( 9/15) pacquet-registry package::tests::package_deserializes_without_npm_user_or_attestations",
+    "(10/15) pacquet-registry package::tests::latest_returns_version_pointed_to_by_dist_tag",
+    "(11/15) pacquet-registry package::tests::package_deserializes_deprecated_boolean_false",
+    "(12/15) pacquet-registry package::tests::package_deserializes_deprecated_reason_string",
+    "(13/15) pacquet-registry package::tests::package_deserializes_deprecated_boolean_true",
+    "(14/15) pacquet-registry package::tests::fetch_from_registry_attaches_authorization_header",
+    "(15/15) pacquet-registry package_version::tests::fetch_from_registry_attaches_authorization_header"
+  ],
+  "PASS_TO_PASS": []
+}

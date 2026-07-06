@@ -1,0 +1,20 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && pnpm install --frozen-lockfile > /dev/null 2>&1 && cd packages/tailwind && compact-vitest run __tests__/tailwind.test.ts",
+  "test_files": [
+    "packages/tailwind/__tests__/tailwind.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/tailwind/__tests__/tailwind.test.ts:: @tailwind base; generates Starlight base CSS",
+    "/workspace/repo/packages/tailwind/__tests__/tailwind.test.ts:: @tailwind base; disables Tailwind preflight"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/tailwind/__tests__/tailwind.test.ts:: @tailwind base; configures `--sl-color-*` variables",
+    "/workspace/repo/packages/tailwind/__tests__/tailwind.test.ts:: @tailwind base; with user theme config generates different CSS from base without user config",
+    "/workspace/repo/packages/tailwind/__tests__/tailwind.test.ts:: @tailwind base; with user theme config uses theme values for Starlight colours",
+    "/workspace/repo/packages/tailwind/__tests__/tailwind.test.ts:: @tailwind utilities; uses [data-theme=\"dark\"] for dark: utility classes",
+    "/workspace/repo/packages/tailwind/__tests__/tailwind.test.ts:: warns when a prefix of \"sl-\" is set"
+  ]
+}

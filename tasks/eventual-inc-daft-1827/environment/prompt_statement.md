@@ -1,5 +1,0 @@
-I'm working with Daft and need a way to assign unique row identifiers to a DataFrame that may span multiple partitions. Right now there's no built-in method for this, and I need IDs that are guaranteed to be unique across all partitions — not just within a single one.
-
-The IDs should encode both the partition index and the row's position within that partition into a single unsigned 64-bit integer, using a bit-shifting scheme where the partition number goes in the upper 28 bits and the row counter goes in the lower 36 bits. This makes the IDs unique across partitions without requiring a global sort or shuffle.
-
-I'd also like the ability to choose the column name for the generated IDs, with a sensible default when no name is provided. The operation should work on empty datasets and should handle cases where a single partition contains multiple internal data chunks — in that case the IDs should still be sequential across those chunks. This capability should be exposed both at the DataFrame level and at the lower-level partition layer.

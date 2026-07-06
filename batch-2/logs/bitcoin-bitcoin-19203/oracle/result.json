@@ -1,0 +1,29 @@
+{
+    "id": "5e47040c-809e-4e33-88e0-f557447626b6",
+    "started_at": "2026-07-04T15:40:00.951440",
+    "finished_at": "2026-07-04T15:44:35.339678",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__bitcoin-bitcoin-19203": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "bitcoin-bitcoin-19203__TwXhJ7J"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

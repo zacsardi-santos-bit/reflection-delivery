@@ -1,5 +1,0 @@
-I'm using a GraphQL API backed by a Postgres extension and I'd like to be able to paginate collections using a numeric offset in addition to the cursor-based pagination that's already available. Right now I can only page through results by following cursor tokens, but I want to be able to skip ahead by a specific number of records — for example, jump to the third page of results without having to traverse pages one and two first.
-
-I'd expect this to work with forward pagination only (where I specify how many records to return from the front), and I'd expect an error if someone tries to combine this offset argument with backward pagination arguments. The pagination metadata (whether there are previous or next pages) should also update correctly when an offset is in use — skipping records should indicate that there are previous pages available, even if no cursor was provided.
-
-This offset argument should also show up in the schema so that API consumers can discover it through introspection, ideally with a description that makes clear it only works for forward pagination and is an alternative to pure cursor pagination.

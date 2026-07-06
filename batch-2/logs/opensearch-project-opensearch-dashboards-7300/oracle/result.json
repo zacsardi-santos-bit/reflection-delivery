@@ -1,0 +1,29 @@
+{
+    "id": "694b3b06-81ae-4a3b-9a65-913880fa9009",
+    "started_at": "2026-07-04T15:37:50.072354",
+    "finished_at": "2026-07-04T15:38:33.725065",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__opensearch-project-opensearch-dashboards-7300": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "opensearch-project-opensearch-da__hPrainV"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

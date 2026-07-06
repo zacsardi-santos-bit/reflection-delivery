@@ -1,0 +1,365 @@
+patching file backend/third_party_licenses/apiserver.csv
+patching file backend/third_party_licenses/cache_server.csv
+patching file backend/third_party_licenses/driver.csv
+patching file backend/third_party_licenses/launcher.csv
+patching file backend/third_party_licenses/persistence_agent.csv
+patching file backend/third_party_licenses/swf.csv
+patching file backend/third_party_licenses/viewer.csv
+patching file go.mod
+patching file go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 64.
+Hunk #3 FAILED at 291.
+Hunk #4 FAILED at 337.
+Hunk #5 FAILED at 374.
+Hunk #6 succeeded at 619 (offset 160 lines).
+Hunk #7 succeeded at 633 with fuzz 3 (offset 161 lines).
+Hunk #8 succeeded at 668 (offset 161 lines).
+Hunk #9 succeeded at 693 (offset 161 lines).
+Hunk #10 succeeded at 702 (offset 161 lines).
+Hunk #11 FAILED at 557.
+Hunk #12 FAILED at 577.
+Hunk #13 FAILED at 595.
+Hunk #14 succeeded at 820 with fuzz 2 (offset 191 lines).
+Hunk #15 FAILED at 646.
+Hunk #16 FAILED at 674.
+Hunk #17 succeeded at 890 (offset 196 lines).
+Hunk #18 FAILED at 712.
+Hunk #19 FAILED at 751.
+Hunk #20 FAILED at 862.
+Hunk #21 FAILED at 919.
+Hunk #22 FAILED at 945.
+Hunk #23 FAILED at 1050.
+Hunk #24 FAILED at 1178.
+Hunk #25 FAILED at 1207.
+Hunk #26 FAILED at 1270.
+Hunk #27 succeeded at 1753 (offset 389 lines).
+Hunk #28 FAILED at 1373.
+Hunk #29 succeeded at 1827 (offset 402 lines).
+Hunk #30 succeeded at 1853 with fuzz 3 (offset 403 lines).
+Hunk #31 succeeded at 1867 with fuzz 1 (offset 404 lines).
+Hunk #32 succeeded at 1877 (offset 405 lines).
+Hunk #33 succeeded at 1905 (offset 405 lines).
+Hunk #34 succeeded at 1916 (offset 405 lines).
+Hunk #35 succeeded at 1935 (offset 405 lines).
+Hunk #36 succeeded at 1964 (offset 405 lines).
+Hunk #37 succeeded at 1984 (offset 405 lines).
+Hunk #38 succeeded at 2007 (offset 405 lines).
+Hunk #39 succeeded at 2027 (offset 405 lines).
+Hunk #40 succeeded at 2038 (offset 405 lines).
+Hunk #41 succeeded at 2086 (offset 405 lines).
+Hunk #42 succeeded at 2112 (offset 405 lines).
+Hunk #43 succeeded at 2120 (offset 405 lines).
+Hunk #44 FAILED at 1766.
+Hunk #45 succeeded at 2218 (offset 408 lines).
+Hunk #46 succeeded at 2274 (offset 408 lines).
+Hunk #47 succeeded at 2300 (offset 408 lines).
+Hunk #48 succeeded at 2338 (offset 408 lines).
+Hunk #49 FAILED at 1948.
+Hunk #50 FAILED at 1981.
+Hunk #51 FAILED at 2019.
+24 out of 51 hunks FAILED -- saving rejects to file go.sum.rej
+patching file backend/third_party_licenses/apiserver.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file backend/third_party_licenses/apiserver.csv.rej
+patching file backend/third_party_licenses/cache_server.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file backend/third_party_licenses/cache_server.csv.rej
+patching file backend/third_party_licenses/driver.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/third_party_licenses/driver.csv.rej
+patching file backend/third_party_licenses/launcher.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/third_party_licenses/launcher.csv.rej
+patching file backend/third_party_licenses/persistence_agent.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file backend/third_party_licenses/persistence_agent.csv.rej
+patching file backend/third_party_licenses/swf.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file backend/third_party_licenses/swf.csv.rej
+patching file backend/third_party_licenses/viewer.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/third_party_licenses/viewer.csv.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 64.
+Hunk #3 FAILED at 291.
+Hunk #4 FAILED at 337.
+Hunk #5 FAILED at 374.
+Hunk #6 FAILED at 459.
+Hunk #7 FAILED at 473.
+Hunk #8 FAILED at 510.
+Hunk #9 FAILED at 536.
+Hunk #10 FAILED at 546.
+Hunk #11 FAILED at 562.
+Hunk #12 FAILED at 582.
+Hunk #13 FAILED at 600.
+Hunk #14 FAILED at 634.
+Hunk #15 FAILED at 653.
+Hunk #16 FAILED at 681.
+Hunk #17 FAILED at 701.
+Hunk #18 FAILED at 719.
+Hunk #19 FAILED at 758.
+Hunk #20 FAILED at 869.
+Hunk #21 FAILED at 926.
+Hunk #22 FAILED at 952.
+Hunk #23 FAILED at 1057.
+Hunk #24 FAILED at 1185.
+Hunk #25 FAILED at 1214.
+Hunk #26 FAILED at 1277.
+Hunk #27 FAILED at 1371.
+Hunk #28 FAILED at 1381.
+Hunk #29 FAILED at 1433.
+Hunk #30 FAILED at 1476.
+Hunk #31 FAILED at 1491.
+Hunk #32 FAILED at 1501.
+Hunk #33 FAILED at 1535.
+Hunk #34 FAILED at 1548.
+Hunk #35 FAILED at 1569.
+Hunk #36 FAILED at 1606.
+Hunk #37 FAILED at 1627.
+Hunk #38 FAILED at 1659.
+Hunk #39 FAILED at 1687.
+Hunk #40 FAILED at 1703.
+Hunk #41 FAILED at 1767.
+Hunk #42 FAILED at 1797.
+Hunk #43 FAILED at 1806.
+Hunk #44 FAILED at 1863.
+Hunk #45 FAILED at 1907.
+Hunk #46 FAILED at 1975.
+Hunk #47 FAILED at 2002.
+Hunk #48 FAILED at 2053.
+Hunk #49 FAILED at 2073.
+Hunk #50 FAILED at 2106.
+Hunk #51 FAILED at 2144.
+51 out of 51 hunks FAILED -- saving rejects to file go.sum.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/apiserver.csv b/backend/third_party_licenses/apiserver.csv
+|index 61f8aa78c..f765f7114 100644
+|--- a/backend/third_party_licenses/apiserver.csv
+|+++ b/backend/third_party_licenses/apiserver.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 215
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/cache_server.csv b/backend/third_party_licenses/cache_server.csv
+|index 85c20629e..fbe53c63b 100644
+|--- a/backend/third_party_licenses/cache_server.csv
+|+++ b/backend/third_party_licenses/cache_server.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 370
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/driver.csv b/backend/third_party_licenses/driver.csv
+|index 0cd11345f..af8a94f91 100644
+|--- a/backend/third_party_licenses/driver.csv
+|+++ b/backend/third_party_licenses/driver.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 487
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/launcher.csv b/backend/third_party_licenses/launcher.csv
+|index 4aba0f16d..2cf43835e 100644
+|--- a/backend/third_party_licenses/launcher.csv
+|+++ b/backend/third_party_licenses/launcher.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 599
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/persistence_agent.csv b/backend/third_party_licenses/persistence_agent.csv
+|index 5b9630a8a..ab115fcfa 100644
+|--- a/backend/third_party_licenses/persistence_agent.csv
+|+++ b/backend/third_party_licenses/persistence_agent.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 753
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/swf.csv b/backend/third_party_licenses/swf.csv
+|index c83fb5cc8..2f5260e60 100644
+|--- a/backend/third_party_licenses/swf.csv
+|+++ b/backend/third_party_licenses/swf.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 921
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/backend/third_party_licenses/viewer.csv b/backend/third_party_licenses/viewer.csv
+|index 3087d8f58..f70229989 100644
+|--- a/backend/third_party_licenses/viewer.csv
+|+++ b/backend/third_party_licenses/viewer.csv
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1032
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 18d0eeeec..4344c74f7 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1256
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 84ed4eadd..49acc8e0e 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+51 out of 51 hunks ignored
+patching file backend/third_party_licenses/apiserver.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file backend/third_party_licenses/apiserver.csv.rej
+patching file backend/third_party_licenses/cache_server.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file backend/third_party_licenses/cache_server.csv.rej
+patching file backend/third_party_licenses/driver.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/third_party_licenses/driver.csv.rej
+patching file backend/third_party_licenses/launcher.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file backend/third_party_licenses/launcher.csv.rej
+patching file backend/third_party_licenses/persistence_agent.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file backend/third_party_licenses/persistence_agent.csv.rej
+patching file backend/third_party_licenses/swf.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file backend/third_party_licenses/swf.csv.rej
+patching file backend/third_party_licenses/viewer.csv
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file backend/third_party_licenses/viewer.csv.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 64.
+Hunk #3 FAILED at 291.
+Hunk #4 FAILED at 337.
+Hunk #5 FAILED at 374.
+Hunk #6 FAILED at 459.
+Hunk #7 FAILED at 473.
+Hunk #8 FAILED at 510.
+Hunk #9 FAILED at 536.
+Hunk #10 FAILED at 546.
+Hunk #11 FAILED at 562.
+Hunk #12 FAILED at 582.
+Hunk #13 FAILED at 600.
+Hunk #14 FAILED at 634.
+Hunk #15 FAILED at 653.
+Hunk #16 FAILED at 681.
+Hunk #17 FAILED at 701.
+Hunk #18 FAILED at 719.
+Hunk #19 FAILED at 758.
+Hunk #20 FAILED at 869.
+Hunk #21 FAILED at 926.
+Hunk #22 FAILED at 952.
+Hunk #23 FAILED at 1057.
+Hunk #24 FAILED at 1185.
+Hunk #25 FAILED at 1214.
+Hunk #26 FAILED at 1277.
+Hunk #27 FAILED at 1371.
+Hunk #28 FAILED at 1381.
+Hunk #29 FAILED at 1433.
+Hunk #30 FAILED at 1476.
+Hunk #31 FAILED at 1491.
+Hunk #32 FAILED at 1501.
+Hunk #33 FAILED at 1535.
+Hunk #34 FAILED at 1548.
+Hunk #35 FAILED at 1569.
+Hunk #36 FAILED at 1606.
+Hunk #37 FAILED at 1627.
+Hunk #38 FAILED at 1659.
+Hunk #39 FAILED at 1687.
+Hunk #40 FAILED at 1703.
+Hunk #41 FAILED at 1767.
+Hunk #42 FAILED at 1797.
+Hunk #43 FAILED at 1806.
+Hunk #44 FAILED at 1863.
+Hunk #45 FAILED at 1907.
+Hunk #46 FAILED at 1975.
+Hunk #47 FAILED at 2002.
+Hunk #48 FAILED at 2053.
+Hunk #49 FAILED at 2073.
+Hunk #50 FAILED at 2106.
+Hunk #51 FAILED at 2144.
+51 out of 51 hunks FAILED -- saving rejects to file go.sum.rej
+ERROR: golden patch failed to apply by all strategies

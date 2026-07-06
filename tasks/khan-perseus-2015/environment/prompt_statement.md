@@ -1,5 +1,0 @@
-I'm working on improving the numeric input editor widget in our content editor. Right now, the editor hides some configuration options behind a "toggle" link — users have to click it to reveal settings like how unsimplified answers should be treated and whether answer formats should be strictly required. I'd like all of these settings to be visible directly without any toggling.
-
-Additionally, the controls are inconsistently organized. Width options are currently standalone buttons, while alignment and coefficient are checkboxes. I'd like to reorganize these into labeled groups of radio buttons for options that are mutually exclusive. Each group should have a clear accessible name so screen readers can communicate the purpose of the group to users. Specifically, width options, alignment, number style, answer format strictness, and unsimplified answer handling should each become a labeled radio group. The answer format type checkboxes should remain as checkboxes but should also be directly accessible without toggling.
-
-One small thing: the accessible label for the text input used for the aria label field should be updated to use all lowercase letters.

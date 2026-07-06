@@ -1,0 +1,21 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/models/diffusion_gemma/test_modeling_diffusion_gemma.py -v -k \"test_diffusion_decoder_mask\" --override-ini=\"addopts=\" -p no:randomly",
+  "test_files": [
+    "tests/models/diffusion_gemma/test_modeling_diffusion_gemma.py",
+    "tests/models/gemma4/test_modeling_gemma4.py",
+    "tests/test_modeling_common.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.models.diffusion_gemma.test_modeling_diffusion_gemma.DiffusionGemmaVisionText2TextModelTest::test_diffusion_decoder_mask_static_cache",
+    "tests.models.diffusion_gemma.test_modeling_diffusion_gemma.DiffusionGemmaVisionText2TextModelTest::test_diffusion_decoder_mask_static_cache_beyond_sliding_window"
+  ],
+  "PASS_TO_PASS": [
+    "tests.models.diffusion_gemma.test_modeling_diffusion_gemma.DiffusionGemmaVisionText2TextModelTest::test_diffusion_decoder_mask_dynamic_cache",
+    "tests.models.diffusion_gemma.test_modeling_diffusion_gemma.DiffusionGemmaVisionText2TextModelTest::test_diffusion_decoder_mask_dynamic_cache_beyond_sliding_window",
+    "tests.models.diffusion_gemma.test_modeling_diffusion_gemma.DiffusionGemmaVisionText2TextModelTest::test_diffusion_decoder_mask_dynamic_cache_left_padding",
+    "tests.models.diffusion_gemma.test_modeling_diffusion_gemma.DiffusionGemmaVisionText2TextModelTest::test_diffusion_decoder_mask_no_cache_raises_exception"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test ./pkg/integration/clients -run TestIntegration/cherry_pick/cherry_pick_range_after_paste -count=1 -v -timeout 600s",
+  "test_files": [
+    "pkg/integration/tests/cherry_pick/cherry_pick_range_after_paste.go",
+    "pkg/integration/tests/test_list.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/jesseduffield/lazygit/pkg/integration/clients::TestIntegration/cherry_pick/cherry_pick_range_after_paste",
+    "github.com/jesseduffield/lazygit/pkg/integration/clients::TestIntegration"
+  ],
+  "PASS_TO_PASS": []
+}

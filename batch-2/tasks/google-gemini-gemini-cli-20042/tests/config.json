@@ -1,0 +1,30 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run --coverage=false src/ui/utils/markdownParsingUtils.test.ts",
+  "test_files": [
+    "packages/cli/src/ui/utils/TableRenderer.test.tsx",
+    "packages/cli/src/ui/utils/markdownParsingUtils.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should return plain text with default color",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle bold text",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle italic text with *",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle italic text with _",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle bold italic text with ***",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle strikethrough text",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle inline code",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle links",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle bare URLs",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle underline tags",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle complex mixed markdown",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should respect custom default color",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle nested formatting in bold/italic",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle hex colors as default",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should override default color with link color",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should override default color with accent color for code",
+    "/workspace/repo/packages/cli/src/ui/utils/markdownParsingUtils.test.ts::parsingUtils parseMarkdownToANSI should handle nested formatting with color overrides"
+  ],
+  "PASS_TO_PASS": []
+}

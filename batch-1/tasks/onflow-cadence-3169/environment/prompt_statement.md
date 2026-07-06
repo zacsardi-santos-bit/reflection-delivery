@@ -1,0 +1,7 @@
+I'm working on the storage migration framework and want to improve it in a couple of ways. Right now, every migration visits all storage domains even if it only needs to touch one or two of them. I'd like each migration implementation to be able to declare which domains it cares about, so the framework can skip irrelevant domains automatically. When a migration doesn't restrict domains at all, it should still run everywhere as before.
+
+I also want to simplify the API for migrating a single account — currently you have to wrap the address in an iterator object even when there's only one address, which is clunky. The ability to pass the address directly would be much cleaner, and the tests should reflect that pattern.
+
+There's also a bug: published values containing certain capability types stored in the inbox domain are not being correctly processed during migration — sometimes causing a panic or being silently skipped. This should be fixed so that migration over the inbox domain correctly handles these values and reports them as successfully migrated.
+
+Please update the migration framework so that value migration implementations declare their applicable domains via a new method on the interface, the framework respects those declarations by skipping non-matching domains, migrating a single account can be done by passing the address directly, and the published-value handling is corrected so inbox-domain values are properly visited.

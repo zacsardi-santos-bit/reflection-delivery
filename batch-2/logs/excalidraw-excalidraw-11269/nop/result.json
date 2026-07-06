@@ -1,0 +1,29 @@
+{
+    "id": "b6276c4f-943f-4851-b1da-befe357f93a6",
+    "started_at": "2026-07-06T12:17:04.855015",
+    "finished_at": "2026-07-06T12:17:44.662227",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__excalidraw-excalidraw-11269": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "excalidraw-excalidraw-11269__BT4VGcT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

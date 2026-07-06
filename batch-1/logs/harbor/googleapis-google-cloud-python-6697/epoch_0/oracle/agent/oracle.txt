@@ -1,0 +1,2 @@
+patching file firestore/google/cloud/firestore_v1beta1/collection.py
+patching file firestore/google/cloud/firestore_v1beta1/query.py

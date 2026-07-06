@@ -1,0 +1,29 @@
+{
+    "id": "23833687-07b9-49fd-aa7a-ad30b27c974c",
+    "started_at": "2026-07-04T15:41:58.923159",
+    "finished_at": "2026-07-04T15:42:16.756910",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__natalie-lang-natalie-2135": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "natalie-lang-natalie-2135__uurVMCu"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

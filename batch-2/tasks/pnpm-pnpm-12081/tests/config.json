@@ -1,0 +1,30 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/installing/deps-resolver && /workspace/repo/node_modules/.bin/tsgo --build && NODE_OPTIONS=\"--experimental-vm-modules --disable-warning=ExperimentalWarning --disable-warning=DEP0169\" /workspace/repo/node_modules/.bin/jest test/resolvePeers.ts --coverage=false --json",
+  "test_files": [
+    "installing/deps-installer/test/install/peerDependencies.ts",
+    "installing/deps-resolver/test/resolvePeers.ts",
+    "pacquet/crates/cli/tests/install.rs"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::dedupePeers a peer's own peer is shared with a sibling that peer-depends both"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::resolve peer dependencies of cyclic dependencies",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::when a package is referenced twice in the dependencies graph and one of the times it cannot resolve its peers, still try to resolve it in the other occurrence",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::peer dependency issues should find peer dependency conflicts",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::peer dependency issues should find peer dependency conflicts when the peer is an optional peer of one of the dependencies",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::peer dependency issues should ignore conflicts between missing optional peer dependencies",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::peer dependency issues should pick the single wanted peer dependency range",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::peer dependency issues should return the intersection of two compatible ranges",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::unmet peer dependency issues should not warn when the found package has prerelease version and the wanted range is *",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::unmet peer dependency issues should not warn when the found package is a prerelease version but satisfies the range",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::unmet peer dependency issue resolved from subdependency should return from where the bad peer dependency is resolved",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::resolve peer dependencies with npm aliases",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::dedupePeers uses version-only peer suffixes without nested dep paths",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::dedupePeers transitive peers use version-only suffixes",
+    "/workspace/repo/installing/deps-resolver/test/resolvePeers.ts::dedupePeers multi-project: different peer versions produce different instances"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && CI=true ./node_modules/.bin/jest packages/gatsby-plugin-less/src/__tests__/gatsby-node.js --coverage=false --json",
+  "test_files": [
+    "packages/gatsby-plugin-less/src/__tests__/gatsby-node.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme object for stage: develop",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme object for stage: build-css",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme object for stage: develop-html",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme object for stage: build-html",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme object for stage: build-javascript",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme path for stage: develop",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme path for stage: build-css",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme path for stage: develop-html",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme path for stage: build-html",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config with theme path for stage: build-javascript",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config without options for stage: develop"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config without options for stage: build-css",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config without options for stage: develop-html",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config without options for stage: build-html",
+    "/workspace/repo/packages/gatsby-plugin-less/src/__tests__/gatsby-node.js::modifies webpack config without options for stage: build-javascript"
+  ]
+}

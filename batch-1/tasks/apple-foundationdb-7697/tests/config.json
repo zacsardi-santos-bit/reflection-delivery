@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/fdbkubernetesmonitor && go test -json ./api -count=1",
+  "test_files": [
+    "fdbkubernetesmonitor/api/config_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/apple/foundationdb/fdbkubernetesmonitor/api::TestGeneratingArgumentsForDefaultConfig",
+    "github.com/apple/foundationdb/fdbkubernetesmonitor/api::TestGeneratingArgumentForEnvironmentVariable",
+    "github.com/apple/foundationdb/fdbkubernetesmonitor/api::TestGeneratingArgumentForIPList",
+    "github.com/apple/foundationdb/fdbkubernetesmonitor/api::TestLookupEnvForEnvironmentVariable",
+    "github.com/apple/foundationdb/fdbkubernetesmonitor/api::TestLookupEnvForIPList"
+  ],
+  "PASS_TO_PASS": []
+}

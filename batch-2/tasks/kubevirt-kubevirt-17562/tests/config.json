@@ -1,0 +1,19 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/synchronization-controller ./pkg/virt-controller/watch/migration ./pkg/virt-controller/watch/vmi ./pkg/virt-handler -count=1",
+  "test_files": [
+    "pkg/synchronization-controller/synchronization-controller_test.go",
+    "pkg/virt-controller/watch/migration/migration_test.go",
+    "pkg/virt-controller/watch/vmi/vmi_test.go",
+    "pkg/virt-handler/migration-target_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "kubevirt.io/kubevirt/pkg/virt-controller/watch/vmi::TestVMI",
+    "kubevirt.io/kubevirt/pkg/virt-controller/watch/migration::TestMigration",
+    "kubevirt.io/kubevirt/pkg/synchronization-controller::TestVirtHandler",
+    "kubevirt.io/kubevirt/pkg/virt-handler::TestVirtHandler"
+  ],
+  "PASS_TO_PASS": []
+}

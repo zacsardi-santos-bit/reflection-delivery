@@ -1,0 +1,9 @@
+patching file ambry-api/src/main/java/com.github.ambry/router/OperationTrackerScope.java
+patching file ambry-cloud/src/main/java/com.github.ambry.cloud/CloudBlobMetadata.java
+patching file ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureCloudDestination.java
+patching file ambry-cloud/src/main/java/com.github.ambry.cloud/azure/AzureMetrics.java
+patching file ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureCloudDestinationTest.java
+patching file ambry-cloud/src/test/java/com.github.ambry.cloud/azure/AzureIntegrationTest.java
+patching file ambry-replication/src/main/java/com.github.ambry.replication/ReplicationEngine.java
+patching file ambry-router/src/main/java/com.github.ambry.router/AdaptiveOperationTracker.java
+patching file ambry-router/src/main/java/com.github.ambry.router/NonBlockingRouterMetrics.java

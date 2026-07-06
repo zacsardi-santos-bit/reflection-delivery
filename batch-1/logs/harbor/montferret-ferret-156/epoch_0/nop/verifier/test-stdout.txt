@@ -1,0 +1,12 @@
+patching file pkg/stdlib/datetime/hour_test.go
+patching file pkg/stdlib/datetime/minute_test.go
+patching file pkg/stdlib/datetime/second_test.go
+# github.com/MontFerret/ferret/pkg/stdlib/datetime_test [github.com/MontFerret/ferret/pkg/stdlib/datetime.test]
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/datetime/hour_test.go:41:12: undefined: datetime.DateHour
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/datetime/minute_test.go:41:12: undefined: datetime.DateMinute
+/go/src/github.com/MontFerret/ferret/pkg/stdlib/datetime/second_test.go:41:12: undefined: datetime.DateSecond
+FAIL	github.com/MontFerret/ferret/pkg/stdlib/datetime [build failed]
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file

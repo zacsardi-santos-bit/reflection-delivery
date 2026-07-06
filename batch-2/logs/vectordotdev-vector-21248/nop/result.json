@@ -1,0 +1,29 @@
+{
+    "id": "87a07fb2-4cdf-4395-a8c9-1cb1193cbc8e",
+    "started_at": "2026-07-04T15:36:37.013699",
+    "finished_at": "2026-07-04T15:37:06.393880",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__vectordotdev-vector-21248": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "vectordotdev-vector-21248__mNQE7am"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

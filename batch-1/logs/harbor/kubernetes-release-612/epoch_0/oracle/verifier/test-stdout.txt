@@ -1,0 +1,22 @@
+patching file debian/build_test.go
+{"Time":"2026-06-29T15:30:59.845655978Z","Action":"start","Package":"_/workspace/repo/debian"}
+{"Time":"2026-06-29T15:30:59.855102501Z","Action":"run","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmConfig"}
+{"Time":"2026-06-29T15:30:59.855151968Z","Action":"output","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmConfig","Output":"=== RUN   TestGetKubeadmConfig\n"}
+{"Time":"2026-06-29T15:30:59.855177993Z","Action":"output","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmConfig","Output":"--- PASS: TestGetKubeadmConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:30:59.855189513Z","Action":"pass","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmConfig","Elapsed":0}
+{"Time":"2026-06-29T15:30:59.855212713Z","Action":"run","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies"}
+{"Time":"2026-06-29T15:30:59.855282217Z","Action":"output","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies","Output":"=== RUN   TestGetKubeadmDependencies\n"}
+{"Time":"2026-06-29T15:30:59.855334475Z","Action":"run","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies/simple_test"}
+{"Time":"2026-06-29T15:30:59.855348269Z","Action":"output","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies/simple_test","Output":"=== RUN   TestGetKubeadmDependencies/simple_test\n"}
+{"Time":"2026-06-29T15:30:59.855362006Z","Action":"output","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies/simple_test","Output":"--- PASS: TestGetKubeadmDependencies/simple_test (0.00s)\n"}
+{"Time":"2026-06-29T15:30:59.855378209Z","Action":"pass","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies/simple_test","Elapsed":0}
+{"Time":"2026-06-29T15:30:59.855409143Z","Action":"run","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies/newer_than_1.11"}
+{"Time":"2026-06-29T15:30:59.855430138Z","Action":"output","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies/newer_than_1.11","Output":"=== RUN   TestGetKubeadmDependencies/newer_than_1.11\n"}
+{"Time":"2026-06-29T15:30:59.855468578Z","Action":"output","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies/newer_than_1.11","Output":"--- PASS: TestGetKubeadmDependencies/newer_than_1.11 (0.00s)\n"}
+{"Time":"2026-06-29T15:30:59.855503223Z","Action":"pass","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies/newer_than_1.11","Elapsed":0}
+{"Time":"2026-06-29T15:30:59.855512718Z","Action":"output","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies","Output":"--- PASS: TestGetKubeadmDependencies (0.00s)\n"}
+{"Time":"2026-06-29T15:30:59.855520699Z","Action":"pass","Package":"_/workspace/repo/debian","Test":"TestGetKubeadmDependencies","Elapsed":0}
+{"Time":"2026-06-29T15:30:59.855528674Z","Action":"output","Package":"_/workspace/repo/debian","Output":"PASS\n"}
+{"Time":"2026-06-29T15:30:59.856080753Z","Action":"output","Package":"_/workspace/repo/debian","Output":"ok  \t_/workspace/repo/debian\t0.010s\n"}
+{"Time":"2026-06-29T15:30:59.856114255Z","Action":"pass","Package":"_/workspace/repo/debian","Elapsed":0.01}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=go exit_code=0

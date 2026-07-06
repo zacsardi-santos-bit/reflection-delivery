@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p jsonrpc-derive --test pubsub-macros --no-fail-fast",
+  "test_files": [
+    "derive/tests/pubsub-macros.rs",
+    "derive/tests/ui/pubsub/mixed-subscriber-signatures.rs",
+    "derive/tests/ui/pubsub/mixed-subscriber-signatures.stderr"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/3) jsonrpc-derive::pubsub-macros test_invalid_trailing_pubsub_params",
+    "(2/3) jsonrpc-derive::pubsub-macros test_subscribe_alternate_method",
+    "(3/3) jsonrpc-derive::pubsub-macros test_subscribe_with_alias"
+  ],
+  "PASS_TO_PASS": []
+}

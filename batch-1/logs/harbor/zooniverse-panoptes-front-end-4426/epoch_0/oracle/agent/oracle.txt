@@ -1,0 +1,5 @@
+patching file app/classifier/index.cjsx
+patching file app/components/subject-viewer.cjsx
+patching file app/pages/project/classify.cjsx
+patching file app/pages/project/classify.jsx
+patching file app/router.cjsx

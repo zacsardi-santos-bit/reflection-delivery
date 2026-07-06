@@ -1,0 +1,103 @@
+patching file api/tests/conftest.py
+patching file api/tests/test_audio_service.py
+patching file api/tests/test_chunker.py
+patching file api/tests/test_text_processing.py
+patching file api/tests/test_tts_implementations.py
+patching file api/tests/test_tts_service.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.0.0, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: cov-6.0.0, asyncio-0.23.5, anyio-4.2.0
+asyncio: mode=Mode.STRICT
+collecting ... collected 44 items / 5 deselected / 39 selected
+
+api/tests/test_audio_service.py::test_convert_to_wav PASSED              [  2%]
+api/tests/test_audio_service.py::test_convert_to_mp3 PASSED              [  5%]
+api/tests/test_audio_service.py::test_convert_to_opus PASSED             [  7%]
+api/tests/test_audio_service.py::test_convert_to_flac PASSED             [ 10%]
+api/tests/test_audio_service.py::test_convert_to_aac_raises_error PASSED [ 12%]
+api/tests/test_audio_service.py::test_convert_to_pcm PASSED              [ 15%]
+api/tests/test_audio_service.py::test_convert_to_invalid_format_raises_error PASSED [ 17%]
+api/tests/test_audio_service.py::test_normalization_wav PASSED           [ 20%]
+api/tests/test_audio_service.py::test_normalization_pcm PASSED           [ 23%]
+api/tests/test_audio_service.py::test_invalid_audio_data PASSED          [ 25%]
+api/tests/test_audio_service.py::test_different_sample_rates PASSED      [ 28%]
+api/tests/test_audio_service.py::test_buffer_position_after_conversion PASSED [ 30%]
+api/tests/test_chunker.py::test_split_text PASSED                        [ 33%]
+api/tests/test_chunker.py::test_split_text_empty PASSED                  [ 35%]
+api/tests/test_chunker.py::test_split_text_single_sentence PASSED        [ 38%]
+api/tests/test_chunker.py::test_split_text_with_custom_chunk_size PASSED [ 41%]
+api/tests/test_text_processing.py::test_phonemize_empty_text PASSED      [ 43%]
+api/tests/test_tts_implementations.py::test_get_device_error PASSED      [ 46%]
+api/tests/test_tts_implementations.py::test_setup_cuda_available PASSED  [ 48%]
+api/tests/test_tts_implementations.py::test_setup_cuda_unavailable PASSED [ 51%]
+api/tests/test_tts_implementations.py::test_cpu_initialize_missing_model PASSED [ 53%]
+api/tests/test_tts_implementations.py::test_cpu_generate_uninitialized PASSED [ 56%]
+api/tests/test_tts_implementations.py::test_cpu_process_text PASSED      [ 58%]
+api/tests/test_tts_implementations.py::test_gpu_initialize_cuda_unavailable PASSED [ 61%]
+api/tests/test_tts_implementations.py::test_gpu_length_to_mask PASSED    [ 64%]
+api/tests/test_tts_implementations.py::test_gpu_generate_uninitialized PASSED [ 66%]
+api/tests/test_tts_implementations.py::test_gpu_process_text PASSED      [ 69%]
+api/tests/test_tts_service.py::test_audio_to_bytes PASSED                [ 71%]
+api/tests/test_tts_service.py::test_list_voices PASSED                   [ 74%]
+api/tests/test_tts_service.py::test_list_voices_error PASSED             [ 76%]
+api/tests/test_tts_service.py::test_model_initialization_cuda PASSED     [ 79%]
+api/tests/test_tts_service.py::test_model_initialization_cpu PASSED      [ 82%]
+api/tests/test_tts_service.py::test_generate_audio_empty_text PASSED     [ 84%]
+api/tests/test_tts_service.py::test_generate_audio_phonemize_error PASSED [ 87%]
+api/tests/test_tts_service.py::test_generate_audio_error PASSED          [ 89%]
+api/tests/test_tts_service.py::test_save_audio PASSED                    [ 92%]
+api/tests/test_tts_service.py::test_combine_voices PASSED                [ 94%]
+api/tests/test_tts_service.py::test_combine_voices_invalid_input PASSED  [ 97%]
+api/tests/test_tts_service.py::test_voicepack_loading_error PASSED       [100%]
+
+=============================== warnings summary ===============================
+api/src/services/text_processing/normalizer.py:22
+  /workspace/repo/api/src/services/text_processing/normalizer.py:22: DeprecationWarning: invalid escape sequence '\.'
+    "|".join(VALID_TLDS) + "))+|[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(:[0-9]+)?([/?][^\s]*)?",
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+
+---------- coverage: platform linux, python 3.11.15-final-0 ----------
+Name                                             Stmts   Miss  Cover   Missing
+------------------------------------------------------------------------------
+api/__init__.py                                      0      0   100%
+api/src/main.py                                     38     11    71%   49-74, 105, 111
+api/src/routers/__init__.py                          0      0   100%
+api/src/routers/development.py                      51     28    45%   15, 36-44, 54-56, 77-129
+api/src/routers/openai_compatible.py                65     46    29%   20, 26-45, 50-57, 67-126, 134-139, 160-173
+api/src/services/__init__.py                         2      0   100%
+api/src/services/audio.py                           54      1    98%   30
+api/src/services/text_processing/__init__.py         4      0   100%
+api/src/services/text_processing/chunker.py         29      4    86%   18, 30, 40, 50
+api/src/services/text_processing/normalizer.py     106     64    40%   28-48, 52-67, 71-72, 76-82, 86-123
+api/src/services/text_processing/phonemizer.py      31      8    74%   51-60, 78
+api/src/services/text_processing/vocabulary.py      13      3    77%   24, 36-37
+api/src/services/tts_base.py                        80     12    85%   31-33, 42, 56-62, 70
+api/src/services/tts_cpu.py                         64     12    81%   19, 35, 44, 46, 115-120, 138-151
+api/src/services/tts_gpu.py                         81     47    42%   40-80, 95-102, 111-113, 119-127, 162-167, 185-190
+api/src/services/tts_model.py                        5      1    80%   4
+api/src/services/tts_service.py                    155     69    55%   41, 55, 73, 82-105, 121-173, 207-208, 219-220, 226-229, 233-241
+api/src/structures/__init__.py                       2      0   100%
+api/src/structures/schemas.py                       18      0   100%
+api/src/structures/text_schemas.py                  11      0   100%
+api/tests/__init__.py                                0      0   100%
+api/tests/conftest.py                              136     53    61%   15, 46-49, 52-56, 59-62, 65-69, 76-78, 81-83, 86, 89, 92, 134, 138-140, 144-147, 151-153, 157-159, 163, 167, 173-181, 187-190
+ui/app.py                                            1      1     0%   1
+ui/lib/__init__.py                                   0      0   100%
+ui/lib/api.py                                       51     51     0%   1-84
+ui/lib/components/__init__.py                        4      4     0%   1-5
+ui/lib/components/input.py                          19     19     0%   1-58
+ui/lib/components/model.py                          14     14     0%   1-41
+ui/lib/components/output.py                         14     14     0%   1-42
+ui/lib/config.py                                     9      9     0%   1-19
+ui/lib/files.py                                     82     82     0%   1-122
+ui/lib/handlers.py                                  89     89     0%   1-228
+ui/lib/interface.py                                 29     29     0%   1-97
+------------------------------------------------------------------------------
+TOTAL                                             1257    671    47%
+
+================= 39 passed, 5 deselected, 1 warning in 3.47s ==================
+reward=1 graded=39 found=0 failed=0 parsed=39 framework=pytest exit_code=0

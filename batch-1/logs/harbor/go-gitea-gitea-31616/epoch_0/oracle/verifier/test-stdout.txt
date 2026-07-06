@@ -1,0 +1,14 @@
+patching file modules/svg/pr31616_test.go
+{"Time":"2026-06-29T15:16:50.858955563Z","Action":"start","Package":"code.gitea.io/gitea/modules/svg"}
+{"Time":"2026-06-29T15:16:50.863773817Z","Action":"run","Package":"code.gitea.io/gitea/modules/svg","Test":"TestNewOcticonsExist"}
+{"Time":"2026-06-29T15:16:50.863833179Z","Action":"output","Package":"code.gitea.io/gitea/modules/svg","Test":"TestNewOcticonsExist","Output":"=== RUN   TestNewOcticonsExist\n"}
+{"Time":"2026-06-29T15:16:50.864010163Z","Action":"output","Package":"code.gitea.io/gitea/modules/svg","Test":"TestNewOcticonsExist","Output":"--- PASS: TestNewOcticonsExist (0.00s)\n"}
+{"Time":"2026-06-29T15:16:50.864064538Z","Action":"pass","Package":"code.gitea.io/gitea/modules/svg","Test":"TestNewOcticonsExist","Elapsed":0}
+{"Time":"2026-06-29T15:16:50.864099377Z","Action":"run","Package":"code.gitea.io/gitea/modules/svg","Test":"TestNormalize"}
+{"Time":"2026-06-29T15:16:50.864122368Z","Action":"output","Package":"code.gitea.io/gitea/modules/svg","Test":"TestNormalize","Output":"=== RUN   TestNormalize\n"}
+{"Time":"2026-06-29T15:16:50.864158779Z","Action":"output","Package":"code.gitea.io/gitea/modules/svg","Test":"TestNormalize","Output":"--- PASS: TestNormalize (0.00s)\n"}
+{"Time":"2026-06-29T15:16:50.864179136Z","Action":"pass","Package":"code.gitea.io/gitea/modules/svg","Test":"TestNormalize","Elapsed":0}
+{"Time":"2026-06-29T15:16:50.864200866Z","Action":"output","Package":"code.gitea.io/gitea/modules/svg","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:50.864428591Z","Action":"output","Package":"code.gitea.io/gitea/modules/svg","Output":"ok  \tcode.gitea.io/gitea/modules/svg\t0.005s\n"}
+{"Time":"2026-06-29T15:16:50.864477459Z","Action":"pass","Package":"code.gitea.io/gitea/modules/svg","Elapsed":0.006}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

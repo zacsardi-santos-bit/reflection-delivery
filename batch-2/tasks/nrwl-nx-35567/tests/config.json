@@ -1,0 +1,32 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts --config=packages/angular/jest.config.cts --no-coverage",
+  "test_files": [
+    "e2e/angular/src/ngrx.test.ts",
+    "nx-dev/nx-dev-e2e/src/packages.spec.ts",
+    "packages/angular/src/generators/ngrx/ngrx.spec.ts",
+    "packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should be a no-op when no @nx/angular:ngrx defaults are set",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should be a no-op when nx.json has no generators field",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should split flat defaults across the two new generator keys",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should not propagate `minimal` to the feature-store key",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should merge nested and flat shapes when both are present",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should preserve nested format when defaults are nested",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should rename the deprecated `module` option to `parent` on the feature key",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should let `module` win over `parent` when both are set (matching old runtime)",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should write to the nested replacement shape when the user already uses it",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should drop the obsolete `root` toggle and not write empty defaults",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should not overwrite existing defaults under the new generator keys",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should remove an empty collection bucket after deleting nested defaults",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should clean up the collection bucket when no other siblings remain (edge: empty new defaults)",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should migrate generator defaults set in project.json",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should migrate nested generator defaults set in project.json",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should migrate defaults in nx.json and project.json independently in the same run",
+    "/workspace/repo/packages/angular/src/migrations/update-23-0-0/migrate-ngrx-generator-defaults.spec.ts::migrate-ngrx-generator-defaults should leave projects without ngrx defaults untouched"
+  ],
+  "PASS_TO_PASS": []
+}

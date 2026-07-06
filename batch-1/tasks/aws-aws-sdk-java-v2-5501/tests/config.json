@@ -1,0 +1,29 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl services-custom/dynamodb-enhanced test -Dtest=\"TransactWriteItemsOperationTest,TransactWriteItemsEnhancedRequestTest,TransactWriteItemsEnhancedResponseTest\" -Dcheckstyle.skip=true -Danimal.sniffer.skip=true -Dmaven.javadoc.skip=true",
+  "test_files": [
+    "services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java",
+    "services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java",
+    "services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/internal/operations/TransactWriteItemsOperationTest.java",
+    "services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java",
+    "services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java"
+  ],
+  "num_test_files": 5,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "AWS::test_1",
+    "AWS::test_2",
+    "AWS::test_3",
+    "AWS::test_4",
+    "AWS::test_5",
+    "AWS::test_6",
+    "AWS::test_7",
+    "AWS::test_8",
+    "AWS::test_9",
+    "AWS::test_10",
+    "AWS::test_11",
+    "AWS::test_12",
+    "AWS::test_13"
+  ],
+  "PASS_TO_PASS": []
+}

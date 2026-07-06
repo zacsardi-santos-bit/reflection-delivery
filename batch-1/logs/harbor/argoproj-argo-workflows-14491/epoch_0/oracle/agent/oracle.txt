@@ -1,0 +1,12 @@
+patching file .features/TEMPLATE.md
+patching file .features/pending/feat-notes.md
+patching file .github/workflows/ci-build.yaml
+patching file .github/workflows/pr.yaml
+patching file .gitignore
+patching file .spelling
+patching file Makefile
+patching file docs/releasing.md
+patching file docs/running-locally.md
+patching file hack/featuregen/components.go
+patching file hack/featuregen/contents.go
+patching file hack/featuregen/main.go

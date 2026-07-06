@@ -1,0 +1,29 @@
+{
+    "id": "0badd841-19fc-497b-8828-b6198cb439b4",
+    "started_at": "2026-07-06T12:23:24.329882",
+    "finished_at": "2026-07-06T12:27:23.376314",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__line-armeria-5779": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "line-armeria-5779__MDzTxzW"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

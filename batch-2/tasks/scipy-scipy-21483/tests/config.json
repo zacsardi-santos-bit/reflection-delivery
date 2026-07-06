@@ -1,0 +1,30 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/scipy/special/tests/test_sph_harm.py -v",
+  "test_files": [
+    "scipy/special/tests/test_sph_harm.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_p"
+  ],
+  "PASS_TO_PASS": [
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[1-7]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[1-10]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[1-50]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[4-7]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[4-10]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[4-50]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[5-7]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[5-10]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[5-50]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[9-7]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[9-10]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[9-50]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[14-7]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[14-10]",
+    "scipy.special.tests.test_sph_harm.TestSphHarm::test_all[14-50]",
+    "scipy.special.tests.test_sph_harm::test_first_harmonics"
+  ]
+}

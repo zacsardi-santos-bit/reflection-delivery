@@ -1,0 +1,38 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run src/commands/mcp/list.test.ts src/ui/components/views/McpStatus.test.tsx --coverage=false",
+  "test_files": [
+    "packages/cli/src/commands/mcp/list.test.ts",
+    "packages/cli/src/ui/components/views/McpStatus.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/commands/mcp/list.test.ts::mcp list command should filter servers based on admin allowlist passed in settings",
+    "/workspace/repo/packages/cli/src/commands/mcp/list.test.ts::mcp list command should display blocked status for servers in excluded list",
+    "/workspace/repo/packages/cli/src/commands/mcp/list.test.ts::mcp list command should display disabled status for servers disabled via enablement manager"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/commands/mcp/list.test.ts::mcp list command should display message when no servers configured",
+    "/workspace/repo/packages/cli/src/commands/mcp/list.test.ts::mcp list command should display different server types with connected status",
+    "/workspace/repo/packages/cli/src/commands/mcp/list.test.ts::mcp list command should display disconnected status when connection fails",
+    "/workspace/repo/packages/cli/src/commands/mcp/list.test.ts::mcp list command should merge extension servers with config servers",
+    "/workspace/repo/packages/cli/src/commands/mcp/list.test.ts::mcp list command should show stdio servers as disconnected in untrusted folders",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with a connected server",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with authenticated OAuth status",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with expired OAuth status",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with unauthenticated OAuth status",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with a disconnected server",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly when discovery is in progress",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with schema enabled",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with parametersJsonSchema",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with prompts",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with resources",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with a blocked server",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with both blocked and unblocked servers",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders only blocked servers when no configured servers exist",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with a connecting server",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus renders correctly with a server error",
+    "/workspace/repo/packages/cli/src/ui/components/views/McpStatus.test.tsx::McpStatus truncates resources when exceeding limit"
+  ]
+}

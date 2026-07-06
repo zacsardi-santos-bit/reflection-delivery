@@ -1,0 +1,22 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_js_analyze use_valid_autocomplete --no-fail-fast",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/useValidAutocomplete/invalid.jsx",
+    "crates/biome_js_analyze/tests/specs/nursery/useValidAutocomplete/invalid.jsx.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/useValidAutocomplete/invalid.options.json",
+    "crates/biome_js_analyze/tests/specs/nursery/useValidAutocomplete/valid.jsx",
+    "crates/biome_js_analyze/tests/specs/nursery/useValidAutocomplete/valid.jsx.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/useValidAutocomplete/valid.options.json"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) biome_js_analyze lint::nursery::use_valid_autocomplete::test_order",
+    "(2/5) biome_js_analyze::spec_tests specs::nursery::use_valid_autocomplete::invalid_options_json",
+    "(3/5) biome_js_analyze::spec_tests specs::nursery::use_valid_autocomplete::valid_options_json",
+    "(4/5) biome_js_analyze::spec_tests specs::nursery::use_valid_autocomplete::valid_jsx",
+    "(5/5) biome_js_analyze::spec_tests specs::nursery::use_valid_autocomplete::invalid_jsx"
+  ],
+  "PASS_TO_PASS": []
+}

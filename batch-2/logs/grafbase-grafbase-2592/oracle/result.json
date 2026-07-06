@@ -1,0 +1,29 @@
+{
+    "id": "b411cf20-a07f-41fd-822c-a174d4b89e92",
+    "started_at": "2026-07-04T15:40:31.796989",
+    "finished_at": "2026-07-04T15:42:16.667384",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__grafbase-grafbase-2592": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "grafbase-grafbase-2592__2T9xsoE"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

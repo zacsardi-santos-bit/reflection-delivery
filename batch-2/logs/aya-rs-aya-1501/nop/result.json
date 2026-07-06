@@ -1,0 +1,29 @@
+{
+    "id": "7bf7d177-021e-4244-8bf1-852dae71fdf4",
+    "started_at": "2026-07-06T12:17:21.704592",
+    "finished_at": "2026-07-06T12:18:06.149185",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__aya-rs-aya-1501": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "aya-rs-aya-1501__vBfjsR6"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

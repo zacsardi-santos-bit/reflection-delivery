@@ -1,0 +1,38 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/scripts/tests/ci/test_analyze_e2e_flaky_tests.py /workspace/repo/scripts/tests/ci/test_extract_e2e_test_results.py -v",
+  "test_files": [
+    "scripts/tests/ci/test_analyze_e2e_flaky_tests.py",
+    "scripts/tests/ci/test_extract_e2e_test_results.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.ci.test_analyze_e2e_flaky_tests.TestEscapeSlackMrkdwn::test_escapes_ampersand",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestEscapeSlackMrkdwn::test_escapes_angle_brackets",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestEscapeSlackMrkdwn::test_plain_text_unchanged",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestEscapeSlackMrkdwn::test_all_special_chars",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestIdentifyFlakyCandidates::test_empty_failures",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestIdentifyFlakyCandidates::test_zero_runs",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestIdentifyFlakyCandidates::test_identifies_flaky_test",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestIdentifyFlakyCandidates::test_excludes_low_failure_rate",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestIdentifyFlakyCandidates::test_sorted_by_failure_rate",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestFormatSlackMessage::test_empty_results",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestFormatSlackMessage::test_with_failures_and_fixme",
+    "tests.ci.test_analyze_e2e_flaky_tests.TestFormatSlackMessage::test_special_chars_in_test_names",
+    "tests.ci.test_extract_e2e_test_results.TestTruncateError::test_short_message_unchanged",
+    "tests.ci.test_extract_e2e_test_results.TestTruncateError::test_long_message_truncated",
+    "tests.ci.test_extract_e2e_test_results.TestTruncateError::test_strips_whitespace_and_newlines",
+    "tests.ci.test_extract_e2e_test_results.TestExtractTestTitle::test_with_title_path",
+    "tests.ci.test_extract_e2e_test_results.TestExtractTestTitle::test_without_title_path",
+    "tests.ci.test_extract_e2e_test_results.TestExtractTestTitle::test_missing_location",
+    "tests.ci.test_extract_e2e_test_results.TestExtractFailures::test_extracts_failed_tests",
+    "tests.ci.test_extract_e2e_test_results.TestExtractFailures::test_skips_passing_tests",
+    "tests.ci.test_extract_e2e_test_results.TestExtractFailures::test_empty_suites",
+    "tests.ci.test_extract_e2e_test_results.TestExtractFixmeTests::test_extracts_fixme_tests",
+    "tests.ci.test_extract_e2e_test_results.TestExtractFixmeTests::test_empty_suites",
+    "tests.ci.test_extract_e2e_test_results.TestMainFunction::test_missing_results_file_writes_empty",
+    "tests.ci.test_extract_e2e_test_results.TestMainFunction::test_valid_results_file"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,45 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --reporter=verbose --coverage.enabled=false src/sandbox/linux/LinuxSandboxManager.test.ts src/sandbox/macos/MacOsSandboxManager.integration.test.ts src/sandbox/macos/MacOsSandboxManager.test.ts src/sandbox/macos/seatbeltArgsBuilder.test.ts src/services/sandboxManager.test.ts src/services/windowsSandboxManager.test.ts",
+  "test_files": [
+    "packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts",
+    "packages/core/src/sandbox/macos/MacOsSandboxManager.integration.test.ts",
+    "packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts",
+    "packages/core/src/sandbox/macos/seatbeltArgsBuilder.test.ts",
+    "packages/core/src/services/sandboxManager.test.ts",
+    "packages/core/src/services/windowsSandboxManager.test.ts"
+  ],
+  "num_test_files": 6,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::sanitizePaths should return undefined if no paths are provided",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::sanitizePaths should deduplicate paths and return them",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::sanitizePaths should throw an error if a path is not absolute",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::NoopSandboxManager should respect blockedEnvironmentVariables in config",
+    "/workspace/repo/packages/core/src/services/windowsSandboxManager.test.ts::WindowsSandboxManager should handle networkAccess from config",
+    "/workspace/repo/packages/core/src/services/windowsSandboxManager.test.ts::WindowsSandboxManager should grant Low Integrity access to the workspace and allowed paths",
+    "/workspace/repo/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts::MacOsSandboxManager prepareCommand should allow network when networkAccess is true in policy",
+    "/workspace/repo/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts::MacOsSandboxManager prepareCommand should parameterize allowed paths and normalize them",
+    "/workspace/repo/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts::LinuxSandboxManager maps allowedPaths to bwrap binds"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::NoopSandboxManager should pass through the command and arguments unchanged",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::NoopSandboxManager should sanitize the environment variables",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::NoopSandboxManager should NOT allow disabling environment variable redaction if requested in config (vulnerability fix)",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::NoopSandboxManager should respect allowedEnvironmentVariables in config but filter sensitive ones",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::createSandboxManager should return NoopSandboxManager if sandboxing is disabled",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::createSandboxManager should return 'LinuxSandboxManager' if sandboxing is enabled and platform is 'linux'",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::createSandboxManager should return 'MacOsSandboxManager' if sandboxing is enabled and platform is 'darwin'",
+    "/workspace/repo/packages/core/src/services/sandboxManager.test.ts::createSandboxManager should return 'WindowsSandboxManager' if sandboxing is enabled and platform is 'win32'",
+    "/workspace/repo/packages/core/src/services/windowsSandboxManager.test.ts::WindowsSandboxManager should prepare a GeminiSandbox.exe command",
+    "/workspace/repo/packages/core/src/services/windowsSandboxManager.test.ts::WindowsSandboxManager should sanitize environment variables",
+    "/workspace/repo/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts::MacOsSandboxManager prepareCommand should build a strict allowlist profile allowing the workspace via param",
+    "/workspace/repo/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts::MacOsSandboxManager prepareCommand should format the executable and arguments correctly for sandbox-exec",
+    "/workspace/repo/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts::MacOsSandboxManager prepareCommand should correctly pass through the cwd to the resulting command",
+    "/workspace/repo/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts::MacOsSandboxManager prepareCommand should apply environment sanitization via the default mechanisms",
+    "/workspace/repo/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts::MacOsSandboxManager prepareCommand should resolve parent directories if a file does not exist",
+    "/workspace/repo/packages/core/src/sandbox/macos/MacOsSandboxManager.test.ts::MacOsSandboxManager prepareCommand should throw if realpathSync throws a non-ENOENT error",
+    "/workspace/repo/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts::LinuxSandboxManager correctly outputs bwrap as the program with appropriate isolation flags",
+    "/workspace/repo/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts::LinuxSandboxManager should not bind the workspace twice even if it has a trailing slash in allowedPaths"
+  ]
+}

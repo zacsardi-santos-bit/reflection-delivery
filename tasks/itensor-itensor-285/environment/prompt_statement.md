@@ -1,5 +1,0 @@
-I'm working with the ITensor C++ tensor library and I need to perform QR decompositions on tensors, but the library doesn't have this functionality yet. Right now I can do singular value decompositions, but QR decomposition is more efficient for many tensor network algorithms where I just need to orthogonalize a tensor without computing singular values.
-
-I need a way to take an arbitrary tensor, specify which of its indices belong to the "Q" (orthogonal/unitary) factor, and get back a factorization into Q and an upper-triangular R such that the original tensor is exactly reconstructed as Q times R. It should support both a complete form (where Q is a full square unitary matrix) and a thin/economy form (where Q has reduced dimensions). The shared internal index connecting Q and R needs to be identifiable by a tag.
-
-This should work for real tensors, complex tensors, and tensors that carry quantum number structure. There should also be a lower-level routine that performs QR on plain real and complex matrices, handling both tall matrices and rank-deficient (wide) matrices correctly.

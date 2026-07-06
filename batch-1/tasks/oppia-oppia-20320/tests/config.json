@@ -1,0 +1,16 @@
+{
+  "test_framework": "pytest",
+  "test_command": "redis-server --daemonize yes && gcloud beta emulators datastore start --project=dev-project-id --host-port=localhost:8089 --no-store-on-disk --consistency=1.0 --quiet & sleep 10 && cd /workspace/repo && pytest core/domain/exp_services_test.py::ExplorationTranslationCountTests core/domain/translation_services_test.py::EntityTranslationServicesTest::test_compute_translation_related_changes_upon_revert -v",
+  "test_files": [
+    "core/domain/exp_services_test.py",
+    "core/domain/translation_services_test.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "core.domain.exp_services_test.ExplorationTranslationCountTests::test_translation_count_upon_adding_new_interaction",
+    "core.domain.exp_services_test.ExplorationTranslationCountTests::test_translation_count_upon_revert",
+    "core.domain.translation_services_test.EntityTranslationServicesTest::test_compute_translation_related_changes_upon_revert"
+  ],
+  "PASS_TO_PASS": []
+}

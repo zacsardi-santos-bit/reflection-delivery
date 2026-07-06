@@ -1,0 +1,15 @@
+{
+  "test_framework": "ctest",
+  "test_command": "bash -c 'cd /workspace/build && cmake /workspace/repo -GNinja -DCMAKE_BUILD_TYPE=Debug -DBUILD_PARQUET_EXTENSION=OFF -DENABLE_SANITIZER=FALSE -DENABLE_UBSAN=0 && cmake --build . --target unittest && mkdir -p /workspace/test-results && /workspace/build/test/unittest test/sql/types/test_all_types.test -o /workspace/test-results/output.xml --reporter junit'",
+  "test_files": [
+    "test/sql/storage/all_types_storage.test",
+    "test/sql/storage/all_types_storage_large.test_coverage",
+    "test/sql/types/test_all_types.test"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "unittest.global::test/sql/types/test_all_types.test"
+  ],
+  "PASS_TO_PASS": []
+}

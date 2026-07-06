@@ -1,0 +1,7 @@
+I'm building a Telegram bot using this framework and running into issues with session handling. The bot works fine for plain private messages, but when users interact with it in groups, edit their messages, use inline queries, interact through channel posts, or go through the payment flow (shipping/checkout queries), the session isn't populated correctly.
+
+It seems like the code responsible for determining the session identifier and populating session context only handles a couple of update types — plain messages and callback queries — and silently does nothing for all the others. This means bots that rely on group interactions, channel posts, or payment-related updates have no session data to work with.
+
+Ideally, the session should always contain three fields: one for the current user, one for the group (if the update comes from a group), and one for the channel (if it's a channel post). For query-based updates like inline queries or payment queries, the user field should be populated from the sender. For channel posts, only the channel field should be set. For group messages or group callback queries, both the user and group fields should be populated. All session context objects should carry a timestamp of when they were last refreshed.
+
+Similarly, the unique session key used to identify a conversation should be derived from the most meaningful identifier for each update type — the chat id for message-based updates, or the sender's id for query-based updates.

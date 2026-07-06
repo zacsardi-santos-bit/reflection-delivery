@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./server/gc -count=1",
+  "test_files": [
+    "server/gc/safepoint_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/tikv/pd/server/gc::TestGCSafePointUpdateSequentially",
+    "github.com/tikv/pd/server/gc::TestGCSafePointUpdateCurrently",
+    "github.com/tikv/pd/server/gc::TestServiceGCSafePointUpdate"
+  ],
+  "PASS_TO_PASS": []
+}

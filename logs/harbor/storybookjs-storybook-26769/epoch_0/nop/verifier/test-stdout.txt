@@ -1,8 +1,0 @@
-patching file code/lib/core-server/src/server-channel/create-new-story-channel.test.ts
-patching file code/lib/core-server/src/utils/get-component-variable-name.test.ts
-patching file code/lib/core-server/src/utils/get-new-story-file.test.ts
-patching file code/lib/core-server/src/utils/get-story-id.test.ts
-patching file code/lib/core-server/src/utils/new-story-templates/javascript.test.ts
-patching file code/lib/core-server/src/utils/new-story-templates/typescript.test.ts
-patching file code/lib/core-server/src/utils/posix.test.ts
-reward=0 (grader error: Extra data: line 25 column 1 (char 1919); fell back to exit_code=1)

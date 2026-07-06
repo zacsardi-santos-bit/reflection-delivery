@@ -1,1 +1,0 @@
-cd /workspace/repo/packages/manager && npx vitest run src/layouts/OAuth.test.tsx src/store/authentication/authentication.test.ts

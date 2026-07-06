@@ -1,0 +1,9 @@
+patching file pkg/namespace/namespace_test.go
+{"Time":"2026-06-29T15:22:22.89124652Z","Action":"run","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/namespace","Test":"TestNamespaceDataPlatformProbationRecruitmentAppDevExists"}
+{"Time":"2026-06-29T15:22:22.89139337Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/namespace","Test":"TestNamespaceDataPlatformProbationRecruitmentAppDevExists","Output":"=== RUN   TestNamespaceDataPlatformProbationRecruitmentAppDevExists\n"}
+{"Time":"2026-06-29T15:22:22.89166633Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/namespace","Test":"TestNamespaceDataPlatformProbationRecruitmentAppDevExists","Output":"--- PASS: TestNamespaceDataPlatformProbationRecruitmentAppDevExists (0.00s)\n"}
+{"Time":"2026-06-29T15:22:22.8918353Z","Action":"pass","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/namespace","Test":"TestNamespaceDataPlatformProbationRecruitmentAppDevExists","Elapsed":0}
+{"Time":"2026-06-29T15:22:22.89188063Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/namespace","Output":"PASS\n"}
+{"Time":"2026-06-29T15:22:22.89260182Z","Action":"output","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/namespace","Output":"ok  \tgithub.com/ministryofjustice/cloud-platform-environments/pkg/namespace\t0.026s\n"}
+{"Time":"2026-06-29T15:22:22.894051939Z","Action":"pass","Package":"github.com/ministryofjustice/cloud-platform-environments/pkg/namespace","Elapsed":0.027}
+reward=1 (grader error: Extra data: line 12 column 1 (char 424); fell back to exit_code=0)

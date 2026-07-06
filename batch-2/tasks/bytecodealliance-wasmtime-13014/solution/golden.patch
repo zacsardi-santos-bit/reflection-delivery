@@ -1,0 +1,417 @@
+diff --git a/winch/codegen/src/codegen/bounds.rs b/winch/codegen/src/codegen/bounds.rs
+index be61233cef..00cd6281d6 100644
+--- a/winch/codegen/src/codegen/bounds.rs
++++ b/winch/codegen/src/codegen/bounds.rs
+@@ -7,9 +7,10 @@ use crate::{
+     abi::vmctx,
+     codegen::{CodeGenContext, Emission},
+     isa::reg::{Reg, writable},
+-    masm::{IntCmpKind, IntScratch, MacroAssembler, OperandSize, RegImm, TrapCode},
++    masm::{Imm, IntCmpKind, IntScratch, MacroAssembler, OperandSize, RegImm, TrapCode},
+     stack::TypedReg,
+ };
++use wasmtime_environ::WasmValType;
+ 
+ /// A newtype to represent an immediate offset argument for a heap access.
+ #[derive(Debug, Copy, Clone)]
+@@ -139,7 +140,7 @@ pub(crate) fn ensure_index_and_offset<M: MacroAssembler>(
+             masm.checked_uadd(
+                 writable!(index.as_typed_reg().into()),
+                 index.as_typed_reg().into(),
+-                RegImm::i64(offset as i64),
++                Imm::i64(offset as i64),
+                 heap_ty_size,
+                 TrapCode::HEAP_OUT_OF_BOUNDS,
+             )?;
+@@ -217,8 +218,23 @@ where
+     })?;
+ 
+     // Start by adding the index to the heap base addr.
+-    let index_reg = index.as_typed_reg().reg;
+-    masm.add(writable!(dst), dst, index_reg.into(), ptr_size)?;
++    let index_typed = index.as_typed_reg();
++    let heap_size: OperandSize = heap.index_type().try_into()?;
++
++    // Emit a zero-extend add when dealing with 32-bit heaps to ensure
++    // that the high bits of the 64-bit values are zeroed.
++    if ptr_size == OperandSize::S64 && heap_size == OperandSize::S32 {
++        masm.add_uextend(
++            writable!(dst),
++            dst,
++            index_typed.reg,
++            OperandSize::S32,
++            ptr_size,
++        )?;
++    } else {
++        assert!(index_typed.ty == WasmValType::I64);
++        masm.add(writable!(dst), dst, index_typed.reg.into(), ptr_size)?;
++    }
+ 
+     if offset.as_u32() > 0 {
+         masm.add(
+diff --git a/winch/codegen/src/codegen/mod.rs b/winch/codegen/src/codegen/mod.rs
+index 12bed240b8..0ffda1f144 100644
+--- a/winch/codegen/src/codegen/mod.rs
++++ b/winch/codegen/src/codegen/mod.rs
+@@ -681,6 +681,7 @@ where
+         let memory_index = MemoryIndex::from_u32(memarg.memory);
+         let heap = self.env.resolve_heap(memory_index);
+         let index = Index::from_typed_reg(self.context.pop_to_reg(self.masm, None)?);
++
+         let offset = bounds::ensure_index_and_offset(
+             self.masm,
+             index,
+@@ -828,7 +829,7 @@ where
+             self.masm.checked_uadd(
+                 writable!(index_offset_and_access_size),
+                 index_offset_and_access_size,
+-                RegImm::i64(offset_with_access_size as i64),
++                Imm::i64(offset_with_access_size as i64),
+                 ptr_size,
+                 TrapCode::HEAP_OUT_OF_BOUNDS,
+             )?;
+@@ -1481,7 +1482,7 @@ where
+             self.masm.checked_uadd(
+                 writable!(addr.reg),
+                 addr.reg,
+-                RegImm::i64(arg.offset as i64),
++                Imm::i64(arg.offset as i64),
+                 OperandSize::S64,
+                 TrapCode::HEAP_OUT_OF_BOUNDS,
+             )?;
+@@ -1532,7 +1533,7 @@ where
+             self.masm.checked_uadd(
+                 writable!(addr.reg),
+                 addr.reg,
+-                RegImm::i64(arg.offset as i64),
++                Imm::i64(arg.offset as i64),
+                 OperandSize::S64,
+                 TrapCode::HEAP_OUT_OF_BOUNDS,
+             )?;
+diff --git a/winch/codegen/src/isa/aarch64/asm.rs b/winch/codegen/src/isa/aarch64/asm.rs
+index e7a3f49df1..2b48bf4b68 100644
+--- a/winch/codegen/src/isa/aarch64/asm.rs
++++ b/winch/codegen/src/isa/aarch64/asm.rs
+@@ -390,12 +390,24 @@ impl Assembler {
+ 
+     /// Add with three registers.
+     pub fn add_rrr(&mut self, rm: Reg, rn: Reg, rd: WritableReg, size: OperandSize) {
+-        self.alu_rrr_extend(ALUOp::Add, rm, rn, rd, size);
++        self.alu_rrr_extend(ALUOp::Add, rm, rn, rd, size, ExtendOp::UXTX);
++    }
++
++    /// Add with three registers and explicit extend operation.
++    pub fn add_rrr_with_extend(
++        &mut self,
++        rm: Reg,
++        rn: Reg,
++        rd: WritableReg,
++        size: OperandSize,
++        extendop: ExtendOp,
++    ) {
++        self.alu_rrr_extend(ALUOp::Add, rm, rn, rd, size, extendop);
+     }
+ 
+     /// Add with three registers, setting overflow flags.
+     pub fn adds_rrr(&mut self, rm: Reg, rn: Reg, rd: WritableReg, size: OperandSize) {
+-        self.alu_rrr_extend(ALUOp::AddS, rm, rn, rd, size);
++        self.alu_rrr_extend(ALUOp::AddS, rm, rn, rd, size, ExtendOp::UXTX);
+     }
+ 
+     /// Add across Vector.
+@@ -420,12 +432,19 @@ impl Assembler {
+ 
+     /// Subtract with three registers.
+     pub fn sub_rrr(&mut self, rm: Reg, rn: Reg, rd: WritableReg, size: OperandSize) {
+-        self.alu_rrr_extend(ALUOp::Sub, rm, rn, rd, size);
++        self.alu_rrr_extend(ALUOp::Sub, rm, rn, rd, size, ExtendOp::UXTX);
+     }
+ 
+     /// Subtract with three registers, setting flags.
+     pub fn subs_rrr(&mut self, rm: Reg, rn: Reg, size: OperandSize) {
+-        self.alu_rrr_extend(ALUOp::SubS, rm, rn, writable!(regs::zero()), size);
++        self.alu_rrr_extend(
++            ALUOp::SubS,
++            rm,
++            rn,
++            writable!(regs::zero()),
++            size,
++            ExtendOp::UXTX,
++        );
+     }
+ 
+     /// Multiply with three registers.
+@@ -993,14 +1012,22 @@ impl Assembler {
+         });
+     }
+ 
+-    fn alu_rrr_extend(&mut self, op: ALUOp, rm: Reg, rn: Reg, rd: WritableReg, size: OperandSize) {
++    fn alu_rrr_extend(
++        &mut self,
++        op: ALUOp,
++        rm: Reg,
++        rn: Reg,
++        rd: WritableReg,
++        size: OperandSize,
++        extendop: ExtendOp,
++    ) {
+         self.emit(Inst::AluRRRExtend {
+             alu_op: op,
+             size: size.into(),
+             rd: rd.map(Into::into),
+             rn: rn.into(),
+             rm: rm.into(),
+-            extendop: ExtendOp::UXTX,
++            extendop,
+         });
+     }
+ 
+diff --git a/winch/codegen/src/isa/aarch64/masm.rs b/winch/codegen/src/isa/aarch64/masm.rs
+index cf8324489c..6519694345 100644
+--- a/winch/codegen/src/isa/aarch64/masm.rs
++++ b/winch/codegen/src/isa/aarch64/masm.rs
+@@ -17,7 +17,7 @@ use crate::{
+         reg::{Reg, WritableReg, writable},
+     },
+     masm::{
+-        CalleeKind, DivKind, Extend, ExtendKind, ExtractLaneKind, FloatCmpKind, FloatScratch,
++        CalleeKind, DivKind, Extend, ExtendKind, ExtractLaneKind, FloatCmpKind, FloatScratch, Imm,
+         Imm as I, IntCmpKind, IntScratch, LoadKind, MacroAssembler as Masm, MulWideKind,
+         OperandSize, RegImm, RemKind, ReplaceLaneKind, RmwOp, RoundingMode, SPOffset, Scratch,
+         ScratchType, ShiftKind, SplatKind, StackSlot, StoreKind, TRUSTED_FLAGS, TrapCode,
+@@ -32,7 +32,9 @@ use cranelift_codegen::{
+     binemit::CodeOffset,
+     ir::{MemFlags, RelSourceLoc, SourceLoc, types},
+     isa::aarch64,
+-    isa::aarch64::inst::{self, Cond, Imm12, ImmLogic, ImmShift, SImm7Scaled, SImm9, VectorSize},
++    isa::aarch64::inst::{
++        self, Cond, ExtendOp, Imm12, ImmLogic, ImmShift, SImm7Scaled, SImm9, VectorSize,
++    },
+     settings,
+ };
+ use regalloc2::RegClass;
+@@ -560,11 +562,34 @@ impl Masm for MacroAssembler {
+         }
+     }
+ 
++    fn add_uextend(
++        &mut self,
++        dst: WritableReg,
++        lhs: Reg,
++        rhs: Reg,
++        from_size: OperandSize,
++        size: OperandSize,
++    ) -> Result<()> {
++        assert!(from_size.num_bits() <= size.num_bits());
++        let extendop = match from_size {
++            OperandSize::S8 => ExtendOp::UXTB,
++            OperandSize::S16 => ExtendOp::UXTH,
++            OperandSize::S32 => ExtendOp::UXTW,
++            OperandSize::S64 => ExtendOp::UXTX,
++            OperandSize::S128 => {
++                return Err(format_err!(CodeGenError::invalid_operand_combination()));
++            }
++        };
++
++        self.asm.add_rrr_with_extend(rhs, lhs, dst, size, extendop);
++        Ok(())
++    }
++
+     fn checked_uadd(
+         &mut self,
+         dst: WritableReg,
+         lhs: Reg,
+-        rhs: RegImm,
++        rhs: Imm,
+         size: OperandSize,
+         trap: TrapCode,
+     ) -> Result<()> {
+@@ -572,25 +597,17 @@ impl Masm for MacroAssembler {
+         // ensure that the real SP is 16-byte aligned in case control flow is
+         // transferred to a signal handler.
+         self.with_aligned_sp(|masm| {
+-            match (rhs, lhs, dst) {
+-                // NB: we don't use `Self::add_ir` since we explicitly
+-                // want to emit the add variant which sets overflow
+-                // flags.
+-                (RegImm::Imm(i), rn, rd) => {
+-                    let imm = i.unwrap_as_u64();
+-                    match Imm12::maybe_from_u64(imm) {
+-                        Some(imm12) => masm.asm.adds_ir(imm12, rn, rd, size),
+-                        None => {
+-                            masm.with_scratch::<IntScratch, _>(|masm, scratch| {
+-                                masm.asm.mov_ir(scratch.writable(), i, i.size());
+-                                masm.asm.adds_rrr(scratch.inner(), rn, rd, size);
+-                            });
+-                        }
+-                    }
+-                }
+-
+-                (RegImm::Reg(rm), rn, rd) => {
+-                    masm.asm.adds_rrr(rm, rn, rd, size);
++            // NB: we don't use `Self::add_ir` since we explicitly
++            // want to emit the add variant which sets overflow
++            // flags.
++            let imm = rhs.unwrap_as_u64();
++            match Imm12::maybe_from_u64(imm) {
++                Some(imm12) => masm.asm.adds_ir(imm12, lhs, dst, size),
++                None => {
++                    masm.with_scratch::<IntScratch, _>(|masm, scratch| {
++                        masm.asm.mov_ir(scratch.writable(), rhs, rhs.size());
++                        masm.asm.adds_rrr(scratch.inner(), lhs, dst, size);
++                    });
+                 }
+             }
+             masm.asm.trapif(Cond::Hs, trap);
+diff --git a/winch/codegen/src/isa/x64/masm.rs b/winch/codegen/src/isa/x64/masm.rs
+index e48d86db61..83a0789edb 100644
+--- a/winch/codegen/src/isa/x64/masm.rs
++++ b/winch/codegen/src/isa/x64/masm.rs
+@@ -6,13 +6,13 @@ use super::{
+     regs::{self, rbp, rsp, scratch_fpr_bitset, scratch_gpr_bitset},
+ };
+ use crate::masm::{
+-    DivKind, Extend, ExtendKind, ExtractLaneKind, FloatCmpKind, FloatScratch, Imm as I, IntCmpKind,
+-    IntScratch, LaneSelector, LoadKind, MacroAssembler as Masm, MulWideKind, OperandSize, RegImm,
+-    RemKind, ReplaceLaneKind, RmwOp, RoundingMode, Scratch, ScratchType, ShiftKind, SplatKind,
+-    StoreKind, TRUSTED_FLAGS, TrapCode, TruncKind, UNTRUSTED_FLAGS, V128AbsKind, V128AddKind,
+-    V128ConvertKind, V128ExtAddKind, V128ExtMulKind, V128ExtendKind, V128MaxKind, V128MinKind,
+-    V128MulKind, V128NarrowKind, V128NegKind, V128SubKind, V128TruncKind, VectorCompareKind,
+-    VectorEqualityKind, Zero,
++    DivKind, Extend, ExtendKind, ExtractLaneKind, FloatCmpKind, FloatScratch, Imm, Imm as I,
++    IntCmpKind, IntScratch, LaneSelector, LoadKind, MacroAssembler as Masm, MulWideKind,
++    OperandSize, RegImm, RemKind, ReplaceLaneKind, RmwOp, RoundingMode, Scratch, ScratchType,
++    ShiftKind, SplatKind, StoreKind, TRUSTED_FLAGS, TrapCode, TruncKind, UNTRUSTED_FLAGS,
++    V128AbsKind, V128AddKind, V128ConvertKind, V128ExtAddKind, V128ExtMulKind, V128ExtendKind,
++    V128MaxKind, V128MinKind, V128MulKind, V128NarrowKind, V128NegKind, V128SubKind, V128TruncKind,
++    VectorCompareKind, VectorEqualityKind, Zero,
+ };
+ use crate::{
+     Result,
+@@ -484,15 +484,40 @@ impl Masm for MacroAssembler {
+         Ok(())
+     }
+ 
++    fn add_uextend(
++        &mut self,
++        dst: WritableReg,
++        lhs: Reg,
++        rhs: Reg,
++        from_size: OperandSize,
++        size: OperandSize,
++    ) -> Result<()> {
++        assert!(size == OperandSize::S64);
++        assert!(from_size == OperandSize::S32 || from_size == OperandSize::S64);
++
++        Self::ensure_two_argument_form(&dst.to_reg(), &lhs)?;
++        if from_size == OperandSize::S32 && size == OperandSize::S64 {
++            self.extend(
++                writable!(rhs),
++                rhs,
++                ExtendKind::Unsigned(Extend::I64Extend32),
++            )?;
++        }
++
++        self.asm.add_rr(rhs, dst, size);
++
++        Ok(())
++    }
++
+     fn checked_uadd(
+         &mut self,
+         dst: WritableReg,
+         lhs: Reg,
+-        rhs: RegImm,
++        rhs: Imm,
+         size: OperandSize,
+         trap: TrapCode,
+     ) -> Result<()> {
+-        self.add(dst, lhs, rhs, size)?;
++        self.add(dst, lhs, RegImm::Imm(rhs), size)?;
+         self.asm.trapif(CC::B, trap);
+         Ok(())
+     }
+diff --git a/winch/codegen/src/masm.rs b/winch/codegen/src/masm.rs
+index 1dc68778e7..84046acc12 100644
+--- a/winch/codegen/src/masm.rs
++++ b/winch/codegen/src/masm.rs
+@@ -1646,13 +1646,26 @@ pub(crate) trait MacroAssembler {
+     /// Perform add operation.
+     fn add(&mut self, dst: WritableReg, lhs: Reg, rhs: RegImm, size: OperandSize) -> Result<()>;
+ 
++    /// Perform add with unsigned extension.
++    fn add_uextend(
++        &mut self,
++        dst: WritableReg,
++        lhs: Reg,
++        rhs: Reg,
++        from_size: OperandSize,
++        size: OperandSize,
++    ) -> Result<()>;
++
+     /// Perform a checked unsigned integer addition, emitting the provided trap
+     /// if the addition overflows.
++    ///
++    /// Note: This only accepts immediate operands. For register operands with
++    /// proper extension, use add_uextend with manual overflow checking.
+     fn checked_uadd(
+         &mut self,
+         dst: WritableReg,
+         lhs: Reg,
+-        rhs: RegImm,
++        rhs: Imm,
+         size: OperandSize,
+         trap: TrapCode,
+     ) -> Result<()>;
+diff --git a/winch/codegen/src/visitor.rs b/winch/codegen/src/visitor.rs
+index 0f46d113e2..941de1ddaf 100644
+--- a/winch/codegen/src/visitor.rs
++++ b/winch/codegen/src/visitor.rs
+@@ -28,8 +28,8 @@ use wasmparser::{
+ };
+ use wasmtime_cranelift::TRAP_INDIRECT_CALL_TO_NULL;
+ use wasmtime_environ::{
+-    FUNCREF_INIT_BIT, FuncIndex, GlobalIndex, MemoryIndex, TableIndex, TypeIndex, WasmHeapType,
+-    WasmValType,
++    FUNCREF_INIT_BIT, FuncIndex, GlobalIndex, IndexType, MemoryIndex, TableIndex, TypeIndex,
++    WasmHeapType, WasmValType,
+ };
+ 
+ /// A macro to define unsupported WebAssembly operators.
+@@ -1761,8 +1761,12 @@ where
+ 
+     fn visit_table_grow(&mut self, table: u32) -> Self::Output {
+         let table_index = TableIndex::from_u32(table);
+-        let table_ty = self.env.table(table_index);
+-        let builtin = match table_ty.ref_type.heap_type {
++        let ptr_type = self.env.ptr_type();
++        let (heap_type, idx_type) = {
++            let table_ty = self.env.table(table_index);
++            (table_ty.ref_type.heap_type, table_ty.idx_type)
++        };
++        let builtin = match heap_type {
+             WasmHeapType::Func => self.env.builtins.table_grow_func_ref::<M::ABI>()?,
+             _ => bail!(CodeGenError::unsupported_wasm_type()),
+         };
+@@ -1783,7 +1787,20 @@ where
+ 
+         FnCall::emit::<M>(&mut self.env, self.masm, &mut self.context, builtin)?;
+ 
+-        Ok(())
++        // Similar to the memory.grow builtin, `table.grow` returns a
++        // pointer, however, we need to ensure that the returned index
++        // is representative of the address space for tables.
++        match (ptr_type, idx_type) {
++            (WasmValType::I64, IndexType::I64) => Ok(()),
++            (WasmValType::I64, IndexType::I32) => {
++                let top: Reg = self.context.pop_to_reg(self.masm, None)?.into();
++                self.masm.wrap(writable!(top), top)?;
++                self.context.stack.push(TypedReg::i32(top).into());
++                Ok(())
++            }
++
++            _ => Err(format_err!(CodeGenError::unsupported_32_bit_platform())),
++        }
+     }
+ 
+     fn visit_table_size(&mut self, table: u32) -> Self::Output {

@@ -1,5 +1,0 @@
-I'm working with a linter that detects floating promises — cases where a function returns a Promise but the caller doesn't await it, add error handling, or explicitly discard it. The rule works great for straightforward return types, but I've noticed it misses a whole category of cases: when the function's return type is a conditional type alias.
-
-For instance, if a type alias is defined as a conditional — "if some type condition holds, the result is a Promise; otherwise, it's something else" — and a function uses that alias as its return type, calling that function without handling the result is silently allowed even though the function might return a Promise. The rule seems to treat these conditional type aliases as completely opaque and skips any Promise detection for them.
-
-I'd expect the rule to look through such conditional type aliases and recognize that if any branch of the condition could be a Promise, the call result should be treated as potentially a Promise and flagged if unhandled. Essentially, a conditional type should be treated as a union of its two possible outcomes for the purposes of Promise detection.

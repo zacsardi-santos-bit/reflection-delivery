@@ -1,0 +1,24 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/apps/docs && pnpm vitest run app/api/graphql/route.test.ts app/api/graphql/tests/searchDocs.test.ts --reporter=verbose",
+  "test_files": [
+    "apps/docs/app/api/graphql/route.test.ts",
+    "apps/docs/app/api/graphql/tests/searchDocs.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/docs/app/api/graphql/tests/searchDocs.test.ts::/api/graphql searchDocs should return search results when given a valid query",
+    "/workspace/repo/apps/docs/app/api/graphql/tests/searchDocs.test.ts::/api/graphql searchDocs should respect the limit parameter",
+    "/workspace/repo/apps/docs/app/api/graphql/tests/searchDocs.test.ts::/api/graphql searchDocs should include content field when requested",
+    "/workspace/repo/apps/docs/app/api/graphql/tests/searchDocs.test.ts::/api/graphql searchDocs should handle errors from embedding creation",
+    "/workspace/repo/apps/docs/app/api/graphql/tests/searchDocs.test.ts::/api/graphql searchDocs should require a query parameter"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/apps/docs/app/api/graphql/route.test.ts::/api/graphql basic error statuses should return error if request body is not valid JSON",
+    "/workspace/repo/apps/docs/app/api/graphql/route.test.ts::/api/graphql basic error statuses should return error if request body is missing required fields",
+    "/workspace/repo/apps/docs/app/api/graphql/route.test.ts::/api/graphql basic error statuses should return error if query is not a string",
+    "/workspace/repo/apps/docs/app/api/graphql/route.test.ts::/api/graphql basic error statuses should return error for internal server errors",
+    "/workspace/repo/apps/docs/app/api/graphql/route.test.ts::/api/graphql schema snapshot should match snapshot"
+  ]
+}

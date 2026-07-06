@@ -1,0 +1,32 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --reporter=verbose --coverage=false src/sandbox/linux/LinuxSandboxManager.test.ts src/sandbox/linux/bwrapArgsBuilder.test.ts",
+  "test_files": [
+    "packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts",
+    "packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts::LinuxSandboxManager prepareCommand allows virtual commands targeting includeDirectories",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs should correctly format the base arguments",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs binds workspace read-write when workspaceWrite is true",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs maps network permissions to --share-net",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs maps explicit write permissions to --bind-try",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs should protect both the symlink and the real path of governance files",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs should parameterize allowed paths",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs should bind the parent directory of a non-existent path",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs should parameterize forbidden paths and explicitly deny them",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs handles resolved forbidden paths",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs masks directory paths with tmpfs",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs should apply forbidden paths after allowed paths",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs blocks .env and .env.* files",
+    "/workspace/repo/packages/core/src/sandbox/linux/bwrapArgsBuilder.test.ts::buildBwrapArgs scans globalIncludes for secret files"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts::LinuxSandboxManager prepareCommand wraps the command and arguments correctly using a temporary file",
+    "/workspace/repo/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts::LinuxSandboxManager prepareCommand cleans up the temporary arguments file",
+    "/workspace/repo/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts::LinuxSandboxManager prepareCommand translates virtual commands",
+    "/workspace/repo/packages/core/src/sandbox/linux/LinuxSandboxManager.test.ts::LinuxSandboxManager prepareCommand rejects overrides in plan mode"
+  ]
+}

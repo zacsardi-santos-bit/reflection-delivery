@@ -1,0 +1,220 @@
+patching file app/api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js
+patching file app/react/I18N/components/specs/Translate.spec.js
+patching file app/react/Markdown/components/specs/PublicForm.spec.js
+patching file e2e/suite2/translate.test.ts
+about to fork child process, waiting until server is ready for connections.
+forked process: 41
+child process started successfully, parent exiting
+  console.error
+    Warning: Failed prop type: The prop `saveThesaurus` is marked as required in `MetadataFormFields`, but its value is `undefined`.
+        in MetadataFormFields (created by Connect(MetadataFormFields))
+        in Connect(MetadataFormFields) (created by PublicForm)
+        in div (created by PublicForm)
+        in form (created by Form)
+        in Form (created by Connect(Form))
+        in Connect(Form) (created by LocalForm)
+        in LocalForm (created by PublicForm)
+        in PublicForm
+        in Provider (created by WrapperComponent)
+        in WrapperComponent
+
+      at printWarning (../node_modules/prop-types/checkPropTypes.js:20:15)
+      at checkPropTypes (../node_modules/prop-types/checkPropTypes.js:83:11)
+      at validatePropTypes (../node_modules/react/cjs/react.development.js:1714:7)
+      at createElementWithValidation (../node_modules/react/cjs/react.development.js:1813:5)
+      at Connect.render (../node_modules/react-redux/lib/components/connectAdvanced.js:260:43)
+      at finishClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17160:31)
+      at updateClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17110:24)
+
+  console.error
+    Warning: Failed prop type: The prop `push` is marked as required in `MetadataFormFields`, but its value is `undefined`.
+        in MetadataFormFields (created by Connect(MetadataFormFields))
+        in Connect(MetadataFormFields) (created by PublicForm)
+        in div (created by PublicForm)
+        in form (created by Form)
+        in Form (created by Connect(Form))
+        in Connect(Form) (created by LocalForm)
+        in LocalForm (created by PublicForm)
+        in PublicForm
+        in Provider (created by WrapperComponent)
+        in WrapperComponent
+
+      at printWarning (../node_modules/prop-types/checkPropTypes.js:20:15)
+      at checkPropTypes (../node_modules/prop-types/checkPropTypes.js:83:11)
+      at validatePropTypes (../node_modules/react/cjs/react.development.js:1714:7)
+      at createElementWithValidation (../node_modules/react/cjs/react.development.js:1813:5)
+      at Connect.render (../node_modules/react-redux/lib/components/connectAdvanced.js:260:43)
+      at finishClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17160:31)
+      at updateClassComponent (../node_modules/react-dom/cjs/react-dom.development.js:17110:24)
+
+  console.error
+    Warning: Each child in a list should have a unique "key" prop.
+    
+    Check the render method of `PublicForm`. See https://fb.me/react-warning-keys for more information.
+        in li (created by PublicForm)
+        in PublicForm
+        in Provider (created by WrapperComponent)
+        in WrapperComponent
+
+      166 |             </MobileView>
+      167 |             <div className="preview-list">
+    > 168 |               <ul>
+          |               ^
+      169 |                 {this.state.files.map(file => (
+      170 |                   <li key={file.preview}>
+      171 |                     <div className="preview-title">{file.name}</div>
+
+      at printWarning (../node_modules/react/cjs/react.development.js:315:30)
+      at error (../node_modules/react/cjs/react.development.js:287:5)
+      at validateExplicitKey (../node_modules/react/cjs/react.development.js:1630:5)
+      at validateChildKeys (../node_modules/react/cjs/react.development.js:1656:9)
+      at Object.createElementWithValidation [as createElement] (../node_modules/react/cjs/react.development.js:1806:7)
+      at PublicForm.renderFileField (react/Markdown/components/PublicForm.js:168:15)
+      at PublicForm.renderFileField [as render] (react/Markdown/components/PublicForm.js:235:33)
+
+  console.error
+    Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in the componentWillUnmount method.
+        in Captcha (created by ComponentWrapper)
+        in ComponentWrapper (created by Control)
+        in Control (created by Connect(Control))
+        in Connect(Control) (created by Modeled(Connect(Control)))
+        in Modeled(Connect(Control)) (created by DefaultConnectedControl)
+        in DefaultConnectedControl (created by Captcha)
+        in Captcha (created by PublicForm)
+        in li (created by PublicForm)
+        in ul (created by PublicForm)
+        in div
+        in Unknown (created by ComponentWrapper)
+
+      27 |     const response = await api.get(url);
+      28 |
+    > 29 |     this.setState(response.json);
+         |          ^
+      30 |   }
+      31 |
+      32 |   render() {
+
+      at printWarning (../node_modules/react-dom/cjs/react-dom.development.js:88:30)
+      at error (../node_modules/react-dom/cjs/react-dom.development.js:60:5)
+      at warnAboutUpdateOnUnmountedFiberInDEV (../node_modules/react-dom/cjs/react-dom.development.js:23161:5)
+      at scheduleUpdateOnFiber (../node_modules/react-dom/cjs/react-dom.development.js:21169:5)
+      at Object.enqueueSetState (../node_modules/react-dom/cjs/react-dom.development.js:12639:5)
+      at Captcha.Object.<anonymous>.Component.setState (../node_modules/react/cjs/react.development.js:471:16)
+      at Captcha.setState [as refresh] (react/Forms/components/Captcha.js:29:10)
+
+PASS Client app/react/Markdown/components/specs/PublicForm.spec.js (11.383 s)
+  PublicForm
+    ✓ should bind the MetadataFormFields change to this form (178 ms)
+    ✓ should render a generated ID as title if the option is marked (44 ms)
+    ✓ should load a generated Id as title after submit if the option is marked (71 ms)
+    ✓ should enable remote captcha (38 ms)
+    ✓ should render a form with file and attachments (48 ms)
+    ✓ should submit the values wrapped (52 ms)
+    ✓ should refresh the captcha and clear the form after submit (47 ms)
+    ✓ should refresh captcha and NOT clear the form on submission error (48 ms)
+    ✓ should keep attachments after a submission error (90 ms)
+
+  console.error
+    Warning: Failed prop type: Invalid prop `edit` of type `boolean` supplied to `Translate`, expected `function`.
+        in Translate
+
+      58 |     it('should parse line break in multiline text', () => {
+      59 |       component = shallow(
+    > 60 |         <Translate>
+         |         ^
+      61 |           {`this
+      62 |       is
+      63 |       multiline
+
+      at printWarning (../node_modules/prop-types/checkPropTypes.js:20:15)
+      at checkPropTypes (../node_modules/prop-types/checkPropTypes.js:83:11)
+      at validatePropTypes (../node_modules/react/cjs/react.development.js:1714:7)
+      at Object.createElementWithValidation [as createElement] (../node_modules/react/cjs/react.development.js:1813:5)
+      at Object.<anonymous> (react/I18N/components/specs/Translate.spec.js:60:9)
+
+FAIL Client app/react/I18N/components/specs/Translate.spec.js
+  Translate
+    render
+      ✓ should render the property children inside of a span (7 ms)
+      when i18nmode is true
+        ✓ should render the span with class active (2 ms)
+        onClick
+          ✓ should stop the event from going up (2 ms)
+          ✓ should call edit with context and children (1 ms)
+    markdown support
+      ✕ should parse line break in multiline text (8 ms)
+      ✕ should parse italic text in translation value (2 ms)
+    resetCachedTranslation
+      ✓ should set null the current catched translation
+    mapStateToProps
+      ✓ should try to translate the children and pass it on children (1 ms)
+      ✓ should allow overriding translation key (1 ms)
+      ✓ should store the current locale translation to be fast (1 ms)
+
+  ● Translate › markdown support › should parse line break in multiline text
+
+    expect(received).toBe(expected) // Object.is equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - <span class="translation">this<br/>      is<br/>      multiline<br/>      text</span>
+    + <span class="translation">this
+    +       is
+    +       multiline
+    +       text</span>
+
+      65 |         </Translate>
+      66 |       );
+    > 67 |       expect(component.find('span').html()).toBe(
+         |                                             ^
+      68 |         '<span class="translation">this<br/>      is<br/>      multiline<br/>      text</span>'
+      69 |       );
+      70 |     });
+
+      at Object.toBe (react/I18N/components/specs/Translate.spec.js:67:45)
+
+  ● Translate › markdown support › should parse italic text in translation value
+
+    expect(received).toBe(expected) // Object.is equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - <span class="translation">this<br/>      is<br/>      <i>an italic</i><br/>      text</span>
+    + <span class="translation">this
+    +       is
+    +       *an italic*
+    +       text</span>
+
+      79 |         </Translate>
+      80 |       );
+    > 81 |       expect(component.find('span').html()).toBe(
+         |                                             ^
+      82 |         '<span class="translation">this<br/>      is<br/>      <i>an italic</i><br/>      text</span>'
+      83 |       );
+      84 |     });
+
+      at Object.toBe (react/I18N/components/specs/Translate.spec.js:81:45)
+
+FAIL Server app/api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js
+  ● Test suite failed to run
+
+    Cannot find module '../index.js' from 'api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js'
+
+      1 | import testingDB from 'api/utils/testing_db';
+    > 2 | import migration from '../index.js';
+        | ^
+      3 | import fixtures, { templateContext } from './fixtures.js';
+      4 |
+      5 | describe('migration update translations of settings tooltips', () => {
+
+      at Resolver._throwModNotFoundError (../node_modules/jest-runtime/node_modules/jest-resolve/build/resolver.js:487:11)
+      at Object.<anonymous> (api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js:2:1)
+
+Test Suites: 2 failed, 1 passed, 3 total
+Tests:       2 failed, 17 passed, 19 total
+Snapshots:   0 total
+Time:        18.941 s
+Ran all test suites matching /app\/api\/migrations\/migrations\/113-update_translations_of_settings_tooltips\/specs\/113-update_translations_of_settings_tooltips.spec.js|app\/react\/I18N\/components\/specs\/Translate.spec.js|app\/react\/Markdown\/components\/specs\/PublicForm.spec.js/i in 2 projects.
+{"numFailedTestSuites":2,"numFailedTests":2,"numPassedTestSuites":1,"numPassedTests":17,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":1,"numTodoTests":0,"numTotalTestSuites":3,"numTotalTests":19,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746748041,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":["PublicForm"],"duration":178,"failureMessages":[],"fullName":"PublicForm should bind the MetadataFormFields change to this form","location":null,"status":"passed","title":"should bind the MetadataFormFields change to this form"},{"ancestorTitles":["PublicForm"],"duration":44,"failureMessages":[],"fullName":"PublicForm should render a generated ID as title if the option is marked","location":null,"status":"passed","title":"should render a generated ID as title if the option is marked"},{"ancestorTitles":["PublicForm"],"duration":71,"failureMessages":[],"fullName":"PublicForm should load a generated Id as title after submit if the option is marked","location":null,"status":"passed","title":"should load a generated Id as title after submit if the option is marked"},{"ancestorTitles":["PublicForm"],"duration":38,"failureMessages":[],"fullName":"PublicForm should enable remote captcha","location":null,"status":"passed","title":"should enable remote captcha"},{"ancestorTitles":["PublicForm"],"duration":48,"failureMessages":[],"fullName":"PublicForm should render a form with file and attachments","location":null,"status":"passed","title":"should render a form with file and attachments"},{"ancestorTitles":["PublicForm"],"duration":52,"failureMessages":[],"fullName":"PublicForm should submit the values wrapped","location":null,"status":"passed","title":"should submit the values wrapped"},{"ancestorTitles":["PublicForm"],"duration":47,"failureMessages":[],"fullName":"PublicForm should refresh the captcha and clear the form after submit","location":null,"status":"passed","title":"should refresh the captcha and clear the form after submit"},{"ancestorTitles":["PublicForm"],"duration":48,"failureMessages":[],"fullName":"PublicForm should refresh captcha and NOT clear the form on submission error","location":null,"status":"passed","title":"should refresh captcha and NOT clear the form on submission error"},{"ancestorTitles":["PublicForm"],"duration":90,"failureMessages":[],"fullName":"PublicForm should keep attachments after a submission error","location":null,"status":"passed","title":"should keep attachments after a submission error"}],"endTime":1782746760354,"message":"","name":"/workspace/repo/app/react/Markdown/components/specs/PublicForm.spec.js","startTime":1782746748971,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["Translate","render"],"duration":7,"failureMessages":[],"fullName":"Translate render should render the property children inside of a span","location":null,"status":"passed","title":"should render the property children inside of a span"},{"ancestorTitles":["Translate","render","when i18nmode is true"],"duration":2,"failureMessages":[],"fullName":"Translate render when i18nmode is true should render the span with class active","location":null,"status":"passed","title":"should render the span with class active"},{"ancestorTitles":["Translate","render","when i18nmode is true","onClick"],"duration":2,"failureMessages":[],"fullName":"Translate render when i18nmode is true onClick should stop the event from going up","location":null,"status":"passed","title":"should stop the event from going up"},{"ancestorTitles":["Translate","render","when i18nmode is true","onClick"],"duration":1,"failureMessages":[],"fullName":"Translate render when i18nmode is true onClick should call edit with context and children","location":null,"status":"passed","title":"should call edit with context and children"},{"ancestorTitles":["Translate","markdown support"],"duration":8,"failureMessages":["Error: expect(received).toBe(expected) // Object.is equality\n\n- Expected  - 1\n+ Received  + 4\n\n- <span class=\"translation\">this<br/>      is<br/>      multiline<br/>      text</span>\n+ <span class=\"translation\">this\n+       is\n+       multiline\n+       text</span>\n    at Object.toBe (/workspace/repo/app/react/I18N/components/specs/Translate.spec.js:67:45)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:132:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:46:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:29:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:76:41"],"fullName":"Translate markdown support should parse line break in multiline text","location":null,"status":"failed","title":"should parse line break in multiline text"},{"ancestorTitles":["Translate","markdown support"],"duration":2,"failureMessages":["Error: expect(received).toBe(expected) // Object.is equality\n\n- Expected  - 1\n+ Received  + 4\n\n- <span class=\"translation\">this<br/>      is<br/>      <i>an italic</i><br/>      text</span>\n+ <span class=\"translation\">this\n+       is\n+       *an italic*\n+       text</span>\n    at Object.toBe (/workspace/repo/app/react/I18N/components/specs/Translate.spec.js:81:45)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:132:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:46:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:29:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:76:41"],"fullName":"Translate markdown support should parse italic text in translation value","location":null,"status":"failed","title":"should parse italic text in translation value"},{"ancestorTitles":["Translate","resetCachedTranslation"],"duration":0,"failureMessages":[],"fullName":"Translate resetCachedTranslation should set null the current catched translation","location":null,"status":"passed","title":"should set null the current catched translation"},{"ancestorTitles":["Translate","mapStateToProps"],"duration":1,"failureMessages":[],"fullName":"Translate mapStateToProps should try to translate the children and pass it on children","location":null,"status":"passed","title":"should try to translate the children and pass it on children"},{"ancestorTitles":["Translate","mapStateToProps"],"duration":1,"failureMessages":[],"fullName":"Translate mapStateToProps should allow overriding translation key","location":null,"status":"passed","title":"should allow overriding translation key"},{"ancestorTitles":["Translate","mapStateToProps"],"duration":1,"failureMessages":[],"fullName":"Translate mapStateToProps should store the current locale translation to be fast","location":null,"status":"passed","title":"should store the current locale translation to be fast"}],"endTime":1782746762242,"message":"  ● Translate › markdown support › should parse line break in multiline text\n\n    expect(received).toBe(expected) // Object.is equality\n\n    - Expected  - 1\n    + Received  + 4\n\n    - <span class=\"translation\">this<br/>      is<br/>      multiline<br/>      text</span>\n    + <span class=\"translation\">this\n    +       is\n    +       multiline\n    +       text</span>\n\n      65 |         </Translate>\n      66 |       );\n    > 67 |       expect(component.find('span').html()).toBe(\n         |                                             ^\n      68 |         '<span class=\"translation\">this<br/>      is<br/>      multiline<br/>      text</span>'\n      69 |       );\n      70 |     });\n\n      at Object.toBe (react/I18N/components/specs/Translate.spec.js:67:45)\n\n  ● Translate › markdown support › should parse italic text in translation value\n\n    expect(received).toBe(expected) // Object.is equality\n\n    - Expected  - 1\n    + Received  + 4\n\n    - <span class=\"translation\">this<br/>      is<br/>      <i>an italic</i><br/>      text</span>\n    + <span class=\"translation\">this\n    +       is\n    +       *an italic*\n    +       text</span>\n\n      79 |         </Translate>\n      80 |       );\n    > 81 |       expect(component.find('span').html()).toBe(\n         |                                             ^\n      82 |         '<span class=\"translation\">this<br/>      is<br/>      <i>an italic</i><br/>      text</span>'\n      83 |       );\n      84 |     });\n\n      at Object.toBe (react/I18N/components/specs/Translate.spec.js:81:45)\n","name":"/workspace/repo/app/react/I18N/components/specs/Translate.spec.js","startTime":1782746760391,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746767002,"message":"  ● Test suite failed to run\n\n    Cannot find module '../index.js' from 'api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js'\n\n      1 | import testingDB from 'api/utils/testing_db';\n    > 2 | import migration from '../index.js';\n        | ^\n      3 | import fixtures, { templateContext } from './fixtures.js';\n      4 |\n      5 | describe('migration update translations of settings tooltips', () => {\n\n      at Resolver._throwModNotFoundError (../node_modules/jest-runtime/node_modules/jest-resolve/build/resolver.js:487:11)\n      at Object.<anonymous> (api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js:2:1)\n","name":"/workspace/repo/app/api/migrations/migrations/113-update_translations_of_settings_tooltips/specs/113-update_translations_of_settings_tooltips.spec.js","startTime":1782746767002,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=21 found=19 failed=2 parsed=20 framework=jest exit_code=1

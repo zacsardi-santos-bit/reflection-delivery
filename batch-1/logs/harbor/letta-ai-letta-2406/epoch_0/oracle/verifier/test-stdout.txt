@@ -1,0 +1,61 @@
+patching file tests/integration_test_tool_execution_sandbox.py
+patching file tests/test_managers.py
+patching file tests/test_tool_sandbox/restaurant_management_system/adjust_menu_prices.py
+patching file tests/test_v1_routes.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.4, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/tests
+configfile: pytest.ini
+plugins: order-1.3.0, asyncio-0.23.8, mock-3.14.0, anyio-4.8.0, langsmith-0.3.2
+asyncio: mode=Mode.AUTO
+collecting ... collected 2 items
+
+tests/test_managers.py::test_create_local_sandbox_config_defaults PASSED [ 50%]
+tests/test_v1_routes.py::test_create_custom_local_sandbox_config PASSED  [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/pydantic/fields.py:826
+../../usr/local/lib/python3.11/site-packages/pydantic/fields.py:826
+  /usr/local/lib/python3.11/site-packages/pydantic/fields.py:826: PydanticDeprecatedSince20: Using extra keyword arguments on `Field` is deprecated and will be removed. Use `json_schema_extra` instead. (Extra keys: 'env'). Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.9/migration/
+    warn(
+
+../../usr/local/lib/python3.11/site-packages/pydantic/_internal/_config.py:291
+../../usr/local/lib/python3.11/site-packages/pydantic/_internal/_config.py:291
+../../usr/local/lib/python3.11/site-packages/pydantic/_internal/_config.py:291
+../../usr/local/lib/python3.11/site-packages/pydantic/_internal/_config.py:291
+../../usr/local/lib/python3.11/site-packages/pydantic/_internal/_config.py:291
+../../usr/local/lib/python3.11/site-packages/pydantic/_internal/_config.py:291
+  /usr/local/lib/python3.11/site-packages/pydantic/_internal/_config.py:291: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.9/migration/
+    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+
+letta/schemas/llm_config.py:58
+  /workspace/repo/letta/schemas/llm_config.py:58: PydanticDeprecatedSince20: Pydantic V1 style `@root_validator` validators are deprecated. You should migrate to Pydantic V2 style `@model_validator` validators, see the migration guide for more details. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.9/migration/
+    @root_validator(pre=True)
+
+../../usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:312
+../../usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:312
+  /usr/local/lib/python3.11/site-packages/pydantic/_internal/_generate_schema.py:312: PydanticDeprecatedSince20: `json_encoders` is deprecated. See https://docs.pydantic.dev/2.9/concepts/serialization/#custom-serializers for alternatives. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.9/migration/
+    warnings.warn(
+
+letta/server/rest_api/app.py:257
+  /workspace/repo/letta/server/rest_api/app.py:257: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    @app.on_event("shutdown")
+
+../../usr/local/lib/python3.11/site-packages/fastapi/applications.py:4495
+  /usr/local/lib/python3.11/site-packages/fastapi/applications.py:4495: DeprecationWarning: 
+          on_event is deprecated, use lifespan event handlers instead.
+  
+          Read more about it in the
+          [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+          
+    return self.router.on_event(event_type)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 2 passed, 13 warnings in 11.45s ========================
+reward=1 graded=2 found=0 failed=0 parsed=2 framework=pytest exit_code=0

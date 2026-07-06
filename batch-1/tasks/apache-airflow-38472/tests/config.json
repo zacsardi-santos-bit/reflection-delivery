@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest tests/models/test_taskinstance.py::TestTaskInstance::test_refresh_from_db tests/serialization/test_dag_serialization.py::TestStringifiedDAGs::test_no_new_fields_added_to_base_operator tests/www/views/test_views_tasks.py::test_task_instances -v",
+  "test_files": [
+    "tests/models/test_taskinstance.py",
+    "tests/serialization/test_dag_serialization.py",
+    "tests/www/views/test_views_tasks.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.models.test_taskinstance.TestTaskInstance::test_refresh_from_db",
+    "tests.serialization.test_dag_serialization.TestStringifiedDAGs::test_no_new_fields_added_to_base_operator",
+    "tests.www.views.test_views_tasks::test_task_instances"
+  ],
+  "PASS_TO_PASS": []
+}

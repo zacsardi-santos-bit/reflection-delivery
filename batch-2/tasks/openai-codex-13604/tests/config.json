@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd codex-rs && cargo nextest run --no-fail-fast -p codex-tui -E 'test(feedback_upload_consent_popup_snapshot) | test(feedback_good_result_consent_popup_includes_connectivity_diagnostics_filename)'",
+  "test_files": [
+    "codex-rs/tui/src/chatwidget/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "codex-tui chatwidget::tests::feedback_good_result_consent_popup_includes_connectivity_diagnostics_filename",
+    "codex-tui chatwidget::tests::feedback_upload_consent_popup_snapshot"
+  ],
+  "PASS_TO_PASS": []
+}

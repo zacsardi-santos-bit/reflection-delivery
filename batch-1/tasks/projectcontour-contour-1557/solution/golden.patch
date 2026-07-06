@@ -1,0 +1,140 @@
+diff --git a/apis/projectcontour/v1alpha1/httpproxy.go b/apis/projectcontour/v1alpha1/httpproxy.go
+index 75e1e5cf..3be47c6b 100644
+--- a/apis/projectcontour/v1alpha1/httpproxy.go
++++ b/apis/projectcontour/v1alpha1/httpproxy.go
+@@ -135,6 +135,8 @@ type Service struct {
+ 	Strategy string `json:"strategy,omitempty"`
+ 	// UpstreamValidation defines how to verify the backend service's certificate
+ 	UpstreamValidation *UpstreamValidation `json:"validation,omitempty"`
++	// If Mirror is true the Service will receive a read only mirror of the traffic for this route.
++	Mirror bool `json:"mirror,omitempty"`
+ }
+ 
+ // HealthCheck defines optional healthchecks on the upstream service
+@@ -155,7 +157,7 @@ type HealthCheck struct {
+ 	HealthyThresholdCount uint32 `json:"healthyThresholdCount"`
+ }
+ 
+-// TimeoutPolicy define the attributes associated with timeout
++// TimeoutPolicy defines the attributes associated with timeout.
+ type TimeoutPolicy struct {
+ 	// Timeout for receiving a response from the server after processing a request from client.
+ 	// If not supplied the timeout duration is undefined.
+@@ -166,7 +168,7 @@ type TimeoutPolicy struct {
+ 	Idle string `json:"idle"`
+ }
+ 
+-// RetryPolicy define the attributes associated with retrying policy
++// RetryPolicy defines the attributes associated with retrying policy.
+ type RetryPolicy struct {
+ 	// NumRetries is maximum allowed number of retries.
+ 	// If not supplied, the number of retries is zero.
+diff --git a/internal/dag/builder.go b/internal/dag/builder.go
+index c82dbdbe..231ce767 100644
+--- a/internal/dag/builder.go
++++ b/internal/dag/builder.go
+@@ -474,9 +474,11 @@ func (b *Builder) computeHTTPProxy(proxy *projcontour.HTTPProxy) {
+ 		}
+ 	}
+ 
++	insecure := b.lookupVirtualHost(host)
++	secure := b.lookupSecureVirtualHost(host)
+ 	for _, route := range b.computeRoutes(sw, proxy, nil, nil, enforceTLS) {
+-		b.lookupVirtualHost(host).addRoute(route)
+-		b.lookupSecureVirtualHost(host).addRoute(route)
++		insecure.addRoute(route)
++		secure.addRoute(route)
+ 	}
+ 	sw.SetValid()
+ }
+@@ -580,13 +582,24 @@ func (b *Builder) computeRoutes(sw *ObjectStatusWriter, proxy *projcontour.HTTPP
+ 				}
+ 			}
+ 
+-			r.Clusters = append(r.Clusters, &Cluster{
++			c := &Cluster{
+ 				Upstream:             s,
+ 				LoadBalancerStrategy: service.Strategy,
+ 				Weight:               service.Weight,
+ 				HealthCheckPolicy:    healthCheckPolicy(service.HealthCheck),
+ 				UpstreamValidation:   uv,
+-			})
++			}
++			if service.Mirror && r.MirrorPolicy != nil {
++				sw.SetInvalid("only one service per route may be nominated as mirror")
++				return nil
++			}
++			if service.Mirror {
++				r.MirrorPolicy = &MirrorPolicy{
++					Cluster: c,
++				}
++			} else {
++				r.Clusters = append(r.Clusters, c)
++			}
+ 		}
+ 		routes = append(routes, r)
+ 	}
+diff --git a/internal/dag/dag.go b/internal/dag/dag.go
+index 78fbdb5f..21014668 100644
+--- a/internal/dag/dag.go
++++ b/internal/dag/dag.go
+@@ -106,6 +106,9 @@ type Route struct {
+ 
+ 	// Indicates that during forwarding, the matched prefix (or path) should be swapped with this value
+ 	PrefixRewrite string
++
++	// Mirror Policy defines the mirroring policy for this Route.
++	MirrorPolicy *MirrorPolicy
+ }
+ 
+ // TimeoutPolicy defines the timeout policy for a route.
+@@ -135,6 +138,11 @@ type RetryPolicy struct {
+ 	PerTryTimeout time.Duration
+ }
+ 
++// MirrorPolicy desinges the mirroring policy for a route.
++type MirrorPolicy struct {
++	Cluster *Cluster
++}
++
+ // UpstreamValidation defines how to validate the certificate on the upstream service
+ type UpstreamValidation struct {
+ 	// CACertificate holds a reference to the Secret containing the CA to be used to
+diff --git a/internal/envoy/route.go b/internal/envoy/route.go
+index be058a2a..1840c809 100644
+--- a/internal/envoy/route.go
++++ b/internal/envoy/route.go
+@@ -43,11 +43,12 @@ func Route(match *envoy_api_v2_route.RouteMatch, action *envoy_api_v2_route.Rout
+ // weighted cluster.
+ func RouteRoute(r *dag.Route) *envoy_api_v2_route.Route_Route {
+ 	ra := envoy_api_v2_route.RouteAction{
+-		RetryPolicy:   retryPolicy(r),
+-		Timeout:       responseTimeout(r),
+-		IdleTimeout:   idleTimeout(r),
+-		PrefixRewrite: r.PrefixRewrite,
+-		HashPolicy:    hashPolicy(r),
++		RetryPolicy:         retryPolicy(r),
++		Timeout:             responseTimeout(r),
++		IdleTimeout:         idleTimeout(r),
++		PrefixRewrite:       r.PrefixRewrite,
++		HashPolicy:          hashPolicy(r),
++		RequestMirrorPolicy: mirrorPolicy(r),
+ 	}
+ 
+ 	if r.Websocket {
+@@ -92,6 +93,15 @@ func hashPolicy(r *dag.Route) []*envoy_api_v2_route.RouteAction_HashPolicy {
+ 	return nil
+ }
+ 
++func mirrorPolicy(r *dag.Route) *envoy_api_v2_route.RouteAction_RequestMirrorPolicy {
++	if r.MirrorPolicy == nil {
++		return nil
++	}
++	return &envoy_api_v2_route.RouteAction_RequestMirrorPolicy{
++		Cluster: Clustername(r.MirrorPolicy.Cluster),
++	}
++}
++
+ func responseTimeout(r *dag.Route) *duration.Duration {
+ 	if r.TimeoutPolicy == nil {
+ 		return nil

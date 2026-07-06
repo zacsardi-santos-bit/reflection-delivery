@@ -1,0 +1,7 @@
+I'm working with a code generation system that supports two types of generation blocks — one for HCL output and one for plain file output. I noticed that the HCL-type generation block already supports filtering which stacks receive generated code based on path patterns, but the plain file generation block doesn't have this capability at all.
+
+I need the plain file generation block to support the same kind of stack filtering that the HCL generation block already uses. Specifically, users should be able to add one or more filter blocks to a plain file generation block, where each filter block contains path pattern lists. If multiple patterns or conditions are listed in a single filter block, they should all need to match (AND logic). If multiple filter blocks are present, the stack only needs to satisfy any one of them (OR logic). Glob patterns, including single-segment wildcards, multi-segment wildcards, and root-anchored paths, should all work as expected.
+
+Additionally, it should be a schema error to combine a stack filter with a non-stack generation context, since filters only make sense when generating per-stack.
+
+The parsing and validation of the filter configuration should follow the same rules already established for the HCL-type generation block — invalid path pattern formats (like a bare string instead of a list, or non-string list elements) should produce appropriate schema errors.

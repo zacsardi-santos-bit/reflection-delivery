@@ -1,0 +1,528 @@
+diff --git a/aya-obj/src/maps.rs b/aya-obj/src/maps.rs
+index e9dbc456..cef14415 100644
+--- a/aya-obj/src/maps.rs
++++ b/aya-obj/src/maps.rs
+@@ -66,6 +66,7 @@ pub struct BtfMapDef {
+     pub(crate) value_size: u32,
+     pub(crate) max_entries: u32,
+     pub(crate) map_flags: u32,
++    pub(crate) map_extra: u64,
+     pub(crate) pinning: PinningType,
+     /// BTF type id of the map key
+     pub btf_key_type_id: u32,
+@@ -201,6 +202,14 @@ impl Map {
+         }
+     }
+ 
++    /// Returns per-map-type extra fields.
++    pub const fn map_extra(&self) -> u64 {
++        match self {
++            Self::Legacy(_) => 0,
++            Self::Btf(m) => m.def.map_extra,
++        }
++    }
++
+     /// Returns the pinning type of the map
+     pub const fn pinning(&self) -> PinningType {
+         match self {
+diff --git a/aya-obj/src/obj.rs b/aya-obj/src/obj.rs
+index ccb37527..cda240ed 100644
+--- a/aya-obj/src/obj.rs
++++ b/aya-obj/src/obj.rs
+@@ -1324,6 +1324,9 @@ fn parse_btf_map_def(btf: &Btf, info: &DataSecEntry) -> Result<(String, BtfMapDe
+             "map_flags" => {
+                 map_def.map_flags = get_map_field(btf, m.btf_type)?;
+             }
++            "map_extra" => {
++                map_def.map_extra = get_map_field(btf, m.btf_type)?.into();
++            }
+             "pinning" => {
+                 let pinning = get_map_field(btf, m.btf_type)?;
+                 map_def.pinning = PinningType::try_from(pinning).unwrap_or_else(|_| {
+@@ -1341,7 +1344,7 @@ fn parse_btf_map_def(btf: &Btf, info: &DataSecEntry) -> Result<(String, BtfMapDe
+ 
+ /// Parses a [`bpf_map_info`] into a [`Map`].
+ pub const fn parse_map_info(info: bpf_map_info, pinned: PinningType) -> Map {
+-    if info.btf_key_type_id != 0 {
++    if info.btf_key_type_id != 0 || info.btf_value_type_id != 0 {
+         Map::Btf(BtfMap {
+             def: BtfMapDef {
+                 map_type: info.type_,
+@@ -1349,6 +1352,7 @@ pub const fn parse_map_info(info: bpf_map_info, pinned: PinningType) -> Map {
+                 value_size: info.value_size,
+                 max_entries: info.max_entries,
+                 map_flags: info.map_flags,
++                map_extra: info.map_extra,
+                 pinning: pinned,
+                 btf_key_type_id: info.btf_key_type_id,
+                 btf_value_type_id: info.btf_value_type_id,
+@@ -1439,7 +1443,7 @@ mod tests {
+     use assert_matches::assert_matches;
+ 
+     use super::*;
+-    use crate::generated::btf_ext_header;
++    use crate::generated::{bpf_map_type::BPF_MAP_TYPE_BLOOM_FILTER, btf_ext_header};
+ 
+     const FAKE_INS_LEN: u64 = 8;
+ 
+@@ -1496,6 +1500,27 @@ mod tests {
+         unsafe { crate::util::bytes_of(val) }
+     }
+ 
++    #[test]
++    fn test_parse_map_info_keyless_btf_map() {
++        let mut info = unsafe { mem::zeroed::<bpf_map_info>() };
++        info.type_ = BPF_MAP_TYPE_BLOOM_FILTER as u32;
++        info.value_size = 4;
++        info.max_entries = 64;
++        info.map_extra = 3;
++        info.btf_value_type_id = 7;
++
++        let map = parse_map_info(info, PinningType::None);
++        assert_matches!(map, Map::Btf(m) => {
++            assert_eq!(m.def.map_type, BPF_MAP_TYPE_BLOOM_FILTER as u32);
++            assert_eq!(m.def.key_size, 0);
++            assert_eq!(m.def.value_size, 4);
++            assert_eq!(m.def.max_entries, 64);
++            assert_eq!(m.def.map_extra, 3);
++            assert_eq!(m.def.btf_key_type_id, 0);
++            assert_eq!(m.def.btf_value_type_id, 7);
++        });
++    }
++
+     #[test]
+     fn test_parse_generic_error() {
+         assert_matches!(Object::parse(&b"foo"[..]), Err(ParseError::ElfError(_)))
+diff --git a/aya/src/maps/bloom_filter.rs b/aya/src/maps/bloom_filter.rs
+index 31525c23..c579d402 100644
+--- a/aya/src/maps/bloom_filter.rs
++++ b/aya/src/maps/bloom_filter.rs
+@@ -9,7 +9,7 @@ use std::{
+ use crate::{
+     Pod,
+     maps::{MapData, MapError, check_v_size},
+-    sys::{SyscallError, bpf_map_lookup_elem_ptr, bpf_map_push_elem},
++    sys::{SyscallError, bpf_map_peek_elem, bpf_map_push_elem},
+ };
+ 
+ /// A Bloom Filter.
+@@ -30,8 +30,8 @@ use crate::{
+ ///
+ /// bloom_filter.insert(1, 0)?;
+ ///
+-/// assert_matches!(bloom_filter.contains(&mut 1, 0), Ok(()));
+-/// assert_matches!(bloom_filter.contains(&mut 2, 0), Err(MapError::ElementNotFound));
++/// assert_matches!(bloom_filter.contains(1, 0), Ok(()));
++/// assert_matches!(bloom_filter.contains(2, 0), Err(MapError::ElementNotFound));
+ ///
+ /// # Ok::<(), aya::EbpfError>(())
+ /// ```
+@@ -54,14 +54,12 @@ impl<T: Borrow<MapData>, V: Pod> BloomFilter<T, V> {
+     }
+ 
+     /// Query the existence of the element.
+-    pub fn contains(&self, value: &mut V, flags: u64) -> Result<(), MapError> {
++    pub fn contains(&self, value: impl Borrow<V>, flags: u64) -> Result<(), MapError> {
+         let fd = self.inner.borrow().fd().as_fd();
+ 
+-        match bpf_map_lookup_elem_ptr::<u32, _>(fd, None, value, flags).map_err(|io_error| {
+-            SyscallError {
+-                call: "bpf_map_lookup_elem",
+-                io_error,
+-            }
++        match bpf_map_peek_elem(fd, value.borrow(), flags).map_err(|io_error| SyscallError {
++            call: "bpf_map_lookup_elem",
++            io_error,
+         })? {
+             None => Err(MapError::ElementNotFound),
+             Some(()) => Ok(()),
+@@ -184,7 +182,7 @@ mod tests {
+         override_syscall(|_| sys_error(EFAULT));
+ 
+         assert_matches!(
+-            bloom_filter.contains(&mut 1, 0),
++            bloom_filter.contains(1, 0),
+             Err(MapError::SyscallError(SyscallError { call: "bpf_map_lookup_elem", io_error })) if io_error.raw_os_error() == Some(EFAULT)
+         );
+     }
+@@ -202,9 +200,27 @@ mod tests {
+             _ => sys_error(EFAULT),
+         });
+ 
+-        assert_matches!(
+-            bloom_filter.contains(&mut 1, 0),
+-            Err(MapError::ElementNotFound)
+-        );
++        assert_matches!(bloom_filter.contains(1, 0), Err(MapError::ElementNotFound));
++    }
++
++    #[test]
++    fn test_contains_passes_value_bytes() {
++        const QUERY: u32 = 123;
++        let map = new_map(new_obj_map());
++        let bloom_filter = BloomFilter::<_, u32>::new(&map).unwrap();
++
++        override_syscall(|call| match call {
++            Syscall::Ebpf {
++                cmd: bpf_cmd::BPF_MAP_LOOKUP_ELEM,
++                attr,
++            } => {
++                let value = unsafe { attr.__bindgen_anon_2.__bindgen_anon_1.value } as *const u32;
++                assert_eq!(unsafe { *value }, QUERY);
++                Ok(0)
++            }
++            _ => sys_error(EFAULT),
++        });
++
++        assert_matches!(bloom_filter.contains(QUERY, 0), Ok(()));
+     }
+ }
+diff --git a/aya/src/sys/bpf.rs b/aya/src/sys/bpf.rs
+index c9153ca4..1cc1c421 100644
+--- a/aya/src/sys/bpf.rs
++++ b/aya/src/sys/bpf.rs
+@@ -60,35 +60,45 @@ pub(crate) fn bpf_create_map(
+     u.value_size = def.value_size();
+     u.max_entries = def.max_entries();
+     u.map_flags = def.map_flags();
++    u.map_extra = def.map_extra();
+ 
+     if let aya_obj::Map::Btf(m) = def {
+         // Mimic https://github.com/libbpf/libbpf/issues/355
+         // Currently a bunch of (usually pretty specialized) BPF maps do not support
+         // specifying BTF types for the key and value.
+-        if let Ok(
+-            bpf_map_type::BPF_MAP_TYPE_PERF_EVENT_ARRAY
+-            | bpf_map_type::BPF_MAP_TYPE_CGROUP_ARRAY
+-            | bpf_map_type::BPF_MAP_TYPE_STACK_TRACE
+-            | bpf_map_type::BPF_MAP_TYPE_ARRAY_OF_MAPS
+-            | bpf_map_type::BPF_MAP_TYPE_HASH_OF_MAPS
+-            | bpf_map_type::BPF_MAP_TYPE_DEVMAP
+-            | bpf_map_type::BPF_MAP_TYPE_DEVMAP_HASH
+-            | bpf_map_type::BPF_MAP_TYPE_CPUMAP
+-            | bpf_map_type::BPF_MAP_TYPE_XSKMAP
+-            | bpf_map_type::BPF_MAP_TYPE_SOCKMAP
+-            | bpf_map_type::BPF_MAP_TYPE_SOCKHASH
+-            | bpf_map_type::BPF_MAP_TYPE_QUEUE
+-            | bpf_map_type::BPF_MAP_TYPE_STACK
+-            | bpf_map_type::BPF_MAP_TYPE_RINGBUF,
+-        ) = u.map_type.try_into()
+-        {
+-            u.btf_key_type_id = 0;
+-            u.btf_value_type_id = 0;
+-            u.btf_fd = 0;
+-        } else {
+-            u.btf_key_type_id = m.def.btf_key_type_id;
+-            u.btf_value_type_id = m.def.btf_value_type_id;
+-            u.btf_fd = btf_fd.map(|fd| fd.as_raw_fd()).unwrap_or_default() as u32;
++        match u.map_type.try_into() {
++            Ok(
++                bpf_map_type::BPF_MAP_TYPE_PERF_EVENT_ARRAY
++                | bpf_map_type::BPF_MAP_TYPE_CGROUP_ARRAY
++                | bpf_map_type::BPF_MAP_TYPE_STACK_TRACE
++                | bpf_map_type::BPF_MAP_TYPE_ARRAY_OF_MAPS
++                | bpf_map_type::BPF_MAP_TYPE_HASH_OF_MAPS
++                | bpf_map_type::BPF_MAP_TYPE_DEVMAP
++                | bpf_map_type::BPF_MAP_TYPE_DEVMAP_HASH
++                | bpf_map_type::BPF_MAP_TYPE_CPUMAP
++                | bpf_map_type::BPF_MAP_TYPE_XSKMAP
++                | bpf_map_type::BPF_MAP_TYPE_SOCKMAP
++                | bpf_map_type::BPF_MAP_TYPE_SOCKHASH
++                | bpf_map_type::BPF_MAP_TYPE_QUEUE
++                | bpf_map_type::BPF_MAP_TYPE_STACK
++                | bpf_map_type::BPF_MAP_TYPE_RINGBUF,
++            ) => {
++                u.btf_key_type_id = 0;
++                u.btf_value_type_id = 0;
++                u.btf_fd = 0;
++            }
++            Ok(bpf_map_type::BPF_MAP_TYPE_BLOOM_FILTER) => {
++                // Bloom filters are keyless maps, so the kernel expects a void
++                // key type even when a value BTF type is provided.
++                u.btf_key_type_id = 0;
++                u.btf_value_type_id = m.def.btf_value_type_id;
++                u.btf_fd = btf_fd.map(|fd| fd.as_raw_fd()).unwrap_or_default() as u32;
++            }
++            _ => {
++                u.btf_key_type_id = m.def.btf_key_type_id;
++                u.btf_value_type_id = m.def.btf_value_type_id;
++                u.btf_fd = btf_fd.map(|fd| fd.as_raw_fd()).unwrap_or_default() as u32;
++            }
+         }
+     }
+ 
+@@ -278,6 +288,25 @@ pub(crate) fn bpf_map_lookup_elem_ptr<K: Pod, V>(
+     }
+ }
+ 
++pub(crate) fn bpf_map_peek_elem<V: Pod>(
++    fd: BorrowedFd<'_>,
++    value: &V,
++    flags: u64,
++) -> io::Result<Option<()>> {
++    let mut attr = unsafe { mem::zeroed::<bpf_attr>() };
++
++    let u = unsafe { &mut attr.__bindgen_anon_2 };
++    u.map_fd = fd.as_raw_fd() as u32;
++    u.__bindgen_anon_1.value = ptr::from_ref(value) as u64;
++    u.flags = flags;
++
++    match unit_sys_bpf(bpf_cmd::BPF_MAP_LOOKUP_ELEM, &mut attr) {
++        Ok(()) => Ok(Some(())),
++        Err(io_error) if io_error.raw_os_error() == Some(ENOENT) => Ok(None),
++        Err(e) => Err(e),
++    }
++}
++
+ pub(crate) fn bpf_map_update_elem<K: Pod, V: Pod>(
+     fd: BorrowedFd<'_>,
+     key: Option<&K>,
+@@ -1314,6 +1343,9 @@ pub(crate) fn retry_with_verifier_logs<T>(
+ 
+ #[cfg(test)]
+ mod tests {
++    use aya_obj::{
++        generated::bpf_map_type::BPF_MAP_TYPE_BLOOM_FILTER, maps::PinningType, obj::parse_map_info,
++    };
+     use libc::EINVAL;
+ 
+     use super::*;
+@@ -1408,4 +1440,40 @@ bpf_map_type::BPF_MAP_TYPE_DEVMAP_HASH`"]
+     fn test_prog_id_supported_reject_types() {
+         is_prog_id_supported(bpf_map_type::BPF_MAP_TYPE_HASH);
+     }
++
++    #[test]
++    fn test_bloom_filter_btf_map_create_uses_void_key_type() {
++        const BTF_FD: i32 = 42;
++
++        override_syscall(|call| match call {
++            Syscall::Ebpf {
++                cmd: bpf_cmd::BPF_MAP_CREATE,
++                attr,
++            } => {
++                let u = unsafe { attr.__bindgen_anon_1 };
++                assert_eq!(u.map_type, BPF_MAP_TYPE_BLOOM_FILTER as u32);
++                assert_eq!(u.key_size, 0);
++                assert_eq!(u.btf_key_type_id, 0);
++                assert_eq!(u.btf_value_type_id, 7);
++                assert_eq!(u.btf_fd, BTF_FD as u32);
++                assert_eq!(u.map_extra, 3);
++                Ok(crate::MockableFd::mock_signed_fd().into())
++            }
++            _ => Err((-1, io::Error::from_raw_os_error(EINVAL))),
++        });
++
++        let mut info = unsafe { mem::zeroed::<bpf_map_info>() };
++        info.type_ = BPF_MAP_TYPE_BLOOM_FILTER as u32;
++        info.key_size = 0;
++        info.value_size = 4;
++        info.max_entries = 64;
++        info.map_extra = 3;
++        info.btf_key_type_id = 99;
++        info.btf_value_type_id = 7;
++        let map = parse_map_info(info, PinningType::None);
++
++        let name = CString::new("FILTER").unwrap();
++        let btf_fd = unsafe { BorrowedFd::borrow_raw(BTF_FD) };
++        bpf_create_map(&name, &map, Some(btf_fd)).unwrap();
++    }
+ }
+diff --git a/ebpf/aya-ebpf/src/btf_maps/bloom_filter.rs b/ebpf/aya-ebpf/src/btf_maps/bloom_filter.rs
+new file mode 100644
+index 00000000..44c81f70
+--- /dev/null
++++ b/ebpf/aya-ebpf/src/btf_maps/bloom_filter.rs
+@@ -0,0 +1,54 @@
++use core::{borrow::Borrow, ptr};
++
++use aya_ebpf_cty::c_long;
++
++use crate::{
++    btf_maps::btf_map_def,
++    helpers::{bpf_map_peek_elem, bpf_map_push_elem},
++};
++
++btf_map_def!(
++    /// A BTF-compatible BPF bloom filter map.
++    ///
++    /// Bloom filters are keyless maps. `HASH_FUNCS` encodes the low 4 bits of
++    /// `map_extra`, so it must fit in `0..=15`. `0` delegates to the kernel
++    /// default of 5 hash functions.
++    ///
++    /// # Example
++    ///
++    /// ```rust
++    /// use aya_ebpf::{btf_maps::BloomFilter, macros::btf_map};
++    ///
++    /// #[btf_map]
++    /// static FILTER: BloomFilter<u32, 64, 0, 3> = BloomFilter::new();
++    /// ```
++    pub struct BloomFilter<T; const MAX_ENTRIES: usize, const FLAGS: usize = 0, const HASH_FUNCS: usize = 0>,
++    map_type: BPF_MAP_TYPE_BLOOM_FILTER,
++    max_entries: MAX_ENTRIES,
++    map_flags: FLAGS,
++    key_type: (),
++    value_type: T,
++    map_extra: *const [i32; HASH_FUNCS],
++);
++
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize>
++    BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++{
++    #[inline(always)]
++    pub fn contains(&self, value: impl Borrow<T>) -> Result<(), c_long> {
++        let value = ptr::from_ref(value.borrow());
++        match unsafe { bpf_map_peek_elem(self.as_ptr(), value.cast_mut().cast()) } {
++            0 => Ok(()),
++            ret => Err(ret),
++        }
++    }
++
++    #[inline(always)]
++    pub fn insert(&self, value: impl Borrow<T>, flags: u64) -> Result<(), c_long> {
++        let value = ptr::from_ref(value.borrow());
++        match unsafe { bpf_map_push_elem(self.as_ptr(), value.cast(), flags) } {
++            0 => Ok(()),
++            ret => Err(ret),
++        }
++    }
++}
+diff --git a/ebpf/aya-ebpf/src/btf_maps/mod.rs b/ebpf/aya-ebpf/src/btf_maps/mod.rs
+index b84e4a7f..6f8e1e6c 100644
+--- a/ebpf/aya-ebpf/src/btf_maps/mod.rs
++++ b/ebpf/aya-ebpf/src/btf_maps/mod.rs
+@@ -1,8 +1,10 @@
+ pub mod array;
++pub mod bloom_filter;
+ pub mod ring_buf;
+ pub mod sk_storage;
+ 
+ pub use array::Array;
++pub use bloom_filter::BloomFilter;
+ pub use ring_buf::RingBuf;
+ pub use sk_storage::SkStorage;
+ 
+diff --git a/xtask/public-api/aya-ebpf.txt b/xtask/public-api/aya-ebpf.txt
+index c07d86b5..05d5efbd 100644
+--- a/xtask/public-api/aya-ebpf.txt
++++ b/xtask/public-api/aya-ebpf.txt
+@@ -39,6 +39,38 @@ impl<T> core::borrow::BorrowMut<T> for aya_ebpf::btf_maps::array::Array<T, MAX_E
+ pub fn aya_ebpf::btf_maps::array::Array<T, MAX_ENTRIES, FLAGS>::borrow_mut(&mut self) -> &mut T
+ impl<T> core::convert::From<T> for aya_ebpf::btf_maps::array::Array<T, MAX_ENTRIES, FLAGS>
+ pub fn aya_ebpf::btf_maps::array::Array<T, MAX_ENTRIES, FLAGS>::from(t: T) -> T
++pub mod aya_ebpf::btf_maps::bloom_filter
++#[repr(C)] pub struct aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::contains(&self, value: impl core::borrow::Borrow<T>) -> core::result::Result<(), aya_ebpf_cty::od::c_long>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::insert(&self, value: impl core::borrow::Borrow<T>, flags: u64) -> core::result::Result<(), aya_ebpf_cty::od::c_long>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++pub const fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::new() -> Self
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::default::Default for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::default() -> Self
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::marker::Sync for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::marker::Freeze for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> !core::marker::Send for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::marker::Unpin for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::marker::UnsafeUnpin for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::panic::unwind_safe::RefUnwindSafe for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: core::panic::unwind_safe::RefUnwindSafe
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::panic::unwind_safe::UnwindSafe for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: core::panic::unwind_safe::RefUnwindSafe
++impl<T, U> core::convert::Into<U> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where U: core::convert::From<T>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::into(self) -> U
++impl<T, U> core::convert::TryFrom<U> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where U: core::convert::Into<T>
++pub type aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::Error = core::convert::Infallible
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::try_from(value: U) -> core::result::Result<T, <T as core::convert::TryFrom<U>>::Error>
++impl<T, U> core::convert::TryInto<U> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where U: core::convert::TryFrom<T>
++pub type aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::Error = <U as core::convert::TryFrom<T>>::Error
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::try_into(self) -> core::result::Result<U, <U as core::convert::TryFrom<T>>::Error>
++impl<T> core::any::Any for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: 'static + ?core::marker::Sized
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::type_id(&self) -> core::any::TypeId
++impl<T> core::borrow::Borrow<T> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: ?core::marker::Sized
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::borrow(&self) -> &T
++impl<T> core::borrow::BorrowMut<T> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: ?core::marker::Sized
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::borrow_mut(&mut self) -> &mut T
++impl<T> core::convert::From<T> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::from(t: T) -> T
+ pub mod aya_ebpf::btf_maps::ring_buf
+ #[repr(C)] pub struct aya_ebpf::btf_maps::ring_buf::RingBuf<T, const MAX_ENTRIES: usize, const FLAGS: usize>
+ impl<T, const MAX_ENTRIES: usize, const FLAGS: usize> aya_ebpf::btf_maps::ring_buf::RingBuf<T, MAX_ENTRIES, FLAGS>
+@@ -140,6 +172,37 @@ impl<T> core::borrow::BorrowMut<T> for aya_ebpf::btf_maps::array::Array<T, MAX_E
+ pub fn aya_ebpf::btf_maps::array::Array<T, MAX_ENTRIES, FLAGS>::borrow_mut(&mut self) -> &mut T
+ impl<T> core::convert::From<T> for aya_ebpf::btf_maps::array::Array<T, MAX_ENTRIES, FLAGS>
+ pub fn aya_ebpf::btf_maps::array::Array<T, MAX_ENTRIES, FLAGS>::from(t: T) -> T
++#[repr(C)] pub struct aya_ebpf::btf_maps::BloomFilter<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::contains(&self, value: impl core::borrow::Borrow<T>) -> core::result::Result<(), aya_ebpf_cty::od::c_long>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::insert(&self, value: impl core::borrow::Borrow<T>, flags: u64) -> core::result::Result<(), aya_ebpf_cty::od::c_long>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++pub const fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::new() -> Self
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::default::Default for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::default() -> Self
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::marker::Sync for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::marker::Freeze for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> !core::marker::Send for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::marker::Unpin for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::marker::UnsafeUnpin for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::panic::unwind_safe::RefUnwindSafe for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: core::panic::unwind_safe::RefUnwindSafe
++impl<T, const MAX_ENTRIES: usize, const FLAGS: usize, const HASH_FUNCS: usize> core::panic::unwind_safe::UnwindSafe for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: core::panic::unwind_safe::RefUnwindSafe
++impl<T, U> core::convert::Into<U> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where U: core::convert::From<T>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::into(self) -> U
++impl<T, U> core::convert::TryFrom<U> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where U: core::convert::Into<T>
++pub type aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::Error = core::convert::Infallible
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::try_from(value: U) -> core::result::Result<T, <T as core::convert::TryFrom<U>>::Error>
++impl<T, U> core::convert::TryInto<U> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where U: core::convert::TryFrom<T>
++pub type aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::Error = <U as core::convert::TryFrom<T>>::Error
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::try_into(self) -> core::result::Result<U, <U as core::convert::TryFrom<T>>::Error>
++impl<T> core::any::Any for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: 'static + ?core::marker::Sized
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::type_id(&self) -> core::any::TypeId
++impl<T> core::borrow::Borrow<T> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: ?core::marker::Sized
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::borrow(&self) -> &T
++impl<T> core::borrow::BorrowMut<T> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS> where T: ?core::marker::Sized
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::borrow_mut(&mut self) -> &mut T
++impl<T> core::convert::From<T> for aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>
++pub fn aya_ebpf::btf_maps::bloom_filter::BloomFilter<T, MAX_ENTRIES, FLAGS, HASH_FUNCS>::from(t: T) -> T
+ #[repr(C)] pub struct aya_ebpf::btf_maps::RingBuf<T, const MAX_ENTRIES: usize, const FLAGS: usize>
+ impl<T, const MAX_ENTRIES: usize, const FLAGS: usize> aya_ebpf::btf_maps::ring_buf::RingBuf<T, MAX_ENTRIES, FLAGS>
+ pub const fn aya_ebpf::btf_maps::ring_buf::RingBuf<T, MAX_ENTRIES, FLAGS>::new() -> Self
+diff --git a/xtask/public-api/aya-obj.txt b/xtask/public-api/aya-obj.txt
+index 207acf59..52a688f9 100644
+--- a/xtask/public-api/aya-obj.txt
++++ b/xtask/public-api/aya-obj.txt
+@@ -8384,6 +8384,7 @@ impl aya_obj::maps::Map
+ pub fn aya_obj::maps::Map::data(&self) -> &[u8]
+ pub fn aya_obj::maps::Map::data_mut(&mut self) -> &mut alloc::vec::Vec<u8>
+ pub const fn aya_obj::maps::Map::key_size(&self) -> u32
++pub const fn aya_obj::maps::Map::map_extra(&self) -> u64
+ pub const fn aya_obj::maps::Map::map_flags(&self) -> u32
+ pub const fn aya_obj::maps::Map::map_type(&self) -> u32
+ pub const fn aya_obj::maps::Map::max_entries(&self) -> u32
+@@ -9562,6 +9563,7 @@ impl aya_obj::maps::Map
+ pub fn aya_obj::maps::Map::data(&self) -> &[u8]
+ pub fn aya_obj::maps::Map::data_mut(&mut self) -> &mut alloc::vec::Vec<u8>
+ pub const fn aya_obj::maps::Map::key_size(&self) -> u32
++pub const fn aya_obj::maps::Map::map_extra(&self) -> u64
+ pub const fn aya_obj::maps::Map::map_flags(&self) -> u32
+ pub const fn aya_obj::maps::Map::map_type(&self) -> u32
+ pub const fn aya_obj::maps::Map::max_entries(&self) -> u32
+diff --git a/xtask/public-api/aya.txt b/xtask/public-api/aya.txt
+index fd6a16ee..8969a88f 100644
+--- a/xtask/public-api/aya.txt
++++ b/xtask/public-api/aya.txt
+@@ -137,7 +137,7 @@ pub fn aya::maps::ProgramArray<T>::from(t: T) -> T
+ pub mod aya::maps::bloom_filter
+ pub struct aya::maps::bloom_filter::BloomFilter<T, V: aya::Pod>
+ impl<T: core::borrow::Borrow<aya::maps::MapData>, V: aya::Pod> aya::maps::bloom_filter::BloomFilter<T, V>
+-pub fn aya::maps::bloom_filter::BloomFilter<T, V>::contains(&self, value: &mut V, flags: u64) -> core::result::Result<(), aya::maps::MapError>
++pub fn aya::maps::bloom_filter::BloomFilter<T, V>::contains(&self, value: impl core::borrow::Borrow<V>, flags: u64) -> core::result::Result<(), aya::maps::MapError>
+ impl<T: core::borrow::Borrow<aya::maps::MapData>, V: aya::Pod> aya::maps::bloom_filter::BloomFilter<T, V>
+ pub fn aya::maps::bloom_filter::BloomFilter<T, V>::pin<P: core::convert::AsRef<std::path::Path>>(self, path: P) -> core::result::Result<(), aya::pin::PinError>
+ impl<T: core::borrow::BorrowMut<aya::maps::MapData>, V: aya::Pod> aya::maps::bloom_filter::BloomFilter<T, V>
+@@ -1563,7 +1563,7 @@ impl<T> core::convert::From<T> for aya::maps::array::Array<T, V>
+ pub fn aya::maps::array::Array<T, V>::from(t: T) -> T
+ pub struct aya::maps::BloomFilter<T, V: aya::Pod>
+ impl<T: core::borrow::Borrow<aya::maps::MapData>, V: aya::Pod> aya::maps::bloom_filter::BloomFilter<T, V>
+-pub fn aya::maps::bloom_filter::BloomFilter<T, V>::contains(&self, value: &mut V, flags: u64) -> core::result::Result<(), aya::maps::MapError>
++pub fn aya::maps::bloom_filter::BloomFilter<T, V>::contains(&self, value: impl core::borrow::Borrow<V>, flags: u64) -> core::result::Result<(), aya::maps::MapError>
+ impl<T: core::borrow::Borrow<aya::maps::MapData>, V: aya::Pod> aya::maps::bloom_filter::BloomFilter<T, V>
+ pub fn aya::maps::bloom_filter::BloomFilter<T, V>::pin<P: core::convert::AsRef<std::path::Path>>(self, path: P) -> core::result::Result<(), aya::pin::PinError>
+ impl<T: core::borrow::BorrowMut<aya::maps::MapData>, V: aya::Pod> aya::maps::bloom_filter::BloomFilter<T, V>

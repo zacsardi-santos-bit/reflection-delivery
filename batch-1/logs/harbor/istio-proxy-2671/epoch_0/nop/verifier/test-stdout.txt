@@ -1,0 +1,266 @@
+patching file test/envoye2e/basic_flow/basic_xds_test.go
+patching file test/envoye2e/driver/envoy.go
+patching file test/envoye2e/driver/xds.go
+patching file test/envoye2e/env/envoy.go
+patching file test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go
+patching file test/envoye2e/http_metadata_exchange/testoutput/client.yaml
+patching file test/envoye2e/http_metadata_exchange/testoutput/server.yaml
+patching file test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go
+patching file test/envoye2e/stats/stats_xds_test.go
+patching file test/envoye2e/stats_plugin/stats_plugin_test.go
+patching file test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go
+patching file test/envoye2e/tcp_metadata_exchange/testoutput/client.yaml
+patching file test/envoye2e/tcp_metadata_exchange/testoutput/server.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/tcp_metadata_exchange/testoutput/server.yaml.rej
+patching file test/envoye2e/basic_flow/basic_xds_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file test/envoye2e/basic_flow/basic_xds_test.go.rej
+patching file test/envoye2e/driver/envoy.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/driver/envoy.go.rej
+patching file test/envoye2e/driver/xds.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file test/envoye2e/driver/xds.go.rej
+patching file test/envoye2e/env/envoy.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/env/envoy.go.rej
+patching file test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go.rej
+patching file test/envoye2e/http_metadata_exchange/testoutput/client.yaml
+patching file test/envoye2e/http_metadata_exchange/testoutput/server.yaml
+patching file test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go.rej
+patching file test/envoye2e/stats/stats_xds_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file test/envoye2e/stats/stats_xds_test.go.rej
+patching file test/envoye2e/stats_plugin/stats_plugin_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file test/envoye2e/stats_plugin/stats_plugin_test.go.rej
+patching file test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go.rej
+patching file test/envoye2e/tcp_metadata_exchange/testoutput/client.yaml
+patching file test/envoye2e/tcp_metadata_exchange/testoutput/server.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/tcp_metadata_exchange/testoutput/server.yaml.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/basic_flow/basic_xds_test.go b/test/envoye2e/basic_flow/basic_xds_test.go
+|index 9ea4241d..20cfb970 100644
+|--- a/test/envoye2e/basic_flow/basic_xds_test.go
+|+++ b/test/envoye2e/basic_flow/basic_xds_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 29
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/driver/envoy.go b/test/envoye2e/driver/envoy.go
+|index a7ee937c..0abdf7f8 100644
+|--- a/test/envoye2e/driver/envoy.go
+|+++ b/test/envoye2e/driver/envoy.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 44
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/driver/xds.go b/test/envoye2e/driver/xds.go
+|index e6f54a2b..f846df9a 100644
+|--- a/test/envoye2e/driver/xds.go
+|+++ b/test/envoye2e/driver/xds.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 99
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/env/envoy.go b/test/envoye2e/env/envoy.go
+|index d15f91ae..f4523d99 100644
+|--- a/test/envoye2e/env/envoy.go
+|+++ b/test/envoye2e/env/envoy.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 112
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go b/test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go
+|index 79db4549..2c2ffd7c 100644
+|--- a/test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go
+|+++ b/test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/test/envoye2e/http_metadata_exchange/testoutput/client.yaml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/test/envoye2e/http_metadata_exchange/testoutput/server.yaml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 599
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go b/test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go
+|index f0baf2ce..e0637a1a 100644
+|--- a/test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go
+|+++ b/test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 713
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/stats/stats_xds_test.go b/test/envoye2e/stats/stats_xds_test.go
+|index 0be0ea91..7dd89685 100644
+|--- a/test/envoye2e/stats/stats_xds_test.go
+|+++ b/test/envoye2e/stats/stats_xds_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 827
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/stats_plugin/stats_plugin_test.go b/test/envoye2e/stats_plugin/stats_plugin_test.go
+|index bfa95f88..e3794153 100644
+|--- a/test/envoye2e/stats_plugin/stats_plugin_test.go
+|+++ b/test/envoye2e/stats_plugin/stats_plugin_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 995
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go b/test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go
+|index a28e610d..7fb74340 100644
+|--- a/test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go
+|+++ b/test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+The next patch would delete the file a/test/envoye2e/tcp_metadata_exchange/testoutput/client.yaml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/test/envoye2e/tcp_metadata_exchange/testoutput/server.yaml,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file test/envoye2e/basic_flow/basic_xds_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file test/envoye2e/basic_flow/basic_xds_test.go.rej
+patching file test/envoye2e/driver/envoy.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/driver/envoy.go.rej
+patching file test/envoye2e/driver/xds.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file test/envoye2e/driver/xds.go.rej
+patching file test/envoye2e/env/envoy.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/env/envoy.go.rej
+patching file test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go.rej
+patching file test/envoye2e/http_metadata_exchange/testoutput/client.yaml
+patching file test/envoye2e/http_metadata_exchange/testoutput/server.yaml
+patching file test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go.rej
+patching file test/envoye2e/stats/stats_xds_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file test/envoye2e/stats/stats_xds_test.go.rej
+patching file test/envoye2e/stats_plugin/stats_plugin_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file test/envoye2e/stats_plugin/stats_plugin_test.go.rej
+patching file test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go.rej
+patching file test/envoye2e/tcp_metadata_exchange/testoutput/client.yaml
+patching file test/envoye2e/tcp_metadata_exchange/testoutput/server.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file test/envoye2e/tcp_metadata_exchange/testoutput/server.yaml.rej
+WARN: test.patch did not apply cleanly
+go: finding module for package github.com/envoyproxy/go-control-plane/envoy/extensions/filters/network/http_connection_manager/v3
+go: finding module for package github.com/cncf/udpa/go/udpa/type/v1
+test/envoye2e/driver/envoy.go:30:2: cannot find module providing package github.com/cncf/udpa/go/udpa/type/v1: module lookup disabled by GOPROXY=off
+test/envoye2e/driver/envoy.go:31:2: cannot find module providing package github.com/envoyproxy/go-control-plane/envoy/extensions/filters/network/http_connection_manager/v3: module lookup disabled by GOPROXY=off
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

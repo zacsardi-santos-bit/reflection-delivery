@@ -1,0 +1,98 @@
+{
+    "id": "4bd409bf-e30d-4160-bc22-ccae402d3b5b",
+    "task_name": "offline/cert-manager-cert-manager-6344",
+    "trial_name": "cert-manager-cert-manager-6344__JuTrRXS",
+    "trial_uri": "file:///tmp/oracle/2026-07-01__14-31-03/cert-manager-cert-manager-6344__JuTrRXS",
+    "task_id": {
+        "path": "cert-manager-cert-manager-6344"
+    },
+    "source": "src",
+    "task_checksum": "c42b370bdbc8f59fa55aab3ecb1e06ad8342f81295cff33e2fc817e1074b68f6",
+    "config": {
+        "task": {
+            "path": "cert-manager-cert-manager-6344",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "cert-manager-cert-manager-6344__JuTrRXS",
+        "trials_dir": "/tmp/oracle/2026-07-01__14-31-03",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "oracle",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "00c7887e-76b3-423f-9218-40dc21202458"
+    },
+    "agent_info": {
+        "name": "oracle",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T14:31:12.374923Z",
+    "finished_at": "2026-07-01T14:42:26.637288Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T14:31:12.378138Z",
+        "finished_at": "2026-07-01T14:40:15.851322Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T14:40:15.851361Z",
+        "finished_at": "2026-07-01T14:40:15.851405Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T14:40:15.851457Z",
+        "finished_at": "2026-07-01T14:40:16.842728Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T14:40:16.842856Z",
+        "finished_at": "2026-07-01T14:42:16.175018Z"
+    }
+}

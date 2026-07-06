@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p storage -E 'test(test_alias_operation)' --no-fail-fast",
+  "test_files": [
+    "lib/storage/tests/integration/alias_tests.rs",
+    "tests/shard-snapshot-api.sh",
+    "tests/snapshots/snapshots-recovery.sh"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) storage::integration alias_tests::test_alias_operation"
+  ],
+  "PASS_TO_PASS": []
+}

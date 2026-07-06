@@ -1,0 +1,29 @@
+{
+    "id": "ccd11eb1-c4ff-414f-bb20-eeea888d8029",
+    "started_at": "2026-07-06T12:17:02.341807",
+    "finished_at": "2026-07-06T12:17:52.339931",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__jaegertracing-jaeger-8411": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "jaegertracing-jaeger-8411__ytkJZKb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

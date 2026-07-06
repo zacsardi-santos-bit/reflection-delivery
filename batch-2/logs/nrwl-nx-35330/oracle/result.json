@@ -1,0 +1,29 @@
+{
+    "id": "f0d8aac1-674d-4a72-b4e7-31f428ad242c",
+    "started_at": "2026-07-06T12:18:17.616619",
+    "finished_at": "2026-07-06T12:19:01.472914",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__nrwl-nx-35330": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "nrwl-nx-35330__AZtPEzZ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

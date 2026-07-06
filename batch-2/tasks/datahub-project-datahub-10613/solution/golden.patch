@@ -1,0 +1,328 @@
+diff --git a/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/client/airflow_generator.py b/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/client/airflow_generator.py
+index d67754605c..d18b31a5ff 100644
+--- a/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/client/airflow_generator.py
++++ b/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/client/airflow_generator.py
+@@ -129,10 +129,8 @@ class AirflowGenerator:
+ 
+     @staticmethod
+     def generate_dataflow(
+-        cluster: str,
++        config: DatahubLineageConfig,
+         dag: "DAG",
+-        capture_owner: bool = True,
+-        capture_tags: bool = True,
+     ) -> DataFlow:
+         """
+         Generates a Dataflow object from an Airflow DAG
+@@ -146,7 +144,10 @@ class AirflowGenerator:
+         orchestrator = "airflow"
+         description = "\n\n".join(filter(None, [dag.description, dag.doc_md])) or None
+         data_flow = DataFlow(
+-            env=cluster, id=id, orchestrator=orchestrator, description=description
++            env=config.cluster,
++            id=id,
++            orchestrator=orchestrator,
++            description=description,
+         )
+ 
+         flow_property_bag: Dict[str, str] = {}
+@@ -173,10 +174,10 @@ class AirflowGenerator:
+         base_url = conf.get("webserver", "base_url")
+         data_flow.url = f"{base_url}/tree?dag_id={dag.dag_id}"
+ 
+-        if capture_owner and dag.owner:
++        if config.capture_ownership_info and dag.owner:
+             data_flow.owners.update(owner.strip() for owner in dag.owner.split(","))
+ 
+-        if capture_tags and dag.tags:
++        if config.capture_tags_info and dag.tags:
+             data_flow.tags.update(dag.tags)
+ 
+         return data_flow
+@@ -311,14 +312,14 @@ class AirflowGenerator:
+     @staticmethod
+     def run_dataflow(
+         emitter: Emitter,
+-        cluster: str,
++        config: DatahubLineageConfig,
+         dag_run: "DagRun",
+         start_timestamp_millis: Optional[int] = None,
+         dataflow: Optional[DataFlow] = None,
+     ) -> None:
+         if dataflow is None:
+             assert dag_run.dag
+-            dataflow = AirflowGenerator.generate_dataflow(cluster, dag_run.dag)
++            dataflow = AirflowGenerator.generate_dataflow(config, dag_run.dag)
+ 
+         if start_timestamp_millis is None:
+             assert dag_run.execution_date
+@@ -357,13 +358,15 @@ class AirflowGenerator:
+         dpi.properties.update(property_bag)
+ 
+         dpi.emit_process_start(
+-            emitter=emitter, start_timestamp_millis=start_timestamp_millis
++            emitter=emitter,
++            start_timestamp_millis=start_timestamp_millis,
++            materialize_iolets=config.materialize_iolets,
+         )
+ 
+     @staticmethod
+     def complete_dataflow(
+         emitter: Emitter,
+-        cluster: str,
++        config: DatahubLineageConfig,
+         dag_run: "DagRun",
+         end_timestamp_millis: Optional[int] = None,
+         dataflow: Optional[DataFlow] = None,
+@@ -378,7 +381,7 @@ class AirflowGenerator:
+         """
+         if dataflow is None:
+             assert dag_run.dag
+-            dataflow = AirflowGenerator.generate_dataflow(cluster, dag_run.dag)
++            dataflow = AirflowGenerator.generate_dataflow(config, dag_run.dag)
+ 
+         assert dag_run.run_id
+         dpi = DataProcessInstance.from_dataflow(dataflow=dataflow, id=dag_run.run_id)
+@@ -409,28 +412,27 @@ class AirflowGenerator:
+     @staticmethod
+     def run_datajob(
+         emitter: Emitter,
+-        cluster: str,
+         ti: "TaskInstance",
+         dag: "DAG",
+         dag_run: "DagRun",
++        config: DatahubLineageConfig,
+         start_timestamp_millis: Optional[int] = None,
+         datajob: Optional[DataJob] = None,
+         attempt: Optional[int] = None,
+         emit_templates: bool = True,
+-        config: Optional[DatahubLineageConfig] = None,
+     ) -> DataProcessInstance:
+         if datajob is None:
+             assert ti.task is not None
+             datajob = AirflowGenerator.generate_datajob(
+-                cluster, ti.task, dag, config=config
++                config.cluster, ti.task, dag, config=config
+             )
+ 
+         assert dag_run.run_id
+         dpi = DataProcessInstance.from_datajob(
+             datajob=datajob,
+             id=f"{dag.dag_id}_{ti.task_id}_{dag_run.run_id}",
+-            clone_inlets=config is None or config.materialize_iolets,
+-            clone_outlets=config is None or config.materialize_iolets,
++            clone_inlets=True,
++            clone_outlets=True,
+         )
+         job_property_bag: Dict[str, str] = {}
+         job_property_bag["run_id"] = str(dag_run.run_id)
+@@ -481,6 +483,7 @@ class AirflowGenerator:
+             start_timestamp_millis=start_timestamp_millis,
+             attempt=attempt,
+             emit_template=emit_templates,
++            materialize_iolets=config.materialize_iolets,
+         )
+         return dpi
+ 
+diff --git a/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/datahub_listener.py b/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/datahub_listener.py
+index ed155a35a9..0bf633a74d 100644
+--- a/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/datahub_listener.py
++++ b/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/datahub_listener.py
+@@ -403,13 +403,12 @@ class DataHubListener:
+         if self.config.capture_executions:
+             dpi = AirflowGenerator.run_datajob(
+                 emitter=self.emitter,
+-                cluster=self.config.cluster,
++                config=self.config,
+                 ti=task_instance,
+                 dag=dag,
+                 dag_run=dagrun,
+                 datajob=datajob,
+                 emit_templates=False,
+-                config=self.config,
+             )
+             logger.debug(f"Emitted DataHub DataProcess Instance start: {dpi}")
+ 
+@@ -525,10 +524,8 @@ class DataHubListener:
+             return
+ 
+         dataflow = AirflowGenerator.generate_dataflow(
+-            cluster=self.config.cluster,
++            config=self.config,
+             dag=dag,
+-            capture_tags=self.config.capture_tags_info,
+-            capture_owner=self.config.capture_ownership_info,
+         )
+         dataflow.emit(self.emitter, callback=self._make_emit_callback())
+ 
+diff --git a/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/datahub_plugin_v22.py b/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/datahub_plugin_v22.py
+index 628300d45d..ace7669bfa 100644
+--- a/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/datahub_plugin_v22.py
++++ b/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/datahub_plugin_v22.py
+@@ -106,10 +106,8 @@ def datahub_task_status_callback(context, status):
+     )
+ 
+     dataflow = AirflowGenerator.generate_dataflow(
+-        cluster=config.cluster,
++        config=config,
+         dag=dag,
+-        capture_tags=config.capture_tags_info,
+-        capture_owner=config.capture_ownership_info,
+     )
+     task.log.info(f"Emitting Datahub Dataflow: {dataflow}")
+     dataflow.emit(emitter, callback=_make_emit_callback(task.log))
+@@ -139,13 +137,12 @@ def datahub_task_status_callback(context, status):
+     if config.capture_executions:
+         dpi = AirflowGenerator.run_datajob(
+             emitter=emitter,
+-            cluster=config.cluster,
++            config=config,
+             ti=ti,
+             dag=dag,
+             dag_run=context["dag_run"],
+             datajob=datajob,
+             start_timestamp_millis=int(ti.start_date.timestamp() * 1000),
+-            config=config,
+         )
+ 
+         task.log.info(f"Emitted Start Datahub Dataprocess Instance: {dpi}")
+@@ -207,13 +204,12 @@ def datahub_pre_execution(context):
+     if config.capture_executions:
+         dpi = AirflowGenerator.run_datajob(
+             emitter=emitter,
+-            cluster=config.cluster,
++            config=config,
+             ti=ti,
+             dag=dag,
+             dag_run=context["dag_run"],
+             datajob=datajob,
+             start_timestamp_millis=int(ti.start_date.timestamp() * 1000),
+-            config=config,
+         )
+ 
+         task.log.info(f"Emitting Datahub Dataprocess Instance: {dpi}")
+diff --git a/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/lineage/_lineage_core.py b/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/lineage/_lineage_core.py
+index 43e62c9f65..638458b0ef 100644
+--- a/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/lineage/_lineage_core.py
++++ b/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/lineage/_lineage_core.py
+@@ -37,10 +37,8 @@ def send_lineage_to_datahub(
+     emitter = hook.make_emitter()
+ 
+     dataflow = AirflowGenerator.generate_dataflow(
+-        cluster=config.cluster,
++        config=config,
+         dag=dag,
+-        capture_tags=config.capture_tags_info,
+-        capture_owner=config.capture_ownership_info,
+     )
+     dataflow.emit(emitter)
+     operator.log.info(f"Emitted from Lineage: {dataflow}")
+@@ -68,7 +66,7 @@ def send_lineage_to_datahub(
+ 
+         dpi = AirflowGenerator.run_datajob(
+             emitter=emitter,
+-            cluster=config.cluster,
++            config=config,
+             ti=ti,
+             dag=dag,
+             dag_run=dag_run,
+diff --git a/metadata-ingestion/src/datahub/api/entities/datajob/datajob.py b/metadata-ingestion/src/datahub/api/entities/datajob/datajob.py
+index 69cbcc4c3e..e56e9f059d 100644
+--- a/metadata-ingestion/src/datahub/api/entities/datajob/datajob.py
++++ b/metadata-ingestion/src/datahub/api/entities/datajob/datajob.py
+@@ -16,7 +16,6 @@ from datahub.metadata.schema_classes import (
+     OwnershipSourceClass,
+     OwnershipSourceTypeClass,
+     OwnershipTypeClass,
+-    StatusClass,
+     TagAssociationClass,
+ )
+ from datahub.utilities.urns.data_flow_urn import DataFlowUrn
+@@ -168,5 +167,5 @@ class DataJob:
+             for iolet in self.inlets + self.outlets:
+                 yield MetadataChangeProposalWrapper(
+                     entityUrn=str(iolet),
+-                    aspect=StatusClass(removed=False),
++                    aspect=iolet.to_key_aspect(),
+                 )
+diff --git a/metadata-ingestion/src/datahub/api/entities/dataprocess/dataprocess_instance.py b/metadata-ingestion/src/datahub/api/entities/dataprocess/dataprocess_instance.py
+index fa5b5bd6a5..771efd1f2a 100644
+--- a/metadata-ingestion/src/datahub/api/entities/dataprocess/dataprocess_instance.py
++++ b/metadata-ingestion/src/datahub/api/entities/dataprocess/dataprocess_instance.py
+@@ -20,7 +20,6 @@ from datahub.metadata.schema_classes import (
+     DataProcessInstanceRunResultClass,
+     DataProcessRunStatusClass,
+     DataProcessTypeClass,
+-    StatusClass,
+ )
+ from datahub.utilities.urns.data_flow_urn import DataFlowUrn
+ from datahub.utilities.urns.data_job_urn import DataJobUrn
+@@ -107,16 +106,18 @@ class DataProcessInstance:
+         start_timestamp_millis: int,
+         attempt: Optional[int] = None,
+         emit_template: bool = True,
++        materialize_iolets: bool = True,
+         callback: Optional[Callable[[Exception, str], None]] = None,
+     ) -> None:
+         """
+ 
+         :rtype: None
+         :param emitter: Datahub Emitter to emit the process event
+-        :param start_timestamp_millis: (int) the execution start time in milliseconds
++        :param start_timestamp_millis: the execution start time in milliseconds
+         :param attempt: the number of attempt of the execution with the same execution id
+-        :param emit_template: (bool) If it is set the template of the execution (datajob, dataflow) will be emitted as well.
+-        :param callback: (Optional[Callable[[Exception, str], None]]) the callback method for KafkaEmitter if it is used
++        :param emit_template: If it is set the template of the execution (datajob, dataflow) will be emitted as well.
++        :param materialize_iolets: If it is set the iolets will be materialized
++        :param callback: the callback method for KafkaEmitter if it is used
+         """
+         if emit_template and self.template_urn is not None:
+             template_object: Union[DataJob, DataFlow]
+@@ -157,7 +158,10 @@ class DataProcessInstance:
+             for mcp in template_object.generate_mcp():
+                 self._emit_mcp(mcp, emitter, callback)
+ 
+-        for mcp in self.generate_mcp(created_ts_millis=start_timestamp_millis):
++        for mcp in self.generate_mcp(
++            created_ts_millis=start_timestamp_millis,
++            materialize_iolets=materialize_iolets,
++        ):
+             self._emit_mcp(mcp, emitter, callback)
+         for mcp in self.start_event_mcp(start_timestamp_millis, attempt):
+             self._emit_mcp(mcp, emitter, callback)
+@@ -230,7 +234,7 @@ class DataProcessInstance:
+             self._emit_mcp(mcp, emitter, callback)
+ 
+     def generate_mcp(
+-        self, created_ts_millis: Optional[int] = None, materialize_iolets: bool = True
++        self, created_ts_millis: Optional[int], materialize_iolets: bool
+     ) -> Iterable[MetadataChangeProposalWrapper]:
+         """Generates mcps from the object"""
+ 
+@@ -280,13 +284,17 @@ class DataProcessInstance:
+         self,
+         emitter: Emitter,
+         callback: Optional[Callable[[Exception, str], None]] = None,
++        created_ts_millis: Optional[int] = None,
+     ) -> None:
+         """
+ 
+         :param emitter: (Emitter) the datahub emitter to emit generated mcps
+         :param callback: (Optional[Callable[[Exception, str], None]]) the callback method for KafkaEmitter if it is used
+         """
+-        for mcp in self.generate_mcp():
++        for mcp in self.generate_mcp(
++            created_ts_millis=created_ts_millis,
++            materialize_iolets=True,
++        ):
+             self._emit_mcp(mcp, emitter, callback)
+ 
+     @staticmethod
+@@ -363,5 +371,5 @@ class DataProcessInstance:
+             for iolet in self.inlets + self.outlets:
+                 yield MetadataChangeProposalWrapper(
+                     entityUrn=str(iolet),
+-                    aspect=StatusClass(removed=False),
++                    aspect=iolet.to_key_aspect(),
+                 )

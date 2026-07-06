@@ -1,0 +1,7 @@
+patching file Cargo.lock
+patching file crates/biome_analyze/Cargo.toml
+patching file crates/biome_analyze/src/diagnostics.rs
+patching file crates/biome_analyze/src/lib.rs
+patching file crates/biome_analyze/src/suppressions.rs
+patching file crates/biome_js_analyze/src/lib.rs
+patching file crates/biome_suppression/src/lib.rs

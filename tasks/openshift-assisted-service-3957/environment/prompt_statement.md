@@ -1,5 +1,0 @@
-I'm working on the OpenShift assisted-service operator and I need the image service container to know its own externally accessible address. Right now the image service StatefulSet is configured with environment variables for connecting to other services, but it doesn't have any variables telling it what scheme and hostname external clients use to reach the image service itself.
-
-In OpenShift, the image service is exposed via a Route resource, and that Route has the external hostname for the service. I'd like the reconciler that creates or updates the image service StatefulSet to automatically read the image service's Route, extract the scheme and hostname from it, and inject those as environment variables into the container — one variable for the scheme (which should be HTTPS) and one for the hostname. If the route isn't available at reconcile time, the function should log a warning and use empty strings rather than failing hard.
-
-This will allow the image service to construct correct self-referential URLs for its own endpoints.

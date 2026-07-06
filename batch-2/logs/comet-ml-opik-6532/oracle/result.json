@@ -1,0 +1,29 @@
+{
+    "id": "54d7d241-42a3-46ad-b950-26ae00959ff0",
+    "started_at": "2026-07-06T12:18:31.896945",
+    "finished_at": "2026-07-06T12:19:13.626710",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__comet-ml-opik-6532": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "comet-ml-opik-6532__hK3Azdx"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

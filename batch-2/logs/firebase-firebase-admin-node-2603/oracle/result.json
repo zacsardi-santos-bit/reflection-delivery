@@ -1,0 +1,29 @@
+{
+    "id": "2f5678f5-375e-4149-8cd8-8f1eae670225",
+    "started_at": "2026-07-04T15:38:13.580024",
+    "finished_at": "2026-07-04T15:39:08.234033",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__firebase-firebase-admin-node-2603": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "firebase-firebase-admin-node-260__aQpjNgB"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

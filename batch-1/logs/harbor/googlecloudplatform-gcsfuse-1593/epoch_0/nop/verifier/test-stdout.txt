@@ -1,0 +1,14 @@
+patching file flags_test.go
+patching file internal/config/yaml_parser_test.go
+patching file internal/mount/flag_test.go
+patching file main_test.go
+# github.com/googlecloudplatform/gcsfuse/internal/mount [github.com/googlecloudplatform/gcsfuse/internal/mount.test]
+internal/mount/flag_test.go:47:36: undefined: DefaultStatOrTypeCacheTTL
+internal/mount/flag_test.go:91:25: undefined: config.MaxSupportedTtlInSeconds
+internal/mount/flag_test.go:93:65: undefined: config.MaxSupportedTtlInSeconds
+internal/mount/flag_test.go:139:44: undefined: MetadataCacheTTL
+# github.com/googlecloudplatform/gcsfuse/internal/config [github.com/googlecloudplatform/gcsfuse/internal/config.test]
+internal/config/yaml_parser_test.go:166:60: undefined: MetadataCacheTtlSecsTooHighError
+FAIL	github.com/googlecloudplatform/gcsfuse/internal/config [build failed]
+FAIL	github.com/googlecloudplatform/gcsfuse/internal/mount [build failed]
+reward=0 graded=3 found=3 failed=3 parsed=2 framework=go exit_code=1

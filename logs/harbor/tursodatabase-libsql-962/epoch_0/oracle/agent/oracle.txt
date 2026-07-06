@@ -1,2 +1,0 @@
-patching file bindings/go/go.mod
-patching file bindings/go/go.sum

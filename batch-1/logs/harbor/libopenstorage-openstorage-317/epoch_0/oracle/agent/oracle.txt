@@ -1,0 +1,9 @@
+patching file osdconfig/README.md
+patching file osdconfig/api.go
+patching file osdconfig/callback.go
+patching file osdconfig/constants.go
+patching file osdconfig/helper.go
+patching file osdconfig/interface.go
+patching file osdconfig/new.go
+patching file osdconfig/struct.go
+patching file osdconfig/types.go

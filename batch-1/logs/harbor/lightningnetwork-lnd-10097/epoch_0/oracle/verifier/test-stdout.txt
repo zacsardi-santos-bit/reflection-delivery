@@ -1,0 +1,662 @@
+patching file discovery/syncer_atomic_test.go
+patching file discovery/syncer_queue_test.go
+patching file discovery/syncer_test.go
+{"Time":"2026-06-29T15:15:47.213076464Z","Action":"start","Package":"github.com/lightningnetwork/lnd/discovery"}
+{"Time":"2026-06-29T15:15:47.291904998Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPurgeBanEntries"}
+{"Time":"2026-06-29T15:15:47.292075868Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPurgeBanEntries","Output":"=== RUN   TestPurgeBanEntries\n"}
+{"Time":"2026-06-29T15:15:47.292589747Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPurgeBanEntries","Output":"=== PAUSE TestPurgeBanEntries\n"}
+{"Time":"2026-06-29T15:15:47.292700696Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPurgeBanEntries"}
+{"Time":"2026-06-29T15:15:47.292762205Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessAnnouncement"}
+{"Time":"2026-06-29T15:15:47.292776022Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessAnnouncement","Output":"=== RUN   TestProcessAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.292809326Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessAnnouncement","Output":"=== PAUSE TestProcessAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.292834355Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessAnnouncement"}
+{"Time":"2026-06-29T15:15:47.292864423Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPrematureAnnouncement"}
+{"Time":"2026-06-29T15:15:47.292876276Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPrematureAnnouncement","Output":"=== RUN   TestPrematureAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.29290953Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPrematureAnnouncement","Output":"=== PAUSE TestPrematureAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.293057831Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPrematureAnnouncement"}
+{"Time":"2026-06-29T15:15:47.293334526Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementLocalFirst"}
+{"Time":"2026-06-29T15:15:47.293409301Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementLocalFirst","Output":"=== RUN   TestSignatureAnnouncementLocalFirst\n"}
+{"Time":"2026-06-29T15:15:47.29347583Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementLocalFirst","Output":"=== PAUSE TestSignatureAnnouncementLocalFirst\n"}
+{"Time":"2026-06-29T15:15:47.293496059Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementLocalFirst"}
+{"Time":"2026-06-29T15:15:47.293521327Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOrphanSignatureAnnouncement"}
+{"Time":"2026-06-29T15:15:47.293561095Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOrphanSignatureAnnouncement","Output":"=== RUN   TestOrphanSignatureAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.293587034Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOrphanSignatureAnnouncement","Output":"=== PAUSE TestOrphanSignatureAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.293599829Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOrphanSignatureAnnouncement"}
+{"Time":"2026-06-29T15:15:47.293632242Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementRetryAtStartup"}
+{"Time":"2026-06-29T15:15:47.293649025Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementRetryAtStartup","Output":"=== RUN   TestSignatureAnnouncementRetryAtStartup\n"}
+{"Time":"2026-06-29T15:15:47.29369341Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementRetryAtStartup","Output":"=== PAUSE TestSignatureAnnouncementRetryAtStartup\n"}
+{"Time":"2026-06-29T15:15:47.293726464Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementRetryAtStartup"}
+{"Time":"2026-06-29T15:15:47.293748617Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementFullProofWhenRemoteProof"}
+{"Time":"2026-06-29T15:15:47.293769057Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementFullProofWhenRemoteProof","Output":"=== RUN   TestSignatureAnnouncementFullProofWhenRemoteProof\n"}
+{"Time":"2026-06-29T15:15:47.293799115Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementFullProofWhenRemoteProof","Output":"=== PAUSE TestSignatureAnnouncementFullProofWhenRemoteProof\n"}
+{"Time":"2026-06-29T15:15:47.293816398Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementFullProofWhenRemoteProof"}
+{"Time":"2026-06-29T15:15:47.293833711Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeDuplicatedAnnouncements"}
+{"Time":"2026-06-29T15:15:47.293847348Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeDuplicatedAnnouncements","Output":"=== RUN   TestDeDuplicatedAnnouncements\n"}
+{"Time":"2026-06-29T15:15:47.293882125Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeDuplicatedAnnouncements","Output":"=== PAUSE TestDeDuplicatedAnnouncements\n"}
+{"Time":"2026-06-29T15:15:47.293903496Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeDuplicatedAnnouncements"}
+{"Time":"2026-06-29T15:15:47.293916331Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestForwardPrivateNodeAnnouncement"}
+{"Time":"2026-06-29T15:15:47.293929356Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestForwardPrivateNodeAnnouncement","Output":"=== RUN   TestForwardPrivateNodeAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.294019951Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestForwardPrivateNodeAnnouncement","Output":"=== PAUSE TestForwardPrivateNodeAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.294035532Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestForwardPrivateNodeAnnouncement"}
+{"Time":"2026-06-29T15:15:47.294070749Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectZombieEdge"}
+{"Time":"2026-06-29T15:15:47.294088173Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectZombieEdge","Output":"=== RUN   TestRejectZombieEdge\n"}
+{"Time":"2026-06-29T15:15:47.294236761Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectZombieEdge","Output":"=== PAUSE TestRejectZombieEdge\n"}
+{"Time":"2026-06-29T15:15:47.294276086Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectZombieEdge"}
+{"Time":"2026-06-29T15:15:47.294323217Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessZombieEdgeNowLive"}
+{"Time":"2026-06-29T15:15:47.294339629Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessZombieEdgeNowLive","Output":"=== RUN   TestProcessZombieEdgeNowLive\n"}
+{"Time":"2026-06-29T15:15:47.294352504Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessZombieEdgeNowLive","Output":"=== PAUSE TestProcessZombieEdgeNowLive\n"}
+{"Time":"2026-06-29T15:15:47.294372613Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessZombieEdgeNowLive"}
+{"Time":"2026-06-29T15:15:47.294413652Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReceiveRemoteChannelUpdateFirst"}
+{"Time":"2026-06-29T15:15:47.294442228Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReceiveRemoteChannelUpdateFirst","Output":"=== RUN   TestReceiveRemoteChannelUpdateFirst\n"}
+{"Time":"2026-06-29T15:15:47.294460613Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReceiveRemoteChannelUpdateFirst","Output":"=== PAUSE TestReceiveRemoteChannelUpdateFirst\n"}
+{"Time":"2026-06-29T15:15:47.294484509Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReceiveRemoteChannelUpdateFirst"}
+{"Time":"2026-06-29T15:15:47.294535067Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelAnnouncementValidation"}
+{"Time":"2026-06-29T15:15:47.294570896Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelAnnouncementValidation","Output":"=== RUN   TestExtraDataChannelAnnouncementValidation\n"}
+{"Time":"2026-06-29T15:15:47.294583581Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelAnnouncementValidation","Output":"=== PAUSE TestExtraDataChannelAnnouncementValidation\n"}
+{"Time":"2026-06-29T15:15:47.294595254Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelAnnouncementValidation"}
+{"Time":"2026-06-29T15:15:47.294631348Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelUpdateValidation"}
+{"Time":"2026-06-29T15:15:47.29465823Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelUpdateValidation","Output":"=== RUN   TestExtraDataChannelUpdateValidation\n"}
+{"Time":"2026-06-29T15:15:47.294691364Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelUpdateValidation","Output":"=== PAUSE TestExtraDataChannelUpdateValidation\n"}
+{"Time":"2026-06-29T15:15:47.294703798Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelUpdateValidation"}
+{"Time":"2026-06-29T15:15:47.294727845Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataNodeAnnouncementValidation"}
+{"Time":"2026-06-29T15:15:47.294748835Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataNodeAnnouncementValidation","Output":"=== RUN   TestExtraDataNodeAnnouncementValidation\n"}
+{"Time":"2026-06-29T15:15:47.294768313Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataNodeAnnouncementValidation","Output":"=== PAUSE TestExtraDataNodeAnnouncementValidation\n"}
+{"Time":"2026-06-29T15:15:47.294779815Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataNodeAnnouncementValidation"}
+{"Time":"2026-06-29T15:15:47.294796407Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRetransmit"}
+{"Time":"2026-06-29T15:15:47.294830473Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRetransmit","Output":"=== RUN   TestRetransmit\n"}
+{"Time":"2026-06-29T15:15:47.294868226Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRetransmit","Output":"=== PAUSE TestRetransmit\n"}
+{"Time":"2026-06-29T15:15:47.294906701Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRetransmit"}
+{"Time":"2026-06-29T15:15:47.294931228Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestNodeAnnouncementNoChannels"}
+{"Time":"2026-06-29T15:15:47.294953832Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestNodeAnnouncementNoChannels","Output":"=== RUN   TestNodeAnnouncementNoChannels\n"}
+{"Time":"2026-06-29T15:15:47.294993939Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestNodeAnnouncementNoChannels","Output":"=== PAUSE TestNodeAnnouncementNoChannels\n"}
+{"Time":"2026-06-29T15:15:47.295026171Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestNodeAnnouncementNoChannels"}
+{"Time":"2026-06-29T15:15:47.295037122Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOptionalFieldsChannelUpdateValidation"}
+{"Time":"2026-06-29T15:15:47.295091257Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOptionalFieldsChannelUpdateValidation","Output":"=== RUN   TestOptionalFieldsChannelUpdateValidation\n"}
+{"Time":"2026-06-29T15:15:47.295224795Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOptionalFieldsChannelUpdateValidation","Output":"=== PAUSE TestOptionalFieldsChannelUpdateValidation\n"}
+{"Time":"2026-06-29T15:15:47.295250946Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOptionalFieldsChannelUpdateValidation"}
+{"Time":"2026-06-29T15:15:47.295271967Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSendChannelUpdateReliably"}
+{"Time":"2026-06-29T15:15:47.295291434Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSendChannelUpdateReliably","Output":"=== RUN   TestSendChannelUpdateReliably\n"}
+{"Time":"2026-06-29T15:15:47.295323696Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSendChannelUpdateReliably","Output":"=== PAUSE TestSendChannelUpdateReliably\n"}
+{"Time":"2026-06-29T15:15:47.29533605Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSendChannelUpdateReliably"}
+{"Time":"2026-06-29T15:15:47.295353344Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPropagateChanPolicyUpdate"}
+{"Time":"2026-06-29T15:15:47.295368493Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPropagateChanPolicyUpdate","Output":"=== RUN   TestPropagateChanPolicyUpdate\n"}
+{"Time":"2026-06-29T15:15:47.295404152Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPropagateChanPolicyUpdate","Output":"=== PAUSE TestPropagateChanPolicyUpdate\n"}
+{"Time":"2026-06-29T15:15:47.295422247Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPropagateChanPolicyUpdate"}
+{"Time":"2026-06-29T15:15:47.29543913Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessChannelAnnouncementOptionalMsgFields"}
+{"Time":"2026-06-29T15:15:47.295462515Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessChannelAnnouncementOptionalMsgFields","Output":"=== RUN   TestProcessChannelAnnouncementOptionalMsgFields\n"}
+{"Time":"2026-06-29T15:15:47.295497392Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessChannelAnnouncementOptionalMsgFields","Output":"=== PAUSE TestProcessChannelAnnouncementOptionalMsgFields\n"}
+{"Time":"2026-06-29T15:15:47.295613391Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessChannelAnnouncementOptionalMsgFields"}
+{"Time":"2026-06-29T15:15:47.295675531Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSplitAnnouncementsCorrectSubBatches"}
+{"Time":"2026-06-29T15:15:47.295711521Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSplitAnnouncementsCorrectSubBatches","Output":"=== RUN   TestSplitAnnouncementsCorrectSubBatches\n"}
+{"Time":"2026-06-29T15:15:47.299950054Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSplitAnnouncementsCorrectSubBatches","Output":"--- PASS: TestSplitAnnouncementsCorrectSubBatches (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.299992807Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSplitAnnouncementsCorrectSubBatches","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.300027615Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizes"}
+{"Time":"2026-06-29T15:15:47.300057342Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizes","Output":"=== RUN   TestCalculateCorrectSubBatchSizes\n"}
+{"Time":"2026-06-29T15:15:47.300092209Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizes","Output":"=== PAUSE TestCalculateCorrectSubBatchSizes\n"}
+{"Time":"2026-06-29T15:15:47.300117288Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizes"}
+{"Time":"2026-06-29T15:15:47.300157546Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizesDifferentDelay"}
+{"Time":"2026-06-29T15:15:47.300198054Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizesDifferentDelay","Output":"=== RUN   TestCalculateCorrectSubBatchSizesDifferentDelay\n"}
+{"Time":"2026-06-29T15:15:47.300218934Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizesDifferentDelay","Output":"=== PAUSE TestCalculateCorrectSubBatchSizesDifferentDelay\n"}
+{"Time":"2026-06-29T15:15:47.300243191Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizesDifferentDelay"}
+{"Time":"2026-06-29T15:15:47.300257208Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestBroadcastAnnsAfterGraphSynced"}
+{"Time":"2026-06-29T15:15:47.300268891Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestBroadcastAnnsAfterGraphSynced","Output":"=== RUN   TestBroadcastAnnsAfterGraphSynced\n"}
+{"Time":"2026-06-29T15:15:47.300313858Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestBroadcastAnnsAfterGraphSynced","Output":"=== PAUSE TestBroadcastAnnsAfterGraphSynced\n"}
+{"Time":"2026-06-29T15:15:47.300333095Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestBroadcastAnnsAfterGraphSynced"}
+{"Time":"2026-06-29T15:15:47.30035656Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitDeDup"}
+{"Time":"2026-06-29T15:15:47.300369435Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitDeDup","Output":"=== RUN   TestRateLimitDeDup\n"}
+{"Time":"2026-06-29T15:15:47.30038223Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitDeDup","Output":"=== PAUSE TestRateLimitDeDup\n"}
+{"Time":"2026-06-29T15:15:47.300482263Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitDeDup"}
+{"Time":"2026-06-29T15:15:47.30053785Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitChannelUpdates"}
+{"Time":"2026-06-29T15:15:47.300556727Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitChannelUpdates","Output":"=== RUN   TestRateLimitChannelUpdates\n"}
+{"Time":"2026-06-29T15:15:47.300581164Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitChannelUpdates","Output":"=== PAUSE TestRateLimitChannelUpdates\n"}
+{"Time":"2026-06-29T15:15:47.300605842Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitChannelUpdates"}
+{"Time":"2026-06-29T15:15:47.300764378Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestIgnoreOwnAnnouncement"}
+{"Time":"2026-06-29T15:15:47.300829875Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestIgnoreOwnAnnouncement","Output":"=== RUN   TestIgnoreOwnAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.300871085Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestIgnoreOwnAnnouncement","Output":"=== PAUSE TestIgnoreOwnAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.300885713Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestIgnoreOwnAnnouncement"}
+{"Time":"2026-06-29T15:15:47.300918446Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectCacheChannelAnn"}
+{"Time":"2026-06-29T15:15:47.30093594Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectCacheChannelAnn","Output":"=== RUN   TestRejectCacheChannelAnn\n"}
+{"Time":"2026-06-29T15:15:47.300972681Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectCacheChannelAnn","Output":"=== PAUSE TestRejectCacheChannelAnn\n"}
+{"Time":"2026-06-29T15:15:47.300995074Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectCacheChannelAnn"}
+{"Time":"2026-06-29T15:15:47.301012919Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestFutureMsgCacheEviction"}
+{"Time":"2026-06-29T15:15:47.301029431Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestFutureMsgCacheEviction","Output":"=== RUN   TestFutureMsgCacheEviction\n"}
+{"Time":"2026-06-29T15:15:47.301041885Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestFutureMsgCacheEviction","Output":"=== PAUSE TestFutureMsgCacheEviction\n"}
+{"Time":"2026-06-29T15:15:47.301059279Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestFutureMsgCacheEviction"}
+{"Time":"2026-06-29T15:15:47.301079768Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningNonChanPeer"}
+{"Time":"2026-06-29T15:15:47.301098384Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningNonChanPeer","Output":"=== RUN   TestChanAnnBanningNonChanPeer\n"}
+{"Time":"2026-06-29T15:15:47.301110918Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningNonChanPeer","Output":"=== PAUSE TestChanAnnBanningNonChanPeer\n"}
+{"Time":"2026-06-29T15:15:47.301122951Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningNonChanPeer"}
+{"Time":"2026-06-29T15:15:47.301207485Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningChanPeer"}
+{"Time":"2026-06-29T15:15:47.301225881Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningChanPeer","Output":"=== RUN   TestChanAnnBanningChanPeer\n"}
+{"Time":"2026-06-29T15:15:47.301353342Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningChanPeer","Output":"=== PAUSE TestChanAnnBanningChanPeer\n"}
+{"Time":"2026-06-29T15:15:47.301412096Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningChanPeer"}
+{"Time":"2026-06-29T15:15:47.30145035Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChannelOnChainRejectionZombie"}
+{"Time":"2026-06-29T15:15:47.301474677Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChannelOnChainRejectionZombie","Output":"=== RUN   TestChannelOnChainRejectionZombie\n"}
+{"Time":"2026-06-29T15:15:47.301490998Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChannelOnChainRejectionZombie","Output":"=== PAUSE TestChannelOnChainRejectionZombie\n"}
+{"Time":"2026-06-29T15:15:47.301525575Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChannelOnChainRejectionZombie"}
+{"Time":"2026-06-29T15:15:47.301556455Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreMessages"}
+{"Time":"2026-06-29T15:15:47.301603475Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreMessages","Output":"=== RUN   TestMessageStoreMessages\n"}
+{"Time":"2026-06-29T15:15:47.301623093Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreMessages","Output":"=== PAUSE TestMessageStoreMessages\n"}
+{"Time":"2026-06-29T15:15:47.301654775Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreMessages"}
+{"Time":"2026-06-29T15:15:47.301682588Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreUnsupportedMessage"}
+{"Time":"2026-06-29T15:15:47.301710032Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreUnsupportedMessage","Output":"=== RUN   TestMessageStoreUnsupportedMessage\n"}
+{"Time":"2026-06-29T15:15:47.301721363Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreUnsupportedMessage","Output":"=== PAUSE TestMessageStoreUnsupportedMessage\n"}
+{"Time":"2026-06-29T15:15:47.301758014Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreUnsupportedMessage"}
+{"Time":"2026-06-29T15:15:47.301775548Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreDeleteMessage"}
+{"Time":"2026-06-29T15:15:47.301796589Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreDeleteMessage","Output":"=== RUN   TestMessageStoreDeleteMessage\n"}
+{"Time":"2026-06-29T15:15:47.301809263Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreDeleteMessage","Output":"=== PAUSE TestMessageStoreDeleteMessage\n"}
+{"Time":"2026-06-29T15:15:47.301820405Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreDeleteMessage"}
+{"Time":"2026-06-29T15:15:47.301862166Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderFlow"}
+{"Time":"2026-06-29T15:15:47.301886302Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderFlow","Output":"=== RUN   TestReliableSenderFlow\n"}
+{"Time":"2026-06-29T15:15:47.301903906Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderFlow","Output":"=== PAUSE TestReliableSenderFlow\n"}
+{"Time":"2026-06-29T15:15:47.3019164Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderFlow"}
+{"Time":"2026-06-29T15:15:47.301939896Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderStaleMessages"}
+{"Time":"2026-06-29T15:15:47.301953202Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderStaleMessages","Output":"=== RUN   TestReliableSenderStaleMessages\n"}
+{"Time":"2026-06-29T15:15:47.301989181Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderStaleMessages","Output":"=== PAUSE TestReliableSenderStaleMessages\n"}
+{"Time":"2026-06-29T15:15:47.302007777Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderStaleMessages"}
+{"Time":"2026-06-29T15:15:47.302028407Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNumActiveSyncers"}
+{"Time":"2026-06-29T15:15:47.302230177Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNumActiveSyncers","Output":"=== RUN   TestSyncManagerNumActiveSyncers\n"}
+{"Time":"2026-06-29T15:15:47.302275695Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNumActiveSyncers","Output":"=== PAUSE TestSyncManagerNumActiveSyncers\n"}
+{"Time":"2026-06-29T15:15:47.302321774Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNumActiveSyncers"}
+{"Time":"2026-06-29T15:15:47.302336843Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNewActiveSyncerAfterDisconnect"}
+{"Time":"2026-06-29T15:15:47.302358015Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNewActiveSyncerAfterDisconnect","Output":"=== RUN   TestSyncManagerNewActiveSyncerAfterDisconnect\n"}
+{"Time":"2026-06-29T15:15:47.302386269Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNewActiveSyncerAfterDisconnect","Output":"=== PAUSE TestSyncManagerNewActiveSyncerAfterDisconnect\n"}
+{"Time":"2026-06-29T15:15:47.302417299Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNewActiveSyncerAfterDisconnect"}
+{"Time":"2026-06-29T15:15:47.302457216Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerRotateActiveSyncerCandidate"}
+{"Time":"2026-06-29T15:15:47.302501462Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerRotateActiveSyncerCandidate","Output":"=== RUN   TestSyncManagerRotateActiveSyncerCandidate\n"}
+{"Time":"2026-06-29T15:15:47.302514467Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerRotateActiveSyncerCandidate","Output":"=== PAUSE TestSyncManagerRotateActiveSyncerCandidate\n"}
+{"Time":"2026-06-29T15:15:47.302537151Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerRotateActiveSyncerCandidate"}
+{"Time":"2026-06-29T15:15:47.302554364Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNoInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.302568161Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNoInitialHistoricalSync","Output":"=== RUN   TestSyncManagerNoInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.302580574Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNoInitialHistoricalSync","Output":"=== PAUSE TestSyncManagerNoInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.302598489Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNoInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.302632876Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.302672011Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerInitialHistoricalSync","Output":"=== RUN   TestSyncManagerInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.302719172Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerInitialHistoricalSync","Output":"=== PAUSE TestSyncManagerInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.302733259Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.302746275Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerHistoricalSyncOnReconnect"}
+{"Time":"2026-06-29T15:15:47.302827562Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerHistoricalSyncOnReconnect","Output":"=== RUN   TestSyncManagerHistoricalSyncOnReconnect\n"}
+{"Time":"2026-06-29T15:15:47.302870816Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerHistoricalSyncOnReconnect","Output":"=== PAUSE TestSyncManagerHistoricalSyncOnReconnect\n"}
+{"Time":"2026-06-29T15:15:47.302891275Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerHistoricalSyncOnReconnect"}
+{"Time":"2026-06-29T15:15:47.302917556Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerForceHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.302943907Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerForceHistoricalSync","Output":"=== RUN   TestSyncManagerForceHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.302984495Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerForceHistoricalSync","Output":"=== PAUSE TestSyncManagerForceHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.303014573Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerForceHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.303027358Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement"}
+{"Time":"2026-06-29T15:15:47.303039983Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement","Output":"=== RUN   TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement\n"}
+{"Time":"2026-06-29T15:15:47.303052086Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement","Output":"=== PAUSE TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement\n"}
+{"Time":"2026-06-29T15:15:47.303062536Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement"}
+{"Time":"2026-06-29T15:15:47.303080811Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerWaitUntilInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.303098906Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerWaitUntilInitialHistoricalSync","Output":"=== RUN   TestSyncManagerWaitUntilInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.303221478Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerWaitUntilInitialHistoricalSync","Output":"=== PAUSE TestSyncManagerWaitUntilInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.303335548Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerWaitUntilInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.30338325Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation"}
+{"Time":"2026-06-29T15:15:47.303410914Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation","Output":"=== RUN   TestDeriveRateLimitReservation\n"}
+{"Time":"2026-06-29T15:15:47.303431193Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/sequential_messages_have_increasing_delays"}
+{"Time":"2026-06-29T15:15:47.303456552Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/sequential_messages_have_increasing_delays","Output":"=== RUN   TestDeriveRateLimitReservation/sequential_messages_have_increasing_delays\n"}
+{"Time":"2026-06-29T15:15:47.303489927Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/sequential_messages_have_increasing_delays","Output":"    sync_manager_test.go:783: Delay sequence: 0s → 99.79345ms → 199.79336ms (expected theoretical: 100ms)\n"}
+{"Time":"2026-06-29T15:15:47.303506539Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/sequential_messages_have_increasing_delays","Output":"--- PASS: TestDeriveRateLimitReservation/sequential_messages_have_increasing_delays (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.303530355Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/sequential_messages_have_increasing_delays","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.303554592Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/propagates_serialization_errors"}
+{"Time":"2026-06-29T15:15:47.303567417Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/propagates_serialization_errors","Output":"=== RUN   TestDeriveRateLimitReservation/propagates_serialization_errors\n"}
+{"Time":"2026-06-29T15:15:47.303611231Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/propagates_serialization_errors","Output":"--- PASS: TestDeriveRateLimitReservation/propagates_serialization_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.303735246Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/propagates_serialization_errors","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.303767588Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/larger_messages_have_longer_delays"}
+{"Time":"2026-06-29T15:15:47.303781806Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/larger_messages_have_longer_delays","Output":"=== RUN   TestDeriveRateLimitReservation/larger_messages_have_longer_delays\n"}
+{"Time":"2026-06-29T15:15:47.303912449Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/larger_messages_have_longer_delays","Output":"--- PASS: TestDeriveRateLimitReservation/larger_messages_have_longer_delays (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.303953138Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation/larger_messages_have_longer_delays","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.303975711Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation","Output":"--- PASS: TestDeriveRateLimitReservation (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.303987715Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeriveRateLimitReservation","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.30401123Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSingleBacklogSend"}
+{"Time":"2026-06-29T15:15:47.304028423Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSingleBacklogSend","Output":"=== RUN   TestGossipSyncerSingleBacklogSend\n"}
+{"Time":"2026-06-29T15:15:47.304056948Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSingleBacklogSend","Output":"=== PAUSE TestGossipSyncerSingleBacklogSend\n"}
+{"Time":"2026-06-29T15:15:47.304068701Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSingleBacklogSend"}
+{"Time":"2026-06-29T15:15:47.304092377Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRange"}
+{"Time":"2026-06-29T15:15:47.304103408Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRange","Output":"=== RUN   TestGossipSyncerQueueTimestampRange\n"}
+{"Time":"2026-06-29T15:15:47.304172913Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRange","Output":"=== PAUSE TestGossipSyncerQueueTimestampRange\n"}
+{"Time":"2026-06-29T15:15:47.30420236Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRange"}
+{"Time":"2026-06-29T15:15:47.304257676Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeFull"}
+{"Time":"2026-06-29T15:15:47.304284679Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeFull","Output":"=== RUN   TestGossipSyncerQueueTimestampRangeFull\n"}
+{"Time":"2026-06-29T15:15:47.304307413Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeFull","Output":"=== PAUSE TestGossipSyncerQueueTimestampRangeFull\n"}
+{"Time":"2026-06-29T15:15:47.304327001Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeFull"}
+{"Time":"2026-06-29T15:15:47.30436299Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeConcurrent"}
+{"Time":"2026-06-29T15:15:47.304387868Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeConcurrent","Output":"=== RUN   TestGossipSyncerQueueTimestampRangeConcurrent\n"}
+{"Time":"2026-06-29T15:15:47.304414139Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeConcurrent","Output":"=== PAUSE TestGossipSyncerQueueTimestampRangeConcurrent\n"}
+{"Time":"2026-06-29T15:15:47.304436011Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeConcurrent"}
+{"Time":"2026-06-29T15:15:47.30447172Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueShutdown"}
+{"Time":"2026-06-29T15:15:47.304488493Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueShutdown","Output":"=== RUN   TestGossipSyncerQueueShutdown\n"}
+{"Time":"2026-06-29T15:15:47.304512689Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueShutdown","Output":"=== PAUSE TestGossipSyncerQueueShutdown\n"}
+{"Time":"2026-06-29T15:15:47.304523731Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueShutdown"}
+{"Time":"2026-06-29T15:15:47.304569118Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants"}
+{"Time":"2026-06-29T15:15:47.304587253Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants","Output":"=== RUN   TestGossipSyncerQueueInvariants\n"}
+{"Time":"2026-06-29T15:15:47.304632752Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants","Output":"=== PAUSE TestGossipSyncerQueueInvariants\n"}
+{"Time":"2026-06-29T15:15:47.304644514Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants"}
+{"Time":"2026-06-29T15:15:47.304655836Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueOrder"}
+{"Time":"2026-06-29T15:15:47.304670445Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueOrder","Output":"=== RUN   TestGossipSyncerQueueOrder\n"}
+{"Time":"2026-06-29T15:15:47.304681616Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueOrder","Output":"=== PAUSE TestGossipSyncerQueueOrder\n"}
+{"Time":"2026-06-29T15:15:47.304692477Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueOrder"}
+{"Time":"2026-06-29T15:15:47.304716754Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsNoHorizon"}
+{"Time":"2026-06-29T15:15:47.304734879Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsNoHorizon","Output":"=== RUN   TestGossipSyncerFilterGossipMsgsNoHorizon\n"}
+{"Time":"2026-06-29T15:15:47.304759246Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsNoHorizon","Output":"=== PAUSE TestGossipSyncerFilterGossipMsgsNoHorizon\n"}
+{"Time":"2026-06-29T15:15:47.304773213Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsNoHorizon"}
+{"Time":"2026-06-29T15:15:47.304790978Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsAllInMemory"}
+{"Time":"2026-06-29T15:15:47.304811678Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsAllInMemory","Output":"=== RUN   TestGossipSyncerFilterGossipMsgsAllInMemory\n"}
+{"Time":"2026-06-29T15:15:47.304842046Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsAllInMemory","Output":"=== PAUSE TestGossipSyncerFilterGossipMsgsAllInMemory\n"}
+{"Time":"2026-06-29T15:15:47.304856294Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsAllInMemory"}
+{"Time":"2026-06-29T15:15:47.304877655Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyNoHistoricalGossipFilter"}
+{"Time":"2026-06-29T15:15:47.304893826Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyNoHistoricalGossipFilter","Output":"=== RUN   TestGossipSyncerApplyNoHistoricalGossipFilter\n"}
+{"Time":"2026-06-29T15:15:47.304917502Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyNoHistoricalGossipFilter","Output":"=== PAUSE TestGossipSyncerApplyNoHistoricalGossipFilter\n"}
+{"Time":"2026-06-29T15:15:47.304931349Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyNoHistoricalGossipFilter"}
+{"Time":"2026-06-29T15:15:47.304966517Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyGossipFilter"}
+{"Time":"2026-06-29T15:15:47.304992637Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyGossipFilter","Output":"=== RUN   TestGossipSyncerApplyGossipFilter\n"}
+{"Time":"2026-06-29T15:15:47.305012055Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyGossipFilter","Output":"=== PAUSE TestGossipSyncerApplyGossipFilter\n"}
+{"Time":"2026-06-29T15:15:47.30504058Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyGossipFilter"}
+{"Time":"2026-06-29T15:15:47.30505619Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueryChannelRangeWrongChainHash"}
+{"Time":"2026-06-29T15:15:47.305076229Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueryChannelRangeWrongChainHash","Output":"=== RUN   TestGossipSyncerQueryChannelRangeWrongChainHash\n"}
+{"Time":"2026-06-29T15:15:47.305104994Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueryChannelRangeWrongChainHash","Output":"=== PAUSE TestGossipSyncerQueryChannelRangeWrongChainHash\n"}
+{"Time":"2026-06-29T15:15:47.305115946Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueryChannelRangeWrongChainHash"}
+{"Time":"2026-06-29T15:15:47.305137147Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDsWrongChainHash"}
+{"Time":"2026-06-29T15:15:47.30514952Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDsWrongChainHash","Output":"=== RUN   TestGossipSyncerReplyShortChanIDsWrongChainHash\n"}
+{"Time":"2026-06-29T15:15:47.305162396Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDsWrongChainHash","Output":"=== PAUSE TestGossipSyncerReplyShortChanIDsWrongChainHash\n"}
+{"Time":"2026-06-29T15:15:47.305181923Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDsWrongChainHash"}
+{"Time":"2026-06-29T15:15:47.305215278Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDs"}
+{"Time":"2026-06-29T15:15:47.305226569Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDs","Output":"=== RUN   TestGossipSyncerReplyShortChanIDs\n"}
+{"Time":"2026-06-29T15:15:47.305245476Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDs","Output":"=== PAUSE TestGossipSyncerReplyShortChanIDs\n"}
+{"Time":"2026-06-29T15:15:47.30526328Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDs"}
+{"Time":"2026-06-29T15:15:47.305275043Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQuery"}
+{"Time":"2026-06-29T15:15:47.305287517Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQuery","Output":"=== RUN   TestGossipSyncerReplyChanRangeQuery\n"}
+{"Time":"2026-06-29T15:15:47.305298769Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQuery","Output":"=== PAUSE TestGossipSyncerReplyChanRangeQuery\n"}
+{"Time":"2026-06-29T15:15:47.30530934Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQuery"}
+{"Time":"2026-06-29T15:15:47.305328156Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryBlockRange"}
+{"Time":"2026-06-29T15:15:47.305349056Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryBlockRange","Output":"=== RUN   TestGossipSyncerReplyChanRangeQueryBlockRange\n"}
+{"Time":"2026-06-29T15:15:47.30538733Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryBlockRange","Output":"=== PAUSE TestGossipSyncerReplyChanRangeQueryBlockRange\n"}
+{"Time":"2026-06-29T15:15:47.305407379Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryBlockRange"}
+{"Time":"2026-06-29T15:15:47.305425925Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryNoNewChans"}
+{"Time":"2026-06-29T15:15:47.305437838Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryNoNewChans","Output":"=== RUN   TestGossipSyncerReplyChanRangeQueryNoNewChans\n"}
+{"Time":"2026-06-29T15:15:47.305485861Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryNoNewChans","Output":"=== PAUSE TestGossipSyncerReplyChanRangeQueryNoNewChans\n"}
+{"Time":"2026-06-29T15:15:47.305511831Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryNoNewChans"}
+{"Time":"2026-06-29T15:15:47.305541869Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerGenChanRangeQuery"}
+{"Time":"2026-06-29T15:15:47.305567318Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerGenChanRangeQuery","Output":"=== RUN   TestGossipSyncerGenChanRangeQuery\n"}
+{"Time":"2026-06-29T15:15:47.305578239Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerGenChanRangeQuery","Output":"=== PAUSE TestGossipSyncerGenChanRangeQuery\n"}
+{"Time":"2026-06-29T15:15:47.305596034Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerGenChanRangeQuery"}
+{"Time":"2026-06-29T15:15:47.305613177Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply"}
+{"Time":"2026-06-29T15:15:47.305623717Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply","Output":"=== RUN   TestGossipSyncerProcessChanRangeReply\n"}
+{"Time":"2026-06-29T15:15:47.305653895Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply","Output":"=== PAUSE TestGossipSyncerProcessChanRangeReply\n"}
+{"Time":"2026-06-29T15:15:47.305670407Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply"}
+{"Time":"2026-06-29T15:15:47.305712108Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSynchronizeChanIDs"}
+{"Time":"2026-06-29T15:15:47.305725834Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSynchronizeChanIDs","Output":"=== RUN   TestGossipSyncerSynchronizeChanIDs\n"}
+{"Time":"2026-06-29T15:15:47.305767986Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSynchronizeChanIDs","Output":"=== PAUSE TestGossipSyncerSynchronizeChanIDs\n"}
+{"Time":"2026-06-29T15:15:47.305784949Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSynchronizeChanIDs"}
+{"Time":"2026-06-29T15:15:47.305803715Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerRoutineSync"}
+{"Time":"2026-06-29T15:15:47.305821329Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerRoutineSync","Output":"=== RUN   TestGossipSyncerRoutineSync\n"}
+{"Time":"2026-06-29T15:15:47.305869743Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerRoutineSync","Output":"=== PAUSE TestGossipSyncerRoutineSync\n"}
+{"Time":"2026-06-29T15:15:47.305884381Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerRoutineSync"}
+{"Time":"2026-06-29T15:15:47.30592026Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerAlreadySynced"}
+{"Time":"2026-06-29T15:15:47.305954076Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerAlreadySynced","Output":"=== RUN   TestGossipSyncerAlreadySynced\n"}
+{"Time":"2026-06-29T15:15:47.305967982Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerAlreadySynced","Output":"=== PAUSE TestGossipSyncerAlreadySynced\n"}
+{"Time":"2026-06-29T15:15:47.305981078Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerAlreadySynced"}
+{"Time":"2026-06-29T15:15:47.306000977Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions"}
+{"Time":"2026-06-29T15:15:47.306016446Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions","Output":"=== RUN   TestGossipSyncerSyncTransitions\n"}
+{"Time":"2026-06-29T15:15:47.306027397Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions","Output":"=== PAUSE TestGossipSyncerSyncTransitions\n"}
+{"Time":"2026-06-29T15:15:47.306046194Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions"}
+{"Time":"2026-06-29T15:15:47.306066183Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.306079278Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerHistoricalSync","Output":"=== RUN   TestGossipSyncerHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.306110197Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerHistoricalSync","Output":"=== PAUSE TestGossipSyncerHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.306121299Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.306165604Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncedSignal"}
+{"Time":"2026-06-29T15:15:47.306203498Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncedSignal","Output":"=== RUN   TestGossipSyncerSyncedSignal\n"}
+{"Time":"2026-06-29T15:15:47.30622503Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncedSignal","Output":"=== PAUSE TestGossipSyncerSyncedSignal\n"}
+{"Time":"2026-06-29T15:15:47.306263244Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncedSignal"}
+{"Time":"2026-06-29T15:15:47.306274074Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerMaxChannelRangeReplies"}
+{"Time":"2026-06-29T15:15:47.30629273Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerMaxChannelRangeReplies","Output":"=== RUN   TestGossipSyncerMaxChannelRangeReplies\n"}
+{"Time":"2026-06-29T15:15:47.306309122Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerMaxChannelRangeReplies","Output":"=== PAUSE TestGossipSyncerMaxChannelRangeReplies\n"}
+{"Time":"2026-06-29T15:15:47.306346284Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerMaxChannelRangeReplies"}
+{"Time":"2026-06-29T15:15:47.306371262Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierSemaphore"}
+{"Time":"2026-06-29T15:15:47.306386923Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierSemaphore","Output":"=== RUN   TestValidationBarrierSemaphore\n"}
+{"Time":"2026-06-29T15:15:47.306407082Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierSemaphore","Output":"=== PAUSE TestValidationBarrierSemaphore\n"}
+{"Time":"2026-06-29T15:15:47.306434164Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierSemaphore"}
+{"Time":"2026-06-29T15:15:47.306445966Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierQuit"}
+{"Time":"2026-06-29T15:15:47.306472237Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierQuit","Output":"=== RUN   TestValidationBarrierQuit\n"}
+{"Time":"2026-06-29T15:15:47.306500532Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierQuit","Output":"=== PAUSE TestValidationBarrierQuit\n"}
+{"Time":"2026-06-29T15:15:47.306518907Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierQuit"}
+{"Time":"2026-06-29T15:15:47.306542583Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierParentJobsClear"}
+{"Time":"2026-06-29T15:15:47.306553514Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierParentJobsClear","Output":"=== RUN   TestValidationBarrierParentJobsClear\n"}
+{"Time":"2026-06-29T15:15:47.306564746Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierParentJobsClear","Output":"=== PAUSE TestValidationBarrierParentJobsClear\n"}
+{"Time":"2026-06-29T15:15:47.306582841Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierParentJobsClear"}
+{"Time":"2026-06-29T15:15:47.306599233Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPurgeBanEntries"}
+{"Time":"2026-06-29T15:15:47.306621195Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPurgeBanEntries","Output":"=== CONT  TestPurgeBanEntries\n"}
+{"Time":"2026-06-29T15:15:47.306653498Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNewActiveSyncerAfterDisconnect"}
+{"Time":"2026-06-29T15:15:47.306674548Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNewActiveSyncerAfterDisconnect","Output":"=== CONT  TestSyncManagerNewActiveSyncerAfterDisconnect\n"}
+{"Time":"2026-06-29T15:15:47.306850077Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPurgeBanEntries","Output":"--- PASS: TestPurgeBanEntries (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.306903671Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPurgeBanEntries","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.30694994Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDsWrongChainHash"}
+{"Time":"2026-06-29T15:15:47.30696535Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDsWrongChainHash","Output":"=== CONT  TestGossipSyncerReplyShortChanIDsWrongChainHash\n"}
+{"Time":"2026-06-29T15:15:47.306985248Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDsWrongChainHash","Output":"--- PASS: TestGossipSyncerReplyShortChanIDsWrongChainHash (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.307023102Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDsWrongChainHash","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.307059772Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierParentJobsClear"}
+{"Time":"2026-06-29T15:15:47.307091183Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierParentJobsClear","Output":"=== CONT  TestValidationBarrierParentJobsClear\n"}
+{"Time":"2026-06-29T15:15:47.307204177Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierQuit"}
+{"Time":"2026-06-29T15:15:47.307239866Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierQuit","Output":"=== CONT  TestValidationBarrierQuit\n"}
+{"Time":"2026-06-29T15:15:47.307268702Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierParentJobsClear","Output":"--- PASS: TestValidationBarrierParentJobsClear (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.307298419Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierParentJobsClear","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.307312025Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRange"}
+{"Time":"2026-06-29T15:15:47.307323448Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRange","Output":"=== CONT  TestGossipSyncerQueueTimestampRange\n"}
+{"Time":"2026-06-29T15:15:47.307335771Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierSemaphore"}
+{"Time":"2026-06-29T15:15:47.307347574Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierSemaphore","Output":"=== CONT  TestValidationBarrierSemaphore\n"}
+{"Time":"2026-06-29T15:15:47.307454797Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerMaxChannelRangeReplies"}
+{"Time":"2026-06-29T15:15:47.307491107Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerMaxChannelRangeReplies","Output":"=== CONT  TestGossipSyncerMaxChannelRangeReplies\n"}
+{"Time":"2026-06-29T15:15:47.307525954Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncedSignal"}
+{"Time":"2026-06-29T15:15:47.307545803Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncedSignal","Output":"=== CONT  TestGossipSyncerSyncedSignal\n"}
+{"Time":"2026-06-29T15:15:47.307582494Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.307612872Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerHistoricalSync","Output":"=== CONT  TestGossipSyncerHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.309134724Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions"}
+{"Time":"2026-06-29T15:15:47.30924119Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions","Output":"=== CONT  TestGossipSyncerSyncTransitions\n"}
+{"Time":"2026-06-29T15:15:47.309307873Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerAlreadySynced"}
+{"Time":"2026-06-29T15:15:47.309351397Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerAlreadySynced","Output":"=== CONT  TestGossipSyncerAlreadySynced\n"}
+{"Time":"2026-06-29T15:15:47.3094532Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerRoutineSync"}
+{"Time":"2026-06-29T15:15:47.309511122Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerRoutineSync","Output":"=== CONT  TestGossipSyncerRoutineSync\n"}
+{"Time":"2026-06-29T15:15:47.309575897Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSynchronizeChanIDs"}
+{"Time":"2026-06-29T15:15:47.309627316Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSynchronizeChanIDs","Output":"=== CONT  TestGossipSyncerSynchronizeChanIDs\n"}
+{"Time":"2026-06-29T15:15:47.309645882Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply"}
+{"Time":"2026-06-29T15:15:47.309666642Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply","Output":"=== CONT  TestGossipSyncerProcessChanRangeReply\n"}
+{"Time":"2026-06-29T15:15:47.309691951Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerHistoricalSyncOnReconnect"}
+{"Time":"2026-06-29T15:15:47.309705628Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerHistoricalSyncOnReconnect","Output":"=== CONT  TestSyncManagerHistoricalSyncOnReconnect\n"}
+{"Time":"2026-06-29T15:15:47.309721318Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/legacy"}
+{"Time":"2026-06-29T15:15:47.30973285Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/legacy","Output":"=== RUN   TestGossipSyncerProcessChanRangeReply/legacy\n"}
+{"Time":"2026-06-29T15:15:47.30975871Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryNoNewChans"}
+{"Time":"2026-06-29T15:15:47.30977385Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryNoNewChans","Output":"=== CONT  TestGossipSyncerReplyChanRangeQueryNoNewChans\n"}
+{"Time":"2026-06-29T15:15:47.309796554Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryBlockRange"}
+{"Time":"2026-06-29T15:15:47.309815009Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryBlockRange","Output":"=== CONT  TestGossipSyncerReplyChanRangeQueryBlockRange\n"}
+{"Time":"2026-06-29T15:15:47.310138278Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQuery"}
+{"Time":"2026-06-29T15:15:47.310229294Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQuery","Output":"=== CONT  TestGossipSyncerReplyChanRangeQuery\n"}
+{"Time":"2026-06-29T15:15:47.310267588Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/legacy","Output":"=== PAUSE TestGossipSyncerProcessChanRangeReply/legacy\n"}
+{"Time":"2026-06-29T15:15:47.310316072Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/legacy"}
+{"Time":"2026-06-29T15:15:47.310329538Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNoInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.310364606Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNoInitialHistoricalSync","Output":"=== CONT  TestSyncManagerNoInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.310386308Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDs"}
+{"Time":"2026-06-29T15:15:47.310411527Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDs","Output":"=== CONT  TestGossipSyncerReplyShortChanIDs\n"}
+{"Time":"2026-06-29T15:15:47.310443048Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueryChannelRangeWrongChainHash"}
+{"Time":"2026-06-29T15:15:47.31046499Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueryChannelRangeWrongChainHash","Output":"=== CONT  TestGossipSyncerQueryChannelRangeWrongChainHash\n"}
+{"Time":"2026-06-29T15:15:47.310485069Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPropagateChanPolicyUpdate"}
+{"Time":"2026-06-29T15:15:47.310507031Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPropagateChanPolicyUpdate","Output":"=== CONT  TestPropagateChanPolicyUpdate\n"}
+{"Time":"2026-06-29T15:15:47.310557078Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderStaleMessages"}
+{"Time":"2026-06-29T15:15:47.310667521Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderStaleMessages","Output":"=== CONT  TestReliableSenderStaleMessages\n"}
+{"Time":"2026-06-29T15:15:47.310721806Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSingleBacklogSend"}
+{"Time":"2026-06-29T15:15:47.310737817Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSingleBacklogSend","Output":"=== CONT  TestGossipSyncerSingleBacklogSend\n"}
+{"Time":"2026-06-29T15:15:47.310762294Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerWaitUntilInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.310782854Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerWaitUntilInitialHistoricalSync","Output":"=== CONT  TestSyncManagerWaitUntilInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.310802031Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement"}
+{"Time":"2026-06-29T15:15:47.310828843Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement","Output":"=== CONT  TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement\n"}
+{"Time":"2026-06-29T15:15:47.310859072Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/active_to_passive"}
+{"Time":"2026-06-29T15:15:47.310952117Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/active_to_passive","Output":"=== RUN   TestGossipSyncerSyncTransitions/active_to_passive\n"}
+{"Time":"2026-06-29T15:15:47.311067419Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerForceHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.311113769Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerForceHistoricalSync","Output":"=== CONT  TestSyncManagerForceHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.311142224Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerGenChanRangeQuery"}
+{"Time":"2026-06-29T15:15:47.311223091Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerGenChanRangeQuery","Output":"=== CONT  TestGossipSyncerGenChanRangeQuery\n"}
+{"Time":"2026-06-29T15:15:47.311263769Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerInitialHistoricalSync"}
+{"Time":"2026-06-29T15:15:47.311353322Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerInitialHistoricalSync","Output":"=== CONT  TestSyncManagerInitialHistoricalSync\n"}
+{"Time":"2026-06-29T15:15:47.311444879Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/block_ranges"}
+{"Time":"2026-06-29T15:15:47.311476751Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/block_ranges","Output":"=== RUN   TestGossipSyncerProcessChanRangeReply/block_ranges\n"}
+{"Time":"2026-06-29T15:15:47.311503783Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/block_ranges","Output":"=== PAUSE TestGossipSyncerProcessChanRangeReply/block_ranges\n"}
+{"Time":"2026-06-29T15:15:47.311526347Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/block_ranges"}
+{"Time":"2026-06-29T15:15:47.311560743Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerRotateActiveSyncerCandidate"}
+{"Time":"2026-06-29T15:15:47.311572757Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerRotateActiveSyncerCandidate","Output":"=== CONT  TestSyncManagerRotateActiveSyncerCandidate\n"}
+{"Time":"2026-06-29T15:15:47.311606552Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNumActiveSyncers"}
+{"Time":"2026-06-29T15:15:47.311619126Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNumActiveSyncers","Output":"=== CONT  TestSyncManagerNumActiveSyncers\n"}
+{"Time":"2026-06-29T15:15:47.311674102Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRange","Output":"--- PASS: TestGossipSyncerQueueTimestampRange (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.311702568Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRange","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.311731794Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncedSignal","Output":"--- PASS: TestGossipSyncerSyncedSignal (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.311775198Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncedSignal","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.311790498Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerHistoricalSync","Output":"--- PASS: TestGossipSyncerHistoricalSync (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.311803813Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerHistoricalSync","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.311842267Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerRoutineSync","Output":"--- PASS: TestGossipSyncerRoutineSync (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.311876474Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerRoutineSync","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.311893637Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSynchronizeChanIDs","Output":"--- PASS: TestGossipSyncerSynchronizeChanIDs (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.311918815Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSynchronizeChanIDs","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.311943784Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerAlreadySynced","Output":"--- PASS: TestGossipSyncerAlreadySynced (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.311973682Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerAlreadySynced","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.311986907Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQuery","Output":"--- PASS: TestGossipSyncerReplyChanRangeQuery (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.312019941Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQuery","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.312038317Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryBlockRange","Output":"--- PASS: TestGossipSyncerReplyChanRangeQueryBlockRange (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.312174284Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryBlockRange","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.312300794Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryNoNewChans","Output":"--- PASS: TestGossipSyncerReplyChanRangeQueryNoNewChans (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.312471955Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyChanRangeQueryNoNewChans","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.312524467Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueryChannelRangeWrongChainHash","Output":"--- PASS: TestGossipSyncerQueryChannelRangeWrongChainHash (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.312567961Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueryChannelRangeWrongChainHash","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.312596787Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/active_to_passive","Output":"=== PAUSE TestGossipSyncerSyncTransitions/active_to_passive\n"}
+{"Time":"2026-06-29T15:15:47.312617516Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/active_to_passive"}
+{"Time":"2026-06-29T15:15:47.312657003Z","Action":"run","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/passive_to_active"}
+{"Time":"2026-06-29T15:15:47.312669858Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/passive_to_active","Output":"=== RUN   TestGossipSyncerSyncTransitions/passive_to_active\n"}
+{"Time":"2026-06-29T15:15:47.312729463Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreDeleteMessage"}
+{"Time":"2026-06-29T15:15:47.312759471Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreDeleteMessage","Output":"=== CONT  TestMessageStoreDeleteMessage\n"}
+{"Time":"2026-06-29T15:15:47.312786553Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/passive_to_active","Output":"=== PAUSE TestGossipSyncerSyncTransitions/passive_to_active\n"}
+{"Time":"2026-06-29T15:15:47.312803085Z","Action":"pause","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/passive_to_active"}
+{"Time":"2026-06-29T15:15:47.312821831Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDs","Output":"--- PASS: TestGossipSyncerReplyShortChanIDs (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.312843012Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerReplyShortChanIDs","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.312854585Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerGenChanRangeQuery","Output":"--- PASS: TestGossipSyncerGenChanRangeQuery (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.312875896Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerGenChanRangeQuery","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.312887458Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderFlow"}
+{"Time":"2026-06-29T15:15:47.312910142Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderFlow","Output":"=== CONT  TestReliableSenderFlow\n"}
+{"Time":"2026-06-29T15:15:47.312926914Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreUnsupportedMessage"}
+{"Time":"2026-06-29T15:15:47.312943687Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreUnsupportedMessage","Output":"=== CONT  TestMessageStoreUnsupportedMessage\n"}
+{"Time":"2026-06-29T15:15:47.315501681Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreUnsupportedMessage","Output":"--- PASS: TestMessageStoreUnsupportedMessage (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.315663123Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreUnsupportedMessage","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.315720665Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreMessages"}
+{"Time":"2026-06-29T15:15:47.315751785Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreMessages","Output":"=== CONT  TestMessageStoreMessages\n"}
+{"Time":"2026-06-29T15:15:47.318130663Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreDeleteMessage","Output":"--- PASS: TestMessageStoreDeleteMessage (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.318288769Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreDeleteMessage","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.318334919Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChannelOnChainRejectionZombie"}
+{"Time":"2026-06-29T15:15:47.318368373Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChannelOnChainRejectionZombie","Output":"=== CONT  TestChannelOnChainRejectionZombie\n"}
+{"Time":"2026-06-29T15:15:47.320199652Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreMessages","Output":"--- PASS: TestMessageStoreMessages (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.320394364Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestMessageStoreMessages","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.320445102Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningChanPeer"}
+{"Time":"2026-06-29T15:15:47.320476803Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningChanPeer","Output":"=== CONT  TestChanAnnBanningChanPeer\n"}
+{"Time":"2026-06-29T15:15:47.325740714Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChannelOnChainRejectionZombie","Output":"--- PASS: TestChannelOnChainRejectionZombie (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.325776212Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChannelOnChainRejectionZombie","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.325832591Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningNonChanPeer"}
+{"Time":"2026-06-29T15:15:47.325847791Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningNonChanPeer","Output":"=== CONT  TestChanAnnBanningNonChanPeer\n"}
+{"Time":"2026-06-29T15:15:47.357653011Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierSemaphore","Output":"--- PASS: TestValidationBarrierSemaphore (0.05s)\n"}
+{"Time":"2026-06-29T15:15:47.35775784Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierSemaphore","Elapsed":0.05}
+{"Time":"2026-06-29T15:15:47.357860162Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestFutureMsgCacheEviction"}
+{"Time":"2026-06-29T15:15:47.357896252Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestFutureMsgCacheEviction","Output":"=== CONT  TestFutureMsgCacheEviction\n"}
+{"Time":"2026-06-29T15:15:47.35803974Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestIgnoreOwnAnnouncement"}
+{"Time":"2026-06-29T15:15:47.358095076Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestIgnoreOwnAnnouncement","Output":"=== CONT  TestIgnoreOwnAnnouncement\n"}
+{"Time":"2026-06-29T15:15:47.358110436Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierQuit","Output":"--- PASS: TestValidationBarrierQuit (0.05s)\n"}
+{"Time":"2026-06-29T15:15:47.358124032Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestValidationBarrierQuit","Elapsed":0.05}
+{"Time":"2026-06-29T15:15:47.358136126Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestFutureMsgCacheEviction","Output":"--- PASS: TestFutureMsgCacheEviction (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.358147578Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestFutureMsgCacheEviction","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.358182636Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectCacheChannelAnn"}
+{"Time":"2026-06-29T15:15:47.358301315Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectCacheChannelAnn","Output":"=== CONT  TestRejectCacheChannelAnn\n"}
+{"Time":"2026-06-29T15:15:47.363772486Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectCacheChannelAnn","Output":"--- PASS: TestRejectCacheChannelAnn (0.01s)\n"}
+{"Time":"2026-06-29T15:15:47.363868667Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectCacheChannelAnn","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:47.363912802Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitChannelUpdates"}
+{"Time":"2026-06-29T15:15:47.363946277Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitChannelUpdates","Output":"=== CONT  TestRateLimitChannelUpdates\n"}
+{"Time":"2026-06-29T15:15:47.491713612Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningChanPeer","Output":"--- PASS: TestChanAnnBanningChanPeer (0.17s)\n"}
+{"Time":"2026-06-29T15:15:47.491898365Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningChanPeer","Elapsed":0.17}
+{"Time":"2026-06-29T15:15:47.491980994Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitDeDup"}
+{"Time":"2026-06-29T15:15:47.492025059Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitDeDup","Output":"=== CONT  TestRateLimitDeDup\n"}
+{"Time":"2026-06-29T15:15:47.501852621Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningNonChanPeer","Output":"--- PASS: TestChanAnnBanningNonChanPeer (0.18s)\n"}
+{"Time":"2026-06-29T15:15:47.501915483Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestChanAnnBanningNonChanPeer","Elapsed":0.18}
+{"Time":"2026-06-29T15:15:47.501943437Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestBroadcastAnnsAfterGraphSynced"}
+{"Time":"2026-06-29T15:15:47.501982523Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestBroadcastAnnsAfterGraphSynced","Output":"=== CONT  TestBroadcastAnnsAfterGraphSynced\n"}
+{"Time":"2026-06-29T15:15:47.509826711Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerMaxChannelRangeReplies","Output":"--- PASS: TestGossipSyncerMaxChannelRangeReplies (0.20s)\n"}
+{"Time":"2026-06-29T15:15:47.509884202Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerMaxChannelRangeReplies","Elapsed":0.2}
+{"Time":"2026-06-29T15:15:47.509913278Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizesDifferentDelay"}
+{"Time":"2026-06-29T15:15:47.509929129Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizesDifferentDelay","Output":"=== CONT  TestCalculateCorrectSubBatchSizesDifferentDelay\n"}
+{"Time":"2026-06-29T15:15:47.510050573Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizesDifferentDelay","Output":"--- PASS: TestCalculateCorrectSubBatchSizesDifferentDelay (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.51012147Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizesDifferentDelay","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.510226183Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizes"}
+{"Time":"2026-06-29T15:15:47.510272312Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizes","Output":"=== CONT  TestCalculateCorrectSubBatchSizes\n"}
+{"Time":"2026-06-29T15:15:47.510314584Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizes","Output":"--- PASS: TestCalculateCorrectSubBatchSizes (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.510335254Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestCalculateCorrectSubBatchSizes","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.51034864Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessChannelAnnouncementOptionalMsgFields"}
+{"Time":"2026-06-29T15:15:47.510360432Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessChannelAnnouncementOptionalMsgFields","Output":"=== CONT  TestProcessChannelAnnouncementOptionalMsgFields\n"}
+{"Time":"2026-06-29T15:15:47.511138887Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderStaleMessages","Output":"--- PASS: TestReliableSenderStaleMessages (0.20s)\n"}
+{"Time":"2026-06-29T15:15:47.511198102Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderStaleMessages","Elapsed":0.2}
+{"Time":"2026-06-29T15:15:47.511219744Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessZombieEdgeNowLive"}
+{"Time":"2026-06-29T15:15:47.511231506Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessZombieEdgeNowLive","Output":"=== CONT  TestProcessZombieEdgeNowLive\n"}
+{"Time":"2026-06-29T15:15:47.512033156Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessChannelAnnouncementOptionalMsgFields","Output":"--- PASS: TestProcessChannelAnnouncementOptionalMsgFields (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.512101037Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessChannelAnnouncementOptionalMsgFields","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.512143349Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSendChannelUpdateReliably"}
+{"Time":"2026-06-29T15:15:47.512275719Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSendChannelUpdateReliably","Output":"=== CONT  TestSendChannelUpdateReliably\n"}
+{"Time":"2026-06-29T15:15:47.612071269Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSingleBacklogSend","Output":"--- PASS: TestGossipSyncerSingleBacklogSend (0.30s)\n"}
+{"Time":"2026-06-29T15:15:47.612202999Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSingleBacklogSend","Elapsed":0.3}
+{"Time":"2026-06-29T15:15:47.61226557Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOptionalFieldsChannelUpdateValidation"}
+{"Time":"2026-06-29T15:15:47.612380647Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOptionalFieldsChannelUpdateValidation","Output":"=== CONT  TestOptionalFieldsChannelUpdateValidation\n"}
+{"Time":"2026-06-29T15:15:47.616871167Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOptionalFieldsChannelUpdateValidation","Output":"--- PASS: TestOptionalFieldsChannelUpdateValidation (0.00s)\n"}
+{"Time":"2026-06-29T15:15:47.616909201Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOptionalFieldsChannelUpdateValidation","Elapsed":0}
+{"Time":"2026-06-29T15:15:47.616927256Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestNodeAnnouncementNoChannels"}
+{"Time":"2026-06-29T15:15:47.61693974Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestNodeAnnouncementNoChannels","Output":"=== CONT  TestNodeAnnouncementNoChannels\n"}
+{"Time":"2026-06-29T15:15:47.906081969Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestBroadcastAnnsAfterGraphSynced","Output":"--- PASS: TestBroadcastAnnsAfterGraphSynced (0.40s)\n"}
+{"Time":"2026-06-29T15:15:47.906178266Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestBroadcastAnnsAfterGraphSynced","Elapsed":0.4}
+{"Time":"2026-06-29T15:15:47.906233052Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRetransmit"}
+{"Time":"2026-06-29T15:15:47.906248251Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRetransmit","Output":"=== CONT  TestRetransmit\n"}
+{"Time":"2026-06-29T15:15:48.121498346Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestNodeAnnouncementNoChannels","Output":"--- PASS: TestNodeAnnouncementNoChannels (0.50s)\n"}
+{"Time":"2026-06-29T15:15:48.121579683Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestNodeAnnouncementNoChannels","Elapsed":0.5}
+{"Time":"2026-06-29T15:15:48.121597617Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataNodeAnnouncementValidation"}
+{"Time":"2026-06-29T15:15:48.121635621Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataNodeAnnouncementValidation","Output":"=== CONT  TestExtraDataNodeAnnouncementValidation\n"}
+{"Time":"2026-06-29T15:15:48.123550568Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataNodeAnnouncementValidation","Output":"--- PASS: TestExtraDataNodeAnnouncementValidation (0.00s)\n"}
+{"Time":"2026-06-29T15:15:48.123695503Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataNodeAnnouncementValidation","Elapsed":0}
+{"Time":"2026-06-29T15:15:48.123759387Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelUpdateValidation"}
+{"Time":"2026-06-29T15:15:48.123797029Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelUpdateValidation","Output":"=== CONT  TestExtraDataChannelUpdateValidation\n"}
+{"Time":"2026-06-29T15:15:48.127722628Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelUpdateValidation","Output":"--- PASS: TestExtraDataChannelUpdateValidation (0.00s)\n"}
+{"Time":"2026-06-29T15:15:48.127795298Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelUpdateValidation","Elapsed":0}
+{"Time":"2026-06-29T15:15:48.127810698Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelAnnouncementValidation"}
+{"Time":"2026-06-29T15:15:48.12783767Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelAnnouncementValidation","Output":"=== CONT  TestExtraDataChannelAnnouncementValidation\n"}
+{"Time":"2026-06-29T15:15:48.132198691Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelAnnouncementValidation","Output":"--- PASS: TestExtraDataChannelAnnouncementValidation (0.00s)\n"}
+{"Time":"2026-06-29T15:15:48.132328161Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestExtraDataChannelAnnouncementValidation","Elapsed":0}
+{"Time":"2026-06-29T15:15:48.132368028Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReceiveRemoteChannelUpdateFirst"}
+{"Time":"2026-06-29T15:15:48.132385752Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReceiveRemoteChannelUpdateFirst","Output":"=== CONT  TestReceiveRemoteChannelUpdateFirst\n"}
+{"Time":"2026-06-29T15:15:48.298628034Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitDeDup","Output":"--- PASS: TestRateLimitDeDup (0.81s)\n"}
+{"Time":"2026-06-29T15:15:48.298705694Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitDeDup","Elapsed":0.81}
+{"Time":"2026-06-29T15:15:48.298722106Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsNoHorizon"}
+{"Time":"2026-06-29T15:15:48.298732376Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsNoHorizon","Output":"=== CONT  TestGossipSyncerFilterGossipMsgsNoHorizon\n"}
+{"Time":"2026-06-29T15:15:48.308714583Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsNoHorizon","Output":"--- PASS: TestGossipSyncerFilterGossipMsgsNoHorizon (0.01s)\n"}
+{"Time":"2026-06-29T15:15:48.308778166Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsNoHorizon","Elapsed":0.01}
+{"Time":"2026-06-29T15:15:48.308815979Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyGossipFilter"}
+{"Time":"2026-06-29T15:15:48.308831298Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyGossipFilter","Output":"=== CONT  TestGossipSyncerApplyGossipFilter\n"}
+{"Time":"2026-06-29T15:15:48.308871095Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyGossipFilter","Output":"--- PASS: TestGossipSyncerApplyGossipFilter (0.00s)\n"}
+{"Time":"2026-06-29T15:15:48.308885443Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyGossipFilter","Elapsed":0}
+{"Time":"2026-06-29T15:15:48.30889912Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyNoHistoricalGossipFilter"}
+{"Time":"2026-06-29T15:15:48.308911213Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyNoHistoricalGossipFilter","Output":"=== CONT  TestGossipSyncerApplyNoHistoricalGossipFilter\n"}
+{"Time":"2026-06-29T15:15:48.311409513Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerForceHistoricalSync","Output":"--- PASS: TestSyncManagerForceHistoricalSync (1.00s)\n"}
+{"Time":"2026-06-29T15:15:48.311461623Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerForceHistoricalSync","Elapsed":1}
+{"Time":"2026-06-29T15:15:48.311478246Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsAllInMemory"}
+{"Time":"2026-06-29T15:15:48.31149116Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsAllInMemory","Output":"=== CONT  TestGossipSyncerFilterGossipMsgsAllInMemory\n"}
+{"Time":"2026-06-29T15:15:48.311519054Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsAllInMemory","Output":"--- PASS: TestGossipSyncerFilterGossipMsgsAllInMemory (0.00s)\n"}
+{"Time":"2026-06-29T15:15:48.311543852Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerFilterGossipMsgsAllInMemory","Elapsed":0}
+{"Time":"2026-06-29T15:15:48.311556657Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants"}
+{"Time":"2026-06-29T15:15:48.311568079Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants","Output":"=== CONT  TestGossipSyncerQueueInvariants\n"}
+{"Time":"2026-06-29T15:15:48.415578079Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessZombieEdgeNowLive","Output":"--- PASS: TestProcessZombieEdgeNowLive (0.90s)\n"}
+{"Time":"2026-06-29T15:15:48.415631161Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessZombieEdgeNowLive","Elapsed":0.9}
+{"Time":"2026-06-29T15:15:48.415665978Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueOrder"}
+{"Time":"2026-06-29T15:15:48.415699133Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueOrder","Output":"=== CONT  TestGossipSyncerQueueOrder\n"}
+{"Time":"2026-06-29T15:15:48.415768136Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueOrder","Output":"--- PASS: TestGossipSyncerQueueOrder (0.00s)\n"}
+{"Time":"2026-06-29T15:15:48.415794767Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueOrder","Elapsed":0}
+{"Time":"2026-06-29T15:15:48.415809927Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueShutdown"}
+{"Time":"2026-06-29T15:15:48.415821429Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueShutdown","Output":"=== CONT  TestGossipSyncerQueueShutdown\n"}
+{"Time":"2026-06-29T15:15:48.617025982Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueShutdown","Output":"--- PASS: TestGossipSyncerQueueShutdown (0.20s)\n"}
+{"Time":"2026-06-29T15:15:48.617098587Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueShutdown","Elapsed":0.2}
+{"Time":"2026-06-29T15:15:48.617165276Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeConcurrent"}
+{"Time":"2026-06-29T15:15:48.617179684Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeConcurrent","Output":"=== CONT  TestGossipSyncerQueueTimestampRangeConcurrent\n"}
+{"Time":"2026-06-29T15:15:48.660421775Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestIgnoreOwnAnnouncement","Output":"--- PASS: TestIgnoreOwnAnnouncement (1.30s)\n"}
+{"Time":"2026-06-29T15:15:48.660474187Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestIgnoreOwnAnnouncement","Elapsed":1.3}
+{"Time":"2026-06-29T15:15:48.66049155Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementRetryAtStartup"}
+{"Time":"2026-06-29T15:15:48.660510677Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementRetryAtStartup","Output":"=== CONT  TestSignatureAnnouncementRetryAtStartup\n"}
+{"Time":"2026-06-29T15:15:49.012220403Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement","Output":"--- PASS: TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement (1.70s)\n"}
+{"Time":"2026-06-29T15:15:49.012350365Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerGraphSyncedAfterHistoricalSyncReplacement","Elapsed":1.7}
+{"Time":"2026-06-29T15:15:49.01241514Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectZombieEdge"}
+{"Time":"2026-06-29T15:15:49.01245114Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectZombieEdge","Output":"=== CONT  TestRejectZombieEdge\n"}
+{"Time":"2026-06-29T15:15:49.014386366Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNewActiveSyncerAfterDisconnect","Output":"--- PASS: TestSyncManagerNewActiveSyncerAfterDisconnect (1.71s)\n"}
+{"Time":"2026-06-29T15:15:49.014461491Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNewActiveSyncerAfterDisconnect","Elapsed":1.71}
+{"Time":"2026-06-29T15:15:49.014571103Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestForwardPrivateNodeAnnouncement"}
+{"Time":"2026-06-29T15:15:49.014641148Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestForwardPrivateNodeAnnouncement","Output":"=== CONT  TestForwardPrivateNodeAnnouncement\n"}
+{"Time":"2026-06-29T15:15:49.118059305Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerHistoricalSyncOnReconnect","Output":"--- PASS: TestSyncManagerHistoricalSyncOnReconnect (1.81s)\n"}
+{"Time":"2026-06-29T15:15:49.118180464Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerHistoricalSyncOnReconnect","Elapsed":1.81}
+{"Time":"2026-06-29T15:15:49.118320094Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeDuplicatedAnnouncements"}
+{"Time":"2026-06-29T15:15:49.118383587Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeDuplicatedAnnouncements","Output":"=== CONT  TestDeDuplicatedAnnouncements\n"}
+{"Time":"2026-06-29T15:15:49.121571324Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeDuplicatedAnnouncements","Output":"--- PASS: TestDeDuplicatedAnnouncements (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.121693109Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestDeDuplicatedAnnouncements","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.121762684Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementFullProofWhenRemoteProof"}
+{"Time":"2026-06-29T15:15:49.121802531Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementFullProofWhenRemoteProof","Output":"=== CONT  TestSignatureAnnouncementFullProofWhenRemoteProof\n"}
+{"Time":"2026-06-29T15:15:49.218661479Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeConcurrent","Output":"--- PASS: TestGossipSyncerQueueTimestampRangeConcurrent (0.60s)\n"}
+{"Time":"2026-06-29T15:15:49.218779186Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeConcurrent","Elapsed":0.6}
+{"Time":"2026-06-29T15:15:49.21885344Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementLocalFirst"}
+{"Time":"2026-06-29T15:15:49.218912203Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementLocalFirst","Output":"=== CONT  TestSignatureAnnouncementLocalFirst\n"}
+{"Time":"2026-06-29T15:15:49.312862989Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderFlow","Output":"--- PASS: TestReliableSenderFlow (2.00s)\n"}
+{"Time":"2026-06-29T15:15:49.312942863Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReliableSenderFlow","Elapsed":2}
+{"Time":"2026-06-29T15:15:49.312981408Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOrphanSignatureAnnouncement"}
+{"Time":"2026-06-29T15:15:49.313010254Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOrphanSignatureAnnouncement","Output":"=== CONT  TestOrphanSignatureAnnouncement\n"}
+{"Time":"2026-06-29T15:15:49.412157159Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRetransmit","Output":"--- PASS: TestRetransmit (1.51s)\n"}
+{"Time":"2026-06-29T15:15:49.412329853Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRetransmit","Elapsed":1.51}
+{"Time":"2026-06-29T15:15:49.412432301Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPrematureAnnouncement"}
+{"Time":"2026-06-29T15:15:49.412465706Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPrematureAnnouncement","Output":"=== CONT  TestPrematureAnnouncement\n"}
+{"Time":"2026-06-29T15:15:49.414337689Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPrematureAnnouncement","Output":"--- PASS: TestPrematureAnnouncement (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.414455177Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPrematureAnnouncement","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.414598969Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessAnnouncement"}
+{"Time":"2026-06-29T15:15:49.414654016Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessAnnouncement","Output":"=== CONT  TestProcessAnnouncement\n"}
+{"Time":"2026-06-29T15:15:49.434593497Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReceiveRemoteChannelUpdateFirst","Output":"--- PASS: TestReceiveRemoteChannelUpdateFirst (1.30s)\n"}
+{"Time":"2026-06-29T15:15:49.434663242Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestReceiveRemoteChannelUpdateFirst","Elapsed":1.3}
+{"Time":"2026-06-29T15:15:49.434706365Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeFull"}
+{"Time":"2026-06-29T15:15:49.434736684Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeFull","Output":"=== CONT  TestGossipSyncerQueueTimestampRangeFull\n"}
+{"Time":"2026-06-29T15:15:49.434767854Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeFull","Output":"--- PASS: TestGossipSyncerQueueTimestampRangeFull (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.434832589Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueTimestampRangeFull","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.434849181Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/legacy"}
+{"Time":"2026-06-29T15:15:49.434898797Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/legacy","Output":"=== CONT  TestGossipSyncerProcessChanRangeReply/legacy\n"}
+{"Time":"2026-06-29T15:15:49.434929006Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/legacy","Output":"--- PASS: TestGossipSyncerProcessChanRangeReply/legacy (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.434956639Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/legacy","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.434985425Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/block_ranges"}
+{"Time":"2026-06-29T15:15:49.435009261Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/block_ranges","Output":"=== CONT  TestGossipSyncerProcessChanRangeReply/block_ranges\n"}
+{"Time":"2026-06-29T15:15:49.435072834Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/block_ranges","Output":"--- PASS: TestGossipSyncerProcessChanRangeReply/block_ranges (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.435097051Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply/block_ranges","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.435126548Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply","Output":"--- PASS: TestGossipSyncerProcessChanRangeReply (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.435149502Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerProcessChanRangeReply","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.435161836Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/active_to_passive"}
+{"Time":"2026-06-29T15:15:49.43520545Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/active_to_passive","Output":"=== CONT  TestGossipSyncerSyncTransitions/active_to_passive\n"}
+{"Time":"2026-06-29T15:15:49.435223525Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/active_to_passive","Output":"--- PASS: TestGossipSyncerSyncTransitions/active_to_passive (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.435235728Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/active_to_passive","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.435260426Z","Action":"cont","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/passive_to_active"}
+{"Time":"2026-06-29T15:15:49.435278772Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/passive_to_active","Output":"=== CONT  TestGossipSyncerSyncTransitions/passive_to_active\n"}
+{"Time":"2026-06-29T15:15:49.435300424Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/passive_to_active","Output":"--- PASS: TestGossipSyncerSyncTransitions/passive_to_active (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.435319841Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions/passive_to_active","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.435331453Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions","Output":"--- PASS: TestGossipSyncerSyncTransitions (0.00s)\n"}
+{"Time":"2026-06-29T15:15:49.512395058Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerSyncTransitions","Elapsed":0}
+{"Time":"2026-06-29T15:15:49.51246314Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNoInitialHistoricalSync","Output":"--- PASS: TestSyncManagerNoInitialHistoricalSync (2.20s)\n"}
+{"Time":"2026-06-29T15:15:49.617293197Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNoInitialHistoricalSync","Elapsed":2.2}
+{"Time":"2026-06-29T15:15:49.617359545Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectZombieEdge","Output":"--- PASS: TestRejectZombieEdge (0.61s)\n"}
+{"Time":"2026-06-29T15:15:49.619407644Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRejectZombieEdge","Elapsed":0.61}
+{"Time":"2026-06-29T15:15:49.619459695Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestForwardPrivateNodeAnnouncement","Output":"--- PASS: TestForwardPrivateNodeAnnouncement (0.60s)\n"}
+{"Time":"2026-06-29T15:15:49.9185941Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestForwardPrivateNodeAnnouncement","Elapsed":0.6}
+{"Time":"2026-06-29T15:15:49.918753433Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessAnnouncement","Output":"--- PASS: TestProcessAnnouncement (0.50s)\n"}
+{"Time":"2026-06-29T15:15:50.01276468Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestProcessAnnouncement","Elapsed":0.5}
+{"Time":"2026-06-29T15:15:50.012840286Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerInitialHistoricalSync","Output":"--- PASS: TestSyncManagerInitialHistoricalSync (2.70s)\n"}
+{"Time":"2026-06-29T15:15:50.016409261Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerInitialHistoricalSync","Elapsed":2.7}
+{"Time":"2026-06-29T15:15:50.016463696Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerRotateActiveSyncerCandidate","Output":"--- PASS: TestSyncManagerRotateActiveSyncerCandidate (2.71s)\n"}
+{"Time":"2026-06-29T15:15:50.166790308Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerRotateActiveSyncerCandidate","Elapsed":2.71}
+{"Time":"2026-06-29T15:15:50.1668633Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementRetryAtStartup","Output":"--- PASS: TestSignatureAnnouncementRetryAtStartup (1.51s)\n"}
+{"Time":"2026-06-29T15:15:50.225393712Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementRetryAtStartup","Elapsed":1.51}
+{"Time":"2026-06-29T15:15:50.225463788Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementFullProofWhenRemoteProof","Output":"--- PASS: TestSignatureAnnouncementFullProofWhenRemoteProof (1.10s)\n"}
+{"Time":"2026-06-29T15:15:50.416757637Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementFullProofWhenRemoteProof","Elapsed":1.1}
+{"Time":"2026-06-29T15:15:50.416829826Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOrphanSignatureAnnouncement","Output":"--- PASS: TestOrphanSignatureAnnouncement (1.10s)\n"}
+{"Time":"2026-06-29T15:15:50.521580519Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestOrphanSignatureAnnouncement","Elapsed":1.1}
+{"Time":"2026-06-29T15:15:50.521659162Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementLocalFirst","Output":"--- PASS: TestSignatureAnnouncementLocalFirst (1.30s)\n"}
+{"Time":"2026-06-29T15:15:50.6132169Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSignatureAnnouncementLocalFirst","Elapsed":1.3}
+{"Time":"2026-06-29T15:15:50.613274402Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerWaitUntilInitialHistoricalSync","Output":"--- PASS: TestSyncManagerWaitUntilInitialHistoricalSync (3.30s)\n"}
+{"Time":"2026-06-29T15:15:50.71678622Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerWaitUntilInitialHistoricalSync","Elapsed":3.3}
+{"Time":"2026-06-29T15:15:50.716984057Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSendChannelUpdateReliably","Output":"--- PASS: TestSendChannelUpdateReliably (3.20s)\n"}
+{"Time":"2026-06-29T15:15:51.310081604Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSendChannelUpdateReliably","Elapsed":3.2}
+{"Time":"2026-06-29T15:15:51.310214401Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyNoHistoricalGossipFilter","Output":"--- PASS: TestGossipSyncerApplyNoHistoricalGossipFilter (3.00s)\n"}
+{"Time":"2026-06-29T15:15:51.521673065Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerApplyNoHistoricalGossipFilter","Elapsed":3}
+{"Time":"2026-06-29T15:15:51.521819198Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNumActiveSyncers","Output":"--- PASS: TestSyncManagerNumActiveSyncers (4.21s)\n"}
+{"Time":"2026-06-29T15:15:52.816894383Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestSyncManagerNumActiveSyncers","Elapsed":4.21}
+{"Time":"2026-06-29T15:15:52.816976832Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPropagateChanPolicyUpdate","Output":"--- PASS: TestPropagateChanPolicyUpdate (5.51s)\n"}
+{"Time":"2026-06-29T15:15:54.472440556Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestPropagateChanPolicyUpdate","Elapsed":5.51}
+{"Time":"2026-06-29T15:15:54.472507165Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitChannelUpdates","Output":"--- PASS: TestRateLimitChannelUpdates (7.11s)\n"}
+{"Time":"2026-06-29T15:15:56.680734287Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestRateLimitChannelUpdates","Elapsed":7.11}
+{"Time":"2026-06-29T15:15:56.680949287Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants","Output":"    syncer_queue_test.go:255: [rapid] OK, passed 100 tests (8.368909409s)\n"}
+{"Time":"2026-06-29T15:15:56.681029212Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants","Output":"--- PASS: TestGossipSyncerQueueInvariants (8.37s)\n"}
+{"Time":"2026-06-29T15:15:56.681056925Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Test":"TestGossipSyncerQueueInvariants","Elapsed":8.37}
+{"Time":"2026-06-29T15:15:56.681072305Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Output":"PASS\n"}
+{"Time":"2026-06-29T15:15:56.685167655Z","Action":"output","Package":"github.com/lightningnetwork/lnd/discovery","Output":"ok  \tgithub.com/lightningnetwork/lnd/discovery\t9.471s\n"}
+{"Time":"2026-06-29T15:15:56.685281635Z","Action":"pass","Package":"github.com/lightningnetwork/lnd/discovery","Elapsed":9.472}
+reward=1 graded=84 found=84 failed=0 parsed=84 framework=go exit_code=0

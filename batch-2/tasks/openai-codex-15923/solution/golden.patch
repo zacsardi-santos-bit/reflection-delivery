@@ -1,0 +1,764 @@
+diff --git a/codex-rs/Cargo.lock b/codex-rs/Cargo.lock
+index 9487d74a10..9f62e87eea 100644
+--- a/codex-rs/Cargo.lock
++++ b/codex-rs/Cargo.lock
+@@ -1417,6 +1417,7 @@ dependencies = [
+  "codex-sandboxing",
+  "codex-shell-command",
+  "codex-state",
++ "codex-tools",
+  "codex-utils-absolute-path",
+  "codex-utils-cargo-bin",
+  "codex-utils-cli",
+@@ -1848,6 +1849,7 @@ dependencies = [
+  "codex-shell-escalation",
+  "codex-state",
+  "codex-terminal-detection",
++ "codex-tools",
+  "codex-utils-absolute-path",
+  "codex-utils-cache",
+  "codex-utils-cargo-bin",
+@@ -2627,6 +2629,15 @@ dependencies = [
+  "tracing",
+ ]
+ 
++[[package]]
++name = "codex-tools"
++version = "0.0.0"
++dependencies = [
++ "pretty_assertions",
++ "serde",
++ "serde_json",
++]
++
+ [[package]]
+ name = "codex-tui"
+ version = "0.0.0"
+diff --git a/codex-rs/Cargo.toml b/codex-rs/Cargo.toml
+index ba287de5c5..f05355e393 100644
+--- a/codex-rs/Cargo.toml
++++ b/codex-rs/Cargo.toml
+@@ -51,6 +51,7 @@ members = [
+     "otel",
+     "tui",
+     "tui_app_server",
++    "tools",
+     "v8-poc",
+     "utils/absolute-path",
+     "utils/cargo-bin",
+@@ -150,6 +151,7 @@ codex-skills = { path = "skills" }
+ codex-state = { path = "state" }
+ codex-stdio-to-uds = { path = "stdio-to-uds" }
+ codex-terminal-detection = { path = "terminal-detection" }
++codex-tools = { path = "tools" }
+ codex-tui = { path = "tui" }
+ codex-tui-app-server = { path = "tui_app_server" }
+ codex-v8-poc = { path = "v8-poc" }
+diff --git a/codex-rs/app-server/Cargo.toml b/codex-rs/app-server/Cargo.toml
+index f54bb7ad03..ee12e87acb 100644
+--- a/codex-rs/app-server/Cargo.toml
++++ b/codex-rs/app-server/Cargo.toml
+@@ -49,6 +49,7 @@ codex-feedback = { workspace = true }
+ codex-rmcp-client = { workspace = true }
+ codex-sandboxing = { workspace = true }
+ codex-state = { workspace = true }
++codex-tools = { workspace = true }
+ codex-utils-absolute-path = { workspace = true }
+ codex-utils-json-to-toml = { workspace = true }
+ chrono = { workspace = true }
+diff --git a/codex-rs/app-server/src/codex_message_processor.rs b/codex-rs/app-server/src/codex_message_processor.rs
+index 620a85a095..875eb2b87f 100644
+--- a/codex-rs/app-server/src/codex_message_processor.rs
++++ b/codex-rs/app-server/src/codex_message_processor.rs
+@@ -7903,7 +7903,7 @@ fn validate_dynamic_tools(tools: &[ApiDynamicToolSpec]) -> Result<(), String> {
+             return Err(format!("duplicate dynamic tool name: {name}"));
+         }
+ 
+-        if let Err(err) = codex_core::parse_tool_input_schema(&tool.input_schema) {
++        if let Err(err) = codex_tools::parse_tool_input_schema(&tool.input_schema) {
+             return Err(format!(
+                 "dynamic tool input schema is not supported for {name}: {err}"
+             ));
+diff --git a/codex-rs/core/Cargo.toml b/codex-rs/core/Cargo.toml
+index f64a0a5280..e40066027d 100644
+--- a/codex-rs/core/Cargo.toml
++++ b/codex-rs/core/Cargo.toml
+@@ -52,6 +52,7 @@ codex-rmcp-client = { workspace = true }
+ codex-sandboxing = { workspace = true }
+ codex-state = { workspace = true }
+ codex-terminal-detection = { workspace = true }
++codex-tools = { workspace = true }
+ codex-utils-absolute-path = { workspace = true }
+ codex-utils-cache = { workspace = true }
+ codex-utils-image = { workspace = true }
+diff --git a/codex-rs/core/src/lib.rs b/codex-rs/core/src/lib.rs
+index ea2651f92e..f0390c805a 100644
+--- a/codex-rs/core/src/lib.rs
++++ b/codex-rs/core/src/lib.rs
+@@ -201,6 +201,7 @@ pub use client_common::REVIEW_PROMPT;
+ pub use client_common::ResponseEvent;
+ pub use client_common::ResponseStream;
+ pub use codex_sandboxing::get_platform_sandbox;
++pub use codex_tools::parse_tool_input_schema;
+ pub use compact::content_items_to_text;
+ pub use event_mapping::parse_turn_item;
+ pub use exec_policy::ExecPolicyError;
+@@ -208,7 +209,6 @@ pub use exec_policy::check_execpolicy_for_warnings;
+ pub use exec_policy::format_exec_policy_error_with_source;
+ pub use exec_policy::load_exec_policy;
+ pub use file_watcher::FileWatcherEvent;
+-pub use tools::spec::parse_tool_input_schema;
+ pub use turn_metadata::build_turn_metadata_header;
+ pub mod compact;
+ pub mod memory_trace;
+diff --git a/codex-rs/core/src/tools/spec.rs b/codex-rs/core/src/tools/spec.rs
+index 82aba1a8cb..a81bf5a3c3 100644
+--- a/codex-rs/core/src/tools/spec.rs
++++ b/codex-rs/core/src/tools/spec.rs
+@@ -46,6 +46,7 @@ use codex_protocol::openai_models::WebSearchToolType;
+ use codex_protocol::protocol::SandboxPolicy;
+ use codex_protocol::protocol::SessionSource;
+ use codex_protocol::protocol::SubAgentSource;
++pub use codex_tools::parse_tool_input_schema;
+ use codex_utils_absolute_path::AbsolutePathBuf;
+ use serde::Deserialize;
+ use serde::Serialize;
+@@ -55,6 +56,8 @@ use std::collections::BTreeMap;
+ use std::collections::HashMap;
+ use std::path::PathBuf;
+ 
++pub type JsonSchema = codex_tools::JsonSchema;
++
+ const TOOL_SEARCH_DESCRIPTION_TEMPLATE: &str =
+     include_str!("../../templates/search_tool/tool_description.md");
+ const TOOL_SUGGEST_DESCRIPTION_TEMPLATE: &str =
+@@ -539,62 +542,6 @@ fn supports_image_generation(model_info: &ModelInfo) -> bool {
+     model_info.input_modalities.contains(&InputModality::Image)
+ }
+ 
+-/// Generic JSON‑Schema subset needed for our tool definitions
+-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+-#[serde(tag = "type", rename_all = "lowercase")]
+-pub enum JsonSchema {
+-    Boolean {
+-        #[serde(skip_serializing_if = "Option::is_none")]
+-        description: Option<String>,
+-    },
+-    String {
+-        #[serde(skip_serializing_if = "Option::is_none")]
+-        description: Option<String>,
+-    },
+-    /// MCP schema allows "number" | "integer" for Number
+-    #[serde(alias = "integer")]
+-    Number {
+-        #[serde(skip_serializing_if = "Option::is_none")]
+-        description: Option<String>,
+-    },
+-    Array {
+-        items: Box<JsonSchema>,
+-
+-        #[serde(skip_serializing_if = "Option::is_none")]
+-        description: Option<String>,
+-    },
+-    Object {
+-        properties: BTreeMap<String, JsonSchema>,
+-        #[serde(skip_serializing_if = "Option::is_none")]
+-        required: Option<Vec<String>>,
+-        #[serde(
+-            rename = "additionalProperties",
+-            skip_serializing_if = "Option::is_none"
+-        )]
+-        additional_properties: Option<AdditionalProperties>,
+-    },
+-}
+-
+-/// Whether additional properties are allowed, and if so, any required schema
+-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+-#[serde(untagged)]
+-pub enum AdditionalProperties {
+-    Boolean(bool),
+-    Schema(Box<JsonSchema>),
+-}
+-
+-impl From<bool> for AdditionalProperties {
+-    fn from(b: bool) -> Self {
+-        Self::Boolean(b)
+-    }
+-}
+-
+-impl From<JsonSchema> for AdditionalProperties {
+-    fn from(s: JsonSchema) -> Self {
+-        Self::Schema(Box::new(s))
+-    }
+-}
+-
+ fn create_network_permissions_schema() -> JsonSchema {
+     JsonSchema::Object {
+         properties: BTreeMap::from([(
+@@ -2458,13 +2405,6 @@ fn dynamic_tool_to_openai_tool(
+     })
+ }
+ 
+-/// Parse the tool input_schema or return an error for invalid schema
+-pub fn parse_tool_input_schema(input_schema: &JsonValue) -> Result<JsonSchema, serde_json::Error> {
+-    let mut input_schema = input_schema.clone();
+-    sanitize_json_schema(&mut input_schema);
+-    serde_json::from_value::<JsonSchema>(input_schema)
+-}
+-
+ fn mcp_tool_to_openai_tool_parts(
+     tool: rmcp::model::Tool,
+ ) -> Result<(String, JsonSchema, Option<JsonValue>), serde_json::Error> {
+@@ -2489,13 +2429,7 @@ fn mcp_tool_to_openai_tool_parts(
+         );
+     }
+ 
+-    // Serialize to a raw JSON value so we can sanitize schemas coming from MCP
+-    // servers. Some servers omit the top-level or nested `type` in JSON
+-    // Schemas (e.g. using enum/anyOf), or use unsupported variants like
+-    // `integer`. Our internal JsonSchema is a small subset and requires
+-    // `type`, so we coerce/sanitize here for compatibility.
+-    sanitize_json_schema(&mut serialized_input_schema);
+-    let input_schema = serde_json::from_value::<JsonSchema>(serialized_input_schema)?;
++    let input_schema = parse_tool_input_schema(&serialized_input_schema)?;
+     let structured_content_schema = output_schema
+         .map(|output_schema| serde_json::Value::Object(output_schema.as_ref().clone()))
+         .unwrap_or_else(|| JsonValue::Object(serde_json::Map::new()));
+@@ -2526,117 +2460,6 @@ fn mcp_call_tool_result_output_schema(structured_content_schema: JsonValue) -> J
+     })
+ }
+ 
+-/// Sanitize a JSON Schema (as serde_json::Value) so it can fit our limited
+-/// JsonSchema enum. This function:
+-/// - Ensures every schema object has a "type". If missing, infers it from
+-///   common keywords (properties => object, items => array, enum/const/format => string)
+-///   and otherwise defaults to "string".
+-/// - Fills required child fields (e.g. array items, object properties) with
+-///   permissive defaults when absent.
+-fn sanitize_json_schema(value: &mut JsonValue) {
+-    match value {
+-        JsonValue::Bool(_) => {
+-            // JSON Schema boolean form: true/false. Coerce to an accept-all string.
+-            *value = json!({ "type": "string" });
+-        }
+-        JsonValue::Array(arr) => {
+-            for v in arr.iter_mut() {
+-                sanitize_json_schema(v);
+-            }
+-        }
+-        JsonValue::Object(map) => {
+-            // First, recursively sanitize known nested schema holders
+-            if let Some(props) = map.get_mut("properties")
+-                && let Some(props_map) = props.as_object_mut()
+-            {
+-                for (_k, v) in props_map.iter_mut() {
+-                    sanitize_json_schema(v);
+-                }
+-            }
+-            if let Some(items) = map.get_mut("items") {
+-                sanitize_json_schema(items);
+-            }
+-            // Some schemas use oneOf/anyOf/allOf - sanitize their entries
+-            for combiner in ["oneOf", "anyOf", "allOf", "prefixItems"] {
+-                if let Some(v) = map.get_mut(combiner) {
+-                    sanitize_json_schema(v);
+-                }
+-            }
+-
+-            // Normalize/ensure type
+-            let mut ty = map.get("type").and_then(|v| v.as_str()).map(str::to_string);
+-
+-            // If type is an array (union), pick first supported; else leave to inference
+-            if ty.is_none()
+-                && let Some(JsonValue::Array(types)) = map.get("type")
+-            {
+-                for t in types {
+-                    if let Some(tt) = t.as_str()
+-                        && matches!(
+-                            tt,
+-                            "object" | "array" | "string" | "number" | "integer" | "boolean"
+-                        )
+-                    {
+-                        ty = Some(tt.to_string());
+-                        break;
+-                    }
+-                }
+-            }
+-
+-            // Infer type if still missing
+-            if ty.is_none() {
+-                if map.contains_key("properties")
+-                    || map.contains_key("required")
+-                    || map.contains_key("additionalProperties")
+-                {
+-                    ty = Some("object".to_string());
+-                } else if map.contains_key("items") || map.contains_key("prefixItems") {
+-                    ty = Some("array".to_string());
+-                } else if map.contains_key("enum")
+-                    || map.contains_key("const")
+-                    || map.contains_key("format")
+-                {
+-                    ty = Some("string".to_string());
+-                } else if map.contains_key("minimum")
+-                    || map.contains_key("maximum")
+-                    || map.contains_key("exclusiveMinimum")
+-                    || map.contains_key("exclusiveMaximum")
+-                    || map.contains_key("multipleOf")
+-                {
+-                    ty = Some("number".to_string());
+-                }
+-            }
+-            // If we still couldn't infer, default to string
+-            let ty = ty.unwrap_or_else(|| "string".to_string());
+-            map.insert("type".to_string(), JsonValue::String(ty.to_string()));
+-
+-            // Ensure object schemas have properties map
+-            if ty == "object" {
+-                if !map.contains_key("properties") {
+-                    map.insert(
+-                        "properties".to_string(),
+-                        JsonValue::Object(serde_json::Map::new()),
+-                    );
+-                }
+-                // If additionalProperties is an object schema, sanitize it too.
+-                // Leave booleans as-is, since JSON Schema allows boolean here.
+-                if let Some(ap) = map.get_mut("additionalProperties") {
+-                    let is_bool = matches!(ap, JsonValue::Bool(_));
+-                    if !is_bool {
+-                        sanitize_json_schema(ap);
+-                    }
+-                }
+-            }
+-
+-            // Ensure array schemas have items
+-            if ty == "array" && !map.contains_key("items") {
+-                map.insert("items".to_string(), json!({ "type": "string" }));
+-            }
+-        }
+-        _ => {}
+-    }
+-}
+-
+ /// Builds the tool registry builder while collecting tool specs for later serialization.
+ #[cfg(test)]
+ pub(crate) fn build_specs(
+diff --git a/codex-rs/core/src/tools/spec_tests.rs b/codex-rs/core/src/tools/spec_tests.rs
+index 6f0e7496b8..82310e8726 100644
+--- a/codex-rs/core/src/tools/spec_tests.rs
++++ b/codex-rs/core/src/tools/spec_tests.rs
+@@ -11,6 +11,7 @@ use codex_app_server_protocol::AppInfo;
+ use codex_protocol::openai_models::InputModality;
+ use codex_protocol::openai_models::ModelInfo;
+ use codex_protocol::openai_models::ModelsResponse;
++use codex_tools::AdditionalProperties;
+ use codex_utils_absolute_path::AbsolutePathBuf;
+ use pretty_assertions::assert_eq;
+ use std::path::PathBuf;
+diff --git a/codex-rs/tools/BUILD.bazel b/codex-rs/tools/BUILD.bazel
+new file mode 100644
+index 0000000000..d2e730cfa9
+--- /dev/null
++++ b/codex-rs/tools/BUILD.bazel
+@@ -0,0 +1,6 @@
++load("//:defs.bzl", "codex_rust_crate")
++
++codex_rust_crate(
++    name = "tools",
++    crate_name = "codex_tools",
++)
+diff --git a/codex-rs/tools/Cargo.toml b/codex-rs/tools/Cargo.toml
+new file mode 100644
+index 0000000000..c596520c57
+--- /dev/null
++++ b/codex-rs/tools/Cargo.toml
+@@ -0,0 +1,15 @@
++[package]
++edition.workspace = true
++license.workspace = true
++name = "codex-tools"
++version.workspace = true
++
++[lints]
++workspace = true
++
++[dependencies]
++serde = { workspace = true, features = ["derive"] }
++serde_json = { workspace = true }
++
++[dev-dependencies]
++pretty_assertions = { workspace = true }
+diff --git a/codex-rs/tools/README.md b/codex-rs/tools/README.md
+new file mode 100644
+index 0000000000..d4c2f28e91
+--- /dev/null
++++ b/codex-rs/tools/README.md
+@@ -0,0 +1,70 @@
++# codex-tools
++
++`codex-tools` is intended to become the home for tool-related code that is
++shared across multiple crates and does not need to stay coupled to
++`codex-core`.
++
++Today this crate is intentionally small. It only owns the shared tool input
++schema model and parser that were previously defined in `core/src/tools/spec.rs`:
++
++- `JsonSchema`
++- `AdditionalProperties`
++- `parse_tool_input_schema()`
++
++That extraction is the first step in a longer migration. The goal is not to
++move all of `core/src/tools` into this crate in one shot. Instead, the plan is
++to peel off reusable pieces in reviewable increments while keeping
++compatibility-sensitive orchestration in `codex-core` until the surrounding
++boundaries are ready.
++
++## Vision
++
++Over time, this crate should hold tool-facing primitives that are shared by
++multiple consumers, for example:
++
++- schema and spec data models
++- tool input/output parsing helpers
++- tool metadata and compatibility shims that do not depend on `codex-core`
++- other narrowly scoped utility code that multiple crates need
++
++The corresponding non-goals are just as important:
++
++- do not move `codex-core` orchestration here prematurely
++- do not pull `Session` / `TurnContext` / approval flow / runtime execution
++  logic into this crate unless those dependencies have first been split into
++  stable shared interfaces
++- do not turn this crate into a grab-bag for unrelated helper code
++
++## Migration approach
++
++The expected migration shape is:
++
++1. Move low-coupling tool primitives here.
++2. Switch non-core consumers to depend on `codex-tools` directly.
++3. Leave compatibility-sensitive adapters in `codex-core` while downstream
++   call sites are updated.
++4. Only extract higher-level tool infrastructure after the crate boundaries are
++   clear and independently testable.
++
++That means it is normal for `codex-core` to temporarily re-export types or
++helpers from `codex-tools` during the transition.
++
++## Crate conventions
++
++This crate should start with stricter structure than `core/src/tools` so it
++stays easy to grow:
++
++- `src/lib.rs` should remain exports-only.
++- Business logic should live in named module files such as `foo.rs`.
++- Unit tests for `foo.rs` should live in a sibling `foo_tests.rs`.
++- The implementation file should wire tests with:
++
++```rust
++#[cfg(test)]
++#[path = "foo_tests.rs"]
++mod tests;
++```
++
++If this crate starts accumulating code that needs runtime state from
++`codex-core`, that is a sign to revisit the extraction boundary before adding
++more here.
+diff --git a/codex-rs/tools/src/json_schema.rs b/codex-rs/tools/src/json_schema.rs
+new file mode 100644
+index 0000000000..727a085af1
+--- /dev/null
++++ b/codex-rs/tools/src/json_schema.rs
+@@ -0,0 +1,176 @@
++use serde::Deserialize;
++use serde::Serialize;
++use serde_json::Value as JsonValue;
++use serde_json::json;
++use std::collections::BTreeMap;
++
++/// Generic JSON-Schema subset needed for our tool definitions.
++#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
++#[serde(tag = "type", rename_all = "lowercase")]
++pub enum JsonSchema {
++    Boolean {
++        #[serde(skip_serializing_if = "Option::is_none")]
++        description: Option<String>,
++    },
++    String {
++        #[serde(skip_serializing_if = "Option::is_none")]
++        description: Option<String>,
++    },
++    /// MCP schema allows "number" | "integer" for Number.
++    #[serde(alias = "integer")]
++    Number {
++        #[serde(skip_serializing_if = "Option::is_none")]
++        description: Option<String>,
++    },
++    Array {
++        items: Box<JsonSchema>,
++
++        #[serde(skip_serializing_if = "Option::is_none")]
++        description: Option<String>,
++    },
++    Object {
++        properties: BTreeMap<String, JsonSchema>,
++        #[serde(skip_serializing_if = "Option::is_none")]
++        required: Option<Vec<String>>,
++        #[serde(
++            rename = "additionalProperties",
++            skip_serializing_if = "Option::is_none"
++        )]
++        additional_properties: Option<AdditionalProperties>,
++    },
++}
++
++/// Whether additional properties are allowed, and if so, any required schema.
++#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
++#[serde(untagged)]
++pub enum AdditionalProperties {
++    Boolean(bool),
++    Schema(Box<JsonSchema>),
++}
++
++impl From<bool> for AdditionalProperties {
++    fn from(value: bool) -> Self {
++        Self::Boolean(value)
++    }
++}
++
++impl From<JsonSchema> for AdditionalProperties {
++    fn from(value: JsonSchema) -> Self {
++        Self::Schema(Box::new(value))
++    }
++}
++
++/// Parse the tool `input_schema` or return an error for invalid schema.
++pub fn parse_tool_input_schema(input_schema: &JsonValue) -> Result<JsonSchema, serde_json::Error> {
++    let mut input_schema = input_schema.clone();
++    sanitize_json_schema(&mut input_schema);
++    serde_json::from_value::<JsonSchema>(input_schema)
++}
++
++/// Sanitize a JSON Schema (as serde_json::Value) so it can fit our limited
++/// JsonSchema enum. This function:
++/// - Ensures every schema object has a "type". If missing, infers it from
++///   common keywords (properties => object, items => array, enum/const/format => string)
++///   and otherwise defaults to "string".
++/// - Fills required child fields (e.g. array items, object properties) with
++///   permissive defaults when absent.
++fn sanitize_json_schema(value: &mut JsonValue) {
++    match value {
++        JsonValue::Bool(_) => {
++            // JSON Schema boolean form: true/false. Coerce to an accept-all string.
++            *value = json!({ "type": "string" });
++        }
++        JsonValue::Array(values) => {
++            for value in values {
++                sanitize_json_schema(value);
++            }
++        }
++        JsonValue::Object(map) => {
++            if let Some(properties) = map.get_mut("properties")
++                && let Some(properties_map) = properties.as_object_mut()
++            {
++                for value in properties_map.values_mut() {
++                    sanitize_json_schema(value);
++                }
++            }
++            if let Some(items) = map.get_mut("items") {
++                sanitize_json_schema(items);
++            }
++            for combiner in ["oneOf", "anyOf", "allOf", "prefixItems"] {
++                if let Some(value) = map.get_mut(combiner) {
++                    sanitize_json_schema(value);
++                }
++            }
++
++            let mut schema_type = map
++                .get("type")
++                .and_then(|value| value.as_str())
++                .map(str::to_string);
++
++            if schema_type.is_none()
++                && let Some(JsonValue::Array(types)) = map.get("type")
++            {
++                for candidate in types {
++                    if let Some(candidate_type) = candidate.as_str()
++                        && matches!(
++                            candidate_type,
++                            "object" | "array" | "string" | "number" | "integer" | "boolean"
++                        )
++                    {
++                        schema_type = Some(candidate_type.to_string());
++                        break;
++                    }
++                }
++            }
++
++            if schema_type.is_none() {
++                if map.contains_key("properties")
++                    || map.contains_key("required")
++                    || map.contains_key("additionalProperties")
++                {
++                    schema_type = Some("object".to_string());
++                } else if map.contains_key("items") || map.contains_key("prefixItems") {
++                    schema_type = Some("array".to_string());
++                } else if map.contains_key("enum")
++                    || map.contains_key("const")
++                    || map.contains_key("format")
++                {
++                    schema_type = Some("string".to_string());
++                } else if map.contains_key("minimum")
++                    || map.contains_key("maximum")
++                    || map.contains_key("exclusiveMinimum")
++                    || map.contains_key("exclusiveMaximum")
++                    || map.contains_key("multipleOf")
++                {
++                    schema_type = Some("number".to_string());
++                }
++            }
++
++            let schema_type = schema_type.unwrap_or_else(|| "string".to_string());
++            map.insert("type".to_string(), JsonValue::String(schema_type.clone()));
++
++            if schema_type == "object" {
++                if !map.contains_key("properties") {
++                    map.insert(
++                        "properties".to_string(),
++                        JsonValue::Object(serde_json::Map::new()),
++                    );
++                }
++                if let Some(additional_properties) = map.get_mut("additionalProperties")
++                    && !matches!(additional_properties, JsonValue::Bool(_))
++                {
++                    sanitize_json_schema(additional_properties);
++                }
++            }
++
++            if schema_type == "array" && !map.contains_key("items") {
++                map.insert("items".to_string(), json!({ "type": "string" }));
++            }
++        }
++        _ => {}
++    }
++}
++
++#[cfg(test)]
++#[path = "json_schema_tests.rs"]
++mod tests;
+diff --git a/codex-rs/tools/src/json_schema_tests.rs b/codex-rs/tools/src/json_schema_tests.rs
+new file mode 100644
+index 0000000000..7d2cd25c9d
+--- /dev/null
++++ b/codex-rs/tools/src/json_schema_tests.rs
+@@ -0,0 +1,98 @@
++use super::AdditionalProperties;
++use super::JsonSchema;
++use super::parse_tool_input_schema;
++use pretty_assertions::assert_eq;
++use std::collections::BTreeMap;
++
++#[test]
++fn parse_tool_input_schema_coerces_boolean_schemas() {
++    let schema = parse_tool_input_schema(&serde_json::json!(true)).expect("parse schema");
++
++    assert_eq!(schema, JsonSchema::String { description: None });
++}
++
++#[test]
++fn parse_tool_input_schema_infers_object_shape_and_defaults_properties() {
++    let schema = parse_tool_input_schema(&serde_json::json!({
++        "properties": {
++            "query": {"description": "search query"}
++        }
++    }))
++    .expect("parse schema");
++
++    assert_eq!(
++        schema,
++        JsonSchema::Object {
++            properties: BTreeMap::from([(
++                "query".to_string(),
++                JsonSchema::String {
++                    description: Some("search query".to_string()),
++                },
++            )]),
++            required: None,
++            additional_properties: None,
++        }
++    );
++}
++
++#[test]
++fn parse_tool_input_schema_normalizes_integer_and_missing_array_items() {
++    let schema = parse_tool_input_schema(&serde_json::json!({
++        "type": "object",
++        "properties": {
++            "page": {"type": "integer"},
++            "tags": {"type": "array"}
++        }
++    }))
++    .expect("parse schema");
++
++    assert_eq!(
++        schema,
++        JsonSchema::Object {
++            properties: BTreeMap::from([
++                ("page".to_string(), JsonSchema::Number { description: None },),
++                (
++                    "tags".to_string(),
++                    JsonSchema::Array {
++                        items: Box::new(JsonSchema::String { description: None }),
++                        description: None,
++                    },
++                ),
++            ]),
++            required: None,
++            additional_properties: None,
++        }
++    );
++}
++
++#[test]
++fn parse_tool_input_schema_sanitizes_additional_properties_schema() {
++    let schema = parse_tool_input_schema(&serde_json::json!({
++        "type": "object",
++        "additionalProperties": {
++            "required": ["value"],
++            "properties": {
++                "value": {"anyOf": [{"type": "string"}, {"type": "number"}]}
++            }
++        }
++    }))
++    .expect("parse schema");
++
++    assert_eq!(
++        schema,
++        JsonSchema::Object {
++            properties: BTreeMap::new(),
++            required: None,
++            additional_properties: Some(AdditionalProperties::Schema(Box::new(
++                JsonSchema::Object {
++                    properties: BTreeMap::from([(
++                        "value".to_string(),
++                        JsonSchema::String { description: None },
++                    )]),
++                    required: Some(vec!["value".to_string()]),
++                    additional_properties: None,
++                },
++            ))),
++        }
++    );
++}
+diff --git a/codex-rs/tools/src/lib.rs b/codex-rs/tools/src/lib.rs
+new file mode 100644
+index 0000000000..90d3af10c8
+--- /dev/null
++++ b/codex-rs/tools/src/lib.rs
+@@ -0,0 +1,7 @@
++//! Shared tool-schema parsing primitives that can live outside `codex-core`.
++
++mod json_schema;
++
++pub use json_schema::AdditionalProperties;
++pub use json_schema::JsonSchema;
++pub use json_schema::parse_tool_input_schema;

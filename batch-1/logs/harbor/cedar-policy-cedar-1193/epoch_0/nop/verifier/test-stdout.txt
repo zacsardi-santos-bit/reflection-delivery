@@ -1,0 +1,609 @@
+patching file cedar-policy/src/tests.rs
+warning: /workspace/repo/cedar-policy/Cargo.toml: `crate_type` is deprecated in favor of `crate-type` and will not work in the 2024 edition
+(in the `cedar_policy` library target)
+warning: /workspace/repo/cedar-wasm/Cargo.toml: `crate_type` is deprecated in favor of `crate-type` and will not work in the 2024 edition
+(in the `cedar_wasm` library target)
+   Compiling cedar-policy-core v3.3.0 (/workspace/repo/cedar-policy-core)
+   Compiling cedar-policy-validator v3.3.0 (/workspace/repo/cedar-policy-validator)
+warning: elided lifetime has a name
+  --> cedar-policy-validator/src/rbac.rs:41:31
+   |
+38 |     pub(crate) fn validate_entity_types<'a>(
+   |                                         -- lifetime `'a` declared here
+...
+41 |     ) -> impl Iterator<Item = ValidationError> + 'a {
+   |                               ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+   |
+   = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: elided lifetime has a name
+  --> cedar-policy-validator/src/rbac.rs:92:31
+   |
+89 |     pub(crate) fn validate_action_ids<'a>(
+   |                                       -- lifetime `'a` declared here
+...
+92 |     ) -> impl Iterator<Item = ValidationError> + 'a {
+   |                               ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/rbac.rs:357:31
+    |
+354 |     pub(crate) fn get_apply_specs_for_action<'a>(
+    |                                              -- lifetime `'a` declared here
+...
+357 |     ) -> impl Iterator<Item = &ValidatorApplySpec> + 'a {
+    |                               ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/schema.rs:199:81
+    |
+199 |     pub fn ancestors<'a>(&'a self, ty: &'a Name) -> Option<impl Iterator<Item = &Name> + 'a> {
+    |                      -- lifetime `'a` declared here                             ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/schema.rs:612:83
+    |
+612 |     pub(crate) fn get_entity_types_in<'a>(&'a self, entity: &'a EntityUID) -> Vec<&Name> {
+    |                                       -- lifetime `'a` declared here              ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/schema.rs:632:31
+    |
+629 |     pub(crate) fn get_entity_types_in_set<'a>(
+    |                                           -- lifetime `'a` declared here
+...
+632 |     ) -> impl Iterator<Item = &Name> {
+    |                               ^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:319:15
+    |
+316 |     pub fn typecheck_by_request_env<'b>(
+    |                                     -- lifetime `'b` declared here
+...
+319 |     ) -> Vec<(RequestEnv, PolicyCheck)> {
+    |               ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:348:15
+    |
+344 |     fn apply_typecheck_fn_by_request_env<'b, F, C>(
+    |                                          -- lifetime `'b` declared here
+...
+348 |     ) -> Vec<(RequestEnv, C)>
+    |               ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/typecheck.rs:454:34
+    |
+450 |     fn link_request_env<'b>(
+    |                         -- lifetime `'b` declared here
+...
+454 |     ) -> Box<dyn Iterator<Item = RequestEnv> + 'b> {
+    |                                  ^^^^^^^^^^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+    --> cedar-policy-validator/src/typecheck.rs:2453:17
+     |
+2450 |     fn lookup_extension_function<'b>(
+     |                                  -- lifetime `'b` declared here
+...
+2453 |     ) -> Result<&ExtensionFunctionType, impl FnOnce(Expr) -> TypeError + 'b> {
+     |                 ^ this elided lifetime gets resolved as `'b`
+
+warning: elided lifetime has a name
+   --> cedar-policy-validator/src/lib.rs:157:38
+    |
+153 |     fn validate_slots<'a>(
+    |                       -- lifetime `'a` declared here
+...
+157 |     ) -> Option<impl Iterator<Item = ValidationError> + 'a> {
+    |                                      ^^^^^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+
+warning: `cedar-policy-validator` (lib) generated 11 warnings
+   Compiling cedar-policy v3.3.0 (/workspace/repo/cedar-policy)
+warning: elided lifetime has a name
+    --> cedar-policy/src/api.rs:1671:38
+     |
+1668 |     pub fn ancestors<'a>(
+     |                      -- lifetime `'a` declared here
+...
+1671 |     ) -> Option<impl Iterator<Item = &EntityTypeName> + 'a> {
+     |                                      ^ this elided lifetime gets resolved as `'a`
+     |
+     = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: `cedar-policy` (lib) generated 1 warning
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_duplicate_context_key`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1624:5
+     |
+1624 | /     fn test_authorized_fails_duplicate_context_key() {
+1625 | |         let call = r#"{
+1626 | |             "principal" : {
+1627 | |                 "type" : "User",
+...    |
+1649 | |         assert_is_failure(&json_is_authorized(call), true, "found duplicate key");
+1650 | |     }
+     | |_____^
+     |
+     = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_duplicate_entity_uid`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1577:5
+     |
+1577 | /     fn test_authorized_fails_duplicate_entity_uid() {
+1578 | |         let call = r#"{
+1579 | |             "principal" : {
+1580 | |                 "type" : "User",
+...    |
+1620 | |         );
+1621 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_duplicate_instantiations_ids`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1260:5
+     |
+1260 | /     fn test_authorized_fails_on_duplicate_instantiations_ids() {
+1261 | |         let call = r#"{
+1262 | |             "principal" : {
+1263 | |                 "type" : "User",
+...    |
+1307 | |         );
+1308 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_duplicate_policy_ids`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1417:5
+     |
+1417 | /     fn test_authorized_fails_on_duplicate_policy_ids() {
+1418 | |         let call = r#"{
+1419 | |             "principal" : "User::\"alice\"",
+1420 | |             "action" : "Photo::\"view\"",
+...    |
+1433 | |         assert_is_failure(&json_is_authorized(call), true, "no duplicate IDs");
+1434 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_duplicate_slot_instantiation1`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1457:5
+     |
+1457 | /     fn test_authorized_fails_on_duplicate_slot_instantiation1() {
+1458 | |         let call = r#"{
+1459 | |             "principal" : "User::\"alice\"",
+1460 | |             "action" : "Photo::\"view\"",
+...    |
+1489 | |         );
+1490 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_duplicate_slot_instantiation2`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1493:5
+     |
+1493 | /     fn test_authorized_fails_on_duplicate_slot_instantiation2() {
+1494 | |         let call = r#"{
+1495 | |             "principal" : "User::\"alice\"",
+1496 | |             "action" : "Photo::\"view\"",
+...    |
+1529 | |         );
+1530 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_duplicate_slot_instantiation3`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1533:5
+     |
+1533 | /     fn test_authorized_fails_on_duplicate_slot_instantiation3() {
+1534 | |         let call = r#"{
+1535 | |             "principal" : "User::\"alice\"",
+1536 | |             "action" : "Photo::\"view\"",
+...    |
+1573 | |         );
+1574 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_duplicate_template_ids`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1437:5
+     |
+1437 | /     fn test_authorized_fails_on_duplicate_template_ids() {
+1438 | |         let call = r#"{
+1439 | |             "principal" : "User::\"alice\"",
+1440 | |             "action" : "Photo::\"view\"",
+...    |
+1453 | |         assert_is_failure(&json_is_authorized(call), true, "found duplicate key");
+1454 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_policy_collision_with_template`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1230:5
+     |
+1230 | /     fn test_authorized_fails_on_policy_collision_with_template() {
+1231 | |         let call = r#"{
+1232 | |             "principal" : {
+1233 | |                 "type" : "User",
+...    |
+1256 | |         );
+1257 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_template_instantiation_collision_with_policy`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1352:5
+     |
+1352 | /     fn test_authorized_fails_on_template_instantiation_collision_with_policy() {
+1353 | |         let call = r#"{
+1354 | |             "principal" : {
+1355 | |                 "type" : "User",
+...    |
+1389 | |         );
+1390 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_fails_on_template_instantiation_collision_with_template`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1311:5
+     |
+1311 | /     fn test_authorized_fails_on_template_instantiation_collision_with_template() {
+1312 | |         let call = r#"{
+1313 | |             "principal" : {
+1314 | |                 "type" : "User",
+...    |
+1348 | |         );
+1349 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_on_multi_policy_slice`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:973:5
+     |
+973  | /     fn test_authorized_on_multi_policy_slice() {
+974  | |         let call = r#"
+975  | |         {
+976  | |             "principal": {
+...    |
+999  | |         assert_is_authorized(json_is_authorized(call));
+1000 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_on_multi_policy_slice_denies_when_expected`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1074:5
+     |
+1074 | /     fn test_authorized_on_multi_policy_slice_denies_when_expected() {
+1075 | |         let call = r#"
+1076 | |         {
+1077 | |             "principal": {
+...    |
+1099 | |         assert_is_not_authorized(json_is_authorized(call));
+1100 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_on_multi_policy_slice_with_string_policies`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1003:5
+     |
+1003 | /     fn test_authorized_on_multi_policy_slice_with_string_policies() {
+1004 | |         let call = r#"
+1005 | |         {
+1006 | |             "principal": {
+...    |
+1070 | |         assert_is_authorized(json_is_authorized(call));
+1071 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_on_multi_policy_slice_with_string_policies_denies_when_expected`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1103:5
+     |
+1103 | /     fn test_authorized_on_multi_policy_slice_with_string_policies_denies_when_expected() {
+1104 | |         let call = r#"
+1105 | |         {
+1106 | |             "principal": {
+...    |
+1126 | |         assert_is_not_authorized(json_is_authorized(call));
+1127 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_on_simple_slice`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/is_authorized.rs:813:5
+    |
+813 | /     fn test_authorized_on_simple_slice() {
+814 | |         let call = r#"
+815 | |         {
+816 | |             "principal": {
+...   |
+838 | |         assert_is_authorized(json_is_authorized(call));
+839 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_on_simple_slice_with_attrs_and_parents`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/is_authorized.rs:901:5
+    |
+901 | /     fn test_authorized_on_simple_slice_with_attrs_and_parents() {
+902 | |         let call = r#"
+903 | |         {
+904 | |             "principal": {
+...   |
+969 | |         assert_is_authorized(json_is_authorized(call));
+970 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_on_simple_slice_with_context`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/is_authorized.rs:869:5
+    |
+869 | /     fn test_authorized_on_simple_slice_with_context() {
+870 | |         let call = r#"
+871 | |         {
+872 | |             "principal": {
+...   |
+897 | |         assert_is_authorized(json_is_authorized(call));
+898 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_on_simple_slice_with_string_policies`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/is_authorized.rs:842:5
+    |
+842 | /     fn test_authorized_on_simple_slice_with_string_policies() {
+843 | |         let call = r#"
+844 | |         {
+845 | |             "principal": {
+...   |
+865 | |         assert_is_authorized(json_is_authorized(call));
+866 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_with_template_as_policy_should_fail`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1130:5
+     |
+1130 | /     fn test_authorized_with_template_as_policy_should_fail() {
+1131 | |         let call = r#"
+1132 | |         {
+1133 | |             "principal": {
+...    |
+1153 | |         assert_is_not_authorized(json_is_authorized(call));
+1154 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_with_template_instantiation`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1186:5
+     |
+1186 | /     fn test_authorized_with_template_instantiation() {
+1187 | |         let call = r#"
+1188 | |         {
+1189 | |             "principal": {
+...    |
+1226 | |         assert_is_authorized(json_is_authorized(call));
+1227 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_authorized_with_template_should_fail`: Use the functions in the `ffi` module instead
+    --> cedar-policy/src/frontend/is_authorized.rs:1157:5
+     |
+1157 | /     fn test_authorized_with_template_should_fail() {
+1158 | |         let call = r#"
+1159 | |         {
+1160 | |             "principal": {
+...    |
+1182 | |         assert_is_not_authorized(json_is_authorized(call));
+1183 | |     }
+     | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_failure_on_invalid_syntax`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/is_authorized.rs:751:5
+    |
+751 | /     fn test_failure_on_invalid_syntax() {
+752 | |         assert_is_failure(
+753 | |             &json_is_authorized("iefjieoafiaeosij"),
+754 | |             true,
+755 | |             "expected value",
+756 | |         );
+757 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_not_authorized_on_empty_slice`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/is_authorized.rs:760:5
+    |
+760 | /     fn test_not_authorized_on_empty_slice() {
+761 | |         let call = r#"
+762 | |         {
+763 | |             "principal": {
+...   |
+783 | |         assert_is_not_authorized(json_is_authorized(call));
+784 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_not_authorized_on_unspecified`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/is_authorized.rs:787:5
+    |
+787 | /     fn test_not_authorized_on_unspecified() {
+788 | |         let call = r#"
+789 | |         {
+790 | |             "principal": null,
+...   |
+809 | |         assert_is_not_authorized(json_is_authorized(call));
+810 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::is_authorized::test::test_slice_convert`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/is_authorized.rs:697:5
+    |
+697 | /     fn test_slice_convert() {
+698 | |         let entities = serde_json::json!(
+...   |
+747 | |             );
+748 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_bad_call_format_fails`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:417:5
+    |
+417 | /     fn test_bad_call_format_fails() {
+418 | |         let result = json_validate("uerfheriufheiurfghtrg");
+419 | |         assert_is_failure(&result, true, "error parsing call: expected value");
+420 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_empty_policy_validates_without_notes`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:174:5
+    |
+174 | /     fn test_empty_policy_validates_without_notes() {
+175 | |         let call_json = r#"{
+176 | |             "schema": {},
+177 | |             "policySet": {}
+...   |
+182 | |         assert_validates_without_notes(result);
+183 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_nontrivial_correct_policy_validates_without_notes`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:186:5
+    |
+186 | /     fn test_nontrivial_correct_policy_validates_without_notes() {
+187 | |         let call_json = r#"{
+188 | |   "schema": { "": {
+189 | |     "entityTypes": {
+...   |
+238 | |         assert_validates_without_notes(result);
+239 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_nontrivial_correct_policy_validates_without_notes_concatenated_policies`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:295:5
+    |
+295 | /     fn test_nontrivial_correct_policy_validates_without_notes_concatenated_policies() {
+296 | |         let call_json = r#"{
+297 | |   "schema": { "": {
+298 | |     "entityTypes": {
+...   |
+347 | |         assert_validates_without_notes(result);
+348 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_policy_with_parse_error_fails_concatenated_policies`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:399:5
+    |
+399 | /     fn test_policy_with_parse_error_fails_concatenated_policies() {
+400 | |         let call_json = r#"{
+401 | |             "schema": {"": {
+402 | |                 "entityTypes": {},
+...   |
+413 | |         );
+414 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_policy_with_parse_error_fails_passing_on_errors`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:242:5
+    |
+242 | /     fn test_policy_with_parse_error_fails_passing_on_errors() {
+243 | |         let call_json = r#"{
+244 | |             "schema": {"": {
+245 | |                 "entityTypes": {},
+...   |
+259 | |         );
+260 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_policy_with_parse_error_fails_passing_on_errors_concatenated_policies`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:351:5
+    |
+351 | /     fn test_policy_with_parse_error_fails_passing_on_errors_concatenated_policies() {
+352 | |         let call_json = r#"{
+353 | |             "schema": {"": {
+354 | |                 "entityTypes": {},
+...   |
+366 | |         );
+367 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_semantically_incorrect_policy_fails_with_notes`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:263:5
+    |
+263 | /     fn test_semantically_incorrect_policy_fails_with_notes() {
+264 | |         let call_json = r#"{
+265 | |   "schema":{"": {
+266 | |     "entityTypes": {
+...   |
+291 | |         assert_validates_with_notes(result, 2);
+292 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_semantically_incorrect_policy_fails_with_notes_concatenated_policies`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:370:5
+    |
+370 | /     fn test_semantically_incorrect_policy_fails_with_notes_concatenated_policies() {
+371 | |         let call_json = r#"{
+372 | |   "schema": {"": {
+373 | |     "entityTypes": {
+...   |
+395 | |         assert_validates_with_notes(result, 1);
+396 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_validate_empty_policy_directly`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:158:5
+    |
+158 | /     fn test_validate_empty_policy_directly() {
+159 | |         let schema = cedar_policy_validator::SchemaFragment(HashMap::new());
+160 | |
+161 | |         let call = ValidateCall {
+...   |
+170 | |         assert_validates_without_notes(result);
+171 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_validate_fails_on_duplicate_namespace`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:423:5
+    |
+423 | /     fn test_validate_fails_on_duplicate_namespace() {
+424 | |         let call_json = r#"{
+425 | |             "schema": {
+426 | |               "foo": { "entityTypes": {}, "actions": {} },
+...   |
+437 | |         );
+438 | |     }
+    | |_____^
+
+warning: use of deprecated constant `frontend::validate::test::test_validate_fails_on_duplicate_policy_id`: Use the functions in the `ffi` module instead
+   --> cedar-policy/src/frontend/validate.rs:461:5
+    |
+461 | /     fn test_validate_fails_on_duplicate_policy_id() {
+462 | |         let call_json = r#"{
+463 | |             "schema": { "": { "entityTypes": {}, "actions": {} } },
+464 | |             "policySet": {
+...   |
+471 | |         assert_is_failure(&result, true, "no duplicate IDs");
+472 | |     }
+    | |_____^
+
+error[E0599]: no method named `num_of_templates` found for struct `api::PolicySet` in the current scope
+    --> cedar-policy/src/tests.rs:756:25
+     |
+756  |         assert_eq!(pset.num_of_templates(), 1);
+     |                         ^^^^^^^^^^^^^^^^
+     |
+    ::: cedar-policy/src/api.rs:2672:1
+     |
+2672 | pub struct PolicySet {
+     | -------------------- method `num_of_templates` not found for this struct
+     |
+help: there is a method `templates` with a similar name
+     |
+756  -         assert_eq!(pset.num_of_templates(), 1);
+756  +         assert_eq!(pset.templates(), 1);
+     |
+
+error[E0599]: no method named `num_of_policies` found for struct `api::PolicySet` in the current scope
+    --> cedar-policy/src/tests.rs:757:25
+     |
+757  |         assert_eq!(pset.num_of_policies(), 2);
+     |                         ^^^^^^^^^^^^^^^
+     |
+    ::: cedar-policy/src/api.rs:2672:1
+     |
+2672 | pub struct PolicySet {
+     | -------------------- method `num_of_policies` not found for this struct
+     |
+help: there is a method `policies` with a similar name
+     |
+757  -         assert_eq!(pset.num_of_policies(), 2);
+757  +         assert_eq!(pset.policies(), 2);
+     |
+
+For more information about this error, try `rustc --explain E0599`.
+warning: `cedar-policy` (lib test) generated 39 warnings (1 duplicate)
+error: could not compile `cedar-policy` (lib test) due to 2 previous errors; 39 warnings emitted
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.88.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package cedar-policy` exited with code 101
+reward=0 graded=209 found=0 failed=0 parsed=0 framework=cargo exit_code=101

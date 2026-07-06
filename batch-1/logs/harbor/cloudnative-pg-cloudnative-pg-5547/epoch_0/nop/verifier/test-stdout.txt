@@ -1,0 +1,13 @@
+patching file internal/management/controller/database_controller_sql_test.go
+patching file internal/management/controller/database_controller_test.go
+# github.com/cloudnative-pg/cloudnative-pg/internal/management/controller [github.com/cloudnative-pg/cloudnative-pg/internal/management/controller.test]
+internal/management/controller/database_controller_sql_test.go:71:21: undefined: detectDatabase
+internal/management/controller/database_controller_sql_test.go:82:21: undefined: detectDatabase
+internal/management/controller/database_controller_sql_test.go:105:10: undefined: createDatabase
+internal/management/controller/database_controller_sql_test.go:160:10: undefined: updateDatabase
+internal/management/controller/database_controller_sql_test.go:174:10: undefined: dropDatabase
+internal/management/controller/database_controller_test.go:108:14: cannot use &f (value of type *fakeInstanceData) as *"github.com/cloudnative-pg/cloudnative-pg/pkg/management/postgres".Instance value in struct literal
+{"Time":"2026-06-29T15:18:09.051923044Z","Action":"start","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller"}
+{"Time":"2026-06-29T15:18:09.051990495Z","Action":"output","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Output":"FAIL\tgithub.com/cloudnative-pg/cloudnative-pg/internal/management/controller [build failed]\n"}
+{"Time":"2026-06-29T15:18:09.052005478Z","Action":"fail","Package":"github.com/cloudnative-pg/cloudnative-pg/internal/management/controller","Elapsed":0}
+reward=0 graded=1 found=0 failed=0 parsed=1 framework=go exit_code=1

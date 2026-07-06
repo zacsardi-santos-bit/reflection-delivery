@@ -1,0 +1,14 @@
+patching file ghost/admin/package.json
+patching file ghost/core/core/server/data/migrations/versions/5.93/2024-09-03-18-51-01-update-stripe-prices-nickname-length.js
+patching file ghost/core/core/server/data/migrations/versions/5.94/2024-09-03-20-09-40-null-analytics-jobs-timings.js
+patching file ghost/core/core/server/data/schema/schema.js
+patching file ghost/core/core/server/services/email-analytics/EmailAnalyticsServiceWrapper.js
+patching file ghost/core/core/server/services/email-analytics/lib/queries.js
+patching file ghost/core/package.json
+patching file ghost/core/test/e2e-api/members/__snapshots__/donation-checkout-session.test.js.snap
+patching file ghost/core/test/e2e-api/members/donation-checkout-session.test.js
+patching file ghost/core/test/unit/server/data/schema/integrity.test.js
+patching file ghost/email-analytics-provider-mailgun/lib/EmailAnalyticsProviderMailgun.js
+patching file ghost/email-analytics-service/lib/EmailAnalyticsService.js
+patching file ghost/mailgun-client/lib/MailgunClient.js
+patching file ghost/payments/lib/PaymentsService.js

@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/legacy_test/test_functional_conv1d.py /workspace/repo/test/legacy_test/test_functional_conv2d.py -v -k 'not (conv2d and TestFunctionalConv2DError and test_exception)'",
+  "test_files": [
+    "test/legacy_test/test_functional_conv1d.py",
+    "test/legacy_test/test_functional_conv2d.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1D_ZeroKernelError::test_depthwise_zero_kernel",
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1D_ZeroKernelError::test_depthwise_zero_kernel_float64",
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1D_ZeroKernelError::test_depthwise_zero_kernel_nlc",
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1D_ZeroKernelError::test_depthwise_zero_kernel_small",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2D_ZeroKernelError::test_depthwise_large_zero_kH",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2D_ZeroKernelError::test_depthwise_large_zero_kW",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2D_ZeroKernelError::test_depthwise_zero_kH",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2D_ZeroKernelError::test_depthwise_zero_kW",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2D_ZeroKernelError::test_regular_conv_zero_kH",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2D_ZeroKernelError::test_regular_conv_zero_kW"
+  ],
+  "PASS_TO_PASS": [
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1DError::test_exception",
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1DErrorCase1::test_exception",
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1D_CPU_FP16::test_cpu_fp16",
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1D_ZeroSize::test_dygraph",
+    "test.legacy_test.test_functional_conv1d.TestFunctionalConv1D_ZeroSize2::test_dygraph",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2DErrorCase12::test_dygraph_exception",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2D_ZeroSize::test_dygraph",
+    "test.legacy_test.test_functional_conv2d.TestFunctionalConv2D_ZeroSize2::test_dygraph"
+  ]
+}

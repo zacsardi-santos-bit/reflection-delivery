@@ -1,2 +1,0 @@
-patching file sdks/go/pkg/beam/core/runtime/harness/datamgr.go
-patching file sdks/go/pkg/beam/core/runtime/harness/statemgr.go

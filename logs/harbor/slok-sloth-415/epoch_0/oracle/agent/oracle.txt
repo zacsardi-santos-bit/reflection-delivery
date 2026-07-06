@@ -1,5 +1,0 @@
-patching file deploy/kubernetes/helm/sloth/Chart.yaml
-patching file deploy/kubernetes/helm/sloth/templates/deployment.yaml
-patching file deploy/kubernetes/helm/sloth/values.yaml
-patching file deploy/kubernetes/raw/sloth-with-common-plugins.yaml
-patching file deploy/kubernetes/raw/sloth.yaml

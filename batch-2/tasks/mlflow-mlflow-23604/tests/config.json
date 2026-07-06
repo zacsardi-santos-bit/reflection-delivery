@@ -1,0 +1,40 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/mlflow/server/js && echo 'bW9kdWxlLmV4cG9ydHM9e3ByZXNldHM6W1siQGJhYmVsL3ByZXNldC1lbnYiLHsidGFyZ2V0cyI6eyJub2RlIjoiY3VycmVudCJ9fV0sWyJAYmFiZWwvcHJlc2V0LXR5cGVzY3JpcHQiXSxbIkBiYWJlbC9wcmVzZXQtcmVhY3QiLHsicnVudGltZSI6ImF1dG9tYXRpYyJ9XV19Ow==' | base64 -d > babel.config.js && echo 'eyJ0ZXN0RW52aXJvbm1lbnQiOiJqc2RvbSIsInRyYW5zZm9ybSI6eyJcXC5banRdc3g/JCI6WyJiYWJlbC1qZXN0Iix7ImNvbmZpZ0ZpbGUiOiIuL2JhYmVsLmNvbmZpZy5qcyJ9XX0sInRyYW5zZm9ybUlnbm9yZVBhdHRlcm5zIjpbIlxcLnBucFxcLlteXFwvXSskIiwibm9kZV9tb2R1bGVzLyg/IShAZGF0YWJyaWNrcy9kZXNpZ24tc3lzdGVtfEBhbnQtZGVzaWduL2ljb25zfEBhbnQtZGVzaWduL2ljb25zLXN2Z3xAYmFiZWwvcnVudGltZS8uKy9lc20pKSJdLCJtb2R1bGVOYW1lTWFwcGVyIjp7IkBkYXRhYnJpY2tzL2kxOG4iOiI8cm9vdERpcj4vc3JjL2kxOG4vaTE4biIsIkBkYXRhYnJpY2tzL2Rlc2lnbi1zeXN0ZW0vKC4rKSI6Ijxyb290RGlyPi9ub2RlX21vZHVsZXMvQGRhdGFicmlja3MvZGVzaWduLXN5c3RlbS9kaXN0LyQxIiwiQGRhdGFicmlja3Mvd2ViLXNoYXJlZC8oLiopIjoiPHJvb3REaXI+L3NyYy9zaGFyZWQvd2ViLXNoYXJlZC8kMSIsIl5yZWNoYXJ0cyQiOiI8cm9vdERpcj4vX19tb2Nrc19fL3JlY2hhcnRzLnRzeCJ9LCJzZXR1cEZpbGVzIjpbImplc3QtY2FudmFzLW1vY2siXSwic2V0dXBGaWxlc0FmdGVyRW52IjpbIjxyb290RGlyPi9zY3JpcHRzL2Vudi1tb2Nrcy5qcyIsIjxyb290RGlyPi9zY3JpcHRzL3NldHVwLWplc3QtZG9tLW1hdGNoZXJzLmpzIiwiPHJvb3REaXI+L3NjcmlwdHMvc2V0dXAtdGVzdGluZy1saWJyYXJ5LmpzIiwiPHJvb3REaXI+L3NyYy9zZXR1cFRlc3RzLmpzIl0sIm1vZHVsZUZpbGVFeHRlbnNpb25zIjpbInRzIiwidHN4IiwianMiLCJqc3giLCJqc29uIiwibWpzIl19Cg==' | base64 -d > jest.config.json && node_modules/.bin/jest --testPathPattern=\"label-schemas\" --watchAll=false --forceExit --config ./jest.config.json",
+  "test_files": [
+    "mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx",
+    "mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useGetLabelSchemaQuery fetches a schema by id",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useGetLabelSchemaQuery does not fire when schemaId is empty",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useGetLabelSchemaByNameQuery passes experiment_id + name as query params",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useListLabelSchemasQuery paginates through max_results + page_token",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useListLabelSchemasQuery omits max_results + page_token when undefined",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useCreateLabelSchemaMutation POSTs to /create with the params body",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useUpdateLabelSchemaMutation strips undefined sparse-update keys before sending",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useUpdateLabelSchemaMutation forwards empty-string instruction as a real value (replaces stored field with \"\")",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useUpdateLabelSchemaMutation forwards explicit false for enable_comment",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/hooks/labelSchemaHooks.test.tsx::label-schema hooks useDeleteLabelSchemaMutation sends DELETE with schema_id in body",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputPassFail renders positive and negative labels",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputPassFail fires onChange(true) when the positive button is clicked",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputPassFail fires onChange(false) when the negative button is clicked",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputNumeric renders min/max bounds on the input",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputNumeric clears to null when the user empties the field",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputNumeric forwards parsed numeric values",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputNumeric omits min/max attributes when not set on the input",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputCategorical renders single-select by default",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputCategorical renders multi-select when input.multi_select is true",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputCategorical fires onChange(option) when a single-select option is clicked",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputCategorical fires onChange([option]) when a multi-select option is clicked from empty",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputRenderer dispatches to the pass-fail widget when input.pass_fail is set",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputRenderer dispatches to the numeric widget when input.numeric is set",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputRenderer dispatches to the categorical widget when input.categorical is set",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputRenderer dispatches to the text widget when input.text is set",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputRenderer renders an error Alert when the input wrapper has no variant set",
+    "/workspace/repo/mlflow/server/js/src/experiment-tracking/components/label-schemas/widgets/labelSchemaWidgets.test.tsx::LabelSchemaInputRenderer propagates a null value upward when the numeric widget is cleared"
+  ],
+  "PASS_TO_PASS": []
+}

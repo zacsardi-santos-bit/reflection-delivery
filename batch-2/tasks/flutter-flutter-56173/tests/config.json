@@ -1,0 +1,24 @@
+{
+  "test_framework": "bun",
+  "test_command": "cd /workspace/repo/packages/flutter_tools && pub run test --reporter=json test/general.shard/web/devices_test.dart 2>&1 | python3 /workspace/dart_to_bun.py",
+  "test_files": [
+    "packages/flutter_tools/test/general.shard/web/devices_test.dart"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "No web devices listed if feature is disabled",
+    "GoogleChromeDevice defaults",
+    "MicrosoftEdge defaults",
+    "Server defaults",
+    "Chrome device is listed when Chrome can be run",
+    "Chrome device is not listed when Chrome cannot be run",
+    "Edge device is not listed when Edge cannot be run",
+    "Web Server device is listed by default",
+    "Chrome invokes version command on non-Windows platforms",
+    "Chrome and Edge version check invokes registry query on windows.",
+    "Edge is not supported on versions less than 73",
+    "Edge is not support on non-windows platform"
+  ],
+  "PASS_TO_PASS": []
+}

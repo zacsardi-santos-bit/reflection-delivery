@@ -1,0 +1,26 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/manager && npx vitest run src/layouts/OAuth.test.tsx src/store/authentication/authentication.test.ts",
+  "test_files": [
+    "packages/manager/src/layouts/OAuth.test.tsx",
+    "packages/manager/src/store/authentication/authentication.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/manager/src/layouts/OAuth.test.tsx::layouts/OAuth parseQueryParams Should redirect to logout path when nonce is different",
+    "/workspace/repo/packages/manager/src/layouts/OAuth.test.tsx::layouts/OAuth parseQueryParams Should redirect to logout path when token exchange call fails",
+    "/workspace/repo/packages/manager/src/layouts/OAuth.test.tsx::layouts/OAuth parseQueryParams Should redirect to logout path when no code verifier in local storage",
+    "/workspace/repo/packages/manager/src/layouts/OAuth.test.tsx::layouts/OAuth parseQueryParams exchanges authorization code for token and dispatches session start",
+    "/workspace/repo/packages/manager/src/layouts/OAuth.test.tsx::layouts/OAuth parseQueryParams Should redirect to login when no code parameter in URL",
+    "/workspace/repo/packages/manager/src/store/authentication/authentication.test.ts::Authentication should set tokens when setToken is invoked",
+    "/workspace/repo/packages/manager/src/store/authentication/authentication.test.ts::Authentication expire() should properly expire tokens stored in local storage and redux state",
+    "/workspace/repo/packages/manager/src/store/authentication/authentication.test.ts::Authentication should set loggedInAsCustomer to true if token contains \"admin\"",
+    "/workspace/repo/packages/manager/src/store/authentication/authentication.test.ts::Authentication should set loggedInAsCustomer to false if token does not contain \"admin\""
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/manager/src/layouts/OAuth.test.tsx::layouts/OAuth parseQueryParams parses query params of the expected format",
+    "/workspace/repo/packages/manager/src/layouts/OAuth.test.tsx::layouts/OAuth parseQueryParams returns an empty object for an empty string",
+    "/workspace/repo/packages/manager/src/layouts/OAuth.test.tsx::layouts/OAuth parseQueryParams doesn't truncate values that include ="
+  ]
+}

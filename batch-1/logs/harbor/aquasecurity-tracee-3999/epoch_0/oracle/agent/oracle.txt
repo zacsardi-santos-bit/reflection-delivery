@@ -1,0 +1,901 @@
+patching file .github/actions/build-dependencies/action.yaml
+patching file Vagrantfile
+patching file api/go.mod
+patching file api/go.sum
+Hunk #1 FAILED at 1.
+1 out of 1 hunk FAILED -- saving rejects to file api/go.sum.rej
+patching file builder/Dockerfile.k8s
+patching file builder/Dockerfile.man
+patching file builder/Dockerfile.protoc
+patching file builder/Dockerfile.ubuntu-tracee-make
+patching file docs/contributing/building/building.md
+patching file docs/docs/flags/cache.1.md
+patching file docs/docs/flags/capabilities.1.md
+patching file docs/docs/flags/capture.1.md
+patching file docs/docs/flags/config.1.md
+patching file docs/docs/flags/containers.1.md
+patching file docs/docs/flags/events.1.md
+patching file docs/docs/flags/log.1.md
+patching file docs/docs/flags/output.1.md
+patching file docs/docs/flags/rego.1.md
+patching file docs/docs/flags/scope.1.md
+patching file docs/man/cache.1
+patching file docs/man/capabilities.1
+patching file docs/man/capture.1
+patching file docs/man/config.1
+patching file docs/man/containers.1
+patching file docs/man/events.1
+patching file docs/man/log.1
+patching file docs/man/output.1
+patching file docs/man/rego.1
+patching file docs/man/scope.1
+patching file go.mod
+patching file go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 15.
+Hunk #3 succeeded at 292 with fuzz 3 (offset 259 lines).
+Hunk #4 FAILED at 40.
+Hunk #5 FAILED at 74.
+Hunk #6 FAILED at 106.
+Hunk #7 FAILED at 132.
+Hunk #8 succeeded at 521 (offset 362 lines).
+Hunk #9 FAILED at 177.
+Hunk #10 FAILED at 234.
+Hunk #11 FAILED at 250.
+Hunk #12 FAILED at 275.
+Hunk #13 FAILED at 325.
+Hunk #14 succeeded at 834 with fuzz 3 (offset 488 lines).
+Hunk #15 FAILED at 363.
+Hunk #16 succeeded at 1090 (offset 550 lines).
+Hunk #17 FAILED at 572.
+13 out of 17 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/containers/runtime/containerd.go
+patching file pkg/containers/runtime/crio.go
+patching file signatures/helpers/go.mod
+The next patch would create the file signatures/helpers/go.sum,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file types/go.mod
+patching file .github/actions/build-dependencies/action.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/actions/build-dependencies/action.yaml.rej
+patching file Vagrantfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Vagrantfile.rej
+patching file api/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file api/go.mod.rej
+patching file api/go.sum
+Hunk #1 FAILED at 1.
+1 out of 1 hunk FAILED -- saving rejects to file api/go.sum.rej
+patching file builder/Dockerfile.k8s
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file builder/Dockerfile.k8s.rej
+patching file builder/Dockerfile.man
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file builder/Dockerfile.man.rej
+patching file builder/Dockerfile.protoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file builder/Dockerfile.protoc.rej
+patching file builder/Dockerfile.ubuntu-tracee-make
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file builder/Dockerfile.ubuntu-tracee-make.rej
+patching file docs/contributing/building/building.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/contributing/building/building.md.rej
+patching file docs/docs/flags/cache.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/cache.1.md.rej
+patching file docs/docs/flags/capabilities.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/capabilities.1.md.rej
+patching file docs/docs/flags/capture.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/capture.1.md.rej
+patching file docs/docs/flags/config.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/config.1.md.rej
+patching file docs/docs/flags/containers.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/containers.1.md.rej
+patching file docs/docs/flags/events.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/events.1.md.rej
+patching file docs/docs/flags/log.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/log.1.md.rej
+patching file docs/docs/flags/output.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/output.1.md.rej
+patching file docs/docs/flags/rego.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/rego.1.md.rej
+patching file docs/docs/flags/scope.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/scope.1.md.rej
+patching file docs/man/cache.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/man/cache.1.rej
+patching file docs/man/capabilities.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/man/capabilities.1.rej
+patching file docs/man/capture.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file docs/man/capture.1.rej
+patching file docs/man/config.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/man/config.1.rej
+patching file docs/man/containers.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/man/containers.1.rej
+patching file docs/man/events.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file docs/man/events.1.rej
+patching file docs/man/log.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file docs/man/log.1.rej
+patching file docs/man/output.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file docs/man/output.1.rej
+patching file docs/man/rego.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/man/rego.1.rej
+patching file docs/man/scope.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file docs/man/scope.1.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 15.
+Hunk #3 FAILED at 33.
+Hunk #4 FAILED at 43.
+Hunk #5 FAILED at 77.
+Hunk #6 FAILED at 109.
+Hunk #7 FAILED at 135.
+Hunk #8 FAILED at 162.
+Hunk #9 FAILED at 173.
+Hunk #10 FAILED at 230.
+Hunk #11 FAILED at 246.
+Hunk #12 FAILED at 271.
+Hunk #13 FAILED at 321.
+Hunk #14 FAILED at 342.
+Hunk #15 FAILED at 356.
+Hunk #16 FAILED at 533.
+Hunk #17 FAILED at 561.
+17 out of 17 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/containers/runtime/containerd.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/containers/runtime/containerd.go.rej
+patching file pkg/containers/runtime/crio.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/containers/runtime/crio.go.rej
+patching file signatures/helpers/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file signatures/helpers/go.mod.rej
+The next patch would create the file signatures/helpers/go.sum,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file types/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file types/go.mod.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/actions/build-dependencies/action.yaml b/.github/actions/build-dependencies/action.yaml
+|index 2a94d2807..933b3df9a 100644
+|--- a/.github/actions/build-dependencies/action.yaml
+|+++ b/.github/actions/build-dependencies/action.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Vagrantfile b/Vagrantfile
+|index e7848c5bf..99709dba6 100644
+|--- a/Vagrantfile
+|+++ b/Vagrantfile
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 31
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/api/go.mod b/api/go.mod
+|index 2551f0341..9d327a39b 100644
+|--- a/api/go.mod
+|+++ b/api/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 59
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/api/go.sum b/api/go.sum
+|index b17315b52..f6e8138fd 100644
+|--- a/api/go.sum
+|+++ b/api/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 99
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/builder/Dockerfile.k8s b/builder/Dockerfile.k8s
+|index c6178d54b..e1312e7d5 100644
+|--- a/builder/Dockerfile.k8s
+|+++ b/builder/Dockerfile.k8s
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 109
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/builder/Dockerfile.man b/builder/Dockerfile.man
+|index 6ab06db41..103fb74fc 100644
+|--- a/builder/Dockerfile.man
+|+++ b/builder/Dockerfile.man
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 122
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/builder/Dockerfile.protoc b/builder/Dockerfile.protoc
+|index 1b469e210..7e509a82a 100644
+|--- a/builder/Dockerfile.protoc
+|+++ b/builder/Dockerfile.protoc
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 147
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/builder/Dockerfile.ubuntu-tracee-make b/builder/Dockerfile.ubuntu-tracee-make
+|index 19c80f8ed..989cabf94 100644
+|--- a/builder/Dockerfile.ubuntu-tracee-make
+|+++ b/builder/Dockerfile.ubuntu-tracee-make
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 160
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/contributing/building/building.md b/docs/contributing/building/building.md
+|index e107a66c2..74b7b0984 100644
+|--- a/docs/contributing/building/building.md
+|+++ b/docs/contributing/building/building.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 173
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/cache.1.md b/docs/docs/flags/cache.1.md
+|index dc2010110..00be7129e 100644
+|--- a/docs/docs/flags/cache.1.md
+|+++ b/docs/docs/flags/cache.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 186
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/capabilities.1.md b/docs/docs/flags/capabilities.1.md
+|index e623ffdfe..94626bc00 100644
+|--- a/docs/docs/flags/capabilities.1.md
+|+++ b/docs/docs/flags/capabilities.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 199
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/capture.1.md b/docs/docs/flags/capture.1.md
+|index 259a8d95d..885cb55d2 100644
+|--- a/docs/docs/flags/capture.1.md
+|+++ b/docs/docs/flags/capture.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 212
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/config.1.md b/docs/docs/flags/config.1.md
+|index 2cfba6926..b65ec9bd5 100644
+|--- a/docs/docs/flags/config.1.md
+|+++ b/docs/docs/flags/config.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 225
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/containers.1.md b/docs/docs/flags/containers.1.md
+|index d08973360..a504bafc4 100644
+|--- a/docs/docs/flags/containers.1.md
+|+++ b/docs/docs/flags/containers.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 238
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/events.1.md b/docs/docs/flags/events.1.md
+|index b573821e3..72c135f8b 100644
+|--- a/docs/docs/flags/events.1.md
+|+++ b/docs/docs/flags/events.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 251
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/log.1.md b/docs/docs/flags/log.1.md
+|index f411c239b..d5ba20f79 100644
+|--- a/docs/docs/flags/log.1.md
+|+++ b/docs/docs/flags/log.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 264
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/output.1.md b/docs/docs/flags/output.1.md
+|index b3fa0d294..309c21b60 100644
+|--- a/docs/docs/flags/output.1.md
+|+++ b/docs/docs/flags/output.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 277
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/rego.1.md b/docs/docs/flags/rego.1.md
+|index 3e816aae0..26d906214 100644
+|--- a/docs/docs/flags/rego.1.md
+|+++ b/docs/docs/flags/rego.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 290
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/docs/flags/scope.1.md b/docs/docs/flags/scope.1.md
+|index da519ca75..a8a79a63f 100644
+|--- a/docs/docs/flags/scope.1.md
+|+++ b/docs/docs/flags/scope.1.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 303
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/cache.1 b/docs/man/cache.1
+|index 62b3cde38..46f0c8df0 100644
+|--- a/docs/man/cache.1
+|+++ b/docs/man/cache.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 404
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/capabilities.1 b/docs/man/capabilities.1
+|index 80e50e487..61e172678 100644
+|--- a/docs/man/capabilities.1
+|+++ b/docs/man/capabilities.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 502
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/capture.1 b/docs/man/capture.1
+|index a9c05b2d7..26f68f1bf 100644
+|--- a/docs/man/capture.1
+|+++ b/docs/man/capture.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 719
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/config.1 b/docs/man/config.1
+|index 7f1e7e1bd..37687e015 100644
+|--- a/docs/man/config.1
+|+++ b/docs/man/config.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 783
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/containers.1 b/docs/man/containers.1
+|index 94cc72518..b2602e247 100644
+|--- a/docs/man/containers.1
+|+++ b/docs/man/containers.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 872
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/events.1 b/docs/man/events.1
+|index 70baa5e8b..1a2d745c5 100644
+|--- a/docs/man/events.1
+|+++ b/docs/man/events.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 1133
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/log.1 b/docs/man/log.1
+|index 791e5428c..1c8809a58 100644
+|--- a/docs/man/log.1
+|+++ b/docs/man/log.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 1340
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/output.1 b/docs/man/output.1
+|index 322109a2e..b4070498d 100644
+|--- a/docs/man/output.1
+|+++ b/docs/man/output.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 1604
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/rego.1 b/docs/man/rego.1
+|index 3cc0be1e3..8e32a3edc 100644
+|--- a/docs/man/rego.1
+|+++ b/docs/man/rego.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1679
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/man/scope.1 b/docs/man/scope.1
+|index 2ba9e9a3b..67b394a96 100644
+|--- a/docs/man/scope.1
+|+++ b/docs/man/scope.1
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 2082
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index 8fdd9391f..c587fa645 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2343
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 71812988e..4f8f5b6c5 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+17 out of 17 hunks ignored
+can't find file to patch at input line 3949
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/containers/runtime/containerd.go b/pkg/containers/runtime/containerd.go
+|index 8e43b2cc9..7917588ef 100644
+|--- a/pkg/containers/runtime/containerd.go
+|+++ b/pkg/containers/runtime/containerd.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3962
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/containers/runtime/crio.go b/pkg/containers/runtime/crio.go
+|index 8a0623ce0..45640fac3 100644
+|--- a/pkg/containers/runtime/crio.go
+|+++ b/pkg/containers/runtime/crio.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 3975
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/signatures/helpers/go.mod b/signatures/helpers/go.mod
+|index 0df7dc9ed..cd3d47ac2 100644
+|--- a/signatures/helpers/go.mod
+|+++ b/signatures/helpers/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/signatures/helpers/go.sum
+can't find file to patch at input line 4002
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/types/go.mod b/types/go.mod
+|index 8349f96a1..f6f8a560f 100644
+|--- a/types/go.mod
+|+++ b/types/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .github/actions/build-dependencies/action.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/actions/build-dependencies/action.yaml.rej
+patching file Vagrantfile
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Vagrantfile.rej
+patching file api/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file api/go.mod.rej
+patching file api/go.sum
+Hunk #1 FAILED at 1.
+1 out of 1 hunk FAILED -- saving rejects to file api/go.sum.rej
+patching file builder/Dockerfile.k8s
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file builder/Dockerfile.k8s.rej
+patching file builder/Dockerfile.man
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file builder/Dockerfile.man.rej
+patching file builder/Dockerfile.protoc
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file builder/Dockerfile.protoc.rej
+patching file builder/Dockerfile.ubuntu-tracee-make
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file builder/Dockerfile.ubuntu-tracee-make.rej
+patching file docs/contributing/building/building.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/contributing/building/building.md.rej
+patching file docs/docs/flags/cache.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/cache.1.md.rej
+patching file docs/docs/flags/capabilities.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/capabilities.1.md.rej
+patching file docs/docs/flags/capture.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/capture.1.md.rej
+patching file docs/docs/flags/config.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/config.1.md.rej
+patching file docs/docs/flags/containers.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/containers.1.md.rej
+patching file docs/docs/flags/events.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/events.1.md.rej
+patching file docs/docs/flags/log.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/log.1.md.rej
+patching file docs/docs/flags/output.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/output.1.md.rej
+patching file docs/docs/flags/rego.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/rego.1.md.rej
+patching file docs/docs/flags/scope.1.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/docs/flags/scope.1.md.rej
+patching file docs/man/cache.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file docs/man/cache.1.rej
+patching file docs/man/capabilities.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/man/capabilities.1.rej
+patching file docs/man/capture.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file docs/man/capture.1.rej
+patching file docs/man/config.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/man/config.1.rej
+patching file docs/man/containers.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/man/containers.1.rej
+patching file docs/man/events.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file docs/man/events.1.rej
+patching file docs/man/log.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file docs/man/log.1.rej
+patching file docs/man/output.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file docs/man/output.1.rej
+patching file docs/man/rego.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/man/rego.1.rej
+patching file docs/man/scope.1
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file docs/man/scope.1.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 15.
+Hunk #3 FAILED at 33.
+Hunk #4 FAILED at 43.
+Hunk #5 FAILED at 77.
+Hunk #6 FAILED at 109.
+Hunk #7 FAILED at 135.
+Hunk #8 FAILED at 162.
+Hunk #9 FAILED at 173.
+Hunk #10 FAILED at 230.
+Hunk #11 FAILED at 246.
+Hunk #12 FAILED at 271.
+Hunk #13 FAILED at 321.
+Hunk #14 FAILED at 342.
+Hunk #15 FAILED at 356.
+Hunk #16 FAILED at 533.
+Hunk #17 FAILED at 561.
+17 out of 17 hunks FAILED -- saving rejects to file go.sum.rej
+patching file pkg/containers/runtime/containerd.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/containers/runtime/containerd.go.rej
+patching file pkg/containers/runtime/crio.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/containers/runtime/crio.go.rej
+patching file signatures/helpers/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file signatures/helpers/go.mod.rej
+The next patch would create the file signatures/helpers/go.sum,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file types/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file types/go.mod.rej
+ERROR: golden patch failed to apply by all strategies

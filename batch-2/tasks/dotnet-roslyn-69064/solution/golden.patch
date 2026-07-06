@@ -1,0 +1,701 @@
+diff --git a/src/Compilers/CSharp/Portable/Binder/Binder_Expressions.cs b/src/Compilers/CSharp/Portable/Binder/Binder_Expressions.cs
+index f1816ef59e8..cc8f364c8de 100644
+--- a/src/Compilers/CSharp/Portable/Binder/Binder_Expressions.cs
++++ b/src/Compilers/CSharp/Portable/Binder/Binder_Expressions.cs
+@@ -9252,11 +9252,7 @@ void checkWellKnown(WellKnownMember member)
+                             if (!candidate.IsStatic &&
+                                 IsAccessible(candidate, syntax, diagnostics) &&
+                                 candidate is MethodSymbol method &&
+-                                method.OriginalDefinition is var original &&
+-                                !original.ReturnsVoid &&
+-                                original.ParameterCount == 2 &&
+-                                original.Parameters[0] is { Type.SpecialType: SpecialType.System_Int32, RefKind: RefKind.None } &&
+-                                original.Parameters[1] is { Type.SpecialType: SpecialType.System_Int32, RefKind: RefKind.None })
++                                MethodHasValidSliceSignature(method))
+                             {
+                                 makeCall(syntax, receiver, method, out indexerOrSliceAccess, out argumentPlaceholders);
+                                 lookupResult.Free();
+@@ -9295,6 +9291,15 @@ void checkWellKnown(WellKnownMember member)
+             }
+         }
+ 
++        internal static bool MethodHasValidSliceSignature(MethodSymbol method)
++        {
++            return method.OriginalDefinition is var original &&
++                   !original.ReturnsVoid &&
++                   original.ParameterCount == 2 &&
++                   original.Parameters[0] is { Type.SpecialType: SpecialType.System_Int32, RefKind: RefKind.None } &&
++                   original.Parameters[1] is { Type.SpecialType: SpecialType.System_Int32, RefKind: RefKind.None };
++        }
++
+         private bool TryBindLengthOrCount(
+             SyntaxNode syntax,
+             BoundValuePlaceholderBase receiverPlaceholder,
+diff --git a/src/Compilers/CSharp/Portable/CSharpResources.resx b/src/Compilers/CSharp/Portable/CSharpResources.resx
+index 5dc4bb13443..bfb19b064a5 100644
+--- a/src/Compilers/CSharp/Portable/CSharpResources.resx
++++ b/src/Compilers/CSharp/Portable/CSharpResources.resx
+@@ -7682,4 +7682,22 @@ To remove the warning, you can use /reference instead (set the Embed Interop Typ
+   <data name="ERR_InlineArrayUnsupportedElementFieldModifier" xml:space="preserve">
+     <value>Inline array element field cannot be declared as required, readonly, volatile, or as a fixed size buffer.</value>
+   </data>
++  <data name="WRN_InlineArrayIndexerNotUsed" xml:space="preserve">
++    <value>Inline array indexer will not be used for element access expression.</value>
++  </data>
++  <data name="WRN_InlineArrayIndexerNotUsed_Title" xml:space="preserve">
++    <value>Inline array indexer will not be used for element access expression.</value>
++  </data>
++  <data name="WRN_InlineArraySliceNotUsed" xml:space="preserve">
++    <value>Inline array 'Slice' method will not be used for element access expression.</value>
++  </data>
++  <data name="WRN_InlineArraySliceNotUsed_Title" xml:space="preserve">
++    <value>Inline array 'Slice' method will not be used for element access expression.</value>
++  </data>
++  <data name="WRN_InlineArrayConversionOperatorNotUsed" xml:space="preserve">
++    <value>Inline array conversion operator will not be used for conversion from expression of the declaring type.</value>
++  </data>
++  <data name="WRN_InlineArrayConversionOperatorNotUsed_Title" xml:space="preserve">
++    <value>Inline array conversion operator will not be used for conversion from expression of the declaring type.</value>
++  </data>
+ </root>
+\ No newline at end of file
+diff --git a/src/Compilers/CSharp/Portable/Errors/ErrorCode.cs b/src/Compilers/CSharp/Portable/Errors/ErrorCode.cs
+index b4732b84b50..54b6c3999a3 100644
+--- a/src/Compilers/CSharp/Portable/Errors/ErrorCode.cs
++++ b/src/Compilers/CSharp/Portable/Errors/ErrorCode.cs
+@@ -2243,6 +2243,9 @@ internal enum ErrorCode
+         WRN_PrimaryConstructorParameterIsShadowedAndNotPassedToBase = 9179,
+ 
+         ERR_InlineArrayUnsupportedElementFieldModifier = 9180,
++        WRN_InlineArrayIndexerNotUsed = 9181,
++        WRN_InlineArraySliceNotUsed = 9182,
++        WRN_InlineArrayConversionOperatorNotUsed = 9183,
+ 
+         #endregion
+ 
+diff --git a/src/Compilers/CSharp/Portable/Errors/ErrorFacts.cs b/src/Compilers/CSharp/Portable/Errors/ErrorFacts.cs
+index f4dac2b80f8..3e1f560edf2 100644
+--- a/src/Compilers/CSharp/Portable/Errors/ErrorFacts.cs
++++ b/src/Compilers/CSharp/Portable/Errors/ErrorFacts.cs
+@@ -537,6 +537,9 @@ internal static int GetWarningLevel(ErrorCode code)
+                 case ErrorCode.WRN_NullabilityMismatchInParameterTypeOnInterceptor:
+                 case ErrorCode.WRN_CapturedPrimaryConstructorParameterInFieldInitializer:
+                 case ErrorCode.WRN_PrimaryConstructorParameterIsShadowedAndNotPassedToBase:
++                case ErrorCode.WRN_InlineArrayIndexerNotUsed:
++                case ErrorCode.WRN_InlineArraySliceNotUsed:
++                case ErrorCode.WRN_InlineArrayConversionOperatorNotUsed:
+                     return 1;
+                 default:
+                     return 0;
+@@ -2363,6 +2366,9 @@ internal static bool IsBuildOnlyDiagnostic(ErrorCode code)
+                 case ErrorCode.ERR_CollectionLiteralNoTargetType:
+                 case ErrorCode.WRN_PrimaryConstructorParameterIsShadowedAndNotPassedToBase:
+                 case ErrorCode.ERR_InlineArrayUnsupportedElementFieldModifier:
++                case ErrorCode.WRN_InlineArrayIndexerNotUsed:
++                case ErrorCode.WRN_InlineArraySliceNotUsed:
++                case ErrorCode.WRN_InlineArrayConversionOperatorNotUsed:
+                     return false;
+                 default:
+                     // NOTE: All error codes must be explicitly handled in this switch statement
+diff --git a/src/Compilers/CSharp/Portable/Generated/ErrorFacts.Generated.cs b/src/Compilers/CSharp/Portable/Generated/ErrorFacts.Generated.cs
+index b8fdf8dba05..9f8683570ab 100644
+--- a/src/Compilers/CSharp/Portable/Generated/ErrorFacts.Generated.cs
++++ b/src/Compilers/CSharp/Portable/Generated/ErrorFacts.Generated.cs
+@@ -320,6 +320,9 @@ public static bool IsWarning(ErrorCode code)
+                 case ErrorCode.WRN_NullabilityMismatchInReturnTypeOnInterceptor:
+                 case ErrorCode.WRN_NullabilityMismatchInParameterTypeOnInterceptor:
+                 case ErrorCode.WRN_PrimaryConstructorParameterIsShadowedAndNotPassedToBase:
++                case ErrorCode.WRN_InlineArrayIndexerNotUsed:
++                case ErrorCode.WRN_InlineArraySliceNotUsed:
++                case ErrorCode.WRN_InlineArrayConversionOperatorNotUsed:
+                     return true;
+                 default:
+                     return false;
+diff --git a/src/Compilers/CSharp/Portable/Symbols/Source/SourceNamedTypeSymbol.cs b/src/Compilers/CSharp/Portable/Symbols/Source/SourceNamedTypeSymbol.cs
+index 311cd479eb6..fb53c78a572 100644
+--- a/src/Compilers/CSharp/Portable/Symbols/Source/SourceNamedTypeSymbol.cs
++++ b/src/Compilers/CSharp/Portable/Symbols/Source/SourceNamedTypeSymbol.cs
+@@ -1758,6 +1758,50 @@ protected override void AfterMembersCompletedChecks(BindingDiagnosticBag diagnos
+                     {
+                         diagnostics.Add(ErrorCode.ERR_InlineArrayUnsupportedElementFieldModifier, elementField.TryGetFirstLocation() ?? GetFirstLocation());
+                     }
++
++                    if (TryGetInlineArrayElementField() is { TypeWithAnnotations: var elementType })
++                    {
++                        NamedTypeSymbol? index = null;
++                        NamedTypeSymbol? range = null;
++
++                        foreach (PropertySymbol indexer in Indexers)
++                        {
++                            if (indexer.Parameters is [{ Type: { } type }] &&
++                                (type.SpecialType == SpecialType.System_Int32 ||
++                                 type.Equals(index ??= DeclaringCompilation.GetWellKnownType(WellKnownType.System_Index), TypeCompareKind.AllIgnoreOptions) ||
++                                 type.Equals(range ??= DeclaringCompilation.GetWellKnownType(WellKnownType.System_Range), TypeCompareKind.AllIgnoreOptions)))
++                            {
++                                diagnostics.Add(ErrorCode.WRN_InlineArrayIndexerNotUsed, indexer.TryGetFirstLocation() ?? GetFirstLocation());
++                            }
++                        }
++
++                        foreach (var slice in GetMembers(WellKnownMemberNames.SliceMethodName).OfType<MethodSymbol>())
++                        {
++                            if (Binder.MethodHasValidSliceSignature(slice))
++                            {
++                                diagnostics.Add(ErrorCode.WRN_InlineArraySliceNotUsed, slice.TryGetFirstLocation() ?? GetFirstLocation());
++                                break;
++                            }
++                        }
++
++                        NamedTypeSymbol? span = null;
++                        NamedTypeSymbol? readOnlySpan = null;
++
++                        foreach (var conversion in GetMembers().OfType<SourceUserDefinedConversionSymbol>())
++                        {
++                            TypeSymbol returnType = conversion.ReturnType;
++                            TypeSymbol returnTypeOriginalDefinition = returnType.OriginalDefinition;
++
++                            if (conversion.ParameterCount == 1 &&
++                                conversion.Parameters[0].Type.Equals(this, TypeCompareKind.AllIgnoreOptions) &&
++                                (returnTypeOriginalDefinition.Equals(span ??= DeclaringCompilation.GetWellKnownType(WellKnownType.System_Span_T), TypeCompareKind.AllIgnoreOptions) ||
++                                 returnTypeOriginalDefinition.Equals(readOnlySpan ??= DeclaringCompilation.GetWellKnownType(WellKnownType.System_ReadOnlySpan_T), TypeCompareKind.AllIgnoreOptions)) &&
++                                Conversions.HasIdentityConversion(((NamedTypeSymbol)returnTypeOriginalDefinition).Construct(ImmutableArray.Create(elementType)), returnType))
++                            {
++                                diagnostics.Add(ErrorCode.WRN_InlineArrayConversionOperatorNotUsed, conversion.TryGetFirstLocation() ?? GetFirstLocation());
++                            }
++                        }
++                    }
+                 }
+                 else
+                 {
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.cs.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.cs.xlf
+index 2f67ffd2fe6..ca900a502a8 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.cs.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.cs.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">Použití proměnné v tomto kontextu může vystavit odkazované proměnné mimo rozsah jejich oboru.</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">Zachycuje se volání {0} s zachycovačem {1}, ale podpisy se neshodují.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.de.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.de.xlf
+index 6dcde332041..f37e5f17b75 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.de.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.de.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">Die Verwendung der Variablen in diesem Kontext kann dazu führen, dass referenzierte Variablen außerhalb ihres Deklarationsbereichs verfügbar gemacht werden.</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">Abfangen eines Aufrufs von "{0}" mit Interceptor "{1}", aber die Signaturen stimmen nicht überein.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.es.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.es.xlf
+index 4c5dd570c72..650e58162ae 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.es.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.es.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">Usar la variable en este contexto puede exponer variables a las que se hace referencia fuera de su ámbito de declaración</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">Intercepción de una llamada a '{0}' con el interceptor '{1}', pero las firmas no coinciden.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.fr.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.fr.xlf
+index 8a78be23742..c46f8ad4fdf 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.fr.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.fr.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">Utiliser la variable dans ce contexte peut exposer des variables de référence en dehors de leur étendue de déclaration</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">Interception d'un appel à '{0}' avec l'intercepteur '{1}', mais les signatures ne correspondent pas.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.it.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.it.xlf
+index 0b3f03c8215..74029375393 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.it.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.it.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">L'uso di variabili in questo contesto potrebbe esporre le variabili a cui si fa riferimento al di fuori dell'ambito della dichiarazione</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">Intercettazione di una chiamata a '{0}' con l'intercettore '{1}', ma le firme non corrispondono.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.ja.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.ja.xlf
+index de98e5b6cca..2c2762b3958 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.ja.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.ja.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">このコンテキストでの変数の使用は、参照される変数が宣言のスコープ外に公開される可能性があります</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">インターセプター '{1}' を使用して'{0}' への呼び出しをインターセプトしていますが、署名が一致しません。</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.ko.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.ko.xlf
+index c7097092111..a9424d06530 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.ko.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.ko.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">이 컨텍스트에서 변수를 사용하면 선언 범위 외부에서 참조된 변수가 노출될 수 있습니다.</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">'{1}' 인터셉터로 '{0}'에 대한 호출을 가로채지만 서명이 일치하지 않습니다.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.pl.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.pl.xlf
+index c86a98cff9e..27f2ead1d61 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.pl.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.pl.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">Nie można używać zmiennej w tym kontekście, ponieważ może uwidaczniać odwoływane zmienne poza ich zakresem deklaracji</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">Przechwytywanie wywołania do „{0}” za pomocą interceptora „{1}”, ale sygnatury nie są zgodne.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.pt-BR.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.pt-BR.xlf
+index d2599fc08c8..759d6d68e06 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.pt-BR.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.pt-BR.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">O uso de variável neste contexto pode expor variáveis referenciadas fora de seu escopo de declaração</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">Interceptando uma chamada para '{0}' com interceptador '{1}', mas as assinaturas não coincidem.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.ru.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.ru.xlf
+index 0f03e0c6143..da6c8057b9b 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.ru.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.ru.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">Использование переменной в этом контексте может представить ссылочные переменные за пределами области их объявления.</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">Перехват вызова ' {0} ' с перехватчиком ' {1} ', но подписи не совпадают.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.tr.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.tr.xlf
+index 583d9566cb4..0c09ed70c5c 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.tr.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.tr.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">Bu bağlamda değişken kullanımı, başvurulan değişkenleri bildirim kapsamının dışında gösterebilir.</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">'{0}' hedefine olan çağrı '{1}' engelleyicisi ile engelleniyor, ancak imzalar eşleşmiyor.</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.zh-Hans.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.zh-Hans.xlf
+index 9643ab23d2f..62561e73f62 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.zh-Hans.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.zh-Hans.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">在此上下文中使用变量可能会在变量声明范围以外公开所引用的变量</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">正在使用侦听器“{1}”截获对“{0}”的调用，但签名不匹配。</target>
+diff --git a/src/Compilers/CSharp/Portable/xlf/CSharpResources.zh-Hant.xlf b/src/Compilers/CSharp/Portable/xlf/CSharpResources.zh-Hant.xlf
+index a8925810086..dabf7c3d56a 100644
+--- a/src/Compilers/CSharp/Portable/xlf/CSharpResources.zh-Hant.xlf
++++ b/src/Compilers/CSharp/Portable/xlf/CSharpResources.zh-Hant.xlf
+@@ -2467,6 +2467,36 @@
+         <target state="translated">在此內容中使用變數，可能會將參考的變數公開在其宣告範圍外</target>
+         <note />
+       </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayConversionOperatorNotUsed_Title">
++        <source>Inline array conversion operator will not be used for conversion from expression of the declaring type.</source>
++        <target state="new">Inline array conversion operator will not be used for conversion from expression of the declaring type.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArrayIndexerNotUsed_Title">
++        <source>Inline array indexer will not be used for element access expression.</source>
++        <target state="new">Inline array indexer will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
++      <trans-unit id="WRN_InlineArraySliceNotUsed_Title">
++        <source>Inline array 'Slice' method will not be used for element access expression.</source>
++        <target state="new">Inline array 'Slice' method will not be used for element access expression.</target>
++        <note />
++      </trans-unit>
+       <trans-unit id="WRN_InterceptorSignatureMismatch">
+         <source>Intercepting a call to '{0}' with interceptor '{1}', but the signatures do not match.</source>
+         <target state="translated">正在使用攔截器 '{1}' 攔截對 '{0}' 的呼叫，但簽章不相符。</target>

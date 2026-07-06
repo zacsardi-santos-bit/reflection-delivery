@@ -1,0 +1,19 @@
+patching file pkg/ai/bedrock_support/completions_test.go
+patching file pkg/ai/bedrock_support/model_test.go
+patching file pkg/ai/bedrock_support/responses_test.go
+# github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support [github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support.test]
+pkg/ai/bedrock_support/completions_test.go:61:3: unknown field ModelName in struct literal of type BedrockModelConfig
+pkg/ai/bedrock_support/completions_test.go:65:26: completion.GetDefaultCompletion undefined (type *AmazonCompletion has no field or method GetDefaultCompletion)
+pkg/ai/bedrock_support/completions_test.go:85:3: unknown field ModelName in struct literal of type BedrockModelConfig
+pkg/ai/bedrock_support/completions_test.go:89:26: completion.GetNovaCompletion undefined (type *AmazonCompletion has no field or method GetNovaCompletion)
+pkg/ai/bedrock_support/completions_test.go:114:3: unknown field ModelName in struct literal of type BedrockModelConfig
+pkg/ai/bedrock_support/completions_test.go:143:3: unknown field ModelName in struct literal of type BedrockModelConfig
+pkg/ai/bedrock_support/completions_test.go:167:3: unknown field ModelName in struct literal of type BedrockModelConfig
+pkg/ai/bedrock_support/completions_test.go:177:17: undefined: isModelSupported
+pkg/ai/bedrock_support/completions_test.go:178:18: undefined: isModelSupported
+pkg/ai/bedrock_support/model_test.go:15:3: unknown field ModelName in struct literal of type BedrockModelConfig
+pkg/ai/bedrock_support/model_test.go:15:3: too many errors
+{"Time":"2026-06-29T15:17:04.121336118Z","Action":"start","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support"}
+{"Time":"2026-06-29T15:17:04.121424863Z","Action":"output","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Output":"FAIL\tgithub.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support [build failed]\n"}
+{"Time":"2026-06-29T15:17:04.121466907Z","Action":"fail","Package":"github.com/k8sgpt-ai/k8sgpt/pkg/ai/bedrock_support","Elapsed":0}
+reward=0 graded=14 found=0 failed=0 parsed=1 framework=go exit_code=1

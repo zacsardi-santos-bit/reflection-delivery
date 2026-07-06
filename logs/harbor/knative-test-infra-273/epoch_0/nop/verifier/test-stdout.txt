@@ -1,9 +1,0 @@
-patching file test/library_test.go (renamed from test/simple_test.go)
-patching file test/presubmit-tests.sh
-patching file test/unit/library-tests.sh
-patching file tools/testgrid/testgrid_test.go
-# github.com/knative/test-infra/tools/testgrid_test [github.com/knative/test-infra/tools/testgrid.test]
-/go/src/github.com/knative/test-infra/tools/testgrid/testgrid_test.go:28:37: undefined: testgrid.Filename
-/go/src/github.com/knative/test-infra/tools/testgrid/testgrid_test.go:72:38: undefined: testgrid.Filename
-FAIL	github.com/knative/test-infra/tools/testgrid [build failed]
-reward=0 graded=2 found=2 failed=2 parsed=1 framework=go exit_code=1

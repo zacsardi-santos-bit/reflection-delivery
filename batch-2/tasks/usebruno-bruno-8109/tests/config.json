@@ -1,0 +1,26 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/bruno-app && npx jest src/components/ApiSpecPanel/Renderers/Swagger/serializeBody.spec.js --coverage=false --verbose --forceExit; cd /workspace/repo/packages/bruno-electron && node --experimental-vm-modules /workspace/repo/node_modules/jest/bin/jest.js tests/swagger-fetch.test.js --coverage=false --verbose --forceExit",
+  "test_files": [
+    "packages/bruno-app/src/components/ApiSpecPanel/Renderers/Swagger/serializeBody.spec.js",
+    "packages/bruno-electron/tests/swagger-fetch.test.js"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch returns base64-encoded body for 2xx response",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch surfaces non-2xx status without throwing",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch returns error shape with code on network failure",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch returns error shape on TLS failure",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch returns INVALID_REQUEST when called with no payload",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch returns INVALID_REQUEST when url is missing",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch forwards method, headers, and body to axios",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch forwards PUT method with body to axios",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch forwards DELETE method with body to axios",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch forwards PATCH method with body to axios",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch forwards Authorization header for auth-required endpoints",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch normalizes AxiosHeaders instance to plain object via toJSON",
+    "/workspace/repo/packages/bruno-electron/tests/swagger-fetch.test.js::proxySwaggerFetch accepts plain http:// targets (no scheme restriction)"
+  ],
+  "PASS_TO_PASS": []
+}

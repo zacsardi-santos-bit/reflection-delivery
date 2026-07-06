@@ -1,0 +1,25 @@
+patching file common/clock/event_timer_gate_test.go
+patching file common/clock/real_timer_benchmark_test.go
+patching file common/clock/timer_gate_test.go
+patching file service/history/queue/factory_test.go
+patching file service/history/queue/timer_gate_test.go
+patching file service/history/queue/timer_queue_processor_base_test.go
+# github.com/uber/cadence/common/clock [github.com/uber/cadence/common/clock.test]
+common/clock/event_timer_gate_test.go:39:18: undefined: EventTimerGate
+common/clock/event_timer_gate_test.go:60:21: undefined: NewEventTimerGate
+common/clock/timer_gate_test.go:38:13: undefined: TimerGate
+common/clock/timer_gate_test.go:58:16: undefined: NewTimerGate
+common/clock/real_timer_benchmark_test.go:31:11: undefined: NewTimerGate
+{"Time":"2026-06-29T15:18:39.030280175Z","Action":"start","Package":"github.com/uber/cadence/common/clock"}
+{"Time":"2026-06-29T15:18:39.031553037Z","Action":"output","Package":"github.com/uber/cadence/common/clock","Output":"FAIL\tgithub.com/uber/cadence/common/clock [build failed]\n"}
+{"Time":"2026-06-29T15:18:39.031597837Z","Action":"fail","Package":"github.com/uber/cadence/common/clock","Elapsed":0.001}
+# github.com/uber/cadence/service/history/queue [github.com/uber/cadence/service/history/queue.test]
+service/history/queue/timer_queue_processor_base_test.go:574:41: timerQueueProcessBase.timerGate.Chan undefined (type TimerGate has no field or method Chan)
+service/history/queue/timer_queue_processor_base_test.go:663:41: timerQueueProcessBase.timerGate.Chan undefined (type TimerGate has no field or method Chan)
+service/history/queue/timer_queue_processor_base_test.go:754:41: timerQueueProcessBase.timerGate.Chan undefined (type TimerGate has no field or method Chan)
+service/history/queue/timer_queue_processor_base_test.go:852:41: timerQueueProcessBase.timerGate.Chan undefined (type TimerGate has no field or method Chan)
+service/history/queue/timer_queue_processor_base_test.go:934:21: undefined: clock.NewTimerGate
+{"Time":"2026-06-29T15:18:48.415545885Z","Action":"start","Package":"github.com/uber/cadence/service/history/queue"}
+{"Time":"2026-06-29T15:18:48.415596455Z","Action":"output","Package":"github.com/uber/cadence/service/history/queue","Output":"FAIL\tgithub.com/uber/cadence/service/history/queue [build failed]\n"}
+{"Time":"2026-06-29T15:18:48.415626745Z","Action":"fail","Package":"github.com/uber/cadence/service/history/queue","Elapsed":0}
+reward=0 graded=226 found=0 failed=0 parsed=2 framework=go exit_code=1

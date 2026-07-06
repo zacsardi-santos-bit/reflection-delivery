@@ -1,0 +1,13 @@
+patching file cmd/priv_val_server/main.go
+patching file cmd/tendermint/commands/run_node.go
+patching file config/config.go
+patching file docs/architecture/adr-008-priv-validator.md
+patching file node/node.go
+patching file types/canonical_json.go
+patching file types/priv_validator.go
+patching file types/priv_validator/json.go
+patching file types/priv_validator/sign_info.go
+patching file types/priv_validator/socket.go
+patching file types/priv_validator/unencrypted.go
+patching file types/priv_validator/upgrade.go
+patching file types/priv_validator/upgrade_pv/main.go

@@ -1,0 +1,392 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_pytest_style/PT023.py
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.12s
+────────────
+ Nextest run ID 7fbf5c83-3e33-4545-b4ac-89d9aacffe33 with nextest profile: default
+    Starting 2 tests across 1 binary (2431 tests skipped)
+        FAIL [   0.149s] (1/2) ruff_linter rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_mark_parentheses_true_settings_default_pt023_parentheses_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_parentheses.snap
+    Snapshot: PT023_parentheses
+    Source: crates/ruff_linter/src/rules/flake8_pytest_style/mod.rs:357
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        0       │-PT023.py:12:1: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+        1       │-   |
+        2       │-12 | @pytest.mark.foo
+        3       │-   | ^^^^^^^^^^^^^^^^ PT023
+        4       │-13 | def test_something():
+        5       │-14 |     pass
+        6       │-   |
+        7       │-   = help: Add parentheses
+        8       │-
+        9       │-ℹ Safe fix
+       10       │-9  9  | # Without parentheses
+       11       │-10 10 | 
+       12       │-11 11 | 
+       13       │-12    |-@pytest.mark.foo
+       14       │-   12 |+@pytest.mark.foo()
+       15       │-13 13 | def test_something():
+       16       │-14 14 |     pass
+       17       │-15 15 | 
+       18       │-
+       19     0 │ PT023.py:17:1: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+       20     1 │    |
+       21     2 │ 17 | @pytest.mark.foo
+       22     3 │    | ^^^^^^^^^^^^^^^^ PT023
+       23       │-18 | class TestClass:
+       24       │-19 |     def test_something():
+              4 │+18 | def test_something():
+              5 │+19 |     pass
+       25     6 │    |
+       26     7 │    = help: Add parentheses
+       27     8 │ 
+       28     9 │ ℹ Safe fix
+       29       │-14 14 |     pass
+             10 │+14 14 | # Without parentheses
+       30    11 │ 15 15 | 
+       31    12 │ 16 16 | 
+       32    13 │ 17    |-@pytest.mark.foo
+       33    14 │    17 |+@pytest.mark.foo()
+       34       │-18 18 | class TestClass:
+       35       │-19 19 |     def test_something():
+       36       │-20 20 |         pass
+             15 │+18 18 | def test_something():
+             16 │+19 19 |     pass
+             17 │+20 20 | 
+       37    18 │ 
+       38       │-PT023.py:24:5: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+             19 │+PT023.py:22:1: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+       39    20 │    |
+             21 │+22 | @pytest.mark.foo
+             22 │+   | ^^^^^^^^^^^^^^^^ PT023
+       40    23 │ 23 | class TestClass:
+       41       │-24 |     @pytest.mark.foo
+       42       │-   |     ^^^^^^^^^^^^^^^^ PT023
+       43       │-25 |     def test_something():
+       44       │-26 |         pass
+             24 │+24 |     def test_something():
+       45    25 │    |
+       46    26 │    = help: Add parentheses
+       47    27 │ 
+       48    28 │ ℹ Safe fix
+             29 │+19 19 |     pass
+             30 │+20 20 | 
+       49    31 │ 21 21 | 
+       50       │-22 22 | 
+             32 │+22    |-@pytest.mark.foo
+             33 │+   22 |+@pytest.mark.foo()
+       51    34 │ 23 23 | class TestClass:
+       52       │-24    |-    @pytest.mark.foo
+       53       │-   24 |+    @pytest.mark.foo()
+       54       │-25 25 |     def test_something():
+       55       │-26 26 |         pass
+       56       │-27 27 | 
+             35 │+24 24 |     def test_something():
+             36 │+25 25 |         pass
+       57    37 │ 
+       58       │-PT023.py:30:5: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+             38 │+PT023.py:29:5: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+       59    39 │    |
+       60       │-29 | class TestClass:
+       61       │-30 |     @pytest.mark.foo
+             40 │+28 | class TestClass:
+             41 │+29 |     @pytest.mark.foo
+       62    42 │    |     ^^^^^^^^^^^^^^^^ PT023
+       63       │-31 |     class TestNestedClass:
+       64       │-32 |         def test_something():
+             43 │+30 |     def test_something():
+             44 │+31 |         pass
+       65    45 │    |
+       66    46 │    = help: Add parentheses
+       67    47 │ 
+       68    48 │ ℹ Safe fix
+             49 │+26 26 | 
+       69    50 │ 27 27 | 
+       70       │-28 28 | 
+       71       │-29 29 | class TestClass:
+       72       │-30    |-    @pytest.mark.foo
+       73       │-   30 |+    @pytest.mark.foo()
+       74       │-31 31 |     class TestNestedClass:
+       75       │-32 32 |         def test_something():
+       76       │-33 33 |             pass
+             51 │+28 28 | class TestClass:
+             52 │+29    |-    @pytest.mark.foo
+             53 │+   29 |+    @pytest.mark.foo()
+             54 │+30 30 |     def test_something():
+             55 │+31 31 |         pass
+             56 │+32 32 | 
+       77    57 │ 
+       78       │-PT023.py:38:9: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+             58 │+PT023.py:35:5: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+       79    59 │    |
+       80       │-36 | class TestClass:
+       81       │-37 |     class TestNestedClass:
+       82       │-38 |         @pytest.mark.foo
+             60 │+34 | class TestClass:
+             61 │+35 |     @pytest.mark.foo
+             62 │+   |     ^^^^^^^^^^^^^^^^ PT023
+             63 │+36 |     class TestNestedClass:
+             64 │+37 |         def test_something():
+             65 │+   |
+             66 │+   = help: Add parentheses
+             67 │+
+             68 │+ℹ Safe fix
+             69 │+32 32 | 
+             70 │+33 33 | 
+             71 │+34 34 | class TestClass:
+             72 │+35    |-    @pytest.mark.foo
+             73 │+   35 |+    @pytest.mark.foo()
+             74 │+36 36 |     class TestNestedClass:
+             75 │+37 37 |         def test_something():
+             76 │+38 38 |             pass
+             77 │+
+             78 │+PT023.py:43:9: PT023 [*] Use `@pytest.mark.foo()` over `@pytest.mark.foo`
+             79 │+   |
+             80 │+41 | class TestClass:
+             81 │+42 |     class TestNestedClass:
+             82 │+43 |         @pytest.mark.foo
+       83    83 │    |         ^^^^^^^^^^^^^^^^ PT023
+       84       │-39 |         def test_something():
+       85       │-40 |             pass
+             84 │+44 |         def test_something():
+             85 │+45 |             pass
+       86    86 │    |
+       87    87 │    = help: Add parentheses
+       88    88 │ 
+       89    89 │ ℹ Safe fix
+       90       │-35 35 | 
+       91       │-36 36 | class TestClass:
+       92       │-37 37 |     class TestNestedClass:
+       93       │-38    |-        @pytest.mark.foo
+       94       │-   38 |+        @pytest.mark.foo()
+       95       │-39 39 |         def test_something():
+       96       │-40 40 |             pass
+       97       │-41 41 |
+             90 │+40 40 | 
+             91 │+41 41 | class TestClass:
+             92 │+42 42 |     class TestNestedClass:
+             93 │+43    |-        @pytest.mark.foo
+             94 │+   43 |+        @pytest.mark.foo()
+             95 │+44 44 |         def test_something():
+             96 │+45 45 |             pass
+             97 │+46 46 |
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_mark_parentheses_true_settings_default_pt023_parentheses_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_mark_parentheses_true_settings_default_pt023_parentheses_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2432 filtered out; finished in 0.12s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_parentheses.snap.new
+
+    thread 'rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_mark_parentheses_true_settings_default_pt023_parentheses_expects' panicked at /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/insta-1.43.1/src/runtime.rs:679:13:
+    snapshot assertion for 'PT023_parentheses' failed in line 357
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 1 test still running
+        FAIL [   0.148s] (2/2) ruff_linter rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_default_pt023_default_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_default.snap
+    Snapshot: PT023_default
+    Source: crates/ruff_linter/src/rules/flake8_pytest_style/mod.rs:357
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+        0       │-PT023.py:46:1: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+        1       │-   |
+        2       │-46 | @pytest.mark.foo()
+        3       │-   | ^^^^^^^^^^^^^^^^^^ PT023
+        4       │-47 | def test_something():
+        5       │-48 |     pass
+        6       │-   |
+        7       │-   = help: Remove parentheses
+        8       │-
+        9       │-ℹ Safe fix
+       10       │-43 43 | # With parentheses
+       11       │-44 44 | 
+       12       │-45 45 | 
+       13       │-46    |-@pytest.mark.foo()
+       14       │-   46 |+@pytest.mark.foo
+       15       │-47 47 | def test_something():
+       16       │-48 48 |     pass
+       17       │-49 49 | 
+       18       │-
+       19     0 │ PT023.py:51:1: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+       20     1 │    |
+       21     2 │ 51 | @pytest.mark.foo()
+       22     3 │    | ^^^^^^^^^^^^^^^^^^ PT023
+       23       │-52 | class TestClass:
+       24       │-53 |     def test_something():
+              4 │+52 | def test_something():
+              5 │+53 |     pass
+       25     6 │    |
+       26     7 │    = help: Remove parentheses
+       27     8 │ 
+       28     9 │ ℹ Safe fix
+       29       │-48 48 |     pass
+             10 │+48 48 | # With parentheses
+       30    11 │ 49 49 | 
+       31    12 │ 50 50 | 
+       32    13 │ 51    |-@pytest.mark.foo()
+       33    14 │    51 |+@pytest.mark.foo
+       34       │-52 52 | class TestClass:
+       35       │-53 53 |     def test_something():
+       36       │-54 54 |         pass
+             15 │+52 52 | def test_something():
+             16 │+53 53 |     pass
+             17 │+54 54 | 
+       37    18 │ 
+       38       │-PT023.py:58:5: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+             19 │+PT023.py:56:1: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+       39    20 │    |
+             21 │+56 | @pytest.mark.foo()
+             22 │+   | ^^^^^^^^^^^^^^^^^^ PT023
+       40    23 │ 57 | class TestClass:
+       41       │-58 |     @pytest.mark.foo()
+       42       │-   |     ^^^^^^^^^^^^^^^^^^ PT023
+       43       │-59 |     def test_something():
+       44       │-60 |         pass
+             24 │+58 |     def test_something():
+       45    25 │    |
+       46    26 │    = help: Remove parentheses
+       47    27 │ 
+       48    28 │ ℹ Safe fix
+             29 │+53 53 |     pass
+             30 │+54 54 | 
+       49    31 │ 55 55 | 
+       50       │-56 56 | 
+             32 │+56    |-@pytest.mark.foo()
+             33 │+   56 |+@pytest.mark.foo
+       51    34 │ 57 57 | class TestClass:
+       52       │-58    |-    @pytest.mark.foo()
+       53       │-   58 |+    @pytest.mark.foo
+       54       │-59 59 |     def test_something():
+       55       │-60 60 |         pass
+       56       │-61 61 | 
+             35 │+58 58 |     def test_something():
+             36 │+59 59 |         pass
+       57    37 │ 
+       58       │-PT023.py:64:5: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+             38 │+PT023.py:63:5: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+       59    39 │    |
+       60       │-63 | class TestClass:
+       61       │-64 |     @pytest.mark.foo()
+             40 │+62 | class TestClass:
+             41 │+63 |     @pytest.mark.foo()
+       62    42 │    |     ^^^^^^^^^^^^^^^^^^ PT023
+       63       │-65 |     class TestNestedClass:
+       64       │-66 |         def test_something():
+             43 │+64 |     def test_something():
+             44 │+65 |         pass
+       65    45 │    |
+       66    46 │    = help: Remove parentheses
+       67    47 │ 
+       68    48 │ ℹ Safe fix
+             49 │+60 60 | 
+       69    50 │ 61 61 | 
+       70       │-62 62 | 
+       71       │-63 63 | class TestClass:
+       72       │-64    |-    @pytest.mark.foo()
+       73       │-   64 |+    @pytest.mark.foo
+       74       │-65 65 |     class TestNestedClass:
+       75       │-66 66 |         def test_something():
+       76       │-67 67 |             pass
+             51 │+62 62 | class TestClass:
+             52 │+63    |-    @pytest.mark.foo()
+             53 │+   63 |+    @pytest.mark.foo
+             54 │+64 64 |     def test_something():
+             55 │+65 65 |         pass
+             56 │+66 66 | 
+       77    57 │ 
+       78       │-PT023.py:72:9: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+             58 │+PT023.py:69:5: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+       79    59 │    |
+       80       │-70 | class TestClass:
+       81       │-71 |     class TestNestedClass:
+       82       │-72 |         @pytest.mark.foo()
+             60 │+68 | class TestClass:
+             61 │+69 |     @pytest.mark.foo()
+             62 │+   |     ^^^^^^^^^^^^^^^^^^ PT023
+             63 │+70 |     class TestNestedClass:
+             64 │+71 |         def test_something():
+             65 │+   |
+             66 │+   = help: Remove parentheses
+             67 │+
+             68 │+ℹ Safe fix
+             69 │+66 66 | 
+             70 │+67 67 | 
+             71 │+68 68 | class TestClass:
+             72 │+69    |-    @pytest.mark.foo()
+             73 │+   69 |+    @pytest.mark.foo
+             74 │+70 70 |     class TestNestedClass:
+             75 │+71 71 |         def test_something():
+             76 │+72 72 |             pass
+             77 │+
+             78 │+PT023.py:77:9: PT023 [*] Use `@pytest.mark.foo` over `@pytest.mark.foo()`
+             79 │+   |
+             80 │+75 | class TestClass:
+             81 │+76 |     class TestNestedClass:
+             82 │+77 |         @pytest.mark.foo()
+       83    83 │    |         ^^^^^^^^^^^^^^^^^^ PT023
+       84       │-73 |         def test_something():
+       85       │-74 |             pass
+             84 │+78 |         def test_something():
+             85 │+79 |             pass
+       86    86 │    |
+       87    87 │    = help: Remove parentheses
+       88    88 │ 
+       89    89 │ ℹ Safe fix
+       90       │-69 69 | 
+       91       │-70 70 | class TestClass:
+       92       │-71 71 |     class TestNestedClass:
+       93       │-72    |-        @pytest.mark.foo()
+       94       │-   72 |+        @pytest.mark.foo
+       95       │-73 73 |         def test_something():
+       96       │-74 74 |             pass
+             90 │+74 74 | 
+             91 │+75 75 | class TestClass:
+             92 │+76 76 |     class TestNestedClass:
+             93 │+77    |-        @pytest.mark.foo()
+             94 │+   77 |+        @pytest.mark.foo
+             95 │+78 78 |         def test_something():
+             96 │+79 79 |             pass
+    ────────────┴───────────────────────────────────────────────────────────────────
+    To update snapshots run `cargo insta review`
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_default_pt023_default_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_default_pt023_default_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2432 filtered out; finished in 0.12s
+
+  stderr ───
+    stored new snapshot /workspace/repo/crates/ruff_linter/src/rules/flake8_pytest_style/snapshots/ruff_linter__rules__flake8_pytest_style__tests__PT023_default.snap.new
+
+    thread 'rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_default_pt023_default_expects' panicked at /root/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/insta-1.43.1/src/runtime.rs:679:13:
+    snapshot assertion for 'PT023_default' failed in line 357
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.161s] 2 tests run: 0 passed, 2 failed, 2431 skipped
+        FAIL [   0.149s] (1/2) ruff_linter rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_mark_parentheses_true_settings_default_pt023_parentheses_expects
+        FAIL [   0.148s] (2/2) ruff_linter rules::flake8_pytest_style::tests::test_pytest_style::rule_pytestincorrectmarkparenthesesstyle_path_new_pt023_py_settings_default_pt023_default_expects
+error: test run failed
+reward=0 graded=2 found=0 failed=0 parsed=2 framework=cargo exit_code=100

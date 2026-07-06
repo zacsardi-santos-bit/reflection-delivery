@@ -1,0 +1,17 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/mlflow/server/js && node_modules/.bin/craco test --env=jsdom --watchAll=false src/common/components/MlflowSidebarExperimentItems.test.tsx",
+  "test_files": [
+    "mlflow/server/js/src/common/components/MlflowSidebarExperimentItems.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/mlflow/server/js/src/common/components/MlflowSidebarExperimentItems.test.tsx::MlflowSidebarExperimentItems preserves only time range params when navigating from traces-related to other tabs",
+    "/workspace/repo/mlflow/server/js/src/common/components/MlflowSidebarExperimentItems.test.tsx::MlflowSidebarExperimentItems preserves only time range params when navigating from other tabs to traces-related",
+    "/workspace/repo/mlflow/server/js/src/common/components/MlflowSidebarExperimentItems.test.tsx::MlflowSidebarExperimentItems preserves only time range params when navigating between non-traces-related tabs"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/mlflow/server/js/src/common/components/MlflowSidebarExperimentItems.test.tsx::MlflowSidebarExperimentItems preserves all query params when navigating between traces-related tabs"
+  ]
+}

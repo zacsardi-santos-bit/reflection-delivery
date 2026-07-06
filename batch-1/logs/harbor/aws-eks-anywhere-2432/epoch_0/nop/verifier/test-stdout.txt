@@ -1,0 +1,12 @@
+patching file pkg/executables/kubectl_test.go
+patching file test/e2e/curated_packages_test.go
+patching file test/framework/cluster.go
+patching file test/framework/curatedpackages.go
+# github.com/aws/eks-anywhere/pkg/executables_test [github.com/aws/eks-anywhere/pkg/executables.test]
+pkg/executables/kubectl_test.go:270:14: k.WaitForService undefined (type *executables.Kubectl has no field or method WaitForService)
+pkg/executables/kubectl_test.go:295:14: k.WaitForService undefined (type *executables.Kubectl has no field or method WaitForService)
+pkg/executables/kubectl_test.go:304:14: k.WaitForService undefined (type *executables.Kubectl has no field or method WaitForService)
+pkg/executables/kubectl_test.go:311:14: k.WaitForService undefined (type *executables.Kubectl has no field or method WaitForService)
+FAIL	github.com/aws/eks-anywhere/pkg/executables [build failed]
+FAIL
+reward=0 graded=4 found=4 failed=4 parsed=1 framework=go exit_code=1

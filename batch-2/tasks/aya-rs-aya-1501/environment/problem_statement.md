@@ -1,0 +1,9 @@
+I'm cleaning up bloom filter support across aya and hit a few related snags. First off, the user-space membership check currently takes the value as a mutable reference, which is dumb since checking presence doesn't mutate anything, so I want to relax that to a plain shared reference and callers shouldn't need a `mut` binding just to ask "is this in the filter?".
+
+Then there's the typed map (BTF) recognition. Bloom filters are keyless, they've got a value type but no key type, and right now the library only treats a map as BTF-typed when it sees a non-zero key type id. That breaks bloom filters two ways: when we read map info back from the kernel, a bloom filter that was created with value type info gets misidentified as a legacy untyped map, and when we create a typed bloom filter we wrongly hand key type info to the kernel even though it wants a void key. So the fix is to look at the value type too (not just the key) when deciding if a map is BTF-typed, and to always set the key type to void when creating bloom filters.
+
+Also there's per-map extra metadata that configures the number of hash functions in a bloom filter, and that needs to actually live in the map definition struct and get passed through correctly both when we parse maps and when we create them, right now it's not being tracked properly.
+
+Last thing, on the eBPF kernel side I want a BTF-compatible bloom filter map type that follows the same const-generic pattern the other typed maps use, so const generics for capacity, flags, and the hash function count, that way eBPF programs can declare a bloom filter the same way they'd declare any other typed map. Right now there's no typed bloom filter available on that side at all.
+
+The point of all this is to make bloom filters proper first-class citizens in the typed map workflow instead of the awkward special case they are today.

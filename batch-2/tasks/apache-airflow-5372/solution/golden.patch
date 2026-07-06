@@ -1,0 +1,2561 @@
+diff --git a/.github/SECURITY.rst b/.github/SECURITY.rst
+deleted file mode 100644
+index 09a86a3b6a..0000000000
+--- a/.github/SECURITY.rst
++++ /dev/null
+@@ -1,22 +0,0 @@
+-Reporting Vulnerabilities
+--------------------------
+-
+-**⚠️ Please do not file Jira issues for security vulnerabilities as they are public! ⚠️**
+-
+-The Apache Software Foundation takes security issues very seriously. Apache
+-Airflow specifically offers security features and is responsive to issues
+-around its features. If you have any concern around Airflow Security or believe
+-you have uncovered a vulnerability, we suggest that you get in touch via the
+-e-mail address security@apache.org. In the message, try to provide a
+-description of the issue and ideally a way of reproducing it. The security team
+-will get back to you after assessing the description.
+-
+-Note that this security address should be used only for undisclosed
+-vulnerabilities. Dealing with fixed issues or general questions on how to use
+-the security features should be handled regularly via the user and the dev
+-lists. Please report any security problems to the project security address
+-before disclosing it publicly.
+-
+-The `ASF Security team's page <https://www.apache.org/security/>`_ describes
+-how vulnerability reports are handled, and includes PGP keys if you wish to use
+-that.
+diff --git a/.pylintrc b/.pylintrc
+index ab91e0bb15..09f53046a7 100644
+--- a/.pylintrc
++++ b/.pylintrc
+@@ -166,8 +166,8 @@ disable=print-statement,
+         super-init-not-called,  # BasPH: ignored for now but should be fixed somewhere in the future
+         arguments-differ,  # Doesn't always raise valid messages
+         import-error,  # Requires installing Airflow environment in CI task which takes long, therefore ignored. Tests should fail anyways if deps are missing. Possibly un-ignore in the future if we ever use pre-built Docker images for CI.
+-        fixme,  # There should be a good reason for adding a TODO
+-        pointless-statement  # Is raised on the bitshift operator. Could be disabled only on /example_dags after https://github.com/PyCQA/pylint/projects/1.
++        fixme  # There should be a good reason for adding a TODO
++
+ 
+ # Enable the message, report, category or checker with the given id(s). You can
+ # either give multiple identifier separated by comma (,) or put this option
+@@ -446,8 +446,7 @@ good-names=e,
+            i,
+            j,
+            k,
+-           _,
+-           ti  # Commonly used in Airflow as shorthand for taskinstance
++           _
+ 
+ # Include a hint for the correct naming format with invalid-name.
+ include-naming-hint=no
+@@ -469,11 +468,9 @@ method-naming-style=snake_case
+ # Naming style matching correct module names.
+ module-naming-style=snake_case
+ 
+-# Regular expression matching correct module names. Overrides module-naming-style.
+-# Default regex changes:
+-# - allow modules beginning with 0-9 (used in airflow/migrations)
+-# - allow up to 60 chars (airflow/migrations contains quite long names)
+-module-rgx=[a-z0-9_][a-z0-9_]{2,59}$
++# Regular expression matching correct module names. Overrides module-naming-
++# style.
++#module-rgx=
+ 
+ # Colon-delimited sets of names that determine each other's naming style when
+ # the name regexes allow several styles.
+diff --git a/README.md b/README.md
+index 41878d8d85..62be2f456e 100644
+--- a/README.md
++++ b/README.md
+@@ -121,7 +121,7 @@ Currently **officially** using Airflow:
+ 1. [allegro.pl](http://allegro.tech/) [[@kretes](https://github.com/kretes)]
+ 1. [AltX](https://www.getaltx.com/about) [[@pedromduarte](https://github.com/pedromduarte)]
+ 1. [Apigee](https://apigee.com) [[@btallman](https://github.com/btallman)]
+-1. [ARGO Labs](http://www.argolabs.org) [[@California Data Collaborative](https://github.com/California-Data-Collaborative)]
++1. [ARGO Labs](http://www.argolabs.org) [[California Data Collaborative](https://github.com/California-Data-Collaborative)]
+ 1. [ARMEDANGELS](https://www.armedangels.de) [[@swiffer](https://github.com/swiffer)]
+ 1. [Arquivei](https://www.arquivei.com.br/) [[@arquivei](https://github.com/arquivei)]
+ 1. [Arrive](https://www.arrive.com/)
+@@ -188,6 +188,7 @@ Currently **officially** using Airflow:
+ 1. [DataFox](https://www.datafox.com/) [[@sudowork](https://github.com/sudowork)]
+ 1. [Digital First Media](http://www.digitalfirstmedia.com/) [[@duffn](https://github.com/duffn) & [@mschmo](https://github.com/mschmo) & [@seanmuth](https://github.com/seanmuth)]
+ 1. [DigitalOcean](https://digitalocean.com/) [[@ajbosco](https://github.com/ajbosco)]
++1. [DocuTAP](https://www.docutap.com/) [[@jshvrsn](https://github.com/jshvrsn) & [@lhvphan](https://github.com/lhvphan) & [@cloneluke](https://github.com/cloneluke)]
+ 1. [DoorDash](https://www.doordash.com/)
+ 1. [Dotmodus](http://dotmodus.com) [[@dannylee12](https://github.com/dannylee12)]
+ 1. [Drivy](https://www.drivy.com) [[@AntoineAugusti](https://github.com/AntoineAugusti)]
+@@ -196,7 +197,6 @@ Currently **officially** using Airflow:
+ 1. [eRevalue](https://www.datamaran.com) [[@hamedhsn](https://github.com/hamedhsn)]
+ 1. [Etsy](https://www.etsy.com) [[@mchalek](https://github.com/mchalek)]
+ 1. [evo.company](https://evo.company/) [[@orhideous](https://github.com/orhideous)]
+-1. [Experity (formerly DocuTAP)](https://www.experityhealth.com/) [[@cloneluke](https://github.com/cloneluke) & [@tobyjoliver](https://github.com/tobyjoliver)]
+ 1. [Fathom Health](https://www.fathomhealth.co/)
+ 1. [Firestone Inventing](https://www.hsmap.com/) [[@zihengCat](https://github.com/zihengCat)]
+ 1. [Flipp](https://www.flipp.com) [[@sethwilsonwishabi](https://github.com/sethwilsonwishabi)]
+@@ -287,7 +287,7 @@ Currently **officially** using Airflow:
+ 1. [Open Knowledge International](https://okfn.org) [@vitorbaptista](https://github.com/vitorbaptista)
+ 1. [Outcome Health](https://www.outcomehealth.com/) [[@mikethoun](https://github.com/mikethoun), [@rolandotribo](https://github.com/rolandotribo)]
+ 1. [Overstock](https://www.github.com/overstock) [[@mhousley](https://github.com/mhousley) & [@mct0006](https://github.com/mct0006)]
+-1. [Pagar.me](https://pagar.me/) [[@pagarme](https://github.com/pagarme)]
++1. [Pagar.me](https://pagar.me/) [[@pagarme](https://github.com/pagarme)
+ 1. [Palo Alto Networks](https://www.paloaltonetworks.com/) [[@PaloAltoNetworks](https://github.com/PaloAltoNetworks)]
+ 1. [Pandora Media](https://www.pandora.com/) [[@Acehaidrey](https://github.com/Acehaidrey) & [@wolfier](https://github.com/wolfier)]
+ 1. [PAYMILL](https://www.paymill.com/) [[@paymill](https://github.com/paymill) & [@matthiashuschle](https://github.com/matthiashuschle)]
+@@ -328,7 +328,6 @@ Currently **officially** using Airflow:
+ 1. [Spotify](https://github.com/spotify) [[@znichols](https://github.com/znichols)]
+ 1. [Square](https://squareup.com/)
+ 1. [Stackspace](https://beta.stackspace.io/)
+-1. [StoneCo](https://www.stone.co) [[@lgwacker](https://github.com/lgwacker)]
+ 1. [Strava](https://strava.com) [[@strava](https://github.com/strava), [@dhuang](https://github.com/dhuang) & [@liamstewart](https://github.com/liamstewart)]
+ 1. [Stripe](https://stripe.com) [[@jbalogh](https://github.com/jbalogh)]
+ 1. [Strongmind](https://www.strongmind.com) [[@tomchapin](https://github.com/tomchapin) & [@wongstein](https://github.com/wongstein)]
+diff --git a/airflow/bin/cli.py b/airflow/bin/cli.py
+index 80e74b3af0..aad088cef9 100644
+--- a/airflow/bin/cli.py
++++ b/airflow/bin/cli.py
+@@ -410,8 +410,10 @@ def unpause(args):
+ 
+ 
+ def set_is_paused(is_paused, args):
+-    DagModel.get_dagmodel(args.dag_id).set_is_paused(
++    DagModel.set_is_paused(
++        dag_id=args.dag_id,
+         is_paused=is_paused,
++        subdir=process_subdir(args.subdir),
+     )
+ 
+     print("Dag: {}, paused: {}".format(args.dag_id, str(is_paused)))
+diff --git a/airflow/contrib/example_dags/example_azure_cosmosdb_sensor.py b/airflow/contrib/example_dags/example_azure_cosmosdb_sensor.py
+index dd0b83e811..17cc02bea6 100644
+--- a/airflow/contrib/example_dags/example_azure_cosmosdb_sensor.py
++++ b/airflow/contrib/example_dags/example_azure_cosmosdb_sensor.py
+@@ -61,4 +61,4 @@ t2 = AzureCosmosInsertDocumentOperator(
+     document={"id": "someuniqueid", "param1": "value1", "param2": "value2"},
+     azure_cosmos_conn_id='azure_cosmos_default')
+ 
+-t1 >> t2
++t1 >> t2  # pylint: disable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_dingding_operator.py b/airflow/contrib/example_dags/example_dingding_operator.py
+index c6d8cca6fd..64140b6670 100644
+--- a/airflow/contrib/example_dags/example_dingding_operator.py
++++ b/airflow/contrib/example_dags/example_dingding_operator.py
+@@ -212,12 +212,12 @@ msg_failure_callback = DingdingOperator(
+     dag=dag,
+ )
+ 
+-[
++[  # pylint: disable=pointless-statement
+     text_msg_remind_none,
+     text_msg_remind_specific,
+     text_msg_remind_include_invalid,
+     text_msg_remind_all
+-] >> link_msg >> markdown_msg >> [
++] >> link_msg >> markdown_msg >> [  # pylint: disable=pointless-statement
+     single_action_card_msg,
+     multi_action_card_msg
+-] >> feed_card_msg >> msg_failure_callback
++] >> feed_card_msg >> msg_failure_callback  # pylint: disable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_bigtable_operators.py b/airflow/contrib/example_dags/example_gcp_bigtable_operators.py
+index 7ab9e02e0a..974f5edfea 100644
+--- a/airflow/contrib/example_dags/example_gcp_bigtable_operators.py
++++ b/airflow/contrib/example_dags/example_gcp_bigtable_operators.py
+@@ -109,7 +109,7 @@ with models.DAG(
+         cluster_storage_type=int(CBT_CLUSTER_STORAGE_TYPE),
+         task_id='create_instance_task2',
+     )
+-    create_instance_task >> create_instance_task2
++    create_instance_task >> create_instance_task2  # pylint: disable=pointless-statement
+     # [END howto_operator_gcp_bigtable_instance_create]
+ 
+     # [START howto_operator_gcp_bigtable_cluster_update]
+@@ -126,7 +126,7 @@ with models.DAG(
+         nodes=int(CBT_CLUSTER_NODES_UPDATED),
+         task_id='update_cluster_task2',
+     )
+-    cluster_update_task >> cluster_update_task2
++    cluster_update_task >> cluster_update_task2  # pylint: disable=pointless-statement
+     # [END howto_operator_gcp_bigtable_cluster_update]
+ 
+     # [START howto_operator_gcp_bigtable_instance_delete]
+@@ -153,7 +153,7 @@ with models.DAG(
+         table_id=CBT_TABLE_ID,
+         task_id='create_table_task2',
+     )
+-    create_table_task >> create_table_task2
++    create_table_task >> create_table_task2  # pylint: disable=pointless-statement
+     # [END howto_operator_gcp_bigtable_table_create]
+ 
+     # [START howto_operator_gcp_bigtable_table_wait_for_replication]
+@@ -188,6 +188,7 @@ with models.DAG(
+     )
+     # [END howto_operator_gcp_bigtable_table_delete]
+ 
++    # pylint: disable=pointless-statement
+     wait_for_table_replication_task >> delete_table_task
+     wait_for_table_replication_task2 >> delete_table_task
+     wait_for_table_replication_task >> delete_table_task2
+@@ -204,3 +205,4 @@ with models.DAG(
+     # Only delete instances after all tables are deleted
+     [delete_table_task, delete_table_task2] >> \
+         delete_instance_task >> delete_instance_task2
++    # pylint: enable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_compute.py b/airflow/contrib/example_dags/example_gcp_compute.py
+index 3985cd7452..e2cad7dc8c 100644
+--- a/airflow/contrib/example_dags/example_gcp_compute.py
++++ b/airflow/contrib/example_dags/example_gcp_compute.py
+@@ -111,5 +111,7 @@ with models.DAG(
+     )
+     # [END howto_operator_gce_set_machine_type_no_project_id]
+ 
++    # pylint: disable=pointless-statement
+     gce_instance_start >> gce_instance_start2 >> gce_instance_stop >> \
+         gce_instance_stop2 >> gce_set_machine_type >> gce_set_machine_type2
++    # pylint: enable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_compute_igm.py b/airflow/contrib/example_dags/example_gcp_compute_igm.py
+index 58a28a98a2..a145bc43cd 100644
+--- a/airflow/contrib/example_dags/example_gcp_compute_igm.py
++++ b/airflow/contrib/example_dags/example_gcp_compute_igm.py
+@@ -140,6 +140,8 @@ with models.DAG(
+         )
+     # [END howto_operator_gce_igm_update_template_no_project_id]
+ 
++    # pylint: disable=pointless-statement
+     gce_instance_template_copy >> gce_instance_template_copy2 >> \
+         gce_instance_group_manager_update_template >> \
+         gce_instance_group_manager_update_template2
++    # pylint: enable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_function.py b/airflow/contrib/example_dags/example_gcp_function.py
+index 75dcf2ece3..c2d3bf3a23 100644
+--- a/airflow/contrib/example_dags/example_gcp_function.py
++++ b/airflow/contrib/example_dags/example_gcp_function.py
+@@ -130,4 +130,4 @@ with models.DAG(
+         name=FUNCTION_NAME
+     )
+     # [END howto_operator_gcf_delete]
+-    deploy_task >> deploy2_task >> delete_task
++    deploy_task >> deploy2_task >> delete_task  # pylint: disable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_natural_language.py b/airflow/contrib/example_dags/example_gcp_natural_language.py
+index 1512375819..61efab22b6 100644
+--- a/airflow/contrib/example_dags/example_gcp_natural_language.py
++++ b/airflow/contrib/example_dags/example_gcp_natural_language.py
+@@ -107,7 +107,9 @@ with models.DAG(
+     )
+     # [END howto_operator_gcp_natural_language_analyze_classify_text_result]
+ 
++    # pylint: disable=pointless-statement
+     analyze_entities >> analyze_entities_result
+     analyze_entity_sentiment >> analyze_entity_sentiment_result
+     analyze_sentiment >> analyze_sentiment_result
+     analyze_classify_text >> analyze_classify_text_result
++    # pylint: enable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_spanner.py b/airflow/contrib/example_dags/example_gcp_spanner.py
+index 4d77b3abf0..017b940c48 100644
+--- a/airflow/contrib/example_dags/example_gcp_spanner.py
++++ b/airflow/contrib/example_dags/example_gcp_spanner.py
+@@ -183,6 +183,7 @@ with models.DAG(
+     )
+     # [END howto_operator_spanner_delete]
+ 
++    # pylint: disable=pointless-statement
+     spanner_instance_create_task \
+         >> spanner_instance_update_task \
+         >> spanner_database_deploy_task \
+@@ -196,3 +197,4 @@ with models.DAG(
+         >> spanner_database_delete_task2 \
+         >> spanner_instance_delete_task \
+         >> spanner_instance_delete_task2
++    # pylint: enable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_speech.py b/airflow/contrib/example_dags/example_gcp_speech.py
+index fc1e2d9fa1..3acd0c8980 100644
+--- a/airflow/contrib/example_dags/example_gcp_speech.py
++++ b/airflow/contrib/example_dags/example_gcp_speech.py
+@@ -84,7 +84,7 @@ with models.DAG(
+     )
+     # [END howto_operator_speech_to_text_recognize]
+ 
+-    text_to_speech_synthesize_task >> speech_to_text_recognize_task
++    text_to_speech_synthesize_task >> speech_to_text_recognize_task  # pylint: disable=pointless-statement
+ 
+     # [START howto_operator_translate_speech]
+     translate_speech_task = GcpTranslateSpeechOperator(
+@@ -99,4 +99,4 @@ with models.DAG(
+     )
+     # [END howto_operator_translate_speech]
+ 
+-    text_to_speech_synthesize_task >> translate_speech_task
++    text_to_speech_synthesize_task >> translate_speech_task  # pylint: disable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_sql.py b/airflow/contrib/example_dags/example_gcp_sql.py
+index 6cc5e33cfc..f97a80d929 100644
+--- a/airflow/contrib/example_dags/example_gcp_sql.py
++++ b/airflow/contrib/example_dags/example_gcp_sql.py
+@@ -186,7 +186,7 @@ with models.DAG(
+ ) as dag:
+ 
+     def next_dep(task, prev):
+-        prev >> task
++        prev >> task  # pylint: disable=pointless-statement
+         return task
+ 
+     # ############################################## #
+diff --git a/airflow/contrib/example_dags/example_gcp_sql_query.py b/airflow/contrib/example_dags/example_gcp_sql_query.py
+index 03d98c8848..3a16e915b6 100644
+--- a/airflow/contrib/example_dags/example_gcp_sql_query.py
++++ b/airflow/contrib/example_dags/example_gcp_sql_query.py
+@@ -287,7 +287,7 @@ with models.DAG(
+         )
+         tasks.append(task)
+         if prev_task:
+-            prev_task >> task
++            prev_task >> task  # pylint: disable=pointless-statement
+         prev_task = task
+ 
+ # [END howto_operator_cloudsql_query_operators]
+diff --git a/airflow/contrib/example_dags/example_gcp_transfer.py b/airflow/contrib/example_dags/example_gcp_transfer.py
+index b204261386..636f9bc5cc 100644
+--- a/airflow/contrib/example_dags/example_gcp_transfer.py
++++ b/airflow/contrib/example_dags/example_gcp_transfer.py
+@@ -248,7 +248,9 @@ with models.DAG(
+         project_id=GCP_PROJECT_ID,
+     )
+ 
++    # pylint: disable=pointless-statement
+     create_transfer_job_from_aws >> wait_for_operation_to_start >> pause_operation >> \
+         list_operations >> get_operation >> resume_operation >> wait_for_operation_to_end >> \
+         create_transfer_job_from_gcp >> wait_for_second_operation_to_start >> cancel_operation >> \
+         delete_transfer_from_aws_job >> delete_transfer_from_gcp_job
++    # pylint: enable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcp_translate.py b/airflow/contrib/example_dags/example_gcp_translate.py
+index 7a86538059..96194bb2b2 100644
+--- a/airflow/contrib/example_dags/example_gcp_translate.py
++++ b/airflow/contrib/example_dags/example_gcp_translate.py
+@@ -49,5 +49,5 @@ with models.DAG(
+         task_id='access',
+         bash_command="echo '{{ task_instance.xcom_pull(\"translate\")[0] }}'"
+     )
+-    product_set_create >> translation_access
++    product_set_create >> translation_access  # pylint: disable=pointless-statement
+     # [END howto_operator_translate_access]
+diff --git a/airflow/contrib/example_dags/example_gcp_vision.py b/airflow/contrib/example_dags/example_gcp_vision.py
+index c15aedd9b2..c9791d3b80 100644
+--- a/airflow/contrib/example_dags/example_gcp_vision.py
++++ b/airflow/contrib/example_dags/example_gcp_vision.py
+@@ -230,6 +230,7 @@ with models.DAG(
+     )
+     # [END howto_operator_vision_remove_product_from_product_set]
+ 
++    # pylint: disable=pointless-statement
+     # Product path
+     product_create >> product_get >> product_update >> product_delete
+ 
+@@ -245,6 +246,7 @@ with models.DAG(
+     add_product_to_product_set >> remove_product_from_product_set
+     remove_product_from_product_set >> product_delete
+     remove_product_from_product_set >> product_set_delete
++    # pylint: enable=pointless-statement
+ 
+ with models.DAG(
+     'example_gcp_vision_explicit_id', default_args=default_args, schedule_interval=None
+@@ -382,6 +384,7 @@ with models.DAG(
+     )
+     # [END howto_operator_vision_remove_product_from_product_set_2]
+ 
++    # pylint: disable=pointless-statement
+     # Product path
+     product_create_2 >> product_create_2_idempotence >> product_get_2 >> product_update_2 >> product_delete_2
+ 
+@@ -398,6 +401,7 @@ with models.DAG(
+     product_create_2 >> add_product_to_product_set_2
+     remove_product_from_product_set_2 >> product_set_delete_2
+     remove_product_from_product_set_2 >> product_delete_2
++    # pylint: enable=pointless-statement
+ 
+ with models.DAG(
+     'example_gcp_vision_annotate_image', default_args=default_args, schedule_interval=None
+@@ -477,9 +481,11 @@ with models.DAG(
+     )
+     # [END howto_operator_vision_detect_safe_search_result]
+ 
++    # pylint: disable=pointless-statement
+     annotate_image >> annotate_image_result
+ 
+     detect_text >> detect_text_result
+     document_detect_text >> document_detect_text_result
+     detect_labels >> detect_labels_result
+     detect_safe_search >> detect_safe_search_result
++    # pylint: enable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_gcs_acl.py b/airflow/contrib/example_dags/example_gcs_acl.py
+index 27713eb9ed..bc4c6421f2 100644
+--- a/airflow/contrib/example_dags/example_gcs_acl.py
++++ b/airflow/contrib/example_dags/example_gcs_acl.py
+@@ -74,4 +74,5 @@ with models.DAG(
+     )
+     # [END howto_operator_gcs_object_create_acl_entry_task]
+ 
++    # pylint: disable=pointless-statement
+     gcs_bucket_create_acl_entry_task >> gcs_object_create_acl_entry_task
+diff --git a/airflow/contrib/example_dags/example_gcs_to_bq_operator.py b/airflow/contrib/example_dags/example_gcs_to_bq_operator.py
+index b76d05eec1..0dbaef5008 100644
+--- a/airflow/contrib/example_dags/example_gcs_to_bq_operator.py
++++ b/airflow/contrib/example_dags/example_gcs_to_bq_operator.py
+@@ -64,4 +64,4 @@ if gcs_to_bq is not None:
+         bash_command='bq rm -rf airflow_test',
+         dag=dag)
+ 
+-    create_test_dataset >> load_csv >> delete_test_dataset
++    create_test_dataset >> load_csv >> delete_test_dataset  # pylint: disable=pointless-statement
+diff --git a/airflow/contrib/example_dags/example_pubsub_flow.py b/airflow/contrib/example_dags/example_pubsub_flow.py
+index 3b7ac34d1f..efdcd52fdb 100644
+--- a/airflow/contrib/example_dags/example_pubsub_flow.py
++++ b/airflow/contrib/example_dags/example_pubsub_flow.py
+@@ -82,5 +82,5 @@ with DAG('pubsub-end-to-end', default_args=default_args,
+     t6 = PubSubSubscriptionDeleteOperator(task_id='delete-subscription')
+     t7 = PubSubTopicDeleteOperator(task_id='delete-topic')
+ 
+-    t1 >> t2 >> t3
+-    t2 >> t4 >> t5 >> t6 >> t7
++    t1 >> t2 >> t3  # pylint: disable=pointless-statement
++    t2 >> t4 >> t5 >> t6 >> t7  # pylint: disable=pointless-statement
+diff --git a/airflow/contrib/operators/ssh_operator.py b/airflow/contrib/operators/ssh_operator.py
+index 63bf249645..91fbf43b56 100644
+--- a/airflow/contrib/operators/ssh_operator.py
++++ b/airflow/contrib/operators/ssh_operator.py
+@@ -45,9 +45,6 @@ class SSHOperator(BaseOperator):
+     :type command: str
+     :param timeout: timeout (in seconds) for executing the command.
+     :type timeout: int
+-    :param environment: a dict of shell environment variables. Note that the
+-        server will reject them silently if `AcceptEnv` is not set in SSH config.
+-    :type environment: dict
+     """
+ 
+     template_fields = ('command', 'remote_host')
+@@ -60,7 +57,6 @@ class SSHOperator(BaseOperator):
+                  remote_host=None,
+                  command=None,
+                  timeout=10,
+-                 environment=None,
+                  *args,
+                  **kwargs):
+         super().__init__(*args, **kwargs)
+@@ -69,7 +65,6 @@ class SSHOperator(BaseOperator):
+         self.remote_host = remote_host
+         self.command = command
+         self.timeout = timeout
+-        self.environment = environment
+ 
+     def execute(self, context):
+         try:
+@@ -105,8 +100,7 @@ class SSHOperator(BaseOperator):
+                 # set timeout taken as params
+                 stdin, stdout, stderr = ssh_client.exec_command(command=self.command,
+                                                                 get_pty=get_pty,
+-                                                                timeout=self.timeout,
+-                                                                environment=self.environment
++                                                                timeout=self.timeout
+                                                                 )
+                 # get channels
+                 channel = stdout.channel
+diff --git a/airflow/dag/base_dag.py b/airflow/dag/base_dag.py
+index 37b2c70c52..4a96559957 100644
+--- a/airflow/dag/base_dag.py
++++ b/airflow/dag/base_dag.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Base classes for DAG and DagBag."""
+-
+ from abc import ABCMeta, abstractmethod
+ 
+ 
+diff --git a/airflow/example_dags/example_bash_operator.py b/airflow/example_dags/example_bash_operator.py
+index 1eb030fc6a..771b86d201 100644
+--- a/airflow/example_dags/example_bash_operator.py
++++ b/airflow/example_dags/example_bash_operator.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the usage of the BashOperator."""
+-
+ from datetime import timedelta
+ 
+ import airflow
+diff --git a/airflow/example_dags/example_branch_operator.py b/airflow/example_dags/example_branch_operator.py
+index bf89fefb45..197d7d7a73 100644
+--- a/airflow/example_dags/example_branch_operator.py
++++ b/airflow/example_dags/example_branch_operator.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the usage of the BranchPythonOperator."""
+-
+ import random
+ 
+ import airflow
+diff --git a/airflow/example_dags/example_branch_python_dop_operator_3.py b/airflow/example_dags/example_branch_python_dop_operator_3.py
+index 8fdd561cd0..36edb27317 100644
+--- a/airflow/example_dags/example_branch_python_dop_operator_3.py
++++ b/airflow/example_dags/example_branch_python_dop_operator_3.py
+@@ -17,11 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""
+-Example DAG demonstrating the usage of BranchPythonOperator with depends_on_past=True, where tasks may be run
+-or skipped on alternating runs.
+-"""
+-
+ import airflow
+ from airflow.models import DAG
+ from airflow.operators.dummy_operator import DummyOperator
+@@ -33,6 +28,9 @@ args = {
+     'depends_on_past': True,
+ }
+ 
++# BranchPython operator that depends on past
++# and where tasks may run or be skipped on
++# alternating runs
+ dag = DAG(
+     dag_id='example_branch_dop_operator_v3',
+     schedule_interval='*/1 * * * *',
+@@ -41,13 +39,6 @@ dag = DAG(
+ 
+ 
+ def should_run(**kwargs):
+-    """
+-    Determine which dummy_task should be run based on if the execution date minute is even or odd.
+-
+-    :param dict kwargs: Context
+-    :return: Id of the task to run
+-    :rtype: str
+-    """
+     print('------------- exec dttm = {} and minute = {}'.
+           format(kwargs['execution_date'], kwargs['execution_date'].minute))
+     if kwargs['execution_date'].minute % 2 == 0:
+diff --git a/airflow/example_dags/example_http_operator.py b/airflow/example_dags/example_http_operator.py
+index 44a62fe9ca..4a469795a2 100644
+--- a/airflow/example_dags/example_http_operator.py
++++ b/airflow/example_dags/example_http_operator.py
+@@ -16,9 +16,9 @@
+ # KIND, either express or implied.  See the License for the
+ # specific language governing permissions and limitations
+ # under the License.
+-
+-"""Example HTTP operator and sensor"""
+-
++"""
++### Example HTTP operator and sensor
++"""
+ import json
+ from datetime import timedelta
+ 
+@@ -48,7 +48,7 @@ t1 = SimpleHttpOperator(
+     endpoint='api/v1.0/nodes',
+     data=json.dumps({"priority": 5}),
+     headers={"Content-Type": "application/json"},
+-    response_check=lambda response: len(response.json()) == 0,
++    response_check=lambda response: True if len(response.json()) == 0 else False,
+     dag=dag,
+ )
+ 
+@@ -92,7 +92,7 @@ sensor = HttpSensor(
+     http_conn_id='http_default',
+     endpoint='',
+     request_params={},
+-    response_check=lambda response: "Google" in response.text,
++    response_check=lambda response: True if "Google" in response.text else False,
+     poke_interval=5,
+     dag=dag,
+ )
+diff --git a/airflow/example_dags/example_latest_only.py b/airflow/example_dags/example_latest_only.py
+index ae4339a44c..635a764198 100644
+--- a/airflow/example_dags/example_latest_only.py
++++ b/airflow/example_dags/example_latest_only.py
+@@ -16,9 +16,9 @@
+ # KIND, either express or implied.  See the License for the
+ # specific language governing permissions and limitations
+ # under the License.
+-
+-"""Example of the LatestOnlyOperator"""
+-
++"""
++Example of the LatestOnlyOperator
++"""
+ import datetime as dt
+ 
+ import airflow
+diff --git a/airflow/example_dags/example_passing_params_via_test_command.py b/airflow/example_dags/example_passing_params_via_test_command.py
+index 1cab8f94e3..2aef593abf 100644
+--- a/airflow/example_dags/example_passing_params_via_test_command.py
++++ b/airflow/example_dags/example_passing_params_via_test_command.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the usage of the params arguments in templated arguments."""
+-
+ from datetime import timedelta
+ 
+ import airflow
+@@ -37,12 +35,10 @@ dag = DAG(
+ )
+ 
+ 
+-def my_py_command(**kwargs):
+-    """
+-    Print out the "foo" param passed in via
+-    `airflow test example_passing_params_via_test_command run_this <date>
+-    -tp '{"foo":"bar"}'`
+-    """
++def my_py_command(ds, **kwargs):
++    # Print out the "foo" param passed in via
++    # `airflow test example_passing_params_via_test_command run_this <date>
++    # -tp '{"foo":"bar"}'`
+     if kwargs["test_mode"]:
+         print(" 'foo' was passed in via test={} command : kwargs[params][foo] \
+                = {}".format(kwargs["test_mode"], kwargs["params"]["foo"]))
+diff --git a/airflow/example_dags/example_pig_operator.py b/airflow/example_dags/example_pig_operator.py
+index 39994b0eb0..7a76ea1270 100644
+--- a/airflow/example_dags/example_pig_operator.py
++++ b/airflow/example_dags/example_pig_operator.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the usage of the PigOperator."""
+-
+ import airflow
+ from airflow.models import DAG
+ from airflow.operators.pig_operator import PigOperator
+@@ -40,3 +38,5 @@ run_this = PigOperator(
+     pig_opts="-x local",
+     dag=dag,
+ )
++
++run_this
+diff --git a/airflow/example_dags/example_python_operator.py b/airflow/example_dags/example_python_operator.py
+index 6903b55027..0c9b279340 100644
+--- a/airflow/example_dags/example_python_operator.py
++++ b/airflow/example_dags/example_python_operator.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the usage of the PythonOperator."""
+-
+ import time
+ from pprint import pprint
+ 
+@@ -40,7 +38,6 @@ dag = DAG(
+ 
+ # [START howto_operator_python]
+ def print_context(ds, **kwargs):
+-    """Print the Airflow context and ds variable from the context."""
+     pprint(kwargs)
+     print(ds)
+     return 'Whatever you return gets printed in the logs'
+diff --git a/airflow/example_dags/example_short_circuit_operator.py b/airflow/example_dags/example_short_circuit_operator.py
+index 8f7f29f092..1093dab616 100644
+--- a/airflow/example_dags/example_short_circuit_operator.py
++++ b/airflow/example_dags/example_short_circuit_operator.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the usage of the ShortCircuitOperator."""
+-
+ import airflow.utils.helpers
+ from airflow.models import DAG
+ from airflow.operators.dummy_operator import DummyOperator
+diff --git a/airflow/example_dags/example_skip_dag.py b/airflow/example_dags/example_skip_dag.py
+index 091ef270fb..456eb911dc 100644
+--- a/airflow/example_dags/example_skip_dag.py
++++ b/airflow/example_dags/example_skip_dag.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the DummyOperator and a custom DummySkipOperator which skips by default."""
+-
+ import airflow
+ from airflow.exceptions import AirflowSkipException
+ from airflow.models import DAG
+@@ -32,26 +30,17 @@ args = {
+ 
+ # Create some placeholder operators
+ class DummySkipOperator(DummyOperator):
+-    """Dummy operator which always skips the task."""
+-
+     ui_color = '#e8b7e4'
+ 
+     def execute(self, context):
+         raise AirflowSkipException
+ 
+ 
+-def create_test_pipeline(suffix, trigger_rule, dag_):
+-    """
+-    Instantiate a number of operators for the given DAG.
+-
+-    :param str suffix: Suffix to append to the operator task_ids
+-    :param str trigger_rule: TriggerRule for the join task
+-    :param DAG dag_: The DAG to run the operators on
+-    """
+-    skip_operator = DummySkipOperator(task_id='skip_operator_{}'.format(suffix), dag=dag_)
+-    always_true = DummyOperator(task_id='always_true_{}'.format(suffix), dag=dag_)
+-    join = DummyOperator(task_id=trigger_rule, dag=dag_, trigger_rule=trigger_rule)
+-    final = DummyOperator(task_id='final_{}'.format(suffix), dag=dag_)
++def create_test_pipeline(suffix, trigger_rule, dag):
++    skip_operator = DummySkipOperator(task_id='skip_operator_{}'.format(suffix), dag=dag)
++    always_true = DummyOperator(task_id='always_true_{}'.format(suffix), dag=dag)
++    join = DummyOperator(task_id=trigger_rule, dag=dag, trigger_rule=trigger_rule)
++    final = DummyOperator(task_id='final_{}'.format(suffix), dag=dag)
+ 
+     skip_operator >> join
+     always_true >> join
+diff --git a/airflow/example_dags/example_subdag_operator.py b/airflow/example_dags/example_subdag_operator.py
+index b97176e284..98386ba454 100644
+--- a/airflow/example_dags/example_subdag_operator.py
++++ b/airflow/example_dags/example_subdag_operator.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the usage of the SubDagOperator."""
+-
+ import airflow
+ from airflow.example_dags.subdags.subdag import subdag
+ from airflow.models import DAG
+diff --git a/airflow/example_dags/example_trigger_controller_dag.py b/airflow/example_dags/example_trigger_controller_dag.py
+index 5c2c795d3a..35e7184f76 100644
+--- a/airflow/example_dags/example_trigger_controller_dag.py
++++ b/airflow/example_dags/example_trigger_controller_dag.py
+@@ -50,7 +50,6 @@ def conditionally_trigger(context, dag_run_obj):
+         dag_run_obj.payload = {'message': context['params']['message']}
+         pp.pprint(dag_run_obj.payload)
+         return dag_run_obj
+-    return None
+ 
+ 
+ # Define the DAG
+diff --git a/airflow/example_dags/example_trigger_target_dag.py b/airflow/example_dags/example_trigger_target_dag.py
+index 83076444a5..c1403a60e1 100644
+--- a/airflow/example_dags/example_trigger_target_dag.py
++++ b/airflow/example_dags/example_trigger_target_dag.py
+@@ -17,25 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""
+-This example illustrates the use of the TriggerDagRunOperator. There are 2
+-entities at work in this scenario:
+-1. The Controller DAG - the DAG that conditionally executes the trigger
+-   (in example_trigger_controller.py)
+-2. The Target DAG - DAG being triggered
+-
+-This example illustrates the following features :
+-1. A TriggerDagRunOperator that takes:
+-  a. A python callable that decides whether or not to trigger the Target DAG
+-  b. An optional params dict passed to the python callable to help in
+-     evaluating whether or not to trigger the Target DAG
+-  c. The id (name) of the Target DAG
+-  d. The python callable can add contextual info to the DagRun created by
+-     way of adding a Pickleable payload (e.g. dictionary of primitives). This
+-     state is then made available to the TargetDag
+-2. A Target DAG : c.f. example_trigger_target_dag.py
+-"""
+-
+ import pprint
+ from datetime import datetime
+ 
+@@ -45,6 +26,23 @@ from airflow.operators.python_operator import PythonOperator
+ 
+ pp = pprint.PrettyPrinter(indent=4)
+ 
++# This example illustrates the use of the TriggerDagRunOperator. There are 2
++# entities at work in this scenario:
++# 1. The Controller DAG - the DAG that conditionally executes the trigger
++#    (in example_trigger_controller.py)
++# 2. The Target DAG - DAG being triggered
++#
++# This example illustrates the following features :
++# 1. A TriggerDagRunOperator that takes:
++#   a. A python callable that decides whether or not to trigger the Target DAG
++#   b. An optional params dict passed to the python callable to help in
++#      evaluating whether or not to trigger the Target DAG
++#   c. The id (name) of the Target DAG
++#   d. The python callable can add contextual info to the DagRun created by
++#      way of adding a Pickleable payload (e.g. dictionary of primitives). This
++#      state is then made available to the TargetDag
++# 2. A Target DAG : c.f. example_trigger_target_dag.py
++
+ args = {
+     'start_date': datetime.utcnow(),
+     'owner': 'airflow',
+@@ -57,12 +55,7 @@ dag = DAG(
+ )
+ 
+ 
+-def run_this_func(**kwargs):
+-    """
+-    Print the payload "message" passed to the DagRun conf attribute.
+-
+-    :param dict kwargs: Context
+-    """
++def run_this_func(ds, **kwargs):
+     print("Remotely received value of {} for key=message".
+           format(kwargs['dag_run'].conf['message']))
+ 
+diff --git a/airflow/example_dags/example_xcom.py b/airflow/example_dags/example_xcom.py
+index a1d60082ed..dbe2f11706 100644
+--- a/airflow/example_dags/example_xcom.py
++++ b/airflow/example_dags/example_xcom.py
+@@ -17,8 +17,6 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Example DAG demonstrating the usage of XComs."""
+-
+ import airflow
+ from airflow import DAG
+ from airflow.operators.python_operator import PythonOperator
+@@ -40,26 +38,25 @@ def push(**kwargs):
+     kwargs['ti'].xcom_push(key='value from pusher 1', value=value_1)
+ 
+ 
+-def push_by_returning():
++def push_by_returning(**kwargs):
+     """Pushes an XCom without a specific target, just by returning it"""
+     return value_2
+ 
+ 
+ def puller(**kwargs):
+-    """Pull all previously pushed XComs and check if the pushed values match the pulled values."""
+     ti = kwargs['ti']
+ 
+     # get value_1
+-    pulled_value_1 = ti.xcom_pull(key=None, task_ids='push')
+-    assert pulled_value_1 == value_1
++    v1 = ti.xcom_pull(key=None, task_ids='push')
++    assert v1 == value_1
+ 
+     # get value_2
+-    pulled_value_2 = ti.xcom_pull(task_ids='push_by_returning')
+-    assert pulled_value_2 == value_2
++    v2 = ti.xcom_pull(task_ids='push_by_returning')
++    assert v2 == value_2
+ 
+     # get both value_1 and value_2
+-    pulled_value_1, pulled_value_2 = ti.xcom_pull(key=None, task_ids=['push', 'push_by_returning'])
+-    assert (pulled_value_1, pulled_value_2) == (value_1, value_2)
++    v1, v2 = ti.xcom_pull(key=None, task_ids=['push', 'push_by_returning'])
++    assert (v1, v2) == (value_1, value_2)
+ 
+ 
+ push1 = PythonOperator(
+diff --git a/airflow/example_dags/subdags/subdag.py b/airflow/example_dags/subdags/subdag.py
+index 46ae6b5674..6a67c7d222 100644
+--- a/airflow/example_dags/subdags/subdag.py
++++ b/airflow/example_dags/subdags/subdag.py
+@@ -17,22 +17,11 @@
+ # specific language governing permissions and limitations
+ # under the License.
+ 
+-"""Helper function to generate a DAG and operators given some arguments."""
+-
+ from airflow.models import DAG
+ from airflow.operators.dummy_operator import DummyOperator
+ 
+ 
+ def subdag(parent_dag_name, child_dag_name, args):
+-    """
+-    Generate a DAG to be used as a subdag.
+-
+-    :param str parent_dag_name: Id of the parent DAG
+-    :param str child_dag_name: Id of the child DAG
+-    :param dict args: Default arguments to provide to the subdag
+-    :return: DAG to use as a subdag
+-    :rtype: airflow.models.DAG
+-    """
+     dag_subdag = DAG(
+         dag_id='%s.%s' % (parent_dag_name, child_dag_name),
+         default_args=args,
+diff --git a/airflow/models/dag.py b/airflow/models/dag.py
+index e17c960d2e..9bce9982b7 100644
+--- a/airflow/models/dag.py
++++ b/airflow/models/dag.py
+@@ -1519,22 +1519,40 @@ class DagModel(Base):
+                                             conf=conf,
+                                             session=session)
+ 
++    @classmethod
++    def _find_dag_ids_including_subdags(cls, dag: DAG):
++        from airflow.operators.subdag_operator import SubDagOperator  # Avoid circular imports
++        dag_ids = [dag.dag_id]
++        for task in dag.tasks:
++            if isinstance(task, SubDagOperator):
++                subdag = task.subdag
++                dag_ids.extend(cls._find_dag_ids_including_subdags(subdag))
++        return dag_ids
++
++    @classmethod
+     @provide_session
+-    def set_is_paused(self,
++    def set_is_paused(cls,
++                      dag_id: str,
+                       is_paused: bool,
+                       including_subdags: bool = True,
++                      subdir: str = None,
+                       session=None) -> None:
+         """
+         Pause/Un-pause a DAG.
+ 
++        :param dag_id: DAG ID
+         :param is_paused: Is the DAG paused
+         :param including_subdags: whether to include the DAG's subdags
++        :param subdir: where to find the DAG files
+         :param session: session
+         """
+-        dag_ids = [self.dag_id]  # type: List[str]
++        dag_ids = []  # type: List[str]
+         if including_subdags:
+-            subdags = self.get_dag().subdags
+-            dag_ids.extend([subdag.dag_id for subdag in subdags])
++            dagbag = DagBag(dag_folder=subdir)
++            dag_ids.extend(cls._find_dag_ids_including_subdags(dagbag.get_dag(dag_id)))
++        else:
++            dag_ids.append(dag_id)
++
+         dag_models = session.query(DagModel).filter(DagModel.dag_id.in_(dag_ids)).all()
+         try:
+             for dag_model in dag_models:
+diff --git a/airflow/models/dagrun.py b/airflow/models/dagrun.py
+index 926d3c056f..dd748ac6d0 100644
+--- a/airflow/models/dagrun.py
++++ b/airflow/models/dagrun.py
+@@ -16,6 +16,7 @@
+ # KIND, either express or implied.  See the License for the
+ # specific language governing permissions and limitations
+ # under the License.
++from typing import Optional, cast
+ 
+ import six
+ from sqlalchemy import (
+@@ -24,7 +25,7 @@ from sqlalchemy import (
+ )
+ from sqlalchemy.ext.declarative import declared_attr
+ from sqlalchemy.orm import synonym
+-
++from sqlalchemy.orm.session import Session
+ from airflow.exceptions import AirflowException
+ from airflow.models.base import Base, ID_LEN
+ from airflow.stats import Stats
+@@ -218,12 +219,19 @@ class DagRun(Base, LoggingMixin):
+         return self.dag
+ 
+     @provide_session
+-    def get_previous_dagrun(self, session=None):
++    def get_previous_dagrun(self, state: str = None, session: Session = None) -> Optional['DagRun']:
+         """The previous DagRun, if there is one"""
+ 
+-        return session.query(DagRun).filter(
++        session = cast(Session, session)  # mypy
++
++        filters = [
+             DagRun.dag_id == self.dag_id,
+-            DagRun.execution_date < self.execution_date
++            DagRun.execution_date < self.execution_date,
++        ]
++        if state is not None:
++            filters.append(DagRun.state == state)
++        return session.query(DagRun).filter(
++            *filters
+         ).order_by(
+             DagRun.execution_date.desc()
+         ).first()
+diff --git a/airflow/models/taskinstance.py b/airflow/models/taskinstance.py
+index 24ef4834d2..9ad0331f38 100644
+--- a/airflow/models/taskinstance.py
++++ b/airflow/models/taskinstance.py
+@@ -26,11 +26,15 @@ import os
+ import signal
+ import time
+ from datetime import timedelta
++from typing import Optional
+ from urllib.parse import quote
++import lazy_object_proxy
++import pendulum
+ 
+ import dill
+ from sqlalchemy import Column, String, Float, Integer, PickleType, Index, func
+ from sqlalchemy.orm import reconstructor
++from sqlalchemy.orm.session import Session
+ 
+ from airflow import configuration, settings
+ from airflow.exceptions import (
+@@ -516,7 +520,7 @@ class TaskInstance(Base, LoggingMixin):
+         return count == len(task.downstream_task_ids)
+ 
+     @provide_session
+-    def _get_previous_ti(self, session=None):
++    def _get_previous_ti(self, state: str = None, session: Session = None) -> Optional['TaskInstance']:
+         dag = self.task.dag
+         if dag:
+             dr = self.get_dagrun(session=session)
+@@ -528,14 +532,18 @@ class TaskInstance(Base, LoggingMixin):
+                 if not previous_scheduled_date:
+                     return None
+ 
+-                return TaskInstance(task=self.task,
+-                                    execution_date=previous_scheduled_date)
++                return TaskInstance(task=self.task, execution_date=previous_scheduled_date)
+ 
+             dr.dag = dag
+-            if dag.catchup:
++
++            # We always ignore schedule in dagrun lookup when `state` is given or `schedule_interval is None`.
++            # For legacy reasons, when `catchup=True`, we use `get_previous_scheduled_dagrun` unless
++            # `ignore_schedule` is `True`.
++            ignore_schedule = state is not None or dag.schedule_interval is None
++            if dag.catchup is True and not ignore_schedule:
+                 last_dagrun = dr.get_previous_scheduled_dagrun(session=session)
+             else:
+-                last_dagrun = dr.get_previous_dagrun(session=session)
++                last_dagrun = dr.get_previous_dagrun(session=session, state=state)
+ 
+             if last_dagrun:
+                 return last_dagrun.get_task_instance(self.task_id, session=session)
+@@ -543,10 +551,29 @@ class TaskInstance(Base, LoggingMixin):
+         return None
+ 
+     @property
+-    def previous_ti(self):
++    def previous_ti(self) -> Optional['TaskInstance']:
+         """The task instance for the task that ran before this task instance."""
+         return self._get_previous_ti()
+ 
++    @property
++    def previous_ti_success(self) -> Optional['TaskInstance']:
++        """The ti from prior succesful dag run for this task, by execution date."""
++        return self._get_previous_ti(state=State.SUCCESS)
++
++    @property
++    def previous_execution_date_success(self) -> Optional[pendulum.datetime]:
++        """The execution date from property previous_ti_success."""
++        self.log.debug("previous_execution_date_success was called")
++        prev_ti = self._get_previous_ti(state=State.SUCCESS)
++        return prev_ti and prev_ti.execution_date
++
++    @property
++    def previous_start_date_success(self) -> Optional[pendulum.datetime]:
++        """The start date from property previous_ti_success."""
++        self.log.debug("previous_start_date_success was called")
++        prev_ti = self._get_previous_ti(state=State.SUCCESS)
++        return prev_ti and prev_ti.start_date
++
+     @provide_session
+     def are_dependencies_met(
+             self,
+@@ -1187,6 +1214,9 @@ class TaskInstance(Base, LoggingMixin):
+             'run_id': run_id,
+             'execution_date': self.execution_date,
+             'prev_execution_date': prev_execution_date,
++            'prev_execution_date_success': lazy_object_proxy.Proxy(
++                lambda: self.previous_execution_date_success),
++            'prev_start_date_success': lazy_object_proxy.Proxy(lambda: self.previous_start_date_success),
+             'next_execution_date': next_execution_date,
+             'latest_date': ds,
+             'macros': macros,
+diff --git a/airflow/operators/docker_operator.py b/airflow/operators/docker_operator.py
+index ce21f7b04f..527620e048 100644
+--- a/airflow/operators/docker_operator.py
++++ b/airflow/operators/docker_operator.py
+@@ -73,9 +73,6 @@ class DockerOperator(BaseOperator):
+         Either a float value, which represents the limit in bytes,
+         or a string like ``128m`` or ``1g``.
+     :type mem_limit: float or str
+-    :param host_tmp_dir: Specify the location of the temporary directory on the host which will
+-        be mapped to tmp_dir. If not provided defaults to using the standard system temp directory.
+-    :type host_tmp_dir: str
+     :param network_mode: Network mode for the container.
+     :type network_mode: str
+     :param tls_ca_cert: Path to a PEM-encoded certificate authority
+@@ -127,7 +124,6 @@ class DockerOperator(BaseOperator):
+             environment=None,
+             force_pull=False,
+             mem_limit=None,
+-            host_tmp_dir=None,
+             network_mode=None,
+             tls_ca_cert=None,
+             tls_client_cert=None,
+@@ -159,7 +155,6 @@ class DockerOperator(BaseOperator):
+         self.force_pull = force_pull
+         self.image = image
+         self.mem_limit = mem_limit
+-        self.host_tmp_dir = host_tmp_dir
+         self.network_mode = network_mode
+         self.tls_ca_cert = tls_ca_cert
+         self.tls_client_cert = tls_client_cert
+@@ -208,7 +203,7 @@ class DockerOperator(BaseOperator):
+                 if 'status' in output:
+                     self.log.info("%s", output['status'])
+ 
+-        with TemporaryDirectory(prefix='airflowtmp', dir=self.host_tmp_dir) as host_tmp_dir:
++        with TemporaryDirectory(prefix='airflowtmp') as host_tmp_dir:
+             self.environment['AIRFLOW_TMP_DIR'] = self.tmp_dir
+             self.volumes.append('{0}:{1}'.format(host_tmp_dir, self.tmp_dir))
+ 
+diff --git a/airflow/settings.py b/airflow/settings.py
+index 486702a8d0..c756672cc5 100644
+--- a/airflow/settings.py
++++ b/airflow/settings.py
+@@ -221,11 +221,6 @@ def configure_adapters():
+         MySQLdb.converters.conversions[Pendulum] = MySQLdb.converters.DateTime2literal
+     except ImportError:
+         pass
+-    try:
+-        import pymysql.converters
+-        pymysql.converters.conversions[Pendulum] = pymysql.converters.escape_datetime
+-    except ImportError:
+-        pass
+ 
+ 
+ def validate_session():
+diff --git a/airflow/utils/log/json_formatter.py b/airflow/utils/log/json_formatter.py
+index 1ded200f22..c09922ecf4 100644
+--- a/airflow/utils/log/json_formatter.py
++++ b/airflow/utils/log/json_formatter.py
+@@ -25,12 +25,12 @@ import logging
+ import json
+ 
+ 
+-def merge_dicts(dict1, dict2):
++def merge_dicts(d1, d2):
+     """
+     Merge two dicts
+     """
+-    merged = dict1.copy()
+-    merged.update(dict2)
++    merged = d1.copy()
++    merged.update(d2)
+     return merged
+ 
+ 
+@@ -38,7 +38,6 @@ class JSONFormatter(logging.Formatter):
+     """
+     JSONFormatter instances are used to convert a log record to json.
+     """
+-    # pylint: disable=too-many-arguments
+     def __init__(self, fmt=None, datefmt=None, style='%', json_fields=None, extras=None):
+         super(JSONFormatter, self).__init__(fmt, datefmt, style)
+         if extras is None:
+diff --git a/airflow/version.py b/airflow/version.py
+index 62b369a23f..c9c2bf2b95 100644
+--- a/airflow/version.py
++++ b/airflow/version.py
+@@ -18,4 +18,4 @@
+ # under the License.
+ #
+ 
+-version = '2.0.0.dev0'
++version = '2.0.0.dev0+'
+diff --git a/airflow/www/api/experimental/endpoints.py b/airflow/www/api/experimental/endpoints.py
+index b34f5d1810..96fd9c0af0 100644
+--- a/airflow/www/api/experimental/endpoints.py
++++ b/airflow/www/api/experimental/endpoints.py
+@@ -176,7 +176,8 @@ def dag_paused(dag_id, paused):
+ 
+     is_paused = True if paused == 'true' else False
+ 
+-    models.DagModel.get_dagmodel(dag_id).set_is_paused(
++    models.DagModel.set_is_paused(
++        dag_id=dag_id,
+         is_paused=is_paused,
+     )
+ 
+diff --git a/airflow/www/package-lock.json b/airflow/www/package-lock.json
+index 77a26099e1..e7672f1b6f 100644
+--- a/airflow/www/package-lock.json
++++ b/airflow/www/package-lock.json
+@@ -608,6 +608,7 @@
+       "version": "1.0.10",
+       "resolved": "https://registry.npmjs.org/argparse/-/argparse-1.0.10.tgz",
+       "integrity": "sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==",
++      "dev": true,
+       "requires": {
+         "sprintf-js": "1.0.3"
+       }
+@@ -2507,7 +2508,7 @@
+         "imurmurhash": "0.1.4",
+         "inquirer": "3.3.0",
+         "is-resolvable": "1.1.0",
+-        "js-yaml": "3.13.1",
++        "js-yaml": "3.12.0",
+         "json-stable-stringify-without-jsonify": "1.0.1",
+         "levn": "0.3.0",
+         "lodash": "4.17.11",
+@@ -4552,18 +4553,20 @@
+       "dev": true
+     },
+     "js-yaml": {
+-      "version": "3.13.1",
+-      "resolved": "https://registry.npmjs.org/js-yaml/-/js-yaml-3.13.1.tgz",
+-      "integrity": "sha512-YfbcO7jXDdyj0DGxYVSlSeQNHbD7XPWvrVWeVUujrQEoZzWJIRrCPoyk6kL6IAjAG2IolMK4T0hNUe0HOUs5Jw==",
++      "version": "3.12.0",
++      "resolved": "https://registry.npmjs.org/js-yaml/-/js-yaml-3.12.0.tgz",
++      "integrity": "sha512-PIt2cnwmPfL4hKNwqeiuz4bKfnzHTBv6HyVgjahA6mPLwPDzjDWrplJBMjHUFxku/N3FlmrbyPclad+I+4mJ3A==",
++      "dev": true,
+       "requires": {
+         "argparse": "1.0.10",
+-        "esprima": "4.0.1"
++        "esprima": "4.0.0"
+       },
+       "dependencies": {
+         "esprima": {
+-          "version": "4.0.1",
+-          "resolved": "https://registry.npmjs.org/esprima/-/esprima-4.0.1.tgz",
+-          "integrity": "sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A=="
++          "version": "4.0.0",
++          "resolved": "https://registry.npmjs.org/esprima/-/esprima-4.0.0.tgz",
++          "integrity": "sha512-oftTcaMu/EGrEIu904mWteKIv8vMuOgGYo7EhVJJN00R/EED9DCua/xxHRdYnKtcECzVg7xOWhflvJMnqcFZjw==",
++          "dev": true
+         }
+       }
+     },
+@@ -10008,7 +10011,8 @@
+     "sprintf-js": {
+       "version": "1.0.3",
+       "resolved": "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz",
+-      "integrity": "sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw="
++      "integrity": "sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=",
++      "dev": true
+     },
+     "ssri": {
+       "version": "5.3.0",
+diff --git a/airflow/www/package.json b/airflow/www/package.json
+index 59d250a9e0..281cde3166 100644
+--- a/airflow/www/package.json
++++ b/airflow/www/package.json
+@@ -45,7 +45,6 @@
+     "file-loader": "^1.1.11",
+     "imports-loader": "^0.8.0",
+     "jquery": ">=3.4.0",
+-    "js-yaml": ">=3.13.1",
+     "lodash": "^4.17.11",
+     "mini-css-extract-plugin": "^0.4.1",
+     "style-loader": "^0.21.0",
+@@ -63,7 +62,6 @@
+     "datatables.net": "^1.10.19",
+     "datatables.net-bs": "^1.10.19",
+     "jquery": ">=3.4.0",
+-    "js-yaml": ">=3.13.1",
+     "lodash": "^4.17.11",
+     "moment-timezone": "^0.5.21",
+     "npm": "^6.4.1",
+diff --git a/airflow/www/templates/airflow/dags.html b/airflow/www/templates/airflow/dags.html
+index f4684c8300..3f4b9f69b5 100644
+--- a/airflow/www/templates/airflow/dags.html
++++ b/airflow/www/templates/airflow/dags.html
+@@ -103,11 +103,13 @@
+ 
+                 <!-- Column 7: Last Run -->
+                 <td class="text-nowrap latest_dag_run {{ dag.dag_id }}">
+-                  <div height="10" width="10" id='last-run-{{ dag.safe_dag_id }}' style="display: block;">
+-                    <a></a>
+-                    <img class="loading-last-run" width="15" src="{{ url_for("static", filename="loading.gif") }}">
+-                    <span aria-hidden="true" id="statuses_info" title=" " class="glyphicon glyphicon-info-sign" style="display:none"></span>
+-                  </div>
++                  {% set last_run = dag.get_last_dagrun(include_externally_triggered=True) %}
++                  {% if last_run and last_run.execution_date %}
++                    <a href="{{ url_for('Airflow.graph', dag_id=dag.dag_id, execution_date=last_run.execution_date) }}">
++                      {{ last_run.execution_date.strftime("%Y-%m-%d %H:%M") }}
++                    </a>
++                    <span aria-hidden="true" id="statuses_info" title="Start Date: {{ last_run.start_date.strftime("%Y-%m-%d %H:%M") }}" class="glyphicon glyphicon-info-sign"></span>
++                  {% endif %}
+                 </td>
+ 
+                 <!-- Column 8: Dag Runs -->
+@@ -307,21 +309,6 @@
+           }
+         });
+       });
+-      d3.json("{{ url_for('Airflow.last_dagruns') }}", function(error, json) {
+-        for(var safe_dag_id in json) {
+-          dag_id = json[safe_dag_id].dag_id;
+-          last_run = json[safe_dag_id].last_run;
+-          g = d3.select('div#last-run-' + safe_dag_id)
+-          g.selectAll('a')
+-            .attr("href", "{{ url_for('Airflow.graph') }}?dag_id=" + encodeURIComponent(dag_id) + "&execution_date=" + last_run)
+-            .text(last_run);
+-          g.selectAll('span')
+-            .attr("data-original-title", "Start Date: " + last_run)
+-            .style('display', null);
+-          g.selectAll(".loading-last-run").remove();
+-        }
+-        d3.selectAll(".loading-last-run").remove();
+-      });
+       d3.json("{{ url_for('Airflow.dag_stats') }}", function(error, json) {
+         for(var dag_id in json) {
+             states = json[dag_id];
+diff --git a/airflow/www/views.py b/airflow/www/views.py
+index d0ce03e2db..b4bb8eef13 100644
+--- a/airflow/www/views.py
++++ b/airflow/www/views.py
+@@ -403,33 +403,6 @@ class Airflow(AirflowBaseView):
+                 })
+         return wwwutils.json_response(payload)
+ 
+-    @expose('/last_dagruns')
+-    @has_access
+-    @provide_session
+-    def last_dagruns(self, session=None):
+-        DagRun = models.DagRun
+-
+-        filter_dag_ids = appbuilder.sm.get_accessible_dag_ids()
+-
+-        if not filter_dag_ids:
+-            return
+-
+-        dags_to_latest_runs = dict(session.query(
+-            DagRun.dag_id, sqla.func.max(DagRun.execution_date).label('execution_date'))
+-            .group_by(DagRun.dag_id).all())
+-
+-        payload = {}
+-        for dag in dagbag.dags.values():
+-            dag_accessible = 'all_dags' in filter_dag_ids or dag.dag_id in filter_dag_ids
+-            if (dag_accessible and dag.dag_id in dags_to_latest_runs and
+-                    dags_to_latest_runs[dag.dag_id]):
+-                payload[dag.safe_dag_id] = {
+-                    'dag_id': dag.dag_id,
+-                    'last_run': dags_to_latest_runs[dag.dag_id].strftime("%Y-%m-%d %H:%M")
+-                }
+-
+-        return wwwutils.json_response(payload)
+-
+     @expose('/code')
+     @has_dag_access(can_dag_read=True)
+     @has_access
+@@ -1690,7 +1663,7 @@ class Airflow(AirflowBaseView):
+     def paused(self):
+         dag_id = request.args.get('dag_id')
+         is_paused = True if request.args.get('is_paused') == 'false' else False
+-        models.DagModel.get_dagmodel(dag_id).set_is_paused(is_paused=is_paused)
++        models.DagModel.set_is_paused(dag_id=dag_id, is_paused=is_paused)
+         return "OK"
+ 
+     @expose('/refresh', methods=['POST'])
+diff --git a/docs/build.sh b/docs/build.sh
+index b6df10cfd7..7d7a433f5a 100755
+--- a/docs/build.sh
++++ b/docs/build.sh
+@@ -23,18 +23,6 @@ set -e
+ FWDIR="$(cd "`dirname "$0"`"; pwd)"
+ cd "$FWDIR"
+ 
+-NUM_INCORRECT_USE_LITERALINCLUDE_DIRECTIVE=$(grep -inR --include \*.rst 'literalinclude::.\+example_dags' .\
+-    tee /dev/tty |\
+-    wc -l |\
+-    tr -d '[:space:]')
+-
+-if [[ "${NUM_INCORRECT_USE_LITERALINCLUDE_DIRECTIVE}" -ne "0" ]]; then
+-    echo "Unexpected problems found in the documentation. "
+-    echo "You should use a exampleinclude directive to include example DAGs."
+-    echo "Currently, ${NUM_INCORRECT_USE_LITERALINCLUDE_DIRECTIVE} problem found."
+-    exit 1
+-fi
+-
+ [[ -d "_build" ]] && rm -r _build
+ [[ -d "_api" ]] && rm -r _api
+ 
+@@ -49,7 +37,7 @@ NUM_CURRENT_WARNINGS=$(echo $SUCCEED_LINE |\
+ if echo $SUCCEED_LINE | grep -q "warning"; then
+     echo
+     echo "Unexpected problems found in the documentation. "
+-    echo "Currently, ${NUM_CURRENT_WARNINGS} warnings found. "
++    echo "Currently, ${NUM_CURRENT_WARNINGS} warnings found"
+     echo
+     exit 1
+ fi
+diff --git a/docs/concepts.rst b/docs/concepts.rst
+index 87332c006a..5b5ad4b151 100644
+--- a/docs/concepts.rst
++++ b/docs/concepts.rst
+@@ -1019,7 +1019,7 @@ It will not go into subdirectories as these are considered to be potential
+ packages.
+ 
+ In case you would like to add module dependencies to your DAG you basically would
+-do the same, but then it is more suitable to use a virtualenv and pip.
++do the same, but then it is more to use a virtualenv and pip.
+ 
+ .. code-block:: bash
+ 
+diff --git a/docs/howto/operator/dingding.rst b/docs/howto/operator/dingding.rst
+index ba7dec32d3..51bbd95789 100644
+--- a/docs/howto/operator/dingding.rst
++++ b/docs/howto/operator/dingding.rst
+@@ -35,7 +35,7 @@ Basic Usage
+ Use the :class:`~airflow/contrib/operators/dingding_operator.DingdingOperator`
+ to send Dingding message:
+ 
+-.. exampleinclude:: ../../../airflow/contrib/example_dags/example_dingding_operator.py
++.. literalinclude:: ../../../airflow/contrib/example_dags/example_dingding_operator.py
+     :language: python
+     :start-after: [START howto_operator_dingding]
+     :end-before: [END howto_operator_dingding]
+@@ -47,7 +47,7 @@ Remind users in message
+ Use parameters ``at_mobiles`` and ``at_all`` to remind specific users when you send message,
+ ``at_mobiles`` will be ignored When ``at_all`` is set to ``True``:
+ 
+-.. exampleinclude:: ../../../airflow/contrib/example_dags/example_dingding_operator.py
++.. literalinclude:: ../../../airflow/contrib/example_dags/example_dingding_operator.py
+     :language: python
+     :start-after: [START howto_operator_dingding_remind_users]
+     :end-before: [END howto_operator_dingding_remind_users]
+@@ -59,7 +59,7 @@ Send rich text message
+ The Dingding operator can send rich text messages including link, markdown, actionCard and feedCard.
+ A rich text message can not remind specific users except by using markdown type message:
+ 
+-.. exampleinclude:: ../../../airflow/contrib/example_dags/example_dingding_operator.py
++.. literalinclude:: ../../../airflow/contrib/example_dags/example_dingding_operator.py
+     :language: python
+     :start-after: [START howto_operator_dingding_rich_text]
+     :end-before: [END howto_operator_dingding_rich_text]
+@@ -72,7 +72,7 @@ Dingding operator could handle task callback by writing a function wrapper dingd
+ and then pass the function to ``sla_miss_callback``, ``on_success_callback``, ``on_failure_callback``,
+ or ``on_retry_callback``. Here we use ``on_failure_callback`` as an example:
+ 
+-.. exampleinclude:: ../../../airflow/contrib/example_dags/example_dingding_operator.py
++.. literalinclude:: ../../../airflow/contrib/example_dags/example_dingding_operator.py
+     :language: python
+     :start-after: [START howto_operator_dingding_failure_callback]
+     :end-before: [END howto_operator_dingding_failure_callback]
+diff --git a/docs/howto/operator/gcp/compute.rst b/docs/howto/operator/gcp/compute.rst
+index 693eb7ac2c..1d773ad4ff 100644
+--- a/docs/howto/operator/gcp/compute.rst
++++ b/docs/howto/operator/gcp/compute.rst
+@@ -66,7 +66,7 @@ from the GCP connection id used:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gce_instance_start_template_fields]
+@@ -121,7 +121,7 @@ from the GCP connection used:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gce_instance_stop_template_fields]
+@@ -182,7 +182,7 @@ from the GCP connection used:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gce_instance_set_machine_type_template_fields]
+@@ -243,7 +243,7 @@ from the GCP connection used:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gce_instance_template_copy_operator_template_fields]
+@@ -304,7 +304,7 @@ from the GCP connection used:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_compute_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gce_igm_update_template_operator_template_fields]
+diff --git a/docs/howto/operator/gcp/function.rst b/docs/howto/operator/gcp/function.rst
+index 5364d3a32f..2d2af271e8 100644
+--- a/docs/howto/operator/gcp/function.rst
++++ b/docs/howto/operator/gcp/function.rst
+@@ -55,7 +55,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_function_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_function_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcf_function_delete_template_fields]
+@@ -154,7 +154,7 @@ from the GCP connection used:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_function_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_function_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcf_function_deploy_template_fields]
+diff --git a/docs/howto/operator/gcp/gcs.rst b/docs/howto/operator/gcp/gcs.rst
+index bf7fdbe1f5..a5a41c9f65 100644
+--- a/docs/howto/operator/gcp/gcs.rst
++++ b/docs/howto/operator/gcp/gcs.rst
+@@ -70,7 +70,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcs_acl_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcs_acl_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcs_bucket_create_acl_template_fields]
+@@ -114,7 +114,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcs_acl_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcs_acl_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcs_object_create_acl_template_fields]
+diff --git a/docs/howto/operator/gcp/spanner.rst b/docs/howto/operator/gcp/spanner.rst
+index 8dae0b163b..0d4c5a4e3d 100644
+--- a/docs/howto/operator/gcp/spanner.rst
++++ b/docs/howto/operator/gcp/spanner.rst
+@@ -58,7 +58,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_spanner_delete_template_fields]
+@@ -108,7 +108,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_spanner_database_deploy_template_fields]
+@@ -168,7 +168,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_spanner_database_update_template_fields]
+@@ -215,7 +215,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_spanner_query_template_fields]
+@@ -263,7 +263,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_spanner_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_spanner_delete_template_fields]
+diff --git a/docs/howto/operator/gcp/speech.rst b/docs/howto/operator/gcp/speech.rst
+index 99af60a951..0455aadc15 100644
+--- a/docs/howto/operator/gcp/speech.rst
++++ b/docs/howto/operator/gcp/speech.rst
+@@ -33,7 +33,7 @@ Arguments
+ 
+ Some arguments in the example DAG are taken from the OS environment variables:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
+       :language: python
+       :start-after: [START howto_operator_text_to_speech_env_variables]
+       :end-before: [END howto_operator_text_to_speech_env_variables]
+@@ -43,14 +43,14 @@ google.cloud.texttospeech_v1.types module
+ 
+ for more information, see: https://googleapis.github.io/google-cloud-python/latest/texttospeech/gapic/v1/api.html#google.cloud.texttospeech_v1.TextToSpeechClient.synthesize_speech
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
+       :language: python
+       :start-after: [START howto_operator_text_to_speech_api_arguments]
+       :end-before: [END howto_operator_text_to_speech_api_arguments]
+ 
+ filename is a simple string argument:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
+       :language: python
+       :start-after: [START howto_operator_text_to_speech_gcp_filename]
+       :end-before: [END howto_operator_text_to_speech_gcp_filename]
+@@ -58,7 +58,7 @@ filename is a simple string argument:
+ Using the operator
+ """"""""""""""""""
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_text_to_speech_synthesize]
+@@ -94,14 +94,14 @@ google.cloud.speech_v1.types module
+ 
+ for more information, see: https://googleapis.github.io/google-cloud-python/latest/speech/gapic/v1/api.html#google.cloud.speech_v1.SpeechClient.recognize
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
+       :language: python
+       :start-after: [START howto_operator_text_to_speech_api_arguments]
+       :end-before: [END howto_operator_text_to_speech_api_arguments]
+ 
+ filename is a simple string argument:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
+       :language: python
+       :start-after: [START howto_operator_speech_to_text_api_arguments]
+       :end-before: [END howto_operator_speech_to_text_api_arguments]
+@@ -109,7 +109,7 @@ filename is a simple string argument:
+ Using the operator
+ """"""""""""""""""
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_speech.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_speech_to_text_recognize]
+diff --git a/docs/howto/operator/gcp/sql.rst b/docs/howto/operator/gcp/sql.rst
+index 01b2c10126..a18a95ef8e 100644
+--- a/docs/howto/operator/gcp/sql.rst
++++ b/docs/howto/operator/gcp/sql.rst
+@@ -64,7 +64,7 @@ Example request body:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_db_create_template_fields]
+@@ -111,7 +111,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_db_delete_template_fields]
+@@ -167,7 +167,7 @@ Example request body:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_db_patch_template_fields]
+@@ -225,7 +225,7 @@ Replicas are deleted the same way as primary instances:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_delete_template_fields]
+@@ -289,7 +289,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_export_template_fields]
+@@ -386,7 +386,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_import_template_fields]
+@@ -481,7 +481,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_create_template_fields]
+@@ -539,7 +539,7 @@ it will be retrieved from the GCP connection used. Both variants are shown:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_patch_template_fields]
+@@ -631,7 +631,7 @@ standard AIRFLOW notation for defining connection via environment variables):
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_sql_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_sql_query_template_fields]
+diff --git a/docs/howto/operator/gcp/transfer.rst b/docs/howto/operator/gcp/transfer.rst
+index 8b5089126a..c41313669c 100644
+--- a/docs/howto/operator/gcp/transfer.rst
++++ b/docs/howto/operator/gcp/transfer.rst
+@@ -80,7 +80,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_job_create_template_fields]
+@@ -121,7 +121,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_job_delete_template_fields]
+@@ -167,7 +167,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_job_update_template_fields]
+@@ -208,7 +208,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_operation_cancel_template_fields]
+@@ -250,7 +250,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_operation_get_template_fields]
+@@ -291,7 +291,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_operations_list_template_fields]
+@@ -332,7 +332,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_operation_pause_template_fields]
+@@ -373,7 +373,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_transfer_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_operation_resume_template_fields]
+@@ -413,7 +413,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/sensors/gcp_transfer_sensor.py
++.. exampleinclude:: ../../../../airflow/contrib/sensors/gcp_transfer_sensor.py
+     :language: python
+     :dedent: 4
+     :start-after: [START gcp_transfer_job_sensor_template_fields]
+diff --git a/docs/howto/operator/gcp/translate-speech.rst b/docs/howto/operator/gcp/translate-speech.rst
+index cda515d1c8..0c0fb36a78 100644
+--- a/docs/howto/operator/gcp/translate-speech.rst
++++ b/docs/howto/operator/gcp/translate-speech.rst
+@@ -65,7 +65,7 @@ Using the operator
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_translate_speech_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_translate_speech_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START translate_speech_template_fields]
+diff --git a/docs/howto/operator/gcp/translate.rst b/docs/howto/operator/gcp/translate.rst
+index 33453ccf1d..32ad7bfdb6 100644
+--- a/docs/howto/operator/gcp/translate.rst
++++ b/docs/howto/operator/gcp/translate.rst
+@@ -56,7 +56,7 @@ XCom mechanisms of Airflow:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_translate_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_translate_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START translate_template_fields]
+diff --git a/docs/howto/operator/gcp/video.rst b/docs/howto/operator/gcp/video.rst
+index 70cd6985f9..cf95c0059f 100644
+--- a/docs/howto/operator/gcp/video.rst
++++ b/docs/howto/operator/gcp/video.rst
+@@ -37,14 +37,14 @@ Arguments
+ 
+ Some arguments in the example DAG are taken from the OS environment variables:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :start-after: [START howto_operator_video_intelligence_os_args]
+       :end-before: [END howto_operator_video_intelligence_os_args]
+ 
+ Input uri is an uri to a file in Google Cloud Storage
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :start-after: [START howto_operator_video_intelligence_other_args]
+       :end-before: [END howto_operator_video_intelligence_other_args]
+@@ -52,7 +52,7 @@ Input uri is an uri to a file in Google Cloud Storage
+ Using the operator
+ """"""""""""""""""
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_video_intelligence_detect_labels]
+@@ -60,7 +60,7 @@ Using the operator
+ 
+ You can use the annotation output via Xcom:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_video_intelligence_detect_labels_result]
+@@ -96,14 +96,14 @@ Arguments
+ 
+ Some arguments in the example DAG are taken from the OS environment variables:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :start-after: [START howto_operator_video_intelligence_os_args]
+       :end-before: [END howto_operator_video_intelligence_os_args]
+ 
+ Input uri is an uri to a file in Google Cloud Storage
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :start-after: [START howto_operator_video_intelligence_other_args]
+       :end-before: [END howto_operator_video_intelligence_other_args]
+@@ -111,7 +111,7 @@ Input uri is an uri to a file in Google Cloud Storage
+ Using the operator
+ """"""""""""""""""
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_video_intelligence_detect_explicit_content]
+@@ -119,7 +119,7 @@ Using the operator
+ 
+ You can use the annotation output via Xcom:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_video_intelligence_detect_explicit_content_result]
+@@ -155,14 +155,14 @@ Arguments
+ 
+ Some arguments in the example DAG are taken from the OS environment variables:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :start-after: [START howto_operator_video_intelligence_os_args]
+       :end-before: [END howto_operator_video_intelligence_os_args]
+ 
+ Input uri is an uri to a file in Google Cloud Storage
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :start-after: [START howto_operator_video_intelligence_other_args]
+       :end-before: [END howto_operator_video_intelligence_other_args]
+@@ -170,7 +170,7 @@ Input uri is an uri to a file in Google Cloud Storage
+ Using the operator
+ """"""""""""""""""
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_video_intelligence_detect_video_shots]
+@@ -178,7 +178,7 @@ Using the operator
+ 
+ You can use the annotation output via Xcom:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_video_intelligence.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_video_intelligence_detect_video_shots_result]
+diff --git a/docs/howto/operator/gcp/vision.rst b/docs/howto/operator/gcp/vision.rst
+index 42e3ba4d9b..f3b4c7d9eb 100644
+--- a/docs/howto/operator/gcp/vision.rst
++++ b/docs/howto/operator/gcp/vision.rst
+@@ -95,7 +95,7 @@ Otherwise it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_add_product_to_product_set_template_fields]
+@@ -169,7 +169,7 @@ The result can be extracted from XCOM:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_annotate_image_template_fields]
+@@ -252,7 +252,7 @@ Or it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_product_create_template_fields]
+@@ -319,7 +319,7 @@ Otherwise it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_product_delete_template_fields]
+@@ -382,7 +382,7 @@ Otherwise it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_product_get_template_fields]
+@@ -459,7 +459,7 @@ Or it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_productset_create_template_fields]
+@@ -520,7 +520,7 @@ Otherwise it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_productset_delete_template_fields]
+@@ -579,7 +579,7 @@ Otherwise it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_productset_get_template_fields]
+@@ -664,7 +664,7 @@ Otherwise it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_productset_update_template_fields]
+@@ -758,7 +758,7 @@ Otherwise it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_product_update_template_fields]
+@@ -835,7 +835,7 @@ Or it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_reference_image_create_template_fields]
+@@ -920,7 +920,7 @@ Otherwise it can be specified explicitly:
+ Templating
+ """"""""""
+ 
+-.. literalinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
++.. exampleinclude:: ../../../../airflow/contrib/operators/gcp_vision_operator.py
+     :language: python
+     :dedent: 4
+     :start-after: [START vision_remove_product_from_product_set_template_fields]
+@@ -948,7 +948,7 @@ Arguments
+ 
+ Some arguments in the example DAG are taken from the OS environment variables:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :start-after: [START howto_operator_vision_annotate_image_url]
+       :end-before: [END howto_operator_vision_annotate_image_url]
+@@ -960,12 +960,12 @@ Using the operator
+ We are using the :class:`Retry` objects from
+ Google libraries:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :start-after: [START howto_operator_vision_retry_import]
+       :end-before: [END howto_operator_vision_retry_import]
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_vision_detect_text]
+@@ -973,7 +973,7 @@ Google libraries:
+ 
+ The result can be extracted from XCOM:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_vision_detect_text_result]
+@@ -1010,7 +1010,7 @@ Arguments
+ 
+ Some arguments in the example DAG are taken from the OS environment variables:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :start-after: [START howto_operator_vision_annotate_image_url]
+       :end-before: [END howto_operator_vision_annotate_image_url]
+@@ -1022,12 +1022,12 @@ Using the operator
+ We are using the :class:`Retry` objects from
+ Google libraries:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :start-after: [START howto_operator_vision_retry_import]
+       :end-before: [END howto_operator_vision_retry_import]
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_vision_document_detect_text]
+@@ -1035,7 +1035,7 @@ Google libraries:
+ 
+ The result can be extracted from XCOM:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_vision_document_detect_text_result]
+@@ -1072,7 +1072,7 @@ Arguments
+ 
+ Some arguments in the example DAG are taken from the OS environment variables:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :start-after: [START howto_operator_vision_annotate_image_url]
+       :end-before: [END howto_operator_vision_annotate_image_url]
+@@ -1084,12 +1084,12 @@ Using the operator
+ We are using the :class:`Retry` objects from
+ Google libraries:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :start-after: [START howto_operator_vision_retry_import]
+       :end-before: [END howto_operator_vision_retry_import]
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_vision_detect_labels]
+@@ -1097,7 +1097,7 @@ Google libraries:
+ 
+ The result can be extracted from XCOM:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_vision_detect_labels_result]
+@@ -1134,7 +1134,7 @@ Arguments
+ 
+ Some arguments in the example DAG are taken from the OS environment variables:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :start-after: [START howto_operator_vision_annotate_image_url]
+       :end-before: [END howto_operator_vision_annotate_image_url]
+@@ -1146,12 +1146,12 @@ Using the operator
+ We are using the :class:`Retry` objects from
+ Google libraries:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :start-after: [START howto_operator_vision_retry_import]
+       :end-before: [END howto_operator_vision_retry_import]
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_vision_detect_safe_search]
+@@ -1159,7 +1159,7 @@ Google libraries:
+ 
+ The result can be extracted from XCOM:
+ 
+-.. exampleinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
++.. literalinclude:: ../../../../airflow/contrib/example_dags/example_gcp_vision.py
+       :language: python
+       :dedent: 4
+       :start-after: [START howto_operator_vision_detect_safe_search_result]
+diff --git a/docs/howto/operator/index.rst b/docs/howto/operator/index.rst
+index d457ef97db..3ed731d020 100644
+--- a/docs/howto/operator/index.rst
++++ b/docs/howto/operator/index.rst
+@@ -31,6 +31,4 @@ information.
+     bash
+     dingding
+     gcp/index
+-    papermill
+     python
+-
+diff --git a/docs/index.rst b/docs/index.rst
+index dc230d86fe..0b79997d6d 100644
+--- a/docs/index.rst
++++ b/docs/index.rst
+@@ -90,6 +90,7 @@ Content
+     metrics
+     kubernetes
+     lineage
++    papermill
+     changelog
+     faq
+     macros
+diff --git a/docs/macros.rst b/docs/macros.rst
+index b1e1745fdf..656037670a 100644
+--- a/docs/macros.rst
++++ b/docs/macros.rst
+@@ -28,54 +28,56 @@ Default Variables
+ The Airflow engine passes a few variables by default that are accessible
+ in all templates
+ 
+-=================================   ====================================
+-Variable                            Description
+-=================================   ====================================
+-``{{ ds }}``                        the execution date as ``YYYY-MM-DD``
+-``{{ ds_nodash }}``                 the execution date as ``YYYYMMDD``
+-``{{ prev_ds }}``                   the previous execution date as ``YYYY-MM-DD``
+-                                    if ``{{ ds }}`` is ``2018-01-08`` and ``schedule_interval`` is ``@weekly``,
+-                                    ``{{ prev_ds }}`` will be ``2018-01-01``
+-``{{ prev_ds_nodash }}``            the previous execution date as ``YYYYMMDD`` if exists, else ``None``
+-``{{ next_ds }}``                   the next execution date as ``YYYY-MM-DD``
+-                                    if ``{{ ds }}`` is ``2018-01-01`` and ``schedule_interval`` is ``@weekly``,
+-                                    ``{{ next_ds }}`` will be ``2018-01-08``
+-``{{ next_ds_nodash }}``            the next execution date as ``YYYYMMDD`` if exists, else ``None``
+-``{{ yesterday_ds }}``              the day before the execution date as ``YYYY-MM-DD``
+-``{{ yesterday_ds_nodash }}``       the day before the execution date as ``YYYYMMDD``
+-``{{ tomorrow_ds }}``               the day after the execution date as ``YYYY-MM-DD``
+-``{{ tomorrow_ds_nodash }}``        the day after the execution date as ``YYYYMMDD``
+-``{{ ts }}``                        same as ``execution_date.isoformat()``. Example: ``2018-01-01T00:00:00+00:00``
+-``{{ ts_nodash }}``                 same as ``ts`` without ``-``, ``:`` and TimeZone info. Example: ``20180101T000000``
+-``{{ ts_nodash_with_tz }}``         same as ``ts`` without ``-`` and ``:``. Example: ``20180101T000000+0000``
+-``{{ execution_date }}``            the execution_date (pendulum.Pendulum)
+-``{{ prev_execution_date }}``       the previous execution date (if available) (pendulum.Pendulum)
+-``{{ next_execution_date }}``       the next execution date (pendulum.Pendulum)
+-``{{ dag }}``                       the DAG object
+-``{{ task }}``                      the Task object
+-``{{ macros }}``                    a reference to the macros package, described below
+-``{{ task_instance }}``             the task_instance object
+-``{{ end_date }}``                  same as ``{{ ds }}``
+-``{{ latest_date }}``               same as ``{{ ds }}``
+-``{{ ti }}``                        same as ``{{ task_instance }}``
+-``{{ params }}``                    a reference to the user-defined params dictionary which can be overridden by
+-                                    the dictionary passed through ``trigger_dag -c`` if you enabled
+-                                    ``dag_run_conf_overrides_params` in ``airflow.cfg``
+-``{{ var.value.my_var }}``          global defined variables represented as a dictionary
+-``{{ var.json.my_var.path }}``      global defined variables represented as a dictionary
+-                                    with deserialized JSON object, append the path to the
+-                                    key within the JSON object
+-``{{ task_instance_key_str }}``     a unique, human-readable key to the task instance
+-                                    formatted ``{dag_id}_{task_id}_{ds}``
+-``{{ conf }}``                      the full configuration object located at
+-                                    ``airflow.configuration.conf`` which
+-                                    represents the content of your
+-                                    ``airflow.cfg``
+-``{{ run_id }}``                    the ``run_id`` of the current DAG run
+-``{{ dag_run }}``                   a reference to the DagRun object
+-``{{ test_mode }}``                 whether the task instance was called using
+-                                    the CLI's test subcommand
+-=================================   ====================================
++=====================================   ====================================
++Variable                                Description
++=====================================   ====================================
++``{{ ds }}``                            the execution date as ``YYYY-MM-DD``
++``{{ ds_nodash }}``                     the execution date as ``YYYYMMDD``
++``{{ prev_ds }}``                       the previous execution date as ``YYYY-MM-DD``
++                                        if ``{{ ds }}`` is ``2018-01-08`` and ``schedule_interval`` is ``@weekly``,
++                                        ``{{ prev_ds }}`` will be ``2018-01-01``
++``{{ prev_ds_nodash }}``                the previous execution date as ``YYYYMMDD`` if exists, else ``None``
++``{{ next_ds }}``                       the next execution date as ``YYYY-MM-DD``
++                                        if ``{{ ds }}`` is ``2018-01-01`` and ``schedule_interval`` is ``@weekly``,
++                                        ``{{ next_ds }}`` will be ``2018-01-08``
++``{{ next_ds_nodash }}``                the next execution date as ``YYYYMMDD`` if exists, else ``None``
++``{{ yesterday_ds }}``                  the day before the execution date as ``YYYY-MM-DD``
++``{{ yesterday_ds_nodash }}``           the day before the execution date as ``YYYYMMDD``
++``{{ tomorrow_ds }}``                   the day after the execution date as ``YYYY-MM-DD``
++``{{ tomorrow_ds_nodash }}``            the day after the execution date as ``YYYYMMDD``
++``{{ ts }}``                            same as ``execution_date.isoformat()``. Example: ``2018-01-01T00:00:00+00:00``
++``{{ ts_nodash }}``                     same as ``ts`` without ``-``, ``:`` and TimeZone info. Example: ``20180101T000000``
++``{{ ts_nodash_with_tz }}``             same as ``ts`` without ``-`` and ``:``. Example: ``20180101T000000+0000``
++``{{ execution_date }}``                the execution_date (pendulum.Pendulum)
++``{{ prev_execution_date }}``           the previous execution date (if available) (pendulum.Pendulum)
++``{{ prev_execution_date_success }}``   execution date from prior succesful dag run (if available) (pendulum.Pendulum)
++``{{ prev_start_date_success }}``       start date from prior successful dag run (if available) (pendulum.Pendulum)
++``{{ next_execution_date }}``           the next execution date (pendulum.Pendulum)
++``{{ dag }}``                           the DAG object
++``{{ task }}``                          the Task object
++``{{ macros }}``                        a reference to the macros package, described below
++``{{ task_instance }}``                 the task_instance object
++``{{ end_date }}``                      same as ``{{ ds }}``
++``{{ latest_date }}``                   same as ``{{ ds }}``
++``{{ ti }}``                            same as ``{{ task_instance }}``
++``{{ params }}``                        a reference to the user-defined params dictionary which can be overridden by
++                                        the dictionary passed through ``trigger_dag -c`` if you enabled
++                                        ``dag_run_conf_overrides_params` in ``airflow.cfg``
++``{{ var.value.my_var }}``              global defined variables represented as a dictionary
++``{{ var.json.my_var.path }}``          global defined variables represented as a dictionary
++                                        with deserialized JSON object, append the path to the
++                                        key within the JSON object
++``{{ task_instance_key_str }}``         a unique, human-readable key to the task instance
++                                        formatted ``{dag_id}_{task_id}_{ds}``
++``{{ conf }}``                          the full configuration object located at
++                                        ``airflow.configuration.conf`` which
++                                        represents the content of your
++                                        ``airflow.cfg``
++``{{ run_id }}``                        the ``run_id`` of the current DAG run
++``{{ dag_run }}``                       a reference to the DagRun object
++``{{ test_mode }}``                     whether the task instance was called using
++                                        the CLI's test subcommand
++=====================================   ====================================
+ 
+ Note that you can access the object's attributes and methods with simple
+ dot notation. Here are some examples of what is possible:
+diff --git a/docs/howto/operator/papermill.rst b/docs/papermill.rst
+similarity index 100%
+rename from docs/howto/operator/papermill.rst
+rename to docs/papermill.rst
+diff --git a/docs/project.rst b/docs/project.rst
+index 59fa904ea4..14f68f438e 100644
+--- a/docs/project.rst
++++ b/docs/project.rst
+@@ -58,7 +58,6 @@ Committers
+ - @jmcarp (Joshua Carp)
+ - @KevinYang21 (Kevin Yang)
+ - @mik-laj (Kamil Breguła)
+-- @aijamalnk (Aizhamal Nurmamat kyzy)
+ 
+ 
+ For the full list of contributors, take a look at `Airflow's Github
+diff --git a/docs/security.rst b/docs/security.rst
+index 0b693d9cb9..259a8ebd43 100644
+--- a/docs/security.rst
++++ b/docs/security.rst
+@@ -18,11 +18,6 @@
+ Security
+ ========
+ 
+-.. include:: ../.github/SECURITY.rst
+-
+-Web Authentication
+-------------------
+-
+ By default, Airflow requires users to specify a password prior to login. You can use the
+ following CLI commands to create an account:
+ 
+@@ -43,6 +38,30 @@ Be sure to checkout :doc:`api` for securing the API.
+    environment variables) as ``%%``, otherwise Airflow might leak these
+    passwords on a config parser exception to a log.
+ 
++Reporting Vulnerabilities
++-------------------------
++
++The Apache Software Foundation takes security issues very seriously. Apache
++Airflow specifically offers security features and is responsive to issues
++around its features. If you have any concern around Airflow Security or believe
++you have uncovered a vulnerability, we suggest that you get in touch via the
++e-mail address security@apache.org. In the message, try to provide a
++description of the issue and ideally a way of reproducing it. The security team
++will get back to you after assessing the description.
++
++Note that this security address should be used only for undisclosed
++vulnerabilities. Dealing with fixed issues or general questions on how to use
++the security features should be handled regularly via the user and the dev
++lists. Please report any security problems to the project security address
++before disclosing it publicly.
++
++The `ASF Security team's page <https://www.apache.org/security/>`_ describes
++how vulnerability reports are handled, and includes PGP keys if you wish to use
++that.
++
++Web Authentication
++------------------
++
+ Password
+ ''''''''
+ 
+diff --git a/scripts/ci/ci_pylint.sh b/scripts/ci/ci_pylint.sh
+index 0cf1271b22..925ce224f7 100755
+--- a/scripts/ci/ci_pylint.sh
++++ b/scripts/ci/ci_pylint.sh
+@@ -17,8 +17,8 @@
+ # limitations under the License.
+ #
+ 
+-# Script to run Pylint on all code. Should be started from root directory of Airflow:
+-# ./scripts/ci/ci_pylint.sh
++# Script to run Pylint on all code. Should be started from root directory:
++# ./[airflow dir]/scripts/ci/ci_pylint.sh
+ 
+ set -ex
+ 
+@@ -26,5 +26,4 @@ find . -name "*.py" \
+ -not -path "./.eggs/*" \
+ -not -path "./airflow/www/node_modules/*" \
+ -not -path "./airflow/_vendor/*" \
+--not -path "./build/*" \
+--not -name 'webserver_config.py' | grep -vFf scripts/ci/pylint_todo.txt | xargs pylint --output-format=colorized
++-not -path "./build" | grep -vFf scripts/ci/pylint_todo.txt | xargs pylint --output-format=colorized
+diff --git a/scripts/ci/pylint_todo.txt b/scripts/ci/pylint_todo.txt
+index 84197faf7a..7921763661 100644
+--- a/scripts/ci/pylint_todo.txt
++++ b/scripts/ci/pylint_todo.txt
+@@ -287,6 +287,30 @@
+ ./airflow/contrib/utils/mlengine_prediction_summary.py
+ ./airflow/contrib/utils/sendgrid.py
+ ./airflow/contrib/utils/weekday.py
++./airflow/dag/__init__.py
++./airflow/dag/base_dag.py
++./airflow/example_dags/__init__.py
++./airflow/example_dags/docker_copy_data.py
++./airflow/example_dags/example_bash_operator.py
++./airflow/example_dags/example_branch_operator.py
++./airflow/example_dags/example_branch_python_dop_operator_3.py
++./airflow/example_dags/example_docker_operator.py
++./airflow/example_dags/example_http_operator.py
++./airflow/example_dags/example_latest_only.py
++./airflow/example_dags/example_latest_only_with_trigger.py
++./airflow/example_dags/example_passing_params_via_test_command.py
++./airflow/example_dags/example_pig_operator.py
++./airflow/example_dags/example_python_operator.py
++./airflow/example_dags/example_short_circuit_operator.py
++./airflow/example_dags/example_skip_dag.py
++./airflow/example_dags/example_subdag_operator.py
++./airflow/example_dags/example_trigger_controller_dag.py
++./airflow/example_dags/example_trigger_target_dag.py
++./airflow/example_dags/example_xcom.py
++./airflow/example_dags/subdags/__init__.py
++./airflow/example_dags/subdags/subdag.py
++./airflow/example_dags/test_utils.py
++./airflow/example_dags/tutorial.py
+ ./airflow/exceptions.py
+ ./airflow/executors/__init__.py
+ ./airflow/executors/base_executor.py
+diff --git a/setup.cfg b/setup.cfg
+index ef06e54a73..02281bc866 100644
+--- a/setup.cfg
++++ b/setup.cfg
+@@ -33,6 +33,14 @@ universal=1
+ [files]
+ packages = airflow
+ 
++[build_sphinx]
++source-dir = docs/
++build-dir = docs/_build
++all_files = 1
++
++[upload_sphinx]
++upload-dir = docs/_build/html
++
+ [easy_install]
+ 
+ [mypy]
+diff --git a/setup.py b/setup.py
+index e5cbaf321d..87dc92a932 100644
+--- a/setup.py
++++ b/setup.py
+@@ -70,12 +70,7 @@ class Tox(TestCommand):
+ 
+ 
+ class CleanCommand(Command):
+-    """
+-    Command to tidy up the project root.
+-    Registered as cmdclass in setup() so it can be called with ``python setup.py extra_clean``.
+-    """
+-
+-    description = "Tidy up the project root"
++    """Command to tidy up the project root."""
+     user_options = []
+ 
+     def initialize_options(self):
+@@ -91,10 +86,7 @@ class CleanCommand(Command):
+ class CompileAssets(Command):
+     """
+     Compile and build the frontend assets using npm and webpack.
+-    Registered as cmdclass in setup() so it can be called with ``python setup.py compile_assets``.
+     """
+-
+-    description = "Compile and build the frontend assets"
+     user_options = []
+ 
+     def initialize_options(self):
+@@ -179,6 +171,7 @@ datadog = ['datadog>=0.14.0']
+ doc = [
+     'sphinx-argparse>=0.1.13',
+     'sphinx-autoapi>=0.7.1',
++    'Sphinx-PyPI-upload>=0.2.1',
+     'sphinx-rtd-theme>=0.1.6',
+     'sphinx>=1.2.3',
+     'sphinxcontrib-httpdomain>=1.7.0',
+diff --git a/tests/contrib/operators/test_ssh_operator.py b/tests/contrib/operators/test_ssh_operator.py
+index de08cf6594..3cf12cab6c 100644
+--- a/tests/contrib/operators/test_ssh_operator.py
++++ b/tests/contrib/operators/test_ssh_operator.py
+@@ -121,7 +121,6 @@ class SSHOperatorTest(unittest.TestCase):
+             command="echo -n airflow",
+             do_xcom_push=True,
+             dag=self.dag,
+-            environment={'TEST': 'value'}
+         )
+ 
+         self.assertIsNotNone(task)
+diff --git a/tests/models/test_dag.py b/tests/models/test_dag.py
+index 9857a05aa3..6c08c337d7 100644
+--- a/tests/models/test_dag.py
++++ b/tests/models/test_dag.py
+@@ -939,7 +939,7 @@ class DagTest(unittest.TestCase):
+ 
+         self.assertEquals(2, unpaused_dags)
+ 
+-        DagModel.get_dagmodel(dag.dag_id).set_is_paused(is_paused=True)
++        DagModel.set_is_paused(dag.dag_id, is_paused=True)
+ 
+         paused_dags = session.query(
+             DagModel
+diff --git a/tests/operators/test_docker_operator.py b/tests/operators/test_docker_operator.py
+index ed9b5441f6..9747a1b96a 100644
+--- a/tests/operators/test_docker_operator.py
++++ b/tests/operators/test_docker_operator.py
+@@ -51,8 +51,7 @@ class DockerOperatorTestCase(unittest.TestCase):
+         operator = DockerOperator(api_version='1.19', command='env', environment={'UNIT': 'TEST'},
+                                   image='ubuntu:latest', network_mode='bridge', owner='unittest',
+                                   task_id='unittest', volumes=['/host/path:/container/path'],
+-                                  working_dir='/container/path', shm_size=1000,
+-                                  host_tmp_dir='/host/airflow')
++                                  working_dir='/container/path', shm_size=1000)
+         operator.execute(None)
+ 
+         client_class_mock.assert_called_with(base_url='unix://var/run/docker.sock', tls=None,
+@@ -77,7 +76,6 @@ class DockerOperatorTestCase(unittest.TestCase):
+                                                           auto_remove=False,
+                                                           dns=None,
+                                                           dns_search=None)
+-        mkdtemp_mock.assert_called_with(dir='/host/airflow', prefix='airflowtmp', suffix='')
+         client_mock.images.assert_called_with(name='ubuntu:latest')
+         client_mock.logs.assert_called_with(container='some_id', stream=True)
+         client_mock.pull.assert_called_with('ubuntu:latest', stream=True)
+diff --git a/tests/www/test_views.py b/tests/www/test_views.py
+index a5b27ae52f..a31d38ef62 100644
+--- a/tests/www/test_views.py
++++ b/tests/www/test_views.py
+@@ -490,10 +490,6 @@ class TestAirflowBaseViews(TestBase):
+         resp = self.client.get(url, follow_redirects=True)
+         self.check_content_in_response('runme_1', resp)
+ 
+-    def test_last_dagruns(self):
+-        resp = self.client.get('last_dagruns', follow_redirects=True)
+-        self.check_content_in_response('example_bash_operator', resp)
+-
+     def test_tree(self):
+         url = 'tree?dag_id=example_bash_operator'
+         resp = self.client.get(url, follow_redirects=True)

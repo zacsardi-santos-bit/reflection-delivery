@@ -1,0 +1,29 @@
+{
+    "id": "12cc3bb0-6ff3-4ec6-8f47-db18ffb3491b",
+    "started_at": "2026-07-04T15:42:17.694123",
+    "finished_at": "2026-07-04T15:44:45.111752",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-inlong-10726": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-inlong-10726__4gpitPb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

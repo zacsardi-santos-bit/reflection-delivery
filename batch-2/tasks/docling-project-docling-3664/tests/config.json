@@ -1,0 +1,28 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/test_backend_asciidoc.py -v",
+  "test_files": [
+    "tests/data/asciidoc/asciidoc_01.asciidoc",
+    "tests/data/asciidoc/asciidoc_02.asciidoc",
+    "tests/data/asciidoc/asciidoc_03.asciidoc",
+    "tests/data/asciidoc/asciidoc_04.asciidoc",
+    "tests/data/groundtruth/docling_v2/asciidoc_01.asciidoc.md",
+    "tests/data/groundtruth/docling_v2/asciidoc_02.asciidoc.md",
+    "tests/data/groundtruth/docling_v2/asciidoc_03.asciidoc.md",
+    "tests/data/groundtruth/docling_v2/asciidoc_04.asciidoc.md",
+    "tests/data/groundtruth/docling_v2/test_01.asciidoc.md",
+    "tests/data/groundtruth/docling_v2/test_02.asciidoc.md",
+    "tests/test_backend_asciidoc.py"
+  ],
+  "num_test_files": 11,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_backend_asciidoc::test_asciidocs_examples"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_backend_asciidoc::test_parse_picture",
+    "tests.test_backend_asciidoc::test_table_cell_format_specifiers",
+    "tests.test_backend_asciidoc::test_table_cell_content_preserved",
+    "tests.test_backend_asciidoc::test_empty_table_does_not_crash"
+  ]
+}

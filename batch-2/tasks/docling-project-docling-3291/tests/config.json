@@ -1,0 +1,16 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_rapid_ocr_lang.py -v",
+  "test_files": [
+    "tests/test_rapid_ocr_lang.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_rapid_ocr_lang::test_rapidocr_uses_english_mobile_assets",
+    "tests.test_rapid_ocr_lang::test_rapidocr_defaults_to_chinese_mobile_assets",
+    "tests.test_rapid_ocr_lang::test_download_models_uses_language_specific_mobile_paths",
+    "tests.test_rapid_ocr_lang::test_model_downloader_fetches_both_rapidocr_language_sets"
+  ],
+  "PASS_TO_PASS": []
+}

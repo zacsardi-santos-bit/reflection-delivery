@@ -1,0 +1,428 @@
+diff --git a/mlflow/entities/span.py b/mlflow/entities/span.py
+index 01f520c6a..2c757e55a 100644
+--- a/mlflow/entities/span.py
++++ b/mlflow/entities/span.py
+@@ -166,14 +166,10 @@ class Span:
+         """
+         return self._attributes.get(key)
+ 
+-    def to_dict(self, dump_events=False):
++    def to_dict(self):
+         # NB: OpenTelemetry Span has to_json() method, but it will write many fields that
+         #  we don't use e.g. links, kind, resource, trace_state, etc. So we manually
+         #  cherry-pick the fields we need here.
+-        if dump_events:
+-            events = [event.json() for event in self.events]
+-        else:
+-            events = [asdict(event) for event in self.events]
+         return {
+             "name": self.name,
+             "context": {
+@@ -186,7 +182,7 @@ class Span:
+             "status_code": self.status.status_code.value,
+             "status_message": self.status.description,
+             "attributes": dict(self._span.attributes),
+-            "events": events,
++            "events": [asdict(event) for event in self.events],
+         }
+ 
+     @classmethod
+@@ -445,7 +441,14 @@ class _SpanAttributesRegistry:
+ 
+     def get(self, key: str):
+         serialized_value = self._span.attributes.get(key)
+-        return json.loads(serialized_value) if serialized_value else None
++        if serialized_value:
++            try:
++                return json.loads(serialized_value)
++            except Exception as e:
++                _logger.warning(
++                    f"Failed to get value for key {key}, make sure you set the attribute "
++                    f"on mlflow Span class instead of directly to the OpenTelemetry span. {e}"
++                )
+ 
+     def set(self, key: str, value: Any):
+         if not isinstance(key, str):
+diff --git a/mlflow/entities/trace.py b/mlflow/entities/trace.py
+index 7b7b6e428..373fac848 100644
+--- a/mlflow/entities/trace.py
++++ b/mlflow/entities/trace.py
+@@ -1,12 +1,14 @@
+ from __future__ import annotations
+ 
+ import json
+-from dataclasses import asdict, dataclass
++from dataclasses import dataclass
+ from typing import Any, Dict
+ 
+ from mlflow.entities._mlflow_object import _MlflowObject
+ from mlflow.entities.trace_data import TraceData
+ from mlflow.entities.trace_info import TraceInfo
++from mlflow.exceptions import MlflowException
++from mlflow.protos.databricks_pb2 import INVALID_PARAMETER_VALUE
+ 
+ 
+ @dataclass
+@@ -21,13 +23,40 @@ class Trace(_MlflowObject):
+     info: TraceInfo
+     data: TraceData
+ 
++    def to_dict(self) -> Dict[str, Any]:
++        return {"info": self.info.to_dict(), "data": self.data.to_dict()}
++
+     def to_json(self) -> str:
+         from mlflow.tracing.utils import TraceJSONEncoder
+ 
+-        return json.dumps(
+-            {"info": asdict(self.info), "data": self.data.to_dict()}, cls=TraceJSONEncoder
++        return json.dumps(self.to_dict(), cls=TraceJSONEncoder)
++
++    @classmethod
++    def from_dict(cls, trace_dict: Dict[str, Any]) -> Trace:
++        info = trace_dict.get("info")
++        data = trace_dict.get("data")
++        if info is None or data is None:
++            raise MlflowException(
++                "Unable to parse Trace from dictionary. Expected keys: 'info' and 'data'. "
++                "Received keys: %s" % list(trace_dict.keys()),
++                error_code=INVALID_PARAMETER_VALUE,
++            )
++        return cls(
++            info=TraceInfo.from_dict(info),
++            data=TraceData.from_dict(data),
+         )
+ 
++    @classmethod
++    def from_json(cls, trace_json: str) -> Trace:
++        try:
++            trace_dict = json.loads(trace_json)
++        except json.JSONDecodeError as e:
++            raise MlflowException(
++                f"Unable to parse trace JSON: {trace_json}. Error: {e}",
++                error_code=INVALID_PARAMETER_VALUE,
++            )
++        return cls.from_dict(trace_dict)
++
+     def _repr_mimebundle_(self, include=None, exclude=None):
+         """
+         This method is used to trigger custom display logic in IPython notebooks.
+diff --git a/mlflow/langchain/api_request_parallel_processor.py b/mlflow/langchain/api_request_parallel_processor.py
+index d890de110..26e48a1b7 100644
+--- a/mlflow/langchain/api_request_parallel_processor.py
++++ b/mlflow/langchain/api_request_parallel_processor.py
+@@ -286,10 +286,14 @@ class APIRequest:
+                 else:
+                     response = APIRequest._try_transform_response_to_chat_format(response)
+         else:
++            if isinstance(self.lc_model, langchain.chains.base.Chain):
++                kwargs = {"return_only_outputs": True}
++            else:
++                kwargs = {}
+             response = self.lc_model(
+                 self.request_json,
+-                return_only_outputs=True,
+                 callbacks=callback_handlers,
++                **kwargs,
+             )
+ 
+             if self.did_perform_chat_conversion or self.convert_chat_responses:
+diff --git a/mlflow/langchain/langchain_tracer.py b/mlflow/langchain/langchain_tracer.py
+index 4aaaacd54..a10cbd4cb 100644
+--- a/mlflow/langchain/langchain_tracer.py
++++ b/mlflow/langchain/langchain_tracer.py
+@@ -1,7 +1,4 @@
+-import json
+ import logging
+-from dataclasses import asdict, dataclass
+-from datetime import datetime
+ from typing import Any, Dict, List, Optional, Sequence, Union
+ from uuid import UUID
+ 
+@@ -20,15 +17,8 @@ from tenacity import RetryCallState
+ import mlflow
+ from mlflow import MlflowClient
+ from mlflow.entities import LiveSpan, SpanEvent, SpanStatus, SpanStatusCode, SpanType
+-from mlflow.environment_variables import _USE_MLFLOW_LANGCHAIN_TRACER_FOR_RAG_TRACING
+ from mlflow.exceptions import MlflowException
+-from mlflow.langchain.utils import (
+-    DATABRICKS_VECTOR_SEARCH_DOC_URI,
+-    DATABRICKS_VECTOR_SEARCH_PRIMARY_KEY,
+-    get_databricks_vector_search_key,
+-)
+ from mlflow.pyfunc.context import Context, set_prediction_context
+-from mlflow.tracing.export.inference_table import pop_trace
+ from mlflow.utils.autologging_utils import ExceptionSafeAbstractClass
+ 
+ _logger = logging.getLogger(__name__)
+@@ -75,20 +65,6 @@ class MlflowLangchainTracer(BaseCallbackHandler, metaclass=ExceptionSafeAbstract
+         self._prediction_context = prediction_context
+         self._request_id = None
+ 
+-    def _dump_trace(self) -> str:
+-        """
+-        This method is only used to get the trace data from the buffer in databricks
+-        serving, it should return the trace in dictionary format and then dump to string.
+-        """
+-
+-        def _default_converter(o):
+-            if isinstance(o, datetime):
+-                return o.isoformat()
+-            raise TypeError(f"Object of type {o.__class__.__name__} is not JSON serializable")
+-
+-        trace = pop_trace(self._request_id)
+-        return json.dumps(trace, default=_default_converter)
+-
+     def _get_span_by_run_id(self, run_id: UUID) -> Optional[LiveSpan]:
+         if span := self._run_span_mapping.get(str(run_id)):
+             return span
+@@ -203,8 +179,6 @@ class MlflowLangchainTracer(BaseCallbackHandler, metaclass=ExceptionSafeAbstract
+         """Run when LLM (non-chat models) starts running."""
+         if metadata:
+             kwargs.update({"metadata": metadata})
+-        if _USE_MLFLOW_LANGCHAIN_TRACER_FOR_RAG_TRACING.get():
+-            prompts = convert_llm_inputs(prompts)
+         self._start_span(
+             span_name=name or self._assign_span_name(serialized, "llm"),
+             parent_run_id=parent_run_id,
+@@ -269,8 +243,6 @@ class MlflowLangchainTracer(BaseCallbackHandler, metaclass=ExceptionSafeAbstract
+         """End the span for an LLM run."""
+         llm_span = self._get_span_by_run_id(run_id)
+         outputs = response.dict()
+-        if _USE_MLFLOW_LANGCHAIN_TRACER_FOR_RAG_TRACING.get():
+-            outputs = convert_llm_outputs(outputs)
+         self._end_span(llm_span, outputs=outputs)
+ 
+     def on_llm_error(
+@@ -409,8 +381,6 @@ class MlflowLangchainTracer(BaseCallbackHandler, metaclass=ExceptionSafeAbstract
+     def on_retriever_end(self, documents: Sequence[Document], *, run_id: UUID, **kwargs: Any):
+         """Run when Retriever ends running."""
+         retriever_span = self._get_span_by_run_id(run_id)
+-        if _USE_MLFLOW_LANGCHAIN_TRACER_FOR_RAG_TRACING.get():
+-            documents = convert_retriever_outputs(documents)
+         self._end_span(retriever_span, outputs=documents)
+ 
+     def on_retriever_error(
+@@ -492,108 +462,3 @@ class MlflowLangchainTracer(BaseCallbackHandler, metaclass=ExceptionSafeAbstract
+             self._reset()
+         except Exception as e:
+             _logger.debug(f"Failed to flush MLflow tracer due to error {e}.")
+-
+-
+-@dataclass
+-class Chunk:
+-    chunk_id: Optional[str] = None
+-    doc_uri: Optional[str] = None
+-    content: Optional[str] = None
+-
+-
+-def convert_retriever_outputs(
+-    documents: List[Document],
+-) -> Dict[str, List[Dict[str, str]]]:
+-    """
+-    Convert Retriever outputs format from
+-    [
+-        Document(page_content="...", metadata={...}, type="Document"),
+-        ...
+-    ]
+-    to
+-    {
+-        "chunks": [
+-            {
+-                "chunk_id": "...",
+-                "doc_uri": "...",
+-                "content": "...",
+-            },
+-            ...
+-        ]
+-    }
+-    """
+-    chunk_id_col = (
+-        get_databricks_vector_search_key(DATABRICKS_VECTOR_SEARCH_PRIMARY_KEY) or VS_INDEX_ID_COL
+-    )
+-    doc_uri_col = (
+-        get_databricks_vector_search_key(DATABRICKS_VECTOR_SEARCH_DOC_URI) or VS_INDEX_DOC_URL_COL
+-    )
+-    return {
+-        "chunks": [
+-            asdict(
+-                Chunk(
+-                    chunk_id=doc.metadata.get(chunk_id_col),
+-                    doc_uri=doc.metadata.get(doc_uri_col),
+-                    content=doc.page_content,
+-                )
+-            )
+-            for doc in documents
+-        ]
+-    }
+-
+-
+-# TODO: multiple prompts is not supported for now
+-# we should update once rag eval supports it.
+-def convert_llm_inputs(
+-    prompts: List[str],
+-) -> Dict[str, str]:
+-    """
+-    Convert LLM inputs format from
+-    ["prompt1"...]
+-    to
+-    {"prompt": "prompt1"}
+-    """
+-    if len(prompts) == 0:
+-        prompt = ""
+-    elif len(prompts) == 1:
+-        prompt = prompts[0]
+-    else:
+-        raise NotImplementedError(f"Multiple prompts not supported yet. Got: {prompts}")
+-    return {"prompt": prompt}
+-
+-
+-# TODO: This assumes we are not in batch situation where we have multiple generations per
+-# input, we should handle that case once rag eval supports it.
+-def convert_llm_outputs(
+-    outputs: Dict[str, Any],
+-) -> Dict[str, Any]:
+-    """
+-    Convert LLM outputs format from
+-    {
+-        # generations is List[List[Generation]] because
+-        # each input could have multiple candidate generations.
+-        "generations": [
+-            [
+-                {
+-                    "text": "...",
+-                    "generation_info": {...},
+-                    "type": "Generation"
+-                }
+-            ]
+-        ],
+-        "llm_output": {...},
+-        "run": [{"run_id": "..."}],
+-    }
+-    to
+-    {
+-        # Convert to str by extracting first text field of Generation
+-        "generated_text": "generated_text1",
+-    }
+-    """
+-    generated_text = ""
+-    if "generations" in outputs:
+-        generations: List[List[Dict[str, Any]]] = outputs["generations"]
+-        if len(generations) > 0 and len(generations[0]) > 0:
+-            first_generation: Dict[str, Any] = generations[0][0]
+-            generated_text = first_generation.get("text", "")
+-    return {"generated_text": generated_text}
+diff --git a/mlflow/tracing/export/inference_table.py b/mlflow/tracing/export/inference_table.py
+index 315414eb2..e643fa30b 100644
+--- a/mlflow/tracing/export/inference_table.py
++++ b/mlflow/tracing/export/inference_table.py
+@@ -1,18 +1,14 @@
+-import json
+ import logging
+-from datetime import datetime
+ from typing import Any, Dict, Optional, Sequence
+ 
+ from cachetools import TTLCache
+ from opentelemetry.sdk.trace import ReadableSpan
+ from opentelemetry.sdk.trace.export import SpanExporter
+ 
+-from mlflow.entities.span import LiveSpan
+ from mlflow.environment_variables import (
+     MLFLOW_TRACE_BUFFER_MAX_SIZE,
+     MLFLOW_TRACE_BUFFER_TTL_SECONDS,
+ )
+-from mlflow.tracing.constant import TRACE_SCHEMA_VERSION, TRACE_SCHEMA_VERSION_KEY
+ from mlflow.tracing.trace_manager import InMemoryTraceManager
+ 
+ _logger = logging.getLogger(__name__)
+@@ -72,35 +68,4 @@ class InferenceTableSpanExporter(SpanExporter):
+                 continue
+ 
+             # Add the trace to the in-memory buffer so it can be retrieved by upstream
+-            _TRACE_BUFFER[trace.info.request_id] = {
+-                TRACE_SCHEMA_VERSION_KEY: TRACE_SCHEMA_VERSION,
+-                "start_timestamp": self._nanoseconds_to_datetime(span._start_time),
+-                "end_timestamp": self._nanoseconds_to_datetime(span._end_time),
+-                "spans": [self._format_spans(span) for span in trace.data.spans],
+-            }
+-
+-    def _format_spans(self, mlflow_span: LiveSpan) -> Dict[str, Any]:
+-        """
+-        Format the MLflow span to the format that can be stored in the Inference Table.
+-
+-        The schema is mostly the same, but the attributes field is stored as a JSON
+-        string instead of a dictionary. Therefore, the attributes are converted from
+-        Dict[str, str(json)] to str(json).
+-        """
+-        span_dict = mlflow_span.to_dict(dump_events=True)
+-        attributes = span_dict["attributes"]
+-        # deserialize each attribute value and then serialize the whole dictionary
+-        attributes = {k: self._decode_attribute(v) for k, v in attributes.items()}
+-        span_dict["attributes"] = json.dumps(attributes)
+-        return span_dict
+-
+-    def _decode_attribute(self, value: str) -> Any:
+-        # All attribute values should be JSON encoded strings if they set via the MLflow Span
+-        # property, but there may be some attributes set directly to the OpenTelemetry span.
+-        try:
+-            return json.loads(value)
+-        except (json.JSONDecodeError, TypeError):
+-            return value
+-
+-    def _nanoseconds_to_datetime(self, t: Optional[int]) -> Optional[datetime]:
+-        return datetime.fromtimestamp(t / 1e9) if t is not None else None
++            _TRACE_BUFFER[trace.info.request_id] = trace.to_dict()
+diff --git a/mlflow/tracing/export/mlflow.py b/mlflow/tracing/export/mlflow.py
+index e6e2c757a..79ad3e5bc 100644
+--- a/mlflow/tracing/export/mlflow.py
++++ b/mlflow/tracing/export/mlflow.py
+@@ -84,8 +84,4 @@ class MlflowSpanExporter(SpanExporter):
+             self._client._upload_trace_data(trace.info, trace.data)
+             self._client._upload_ended_trace_info(trace.info)
+         except Exception as e:
+-            # avoid silent failures
+-            _logger.warning(
+-                f"Failed to log trace to MLflow backend: {e}",
+-                exc_info=_logger.isEnabledFor(logging.DEBUG),
+-            )
++            _logger.debug(f"Failed to log trace to MLflow backend: {e}", exc_info=True)
+diff --git a/mlflow/tracing/processor/inference_table.py b/mlflow/tracing/processor/inference_table.py
+index c86585904..d50a3f9a9 100644
+--- a/mlflow/tracing/processor/inference_table.py
++++ b/mlflow/tracing/processor/inference_table.py
+@@ -9,7 +9,7 @@ from opentelemetry.sdk.trace.export import SimpleSpanProcessor, SpanExporter
+ 
+ from mlflow.entities.trace_info import TraceInfo
+ from mlflow.entities.trace_status import TraceStatus
+-from mlflow.tracing.constant import SpanAttributeKey
++from mlflow.tracing.constant import TRACE_SCHEMA_VERSION, TRACE_SCHEMA_VERSION_KEY, SpanAttributeKey
+ from mlflow.tracing.trace_manager import InMemoryTraceManager
+ from mlflow.tracing.utils import (
+     deduplicate_span_names_in_place,
+@@ -71,6 +71,7 @@ class InferenceTableSpanProcessor(SimpleSpanProcessor):
+                 )
+                 return
+         span.set_attribute(SpanAttributeKey.REQUEST_ID, json.dumps(request_id))
++        tags = {TRACE_SCHEMA_VERSION_KEY: str(TRACE_SCHEMA_VERSION)}
+ 
+         if span._parent is None:
+             trace_info = TraceInfo(
+@@ -80,6 +81,7 @@ class InferenceTableSpanProcessor(SimpleSpanProcessor):
+                 execution_time_ms=None,
+                 status=TraceStatus.IN_PROGRESS,
+                 request_metadata={},
++                tags=tags,
+             )
+             self._trace_manager.register_trace(span.context.trace_id, trace_info)
+ 
+diff --git a/mlflow/tracking/_tracking_service/client.py b/mlflow/tracking/_tracking_service/client.py
+index 3422ebc42..78caa1c0f 100644
+--- a/mlflow/tracking/_tracking_service/client.py
++++ b/mlflow/tracking/_tracking_service/client.py
+@@ -222,7 +222,6 @@ class TrackingServiceClient:
+         Returns:
+             The updated TraceInfo object.
+         """
+-        tags = exclude_immutable_tags(tags or {})
+         return self.store.end_trace(
+             request_id=request_id,
+             timestamp_ms=timestamp_ms,

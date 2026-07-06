@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && touch crates/biome_js_analyze/tests/spec_tests.rs && INSTA_UPDATE=no cargo nextest run -p biome_js_analyze --test spec_tests -E 'test(no_implied_eval)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noImpliedEval/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noImpliedEval/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noImpliedEval/invalid.jsx",
+    "crates/biome_js_analyze/tests/specs/nursery/noImpliedEval/invalid.jsx.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noImpliedEval/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noImpliedEval/valid.js.snap"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(2/3) biome_js_analyze::spec_tests specs::nursery::no_implied_eval::invalid_jsx",
+    "(1/3) biome_js_analyze::spec_tests specs::nursery::no_implied_eval::valid_js",
+    "(3/3) biome_js_analyze::spec_tests specs::nursery::no_implied_eval::invalid_js"
+  ],
+  "PASS_TO_PASS": []
+}

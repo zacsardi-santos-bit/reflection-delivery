@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/components/websocket_api/test_auth.py -v",
+  "test_files": [
+    "tests/components/websocket_api/test_auth.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.websocket_api.test_auth::test_auth_local_only_user_rejected_remote"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.websocket_api.test_auth::test_auth_events",
+    "tests.components.websocket_api.test_auth::test_auth_via_msg_incorrect_pass",
+    "tests.components.websocket_api.test_auth::test_auth_events_incorrect_pass",
+    "tests.components.websocket_api.test_auth::test_pre_auth_only_auth_allowed",
+    "tests.components.websocket_api.test_auth::test_auth_active_with_token",
+    "tests.components.websocket_api.test_auth::test_auth_active_user_inactive",
+    "tests.components.websocket_api.test_auth::test_auth_local_only_user_allowed_local",
+    "tests.components.websocket_api.test_auth::test_auth_active_with_password_not_allow",
+    "tests.components.websocket_api.test_auth::test_auth_legacy_support_with_password",
+    "tests.components.websocket_api.test_auth::test_auth_with_invalid_token",
+    "tests.components.websocket_api.test_auth::test_auth_close_after_revoke",
+    "tests.components.websocket_api.test_auth::test_auth_sending_invalid_json_disconnects",
+    "tests.components.websocket_api.test_auth::test_auth_sending_binary_disconnects",
+    "tests.components.websocket_api.test_auth::test_auth_close_disconnects",
+    "tests.components.websocket_api.test_auth::test_auth_error_disconnects",
+    "tests.components.websocket_api.test_auth::test_auth_sending_unknown_type_disconnects",
+    "tests.components.websocket_api.test_auth::test_error_right_after_auth_disconnects",
+    "tests.components.websocket_api.test_auth::test_unix_socket_auth_bypass"
+  ]
+}

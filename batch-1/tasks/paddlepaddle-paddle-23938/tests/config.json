@@ -1,0 +1,21 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/tests/test_fp16_utils.py /workspace/tests/test_collective_optimizer.py -v",
+  "test_files": [
+    "python/paddle/fluid/contrib/tests/test_fp16_utils.py",
+    "python/paddle/fluid/tests/unittests/CMakeLists.txt",
+    "python/paddle/fluid/tests/unittests/test_collective_optimizer.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_fp16_utils.AMPTest::test_find_op_index",
+    "tests.test_fp16_utils.AMPTest::test_find_true_post_op",
+    "tests.test_collective_optimizer.CollectiveOptimizerTest::test_amp_strategy",
+    "tests.test_collective_optimizer.CollectiveOptimizerTest::test_recompute_checkpoints",
+    "tests.test_collective_optimizer.CollectiveOptimizerTest::test_recompute_strategy"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_collective_optimizer.CollectiveOptimizerTest::test_ds_as_None"
+  ]
+}

@@ -1,0 +1,1 @@
+npm ci && node bin/mocha.js test/node-unit/cli/run.spec.js

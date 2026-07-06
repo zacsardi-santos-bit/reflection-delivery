@@ -1,9 +1,0 @@
-patching file internal/services/analysisservices/analysis_services_server_resource_test.go
-patching file internal/services/automanage/client/client.go
-patching file internal/services/automanage/parse/automanage_configuration_hci_assignment.go
-patching file internal/services/automanage/resourceid.go
-patching file internal/services/automanage/validate/automanage_configuration_hci_assignment_id.go
-patching file internal/services/azurestackhci/stack_hci_cluster_resource.go
-patching file internal/services/compute/virtual_machine_data_source.go
-patching file internal/services/mariadb/mariadb_configuration_resource_test.go
-patching file website/docs/r/stack_hci_cluster.html.markdown

@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python_modules/libraries/dagster-gcp/dagster_gcp_tests/bigquery_tests/test_bigquery_write_modes.py -v",
+  "test_files": [
+    "python_modules/libraries/dagster-gcp/dagster_gcp_tests/bigquery_tests/test_bigquery_write_modes.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python_modules.libraries.dagster-gcp.dagster_gcp_tests.bigquery_tests.test_bigquery_write_modes::test_delete_table_slice_truncate",
+    "python_modules.libraries.dagster-gcp.dagster_gcp_tests.bigquery_tests.test_bigquery_write_modes::test_delete_table_slice_replace",
+    "python_modules.libraries.dagster-gcp.dagster_gcp_tests.bigquery_tests.test_bigquery_write_modes::test_delete_table_slice_append",
+    "python_modules.libraries.dagster-gcp.dagster_gcp_tests.bigquery_tests.test_bigquery_write_modes::test_partitioned_table_ignores_write_mode",
+    "python_modules.libraries.dagster-gcp.dagster_gcp_tests.bigquery_tests.test_bigquery_write_modes::test_default_write_mode_in_factory",
+    "python_modules.libraries.dagster-gcp.dagster_gcp_tests.bigquery_tests.test_bigquery_write_modes::test_explicit_write_mode_in_factory",
+    "python_modules.libraries.dagster-gcp.dagster_gcp_tests.bigquery_tests.test_bigquery_write_modes::test_gcp_credentials_propagation"
+  ],
+  "PASS_TO_PASS": []
+}

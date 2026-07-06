@@ -1,0 +1,7 @@
+patching file pkg/apis/kubeone/validation/validation_test.go
+# k8c.io/kubeone/pkg/apis/kubeone/validation [k8c.io/kubeone/pkg/apis/kubeone/validation.test]
+pkg/apis/kubeone/validation/validation_test.go:1846:7: unknown field MaxPods in struct literal of type kubeone.KubeletConfig
+pkg/apis/kubeone/validation/validation_test.go:1862:7: unknown field MaxPods in struct literal of type kubeone.KubeletConfig
+pkg/apis/kubeone/validation/validation_test.go:1878:7: unknown field MaxPods in struct literal of type kubeone.KubeletConfig
+FAIL	k8c.io/kubeone/pkg/apis/kubeone/validation [build failed]
+reward=0 graded=191 found=191 failed=191 parsed=1 framework=go exit_code=1

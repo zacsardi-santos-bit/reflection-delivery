@@ -1,0 +1,29 @@
+{
+    "id": "8ca4ef2e-6e40-4a1a-875b-1fc8bfdd1db9",
+    "started_at": "2026-07-06T12:17:35.188400",
+    "finished_at": "2026-07-06T12:18:09.092029",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__rocicorp-mono-5905": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "rocicorp-mono-5905__KDamogh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

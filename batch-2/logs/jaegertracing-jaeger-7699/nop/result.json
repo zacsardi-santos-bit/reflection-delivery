@@ -1,0 +1,29 @@
+{
+    "id": "2823cd69-cb85-4a42-a230-e83e69d77345",
+    "started_at": "2026-07-06T12:17:23.116680",
+    "finished_at": "2026-07-06T12:18:29.623468",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__jaegertracing-jaeger-7699": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "jaegertracing-jaeger-7699__R59neGb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

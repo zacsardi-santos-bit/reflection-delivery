@@ -1,0 +1,234 @@
+patching file services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java
+patching file services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java
+patching file services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/internal/operations/TransactWriteItemsOperationTest.java
+patching file services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java
+patching file services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for software.amazon.awssdk:v2-migration:jar:2.27.12-SNAPSHOT-PREVIEW
+[WARNING] 'version' contains an expression but should be a constant. @ software.amazon.awssdk:v2-migration:${awsjavasdk.version}-PREVIEW, /workspace/repo/v2-migration/pom.xml, line 29, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for software.amazon.awssdk:codegen-generated-classes-test:jar:2.27.12-SNAPSHOT
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: software.amazon.awssdk:netty-nio-client:jar -> duplicate declaration of version ${awsjavasdk.version} @ line 243, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] --------------< software.amazon.awssdk:dynamodb-enhanced >--------------
+[INFO] Building AWS Java SDK :: DynamoDB :: Enhanced Client 2.27.12-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- checkstyle:3.1.2:check (checkstyle) @ dynamodb-enhanced ---
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (default-prepare-agent) @ dynamodb-enhanced ---
+[INFO] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/workspace/repo/services-custom/dynamodb-enhanced/target/jacoco.exec,excludes=software/amazon/awssdk/modulepath/tests/**/*.class:software/amazon/awssdk/nativeimagetest/**/*.class:software/amazon/awssdk/testutils/service/**/*.class:**/*Benchmark.class -XX:+AllowRedefinitionToAddDeleteMethods
+[INFO] 
+[INFO] --- build-helper:3.3.0:add-test-source (add-integ-sources) @ dynamodb-enhanced ---
+[INFO] Test Source directory: /workspace/repo/services-custom/dynamodb-enhanced/src/it/java added.
+[INFO] 
+[INFO] --- build-helper:3.3.0:add-test-resource (add-integ-resources) @ dynamodb-enhanced ---
+[INFO] 
+[INFO] --- build-helper:3.3.0:add-source (add-generated-sources) @ dynamodb-enhanced ---
+[INFO] Source directory: /workspace/repo/services-custom/dynamodb-enhanced/target/generated-sources/sdk added.
+[INFO] 
+[INFO] --- build-helper:3.3.0:add-resource (add-generated-resources) @ dynamodb-enhanced ---
+[INFO] 
+[INFO] --- build-helper:3.3.0:add-resource (add-license-notice) @ dynamodb-enhanced ---
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ dynamodb-enhanced ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] skip non existing resourceDirectory /workspace/repo/services-custom/dynamodb-enhanced/target/generated-resources/sdk-resources
+[INFO] Copying 2 resources from ../.. to target/classes/META-INF
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ dynamodb-enhanced ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] >>> spotbugs:4.7.3.5:check (findbugs) > :spotbugs @ dynamodb-enhanced >>>
+[INFO] 
+[INFO] --- spotbugs:4.7.3.5:spotbugs (spotbugs) @ dynamodb-enhanced ---
+[WARNING]  Parameter 'spotbugsXmlOutput' is deprecated: No reason given
+[INFO] Fork Value is false
+     [java] JVM args ignored when same JVM is used.
+WARNING: A terminally deprecated method in java.lang.System has been called
+WARNING: System::setSecurityManager has been called by org.apache.tools.ant.types.Permissions (file:/root/.m2/repository/org/apache/ant/ant/1.10.14/ant-1.10.14.jar)
+WARNING: Please consider reporting this to the maintainers of org.apache.tools.ant.types.Permissions
+WARNING: System::setSecurityManager will be removed in a future release
+[INFO] Done SpotBugs Analysis....
+[INFO] 
+[INFO] <<< spotbugs:4.7.3.5:check (findbugs) < :spotbugs @ dynamodb-enhanced <<<
+[INFO] 
+[INFO] 
+[INFO] --- spotbugs:4.7.3.5:check (findbugs) @ dynamodb-enhanced ---
+[WARNING]  Parameter 'spotbugsXmlOutput' is deprecated: No reason given
+[INFO] BugInstance size is 0
+[INFO] Error size is 0
+[INFO] No errors/warnings found
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ dynamodb-enhanced ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] skip non existing resourceDirectory /workspace/repo/services-custom/dynamodb-enhanced/src/it/resources
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ dynamodb-enhanced ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 253 source files to /workspace/repo/services-custom/dynamodb-enhanced/target/test-classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[45,53] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: package software.amazon.awssdk.enhanced.dynamodb.model
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[45,53] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: package software.amazon.awssdk.enhanced.dynamodb.model
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[60,8] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[60,57] error: cannot find symbol
+  symbol:   variable TransactWriteItemsEnhancedResponse
+  location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[73,8] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[73,57] error: cannot find symbol
+  symbol:   variable TransactWriteItemsEnhancedResponse
+  location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[85,32] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[213,8] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class AsyncTransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[215,45] error: cannot find symbol
+  symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+  location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[259,8] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class AsyncTransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[261,45] error: cannot find symbol
+  symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+  location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[307,8] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class AsyncTransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[309,45] error: cannot find symbol
+  symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+  location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[212,8] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class TransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[214,16] error: cannot find symbol
+  symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+  location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[257,8] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class TransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[259,16] error: cannot find symbol
+  symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+  location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[310,8] error: cannot find symbol
+  symbol:   class TransactWriteItemsEnhancedResponse
+  location: class TransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[312,16] error: cannot find symbol
+  symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+  location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java:[92,16] error: cannot find symbol
+  symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+  location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java:[111,30] error: cannot find symbol
+  symbol:   method returnConsumedCapacity()
+  location: variable builtObject of type TransactWriteItemsEnhancedRequest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java:[112,30] error: cannot find symbol
+  symbol:   method returnConsumedCapacityAsString()
+  location: variable builtObject of type TransactWriteItemsEnhancedRequest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java:[113,30] error: cannot find symbol
+  symbol:   method returnItemCollectionMetrics()
+  location: variable builtObject of type TransactWriteItemsEnhancedRequest
+[INFO] 23 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  17.449 s
+[INFO] Finished at: 2026-06-29T15:26:51Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:testCompile (default-testCompile) on project dynamodb-enhanced: Compilation failure: Compilation failure: 
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[45,53] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: package software.amazon.awssdk.enhanced.dynamodb.model
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[45,53] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: package software.amazon.awssdk.enhanced.dynamodb.model
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[60,8] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[60,57] error: cannot find symbol
+[ERROR]   symbol:   variable TransactWriteItemsEnhancedResponse
+[ERROR]   location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[73,8] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[73,57] error: cannot find symbol
+[ERROR]   symbol:   variable TransactWriteItemsEnhancedResponse
+[ERROR]   location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponseTest.java:[85,32] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class TransactWriteItemsEnhancedResponseTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[213,8] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class AsyncTransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[215,45] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+[ERROR]   location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[259,8] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class AsyncTransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[261,45] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+[ERROR]   location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[307,8] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class AsyncTransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/AsyncTransactWriteItemsTest.java:[309,45] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+[ERROR]   location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[212,8] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class TransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[214,16] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+[ERROR]   location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[257,8] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class TransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[259,16] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+[ERROR]   location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[310,8] error: cannot find symbol
+[ERROR]   symbol:   class TransactWriteItemsEnhancedResponse
+[ERROR]   location: class TransactWriteItemsTest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/functionaltests/TransactWriteItemsTest.java:[312,16] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+[ERROR]   location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java:[92,16] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacity(ReturnConsumedCapacity)
+[ERROR]   location: class Builder
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java:[111,30] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacity()
+[ERROR]   location: variable builtObject of type TransactWriteItemsEnhancedRequest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java:[112,30] error: cannot find symbol
+[ERROR]   symbol:   method returnConsumedCapacityAsString()
+[ERROR]   location: variable builtObject of type TransactWriteItemsEnhancedRequest
+[ERROR] /workspace/repo/services-custom/dynamodb-enhanced/src/test/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequestTest.java:[113,30] error: cannot find symbol
+[ERROR]   symbol:   method returnItemCollectionMetrics()
+[ERROR]   location: variable builtObject of type TransactWriteItemsEnhancedRequest
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+reward=0 graded=13 found=0 failed=0 parsed=1 framework=maven exit_code=1

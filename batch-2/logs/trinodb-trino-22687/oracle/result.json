@@ -1,0 +1,29 @@
+{
+    "id": "ba484008-9afd-474d-96ef-972045f43456",
+    "started_at": "2026-07-04T15:41:17.274808",
+    "finished_at": "2026-07-04T15:42:55.144622",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__trinodb-trino-22687": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "trinodb-trino-22687__jZATWPJ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

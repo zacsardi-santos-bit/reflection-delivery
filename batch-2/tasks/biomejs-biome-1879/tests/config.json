@@ -1,0 +1,24 @@
+{
+  "test_framework": "cargo",
+  "test_command": "touch crates/biome_js_analyze/tests/spec_tests.rs && cargo nextest run -p biome_js_analyze -E 'test(no_exports_in_test)'",
+  "test_files": [
+    "crates/biome_js_analyze/src/analyzers/nursery/no_exports_in_test.rs",
+    "crates/biome_js_analyze/tests/specs/nursery/noExportsInTest/invalid.cjs",
+    "crates/biome_js_analyze/tests/specs/nursery/noExportsInTest/invalid.cjs.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noExportsInTest/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noExportsInTest/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noExportsInTest/valid.cjs",
+    "crates/biome_js_analyze/tests/specs/nursery/noExportsInTest/valid.cjs.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noExportsInTest/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noExportsInTest/valid.js.snap"
+  ],
+  "num_test_files": 9,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/4) biome_js_analyze::spec_tests specs::nursery::no_exports_in_test::valid_cjs",
+    "(2/4) biome_js_analyze::spec_tests specs::nursery::no_exports_in_test::valid_js",
+    "(3/4) biome_js_analyze::spec_tests specs::nursery::no_exports_in_test::invalid_cjs",
+    "(4/4) biome_js_analyze::spec_tests specs::nursery::no_exports_in_test::invalid_js"
+  ],
+  "PASS_TO_PASS": []
+}

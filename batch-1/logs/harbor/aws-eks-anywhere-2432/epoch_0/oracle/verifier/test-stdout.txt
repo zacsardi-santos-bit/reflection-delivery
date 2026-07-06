@@ -1,0 +1,6 @@
+patching file pkg/executables/kubectl_test.go
+patching file test/e2e/curated_packages_test.go
+patching file test/framework/cluster.go
+patching file test/framework/curatedpackages.go
+ok  	github.com/aws/eks-anywhere/pkg/executables	4.027s
+reward=1 graded=4 found=0 failed=0 parsed=0 framework=go exit_code=0

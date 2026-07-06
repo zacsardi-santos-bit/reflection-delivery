@@ -1,7 +1,0 @@
-patching file staging/src/k8s.io/apiserver/pkg/util/webhook/client_test.go
-patching file test/integration/apiserver/admissionwebhook/admission_test.go
-patching file test/integration/apiserver/admissionwebhook/load_balance_test.go
-# k8s.io/apiserver/pkg/util/webhook [k8s.io/apiserver/pkg/util/webhook.test]
-vendor/k8s.io/apiserver/pkg/util/webhook/client_test.go:67:19: cm.hookClientConfig undefined (type ClientManager has no field or method hookClientConfig)
-FAIL	k8s.io/apiserver/pkg/util/webhook [build failed]
-reward=0 graded=51 found=51 failed=51 parsed=1 framework=go exit_code=1

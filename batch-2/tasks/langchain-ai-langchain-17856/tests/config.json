@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/libs/partners/groq/tests/unit_tests/test_chat_models.py /workspace/repo/libs/partners/groq/tests/unit_tests/test_imports.py -v",
+  "test_files": [
+    "libs/partners/groq/tests/__init__.py",
+    "libs/partners/groq/tests/integration_tests/__init__.py",
+    "libs/partners/groq/tests/integration_tests/test_chat_models.py",
+    "libs/partners/groq/tests/integration_tests/test_compile.py",
+    "libs/partners/groq/tests/unit_tests/__init__.py",
+    "libs/partners/groq/tests/unit_tests/fake/__init__.py",
+    "libs/partners/groq/tests/unit_tests/fake/callbacks.py",
+    "libs/partners/groq/tests/unit_tests/test_chat_models.py",
+    "libs/partners/groq/tests/unit_tests/test_imports.py"
+  ],
+  "num_test_files": 9,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit_tests.test_chat_models::test_groq_model_param",
+    "tests.unit_tests.test_chat_models::test_function_message_dict_to_function_message",
+    "tests.unit_tests.test_chat_models::test__convert_dict_to_message_human",
+    "tests.unit_tests.test_chat_models::test__convert_dict_to_message_ai",
+    "tests.unit_tests.test_chat_models::test__convert_dict_to_message_system",
+    "tests.unit_tests.test_chat_models::test_groq_invoke",
+    "tests.unit_tests.test_chat_models::test_groq_ainvoke",
+    "tests.unit_tests.test_chat_models::test_chat_groq_extra_kwargs",
+    "tests.unit_tests.test_chat_models::test_chat_groq_invalid_streaming_params",
+    "tests.unit_tests.test_chat_models::test_chat_groq_secret",
+    "tests.unit_tests.test_chat_models::test_groq_serialization",
+    "tests.unit_tests.test_imports::test_all_imports"
+  ],
+  "PASS_TO_PASS": []
+}

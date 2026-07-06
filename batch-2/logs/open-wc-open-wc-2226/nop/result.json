@@ -1,0 +1,29 @@
+{
+    "id": "bf2158ea-135d-4e0a-893a-641c4069967b",
+    "started_at": "2026-07-04T15:37:24.472090",
+    "finished_at": "2026-07-04T15:38:12.452484",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__open-wc-open-wc-2226": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "open-wc-open-wc-2226__fCLDLeU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

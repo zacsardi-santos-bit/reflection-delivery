@@ -1,0 +1,25 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p re_renderer --no-fail-fast",
+  "test_files": [
+    "crates/viewer/re_renderer/src/context_test.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/13) re_renderer size::tests::scene_point_distinction",
+    "( 2/13) re_renderer wgpu_resources::static_resource_pool::tests::resource_reuse",
+    "( 3/13) re_renderer file_resolver::tests_file_resolver::cyclic_indirect",
+    "( 4/13) re_renderer file_resolver::tests_file_resolver::cyclic_direct",
+    "( 5/13) re_renderer wgpu_resources::dynamic_resource_pool::tests::handle_unchanged_on_reuse",
+    "( 6/13) re_renderer wgpu_resources::static_resource_pool::tests::get_resource",
+    "( 7/13) re_renderer file_resolver::tests_import_clause::parsing_failure",
+    "( 8/13) re_renderer file_resolver::tests_file_resolver::acyclic_interpolation",
+    "( 9/13) re_renderer wgpu_resources::dynamic_resource_pool::tests::individual_handles",
+    "(10/13) re_renderer wgpu_resources::dynamic_resource_pool::tests::resource_alloc_and_reuse",
+    "(11/13) re_renderer file_resolver::tests_import_clause::parsing_success",
+    "(12/13) re_renderer transform::tests::to_ndc_scale_and_translation",
+    "(13/13) re_renderer renderer::lines::tests::empty_strips"
+  ],
+  "PASS_TO_PASS": []
+}

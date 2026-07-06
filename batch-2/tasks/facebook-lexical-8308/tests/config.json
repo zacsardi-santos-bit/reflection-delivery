@@ -1,0 +1,21 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts --project unit",
+  "test_files": [
+    "packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts::NestedEditorExtension Commands delegate to parent synchronously when parent is not updating",
+    "/workspace/repo/packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts::NestedEditorExtension Commands delegate to parent asynchronously when parent is updating"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts::NestedEditorExtension it sets _parentEditor implicitly",
+    "/workspace/repo/packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts::NestedEditorExtension $getParentEditor can be overridden",
+    "/workspace/repo/packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts::NestedEditorExtension The theme is inherited by default",
+    "/workspace/repo/packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts::NestedEditorExtension If the child has a theme it is not inherited",
+    "/workspace/repo/packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts::NestedEditorExtension inheritEditableFromParent defaults false but can be enabled later",
+    "/workspace/repo/packages/lexical-extension/src/__tests__/unit/NestedEditorExtension.test.ts::NestedEditorExtension inheritEditableFromParent works when configured true"
+  ]
+}

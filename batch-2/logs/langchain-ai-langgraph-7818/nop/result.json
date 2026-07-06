@@ -1,0 +1,29 @@
+{
+    "id": "5b83209a-f5af-4f37-8f7f-39ea0612f102",
+    "started_at": "2026-07-06T12:17:30.552603",
+    "finished_at": "2026-07-06T12:20:02.132050",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__langchain-ai-langgraph-7818": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "langchain-ai-langgraph-7818__VDuHLFG"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

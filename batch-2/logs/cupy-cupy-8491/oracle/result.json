@@ -1,0 +1,29 @@
+{
+    "id": "bd312797-9429-46b9-b486-626096967108",
+    "started_at": "2026-07-04T15:39:35.506484",
+    "finished_at": "2026-07-04T15:39:47.069661",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__cupy-cupy-8491": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "cupy-cupy-8491__PjbSqYF"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

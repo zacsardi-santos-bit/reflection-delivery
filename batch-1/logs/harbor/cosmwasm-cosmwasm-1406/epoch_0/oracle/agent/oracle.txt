@@ -1,0 +1,7 @@
+patching file .circleci/config.yml
+patching file CHANGELOG.md
+patching file packages/vm/src/cache.rs
+patching file packages/vm/src/filesystem.rs
+patching file packages/vm/src/lib.rs
+patching file packages/vm/src/modules/file_system_cache.rs
+patching file packages/vm/src/modules/mod.rs

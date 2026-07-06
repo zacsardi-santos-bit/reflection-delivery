@@ -1,0 +1,9 @@
+I'm hitting a few gaps in the Airbyte sync operator in Apache Airflow and how it handles job outcomes, and it's causing silent data pipeline issues where workflows sail past a cancelled or timed-out sync as if it succeeded.
+
+First thing, when an Airbyte job gets cancelled (remotely or by the system), the operator just finishes clean without raising anything, so I can't tell a real successful sync apart from one that got killed mid-run. I want a cancelled job to be treated as a failure and raise an error so downstream tasks and failure callbacks actually fire.
+
+Second, there's no hard task-level execution deadline that also cancels the remote job. The existing wait timeout only controls how long we wait, it doesn't cancel anything on the Airbyte side when it's exceeded. I want a separate execution timeout concept that, when hit, cancels the remote job and then fails the task. And if both a wait timeout and this execution deadline are set, the earlier one should win. Also important, if the cancellation call itself throws while we're timing out, the task should still fail with the original timeout reason, the cancel error must not mask the real cause.
+
+Third, when the operator gets a kill signal (signal or scheduler intervention) and the cancel-job call fails, right now the exception propagates and crashes the whole task, which hides the real reason it died. Instead I want that cancel failure logged as a warning so the task proceeds with its remaining cleanup steps and fails for the right reason.
+
+Oh and the async trigger side needs updating too to support this new execution deadline. It should accept the deadline as an optional param, include it in its serialized state, and emit a distinct timeout status event when the deadline is exceeded, separate from the existing end-time error event. Btw all the time comparisons in the trigger should use monotonic time so clock adjustments don't mess things up.

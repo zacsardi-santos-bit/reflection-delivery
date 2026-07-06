@@ -1,0 +1,29 @@
+{
+    "id": "e9bff294-a667-4097-88ee-f4a1f3736d9d",
+    "started_at": "2026-07-04T15:39:59.082778",
+    "finished_at": "2026-07-04T15:40:15.491099",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__python-semantic-release-python-semantic-release-890": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "python-semantic-release-python-s__uKMDbW8"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

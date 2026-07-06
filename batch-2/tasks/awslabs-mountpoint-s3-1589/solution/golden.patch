@@ -1,0 +1,2123 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 05e563cd..56c46d0c 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -109,15 +109,6 @@ dependencies = [
+  "backtrace",
+ ]
+ 
+-[[package]]
+-name = "ascii-canvas"
+-version = "3.0.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8824ecca2e851cec16968d54a01dd372ef8f95b244fb84b84e70128be347c3c6"
+-dependencies = [
+- "term",
+-]
+-
+ [[package]]
+ name = "assert-json-diff"
+ version = "2.0.2"
+@@ -165,27 +156,6 @@ version = "0.1.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "bfdc70193dadb9d7287fa4b633f15f90c876915b31f6af17da307fc59c9859a8"
+ 
+-[[package]]
+-name = "async-attributes"
+-version = "1.1.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a3203e79f4dd9bdda415ed03cf14dae5a2bf775c683a00f94e9cd1faf0f596e5"
+-dependencies = [
+- "quote",
+- "syn 1.0.109",
+-]
+-
+-[[package]]
+-name = "async-channel"
+-version = "1.9.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "81953c529336010edd6d8e358f886d9581267795c61b19475b71314bffa46d35"
+-dependencies = [
+- "concurrent-queue",
+- "event-listener 2.5.3",
+- "futures-core",
+-]
+-
+ [[package]]
+ name = "async-channel"
+ version = "2.5.0"
+@@ -198,35 +168,6 @@ dependencies = [
+  "pin-project-lite",
+ ]
+ 
+-[[package]]
+-name = "async-executor"
+-version = "1.13.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bb812ffb58524bdd10860d7d974e2f01cc0950c2438a74ee5ec2e2280c6c4ffa"
+-dependencies = [
+- "async-task",
+- "concurrent-queue",
+- "fastrand",
+- "futures-lite",
+- "pin-project-lite",
+- "slab",
+-]
+-
+-[[package]]
+-name = "async-global-executor"
+-version = "2.4.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "05b1b633a2115cd122d73b955eadd9916c18c8f510ec9cd1686404c60ad1c29c"
+-dependencies = [
+- "async-channel 2.5.0",
+- "async-executor",
+- "async-io",
+- "async-lock",
+- "blocking",
+- "futures-lite",
+- "once_cell",
+-]
+-
+ [[package]]
+ name = "async-io"
+ version = "2.5.0"
+@@ -251,84 +192,11 @@ version = "3.4.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "5fd03604047cee9b6ce9de9f70c6cd540a0520c813cbd49bae61f33ab80ed1dc"
+ dependencies = [
+- "event-listener 5.4.1",
++ "event-listener",
+  "event-listener-strategy",
+  "pin-project-lite",
+ ]
+ 
+-[[package]]
+-name = "async-object-pool"
+-version = "0.1.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "333c456b97c3f2d50604e8b2624253b7f787208cb72eb75e64b0ad11b221652c"
+-dependencies = [
+- "async-std",
+-]
+-
+-[[package]]
+-name = "async-process"
+-version = "2.4.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "65daa13722ad51e6ab1a1b9c01299142bc75135b337923cfa10e79bbbd669f00"
+-dependencies = [
+- "async-channel 2.5.0",
+- "async-io",
+- "async-lock",
+- "async-signal",
+- "async-task",
+- "blocking",
+- "cfg-if",
+- "event-listener 5.4.1",
+- "futures-lite",
+- "rustix 1.0.8",
+-]
+-
+-[[package]]
+-name = "async-signal"
+-version = "0.2.12"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "f567af260ef69e1d52c2b560ce0ea230763e6fbb9214a85d768760a920e3e3c1"
+-dependencies = [
+- "async-io",
+- "async-lock",
+- "atomic-waker",
+- "cfg-if",
+- "futures-core",
+- "futures-io",
+- "rustix 1.0.8",
+- "signal-hook-registry",
+- "slab",
+- "windows-sys 0.60.2",
+-]
+-
+-[[package]]
+-name = "async-std"
+-version = "1.13.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "730294c1c08c2e0f85759590518f6333f0d5a0a766a27d519c1b244c3dfd8a24"
+-dependencies = [
+- "async-attributes",
+- "async-channel 1.9.0",
+- "async-global-executor",
+- "async-io",
+- "async-lock",
+- "async-process",
+- "crossbeam-utils",
+- "futures-channel",
+- "futures-core",
+- "futures-io",
+- "futures-lite",
+- "gloo-timers",
+- "kv-log-macro",
+- "log",
+- "memchr",
+- "once_cell",
+- "pin-project-lite",
+- "pin-utils",
+- "slab",
+- "wasm-bindgen-futures",
+-]
+-
+ [[package]]
+ name = "async-stream"
+ version = "0.3.6"
+@@ -348,15 +216,9 @@ checksum = "c7c24de15d275a1ecfd47a380fb4d5ec9bfe0933f309ed5e705b775596a3574d"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+-[[package]]
+-name = "async-task"
+-version = "4.7.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "8b75356056920673b02621b35afd0f7dda9306d03c79a30f5c56c44cf256e3de"
+-
+ [[package]]
+ name = "async-trait"
+ version = "0.1.88"
+@@ -365,7 +227,7 @@ checksum = "e539d3fca749fcee5236ab05e93a52867dd549cc157c8cb7f99595f3cedffdb5"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -382,7 +244,7 @@ checksum = "ffdcb70bdbc4d478427380519163274ac86e52916e10f0a8889adf0f96d3fee7"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -688,7 +550,7 @@ dependencies = [
+  "http 1.3.1",
+  "http-body 0.4.6",
+  "hyper 0.14.32",
+- "hyper 1.6.0",
++ "hyper 1.7.0",
+  "hyper-rustls 0.24.2",
+  "hyper-rustls 0.27.7",
+  "hyper-util",
+@@ -869,17 +731,6 @@ version = "1.8.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "55248b47b0caf0546f7988906588779981c43bb1bc9d0c44087278f80cdb44ba"
+ 
+-[[package]]
+-name = "basic-cookies"
+-version = "0.1.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "67bd8fd42c16bdb08688243dc5f0cc117a3ca9efeeaba3a345a18a6159ad96f7"
+-dependencies = [
+- "lalrpop",
+- "lalrpop-util",
+- "regex",
+-]
+-
+ [[package]]
+ name = "bincode"
+ version = "1.3.3"
+@@ -928,7 +779,7 @@ dependencies = [
+  "regex",
+  "rustc-hash 1.1.0",
+  "shlex",
+- "syn 2.0.104",
++ "syn",
+  "which 4.4.2",
+ ]
+ 
+@@ -947,16 +798,7 @@ dependencies = [
+  "regex",
+  "rustc-hash 2.1.1",
+  "shlex",
+- "syn 2.0.104",
+-]
+-
+-[[package]]
+-name = "bit-set"
+-version = "0.5.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0700ddab506f33b20a03b13996eccd309a48e5ff77d0d95926aa0210fb4e95f1"
+-dependencies = [
+- "bit-vec 0.6.3",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -965,15 +807,9 @@ version = "0.8.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "08807e080ed7f9d5433fa9b275196cfc35414f66a0c79d864dc51a0d825231a3"
+ dependencies = [
+- "bit-vec 0.8.0",
++ "bit-vec",
+ ]
+ 
+-[[package]]
+-name = "bit-vec"
+-version = "0.6.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "349f9b6a179ed607305526ca489b34ad0a41aed5f7980fa90eb03160b69598fb"
+-
+ [[package]]
+ name = "bit-vec"
+ version = "0.8.0"
+@@ -1007,19 +843,6 @@ dependencies = [
+  "generic-array",
+ ]
+ 
+-[[package]]
+-name = "blocking"
+-version = "1.6.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "e83f8d02be6967315521be875afa792a316e28d57b5a2d401897e2a7921b7f21"
+-dependencies = [
+- "async-channel 2.5.0",
+- "async-task",
+- "futures-io",
+- "futures-lite",
+- "piper",
+-]
+-
+ [[package]]
+ name = "bstr"
+ version = "1.12.0"
+@@ -1178,7 +1001,7 @@ dependencies = [
+  "heck",
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -1477,6 +1300,23 @@ dependencies = [
+  "parking_lot_core",
+ ]
+ 
++[[package]]
++name = "deadpool"
++version = "0.12.2"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "5ed5957ff93768adf7a65ab167a17835c3d2c3c50d084fe305174c112f468e2f"
++dependencies = [
++ "deadpool-runtime",
++ "num_cpus",
++ "tokio",
++]
++
++[[package]]
++name = "deadpool-runtime"
++version = "0.1.4"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "092966b41edc516079bdf31ec78a2e0588d1d0c08f78b91d8307215928642b2b"
++
+ [[package]]
+ name = "der"
+ version = "0.6.1"
+@@ -1514,27 +1354,6 @@ dependencies = [
+  "subtle",
+ ]
+ 
+-[[package]]
+-name = "dirs-next"
+-version = "2.0.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b98cf8ebf19c3d1b223e151f99a4f9f0690dca41414773390fc824184ac833e1"
+-dependencies = [
+- "cfg-if",
+- "dirs-sys-next",
+-]
+-
+-[[package]]
+-name = "dirs-sys-next"
+-version = "0.1.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4ebda144c4fe02d1f7ea1a7d9641b6fc6b580adcfa024ae48797ecdeb6825b4d"
+-dependencies = [
+- "libc",
+- "redox_users",
+- "winapi",
+-]
+-
+ [[package]]
+ name = "displaydoc"
+ version = "0.2.5"
+@@ -1543,7 +1362,7 @@ checksum = "97369cbbc041bc366949bc74d34658d6cda5621039731c6310521892a3a20ae0"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -1611,15 +1430,6 @@ dependencies = [
+  "zeroize",
+ ]
+ 
+-[[package]]
+-name = "ena"
+-version = "0.14.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "3d248bdd43ce613d87415282f69b9bb99d947d290b10962dd6c56233312c2ad5"
+-dependencies = [
+- "log",
+-]
+-
+ [[package]]
+ name = "env_filter"
+ version = "0.1.3"
+@@ -1665,12 +1475,6 @@ dependencies = [
+  "windows-sys 0.60.2",
+ ]
+ 
+-[[package]]
+-name = "event-listener"
+-version = "2.5.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0206175f82b8d6bf6652ff7d71a1e27fd2e4efde587fd368662814d6ec1d9ce0"
+-
+ [[package]]
+ name = "event-listener"
+ version = "5.4.1"
+@@ -1688,7 +1492,7 @@ version = "0.5.4"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "8be9f3dfaaffdae2972880079a491a1a8bb7cbed0b8dd7a347f668b4150a3b93"
+ dependencies = [
+- "event-listener 5.4.1",
++ "event-listener",
+  "pin-project-lite",
+ ]
+ 
+@@ -1732,12 +1536,6 @@ dependencies = [
+  "windows-sys 0.59.0",
+ ]
+ 
+-[[package]]
+-name = "fixedbitset"
+-version = "0.4.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0ce7134b9999ecaf8bcd65542e436736ef32ddca1b3e06094cb6ec5755203b80"
+-
+ [[package]]
+ name = "float-cmp"
+ version = "0.10.0"
+@@ -1835,10 +1633,7 @@ version = "2.6.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "f78e10609fe0e0b3f4157ffab1876319b5b0db102a2c60dc4626306dc46b44ad"
+ dependencies = [
+- "fastrand",
+  "futures-core",
+- "futures-io",
+- "parking",
+  "pin-project-lite",
+ ]
+ 
+@@ -1850,7 +1645,7 @@ checksum = "162ee34ebcb7c64a8abebc059ce0fee27c2262618d7b60ed8faf72fef13c3650"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -1979,18 +1774,6 @@ dependencies = [
+  "walkdir",
+ ]
+ 
+-[[package]]
+-name = "gloo-timers"
+-version = "0.3.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bbb143cf96099802033e0d4f4963b19fd2e0b728bcf076cd9cf7f6634f092994"
+-dependencies = [
+- "futures-channel",
+- "futures-core",
+- "js-sys",
+- "wasm-bindgen",
+-]
+-
+ [[package]]
+ name = "group"
+ version = "0.12.1"
+@@ -2201,34 +1984,6 @@ version = "1.0.3"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "df3b46402a9d5adb4c86a0cf463f42e19994e3ee891101b1841f30a545cb49a9"
+ 
+-[[package]]
+-name = "httpmock"
+-version = "0.7.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "08ec9586ee0910472dec1a1f0f8acf52f0fdde93aea74d70d4a3107b4be0fd5b"
+-dependencies = [
+- "assert-json-diff",
+- "async-object-pool",
+- "async-std",
+- "async-trait",
+- "base64 0.21.7",
+- "basic-cookies",
+- "crossbeam-utils",
+- "form_urlencoded",
+- "futures-util",
+- "hyper 0.14.32",
+- "lazy_static",
+- "levenshtein",
+- "log",
+- "regex",
+- "serde",
+- "serde_json",
+- "serde_regex",
+- "similar",
+- "tokio",
+- "url",
+-]
+-
+ [[package]]
+ name = "humansize"
+ version = "2.1.3"
+@@ -2264,19 +2019,22 @@ dependencies = [
+ 
+ [[package]]
+ name = "hyper"
+-version = "1.6.0"
++version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "cc2b571658e38e0c01b1fdca3bbbe93c00d3d71693ff2770043f8c29bc7d6f80"
++checksum = "eb3aa54a13a0dfe7fbe3a59e0c76093041720fdc77b110cc0fc260fafb4dc51e"
+ dependencies = [
++ "atomic-waker",
+  "bytes",
+  "futures-channel",
+- "futures-util",
++ "futures-core",
+  "h2 0.4.12",
+  "http 1.3.1",
+  "http-body 1.0.1",
+  "httparse",
++ "httpdate",
+  "itoa",
+  "pin-project-lite",
++ "pin-utils",
+  "smallvec",
+  "tokio",
+  "want",
+@@ -2305,7 +2063,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e3c93eb611681b207e1fe55d5a71ecf91572ec8a6705cdb6857f7d8d5242cf58"
+ dependencies = [
+  "http 1.3.1",
+- "hyper 1.6.0",
++ "hyper 1.7.0",
+  "hyper-util",
+  "rustls 0.23.31",
+  "rustls-native-certs 0.8.1",
+@@ -2328,7 +2086,7 @@ dependencies = [
+  "futures-util",
+  "http 1.3.1",
+  "http-body 1.0.1",
+- "hyper 1.6.0",
++ "hyper 1.7.0",
+  "ipnet",
+  "libc",
+  "percent-encoding",
+@@ -2531,15 +2289,6 @@ dependencies = [
+  "either",
+ ]
+ 
+-[[package]]
+-name = "itertools"
+-version = "0.11.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b1c173a5686ce8bfa551b3563d0c2170bf24ca44da99c7ca4bfdab5418c3fe57"
+-dependencies = [
+- "either",
+-]
+-
+ [[package]]
+ name = "itertools"
+ version = "0.12.1"
+@@ -2594,7 +2343,7 @@ checksum = "03343451ff899767262ec32146f6d559dd759fdadf42ff0e227c7c48f72594b4"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -2617,46 +2366,6 @@ dependencies = [
+  "wasm-bindgen",
+ ]
+ 
+-[[package]]
+-name = "kv-log-macro"
+-version = "1.0.7"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "0de8b303297635ad57c9f5059fd9cee7a47f8e8daa09df0fcd07dd39fb22977f"
+-dependencies = [
+- "log",
+-]
+-
+-[[package]]
+-name = "lalrpop"
+-version = "0.20.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "55cb077ad656299f160924eb2912aa147d7339ea7d69e1b5517326fdcec3c1ca"
+-dependencies = [
+- "ascii-canvas",
+- "bit-set 0.5.3",
+- "ena",
+- "itertools 0.11.0",
+- "lalrpop-util",
+- "petgraph",
+- "pico-args",
+- "regex",
+- "regex-syntax 0.8.5",
+- "string_cache",
+- "term",
+- "tiny-keccak",
+- "unicode-xid",
+- "walkdir",
+-]
+-
+-[[package]]
+-name = "lalrpop-util"
+-version = "0.20.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "507460a910eb7b32ee961886ff48539633b788a36b65692b95f225b844c82553"
+-dependencies = [
+- "regex-automata 0.4.9",
+-]
+-
+ [[package]]
+ name = "lazy_static"
+ version = "1.5.0"
+@@ -2669,12 +2378,6 @@ version = "1.3.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "830d08ce1d1d941e6b30645f1a0eb5643013d835ce3779a5fc208261dbe10f55"
+ 
+-[[package]]
+-name = "levenshtein"
+-version = "1.0.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "db13adb97ab515a3691f56e4dbab09283d0b86cb45abd991d8634a9d6f501760"
+-
+ [[package]]
+ name = "libc"
+ version = "0.2.175"
+@@ -2782,9 +2485,6 @@ name = "log"
+ version = "0.4.27"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
+-dependencies = [
+- "value-bag",
+-]
+ 
+ [[package]]
+ name = "lru"
+@@ -2928,7 +2628,7 @@ dependencies = [
+  "supports-color 3.0.2",
+  "tempfile",
+  "test-case",
+- "thiserror 2.0.14",
++ "thiserror",
+  "time",
+  "tokio",
+  "tracing",
+@@ -2954,7 +2654,7 @@ dependencies = [
+  "smallstr",
+  "static_assertions",
+  "test-case",
+- "thiserror 2.0.14",
++ "thiserror",
+  "tracing",
+  "tracing-subscriber",
+ ]
+@@ -2978,7 +2678,7 @@ dependencies = [
+  "anyhow",
+  "assert_cmd",
+  "assert_fs",
+- "async-channel 2.5.0",
++ "async-channel",
+  "async-lock",
+  "async-stream",
+  "async-trait",
+@@ -3001,7 +2701,6 @@ dependencies = [
+  "futures",
+  "hdrhistogram",
+  "hex",
+- "httpmock",
+  "humansize",
+  "libc",
+  "linked-hash-map",
+@@ -3032,13 +2731,14 @@ dependencies = [
+  "syslog",
+  "tempfile",
+  "test-case",
+- "thiserror 2.0.14",
++ "thiserror",
+  "time",
+  "tokio",
+  "tracing",
+  "tracing-log",
+  "tracing-subscriber",
+  "walkdir",
++ "wiremock",
+ ]
+ 
+ [[package]]
+@@ -3060,12 +2760,6 @@ dependencies = [
+  "zerocopy",
+ ]
+ 
+-[[package]]
+-name = "new_debug_unreachable"
+-version = "1.0.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
+-
+ [[package]]
+ name = "nix"
+ version = "0.29.0"
+@@ -3230,7 +2924,7 @@ dependencies = [
+  "futures-sink",
+  "js-sys",
+  "pin-project-lite",
+- "thiserror 2.0.14",
++ "thiserror",
+  "tracing",
+ ]
+ 
+@@ -3260,7 +2954,7 @@ dependencies = [
+  "opentelemetry_sdk",
+  "prost",
+  "reqwest",
+- "thiserror 2.0.14",
++ "thiserror",
+  "tracing",
+ ]
+ 
+@@ -3289,7 +2983,7 @@ dependencies = [
+  "percent-encoding",
+  "rand 0.9.2",
+  "serde_json",
+- "thiserror 2.0.14",
++ "thiserror",
+  "tokio",
+  "tokio-stream",
+ ]
+@@ -3378,31 +3072,6 @@ version = "2.3.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
+ 
+-[[package]]
+-name = "petgraph"
+-version = "0.6.5"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b4c5cc86750666a3ed20bdaf5ca2a0344f9c67674cae0515bec2da16fbaa47db"
+-dependencies = [
+- "fixedbitset",
+- "indexmap",
+-]
+-
+-[[package]]
+-name = "phf_shared"
+-version = "0.11.3"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "67eabc2ef2a60eb7faa00097bd1ffdb5bd28e62bf39990626a582201b7a754e5"
+-dependencies = [
+- "siphasher",
+-]
+-
+-[[package]]
+-name = "pico-args"
+-version = "0.5.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5be167a7af36ee22fe3115051bc51f6e6c7054c9348e28deb4f49bd6f705a315"
+-
+ [[package]]
+ name = "pin-project"
+ version = "1.1.10"
+@@ -3420,7 +3089,7 @@ checksum = "6e918e4ff8c4549eb882f14b3a4bc8c8bc93de829416eacf579f1207a8fbf861"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -3435,17 +3104,6 @@ version = "0.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
+ 
+-[[package]]
+-name = "piper"
+-version = "0.2.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "96c8c490f422ef9a4efd2cb5b42b76c8613d7e7dfc1caf667b8a3350a5acc066"
+-dependencies = [
+- "atomic-waker",
+- "fastrand",
+- "futures-io",
+-]
+-
+ [[package]]
+ name = "pkcs8"
+ version = "0.9.0"
+@@ -3553,12 +3211,6 @@ dependencies = [
+  "zerocopy",
+ ]
+ 
+-[[package]]
+-name = "precomputed-hash"
+-version = "0.1.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "925383efa346730478fb4838dbe9137d2a47675ad789c546d150a6e1dd4ab31c"
+-
+ [[package]]
+ name = "predicates"
+ version = "3.1.3"
+@@ -3596,7 +3248,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "ff24dfcda44452b9816fff4cd4227e1bb73ff5a2f1bc1105aa92fb8565ce44d2"
+ dependencies = [
+  "proc-macro2",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -3636,8 +3288,8 @@ version = "1.7.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "6fcdab19deb5195a31cf7726a210015ff1496ba1464fd42cb4f537b8b01b471f"
+ dependencies = [
+- "bit-set 0.8.0",
+- "bit-vec 0.8.0",
++ "bit-set",
++ "bit-vec",
+  "bitflags",
+  "lazy_static",
+  "num-traits",
+@@ -3658,7 +3310,7 @@ checksum = "4ee1c9ac207483d5e7db4940700de86a9aae46ef90c48b57f99fe7edb8345e49"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -3681,7 +3333,7 @@ dependencies = [
+  "itertools 0.14.0",
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -3817,17 +3469,6 @@ dependencies = [
+  "bitflags",
+ ]
+ 
+-[[package]]
+-name = "redox_users"
+-version = "0.4.6"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "ba009ff324d1fc1b900bd1fdb31564febe58a8ccc8a6fdbb93b543d33b13ca43"
+-dependencies = [
+- "getrandom 0.2.16",
+- "libredox",
+- "thiserror 1.0.69",
+-]
+-
+ [[package]]
+ name = "regex"
+ version = "1.11.1"
+@@ -3892,7 +3533,7 @@ dependencies = [
+  "http 1.3.1",
+  "http-body 1.0.1",
+  "http-body-util",
+- "hyper 1.6.0",
++ "hyper 1.7.0",
+  "hyper-util",
+  "js-sys",
+  "log",
+@@ -4252,7 +3893,7 @@ checksum = "5b0276cf7f2c73365f7157c8123c21cd9a50fbbd844757af28ca1f5925fc2a00"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -4267,16 +3908,6 @@ dependencies = [
+  "serde",
+ ]
+ 
+-[[package]]
+-name = "serde_regex"
+-version = "1.1.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "a8136f1a4ea815d7eac4101cfd0b16dc0cb5e1fe1b8609dfd728058656b7badf"
+-dependencies = [
+- "regex",
+- "serde",
+-]
+-
+ [[package]]
+ name = "serde_repr"
+ version = "0.1.20"
+@@ -4285,7 +3916,7 @@ checksum = "175ee3e80ae9982737ca543e96133087cbd9a485eecc3bc4de9c1a37b47ea59c"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -4322,7 +3953,7 @@ checksum = "5d69265a08751de7844521fd15003ae0a888e035773ba05695c5c759a6f89eef"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -4411,18 +4042,6 @@ dependencies = [
+  "rand_core 0.6.4",
+ ]
+ 
+-[[package]]
+-name = "similar"
+-version = "2.7.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bbbb5d9659141646ae647b42fe094daf6c6192d1620870b449d9557f748b2daa"
+-
+-[[package]]
+-name = "siphasher"
+-version = "1.0.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "56199f7ddabf13fe5074ce809e7d3f42b42ae711800501b5b16ea82ad029c39d"
+-
+ [[package]]
+ name = "slab"
+ version = "0.4.11"
+@@ -4486,18 +4105,6 @@ version = "1.1.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
+ 
+-[[package]]
+-name = "string_cache"
+-version = "0.8.9"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "bf776ba3fa74f83bf4b63c3dcbbf82173db2632ed8452cb2d891d33f459de70f"
+-dependencies = [
+- "new_debug_unreachable",
+- "parking_lot",
+- "phf_shared",
+- "precomputed-hash",
+-]
+-
+ [[package]]
+ name = "strsim"
+ version = "0.11.1"
+@@ -4529,17 +4136,6 @@ dependencies = [
+  "is_ci",
+ ]
+ 
+-[[package]]
+-name = "syn"
+-version = "1.0.109"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "72b64191b275b66ffe2469e8af2c1cfe3bafa67b529ead792a6d0160888b4237"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "unicode-ident",
+-]
+-
+ [[package]]
+ name = "syn"
+ version = "2.0.104"
+@@ -4568,7 +4164,7 @@ checksum = "728a70f3dbaf5bab7f0c4b1ac8d7ae5ea60a4b5549c8a5914361c99147a709d2"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -4626,17 +4222,6 @@ dependencies = [
+  "windows-sys 0.59.0",
+ ]
+ 
+-[[package]]
+-name = "term"
+-version = "0.7.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "c59df8ac95d96ff9bede18eb7300b0fda5e5d8d90960e76f8e14ae765eedbf1f"
+-dependencies = [
+- "dirs-next",
+- "rustversion",
+- "winapi",
+-]
+-
+ [[package]]
+ name = "termtree"
+ version = "0.5.1"
+@@ -4661,7 +4246,7 @@ dependencies = [
+  "cfg-if",
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -4672,37 +4257,17 @@ checksum = "5c89e72a01ed4c579669add59014b9a524d609c0c88c6a585ce37485879f6ffb"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+  "test-case-core",
+ ]
+ 
+-[[package]]
+-name = "thiserror"
+-version = "1.0.69"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
+-dependencies = [
+- "thiserror-impl 1.0.69",
+-]
+-
+ [[package]]
+ name = "thiserror"
+ version = "2.0.14"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "0b0949c3a6c842cbde3f1686d6eea5a010516deb7085f79db747562d4102f41e"
+ dependencies = [
+- "thiserror-impl 2.0.14",
+-]
+-
+-[[package]]
+-name = "thiserror-impl"
+-version = "1.0.69"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
+-dependencies = [
+- "proc-macro2",
+- "quote",
+- "syn 2.0.104",
++ "thiserror-impl",
+ ]
+ 
+ [[package]]
+@@ -4713,7 +4278,7 @@ checksum = "cc5b44b4ab9c2fdd0e0512e6bece8388e214c0749f5862b114cc5b7a25daf227"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -4758,15 +4323,6 @@ dependencies = [
+  "time-core",
+ ]
+ 
+-[[package]]
+-name = "tiny-keccak"
+-version = "2.0.2"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "2c9d3793400a45f954c52e73d068316d76b6f4e36977e3fcebb13a2721e80237"
+-dependencies = [
+- "crunchy",
+-]
+-
+ [[package]]
+ name = "tinystr"
+ version = "0.8.1"
+@@ -4814,7 +4370,7 @@ checksum = "6e06d43f1345a3bcd39f6a56dbb7dcab2ba47e68e8ac134855e7e2bdbaf8cab8"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -4947,7 +4503,7 @@ checksum = "81383ab64e72a7a8b8e13130c49e3dab29def6d0c7d76a03087b3cf71c5c6903"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -5077,12 +4633,6 @@ version = "0.1.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "ba73ea9cf16a25df0c8caa16c51acb937d5712a8429db78a3ee29d5dcacd3a65"
+ 
+-[[package]]
+-name = "value-bag"
+-version = "1.11.1"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "943ce29a8a743eb10d6082545d861b24f9d1b160b7d741e0f2cdf726bec909c5"
+-
+ [[package]]
+ name = "vcpkg"
+ version = "0.2.15"
+@@ -5172,7 +4722,7 @@ dependencies = [
+  "log",
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+  "wasm-bindgen-shared",
+ ]
+ 
+@@ -5207,7 +4757,7 @@ checksum = "8ae87ea40c9f689fc23f209965b6fb8a99ad69aeeb0231408be24920604395de"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+  "wasm-bindgen-backend",
+  "wasm-bindgen-shared",
+ ]
+@@ -5339,7 +4889,7 @@ checksum = "a47fddd13af08290e67f4acabf4b459f647552718f683a7b415d290ac744a836"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -5350,7 +4900,7 @@ checksum = "bd9211b69f8dcdfa817bfd14bf1c97c9188afa36f4750130fcdf3f400eca9fa8"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -5558,6 +5108,29 @@ version = "0.0.19"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+ checksum = "d135d17ab770252ad95e9a872d365cf3090e3be864a34ab46f48555993efc904"
+ 
++[[package]]
++name = "wiremock"
++version = "0.6.5"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "08db1edfb05d9b3c1542e521aea074442088292f00b5f28e435c714a98f85031"
++dependencies = [
++ "assert-json-diff",
++ "base64 0.22.1",
++ "deadpool",
++ "futures",
++ "http 1.3.1",
++ "http-body-util",
++ "hyper 1.7.0",
++ "hyper-util",
++ "log",
++ "once_cell",
++ "regex",
++ "serde",
++ "serde_json",
++ "tokio",
++ "url",
++]
++
+ [[package]]
+ name = "wit-bindgen-rt"
+ version = "0.39.0"
+@@ -5623,7 +5196,7 @@ checksum = "38da3c9736e16c5d3c8c597a9aaa5d1fa565d0532ae05e27c24aa62fb32c0ab6"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+  "synstructure",
+ ]
+ 
+@@ -5644,7 +5217,7 @@ checksum = "9ecf5b4cc5364572d7f4c329661bcc82724222973f2cab6f050a4e5c22f75181"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+ 
+ [[package]]
+@@ -5664,7 +5237,7 @@ checksum = "d71e5d6e06ab090c67b5e44993ec16b72dcbaabc526db883a360057678b48502"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+  "synstructure",
+ ]
+ 
+@@ -5704,5 +5277,5 @@ checksum = "5b96237efa0c878c64bd89c436f661be4e46b2f3eff1ebb976f7ef2321d2f58f"
+ dependencies = [
+  "proc-macro2",
+  "quote",
+- "syn 2.0.104",
++ "syn",
+ ]
+diff --git a/benchmark/benchmark.py b/benchmark/benchmark.py
+index f2185bb3..7c4623cf 100644
+--- a/benchmark/benchmark.py
++++ b/benchmark/benchmark.py
+@@ -342,7 +342,7 @@ def run_experiment(cfg: DictConfig) -> None:
+         benchmark = CrtBenchmark(cfg, metadata)
+     elif benchmark_type == "client":
+         benchmark = ClientBenchmark(cfg, metadata)
+-    elif benchmark_type == "client_bp":
++    elif benchmark_type == "client-bp":
+         benchmark = ClientBenchmark(cfg, metadata, backpressure=True)
+     else:
+         raise ValueError(f"Unsupported benchmark type: {benchmark_type}")
+diff --git a/benchmark/benchmarks/benchmark_config_parser.py b/benchmark/benchmarks/benchmark_config_parser.py
+index 194d9b63..ce01e6cf 100644
+--- a/benchmark/benchmarks/benchmark_config_parser.py
++++ b/benchmark/benchmarks/benchmark_config_parser.py
+@@ -44,7 +44,6 @@ class BenchmarkConfigParser:
+             'with_perf_stat': getattr(self.cfg.monitoring, 'with_perf_stat', False),
+             'with_flamegraph': getattr(self.cfg.monitoring, 'with_flamegraph', False),
+             'download_checksums': getattr(self.cfg, 'download_checksums', True),
+-            'crt_eventloop_threads': getattr(self.cfg, 'crt_eventloop_threads', None),
+         }
+ 
+     def get_mountpoint_config(self) -> Dict[str, Any]:
+diff --git a/benchmark/benchmarks/client_benchmark.py b/benchmark/benchmarks/client_benchmark.py
+index 28fb0095..47fee93c 100644
+--- a/benchmark/benchmarks/client_benchmark.py
++++ b/benchmark/benchmarks/client_benchmark.py
+@@ -50,6 +50,9 @@ class ClientBenchmark(BaseBenchmark):
+         if (read_part_size := self.common_config['read_part_size']) is not None:
+             subprocess_args.extend(["--part-size", read_part_size])
+ 
++        if (crt_mem_limit_gib := self.common_config.get('crt_mem_limit_gib')) is not None:
++            subprocess_args.extend(["--crt-memory-limit-gb", crt_mem_limit_gib])
++
+         subprocess_args.extend(["--output-file", "client-output.json"])
+         subprocess_args.append("real")
+         region = self.common_config['region']
+@@ -75,8 +78,6 @@ class ClientBenchmark(BaseBenchmark):
+         client_env = {}
+         if not self.common_config['download_checksums']:
+             client_env["EXPERIMENTAL_MOUNTPOINT_NO_DOWNLOAD_INTEGRITY_VALIDATION"] = "ON"
+-        if (crt_eventloop_threads := self.common_config['crt_eventloop_threads']) is not None:
+-            client_env["UNSTABLE_CRT_EVENTLOOP_THREADS"] = str(crt_eventloop_threads)
+ 
+         log.info("Client benchmark command prepared with args: %s", subprocess_args)
+ 
+diff --git a/benchmark/benchmarks/mountpoint.py b/benchmark/benchmarks/mountpoint.py
+index fcc1b7c5..bf85cfa3 100644
+--- a/benchmark/benchmarks/mountpoint.py
++++ b/benchmark/benchmarks/mountpoint.py
+@@ -120,9 +120,6 @@ def mount_mp(cfg: DictConfig, mount_dir: str) -> Dict[str, Any]:
+     if not common_config['download_checksums']:
+         mp_env["EXPERIMENTAL_MOUNTPOINT_NO_DOWNLOAD_INTEGRITY_VALIDATION"] = "ON"
+ 
+-    if (crt_eventloop_threads := common_config['crt_eventloop_threads']) is not None:
+-        mp_env["UNSTABLE_CRT_EVENTLOOP_THREADS"] = str(crt_eventloop_threads)
+-
+     if stub_mode != "off" and mp_config["mountpoint_binary"] is not None:
+         raise ValueError("Cannot use `stub_mode` with `mountpoint_binary`, `stub_mode` requires recompilation")
+ 
+diff --git a/benchmark/benchmarks/prefetch_benchmark.py b/benchmark/benchmarks/prefetch_benchmark.py
+index 4ffbef41..6c579099 100644
+--- a/benchmark/benchmarks/prefetch_benchmark.py
++++ b/benchmark/benchmarks/prefetch_benchmark.py
+@@ -1,4 +1,5 @@
+ import logging
++
+ import subprocess
+ from typing import Dict, Any
+ 
+@@ -75,9 +76,6 @@ class PrefetchBenchmark(BaseBenchmark):
+         if not self.common_config['download_checksums']:
+             prefetch_env["EXPERIMENTAL_MOUNTPOINT_NO_DOWNLOAD_INTEGRITY_VALIDATION"] = "ON"
+ 
+-        if (crt_eventloop_threads := self.common_config['crt_eventloop_threads']) is not None:
+-            prefetch_env["UNSTABLE_CRT_EVENTLOOP_THREADS"] = str(crt_eventloop_threads)
+-
+         log.info("Prefetch benchmark command prepared with args: %s", subprocess_args)
+ 
+         return Command(args=subprocess_args, env=prefetch_env)
+diff --git a/benchmark/conf/config.yaml b/benchmark/conf/config.yaml
+index 1363541e..9b4ca12a 100644
+--- a/benchmark/conf/config.yaml
++++ b/benchmark/conf/config.yaml
+@@ -5,24 +5,22 @@ defaults:
+   - _self_
+   - override hydra/job_logging: colorlog
+   - override hydra/hydra_logging: colorlog
+-  - override hydra/sweeper: multi
+ 
+ # ===== Common parameters for all benchmarks =====
+ s3_bucket: ???
+ s3_result_bucket: !!null
+ application_workers: 1
+ iteration: 0
+-iterations: 10
++iterations: 1
+ run_time: 30  # Default run time in seconds
+ read_size: 262144 # Defaults to 256KiB, can go up to 1MiB.
+ read_part_size: !!null
+ region: "us-east-1"
+ write_part_size: 16777216  # 16 MiB, to allow for uploads of large files
+ object_size_in_gib: 100  # Size of the object to benchmark
+-benchmark_type: "fio" # fio, prefetch, client, client_bp, crt
++benchmark_type: "fio" # fio, prefetch, client, client-bp, crt
+ s3_keys: !!null
+ download_checksums: true
+-crt_eventloop_threads: !!null # Number of ELG thread count
+ 
+ # Network configuration
+ network:
+@@ -58,7 +56,6 @@ benchmarks:
+       - sequential_read
+     fio_benchmark: "${benchmarks.fio.fio_benchmarks[0]}"
+     fio_io_engine: "psync"
+-    fuse_threads: !!null
+ 
+   prefetch:
+     max_memory_target: !!null # memory upper-limit in MB
+@@ -69,7 +66,7 @@ benchmarks:
+   client:
+     # None
+ 
+-  client_bp:
++  client_backpressure:
+     read_window_size: !!null #2147483648
+ 
+ 
+@@ -78,4 +75,14 @@ hydra:
+     app_name: "Mountpoint benchmark runner"
+   mode: MULTIRUN
+   job:
+-    chdir: true
+\ No newline at end of file
++    chdir: true
++  sweeper:
++    # Global sweeper params - use this for common parameters across all benchmarks
++    # For specific parameter use sweep params under the specific benchmark type config
++    params:
++      'application_workers': 1, 4, 16, 64, 128
++      'iteration': "range(${iterations})"
++      'mountpoint.fuse_threads': 1, 16, 64
++      'benchmarks.fio.direct_io': false, true
++      # 'benchmarks.prefetch.max_memory_target': !!null, 1073741824, 2147483648  # null, 1GB, 2GB
++      #'benchmarks.client_backpressure.read_window_size': 8388608, 2147483648
+diff --git a/benchmark/conf/hydra/sweeper/base.yaml b/benchmark/conf/hydra/sweeper/base.yaml
+deleted file mode 100644
+index 91c5e0d5..00000000
+--- a/benchmark/conf/hydra/sweeper/base.yaml
++++ /dev/null
+@@ -1,8 +0,0 @@
+-# Base sweeper configuration with common parameters for all benchmark types
+-_target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+-max_batch_size: null
+-params:
+-  'application_workers': 1, 16 # 4, 64
+-  'iteration': "range(${iterations})"
+-  'network.maximum_throughput_gbps': 400
+-  # 'crt_eventloop_threads': 128, 256, 1024
+\ No newline at end of file
+diff --git a/benchmark/conf/hydra/sweeper/client.yaml b/benchmark/conf/hydra/sweeper/client.yaml
+deleted file mode 100644
+index 53090e1c..00000000
+--- a/benchmark/conf/hydra/sweeper/client.yaml
++++ /dev/null
+@@ -1,2 +0,0 @@
+-# @package hydra.sweeper
+-params: {}
+\ No newline at end of file
+diff --git a/benchmark/conf/hydra/sweeper/client_bp.yaml b/benchmark/conf/hydra/sweeper/client_bp.yaml
+deleted file mode 100644
+index 8cf26365..00000000
+--- a/benchmark/conf/hydra/sweeper/client_bp.yaml
++++ /dev/null
+@@ -1,3 +0,0 @@
+-# @package hydra.sweeper
+-params: {}
+-  #'benchmarks.client_bp.read_window_size': 2147483648, 8589934592, 17179869184  # 2GB, 8GB, 16GB
+\ No newline at end of file
+diff --git a/benchmark/conf/hydra/sweeper/crt.yaml b/benchmark/conf/hydra/sweeper/crt.yaml
+deleted file mode 100644
+index 53090e1c..00000000
+--- a/benchmark/conf/hydra/sweeper/crt.yaml
++++ /dev/null
+@@ -1,2 +0,0 @@
+-# @package hydra.sweeper
+-params: {}
+\ No newline at end of file
+diff --git a/benchmark/conf/hydra/sweeper/fio.yaml b/benchmark/conf/hydra/sweeper/fio.yaml
+deleted file mode 100644
+index 854545d4..00000000
+--- a/benchmark/conf/hydra/sweeper/fio.yaml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-# @package hydra.sweeper
+-params:
+-  'benchmarks.fio.direct_io': false, true
+-  'benchmarks.fio.fuse_threads': 16 #1, 64
+\ No newline at end of file
+diff --git a/benchmark/conf/hydra/sweeper/multi.yaml b/benchmark/conf/hydra/sweeper/multi.yaml
+deleted file mode 100644
+index 63ba7f23..00000000
+--- a/benchmark/conf/hydra/sweeper/multi.yaml
++++ /dev/null
+@@ -1,10 +0,0 @@
+-# @package hydra.sweeper
+-defaults:
+-  - base
+-  - fio
+-  - prefetch
+-  - client_bp
+-  - client
+-  - crt
+-
+-_target_: hydra_plugins.smart_sweeper.smart_benchmark_sweeper.SmartBenchmarkSweeper
+\ No newline at end of file
+diff --git a/benchmark/conf/hydra/sweeper/prefetch.yaml b/benchmark/conf/hydra/sweeper/prefetch.yaml
+deleted file mode 100644
+index 15a472fb..00000000
+--- a/benchmark/conf/hydra/sweeper/prefetch.yaml
++++ /dev/null
+@@ -1,3 +0,0 @@
+-# @package hydra.sweeper
+-params: {}
+-  #'benchmarks.prefetch.max_memory_target': null, 1073741824, 2147483648  # null, 1GiB, 2GiB
+\ No newline at end of file
+diff --git a/benchmark/hydra_plugins/__init__.py b/benchmark/hydra_plugins/__init__.py
+deleted file mode 100644
+index 69e3be50..00000000
+--- a/benchmark/hydra_plugins/__init__.py
++++ /dev/null
+@@ -1 +0,0 @@
+-__path__ = __import__('pkgutil').extend_path(__path__, __name__)
+diff --git a/benchmark/hydra_plugins/smart_sweeper/__init__.py b/benchmark/hydra_plugins/smart_sweeper/__init__.py
+deleted file mode 100644
+index e69de29b..00000000
+diff --git a/benchmark/hydra_plugins/smart_sweeper/smart_benchmark_sweeper.py b/benchmark/hydra_plugins/smart_sweeper/smart_benchmark_sweeper.py
+deleted file mode 100644
+index 08061888..00000000
+--- a/benchmark/hydra_plugins/smart_sweeper/smart_benchmark_sweeper.py
++++ /dev/null
+@@ -1,143 +0,0 @@
+-from dataclasses import dataclass
+-import itertools
+-import logging
+-from pathlib import Path
+-from typing import Any, Dict, List, Optional
+-import re
+-from hydra.types import HydraContext
+-from hydra.core.config_store import ConfigStore
+-from hydra.core.override_parser.overrides_parser import OverridesParser
+-from hydra.core.override_parser.types import Glob, Override
+-from hydra.core.plugins import Plugins
+-from hydra.plugins.launcher import Launcher
+-from hydra.plugins.sweeper import Sweeper
+-from hydra.types import TaskFunction
+-from omegaconf import DictConfig, OmegaConf
+-
+-log = logging.getLogger(__name__)
+-
+-
+-@dataclass
+-class SmartBenchmarkSweeperConf:
+-    _target_: str = "hydra_plugins.smart_sweeper.smart_benchmark_sweeper.SmartBenchmarkSweeper"
+-    max_batch_size: Optional[int] = None
+-    params: Optional[Dict[str, str]] = None
+-
+-
+-ConfigStore.instance().store(group="hydra/sweeper", name="smart_benchmark", node=SmartBenchmarkSweeperConf)
+-
+-
+-class SmartBenchmarkSweeper(Sweeper):
+-    BENCHMARK_TYPE_REGEX = re.compile(r'^benchmarks\.([^.]+)\.')
+-
+-    def __init__(self, max_batch_size: Optional[int] = None, params: Optional[Dict[str, str]] = None):
+-        self.max_batch_size = max_batch_size
+-        self.params = params or {}
+-        self.config: Optional[DictConfig] = None
+-        self.launcher: Optional[Launcher] = None
+-        self.hydra_context: Optional[HydraContext] = None
+-
+-    def _glob_match_parameter(
+-        self, param_key: str, benchmark_type: str, exclude_patterns: Optional[List[str]] = None
+-    ) -> bool:
+-        """
+-        Check if a parameter belongs to a specific benchmark type using Hydra's GLOB.
+-        Only matches exact benchmark types: fio, prefetch, client, crt.
+-        """
+-        pattern = f"benchmarks.{benchmark_type}.*"
+-        glob_filter = Glob(include=[pattern], exclude=exclude_patterns or [])
+-        return len(glob_filter.filter([param_key])) > 0
+-
+-    def _process_overrides_to_sweep_lists(self, overrides: List[Override]) -> List[List[str]]:
+-        lists = []
+-        for override in overrides:
+-            if override.is_sweep_override():
+-                key = override.get_key_element()
+-                sweep = [f"{key}={val}" for val in override.sweep_string_iterator()]
+-                lists.append(sweep)
+-            else:
+-                key = override.get_key_element()
+-                value = override.get_value_element_as_str()
+-                lists.append([f"{key}={value}"])
+-        return lists
+-
+-    def setup(self, *, hydra_context: HydraContext, task_function: TaskFunction, config: DictConfig) -> None:
+-        self.config = config
+-        self.launcher = Plugins.instance().instantiate_launcher(
+-            hydra_context=hydra_context, task_function=task_function, config=config
+-        )
+-        self.hydra_context = hydra_context
+-
+-    def sweep(self, arguments: List[str]) -> Any:
+-        benchmark_types = self._extract_benchmark_types(arguments)
+-        log.info(f"Running benchmark types: {benchmark_types}")
+-
+-        # Save sweep config
+-        sweep_dir = Path(self.config.hydra.sweep.dir)
+-        sweep_dir.mkdir(parents=True, exist_ok=True)
+-        OmegaConf.save(self.config, sweep_dir / "multirun.yaml")
+-
+-        params_conf = []
+-        for k, v in self.params.items():
+-            params_conf.append(f"{k}={v}")
+-        params_conf.extend(arguments)
+-
+-        parser = OverridesParser.create()
+-        parsed = parser.parse_overrides(params_conf)
+-
+-        all_combinations = []
+-        for benchmark_type in benchmark_types:
+-            type_combinations = self._generate_combinations_for_type(benchmark_type, parsed)
+-            all_combinations.extend(type_combinations)
+-
+-        log.info(f"Generated {len(all_combinations)} total combinations")
+-
+-        returns = []
+-        initial_job_idx = 0
+-        if all_combinations:
+-            self.validate_batch_is_legal(all_combinations)
+-            results = self.launcher.launch(all_combinations, initial_job_idx=initial_job_idx)
+-            returns.append(results)
+-
+-        return returns
+-
+-    def _extract_benchmark_types(self, arguments: List[str]) -> List[str]:
+-        for arg in arguments:
+-            if arg.startswith("benchmark_type="):
+-                benchmark_type_str = arg.split("=", 1)[1]
+-                return [bt.strip() for bt in benchmark_type_str.split(",")]
+-        return ["fio"]
+-
+-    def _generate_combinations_for_type(self, benchmark_type: str, parsed_overrides: List[Override]) -> List[List[str]]:
+-        common_overrides = []
+-        type_specific_overrides = []
+-        other_type_nulls = set()
+-
+-        for param_override in parsed_overrides:
+-            param_key = param_override.get_key_element()
+-            # Skip benchmark_type parameter - we handle it separately
+-            if param_key == "benchmark_type":
+-                continue
+-
+-            if param_key.startswith("benchmarks."):
+-                if self._glob_match_parameter(param_key, benchmark_type):
+-                    type_specific_overrides.append(param_override)
+-                else:
+-                    other_type_nulls.add(param_key)
+-            else:
+-                common_overrides.append(param_override)
+-
+-        param_lists = [[f"benchmark_type={benchmark_type}"]]
+-
+-        if common_overrides:
+-            param_lists.extend(self._process_overrides_to_sweep_lists(common_overrides))
+-
+-        if type_specific_overrides:
+-            param_lists.extend(self._process_overrides_to_sweep_lists(type_specific_overrides))
+-
+-        combinations = list(itertools.product(*param_lists))
+-
+-        null_assignments = [f"{param_key}=null" for param_key in sorted(other_type_nulls)]
+-
+-        result = [list(combination) + null_assignments for combination in combinations]
+-        return result or [[f"benchmark_type={benchmark_type}"] + null_assignments]
+diff --git a/benchmark/pyproject.toml b/benchmark/pyproject.toml
+index 5397b850..da0eca88 100644
+--- a/benchmark/pyproject.toml
++++ b/benchmark/pyproject.toml
+@@ -9,7 +9,3 @@ dependencies = [
+     "hydra-core>=1.3.2",
+     "psutil>=7.0.0",
+ ]
+-[dependency-groups]
+-dev = [
+-    "pytest",
+-]
+diff --git a/benchmark/tests/__init__.py b/benchmark/tests/__init__.py
+deleted file mode 100644
+index e69de29b..00000000
+diff --git a/benchmark/tests/test_smart_sweeper_combinations.py b/benchmark/tests/test_smart_sweeper_combinations.py
+deleted file mode 100644
+index 0b74b153..00000000
+--- a/benchmark/tests/test_smart_sweeper_combinations.py
++++ /dev/null
+@@ -1,81 +0,0 @@
+-from hydra.core.override_parser.overrides_parser import OverridesParser
+-from hydra_plugins.smart_sweeper.smart_benchmark_sweeper import SmartBenchmarkSweeper
+-
+-
+-class TestSmartSweeperCombinations:
+-    def setup_method(self):
+-        self.sweeper = SmartBenchmarkSweeper()
+-        self.parser = OverridesParser.create()
+-
+-    def test_glob_parameter_matching(self):
+-        """Test GLOB-based parameter matching for different benchmark types."""
+-
+-        # Test exact matching
+-        assert self.sweeper._glob_match_parameter("benchmarks.fio.direct_io", "fio")
+-        assert self.sweeper._glob_match_parameter("benchmarks.prefetch.max_memory", "prefetch")
+-        assert self.sweeper._glob_match_parameter("benchmarks.client.read_window_size", "client")
+-
+-        # Test non-matching
+-        assert not self.sweeper._glob_match_parameter("benchmarks.fio.direct_io", "prefetch")
+-        assert not self.sweeper._glob_match_parameter("benchmarks.prefetch.max_memory", "fio")
+-
+-        # Test client-bp mapping to client
+-        assert self.sweeper._glob_match_parameter("benchmarks.client.read_window_size", "client-bp")
+-
+-        print("GLOB parameter matching test passed")
+-
+-    def test_parameter_isolation_by_type(self):
+-        """Test that parameters are properly isolated by benchmark type."""
+-        test_overrides = self.parser.parse_overrides(
+-            [
+-                'benchmarks.fio.direct_io=false,true',
+-                'benchmarks.client.read_window_size=2GB,8GB',
+-                'application_workers=1,4',
+-            ]
+-        )
+-
+-        fio_result = self.sweeper._generate_combinations_for_type("fio", test_overrides)
+-
+-        for combo in fio_result:
+-            # Should have FIO parameters
+-            assert any("benchmarks.fio.direct_io=" in param and "=null" not in param for param in combo)
+-            # Should null client parameters
+-            assert any("benchmarks.client.read_window_size=null" in param for param in combo)
+-
+-        client_result = self.sweeper._generate_combinations_for_type("client-bp", test_overrides)
+-
+-        for combo in client_result:
+-            # Should have client parameters (mapped from client-bp)
+-            assert any("benchmarks.client.read_window_size=" in param and "=null" not in param for param in combo)
+-            # Should null FIO parameters
+-            assert any("benchmarks.fio.direct_io=null" in param for param in combo)
+-
+-        print("Parameter isolation test passed")
+-
+-
+-def run_all_tests():
+-    test_instance = TestSmartSweeperCombinations()
+-
+-    print("Testing SmartBenchmarkSweeper GLOB parameter matching:\n")
+-
+-    test_methods = [
+-        'test_glob_parameter_matching',
+-        'test_parameter_isolation_by_type',
+-    ]
+-
+-    for method_name in test_methods:
+-        print(f"\n--- Executing {method_name} ---")
+-        test_instance.setup_method()
+-        method = getattr(test_instance, method_name)
+-        try:
+-            method()
+-            print(f"✓ {method_name} PASSED")
+-        except Exception as e:
+-            print(f"✗ {method_name} FAILED: {e}")
+-            raise
+-
+-    print("\n✓ All GLOB functionality tests completed successfully!")
+-
+-
+-if __name__ == "__main__":
+-    run_all_tests()
+diff --git a/benchmark/uv.lock b/benchmark/uv.lock
+index f0de231e..32884233 100644
+--- a/benchmark/uv.lock
++++ b/benchmark/uv.lock
+@@ -1,12 +1,12 @@
+ version = 1
+-revision = 2
++revision = 1
+ requires-python = ">=3.11"
+ 
+ [[package]]
+ name = "antlr4-python3-runtime"
+ version = "4.9.3"
+ source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz", hash = "sha256:f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b", size = 117034, upload-time = "2021-11-06T17:52:23.524Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz", hash = "sha256:f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b", size = 117034 }
+ 
+ [[package]]
+ name = "benchmark"
+@@ -18,40 +18,32 @@ dependencies = [
+     { name = "psutil" },
+ ]
+ 
+-[package.dev-dependencies]
+-dev = [
+-    { name = "pytest" },
+-]
+-
+ [package.metadata]
+ requires-dist = [
+-    { name = "hydra-colorlog", specifier = ">=1.2.0" },
+     { name = "hydra-core", specifier = ">=1.3.2" },
+     { name = "psutil", specifier = ">=7.0.0" },
++    { name = "hydra-colorlog", specifier = ">=1.2.0" },
+ ]
+ 
+-[package.metadata.requires-dev]
+-dev = [{ name = "pytest" }]
+-
+ [[package]]
+ name = "colorama"
+ version = "0.4.6"
+ source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44", size = 27697, upload-time = "2022-10-25T02:36:22.414Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44", size = 27697 }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335, upload-time = "2022-10-25T02:36:20.889Z" },
++    { url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335 },
+ ]
+ 
+ [[package]]
+ name = "colorlog"
+-version = "6.7.0"
++version = "6.9.0"
+ source = { registry = "https://pypi.org/simple" }
+ dependencies = [
+     { name = "colorama", marker = "sys_platform == 'win32'" },
+ ]
+-sdist = { url = "https://files.pythonhosted.org/packages/78/6b/4e5481ddcdb9c255b2715f54c863629f1543e97bc8c309d1c5c131ad14f2/colorlog-6.7.0.tar.gz", hash = "sha256:bd94bd21c1e13fac7bd3153f4bc3a7dc0eb0974b8bc2fdf1a989e474f6e582e5", size = 29920, upload-time = "2022-08-29T14:51:27.945Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/d3/7a/359f4d5df2353f26172b3cc39ea32daa39af8de522205f512f458923e677/colorlog-6.9.0.tar.gz", hash = "sha256:bfba54a1b93b94f54e1f4fe48395725a3d92fd2a4af702f6bd70946bdc0c6ac2", size = 16624 }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/58/43/a363c213224448f9e194d626221123ce00e3fb3d87c0c22aed52b620bdd1/colorlog-6.7.0-py2.py3-none-any.whl", hash = "sha256:0d33ca236784a1ba3ff9c532d4964126d8a2c44f1f0cb1d2b0728196f512f662", size = 11286, upload-time = "2022-08-29T14:51:26.426Z" },
++    { url = "https://files.pythonhosted.org/packages/e3/51/9b208e85196941db2f0654ad0357ca6388ab3ed67efdbfc799f35d1f83aa/colorlog-6.9.0-py3-none-any.whl", hash = "sha256:5906e71acd67cb07a71e779c47c4bcb45fb8c2993eebe9e5adcd6a6f1b283eff", size = 11424 },
+ ]
+ 
+ [[package]]
+@@ -62,9 +54,9 @@ dependencies = [
+     { name = "colorlog" },
+     { name = "hydra-core" },
+ ]
+-sdist = { url = "https://files.pythonhosted.org/packages/2b/fc/ab5ca078d5184ae3280d5654734860198c643cd2caaaaaece63283d9f76d/hydra-colorlog-1.2.0.tar.gz", hash = "sha256:d44f85008fabd2448c7e3b496c31b44d7610560f6fff74f3673afaa949870899", size = 3060, upload-time = "2022-05-17T22:16:25.407Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/2b/fc/ab5ca078d5184ae3280d5654734860198c643cd2caaaaaece63283d9f76d/hydra-colorlog-1.2.0.tar.gz", hash = "sha256:d44f85008fabd2448c7e3b496c31b44d7610560f6fff74f3673afaa949870899", size = 3060 }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/40/50/a08b0453c18088da369991d015ef3902a9ab532b515a41f1bfbe1394854d/hydra_colorlog-1.2.0-py3-none-any.whl", hash = "sha256:33d05fc11ca9bc7a5d69cfb3c8fb395a1bc52fa1dfe7aca6a6f5ffb57f6e7c4b", size = 3638, upload-time = "2022-05-17T22:16:23.598Z" },
++    { url = "https://files.pythonhosted.org/packages/40/50/a08b0453c18088da369991d015ef3902a9ab532b515a41f1bfbe1394854d/hydra_colorlog-1.2.0-py3-none-any.whl", hash = "sha256:33d05fc11ca9bc7a5d69cfb3c8fb395a1bc52fa1dfe7aca6a6f5ffb57f6e7c4b", size = 3638 },
+ ]
+ 
+ [[package]]
+@@ -76,18 +68,9 @@ dependencies = [
+     { name = "omegaconf" },
+     { name = "packaging" },
+ ]
+-sdist = { url = "https://files.pythonhosted.org/packages/6d/8e/07e42bc434a847154083b315779b0a81d567154504624e181caf2c71cd98/hydra-core-1.3.2.tar.gz", hash = "sha256:8a878ed67216997c3e9d88a8e72e7b4767e81af37afb4ea3334b269a4390a824", size = 3263494, upload-time = "2023-02-23T18:33:43.03Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/6d/8e/07e42bc434a847154083b315779b0a81d567154504624e181caf2c71cd98/hydra-core-1.3.2.tar.gz", hash = "sha256:8a878ed67216997c3e9d88a8e72e7b4767e81af37afb4ea3334b269a4390a824", size = 3263494 }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/c6/50/e0edd38dcd63fb26a8547f13d28f7a008bc4a3fd4eb4ff030673f22ad41a/hydra_core-1.3.2-py3-none-any.whl", hash = "sha256:fa0238a9e31df3373b35b0bfb672c34cc92718d21f81311d8996a16de1141d8b", size = 154547, upload-time = "2023-02-23T18:33:40.801Z" },
+-]
+-
+-[[package]]
+-name = "iniconfig"
+-version = "2.1.0"
+-source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/f2/97/ebf4da567aa6827c909642694d71c9fcf53e5b504f2d96afea02718862f3/iniconfig-2.1.0.tar.gz", hash = "sha256:3abbd2e30b36733fee78f9c7f7308f2d0050e88f0087fd25c2645f63c773e1c7", size = 4793, upload-time = "2025-03-19T20:09:59.721Z" }
+-wheels = [
+-    { url = "https://files.pythonhosted.org/packages/2c/e1/e6716421ea10d38022b952c159d5161ca1193197fb744506875fbb87ea7b/iniconfig-2.1.0-py3-none-any.whl", hash = "sha256:9deba5723312380e77435581c6bf4935c94cbfab9b1ed33ef8d238ea168eb760", size = 6050, upload-time = "2025-03-19T20:10:01.071Z" },
++    { url = "https://files.pythonhosted.org/packages/c6/50/e0edd38dcd63fb26a8547f13d28f7a008bc4a3fd4eb4ff030673f22ad41a/hydra_core-1.3.2-py3-none-any.whl", hash = "sha256:fa0238a9e31df3373b35b0bfb672c34cc92718d21f81311d8996a16de1141d8b", size = 154547 },
+ ]
+ 
+ [[package]]
+@@ -98,100 +81,66 @@ dependencies = [
+     { name = "antlr4-python3-runtime" },
+     { name = "pyyaml" },
+ ]
+-sdist = { url = "https://files.pythonhosted.org/packages/09/48/6388f1bb9da707110532cb70ec4d2822858ddfb44f1cdf1233c20a80ea4b/omegaconf-2.3.0.tar.gz", hash = "sha256:d5d4b6d29955cc50ad50c46dc269bcd92c6e00f5f90d23ab5fee7bfca4ba4cc7", size = 3298120, upload-time = "2022-12-08T20:59:22.753Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/09/48/6388f1bb9da707110532cb70ec4d2822858ddfb44f1cdf1233c20a80ea4b/omegaconf-2.3.0.tar.gz", hash = "sha256:d5d4b6d29955cc50ad50c46dc269bcd92c6e00f5f90d23ab5fee7bfca4ba4cc7", size = 3298120 }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/e3/94/1843518e420fa3ed6919835845df698c7e27e183cb997394e4a670973a65/omegaconf-2.3.0-py3-none-any.whl", hash = "sha256:7b4df175cdb08ba400f45cae3bdcae7ba8365db4d165fc65fd04b050ab63b46b", size = 79500, upload-time = "2022-12-08T20:59:19.686Z" },
++    { url = "https://files.pythonhosted.org/packages/e3/94/1843518e420fa3ed6919835845df698c7e27e183cb997394e4a670973a65/omegaconf-2.3.0-py3-none-any.whl", hash = "sha256:7b4df175cdb08ba400f45cae3bdcae7ba8365db4d165fc65fd04b050ab63b46b", size = 79500 },
+ ]
+ 
+ [[package]]
+ name = "packaging"
+-version = "25.0"
+-source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz", hash = "sha256:d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f", size = 165727, upload-time = "2025-04-19T11:48:59.673Z" }
+-wheels = [
+-    { url = "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl", hash = "sha256:29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484", size = 66469, upload-time = "2025-04-19T11:48:57.875Z" },
+-]
+-
+-[[package]]
+-name = "pluggy"
+-version = "1.6.0"
++version = "24.2"
+ source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/f9/e2/3e91f31a7d2b083fe6ef3fa267035b518369d9511ffab804f839851d2779/pluggy-1.6.0.tar.gz", hash = "sha256:7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3", size = 69412, upload-time = "2025-05-15T12:30:07.975Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/d0/63/68dbb6eb2de9cb10ee4c9c14a0148804425e13c4fb20d61cce69f53106da/packaging-24.2.tar.gz", hash = "sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f", size = 163950 }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl", hash = "sha256:e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746", size = 20538, upload-time = "2025-05-15T12:30:06.134Z" },
++    { url = "https://files.pythonhosted.org/packages/88/ef/eb23f262cca3c0c4eb7ab1933c3b1f03d021f2c48f54763065b6f0e321be/packaging-24.2-py3-none-any.whl", hash = "sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759", size = 65451 },
+ ]
+ 
+ [[package]]
+ name = "psutil"
+ version = "7.0.0"
+ source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/2a/80/336820c1ad9286a4ded7e845b2eccfcb27851ab8ac6abece774a6ff4d3de/psutil-7.0.0.tar.gz", hash = "sha256:7be9c3eba38beccb6495ea33afd982a44074b78f28c434a1f51cc07fd315c456", size = 497003, upload-time = "2025-02-13T21:54:07.946Z" }
+-wheels = [
+-    { url = "https://files.pythonhosted.org/packages/ed/e6/2d26234410f8b8abdbf891c9da62bee396583f713fb9f3325a4760875d22/psutil-7.0.0-cp36-abi3-macosx_10_9_x86_64.whl", hash = "sha256:101d71dc322e3cffd7cea0650b09b3d08b8e7c4109dd6809fe452dfd00e58b25", size = 238051, upload-time = "2025-02-13T21:54:12.36Z" },
+-    { url = "https://files.pythonhosted.org/packages/04/8b/30f930733afe425e3cbfc0e1468a30a18942350c1a8816acfade80c005c4/psutil-7.0.0-cp36-abi3-macosx_11_0_arm64.whl", hash = "sha256:39db632f6bb862eeccf56660871433e111b6ea58f2caea825571951d4b6aa3da", size = 239535, upload-time = "2025-02-13T21:54:16.07Z" },
+-    { url = "https://files.pythonhosted.org/packages/2a/ed/d362e84620dd22876b55389248e522338ed1bf134a5edd3b8231d7207f6d/psutil-7.0.0-cp36-abi3-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:1fcee592b4c6f146991ca55919ea3d1f8926497a713ed7faaf8225e174581e91", size = 275004, upload-time = "2025-02-13T21:54:18.662Z" },
+-    { url = "https://files.pythonhosted.org/packages/bf/b9/b0eb3f3cbcb734d930fdf839431606844a825b23eaf9a6ab371edac8162c/psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4b1388a4f6875d7e2aff5c4ca1cc16c545ed41dd8bb596cefea80111db353a34", size = 277986, upload-time = "2025-02-13T21:54:21.811Z" },
+-    { url = "https://files.pythonhosted.org/packages/eb/a2/709e0fe2f093556c17fbafda93ac032257242cabcc7ff3369e2cb76a97aa/psutil-7.0.0-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a5f098451abc2828f7dc6b58d44b532b22f2088f4999a937557b603ce72b1993", size = 279544, upload-time = "2025-02-13T21:54:24.68Z" },
+-    { url = "https://files.pythonhosted.org/packages/50/e6/eecf58810b9d12e6427369784efe814a1eec0f492084ce8eb8f4d89d6d61/psutil-7.0.0-cp37-abi3-win32.whl", hash = "sha256:ba3fcef7523064a6c9da440fc4d6bd07da93ac726b5733c29027d7dc95b39d99", size = 241053, upload-time = "2025-02-13T21:54:34.31Z" },
+-    { url = "https://files.pythonhosted.org/packages/50/1b/6921afe68c74868b4c9fa424dad3be35b095e16687989ebbb50ce4fceb7c/psutil-7.0.0-cp37-abi3-win_amd64.whl", hash = "sha256:4cf3d4eb1aa9b348dec30105c55cd9b7d4629285735a102beb4441e38db90553", size = 244885, upload-time = "2025-02-13T21:54:37.486Z" },
+-]
+-
+-[[package]]
+-name = "pygments"
+-version = "2.19.2"
+-source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/b0/77/a5b8c569bf593b0140bde72ea885a803b82086995367bf2037de0159d924/pygments-2.19.2.tar.gz", hash = "sha256:636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887", size = 4968631, upload-time = "2025-06-21T13:39:12.283Z" }
+-wheels = [
+-    { url = "https://files.pythonhosted.org/packages/c7/21/705964c7812476f378728bdf590ca4b771ec72385c533964653c68e86bdc/pygments-2.19.2-py3-none-any.whl", hash = "sha256:86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b", size = 1225217, upload-time = "2025-06-21T13:39:07.939Z" },
+-]
+-
+-[[package]]
+-name = "pytest"
+-version = "8.4.1"
+-source = { registry = "https://pypi.org/simple" }
+-dependencies = [
+-    { name = "colorama", marker = "sys_platform == 'win32'" },
+-    { name = "iniconfig" },
+-    { name = "packaging" },
+-    { name = "pluggy" },
+-    { name = "pygments" },
+-]
+-sdist = { url = "https://files.pythonhosted.org/packages/08/ba/45911d754e8eba3d5a841a5ce61a65a685ff1798421ac054f85aa8747dfb/pytest-8.4.1.tar.gz", hash = "sha256:7c67fd69174877359ed9371ec3af8a3d2b04741818c51e5e99cc1742251fa93c", size = 1517714, upload-time = "2025-06-18T05:48:06.109Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/2a/80/336820c1ad9286a4ded7e845b2eccfcb27851ab8ac6abece774a6ff4d3de/psutil-7.0.0.tar.gz", hash = "sha256:7be9c3eba38beccb6495ea33afd982a44074b78f28c434a1f51cc07fd315c456", size = 497003 }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/29/16/c8a903f4c4dffe7a12843191437d7cd8e32751d5de349d45d3fe69544e87/pytest-8.4.1-py3-none-any.whl", hash = "sha256:539c70ba6fcead8e78eebbf1115e8b589e7565830d7d006a8723f19ac8a0afb7", size = 365474, upload-time = "2025-06-18T05:48:03.955Z" },
++    { url = "https://files.pythonhosted.org/packages/ed/e6/2d26234410f8b8abdbf891c9da62bee396583f713fb9f3325a4760875d22/psutil-7.0.0-cp36-abi3-macosx_10_9_x86_64.whl", hash = "sha256:101d71dc322e3cffd7cea0650b09b3d08b8e7c4109dd6809fe452dfd00e58b25", size = 238051 },
++    { url = "https://files.pythonhosted.org/packages/04/8b/30f930733afe425e3cbfc0e1468a30a18942350c1a8816acfade80c005c4/psutil-7.0.0-cp36-abi3-macosx_11_0_arm64.whl", hash = "sha256:39db632f6bb862eeccf56660871433e111b6ea58f2caea825571951d4b6aa3da", size = 239535 },
++    { url = "https://files.pythonhosted.org/packages/2a/ed/d362e84620dd22876b55389248e522338ed1bf134a5edd3b8231d7207f6d/psutil-7.0.0-cp36-abi3-manylinux_2_12_i686.manylinux2010_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:1fcee592b4c6f146991ca55919ea3d1f8926497a713ed7faaf8225e174581e91", size = 275004 },
++    { url = "https://files.pythonhosted.org/packages/bf/b9/b0eb3f3cbcb734d930fdf839431606844a825b23eaf9a6ab371edac8162c/psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4b1388a4f6875d7e2aff5c4ca1cc16c545ed41dd8bb596cefea80111db353a34", size = 277986 },
++    { url = "https://files.pythonhosted.org/packages/eb/a2/709e0fe2f093556c17fbafda93ac032257242cabcc7ff3369e2cb76a97aa/psutil-7.0.0-cp36-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a5f098451abc2828f7dc6b58d44b532b22f2088f4999a937557b603ce72b1993", size = 279544 },
++    { url = "https://files.pythonhosted.org/packages/50/e6/eecf58810b9d12e6427369784efe814a1eec0f492084ce8eb8f4d89d6d61/psutil-7.0.0-cp37-abi3-win32.whl", hash = "sha256:ba3fcef7523064a6c9da440fc4d6bd07da93ac726b5733c29027d7dc95b39d99", size = 241053 },
++    { url = "https://files.pythonhosted.org/packages/50/1b/6921afe68c74868b4c9fa424dad3be35b095e16687989ebbb50ce4fceb7c/psutil-7.0.0-cp37-abi3-win_amd64.whl", hash = "sha256:4cf3d4eb1aa9b348dec30105c55cd9b7d4629285735a102beb4441e38db90553", size = 244885 },
+ ]
+ 
+ [[package]]
+ name = "pyyaml"
+ version = "6.0.2"
+ source = { registry = "https://pypi.org/simple" }
+-sdist = { url = "https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/pyyaml-6.0.2.tar.gz", hash = "sha256:d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e", size = 130631, upload-time = "2024-08-06T20:33:50.674Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/54/ed/79a089b6be93607fa5cdaedf301d7dfb23af5f25c398d5ead2525b063e17/pyyaml-6.0.2.tar.gz", hash = "sha256:d584d9ec91ad65861cc08d42e834324ef890a082e591037abe114850ff7bbc3e", size = 130631 }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/f8/aa/7af4e81f7acba21a4c6be026da38fd2b872ca46226673c89a758ebdc4fd2/PyYAML-6.0.2-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:cc1c1159b3d456576af7a3e4d1ba7e6924cb39de8f67111c735f6fc832082774", size = 184612, upload-time = "2024-08-06T20:32:03.408Z" },
+-    { url = "https://files.pythonhosted.org/packages/8b/62/b9faa998fd185f65c1371643678e4d58254add437edb764a08c5a98fb986/PyYAML-6.0.2-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:1e2120ef853f59c7419231f3bf4e7021f1b936f6ebd222406c3b60212205d2ee", size = 172040, upload-time = "2024-08-06T20:32:04.926Z" },
+-    { url = "https://files.pythonhosted.org/packages/ad/0c/c804f5f922a9a6563bab712d8dcc70251e8af811fce4524d57c2c0fd49a4/PyYAML-6.0.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5d225db5a45f21e78dd9358e58a98702a0302f2659a3c6cd320564b75b86f47c", size = 736829, upload-time = "2024-08-06T20:32:06.459Z" },
+-    { url = "https://files.pythonhosted.org/packages/51/16/6af8d6a6b210c8e54f1406a6b9481febf9c64a3109c541567e35a49aa2e7/PyYAML-6.0.2-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:5ac9328ec4831237bec75defaf839f7d4564be1e6b25ac710bd1a96321cc8317", size = 764167, upload-time = "2024-08-06T20:32:08.338Z" },
+-    { url = "https://files.pythonhosted.org/packages/75/e4/2c27590dfc9992f73aabbeb9241ae20220bd9452df27483b6e56d3975cc5/PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3ad2a3decf9aaba3d29c8f537ac4b243e36bef957511b4766cb0057d32b0be85", size = 762952, upload-time = "2024-08-06T20:32:14.124Z" },
+-    { url = "https://files.pythonhosted.org/packages/9b/97/ecc1abf4a823f5ac61941a9c00fe501b02ac3ab0e373c3857f7d4b83e2b6/PyYAML-6.0.2-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:ff3824dc5261f50c9b0dfb3be22b4567a6f938ccce4587b38952d85fd9e9afe4", size = 735301, upload-time = "2024-08-06T20:32:16.17Z" },
+-    { url = "https://files.pythonhosted.org/packages/45/73/0f49dacd6e82c9430e46f4a027baa4ca205e8b0a9dce1397f44edc23559d/PyYAML-6.0.2-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:797b4f722ffa07cc8d62053e4cff1486fa6dc094105d13fea7b1de7d8bf71c9e", size = 756638, upload-time = "2024-08-06T20:32:18.555Z" },
+-    { url = "https://files.pythonhosted.org/packages/22/5f/956f0f9fc65223a58fbc14459bf34b4cc48dec52e00535c79b8db361aabd/PyYAML-6.0.2-cp311-cp311-win32.whl", hash = "sha256:11d8f3dd2b9c1207dcaf2ee0bbbfd5991f571186ec9cc78427ba5bd32afae4b5", size = 143850, upload-time = "2024-08-06T20:32:19.889Z" },
+-    { url = "https://files.pythonhosted.org/packages/ed/23/8da0bbe2ab9dcdd11f4f4557ccaf95c10b9811b13ecced089d43ce59c3c8/PyYAML-6.0.2-cp311-cp311-win_amd64.whl", hash = "sha256:e10ce637b18caea04431ce14fabcf5c64a1c61ec9c56b071a4b7ca131ca52d44", size = 161980, upload-time = "2024-08-06T20:32:21.273Z" },
+-    { url = "https://files.pythonhosted.org/packages/86/0c/c581167fc46d6d6d7ddcfb8c843a4de25bdd27e4466938109ca68492292c/PyYAML-6.0.2-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:c70c95198c015b85feafc136515252a261a84561b7b1d51e3384e0655ddf25ab", size = 183873, upload-time = "2024-08-06T20:32:25.131Z" },
+-    { url = "https://files.pythonhosted.org/packages/a8/0c/38374f5bb272c051e2a69281d71cba6fdb983413e6758b84482905e29a5d/PyYAML-6.0.2-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:ce826d6ef20b1bc864f0a68340c8b3287705cae2f8b4b1d932177dcc76721725", size = 173302, upload-time = "2024-08-06T20:32:26.511Z" },
+-    { url = "https://files.pythonhosted.org/packages/c3/93/9916574aa8c00aa06bbac729972eb1071d002b8e158bd0e83a3b9a20a1f7/PyYAML-6.0.2-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1f71ea527786de97d1a0cc0eacd1defc0985dcf6b3f17bb77dcfc8c34bec4dc5", size = 739154, upload-time = "2024-08-06T20:32:28.363Z" },
+-    { url = "https://files.pythonhosted.org/packages/95/0f/b8938f1cbd09739c6da569d172531567dbcc9789e0029aa070856f123984/PyYAML-6.0.2-cp312-cp312-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:9b22676e8097e9e22e36d6b7bda33190d0d400f345f23d4065d48f4ca7ae0425", size = 766223, upload-time = "2024-08-06T20:32:30.058Z" },
+-    { url = "https://files.pythonhosted.org/packages/b9/2b/614b4752f2e127db5cc206abc23a8c19678e92b23c3db30fc86ab731d3bd/PyYAML-6.0.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:80bab7bfc629882493af4aa31a4cfa43a4c57c83813253626916b8c7ada83476", size = 767542, upload-time = "2024-08-06T20:32:31.881Z" },
+-    { url = "https://files.pythonhosted.org/packages/d4/00/dd137d5bcc7efea1836d6264f049359861cf548469d18da90cd8216cf05f/PyYAML-6.0.2-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:0833f8694549e586547b576dcfaba4a6b55b9e96098b36cdc7ebefe667dfed48", size = 731164, upload-time = "2024-08-06T20:32:37.083Z" },
+-    { url = "https://files.pythonhosted.org/packages/c9/1f/4f998c900485e5c0ef43838363ba4a9723ac0ad73a9dc42068b12aaba4e4/PyYAML-6.0.2-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:8b9c7197f7cb2738065c481a0461e50ad02f18c78cd75775628afb4d7137fb3b", size = 756611, upload-time = "2024-08-06T20:32:38.898Z" },
+-    { url = "https://files.pythonhosted.org/packages/df/d1/f5a275fdb252768b7a11ec63585bc38d0e87c9e05668a139fea92b80634c/PyYAML-6.0.2-cp312-cp312-win32.whl", hash = "sha256:ef6107725bd54b262d6dedcc2af448a266975032bc85ef0172c5f059da6325b4", size = 140591, upload-time = "2024-08-06T20:32:40.241Z" },
+-    { url = "https://files.pythonhosted.org/packages/0c/e8/4f648c598b17c3d06e8753d7d13d57542b30d56e6c2dedf9c331ae56312e/PyYAML-6.0.2-cp312-cp312-win_amd64.whl", hash = "sha256:7e7401d0de89a9a855c839bc697c079a4af81cf878373abd7dc625847d25cbd8", size = 156338, upload-time = "2024-08-06T20:32:41.93Z" },
+-    { url = "https://files.pythonhosted.org/packages/ef/e3/3af305b830494fa85d95f6d95ef7fa73f2ee1cc8ef5b495c7c3269fb835f/PyYAML-6.0.2-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:efdca5630322a10774e8e98e1af481aad470dd62c3170801852d752aa7a783ba", size = 181309, upload-time = "2024-08-06T20:32:43.4Z" },
+-    { url = "https://files.pythonhosted.org/packages/45/9f/3b1c20a0b7a3200524eb0076cc027a970d320bd3a6592873c85c92a08731/PyYAML-6.0.2-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:50187695423ffe49e2deacb8cd10510bc361faac997de9efef88badc3bb9e2d1", size = 171679, upload-time = "2024-08-06T20:32:44.801Z" },
+-    { url = "https://files.pythonhosted.org/packages/7c/9a/337322f27005c33bcb656c655fa78325b730324c78620e8328ae28b64d0c/PyYAML-6.0.2-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:0ffe8360bab4910ef1b9e87fb812d8bc0a308b0d0eef8c8f44e0254ab3b07133", size = 733428, upload-time = "2024-08-06T20:32:46.432Z" },
+-    { url = "https://files.pythonhosted.org/packages/a3/69/864fbe19e6c18ea3cc196cbe5d392175b4cf3d5d0ac1403ec3f2d237ebb5/PyYAML-6.0.2-cp313-cp313-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:17e311b6c678207928d649faa7cb0d7b4c26a0ba73d41e99c4fff6b6c3276484", size = 763361, upload-time = "2024-08-06T20:32:51.188Z" },
+-    { url = "https://files.pythonhosted.org/packages/04/24/b7721e4845c2f162d26f50521b825fb061bc0a5afcf9a386840f23ea19fa/PyYAML-6.0.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:70b189594dbe54f75ab3a1acec5f1e3faa7e8cf2f1e08d9b561cb41b845f69d5", size = 759523, upload-time = "2024-08-06T20:32:53.019Z" },
+-    { url = "https://files.pythonhosted.org/packages/2b/b2/e3234f59ba06559c6ff63c4e10baea10e5e7df868092bf9ab40e5b9c56b6/PyYAML-6.0.2-cp313-cp313-musllinux_1_1_aarch64.whl", hash = "sha256:41e4e3953a79407c794916fa277a82531dd93aad34e29c2a514c2c0c5fe971cc", size = 726660, upload-time = "2024-08-06T20:32:54.708Z" },
+-    { url = "https://files.pythonhosted.org/packages/fe/0f/25911a9f080464c59fab9027482f822b86bf0608957a5fcc6eaac85aa515/PyYAML-6.0.2-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:68ccc6023a3400877818152ad9a1033e3db8625d899c72eacb5a668902e4d652", size = 751597, upload-time = "2024-08-06T20:32:56.985Z" },
+-    { url = "https://files.pythonhosted.org/packages/14/0d/e2c3b43bbce3cf6bd97c840b46088a3031085179e596d4929729d8d68270/PyYAML-6.0.2-cp313-cp313-win32.whl", hash = "sha256:bc2fa7c6b47d6bc618dd7fb02ef6fdedb1090ec036abab80d4681424b84c1183", size = 140527, upload-time = "2024-08-06T20:33:03.001Z" },
+-    { url = "https://files.pythonhosted.org/packages/fa/de/02b54f42487e3d3c6efb3f89428677074ca7bf43aae402517bc7cca949f3/PyYAML-6.0.2-cp313-cp313-win_amd64.whl", hash = "sha256:8388ee1976c416731879ac16da0aff3f63b286ffdd57cdeb95f3f2e085687563", size = 156446, upload-time = "2024-08-06T20:33:04.33Z" },
++    { url = "https://files.pythonhosted.org/packages/f8/aa/7af4e81f7acba21a4c6be026da38fd2b872ca46226673c89a758ebdc4fd2/PyYAML-6.0.2-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:cc1c1159b3d456576af7a3e4d1ba7e6924cb39de8f67111c735f6fc832082774", size = 184612 },
++    { url = "https://files.pythonhosted.org/packages/8b/62/b9faa998fd185f65c1371643678e4d58254add437edb764a08c5a98fb986/PyYAML-6.0.2-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:1e2120ef853f59c7419231f3bf4e7021f1b936f6ebd222406c3b60212205d2ee", size = 172040 },
++    { url = "https://files.pythonhosted.org/packages/ad/0c/c804f5f922a9a6563bab712d8dcc70251e8af811fce4524d57c2c0fd49a4/PyYAML-6.0.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5d225db5a45f21e78dd9358e58a98702a0302f2659a3c6cd320564b75b86f47c", size = 736829 },
++    { url = "https://files.pythonhosted.org/packages/51/16/6af8d6a6b210c8e54f1406a6b9481febf9c64a3109c541567e35a49aa2e7/PyYAML-6.0.2-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:5ac9328ec4831237bec75defaf839f7d4564be1e6b25ac710bd1a96321cc8317", size = 764167 },
++    { url = "https://files.pythonhosted.org/packages/75/e4/2c27590dfc9992f73aabbeb9241ae20220bd9452df27483b6e56d3975cc5/PyYAML-6.0.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3ad2a3decf9aaba3d29c8f537ac4b243e36bef957511b4766cb0057d32b0be85", size = 762952 },
++    { url = "https://files.pythonhosted.org/packages/9b/97/ecc1abf4a823f5ac61941a9c00fe501b02ac3ab0e373c3857f7d4b83e2b6/PyYAML-6.0.2-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:ff3824dc5261f50c9b0dfb3be22b4567a6f938ccce4587b38952d85fd9e9afe4", size = 735301 },
++    { url = "https://files.pythonhosted.org/packages/45/73/0f49dacd6e82c9430e46f4a027baa4ca205e8b0a9dce1397f44edc23559d/PyYAML-6.0.2-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:797b4f722ffa07cc8d62053e4cff1486fa6dc094105d13fea7b1de7d8bf71c9e", size = 756638 },
++    { url = "https://files.pythonhosted.org/packages/22/5f/956f0f9fc65223a58fbc14459bf34b4cc48dec52e00535c79b8db361aabd/PyYAML-6.0.2-cp311-cp311-win32.whl", hash = "sha256:11d8f3dd2b9c1207dcaf2ee0bbbfd5991f571186ec9cc78427ba5bd32afae4b5", size = 143850 },
++    { url = "https://files.pythonhosted.org/packages/ed/23/8da0bbe2ab9dcdd11f4f4557ccaf95c10b9811b13ecced089d43ce59c3c8/PyYAML-6.0.2-cp311-cp311-win_amd64.whl", hash = "sha256:e10ce637b18caea04431ce14fabcf5c64a1c61ec9c56b071a4b7ca131ca52d44", size = 161980 },
++    { url = "https://files.pythonhosted.org/packages/86/0c/c581167fc46d6d6d7ddcfb8c843a4de25bdd27e4466938109ca68492292c/PyYAML-6.0.2-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:c70c95198c015b85feafc136515252a261a84561b7b1d51e3384e0655ddf25ab", size = 183873 },
++    { url = "https://files.pythonhosted.org/packages/a8/0c/38374f5bb272c051e2a69281d71cba6fdb983413e6758b84482905e29a5d/PyYAML-6.0.2-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:ce826d6ef20b1bc864f0a68340c8b3287705cae2f8b4b1d932177dcc76721725", size = 173302 },
++    { url = "https://files.pythonhosted.org/packages/c3/93/9916574aa8c00aa06bbac729972eb1071d002b8e158bd0e83a3b9a20a1f7/PyYAML-6.0.2-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:1f71ea527786de97d1a0cc0eacd1defc0985dcf6b3f17bb77dcfc8c34bec4dc5", size = 739154 },
++    { url = "https://files.pythonhosted.org/packages/95/0f/b8938f1cbd09739c6da569d172531567dbcc9789e0029aa070856f123984/PyYAML-6.0.2-cp312-cp312-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:9b22676e8097e9e22e36d6b7bda33190d0d400f345f23d4065d48f4ca7ae0425", size = 766223 },
++    { url = "https://files.pythonhosted.org/packages/b9/2b/614b4752f2e127db5cc206abc23a8c19678e92b23c3db30fc86ab731d3bd/PyYAML-6.0.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:80bab7bfc629882493af4aa31a4cfa43a4c57c83813253626916b8c7ada83476", size = 767542 },
++    { url = "https://files.pythonhosted.org/packages/d4/00/dd137d5bcc7efea1836d6264f049359861cf548469d18da90cd8216cf05f/PyYAML-6.0.2-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:0833f8694549e586547b576dcfaba4a6b55b9e96098b36cdc7ebefe667dfed48", size = 731164 },
++    { url = "https://files.pythonhosted.org/packages/c9/1f/4f998c900485e5c0ef43838363ba4a9723ac0ad73a9dc42068b12aaba4e4/PyYAML-6.0.2-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:8b9c7197f7cb2738065c481a0461e50ad02f18c78cd75775628afb4d7137fb3b", size = 756611 },
++    { url = "https://files.pythonhosted.org/packages/df/d1/f5a275fdb252768b7a11ec63585bc38d0e87c9e05668a139fea92b80634c/PyYAML-6.0.2-cp312-cp312-win32.whl", hash = "sha256:ef6107725bd54b262d6dedcc2af448a266975032bc85ef0172c5f059da6325b4", size = 140591 },
++    { url = "https://files.pythonhosted.org/packages/0c/e8/4f648c598b17c3d06e8753d7d13d57542b30d56e6c2dedf9c331ae56312e/PyYAML-6.0.2-cp312-cp312-win_amd64.whl", hash = "sha256:7e7401d0de89a9a855c839bc697c079a4af81cf878373abd7dc625847d25cbd8", size = 156338 },
++    { url = "https://files.pythonhosted.org/packages/ef/e3/3af305b830494fa85d95f6d95ef7fa73f2ee1cc8ef5b495c7c3269fb835f/PyYAML-6.0.2-cp313-cp313-macosx_10_13_x86_64.whl", hash = "sha256:efdca5630322a10774e8e98e1af481aad470dd62c3170801852d752aa7a783ba", size = 181309 },
++    { url = "https://files.pythonhosted.org/packages/45/9f/3b1c20a0b7a3200524eb0076cc027a970d320bd3a6592873c85c92a08731/PyYAML-6.0.2-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:50187695423ffe49e2deacb8cd10510bc361faac997de9efef88badc3bb9e2d1", size = 171679 },
++    { url = "https://files.pythonhosted.org/packages/7c/9a/337322f27005c33bcb656c655fa78325b730324c78620e8328ae28b64d0c/PyYAML-6.0.2-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:0ffe8360bab4910ef1b9e87fb812d8bc0a308b0d0eef8c8f44e0254ab3b07133", size = 733428 },
++    { url = "https://files.pythonhosted.org/packages/a3/69/864fbe19e6c18ea3cc196cbe5d392175b4cf3d5d0ac1403ec3f2d237ebb5/PyYAML-6.0.2-cp313-cp313-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:17e311b6c678207928d649faa7cb0d7b4c26a0ba73d41e99c4fff6b6c3276484", size = 763361 },
++    { url = "https://files.pythonhosted.org/packages/04/24/b7721e4845c2f162d26f50521b825fb061bc0a5afcf9a386840f23ea19fa/PyYAML-6.0.2-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:70b189594dbe54f75ab3a1acec5f1e3faa7e8cf2f1e08d9b561cb41b845f69d5", size = 759523 },
++    { url = "https://files.pythonhosted.org/packages/2b/b2/e3234f59ba06559c6ff63c4e10baea10e5e7df868092bf9ab40e5b9c56b6/PyYAML-6.0.2-cp313-cp313-musllinux_1_1_aarch64.whl", hash = "sha256:41e4e3953a79407c794916fa277a82531dd93aad34e29c2a514c2c0c5fe971cc", size = 726660 },
++    { url = "https://files.pythonhosted.org/packages/fe/0f/25911a9f080464c59fab9027482f822b86bf0608957a5fcc6eaac85aa515/PyYAML-6.0.2-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:68ccc6023a3400877818152ad9a1033e3db8625d899c72eacb5a668902e4d652", size = 751597 },
++    { url = "https://files.pythonhosted.org/packages/14/0d/e2c3b43bbce3cf6bd97c840b46088a3031085179e596d4929729d8d68270/PyYAML-6.0.2-cp313-cp313-win32.whl", hash = "sha256:bc2fa7c6b47d6bc618dd7fb02ef6fdedb1090ec036abab80d4681424b84c1183", size = 140527 },
++    { url = "https://files.pythonhosted.org/packages/fa/de/02b54f42487e3d3c6efb3f89428677074ca7bf43aae402517bc7cca949f3/PyYAML-6.0.2-cp313-cp313-win_amd64.whl", hash = "sha256:8388ee1976c416731879ac16da0aff3f63b286ffdd57cdeb95f3f2e085687563", size = 156446 },
+ ]
+diff --git a/mountpoint-s3-client/examples/client_benchmark.rs b/mountpoint-s3-client/examples/client_benchmark.rs
+index 033e4344..e6781d24 100644
+--- a/mountpoint-s3-client/examples/client_benchmark.rs
++++ b/mountpoint-s3-client/examples/client_benchmark.rs
+@@ -13,7 +13,6 @@ use mountpoint_s3_client::mock_client::{MockClient, MockObject};
+ use mountpoint_s3_client::types::{ClientBackpressureHandle, ETag, GetObjectParams, GetObjectResponse};
+ use mountpoint_s3_client::{ObjectClient, S3CrtClient};
+ use mountpoint_s3_crt::common::rust_log_adapter::RustLogAdapter;
+-use mountpoint_s3_fs::memory::PagedPool;
+ use serde_json::{json, to_writer};
+ use tracing_subscriber::EnvFilter;
+ use tracing_subscriber::fmt::Subscriber;
+@@ -117,11 +116,11 @@ fn run_benchmark(
+         let received_size = received_size.load(Ordering::SeqCst);
+         total_bytes += received_size;
+         println!(
+-            "{}: received {} bytes in {:.2}s: {:.2} Gb/s",
++            "{}: received {} bytes in {:.2}s: {:.2} Gib/s",
+             iteration,
+             received_size,
+             elapsed.as_secs_f64(),
+-            (received_size as f64) / elapsed.as_secs_f64() / (1000 * 1000 * 1000 / 8) as f64
++            (received_size as f64) / elapsed.as_secs_f64() / (1024 * 1024 * 1024 / 8) as f64
+         );
+ 
+         iter_results.push(json!({
+@@ -135,11 +134,11 @@ fn run_benchmark(
+ 
+     let total_elapsed = total_start.elapsed();
+     println!(
+-        "Total: received {} bytes in {:.2}s across {} iterations: {:.2} Gb/s",
++        "Total: received {} bytes in {:.2}s across {} iterations: {:.2} Gib/s",
+         total_bytes,
+         total_elapsed.as_secs_f64(),
+         iter_results.len(),
+-        (total_bytes as f64) / total_elapsed.as_secs_f64() / (1000 * 1000 * 1000 / 8) as f64
++        (total_bytes as f64) / total_elapsed.as_secs_f64() / (1024 * 1024 * 1024 / 8) as f64
+     );
+ 
+     if let Some(output_path) = output_path {
+@@ -199,10 +198,17 @@ struct CliArgs {
+     #[arg(
+         long,
+         help = "Desired throughput in Gbps",
+-        default_value_t = 100.0,
++        default_value_t = 10.0,
+         visible_alias = "maximum-throughput-gbps"
+     )]
+     throughput_target_gbps: f64,
++    #[arg(
++        long,
++        help = "CRT Memory limit in GB",
++        default_value = "0",
++        visible_alias = "memory-limit-gb"
++    )]
++    crt_memory_limit_gb: u64,
+     #[arg(long, help = "Part size in bytes for multi-part GET", default_value = "8388608")]
+     part_size: usize,
+     #[arg(long, help = "Number of benchmark iterations", default_value = "1")]
+@@ -227,29 +233,22 @@ struct CliArgs {
+ }
+ 
+ fn create_s3_client_config(region: &str, args: &CliArgs, nics: Vec<String>) -> S3ClientConfig {
+-    let pool = PagedPool::new_with_candidate_sizes([args.part_size]);
+-    let mut config = S3ClientConfig::new()
+-        .endpoint_config(EndpointConfig::new(region))
+-        .throughput_target_gbps(args.throughput_target_gbps)
+-        .network_interface_names(nics)
+-        .part_size(args.part_size)
+-        .memory_pool(pool.clone());
++    let mut config = S3ClientConfig::new().endpoint_config(EndpointConfig::new(region));
++
++    config = config.throughput_target_gbps(args.throughput_target_gbps);
++    config = config.memory_limit_in_bytes(args.crt_memory_limit_gb * 1024 * 1024 * 1024);
++    config = config.network_interface_names(nics);
++
++    config = config.part_size(args.part_size);
+ 
+     if args.enable_backpressure {
+-        config = config.read_backpressure(true).initial_read_window(
++        config = config.read_backpressure(true);
++        config = config.initial_read_window(
+             args.initial_window_size
+                 .expect("read window size is required when backpressure is enabled"),
+         );
+     }
+ 
+-    const ENV_VAR_KEY_CRT_ELG_THREADS: &str = "UNSTABLE_CRT_EVENTLOOP_THREADS";
+-    if let Some(crt_elg_threads) = std::env::var_os(ENV_VAR_KEY_CRT_ELG_THREADS) {
+-        let crt_elg_threads = crt_elg_threads.to_string_lossy().parse::<u16>().unwrap_or_else(|_| {
+-            panic!("Invalid value for environment variable {ENV_VAR_KEY_CRT_ELG_THREADS}. Must be positive integer.")
+-        });
+-        config = config.event_loop_threads(crt_elg_threads);
+-    }
+-
+     config
+ }
+ 
+diff --git a/mountpoint-s3-fs/Cargo.toml b/mountpoint-s3-fs/Cargo.toml
+index 3df0b47b..16a2337f 100644
+--- a/mountpoint-s3-fs/Cargo.toml
++++ b/mountpoint-s3-fs/Cargo.toml
+@@ -69,7 +69,7 @@ criterion = { version = "0.6.0", features = ["async", "async_futures"] }
+ ctor = "0.4.2"
+ filetime = "0.2.25"
+ futures = { version = "0.3.31", features = ["thread-pool"] }
+-httpmock = "0.7.0"
++wiremock = "0.6.2"
+ predicates = "3.1.3"
+ proptest = "1.7.0"
+ proptest-derive = "0.5.1"
+diff --git a/mountpoint-s3-fs/examples/prefetch_benchmark.rs b/mountpoint-s3-fs/examples/prefetch_benchmark.rs
+index 6da351e1..a8cff7f9 100644
+--- a/mountpoint-s3-fs/examples/prefetch_benchmark.rs
++++ b/mountpoint-s3-fs/examples/prefetch_benchmark.rs
+@@ -69,6 +69,9 @@ pub struct CliArgs {
+     )]
+     pub maximum_throughput_gbps: Option<u64>,
+ 
++    #[arg(long, help = "Override value for CRT memory limit in gibibytes", value_name = "GiB")]
++    pub crt_memory_limit_gib: Option<u64>,
++
+     #[clap(
+         long,
+         help = "Maximum memory usage target for Mountpoint's memory limiter [default: 95% of total system memory]",
+@@ -143,22 +146,15 @@ impl CliArgs {
+         if let Some(throughput_target_gbps) = self.maximum_throughput_gbps {
+             client_config = client_config.throughput_target_gbps(throughput_target_gbps as f64);
+         }
++        if let Some(limit_gib) = self.crt_memory_limit_gib {
++            client_config = client_config.memory_limit_in_bytes(limit_gib * 1024 * 1024 * 1024);
++        }
+         if let Some(part_size) = self.part_size {
+             client_config = client_config.part_size(part_size as usize);
+         }
+         if let Some(nics) = &self.bind {
+             client_config = client_config.network_interface_names(nics.to_vec());
+         }
+-        const ENV_VAR_KEY_CRT_ELG_THREADS: &str = "UNSTABLE_CRT_EVENTLOOP_THREADS";
+-        if let Some(crt_elg_threads) = std::env::var_os(ENV_VAR_KEY_CRT_ELG_THREADS) {
+-            let crt_elg_threads = crt_elg_threads.to_string_lossy().parse::<u16>().unwrap_or_else(|_| {
+-                panic!(
+-                    "Invalid value for environment variable {ENV_VAR_KEY_CRT_ELG_THREADS}. Must be positive integer."
+-                )
+-            });
+-            client_config = client_config.event_loop_threads(crt_elg_threads);
+-        }
+-
+         client_config
+     }
+ }
+diff --git a/mountpoint-s3-fs/examples/upload_benchmark.rs b/mountpoint-s3-fs/examples/upload_benchmark.rs
+index c122dfc7..deb953e3 100644
+--- a/mountpoint-s3-fs/examples/upload_benchmark.rs
++++ b/mountpoint-s3-fs/examples/upload_benchmark.rs
+@@ -57,6 +57,9 @@ struct UploadBenchmarkArgs {
+     #[clap(long, help = "Size of each write in bytes", default_value = "131072")]
+     pub write_size: usize,
+ 
++    #[arg(long, help = "Override value for CRT memory limit in gibibytes", value_name = "GiB")]
++    pub crt_memory_limit_gib: Option<u64>,
++
+     #[clap(
+         long,
+         help = "Maximum memory usage target for Mountpoint's memory limiter [default: 95% of total system memory]",
+@@ -98,12 +101,14 @@ fn main() {
+         endpoint_config = endpoint_config.endpoint(endpoint_uri);
+     }
+     let pool = PagedPool::new_with_candidate_sizes([args.write_part_size]);
+-    let config = S3ClientConfig::new()
++    let mut config = S3ClientConfig::new()
+         .endpoint_config(endpoint_config)
+         .throughput_target_gbps(args.throughput_target_gbps as f64)
+         .write_part_size(args.write_part_size)
+         .memory_pool(pool.clone());
+-
++    if let Some(crt_mem_limit_gib) = args.crt_memory_limit_gib {
++        config = config.memory_limit_in_bytes(crt_mem_limit_gib * 1024 * 1024 * 1024);
++    }
+     let client = Arc::new(S3CrtClient::new(config).expect("couldn't create client"));
+     let runtime = Runtime::new(client.event_loop_group());
+ 
+diff --git a/mountpoint-s3-fs/src/s3/config.rs b/mountpoint-s3-fs/src/s3/config.rs
+index d700f0ff..63828d6c 100644
+--- a/mountpoint-s3-fs/src/s3/config.rs
++++ b/mountpoint-s3-fs/src/s3/config.rs
+@@ -175,16 +175,6 @@ impl ClientConfig {
+         // jitter, and 20s max backoff time, 10 attempts will take an average of 55 seconds.
+         client_config = client_config.max_attempts(NonZeroUsize::new(10).unwrap());
+ 
+-        const ENV_VAR_KEY_CRT_ELG_THREADS: &str = "UNSTABLE_CRT_EVENTLOOP_THREADS";
+-        if let Some(crt_elg_threads) = std::env::var_os(ENV_VAR_KEY_CRT_ELG_THREADS) {
+-            let crt_elg_threads = crt_elg_threads.to_string_lossy().parse::<u16>().unwrap_or_else(|_| {
+-                panic!(
+-                    "Invalid value for environment variable {ENV_VAR_KEY_CRT_ELG_THREADS}. Must be positive integer."
+-                )
+-            });
+-            client_config = client_config.event_loop_threads(crt_elg_threads);
+-        }
+-
+         let mut endpoint_config = EndpointConfig::new(self.region.as_str())
+             .addressing_style(self.addressing_style)
+             .use_accelerate(self.transfer_acceleration)

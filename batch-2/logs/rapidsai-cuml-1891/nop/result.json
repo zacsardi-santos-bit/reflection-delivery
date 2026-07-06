@@ -1,0 +1,29 @@
+{
+    "id": "438bc6b7-b0b8-4142-ad2a-413cfa7f5f27",
+    "started_at": "2026-07-04T15:37:03.843885",
+    "finished_at": "2026-07-04T15:39:23.082361",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__rapidsai-cuml-1891": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "rapidsai-cuml-1891__63dmtFm"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

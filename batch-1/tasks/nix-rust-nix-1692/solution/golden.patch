@@ -1,0 +1,38 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 4c1f90eb..4e3e2974 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -61,6 +61,9 @@ This project adheres to [Semantic Versioning](https://semver.org/).
+   (#[1670](https://github.com/nix-rust/nix/pull/1670))
+ - Added `waitid`.
+   (#[1584](https://github.com/nix-rust/nix/pull/1584))
++- Added `Ipv6DontFrag` for android, iOS, linux and macOS.
++- Added `IpDontFrag` for iOS, macOS.
++  (#[1692](https://github.com/nix-rust/nix/pull/1692))
+ 
+ ### Changed
+ 
+diff --git a/src/sys/socket/sockopt.rs b/src/sys/socket/sockopt.rs
+index c600391c..e80b09e7 100644
+--- a/src/sys/socket/sockopt.rs
++++ b/src/sys/socket/sockopt.rs
+@@ -615,6 +615,19 @@ sockopt_impl!(
+ sockopt_impl!(
+     /// Set the unicast hop limit for the socket.
+     Ipv6Ttl, Both, libc::IPPROTO_IPV6, libc::IPV6_UNICAST_HOPS, libc::c_int);
++#[cfg(any(target_os = "ios", target_os = "macos"))]
++sockopt_impl!(
++    /// Set "don't fragment packet" flag on the IP packet.
++    IpDontFrag, Both, libc::IPPROTO_IP, libc::IP_DONTFRAG, bool);
++#[cfg(any(
++    target_os = "android",
++    target_os = "ios",
++    target_os = "linux",
++    target_os = "macos",
++))]
++sockopt_impl!(
++    /// Set "don't fragment packet" flag on the IPv6 packet.
++    Ipv6DontFrag, Both, libc::IPPROTO_IPV6, libc::IPV6_DONTFRAG, bool);
+ 
+ #[allow(missing_docs)]
+ // Not documented by Linux!

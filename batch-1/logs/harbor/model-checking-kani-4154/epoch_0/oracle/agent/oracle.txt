@@ -1,0 +1,1281 @@
+patching file .github/labeler.yml
+patching file .github/workflows/bench-compiler.yml
+patching file .github/workflows/bench-e2e.yml (renamed from .github/workflows/bench.yml)
+patching file .github/workflows/extra_jobs.yml
+patching file Cargo.lock
+patching file Cargo.toml
+patching file cprover_bindings/Cargo.toml
+patching file cprover_bindings/src/goto_program/typ.rs
+patching file cprover_bindings/src/irep/irep_id.rs
+patching file cprover_bindings/src/irep/to_irep.rs
+patching file docs/src/rust-feature-support/intrinsics.md
+patching file kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs
+patching file kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs
+patching file kani-compiler/src/intrinsics.rs
+patching file kani-compiler/src/kani_middle/coercion.rs
+patching file kani-compiler/src/kani_middle/points_to/points_to_analysis.rs
+patching file kani-compiler/src/kani_middle/provide.rs
+patching file kani-compiler/src/kani_middle/resolve.rs
+patching file kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs
+patching file kani-driver/Cargo.toml
+patching file kani-driver/src/call_cargo.rs
+patching file library/kani_macros/src/sysroot/contracts/helpers.rs
+patching file rust-toolchain.toml
+patching file tests/expected/arbitrary/ptrs/pointer_generator_error.expected
+patching file tests/expected/uninit/atomic/atomic.rs
+patching file tests/expected/union/static_union.expected
+patching file tests/expected/union/static_union.rs
+patching file tests/expected/union/static_union2.expected
+patching file tests/expected/union/static_union2.rs
+patching file tests/expected/union/union_transmute.expected
+patching file tests/expected/union/union_transmute.rs
+patching file tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs
+patching file tests/kani/Intrinsics/ConstEval/align_of.rs
+patching file tests/kani/Intrinsics/ConstEval/min_align_of.rs
+patching file tests/kani/Intrinsics/ConstEval/pref_align_of.rs
+File tests/perf/s2n-quic is not a regular file -- refusing to patch
+1 out of 1 hunk ignored -- saving rejects to file tests/perf/s2n-quic.rej
+patching file tools/benchcomp/benchcomp/visualizers/__init__.py
+patching file tools/build-kani/Cargo.toml
+patching file tools/compile-timer/Cargo.toml
+patching file tools/compile-timer/README.md
+patching file tools/compile-timer/src/common.rs
+patching file tools/compile-timer/src/compile-analyzer.rs
+patching file tools/compile-timer/src/compile-timer.rs
+patching file tools/scanner/Cargo.toml
+patching file .github/labeler.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/labeler.yml.rej
+The next patch would create the file .github/workflows/bench-compiler.yml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .github/workflows/bench-e2e.yml (renamed from .github/workflows/bench.yml)
+patching file .github/workflows/extra_jobs.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/extra_jobs.yml.rej
+patching file Cargo.lock
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+28 out of 28 hunks ignored -- saving rejects to file Cargo.lock.rej
+patching file Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Cargo.toml.rej
+patching file cprover_bindings/Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cprover_bindings/Cargo.toml.rej
+patching file cprover_bindings/src/goto_program/typ.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file cprover_bindings/src/goto_program/typ.rs.rej
+patching file cprover_bindings/src/irep/irep_id.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cprover_bindings/src/irep/irep_id.rs.rej
+patching file cprover_bindings/src/irep/to_irep.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cprover_bindings/src/irep/to_irep.rs.rej
+patching file docs/src/rust-feature-support/intrinsics.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/src/rust-feature-support/intrinsics.md.rej
+patching file kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs.rej
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs.rej
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs.rej
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs.rej
+patching file kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs.rej
+patching file kani-compiler/src/intrinsics.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file kani-compiler/src/intrinsics.rs.rej
+patching file kani-compiler/src/kani_middle/coercion.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/coercion.rs.rej
+patching file kani-compiler/src/kani_middle/points_to/points_to_analysis.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/points_to/points_to_analysis.rs.rej
+patching file kani-compiler/src/kani_middle/provide.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/provide.rs.rej
+patching file kani-compiler/src/kani_middle/resolve.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/resolve.rs.rej
+patching file kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs.rej
+patching file kani-driver/Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file kani-driver/Cargo.toml.rej
+patching file kani-driver/src/call_cargo.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file kani-driver/src/call_cargo.rs.rej
+patching file library/kani_macros/src/sysroot/contracts/helpers.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file library/kani_macros/src/sysroot/contracts/helpers.rs.rej
+patching file rust-toolchain.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file rust-toolchain.toml.rej
+patching file tests/expected/arbitrary/ptrs/pointer_generator_error.expected
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/expected/arbitrary/ptrs/pointer_generator_error.expected.rej
+patching file tests/expected/uninit/atomic/atomic.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/expected/uninit/atomic/atomic.rs.rej
+patching file tests/expected/union/static_union.expected
+patching file tests/expected/union/static_union.rs
+patching file tests/expected/union/static_union2.expected
+patching file tests/expected/union/static_union2.rs
+patching file tests/expected/union/union_transmute.expected
+patching file tests/expected/union/union_transmute.rs
+patching file tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs.rej
+patching file tests/kani/Intrinsics/ConstEval/align_of.rs
+The next patch would create the file tests/kani/Intrinsics/ConstEval/min_align_of.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tests/kani/Intrinsics/ConstEval/pref_align_of.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+File tests/perf/s2n-quic is not a regular file -- refusing to patch
+1 out of 1 hunk ignored -- saving rejects to file tests/perf/s2n-quic.rej
+patching file tools/benchcomp/benchcomp/visualizers/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/benchcomp/benchcomp/visualizers/__init__.py.rej
+patching file tools/build-kani/Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/build-kani/Cargo.toml.rej
+The next patch would create the file tools/compile-timer/Cargo.toml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tools/compile-timer/README.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tools/compile-timer/src/common.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tools/compile-timer/src/compile-analyzer.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tools/compile-timer/src/compile-timer.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file tools/scanner/Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/scanner/Cargo.toml.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/labeler.yml b/.github/labeler.yml
+|index 1195ee4a1..9ef0a5a3c 100644
+|--- a/.github/labeler.yml
+|+++ b/.github/labeler.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/.github/workflows/bench-compiler.yml
+Cannot rename file without two valid file names
+1 out of 1 hunk ignored
+can't find file to patch at input line 194
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/.github/workflows/extra_jobs.yml b/.github/workflows/extra_jobs.yml
+|index ddf242ba3..416fe9407 100644
+|--- a/.github/workflows/extra_jobs.yml
+|+++ b/.github/workflows/extra_jobs.yml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 219
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Cargo.lock b/Cargo.lock
+|index 39938c340..39d0be596 100644
+|--- a/Cargo.lock
+|+++ b/Cargo.lock
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+28 out of 28 hunks ignored
+can't find file to patch at input line 576
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/Cargo.toml b/Cargo.toml
+|index 62d572f35..5f5564e99 100644
+|--- a/Cargo.toml
+|+++ b/Cargo.toml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 588
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cprover_bindings/Cargo.toml b/cprover_bindings/Cargo.toml
+|index d060ba0ad..eda45088f 100644
+|--- a/cprover_bindings/Cargo.toml
+|+++ b/cprover_bindings/Cargo.toml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 601
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cprover_bindings/src/goto_program/typ.rs b/cprover_bindings/src/goto_program/typ.rs
+|index bf4479410..df1503b60 100644
+|--- a/cprover_bindings/src/goto_program/typ.rs
+|+++ b/cprover_bindings/src/goto_program/typ.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 693
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cprover_bindings/src/irep/irep_id.rs b/cprover_bindings/src/irep/irep_id.rs
+|index a6ba0f86e..4a975e3df 100644
+|--- a/cprover_bindings/src/irep/irep_id.rs
+|+++ b/cprover_bindings/src/irep/irep_id.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 706
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cprover_bindings/src/irep/to_irep.rs b/cprover_bindings/src/irep/to_irep.rs
+|index 7b5ea07f0..90c8189ba 100644
+|--- a/cprover_bindings/src/irep/to_irep.rs
+|+++ b/cprover_bindings/src/irep/to_irep.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 724
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/docs/src/rust-feature-support/intrinsics.md b/docs/src/rust-feature-support/intrinsics.md
+|index 208b43479..2fa8b5409 100644
+|--- a/docs/src/rust-feature-support/intrinsics.md
+|+++ b/docs/src/rust-feature-support/intrinsics.md
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 747
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs b/kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs
+|index 0ee1e00ba..fb1666526 100644
+|--- a/kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs
+|+++ b/kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 809
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs b/kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs
+|index 921d9bd8c..01ba2c8ca 100644
+|--- a/kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs
+|+++ b/kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 864
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs b/kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs
+|index 05995ca4b..243262a87 100644
+|--- a/kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs
+|+++ b/kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 877
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs b/kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs
+|index 5554458e7..56bc2b728 100644
+|--- a/kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs
+|+++ b/kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 965
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs b/kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs
+|index de082cb1c..2561c51b2 100644
+|--- a/kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs
+|+++ b/kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 1065
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/intrinsics.rs b/kani-compiler/src/intrinsics.rs
+|index 0ffc0cd8d..94b946261 100644
+|--- a/kani-compiler/src/intrinsics.rs
+|+++ b/kani-compiler/src/intrinsics.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 1272
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/kani_middle/coercion.rs b/kani-compiler/src/kani_middle/coercion.rs
+|index cc67cc886..5fe1e5094 100644
+|--- a/kani-compiler/src/kani_middle/coercion.rs
+|+++ b/kani-compiler/src/kani_middle/coercion.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1293
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/kani_middle/points_to/points_to_analysis.rs b/kani-compiler/src/kani_middle/points_to/points_to_analysis.rs
+|index 363831c1d..a3526d997 100644
+|--- a/kani-compiler/src/kani_middle/points_to/points_to_analysis.rs
+|+++ b/kani-compiler/src/kani_middle/points_to/points_to_analysis.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 1360
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/kani_middle/provide.rs b/kani-compiler/src/kani_middle/provide.rs
+|index 52c3a789e..91b830a23 100644
+|--- a/kani-compiler/src/kani_middle/provide.rs
+|+++ b/kani-compiler/src/kani_middle/provide.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1382
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/kani_middle/resolve.rs b/kani-compiler/src/kani_middle/resolve.rs
+|index 865a96d40..060f68ac8 100644
+|--- a/kani-compiler/src/kani_middle/resolve.rs
+|+++ b/kani-compiler/src/kani_middle/resolve.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1406
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs b/kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs
+|index 62161d28d..ea3c5db5c 100644
+|--- a/kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs
+|+++ b/kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 1463
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-driver/Cargo.toml b/kani-driver/Cargo.toml
+|index abbc30be8..6ecc2d767 100644
+|--- a/kani-driver/Cargo.toml
+|+++ b/kani-driver/Cargo.toml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1476
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/kani-driver/src/call_cargo.rs b/kani-driver/src/call_cargo.rs
+|index 9cba9c940..f669612c5 100644
+|--- a/kani-driver/src/call_cargo.rs
+|+++ b/kani-driver/src/call_cargo.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1494
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/library/kani_macros/src/sysroot/contracts/helpers.rs b/library/kani_macros/src/sysroot/contracts/helpers.rs
+|index e4182041e..c79a5520c 100644
+|--- a/library/kani_macros/src/sysroot/contracts/helpers.rs
+|+++ b/library/kani_macros/src/sysroot/contracts/helpers.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1507
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/rust-toolchain.toml b/rust-toolchain.toml
+|index a7a32f1f5..04b2342ca 100644
+|--- a/rust-toolchain.toml
+|+++ b/rust-toolchain.toml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1518
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/expected/arbitrary/ptrs/pointer_generator_error.expected b/tests/expected/arbitrary/ptrs/pointer_generator_error.expected
+|index 836af1381..06496f431 100644
+|--- a/tests/expected/arbitrary/ptrs/pointer_generator_error.expected
+|+++ b/tests/expected/arbitrary/ptrs/pointer_generator_error.expected
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1534
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/expected/uninit/atomic/atomic.rs b/tests/expected/uninit/atomic/atomic.rs
+|index a5bb0cbe9..6bc98252d 100644
+|--- a/tests/expected/uninit/atomic/atomic.rs
+|+++ b/tests/expected/uninit/atomic/atomic.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+The next patch would delete the file a/tests/expected/union/static_union.expected,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/tests/expected/union/static_union.rs,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/tests/expected/union/static_union2.expected,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/tests/expected/union/static_union2.rs,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/tests/expected/union/union_transmute.expected,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would delete the file a/tests/expected/union/union_transmute.rs,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 1681
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs b/tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs
+|index 83f76816f..ba4822488 100644
+|--- a/tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs
+|+++ b/tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1797
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs
+|index 5789d9d62..2f85653b0 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1830
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs
+|index 8eccf86bc..6be83c2ea 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1863
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs
+|index 57ccdb841..996741467 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2014
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs
+|index b30cd8aa0..6beb66dec 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2170
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs
+|index b27c2f029..44cddd82e 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2196
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs
+|index 14bdcaac7..9d5d850fe 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2229
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs
+|index 64238ace2..ea9caf597 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2262
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs
+|index 4cae3c569..c058dadfd 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+can't find file to patch at input line 2312
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs
+|index aca7f2594..9eba4396b 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2344
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs
+|index e388ada3a..1b5b7df8b 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2371
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs
+|index 8581c6b96..fd73c1c86 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2397
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs
+|index e57a3a12f..3f2050689 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2430
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs
+|index 197312518..ee05691da 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2463
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs
+|index 9a9d9f81f..69aea2493 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2496
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs
+|index e8a1524cb..e91027f61 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 2538
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs b/tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs
+|index 61a9e397e..e9953aa78 100644
+|--- a/tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs
+|+++ b/tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+The next patch would delete the file a/tests/kani/Intrinsics/ConstEval/align_of.rs,
+which does not exist!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/tests/kani/Intrinsics/ConstEval/min_align_of.rs
+patching file b/tests/kani/Intrinsics/ConstEval/pref_align_of.rs
+can't find file to patch at input line 2785
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tests/perf/s2n-quic b/tests/perf/s2n-quic
+|index b1b5bf8be..3129ad5ac 160000
+|--- a/tests/perf/s2n-quic
+|+++ b/tests/perf/s2n-quic
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2792
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/benchcomp/benchcomp/visualizers/__init__.py b/tools/benchcomp/benchcomp/visualizers/__init__.py
+|index 865386900..8963e444e 100644
+|--- a/tools/benchcomp/benchcomp/visualizers/__init__.py
+|+++ b/tools/benchcomp/benchcomp/visualizers/__init__.py
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 2814
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/build-kani/Cargo.toml b/tools/build-kani/Cargo.toml
+|index 76e63caa6..2c07f6ffd 100644
+|--- a/tools/build-kani/Cargo.toml
+|+++ b/tools/build-kani/Cargo.toml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file b/tools/compile-timer/Cargo.toml
+patching file b/tools/compile-timer/README.md
+patching file b/tools/compile-timer/src/common.rs
+patching file b/tools/compile-timer/src/compile-analyzer.rs
+patching file b/tools/compile-timer/src/compile-timer.rs
+can't find file to patch at input line 3382
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/tools/scanner/Cargo.toml b/tools/scanner/Cargo.toml
+|index 271a3ac4c..aa3448096 100644
+|--- a/tools/scanner/Cargo.toml
+|+++ b/tools/scanner/Cargo.toml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .github/labeler.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/labeler.yml.rej
+The next patch would create the file .github/workflows/bench-compiler.yml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file .github/workflows/bench-e2e.yml (renamed from .github/workflows/bench.yml)
+patching file .github/workflows/extra_jobs.yml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file .github/workflows/extra_jobs.yml.rej
+patching file Cargo.lock
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+28 out of 28 hunks ignored -- saving rejects to file Cargo.lock.rej
+patching file Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file Cargo.toml.rej
+patching file cprover_bindings/Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cprover_bindings/Cargo.toml.rej
+patching file cprover_bindings/src/goto_program/typ.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file cprover_bindings/src/goto_program/typ.rs.rej
+patching file cprover_bindings/src/irep/irep_id.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cprover_bindings/src/irep/irep_id.rs.rej
+patching file cprover_bindings/src/irep/to_irep.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file cprover_bindings/src/irep/to_irep.rs.rej
+patching file docs/src/rust-feature-support/intrinsics.md
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file docs/src/rust-feature-support/intrinsics.md.rej
+patching file kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file kani-compiler/src/codegen_aeneas_llbc/compiler_interface.rs.rej
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file kani-compiler/src/codegen_cprover_gotoc/codegen/intrinsic.rs.rej
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file kani-compiler/src/codegen_cprover_gotoc/codegen/rvalue.rs.rej
+patching file kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file kani-compiler/src/codegen_cprover_gotoc/codegen/typ.rs.rej
+patching file kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file kani-compiler/src/codegen_cprover_gotoc/compiler_interface.rs.rej
+patching file kani-compiler/src/intrinsics.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file kani-compiler/src/intrinsics.rs.rej
+patching file kani-compiler/src/kani_middle/coercion.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/coercion.rs.rej
+patching file kani-compiler/src/kani_middle/points_to/points_to_analysis.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/points_to/points_to_analysis.rs.rej
+patching file kani-compiler/src/kani_middle/provide.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/provide.rs.rej
+patching file kani-compiler/src/kani_middle/resolve.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/resolve.rs.rej
+patching file kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file kani-compiler/src/kani_middle/transform/check_uninit/ptr_uninit/uninit_visitor.rs.rej
+patching file kani-driver/Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file kani-driver/Cargo.toml.rej
+patching file kani-driver/src/call_cargo.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file kani-driver/src/call_cargo.rs.rej
+patching file library/kani_macros/src/sysroot/contracts/helpers.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file library/kani_macros/src/sysroot/contracts/helpers.rs.rej
+patching file rust-toolchain.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file rust-toolchain.toml.rej
+patching file tests/expected/arbitrary/ptrs/pointer_generator_error.expected
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/expected/arbitrary/ptrs/pointer_generator_error.expected.rej
+patching file tests/expected/uninit/atomic/atomic.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/expected/uninit/atomic/atomic.rs.rej
+patching file tests/expected/union/static_union.expected
+patching file tests/expected/union/static_union.rs
+patching file tests/expected/union/static_union2.expected
+patching file tests/expected/union/static_union2.rs
+patching file tests/expected/union/union_transmute.expected
+patching file tests/expected/union/union_transmute.rs
+patching file tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/AlignOfVal/align_of_basic.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicAdd/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicAnd/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchg/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicCxchgWeak/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicFence/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicMax/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicMin/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicNand/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicOr/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicSingleThreadFence/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicStore/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicSub/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmax/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicUmin/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicXchg/main.rs.rej
+patching file tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file tests/kani/Intrinsics/Atomic/Unstable/AtomicXor/main.rs.rej
+patching file tests/kani/Intrinsics/ConstEval/align_of.rs
+The next patch would create the file tests/kani/Intrinsics/ConstEval/min_align_of.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tests/kani/Intrinsics/ConstEval/pref_align_of.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+File tests/perf/s2n-quic is not a regular file -- refusing to patch
+1 out of 1 hunk ignored -- saving rejects to file tests/perf/s2n-quic.rej
+patching file tools/benchcomp/benchcomp/visualizers/__init__.py
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/benchcomp/benchcomp/visualizers/__init__.py.rej
+patching file tools/build-kani/Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/build-kani/Cargo.toml.rej
+The next patch would create the file tools/compile-timer/Cargo.toml,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tools/compile-timer/README.md,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tools/compile-timer/src/common.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tools/compile-timer/src/compile-analyzer.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file tools/compile-timer/src/compile-timer.rs,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file tools/scanner/Cargo.toml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file tools/scanner/Cargo.toml.rej
+ERROR: golden patch failed to apply by all strategies

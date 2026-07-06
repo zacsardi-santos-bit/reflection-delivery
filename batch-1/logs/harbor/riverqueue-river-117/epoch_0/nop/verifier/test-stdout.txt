@@ -1,0 +1,77 @@
+patching file client_test.go
+patching file internal/dbadapter/db_adapter_test.go
+patching file internal/dbadaptertest/test_adapter.go
+patching file internal/dblist/job_list_test.go
+patching file job_list_params_test.go
+Starting PostgreSQL 15 database server: main.
+Created database river_testdb.
+Loaded schema in river_testdb.
+Created database river_testdb_example.
+Loaded schema in river_testdb_example.
+Created database river_testdb_0.
+Loaded schema in river_testdb_0.
+Created database river_testdb_1.
+Loaded schema in river_testdb_1.
+Created database river_testdb_2.
+Loaded schema in river_testdb_2.
+Created database river_testdb_3.
+Loaded schema in river_testdb_3.
+Created database river_testdb_4.
+Loaded schema in river_testdb_4.
+Created database river_testdb_5.
+Loaded schema in river_testdb_5.
+Created database river_testdb_6.
+Loaded schema in river_testdb_6.
+Created database river_testdb_7.
+Loaded schema in river_testdb_7.
+Created database river_testdb_8.
+Loaded schema in river_testdb_8.
+Created database river_testdb_9.
+Loaded schema in river_testdb_9.
+Created database river_testdb_10.
+Loaded schema in river_testdb_10.
+Created database river_testdb_11.
+Loaded schema in river_testdb_11.
+Created database river_testdb_12.
+Loaded schema in river_testdb_12.
+Created database river_testdb_13.
+Loaded schema in river_testdb_13.
+Created database river_testdb_14.
+Loaded schema in river_testdb_14.
+Created database river_testdb_15.
+Loaded schema in river_testdb_15.
+Created database river_testdb_16.
+Loaded schema in river_testdb_16.
+Created database river_testdb_17.
+Loaded schema in river_testdb_17.
+# github.com/riverqueue/river/internal/dbadaptertest
+internal/dbadaptertest/test_adapter.go:43:72: undefined: dbadapter.JobListParams
+internal/dbadaptertest/test_adapter.go:44:83: undefined: dbadapter.JobListParams
+internal/dbadaptertest/test_adapter.go:130:70: undefined: dbadapter.JobListParams
+internal/dbadaptertest/test_adapter.go:137:31: ta.fallthroughAdapter.JobList undefined (type dbadapter.Adapter has no field or method JobList)
+internal/dbadaptertest/test_adapter.go:140:83: undefined: dbadapter.JobListParams
+internal/dbadaptertest/test_adapter.go:147:31: ta.fallthroughAdapter.JobListTx undefined (type dbadapter.Adapter has no field or method JobListTx)
+# github.com/riverqueue/river/internal/dblist [github.com/riverqueue/river/internal/dblist.test]
+internal/dblist/job_list_test.go:23:13: undefined: JobList
+internal/dblist/job_list_test.go:23:30: undefined: JobListParams
+internal/dblist/job_list_test.go:26:18: undefined: JobListOrderBy
+internal/dblist/job_list_test.go:26:53: undefined: SortOrderAsc
+internal/dblist/job_list_test.go:37:13: undefined: JobList
+internal/dblist/job_list_test.go:37:30: undefined: JobListParams
+internal/dblist/job_list_test.go:42:18: undefined: JobListOrderBy
+internal/dblist/job_list_test.go:42:53: undefined: SortOrderAsc
+# github.com/riverqueue/river/internal/dbadapter [github.com/riverqueue/river/internal/dbadapter.test]
+internal/dbadapter/db_adapter_test.go:784:87: undefined: JobListParams
+internal/dbadapter/db_adapter_test.go:787:24: adapter.JobList undefined (type *StandardAdapter has no field or method JobList)
+internal/dbadapter/db_adapter_test.go:795:23: adapter.JobListTx undefined (type *StandardAdapter has no field or method JobListTx)
+internal/dbadapter/db_adapter_test.go:804:13: undefined: JobListParams
+internal/dbadapter/db_adapter_test.go:806:18: undefined: JobListOrderBy
+internal/dbadapter/db_adapter_test.go:806:53: undefined: SortOrderDesc
+internal/dbadapter/db_adapter_test.go:828:13: undefined: JobListParams
+internal/dbadapter/db_adapter_test.go:832:18: undefined: JobListOrderBy
+internal/dbadapter/db_adapter_test.go:832:53: undefined: SortOrderDesc
+internal/dbadapter/db_adapter_test.go:850:13: undefined: JobListParams
+internal/dbadapter/db_adapter_test.go:850:13: too many errors
+FAIL	github.com/riverqueue/river/internal/dbadapter [build failed]
+FAIL	github.com/riverqueue/river/internal/dblist [build failed]
+reward=0 graded=42 found=42 failed=42 parsed=2 framework=go exit_code=1

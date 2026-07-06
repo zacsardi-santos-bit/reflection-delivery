@@ -1,0 +1,5 @@
+patching file test/e2e/prow.yaml
+patching file test/tests.yml
+{"Action":"run","Test":"TestProwYAMLConsistency"}
+{"Action":"pass","Test":"TestProwYAMLConsistency","Elapsed":0}
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

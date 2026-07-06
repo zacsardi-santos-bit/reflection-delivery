@@ -1,0 +1,6 @@
+patching file CHANGELOG.md
+patching file client.go
+patching file internal/maintenance/periodic_job_enqueuer.go
+patching file periodic.go
+patching file periodic_job.go
+patching file rivertype/river_type.go (renamed from rivertype/job_row.go)

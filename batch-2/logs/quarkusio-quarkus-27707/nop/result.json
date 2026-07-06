@@ -1,0 +1,29 @@
+{
+    "id": "29a43dce-ebdb-4aba-b6ef-3b4eac6ccbd1",
+    "started_at": "2026-07-04T15:37:31.753642",
+    "finished_at": "2026-07-04T15:42:01.306684",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__quarkusio-quarkus-27707": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "quarkusio-quarkus-27707__TNJCBvJ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

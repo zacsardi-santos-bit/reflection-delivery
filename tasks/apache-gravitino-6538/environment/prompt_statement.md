@@ -1,7 +1,0 @@
-I'm working on the Gravitino CLI tool and noticed that when I list columns for a table, the output doesn't show the default value for each column. The plain text (CSV) output and the formatted table output both show name, type, nullability, auto-increment, and comment — but there's no "Default" column anywhere. I'd like to add default value display to both output formats.
-
-The default value should be formatted appropriately depending on its type: numeric literals should appear as plain numbers, string literals should appear as their text (with empty strings shown distinctly using surrounding single quotes), and function-based defaults should appear using function call notation including any field arguments in square brackets. When no default is configured, the field should just be blank.
-
-I also want a shared utility class to centralize the formatting logic for things like display width (with proper support for wide characters like CJK text that take up two display columns), spacing, comment display (showing a placeholder when the comment is null), and the default value formatting. The auto-increment display logic should also live there — it should only show true/false for integer-compatible column types, and be blank for other types.
-
-The existing formatted table output for a full table's columns should also be updated to include this new "Default" column between the "Type" and "AutoIncrement" columns.

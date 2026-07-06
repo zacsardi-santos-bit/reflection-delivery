@@ -1,8 +1,0 @@
-patching file lite/api/benchmark.cc
-patching file lite/api/test_helper.h
-patching file lite/kernels/opencl/conv_image_compute.h
-patching file lite/kernels/opencl/image_helper.h
-patching file lite/kernels/opencl/io_copy_buffer_compute.cc
-patching file lite/utils/CMakeLists.txt
-patching file lite/utils/timer.cc
-patching file lite/utils/timer.h

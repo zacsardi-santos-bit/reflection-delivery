@@ -1,0 +1,16 @@
+patching file crates/ruma-events/tests/it/event_content.rs
+patching file crates/ruma-events/tests/it/ui/14-enum-content-double-kind.rs
+patching file crates/ruma-events/tests/it/ui/15-content-invalid-double-kind.rs
+patching file crates/ruma-events/tests/it/ui/15-content-invalid-double-kind.stderr
+   Compiling ruma-common v0.15.2 (/workspace/repo/crates/ruma-common)
+   Compiling ruma-events v0.30.3 (/workspace/repo/crates/ruma-events)
+   Compiling ruma-identifiers-validation v0.10.1 (/workspace/repo/crates/ruma-identifiers-validation)
+   Compiling ruma-macros v0.15.1 (/workspace/repo/crates/ruma-macros)
+    Finished `test` profile [unoptimized] target(s) in 17.45s
+────────────
+ Nextest run ID 57bd49c8-c9fb-470d-8d19-0131652b9003 with nextest profile: default
+    Starting 1 test across 2 binaries (270 tests skipped)
+        PASS [  29.423s] (1/1) ruma-events::it event_content::ui
+────────────
+     Summary [  29.424s] 1 test run: 1 passed, 270 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

@@ -1,0 +1,29 @@
+{
+    "id": "5812d389-efa9-493e-9a8d-53474d4e73f0",
+    "started_at": "2026-07-06T12:18:22.317367",
+    "finished_at": "2026-07-06T12:19:28.221616",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__oppia-oppia-24869": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "oppia-oppia-24869__LyzpEN7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

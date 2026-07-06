@@ -1,0 +1,246 @@
+patching file tests/pytests/unit/test_minion.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-6.2.5, py-1.11.0, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+tempdir: /tmp/salt-tests-tmpdir
+max open files; soft: 1048576; hard: 1048576
+rootdir: /workspace/repo, configfile: pytest.ini
+plugins: flaky-3.8.1, salt-factories-0.102.0, helpers-namespace-2021.12.29, tempdir-2019.10.12
+collecting ... collected 6 items
+
+tests/pytests/unit/test_minion.py::test_minion_load_grains_false PASSED  [ 16%]
+tests/pytests/unit/test_minion.py::test_minion_load_grains_true PASSED   [ 33%]
+tests/pytests/unit/test_minion.py::test_minion_load_grains_default PASSED [ 50%]
+tests/pytests/unit/test_minion.py::test_send_req_tries[req_channel0] FAILED [ 66%]
+tests/pytests/unit/test_minion.py::test_send_req_tries[req_channel1] FAILED [ 83%]
+tests/pytests/unit/test_minion.py::test_mine_send_tries FAILED           [100%]
+
+=================================== FAILURES ===================================
+______________________ test_send_req_tries[req_channel0] _______________________
+
+req_channel = ('salt.transport.client.AsyncReqChannel.factory', <function <lambda> at 0x2b9f32addaf0>)
+
+    @pytest.mark.parametrize(
+        "req_channel",
+        [
+            (
+                "salt.transport.client.AsyncReqChannel.factory",
+                lambda load, timeout, tries: salt.ext.tornado.gen.maybe_future(tries),
+            ),
+            (
+                "salt.transport.client.ReqChannel.factory",
+                lambda load, timeout, tries: tries,
+            ),
+        ],
+    )
+    def test_send_req_tries(req_channel):
+        channel_enter = MagicMock()
+        channel_enter.send.side_effect = req_channel[1]
+        channel = MagicMock()
+        channel.__enter__.return_value = channel_enter
+    
+        with patch(req_channel[0], return_value=channel):
+            opts = {
+                "random_startup_delay": 0,
+                "grains": {},
+                "return_retry_tries": 30,
+                "minion_sign_messages": False,
+            }
+            with patch("salt.loader.grains"):
+                minion = salt.minion.Minion(opts)
+    
+                load = {"load": "value"}
+                timeout = 60
+    
+                if "Async" in req_channel[0]:
+>                   rtn = minion._send_req_async(load, timeout).result()
+
+tests/pytests/unit/test_minion.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+salt/ext/tornado/concurrent.py:249: in result
+    raise_exc_info(self._exc_info)
+<string>:4: in raise_exc_info
+    ???
+salt/ext/tornado/gen.py:309: in wrapper
+    yielded = next(result)
+salt/minion.py:1600: in _send_req_async
+    ret = yield channel.send(load, timeout=timeout)
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1190: in __call__
+    return _mock_self._mock_call(*args, **kwargs)
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1194: in _mock_call
+    return _mock_self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_mock_self = <MagicMock name='mock.__enter__().send' id='47962748823344'>
+args = ({'load': 'value'},), kwargs = {'timeout': 60}
+self = <MagicMock name='mock.__enter__().send' id='47962748823344'>
+effect = <function <lambda> at 0x2b9f32addaf0>
+
+    def _execute_mock_call(_mock_self, *args, **kwargs):
+        self = _mock_self
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+                raise effect
+            elif not _callable(effect):
+                result = next(effect)
+                if _is_exception(result):
+                    raise result
+            else:
+>               result = effect(*args, **kwargs)
+E               TypeError: <lambda>() missing 1 required positional argument: 'tries'
+
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1257: TypeError
+______________________ test_send_req_tries[req_channel1] _______________________
+
+req_channel = ('salt.transport.client.ReqChannel.factory', <function <lambda> at 0x2b9f32addf70>)
+
+    @pytest.mark.parametrize(
+        "req_channel",
+        [
+            (
+                "salt.transport.client.AsyncReqChannel.factory",
+                lambda load, timeout, tries: salt.ext.tornado.gen.maybe_future(tries),
+            ),
+            (
+                "salt.transport.client.ReqChannel.factory",
+                lambda load, timeout, tries: tries,
+            ),
+        ],
+    )
+    def test_send_req_tries(req_channel):
+        channel_enter = MagicMock()
+        channel_enter.send.side_effect = req_channel[1]
+        channel = MagicMock()
+        channel.__enter__.return_value = channel_enter
+    
+        with patch(req_channel[0], return_value=channel):
+            opts = {
+                "random_startup_delay": 0,
+                "grains": {},
+                "return_retry_tries": 30,
+                "minion_sign_messages": False,
+            }
+            with patch("salt.loader.grains"):
+                minion = salt.minion.Minion(opts)
+    
+                load = {"load": "value"}
+                timeout = 60
+    
+                if "Async" in req_channel[0]:
+                    rtn = minion._send_req_async(load, timeout).result()
+                else:
+>                   rtn = minion._send_req_sync(load, timeout)
+
+tests/pytests/unit/test_minion.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+salt/minion.py:1586: in _send_req_sync
+    return channel.send(load, timeout=timeout)
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1190: in __call__
+    return _mock_self._mock_call(*args, **kwargs)
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1194: in _mock_call
+    return _mock_self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_mock_self = <MagicMock name='mock.__enter__().send' id='47962746853936'>
+args = ({'load': 'value'},), kwargs = {'timeout': 60}
+self = <MagicMock name='mock.__enter__().send' id='47962746853936'>
+effect = <function <lambda> at 0x2b9f32addf70>
+
+    def _execute_mock_call(_mock_self, *args, **kwargs):
+        self = _mock_self
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+                raise effect
+            elif not _callable(effect):
+                result = next(effect)
+                if _is_exception(result):
+                    raise result
+            else:
+>               result = effect(*args, **kwargs)
+E               TypeError: <lambda>() missing 1 required positional argument: 'tries'
+
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1257: TypeError
+_____________________________ test_mine_send_tries _____________________________
+
+req_channel_factory = <MagicMock name='factory' id='47962745335184'>
+
+    @patch("salt.transport.client.ReqChannel.factory")
+    def test_mine_send_tries(req_channel_factory):
+        channel_enter = MagicMock()
+        channel_enter.send.side_effect = lambda load, timeout, tries: tries
+        channel = MagicMock()
+        channel.__enter__.return_value = channel_enter
+        req_channel_factory.return_value = channel
+    
+        opts = {
+            "random_startup_delay": 0,
+            "grains": {},
+            "return_retry_tries": 20,
+            "minion_sign_messages": False,
+        }
+        with patch("salt.loader.grains"):
+            minion = salt.minion.Minion(opts)
+            minion.tok = "token"
+    
+            data = {}
+            tag = "tag"
+    
+>           rtn = minion._mine_send(tag, data)
+
+tests/pytests/unit/test_minion.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+salt/minion.py:2581: in _mine_send
+    ret = channel.send(data)
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1190: in __call__
+    return _mock_self._mock_call(*args, **kwargs)
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1194: in _mock_call
+    return _mock_self._execute_mock_call(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_mock_self = <MagicMock name='factory().__enter__().send' id='47962765509920'>
+args = ({'tok': 'token'},), kwargs = {}
+self = <MagicMock name='factory().__enter__().send' id='47962765509920'>
+effect = <function test_mine_send_tries.<locals>.<lambda> at 0x2b9f33c491f0>
+
+    def _execute_mock_call(_mock_self, *args, **kwargs):
+        self = _mock_self
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+                raise effect
+            elif not _callable(effect):
+                result = next(effect)
+                if _is_exception(result):
+                    raise result
+            else:
+>               result = effect(*args, **kwargs)
+E               TypeError: <lambda>() missing 2 required positional arguments: 'timeout' and 'tries'
+
+/usr/local/lib/python3.9/site-packages/mock/mock.py:1257: TypeError
+=============================== warnings summary ===============================
+salt/ext/tornado/web.py:1805
+  /workspace/repo/salt/ext/tornado/web.py:1805: DeprecationWarning: invalid escape sequence \.
+    """A collection of request handlers that make up a web application.
+
+salt/utils/jinja.py:42
+  /workspace/repo/salt/utils/jinja.py:42: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    JINJA_VERSION = LooseVersion(jinja2.__version__)
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ============================
+FAILED tests/pytests/unit/test_minion.py::test_send_req_tries[req_channel0]
+FAILED tests/pytests/unit/test_minion.py::test_send_req_tries[req_channel1]
+FAILED tests/pytests/unit/test_minion.py::test_mine_send_tries - TypeError: <...
+=================== 3 failed, 3 passed, 2 warnings in 1.00s ====================
+reward=0 graded=6 found=0 failed=0 parsed=4 framework=pytest exit_code=1

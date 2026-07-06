@@ -1,5 +1,0 @@
-We're seeing clusters where pipeline version numbers in the database have gotten out of sync — multiple pipeline records end up with the same version number. This causes failures when trying to list pipelines or jobs, and also blocks running new pipeline versions. We need a database migration step to detect and fix these duplicates by renumbering pipeline versions sequentially and updating the associated job records to match. After the fix, a uniqueness constraint should be applied to ensure this can't silently recur.
-
-To support testing the migration in isolation, the migration chain should be split so there's a way to run all the steps up to (but not including) the deduplication, and then apply the deduplication separately. This makes it possible to set up a test environment at the pre-deduplication state, artificially introduce duplicate versions, and verify that the deduplication step correctly resolves them.
-
-Additionally, an earlier migration state that is currently only accessible within its own package needs to be exported so that other packages can reference it directly as a starting point.

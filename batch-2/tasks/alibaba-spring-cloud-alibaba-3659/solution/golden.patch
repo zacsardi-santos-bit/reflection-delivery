@@ -1,0 +1,1943 @@
+diff --git a/spring-cloud-alibaba-dependencies/pom.xml b/spring-cloud-alibaba-dependencies/pom.xml
+index 95e2faadb..f87db83af 100644
+--- a/spring-cloud-alibaba-dependencies/pom.xml
++++ b/spring-cloud-alibaba-dependencies/pom.xml
+@@ -25,6 +25,11 @@
+         <spring.context.support.version>1.0.11</spring.context.support.version>
+         <!-- Apache RocketMQ -->
+         <rocketmq.version>5.1.4</rocketmq.version>
++
++        <!-- Spring AI -->
++        <spring.ai.version>0.8.0</spring.ai.version>
++        <dashscope-sdk-java.version>2.10.1</dashscope-sdk-java.version>
++
+         <!-- Maven Plugin Versions -->
+         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+@@ -42,6 +47,19 @@
+                 <version>${nacos.client.version}</version>
+             </dependency>
+ 
++            <!-- Spring AI & dashscope SDK-->
++            <dependency>
++                <groupId>com.alibaba</groupId>
++                <artifactId>dashscope-sdk-java</artifactId>
++                <version>${dashscope-sdk-java.version}</version>
++            </dependency>
++
++            <dependency>
++                <groupId>org.springframework.ai</groupId>
++                <artifactId>spring-ai-core</artifactId>
++                <version>${spring.ai.version}</version>
++            </dependency>
++
+             <!-- Sentinel -->
+             <dependency>
+                 <groupId>com.alibaba.csp</groupId>
+@@ -198,6 +216,12 @@
+                 <version>${revision}</version>
+             </dependency>
+ 
++            <dependency>
++                <groupId>com.alibaba.cloud</groupId>
++                <artifactId>spring-cloud-starter-alibaba-ai</artifactId>
++                <version>${revision}</version>
++            </dependency>
++
+             <dependency>
+                 <groupId>com.alibaba.cloud</groupId>
+                 <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+diff --git a/spring-cloud-alibaba-examples/pom.xml b/spring-cloud-alibaba-examples/pom.xml
+index 0a5a568b4..37b7e9c1f 100644
+--- a/spring-cloud-alibaba-examples/pom.xml
++++ b/spring-cloud-alibaba-examples/pom.xml
+@@ -52,6 +52,7 @@
+         <module>integrated-example/integrated-praise-consumer</module>
+         <module>integrated-example/integrated-common</module>
+ 		<module>integrated-example/integrated-frontend</module>
++		<module>spring-cloud-ai-example</module>
+ 	</modules>
+ 
+ 
+diff --git a/spring-cloud-alibaba-examples/spring-cloud-ai-example/README-en.md b/spring-cloud-alibaba-examples/spring-cloud-ai-example/README-en.md
+new file mode 100644
+index 000000000..f624a44bc
+--- /dev/null
++++ b/spring-cloud-alibaba-examples/spring-cloud-ai-example/README-en.md
+@@ -0,0 +1,106 @@
++# Spring Cloud Alibaba AI Example
++
++## Project description
++
++The Spring Cloud Alibaba AI module is based on [Spring AI 0.8.0](https://docs.spring.io/spring-ai/reference/0.8-SNAPSHOT/index.html) the project API to complete the access of the general series of large models. This project demonstrates how to use `spring-cloud-starter-alibaba-ai` the Spring Cloud microservice application to integrate with the generic family model.
++
++[model service dashscope](https://help.aliyun.com/zh/dashscope/) It is a big model application service launched by Alibaba. Based on the concept of "Model-as-a-Service" (MaaS), Lingji Model Service provides a variety of model services including model reasoning and model fine-tuning training through standardized APIs around AI models in various fields.
++
++- Current completion of spring-ai
++
++## Application access
++
++### Access `spring-cloud-starter-alibaba-ai`
++
++1. Add the following dependencies to the project POM. XML:
++
++
++   ```xml
++   <dependency>
++       <groupId>com.alibaba.cloud</groupId>
++       <artifactId>spring-cloud-starter-alibaba-ai</artifactId>
++   </dependency>
++   ```
++
++2. Add the following configuration to the application. Yml configuration file:
++
++
++   ```yaml
++   spring:
++     cloud:
++       ai:
++         tongyi:
++           chat:
++             options:
++               # api_key is invalied.
++               api-key: sk-a3d73b1709bf4a178c28ed7c8b3b5a45
++               system-user: "You are a helpful assistant."
++   ```
++
++3. Add the following code:
++
++
++   ```java
++   controller:
++   
++   @GetMapping("/example")
++   public Map<String, String> completion(
++       @RequestParam(value = "message", defaultValue = "Tell me a joke")
++       String message
++   ) {
++   
++       return tongyiService.completion(message);
++   }
++   
++   service:
++   
++   @Resource
++   private MessageManager msgManager;
++   
++   private final ChatClient chatClient;
++   
++   @Autowired
++   public TongYiServiceImpl(ChatClient chatClient) {
++   
++       this.chatClient = chatClient;
++   }
++   
++   @Override
++   public Map<String, String> completion(String message) {
++   
++       Message userMsg = Message.builder()
++           .role(Role.USER.getValue())
++           .content(message)
++           .build();
++       msgManager.add(userMsg);
++   
++       return Map.of(message, chatClient.call(message));
++   }
++   ```
++
++4. Start the application
++
++   This Example project supports the following two startup methods:
++
++   1. IDE direct startup: find the main class `TongYiApplication` and execute the main method to start the application.
++   2. Start after packaging and compiling: First `mvn clean package`, compile and package the project, and then enter the `target` folder to `java -jar spring-cloud-ai-example.jar` start the application.
++
++## Validate
++
++Browser address bar input: `http://localhost:8080/ai/example`
++
++The following response is returned:
++
++
++```json
++{
++    "Tell me a joke": "Sure, here's a classic one for you:\n\nWhy was the math book sad?\n\nBecause it had too many problems.\n\nI hope that made you smile! If you're looking for more, just let me know."
++}
++```
++
++## Configuration item description
++
++https://help.aliyun.com/zh/dashscope/developer-reference/api-details
++
++
++
+diff --git a/spring-cloud-alibaba-examples/spring-cloud-ai-example/README.md b/spring-cloud-alibaba-examples/spring-cloud-ai-example/README.md
+new file mode 100644
+index 000000000..fb0f7cdba
+--- /dev/null
++++ b/spring-cloud-alibaba-examples/spring-cloud-ai-example/README.md
+@@ -0,0 +1,104 @@
++# Spring Cloud Alibaba AI Example
++
++## 项目说明
++
++Spring Cloud Alibaba AI 模块基于 [Spring AI 0.8.0](https://docs.spring.io/spring-ai/reference/0.8-SNAPSHOT/index.html) 项目 API 完成通义系列大模型的接入。本项目演示如何使用 `spring-cloud-starter-alibaba-ai` 完成 Spring Cloud 微服务应用与通义系列模型的整合。
++
++[模型服务灵积](https://help.aliyun.com/zh/dashscope/) 是阿里巴巴推出的一个大模型应用服务。灵积模型服务建立在“模型即服务”（Model-as-a-Service，MaaS）的理念基础之上，围绕AI各领域模型，通过标准化的API提供包括模型推理、模型微调训练在内的多种模型服务。
++
++- 目前之完成 spring-ai
++
++## 应用接入
++
++### 接入 `spring-cloud-starter-alibaba-ai`
++
++1. 在项目 pom.xml 中加入以下依赖：
++
++   ```xml
++   <dependency>
++       <groupId>com.alibaba.cloud</groupId>
++       <artifactId>spring-cloud-starter-alibaba-ai</artifactId>
++   </dependency>
++   ```
++
++2. 在 application.yml 配置文件中加入以下配置：
++
++   ```yaml
++   spring:
++     cloud:
++       ai:
++         tongyi:
++           chat:
++             options:
++               # api_key is invalied.
++               api-key: sk-a3d73b1709bf4a178c28ed7c8b3b5a45
++               system-user: "You are a helpful assistant."
++   ```
++
++3. 添加如下代码：
++
++   ```java
++   controller:
++   
++   @GetMapping("/example")
++   public Map<String, String> completion(
++       @RequestParam(value = "message", defaultValue = "Tell me a joke")
++       String message
++   ) {
++   
++       return tongyiService.completion(message);
++   }
++   
++   service:
++   
++   @Resource
++   private MessageManager msgManager;
++   
++   private final ChatClient chatClient;
++   
++   @Autowired
++   public TongYiServiceImpl(ChatClient chatClient) {
++   
++       this.chatClient = chatClient;
++   }
++   
++   @Override
++   public Map<String, String> completion(String message) {
++   
++       Message userMsg = Message.builder()
++           .role(Role.USER.getValue())
++           .content(message)
++           .build();
++       msgManager.add(userMsg);
++   
++       return Map.of(message, chatClient.call(message));
++   }
++   ```
++
++4. 启动应用
++
++   本 Example 项目支持如下两种启动方式：
++
++   1. IDE 直接启动：找到主类 `TongYiApplication`，执行 main 方法启动应用。
++   2. 打包编译后启动：首先执行 `mvn clean package` 将工程编译打包，进入 `target` 文件夹执行 `java -jar spring-cloud-ai-example.jar` 启动应用。
++
++## 验证
++
++浏览器地址栏输入：`http://localhost:8080/ai/example`
++
++返回如下响应：
++
++```json
++{
++    "Tell me a joke": "Sure, here's a classic one for you:\n\nWhy was the math book sad?\n\nBecause it had too many problems.\n\nI hope that made you smile! If you're looking for more, just let me know."
++}
++```
++
++## 配置项说明
++
++https://help.aliyun.com/zh/dashscope/developer-reference/api-details
++
++## 
++
++
++
+diff --git a/spring-cloud-alibaba-examples/spring-cloud-ai-example/pom.xml b/spring-cloud-alibaba-examples/spring-cloud-ai-example/pom.xml
+new file mode 100644
+index 000000000..5a1ef4648
+--- /dev/null
++++ b/spring-cloud-alibaba-examples/spring-cloud-ai-example/pom.xml
+@@ -0,0 +1,62 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<!--
++   Copyright 2023-2024 the original author or authors.
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++        https://www.apache.org/licenses/LICENSE-2.0
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
++-->
++
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++
++	<parent>
++		<artifactId>spring-cloud-alibaba-examples</artifactId>
++		<groupId>com.alibaba.cloud</groupId>
++		<version>${revision}</version>
++		<relativePath>../pom.xml</relativePath>
++	</parent>
++	<modelVersion>4.0.0</modelVersion>
++
++	<artifactId>spring-cloud-ai-example</artifactId>
++	<name>Spring Cloud Starter Alibaba AI Example</name>
++	<description>Example demonstrating how to use Spring Cloud Alibaba AI</description>
++	<packaging>jar</packaging>
++
++	<dependencies>
++
++		<dependency>
++			<groupId>com.alibaba.cloud</groupId>
++			<artifactId>spring-cloud-starter-alibaba-ai</artifactId>
++		</dependency>
++
++	</dependencies>
++
++	<build>
++		<plugins>
++			<plugin>
++				<groupId>org.springframework.boot</groupId>
++				<artifactId>spring-boot-maven-plugin</artifactId>
++			</plugin>
++			<plugin>
++				<groupId>org.apache.maven.plugins</groupId>
++				<artifactId>maven-deploy-plugin</artifactId>
++				<version>${maven-deploy-plugin.version}</version>
++				<configuration>
++					<skip>true</skip>
++				</configuration>
++			</plugin>
++		</plugins>
++	</build>
++
++</project>
+\ No newline at end of file
+diff --git a/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/TongYiApplication.java b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/TongYiApplication.java
+new file mode 100644
+index 000000000..e0e1d2d22
+--- /dev/null
++++ b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/TongYiApplication.java
+@@ -0,0 +1,35 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.example.tongyi;
++
++import org.springframework.boot.SpringApplication;
++import org.springframework.boot.autoconfigure.SpringBootApplication;
++
++/**
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++@SpringBootApplication
++public class TongYiApplication {
++
++	public static void main(String[] args) {
++
++		SpringApplication.run(TongYiApplication.class);
++	}
++
++}
+diff --git a/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/controller/TongYiController.java b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/controller/TongYiController.java
+new file mode 100644
+index 000000000..3a140f7b8
+--- /dev/null
++++ b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/controller/TongYiController.java
+@@ -0,0 +1,59 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.example.tongyi.controller;
++
++import java.util.Map;
++
++import com.alibaba.cloud.ai.example.tongyi.service.TongYiService;
++
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RequestParam;
++import org.springframework.web.bind.annotation.RestController;
++
++/**
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++@RestController
++@RequestMapping("/ai")
++public class TongYiController {
++
++	@Autowired
++	private TongYiService tongyiService;
++
++	@GetMapping("/example")
++	public Map<String, String> completion(
++			@RequestParam(value = "message", defaultValue = "Tell me a joke")
++			String message
++	) {
++
++		return tongyiService.completion(message);
++	}
++
++	@GetMapping("/stream")
++	public Map<String, String> streamCompletion(
++			@RequestParam(value = "message", defaultValue = "请告诉我西红柿炖牛腩怎么做？")
++			String message
++	) {
++
++		return tongyiService.streamCompletion(message);
++	}
++
++}
+diff --git a/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/service/TongYiService.java b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/service/TongYiService.java
+new file mode 100644
+index 000000000..74431db9f
+--- /dev/null
++++ b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/service/TongYiService.java
+@@ -0,0 +1,32 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.example.tongyi.service;
++
++import java.util.Map;
++
++/**
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++public interface TongYiService {
++
++	Map<String, String> completion(String message);
++
++	Map<String, String> streamCompletion(String message);
++
++}
+diff --git a/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/service/impl/TongYiServiceImpl.java b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/service/impl/TongYiServiceImpl.java
+new file mode 100644
+index 000000000..f517ce1d5
+--- /dev/null
++++ b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/java/com/alibaba/cloud/ai/example/tongyi/service/impl/TongYiServiceImpl.java
+@@ -0,0 +1,88 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.example.tongyi.service.impl;
++
++import java.util.Map;
++
++import com.alibaba.cloud.ai.example.tongyi.service.TongYiService;
++import com.alibaba.dashscope.common.Message;
++import com.alibaba.dashscope.common.MessageManager;
++import com.alibaba.dashscope.common.Role;
++import jakarta.annotation.Resource;
++import lombok.extern.slf4j.Slf4j;
++import reactor.core.publisher.Flux;
++
++import org.springframework.ai.chat.ChatClient;
++import org.springframework.ai.chat.StreamingChatClient;
++import org.springframework.ai.chat.prompt.Prompt;
++import org.springframework.beans.factory.annotation.Autowired;
++import org.springframework.stereotype.Service;
++
++/**
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++@Slf4j
++@Service
++public class TongYiServiceImpl implements TongYiService {
++
++	@Resource
++	private MessageManager msgManager;
++
++	private final ChatClient chatClient;
++
++	private final StreamingChatClient streamingChatClient;
++
++	@Autowired
++	public TongYiServiceImpl(ChatClient chatClient, StreamingChatClient streamingChatClient) {
++
++		this.chatClient = chatClient;
++		this.streamingChatClient = streamingChatClient;
++	}
++
++	@Override
++	public Map<String, String> completion(String message) {
++
++		Message userMsg = Message.builder()
++				.role(Role.USER.getValue())
++				.content(message)
++				.build();
++		msgManager.add(userMsg);
++
++		return Map.of(message, chatClient.call(message));
++	}
++
++	@Override
++	public Map<String, String> streamCompletion(String message) {
++
++		StringBuilder fullContent = new StringBuilder();
++
++		streamingChatClient.stream(new Prompt(message))
++				.flatMap(chatResponse -> Flux.fromIterable(chatResponse.getResults()))
++				.map(content -> content.getOutput().getContent())
++				.doOnNext(fullContent::append)
++				.last()
++				.map(lastContent -> Map.of(message, fullContent.toString()))
++				.block();
++
++		log.info(fullContent.toString());
++
++		return Map.of(message, fullContent.toString());
++	}
++
++}
+diff --git a/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/resources/application.yml b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/resources/application.yml
+new file mode 100644
+index 000000000..8d2dd70fe
+--- /dev/null
++++ b/spring-cloud-alibaba-examples/spring-cloud-ai-example/src/main/resources/application.yml
+@@ -0,0 +1,29 @@
++#
++#  Copyright 2023-2024 the original author or authors.
++#
++#  Licensed under the Apache License, Version 2.0 (the "License");
++#  you may not use this file except in compliance with the License.
++#  You may obtain a copy of the License at
++#
++#       https://www.apache.org/licenses/LICENSE-2.0
++#
++#  Unless required by applicable law or agreed to in writing, software
++#  distributed under the License is distributed on an "AS IS" BASIS,
++#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++#  See the License for the specific language governing permissions and
++#  limitations under the License.
++#
++
++server:
++  port: 8080
++
++spring:
++  application:
++    name: tongyi-example
++  cloud:
++    ai:
++      tongyi:
++        chat:
++          options:
++            api-key: sk-a3d73b1709bf4a178c28ed7c8b3b5a45
++            system-user: "You are a helpful assistant."
+diff --git a/spring-cloud-alibaba-starters/pom.xml b/spring-cloud-alibaba-starters/pom.xml
+index 0476ad963..a90123bdd 100644
+--- a/spring-cloud-alibaba-starters/pom.xml
++++ b/spring-cloud-alibaba-starters/pom.xml
+@@ -26,7 +26,8 @@
+         <module>spring-cloud-alibaba-sentinel-datasource</module>
+         <module>spring-cloud-alibaba-sentinel-gateway</module>
+         <module>spring-cloud-alibaba-commons</module>
+-    </modules>
++		<module>spring-cloud-starter-alibaba-ai</module>
++	</modules>
+ 
+     <build>
+         <plugins>
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/README.md b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/README.md
+new file mode 100644
+index 000000000..e4446c97c
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/README.md
+@@ -0,0 +1,3 @@
++[Spring AI](https://docs.spring.io/spring-ai/reference/0.8-SNAPSHOT/index.html)
++[通义大模型](https://help.aliyun.com/zh/dashscope/developer-reference/model-introduction)
++[Spring AI chat completion api](https://docs.spring.io/spring-ai/reference/0.8-SNAPSHOT/api/chatclient.html)
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/pom.xml b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/pom.xml
+new file mode 100644
+index 000000000..72e507a0d
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/pom.xml
+@@ -0,0 +1,84 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<!--
++   Copyright 2023-2024 the original author or authors.
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++        https://www.apache.org/licenses/LICENSE-2.0
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
++-->
++
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++	<modelVersion>4.0.0</modelVersion>
++
++	<parent>
++		<groupId>com.alibaba.cloud</groupId>
++		<artifactId>spring-cloud-alibaba-starters</artifactId>
++		<version>${revision}</version>
++		<relativePath>../pom.xml</relativePath>
++	</parent>
++
++	<artifactId>spring-cloud-starter-alibaba-ai</artifactId>
++	<name>Spring Cloud Starter Alibaba AI</name>
++
++	<dependencies>
++
++		<dependency>
++			<groupId>org.springframework.ai</groupId>
++			<artifactId>spring-ai-core</artifactId>
++		</dependency>
++
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-actuator</artifactId>
++			<optional>true</optional>
++		</dependency>
++
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-web</artifactId>
++		</dependency>
++
++		<dependency>
++			<groupId>com.alibaba</groupId>
++			<artifactId>dashscope-sdk-java</artifactId>
++		</dependency>
++
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-actuator-autoconfigure</artifactId>
++			<optional>true</optional>
++		</dependency>
++
++	</dependencies>
++
++	<repositories>
++		<repository>
++			<id>spring-milestones</id>
++			<name>Spring Milestones</name>
++			<url>https://repo.spring.io/milestone</url>
++			<snapshots>
++				<enabled>false</enabled>
++			</snapshots>
++		</repository>
++		<repository>
++			<id>spring-snapshots</id>
++			<name>Spring Snapshots</name>
++			<url>https://repo.spring.io/snapshot</url>
++			<releases>
++				<enabled>false</enabled>
++			</releases>
++		</repository>
++	</repositories>
++
++</project>
+\ No newline at end of file
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiAutoConfiguration.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiAutoConfiguration.java
+new file mode 100644
+index 000000000..36a8668a7
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiAutoConfiguration.java
+@@ -0,0 +1,76 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi;
++
++import com.alibaba.cloud.ai.tongyi.client.TongYiChatClient;
++import com.alibaba.cloud.ai.tongyi.constant.TongYiConstants;
++import com.alibaba.dashscope.aigc.generation.Generation;
++import com.alibaba.dashscope.common.Message;
++import com.alibaba.dashscope.common.MessageManager;
++
++import org.springframework.boot.autoconfigure.AutoConfiguration;
++import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
++import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
++import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
++import org.springframework.boot.context.properties.EnableConfigurationProperties;
++import org.springframework.context.annotation.Bean;
++
++/**
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++@AutoConfiguration
++@ConditionalOnClass({TongYiChatClient.class, MessageManager.class})
++@EnableConfigurationProperties(TongYiChatProperties.class)
++public class TongYiAutoConfiguration {
++
++	@Bean
++	@ConditionalOnMissingBean
++	public Generation generation() {
++
++		return new Generation();
++	}
++
++	@Bean
++	@ConditionalOnMissingBean
++	public MessageManager msgManager(TongYiChatProperties chatProperties) {
++
++		MessageManager messageManager = new MessageManager(10);
++		messageManager.add(
++				Message.builder()
++						.role(TongYiConstants.Role.SYSTEM)
++						.content(chatProperties.getOptions().getSystemUser())
++						.build()
++		);
++
++		return new MessageManager(10);
++	}
++
++	@Bean
++	@ConditionalOnProperty(
++			prefix = TongYiChatProperties.CONFIG_PREFIX,
++			name = "enabled",
++			havingValue = "true",
++			matchIfMissing = true
++	)
++	public TongYiChatClient tongYiChatClient(Generation generation, TongYiChatProperties chatOptions) {
++
++		return new TongYiChatClient(generation, chatOptions.getOptions());
++	}
++
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiChatOptions.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiChatOptions.java
+new file mode 100644
+index 000000000..79825dd63
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiChatOptions.java
+@@ -0,0 +1,428 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi;
++
++import java.util.List;
++import java.util.Objects;
++
++import com.alibaba.cloud.ai.tongyi.constant.TongYiConstants;
++import com.alibaba.dashscope.aigc.generation.models.QwenParam;
++
++import org.springframework.ai.chat.prompt.ChatOptions;
++
++/**
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++public class TongYiChatOptions implements ChatOptions {
++
++	/**
++	 * TongYi model api key.
++	 */
++	private String apiKey;
++
++	/**
++	 * TongYi model name, {@link TongYiConstants}.
++	 */
++	private String model = TongYiConstants.Model.QWEN_TURBO;
++
++	/**
++	 * The random number seed used in generation, the user controls the randomness of the content generated by the model.
++	 * seed supports unsigned 64-bit integers, with a default value of 1234.
++	 * when using seed, the model will generate the same or similar results as much as possible, but there is currently no guarantee that the results will be exactly the same each time.
++	 */
++	private Integer seed = 1234;
++
++	/**
++	 * Used to specify the maximum number of tokens that the model can generate when generating content,
++	 * it defines the upper limit of generation but does not guarantee that this number will be generated every time.
++	 * For qwen-turbo the maximum and default values are 1500 tokens.
++	 * The qwen-max, qwen-max-1201, qwen-max-longcontext, and qwen-plus models have a maximum and default value of 2000 tokens.
++	 */
++	private Integer maxTokens = 1500;
++
++	/**
++	 * The generation process kernel sampling method probability threshold,
++	 * for example, takes the value of 0.8, only retains the smallest set of the most probable tokens with probabilities that add up to greater than or equal to 0.8 as the candidate set.
++	 * The range of values is (0,1.0), the larger the value, the higher the randomness of generation; the lower the value, the higher the certainty of generation.
++	 */
++	private Double topP = 0.8;
++
++	/**
++	 * The size of the sampling candidate set at the time of generation.
++	 * For example, with a value of 50, only the 50 highest scoring tokens in a single generation will form a randomly sampled candidate set.
++	 * The larger the value, the higher the randomness of the generation; the smaller the value, the higher the certainty of the generation.
++	 * This parameter is not passed by default, and a value of None or when top_k is greater than 100 indicates that the top_k policy is not enabled,
++	 * at which time, only the top_p policy is in effect.
++	 */
++	private Integer topK;
++
++	/**
++	 * Used to control the repeatability of model generation.
++	 * Increasing repetition_penalty reduces the repetition of model generation. 1.0 means no penalty.
++	 */
++	private Double repetitionPenalty = 1.1;
++
++	/**
++	 * is used to control the degree of randomness and diversity.
++	 * Specifically, the temperature value controls the extent to which the probability distribution of each candidate word is smoothed when generating text.
++	 * Higher values of temperature reduce the peak of the probability distribution, allowing more low-probability words to be selected and generating more diverse results,
++	 * while lower values of temperature enhance the peak of the probability distribution, making it easier for high-probability words to be selected and generating more certain results.
++	 * Range: [0, 2), 0 is not recommended, meaningless.
++	 * java version >= 2.5.1
++	 */
++	private Double temperature = 0.85;
++
++	/**
++	 * The stop parameter is used to realize precise control of the content generation process, automatically stopping when the generated content is about to contain the specified string or token_ids,
++	 * and the generated content does not contain the specified content.
++	 * For example, if stop is specified as "Hello", it means stop when "Hello" will be generated; if stop is specified as [37763, 367], it means stop when "Observation" will be generated.
++	 * The stop parameter can be passed as a list of arrays of strings or token_ids to support the scenario of using multiple stops.
++	 * Explanation: Do not mix strings and token_ids in list mode, the element types should be the same in list mode.
++	 */
++	private List<Integer> stop;
++
++	/**
++	 * Whether or not to use stream output. When outputting the result in stream mode, the interface returns the result as generator,
++	 * you need to iterate to get the result, the default output is the whole sequence of the current generation for each output,
++	 * the last output is the final result of all the generation, you can change the output mode to non-incremental output by the parameter incremental_output to False.
++	 */
++	private Boolean stream = false;
++
++	/**
++	 * The model has a built-in Internet search service.
++	 * This parameter controls whether the model refers to the use of Internet search results when generating text. The values are as follows:
++	 * True: enable internet search, the model will use the search result as the reference information in the text generation process, but the model will "judge by itself" whether to use the internet search result based on its internal logic.
++	 * False (default): Internet search is disabled.
++	 */
++	private Boolean enableSearch = false;
++
++	/**
++	 * [text|message], defaults to text, when it is message,
++	 * the output refers to the message result example.
++	 * It is recommended to prioritize the use of message format.
++	 */
++	private String resultFormat = QwenParam.ResultFormat.MESSAGE;
++
++	/**
++	 * Control the streaming output mode, that is, the content will contain the content has been output;
++	 * set to True, will open the incremental output mode, the output will not contain the content has been output,
++	 * you need to splice the whole output, refer to the streaming output sample code.
++	 */
++	private Boolean incrementalOutput = false;
++
++	/**
++	 * A list of tools that the model can optionally call.
++	 * Currently only functions are supported, and even if multiple functions are entered, the model will only select one to generate the result.
++	 */
++	private List<String> tools;
++
++	private String SystemUser = "You are a helpful assistant.";
++
++	@Override
++	public Float getTemperature() {
++
++		return this.temperature.floatValue();
++	}
++
++	@Override
++	public void setTemperature(Float temperature) {
++
++		this.temperature = temperature.doubleValue();
++	}
++
++	@Override
++	public Float getTopP() {
++
++		return this.topP.floatValue();
++	}
++
++	@Override
++	public void setTopP(Float topP) {
++
++		this.topP = topP.doubleValue();
++	}
++
++	@Override
++	public Integer getTopK() {
++
++		return this.topK;
++	}
++
++	@Override
++	public void setTopK(Integer topK) {
++
++		this.topK = topK;
++	}
++
++	public String getSystemUser() {
++		return SystemUser;
++	}
++
++	public void setSystemUser(String systemUser) {
++		SystemUser = systemUser;
++	}
++
++	public String getApiKey() {
++
++		return apiKey;
++	}
++
++	public void setApiKey(String apiKey) {
++
++		this.apiKey = apiKey;
++	}
++
++	public String getModel() {
++
++		return model;
++	}
++
++	public void setModel(String model) {
++
++		this.model = model;
++	}
++
++	public Integer getSeed() {
++
++		return seed;
++	}
++
++	public String getResultFormat() {
++
++		return resultFormat;
++	}
++
++	public void setResultFormat(String resultFormat) {
++
++		this.resultFormat = resultFormat;
++	}
++
++	public void setSeed(Integer seed) {
++
++		this.seed = seed;
++	}
++
++	public Integer getMaxTokens() {
++
++		return maxTokens;
++	}
++
++	public void setMaxTokens(Integer maxTokens) {
++
++		this.maxTokens = maxTokens;
++	}
++
++	public Float getRepetitionPenalty() {
++
++		return repetitionPenalty.floatValue();
++	}
++
++	public void setRepetitionPenalty(Float repetitionPenalty) {
++
++		this.repetitionPenalty = repetitionPenalty.doubleValue();
++	}
++
++	public List<Integer> getStop() {
++
++		return stop;
++	}
++
++	public void setStop(List<Integer> stop) {
++
++		this.stop = stop;
++	}
++
++	public Boolean getStream() {
++
++		return stream;
++	}
++
++	public void setStream(Boolean stream) {
++
++		this.stream = stream;
++	}
++
++	public Boolean getEnableSearch() {
++
++		return enableSearch;
++	}
++
++	public void setEnableSearch(Boolean enableSearch) {
++
++		this.enableSearch = enableSearch;
++	}
++
++	public Boolean getIncrementalOutput() {
++
++		return incrementalOutput;
++	}
++
++	public void setIncrementalOutput(Boolean incrementalOutput) {
++
++		this.incrementalOutput = incrementalOutput;
++	}
++
++	public List<String> getTools() {
++
++		return tools;
++	}
++
++	public void setTools(List<String> tools) {
++
++		this.tools = tools;
++	}
++
++	@Override
++	public boolean equals(Object o) {
++		if (this == o) {
++			return true;
++		}
++		if (o == null || getClass() != o.getClass()) {
++			return false;
++		}
++		TongYiChatOptions that = (TongYiChatOptions) o;
++
++		return Objects.equals(apiKey, that.apiKey)
++				&& Objects.equals(model, that.model)
++				&& Objects.equals(seed, that.seed)
++				&& Objects.equals(maxTokens, that.maxTokens)
++				&& Objects.equals(topP, that.topP)
++				&& Objects.equals(topK, that.topK)
++				&& Objects.equals(repetitionPenalty, that.repetitionPenalty)
++				&& Objects.equals(temperature, that.temperature)
++				&& Objects.equals(stop, that.stop)
++				&& Objects.equals(resultFormat, that.resultFormat)
++				&& Objects.equals(stream, that.stream)
++				&& Objects.equals(enableSearch, that.enableSearch)
++				&& Objects.equals(incrementalOutput, that.incrementalOutput)
++				&& Objects.equals(tools, that.tools);
++	}
++
++	@Override
++	public int hashCode() {
++
++		return Objects.hash(
++				apiKey,
++				model,
++				seed,
++				maxTokens,
++				topP,
++				topK,
++				repetitionPenalty,
++				temperature,
++				stop,
++				stream,
++				resultFormat,
++				enableSearch,
++				incrementalOutput,
++				tools
++		);
++	}
++
++	@Override
++	public String toString() {
++
++		return "TongYiProperties {" + "apiKey='" + apiKey + '\''
++				+ ", model=" + model
++				+ ", seed=" + seed
++				+ ", maxTokens=" + maxTokens
++				+ ", topP=" + topP
++				+ ", topK=" + topK
++				+ ", repetitionPenalty=" + repetitionPenalty
++				+ ", temperature=" + temperature
++				+ ", stop=" + stop
++				+ ", resultFormat=" + resultFormat
++				+ ", stream=" + stream
++				+ ", enableSearch=" + enableSearch
++				+ ", incrementalOutput=" + incrementalOutput
++				+ ", tools=" + tools
++				+ '}';
++	}
++
++	public static Builder builder() {
++
++		return new Builder();
++	}
++
++	public static class Builder {
++
++		protected TongYiChatOptions options;
++
++		public Builder() {
++
++			this.options = new TongYiChatOptions();
++		}
++
++		public Builder(TongYiChatOptions options) {
++
++			this.options = options;
++		}
++
++		public Builder withModel(String model) {
++			this.options.model = model;
++			return this;
++		}
++
++		public Builder withMaxTokens(Integer maxTokens) {
++			this.options.maxTokens = maxTokens;
++			return this;
++		}
++
++		public Builder withResultFormat(String rf) {
++			this.options.resultFormat = rf;
++			return this;
++		}
++
++		public Builder withEnableSearch(Boolean enableSearch) {
++			this.options.enableSearch = enableSearch;
++			return this;
++		}
++
++		public Builder withSeed(Integer seed) {
++			this.options.seed = seed;
++			return this;
++		}
++
++		public Builder withStop(List<Integer> stop) {
++			this.options.stop = stop;
++			return this;
++		}
++
++		public Builder withTemperature(Double temperature) {
++			this.options.temperature = temperature;
++			return this;
++		}
++
++		public Builder withTopP(Double topP) {
++			this.options.topP = topP;
++			return this;
++		}
++
++		public Builder withTopK(Integer topK) {
++			this.options.topK = topK;
++			return this;
++		}
++
++		public TongYiChatOptions build() {
++
++			return this.options;
++		}
++	}
++
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiChatProperties.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiChatProperties.java
+new file mode 100644
+index 000000000..59837a124
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/TongYiChatProperties.java
+@@ -0,0 +1,81 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi;
++
++import com.alibaba.cloud.ai.tongyi.constant.TongYiConstants;
++import com.alibaba.dashscope.aigc.generation.models.QwenParam;
++
++import org.springframework.boot.context.properties.ConfigurationProperties;
++import org.springframework.boot.context.properties.NestedConfigurationProperty;
++
++/**
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++@ConfigurationProperties(TongYiChatProperties.CONFIG_PREFIX)
++public class TongYiChatProperties {
++
++	/**
++	 * Spring Cloud Alibaba AI configuration prefix.
++	 */
++	public static final String CONFIG_PREFIX = "spring.cloud.ai.tongyi.chat";
++
++	/**
++	 * Default TongYi Chat model.
++	 */
++	public static final String DEFAULT_DEPLOYMENT_NAME = TongYiConstants.Model.QWEN_TURBO;
++
++	/**
++	 * Default temperature speed.
++	 */
++	private static final Double DEFAULT_TEMPERATURE = 0.8;
++
++	/**
++	 * Enable TongYiQWEN ai chat client.
++	 */
++	private boolean enabled = true;
++
++	@NestedConfigurationProperty
++	private TongYiChatOptions options = TongYiChatOptions.builder()
++			.withModel(DEFAULT_DEPLOYMENT_NAME)
++			.withTemperature(DEFAULT_TEMPERATURE)
++			.withEnableSearch(true)
++			.withResultFormat(QwenParam.ResultFormat.MESSAGE)
++			.build();
++
++	public TongYiChatOptions getOptions() {
++
++		return this.options;
++	}
++
++	public void setOptions(TongYiChatOptions options) {
++
++		this.options = options;
++	}
++
++	public boolean isEnabled() {
++
++		return this.enabled;
++	}
++
++	public void setEnabled(boolean enabled) {
++
++		this.enabled = enabled;
++	}
++
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/aot/TongYiRuntimeHints.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/aot/TongYiRuntimeHints.java
+new file mode 100644
+index 000000000..3ebed322e
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/aot/TongYiRuntimeHints.java
+@@ -0,0 +1,38 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi.aot;
++
++import org.springframework.aot.hint.RuntimeHints;
++import org.springframework.aot.hint.RuntimeHintsRegistrar;
++
++/**
++ * The TongYiRuntimeHints class is responsible for registering runtime hints for TongYiAI.
++ *
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++public class TongYiRuntimeHints implements RuntimeHintsRegistrar {
++
++	@Override
++	public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
++
++		// todo
++
++	}
++
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/client/TongYiChatClient.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/client/TongYiChatClient.java
+new file mode 100644
+index 000000000..79e4e40c1
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/client/TongYiChatClient.java
+@@ -0,0 +1,214 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi.client;
++
++import java.util.List;
++import java.util.Objects;
++
++import com.alibaba.cloud.ai.tongyi.TongYiChatOptions;
++import com.alibaba.cloud.ai.tongyi.exception.TongYiException;
++import com.alibaba.dashscope.aigc.generation.Generation;
++import com.alibaba.dashscope.aigc.generation.GenerationOutput;
++import com.alibaba.dashscope.aigc.generation.GenerationResult;
++import com.alibaba.dashscope.aigc.generation.models.QwenParam;
++import com.alibaba.dashscope.common.MessageManager;
++import com.alibaba.dashscope.exception.InputRequiredException;
++import com.alibaba.dashscope.exception.NoApiKeyException;
++import com.alibaba.dashscope.utils.Constants;
++import io.reactivex.Flowable;
++import org.slf4j.Logger;
++import org.slf4j.LoggerFactory;
++import reactor.core.publisher.Flux;
++import reactor.core.scheduler.Schedulers;
++
++import org.springframework.ai.chat.ChatClient;
++import org.springframework.ai.chat.ChatResponse;
++import org.springframework.ai.chat.StreamingChatClient;
++import org.springframework.ai.chat.metadata.ChatGenerationMetadata;
++import org.springframework.ai.chat.prompt.Prompt;
++import org.springframework.beans.factory.annotation.Autowired;
++
++/**
++ *
++ * {@link ChatClient} and {@link StreamingChatClient} implementation for {@literal Alibaba DashScope}
++ * backed by {@link Generation}.
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++public class TongYiChatClient implements ChatClient, StreamingChatClient {
++
++	private static final Logger logger = LoggerFactory.getLogger(TongYiChatClient.class);
++
++	/**
++	 * DashScope generation client.
++	 */
++	private final Generation generation;
++
++	/**
++	 * The TongYi models default chat completion api.
++	 */
++	private TongYiChatOptions defaultOptions;
++
++	/**
++	 * User role message manager.
++	 */
++	@Autowired
++	private MessageManager msgManager;
++
++	/**
++	 * Initializes an instance of the TongYiChatClient.
++	 * @param generation DashScope generation client.
++	 */
++	public TongYiChatClient(Generation generation) {
++
++		this(generation,
++				TongYiChatOptions.builder()
++						.withTopP(0.8)
++						.withEnableSearch(true)
++						.withResultFormat(QwenParam.ResultFormat.MESSAGE)
++						.build()
++		);
++	}
++
++	/**
++	 * Create a TongYi models client.
++	 * @param generation DashScope model generation client.
++	 * @param options TongYi default chat completion api.
++	 */
++	public TongYiChatClient(Generation generation, TongYiChatOptions options) {
++
++		this.generation = generation;
++		this.defaultOptions = options;
++	}
++
++	@Override
++	public ChatResponse call(Prompt prompt) {
++
++		GenerationResult res = null;
++
++		try {
++			res = generation.call(toTongYiChatParams(prompt));
++			msgManager.add(res);
++		}
++		catch (NoApiKeyException | InputRequiredException e) {
++			logger.warn("TongYi chat client: " + e.getMessage());
++			throw new TongYiException(e.getMessage());
++		}
++
++		List<org.springframework.ai.chat.Generation> generations =
++				res
++						.getOutput()
++						.getChoices()
++						.stream()
++						.map(choice ->
++								new org.springframework.ai.chat.Generation(
++										choice
++												.getMessage()
++												.getContent()
++								).withGenerationMetadata(generateChoiceMetadata(choice)
++								))
++						.toList();
++
++		return new ChatResponse(generations);
++
++	}
++
++	@Override
++	public Flux<ChatResponse> stream(Prompt prompt) {
++
++		Flowable<GenerationResult> genRes = null;
++
++		try {
++			genRes = generation.streamCall(toTongYiChatParams(prompt));
++		}
++		catch (NoApiKeyException | InputRequiredException e) {
++			logger.warn("TongYi chat client: " + e.getMessage());
++			throw new TongYiException(e.getMessage());
++		}
++
++		return Flux.from(genRes)
++				.flatMap(
++						message -> Flux.just(
++								message.getOutput()
++										.getChoices()
++										.get(0)
++										.getMessage()
++										.getContent())
++								.map(content -> {
++									var gen = new org.springframework.ai.chat.Generation(content)
++											.withGenerationMetadata(generateChoiceMetadata(
++													message.getOutput()
++															.getChoices()
++															.get(0)
++												));
++									return new ChatResponse(List.of(gen));
++								})
++				)
++				.publishOn(Schedulers.parallel());
++
++	}
++
++	/**
++	 * Configuration properties to Qwen model params.
++	 * @param prompt {@link Prompt}
++	 * @return Qwen models params {@link QwenParam}
++	 */
++	private QwenParam toTongYiChatParams(Prompt prompt) {
++
++		Constants.apiKey = getKey();
++
++		return QwenParam.builder()
++				.model(this.defaultOptions.getModel())
++				.messages(msgManager.get())
++				.resultFormat(this.defaultOptions.getResultFormat())
++				.topP(this.defaultOptions.getTopP().doubleValue())
++				.topK(this.defaultOptions.getTopK())
++				.enableSearch(this.defaultOptions.getEnableSearch())
++				.seed(this.defaultOptions.getSeed())
++				.maxTokens(this.defaultOptions.getMaxTokens())
++				.repetitionPenalty(this.defaultOptions.getRepetitionPenalty())
++				.temperature(this.defaultOptions.getTemperature())
++				.incrementalOutput(this.defaultOptions.getIncrementalOutput())
++				.prompt(prompt.getContents())
++				.build();
++	}
++
++	private ChatGenerationMetadata generateChoiceMetadata(GenerationOutput.Choice choice) {
++
++		return ChatGenerationMetadata.from(
++				String.valueOf(choice.getFinishReason()),
++				choice.getMessage().getContent()
++		);
++	}
++
++	/**
++	 * Get TongYi model api_key .
++	 * todo: Get key from env and env_file.
++	 * @return api_key.
++	 */
++	private String getKey() {
++
++		String apiKey = null;
++
++		if (Objects.nonNull(this.defaultOptions.getApiKey())) {
++			apiKey = this.defaultOptions.getApiKey();
++		}
++		return apiKey;
++	}
++
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/constant/TongYiConstants.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/constant/TongYiConstants.java
+new file mode 100644
+index 000000000..b01f1948d
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/constant/TongYiConstants.java
+@@ -0,0 +1,99 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi.constant;
++
++import com.alibaba.dashscope.aigc.generation.Generation;
++
++/**
++ * TongYi models constants.
++ *
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++public final class TongYiConstants {
++
++	private TongYiConstants() {
++	}
++
++	public static final class Model {
++
++		private Model() {
++		}
++
++		/**
++		 * Tongyi Thousand Questions mega-language model supports input in different languages such as Chinese and English.
++		 */
++		public static final String QWEN_TURBO = Generation.Models.QWEN_TURBO;
++
++		/**
++		 * Enhanced version of Tongyi Thousand Questions mega-language model to support input in different languages such as Chinese and English.
++		 */
++		public static final String QWEN_PLUS = Generation.Models.QWEN_PLUS;
++
++		/**
++		 * Tongyi Qianqi 100 billion level super large-scale language model, support Chinese, English and other different language input.
++		 * As the model is upgraded, qwen-max will be updated and upgraded on a rolling basis. If you wish to use a stable version, please use qwen-max-1201.
++		 */
++		public static final String QWEN_MAX = Generation.Models.QWEN_MAX;
++
++		/**
++		 * Tongyi Qianqi 100 billion level mega-scale language model, supporting different language inputs such as Chinese and English.
++		 * The model is a snapshot stabilized version of qwen-max, and is expected to be maintained until one month after the release time of the next snapshot version (TBD).
++		 */
++		public static final String QWEN_MAX_1021 = "qwen-max-1201";
++
++		/**
++		 * Tongyi Thousand Questions is a 100 billion level super large-scale language model that supports different language inputs such as Chinese and English.
++		 */
++		public static final String QWEN_MAX_LONG_CONTEXT = "qwen-max-longcontext";
++	}
++
++	public static final class Role {
++
++		private Role() {
++		}
++
++		/**
++		 * system: indicates a system-level message that can only be used for the first entry in the conversation history (messages[0]).
++		 * The use of the system role is optional and, if present, must be at the beginning of the list
++		 */
++		public static final String SYSTEM = "system";
++
++		/**
++		 * user and assistant: represent the dialog between the user and the model.
++		 * They should appear alternately in the dialog to simulate the actual dialog flow.
++		 */
++		public static final String USER = "user";
++
++		/**
++		 * user and assistant: represent the dialog between the user and the model.
++		 * They should appear alternately in the dialog to simulate the actual dialog flow.
++		 */
++		public static final String ASSISTANT = "assistant";
++
++		/**
++		 * When using the function_call function, if you want to pass in the result of a function,
++		 * this message takes the form {"content": "Boston is raining.", "name": "get_current_weather", "role": "tool"}, where name is the name of the function,
++		 * which needs to be consistent with the tool_calls[i].function.name parameter in the previous round's response, and content is the output of the function.
++		 * Examples are given for multiple rounds of calls in the reference code.
++		 */
++		public static final String TOOL = "tool";
++
++	}
++
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/exception/TongYiException.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/exception/TongYiException.java
+new file mode 100644
+index 000000000..b1c9920eb
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/exception/TongYiException.java
+@@ -0,0 +1,37 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi.exception;
++
++/**
++ * TongYi models runtime exception.
++ *
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++public class TongYiException extends RuntimeException {
++
++	public TongYiException(String message) {
++
++		super(message);
++	}
++
++	public TongYiException(String message, Throwable cause) {
++
++		super(message, cause);
++	}
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/metadata/TongYiAiChatResponseMetadata.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/metadata/TongYiAiChatResponseMetadata.java
+new file mode 100644
+index 000000000..8cb52498b
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/metadata/TongYiAiChatResponseMetadata.java
+@@ -0,0 +1,85 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi.metadata;
++
++import com.alibaba.dashscope.aigc.generation.GenerationResult;
++
++import org.springframework.ai.chat.metadata.ChatResponseMetadata;
++import org.springframework.ai.chat.metadata.PromptMetadata;
++import org.springframework.ai.chat.metadata.Usage;
++import org.springframework.util.Assert;
++
++/**
++ * {@link ChatResponseMetadata} implementation for {@literal Alibaba DashScope}.
++ *
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++public class TongYiAiChatResponseMetadata implements ChatResponseMetadata {
++
++	protected static final String AI_METADATA_STRING = "{ @type: %1$s, id: %2$s, usage: %3$s, rateLimit: %4$s }";
++
++	@SuppressWarnings("all")
++	public static TongYiAiChatResponseMetadata from(GenerationResult chatCompletions,
++			PromptMetadata promptFilterMetadata) {
++
++		Assert.notNull(chatCompletions, "Alibaba ai ChatCompletions must not be null");
++		String id = chatCompletions.getRequestId();
++		TongYiAiUsage usage = TongYiAiUsage.from(chatCompletions);
++
++		return new TongYiAiChatResponseMetadata(
++				id,
++				usage,
++				promptFilterMetadata
++		);
++	}
++
++	private final String id;
++
++	private final Usage usage;
++
++	private final PromptMetadata promptMetadata;
++
++	protected TongYiAiChatResponseMetadata(String id, TongYiAiUsage usage, PromptMetadata promptMetadata) {
++
++		this.id = id;
++		this.usage = usage;
++		this.promptMetadata = promptMetadata;
++	}
++
++	public String getId() {
++		return this.id;
++	}
++
++	@Override
++	public Usage getUsage() {
++		return this.usage;
++	}
++
++	@Override
++	public PromptMetadata getPromptMetadata() {
++		return this.promptMetadata;
++	}
++
++	@Override
++	public String toString() {
++
++		return AI_METADATA_STRING.formatted(getClass().getTypeName(), getId(), getUsage(), getRateLimit());
++	}
++
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/metadata/TongYiAiUsage.java b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/metadata/TongYiAiUsage.java
+new file mode 100644
+index 000000000..755fb5ac9
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/java/com/alibaba/cloud/ai/tongyi/metadata/TongYiAiUsage.java
+@@ -0,0 +1,77 @@
++/*
++ * Copyright 2023-2024 the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.alibaba.cloud.ai.tongyi.metadata;
++
++import com.alibaba.dashscope.aigc.generation.GenerationResult;
++import com.alibaba.dashscope.aigc.generation.GenerationUsage;
++
++import org.springframework.ai.chat.metadata.Usage;
++import org.springframework.util.Assert;
++
++/**
++ * {@link Usage} implementation for {@literal Alibaba DashScope}.
++ *
++ * @author yuluo
++ * @since 2023.0.0.0
++ */
++
++public class TongYiAiUsage implements Usage {
++
++	private final GenerationUsage usage;
++
++	public TongYiAiUsage(GenerationUsage usage) {
++
++		Assert.notNull(usage, "GenerationUsage must not be null");
++		this.usage = usage;
++	}
++
++	public static TongYiAiUsage from(GenerationResult chatCompletions) {
++
++		Assert.notNull(chatCompletions, "ChatCompletions must not be null");
++		return from(chatCompletions.getUsage());
++	}
++
++	public static TongYiAiUsage from(GenerationUsage usage) {
++
++		return new TongYiAiUsage(usage);
++	}
++
++	protected GenerationUsage getUsage() {
++
++		return this.usage;
++	}
++
++	@Override
++	public Long getPromptTokens() {
++		return null;
++	}
++
++	@Override
++	public Long getGenerationTokens() {
++		return this.getUsage().getOutputTokens().longValue();
++	}
++
++	@Override
++	public Long getTotalTokens() {
++		return this.getUsage().getInputTokens().longValue() + this.getUsage().getInputTokens().longValue();
++	}
++
++	@Override
++	public String toString() {
++		return this.getUsage().toString();
++	}
++}
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/resources/META-INF/spring/aot.factories b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/resources/META-INF/spring/aot.factories
+new file mode 100644
+index 000000000..5247ed975
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/resources/META-INF/spring/aot.factories
+@@ -0,0 +1 @@
++// todo: add hints
+\ No newline at end of file
+diff --git a/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+new file mode 100644
+index 000000000..55619f8bb
+--- /dev/null
++++ b/spring-cloud-alibaba-starters/spring-cloud-starter-alibaba-ai/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+@@ -0,0 +1 @@
++com.alibaba.cloud.ai.tongyi.TongYiAutoConfiguration

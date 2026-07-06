@@ -1,0 +1,1 @@
+cd /workspace/repo/packages/app && npx jest src/admin/SuperAdminPage.test.tsx --coverage=false --verbose --json

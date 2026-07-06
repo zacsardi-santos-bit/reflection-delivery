@@ -1,0 +1,15 @@
+patching file pkg/app/pipectl/cmd/migrate/database.go
+patching file pkg/app/piped/trigger/deployment.go
+patching file pkg/app/pipedv1/trigger/deployment.go
+patching file pkg/app/server/grpcapi/api.go
+patching file pkg/app/server/service/apiservice/service.pb.go
+patching file pkg/app/server/service/apiservice/service.pb.validate.go
+patching file pkg/app/server/service/apiservice/service.proto
+patching file pkg/datastore/applicationstore.go
+patching file pkg/model/application.go
+patching file pkg/model/application.pb.go
+patching file pkg/model/application.pb.validate.go
+patching file pkg/model/application.proto
+patching file web/model/application_pb.d.ts
+patching file web/model/application_pb.js
+patching file web/src/__fixtures__/dummy-application.ts

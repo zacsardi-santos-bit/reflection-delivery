@@ -1,0 +1,29 @@
+{
+    "id": "3434ca79-2db4-4951-a06f-2ec1069728fb",
+    "started_at": "2026-07-06T12:19:09.552907",
+    "finished_at": "2026-07-06T12:20:36.179117",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__gruntwork-io-cloud-nuke-1105": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "gruntwork-io-cloud-nuke-1105__eGhR5JB"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

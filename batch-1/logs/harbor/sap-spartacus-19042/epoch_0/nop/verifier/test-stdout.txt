@@ -1,0 +1,34 @@
+patching file tools/eslint-rules/rules/no-ngrx-fail-action-without-error-action-implementation.spec.ts
+patching file tools/eslint-rules/rules/utils/implements-interface-utils.spec.ts
+patching file tools/eslint-rules/rules/utils/import-utils.spec.ts
+FAIL eslint-rules tools/eslint-rules/rules/utils/import-utils.spec.ts
+  ● Test suite failed to run
+
+    [96mtools/eslint-rules/rules/utils/import-utils.spec.ts[0m:[93m4[0m:[93m64[0m - [91merror[0m[90m TS2307: [0mCannot find module './import-utils' or its corresponding type declarations.
+
+    [7m4[0m import { fixPossiblyMissingImport, isIdentifierImported } from './import-utils';
+    [7m [0m [91m                                                               ~~~~~~~~~~~~~~~~[0m
+
+FAIL eslint-rules tools/eslint-rules/rules/utils/implements-interface-utils.spec.ts
+  ● Test suite failed to run
+
+    [96mtools/eslint-rules/rules/utils/implements-interface-utils.spec.ts[0m:[93m7[0m:[93m8[0m - [91merror[0m[90m TS2307: [0mCannot find module './implements-interface-utils' or its corresponding type declarations.
+
+    [7m7[0m } from './implements-interface-utils';
+    [7m [0m [91m       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+FAIL eslint-rules tools/eslint-rules/rules/no-ngrx-fail-action-without-error-action-implementation.spec.ts
+  ● Test suite failed to run
+
+    [96mtools/eslint-rules/rules/no-ngrx-fail-action-without-error-action-implementation.spec.ts[0m:[93m6[0m:[93m8[0m - [91merror[0m[90m TS2307: [0mCannot find module './no-ngrx-fail-action-without-error-action-implementation' or its corresponding type declarations.
+
+    [7m6[0m } from './no-ngrx-fail-action-without-error-action-implementation';
+    [7m [0m [91m       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+Test Suites: 3 failed, 3 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        3.152 s
+Ran all test suites matching /tools\/eslint-rules\/rules\/no-ngrx-fail-action-without-error-action-implementation.spec.ts|tools\/eslint-rules\/rules\/utils\/implements-interface-utils.spec.ts|tools\/eslint-rules\/rules\/utils\/import-utils.spec.ts/i.
+{"numFailedTestSuites":3,"numFailedTests":0,"numPassedTestSuites":0,"numPassedTests":0,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":3,"numTodoTests":0,"numTotalTestSuites":3,"numTotalTests":0,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746633572,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746636726,"message":"  ● Test suite failed to run\n\n    \u001b[96mtools/eslint-rules/rules/utils/import-utils.spec.ts\u001b[0m:\u001b[93m4\u001b[0m:\u001b[93m64\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module './import-utils' or its corresponding type declarations.\n\n    \u001b[7m4\u001b[0m import { fixPossiblyMissingImport, isIdentifierImported } from './import-utils';\n    \u001b[7m \u001b[0m \u001b[91m                                                               ~~~~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/tools/eslint-rules/rules/utils/import-utils.spec.ts","startTime":1782746636726,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746636726,"message":"  ● Test suite failed to run\n\n    \u001b[96mtools/eslint-rules/rules/utils/implements-interface-utils.spec.ts\u001b[0m:\u001b[93m7\u001b[0m:\u001b[93m8\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module './implements-interface-utils' or its corresponding type declarations.\n\n    \u001b[7m7\u001b[0m } from './implements-interface-utils';\n    \u001b[7m \u001b[0m \u001b[91m       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/tools/eslint-rules/rules/utils/implements-interface-utils.spec.ts","startTime":1782746636726,"status":"failed","summary":""},{"assertionResults":[],"coverage":{},"endTime":1782746636726,"message":"  ● Test suite failed to run\n\n    \u001b[96mtools/eslint-rules/rules/no-ngrx-fail-action-without-error-action-implementation.spec.ts\u001b[0m:\u001b[93m6\u001b[0m:\u001b[93m8\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2307: \u001b[0mCannot find module './no-ngrx-fail-action-without-error-action-implementation' or its corresponding type declarations.\n\n    \u001b[7m6\u001b[0m } from './no-ngrx-fail-action-without-error-action-implementation';\n    \u001b[7m \u001b[0m \u001b[91m       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\u001b[0m\n","name":"/workspace/repo/tools/eslint-rules/rules/no-ngrx-fail-action-without-error-action-implementation.spec.ts","startTime":1782746636726,"status":"failed","summary":""}],"wasInterrupted":false}
+reward=0 graded=31 found=0 failed=0 parsed=3 framework=jest exit_code=1

@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/src/backend/tests/unit/graph/vertex/test_vertex_base.py -v",
+  "test_files": [
+    "src/backend/tests/__init__.py",
+    "src/backend/tests/unit/__init__.py",
+    "src/backend/tests/unit/components/agents/test_tool_calling_agent.py",
+    "src/backend/tests/unit/graph/__init__.py",
+    "src/backend/tests/unit/graph/vertex/__init__.py",
+    "src/backend/tests/unit/graph/vertex/test_vertex_base.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_edge_parameters",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_file_field",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_should_skip_field",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_non_list_edge_param",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_handle_optional_field",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_field_parameters_valid",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_field_parameters_invalid",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_field_parameters_code_error",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_field_parameters_dict_field_list",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_field_parameters_bool_field",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_field_parameters_table_field",
+    "src.backend.tests.unit.graph.vertex.test_vertex_base::test_process_field_parameters_table_field_invalid"
+  ],
+  "PASS_TO_PASS": []
+}

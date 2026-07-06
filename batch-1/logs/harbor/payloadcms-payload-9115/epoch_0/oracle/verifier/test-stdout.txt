@@ -1,0 +1,33 @@
+patching file packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts
+patching file test/collections-rest/int.spec.ts
+patching file test/database/config.ts
+patching file test/database/int.spec.ts
+patching file test/helpers/seed.ts
+patching file test/package.json
+patching file test/relationships/config.ts
+patching file test/relationships/int.spec.ts
+patching file test/relationships/payload-types.ts
+jest-haste-map: Haste module naming collision: template-blank-3.0
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/templates/_template/package.json
+    * <rootDir>/templates/blank/package.json
+
+jest-haste-map: Haste module naming collision: payload-example-form-builder-website
+  The following files share their name; please adjust your hasteImpl:
+    * <rootDir>/examples/form-builder/next-app/package.json
+    * <rootDir>/examples/form-builder/next-pages/package.json
+
+
+Found 1 test suites.
+
+Wrote mongodb db adapter
+    [1m[32m[PASS][0m sanitizeRelationshipIDs > should sanitize relationships [1m[30m(36ms)[0m
+
+
+[1m[30mALL RESULTS[0m
+    [1m[32m[PASS][0m sanitizeRelationshipIDs > should sanitize relationships [1m[30m(36ms)[0m
+
+Executed 1 of 1 (skipped 0) SUCCESS (2.533 secs)
+TOTAL: 1 SUCCESS
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=1 graded=1 found=0 failed=0 parsed=0 framework=jest exit_code=0

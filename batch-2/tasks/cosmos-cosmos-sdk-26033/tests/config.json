@@ -1,0 +1,33 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./x/gov -count=1",
+  "test_files": [
+    "x/gov/abci_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cosmos/cosmos-sdk/x/gov::TestUndecodableProposal_ActiveProposalFails",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestUndecodableProposal_InactiveProposalFails"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/cosmos/cosmos-sdk/x/gov::TestUnregisteredProposal_InactiveProposalFails",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestUnregisteredProposal_ActiveProposalFails",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestTickExpiredDepositPeriod",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestTickMultipleExpiredDepositPeriod",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestTickPassedDepositPeriod",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestTickPassedVotingPeriod/regular_-_deleted",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestTickPassedVotingPeriod/expedited_-_converted_to_regular",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestTickPassedVotingPeriod",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestProposalPassedEndblocker/regular",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestProposalPassedEndblocker/expedited",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestProposalPassedEndblocker",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestEndBlockerProposalHandlerFailed",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestExpeditedProposal_PassAndConversionToRegular/expedited_passes_and_not_converted_to_regular",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestExpeditedProposal_PassAndConversionToRegular/expedited_fails,_converted_to_regular_-_regular_eventually_passes",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestExpeditedProposal_PassAndConversionToRegular/expedited_fails,_converted_to_regular_-_regular_eventually_fails",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestExpeditedProposal_PassAndConversionToRegular",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestImportExportQueues_ErrorUnconsistentState",
+    "github.com/cosmos/cosmos-sdk/x/gov::TestSafeExecuteHandler"
+  ]
+}

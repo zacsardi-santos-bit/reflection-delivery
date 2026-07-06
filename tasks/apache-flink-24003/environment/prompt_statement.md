@@ -1,7 +1,0 @@
-I'm working on Flink's job failure handling and have noticed that when multiple tasks fail at nearly the same time—which is common in cascading failure scenarios—each failure is counted as a separate restart event. This means the restart counter gets inflated, and the exception history ends up with multiple top-level entries for what was really one failure episode.
-
-I'd like to introduce a distinction between "root cause" failures (the first failure that triggers a new restart attempt) and "concurrent" failures (subsequent failures that arrive while a restart is already pending). The restart counter should only be incremented for root cause failures, and concurrent failures should be grouped under the root cause entry in the exception history rather than creating new top-level entries.
-
-The restart strategy component is a natural place to communicate this distinction: when a failure is reported to it, it should indicate whether the failure is a new attempt or a concurrent one. This information should flow through to the failure handling result, allowing downstream consumers (like the exception history tracker) to act accordingly. It should also be possible to add concurrent failures to an already-created exception history entry after the fact.
-
-One edge case: failures that permanently suppress restarts should always be treated as root-cause failures, regardless of what the restart strategy says about new vs. concurrent attempts.

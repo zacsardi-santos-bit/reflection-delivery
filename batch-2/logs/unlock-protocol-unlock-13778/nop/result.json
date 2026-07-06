@@ -1,0 +1,29 @@
+{
+    "id": "c593cfef-736e-4b26-84d2-dc513deac0ab",
+    "started_at": "2026-07-04T15:36:31.985043",
+    "finished_at": "2026-07-04T15:36:59.861619",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__unlock-protocol-unlock-13778": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "unlock-protocol-unlock-13778__N3LhnMn"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

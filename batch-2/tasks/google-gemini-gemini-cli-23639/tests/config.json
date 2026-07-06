@@ -1,0 +1,48 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --coverage=false src/agents/agentLoader.test.ts",
+  "test_files": [
+    "packages/core/src/agents/agentLoader.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should parse remote agent with oauth2 auth",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should parse remote agent with oauth2 auth including all fields",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should parse remote agent with minimal oauth2 config (type only)",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should reject oauth2 auth with invalid authorization_url",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should reject oauth2 auth with invalid token_url",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should convert oauth2 auth config in markdownToAgentDefinition"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should parse a valid markdown agent file",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should parse frontmatter with tools and model config",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should parse frontmatter with mcp_servers",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should throw AgentLoadError if frontmatter is missing",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should throw AgentLoadError if frontmatter is invalid YAML",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should throw AgentLoadError if validation fails (missing required field)",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should parse a valid remote agent markdown file",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should infer remote agent kind from agent_card_url",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should parse a remote agent with no body",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should parse multiple remote agents in a list",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should parse frontmatter without a trailing newline",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader parseAgentMarkdown should throw AgentLoadError if agent name is not a valid slug",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader markdownToAgentDefinition should convert valid Markdown DTO to AgentDefinition with defaults",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader markdownToAgentDefinition should pass through model aliases",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader markdownToAgentDefinition should convert mcp_servers in local agent",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader markdownToAgentDefinition should pass through unknown model names (e.g. auto)",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader markdownToAgentDefinition should convert remote agent definition",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader loadAgentsFromDirectory should load definitions from a directory (Markdown only)",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader loadAgentsFromDirectory should return empty result if directory does not exist",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader loadAgentsFromDirectory should capture errors for malformed individual files",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should parse remote agent with apiKey auth",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should parse remote agent with http Bearer auth",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should parse remote agent with http Basic auth",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should parse remote agent with Digest via raw value",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should parse remote agent with generic raw auth value",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should throw error for Bearer auth without token",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should throw error for Basic auth without credentials",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should throw error for apiKey auth without key",
+    "/workspace/repo/packages/core/src/agents/agentLoader.test.ts::loader remote agent auth configuration should convert auth config in markdownToAgentDefinition"
+  ]
+}

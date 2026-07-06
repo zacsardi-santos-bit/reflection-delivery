@@ -1,0 +1,81 @@
+patching file test/test_mixed_null_assertions.cpp
+Consolidate compiler generated dependencies of target sha1
+Consolidate compiler generated dependencies of target sha2
+Consolidate compiler generated dependencies of target Bid
+Consolidate compiler generated dependencies of target Bson
+[  0%] Built target sha1
+[  0%] Built target sha2
+[  6%] Built target Bid
+[ 15%] Built target Bson
+Consolidate compiler generated dependencies of target Storage
+[ 59%] Built target Storage
+Consolidate compiler generated dependencies of target QueryParser
+Consolidate compiler generated dependencies of target TestUtil
+[ 61%] Built target QueryParser
+[ 68%] Built target TestUtil
+Consolidate compiler generated dependencies of target CoreTestLib
+[ 70%] Building CXX object test/CMakeFiles/CoreTestLib.dir/test_mixed_null_assertions.cpp.o
+[100%] Built target CoreTestLib
+Consolidate compiler generated dependencies of target CoreTests
+[100%] Linking CXX executable realm-tests
+[100%] Built target CoreTests
+
+Realm version: 14.10.2 with Debug Enabled
+Platform: Linux Linux 4.14.355-282.733.amzn2.x86_64 #1 SMP Mon Jun 1 08:18:47 UTC 2026 x86_64
+Encryption: Disabled at compile-time
+
+REALM_MAX_BPNODE_SIZE = 1000
+REALM_MEMDEBUG = Disabled
+
+sizeof (size_t) * 8 = 64
+
+Compiler supported SSE (auto detect):       Yes
+This CPU supports SSE (auto detect):        4.2
+Compiler supported AVX (auto detect):       Yes
+This CPU supports AVX (AVX1) (auto detect): Yes
+
+UNITTEST_RANDOM_SEED:                       1061265486
+Test path prefix:                           /workspace/repo/build/test/
+Test resource path:                         /workspace/repo/build/test/resources/
+
+Number of test threads: 4 (default)
+(Use UNITTEST_THREADS=1 to serialize testing) 
+
+Configuring jUnit reporter to store test results in /workspace/test-results/output.xml
+/workspace/repo/src/realm/array_backlink.cpp:112: [realm-core-14.10.2] Assertion failed: int64_t(value >> 1) == key.value
+./realm-tests(+0x10004f1) [0x558fc3e614f1]
+./realm-tests(+0x100078c) [0x558fc3e6178c]
+./realm-tests(+0x1000630) [0x558fc3e61630]
+./realm-tests(+0x105e0b6) [0x558fc3ebf0b6]
+./realm-tests(+0xf2765d) [0x558fc3d8865d]
+./realm-tests(+0xf2b2e1) [0x558fc3d8c2e1]
+./realm-tests(+0xefc6b0) [0x558fc3d5d6b0]
+./realm-tests(+0xed7e69) [0x558fc3d38e69]
+./realm-tests(+0xed807f) [0x558fc3d3907f]
+./realm-tests(+0xe2ddba) [0x558fc3c8edba]
+./realm-tests(+0xe25350) [0x558fc3c86350]
+./realm-tests(+0xe28c8d) [0x558fc3c89c8d]
+./realm-tests(+0xe25760) [0x558fc3c86760]
+./realm-tests(+0xe52435) [0x558fc3cb3435]
+./realm-tests(+0xe59100) [0x558fc3cba100]
+./realm-tests(+0xe583b0) [0x558fc3cb93b0]
+./realm-tests(+0xe52995) [0x558fc3cb3995]
+./realm-tests(+0xe556c6) [0x558fc3cb66c6]
+./realm-tests(+0xf89598) [0x558fc3dea598]
+./realm-tests(+0xf1f0a3) [0x558fc3d800a3]
+./realm-tests(+0x995bbf) [0x558fc37f6bbf]
+./realm-tests(+0x996237) [0x558fc37f7237]
+./realm-tests(+0x9942df) [0x558fc37f52df]
+./realm-tests(+0xc8731a) [0x558fc3ae831a]
+./realm-tests(+0xc86fc8) [0x558fc3ae7fc8]
+./realm-tests(+0xc85c84) [0x558fc3ae6c84]
+./realm-tests(+0xc8ea9e) [0x558fc3aefa9e]
+./realm-tests(+0xc8ea37) [0x558fc3aefa37]
+./realm-tests(+0xc8e9a7) [0x558fc3aef9a7]
+./realm-tests(+0xc8e960) [0x558fc3aef960]
+./realm-tests(+0xc8e944) [0x558fc3aef944]
+/lib/x86_64-linux-gnu/libstdc++.so.6(+0xdc253) [0x7ffb23208253]
+/lib/x86_64-linux-gnu/libc.so.6(+0x94ac3) [0x7ffb22e90ac3]
+/lib/x86_64-linux-gnu/libc.so.6(clone+0x44) [0x7ffb22f21a84]
+!!! IMPORTANT: Please report this at https://github.com/realm/realm-core/issues/new/choose/tests/test.sh: line 464:   122 Aborted                 (core dumped) UNITTEST_FILTER="Mixed_EmbeddedLstMixedRecursiveDelete Mixed_SingleLinkRecursiveDelete Mixed_ContainerOfLinksFromLargeCluster* Mixed_RemoveRecursiveSingleLink*" UNITTEST_XML=/workspace/test-results/output.xml ./realm-tests
+reward=0 graded=15 found=0 failed=0 parsed=0 framework=ctest exit_code=134

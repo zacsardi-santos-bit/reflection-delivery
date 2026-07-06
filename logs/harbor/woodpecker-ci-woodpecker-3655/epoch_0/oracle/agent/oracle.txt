@@ -1,6 +1,0 @@
-patching file pipeline/backend/kubernetes/backend_options.go
-patching file pipeline/backend/kubernetes/flags.go
-patching file pipeline/backend/kubernetes/kubernetes.go
-patching file pipeline/backend/kubernetes/pod.go
-patching file pipeline/backend/kubernetes/secrets.go
-patching file pipeline/frontend/yaml/linter/schema/schema.json

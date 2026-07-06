@@ -1,0 +1,35 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/dask/array/_array_expr/tests/test_collection.py -v --runarrayexpr",
+  "test_files": [
+    "dask/array/_array_expr/tests/__init__.py",
+    "dask/array/_array_expr/tests/test_collection.py",
+    "dask/array/tests/test_array_core.py",
+    "dask/array/tests/test_array_expr_incompatible.py",
+    "dask/array/tests/test_array_function.py",
+    "dask/array/tests/test_array_utils.py",
+    "dask/array/tests/test_dispatch.py",
+    "dask/array/tests/test_fft.py",
+    "dask/array/tests/test_random.py",
+    "dask/array/tests/test_rechunk.py",
+    "dask/array/tests/test_routines.py",
+    "dask/dataframe/tests/test_ufunc.py"
+  ],
+  "num_test_files": 12,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__add__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__sub__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__mul__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__truediv__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__floordiv__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__pow__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__radd__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__rsub__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__rmul__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__rtruediv__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__rfloordiv__]",
+    "dask.array._array_expr.tests.test_collection::test_arithmetic_ops[__rpow__]"
+  ],
+  "PASS_TO_PASS": []
+}

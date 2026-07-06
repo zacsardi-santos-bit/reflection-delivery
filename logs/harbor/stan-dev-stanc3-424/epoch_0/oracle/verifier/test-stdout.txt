@@ -1,7 +1,0 @@
-patching file test/integration/good/code-gen/cl.expected
-patching file test/integration/good/code-gen/cpp.expected
-patching file test/integration/good/code-gen/optimize_glm.stan
-{"Action":"run","Test":"TestCodeGen"}
-{"Action":"pass","Test":"TestCodeGen","Elapsed":0.001}
-{"Action":"pass","Elapsed":0.001}
-reward=1 graded=1 found=1 failed=0 parsed=1 framework=go exit_code=0

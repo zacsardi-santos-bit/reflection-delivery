@@ -1,0 +1,53 @@
+patching file serve_test.go
+patching file server_test.go
+{"Time":"2026-07-01T14:43:36.727704576Z","Action":"start","Package":"github.com/go-fuego/fuego"}
+{"Time":"2026-07-01T14:43:36.733627454Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run"}
+{"Time":"2026-07-01T14:43:36.7336602Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run","Output":"=== RUN   TestServer_Run\n"}
+{"Time":"2026-07-01T14:43:36.73370157Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/can_run_server"}
+{"Time":"2026-07-01T14:43:36.733705797Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/can_run_server","Output":"=== RUN   TestServer_Run/can_run_server\n"}
+{"Time":"2026-07-01T14:43:37.235246945Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/can_run_server","Output":"--- PASS: TestServer_Run/can_run_server (0.50s)\n"}
+{"Time":"2026-07-01T14:43:37.235284725Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/can_run_server","Elapsed":0.5}
+{"Time":"2026-07-01T14:43:37.235295079Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/can_run_server_WithListener"}
+{"Time":"2026-07-01T14:43:37.235298742Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/can_run_server_WithListener","Output":"=== RUN   TestServer_Run/can_run_server_WithListener\n"}
+{"Time":"2026-07-01T14:43:37.736484026Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/can_run_server_WithListener","Output":"--- PASS: TestServer_Run/can_run_server_WithListener (0.50s)\n"}
+{"Time":"2026-07-01T14:43:37.736524532Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/can_run_server_WithListener","Elapsed":0.5}
+{"Time":"2026-07-01T14:43:37.736534778Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/invalid_address"}
+{"Time":"2026-07-01T14:43:37.736538213Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/invalid_address","Output":"=== RUN   TestServer_Run/invalid_address\n"}
+{"Time":"2026-07-01T14:43:37.738335783Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/invalid_address","Output":"--- PASS: TestServer_Run/invalid_address (0.00s)\n"}
+{"Time":"2026-07-01T14:43:37.738343688Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run/invalid_address","Elapsed":0}
+{"Time":"2026-07-01T14:43:37.738348741Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run","Output":"--- PASS: TestServer_Run (1.00s)\n"}
+{"Time":"2026-07-01T14:43:37.738352431Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestServer_Run","Elapsed":1}
+{"Time":"2026-07-01T14:43:37.738360521Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS"}
+{"Time":"2026-07-01T14:43:37.738363579Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS","Output":"=== RUN   TestServer_RunTLS\n"}
+{"Time":"2026-07-01T14:43:37.83309024Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_config_and_empty_files"}
+{"Time":"2026-07-01T14:43:37.833123765Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_config_and_empty_files","Output":"=== RUN   TestServer_RunTLS/can_run_TLS_server_with_TLS_config_and_empty_files\n"}
+{"Time":"2026-07-01T14:43:38.334191384Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_config_and_empty_files","Output":"    serve_test.go:504: http: Server closed\n"}
+{"Time":"2026-07-01T14:43:38.334239415Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_config_and_empty_files","Output":"--- PASS: TestServer_RunTLS/can_run_TLS_server_with_TLS_config_and_empty_files (0.50s)\n"}
+{"Time":"2026-07-01T14:43:38.334248267Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_config_and_empty_files","Elapsed":0.5}
+{"Time":"2026-07-01T14:43:38.334267118Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_files"}
+{"Time":"2026-07-01T14:43:38.334270495Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_files","Output":"=== RUN   TestServer_RunTLS/can_run_TLS_server_with_TLS_files\n"}
+{"Time":"2026-07-01T14:43:38.83542512Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_files","Output":"    serve_test.go:504: http: Server closed\n"}
+{"Time":"2026-07-01T14:43:38.835465533Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_files","Output":"--- PASS: TestServer_RunTLS/can_run_TLS_server_with_TLS_files (0.50s)\n"}
+{"Time":"2026-07-01T14:43:38.835470676Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/can_run_TLS_server_with_TLS_files","Elapsed":0.5}
+{"Time":"2026-07-01T14:43:38.83547846Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/invalid_address"}
+{"Time":"2026-07-01T14:43:38.835481511Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/invalid_address","Output":"=== RUN   TestServer_RunTLS/invalid_address\n"}
+{"Time":"2026-07-01T14:43:38.835646517Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/invalid_address","Output":"--- PASS: TestServer_RunTLS/invalid_address (0.00s)\n"}
+{"Time":"2026-07-01T14:43:38.835671995Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS/invalid_address","Elapsed":0}
+{"Time":"2026-07-01T14:43:38.835778704Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS","Output":"--- PASS: TestServer_RunTLS (1.10s)\n"}
+{"Time":"2026-07-01T14:43:38.835786975Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestServer_RunTLS","Elapsed":1.1}
+{"Time":"2026-07-01T14:43:38.835990508Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestWithListener"}
+{"Time":"2026-07-01T14:43:38.835996234Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestWithListener","Output":"=== RUN   TestWithListener\n"}
+{"Time":"2026-07-01T14:43:38.836015924Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestWithListener/with_custom_listener"}
+{"Time":"2026-07-01T14:43:38.836019296Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestWithListener/with_custom_listener","Output":"=== RUN   TestWithListener/with_custom_listener\n"}
+{"Time":"2026-07-01T14:43:38.836125038Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestWithListener/with_custom_listener","Output":"--- PASS: TestWithListener/with_custom_listener (0.00s)\n"}
+{"Time":"2026-07-01T14:43:38.83613164Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestWithListener/with_custom_listener","Elapsed":0}
+{"Time":"2026-07-01T14:43:38.836137064Z","Action":"run","Package":"github.com/go-fuego/fuego","Test":"TestWithListener/no_custom_listener"}
+{"Time":"2026-07-01T14:43:38.836139816Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestWithListener/no_custom_listener","Output":"=== RUN   TestWithListener/no_custom_listener\n"}
+{"Time":"2026-07-01T14:43:38.836178602Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestWithListener/no_custom_listener","Output":"--- PASS: TestWithListener/no_custom_listener (0.00s)\n"}
+{"Time":"2026-07-01T14:43:38.836183356Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestWithListener/no_custom_listener","Elapsed":0}
+{"Time":"2026-07-01T14:43:38.836187806Z","Action":"output","Package":"github.com/go-fuego/fuego","Test":"TestWithListener","Output":"--- PASS: TestWithListener (0.00s)\n"}
+{"Time":"2026-07-01T14:43:38.836191954Z","Action":"pass","Package":"github.com/go-fuego/fuego","Test":"TestWithListener","Elapsed":0}
+{"Time":"2026-07-01T14:43:38.836726467Z","Action":"output","Package":"github.com/go-fuego/fuego","Output":"PASS\n"}
+{"Time":"2026-07-01T14:43:38.837607147Z","Action":"output","Package":"github.com/go-fuego/fuego","Output":"ok  \tgithub.com/go-fuego/fuego\t2.110s\n"}
+{"Time":"2026-07-01T14:43:38.837629533Z","Action":"pass","Package":"github.com/go-fuego/fuego","Elapsed":2.11}
+reward=1 graded=11 found=11 failed=0 parsed=11 framework=go exit_code=0

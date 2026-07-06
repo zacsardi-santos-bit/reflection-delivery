@@ -1,8 +1,0 @@
-patching file CHANGELOG.md
-patching file Cargo.lock
-patching file crates/biome_cli/Cargo.toml
-patching file crates/biome_cli/src/cli_options.rs
-patching file crates/biome_cli/src/execute/mod.rs
-patching file crates/biome_cli/src/reporter/gitlab.rs
-patching file crates/biome_cli/src/reporter/mod.rs
-patching file crates/biome_js_analyze/src/lint/suspicious/no_double_equals.rs

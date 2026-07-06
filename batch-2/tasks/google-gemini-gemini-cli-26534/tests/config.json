@@ -1,0 +1,27 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --reporter=verbose --coverage.enabled=false src/context/graph/render.test.ts src/context/graph/toGraph.test.ts src/context/pipeline/contextWorkingBuffer.test.ts",
+  "test_files": [
+    "packages/core/src/context/graph/render.test.ts",
+    "packages/core/src/context/graph/toGraph.test.ts",
+    "packages/core/src/context/pipeline/contextWorkingBuffer.test.ts",
+    "packages/core/src/context/system-tests/__snapshots__/lifecycle.golden.test.ts.snap"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl syncPristineHistory should append newly discovered pristine nodes to the end of the buffer",
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl syncPristineHistory should drop working nodes if their pristine root is dropped from authoritative history",
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl syncPristineHistory should correctly weave summarized and mutated nodes into their chronological spots when new nodes arrive",
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl syncPristineHistory should drop a non-pristine node if ANY of its multiple pristine roots are dropped from authoritative history",
+    "/workspace/repo/packages/core/src/context/graph/render.test.ts::render should filter out previewNodeIds",
+    "/workspace/repo/packages/core/src/context/graph/toGraph.test.ts::ContextGraphBuilder toGraph should skip legacy <session_context> headers even if they appear later in the history"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl should initialize with a pristine graph correctly",
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl should track 1:1 replacements (e.g., masking) and append to audit log",
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl should track N:1 abstractions (e.g., rolling summaries)",
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl should track multi-generation provenance correctly",
+    "/workspace/repo/packages/core/src/context/pipeline/contextWorkingBuffer.test.ts::ContextWorkingBufferImpl should handle net-new injected nodes without throwing"
+  ]
+}

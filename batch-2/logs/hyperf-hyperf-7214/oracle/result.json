@@ -1,0 +1,29 @@
+{
+    "id": "ee444bfb-116e-41aa-a79d-c826f8bf6517",
+    "started_at": "2026-07-04T15:39:36.014640",
+    "finished_at": "2026-07-04T15:39:51.015289",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__hyperf-hyperf-7214": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "hyperf-hyperf-7214__zCmZ8vH"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

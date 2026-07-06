@@ -1,0 +1,29 @@
+{
+    "id": "1ff5d200-df7d-4651-94cc-c88616f1313d",
+    "started_at": "2026-07-06T12:18:28.807638",
+    "finished_at": "2026-07-06T12:18:53.024220",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__marimo-team-marimo-8787": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "marimo-team-marimo-8787__bAKQrZj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

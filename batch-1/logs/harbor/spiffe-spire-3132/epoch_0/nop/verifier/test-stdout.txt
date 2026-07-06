@@ -1,0 +1,38 @@
+patching file pkg/server/cache/entrycache/fullcache_test.go
+patching file pkg/server/datastore/sqlstore/sqlstore_test.go
+patching file test/fakes/fakedatastore/fakedatastore.go
+# github.com/spiffe/spire/test/fakes/fakedatastore
+test/fakes/fakedatastore/fakedatastore.go:40:27: too many arguments in call to ds.Configure
+	have (context.Context, string)
+	want (string)
+FAIL	github.com/spiffe/spire/pkg/server/cache/entrycache [build failed]
+# github.com/spiffe/spire/pkg/server/datastore/sqlstore [github.com/spiffe/spire/pkg/server/datastore/sqlstore.test]
+pkg/server/datastore/sqlstore/sqlstore_test.go:138:28: too many arguments in call to ds.Configure
+	have (context.Context, string)
+	want (string)
+pkg/server/datastore/sqlstore/sqlstore_test.go:162:28: too many arguments in call to ds.Configure
+	have (context.Context, string)
+	want (string)
+pkg/server/datastore/sqlstore/sqlstore_test.go:173:28: too many arguments in call to ds.Configure
+	have (context.Context, string)
+	want (string)
+pkg/server/datastore/sqlstore/sqlstore_test.go:188:29: too many arguments in call to s.ds.Configure
+	have (context.Context, string)
+	want (string)
+pkg/server/datastore/sqlstore/sqlstore_test.go:196:29: too many arguments in call to s.ds.Configure
+	have (context.Context, string)
+	want (string)
+pkg/server/datastore/sqlstore/sqlstore_test.go:202:28: too many arguments in call to s.ds.Configure
+	have (context.Context, string)
+	want (string)
+pkg/server/datastore/sqlstore/sqlstore_test.go:208:28: too many arguments in call to s.ds.Configure
+	have (context.Context, string)
+	want (string)
+pkg/server/datastore/sqlstore/sqlstore_test.go:3924:32: too many arguments in call to s.ds.Configure
+	have (context.Context, string)
+	want (string)
+pkg/server/datastore/sqlstore/sqlstore_test.go:4096:28: too many arguments in call to p.Configure
+	have (context.Context, string)
+	want (string)
+FAIL	github.com/spiffe/spire/pkg/server/datastore/sqlstore [build failed]
+reward=0 graded=541 found=541 failed=541 parsed=2 framework=go exit_code=2

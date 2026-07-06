@@ -1,0 +1,25 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/python && pytest tests/unit/agents/orchestration/test_group_chat.py -v",
+  "test_files": [
+    "python/tests/unit/agents/orchestration/test_group_chat.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit.agents.orchestration.test_group_chat::test_init_member_without_description_throws",
+    "tests.unit.agents.orchestration.test_group_chat::test_prepare",
+    "tests.unit.agents.orchestration.test_group_chat::test_invoke",
+    "tests.unit.agents.orchestration.test_group_chat::test_invoke_with_list",
+    "tests.unit.agents.orchestration.test_group_chat::test_invoke_with_response_callback",
+    "tests.unit.agents.orchestration.test_group_chat::test_invoke_cancel_before_completion",
+    "tests.unit.agents.orchestration.test_group_chat::test_invoke_cancel_after_completion",
+    "tests.unit.agents.orchestration.test_group_chat::test_round_robin_group_chat_manager_init",
+    "tests.unit.agents.orchestration.test_group_chat::test_round_robin_group_chat_manager_init_with_max_rounds",
+    "tests.unit.agents.orchestration.test_group_chat::test_round_robin_group_chat_manager_init_with_human_response_function",
+    "tests.unit.agents.orchestration.test_group_chat::test_round_robin_group_chat_manager_should_terminate",
+    "tests.unit.agents.orchestration.test_group_chat::test_round_robin_group_chat_manager_should_terminate_without_max_rounds",
+    "tests.unit.agents.orchestration.test_group_chat::test_round_robin_group_chat_manager_select_next_agent"
+  ],
+  "PASS_TO_PASS": []
+}

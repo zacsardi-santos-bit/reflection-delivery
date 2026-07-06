@@ -1,0 +1,17 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/apps/oxfmt && pnpm run build-dev && pnpm exec vitest run test/cli/ignore_and_override/ignore_and_override.test.ts test/cli/no_error_on_unmatched_pattern/no_error_on_unmatched_pattern.test.ts",
+  "test_files": [
+    "apps/oxfmt/test/cli/ignore_and_override/__snapshots__/ignore_and_override.test.ts.snap",
+    "apps/oxfmt/test/cli/no_error_on_unmatched_pattern/__snapshots__/no_error_on_unmatched_pattern.test.ts.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/oxfmt/test/cli/ignore_and_override/ignore_and_override.test.ts::ignore_and_override should handle ignore files with overrides",
+    "/workspace/repo/apps/oxfmt/test/cli/no_error_on_unmatched_pattern/no_error_on_unmatched_pattern.test.ts::no_error_on_unmatched_pattern should handle --no-error-on-unmatched-pattern flag",
+    "/workspace/repo/apps/oxfmt/test/cli/no_error_on_unmatched_pattern/no_error_on_unmatched_pattern.test.ts::no_error_on_unmatched_pattern should handle unmatched glob patterns",
+    "/workspace/repo/apps/oxfmt/test/cli/no_error_on_unmatched_pattern/no_error_on_unmatched_pattern.test.ts::no_error_on_unmatched_pattern should ignore ignored paths even when explicitly passed"
+  ],
+  "PASS_TO_PASS": []
+}

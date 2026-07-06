@@ -1,0 +1,179 @@
+patching file nova_vm/src/ecmascript/types/spec/data_block.rs
+patching file tests/expectations.json
+patching file tests/metrics.json
+patching file tests/skip.json
+   Compiling libc v0.2.186
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling cfg-if v1.0.4
+   Compiling unicode-ident v1.0.24
+   Compiling zerocopy v0.8.52
+   Compiling allocator-api2 v0.2.21
+   Compiling bitflags v2.13.0
+   Compiling once_cell v1.21.4
+   Compiling memchr v2.8.2
+   Compiling rustix v1.1.4
+   Compiling linux-raw-sys v0.12.1
+   Compiling unicode-width v0.2.2
+   Compiling version_check v0.9.5
+   Compiling crossbeam-utils v0.8.21
+   Compiling object v0.37.3
+   Compiling getrandom v0.3.4
+   Compiling gimli v0.32.3
+   Compiling adler2 v2.0.1
+   Compiling itoa v1.0.18
+   Compiling miniz_oxide v0.8.9
+   Compiling rustversion v1.0.22
+   Compiling owo-colors v4.3.0
+   Compiling rustc-demangle v0.1.27
+   Compiling thiserror v1.0.69
+   Compiling smawk v0.3.3
+   Compiling siphasher v1.0.3
+   Compiling ahash v0.8.12
+   Compiling ryu v1.0.23
+   Compiling unicode-linebreak v0.1.5
+   Compiling rand_core v0.6.4
+   Compiling is_ci v1.2.0
+   Compiling phf_shared v0.11.3
+   Compiling bumpalo v3.20.3
+   Compiling textwrap v0.16.2
+   Compiling supports-color v3.0.2
+   Compiling rand v0.8.6
+   Compiling supports-unicode v3.0.0
+   Compiling supports-hyperlinks v3.2.0
+   Compiling parking_lot_core v0.9.12
+   Compiling static_assertions v1.1.0
+   Compiling autocfg v1.5.1
+   Compiling oxc_estree v0.36.0
+   Compiling rustc-hash v2.1.2
+   Compiling serde_core v1.0.228
+   Compiling scopeguard v1.2.0
+   Compiling oxc_allocator v0.36.0
+   Compiling smallvec v1.15.2
+   Compiling lock_api v0.4.14
+   Compiling unicode-id-start v1.4.0
+   Compiling equivalent v1.0.2
+   Compiling phf_generator v0.11.3
+   Compiling hashbrown v0.17.1
+   Compiling assert-unchecked v0.1.2
+   Compiling oxc_index v0.36.0
+   Compiling serde v1.0.228
+   Compiling ryu-js v1.0.2
+   Compiling syn v2.0.118
+   Compiling num-traits v0.2.19
+   Compiling addr2line v0.25.1
+   Compiling nonmax v0.5.5
+   Compiling either v1.16.0
+   Compiling cow-utils v0.1.3
+   Compiling castaway v0.2.4
+   Compiling small_string v0.1.0 (/workspace/repo/small_string)
+   Compiling fixedbitset v0.4.2
+   Compiling compact_str v0.8.2
+   Compiling indexmap v2.14.0
+   Compiling getrandom v0.2.17
+   Compiling ref-cast v1.0.25
+   Compiling thiserror v2.0.18
+   Compiling itertools v0.13.0
+   Compiling bytes v1.12.0
+   Compiling simdutf8 v0.1.5
+   Compiling tinyvec_macros v0.1.1
+   Compiling sonic-simd v0.1.4
+   Compiling nova_vm v0.1.0 (/workspace/repo/nova_vm)
+   Compiling tinyvec v1.11.0
+   Compiling sonic-number v0.1.2
+   Compiling seq-macro v0.3.6
+   Compiling foldhash v0.1.5
+   Compiling num-integer v0.1.46
+   Compiling petgraph v0.6.5
+   Compiling hashbrown v0.15.5
+   Compiling unicode-normalization v0.1.25
+   Compiling fast-float v0.2.0
+   Compiling terminal_size v0.4.4
+   Compiling utf8parse v0.2.2
+   Compiling wtf8 v0.1.0
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling num-bigint v0.4.6
+   Compiling anstyle-parse v1.0.0
+   Compiling colorchoice v1.0.5
+   Compiling portable-atomic v1.13.1
+   Compiling getrandom v0.4.3
+   Compiling zmij v1.0.21
+   Compiling anstyle-query v1.1.5
+   Compiling backtrace v0.3.76
+   Compiling anstyle v1.0.14
+   Compiling cfg_aliases v0.2.1
+   Compiling strsim v0.11.1
+   Compiling crossbeam-epoch v0.9.18
+   Compiling nix v0.31.3
+   Compiling rayon-core v1.13.0
+   Compiling heck v0.5.0
+   Compiling anstream v1.0.0
+   Compiling ppv-lite86 v0.2.21
+   Compiling serde_json v1.0.150
+   Compiling clap_lex v1.1.0
+   Compiling crossbeam-deque v0.8.6
+   Compiling console v0.16.3
+   Compiling backtrace-ext v0.2.1
+   Compiling hashbrown v0.14.5
+   Compiling rand_chacha v0.3.1
+   Compiling clap_builder v4.6.0
+   Compiling unit-prefix v0.5.2
+   Compiling serde_yml v0.0.10
+   Compiling fastrand v2.4.1
+   Compiling console v0.15.11
+   Compiling encoding_rs v0.8.35
+   Compiling log v0.4.33
+   Compiling libyml v0.0.3
+   Compiling arraydeque v0.5.1
+   Compiling indicatif v0.18.4
+   Compiling tempfile v3.27.0
+   Compiling dashmap v6.2.1
+   Compiling hashlink v0.8.4
+   Compiling wait-timeout v0.2.1
+   Compiling common v0.1.0 (/workspace/repo/common)
+   Compiling rayon v1.12.0
+   Compiling ctrlc v3.5.2
+   Compiling yaml-rust2 v0.8.1
+   Compiling thiserror-impl v1.0.69
+   Compiling oxc-miette-derive v1.0.2
+   Compiling phf_macros v0.11.3
+   Compiling oxc_ast_macros v0.36.0
+   Compiling serde_derive v1.0.228
+   Compiling thiserror-impl v2.0.18
+   Compiling ref-cast-impl v1.0.25
+   Compiling clap_derive v4.6.1
+   Compiling zeroize_derive v1.5.0
+   Compiling phf v0.11.3
+   Compiling zeroize v1.9.0
+   Compiling cliclack v0.3.8
+   Compiling oxc-miette v1.0.2
+   Compiling clap v4.6.1
+   Compiling oxc_span v0.36.0
+   Compiling oxc_diagnostics v0.36.0
+   Compiling oxc_syntax v0.36.0
+   Compiling oxc_regular_expression v0.36.0
+   Compiling oxc_cfg v0.36.0
+   Compiling oxc_ast v0.36.0
+   Compiling faststr v0.2.34
+   Compiling sonic-rs v0.3.17
+   Compiling tests v0.1.0 (/workspace/repo/tests)
+   Compiling oxc_ecmascript v0.36.0
+   Compiling oxc_parser v0.36.0
+   Compiling oxc_semantic v0.36.0
+error[E0599]: no variant, associated function, or constant named `Uint8ClampedArray` found for enum `ProtoIntrinsics` in the current scope
+   --> nova_vm/src/ecmascript/types/spec/data_block.rs:118:53
+    |
+118 |     const PROTO: ProtoIntrinsics = ProtoIntrinsics::Uint8ClampedArray;
+    |                                                     ^^^^^^^^^^^^^^^^^ variant, associated function, or constant not found in `ProtoIntrinsics`
+    |
+   ::: nova_vm/src/ecmascript/execution/realm/intrinsics.rs:165:1
+    |
+165 | pub enum ProtoIntrinsics {
+    | ------------------------ variant, associated function, or constant `Uint8ClampedArray` not found for this enum
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `nova_vm` (lib) due to 1 previous error
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `nova_vm` (lib test) due to 1 previous error
+error: command `/usr/local/rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics` exited with code 101
+reward=0 graded=64 found=0 failed=0 parsed=0 framework=cargo exit_code=101

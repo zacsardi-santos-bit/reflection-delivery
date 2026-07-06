@@ -1,0 +1,79 @@
+patching file chia/_tests/core/full_node/test_address_manager.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: cov-6.1.0, mock-3.14.0, anyio-4.8.0, xdist-3.6.1
+created: 17/17 workers
+17 workers [19 items]
+
+scheduling tests via LoadScheduling
+
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_collisions_tried 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_tried_bucket 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_eviction_works 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_load_missing_file 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_find 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_get_peers 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_serialization 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_new_bucket 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_no_evict 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addr_manager_ports 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_select 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_bad_ip_encoding 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_create 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_collisions_new 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_delete 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addr_manager 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_select_collision_no_collision 
+[gw7] [ 1/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_delete 
+[gw2] [ 2/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_collisions_new 
+[gw5] [ 3/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_find 
+[gw6] [ 4/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_create 
+[gw9] [ 5/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_tried_bucket 
+[gw10] [ 6/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_new_bucket 
+[gw3] [ 7/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_select 
+[gw0] [ 8/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addr_manager 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_cleanup 
+[gw1] [ 9/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addr_manager_ports 
+chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_migration 
+[gw0] [10/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_cleanup 
+[gw11] [11/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_select_collision_no_collision 
+[gw13] [12/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_eviction_works 
+[gw12] [13/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_no_evict 
+[gw14] [14/19] FAILED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_serialization 
+[gw16] [15/19] FAILED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_load_missing_file 
+[gw15] [16/19] FAILED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_bad_ip_encoding 
+[gw1] [17/19] FAILED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_migration 
+[gw4] [18/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_collisions_tried 
+[gw8] [19/19] PASSED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_addrman_get_peers 
+
+=================================== FAILURES ===================================
+______________________ TestPeerManager.test_serialization ______________________
+[gw14] linux -- Python 3.11.15 /usr/local/bin/python3.11
+chia/_tests/core/full_node/test_address_manager.py:575: in test_serialization
+    serialised_bytes = addrman.serialize_bytes()
+E   AttributeError: 'AddressManagerTest' object has no attribute 'serialize_bytes'
+____________________ TestPeerManager.test_load_missing_file ____________________
+[gw16] linux -- Python 3.11.15 /usr/local/bin/python3.11
+chia/_tests/core/full_node/test_address_manager.py:650: in test_load_missing_file
+    addrman = await AddressManager.create_address_manager(peers_dat_filename)
+E   AttributeError: type object 'AddressManager' has no attribute 'create_address_manager'
+_____________________ TestPeerManager.test_bad_ip_encoding _____________________
+[gw15] linux -- Python 3.11.15 /usr/local/bin/python3.11
+chia/_tests/core/full_node/test_address_manager.py:622: in test_bad_ip_encoding
+    info.stream(nodes)
+E   AttributeError: 'ExtendedPeerInfo' object has no attribute 'stream'
+________________________ TestPeerManager.test_migration ________________________
+[gw1] linux -- Python 3.11.15 /usr/local/bin/python3.11
+chia/_tests/core/full_node/test_address_manager.py:743: in test_migration
+    addrman2 = await AddressManager.create_address_manager(peers_dat_filename)
+E   AttributeError: type object 'AddressManager' has no attribute 'create_address_manager'
+=========================== short test summary info ============================
+FAILED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_serialization - AttributeError: 'AddressManagerTest' object has no attribute 'serialize_bytes'
+FAILED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_load_missing_file - AttributeError: type object 'AddressManager' has no attribute 'create_address_manager'
+FAILED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_bad_ip_encoding - AttributeError: 'ExtendedPeerInfo' object has no attribute 'stream'
+FAILED chia/_tests/core/full_node/test_address_manager.py::TestPeerManager::test_migration - AttributeError: type object 'AddressManager' has no attribute 'create_address_manager'
+========================= 4 failed, 15 passed in 7.03s =========================
+reward=0 graded=19 found=0 failed=0 parsed=15 framework=pytest exit_code=1

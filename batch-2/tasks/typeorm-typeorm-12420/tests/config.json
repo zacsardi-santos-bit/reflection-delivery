@@ -1,0 +1,20 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && service postgresql start && sleep 3 && jq 'map(select(.type == \"postgres\"))' ormconfig.sample.json > ormconfig.json && pnpm run compile; npx mocha --no-config --check-leaks --color --exit --timeout 90000 --global allowedDriverRequire --file ./build/compiled/test/utils/test-setup.js ./build/compiled/test/github-issues/9381/issue-9381.test.js ./build/compiled/test/functional/find-options/json-contains-operator/json-contains-operator.test.js",
+  "test_files": [
+    "test/functional/find-options/json-contains-operator/entity/Item.ts",
+    "test/functional/find-options/json-contains-operator/json-contains-operator.test.ts",
+    "test/github-issues/9381/issue-9381.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/build/compiled/test/functional/find-options/json-contains-operator/json-contains-operator.test.js::find options > find operators > JsonContains should match jsonb columns by partial array containment",
+    "/workspace/repo/build/compiled/test/functional/find-options/json-contains-operator/json-contains-operator.test.js::find options > find operators > JsonContains should not match when no array element is contained",
+    "/workspace/repo/build/compiled/test/functional/find-options/json-contains-operator/json-contains-operator.test.js::find options > find operators > JsonContains should match jsonb columns storing primitive arrays"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/build/compiled/test/github-issues/9381/issue-9381.test.js::github issues > #9381 The column option \u300atransformer\u300b affects the result of the query condition generation transform and find values",
+    "/workspace/repo/build/compiled/test/github-issues/9381/issue-9381.test.js::github issues > #9381 The column option \u300atransformer\u300b affects the result of the query condition generation transform json values and find values"
+  ]
+}

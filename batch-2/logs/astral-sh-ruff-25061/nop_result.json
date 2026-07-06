@@ -1,0 +1,98 @@
+{
+    "id": "7fde8681-f892-43b0-944e-733efb9bbfb2",
+    "task_name": "astral-sh-ruff-25061",
+    "trial_name": "astral-sh-ruff-25061__AHAMwpX",
+    "trial_uri": "file:///tmp/nop/2026-07-02__17-50-34/astral-sh-ruff-25061__AHAMwpX",
+    "task_id": {
+        "path": "astral-sh-ruff-25061"
+    },
+    "source": "src",
+    "task_checksum": "821d343bd74a84877a0ad30c26d202c24dc5726488abac8c30ee0800b32069a2",
+    "config": {
+        "task": {
+            "path": "astral-sh-ruff-25061",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "astral-sh-ruff-25061__AHAMwpX",
+        "trials_dir": "/tmp/nop/2026-07-02__17-50-34",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "76b0a1d8-c9c0-42b4-830e-0a37ec101360"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-02T17:50:39.180091Z",
+    "finished_at": "2026-07-02T17:50:54.583447Z",
+    "environment_setup": {
+        "started_at": "2026-07-02T17:50:39.184529Z",
+        "finished_at": "2026-07-02T17:50:41.257042Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-02T17:50:41.257078Z",
+        "finished_at": "2026-07-02T17:50:41.257124Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-02T17:50:41.257187Z",
+        "finished_at": "2026-07-02T17:50:41.257217Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-02T17:50:41.257320Z",
+        "finished_at": "2026-07-02T17:50:44.266757Z"
+    }
+}

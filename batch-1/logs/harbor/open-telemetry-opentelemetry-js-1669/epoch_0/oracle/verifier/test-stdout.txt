@@ -1,0 +1,58 @@
+patching file packages/opentelemetry-resource-detector-aws/test/detectors/AwsEksDetector.test.ts
+
+> @opentelemetry/resource-detector-aws@0.12.0 precompile
+> tsc --version
+
+Version 3.9.7
+
+> @opentelemetry/resource-detector-aws@0.12.0 compile
+> npm run version:update && tsc -p .
+
+
+> @opentelemetry/resource-detector-aws@0.12.0 version:update
+> node ../../scripts/version-update.js
+
+
+
+  awsEksDetector
+    on successful request
+      ✓ should return an aws_eks_instance_resource
+      ✓ should return a resource with clusterName attribute without cgroup file
+      ✓ should return a resource with container ID attribute without a clusterName
+      ✓ should return a resource with clusterName attribute when cgroup file does not contain valid Container ID
+      ✓ should return an empty resource when not running on Eks
+      ✓ should return an empty resource when k8s token file does not exist
+      ✓ should return an empty resource when containerId and clusterName are invalid
+    on unsuccesful request
+      ✓ should throw when receiving error response code
+      ✓ should return an empty resource when timed out
+      1) should return an empty resource when timed out
+
+
+  9 passing (110ms)
+  1 failing
+
+  1) awsEksDetector
+       on unsuccesful request
+         should return an empty resource when timed out:
+     Uncaught Error: Failed to load page, status code: 404
+      at IncomingMessage.<anonymous> (src/detectors/AwsEksDetector.ts:224:15)
+      at IncomingMessage.emit (node:events:517:28)
+      at endReadableNT (node:internal/streams/readable:1400:12)
+      at processTicksAndRejections (node:internal/process/task_queues:82:21)
+      at runNextTicks (node:internal/process/task_queues:64:3)
+      at processImmediate (node:internal/timers:447:9)
+
+
+
+/workspace/repo/packages/opentelemetry-resource-detector-aws/node_modules/mocha/lib/runner.js:911
+    throw err;
+    ^
+
+Error: EKS metadata api request timed out.
+    at Timeout.<anonymous> (/workspace/repo/packages/opentelemetry-resource-detector-aws/src/detectors/AwsEksDetector.ts:206:16)
+    at listOnTimeout (node:internal/timers:569:17)
+    at processTimers (node:internal/timers:512:7)
+
+Node.js v18.20.8
+reward=1 graded=8 found=8 failed=0 parsed=10 framework=mocha exit_code=7

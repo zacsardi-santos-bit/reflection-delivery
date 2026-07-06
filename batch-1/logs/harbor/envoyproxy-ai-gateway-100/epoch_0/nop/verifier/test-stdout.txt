@@ -1,0 +1,81 @@
+patching file filterconfig/filterconfig_test.go
+patching file internal/controller/sink_test.go
+patching file internal/extproc/mocks_test.go
+patching file internal/extproc/processor_test.go
+patching file internal/extproc/router/request_body_test.go
+patching file internal/extproc/router/router_test.go
+patching file internal/extproc/server_test.go
+patching file internal/extproc/translator/translator_test.go
+patching file internal/extproc/watcher_test.go
+patching file tests/cel-validation/main_test.go
+patching file tests/cel-validation/testdata/aigatewayroutes/basic.yaml
+patching file tests/cel-validation/testdata/aigatewayroutes/no_target_refs.yaml
+patching file tests/cel-validation/testdata/aigatewayroutes/non_openai_schema.yaml
+patching file tests/cel-validation/testdata/aigatewayroutes/unknown_schema.yaml
+patching file tests/cel-validation/testdata/aigatewayroutes/unsupported_match.yaml
+patching file tests/cel-validation/testdata/aiservicebackends/basic-eg-backend.yaml
+patching file tests/cel-validation/testdata/aiservicebackends/basic.yaml
+patching file tests/cel-validation/testdata/aiservicebackends/unknown_schema.yaml
+patching file tests/controller/controller_test.go
+patching file tests/e2e/testdata/translation_testupstream.yaml
+patching file tests/extproc/custom_extproc_test.go
+patching file tests/extproc/extproc_test.go
+# github.com/envoyproxy/ai-gateway/filterconfig_test [github.com/envoyproxy/ai-gateway/filterconfig.test]
+filterconfig/filterconfig_test.go:65:40: cfg.Schema undefined (type *filterconfig.Config has no field or method Schema)
+filterconfig/filterconfig_test.go:73:65: cfg.Rules[0].Backends[1].Schema undefined (type filterconfig.Backend has no field or method Schema)
+filterconfig/filterconfig_test.go:75:61: cfg.Rules[1].Backends[0].Schema undefined (type filterconfig.Backend has no field or method Schema)
+{"Time":"2026-06-29T15:18:53.102540914Z","Action":"start","Package":"github.com/envoyproxy/ai-gateway/filterconfig"}
+{"Time":"2026-06-29T15:18:53.102636793Z","Action":"output","Package":"github.com/envoyproxy/ai-gateway/filterconfig","Output":"FAIL\tgithub.com/envoyproxy/ai-gateway/filterconfig [build failed]\n"}
+{"Time":"2026-06-29T15:18:53.102672033Z","Action":"fail","Package":"github.com/envoyproxy/ai-gateway/filterconfig","Elapsed":0}
+# github.com/envoyproxy/ai-gateway/internal/controller [github.com/envoyproxy/ai-gateway/internal/controller.test]
+internal/controller/sink_test.go:63:43: unknown field Name in struct literal of type "github.com/envoyproxy/ai-gateway/api/v1alpha1".VersionedAPISchema
+internal/controller/sink_test.go:219:6: unknown field Name in struct literal of type "github.com/envoyproxy/ai-gateway/api/v1alpha1".VersionedAPISchema
+internal/controller/sink_test.go:252:44: unknown field Name in struct literal of type "github.com/envoyproxy/ai-gateway/api/v1alpha1".VersionedAPISchema
+internal/controller/sink_test.go:273:5: unknown field Schema in struct literal of type filterconfig.Config
+internal/controller/sink_test.go:273:63: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/controller/sink_test.go:279:38: unknown field Schema in struct literal of type struct{Name string "yaml:\"name\""; OutputSchema filterconfig.VersionedAPISchema "yaml:\"outputSchema\""; Weight int "yaml:\"weight\""; Auth *filterconfig.BackendAuth "yaml:\"auth,omitempty\""}
+internal/controller/sink_test.go:279:78: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+# github.com/envoyproxy/ai-gateway/internal/extproc [github.com/envoyproxy/ai-gateway/internal/extproc.test]
+internal/extproc/mocks_test.go:111:53: unknown field Schema in struct literal of type filterconfig.Backend
+internal/extproc/processor_test.go:99:59: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/processor_test.go:113:59: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/processor_test.go:119:6: unknown field Name in struct literal of type struct{Schema filterconfig.APISchema "yaml:\"schema\""; Version string "yaml:\"version,omitempty\""}
+internal/extproc/processor_test.go:130:59: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/processor_test.go:136:6: unknown field Name in struct literal of type struct{Schema filterconfig.APISchema "yaml:\"schema\""; Version string "yaml:\"version,omitempty\""}
+internal/extproc/processor_test.go:148:59: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/processor_test.go:157:6: unknown field Name in struct literal of type struct{Schema filterconfig.APISchema "yaml:\"schema\""; Version string "yaml:\"version,omitempty\""}
+internal/extproc/server_test.go:32:4: unknown field Schema in struct literal of type filterconfig.Config
+internal/extproc/server_test.go:32:44: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/server_test.go:32:4: too many errors
+# github.com/envoyproxy/ai-gateway/internal/extproc/translator [github.com/envoyproxy/ai-gateway/internal/extproc/translator.test]
+internal/extproc/translator/translator_test.go:14:36: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/translator/translator_test.go:15:36: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/translator/translator_test.go:21:36: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/translator/translator_test.go:22:36: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/translator/translator_test.go:35:36: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/translator/translator_test.go:36:36: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+# github.com/envoyproxy/ai-gateway/internal/extproc/router [github.com/envoyproxy/ai-gateway/internal/extproc/router.test]
+internal/extproc/router/request_body_test.go:16:68: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/router/request_body_test.go:21:68: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/router/router_test.go:37:47: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/router/router_test.go:42:20: unknown field Schema in struct literal of type struct{Name string "yaml:\"name\""; OutputSchema filterconfig.VersionedAPISchema "yaml:\"outputSchema\""; Weight int "yaml:\"weight\""; Auth *filterconfig.BackendAuth "yaml:\"auth,omitempty\""}
+internal/extproc/router/router_test.go:43:20: unknown field Schema in struct literal of type struct{Name string "yaml:\"name\""; OutputSchema filterconfig.VersionedAPISchema "yaml:\"outputSchema\""; Weight int "yaml:\"weight\""; Auth *filterconfig.BackendAuth "yaml:\"auth,omitempty\""}
+internal/extproc/router/router_test.go:51:23: unknown field Schema in struct literal of type struct{Name string "yaml:\"name\""; OutputSchema filterconfig.VersionedAPISchema "yaml:\"outputSchema\""; Weight int "yaml:\"weight\""; Auth *filterconfig.BackendAuth "yaml:\"auth,omitempty\""}
+internal/extproc/router/router_test.go:72:33: b.Schema undefined (type *filterconfig.Backend has no field or method Schema)
+internal/extproc/router/router_test.go:81:34: b.Schema undefined (type *filterconfig.Backend has no field or method Schema)
+internal/extproc/router/router_test.go:95:47: unknown field Name in struct literal of type filterconfig.VersionedAPISchema
+internal/extproc/router/router_test.go:99:18: unknown field Schema in struct literal of type struct{Name string "yaml:\"name\""; OutputSchema filterconfig.VersionedAPISchema "yaml:\"outputSchema\""; Weight int "yaml:\"weight\""; Auth *filterconfig.BackendAuth "yaml:\"auth,omitempty\""}
+internal/extproc/router/router_test.go:99:18: too many errors
+{"Time":"2026-06-29T15:18:55.856176776Z","Action":"start","Package":"github.com/envoyproxy/ai-gateway/internal/controller"}
+{"Time":"2026-06-29T15:18:55.856235545Z","Action":"output","Package":"github.com/envoyproxy/ai-gateway/internal/controller","Output":"FAIL\tgithub.com/envoyproxy/ai-gateway/internal/controller [build failed]\n"}
+{"Time":"2026-06-29T15:18:55.856272625Z","Action":"fail","Package":"github.com/envoyproxy/ai-gateway/internal/controller","Elapsed":0}
+{"Time":"2026-06-29T15:18:55.856313345Z","Action":"start","Package":"github.com/envoyproxy/ai-gateway/internal/extproc"}
+{"Time":"2026-06-29T15:18:55.856384874Z","Action":"output","Package":"github.com/envoyproxy/ai-gateway/internal/extproc","Output":"FAIL\tgithub.com/envoyproxy/ai-gateway/internal/extproc [build failed]\n"}
+{"Time":"2026-06-29T15:18:55.856415064Z","Action":"fail","Package":"github.com/envoyproxy/ai-gateway/internal/extproc","Elapsed":0}
+{"Time":"2026-06-29T15:18:55.856408814Z","Action":"start","Package":"github.com/envoyproxy/ai-gateway/internal/extproc/router"}
+{"Time":"2026-06-29T15:18:55.856577783Z","Action":"output","Package":"github.com/envoyproxy/ai-gateway/internal/extproc/router","Output":"FAIL\tgithub.com/envoyproxy/ai-gateway/internal/extproc/router [build failed]\n"}
+{"Time":"2026-06-29T15:18:55.856609793Z","Action":"fail","Package":"github.com/envoyproxy/ai-gateway/internal/extproc/router","Elapsed":0}
+{"Time":"2026-06-29T15:18:55.856645883Z","Action":"start","Package":"github.com/envoyproxy/ai-gateway/internal/extproc/translator"}
+{"Time":"2026-06-29T15:18:55.856742452Z","Action":"output","Package":"github.com/envoyproxy/ai-gateway/internal/extproc/translator","Output":"FAIL\tgithub.com/envoyproxy/ai-gateway/internal/extproc/translator [build failed]\n"}
+{"Time":"2026-06-29T15:18:55.856770962Z","Action":"fail","Package":"github.com/envoyproxy/ai-gateway/internal/extproc/translator","Elapsed":0}
+reward=0 graded=118 found=0 failed=0 parsed=5 framework=go exit_code=1

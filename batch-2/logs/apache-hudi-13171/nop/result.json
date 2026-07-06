@@ -1,0 +1,29 @@
+{
+    "id": "68c43833-be37-47f0-bbab-e46a6b7dcd17",
+    "started_at": "2026-07-06T12:16:27.359433",
+    "finished_at": "2026-07-06T12:17:42.840310",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__apache-hudi-13171": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "apache-hudi-13171__uEDogLc"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

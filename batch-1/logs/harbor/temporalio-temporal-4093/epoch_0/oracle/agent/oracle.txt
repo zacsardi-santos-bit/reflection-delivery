@@ -1,0 +1,8 @@
+patching file client/admin/client.go
+patching file client/history/client.go
+patching file service/history/replication/bi_direction_stream.go
+patching file service/history/replication/executable_task_initializer.go
+patching file service/history/replication/executable_task_tracker.go
+patching file service/history/replication/executable_task_tracker_mock.go
+patching file service/history/replication/grpc_stream_client.go
+patching file service/history/replication/stream_receiver.go

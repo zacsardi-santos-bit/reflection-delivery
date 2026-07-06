@@ -1,0 +1,4 @@
+patching file macros/src/attr/struct.rs
+patching file macros/src/types/enum.rs
+patching file macros/src/types/mod.rs
+patching file macros/src/types/named.rs

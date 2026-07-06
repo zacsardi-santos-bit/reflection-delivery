@@ -1,0 +1,10 @@
+patching file openmeter/billing/worker/subscription/scanario_test.go
+patching file openmeter/billing/worker/subscription/sync_test.go
+Starting PostgreSQL 15 database server: main.
+# github.com/openmeterio/openmeter/openmeter/billing/worker/subscription [github.com/openmeterio/openmeter/openmeter/billing/worker/subscription.test]
+openmeter/billing/worker/subscription/sync_test.go:1873:18: undefined: billing.ImmutableInvoiceHandlingNotSupportedErrorCode
+openmeter/billing/worker/subscription/sync_test.go:1874:10: undefined: SubscriptionSyncComponentName
+{"Time":"2026-06-29T15:17:01.82235204Z","Action":"start","Package":"github.com/openmeterio/openmeter/openmeter/billing/worker/subscription"}
+{"Time":"2026-06-29T15:17:01.822454554Z","Action":"output","Package":"github.com/openmeterio/openmeter/openmeter/billing/worker/subscription","Output":"FAIL\tgithub.com/openmeterio/openmeter/openmeter/billing/worker/subscription [build failed]\n"}
+{"Time":"2026-06-29T15:17:01.822468457Z","Action":"fail","Package":"github.com/openmeterio/openmeter/openmeter/billing/worker/subscription","Elapsed":0}
+reward=0 graded=31 found=0 failed=0 parsed=1 framework=go exit_code=1

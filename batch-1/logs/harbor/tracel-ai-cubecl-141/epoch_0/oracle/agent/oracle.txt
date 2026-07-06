@@ -1,0 +1,20 @@
+patching file crates/cubecl-core/src/codegen/integrator.rs
+patching file crates/cubecl-core/src/compute/builder.rs
+patching file crates/cubecl-core/src/frontend/container/mod.rs
+patching file crates/cubecl-core/src/frontend/container/sequence/base.rs (renamed from crates/cubecl-core/src/frontend/sequence.rs)
+patching file crates/cubecl-core/src/frontend/container/sequence/launch.rs
+patching file crates/cubecl-core/src/frontend/container/sequence/mod.rs
+patching file crates/cubecl-core/src/frontend/element/array.rs
+patching file crates/cubecl-core/src/frontend/element/atomic.rs
+patching file crates/cubecl-core/src/frontend/element/base.rs
+patching file crates/cubecl-core/src/frontend/element/float.rs
+patching file crates/cubecl-core/src/frontend/element/int.rs
+patching file crates/cubecl-core/src/frontend/element/numeric.rs
+patching file crates/cubecl-core/src/frontend/element/tensor.rs
+patching file crates/cubecl-core/src/frontend/element/uint.rs
+patching file crates/cubecl-core/src/frontend/mod.rs
+patching file crates/cubecl-macros/src/generate/cube_type.rs
+patching file crates/cubecl-macros/src/generate/kernel.rs
+patching file crates/cubecl-macros/src/generate/launch.rs
+patching file crates/cubecl-runtime/src/tune/tuner.rs
+patching file examples/gelu/src/lib.rs

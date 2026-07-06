@@ -1,5 +1,0 @@
-patching file Makefile
-patching file docs/developer-guide/test-e2e.md
-patching file pkg/apis/application/v1alpha1/types.go
-patching file server/project/project.go
-patching file server/project/util.go

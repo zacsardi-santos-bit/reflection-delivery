@@ -1,0 +1,29 @@
+{
+    "id": "78313ee1-5010-420d-a453-801fb3c9f023",
+    "started_at": "2026-07-04T15:38:17.082623",
+    "finished_at": "2026-07-04T15:38:50.817301",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__continuedev-continue-5945": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "continuedev-continue-5945__zieZ6wA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

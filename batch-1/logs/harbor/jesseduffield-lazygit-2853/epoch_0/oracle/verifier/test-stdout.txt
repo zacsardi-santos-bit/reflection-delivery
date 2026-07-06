@@ -1,0 +1,95 @@
+patching file pkg/integration/clients/go_test.go
+patching file pkg/integration/components/test_test.go
+patching file pkg/integration/tests/demo/bisect.go
+patching file pkg/integration/tests/demo/cherry_pick.go
+patching file pkg/integration/tests/demo/commit_and_push.go
+patching file pkg/integration/tests/demo/interactive_rebase.go
+patching file pkg/integration/tests/test_list.go
+patching file test/default_test_config/config.yml
+{"Time":"2026-06-29T15:31:47.630133966Z","Action":"start","Package":"github.com/jesseduffield/lazygit/pkg/integration/components"}
+{"Time":"2026-06-29T15:31:47.669696824Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestManualFailure"}
+{"Time":"2026-06-29T15:31:47.669744125Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestManualFailure","Output":"=== RUN   TestManualFailure\n"}
+{"Time":"2026-06-29T15:31:47.66983061Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestManualFailure","Output":"--- PASS: TestManualFailure (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.669865897Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestManualFailure","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.669905105Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestSuccess"}
+{"Time":"2026-06-29T15:31:47.669913782Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestSuccess","Output":"=== RUN   TestSuccess\n"}
+{"Time":"2026-06-29T15:31:47.669987506Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestSuccess","Output":"--- PASS: TestSuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670009576Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestSuccess","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.670026445Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction"}
+{"Time":"2026-06-29T15:31:47.670050114Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction","Output":"=== RUN   TestGitVersionRestriction\n"}
+{"Time":"2026-06-29T15:31:47.670065633Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_newer"}
+{"Time":"2026-06-29T15:31:47.67007349Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_newer","Output":"=== RUN   TestGitVersionRestriction/AtLeast,_current_is_newer\n"}
+{"Time":"2026-06-29T15:31:47.670206524Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_newer","Output":"--- PASS: TestGitVersionRestriction/AtLeast,_current_is_newer (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670225483Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_newer","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.670238948Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_same"}
+{"Time":"2026-06-29T15:31:47.67024771Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_same","Output":"=== RUN   TestGitVersionRestriction/AtLeast,_current_is_same\n"}
+{"Time":"2026-06-29T15:31:47.670271101Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_same","Output":"--- PASS: TestGitVersionRestriction/AtLeast,_current_is_same (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670282427Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_same","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.670296692Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_older"}
+{"Time":"2026-06-29T15:31:47.670313422Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_older","Output":"=== RUN   TestGitVersionRestriction/AtLeast,_current_is_older\n"}
+{"Time":"2026-06-29T15:31:47.670339912Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_older","Output":"--- PASS: TestGitVersionRestriction/AtLeast,_current_is_older (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670349352Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/AtLeast,_current_is_older","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.670363844Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_older"}
+{"Time":"2026-06-29T15:31:47.67037439Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_older","Output":"=== RUN   TestGitVersionRestriction/Before,_current_is_older\n"}
+{"Time":"2026-06-29T15:31:47.67039092Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_older","Output":"--- PASS: TestGitVersionRestriction/Before,_current_is_older (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670400738Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_older","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.67040914Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_same"}
+{"Time":"2026-06-29T15:31:47.670417274Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_same","Output":"=== RUN   TestGitVersionRestriction/Before,_current_is_same\n"}
+{"Time":"2026-06-29T15:31:47.670438218Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_same","Output":"--- PASS: TestGitVersionRestriction/Before,_current_is_same (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670467533Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_same","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.67049008Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_newer"}
+{"Time":"2026-06-29T15:31:47.670498814Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_newer","Output":"=== RUN   TestGitVersionRestriction/Before,_current_is_newer\n"}
+{"Time":"2026-06-29T15:31:47.670530996Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_newer","Output":"--- PASS: TestGitVersionRestriction/Before,_current_is_newer (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.67054619Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Before,_current_is_newer","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.670554397Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Includes,_current_is_included"}
+{"Time":"2026-06-29T15:31:47.670563183Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Includes,_current_is_included","Output":"=== RUN   TestGitVersionRestriction/Includes,_current_is_included\n"}
+{"Time":"2026-06-29T15:31:47.670592475Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Includes,_current_is_included","Output":"--- PASS: TestGitVersionRestriction/Includes,_current_is_included (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670621102Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Includes,_current_is_included","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.670629985Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Includes,_current_is_not_included"}
+{"Time":"2026-06-29T15:31:47.670643312Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Includes,_current_is_not_included","Output":"=== RUN   TestGitVersionRestriction/Includes,_current_is_not_included\n"}
+{"Time":"2026-06-29T15:31:47.670664765Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Includes,_current_is_not_included","Output":"--- PASS: TestGitVersionRestriction/Includes,_current_is_not_included (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670675802Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction/Includes,_current_is_not_included","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.670685165Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction","Output":"--- PASS: TestGitVersionRestriction (0.00s)\n"}
+{"Time":"2026-06-29T15:31:47.670740956Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Test":"TestGitVersionRestriction","Elapsed":0}
+{"Time":"2026-06-29T15:31:47.670752878Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Output":"PASS\n"}
+{"Time":"2026-06-29T15:31:47.671315297Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Output":"ok  \tgithub.com/jesseduffield/lazygit/pkg/integration/components\t0.041s\n"}
+{"Time":"2026-06-29T15:31:47.671359344Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/components","Elapsed":0.041}
+{"Time":"2026-06-29T15:31:50.807334095Z","Action":"start","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients"}
+{"Time":"2026-06-29T15:31:50.80753327Z","Action":"start","Package":"github.com/jesseduffield/lazygit/pkg/integration/tests"}
+{"Time":"2026-06-29T15:31:50.807648197Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/tests","Output":"?   \tgithub.com/jesseduffield/lazygit/pkg/integration/tests\t[no test files]\n"}
+{"Time":"2026-06-29T15:31:50.807686005Z","Action":"start","Package":"github.com/jesseduffield/lazygit/pkg/integration/tests/demo"}
+{"Time":"2026-06-29T15:31:50.807713786Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/tests/demo","Output":"?   \tgithub.com/jesseduffield/lazygit/pkg/integration/tests/demo\t[no test files]\n"}
+{"Time":"2026-06-29T15:31:50.807744404Z","Action":"skip","Package":"github.com/jesseduffield/lazygit/pkg/integration/tests/demo","Elapsed":0}
+{"Time":"2026-06-29T15:31:50.807680915Z","Action":"skip","Package":"github.com/jesseduffield/lazygit/pkg/integration/tests","Elapsed":0}
+{"Time":"2026-06-29T15:31:50.847597486Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration"}
+{"Time":"2026-06-29T15:31:50.847644782Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration","Output":"=== RUN   TestIntegration\n"}
+{"Time":"2026-06-29T15:31:52.692778856Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push"}
+{"Time":"2026-06-29T15:31:52.692827168Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push","Output":"=== RUN   TestIntegration/sync/force_push\n"}
+{"Time":"2026-06-29T15:31:52.69284857Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push","Output":"=== PAUSE TestIntegration/sync/force_push\n"}
+{"Time":"2026-06-29T15:31:52.692866919Z","Action":"pause","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push"}
+{"Time":"2026-06-29T15:31:52.692890421Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_matching"}
+{"Time":"2026-06-29T15:31:52.692905638Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_matching","Output":"=== RUN   TestIntegration/sync/force_push_multiple_matching\n"}
+{"Time":"2026-06-29T15:31:52.692916996Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_matching","Output":"=== PAUSE TestIntegration/sync/force_push_multiple_matching\n"}
+{"Time":"2026-06-29T15:31:52.692925658Z","Action":"pause","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_matching"}
+{"Time":"2026-06-29T15:31:52.692934864Z","Action":"run","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_upstream"}
+{"Time":"2026-06-29T15:31:52.69294357Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_upstream","Output":"=== RUN   TestIntegration/sync/force_push_multiple_upstream\n"}
+{"Time":"2026-06-29T15:31:52.692952782Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_upstream","Output":"=== PAUSE TestIntegration/sync/force_push_multiple_upstream\n"}
+{"Time":"2026-06-29T15:31:52.692962947Z","Action":"pause","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_upstream"}
+{"Time":"2026-06-29T15:31:52.695693048Z","Action":"cont","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push"}
+{"Time":"2026-06-29T15:31:52.695732105Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push","Output":"=== CONT  TestIntegration/sync/force_push\n"}
+{"Time":"2026-06-29T15:31:52.695742935Z","Action":"cont","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_upstream"}
+{"Time":"2026-06-29T15:31:52.695750983Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_upstream","Output":"=== CONT  TestIntegration/sync/force_push_multiple_upstream\n"}
+{"Time":"2026-06-29T15:31:52.695764713Z","Action":"cont","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_matching"}
+{"Time":"2026-06-29T15:31:52.695771967Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_matching","Output":"=== CONT  TestIntegration/sync/force_push_multiple_matching\n"}
+{"Time":"2026-06-29T15:31:53.224052805Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_upstream","Output":"--- PASS: TestIntegration/sync/force_push_multiple_upstream (0.53s)\n"}
+{"Time":"2026-06-29T15:31:53.22751479Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_upstream","Elapsed":0.53}
+{"Time":"2026-06-29T15:31:53.22756379Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_matching","Output":"--- PASS: TestIntegration/sync/force_push_multiple_matching (0.53s)\n"}
+{"Time":"2026-06-29T15:31:53.234527117Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push_multiple_matching","Elapsed":0.53}
+{"Time":"2026-06-29T15:31:53.234637735Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push","Output":"--- PASS: TestIntegration/sync/force_push (0.54s)\n"}
+{"Time":"2026-06-29T15:31:53.234672952Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration/sync/force_push","Elapsed":0.54}
+{"Time":"2026-06-29T15:31:53.234691045Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration","Output":"--- PASS: TestIntegration (1.85s)\n"}
+{"Time":"2026-06-29T15:31:53.234709047Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Test":"TestIntegration","Elapsed":1.85}
+{"Time":"2026-06-29T15:31:53.23472312Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Output":"PASS\n"}
+{"Time":"2026-06-29T15:31:53.235662081Z","Action":"output","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Output":"ok  \tgithub.com/jesseduffield/lazygit/pkg/integration/clients\t2.428s\n"}
+{"Time":"2026-06-29T15:31:53.235696325Z","Action":"pass","Package":"github.com/jesseduffield/lazygit/pkg/integration/clients","Elapsed":2.428}
+reward=1 graded=15 found=15 failed=0 parsed=15 framework=go exit_code=0

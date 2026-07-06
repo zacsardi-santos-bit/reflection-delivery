@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/src/clusterfuzz/_internal/tests/appengine/handlers/cron/aggregate_fuzzer_stats_test.py -v",
+  "test_files": [
+    "src/clusterfuzz/_internal/tests/appengine/handlers/cron/aggregate_fuzzer_stats_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "clusterfuzz._internal.tests.appengine.handlers.cron.aggregate_fuzzer_stats_test.AggregateFuzzerStatsTest::test_aggregate_fuzzer_stats",
+    "clusterfuzz._internal.tests.appengine.handlers.cron.aggregate_fuzzer_stats_test.AggregateFuzzerStatsTest::test_aggregate_fuzzer_stats_ignoring_409",
+    "clusterfuzz._internal.tests.appengine.handlers.cron.aggregate_fuzzer_stats_test.AggregateFuzzerStatsTest::test_aggregate_fuzzer_stats_raises_non_409",
+    "clusterfuzz._internal.tests.appengine.handlers.cron.aggregate_fuzzer_stats_test.AggregateFuzzerStatsTest::test_aggregate_fuzzer_stats_with_date_flag",
+    "clusterfuzz._internal.tests.appengine.handlers.cron.aggregate_fuzzer_stats_test.AggregateFuzzerStatsTest::test_aggregate_fuzzer_stats_with_invalid_date_flag"
+  ],
+  "PASS_TO_PASS": []
+}

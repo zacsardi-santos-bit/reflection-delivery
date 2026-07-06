@@ -1,0 +1,178 @@
+patching file internal/test/e2e/crypto.go
+patching file internal/test/e2e/fluxGit.go
+patching file internal/test/e2e/github.go
+patching file pkg/git/gitclient/gitclient_test.go
+patching file pkg/git/gogithub/gogithub_test.go
+patching file test/framework/flux.go
+{"Time":"2026-06-29T15:33:18.928580308Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone"}
+{"Time":"2026-06-29T15:33:18.929504441Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone","Output":"=== RUN   TestGoGitClone\n"}
+{"Time":"2026-06-29T15:33:18.930416728Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/clone_repo_success"}
+{"Time":"2026-06-29T15:33:18.93048753Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/clone_repo_success","Output":"=== RUN   TestGoGitClone/clone_repo_success\n"}
+{"Time":"2026-06-29T15:33:18.930791208Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/empty_repository_error"}
+{"Time":"2026-06-29T15:33:18.930815041Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/empty_repository_error","Output":"=== RUN   TestGoGitClone/empty_repository_error\n"}
+{"Time":"2026-06-29T15:33:18.931053999Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone","Output":"--- PASS: TestGoGitClone (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.931091436Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/clone_repo_success","Output":"    --- PASS: TestGoGitClone/clone_repo_success (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.931104075Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/clone_repo_success","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.931117033Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/empty_repository_error","Output":"    --- PASS: TestGoGitClone/empty_repository_error (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.931137815Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone/empty_repository_error","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.931146971Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitClone","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.931156462Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitAdd"}
+{"Time":"2026-06-29T15:33:18.931164713Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitAdd","Output":"=== RUN   TestGoGitAdd\n"}
+{"Time":"2026-06-29T15:33:18.932067609Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitAdd","Output":"--- PASS: TestGoGitAdd (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.932404542Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitAdd","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.932441419Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitRemove"}
+{"Time":"2026-06-29T15:33:18.932482578Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitRemove","Output":"=== RUN   TestGoGitRemove\n"}
+{"Time":"2026-06-29T15:33:18.932546923Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitRemove","Output":"--- PASS: TestGoGitRemove (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.932565293Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitRemove","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.932572779Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitCommit"}
+{"Time":"2026-06-29T15:33:18.932580199Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitCommit","Output":"=== RUN   TestGoGitCommit\n"}
+{"Time":"2026-06-29T15:33:18.932588784Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitCommit","Output":"--- PASS: TestGoGitCommit (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.932596437Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitCommit","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.932615857Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPush"}
+{"Time":"2026-06-29T15:33:18.932627785Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPush","Output":"=== RUN   TestGoGitPush\n"}
+{"Time":"2026-06-29T15:33:18.933881184Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPush","Output":"--- PASS: TestGoGitPush (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.933975967Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPush","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.933990855Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull"}
+{"Time":"2026-06-29T15:33:18.933999888Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull","Output":"=== RUN   TestGoGitPull\n"}
+{"Time":"2026-06-29T15:33:18.934009817Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/pull_success"}
+{"Time":"2026-06-29T15:33:18.934018133Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/pull_success","Output":"=== RUN   TestGoGitPull/pull_success\n"}
+{"Time":"2026-06-29T15:33:18.934030341Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/repo_already_up-to-date"}
+{"Time":"2026-06-29T15:33:18.934037846Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/repo_already_up-to-date","Output":"=== RUN   TestGoGitPull/repo_already_up-to-date\n"}
+{"Time":"2026-06-29T15:33:18.934048807Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull","Output":"--- PASS: TestGoGitPull (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.934057086Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/pull_success","Output":"    --- PASS: TestGoGitPull/pull_success (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.934066975Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/pull_success","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.934077191Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/repo_already_up-to-date","Output":"    --- PASS: TestGoGitPull/repo_already_up-to-date (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.93408505Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull/repo_already_up-to-date","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.934096034Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitPull","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.934118385Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitInit"}
+{"Time":"2026-06-29T15:33:18.934152413Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitInit","Output":"=== RUN   TestGoGitInit\n"}
+{"Time":"2026-06-29T15:33:18.934191743Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitInit","Output":"--- PASS: TestGoGitInit (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.934218779Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitInit","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.934253447Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch"}
+{"Time":"2026-06-29T15:33:18.934308133Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"=== RUN   TestGoGitBranch\n"}
+{"Time":"2026-06-29T15:33:18.93433548Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Output":"--- PASS: TestGoGitBranch (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.934352031Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranch","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.934364804Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists"}
+{"Time":"2026-06-29T15:33:18.934372118Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"=== RUN   TestGoGitBranchRemoteExists\n"}
+{"Time":"2026-06-29T15:33:18.934472283Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Output":"--- PASS: TestGoGitBranchRemoteExists (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.934780798Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitBranchRemoteExists","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.934791655Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists"}
+{"Time":"2026-06-29T15:33:18.934817752Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists","Output":"=== RUN   TestGoGitValidateRemoteExists\n"}
+{"Time":"2026-06-29T15:33:18.93487946Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/validate_success"}
+{"Time":"2026-06-29T15:33:18.934940077Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/validate_success","Output":"=== RUN   TestGoGitValidateRemoteExists/validate_success\n"}
+{"Time":"2026-06-29T15:33:18.934991268Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/invalid_repository_error"}
+{"Time":"2026-06-29T15:33:18.935006734Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/invalid_repository_error","Output":"=== RUN   TestGoGitValidateRemoteExists/invalid_repository_error\n"}
+{"Time":"2026-06-29T15:33:18.935031261Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists","Output":"--- PASS: TestGoGitValidateRemoteExists (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.935076106Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/validate_success","Output":"    --- PASS: TestGoGitValidateRemoteExists/validate_success (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.935104185Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/validate_success","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.935118956Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/invalid_repository_error","Output":"    --- PASS: TestGoGitValidateRemoteExists/invalid_repository_error (0.00s)\n"}
+{"Time":"2026-06-29T15:33:18.9351377Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists/invalid_repository_error","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.935177216Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Test":"TestGoGitValidateRemoteExists","Elapsed":0}
+{"Time":"2026-06-29T15:33:18.935185433Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Output":"PASS\n"}
+{"Time":"2026-06-29T15:33:18.93571841Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Output":"ok  \tgithub.com/aws/eks-anywhere/pkg/git/gitclient\t0.102s\n"}
+{"Time":"2026-06-29T15:33:18.935980171Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gitclient","Elapsed":0.102}
+{"Time":"2026-06-29T15:33:19.445068117Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo"}
+{"Time":"2026-06-29T15:33:19.445186676Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo","Output":"=== RUN   TestGoGithubCreateRepo\n"}
+{"Time":"2026-06-29T15:33:19.445227186Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo/create_public_repo_with_organizational_owner"}
+{"Time":"2026-06-29T15:33:19.445249503Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo/create_public_repo_with_organizational_owner","Output":"=== RUN   TestGoGithubCreateRepo/create_public_repo_with_organizational_owner\n"}
+{"Time":"2026-06-29T15:33:19.445722989Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo/create_personal_repo"}
+{"Time":"2026-06-29T15:33:19.445747657Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo/create_personal_repo","Output":"=== RUN   TestGoGithubCreateRepo/create_personal_repo\n"}
+{"Time":"2026-06-29T15:33:19.445781873Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo","Output":"--- PASS: TestGoGithubCreateRepo (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.445811946Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo/create_public_repo_with_organizational_owner","Output":"    --- PASS: TestGoGithubCreateRepo/create_public_repo_with_organizational_owner (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.445822602Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo/create_public_repo_with_organizational_owner","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.445833652Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo/create_personal_repo","Output":"    --- PASS: TestGoGithubCreateRepo/create_personal_repo (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.445855216Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo/create_personal_repo","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.445873173Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubCreateRepo","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.445885668Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo"}
+{"Time":"2026-06-29T15:33:19.445901516Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo","Output":"=== RUN   TestGoGithubGetRepo\n"}
+{"Time":"2026-06-29T15:33:19.445918811Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/Repo_no_error"}
+{"Time":"2026-06-29T15:33:19.445933113Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/Repo_no_error","Output":"=== RUN   TestGoGithubGetRepo/Repo_no_error\n"}
+{"Time":"2026-06-29T15:33:19.446161954Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/github_client_threw_generic_error"}
+{"Time":"2026-06-29T15:33:19.446192527Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/github_client_threw_generic_error","Output":"=== RUN   TestGoGithubGetRepo/github_client_threw_generic_error\n"}
+{"Time":"2026-06-29T15:33:19.44622125Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/github_threw_404_error"}
+{"Time":"2026-06-29T15:33:19.446229033Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/github_threw_404_error","Output":"=== RUN   TestGoGithubGetRepo/github_threw_404_error\n"}
+{"Time":"2026-06-29T15:33:19.446541204Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo","Output":"--- PASS: TestGoGithubGetRepo (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.446565821Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/Repo_no_error","Output":"    --- PASS: TestGoGithubGetRepo/Repo_no_error (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.446591299Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/Repo_no_error","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.446622625Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/github_client_threw_generic_error","Output":"    --- PASS: TestGoGithubGetRepo/github_client_threw_generic_error (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.446653051Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/github_client_threw_generic_error","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.446669186Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/github_threw_404_error","Output":"    --- PASS: TestGoGithubGetRepo/github_threw_404_error (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.446734898Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo/github_threw_404_error","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.446749893Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubGetRepo","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.446760289Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoSuccess"}
+{"Time":"2026-06-29T15:33:19.446780744Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoSuccess","Output":"=== RUN   TestGoGithubDeleteRepoSuccess\n"}
+{"Time":"2026-06-29T15:33:19.446809298Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoSuccess/github_repo_deleted_successfully"}
+{"Time":"2026-06-29T15:33:19.446817163Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoSuccess/github_repo_deleted_successfully","Output":"=== RUN   TestGoGithubDeleteRepoSuccess/github_repo_deleted_successfully\n"}
+{"Time":"2026-06-29T15:33:19.446828092Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoSuccess","Output":"--- PASS: TestGoGithubDeleteRepoSuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.446838764Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoSuccess/github_repo_deleted_successfully","Output":"    --- PASS: TestGoGithubDeleteRepoSuccess/github_repo_deleted_successfully (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.446851811Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoSuccess/github_repo_deleted_successfully","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.446866074Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoSuccess","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.446885307Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoFail"}
+{"Time":"2026-06-29T15:33:19.446895831Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoFail","Output":"=== RUN   TestGoGithubDeleteRepoFail\n"}
+{"Time":"2026-06-29T15:33:19.446914473Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoFail/github_repo_delete_fail"}
+{"Time":"2026-06-29T15:33:19.446926173Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoFail/github_repo_delete_fail","Output":"=== RUN   TestGoGithubDeleteRepoFail/github_repo_delete_fail\n"}
+{"Time":"2026-06-29T15:33:19.446938186Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoFail","Output":"--- PASS: TestGoGithubDeleteRepoFail (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.44695295Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoFail/github_repo_delete_fail","Output":"    --- PASS: TestGoGithubDeleteRepoFail/github_repo_delete_fail (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.446979418Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoFail/github_repo_delete_fail","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.446992199Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubDeleteRepoFail","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447002833Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubAddDeployKeySuccess"}
+{"Time":"2026-06-29T15:33:19.447012642Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubAddDeployKeySuccess","Output":"=== RUN   TestGoGithubAddDeployKeySuccess\n"}
+{"Time":"2026-06-29T15:33:19.447027925Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubAddDeployKeySuccess/github_repo_deleted_successfully"}
+{"Time":"2026-06-29T15:33:19.447041524Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubAddDeployKeySuccess/github_repo_deleted_successfully","Output":"=== RUN   TestGoGithubAddDeployKeySuccess/github_repo_deleted_successfully\n"}
+{"Time":"2026-06-29T15:33:19.447056003Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubAddDeployKeySuccess","Output":"--- PASS: TestGoGithubAddDeployKeySuccess (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447066398Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubAddDeployKeySuccess/github_repo_deleted_successfully","Output":"    --- PASS: TestGoGithubAddDeployKeySuccess/github_repo_deleted_successfully (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447076118Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubAddDeployKeySuccess/github_repo_deleted_successfully","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447083452Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithubAddDeployKeySuccess","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447090358Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions"}
+{"Time":"2026-06-29T15:33:19.447097511Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions","Output":"=== RUN   TestGoGithub_CheckAccessTokenPermissions\n"}
+{"Time":"2026-06-29T15:33:19.447105698Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions"}
+{"Time":"2026-06-29T15:33:19.447121625Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions","Output":"=== RUN   TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions\n"}
+{"Time":"2026-06-29T15:33:19.447129688Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_without_repo_permissions"}
+{"Time":"2026-06-29T15:33:19.447136716Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_without_repo_permissions","Output":"=== RUN   TestGoGithub_CheckAccessTokenPermissions/token_without_repo_permissions\n"}
+{"Time":"2026-06-29T15:33:19.447146201Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions#01"}
+{"Time":"2026-06-29T15:33:19.447156877Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions#01","Output":"=== RUN   TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions#01\n"}
+{"Time":"2026-06-29T15:33:19.447173737Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions","Output":"--- PASS: TestGoGithub_CheckAccessTokenPermissions (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447182099Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions","Output":"    --- PASS: TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447190471Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447199529Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_without_repo_permissions","Output":"    --- PASS: TestGoGithub_CheckAccessTokenPermissions/token_without_repo_permissions (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447209069Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_without_repo_permissions","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447216459Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions#01","Output":"    --- PASS: TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447224091Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions/token_with_repo_permissions#01","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447230596Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestGoGithub_CheckAccessTokenPermissions","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447238068Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsError"}
+{"Time":"2026-06-29T15:33:19.447245364Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsError","Output":"=== RUN   TestPathExistsError\n"}
+{"Time":"2026-06-29T15:33:19.447265043Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsError","Output":"--- PASS: TestPathExistsError (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447276427Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsError","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447283653Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsItDoes"}
+{"Time":"2026-06-29T15:33:19.447290767Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsItDoes","Output":"=== RUN   TestPathExistsItDoes\n"}
+{"Time":"2026-06-29T15:33:19.447298068Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsItDoes","Output":"--- PASS: TestPathExistsItDoes (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447305589Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsItDoes","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447312501Z","Action":"run","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsItDoesNot"}
+{"Time":"2026-06-29T15:33:19.447319641Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsItDoesNot","Output":"=== RUN   TestPathExistsItDoesNot\n"}
+{"Time":"2026-06-29T15:33:19.447327742Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsItDoesNot","Output":"--- PASS: TestPathExistsItDoesNot (0.00s)\n"}
+{"Time":"2026-06-29T15:33:19.447338843Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Test":"TestPathExistsItDoesNot","Elapsed":0}
+{"Time":"2026-06-29T15:33:19.447358471Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Output":"PASS\n"}
+{"Time":"2026-06-29T15:33:19.447955233Z","Action":"output","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Output":"ok  \tgithub.com/aws/eks-anywhere/pkg/git/gogithub\t0.038s\n"}
+{"Time":"2026-06-29T15:33:19.447987684Z","Action":"pass","Package":"github.com/aws/eks-anywhere/pkg/git/gogithub","Elapsed":0.038}
+{"Time":"2026-06-29T15:33:33.835736566Z","Action":"run","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand"}
+{"Time":"2026-06-29T15:33:33.835798382Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand","Output":"=== RUN   TestCopyCommand\n"}
+{"Time":"2026-06-29T15:33:33.835874814Z","Action":"run","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/simple_upload"}
+{"Time":"2026-06-29T15:33:33.835900352Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/simple_upload","Output":"=== RUN   TestCopyCommand/simple_upload\n"}
+{"Time":"2026-06-29T15:33:33.836109943Z","Action":"run","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/simple_download"}
+{"Time":"2026-06-29T15:33:33.836130316Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/simple_download","Output":"=== RUN   TestCopyCommand/simple_download\n"}
+{"Time":"2026-06-29T15:33:33.836162421Z","Action":"run","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/recursive_upload_exclude_everything_include_file_pattern"}
+{"Time":"2026-06-29T15:33:33.836173232Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/recursive_upload_exclude_everything_include_file_pattern","Output":"=== RUN   TestCopyCommand/recursive_upload_exclude_everything_include_file_pattern\n"}
+{"Time":"2026-06-29T15:33:33.836237706Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand","Output":"--- PASS: TestCopyCommand (0.00s)\n"}
+{"Time":"2026-06-29T15:33:33.836247074Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/simple_upload","Output":"    --- PASS: TestCopyCommand/simple_upload (0.00s)\n"}
+{"Time":"2026-06-29T15:33:33.836255033Z","Action":"pass","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/simple_upload","Elapsed":0}
+{"Time":"2026-06-29T15:33:33.836265959Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/simple_download","Output":"    --- PASS: TestCopyCommand/simple_download (0.00s)\n"}
+{"Time":"2026-06-29T15:33:33.836278112Z","Action":"pass","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/simple_download","Elapsed":0}
+{"Time":"2026-06-29T15:33:33.836288913Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/recursive_upload_exclude_everything_include_file_pattern","Output":"    --- PASS: TestCopyCommand/recursive_upload_exclude_everything_include_file_pattern (0.00s)\n"}
+{"Time":"2026-06-29T15:33:33.836305923Z","Action":"pass","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand/recursive_upload_exclude_everything_include_file_pattern","Elapsed":0}
+{"Time":"2026-06-29T15:33:33.836313472Z","Action":"pass","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Test":"TestCopyCommand","Elapsed":0}
+{"Time":"2026-06-29T15:33:33.83632081Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Output":"PASS\n"}
+{"Time":"2026-06-29T15:33:33.837596344Z","Action":"output","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Output":"ok  \tgithub.com/aws/eks-anywhere/internal/test/e2e\t0.054s\n"}
+{"Time":"2026-06-29T15:33:33.837626552Z","Action":"pass","Package":"github.com/aws/eks-anywhere/internal/test/e2e","Elapsed":0.054}
+{"Time":"2026-06-29T15:33:33.838203691Z","Action":"output","Package":"github.com/aws/eks-anywhere/test/framework","Output":"?   \tgithub.com/aws/eks-anywhere/test/framework\t[no test files]\n"}
+{"Time":"2026-06-29T15:33:33.873161557Z","Action":"skip","Package":"github.com/aws/eks-anywhere/test/framework","Elapsed":0.035}
+reward=1 graded=40 found=40 failed=0 parsed=40 framework=go exit_code=0

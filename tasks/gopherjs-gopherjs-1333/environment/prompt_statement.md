@@ -1,5 +1,0 @@
-I'm working on GopherJS compatibility with a newer version of Go and running into build failures. The standard library moved some internal elliptic curve cryptography packages to a new location in a recent Go release, but the GopherJS native overlay files that replace those packages are still pointing at the old paths. As a result, trying to compile affected packages under GopherJS fails because the old package paths no longer exist.
-
-Beyond the path issue, some of the tests in these packages do a lot of 64-bit arithmetic, which is slow when running under GopherJS. Right now, the only way to deal with slow tests is to skip them entirely, but that's not ideal — I'd rather run them with a reduced number of iterations. I need a way for test overrides in the GopherJS native overlay to cap the maximum number of property-based test iterations so tests can still run, just faster.
-
-Could you help move the native overlay files to the correct paths matching the current standard library layout, remove the old ones, and add support for capping the iteration count in property-based tests so the affected packages compile and run successfully under GopherJS?

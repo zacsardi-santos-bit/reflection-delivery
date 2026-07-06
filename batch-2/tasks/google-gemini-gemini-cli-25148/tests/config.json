@@ -1,0 +1,25 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && NO_COLOR=1 npx vitest run --coverage.enabled=false src/commands/memory.test.ts src/services/memoryService.test.ts && cd /workspace/repo/packages/cli && NO_COLOR=1 npx vitest run --coverage.enabled=false src/ui/components/SkillInboxDialog.test.tsx",
+  "test_files": [
+    "packages/cli/src/ui/components/SkillInboxDialog.test.tsx",
+    "packages/core/src/commands/memory.test.ts",
+    "packages/core/src/services/memoryService.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog disables the project destination when the workspace is untrusted",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog shows inline feedback when moving a skill throws",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog shows inline feedback when reloading skills fails after a move",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog patch support shows patches alongside skills with section headers",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog patch support shows diff preview when a patch is selected",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog patch support applies a patch when Apply is selected",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog patch support disables Apply for workspace patches in an untrusted workspace",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog patch support uses canonical project-scope checks before enabling Apply",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog patch support dismisses a patch when Dismiss is selected",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog patch support shows Windows patch entries with a basename and origin tag",
+    "/workspace/repo/packages/cli/src/ui/components/SkillInboxDialog.test.tsx::SkillInboxDialog patch support renders multi-section patches without duplicate React keys"
+  ],
+  "PASS_TO_PASS": []
+}

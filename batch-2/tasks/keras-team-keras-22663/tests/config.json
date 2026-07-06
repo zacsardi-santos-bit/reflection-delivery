@@ -1,0 +1,44 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/trainers/compile_utils_test.py -v",
+  "test_files": [
+    "keras/src/trainers/compile_utils_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_deeply_nested_outputs_and_metrics1",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_dict_outputs_output_names_ordering",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_list_outputs_dict_labels_uses_output_names"
+  ],
+  "PASS_TO_PASS": [
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_custom_metric_function",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_deeply_nested_outputs_and_metrics0",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_dict_output_case",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_dict_outputs_ignore_mismatched_output_names",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_dict_outputs_outputs_ordering",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_list_output_case",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_name_conversions",
+    "keras.src.trainers.compile_utils_test.TestCompileMetrics::test_single_output_case",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_dict_output_case0",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_dict_output_case1",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_different_container_types",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_list_loss_dict_data",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_list_output_case0",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_list_output_case1",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_single_output_case",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_single_output_case_with_crossentropy_loss",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_struct_loss",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_struct_loss_indice_path",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_struct_loss_invalid_path",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_struct_loss_invalid_weights",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_struct_loss_namedtuple",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_struct_loss_valid_weights",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_structure_mismatch",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_y_true_partial_y_pred_span0",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_y_true_partial_y_pred_span1",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_y_true_partial_y_pred_span2",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_y_true_partial_y_pred_span3",
+    "keras.src.trainers.compile_utils_test.TestCompileLoss::test_y_true_partial_y_pred_span4"
+  ]
+}

@@ -1,5 +1,0 @@
-I'm working on the log service in our coordinator and I've run into two gaps that need to be addressed.
-
-First, the service only supports pushing records into a collection's log — there's no way to read them back. I need a pull operation that lets consumers retrieve stored records starting from a given position, up to a configurable number of records at a time. The starting position should be inclusive, and passing 0 should mean "start from the beginning." The operation needs to be available both at the database access layer and as a gRPC endpoint.
-
-Second, neither push nor pull validates the collection identifier before trying to do anything. When someone passes in a malformed identifier, the error that comes back is confusing and hard to debug. Both operations should check the identifier upfront and, if it's invalid, immediately return a clear error with an appropriate status code indicating the argument is bad and a descriptive message identifying the collection identifier as the problem.

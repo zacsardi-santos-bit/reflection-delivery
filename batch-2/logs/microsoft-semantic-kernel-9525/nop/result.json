@@ -1,0 +1,29 @@
+{
+    "id": "276e643e-0a84-4217-b35a-5a91ae32e184",
+    "started_at": "2026-07-04T15:36:18.875783",
+    "finished_at": "2026-07-04T15:37:57.276290",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__microsoft-semantic-kernel-9525": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "microsoft-semantic-kernel-9525__JE7mbUN"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "685655e3-4c65-4b75-9bf2-1988dcacecd9",
+    "started_at": "2026-07-06T12:20:54.662369",
+    "finished_at": "2026-07-06T12:23:09.415470",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__langchain-ai-langgraph-7498": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "langchain-ai-langgraph-7498__rAuHRTT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

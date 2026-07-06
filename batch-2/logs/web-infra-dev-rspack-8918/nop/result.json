@@ -1,0 +1,29 @@
+{
+    "id": "a4b62b5a-f016-4343-bbe7-3715809d7042",
+    "started_at": "2026-07-04T15:37:45.337244",
+    "finished_at": "2026-07-04T15:38:27.972626",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__web-infra-dev-rspack-8918": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "web-infra-dev-rspack-8918__nGvT2WH"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

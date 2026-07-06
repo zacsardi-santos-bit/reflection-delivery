@@ -1,0 +1,24 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest --config packages/playwright/jest.config.cts packages/playwright/src/plugins/plugin.spec.ts --no-coverage --watchAll=false",
+  "test_files": [
+    "packages/playwright/src/plugins/plugin.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin tsconfig inputs should add tsconfig files from the project tsconfig extends chain that live outside the project root",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin tsconfig inputs should add the workspace root tsconfig.json when tsconfig.base.json exists (handled by nxE2EPreset at runtime)",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin tsconfig inputs should add the same tsconfig inputs to the ciTargetName target"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin should create nodes with default playwright configuration",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin should create nodes with reporters configured",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin should create nodes for distributed CI",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin should create nodes for distributed CI and merge reports",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin should infer dependsOn using the task run in the webServer.command and not set parallelism to false",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin should not set parallelism to false and should infer dependsOn using the tasks run in the different webServer.command that have reuseExistingServer set to true",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin tsconfig inputs should not add the workspace root tsconfig.json when it is the native hasher file (no tsconfig.base.json)",
+    "/workspace/repo/packages/playwright/src/plugins/plugin.spec.ts::@nx/playwright/plugin tsconfig inputs should not add tsconfig files inside the project root"
+  ]
+}

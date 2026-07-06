@@ -1,0 +1,2 @@
+patching file test/spec/modules/r2b2AnalytiscAdapter_spec.js
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=mocha exit_code=1

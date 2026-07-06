@@ -1,0 +1,15 @@
+diff --git a/src/test.rs b/src/test.rs
+index 879dfd9d..76786e30 100644
+--- a/src/test.rs
++++ b/src/test.rs
+@@ -28,8 +28,8 @@ pub use crate::cli::self_update::{RegistryGuard, RegistryValueId, USER_PATH, get
+ 
+ mod clitools;
+ pub use clitools::{
+-    CliTestContext, Config, SanitizedOutput, Scenario, SelfUpdateTestContext, output_release_file,
+-    print_command, print_indented,
++    Assert, CliTestContext, Config, SanitizedOutput, Scenario, SelfUpdateTestContext,
++    output_release_file, print_command, print_indented,
+ };
+ pub(crate) mod dist;
+ pub(crate) mod mock;

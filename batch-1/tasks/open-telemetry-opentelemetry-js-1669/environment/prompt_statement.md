@@ -1,0 +1,5 @@
+I'm using the OpenTelemetry JS library to collect telemetry from my applications running on AWS. The resource detector package works great for EC2, Elastic Beanstalk, and ECS environments, but I've noticed there's no support for Amazon EKS (Elastic Kubernetes Service).
+
+I need to add an EKS detector that can automatically identify when my application is running inside an EKS cluster. When detected, it should populate the resource attributes with the Kubernetes cluster name and the container ID. The cluster name should come from the Amazon CloudWatch configmap that EKS provides, and the container ID should be extracted from the cgroup file.
+
+The detector should handle scenarios where only partial information is available - for instance, if the cluster name can be retrieved but not the container ID, it should still return the cluster name. When the application isn't running on EKS at all, or when necessary files are missing, it should gracefully return an empty resource rather than crashing. The detector should also properly handle error conditions like request timeouts and HTTP errors with appropriate error messages.

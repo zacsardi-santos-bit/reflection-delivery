@@ -1,0 +1,95 @@
+patching file deploy/kubernetes/helm/sloth/tests/helm_chart_test.go
+patching file deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_custom.yaml
+patching file deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_custom_no_extras.yaml
+patching file deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_custom_slo_config.yaml
+patching file deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_default.yaml
+patching file deploy/kubernetes/helm/sloth/tests/testdata/output/deployment_securityContext.yaml
+patching file deploy/kubernetes/helm/sloth/tests/values_test.go
+{"Time":"2026-06-29T15:27:40.824138052Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount"}
+{"Time":"2026-06-29T15:27:40.824279016Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount","Output":"=== RUN   TestChartServiceAccount\n"}
+{"Time":"2026-06-29T15:27:40.824319978Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount/A_chart_without_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.824344165Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount/A_chart_without_values_should_render_correctly.","Output":"=== RUN   TestChartServiceAccount/A_chart_without_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.827029075Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount/A_chart_with_custom_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.827090358Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount/A_chart_with_custom_values_should_render_correctly.","Output":"=== RUN   TestChartServiceAccount/A_chart_with_custom_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.829531879Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount","Output":"--- PASS: TestChartServiceAccount (0.01s)\n"}
+{"Time":"2026-06-29T15:27:40.829604018Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount/A_chart_without_values_should_render_correctly.","Output":"    --- PASS: TestChartServiceAccount/A_chart_without_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.829633523Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount/A_chart_without_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.829669698Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount/A_chart_with_custom_values_should_render_correctly.","Output":"    --- PASS: TestChartServiceAccount/A_chart_with_custom_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.829703389Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount/A_chart_with_custom_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.82973034Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartServiceAccount","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:40.829760166Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment"}
+{"Time":"2026-06-29T15:27:40.829783601Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment","Output":"=== RUN   TestChartDeployment\n"}
+{"Time":"2026-06-29T15:27:40.829809841Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_custom_slo_config_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.829832626Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_custom_slo_config_should_render_correctly.","Output":"=== RUN   TestChartDeployment/A_chart_with_custom_slo_config_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.834265412Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_without_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.834301888Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_without_values_should_render_correctly.","Output":"=== RUN   TestChartDeployment/A_chart_without_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.836729066Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_custom_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.836790369Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_custom_values_should_render_correctly.","Output":"=== RUN   TestChartDeployment/A_chart_with_custom_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.839340024Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_values_without_metrics_and_plugins_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.839380996Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_values_without_metrics_and_plugins_should_render_correctly.","Output":"=== RUN   TestChartDeployment/A_chart_with_values_without_metrics_and_plugins_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.841196125Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment","Output":"--- PASS: TestChartDeployment (0.01s)\n"}
+{"Time":"2026-06-29T15:27:40.841233692Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_custom_slo_config_should_render_correctly.","Output":"    --- PASS: TestChartDeployment/A_chart_with_custom_slo_config_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.841260763Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_custom_slo_config_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.841285941Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_without_values_should_render_correctly.","Output":"    --- PASS: TestChartDeployment/A_chart_without_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.841309968Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_without_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.841333113Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_custom_values_should_render_correctly.","Output":"    --- PASS: TestChartDeployment/A_chart_with_custom_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.84135741Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_custom_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.841380355Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_values_without_metrics_and_plugins_should_render_correctly.","Output":"    --- PASS: TestChartDeployment/A_chart_with_values_without_metrics_and_plugins_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.841406134Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment/A_chart_with_values_without_metrics_and_plugins_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.841431122Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartDeployment","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:40.841455739Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor"}
+{"Time":"2026-06-29T15:27:40.841480156Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor","Output":"=== RUN   TestChartPodMonitor\n"}
+{"Time":"2026-06-29T15:27:40.841509822Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_without_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.841533057Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_without_values_should_render_correctly.","Output":"=== RUN   TestChartPodMonitor/A_chart_without_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.843664446Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_with_custom_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.843700841Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_with_custom_values_should_render_correctly.","Output":"=== RUN   TestChartPodMonitor/A_chart_with_custom_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.84790455Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_with_values_without_metrics_and_plugins_should_correctly."}
+{"Time":"2026-06-29T15:27:40.847953534Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_with_values_without_metrics_and_plugins_should_correctly.","Output":"=== RUN   TestChartPodMonitor/A_chart_with_values_without_metrics_and_plugins_should_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.850045263Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor","Output":"--- PASS: TestChartPodMonitor (0.01s)\n"}
+{"Time":"2026-06-29T15:27:40.850088218Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_without_values_should_render_correctly.","Output":"    --- PASS: TestChartPodMonitor/A_chart_without_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.850126056Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_without_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.850149291Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_with_custom_values_should_render_correctly.","Output":"    --- PASS: TestChartPodMonitor/A_chart_with_custom_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.850173398Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_with_custom_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.850196272Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_with_values_without_metrics_and_plugins_should_correctly.","Output":"    --- PASS: TestChartPodMonitor/A_chart_with_values_without_metrics_and_plugins_should_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.850220169Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor/A_chart_with_values_without_metrics_and_plugins_should_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.850243915Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartPodMonitor","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:40.850267661Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole"}
+{"Time":"2026-06-29T15:27:40.850289915Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole","Output":"=== RUN   TestChartClusterRole\n"}
+{"Time":"2026-06-29T15:27:40.850317507Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole/A_chart_without_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.85033941Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole/A_chart_without_values_should_render_correctly.","Output":"=== RUN   TestChartClusterRole/A_chart_without_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.852178795Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole/A_chart_with_custom_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.85221518Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole/A_chart_with_custom_values_should_render_correctly.","Output":"=== RUN   TestChartClusterRole/A_chart_with_custom_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.854396405Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole","Output":"--- PASS: TestChartClusterRole (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.854429275Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole/A_chart_without_values_should_render_correctly.","Output":"    --- PASS: TestChartClusterRole/A_chart_without_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.854455345Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole/A_chart_without_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.854480363Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole/A_chart_with_custom_values_should_render_correctly.","Output":"    --- PASS: TestChartClusterRole/A_chart_with_custom_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.85451793Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole/A_chart_with_custom_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.854540935Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRole","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.85456402Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding"}
+{"Time":"2026-06-29T15:27:40.854587025Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding","Output":"=== RUN   TestChartClusterRoleBinding\n"}
+{"Time":"2026-06-29T15:27:40.854624552Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding/A_chart_without_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.854647497Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding/A_chart_without_values_should_render_correctly.","Output":"=== RUN   TestChartClusterRoleBinding/A_chart_without_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.85684741Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding/A_chart_with_custom_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.856877125Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding/A_chart_with_custom_values_should_render_correctly.","Output":"=== RUN   TestChartClusterRoleBinding/A_chart_with_custom_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.860977416Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding","Output":"--- PASS: TestChartClusterRoleBinding (0.01s)\n"}
+{"Time":"2026-06-29T15:27:40.861042756Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding/A_chart_without_values_should_render_correctly.","Output":"    --- PASS: TestChartClusterRoleBinding/A_chart_without_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.861071369Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding/A_chart_without_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.861095306Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding/A_chart_with_custom_values_should_render_correctly.","Output":"    --- PASS: TestChartClusterRoleBinding/A_chart_with_custom_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.861119753Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding/A_chart_with_custom_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.861142327Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartClusterRoleBinding","Elapsed":0.01}
+{"Time":"2026-06-29T15:27:40.861166223Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap"}
+{"Time":"2026-06-29T15:27:40.861189529Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap","Output":"=== RUN   TestChartConfigMap\n"}
+{"Time":"2026-06-29T15:27:40.861219134Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap/A_chart_without_values_should_not_render_a_configmap."}
+{"Time":"2026-06-29T15:27:40.861242429Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap/A_chart_without_values_should_not_render_a_configmap.","Output":"=== RUN   TestChartConfigMap/A_chart_without_values_should_not_render_a_configmap.\n"}
+{"Time":"2026-06-29T15:27:40.863160284Z","Action":"run","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap/A_chart_with_custom_values_should_render_correctly."}
+{"Time":"2026-06-29T15:27:40.863222148Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap/A_chart_with_custom_values_should_render_correctly.","Output":"=== RUN   TestChartConfigMap/A_chart_with_custom_values_should_render_correctly.\n"}
+{"Time":"2026-06-29T15:27:40.865590487Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap","Output":"--- PASS: TestChartConfigMap (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.865629837Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap/A_chart_without_values_should_not_render_a_configmap.","Output":"    --- PASS: TestChartConfigMap/A_chart_without_values_should_not_render_a_configmap. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.865655826Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap/A_chart_without_values_should_not_render_a_configmap.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.865681816Z","Action":"output","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap/A_chart_with_custom_values_should_render_correctly.","Output":"    --- PASS: TestChartConfigMap/A_chart_with_custom_values_should_render_correctly. (0.00s)\n"}
+{"Time":"2026-06-29T15:27:40.865708096Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap/A_chart_with_custom_values_should_render_correctly.","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.865730069Z","Action":"pass","Package":"github.com/slok/sloth/helm","Test":"TestChartConfigMap","Elapsed":0}
+{"Time":"2026-06-29T15:27:40.865754316Z","Action":"output","Package":"github.com/slok/sloth/helm","Output":"PASS\n"}
+{"Time":"2026-06-29T15:27:40.866568794Z","Action":"output","Package":"github.com/slok/sloth/helm","Output":"ok  \tgithub.com/slok/sloth/helm\t0.083s\n"}
+{"Time":"2026-06-29T15:27:40.866619Z","Action":"pass","Package":"github.com/slok/sloth/helm","Elapsed":0.083}
+reward=1 graded=21 found=21 failed=0 parsed=21 framework=go exit_code=0

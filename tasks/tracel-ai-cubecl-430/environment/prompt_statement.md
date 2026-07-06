@@ -1,7 +1,0 @@
-I'm working on refactoring the autotune system in the cubecl runtime. Right now, when I define a set of candidate operations to benchmark, I have to bundle the actual memory bindings into the set at construction time. This feels wrong — the set definition (which operations to try) is logically separate from the inputs (which buffers to pass at runtime), but the current API conflates them. Individual operations also have to carry their own copies of the bindings, which is redundant and clutters the implementation.
-
-I'd like to redesign this so that the tunable set only describes what to benchmark and how to generate cache keys and clone inputs, while the actual inputs are passed in separately when the tuner is invoked. This way the same set definition can be reused with different inputs. Individual operations should only hold the data they truly need (like a kernel reference and a client), not the runtime bindings.
-
-Additionally, it would be great if plain closures or functions could be used directly as tunable operations, so I don't have to write a full trait implementation every time. The option to supply custom checksum logic per set (for cache invalidation) should also be available through the builder pattern rather than through post-construction mutation of struct fields.
-
-All existing caching behaviors need to keep working: the same key should still produce a cache hit, and different keys or checksums should still produce cache misses.

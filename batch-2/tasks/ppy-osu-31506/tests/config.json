@@ -1,0 +1,26 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pulseaudio --start --exit-idle-time=-1 --log-target=null -n --load=module-null-sink --load=\"module-native-protocol-unix auth-anonymous=1 socket=/tmp/pulse-socket\" 2>/dev/null || true; sleep 2; dotnet build -c Debug osu.Game.Tests/osu.Game.Tests.csproj 2>&1 | tail -5 && python3 /workspace/run_nunit.py osu.Game.Tests/bin/Debug/net8.0/osu.Game.Tests.dll --filter \"FullyQualifiedName~TestSceneUserDimBackgrounds\" --logger \"console;verbosity=detailed\"",
+  "test_files": [
+    "osu.Game.Tests/Visual/Background/TestSceneUserDimBackgrounds.cs"
+  ],
+  "num_test_files": 1,
+  "language": "csharp",
+  "FAIL_TO_PASS": [
+    "TestSceneUserDimBackgrounds::TestStoryboardUpdatesWhenDimmed"
+  ],
+  "PASS_TO_PASS": [
+    "TestSceneUserDimBackgrounds::TestConstructor",
+    "TestSceneUserDimBackgrounds::TestDisableUserDimBackground",
+    "TestSceneUserDimBackgrounds::TestDisableUserDimStoryboard",
+    "TestSceneUserDimBackgrounds::TestPause",
+    "TestSceneUserDimBackgrounds::TestPlayerLoaderSettingsHover",
+    "TestSceneUserDimBackgrounds::TestPlayerLoaderTransition",
+    "TestSceneUserDimBackgrounds::TestResumeFromPlayer",
+    "TestSceneUserDimBackgrounds::TestStoryboardBackgroundVisibility",
+    "TestSceneUserDimBackgrounds::TestStoryboardIgnoreUserSettings",
+    "TestSceneUserDimBackgrounds::TestStoryboardTransition",
+    "TestSceneUserDimBackgrounds::TestTransition",
+    "TestSceneUserDimBackgrounds::TestUserSettingsIgnoredOnSongSelect"
+  ]
+}

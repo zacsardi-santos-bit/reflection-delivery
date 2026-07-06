@@ -1,0 +1,41 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 -c \"import subprocess,os,sys\nbd='/workspace/repo/tests/queries/0_stateless'\nts=['04307_arrow_oob_reads','04308_arrow_oob_reads_value','04309_arrow_oob_reads_offsets','04310_arrow_oob_reads_arithmetic','04326_arrow_oob_neg_length','04327_arrow_oob_list_offsets','04328_arrow_oob_nested_child_length','04329_arrow_oob_struct_fields','04330_arrow_oob_declared_length','04331_arrow_oob_validity_bitmap']\nec=0\nfor n in ts:\n  sh=bd+'/'+n+'.sh'\n  ref=bd+'/'+n+'.reference'\n  if not os.path.exists(sh):\n    print('FAILED tests::'+n,flush=True)\n    ec=1\n    continue\n  try:\n    r=subprocess.run(['bash',sh],capture_output=True,text=True,timeout=300)\n    out=r.stdout.strip()\n    exp=open(ref).read().strip() if os.path.exists(ref) else ''\n    if out==exp:\n      print('tests::'+n+' PASSED',flush=True)\n    else:\n      print('tests::'+n+' FAILED',flush=True)\n      ec=1\n  except Exception as e:\n    print('tests::'+n+' FAILED',flush=True)\n    ec=1\nsys.exit(ec)\"",
+  "test_files": [
+    "tests/queries/0_stateless/04307_arrow_oob_reads.reference",
+    "tests/queries/0_stateless/04307_arrow_oob_reads.sh",
+    "tests/queries/0_stateless/04308_arrow_oob_reads_value.reference",
+    "tests/queries/0_stateless/04308_arrow_oob_reads_value.sh",
+    "tests/queries/0_stateless/04309_arrow_oob_reads_offsets.reference",
+    "tests/queries/0_stateless/04309_arrow_oob_reads_offsets.sh",
+    "tests/queries/0_stateless/04310_arrow_oob_reads_arithmetic.reference",
+    "tests/queries/0_stateless/04310_arrow_oob_reads_arithmetic.sh",
+    "tests/queries/0_stateless/04326_arrow_oob_neg_length.reference",
+    "tests/queries/0_stateless/04326_arrow_oob_neg_length.sh",
+    "tests/queries/0_stateless/04327_arrow_oob_list_offsets.reference",
+    "tests/queries/0_stateless/04327_arrow_oob_list_offsets.sh",
+    "tests/queries/0_stateless/04328_arrow_oob_nested_child_length.reference",
+    "tests/queries/0_stateless/04328_arrow_oob_nested_child_length.sh",
+    "tests/queries/0_stateless/04329_arrow_oob_struct_fields.reference",
+    "tests/queries/0_stateless/04329_arrow_oob_struct_fields.sh",
+    "tests/queries/0_stateless/04330_arrow_oob_declared_length.reference",
+    "tests/queries/0_stateless/04330_arrow_oob_declared_length.sh",
+    "tests/queries/0_stateless/04331_arrow_oob_validity_bitmap.reference",
+    "tests/queries/0_stateless/04331_arrow_oob_validity_bitmap.sh"
+  ],
+  "num_test_files": 20,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests::04307_arrow_oob_reads",
+    "tests::04308_arrow_oob_reads_value",
+    "tests::04309_arrow_oob_reads_offsets",
+    "tests::04310_arrow_oob_reads_arithmetic",
+    "tests::04326_arrow_oob_neg_length",
+    "tests::04327_arrow_oob_list_offsets",
+    "tests::04328_arrow_oob_nested_child_length",
+    "tests::04329_arrow_oob_struct_fields",
+    "tests::04330_arrow_oob_declared_length",
+    "tests::04331_arrow_oob_validity_bitmap"
+  ],
+  "PASS_TO_PASS": []
+}

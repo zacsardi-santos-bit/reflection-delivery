@@ -1,0 +1,23 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :driver-scala:test --tests \"org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec\" --tests \"org.mongodb.scala.gridfs.GridFSUploadPublisherSpec\" --tests \"org.mongodb.scala.internal.UnitObservableSpec\" && find /workspace/repo/driver-scala/build/test-results/test -name \"TEST-*.xml\" -exec cat {} \\;",
+  "test_files": [
+    "driver-scala/src/test/scala/org/mongodb/scala/ObservableImplicitsToGridFSUploadPublisherUnitSpec.scala",
+    "driver-scala/src/test/scala/org/mongodb/scala/gridfs/GridFSUploadPublisherSpec.scala",
+    "driver-scala/src/test/scala/org/mongodb/scala/internal/UnitObservableSpec.scala"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec::should emit exactly one element",
+    "org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec::should signal the underlying error",
+    "org.mongodb.scala.ObservableImplicitsToGridFSUploadPublisherUnitSpec::should work with explicit request",
+    "org.mongodb.scala.gridfs.GridFSUploadPublisherSpec::GridFSBucket should have the same methods as the wrapped GridFSUploadStream",
+    "org.mongodb.scala.gridfs.GridFSUploadPublisherSpec::GridFSBucket should call the underlying methods",
+    "org.mongodb.scala.internal.UnitObservableSpec::should emit exactly one element",
+    "org.mongodb.scala.internal.UnitObservableSpec::should signal the underlying error",
+    "org.mongodb.scala.internal.UnitObservableSpec::should work with explicit request",
+    "org.mongodb.scala.internal.UnitObservableSpec::should work with for comprehensions"
+  ],
+  "PASS_TO_PASS": []
+}

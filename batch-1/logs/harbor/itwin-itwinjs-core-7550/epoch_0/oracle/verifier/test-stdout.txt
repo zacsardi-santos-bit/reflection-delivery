@@ -1,0 +1,22 @@
+patching file core/backend/src/test/IModelTestUtils.ts
+patching file core/backend/src/test/standalone/ViewDefinition.test.ts
+patching file core/common/src/test/DisplayStyle.test.ts
+patching file core/common/src/test/FeatureSymbology.test.ts
+patching file core/common/src/test/FeatureTable.test.ts
+patching file core/common/src/test/PlanProjectionSettings.test.ts
+patching file full-stack-tests/backend/src/integration/ViewStore.test.ts
+patching file full-stack-tests/core/src/frontend/standalone/FeatureSymbology.test.ts
+
+ RUN  v2.1.0 /workspace/repo/core/common
+
+ ✓ src/test/PlanProjectionSettings.test.ts  (2 tests) 7ms
+ ✓ src/test/FeatureTable.test.ts  (8 tests) 8ms
+ ✓ src/test/FeatureSymbology.test.ts  (24 tests) 16ms
+ ✓ src/test/DisplayStyle.test.ts  (11 tests) 44ms
+
+ Test Files  4 passed (4)
+      Tests  45 passed (45)
+   Start at  15:26:47
+   Duration  1.41s (transform 758ms, setup 0ms, collect 1.94s, tests 76ms, environment 1ms, prepare 819ms)
+
+reward=1 graded=45 found=0 failed=0 parsed=0 framework=vitest exit_code=0

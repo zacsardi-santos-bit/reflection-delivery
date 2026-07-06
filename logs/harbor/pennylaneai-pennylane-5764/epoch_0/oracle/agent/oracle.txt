@@ -1,5 +1,0 @@
-patching file doc/code/qml_qchem.rst
-patching file doc/releases/changelog-dev.md
-patching file pennylane/qchem/__init__.py
-patching file pennylane/qchem/dipole.py
-patching file pennylane/qchem/openfermion_pyscf.py

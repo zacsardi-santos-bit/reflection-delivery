@@ -1,0 +1,40 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && node --expose-gc --max-old-space-size=4096 --experimental-vm-modules node_modules/jest-cli/bin/jest test/ConfigTestCases.basictest.js test/ConfigCacheTestCases.basictest.js --testNamePattern=\"css charset|css export-type-style-and-text-import\" --coverage=false --forceExit",
+  "test_files": [
+    "test/configCases/css/charset/__snapshots__/ConfigCacheTest.snap",
+    "test/configCases/css/charset/__snapshots__/ConfigTest.snap",
+    "test/configCases/css/export-type-style-and-text-import/base.css",
+    "test/configCases/css/export-type-style-and-text-import/index.js",
+    "test/configCases/css/export-type-style-and-text-import/webpack.config.js",
+    "test/configCases/css/export-type-style-and-text-import/wrapper-style.css"
+  ],
+  "num_test_files": 6,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css charset exported tests should handle `@charset` at-rule",
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css export-type-style-and-text-import exported tests should create a style tag for base.css when @imported by a style-type parent even though base.css itself is text-type",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css charset exported tests should handle `@charset` at-rule",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css export-type-style-and-text-import exported tests should create a style tag for base.css when @imported by a style-type parent even though base.css itself is text-type"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css charset charset should compile",
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css charset exported tests should run the exported tests",
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css export-type-style-and-text-import export-type-style-and-text-import should compile",
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css export-type-style-and-text-import exported tests should run the exported tests",
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css export-type-style-and-text-import exported tests should export correct class name for wrapper-style.css",
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css export-type-style-and-text-import exported tests should export text content for base.css",
+    "/workspace/repo/test/ConfigTestCases.basictest.js::ConfigTestCases css export-type-style-and-text-import exported tests should create a style tag for wrapper-style.css own content",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css charset charset should pre-compile to fill disk cache (1st)",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css charset charset should pre-compile to fill disk cache (2nd)",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css charset charset should compile",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css charset exported tests should run the exported tests",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css export-type-style-and-text-import export-type-style-and-text-import should pre-compile to fill disk cache (1st)",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css export-type-style-and-text-import export-type-style-and-text-import should pre-compile to fill disk cache (2nd)",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css export-type-style-and-text-import export-type-style-and-text-import should compile",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css export-type-style-and-text-import exported tests should run the exported tests",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css export-type-style-and-text-import exported tests should export correct class name for wrapper-style.css",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css export-type-style-and-text-import exported tests should export text content for base.css",
+    "/workspace/repo/test/ConfigCacheTestCases.basictest.js::ConfigCacheTestCases css export-type-style-and-text-import exported tests should create a style tag for wrapper-style.css own content"
+  ]
+}

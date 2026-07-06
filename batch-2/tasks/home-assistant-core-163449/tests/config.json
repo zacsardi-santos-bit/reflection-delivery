@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/components/zinvolt/test_config_flow.py tests/components/zinvolt/test_init.py tests/components/zinvolt/test_sensor.py -v",
+  "test_files": [
+    "tests/components/zinvolt/__init__.py",
+    "tests/components/zinvolt/conftest.py",
+    "tests/components/zinvolt/const.py",
+    "tests/components/zinvolt/fixtures/batteries.json",
+    "tests/components/zinvolt/fixtures/current_state.json",
+    "tests/components/zinvolt/snapshots/test_init.ambr",
+    "tests/components/zinvolt/snapshots/test_sensor.ambr",
+    "tests/components/zinvolt/test_config_flow.py",
+    "tests/components/zinvolt/test_init.py",
+    "tests/components/zinvolt/test_sensor.py"
+  ],
+  "num_test_files": 10,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.zinvolt.test_init::test_device"
+  ],
+  "PASS_TO_PASS": []
+}

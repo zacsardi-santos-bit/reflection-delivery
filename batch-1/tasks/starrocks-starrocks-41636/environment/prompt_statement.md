@@ -1,0 +1,5 @@
+I'm working on a multi-threaded system that uses a lock-free list data structure to track active IDs across concurrent operations. The problem is that this data structure never removes old entries — even after an ID is no longer active, its slot stays in the list forever. In high-throughput scenarios, the list balloons to hold hundreds of thousands of stale entries, wasting memory and making iteration slower over time.
+
+I need to add a garbage collection mechanism to this structure. When the number of entries exceeds a configurable initial threshold (specified through the traits interface), the structure should scan its contents and remove any entries that are no longer active, keeping only those that still exist in the system. The threshold needs to be tunable through the traits template parameter so different users of the structure can set their own collection point.
+
+The fix should be delivered as a patch to the third-party library's thread ID list implementation, stored in the repository's thirdparty patches directory.

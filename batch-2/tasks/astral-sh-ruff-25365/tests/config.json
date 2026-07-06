@@ -1,0 +1,50 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci -p ruff_server --no-fail-fast",
+  "test_files": [
+    "crates/ruff_server/tests/e2e/code_action.rs",
+    "crates/ruff_server/tests/e2e/hover.rs",
+    "crates/ruff_server/tests/e2e/workspace.rs"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 2/35) ruff_server edit::replacement::tests::delete_first_line",
+    "( 3/35) ruff_server edit::replacement::tests::replace_lines",
+    "( 4/35) ruff_server session::index::ruff_settings::tests::inline_and_specific_settings_resolution_order",
+    "( 5/35) ruff_server session::options::tests::inline_configuration",
+    "( 6/35) ruff_server session::options::tests::test_vs_code_workspace_settings_resolve",
+    "( 7/35) ruff_server edit::notebook::tests::swap_cells",
+    "( 8/35) ruff_server edit::replacement::tests::delete_middle_line",
+    "( 9/35) ruff_server edit::replacement::tests::delete_multiple_lines",
+    "(10/35) ruff_server edit::text_document::tests::redo_edit",
+    "(11/35) ruff_server edit::replacement::tests::insert_multiple_lines",
+    "(12/35) ruff_server session::options::tests::test_preview_flag",
+    "(13/35) ruff_server edit::replacement::tests::insert_middle_line",
+    "(14/35) ruff_server edit::replacement::tests::insert_first_line",
+    "(15/35) ruff_server session::index::ruff_settings::tests::inline_settings",
+    "(16/35) ruff_server session::options::tests::test_global_only_resolves_correctly",
+    "(17/35) ruff_server::e2e code_action::code_action_without_valid_url_returns_unchanged_action",
+    "(18/35) ruff_server::e2e code_action::invalid_code_action_resolve_data_returns_unchanged_action",
+    "(19/35) ruff_server::e2e hover::no_hover_for_markdown",
+    "(20/35) ruff_server::e2e hover::unavailable_document_returns_empty_response",
+    "(21/35) ruff_server format::tests::format_per_file_version",
+    "(22/35) ruff_server format::tests::format_per_file_version_range",
+    "(23/35) ruff_server session::options::tests::test_vs_code_init_options_deserialize",
+    "(24/35) ruff_server session::options::tests::test_global_only_init_options_deserialize",
+    "(25/35) ruff_server::document delete_lines_pandas_html",
+    "(26/35) ruff_server::e2e hover::hover_for_python_noqa",
+    "(27/35) ruff_server::e2e code_action::no_code_actions_for_markdown",
+    "(28/35) ruff_server::e2e code_action::code_actions_for_python",
+    "(29/35) ruff_server::e2e custom_extension::lint_custom_extension_mapped_to_markdown_emits_no_diagnostics",
+    "(30/35) ruff_server::e2e custom_extension::range_format_custom_extension_mapped_to_markdown_is_unsupported",
+    "(31/35) ruff_server::e2e workspace::unavailable_document_diagnostic_returns_empty_response",
+    "(32/35) ruff_server::e2e workspace::selects_the_correct_workspace_settings_for_multi_root_workspaces",
+    "(33/35) ruff_server::e2e custom_extension::format_custom_extension_mapped_to_markdown",
+    "(34/35) ruff_server::e2e notebook::notebook_without_ipynb_extension",
+    "(35/35) ruff_server::e2e notebook::super_resolution_overview"
+  ],
+  "PASS_TO_PASS": [
+    "( 1/35) ruff_server session::options::tests::test_empty_init_options_deserialize"
+  ]
+}

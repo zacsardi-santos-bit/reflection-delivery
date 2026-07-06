@@ -1,0 +1,233 @@
+diff --git a/crates/biome_markdown_parser/src/parser.rs b/crates/biome_markdown_parser/src/parser.rs
+index 81ea93531c..7f4348e637 100644
+--- a/crates/biome_markdown_parser/src/parser.rs
++++ b/crates/biome_markdown_parser/src/parser.rs
+@@ -217,6 +217,15 @@ impl<'source> MarkdownParser<'source> {
+             .force_relex_in_context(MarkdownLexContext::Regular);
+     }
+ 
++    /// Re-lex the current token in Regular context, treating the position as
++    /// a line start. After consuming a blockquote prefix, the lexer's
++    /// `after_newline` flag is false, which prevents it from producing
++    /// line-start-gated tokens like `MD_THEMATIC_BREAK_LITERAL`. This method
++    /// overrides that flag so the lexer behaves as if at line start.
++    pub(crate) fn force_relex_at_line_start(&mut self) {
++        self.source.force_relex_at_line_start();
++    }
++
+     /// Force re-lex the current token in CodeSpan context.
+     /// In this context, backslash is literal (not an escape character).
+     /// Used for autolinks where `\>` should be `\` + `>` as separate tokens.
+diff --git a/crates/biome_markdown_parser/src/syntax/mod.rs b/crates/biome_markdown_parser/src/syntax/mod.rs
+index 13008ad7b6..80ed9e4f53 100644
+--- a/crates/biome_markdown_parser/src/syntax/mod.rs
++++ b/crates/biome_markdown_parser/src/syntax/mod.rs
+@@ -788,6 +788,9 @@ fn classify_quote_break_after_newline(
+     p.lookahead(|p| {
+         consume_quote_prefix_without_virtual(p, quote_depth);
+         with_virtual_line_start(p, p.cur_range().start(), |p| {
++            // Re-lex at line start so the lexer produces block-level tokens
++            // (e.g. MD_THEMATIC_BREAK_LITERAL for `---`) instead of MINUS.
++            p.force_relex_at_line_start();
+             if p.at(MD_SETEXT_UNDERLINE_LITERAL)
+                 || (p.at(MD_THEMATIC_BREAK_LITERAL) && is_dash_only_thematic_break(p))
+             {
+@@ -865,9 +868,10 @@ fn break_for_quote_prefix_after_inline_newline(p: &mut MarkdownParser, quote_dep
+     if has_quote_prefix(p, quote_depth) {
+         let break_kind = classify_quote_break_after_newline(p, quote_depth);
+         if matches!(break_kind, QuoteBreakKind::SetextUnderline) {
+-            // Consume the quote prefix so the setext underline is visible
+-            // to the paragraph parser.
++            // Consume the quote prefix and re-lex at line start so the
++            // paragraph parser sees MD_THEMATIC_BREAK_LITERAL for `---`.
+             consume_quote_prefix(p, quote_depth);
++            p.force_relex_at_line_start();
+         }
+         match break_kind {
+             QuoteBreakKind::SetextUnderline | QuoteBreakKind::Other => return true,
+diff --git a/crates/biome_markdown_parser/src/syntax/quote.rs b/crates/biome_markdown_parser/src/syntax/quote.rs
+index af909584bb..20e3153eeb 100644
+--- a/crates/biome_markdown_parser/src/syntax/quote.rs
++++ b/crates/biome_markdown_parser/src/syntax/quote.rs
+@@ -97,6 +97,7 @@ pub(crate) fn parse_quote(p: &mut MarkdownParser) -> ParsedSyntax {
+     p.state_mut().block_quote_depth += 1;
+ 
+     let marker_space = emit_quote_prefix_node(p);
++    relex_after_quote_prefix_consumed(p);
+     p.set_virtual_line_start();
+ 
+     parse_quote_block_list(p);
+@@ -125,6 +126,68 @@ fn emit_quote_prefix_node(p: &mut MarkdownParser) -> bool {
+     marker_space
+ }
+ 
++/// After consuming a quote prefix, selectively re-lex the current token as if
++/// it were at line start when the remaining line could form a thematic break.
++///
++/// Re-lexing unconditionally perturbs ordinary quoted text tokenization by
++/// splitting leading spaces into separate tokens. We only need line-start
++/// semantics here for thematic-break candidates like `> ---`.
++///
++/// A candidate is any line whose non-whitespace bytes are all the **same**
++/// thematic break character (`-`, `*`, or `_`). Per CommonMark §4.1, mixing
++/// different break characters (e.g. `_*-`) does **not** form a thematic break.
++fn force_relex_thematic_break_after_quote_prefix(p: &mut MarkdownParser) {
++    let is_thematic_break_candidate = p.at(T![-])
++        || p.at(T![*])
++        || p.at(UNDERSCORE)
++        || p.at(DOUBLE_UNDERSCORE)
++        || (p.at(MD_TEXTUAL_LITERAL) && is_thematic_break_candidate_text(p.cur_text()));
++
++    if is_thematic_break_candidate {
++        p.force_relex_at_line_start();
++    }
++}
++
++fn relex_after_quote_prefix_consumed(p: &mut MarkdownParser) {
++    force_relex_thematic_break_after_quote_prefix(p);
++}
++
++/// Check if `text` could be a thematic break: all non-whitespace bytes must be
++/// the **same** thematic break character (`-`, `*`, or `_`).
++fn is_thematic_break_candidate_text(text: &str) -> bool {
++    use biome_unicode_table::{
++        Dispatch::{IDT, MIN, MUL, WHS},
++        lookup_byte,
++    };
++
++    let mut break_char: Option<u8> = None;
++    for &b in text.as_bytes() {
++        let dispatched = lookup_byte(b);
++        // Skip whitespace (space, tab, etc.) via the shared lookup table.
++        if dispatched == WHS {
++            continue;
++        }
++        // Match thematic break characters via dispatch variants:
++        // MIN = `-`, MUL = `*`, IDT = `_` (IDT also covers letters, so
++        // narrow to `b'_'` explicitly).
++        let is_break_char = matches!(dispatched, MIN | MUL) || (dispatched == IDT && b == b'_');
++        if is_break_char {
++            if let Some(expected) = break_char {
++                // Mixed break characters like `_*-` are not valid.
++                if b != expected {
++                    return false;
++                }
++            } else {
++                break_char = Some(b);
++            }
++        } else {
++            // Any other non-whitespace byte disqualifies the line.
++            return false;
++        }
++    }
++    break_char.is_some()
++}
++
+ /// Emit one quote prefix token sequence: [indent?] `>` [optional space/tab].
+ ///
+ /// Returns whether a post-marker separator was consumed.
+@@ -273,6 +336,7 @@ impl QuoteBlockList {
+         {
+             if has_quote_prefix(p, self.depth) {
+                 consume_quote_prefix(p, self.depth);
++                relex_after_quote_prefix_consumed(p);
+                 self.line_started_with_prefix = true;
+             } else {
+                 return false;
+@@ -532,15 +596,30 @@ fn parse_code_block_newline(p: &mut MarkdownParser, depth: usize) -> bool {
+         return false;
+     }
+ 
++    let continues_code_block = p.lookahead(|p| {
++        consume_quote_prefix(p, depth);
++
++        // Blank lines (consecutive newlines) are allowed in indented code.
++        if p.at(NEWLINE) {
++            return true;
++        }
++
++        at_quote_indented_code_start(p)
++    });
++
++    if !continues_code_block {
++        return false;
++    }
++
+     consume_quote_prefix(p, depth);
++    relex_after_quote_prefix_consumed(p);
+ 
+-    // Blank lines (consecutive newlines) are allowed in indented code
++    // Blank lines (consecutive newlines) are allowed in indented code.
+     if p.at(NEWLINE) {
+         return true;
+     }
+ 
+-    // Next line must still be indented to continue the code block
+-    at_quote_indented_code_start(p)
++    true
+ }
+ 
+ /// Parse a single textual token in an indented code block.
+diff --git a/crates/biome_markdown_parser/src/token_source.rs b/crates/biome_markdown_parser/src/token_source.rs
+index 8227064cba..1b6cc00ed8 100644
+--- a/crates/biome_markdown_parser/src/token_source.rs
++++ b/crates/biome_markdown_parser/src/token_source.rs
+@@ -160,6 +160,14 @@ impl<'source> MarkdownTokenSource<'source> {
+         self.lexer.force_relex_in_context(context)
+     }
+ 
++    /// Re-lex the current token in Regular context, treating the position as
++    /// a line start. This makes the lexer produce line-start-gated tokens
++    /// like `MD_THEMATIC_BREAK_LITERAL`.
++    pub fn force_relex_at_line_start(&mut self) -> MarkdownSyntaxKind {
++        self.lexer
++            .force_relex_at_line_start(MarkdownLexContext::Regular)
++    }
++
+     pub fn set_force_ordered_list_marker(&mut self, value: bool) {
+         self.lexer.lexer_mut().set_force_ordered_list_marker(value);
+     }
+diff --git a/crates/biome_parser/src/lexer.rs b/crates/biome_parser/src/lexer.rs
+index da1f8ed7c6..04f91c4199 100644
+--- a/crates/biome_parser/src/lexer.rs
++++ b/crates/biome_parser/src/lexer.rs
+@@ -689,6 +689,39 @@ where
+ 
+         kind
+     }
++
++    /// Re-lex the current token in the given context, treating the position
++    /// as a line start. This overrides `after_line_break` to `true` so the
++    /// lexer produces line-start-gated tokens (e.g. thematic breaks).
++    pub fn force_relex_at_line_start(&mut self, context: Lex::LexContext) -> Lex::Kind {
++        let checkpoint = if let Some(current) = self.current.clone() {
++            current
++        } else if let Some(first) = self.lookahead.get_checkpoint(0).cloned() {
++            first
++        } else {
++            self.inner.checkpoint()
++        };
++
++        let rewind_checkpoint = LexerCheckpoint {
++            position: checkpoint.current_start,
++            current_start: checkpoint.current_start,
++            current_kind: Lex::Kind::EOF,
++            current_flags: TokenFlags::empty(),
++            after_line_break: true,
++            after_whitespace: checkpoint.after_whitespace,
++            unicode_bom_length: checkpoint.unicode_bom_length,
++            diagnostics_pos: checkpoint.diagnostics_pos,
++        };
++
++        self.inner.rewind(rewind_checkpoint);
++        self.current = None;
++        self.lookahead.clear();
++
++        let kind = self.inner.next_token(context);
++        self.current = Some(self.inner.checkpoint());
++
++        kind
++    }
+ }
+ 
+ impl<'l, Lex> BufferedLexer<Lex::Kind, Lex>

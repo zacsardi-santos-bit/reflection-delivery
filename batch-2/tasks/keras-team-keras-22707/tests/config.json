@@ -1,0 +1,18 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && KERAS_BACKEND=numpy pytest keras/src/ops/image_test.py -v -k \"test_pad_images_invalid_rank_keras_input or test_crop_images_invalid_rank_keras_input or test_pad_images_invalid_padding_params_keras_input or test_crop_images_invalid_cropping_params_keras_input or test_pad_images_negative_output_spec or test_crop_images_negative_output_spec\"",
+  "test_files": [
+    "keras/src/ops/image_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.ops.image_test.ImageOpsDynamicShapeTest::test_crop_images_invalid_cropping_params_keras_input",
+    "keras.src.ops.image_test.ImageOpsDynamicShapeTest::test_crop_images_invalid_rank_keras_input",
+    "keras.src.ops.image_test.ImageOpsDynamicShapeTest::test_pad_images_invalid_padding_params_keras_input",
+    "keras.src.ops.image_test.ImageOpsDynamicShapeTest::test_pad_images_invalid_rank_keras_input",
+    "keras.src.ops.image_test.ImageOpsBehaviorTests::test_crop_images_negative_output_spec",
+    "keras.src.ops.image_test.ImageOpsBehaviorTests::test_pad_images_negative_output_spec"
+  ],
+  "PASS_TO_PASS": []
+}

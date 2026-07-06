@@ -1,7 +1,0 @@
-I'm working on the RBAC authorization plugin in Istio's networking layer and need to make several changes.
-
-Right now, the function that generates metadata list matchers always targets a hard-coded filter namespace. I need it to accept the filter name as an explicit parameter so it can target different filter namespaces — for example, the authentication filter for JWT claims, or other filters for protocol-specific attributes.
-
-The functions that build TCP and HTTP RBAC filters currently take a separate boolean argument for proxy version detection, which decides which config encoding format to use. I want to remove that parameter and have these functions always use the struct-based encoding format, dropping the conditional logic entirely. The TCP vs. HTTP distinction should be handled internally through the existing options struct rather than as a separate argument.
-
-I also need to add support for authorization policy constraints that match against metadata produced by arbitrary Envoy network filters. The constraint key format uses a prefix that identifies it as experimental, followed by the filter name and a bracketed metadata key. I need a helper function that can detect whether a key is in this "prefix[key]" binary format, and then the policy conversion logic should use it to generate the appropriate metadata matcher — a list matcher when the constraint value is itself in bracket notation, or a string matcher otherwise.

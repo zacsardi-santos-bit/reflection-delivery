@@ -1,0 +1,26 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && rspec /workspace/repo/spec/async_spec.rb /workspace/repo/spec/options/widget_lists_spec.rb --format RspecJunitFormatter --out /workspace/test-results/output.xml; cat /workspace/test-results/output.xml",
+  "test_files": [
+    "spec/async_spec.rb",
+    "spec/integrations/client_zpty_spec.rb",
+    "spec/options/async_zpty_name_spec.rb",
+    "spec/options/widget_lists_spec.rb"
+  ],
+  "num_test_files": 4,
+  "language": "ruby",
+  "FAIL_TO_PASS": [
+    "spec.options.widget_lists_spec::a modification to the widget lists when manual rebind is enabled does not take effect until bind command is re-run"
+  ],
+  "PASS_TO_PASS": [
+    "spec.async_spec::with asynchronous suggestions enabled `up-line-or-beginning-search` should show previous history entries",
+    "spec.async_spec::with asynchronous suggestions enabled pressing ^C after fetching a suggestion terminates the prompt and begins a new one",
+    "spec.options.widget_lists_spec::a zle widget when added to ZSH_AUTOSUGGEST_ACCEPT_WIDGETS accepts the suggestion when invoked",
+    "spec.options.widget_lists_spec::a zle widget when added to ZSH_AUTOSUGGEST_CLEAR_WIDGETS clears the suggestion when invoked",
+    "spec.options.widget_lists_spec::a zle widget when added to ZSH_AUTOSUGGEST_EXECUTE_WIDGETS executes the suggestion when invoked",
+    "spec.options.widget_lists_spec::a zle widget when added to ZSH_AUTOSUGGEST_IGNORE_WIDGETS should not be wrapped with an autosuggest widget",
+    "spec.options.widget_lists_spec::a zle widget that moves the cursor forward when added to ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS accepts the suggestion as far as the cursor is moved when invoked",
+    "spec.options.widget_lists_spec::a zle widget that modifies the buffer when not added to any of the widget lists modifies the buffer and fetches a new suggestion",
+    "spec.options.widget_lists_spec::a modification to the widget lists takes effect on the next cmd line"
+  ]
+}

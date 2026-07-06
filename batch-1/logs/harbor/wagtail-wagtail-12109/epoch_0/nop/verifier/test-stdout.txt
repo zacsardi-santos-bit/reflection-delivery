@@ -1,0 +1,798 @@
+patching file wagtail/admin/tests/test_editing_sessions.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+django: version: 5.1.15, settings: wagtail.test.settings (from env)
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: Faker-40.23.0, django-4.12.0
+collecting ... collected 21 items
+
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_invalid_data FAILED [  4%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_must_post FAILED [  9%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_existing_session FAILED [ 14%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_existing_session_with_editing_flag FAILED [ 19%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_invalid_model PASSED [ 23%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_new_session FAILED [ 28%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_new_session_with_editing_flag FAILED [ 33%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_new_session_with_revision FAILED [ 38%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_non_existent_object PASSED [ 42%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_non_page_non_snippet_model PASSED [ 47%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_session_ordering FAILED [ 52%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_snippet_model FAILED [ 57%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_snippet_model_without_permission PASSED [ 61%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_with_multiple_revisions_since_own_revision FAILED [ 66%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_with_new_revision_that_has_no_user FAILED [ 71%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_with_revision FAILED [ 76%]
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_user_must_have_edit_permission_on_page PASSED [ 80%]
+wagtail/admin/tests/test_editing_sessions.py::TestCleanup::test_cleanup PASSED [ 85%]
+wagtail/admin/tests/test_editing_sessions.py::TestReleaseView::test_cannot_release_other_users_session PASSED [ 90%]
+wagtail/admin/tests/test_editing_sessions.py::TestReleaseView::test_must_post PASSED [ 95%]
+wagtail/admin/tests/test_editing_sessions.py::TestReleaseView::test_release PASSED [100%]
+
+=================================== FAILURES ===================================
+________________________ TestPingView.test_invalid_data ________________________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_invalid_data>
+
+    def test_invalid_data(self):
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, self.session.id),
+            ),
+            {"is_editing": "invalid"},
+        )
+>       self.assertEqual(response.status_code, 400)
+E       AssertionError: 200 != 400
+
+wagtail/admin/tests/test_editing_sessions.py:912: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+Creating test database for alias 'default'...
+_________________________ TestPingView.test_must_post __________________________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_must_post>
+
+    def test_must_post(self):
+        response = self.client.get(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, 999999),
+            )
+        )
+>       self.assertEqual(response.status_code, 405)
+E       AssertionError: 200 != 405
+
+wagtail/admin/tests/test_editing_sessions.py:898: AssertionError
+___________________ TestPingView.test_ping_existing_session ____________________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_existing_session>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_existing_session(self):
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, self.session.id),
+            )
+        )
+        self.assertEqual(response.status_code, 200)
+        response_json = response.json()
+        self.assertEqual(response_json["session_id"], self.session.id)
+>       self.assertEqual(
+            response_json["other_sessions"],
+            [
+                {
+                    "session_id": self.other_session.id,
+                    "user": "Vic Otheruser",
+                    "last_seen_at": TIMESTAMP_2.isoformat(),
+                    "is_editing": False,
+                    "revision_id": None,
+                },
+            ],
+        )
+E       AssertionError: Lists differ: [{'se[63 chars]-01T11:59:52+00:00'}] != [{'se[63 chars]-01T11:59:52+00:00', 'is_editing': False, 'revision_id': None}]
+E       
+E       First differing element 0:
+E       {'ses[61 chars]1-01T11:59:52+00:00'}
+E       {'ses[61 chars]1-01T11:59:52+00:00', 'is_editing': False, 'revision_id': None}
+E       
+E       + [{'is_editing': False,
+E       - [{'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'revision_id': None,
+E           'session_id': 2,
+E           'user': 'Vic Otheruser'}]
+
+wagtail/admin/tests/test_editing_sessions.py:143: AssertionError
+__________ TestPingView.test_ping_existing_session_with_editing_flag ___________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_existing_session_with_editing_flag>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_existing_session_with_editing_flag(self):
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, self.session.id),
+            ),
+            {"is_editing": "1"},
+        )
+        self.assertEqual(response.status_code, 200)
+        response_json = response.json()
+        self.assertEqual(response_json["session_id"], self.session.id)
+>       self.assertEqual(
+            response_json["other_sessions"],
+            [
+                # Should not cause any changes to the other sessions list,
+                # as the current session is the one that is editing
+                {
+                    "session_id": self.other_session.id,
+                    "user": "Vic Otheruser",
+                    "last_seen_at": TIMESTAMP_2.isoformat(),
+                    "is_editing": False,
+                    "revision_id": None,
+                },
+            ],
+        )
+E       AssertionError: Lists differ: [{'se[63 chars]-01T11:59:52+00:00'}] != [{'se[63 chars]-01T11:59:52+00:00', 'is_editing': False, 'revision_id': None}]
+E       
+E       First differing element 0:
+E       {'ses[61 chars]1-01T11:59:52+00:00'}
+E       {'ses[61 chars]1-01T11:59:52+00:00', 'is_editing': False, 'revision_id': None}
+E       
+E       + [{'is_editing': False,
+E       - [{'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'revision_id': None,
+E           'session_id': 2,
+E           'user': 'Vic Otheruser'}]
+
+wagtail/admin/tests/test_editing_sessions.py:171: AssertionError
+______________________ TestPingView.test_ping_new_session ______________________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_new_session>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_new_session(self):
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, 999999),
+            )
+        )
+        self.assertEqual(response.status_code, 200)
+        response_json = response.json()
+        new_session_id = response_json["session_id"]
+        session = EditingSession.objects.get(id=new_session_id)
+        self.assertEqual(session.user, self.user)
+        self.assertEqual(session.last_seen_at, TIMESTAMP_NOW)
+>       self.assertFalse(session.is_editing)
+                         ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'EditingSession' object has no attribute 'is_editing'
+
+wagtail/admin/tests/test_editing_sessions.py:476: AttributeError
+_____________ TestPingView.test_ping_new_session_with_editing_flag _____________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_new_session_with_editing_flag>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_new_session_with_editing_flag(self):
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, 999999),
+            ),
+            {"is_editing": "1"},
+        )
+        self.assertEqual(response.status_code, 200)
+        response_json = response.json()
+        new_session_id = response_json["session_id"]
+        session = EditingSession.objects.get(id=new_session_id)
+        self.assertEqual(session.user, self.user)
+        self.assertEqual(session.last_seen_at, TIMESTAMP_NOW)
+>       self.assertTrue(session.is_editing)
+                        ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'EditingSession' object has no attribute 'is_editing'
+
+wagtail/admin/tests/test_editing_sessions.py:514: AttributeError
+_______________ TestPingView.test_ping_new_session_with_revision _______________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_new_session_with_revision>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_new_session_with_revision(self):
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, 999999),
+            ),
+            {"revision_id": self.original_revision.id},
+        )
+        self.assertEqual(response.status_code, 200)
+        response_json = response.json()
+        new_session_id = response_json["session_id"]
+        session = EditingSession.objects.get(id=new_session_id)
+        self.assertEqual(session.user, self.user)
+        self.assertEqual(session.last_seen_at, TIMESTAMP_NOW)
+>       self.assertFalse(session.is_editing)
+                         ^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'EditingSession' object has no attribute 'is_editing'
+
+wagtail/admin/tests/test_editing_sessions.py:591: AttributeError
+___________________ TestPingView.test_ping_session_ordering ____________________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_session_ordering>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_session_ordering(self):
+        fourth_user = self.create_user(
+            "alyx", password="password", first_name="Alyx", last_name="Fourthuser"
+        )
+        fifth_user = self.create_user(
+            "chell", password="password", first_name="Chell", last_name="Fifthuser"
+        )
+    
+        third_session = EditingSession.objects.create(
+            user=self.third_user,
+            content_type=ContentType.objects.get_for_model(Page),
+            object_id=self.page.id,
+            last_seen_at=TIMESTAMP_2,
+        )
+        fourth_session = EditingSession.objects.create(
+            user=fourth_user,
+            content_type=ContentType.objects.get_for_model(Page),
+            object_id=self.page.id,
+            # newer ping but not the last one to be created
+            last_seen_at=TIMESTAMP_1,
+        )
+>       fifth_session = EditingSession.objects.create(
+            user=fifth_user,
+            content_type=ContentType.objects.get_for_model(Page),
+            object_id=self.page.id,
+            last_seen_at=TIMESTAMP_4,
+            is_editing=True,
+        )
+
+wagtail/admin/tests/test_editing_sessions.py:401: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/django/db/models/manager.py:87: in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/django/db/models/query.py:679: in create
+    obj = self.model(**kwargs)
+          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <EditingSession: EditingSession object (None)>, args = ()
+kwargs = {'is_editing': True}
+
+    def __init__(self, *args, **kwargs):
+        # Alias some things as locals to avoid repeat global lookups
+        cls = self.__class__
+        opts = self._meta
+        _setattr = setattr
+        _DEFERRED = DEFERRED
+        if opts.abstract:
+            raise TypeError("Abstract models cannot be instantiated.")
+    
+        pre_init.send(sender=cls, args=args, kwargs=kwargs)
+    
+        # Set up the storage for instance state
+        self._state = ModelState()
+    
+        # There is a rather weird disparity here; if kwargs, it's set, then args
+        # overrides it. It should be one or the other; don't duplicate the work
+        # The reason for the kwargs check is that standard iterator passes in by
+        # args, and instantiation for iteration is 33% faster.
+        if len(args) > len(opts.concrete_fields):
+            # Daft, but matches old exception sans the err msg.
+            raise IndexError("Number of args exceeds number of fields")
+    
+        if not kwargs:
+            fields_iter = iter(opts.concrete_fields)
+            # The ordering of the zip calls matter - zip throws StopIteration
+            # when an iter throws it. So if the first iter throws it, the second
+            # is *not* consumed. We rely on this, so don't change the order
+            # without changing the logic.
+            for val, field in zip(args, fields_iter):
+                if val is _DEFERRED:
+                    continue
+                _setattr(self, field.attname, val)
+        else:
+            # Slower, kwargs-ready version.
+            fields_iter = iter(opts.fields)
+            for val, field in zip(args, fields_iter):
+                if val is _DEFERRED:
+                    continue
+                _setattr(self, field.attname, val)
+                if kwargs.pop(field.name, NOT_PROVIDED) is not NOT_PROVIDED:
+                    raise TypeError(
+                        f"{cls.__qualname__}() got both positional and "
+                        f"keyword arguments for field '{field.name}'."
+                    )
+    
+        # Now we're left with the unprocessed fields that *must* come from
+        # keywords, or default.
+    
+        for field in fields_iter:
+            is_related_object = False
+            # Virtual field
+            if field.attname not in kwargs and field.column is None or field.generated:
+                continue
+            if kwargs:
+                if isinstance(field.remote_field, ForeignObjectRel):
+                    try:
+                        # Assume object instance was passed in.
+                        rel_obj = kwargs.pop(field.name)
+                        is_related_object = True
+                    except KeyError:
+                        try:
+                            # Object instance wasn't passed in -- must be an ID.
+                            val = kwargs.pop(field.attname)
+                        except KeyError:
+                            val = field.get_default()
+                else:
+                    try:
+                        val = kwargs.pop(field.attname)
+                    except KeyError:
+                        # This is done with an exception rather than the
+                        # default argument on pop because we don't want
+                        # get_default() to be evaluated, and then not used.
+                        # Refs #12057.
+                        val = field.get_default()
+            else:
+                val = field.get_default()
+    
+            if is_related_object:
+                # If we are passed a related instance, set it using the
+                # field.name instead of field.attname (e.g. "user" instead of
+                # "user_id") so that the object gets properly cached (and type
+                # checked) by the RelatedObjectDescriptor.
+                if rel_obj is not _DEFERRED:
+                    _setattr(self, field.name, rel_obj)
+            else:
+                if val is not _DEFERRED:
+                    _setattr(self, field.attname, val)
+    
+        if kwargs:
+            property_names = opts._property_names
+            unexpected = ()
+            for prop, value in kwargs.items():
+                # Any remaining kwargs must correspond to properties or virtual
+                # fields.
+                if prop in property_names:
+                    if value is not _DEFERRED:
+                        _setattr(self, prop, value)
+                else:
+                    try:
+                        opts.get_field(prop)
+                    except FieldDoesNotExist:
+                        unexpected += (prop,)
+                    else:
+                        if value is not _DEFERRED:
+                            _setattr(self, prop, value)
+            if unexpected:
+                unexpected_names = ", ".join(repr(n) for n in unexpected)
+>               raise TypeError(
+                    f"{cls.__name__}() got unexpected keyword arguments: "
+                    f"{unexpected_names}"
+                )
+E               TypeError: EditingSession() got unexpected keyword arguments: 'is_editing'
+
+/usr/local/lib/python3.11/site-packages/django/db/models/base.py:567: TypeError
+_____________________ TestPingView.test_ping_snippet_model _____________________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_snippet_model>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_snippet_model(self):
+        snippet = Advert.objects.create(text="Test snippet")
+    
+        # make user a member of Editors
+        self.user.is_superuser = False
+        self.user.save()
+        editors = Group.objects.get(name="Editors")
+        self.user.groups.add(editors)
+    
+        editors.permissions.add(
+            Permission.objects.get(codename="change_advert"),
+        )
+    
+        session = EditingSession.objects.create(
+            user=self.user,
+            content_type=ContentType.objects.get_for_model(Advert),
+            object_id=snippet.pk,
+            last_seen_at=TIMESTAMP_1,
+        )
+        # add two sessions from other_user to test that we correctly merge them into
+        # one record in the response
+>       EditingSession.objects.create(
+            user=self.other_user,
+            content_type=ContentType.objects.get_for_model(Advert),
+            object_id=snippet.pk,
+            last_seen_at=TIMESTAMP_2,
+            is_editing=True,
+        )
+
+wagtail/admin/tests/test_editing_sessions.py:821: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.11/site-packages/django/db/models/manager.py:87: in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/site-packages/django/db/models/query.py:679: in create
+    obj = self.model(**kwargs)
+          ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <EditingSession: EditingSession object (None)>, args = ()
+kwargs = {'is_editing': True}
+
+    def __init__(self, *args, **kwargs):
+        # Alias some things as locals to avoid repeat global lookups
+        cls = self.__class__
+        opts = self._meta
+        _setattr = setattr
+        _DEFERRED = DEFERRED
+        if opts.abstract:
+            raise TypeError("Abstract models cannot be instantiated.")
+    
+        pre_init.send(sender=cls, args=args, kwargs=kwargs)
+    
+        # Set up the storage for instance state
+        self._state = ModelState()
+    
+        # There is a rather weird disparity here; if kwargs, it's set, then args
+        # overrides it. It should be one or the other; don't duplicate the work
+        # The reason for the kwargs check is that standard iterator passes in by
+        # args, and instantiation for iteration is 33% faster.
+        if len(args) > len(opts.concrete_fields):
+            # Daft, but matches old exception sans the err msg.
+            raise IndexError("Number of args exceeds number of fields")
+    
+        if not kwargs:
+            fields_iter = iter(opts.concrete_fields)
+            # The ordering of the zip calls matter - zip throws StopIteration
+            # when an iter throws it. So if the first iter throws it, the second
+            # is *not* consumed. We rely on this, so don't change the order
+            # without changing the logic.
+            for val, field in zip(args, fields_iter):
+                if val is _DEFERRED:
+                    continue
+                _setattr(self, field.attname, val)
+        else:
+            # Slower, kwargs-ready version.
+            fields_iter = iter(opts.fields)
+            for val, field in zip(args, fields_iter):
+                if val is _DEFERRED:
+                    continue
+                _setattr(self, field.attname, val)
+                if kwargs.pop(field.name, NOT_PROVIDED) is not NOT_PROVIDED:
+                    raise TypeError(
+                        f"{cls.__qualname__}() got both positional and "
+                        f"keyword arguments for field '{field.name}'."
+                    )
+    
+        # Now we're left with the unprocessed fields that *must* come from
+        # keywords, or default.
+    
+        for field in fields_iter:
+            is_related_object = False
+            # Virtual field
+            if field.attname not in kwargs and field.column is None or field.generated:
+                continue
+            if kwargs:
+                if isinstance(field.remote_field, ForeignObjectRel):
+                    try:
+                        # Assume object instance was passed in.
+                        rel_obj = kwargs.pop(field.name)
+                        is_related_object = True
+                    except KeyError:
+                        try:
+                            # Object instance wasn't passed in -- must be an ID.
+                            val = kwargs.pop(field.attname)
+                        except KeyError:
+                            val = field.get_default()
+                else:
+                    try:
+                        val = kwargs.pop(field.attname)
+                    except KeyError:
+                        # This is done with an exception rather than the
+                        # default argument on pop because we don't want
+                        # get_default() to be evaluated, and then not used.
+                        # Refs #12057.
+                        val = field.get_default()
+            else:
+                val = field.get_default()
+    
+            if is_related_object:
+                # If we are passed a related instance, set it using the
+                # field.name instead of field.attname (e.g. "user" instead of
+                # "user_id") so that the object gets properly cached (and type
+                # checked) by the RelatedObjectDescriptor.
+                if rel_obj is not _DEFERRED:
+                    _setattr(self, field.name, rel_obj)
+            else:
+                if val is not _DEFERRED:
+                    _setattr(self, field.attname, val)
+    
+        if kwargs:
+            property_names = opts._property_names
+            unexpected = ()
+            for prop, value in kwargs.items():
+                # Any remaining kwargs must correspond to properties or virtual
+                # fields.
+                if prop in property_names:
+                    if value is not _DEFERRED:
+                        _setattr(self, prop, value)
+                else:
+                    try:
+                        opts.get_field(prop)
+                    except FieldDoesNotExist:
+                        unexpected += (prop,)
+                    else:
+                        if value is not _DEFERRED:
+                            _setattr(self, prop, value)
+            if unexpected:
+                unexpected_names = ", ".join(repr(n) for n in unexpected)
+>               raise TypeError(
+                    f"{cls.__name__}() got unexpected keyword arguments: "
+                    f"{unexpected_names}"
+                )
+E               TypeError: EditingSession() got unexpected keyword arguments: 'is_editing'
+
+/usr/local/lib/python3.11/site-packages/django/db/models/base.py:567: TypeError
+______ TestPingView.test_ping_with_multiple_revisions_since_own_revision _______
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_with_multiple_revisions_since_own_revision>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_with_multiple_revisions_since_own_revision(self):
+        # Create a new revision with the other_user
+        with freeze_time(TIMESTAMP_3):
+            self.page.save_revision(user=self.other_user)
+    
+        # Create a new session with the third_user, and save a revision too
+        third_session = EditingSession.objects.create(
+            user=self.third_user,
+            content_type=ContentType.objects.get_for_model(Page),
+            object_id=self.page.id,
+            last_seen_at=TIMESTAMP_3,
+        )
+        with freeze_time(TIMESTAMP_4):
+            latest_revision = self.page.save_revision(user=self.third_user)
+    
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, self.session.id),
+            ),
+            {"revision_id": self.original_revision.id},
+        )
+        self.assertEqual(response.status_code, 200)
+        response_json = response.json()
+        self.assertEqual(response_json["session_id"], self.session.id)
+    
+        # The revision_id should only be set for the session with the latest revision
+>       self.assertEqual(
+            response_json["other_sessions"],
+            [
+                {
+                    # The third_session has a newer ID, but is shown first
+                    # because it has a revision_id set
+                    "session_id": third_session.id,
+                    "user": "Gordon Thirduser",
+                    "last_seen_at": TIMESTAMP_4.isoformat(),
+                    "is_editing": False,
+                    "revision_id": latest_revision.id,
+                },
+                {
+                    "session_id": self.other_session.id,
+                    "user": "Vic Otheruser",
+                    # The timestamp isn't updated for the other_session and it
+                    # doesn't have a revision_id. This is because we don't care
+                    # about the fact that this user created a new revision if
+                    # it's not the latest one.
+                    "last_seen_at": TIMESTAMP_2.isoformat(),
+                    "is_editing": False,
+                    "revision_id": None,
+                },
+            ],
+        )
+E       AssertionError: Lists differ: [{'session_id': 2, 'user': 'Vic Otheruser', 'last_seen_at[119 chars]00'}] != [{'session_id': 4, 'user': 'Gordon Thirduser', 'last_seen[200 chars]one}]
+E       
+E       First differing element 0:
+E       {'session_id': 2, 'user': 'Vic Otheruser', 'last_seen_at[26 chars]:00'}
+E       {'session_id': 4, 'user': 'Gordon Thirduser', 'last_seen[68 chars]': 4}
+E       
+E       + [{'is_editing': False,
+E       +   'last_seen_at': '2020-01-01T11:59:54+00:00',
+E       +   'revision_id': 4,
+E       +   'session_id': 4,
+E       +   'user': 'Gordon Thirduser'},
+E       +  {'is_editing': False,
+E       - [{'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'revision_id': None,
+E           'session_id': 2,
+E       -   'user': 'Vic Otheruser'},
+E       ?                           ^
+E       
+E       +   'user': 'Vic Otheruser'}]
+E       ?                           ^
+E       
+E       -  {'last_seen_at': '2020-01-01T11:59:53+00:00',
+E       -   'session_id': 4,
+E       -   'user': 'Gordon Thirduser'}]
+
+wagtail/admin/tests/test_editing_sessions.py:309: AssertionError
+__________ TestPingView.test_ping_with_new_revision_that_has_no_user ___________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_with_new_revision_that_has_no_user>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_with_new_revision_that_has_no_user(self):
+        # Create a new revision without any user
+        with freeze_time(TIMESTAMP_3):
+            latest_revision = self.page.save_revision()
+    
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, self.session.id),
+            ),
+            {"revision_id": self.original_revision.id},
+        )
+        self.assertEqual(response.status_code, 200)
+        response_json = response.json()
+        self.assertEqual(response_json["session_id"], self.session.id)
+    
+>       self.assertEqual(
+            response_json["other_sessions"],
+            [
+                {
+                    # Should work even if the revision has no associated user
+                    "session_id": None,
+                    "user": "",
+                    "last_seen_at": TIMESTAMP_3.isoformat(),
+                    "is_editing": False,
+                    "revision_id": latest_revision.id,
+                },
+                {
+                    "session_id": self.other_session.id,
+                    "user": "Vic Otheruser",
+                    "last_seen_at": TIMESTAMP_2.isoformat(),
+                    "is_editing": False,
+                    "revision_id": None,
+                },
+            ],
+        )
+E       AssertionError: Lists differ: [{'session_id': 2, 'user': 'Vic Otheruser', 'last_seen_at[27 chars]00'}] != [{'session_id': None, 'user': '', 'last_seen_at': '2020-0[187 chars]one}]
+E       
+E       First differing element 0:
+E       {'session_id': 2, 'user': 'Vic Otheruser', 'last_seen_at[26 chars]:00'}
+E       {'session_id': None, 'user': '', 'last_seen_at': '2020-0[55 chars]': 3}
+E       
+E       Second list contains 1 additional elements.
+E       First extra element 1:
+E       {'session_id': 2, 'user': 'Vic Otheruser', 'last_seen_at': '2020-01-01T11:59:52+00:00', 'is_editing': False, 'revision_id': None}
+E       
+E       + [{'is_editing': False,
+E       +   'last_seen_at': '2020-01-01T11:59:53+00:00',
+E       +   'revision_id': 3,
+E       +   'session_id': None,
+E       +   'user': ''},
+E       +  {'is_editing': False,
+E       - [{'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'revision_id': None,
+E           'session_id': 2,
+E           'user': 'Vic Otheruser'}]
+
+wagtail/admin/tests/test_editing_sessions.py:355: AssertionError
+_____________________ TestPingView.test_ping_with_revision _____________________
+
+self = <wagtail.admin.tests.test_editing_sessions.TestPingView testMethod=test_ping_with_revision>
+
+    @freeze_time(TIMESTAMP_NOW)
+    def test_ping_with_revision(self):
+        response = self.client.post(
+            reverse(
+                "wagtailadmin_editing_sessions:ping",
+                args=("wagtailcore", "page", self.page.id, self.session.id),
+            ),
+            {"revision_id": self.original_revision.id},
+        )
+        self.assertEqual(response.status_code, 200)
+        response_json = response.json()
+        self.assertEqual(response_json["session_id"], self.session.id)
+    
+        # no revisions have been saved since the original revision
+>       self.assertEqual(
+            response_json["other_sessions"],
+            [
+                {
+                    "session_id": self.other_session.id,
+                    "user": "Vic Otheruser",
+                    "last_seen_at": TIMESTAMP_2.isoformat(),
+                    "is_editing": False,
+                    "revision_id": None,
+                },
+            ],
+        )
+E       AssertionError: Lists differ: [{'se[63 chars]-01T11:59:52+00:00'}] != [{'se[63 chars]-01T11:59:52+00:00', 'is_editing': False, 'revision_id': None}]
+E       
+E       First differing element 0:
+E       {'ses[61 chars]1-01T11:59:52+00:00'}
+E       {'ses[61 chars]1-01T11:59:52+00:00', 'is_editing': False, 'revision_id': None}
+E       
+E       + [{'is_editing': False,
+E       - [{'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'last_seen_at': '2020-01-01T11:59:52+00:00',
+E       ? ^^
+E       
+E       +   'revision_id': None,
+E           'session_id': 2,
+E           'user': 'Vic Otheruser'}]
+
+wagtail/admin/tests/test_editing_sessions.py:203: AssertionError
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/l18n/translation.py:17
+  /usr/local/lib/python3.11/site-packages/l18n/translation.py:17: DeprecationWarning: 'locale.getdefaultlocale' is deprecated and slated for removal in Python 3.15. Use setlocale(), getencoding() and getlocale() instead.
+    self.set(getdefaultlocale()[0])
+
+wagtail/admin/forms/choosers.py:35
+  /workspace/repo/wagtail/admin/forms/choosers.py:35: RemovedInDjango60Warning: The default scheme will be changed from 'http' to 'https' in Django 6.0. Pass the forms.URLField.assume_scheme argument to silence this warning, or set the FORMS_URLFIELD_ASSUME_HTTPS transitional setting to True to opt into using 'https' as the new default scheme.
+    url = URLOrAbsolutePathField(required=True, label=_("URL"))
+
+../../usr/local/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1142: 3 warnings
+wagtail/admin/tests/test_editing_sessions.py: 12 warnings
+  /usr/local/lib/python3.11/site-packages/django/db/models/fields/__init__.py:1142: RemovedInDjango60Warning: The default scheme will be changed from 'http' to 'https' in Django 6.0. Pass the forms.URLField.assume_scheme argument to silence this warning, or set the FORMS_URLFIELD_ASSUME_HTTPS transitional setting to True to opt into using 'https' as the new default scheme.
+    return form_class(**defaults)
+
+wagtail/contrib/styleguide/views.py:75
+  /workspace/repo/wagtail/contrib/styleguide/views.py:75: RemovedInDjango60Warning: The default scheme will be changed from 'http' to 'https' in Django 6.0. Pass the forms.URLField.assume_scheme argument to silence this warning, or set the FORMS_URLFIELD_ASSUME_HTTPS transitional setting to True to opt into using 'https' as the new default scheme.
+    url = forms.URLField(required=True)
+
+wagtail/users/forms.py:34
+  /workspace/repo/wagtail/users/forms.py:34: RemovedInWagtail70Warning: The `WAGTAIL_USER_CUSTOM_FIELDS` setting is deprecated. Use a custom `UserViewSet` subclass and override `get_form_class()` instead.
+    warn(
+
+wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_invalid_data
+  /workspace/repo/wagtail/migrations/0087_alter_grouppagepermission_unique_together_and_more.py:19: RemovedInDjango60Warning: CheckConstraint.check is deprecated in favor of `.condition`.
+    constraint=models.CheckConstraint(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_invalid_data
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_must_post
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_existing_session
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_existing_session_with_editing_flag
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_new_session
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_new_session_with_editing_flag
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_new_session_with_revision
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_session_ordering
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_snippet_model
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_with_multiple_revisions_since_own_revision
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_with_new_revision_that_has_no_user
+FAILED wagtail/admin/tests/test_editing_sessions.py::TestPingView::test_ping_with_revision
+================== 12 failed, 9 passed, 20 warnings in 42.21s ==================
+reward=0 graded=21 found=0 failed=0 parsed=21 framework=pytest exit_code=1

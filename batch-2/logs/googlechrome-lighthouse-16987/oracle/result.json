@@ -1,0 +1,29 @@
+{
+    "id": "9282fdeb-c6f2-4c63-a498-9bca1f55f27b",
+    "started_at": "2026-07-06T12:19:52.714170",
+    "finished_at": "2026-07-06T12:20:05.060349",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__googlechrome-lighthouse-16987": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "googlechrome-lighthouse-16987__6ydqdDg"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

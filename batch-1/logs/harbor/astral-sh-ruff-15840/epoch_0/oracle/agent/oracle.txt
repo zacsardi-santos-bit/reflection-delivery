@@ -1,0 +1,8 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_comprehensions/C420_1.py
+patching file crates/ruff_linter/src/rules/flake8_comprehensions/mod.rs
+patching file crates/ruff_linter/src/rules/flake8_comprehensions/rules/unnecessary_dict_comprehension_for_iterable.rs
+patching file crates/ruff_linter/src/rules/flake8_comprehensions/snapshots/ruff_linter__rules__flake8_comprehensions__tests__C420_C420_1.py.snap
+patching file crates/ruff_linter/src/rules/pyupgrade/rules/pep695/mod.rs
+patching file crates/ruff_linter/src/rules/pyupgrade/rules/pep695/non_pep695_type_alias.rs
+patching file crates/ruff_linter/src/rules/pyupgrade/snapshots/ruff_linter__rules__pyupgrade__tests__UP040.py.snap
+patching file crates/ruff_linter/src/rules/pyupgrade/snapshots/ruff_linter__rules__pyupgrade__tests__UP040.pyi.snap

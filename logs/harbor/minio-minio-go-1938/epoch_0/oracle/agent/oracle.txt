@@ -1,4 +1,0 @@
-patching file functional_tests.go
-patching file go.mod
-patching file go.sum
-patching file retry.go

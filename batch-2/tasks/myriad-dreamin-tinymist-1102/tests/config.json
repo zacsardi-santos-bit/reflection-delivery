@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && (if [ -d crates/tinymist-core ] && cd crates/tinymist-core && wasm-pack build --target web --dev -- --no-default-features --features web 2>&1 && node tests/simple.mjs 2>&1; then echo 'PASS [   0.00s] version'; else echo 'FAIL [   0.00s] version'; exit 1; fi)",
+  "test_files": [
+    "crates/tinymist-core/tests/simple.mjs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "version"
+  ],
+  "PASS_TO_PASS": []
+}

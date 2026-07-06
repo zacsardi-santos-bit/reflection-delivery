@@ -1,0 +1,35 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/components/azure_data_explorer/test_config_flow.py tests/components/azure_data_explorer/test_init.py -v",
+  "test_files": [
+    "tests/components/azure_data_explorer/__init__.py",
+    "tests/components/azure_data_explorer/conftest.py",
+    "tests/components/azure_data_explorer/const.py",
+    "tests/components/azure_data_explorer/test_config_flow.py",
+    "tests/components/azure_data_explorer/test_init.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.azure_data_explorer.test_config_flow::test_config_flow",
+    "tests.components.azure_data_explorer.test_config_flow::test_config_flow_errors[test_input0-cannot_connect]",
+    "tests.components.azure_data_explorer.test_config_flow::test_config_flow_errors[test_input1-invalid_auth]",
+    "tests.components.azure_data_explorer.test_init::test_put_event_on_queue_with_managed_client",
+    "tests.components.azure_data_explorer.test_init::test_put_event_on_queue_with_managed_client_with_errors[KustoServiceError]",
+    "tests.components.azure_data_explorer.test_init::test_put_event_on_queue_with_managed_client_with_errors[KustoAuthenticationError]",
+    "tests.components.azure_data_explorer.test_init::test_put_event_on_queue_with_queueing_client",
+    "tests.components.azure_data_explorer.test_init::test_import",
+    "tests.components.azure_data_explorer.test_init::test_unload_entry",
+    "tests.components.azure_data_explorer.test_init::test_late_event",
+    "tests.components.azure_data_explorer.test_init::test_filter[allowlist]",
+    "tests.components.azure_data_explorer.test_init::test_filter[denylist]",
+    "tests.components.azure_data_explorer.test_init::test_filter[filtered_allowlist]",
+    "tests.components.azure_data_explorer.test_init::test_filter[filtered_denylist]",
+    "tests.components.azure_data_explorer.test_init::test_event[None_event]",
+    "tests.components.azure_data_explorer.test_init::test_event[Mailformed_event]",
+    "tests.components.azure_data_explorer.test_init::test_connection[KustoServiceError]",
+    "tests.components.azure_data_explorer.test_init::test_connection[KustoAuthenticationError]",
+    "tests.components.azure_data_explorer.test_init::test_connection[Exception]"
+  ],
+  "PASS_TO_PASS": []
+}

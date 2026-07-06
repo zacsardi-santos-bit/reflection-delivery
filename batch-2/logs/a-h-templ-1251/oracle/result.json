@@ -1,0 +1,29 @@
+{
+    "id": "dd98abfc-a0a6-4ad0-9789-ef1b6851ba2d",
+    "started_at": "2026-07-06T12:18:35.420235",
+    "finished_at": "2026-07-06T12:19:15.091825",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__a-h-templ-1251": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "a-h-templ-1251__T3QMonz"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

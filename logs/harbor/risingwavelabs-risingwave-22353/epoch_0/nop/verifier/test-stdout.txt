@@ -1,6 +1,0 @@
-patching file src/tests/mysql_test/Cargo.toml
-patching file src/tests/mysql_test/src/lib.rs
-patching file src/tests/mysql_test/tests/mysql_async_connection_pool.rs
-error: package ID specification `risingwave_mysql_test` did not match any packages
-error: command `/usr/local/rustup/toolchains/nightly-2025-03-05-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package risingwave_mysql_test --package delta_btree_map` exited with code 101
-reward=0 graded=11 found=0 failed=0 parsed=0 framework=cargo exit_code=101

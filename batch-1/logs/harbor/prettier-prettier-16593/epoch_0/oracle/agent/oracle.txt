@@ -1,0 +1,2 @@
+patching file changelog_unreleased/javascript/16593.md
+patching file src/language-js/comments/handle-comments.js

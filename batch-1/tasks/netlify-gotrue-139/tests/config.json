@@ -1,0 +1,28 @@
+{
+  "test_framework": "go",
+  "test_command": "export GOPATH=/go && export GO111MODULE=off && cd /go/src/github.com/netlify/gotrue && go test -json ./storage -count=1",
+  "test_files": [
+    "api/admin_test.go",
+    "api/api_test.go",
+    "api/external_test.go",
+    "api/hook_test.go",
+    "api/instance_test.go",
+    "api/invite_test.go",
+    "api/recover_test.go",
+    "api/signup_test.go",
+    "api/user_test.go",
+    "api/verify_test.go",
+    "models/refresh_token_test.go",
+    "models/user_test.go",
+    "storage/dial_test.go",
+    "storage/sql/storage_test.go",
+    "storage/test/db_setup.go"
+  ],
+  "num_test_files": 15,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/netlify/gotrue/storage::TestGetExcludedColumns",
+    "github.com/netlify/gotrue/storage::TestGetExcludedColumns_InvalidName"
+  ],
+  "PASS_TO_PASS": []
+}

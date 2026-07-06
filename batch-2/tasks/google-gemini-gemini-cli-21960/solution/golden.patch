@@ -1,0 +1,127 @@
+diff --git a/packages/cli/src/ui/components/LoadingIndicator.tsx b/packages/cli/src/ui/components/LoadingIndicator.tsx
+index a48451b26..f58648ebf 100644
+--- a/packages/cli/src/ui/components/LoadingIndicator.tsx
++++ b/packages/cli/src/ui/components/LoadingIndicator.tsx
+@@ -72,8 +72,7 @@ export const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
+             : undefined);
+ 
+   const cancelAndTimerContent =
+-    showCancelAndTimer &&
+-    streamingState !== StreamingState.WaitingForConfirmation
++    showCancelAndTimer && streamingState === StreamingState.Responding
+       ? `(esc to cancel, ${elapsedTime < 60 ? `${elapsedTime}s` : formatDuration(elapsedTime * 1000)})`
+       : null;
+ 
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.ts b/packages/cli/src/ui/hooks/useGeminiStream.ts
+index a27334391..a2621c454 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.ts
++++ b/packages/cli/src/ui/hooks/useGeminiStream.ts
+@@ -247,15 +247,8 @@ export const useGeminiStream = (
+   const previousApprovalModeRef = useRef<ApprovalMode>(
+     config.getApprovalMode(),
+   );
+-  const [isResponding, setIsRespondingState] = useState<boolean>(false);
+-  const isRespondingRef = useRef<boolean>(false);
+-  const setIsResponding = useCallback(
+-    (value: boolean) => {
+-      setIsRespondingState(value);
+-      isRespondingRef.current = value;
+-    },
+-    [setIsRespondingState],
+-  );
++  const [isResponding, isRespondingRef, setIsResponding] =
++    useStateAndRef<boolean>(false);
+   const [thought, thoughtRef, setThought] =
+     useStateAndRef<ThoughtSummary | null>(null);
+   const [pendingHistoryItem, pendingHistoryItemRef, setPendingHistoryItem] =
+@@ -280,13 +273,16 @@ export const useGeminiStream = (
+ 
+   useEffect(() => {
+     const handleRetryAttempt = (payload: RetryAttemptPayload) => {
++      if (turnCancelledRef.current || !isRespondingRef.current) {
++        return;
++      }
+       setRetryStatus(payload);
+     };
+     coreEvents.on(CoreEvent.RetryAttempt, handleRetryAttempt);
+     return () => {
+       coreEvents.off(CoreEvent.RetryAttempt, handleRetryAttempt);
+     };
+-  }, []);
++  }, [isRespondingRef]);
+ 
+   const [
+     toolCalls,
+@@ -839,6 +835,7 @@ export const useGeminiStream = (
+       return;
+     }
+     turnCancelledRef.current = true;
++    setRetryStatus(null);
+ 
+     // A full cancellation means no tools have produced a final result yet.
+     // This determines if we show a generic "Request cancelled" message.
+@@ -1765,6 +1762,7 @@ export const useGeminiStream = (
+       setThought,
+       maybeAddSuppressedToolErrorNote,
+       maybeAddLowVerbosityFailureNote,
++      isRespondingRef,
+       settings.merged.billing?.overageStrategy,
+       setIsResponding,
+     ],
+diff --git a/packages/cli/src/ui/hooks/useLoadingIndicator.ts b/packages/cli/src/ui/hooks/useLoadingIndicator.ts
+index 6d1361576..0e2dc9c2b 100644
+--- a/packages/cli/src/ui/hooks/useLoadingIndicator.ts
++++ b/packages/cli/src/ui/hooks/useLoadingIndicator.ts
+@@ -79,13 +79,14 @@ export const useLoadingIndicator = ({
+     prevStreamingStateRef.current = streamingState;
+   }, [streamingState, elapsedTimeFromTimer]);
+ 
+-  const retryPhrase = retryStatus
+-    ? errorVerbosity === 'low'
+-      ? retryStatus.attempt >= LOW_VERBOSITY_RETRY_HINT_ATTEMPT_THRESHOLD
+-        ? "This is taking a bit longer, we're still on it."
+-        : null
+-      : `Trying to reach ${getDisplayString(retryStatus.model)} (Attempt ${retryStatus.attempt + 1}/${retryStatus.maxAttempts})`
+-    : null;
++  const retryPhrase =
++    streamingState === StreamingState.Responding && retryStatus
++      ? errorVerbosity === 'low'
++        ? retryStatus.attempt >= LOW_VERBOSITY_RETRY_HINT_ATTEMPT_THRESHOLD
++          ? "This is taking a bit longer, we're still on it."
++          : null
++        : `Trying to reach ${getDisplayString(retryStatus.model)} (Attempt ${retryStatus.attempt + 1}/${retryStatus.maxAttempts})`
++      : null;
+ 
+   return {
+     elapsedTime:
+diff --git a/packages/core/src/utils/retry.ts b/packages/core/src/utils/retry.ts
+index 00d42f532..46765216b 100644
+--- a/packages/core/src/utils/retry.ts
++++ b/packages/core/src/utils/retry.ts
+@@ -232,6 +232,11 @@ export async function retryWithBackoff<T>(
+ 
+   let attempt = 0;
+   let currentDelay = initialDelayMs;
++  const throwIfAborted = () => {
++    if (signal?.aborted) {
++      throw createAbortError();
++    }
++  };
+ 
+   while (attempt < maxAttempts) {
+     if (signal?.aborted) {
+@@ -246,6 +251,7 @@ export async function retryWithBackoff<T>(
+         // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+         shouldRetryOnContent(result as GenerateContentResponse)
+       ) {
++        throwIfAborted();
+         const jitter = currentDelay * 0.3 * (Math.random() * 2 - 1);
+         const delayWithJitter = Math.max(0, currentDelay + jitter);
+         if (onRetry) {
+@@ -266,6 +272,7 @@ export async function retryWithBackoff<T>(
+       if (error instanceof Error && error.name === 'AbortError') {
+         throw error;
+       }
++      throwIfAborted();
+ 
+       const classifiedError = classifyGoogleError(error);

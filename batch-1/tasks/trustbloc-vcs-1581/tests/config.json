@@ -1,0 +1,19 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/service/wellknown/provider -count=1",
+  "test_files": [
+    "pkg/service/wellknown/provider/wellknown_service_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/trustbloc/vcs/pkg/service/wellknown/provider::TestController_GetOpenIDCredentialIssuerConfig/Success",
+    "github.com/trustbloc/vcs/pkg/service/wellknown/provider::TestController_GetOpenIDCredentialIssuerConfig/Success_disabled_DynamicClientRegistration",
+    "github.com/trustbloc/vcs/pkg/service/wellknown/provider::TestController_GetOpenIDCredentialIssuerConfig/Success_signed_issuer_metadata_is_not_supported",
+    "github.com/trustbloc/vcs/pkg/service/wellknown/provider::TestController_GetOpenIDCredentialIssuerConfig/Success_OIDCConfig_and_display_are_empty",
+    "github.com/trustbloc/vcs/pkg/service/wellknown/provider::TestController_GetOpenIDCredentialIssuerConfig/Error_kmsRegistry",
+    "github.com/trustbloc/vcs/pkg/service/wellknown/provider::TestController_GetOpenIDCredentialIssuerConfig/Error_cryptoJWTSigner",
+    "github.com/trustbloc/vcs/pkg/service/wellknown/provider::TestController_GetOpenIDCredentialIssuerConfig"
+  ],
+  "PASS_TO_PASS": []
+}

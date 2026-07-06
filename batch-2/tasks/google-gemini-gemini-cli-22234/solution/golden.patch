@@ -1,0 +1,212 @@
+diff --git a/packages/core/src/code_assist/server.test.ts b/packages/core/src/code_assist/server.test.ts
+index 67c2cab67..ae5a2daeb 100644
+--- a/packages/core/src/code_assist/server.test.ts
++++ b/packages/core/src/code_assist/server.test.ts
+@@ -208,7 +208,6 @@ describe('CodeAssistServer', () => {
+               traceId: 'test-trace-id',
+               status: ActionStatus.ACTION_STATUS_NO_ERROR,
+               initiationMethod: InitiationMethod.COMMAND,
+-              trajectoryId: 'test-session',
+               streamingLatency: expect.objectContaining({
+                 totalLatency: expect.stringMatching(/\d+s/),
+                 firstMessageLatency: expect.stringMatching(/\d+s/),
+@@ -278,7 +277,6 @@ describe('CodeAssistServer', () => {
+             conversationOffered: expect.objectContaining({
+               traceId: 'stream-trace-id',
+               initiationMethod: InitiationMethod.COMMAND,
+-              trajectoryId: 'test-session',
+             }),
+             timestamp: expect.stringMatching(
+               /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/,
+diff --git a/packages/core/src/code_assist/server.ts b/packages/core/src/code_assist/server.ts
+index 40fbcdee4..52b01504d 100644
+--- a/packages/core/src/code_assist/server.ts
++++ b/packages/core/src/code_assist/server.ts
+@@ -153,7 +153,6 @@ export class CodeAssistServer implements ContentGenerator {
+           translatedResponse,
+           streamingLatency,
+           req.config?.abortSignal,
+-          server.sessionId, // Use sessionId as trajectoryId
+         );
+ 
+         if (response.consumedCredits) {
+@@ -224,7 +223,6 @@ export class CodeAssistServer implements ContentGenerator {
+       translatedResponse,
+       streamingLatency,
+       req.config?.abortSignal,
+-      this.sessionId, // Use sessionId as trajectoryId
+     );
+ 
+     if (response.remainingCredits) {
+diff --git a/packages/core/src/code_assist/telemetry.test.ts b/packages/core/src/code_assist/telemetry.test.ts
+index 66f1e631e..0914181ec 100644
+--- a/packages/core/src/code_assist/telemetry.test.ts
++++ b/packages/core/src/code_assist/telemetry.test.ts
+@@ -92,7 +92,6 @@ describe('telemetry', () => {
+         traceId,
+         undefined,
+         streamingLatency,
+-        'trajectory-id',
+       );
+ 
+       expect(result).toEqual({
+@@ -103,7 +102,6 @@ describe('telemetry', () => {
+         streamingLatency,
+         isAgentic: true,
+         initiationMethod: InitiationMethod.COMMAND,
+-        trajectoryId: 'trajectory-id',
+       });
+     });
+ 
+@@ -126,7 +124,6 @@ describe('telemetry', () => {
+         'trace-id',
+         undefined,
+         {},
+-        'trajectory-id',
+       );
+       expect(result).toBeUndefined();
+     });
+@@ -143,7 +140,6 @@ describe('telemetry', () => {
+         'trace-id',
+         signal,
+         {},
+-        'trajectory-id',
+       );
+ 
+       expect(result?.status).toBe(ActionStatus.ACTION_STATUS_CANCELLED);
+@@ -159,7 +155,6 @@ describe('telemetry', () => {
+         'trace-id',
+         undefined,
+         {},
+-        'trajectory-id',
+       );
+ 
+       expect(result?.status).toBe(ActionStatus.ACTION_STATUS_ERROR_UNKNOWN);
+@@ -182,7 +177,6 @@ describe('telemetry', () => {
+         'trace-id',
+         undefined,
+         {},
+-        'trajectory-id',
+       );
+ 
+       expect(result?.status).toBe(ActionStatus.ACTION_STATUS_ERROR_UNKNOWN);
+@@ -200,7 +194,6 @@ describe('telemetry', () => {
+         'trace-id',
+         undefined,
+         {},
+-        undefined,
+       );
+ 
+       expect(result?.status).toBe(ActionStatus.ACTION_STATUS_EMPTY);
+@@ -221,13 +214,7 @@ describe('telemetry', () => {
+         true,
+         [{ name: 'replace', args: {} }],
+       );
+-      const result = createConversationOffered(
+-        response,
+-        'id',
+-        undefined,
+-        {},
+-        undefined,
+-      );
++      const result = createConversationOffered(response, 'id', undefined, {});
+       expect(result?.includedCode).toBe(true);
+     });
+ 
+@@ -244,13 +231,7 @@ describe('telemetry', () => {
+         true,
+         [{ name: 'replace', args: {} }],
+       );
+-      const result = createConversationOffered(
+-        response,
+-        'id',
+-        undefined,
+-        {},
+-        undefined,
+-      );
++      const result = createConversationOffered(response, 'id', undefined, {});
+       expect(result?.includedCode).toBe(false);
+     });
+   });
+@@ -279,7 +260,6 @@ describe('telemetry', () => {
+         response,
+         streamingLatency,
+         undefined,
+-        undefined,
+       );
+ 
+       expect(serverMock.recordConversationOffered).toHaveBeenCalledWith(
+@@ -303,7 +283,6 @@ describe('telemetry', () => {
+         response,
+         {},
+         undefined,
+-        undefined,
+       );
+ 
+       expect(serverMock.recordConversationOffered).not.toHaveBeenCalled();
+diff --git a/packages/core/src/code_assist/telemetry.ts b/packages/core/src/code_assist/telemetry.ts
+index 86304a6e6..412b62124 100644
+--- a/packages/core/src/code_assist/telemetry.ts
++++ b/packages/core/src/code_assist/telemetry.ts
+@@ -36,7 +36,6 @@ export async function recordConversationOffered(
+   response: GenerateContentResponse,
+   streamingLatency: StreamingLatency,
+   abortSignal: AbortSignal | undefined,
+-  trajectoryId: string | undefined,
+ ): Promise<void> {
+   try {
+     if (traceId) {
+@@ -45,7 +44,6 @@ export async function recordConversationOffered(
+         traceId,
+         abortSignal,
+         streamingLatency,
+-        trajectoryId,
+       );
+       if (offered) {
+         await server.recordConversationOffered(offered);
+@@ -89,7 +87,6 @@ export function createConversationOffered(
+   traceId: string,
+   signal: AbortSignal | undefined,
+   streamingLatency: StreamingLatency,
+-  trajectoryId: string | undefined,
+ ): ConversationOffered | undefined {
+   // Only send conversation offered events for responses that contain edit
+   // function calls. Non-edit function calls don't represent file modifications.
+@@ -110,7 +107,6 @@ export function createConversationOffered(
+     streamingLatency,
+     isAgentic: true,
+     initiationMethod: InitiationMethod.COMMAND,
+-    trajectoryId,
+   };
+ }
+ 
+diff --git a/packages/core/src/code_assist/types.ts b/packages/core/src/code_assist/types.ts
+index d238d1a75..7841958cb 100644
+--- a/packages/core/src/code_assist/types.ts
++++ b/packages/core/src/code_assist/types.ts
+@@ -315,7 +315,6 @@ export interface ConversationOffered {
+   streamingLatency?: StreamingLatency;
+   isAgentic?: boolean;
+   initiationMethod?: InitiationMethod;
+-  trajectoryId?: string;
+ }
+ 
+ export interface StreamingLatency {
+diff --git a/packages/core/src/utils/environmentContext.ts b/packages/core/src/utils/environmentContext.ts
+index 88dd1aab6..d5bdd2d75 100644
+--- a/packages/core/src/utils/environmentContext.ts
++++ b/packages/core/src/utils/environmentContext.ts
+@@ -57,7 +57,12 @@ export async function getEnvironmentContext(config: Config): Promise<Part[]> {
+     ? await getDirectoryContextString(config)
+     : '';
+   const tempDir = config.storage.getProjectTempDir();
+-  const environmentMemory = config.getEnvironmentMemory();
++  // When JIT context is enabled, project memory is already included in the
++  // system instruction via renderUserMemory(). Skip it here to avoid sending
++  // the same GEMINI.md content twice.
++  const environmentMemory = config.isJitContextEnabled?.()
++    ? ''
++    : config.getEnvironmentMemory();
+ 
+   const context = `
+ <session_context>

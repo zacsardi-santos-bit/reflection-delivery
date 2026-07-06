@@ -1,0 +1,20 @@
+patching file assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+PASS assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js (55.381 s)
+  ConsentModeSetupCTAWidget
+    ✓ should render the widget (274 ms)
+    ✓ should not render the widget when it is being dismissed (67 ms)
+    checkRequirements
+      ✓ is active when consent mode is not enabled and ads is connected (15 ms)
+      ✓ is not active when consent mode is already enabled and ads is connected (9 ms)
+      ✓ is not active when consent mode is not enabled but ads is not connected (16 ms)
+      ✓ is not active when consent mode is enabled and ads is not connected (10 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   1 passed, 1 total
+Time:        56.126 s
+Ran all test suites matching /assets\/js\/components\/consent-mode\/ConsentModeSetupCTAWidget.test.js/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":6,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":6,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":1,"total":1,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746452251,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["ConsentModeSetupCTAWidget"],"failureMessages":[],"fullName":"ConsentModeSetupCTAWidget should render the widget","location":null,"status":"passed","title":"should render the widget"},{"ancestorTitles":["ConsentModeSetupCTAWidget"],"failureMessages":[],"fullName":"ConsentModeSetupCTAWidget should not render the widget when it is being dismissed","location":null,"status":"passed","title":"should not render the widget when it is being dismissed"},{"ancestorTitles":["ConsentModeSetupCTAWidget","checkRequirements"],"failureMessages":[],"fullName":"ConsentModeSetupCTAWidget checkRequirements is active when consent mode is not enabled and ads is connected","location":null,"status":"passed","title":"is active when consent mode is not enabled and ads is connected"},{"ancestorTitles":["ConsentModeSetupCTAWidget","checkRequirements"],"failureMessages":[],"fullName":"ConsentModeSetupCTAWidget checkRequirements is not active when consent mode is already enabled and ads is connected","location":null,"status":"passed","title":"is not active when consent mode is already enabled and ads is connected"},{"ancestorTitles":["ConsentModeSetupCTAWidget","checkRequirements"],"failureMessages":[],"fullName":"ConsentModeSetupCTAWidget checkRequirements is not active when consent mode is not enabled but ads is not connected","location":null,"status":"passed","title":"is not active when consent mode is not enabled but ads is not connected"},{"ancestorTitles":["ConsentModeSetupCTAWidget","checkRequirements"],"failureMessages":[],"fullName":"ConsentModeSetupCTAWidget checkRequirements is not active when consent mode is enabled and ads is not connected","location":null,"status":"passed","title":"is not active when consent mode is enabled and ads is not connected"}],"endTime":1782746508366,"message":"","name":"/workspace/repo/assets/js/components/consent-mode/ConsentModeSetupCTAWidget.test.js","startTime":1782746452985,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=6 found=6 failed=0 parsed=6 framework=jest exit_code=0

@@ -1,5 +1,0 @@
-I'm working on the DynamoDB state store component and I've noticed that when it initializes, it doesn't actually check whether the configured table exists or whether the credentials have access to it. The initialization just parses the configuration and creates a client, but never contacts DynamoDB to confirm things are working. This means a completely broken configuration — wrong table name, wrong region, missing permissions — will look fine at startup and only blow up later when real operations try to run.
-
-I'd like the initialization logic to include an upfront table access check. If the check fails, initialization should fail with a descriptive error that mentions which table couldn't be accessed. If the check succeeds, initialization should proceed as normal.
-
-One tricky part: I also need to be able to inject a pre-configured client before initialization runs, so the access check can be controlled in tests without making real AWS calls. The initialization logic should respect a client that's already been set rather than always replacing it with a freshly created one.

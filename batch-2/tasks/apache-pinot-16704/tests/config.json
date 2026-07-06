@@ -1,0 +1,24 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pinot-segment-spi,pinot-common,pinot-core test -Dtest=\"AggregationFunctionTypeTest,AggregationFunctionFactoryTest,SumIntAggregationFunctionTest\" -DfailIfNoTests=false",
+  "test_files": [
+    "pinot-common/src/test/java/org/apache/pinot/common/function/AggregationFunctionTypeTest.java",
+    "pinot-core/src/test/java/org/apache/pinot/core/query/aggregation/function/AggregationFunctionFactoryTest.java",
+    "pinot-core/src/test/java/org/apache/pinot/core/query/aggregation/function/SumIntAggregationFunctionTest.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4",
+    "Pinot::test_5",
+    "Pinot::test_6",
+    "Pinot::test_7",
+    "Pinot::test_8",
+    "Pinot::test_9",
+    "Pinot::test_10"
+  ],
+  "PASS_TO_PASS": []
+}

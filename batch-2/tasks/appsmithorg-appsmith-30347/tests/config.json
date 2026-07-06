@@ -1,0 +1,16 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo/app/server && mvn test -pl appsmith-plugins/restApiPlugin -am -Dtest='RestApiPluginTest#testParsingBodyWithInvalidJSONHeader+test_DifferentialParsingStrategy_fromGson+test_setObjectToNumberPolicy_fromGson+test_numberToNumberPolicy_fromGson' -DfailIfNoTests=false",
+  "test_files": [
+    "app/server/appsmith-plugins/restApiPlugin/src/test/java/com/external/plugins/RestApiPluginTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "restApiPlugin::test_1",
+    "restApiPlugin::test_2",
+    "restApiPlugin::test_3",
+    "restApiPlugin::test_4"
+  ],
+  "PASS_TO_PASS": []
+}

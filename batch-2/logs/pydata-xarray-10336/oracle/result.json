@@ -1,0 +1,29 @@
+{
+    "id": "c90bddfe-8ab5-4460-8be0-bc9e4f46c014",
+    "started_at": "2026-07-04T15:39:05.827380",
+    "finished_at": "2026-07-04T15:39:29.770189",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__pydata-xarray-10336": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pydata-xarray-10336__MwSoeUg"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

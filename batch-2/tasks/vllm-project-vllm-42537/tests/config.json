@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/model_executor/test_flashinfer_autotune_cache.py -v --noconftest",
+  "test_files": [
+    "tests/model_executor/test_flashinfer_autotune_cache.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.model_executor.test_flashinfer_autotune_cache::test_resolve_flashinfer_autotune_file_default_layout",
+    "tests.model_executor.test_flashinfer_autotune_cache::test_resolve_flashinfer_autotune_file_uses_override_dir"
+  ],
+  "PASS_TO_PASS": []
+}

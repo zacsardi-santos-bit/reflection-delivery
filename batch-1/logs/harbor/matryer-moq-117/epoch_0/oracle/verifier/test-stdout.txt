@@ -1,0 +1,75 @@
+patching file pkg/moq/moq_modules_test.go
+patching file pkg/moq/moq_test.go
+{"Time":"2026-06-29T15:29:50.702919729Z","Action":"start","Package":"github.com/matryer/moq/pkg/moq"}
+{"Time":"2026-06-29T15:29:50.711767249Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestModulesSamePackage"}
+{"Time":"2026-06-29T15:29:50.711811223Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestModulesSamePackage","Output":"=== RUN   TestModulesSamePackage\n"}
+{"Time":"2026-06-29T15:29:50.749132863Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestModulesSamePackage","Output":"--- PASS: TestModulesSamePackage (0.04s)\n"}
+{"Time":"2026-06-29T15:29:50.749174096Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestModulesSamePackage","Elapsed":0.04}
+{"Time":"2026-06-29T15:29:50.749200768Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestModulesNestedPackage"}
+{"Time":"2026-06-29T15:29:50.749218982Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestModulesNestedPackage","Output":"=== RUN   TestModulesNestedPackage\n"}
+{"Time":"2026-06-29T15:29:50.784965766Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestModulesNestedPackage","Output":"--- PASS: TestModulesNestedPackage (0.04s)\n"}
+{"Time":"2026-06-29T15:29:50.784998291Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestModulesNestedPackage","Elapsed":0.04}
+{"Time":"2026-06-29T15:29:50.785040167Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoq"}
+{"Time":"2026-06-29T15:29:50.785068279Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoq","Output":"=== RUN   TestMoq\n"}
+{"Time":"2026-06-29T15:29:51.04806459Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoq","Output":"--- PASS: TestMoq (0.26s)\n"}
+{"Time":"2026-06-29T15:29:51.04809785Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoq","Elapsed":0.26}
+{"Time":"2026-06-29T15:29:51.048151129Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqWithStaticCheck"}
+{"Time":"2026-06-29T15:29:51.048168334Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqWithStaticCheck","Output":"=== RUN   TestMoqWithStaticCheck\n"}
+{"Time":"2026-06-29T15:29:51.216639034Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqWithStaticCheck","Output":"--- PASS: TestMoqWithStaticCheck (0.17s)\n"}
+{"Time":"2026-06-29T15:29:51.216682102Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqWithStaticCheck","Elapsed":0.17}
+{"Time":"2026-06-29T15:29:51.216725119Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqWithAlias"}
+{"Time":"2026-06-29T15:29:51.216747388Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqWithAlias","Output":"=== RUN   TestMoqWithAlias\n"}
+{"Time":"2026-06-29T15:29:51.371121779Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqWithAlias","Output":"--- PASS: TestMoqWithAlias (0.15s)\n"}
+{"Time":"2026-06-29T15:29:51.371165667Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqWithAlias","Elapsed":0.15}
+{"Time":"2026-06-29T15:29:51.371203256Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqExplicitPackage"}
+{"Time":"2026-06-29T15:29:51.371235208Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqExplicitPackage","Output":"=== RUN   TestMoqExplicitPackage\n"}
+{"Time":"2026-06-29T15:29:51.53248968Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqExplicitPackage","Output":"--- PASS: TestMoqExplicitPackage (0.16s)\n"}
+{"Time":"2026-06-29T15:29:51.532532541Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqExplicitPackage","Elapsed":0.16}
+{"Time":"2026-06-29T15:29:51.532577639Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqExplicitPackageWithStaticCheck"}
+{"Time":"2026-06-29T15:29:51.5325998Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqExplicitPackageWithStaticCheck","Output":"=== RUN   TestMoqExplicitPackageWithStaticCheck\n"}
+{"Time":"2026-06-29T15:29:51.702820083Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqExplicitPackageWithStaticCheck","Output":"--- PASS: TestMoqExplicitPackageWithStaticCheck (0.17s)\n"}
+{"Time":"2026-06-29T15:29:51.702861149Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestMoqExplicitPackageWithStaticCheck","Elapsed":0.17}
+{"Time":"2026-06-29T15:29:51.702890261Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestNotCreatingEmptyDirWhenPkgIsGiven"}
+{"Time":"2026-06-29T15:29:51.702900655Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestNotCreatingEmptyDirWhenPkgIsGiven","Output":"=== RUN   TestNotCreatingEmptyDirWhenPkgIsGiven\n"}
+{"Time":"2026-06-29T15:29:51.869316002Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestNotCreatingEmptyDirWhenPkgIsGiven","Output":"--- PASS: TestNotCreatingEmptyDirWhenPkgIsGiven (0.17s)\n"}
+{"Time":"2026-06-29T15:29:51.869353327Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestNotCreatingEmptyDirWhenPkgIsGiven","Elapsed":0.17}
+{"Time":"2026-06-29T15:29:51.869389693Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestVariadicArguments"}
+{"Time":"2026-06-29T15:29:51.869415974Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestVariadicArguments","Output":"=== RUN   TestVariadicArguments\n"}
+{"Time":"2026-06-29T15:29:52.047633154Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestVariadicArguments","Output":"--- PASS: TestVariadicArguments (0.18s)\n"}
+{"Time":"2026-06-29T15:29:52.04768507Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestVariadicArguments","Elapsed":0.18}
+{"Time":"2026-06-29T15:29:52.047710731Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestNothingToReturn"}
+{"Time":"2026-06-29T15:29:52.047733439Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestNothingToReturn","Output":"=== RUN   TestNothingToReturn\n"}
+{"Time":"2026-06-29T15:29:52.216841939Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestNothingToReturn","Output":"--- PASS: TestNothingToReturn (0.17s)\n"}
+{"Time":"2026-06-29T15:29:52.216883459Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestNothingToReturn","Elapsed":0.17}
+{"Time":"2026-06-29T15:29:52.216951873Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestChannelNames"}
+{"Time":"2026-06-29T15:29:52.21698663Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestChannelNames","Output":"=== RUN   TestChannelNames\n"}
+{"Time":"2026-06-29T15:29:52.255288818Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestChannelNames","Output":"--- PASS: TestChannelNames (0.04s)\n"}
+{"Time":"2026-06-29T15:29:52.255323913Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestChannelNames","Elapsed":0.04}
+{"Time":"2026-06-29T15:29:52.255358695Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestImports"}
+{"Time":"2026-06-29T15:29:52.255376029Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestImports","Output":"=== RUN   TestImports\n"}
+{"Time":"2026-06-29T15:29:52.303343256Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestImports","Output":"--- PASS: TestImports (0.05s)\n"}
+{"Time":"2026-06-29T15:29:52.303382491Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestImports","Elapsed":0.05}
+{"Time":"2026-06-29T15:29:52.303410542Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestTemplateFuncs"}
+{"Time":"2026-06-29T15:29:52.303419674Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestTemplateFuncs","Output":"=== RUN   TestTemplateFuncs\n"}
+{"Time":"2026-06-29T15:29:52.30342875Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestTemplateFuncs","Output":"--- PASS: TestTemplateFuncs (0.00s)\n"}
+{"Time":"2026-06-29T15:29:52.303449032Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestTemplateFuncs","Elapsed":0}
+{"Time":"2026-06-29T15:29:52.303498772Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestVendoredInterface"}
+{"Time":"2026-06-29T15:29:52.303523869Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestVendoredInterface","Output":"=== RUN   TestVendoredInterface\n"}
+{"Time":"2026-06-29T15:29:52.34070384Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestVendoredInterface","Output":"--- PASS: TestVendoredInterface (0.04s)\n"}
+{"Time":"2026-06-29T15:29:52.340753496Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestVendoredInterface","Elapsed":0.04}
+{"Time":"2026-06-29T15:29:52.340827897Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestDotImports"}
+{"Time":"2026-06-29T15:29:52.340869284Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestDotImports","Output":"=== RUN   TestDotImports\n"}
+{"Time":"2026-06-29T15:29:52.379546817Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestDotImports","Output":"--- PASS: TestDotImports (0.04s)\n"}
+{"Time":"2026-06-29T15:29:52.379611754Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestDotImports","Elapsed":0.04}
+{"Time":"2026-06-29T15:29:52.379626698Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestEmptyInterface"}
+{"Time":"2026-06-29T15:29:52.379636568Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestEmptyInterface","Output":"=== RUN   TestEmptyInterface\n"}
+{"Time":"2026-06-29T15:29:52.414873871Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestEmptyInterface","Output":"--- PASS: TestEmptyInterface (0.04s)\n"}
+{"Time":"2026-06-29T15:29:52.414917398Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestEmptyInterface","Elapsed":0.04}
+{"Time":"2026-06-29T15:29:52.414954663Z","Action":"run","Package":"github.com/matryer/moq/pkg/moq","Test":"TestImportedPackageWithSameName"}
+{"Time":"2026-06-29T15:29:52.414975224Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestImportedPackageWithSameName","Output":"=== RUN   TestImportedPackageWithSameName\n"}
+{"Time":"2026-06-29T15:29:52.460902055Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Test":"TestImportedPackageWithSameName","Output":"--- PASS: TestImportedPackageWithSameName (0.05s)\n"}
+{"Time":"2026-06-29T15:29:52.460938035Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Test":"TestImportedPackageWithSameName","Elapsed":0.05}
+{"Time":"2026-06-29T15:29:52.460973832Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Output":"PASS\n"}
+{"Time":"2026-06-29T15:29:52.461655103Z","Action":"output","Package":"github.com/matryer/moq/pkg/moq","Output":"ok  \tgithub.com/matryer/moq/pkg/moq\t1.758s\n"}
+{"Time":"2026-06-29T15:29:52.461692148Z","Action":"pass","Package":"github.com/matryer/moq/pkg/moq","Elapsed":1.759}
+reward=1 graded=17 found=17 failed=0 parsed=17 framework=go exit_code=0

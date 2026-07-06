@@ -1,3 +1,0 @@
-patching file cirq-core/cirq/circuits/circuit.py
-patching file cirq-core/cirq/protocols/circuit_diagram_info_protocol.py
-patching file cirq-core/cirq/testing/circuit_compare.py

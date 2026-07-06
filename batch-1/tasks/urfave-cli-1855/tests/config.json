@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -v -count=1 -run TestJSONExportCommand .",
+  "test_files": [
+    "command_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/urfave/cli/v3::TestJSONExportCommand"
+  ],
+  "PASS_TO_PASS": []
+}

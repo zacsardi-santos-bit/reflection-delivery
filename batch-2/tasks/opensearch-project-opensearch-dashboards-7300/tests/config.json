@@ -1,0 +1,46 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && node scripts/jest --allow-root src/core/public/chrome/nav_controls/nav_controls_service.test.ts src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx src/core/public/chrome/ui/header/collapsible_nav_group_enabled_top.test.tsx src/core/public/chrome/ui/header/header.test.tsx src/plugins/advanced_settings/public/plugin.test.ts src/plugins/dashboard/public/plugin.test.tsx src/plugins/discover/public/plugin.test.ts src/plugins/index_pattern_management/public/plugin.test.ts --coverage=false --watchAll=false",
+  "test_files": [
+    "src/core/public/chrome/nav_controls/nav_controls_service.test.ts",
+    "src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx",
+    "src/core/public/chrome/ui/header/collapsible_nav_group_enabled_top.test.tsx",
+    "src/core/public/chrome/ui/header/header.test.tsx",
+    "src/plugins/advanced_settings/public/plugin.test.ts",
+    "src/plugins/dashboard/public/plugin.test.tsx",
+    "src/plugins/discover/public/plugin.test.ts",
+    "src/plugins/index_pattern_management/public/plugin.test.ts"
+  ],
+  "num_test_files": 8,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() expanded left bottom controls allows registration",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() expanded left bottom controls sorts controls by order property",
+    "/workspace/repo/src/core/public/chrome/ui/header/header.test.tsx::Header handles visibility and lock changes",
+    "/workspace/repo/src/core/public/chrome/ui/header/header.test.tsx::Header renders condensed header",
+    "/workspace/repo/src/core/public/chrome/ui/header/header.test.tsx::Header renders new header when feature flag is turned on",
+    "/workspace/repo/src/plugins/index_pattern_management/public/plugin.test.ts::DiscoverPlugin setup successfully",
+    "/workspace/repo/src/plugins/advanced_settings/public/plugin.test.ts::AdvancedSettingsPlugin setup successfully",
+    "/workspace/repo/src/plugins/dashboard/public/plugin.test.tsx::DashboardPlugin setup successfully",
+    "/workspace/repo/src/plugins/discover/public/plugin.test.ts::DiscoverPlugin setup successfully",
+    "/workspace/repo/src/core/public/chrome/ui/header/collapsible_nav_group_enabled_top.test.tsx::<CollapsibleNavTop /> should render home icon",
+    "/workspace/repo/src/core/public/chrome/ui/header/collapsible_nav_group_enabled_top.test.tsx::<CollapsibleNavTop /> should render back icon",
+    "/workspace/repo/src/core/public/chrome/ui/header/collapsible_nav_group_enabled_top.test.tsx::<CollapsibleNavTop /> should render expand icon",
+    "/workspace/repo/src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx::<NavGroups /> should render correctly",
+    "/workspace/repo/src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx::<CollapsibleNavGroupEnabled /> should render correctly",
+    "/workspace/repo/src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx::<CollapsibleNavGroupEnabled /> should render correctly when only one visible use case is provided",
+    "/workspace/repo/src/core/public/chrome/ui/header/collapsible_nav_group_enabled.test.tsx::<CollapsibleNavGroupEnabled /> should show all use case by default and able to click see all"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() left contorols allows registration",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() left contorols sorts controls by order property",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() right controls allows registration",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() right controls sorts controls by order property",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() center controls allows registration",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() center controls sorts controls by order property",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() expanded right controls allows registration",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() expanded right controls sorts controls by order property",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() expanded center controls allows registration",
+    "/workspace/repo/src/core/public/chrome/nav_controls/nav_controls_service.test.ts::RecentlyAccessed#start() expanded center controls sorts controls by order property"
+  ]
+}

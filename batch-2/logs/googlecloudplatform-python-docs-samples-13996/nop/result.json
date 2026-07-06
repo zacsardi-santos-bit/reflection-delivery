@@ -1,0 +1,29 @@
+{
+    "id": "aeea02f1-25a9-4251-b789-519ad1567925",
+    "started_at": "2026-07-06T12:17:19.977153",
+    "finished_at": "2026-07-06T12:17:54.114890",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__googlecloudplatform-python-docs-samples-13996": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "googlecloudplatform-python-docs__AviyQZU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

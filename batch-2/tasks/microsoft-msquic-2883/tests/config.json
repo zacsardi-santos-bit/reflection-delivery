@@ -1,0 +1,15 @@
+{
+  "test_framework": "ctest",
+  "test_command": "cd /workspace/repo/build && cmake --build . -j$(nproc) > /tmp/build.log 2>&1 && GTEST_FILTER=ParameterValidation.ValidateApi ctest -R msquictest --verbose",
+  "test_files": [
+    "src/test/lib/DataTest.cpp",
+    "src/test/lib/TestStream.cpp",
+    "src/test/lib/TestStream.h"
+  ],
+  "num_test_files": 3,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "msquictest::msquictest"
+  ],
+  "PASS_TO_PASS": []
+}

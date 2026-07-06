@@ -1,0 +1,29 @@
+{
+    "id": "23cd0ac8-8072-4e54-8386-03f02674e5cb",
+    "started_at": "2026-07-04T15:38:02.231177",
+    "finished_at": "2026-07-04T15:39:29.875960",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__biomejs-biome-1811": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "biomejs-biome-1811__bAUE6yW"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

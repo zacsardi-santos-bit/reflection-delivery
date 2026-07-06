@@ -1,0 +1,30 @@
+{
+  "test_framework": "pytest",
+  "test_command": "git checkout HEAD -- Cargo.lock 2>/dev/null || true && maturin develop && pytest tests/sql/test_sql_table_functions.py -v --noconftest",
+  "test_files": [
+    "tests/sql/test_sql_table_functions.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.sql.test_sql_table_functions::test_sql_read_with_schema",
+    "tests.sql.test_sql_table_functions::test_sql_read_csv_with_schema"
+  ],
+  "PASS_TO_PASS": [
+    "tests.sql.test_sql_table_functions::test_sql_read_json",
+    "tests.sql.test_sql_table_functions::test_sql_read_json_path",
+    "tests.sql.test_sql_table_functions::test_sql_read_json_paths",
+    "tests.sql.test_sql_table_functions::test_sql_read_parquet",
+    "tests.sql.test_sql_table_functions::test_sql_read_parquet_path",
+    "tests.sql.test_sql_table_functions::test_sql_read_parquet_paths",
+    "tests.sql.test_sql_table_functions::test_sql_read_csv",
+    "tests.sql.test_sql_table_functions::test_sql_read_csv_path",
+    "tests.sql.test_sql_table_functions::test_sql_read_csv_paths",
+    "tests.sql.test_sql_table_functions::test_read_csv_headers[True]",
+    "tests.sql.test_sql_table_functions::test_read_csv_headers[False]",
+    "tests.sql.test_sql_table_functions::test_read_csv_quote[True]",
+    "tests.sql.test_sql_table_functions::test_read_csv_quote[False]",
+    "tests.sql.test_sql_table_functions::test_read_csv_other_options[=>]",
+    "tests.sql.test_sql_table_functions::test_read_csv_other_options[:=]"
+  ]
+}

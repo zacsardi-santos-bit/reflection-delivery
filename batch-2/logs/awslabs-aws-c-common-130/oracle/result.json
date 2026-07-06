@@ -1,0 +1,29 @@
+{
+    "id": "16e53ce6-6bd0-4c73-8711-5e9cbcda3fdf",
+    "started_at": "2026-07-04T15:41:09.640894",
+    "finished_at": "2026-07-04T15:41:38.466067",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__awslabs-aws-c-common-130": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "awslabs-aws-c-common-130__ciXJCPT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,668 @@
+patching file integ-tests/typescript/baml_client/async_client.ts
+patching file integ-tests/typescript/baml_client/globals.ts
+patching file integ-tests/typescript/baml_client/index.ts
+patching file integ-tests/typescript/baml_client/inlinedbaml.ts
+patching file integ-tests/typescript/baml_client/sync_client.ts
+patching file integ-tests/typescript/baml_client/tracing.ts
+patching file integ-tests/typescript/baml_client/type_builder.ts
+patching file integ-tests/typescript/baml_client/types.ts
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.12
+   Compiling memchr v2.7.4
+   Compiling version_check v0.9.4
+   Compiling autocfg v1.3.0
+   Compiling strsim v0.11.1
+   Compiling serde v1.0.209
+   Compiling fnv v1.0.7
+   Compiling ident_case v1.0.1
+   Compiling utf8parse v0.2.2
+   Compiling colorchoice v1.0.1
+   Compiling anstyle-query v1.1.0
+   Compiling anstyle v1.0.7
+   Compiling thiserror v1.0.62
+   Compiling is_terminal_polyfill v1.70.0
+   Compiling rustversion v1.0.17
+   Compiling regex-syntax v0.8.4
+   Compiling heck v0.5.0
+   Compiling hashbrown v0.14.5
+   Compiling anstyle-parse v0.2.4
+   Compiling equivalent v1.0.1
+   Compiling ryu v1.0.18
+   Compiling log v0.4.22
+   Compiling anyhow v1.0.86
+   Compiling itoa v1.0.11
+   Compiling ucd-trie v0.1.6
+   Compiling anstream v0.6.14
+   Compiling serde_json v1.0.120
+   Compiling unicase v2.7.0
+   Compiling lazy_static v1.5.0
+   Compiling indexmap v1.9.3
+   Compiling clap_lex v0.7.1
+   Compiling hashbrown v0.12.3
+   Compiling aho-corasick v1.1.3
+   Compiling num-traits v0.2.19
+   Compiling crossbeam-utils v0.8.20
+   Compiling clap_builder v4.5.9
+   Compiling minimal-lexical v0.2.1
+   Compiling once_cell v1.19.0
+   Compiling libm v0.2.8
+   Compiling colored v2.1.0
+   Compiling humantime v2.1.0
+   Compiling mime v0.3.17
+   Compiling nom v7.1.3
+   Compiling strsim v0.10.0
+   Compiling indoc v2.0.5
+   Compiling either v1.13.0
+   Compiling quote v1.0.36
+   Compiling unicode-width v0.1.13
+   Compiling rayon-core v1.12.1
+   Compiling mime_guess v2.0.5
+   Compiling unicode-linebreak v0.1.5
+   Compiling askama_escape v0.10.3
+   Compiling smawk v0.3.2
+   Compiling percent-encoding v2.3.1
+   Compiling internal-baml-parser-database v0.55.1 (/workspace/repo/engine/baml-lib/parser-database)
+   Compiling syn v2.0.76
+   Compiling semver v1.0.23
+warning: unexpected `cfg` condition value: `use-pyo3`
+ --> baml-lib/parser-database/build.rs:3:11
+  |
+3 |     #[cfg(feature = "use-pyo3")]
+  |           ^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: expected values for `feature` are: `default`
+  = help: consider adding `use-pyo3` as a feature in `Cargo.toml`
+  = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+  = note: `#[warn(unexpected_cfgs)]` on by default
+
+   Compiling crossbeam-epoch v0.9.18
+   Compiling iana-time-zone v0.1.60
+   Compiling rustc-hash v1.1.0
+   Compiling textwrap v0.16.1
+   Compiling whoami v1.5.1
+   Compiling regex-automata v0.4.7
+   Compiling unsafe-libyaml v0.2.11
+   Compiling same-file v1.0.6
+   Compiling pathdiff v0.1.0
+warning: `internal-baml-parser-database` (build script) generated 1 warning
+   Compiling humansize v2.1.3
+   Compiling crossbeam-deque v0.8.5
+   Compiling walkdir v2.5.0
+   Compiling cfg-if v1.0.0
+   Compiling chrono v0.4.38
+   Compiling base64 v0.22.1
+   Compiling sugar_path v1.2.0
+   Compiling askama_parser v0.2.1
+   Compiling rayon v1.10.0
+   Compiling regex v1.10.5
+   Compiling env_filter v0.1.0
+   Compiling shellwords v1.1.0
+   Compiling darling_core v0.20.10
+   Compiling env_logger v0.11.3
+   Compiling serde_derive v1.0.209
+   Compiling thiserror-impl v1.0.62
+   Compiling strum_macros v0.26.4
+   Compiling clap_derive v4.5.8
+   Compiling test-log-macros v0.2.16
+   Compiling enumflags2_derive v0.7.10
+   Compiling test-log v0.2.16
+   Compiling enumflags2 v0.7.10
+   Compiling pest v2.7.11
+   Compiling darling_macro v0.20.10
+   Compiling strum v0.26.3
+   Compiling clap v4.5.9
+   Compiling darling v0.20.10
+   Compiling derive_builder_core v0.20.0
+   Compiling pest_meta v2.7.11
+   Compiling derive_builder_macro v0.20.0
+   Compiling derive_builder v0.20.0
+   Compiling pest_generator v2.7.11
+   Compiling pest_derive v2.7.11
+   Compiling indexmap v2.2.6
+   Compiling internal-baml-diagnostics v0.55.1 (/workspace/repo/engine/baml-lib/diagnostics)
+   Compiling basic-toml v0.1.9
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling askama_derive v0.12.5
+   Compiling minijinja v1.0.21
+   Compiling askama v0.12.1
+   Compiling baml-types v0.55.1 (/workspace/repo/engine/baml-lib/baml-types)
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> baml-lib/baml-types/src/media.rs:106:22
+    |
+106 |     pub fn extension(&self) -> Option<Cow<str>> {
+    |                      ^^^^^            ^^^^^^^^ the same lifetime is hidden here
+    |                      |
+    |                      the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+106 |     pub fn extension(&self) -> Option<Cow<'_, str>> {
+    |                                           +++
+
+   Compiling internal-baml-schema-ast v0.55.1 (/workspace/repo/engine/baml-lib/schema-ast)
+   Compiling internal-baml-jinja v0.55.1 (/workspace/repo/engine/baml-lib/jinja)
+warning: unused import: `HashSet`
+ --> baml-lib/jinja/src/chat_message_part.rs:1:33
+  |
+1 | use std::collections::{HashMap, HashSet};
+  |                                 ^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `crate::RenderedChatMessage`
+ --> baml-lib/jinja/src/chat_message_part.rs:6:5
+  |
+6 | use crate::RenderedChatMessage;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `baml-types` (lib) generated 1 warning (run `cargo fix --lib -p baml-types` to apply 1 suggestion)
+warning: unused import: `baml_types::TypeValue`
+ --> baml-lib/schema-ast/src/ast/expression.rs:1:5
+  |
+1 | use baml_types::TypeValue;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused imports: `BamlMediaType` and `TypeValue`
+ --> baml-lib/schema-ast/src/ast/identifier.rs:1:18
+  |
+1 | use baml_types::{BamlMediaType, TypeValue};
+  |                  ^^^^^^^^^^^^^  ^^^^^^^^^
+
+warning: unused variable: `e`
+   --> baml-lib/jinja/src/output_format/types.rs:340:37
+    |
+340 |                     FieldType::Enum(e) => inner_str.len() > 15,
+    |                                     ^ help: if this is intentional, prefix it with an underscore: `_e`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `e`
+  --> baml-lib/jinja/src/output_format/mod.rs:30:23
+   |
+30 |             .map_err(|e| std::fmt::Error {})?;
+   |                       ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `t`
+   --> baml-lib/schema-ast/src/ast/field.rs:209:39
+    |
+209 |             FieldType::Symbol(_arity, t, ..) => true,
+    |                                       ^ help: if this is intentional, prefix it with an underscore: `_t`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+   Compiling internal-baml-prompt-parser v0.55.1 (/workspace/repo/engine/baml-lib/prompt-parser)
+warning: `internal-baml-jinja` (lib) generated 4 warnings (run `cargo fix --lib -p internal-baml-jinja` to apply 4 suggestions)
+warning: unused import: `Identifier`
+  --> baml-lib/parser-database/src/walkers/field.rs:12:54
+   |
+12 | use internal_baml_schema_ast::ast::{self, FieldType, Identifier, WithName, WithSpan};
+   |                                                      ^^^^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ClientWalker`
+  --> baml-lib/parser-database/src/walkers/function.rs:13:26
+   |
+13 | use super::{ClassWalker, ClientWalker, ConfigurationWalker, EnumWalker, Walker};
+   |                          ^^^^^^^^^^^^
+
+warning: unused import: `BlockArgs`
+ --> baml-lib/parser-database/src/walkers/template_string.rs:3:43
+  |
+3 | use internal_baml_schema_ast::ast::{self, BlockArgs, Span, WithIdentifier, WithName, WithSpan};
+  |                                           ^^^^^^^^^
+
+warning: ambiguous glob re-exports
+  --> baml-lib/parser-database/src/walkers/mod.rs:22:9
+   |
+22 | pub use function::*;
+   |         ^^^^^^^^^^^ the name `ArgWalker` in the type namespace is first re-exported here
+23 | use internal_baml_schema_ast::ast::{self, FieldType, Identifier, TopId, WithName};
+24 | pub use r#class::*;
+   |         ---------- but the name `ArgWalker` in the type namespace is also re-exported here
+   |
+   = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: unused import: `self`
+  --> baml-lib/parser-database/src/walkers/mod.rs:23:37
+   |
+23 | use internal_baml_schema_ast::ast::{self, FieldType, Identifier, TopId, WithName};
+   |                                     ^^^^
+
+warning: unnecessary parentheses around type
+  --> baml-lib/parser-database/src/coerce_expression.rs:90:11
+   |
+90 | ) -> impl (Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T>) {
+   |           ^                                                      ^
+   |
+   = note: `#[warn(unused_parens)]` (part of `#[warn(unused)]`) on by default
+help: remove these parentheses
+   |
+90 - ) -> impl (Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T>) {
+90 + ) -> impl Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T>  {
+   |
+
+warning: unnecessary parentheses around type
+   --> baml-lib/parser-database/src/coerce_expression.rs:108:20
+    |
+108 |     coercion: &dyn (Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T>),
+    |                    ^                                                      ^
+    |
+help: remove these parentheses
+    |
+108 -     coercion: &dyn (Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T>),
+108 +     coercion: &dyn Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T> ,
+    |
+
+warning: unnecessary parentheses around type
+   --> baml-lib/parser-database/src/coerce_expression.rs:132:24
+    |
+132 |     key_coercion: &dyn (Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T>),
+    |                        ^                                                      ^
+    |
+help: remove these parentheses
+    |
+132 -     key_coercion: &dyn (Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T>),
+132 +     key_coercion: &dyn Fn(&'a ast::Expression, &mut Diagnostics) -> Option<T> ,
+    |
+
+warning: unused import: `ValueExprBlockType`
+ --> baml-lib/parser-database/src/names/validate_reserved_names.rs:1:48
+  |
+1 | use internal_baml_schema_ast::ast::{FieldType, ValueExprBlockType};
+  |                                                ^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `WithName`
+ --> baml-lib/parser-database/src/names/validate_reserved_names.rs:4:33
+  |
+4 |     ast::{self, WithIdentifier, WithName},
+  |                                 ^^^^^^^^
+
+warning: unused import: `baml_types::FieldType`
+ --> baml-lib/parser-database/src/names/mod.rs:8:5
+  |
+8 | use baml_types::FieldType;
+  |     ^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `ConfigBlockProperty`
+ --> baml-lib/parser-database/src/names/mod.rs:9:37
+  |
+9 | use internal_baml_schema_ast::ast::{ConfigBlockProperty, Expression, Field, WithIdentifier};
+  |                                     ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `std::collections::HashSet`
+ --> baml-lib/parser-database/src/types/configurations.rs:4:5
+  |
+4 | use std::collections::HashSet;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unnecessary parentheses around closure body
+   --> baml-lib/parser-database/src/types/configurations.rs:260:47
+    |
+260 | ...                   .map(|(k, v)| ((k.0.to_string(), (k.1.clone(), (*v).clone()))))
+    |                                     ^                                              ^
+    |
+help: remove these parentheses
+    |
+260 -                                 .map(|(k, v)| ((k.0.to_string(), (k.1.clone(), (*v).clone()))))
+260 +                                 .map(|(k, v)| (k.0.to_string(), (k.1.clone(), (*v).clone())) )
+    |
+
+warning: unnecessary parentheses around closure body
+   --> baml-lib/parser-database/src/types/configurations.rs:277:43
+    |
+277 | ...                   .map(|(k, v)| ((k.0.to_string(), (k.1.clone(), (*v).clone()))))
+    |                                     ^                                              ^
+    |
+help: remove these parentheses
+    |
+277 -                             .map(|(k, v)| ((k.0.to_string(), (k.1.clone(), (*v).clone()))))
+277 +                             .map(|(k, v)| (k.0.to_string(), (k.1.clone(), (*v).clone())) )
+    |
+
+warning: unused import: `HashMap`
+  --> baml-lib/parser-database/src/lib.rs:39:24
+   |
+39 | use std::collections::{HashMap, HashSet};
+   |                        ^^^^^^^
+
+warning: unused import: `DatamodelWarning`
+  --> baml-lib/parser-database/src/lib.rs:52:49
+   |
+52 | use internal_baml_diagnostics::{DatamodelError, DatamodelWarning, Diagnostics};
+   |                                                 ^^^^^^^^^^^^^^^^
+
+warning: `internal-baml-schema-ast` (lib) generated 3 warnings (run `cargo fix --lib -p internal-baml-schema-ast` to apply 3 suggestions)
+warning: unused variable: `testcase_id`
+   --> baml-lib/parser-database/src/names/mod.rs:143:35
+    |
+143 |             (ast::TopId::TestCase(testcase_id), ast::Top::TestCase(testcase)) => {
+    |                                   ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_testcase_id`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `ft`
+   --> baml-lib/parser-database/src/types/post_prompt.rs:178:38
+    |
+178 |         ast::FieldType::Primitive(_, ft, _, ..) => Err(DatamodelError::new_validation_error(
+    |                                      ^^ help: if this is intentional, prefix it with an underscore: `_ft`
+
+warning: method `push_warning` is never used
+  --> baml-lib/parser-database/src/context/mod.rs:74:19
+   |
+34 | impl<'db> Context<'db> {
+   | ---------------------- method in this implementation
+...
+74 |     pub(super) fn push_warning(&mut self, warning: DatamodelWarning) {
+   |                   ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: struct `StringValue` is never constructed
+   --> baml-lib/parser-database/src/types/mod.rs:115:12
+    |
+115 | pub struct StringValue {
+    |            ^^^^^^^^^^^
+
+warning: fields `name` and `type_dependencies` are never read
+   --> baml-lib/parser-database/src/types/mod.rs:219:9
+    |
+217 | pub struct TemplateStringProperties {
+    |            ------------------------ fields in this struct
+218 |     // Not all template strings have names (e.g. function prompt)
+219 |     pub name: Option<String>,
+    |         ^^^^
+220 |     pub type_dependencies: HashSet<String>,
+    |         ^^^^^^^^^^^^^^^^^
+    |
+    = note: `TemplateStringProperties` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: function `dedent` is never used
+  --> baml-lib/parser-database/src/types/configurations.rs:10:4
+   |
+10 | fn dedent(s: &str) -> String {
+   |    ^^^^^^
+
+warning: function `process_input` is never used
+ --> baml-lib/parser-database/src/types/post_prompt.rs:8:15
+  |
+8 | pub(crate) fn process_input(
+  |               ^^^^^^^^^^^^^
+
+warning: function `process_print_enum` is never used
+  --> baml-lib/parser-database/src/types/post_prompt.rs:50:15
+   |
+50 | pub(crate) fn process_print_enum(
+   |               ^^^^^^^^^^^^^^^^^^
+
+warning: function `process_print_type` is never used
+   --> baml-lib/parser-database/src/types/post_prompt.rs:106:15
+    |
+106 | pub(crate) fn process_print_type(
+    |               ^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_variable_path` is never used
+   --> baml-lib/parser-database/src/types/post_prompt.rs:155:4
+    |
+155 | fn validate_variable_path(
+    |    ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `validate_prompt` is never used
+  --> baml-lib/parser-database/src/types/prompt.rs:10:15
+   |
+10 | pub(super) fn validate_prompt(
+   |               ^^^^^^^^^^^^^^^
+
+warning: function `handle_comment` is never used
+  --> baml-lib/parser-database/src/types/prompt.rs:34:4
+   |
+34 | fn handle_comment(
+   |    ^^^^^^^^^^^^^^
+
+warning: function `process_prompt_ast` is never used
+  --> baml-lib/parser-database/src/types/prompt.rs:76:4
+   |
+76 | fn process_prompt_ast(ctx: &mut Context<'_>, ast: PromptAst) -> (String, Vec<PromptVariable>) {
+   |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `process_code_block` is never used
+   --> baml-lib/parser-database/src/types/prompt.rs:143:4
+    |
+143 | fn process_code_block(ctx: &mut Context<'_>, code_block: CodeBlock) -> Option<PromptVariable> {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `process_print_enum` is never used
+   --> baml-lib/parser-database/src/types/prompt.rs:161:4
+    |
+161 | fn process_print_enum(ctx: &mut Context<'_>, variable: &Variable) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `process_print_type` is never used
+   --> baml-lib/parser-database/src/types/prompt.rs:173:4
+    |
+173 | fn process_print_type(_ctx: &mut Context<'_>, _variable: &Variable) -> bool {
+    |    ^^^^^^^^^^^^^^^^^^
+
+warning: function `process_input` is never used
+   --> baml-lib/parser-database/src/types/prompt.rs:177:4
+    |
+177 | fn process_input(ctx: &mut Context<'_>, variable: &Variable) -> bool {
+    |    ^^^^^^^^^^^^^
+
+warning: eliding a lifetime that's named elsewhere is confusing
+  --> baml-lib/parser-database/src/walkers/mod.rs:63:57
+   |
+63 |     fn find_top_by_str(&'db self, name: &str) -> Option<&TopId> {
+   |                         --- the lifetime is named here  ^^^^^^ the same lifetime is elided here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+   = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: consistently use `'db`
+   |
+63 |     fn find_top_by_str(&'db self, name: &str) -> Option<&'db TopId> {
+   |                                                          +++
+
+warning: eliding a lifetime that's named elsewhere is confusing
+  --> baml-lib/parser-database/src/coerce_expression.rs:63:80
+   |
+63 |     pub fn string_with_span<'a>(expr: &'a ast::Expression) -> Option<(&'a str, &ast::Span)> {
+   |                                        --                              --      ^^^^^^^^^^ the same lifetime is elided here
+   |                                        |                               |
+   |                                        the lifetime is named here      the same lifetime is named here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'a`
+   |
+63 |     pub fn string_with_span<'a>(expr: &'a ast::Expression) -> Option<(&'a str, &'a ast::Span)> {
+   |                                                                                 ++
+
+warning: eliding a lifetime that's named elsewhere is confusing
+  --> baml-lib/parser-database/src/coerce_expression.rs:67:82
+   |
+67 |     pub fn constant_with_span<'a>(expr: &'a ast::Expression) -> Option<(&'a str, &ast::Span)> {
+   |                                          --                              --      ^^^^^^^^^^ the same lifetime is elided here
+   |                                          |                               |
+   |                                          the lifetime is named here      the same lifetime is named here
+   |
+   = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+help: consistently use `'a`
+   |
+67 |     pub fn constant_with_span<'a>(expr: &'a ast::Expression) -> Option<(&'a str, &'a ast::Span)> {
+   |                                                                                   ++
+
+   Compiling internal-baml-core v0.55.1 (/workspace/repo/engine/baml-lib/baml-core)
+warning: unused import: `BamlMediaType`
+ --> baml-lib/baml-core/src/ir/ir_helpers/to_baml_arg.rs:1:27
+  |
+1 | use baml_types::{BamlMap, BamlMediaType, BamlValue, FieldType, TypeValue};
+  |                           ^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `self`
+ --> baml-lib/baml-core/src/ir/json_schema.rs:7:12
+  |
+7 |     repr::{self},
+  |            ^^^^
+
+warning: unused import: `Context`
+ --> baml-lib/baml-core/src/ir/repr.rs:3:22
+  |
+3 | use anyhow::{anyhow, Context, Result};
+  |                      ^^^^^^^
+
+warning: unreachable pattern
+   --> baml-lib/baml-core/src/ir/repr.rs:467:17
+    |
+455 |                 ast::BlockArgs { args, .. } => args
+    |                 --------------------------- matches any value
+...
+467 |                 _ => vec![],
+    |                 ^ no value can reach this
+    |
+    = note: `#[warn(unreachable_patterns)]` (part of `#[warn(unused)]`) on by default
+
+warning: `internal-baml-parser-database` (lib) generated 37 warnings (run `cargo fix --lib -p internal-baml-parser-database` to apply 21 suggestions)
+warning: unused variable: `db`
+   --> baml-lib/baml-core/src/ir/repr.rs:925:20
+    |
+925 |     fn repr(&self, db: &ParserDatabase) -> Result<TestCaseFunction> {
+    |                    ^^ help: if this is intentional, prefix it with an underscore: `_db`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `name`
+   --> baml-lib/baml-core/src/validate/generator_loader/v1.rs:141:12
+    |
+141 |         Ok(name) => (),
+    |            ^^^^ help: if this is intentional, prefix it with an underscore: `_name`
+
+warning: unused variable: `name`
+   --> baml-lib/baml-core/src/validate/generator_loader/v1.rs:148:12
+    |
+148 |         Ok(name) => (),
+    |            ^^^^ help: if this is intentional, prefix it with an underscore: `_name`
+
+warning: unused variable: `name`
+   --> baml-lib/baml-core/src/validate/generator_loader/v1.rs:155:12
+    |
+155 |         Ok(name) => (),
+    |            ^^^^ help: if this is intentional, prefix it with an underscore: `_name`
+
+warning: unused variable: `e`
+  --> baml-lib/baml-core/src/validate/validation_pipeline/validations/functions.rs:83:17
+   |
+83 |             Err(e) => {
+   |                 ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: unused variable: `e`
+   --> baml-lib/baml-core/src/validate/validation_pipeline/validations/functions.rs:139:29
+    |
+139 |                 if let Some(e) = e.parsing_errors {
+    |                             ^ help: if this is intentional, prefix it with an underscore: `_e`
+
+warning: type alias `FunctionArgs` is never used
+  --> baml-lib/baml-core/src/ir/mod.rs:25:17
+   |
+25 | pub(super) type FunctionArgs = repr::FunctionArgs;
+   |                 ^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: type alias `Prompt` is never used
+  --> baml-lib/baml-core/src/ir/mod.rs:33:17
+   |
+33 | pub(super) type Prompt = repr::Prompt;
+   |                 ^^^^^^
+
+warning: trait `ScopeTrait` is never used
+ --> baml-lib/baml-core/src/ir/ir_helpers/scope_diagnostics.rs:4:7
+  |
+4 | trait ScopeTrait {
+  |       ^^^^^^^^^^
+
+warning: trait `WithJsonSchema` is never used
+  --> baml-lib/baml-core/src/ir/json_schema.rs:11:11
+   |
+11 | pub trait WithJsonSchema {
+   |           ^^^^^^^^^^^^^^
+
+warning: function `process_field` is never used
+   --> baml-lib/baml-core/src/ir/repr.rs:735:4
+    |
+735 | fn process_field(
+    |    ^^^^^^^^^^^^^
+
+   Compiling internal-baml-codegen v0.55.1 (/workspace/repo/engine/language_client_codegen)
+warning: unused import: `process::Command`
+ --> language_client_codegen/src/openapi.rs:1:26
+  |
+1 | use std::{path::PathBuf, process::Command};
+  |                          ^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `Deserialize`
+  --> language_client_codegen/src/openapi.rs:10:13
+   |
+10 | use serde::{Deserialize, Serialize};
+   |             ^^^^^^^^^^^
+
+warning: unused import: `either::Either`
+  --> language_client_codegen/src/ruby/mod.rs:12:5
+   |
+12 | use either::Either;
+   |     ^^^^^^^^^^^^^^
+
+warning: unused import: `either::Either`
+ --> language_client_codegen/src/typescript/mod.rs:7:5
+  |
+7 | use either::Either;
+  |     ^^^^^^^^^^^^^^
+
+warning: unused variable: `baml_image_schema`
+  --> language_client_codegen/src/openapi.rs:73:13
+   |
+73 |         let baml_image_schema = TypeSpecWithMeta {
+   |             ^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_baml_image_schema`
+   |
+   = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> language_client_codegen/src/openapi.rs:558:21
+    |
+558 |                 let mut type_spec = inner.to_type_spec(ir)?;
+    |                     ----^^^^^^^^^
+    |                     |
+    |                     help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `node`
+   --> language_client_codegen/src/python/generate_types.rs:152:26
+    |
+152 | pub fn add_default_value(node: &FieldType, type_str: &String) -> String {
+    |                          ^^^^ help: if this is intentional, prefix it with an underscore: `_node`
+
+warning: unused variable: `args`
+   --> language_client_codegen/src/python/mod.rs:112:21
+    |
+112 |     fn try_from((_, args): (&'_ IntermediateRepr, &'_ crate::GeneratorArgs)) -> Result<Self> {
+    |                     ^^^^ help: if this is intentional, prefix it with an underscore: `_args`
+
+warning: `internal-baml-core` (lib) generated 15 warnings (run `cargo fix --lib -p internal-baml-core` to apply 9 suggestions)
+warning: `internal-baml-codegen` (lib) generated 8 warnings (run `cargo fix --lib -p internal-baml-codegen` to apply 8 suggestions)
+warning: `internal-baml-codegen` (lib test) generated 8 warnings (8 duplicates)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.76s
+────────────
+ Nextest run ID a64a2cbd-35e3-4798-87d5-5e3d1a6a083f with nextest profile: default
+    Starting 0 tests across 1 binary (8 tests skipped)
+────────────
+     Summary [   0.000s] 0 tests run: 0 passed, 8 skipped
+error: no tests to run
+(hint: use `--no-tests` to customize)
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=cargo exit_code=4

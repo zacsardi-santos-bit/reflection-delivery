@@ -1,0 +1,29 @@
+{
+    "id": "781cdb73-1343-4487-be45-b62635ba5686",
+    "started_at": "2026-07-06T12:17:59.567563",
+    "finished_at": "2026-07-06T12:18:27.384179",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__home-assistant-core-165582": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "home-assistant-core-165582__R8iTdEq"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

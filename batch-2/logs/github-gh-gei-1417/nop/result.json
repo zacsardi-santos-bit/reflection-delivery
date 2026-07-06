@@ -1,0 +1,29 @@
+{
+    "id": "501922fb-a07d-4c3c-b366-3dae661efe90",
+    "started_at": "2026-07-04T15:37:23.712912",
+    "finished_at": "2026-07-04T15:38:18.371509",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__github-gh-gei-1417": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "github-gh-gei-1417__WBXnN4e"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

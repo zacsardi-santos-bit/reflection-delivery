@@ -1,0 +1,234 @@
+diff --git a/model-optimizer/extensions/ops/gatherelements.py b/model-optimizer/extensions/ops/gatherelements.py
+index 50e32a068e..f62ed7226e 100644
+--- a/model-optimizer/extensions/ops/gatherelements.py
++++ b/model-optimizer/extensions/ops/gatherelements.py
+@@ -3,8 +3,10 @@
+ 
+ import numpy as np
+ 
++from mo.front.common.partial_infer.utils import dynamic_dimension
+ from mo.graph.graph import Node, Graph
+ from mo.ops.op import Op, PermuteAttrs
++from mo.utils.error import Error
+ 
+ 
+ class GatherElements(Op):
+@@ -33,18 +35,19 @@ class GatherElements(Op):
+ 
+         assert data_rank >= 1, 'data_rank must be >= 1'
+         assert data_rank == len(indices_shape), 'data and indices inputs for node {} must be of the ' \
+-                                                'same rank. Instead got {} and {}'.\
+-                                                format(node.name, data_rank, len(indices_shape))
++                                                'same rank. Instead got {} and {}'. \
++            format(node.name, data_rank, len(indices_shape))
+         assert -data_rank <= axis < data_rank, 'axis for node {0} must be within interval ' \
+-                                               '[-{1}},  {1} - 1]. Instead got: axis={2}'.\
+-                                               format(node.name, data_rank, axis)
++                                               '[-{1},  {1} - 1]. Instead got: axis={2}'. \
++            format(node.name, data_rank, axis)
+         if axis < 0:
+             axis += data_rank
+-
++        out_shape = indices_shape.copy()
+         for idx, (data_sz, ind_sz) in enumerate(zip(data_shape, indices_shape)):
++            out_shape[idx] = ind_sz if ind_sz is not dynamic_dimension or idx == axis else data_sz
+             if idx != axis and data_sz != ind_sz:
+-                raise ValueError('Sizes along axis {} for node {} do not match. data and indices must have ' 
+-                                 'equal size along all axes except for axis {}'.format(idx, node.name, axis))
++                raise Error('Sizes along axis {} for node {} do not match. data and indices must have '
++                            'equal size along all axes except for axis {}'.format(idx, node.name, axis))
+ 
+         data = node.in_port(0).data.get_value()
+         indices = node.in_port(1).data.get_value()
+@@ -57,6 +60,6 @@ class GatherElements(Op):
+                 out_value[idx] = data[tuple(data_idx)]
+             node.out_port(0).data.set_value(out_value)
+         else:
+-            node.out_port(0).data.set_shape(indices_shape)
++            node.out_port(0).data.set_shape(out_shape)
+ 
+         PermuteAttrs.create_permute_attrs(node, attrs=[('axis', 'input:0')])
+diff --git a/model-optimizer/extensions/ops/sparse_reshape.py b/model-optimizer/extensions/ops/sparse_reshape.py
+index 6b113b8f46..2c239a2b1d 100644
+--- a/model-optimizer/extensions/ops/sparse_reshape.py
++++ b/model-optimizer/extensions/ops/sparse_reshape.py
+@@ -3,13 +3,15 @@
+ 
+ import numpy as np
+ 
++from mo.front.common.partial_infer.utils import dynamic_dimension, is_fully_defined, shape_array, strict_compare_tensors, dynamic_dimension_value
+ from mo.graph.graph import Node, Graph
+ from mo.ops.op import Op
+ 
+ 
+ class SparseReshape(Op):
+     """
+-    SparseReshape operation reshapes a sparse tensor. It recomputes indices for a new dense shape.
++    SparseReshape operation reshapes a sparse tensor in Coordinate list (COO) format
++    It recomputes indices for a new dense shape.
+     """
+     op = 'SparseReshape'
+ 
+@@ -28,26 +30,41 @@ class SparseReshape(Op):
+ 
+     @staticmethod
+     def infer(node: Node):
++        name = node.soft_get('name', node.id)
++
+         input_indices_shape = node.in_port(0).data.get_shape()
+         input_indices_value = node.in_port(0).data.get_value()
+-        input_shape_value = node.in_port(1).data.get_value()
+-        new_shape_value = node.in_port(2).data.get_value()
++        input_shape = node.in_port(1).data.get_value()
++        new_shape = node.in_port(2).data.get_value()
+         new_shape_shape = node.in_port(2).data.get_shape()
+ 
+-        assert input_shape_value is not None and new_shape_value is not None, \
++        assert input_shape is not None and new_shape is not None, \
+             "Values for input shape and new shape must be defined"
+-        assert np.count_nonzero(new_shape_value == -1) <= 1, \
++        assert len(np.argwhere(new_shape == -1)) <= 1, \
+             "Value -1 occurs in new shape value more than once"
++        assert len(np.argwhere(new_shape < -1)) == 0, \
++            "Only non-negative or -1 values are allowed"
++
++        output_shape = np.ma.masked_array(new_shape, mask=new_shape == -1, fill_value=dynamic_dimension_value)
++        assert not is_fully_defined(input_shape) or not is_fully_defined(output_shape) or \
++               np.prod(input_shape) == np.prod(output_shape), \
++            "Number of elements in input {} and output {} of dynamic reshape node {} mismatch" \
++            "".format(input_shape, output_shape, name)
++
++        # we can deduce -1 only if input_shape is fully defined and
++        # there is one dynamic dimension in output_shape
++        if is_fully_defined(input_shape) and np.ma.count_masked(output_shape) == 1:
++            undefined_dim_size = np.prod(input_shape) // np.prod(output_shape)
++
++            undefined_idx = np.where(output_shape == dynamic_dimension)[0][0]
++            output_shape[undefined_idx] = undefined_dim_size
++            output_shape.mask[undefined_idx] = False
+ 
+-        node.out_port(1).data.set_shape(new_shape_shape)
+-        output_shape_value = new_shape_value
+-        if np.count_nonzero(output_shape_value == -1) == 1:
+-            elem = np.prod(input_shape_value) // np.prod(new_shape_value[new_shape_value != -1])
+-            output_shape_value[output_shape_value == -1] = elem
+-        node.out_port(1).data.set_value(output_shape_value)
++        node.out_port(1).data.set_value(shape_array(output_shape))
+         output_indices_shape = np.concatenate((input_indices_shape[0:1], new_shape_shape))
+         node.out_port(0).data.set_shape(output_indices_shape)
+ 
+-        # TODO: implement constant value propagation for common case
+-        if np.array_equal(input_shape_value, output_shape_value) and input_indices_value is not None:
++        # TODO: implement constant value propagation for common case with scipy.sparse.coo_matrix.reshape
++        # instead of compatible_shapes we intentionally use np.array_equal
++        if strict_compare_tensors(input_shape, output_shape) and input_indices_value is not None:
+             node.out_port(0).data.set_value(input_indices_value)
+diff --git a/model-optimizer/extensions/ops/sparse_segment_mean.py b/model-optimizer/extensions/ops/sparse_segment_mean.py
+index aa50cb93c1..dae9d8acbc 100644
+--- a/model-optimizer/extensions/ops/sparse_segment_mean.py
++++ b/model-optimizer/extensions/ops/sparse_segment_mean.py
+@@ -3,6 +3,7 @@
+ 
+ import numpy as np
+ 
++from mo.front.common.partial_infer.utils import compatible_shapes
+ from mo.graph.graph import Node, Graph
+ from mo.ops.op import Op
+ 
+@@ -25,7 +26,7 @@ class SparseSegmentMean(Op):
+ 
+     def __init__(self, graph: Graph, attrs: dict):
+         mandatory_props = {
+-            'type': __class__.op,
++            'type': None,
+             'op': __class__.op,
+             'version': 'experimental',
+             'infer': __class__.infer,
+@@ -57,8 +58,8 @@ class SparseSegmentMean(Op):
+             "SparseSegmentMean supports only 1D indices tensor"
+         assert segment_ids_shape is not None and segment_ids_shape.size == 1, \
+             "SparseSegmentMean supports only 1D segment IDs tensor"
+-        assert segment_ids_shape == indices_shape, \
+-            "Indices and segment IDs tensors must have the same shape"
++        assert compatible_shapes(segment_ids_shape, indices_shape), \
++            "Indices and segment IDs tensors must have compatible shapes"
+ 
+         # computes output shape
+         output_shape = data_shape
+diff --git a/model-optimizer/extensions/ops/sparse_segment_sqrtn.py b/model-optimizer/extensions/ops/sparse_segment_sqrtn.py
+index 7c314b8952..3a64b3b92a 100644
+--- a/model-optimizer/extensions/ops/sparse_segment_sqrtn.py
++++ b/model-optimizer/extensions/ops/sparse_segment_sqrtn.py
+@@ -3,6 +3,7 @@
+ 
+ import numpy as np
+ 
++from mo.front.common.partial_infer.utils import compatible_shapes
+ from mo.graph.graph import Node, Graph
+ from mo.ops.op import Op
+ 
+@@ -25,7 +26,7 @@ class SparseSegmentSqrtN(Op):
+ 
+     def __init__(self, graph: Graph, attrs: dict):
+         mandatory_props = {
+-            'type': __class__.op,
++            'type': None,
+             'op': __class__.op,
+             'version': 'experimental',
+             'infer': __class__.infer,
+@@ -57,8 +58,8 @@ class SparseSegmentSqrtN(Op):
+             "SparseSegmentSqrtN supports only 1D indices tensor"
+         assert segment_ids_shape is not None and segment_ids_shape.size == 1, \
+             "SparseSegmentSqrtN supports only 1D segment IDs tensor"
+-        assert segment_ids_shape == indices_shape, \
+-            "Indices and segment IDs tensors must have the same shape"
++        assert compatible_shapes(segment_ids_shape, indices_shape), \
++            "Indices and segment IDs tensors must have compatible shapes"
+ 
+         # computes output shape
+         output_shape = data_shape
+diff --git a/model-optimizer/extensions/ops/sparse_segment_sum.py b/model-optimizer/extensions/ops/sparse_segment_sum.py
+index f1d22dc024..e746b78f2a 100644
+--- a/model-optimizer/extensions/ops/sparse_segment_sum.py
++++ b/model-optimizer/extensions/ops/sparse_segment_sum.py
+@@ -3,6 +3,7 @@
+ 
+ import numpy as np
+ 
++from mo.front.common.partial_infer.utils import compatible_shapes
+ from mo.graph.graph import Node, Graph
+ from mo.ops.op import Op
+ 
+@@ -25,7 +26,7 @@ class SparseSegmentSum(Op):
+ 
+     def __init__(self, graph: Graph, attrs: dict):
+         mandatory_props = {
+-            'type': __class__.op,
++            'type': None,
+             'op': __class__.op,
+             'version': 'experimental',
+             'infer': __class__.infer,
+@@ -57,8 +58,8 @@ class SparseSegmentSum(Op):
+             "SparseSegmentSum supports only 1D indices tensor"
+         assert segment_ids_shape is not None and segment_ids_shape.size == 1, \
+             "SparseSegmentSum supports only 1D segment IDs tensor"
+-        assert segment_ids_shape == indices_shape, \
+-            "Indices and segment IDs tensors must have the same shape"
++        assert compatible_shapes(segment_ids_shape, indices_shape), \
++            "Indices and segment IDs tensors must have compatible shapes"
+ 
+         # computes output shape
+         output_shape = data_shape
+diff --git a/model-optimizer/extensions/ops/unique.py b/model-optimizer/extensions/ops/unique.py
+index 139185bdcd..da95277783 100644
+--- a/model-optimizer/extensions/ops/unique.py
++++ b/model-optimizer/extensions/ops/unique.py
+@@ -32,7 +32,7 @@ class Unique(Op):
+ 
+     def __init__(self, graph: Graph, attrs: dict):
+         mandatory_props = {
+-            'type': __class__.op,
++            'type': None,
+             'op': __class__.op,
+             'version': 'experimental',
+             'infer': __class__.infer,

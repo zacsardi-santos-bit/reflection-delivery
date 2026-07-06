@@ -1,0 +1,29 @@
+{
+    "id": "b1e1c5a7-e0c8-4517-b510-66dfb634be1b",
+    "started_at": "2026-07-04T15:37:36.245953",
+    "finished_at": "2026-07-04T15:38:53.094368",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__hapifhir-hapi-fhir-6158": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "hapifhir-hapi-fhir-6158__bQSeodB"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

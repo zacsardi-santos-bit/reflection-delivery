@@ -1,0 +1,5 @@
+I'm working with the macOS Homebrew package management module and running into issues when a package name is ambiguous — the same name can refer to both a command-line tool and a desktop application. Several of the module's functions (getting the latest version, uninstalling, fetching installed package info, and listing available upgrades) don't have a way to pass extra flags to the underlying package manager, which means I can't disambiguate which variant I want to operate on.
+
+I need these functions to accept an optional list of additional flags that get forwarded to the package manager in the right position in the command. When such flags are provided, they should appear after the base subcommand flags and before any package name arguments.
+
+Beyond the options passthrough, the version lookup function currently only works for one package type but not the other — it needs to handle both formula-type and cask-type packages, each of which uses a different field to store the version. Also, when a formula has published aliases, installed package listings should include those aliases as separate entries so the package can be found by any of its known names.

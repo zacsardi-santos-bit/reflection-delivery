@@ -1,0 +1,29 @@
+{
+    "id": "6311c404-d3ce-4162-9da4-f7c6170dffbe",
+    "started_at": "2026-07-04T15:39:09.055373",
+    "finished_at": "2026-07-04T15:39:31.966318",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__supabase-supabase-26857": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "supabase-supabase-26857__yfaotE5"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

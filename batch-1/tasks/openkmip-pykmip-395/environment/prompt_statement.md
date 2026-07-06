@@ -1,0 +1,5 @@
+I'm working with the PyKMIP library and I've run into a limitation with the authentication handling. Right now, the authentication structure only supports a single credential, but the KMIP specification allows multiple credentials to be attached to a single authentication block. I need the authentication object to hold a list of credentials instead of just one.
+
+Specifically, I'd like to be able to create an authentication object with no credentials (defaulting to an empty list), or with one or more credentials of different types — such as username/password credentials or device credentials — all in the same authentication object. The object should be able to read and write binary encodings that contain multiple credentials in sequence, matching the standard KMIP test vectors. It should also raise helpful errors when credentials are missing or invalid — for instance, when the value passed isn't a list, or when items in the list aren't valid credential objects.
+
+The object should also support equality comparison between two authentication instances, and should produce sensible string representations for debugging that include all the credentials it holds.

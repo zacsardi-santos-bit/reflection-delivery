@@ -1,0 +1,10 @@
+patching file Cargo.lock
+patching file crates/red_knot_python_semantic/Cargo.toml
+patching file crates/red_knot_python_semantic/src/db.rs
+patching file crates/red_knot_python_semantic/src/lib.rs
+patching file crates/red_knot_python_semantic/src/lint.rs
+patching file crates/red_knot_python_semantic/src/suppression.rs
+patching file crates/red_knot_workspace/src/db.rs
+patching file crates/ruff_graph/src/db.rs
+patching file crates/ruff_python_trivia/src/cursor.rs
+patching file fuzz/fuzz_targets/red_knot_check_invalid_syntax.rs

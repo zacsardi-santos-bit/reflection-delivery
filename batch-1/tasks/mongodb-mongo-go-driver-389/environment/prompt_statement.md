@@ -1,0 +1,5 @@
+I'm working with the MongoDB Go driver and running into issues with TLS CA certificate file handling. When I specify a CA file in my connection URI that contains multiple certificates (for example, a root CA followed by intermediate certificates), only the first certificate seems to get loaded into the trusted pool. This causes TLS validation to fail in environments where the certificate chain needs all intermediate certificates to be trusted.
+
+I also noticed that when someone provides an invalid CA file — whether it's empty, contains no certificate blocks at all (like a file that only has a private key), or has malformed non-PEM content — the error messages are inconsistent and unhelpful. I'd expect all of these cases to produce a single, clear error telling the user that the file doesn't contain any valid certificates.
+
+It would be great if the CA file loading logic was updated to load all PEM certificates from the file (not just the first one), and to return a consistent, descriptive error for all the invalid-file cases.

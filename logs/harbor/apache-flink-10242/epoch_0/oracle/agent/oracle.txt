@@ -1,7 +1,0 @@
-patching file flink-clients/src/main/java/org/apache/flink/client/cli/CliFrontend.java
-patching file flink-clients/src/main/java/org/apache/flink/client/program/JobWithJars.java
-patching file flink-clients/src/main/java/org/apache/flink/client/program/PackagedProgram.java
-patching file flink-runtime-web/src/main/java/org/apache/flink/runtime/webmonitor/WebSubmissionExtension.java
-patching file flink-runtime-web/src/main/java/org/apache/flink/runtime/webmonitor/handlers/JarListHandler.java
-patching file flink-runtime-web/src/main/java/org/apache/flink/runtime/webmonitor/handlers/utils/JarHandlerUtils.java
-patching file flink-streaming-java/src/main/java/org/apache/flink/streaming/api/environment/RemoteStreamEnvironment.java

@@ -1,6 +1,0 @@
-patching file adyen_test.go
-patching file response_test.go
-# github.com/zhutik/adyen-api-go [github.com/zhutik/adyen-api-go.test]
-./response_test.go:282:25: response.adjustAuthorisation undefined (type *Response has no field or method adjustAuthorisation)
-FAIL	github.com/zhutik/adyen-api-go [build failed]
-reward=0 graded=17 found=17 failed=17 parsed=1 framework=go exit_code=1

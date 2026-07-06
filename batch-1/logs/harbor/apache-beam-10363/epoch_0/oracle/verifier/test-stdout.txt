@@ -1,0 +1,71 @@
+patching file sdks/go/pkg/beam/core/runtime/harness/datamgr_test.go
+patching file sdks/go/pkg/beam/core/runtime/harness/statemgr_test.go
+{"Time":"2026-06-29T15:21:25.018416417Z","Action":"start","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness"}
+{"Time":"2026-06-29T15:21:25.055981166Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader"}
+{"Time":"2026-06-29T15:21:25.056068926Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader","Output":"=== RUN   TestDataChannelTerminate_dataReader\n"}
+{"Time":"2026-06-29T15:21:25.056374878Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onClose"}
+{"Time":"2026-06-29T15:21:25.056461545Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onClose","Output":"=== RUN   TestDataChannelTerminate_dataReader/onClose\n"}
+{"Time":"2026-06-29T15:21:25.056506031Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onClose","Output":"--- PASS: TestDataChannelTerminate_dataReader/onClose (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.056552511Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onClose","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.05660896Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onSentinel"}
+{"Time":"2026-06-29T15:21:25.05667063Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onSentinel","Output":"=== RUN   TestDataChannelTerminate_dataReader/onSentinel\n"}
+{"Time":"2026-06-29T15:21:25.056696259Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onSentinel","Output":"--- PASS: TestDataChannelTerminate_dataReader/onSentinel (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.056752839Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onSentinel","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.056770583Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onRecvError"}
+{"Time":"2026-06-29T15:21:25.056783949Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onRecvError","Output":"=== RUN   TestDataChannelTerminate_dataReader/onRecvError\n"}
+{"Time":"2026-06-29T15:21:25.056875646Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onRecvError","Output":"--- PASS: TestDataChannelTerminate_dataReader/onRecvError (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.056921014Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader/onRecvError","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.056975229Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader","Output":"--- PASS: TestDataChannelTerminate_dataReader (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.057002301Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_dataReader","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.057041307Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes"}
+{"Time":"2026-06-29T15:21:25.057066465Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes","Output":"=== RUN   TestDataChannelTerminate_Writes\n"}
+{"Time":"2026-06-29T15:21:25.057088248Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onClose_Flush"}
+{"Time":"2026-06-29T15:21:25.057107154Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onClose_Flush","Output":"=== RUN   TestDataChannelTerminate_Writes/onClose_Flush\n"}
+{"Time":"2026-06-29T15:21:25.084623207Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onClose_Flush","Output":"--- PASS: TestDataChannelTerminate_Writes/onClose_Flush (0.03s)\n"}
+{"Time":"2026-06-29T15:21:25.084705346Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onClose_Flush","Elapsed":0.03}
+{"Time":"2026-06-29T15:21:25.084840272Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onClose_Sentinel"}
+{"Time":"2026-06-29T15:21:25.08486513Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onClose_Sentinel","Output":"=== RUN   TestDataChannelTerminate_Writes/onClose_Sentinel\n"}
+{"Time":"2026-06-29T15:21:25.106822332Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onClose_Sentinel","Output":"--- PASS: TestDataChannelTerminate_Writes/onClose_Sentinel (0.02s)\n"}
+{"Time":"2026-06-29T15:21:25.106869413Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onClose_Sentinel","Elapsed":0.02}
+{"Time":"2026-06-29T15:21:25.106910192Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onWrite"}
+{"Time":"2026-06-29T15:21:25.106927094Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onWrite","Output":"=== RUN   TestDataChannelTerminate_Writes/onWrite\n"}
+{"Time":"2026-06-29T15:21:25.126384771Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onWrite","Output":"--- PASS: TestDataChannelTerminate_Writes/onWrite (0.02s)\n"}
+{"Time":"2026-06-29T15:21:25.126450888Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes/onWrite","Elapsed":0.02}
+{"Time":"2026-06-29T15:21:25.126481358Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes","Output":"--- PASS: TestDataChannelTerminate_Writes (0.07s)\n"}
+{"Time":"2026-06-29T15:21:25.126628843Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestDataChannelTerminate_Writes","Elapsed":0.07}
+{"Time":"2026-06-29T15:21:25.126665595Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestLogger"}
+{"Time":"2026-06-29T15:21:25.126701805Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestLogger","Output":"=== RUN   TestLogger\n"}
+{"Time":"2026-06-29T15:21:25.126764856Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestLogger","Output":"--- PASS: TestLogger (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.126793011Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestLogger","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.126826646Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel"}
+{"Time":"2026-06-29T15:21:25.126846484Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel","Output":"=== RUN   TestStateChannel\n"}
+{"Time":"2026-06-29T15:21:25.126885931Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/HappyPath"}
+{"Time":"2026-06-29T15:21:25.126898886Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/HappyPath","Output":"=== RUN   TestStateChannel/HappyPath\n"}
+{"Time":"2026-06-29T15:21:25.127034453Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/HappyPath","Output":"--- PASS: TestStateChannel/HappyPath (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.127064321Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/HappyPath","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.127094088Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readEOF"}
+{"Time":"2026-06-29T15:21:25.127109609Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readEOF","Output":"=== RUN   TestStateChannel/readEOF\n"}
+{"Time":"2026-06-29T15:21:25.12715695Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readEOF","Output":"--- PASS: TestStateChannel/readEOF (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.127205544Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readEOF","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.127250682Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readOtherErr"}
+{"Time":"2026-06-29T15:21:25.127266722Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readOtherErr","Output":"=== RUN   TestStateChannel/readOtherErr\n"}
+{"Time":"2026-06-29T15:21:25.127324725Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readOtherErr","Output":"--- PASS: TestStateChannel/readOtherErr (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.127350595Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readOtherErr","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.127370944Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readResponseChannelDeleted"}
+{"Time":"2026-06-29T15:21:25.127385973Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readResponseChannelDeleted","Output":"=== RUN   TestStateChannel/readResponseChannelDeleted\n"}
+{"Time":"2026-06-29T15:21:25.128176137Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readResponseChannelDeleted","Output":"--- PASS: TestStateChannel/readResponseChannelDeleted (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.128209561Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/readResponseChannelDeleted","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.128242926Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/writeEOF"}
+{"Time":"2026-06-29T15:21:25.128258596Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/writeEOF","Output":"=== RUN   TestStateChannel/writeEOF\n"}
+{"Time":"2026-06-29T15:21:25.128271531Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/writeEOF","Output":"--- PASS: TestStateChannel/writeEOF (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.128300277Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/writeEOF","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.12834334Z","Action":"run","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/writeOtherError"}
+{"Time":"2026-06-29T15:21:25.128368999Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/writeOtherError","Output":"=== RUN   TestStateChannel/writeOtherError\n"}
+{"Time":"2026-06-29T15:21:25.128390962Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/writeOtherError","Output":"--- PASS: TestStateChannel/writeOtherError (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.128406612Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel/writeOtherError","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.128417924Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel","Output":"--- PASS: TestStateChannel (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.128482579Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Test":"TestStateChannel","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.128495284Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:25.130535872Z","Action":"output","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Output":"ok  \tgithub.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness\t0.112s\n"}
+{"Time":"2026-06-29T15:21:25.130592071Z","Action":"pass","Package":"github.com/apache/beam/sdks/go/pkg/beam/core/runtime/harness","Elapsed":0.112}
+reward=1 graded=16 found=16 failed=0 parsed=16 framework=go exit_code=0

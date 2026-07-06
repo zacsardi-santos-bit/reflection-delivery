@@ -1,0 +1,41 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && yarn install --frozen-lockfile >/dev/null 2>&1 && yarn build >/dev/null 2>&1 && cd /workspace/repo/packages/cli && bash -c \"npx vitest run --reporter=verbose test/unit/cmds/beacon.test.ts\"",
+  "test_files": [
+    "packages/beacon-node/test/e2e/network/mdns.test.ts",
+    "packages/beacon-node/test/e2e/network/network.test.ts",
+    "packages/beacon-node/test/e2e/network/onWorker/dataSerialization.test.ts",
+    "packages/beacon-node/test/e2e/network/peers/peerManager.test.ts",
+    "packages/beacon-node/test/perf/network/noise/sendData.test.ts",
+    "packages/beacon-node/test/perf/network/peers/util/prioritizePeers.test.ts",
+    "packages/beacon-node/test/unit/network/peers/priorization.test.ts",
+    "packages/beacon-node/test/unit/network/reqresp/utils.ts",
+    "packages/beacon-node/test/utils/network.ts",
+    "packages/beacon-node/test/utils/node/beacon.ts",
+    "packages/beacon-node/test/utils/node/p2p.ts",
+    "packages/beacon-node/test/utils/peer.ts",
+    "packages/cli/test/unit/cmds/beacon.test.ts",
+    "packages/reqresp/test/unit/request/index.test.ts",
+    "packages/reqresp/test/unit/response/index.test.ts",
+    "packages/reqresp/test/utils/index.ts",
+    "packages/reqresp/test/utils/peer.ts"
+  ],
+  "num_test_files": 17,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "test/unit/cmds/beacon.test.ts > cmds / beacon / args handler > Merge bootnodes from file and CLI arg",
+    "test/unit/cmds/beacon.test.ts > cmds / beacon / args handler > Over-write ENR fields",
+    "test/unit/cmds/beacon.test.ts > cmds / beacon / args handler > Create different PeerId every run",
+    "test/unit/cmds/beacon.test.ts > cmds / beacon / args handler > Re-use existing peer",
+    "test/unit/cmds/beacon.test.ts > cmds / beacon / args handler > Set known deposit contract",
+    "test/unit/cmds/beacon.test.ts > cmds / beacon / args handler > Apply custom network name from config file",
+    "test/unit/cmds/beacon.test.ts > Test isLocalMultiAddr > should return true for 127.0.0.1",
+    "test/unit/cmds/beacon.test.ts > Test isLocalMultiAddr > should return false for 0.0.0.0",
+    "test/unit/cmds/beacon.test.ts > initPeerIdAndEnr > should not reuse peer id, persistNetworkIdentity=false",
+    "test/unit/cmds/beacon.test.ts > initPeerIdAndEnr > should reuse peer id, persistNetworkIdentity=true",
+    "test/unit/cmds/beacon.test.ts > initPeerIdAndEnr > should overwrite invalid peer id",
+    "test/unit/cmds/beacon.test.ts > initPeerIdAndEnr > should overwrite invalid enr",
+    "test/unit/cmds/beacon.test.ts > initPeerIdAndEnr > should overwrite enr that doesn't match peer id"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "dddd82aa-7565-4969-9b0c-6cc6c5872286",
+    "started_at": "2026-07-06T12:18:28.888354",
+    "finished_at": "2026-07-06T12:19:32.029021",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__prowler-cloud-prowler-4255": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "prowler-cloud-prowler-4255__SY6eetr"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

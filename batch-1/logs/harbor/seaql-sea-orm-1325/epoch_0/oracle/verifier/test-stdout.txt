@@ -1,0 +1,378 @@
+patching file tests/collection_tests.rs
+patching file tests/common/features/collection.rs
+patching file tests/common/features/mod.rs
+patching file tests/common/features/schema.rs
+patching file tests/common/features/uuid_fmt.rs
+patching file tests/uuid_fmt_tests.rs
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.46
+   Compiling libc v0.2.186
+   Compiling cfg-if v1.0.4
+   Compiling autocfg v1.5.1
+   Compiling pin-project-lite v0.2.17
+   Compiling futures-core v0.3.32
+   Compiling futures-io v0.3.32
+   Compiling crossbeam-utils v0.8.21
+   Compiling parking v2.2.1
+   Compiling memchr v2.8.2
+   Compiling slab v0.4.12
+   Compiling value-bag v1.12.0
+   Compiling bitflags v2.13.0
+   Compiling version_check v0.9.5
+   Compiling smallvec v1.15.2
+   Compiling fastrand v2.4.1
+   Compiling stable_deref_trait v1.2.1
+   Compiling find-msvc-tools v0.1.9
+   Compiling shlex v2.0.1
+   Compiling pkg-config v0.3.33
+   Compiling syn v1.0.109
+   Compiling vcpkg v0.2.15
+   Compiling once_cell v1.21.4
+   Compiling rustix v1.1.4
+   Compiling futures-lite v2.6.1
+   Compiling cc v1.2.65
+   Compiling linux-raw-sys v0.12.1
+   Compiling log v0.4.33
+   Compiling scopeguard v1.2.0
+   Compiling async-task v4.7.1
+   Compiling event-listener v2.5.3
+   Compiling litemap v0.8.2
+   Compiling lock_api v0.4.14
+   Compiling async-io v2.6.0
+   Compiling num-traits v0.2.19
+   Compiling writeable v0.6.3
+   Compiling atomic-waker v1.1.2
+   Compiling icu_normalizer_data v2.2.0
+   Compiling icu_properties_data v2.2.0
+   Compiling piper v0.2.5
+   Compiling utf8_iter v1.0.4
+   Compiling futures-task v0.3.32
+   Compiling openssl v0.10.81
+   Compiling serde_core v1.0.228
+   Compiling foreign-types-shared v0.1.1
+   Compiling thiserror v1.0.69
+   Compiling native-tls v0.2.18
+   Compiling foreign-types v0.3.2
+   Compiling serde v1.0.228
+   Compiling unicode-segmentation v1.13.3
+   Compiling parking_lot_core v0.9.12
+   Compiling concurrent-queue v2.5.0
+   Compiling openssl-probe v0.2.1
+   Compiling percent-encoding v2.3.2
+   Compiling bytes v1.12.0
+   Compiling event-listener v5.4.1
+   Compiling async-executor v1.14.0
+   Compiling form_urlencoded v1.2.2
+   Compiling async-channel v1.9.0
+   Compiling futures-sink v0.3.32
+   Compiling zerocopy v0.8.52
+   Compiling zmij v1.0.21
+   Compiling ahash v0.8.12
+   Compiling event-listener-strategy v0.5.4
+   Compiling syn v2.0.118
+   Compiling bitflags v1.3.2
+   Compiling time-core v0.1.9
+   Compiling rust_decimal v1.42.1
+   Compiling async-channel v2.5.0
+   Compiling async-lock v3.4.2
+   Compiling pin-utils v0.1.0
+   Compiling num-conv v0.2.2
+   Compiling serde_json v1.0.150
+   Compiling openssl-sys v0.9.117
+   Compiling blocking v1.6.2
+   Compiling parking_lot_core v0.8.6
+   Compiling errno v0.3.14
+   Compiling time-macros v0.2.30
+   Compiling signal-hook-registry v1.4.8
+   Compiling parking_lot v0.12.5
+   Compiling num-integer v0.1.46
+   Compiling mio v1.2.1
+   Compiling socket2 v0.6.4
+   Compiling futures-channel v0.3.32
+   Compiling instant v0.1.13
+   Compiling arrayvec v0.7.7
+   Compiling itoa v1.0.18
+   Compiling iana-time-zone v0.1.65
+   Compiling powerfmt v0.2.0
+   Compiling tinyvec_macros v0.1.1
+   Compiling num-bigint v0.4.6
+   Compiling libsqlite3-sys v0.24.2
+   Compiling tinyvec v1.11.0
+   Compiling spin v0.9.8
+   Compiling indexmap v1.9.3
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling ahash v0.7.8
+   Compiling allocator-api2 v0.2.21
+   Compiling minimal-lexical v0.2.1
+   Compiling io-lifetimes v1.0.11
+   Compiling paste v1.0.15
+   Compiling getrandom v0.4.3
+   Compiling nom v7.1.3
+   Compiling unicode-normalization v0.1.25
+   Compiling parking_lot v0.11.2
+   Compiling getrandom v0.2.17
+   Compiling kv-log-macro v1.0.7
+   Compiling polling v2.8.0
+   Compiling proc-macro-error v1.0.4
+   Compiling unicode_categories v0.1.1
+   Compiling waker-fn v1.2.0
+   Compiling hashbrown v0.12.3
+   Compiling fastrand v1.9.0
+   Compiling bigdecimal v0.3.1
+   Compiling unicode-bidi v0.3.18
+   Compiling rustix v0.37.28
+   Compiling unicode-properties v0.1.4
+   Compiling futures-lite v1.13.0
+   Compiling deranged v0.5.8
+   Compiling stringprep v0.1.5
+   Compiling futures-intrusive v0.4.2
+   Compiling atoi v1.0.0
+   Compiling heck v0.4.1
+   Compiling crossbeam-queue v0.3.12
+   Compiling async-lock v2.8.0
+   Compiling async-io v1.13.0
+   Compiling hex v0.4.3
+   Compiling dotenvy v0.15.7
+   Compiling sqlformat v0.2.6
+   Compiling byteorder v1.5.0
+   Compiling linux-raw-sys v0.3.8
+   Compiling either v1.16.0
+   Compiling uuid v1.23.4
+   Compiling chrono v0.4.45
+   Compiling socket2 v0.4.10
+   Compiling heck v0.3.3
+   Compiling synstructure v0.13.2
+   Compiling time v0.3.51
+   Compiling rustversion v1.0.22
+   Compiling tracing-core v0.1.36
+   Compiling rustix v0.38.44
+   Compiling async-fs v1.6.0
+   Compiling regex-syntax v0.8.11
+   Compiling polling v3.11.0
+   Compiling async-attributes v1.1.2
+   Compiling Inflector v0.11.4
+   Compiling hashbrown v0.14.5
+   Compiling linux-raw-sys v0.4.15
+   Compiling ouroboros_macro v0.15.6
+   Compiling bae v0.1.7
+   Compiling event-listener v3.1.0
+   Compiling async-signal v0.2.14
+   Compiling async-global-executor v2.4.1
+   Compiling async-process v2.5.0
+   Compiling regex-automata v0.4.14
+   Compiling zerofrom-derive v0.1.7
+   Compiling yoke-derive v0.8.2
+   Compiling zerovec-derive v0.11.3
+   Compiling displaydoc v0.2.6
+   Compiling futures-macro v0.3.32
+   Compiling openssl-macros v0.1.1
+   Compiling thiserror-impl v1.0.69
+   Compiling serde_derive v1.0.228
+   Compiling tokio-macros v2.7.0
+   Compiling pin-project-internal v1.1.13
+   Compiling hashlink v0.8.4
+   Compiling async-std v1.13.2
+   Compiling tracing-attributes v0.1.31
+   Compiling sea-strum_macros v0.23.0
+   Compiling async-stream-impl v0.3.6
+   Compiling aliasable v0.1.3
+   Compiling futures-util v0.3.32
+   Compiling lazy_static v1.5.0
+   Compiling sharded-slab v0.1.7
+   Compiling tokio v1.52.3
+   Compiling ouroboros v0.15.6
+   Compiling matchers v0.2.0
+   Compiling sea-orm-macros v0.10.3 (/workspace/repo/sea-orm-macros)
+   Compiling async-stream v0.3.6
+   Compiling async-net v1.8.0
+   Compiling zerofrom v0.1.8
+   Compiling actix-macros v0.2.4
+   Compiling async-trait v0.1.89
+   Compiling yoke v0.8.3
+   Compiling sea-query-derive v0.3.0
+   Compiling zerovec v0.11.6
+   Compiling zerotrie v0.2.4
+warning: field `table_iden` is never read
+  --> sea-orm-macros/src/attributes.rs:14:13
+   |
+6  |     pub struct SeaOrm {
+   |                ------ field in this struct
+...
+14 |         pub table_iden: Option<()>,
+   |             ^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+   Compiling pin-project v1.1.13
+   Compiling async-process v1.8.1
+   Compiling flume v0.10.14
+   Compiling tinystr v0.8.3
+   Compiling potential_utf v0.1.5
+   Compiling smol-potat-macro v0.6.0
+   Compiling tracing v0.1.44
+   Compiling icu_locale_core v2.2.0
+   Compiling icu_collections v2.2.0
+   Compiling sea-strum v0.23.0
+   Compiling tracing-log v0.2.0
+   Compiling thread_local v1.1.9
+   Compiling nu-ansi-term v0.50.3
+   Compiling ansi_term v0.12.1
+   Compiling diff v0.1.13
+   Compiling smol v1.3.0
+   Compiling tracing-subscriber v0.3.23
+   Compiling pretty_assertions v0.7.2
+   Compiling rust_decimal_macros v1.40.0
+   Compiling maplit v1.0.2
+   Compiling futures-executor v0.3.32
+   Compiling futures v0.3.32
+   Compiling icu_provider v2.2.0
+   Compiling icu_properties v2.2.0
+   Compiling icu_normalizer v2.2.0
+   Compiling idna_adapter v1.2.2
+   Compiling smol-potat v1.1.2
+   Compiling idna v1.1.0
+   Compiling url v2.5.8
+   Compiling actix-rt v2.11.0
+warning: `sea-orm-macros` (lib) generated 1 warning
+   Compiling async-native-tls v0.4.0
+   Compiling sqlx-rt v0.6.3
+   Compiling sqlx-core v0.6.3
+   Compiling sea-query v0.28.5
+   Compiling sqlx-macros v0.6.3
+   Compiling sqlx v0.6.3
+   Compiling sea-query-binder v0.3.1
+   Compiling sea-orm v0.10.3 (/workspace/repo)
+warning: elided lifetime has a name
+  --> src/executor/delete.rs:25:92
+   |
+20 | impl<'a, A: 'a> DeleteOne<A>
+   |      -- lifetime `'a` declared here
+...
+25 |     pub fn exec<C>(self, db: &'a C) -> impl Future<Output = Result<DeleteResult, DbErr>> + '_
+   |                                                                                            ^^ this elided lifetime gets resolved as `'a`
+   |
+   = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: elided lifetime has a name
+  --> src/executor/delete.rs:39:92
+   |
+34 | impl<'a, E> DeleteMany<E>
+   |      -- lifetime `'a` declared here
+...
+39 |     pub fn exec<C>(self, db: &'a C) -> impl Future<Output = Result<DeleteResult, DbErr>> + '_
+   |                                                                                            ^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+  --> src/executor/insert.rs:35:99
+   |
+35 |     pub fn exec<'a, C>(self, db: &'a C) -> impl Future<Output = Result<InsertResult<A>, DbErr>> + '_
+   |                 -- lifetime `'a` declared here                                                    ^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+  --> src/executor/insert.rs:56:53
+   |
+53 |     pub fn exec_without_returning<'a, C>(
+   |                                   -- lifetime `'a` declared here
+...
+56 |     ) -> impl Future<Output = Result<u64, DbErr>> + '_
+   |                                                     ^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+  --> src/executor/insert.rs:69:83
+   |
+66 |     pub fn exec_with_returning<'a, C>(
+   |                                -- lifetime `'a` declared here
+...
+69 |     ) -> impl Future<Output = Result<<A::Entity as EntityTrait>::Model, DbErr>> + '_
+   |                                                                                   ^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+  --> src/executor/insert.rs:93:99
+   |
+93 |     pub fn exec<'a, C>(self, db: &'a C) -> impl Future<Output = Result<InsertResult<A>, DbErr>> + '_
+   |                 -- lifetime `'a` declared here                                                    ^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> src/executor/insert.rs:106:53
+    |
+103 |     pub fn exec_without_returning<'a, C>(
+    |                                   -- lifetime `'a` declared here
+...
+106 |     ) -> impl Future<Output = Result<u64, DbErr>> + '_
+    |                                                     ^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+   --> src/executor/insert.rs:118:83
+    |
+115 |     pub fn exec_with_returning<'a, C>(
+    |                                -- lifetime `'a` declared here
+...
+118 |     ) -> impl Future<Output = Result<<A::Entity as EntityTrait>::Model, DbErr>> + '_
+    |                                                                                   ^^ this elided lifetime gets resolved as `'a`
+
+warning: elided lifetime has a name
+  --> src/executor/update.rs:42:92
+   |
+37 | impl<'a, E> UpdateMany<E>
+   |      -- lifetime `'a` declared here
+...
+42 |     pub fn exec<C>(self, db: &'a C) -> impl Future<Output = Result<UpdateResult, DbErr>> + '_
+   |                                                                                            ^^ this elided lifetime gets resolved as `'a`
+
+warning: unused import: `sea_query::JoinType`
+ --> src/query/combine.rs:6:9
+  |
+6 | pub use sea_query::JoinType;
+  |         ^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `sea_query::JoinType`
+ --> src/query/select.rs:7:9
+  |
+7 | pub use sea_query::JoinType;
+  |         ^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `join::*`
+  --> src/query/mod.rs:18:9
+   |
+18 | pub use join::*;
+   |         ^^^^^^^
+
+warning: unexpected `cfg` condition value: `with-decimal`
+  --> src/tests_cfg/cake_filling_price.rs:21:11
+   |
+21 |     #[cfg(feature = "with-decimal")]
+   |           ^^^^^^^^^^--------------
+   |                     |
+   |                     help: there is a expected value with a similar name: `"with-bigdecimal"`
+   |
+   = note: expected values for `feature` are: `bigdecimal`, `chrono`, `debug-print`, `default`, `macros`, `mock`, `postgres-array`, `runtime-actix`, `runtime-actix-native-tls`, `runtime-actix-rustls`, `runtime-async-std`, `runtime-async-std-native-tls`, `runtime-async-std-rustls`, `runtime-tokio`, `runtime-tokio-native-tls`, `runtime-tokio-rustls`, `rust_decimal`, `sea-orm-internal`, `sea-orm-macros`, `sea-query-binder`, `serde_json`, `sqlx`, `sqlx-all`, `sqlx-dep`, `sqlx-mysql`, `sqlx-postgres`, `sqlx-sqlite`, `tests-cfg`, `time`, `uuid`, `with-bigdecimal`, `with-chrono`, `with-json`, `with-rust_decimal`, and `with-time` and 1 more
+   = help: consider adding `with-decimal` as a feature in `Cargo.toml`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
+
+warning: `sea-orm` (lib) generated 13 warnings (run `cargo fix --lib -p sea-orm` to apply 3 suggestions)
+warning: ambiguous glob re-exports
+ --> tests/common/features/schema.rs:1:9
+  |
+1 | pub use super::super::bakery_chain::*;
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the name `schema` in the type namespace is first re-exported here
+2 |
+3 | use super::*;
+  |     -------- but the name `schema` in the type namespace is also re-exported here
+  |
+  = note: `#[warn(ambiguous_glob_reexports)]` on by default
+
+warning: `sea-orm` (test "uuid_fmt_tests") generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.84s
+────────────
+ Nextest run ID cadc98a4-98c2-4afb-aadc-d395e78f23f3 with nextest profile: default
+    Starting 3 tests across 1 binary
+        PASS [   0.019s] (1/3) sea-orm::uuid_fmt_tests common::features::self_join::tests::find_linked_001
+        PASS [   0.020s] (2/3) sea-orm::uuid_fmt_tests common::features::self_join::tests::find_also_linked_001
+        PASS [   0.060s] (3/3) sea-orm::uuid_fmt_tests main
+────────────
+     Summary [   0.061s] 3 tests run: 3 passed, 0 skipped
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=cargo exit_code=0

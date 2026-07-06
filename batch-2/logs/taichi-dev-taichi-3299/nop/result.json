@@ -1,0 +1,29 @@
+{
+    "id": "5af6ba73-ce61-41ee-ad11-b8f3729e29f2",
+    "started_at": "2026-07-04T15:36:55.411208",
+    "finished_at": "2026-07-04T15:43:36.119392",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__taichi-dev-taichi-3299": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "taichi-dev-taichi-3299__hGqmmPA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

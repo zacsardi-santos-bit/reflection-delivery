@@ -1,7 +1,0 @@
-I'm working on adding per-labelset series limits to the Cortex ingester. Right now I can limit series per user or per metric name, but I need a way to cap the number of active series that share a specific combination of label values. For example, I want to be able to say "no more than 100 series with environment=prod" for a given tenant.
-
-The feature should allow configuring multiple such limits, each with a labelset (one or more label name-value pairs) and a numeric cap. When a push would exceed a limit, it should be rejected with a 400 error that identifies which labelset constraint was violated. Composite limits (where multiple labels must all match) should work too — pushing a series that matches both a single-label limit and a multi-label composite limit should be checked against both independently.
-
-The ingester should also expose a new metric that tracks the current number of active series per user and per configured labelset, so operators can observe utilization. This metric should update dynamically when configuration changes: when a labelset limit is removed, the corresponding metric should disappear; when a new limit is added to a running ingester, the count should be bootstrapped from existing persisted data so that existing series are correctly counted against the new limit. The per-labelset counts and the underlying series data should survive an ingester restart.
-
-The limits should be configurable per-tenant, so that updating limits for one tenant takes effect for subsequent pushes without restarting the ingester.

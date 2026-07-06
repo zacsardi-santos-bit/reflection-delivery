@@ -1,5 +1,0 @@
-patching file rosbag2_transport/test/rosbag2_transport/mock_player.hpp
-patching file rosbag2_transport/test/rosbag2_transport/test_play_services.cpp
-patching file rosbag2_transport/test/rosbag2_transport/test_player_stop.cpp
-not found: "/ros_ws/install/rosbag2_transport/share/rosbag2_transport/local_setup.sh"
-reward=0 graded=8 found=0 failed=0 parsed=0 framework=gtest exit_code=1

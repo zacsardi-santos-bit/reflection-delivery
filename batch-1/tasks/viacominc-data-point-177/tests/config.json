@@ -1,0 +1,37 @@
+{
+  "test_framework": "jest",
+  "test_command": "rm -f /workspace/repo/packages/data-point/lib/entity-types/validate-modifiers/__snapshots__/validate-modifiers.test.js.snap && cd /workspace/repo/packages/data-point && npx jest lib/entity-types/entity-hash/factory.test.js lib/entity-types/validate-modifiers/validate-modifiers.test.js lib/helpers/helpers.test.js --coverage=false --verbose --json",
+  "test_files": [
+    "packages/data-point/lib/entity-types/entity-hash/factory.test.js",
+    "packages/data-point/lib/entity-types/validate-modifiers/validate-modifiers.test.js",
+    "packages/data-point/lib/helpers/helpers.test.js"
+  ],
+  "num_test_files": 3,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse composed modifiers throw error if compose non array",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse composed modifiers throw error if compose and loose modifiers are mixed",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse composed modifiers throw error if modifier is invalid",
+    "/workspace/repo/packages/data-point/lib/entity-types/validate-modifiers/validate-modifiers.test.js::validateProperties It should throw error if keys dont match",
+    "/workspace/repo/packages/data-point/lib/entity-types/validate-modifiers/validate-modifiers.test.js::validateProperties It should do nothing if using all valid keys",
+    "/workspace/repo/packages/data-point/lib/entity-types/validate-modifiers/validate-modifiers.test.js::validateModifiers It should include base modifiers"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::Helpers API",
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::helpers.reducify pass simple",
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::helpers.reducify pass error",
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::helpers.reducifyAll reducify all keys",
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::helpers.reducifyAll reducify specific keys",
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::helpers.mockReducer test reducerTest",
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::helpers.createAccumulator It should assign value",
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::helpers.createAccumulator It should accept options to merge with value",
+    "/workspace/repo/packages/data-point/lib/helpers/helpers.test.js::helpers.createReducerResolver It should partially apply dataPoint to method",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#create default",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse loose modifiers factory#mapKeys",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse loose modifiers factory#addKeys",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse loose modifiers factory#omitKeys",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse loose modifiers factory#pickKeys",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse composed modifiers factory#one modifier",
+    "/workspace/repo/packages/data-point/lib/entity-types/entity-hash/factory.test.js::factory#parse composed modifiers factory#multiple modifiers"
+  ]
+}

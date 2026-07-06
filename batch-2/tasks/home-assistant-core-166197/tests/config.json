@@ -1,0 +1,30 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/components/proxmoxve/test_config_flow.py tests/components/proxmoxve/test_init.py -v",
+  "test_files": [
+    "tests/components/proxmoxve/conftest.py",
+    "tests/components/proxmoxve/snapshots/test_diagnostics.ambr",
+    "tests/components/proxmoxve/test_config_flow.py",
+    "tests/components/proxmoxve/test_init.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.proxmoxve.test_config_flow::test_import_flow",
+    "tests.components.proxmoxve.test_config_flow::test_import_flow_exceptions[exception0-invalid_auth]",
+    "tests.components.proxmoxve.test_config_flow::test_import_flow_exceptions[exception1-ssl_error]",
+    "tests.components.proxmoxve.test_config_flow::test_import_flow_exceptions[exception2-connect_timeout]",
+    "tests.components.proxmoxve.test_config_flow::test_import_flow_exceptions[exception3-no_nodes_found]",
+    "tests.components.proxmoxve.test_config_flow::test_import_flow_exceptions[exception4-cannot_connect]",
+    "tests.components.proxmoxve.test_init::test_setup_exceptions[ssl_error]",
+    "tests.components.proxmoxve.test_init::test_setup_exceptions[connect_timeout]",
+    "tests.components.proxmoxve.test_init::test_setup_exceptions[resource_exception_permissions_500]",
+    "tests.components.proxmoxve.test_init::test_setup_exceptions[resource_exception_nodes_403]",
+    "tests.components.proxmoxve.test_init::test_setup_exceptions[resource_exception_nodes_500]",
+    "tests.components.proxmoxve.test_init::test_setup_exceptions[connection_error]",
+    "tests.components.proxmoxve.test_init::test_setup_exceptions[nodes_not_found]",
+    "tests.components.proxmoxve.test_init::test_migration_v1_to_v3",
+    "tests.components.proxmoxve.test_init::test_migration_v2_to_v3"
+  ],
+  "PASS_TO_PASS": []
+}

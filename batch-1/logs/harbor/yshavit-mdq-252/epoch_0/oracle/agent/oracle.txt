@@ -1,0 +1,9 @@
+patching file Cargo.lock
+patching file Cargo.toml
+patching file src/cli.rs
+patching file src/fmt_plain.rs
+patching file src/fmt_plain_writer.rs
+patching file src/lib.rs
+patching file src/tree.rs
+patching file src/tree_ref.rs
+patching file src/tree_test_utils.rs

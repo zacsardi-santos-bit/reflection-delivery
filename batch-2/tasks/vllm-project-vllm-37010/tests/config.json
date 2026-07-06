@@ -1,0 +1,38 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/kernels/moe/test_moe_weight_loading_padded.py -v --noconftest",
+  "test_files": [
+    "tests/kernels/moe/test_moe_weight_loading_padded.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_2d_non_transposed_w2",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_2d_non_transposed_w13",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_2d_transposed_w2",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_2d_transposed_w13",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_3d_non_transposed_w2",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_3d_non_transposed_w13",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_3d_transposed_w2",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_3d_transposed_w13",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_1d_returns_zero",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestGetHiddenDim::test_invalid_shard_dim_raises",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_no_narrowing_when_shapes_match",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_narrow_w2_hidden_dim",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_narrow_w13_hidden_dim",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_narrow_transposed_w2",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_narrow_3d_full_load",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_narrow_1d_scale",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_scalar_weight_no_op",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_no_narrowing_when_loaded_weight_larger",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_negative_hidden_dim_is_noop",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_only_narrows_hidden_dim",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestNarrowExpertDataForPadding::test_narrowed_data_shares_storage",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestWeightLoadingWithPaddedHiddenSize::test_load_w2_with_padding",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestWeightLoadingWithPaddedHiddenSize::test_load_w13_with_padding",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestWeightLoadingWithPaddedHiddenSize::test_load_transposed_w2_with_padding",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestWeightLoadingWithPaddedHiddenSize::test_no_padding_is_noop",
+    "tests.kernels.moe.test_moe_weight_loading_padded.TestWeightLoadingWithPaddedHiddenSize::test_bnb_shape_mismatch_raises"
+  ],
+  "PASS_TO_PASS": []
+}

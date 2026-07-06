@@ -1,0 +1,28 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run -p codex-memories-mcp",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/18) codex-memories-mcp local::tests::read_rejects_invalid_line_requests",
+    "( 2/18) codex-memories-mcp local::tests::search_supports_directory_and_file_scopes",
+    "( 3/18) codex-memories-mcp local::tests::list_returns_shallow_memory_paths",
+    "( 4/18) codex-memories-mcp local::tests::list_preserves_lexicographic_order_for_siblings",
+    "( 5/18) codex-memories-mcp local::tests::read_rejects_symlinked_files",
+    "( 6/18) codex-memories-mcp local::tests::search_supports_pagination",
+    "( 7/18) codex-memories-mcp local::tests::search_supports_context_and_case",
+    "( 8/18) codex-memories-mcp local::tests::scoped_paths_reject_parent_segments",
+    "( 9/18) codex-memories-mcp local::tests::list_rejects_cursor_past_end",
+    "(10/18) codex-memories-mcp local::tests::list_rejects_invalid_cursor",
+    "(11/18) codex-memories-mcp local::tests::read_supports_line_offset",
+    "(12/18) codex-memories-mcp local::tests::search_supports_context_lines",
+    "(13/18) codex-memories-mcp local::tests::list_scoped_directory_is_shallow",
+    "(14/18) codex-memories-mcp local::tests::read_supports_max_lines",
+    "(15/18) codex-memories-mcp local::tests::search_supports_case_insensitive_matching",
+    "(16/18) codex-memories-mcp local::tests::search_rejects_invalid_cursor",
+    "(17/18) codex-memories-mcp local::tests::list_supports_pagination",
+    "(18/18) codex-memories-mcp local::tests::read_rejects_directory_and_returns_file_content"
+  ],
+  "PASS_TO_PASS": []
+}

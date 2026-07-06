@@ -1,3 +1,0 @@
-patching file pkg/api/customization/logging/validator.go
-patching file pkg/controllers/user/logging/utils/kafka.go
-patching file pkg/controllers/user/logging/utils/testwrap.go

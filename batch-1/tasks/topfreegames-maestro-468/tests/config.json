@@ -1,0 +1,21 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -tags unit ./internal/core/workers/runtime_watcher_worker -count=1",
+  "test_files": [
+    "internal/core/workers/runtime_watcher_worker/runtime_watcher_worker_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start/when_added_happens,_updates_instance",
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start/when_added_happens,_and_update_instance_fails,_does_nothing",
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start/when_updated_happens,_updates_instance",
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start/when_updated_happens,_and_update_instance_fails,_does_nothing",
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start/fails_to_start_watcher",
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start/clean_room_state_on_delete_event",
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start/when_clean_room_state_fails,_does_nothing",
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start/when_resultChan_is_closed,_worker_stops_without_error",
+    "github.com/topfreegames/maestro/internal/core/workers/runtime_watcher_worker::TestRuntimeWatcher_Start"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,9 +1,0 @@
-patching file .version
-patching file docs/docs/03-syntax-and-usage/11-css-style-management.md
-patching file generator/generator.go
-patching file generator/test-style-attribute/expected.html
-patching file generator/test-style-attribute/template.templ
-patching file generator/test-style-attribute/template_templ.go
-patching file parser/v2/types.go
-patching file runtime/styleattribute.go
-patching file safehtml/style.go

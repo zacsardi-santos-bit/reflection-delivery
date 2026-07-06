@@ -1,0 +1,46 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/pytests/unit/modules/test_mac_brew_pkg.py -v",
+  "test_files": [
+    "tests/pytests/unit/modules/test_mac_brew_pkg.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_latest_version_multiple_names",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_latest_version_with_options",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_remove_with_options",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_info_installed_extra_options",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_list_upgrades_with_options"
+  ],
+  "PASS_TO_PASS": [
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_list_taps",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_tap_installed",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_tap_failure",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_tap",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_homebrew_prefix_env",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_homebrew_prefix_command",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_homebrew_prefix_returns_none",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_homebrew_prefix_returns_none_even_with_execution_errors",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_homebrew_os_bin_fallback_apple_silicon",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_homebrew_bin",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_list_pkgs_removed",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_list_pkgs_versions_true",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_list_pkgs_homebrew_cask_pakages",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_list_pkgs_no_context",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_version",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_latest_version",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_remove",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_refresh_db_failure",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_refresh_db",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_install",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_hold",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_hold_not_installed",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_hold_pinned",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_unhold",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_unhold_not_installed",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_unhold_not_pinned",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_info_installed",
+    "tests.pytests.unit.modules.test_mac_brew_pkg::test_list_upgrades"
+  ]
+}

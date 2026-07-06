@@ -1,0 +1,78 @@
+patching file chia/_tests/cmds/test_cmd_framework.py
+patching file chia/_tests/cmds/wallet/test_coins.py
+patching file chia/_tests/cmds/wallet/test_tx_decorators.py
+patching file chia/_tests/cmds/wallet/test_wallet.py
+patching file chia/_tests/environments/wallet.py
+patching file chia/_tests/wallet/rpc/test_wallet_rpc.py
+patching file chia/_tests/wallet/test_coin_management.py
+patching file chia/_tests/wallet/test_signer_protocol.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.3, pluggy-1.5.0 -- /workspace/repo/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: anyio-4.7.0, xdist-3.6.1, cov-6.0.0, mock-3.14.0, monitor-1.6.6
+collecting ... collected 95 items / 36 deselected / 59 selected
+
+chia/_tests/cmds/test_cmd_framework.py::test_cmd_bases PASSED           [ 1/59]
+chia/_tests/cmds/test_cmd_framework.py::test_option_loading PASSED      [ 2/59]
+chia/_tests/cmds/test_cmd_framework.py::test_context_requirement PASSED [ 3/59]
+chia/_tests/cmds/test_cmd_framework.py::test_typing PASSED              [ 4/59]
+chia/_tests/cmds/test_cmd_framework.py::test_tx_config_helper PASSED    [ 5/59]
+chia/_tests/cmds/test_cmd_framework.py::test_transaction_endpoint_mixin PASSED [ 6/59]
+chia/_tests/cmds/test_cmd_framework.py::test_old_decorator_support PASSED [ 7/59]
+chia/_tests/cmds/wallet/test_tx_decorators.py::test_tx_out_cmd PASSED   [ 8/59]
+chia/_tests/cmds/wallet/test_wallet.py::test_send PASSED                [ 9/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins0-number_of_coins0-target_amount0-id0] PASSED [10/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins0-number_of_coins0-target_amount0-id1] PASSED [11/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins0-number_of_coins0-target_amount1-id0] PASSED [12/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins0-number_of_coins0-target_amount1-id1] PASSED [13/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins0-number_of_coins1-target_amount0-id0] PASSED [14/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins0-number_of_coins1-target_amount0-id1] PASSED [15/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins0-number_of_coins1-target_amount1-id0] PASSED [16/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins0-number_of_coins1-target_amount1-id1] PASSED [17/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins1-number_of_coins0-target_amount0-id0] PASSED [18/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins1-number_of_coins0-target_amount0-id1] PASSED [19/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins1-number_of_coins0-target_amount1-id0] PASSED [20/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins1-number_of_coins0-target_amount1-id1] PASSED [21/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins1-number_of_coins1-target_amount0-id0] PASSED [22/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins1-number_of_coins1-target_amount0-id1] PASSED [23/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins1-number_of_coins1-target_amount1-id0] PASSED [24/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins1-number_of_coins1-target_amount1-id1] PASSED [25/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins2-number_of_coins0-target_amount0-id0] PASSED [26/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins2-number_of_coins0-target_amount0-id1] PASSED [27/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins2-number_of_coins0-target_amount1-id0] PASSED [28/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins2-number_of_coins0-target_amount1-id1] PASSED [29/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins2-number_of_coins1-target_amount0-id0] PASSED [30/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins2-number_of_coins1-target_amount0-id1] PASSED [31/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins2-number_of_coins1-target_amount1-id0] PASSED [32/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first0-input_coins2-number_of_coins1-target_amount1-id1] PASSED [33/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins0-number_of_coins0-target_amount0-id0] PASSED [34/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins0-number_of_coins0-target_amount0-id1] PASSED [35/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins0-number_of_coins0-target_amount1-id0] PASSED [36/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins0-number_of_coins0-target_amount1-id1] PASSED [37/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins0-number_of_coins1-target_amount0-id0] PASSED [38/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins0-number_of_coins1-target_amount0-id1] PASSED [39/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins0-number_of_coins1-target_amount1-id0] PASSED [40/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins0-number_of_coins1-target_amount1-id1] PASSED [41/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins1-number_of_coins0-target_amount0-id0] PASSED [42/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins1-number_of_coins0-target_amount0-id1] PASSED [43/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins1-number_of_coins0-target_amount1-id0] PASSED [44/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins1-number_of_coins0-target_amount1-id1] PASSED [45/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins1-number_of_coins1-target_amount0-id0] PASSED [46/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins1-number_of_coins1-target_amount0-id1] PASSED [47/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins1-number_of_coins1-target_amount1-id0] PASSED [48/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins1-number_of_coins1-target_amount1-id1] PASSED [49/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins2-number_of_coins0-target_amount0-id0] PASSED [50/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins2-number_of_coins0-target_amount0-id1] PASSED [51/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins2-number_of_coins0-target_amount1-id0] PASSED [52/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins2-number_of_coins0-target_amount1-id1] PASSED [53/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins2-number_of_coins1-target_amount0-id0] PASSED [54/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins2-number_of_coins1-target_amount0-id1] PASSED [55/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins2-number_of_coins1-target_amount1-id0] PASSED [56/59]
+chia/_tests/wallet/test_coin_management.py::test_combine_parsing[largest_first1-input_coins2-number_of_coins1-target_amount1-id1] PASSED [57/59]
+chia/_tests/wallet/test_coin_management.py::test_split_parsing[target_coin_id0-amount_per_coin0-number_of_coins0-id0] PASSED [58/59]
+chia/_tests/wallet/test_coin_management.py::test_split_parsing[target_coin_id0-amount_per_coin0-number_of_coins0-id1] PASSED [59/59]
+
+====================== 59 passed, 36 deselected in 16.50s ======================
+reward=1 graded=59 found=0 failed=0 parsed=9 framework=pytest exit_code=0

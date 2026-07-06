@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py -v --vcr-record=none",
+  "test_files": [
+    "instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_function_call_choice.yaml",
+    "instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_function_call_choice_no_content.yaml",
+    "instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_tool_events.yaml",
+    "instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/cassettes/test_tool_events_no_content.yaml",
+    "instrumentation-genai/opentelemetry-instrumentation-vertexai/tests/test_function_calling.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "instrumentation-genai.opentelemetry-instrumentation-vertexai.tests.test_function_calling::test_function_call_choice",
+    "instrumentation-genai.opentelemetry-instrumentation-vertexai.tests.test_function_calling::test_function_call_choice_no_content",
+    "instrumentation-genai.opentelemetry-instrumentation-vertexai.tests.test_function_calling::test_tool_events",
+    "instrumentation-genai.opentelemetry-instrumentation-vertexai.tests.test_function_calling::test_tool_events_no_content"
+  ],
+  "PASS_TO_PASS": []
+}

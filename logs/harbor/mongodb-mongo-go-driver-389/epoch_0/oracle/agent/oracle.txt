@@ -1,7 +1,0 @@
-patching file mongo/options/clientoptions.go
-patching file mongo/options/testdata/ca-with-intermediates-first.pem
-patching file mongo/options/testdata/ca-with-intermediates-second.pem
-patching file mongo/options/testdata/ca-with-intermediates-third.pem
-patching file mongo/options/testdata/ca-with-intermediates.pem
-patching file mongo/options/testdata/empty-ca.pem
-patching file mongo/options/testdata/malformed-ca.pem

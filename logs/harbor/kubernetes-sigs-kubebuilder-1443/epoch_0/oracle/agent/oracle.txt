@@ -1,2 +1,0 @@
-patching file internal/config/config.go
-patching file pkg/model/config/config.go

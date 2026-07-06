@@ -1,0 +1,201 @@
+patching file test/MUIDataTable.test.js
+patching file test/MUIDataTableFilter.test.js
+patching file test/MUIDataTableToolbar.test.js
+patching file test/MUIDataTableToolbarSelect.test.js
+patching file test/TableResize.test.js
+patching file test/UseColumnDrop.test.js
+patching file test/setup-mocha-env.js
+patching file test/utils.test.js
+Browserslist: caniuse-lite is outdated. Please run:
+npx browserslist@latest --update-db
+
+
+  <MUIDataTable />
+    ✓ should render a table (48ms)
+    ✓ should correctly build internal columns data structure
+    ✓ should correctly rebuild internal columns data structure
+    ✓ should correctly build internal table data and displayData structure
+    ✓ should correctly build internal table data and displayData structure when using nested data (option enableNestedDataAccess omitted )
+    ✓ should correctly build internal table data and displayData structure with enabled nested data custom marker (option enableNestedDataAccess : "/OK/" )
+    ✓ should correctly build internal table data and displayData structure with disabled nested data (option enableNestedDataAccess : "" )
+    ✓ should correctly build internal table data and displayData structure with sortOrder set
+    ✓ should correctly re-build display after xhr with serverSide=true (330ms)
+    ✓ should correctly re-build internal table data and displayData structure with prop change
+    ✓ should correctly re-build table options before and after prop change (169ms)
+    ✓ should correctly sort (173ms)
+    ✓ should correctly sort when sortThirdClickReset is true (109ms)
+    ✓ should correctly sort when sortDescFirst and sortThirdClickReset are true (113ms)
+    ✓ should correctly pass the sorted column name and direction to onColumnSortChange (82ms)
+    ✓ should correctly re-build internal table data while maintaining pagination after state change (102ms)
+    ✓ should not re-build internal table data and displayData structure with no prop change to data or columns (100ms)
+    ✓ should add custom props to table if setTableProps provided
+    ✓ should correctly build internal filterList structure
+    ✓ should correctly build internal unique column data for filterData structure
+    ✓ should correctly build internal rowsPerPage when provided in options
+    ✓ should correctly build internal rowsPerPageOptions when provided in options
+    ✓ should allow empty array rowsPerPageOptions when provided in options
+    ✓ should render pagination when enabled in options (93ms)
+    ✓ should not render pagination when disabled in options (81ms)
+    ✓ should not render toolbar when all its displayable items are missing (72ms)
+Deprecation Notice:  disableToolbarSelect has been deprecated but will still work in version 3.x. It is being replaced by "selectToolbarPlacement"="none". More info: https://github.com/gregnb/mui-datatables/tree/master/docs/v2_to_v3_guide.md
+    ✓ should not render select toolbar when disableToolbarSelect=true
+    ✓ should not render select toolbar when selectToolbarPlacement="none"
+    ✓ should not render select toolbar when selectToolbarPlacement="none" and rowsSelected is inputted
+    ✓ should render both select toolbar and toolbar when selectToolbarPlacement="above"
+    ✓ should render select toolbar by default
+    ✓ should properly set internal filterList when calling filterUpdate method with type=checkbox
+    ✓ should remove entry from filterList when calling filterUpdate method with type=checkbox and same arguments a second time
+    ✓ should properly set internal filterList when calling filterUpdate method with type=dropdown
+    ✓ should apply columns prop change for filterList (109ms)
+    ✓ should create Chip when filterList is populated
+    ✓ should create Chip with custom label when filterList and customFilterListOptions are populated
+    ✓ should call custom filter update function when it is passed into custom filter update
+    ✓ should render filter Chip(s) when options.serverSide = true and serverSideFilterList is populated
+    ✓ should not render filter Chip(s) when options.serverSide = true and serverSideFilterList is not populated
+    ✓ should remove entry from filterList when calling filterUpdate method with type=dropdown and an empty array
+    ✓ should properly reset internal filterList when calling resetFilters method
+    ✓ should have the proper column name in onFilterChange when applying filters
+    ✓ should have the proper type in onFilterChange when calling resetFilters method
+    ✓ should render a footer after the tbody element when customTableBodyFooterRender is called (78ms)
+    ✓ should properly set searchText when calling searchTextUpdate method
+    ✓ should properly set searchText when hiding the search bar
+    ✓ should not change page when hiding the search bar
+    ✓ should filter displayData when searchText is set
+    ✓ should sort provided column with defined data, in ascending order when calling toggleSortColum method for the first time
+    ✓ should sort provided column with undefined data as though it were an empty string, in ascending order when calling toggleSortColum method for the first time
+    ✓ should sort provided column in descending order when calling toggleSortColum method twice
+    ✓ should sort provided column with custom column sort function (sort by name length) in descending order
+    ✓ should toggle provided column when calling toggleViewCol method
+    ✓ should update columns when calling updateColumns method
+    ✓ should get displayable data when calling getDisplayData method
+    ✓ should update rowsPerPage when calling changeRowsPerPage method
+    ✓ should recalculate page when calling changeRowsPerPage method (119ms)
+    ✓ should update page position when calling changePage method
+    ✓ should update selectedRows when calling selectRowUpdate method with type=head
+    ✓ If selectableRows=single, only the last cell must be selected when calling selectRowUpdate method with type=cell.
+    ✓ should allow multiple cells to be selected when selectableRows=multiple and selectRowUpdate method with type=cell.
+    ✓ should update selectedRows when calling selectRowUpdate method with type=custom
+    ✓ should allow multiple cells to be selected when selectableRows=multiple and selectRowUpdate method with type=cell and there are adjacent rows.
+    ✓ should allow multiple cells to be selected and then unselected when selectableRows=multiple and selectRowUpdate method with type=cell and there are adjacent rows.
+    ✓ should not update selectedRows when using rowsSelected option with type=none
+    ✓ should update selectedRows when using rowsSelected option with type=single
+    ✓ should update selectedRows when using rowsSelected option with type=multiple
+    ✓ should update selectedRows (with default type=multiple option) when using rowsSelected with no option specified
+    ✓ should update expandedRows when using expandableRows option with default rowsExpanded
+    ✓ should expand all rows when toggleAllExpandableRows is called
+    ✓ should call onColumnOrderChange when updateColumnOrder is called
+    ✓ should correctly call consoleWarnings
+    ✓ should remove selected data on selectRowDelete when type=cell
+    ✓ should call onRowExpansionChange when row is expanded or collapsed (117ms)
+    ✓ should call onRowSelectionChange when row is selected or unselected (114ms)
+    ✓ should not remove selected data on selectRowDelete when type=cell when onRowsDelete returns false
+    ✓ should update value when calling updateValue method in customBodyRender
+    ✓ should call onTableInit when MUIDataTable is initialized
+    ✓ should call onTableInit only 1 time when creating table and calling selectRowUpdate method with type=head
+    ✓ should call onTableChange when calling selectRowUpdate method with type=head
+    ✓ should call onTableChange when calling selectRowUpdate method with type=cell
+    ✓ should call onTableChange when calling selectRowUpdate method with type=custom
+    ✓ should render only things that match a filter
+    ✓ should render all things that match a text field filter
+    ✓ should skip client side filtering if server side filtering is enabled
+    ✓ should correctly build internal tableProps when setTableProps passed in options
+    ✓ should correctly filter data from filter popover menu (171ms)
+    ✓ should correctly execute customBodyRender methods based on filtering and data
+    should displayData consider filterOptions with logic
+      ✓ with one column
+      ✓ operating as AND
+    should correctly handle array data
+      ✓ should correctly filter array data
+      ✓ should correctly extract array data for filterData
+    should correctly handle non-array data
+      ✓ should correctly filter data when no array data is present
+      ✓ should correctly extract filterData when no array data is present
+    should correctly run comparator function
+      ✓ correctly compares two equal strings
+      ✓ correctly compares two different strings
+
+  <TableFilter />
+    ✓ should render label as filter name (38ms)
+    ✓ should render data table filter view with checkboxes if filterType = 'checkbox'
+    ✓ should render data table filter view with no checkboxes if filter=false for each column
+    ✓ should render data table filter view with selects if filterType = 'select'
+    ✓ should render data table filter view no selects if filter=false for each column
+    ✓ should render data table filter view with checkbox selects if filterType = 'multiselect'
+    ✓ should render data table filter view with custom rendering of items if filterType = 'select'
+    ✓ should render data table filter view with custom rendering of items for filterType = 'multiselect' if renderValue is provided
+    ✓ should data table custom filter view with if filterType = 'custom' and a valid display filterOption is provided
+    ✓ does not render filter if filterType = 'custom' and no display filterOption is provided
+    ✓ should render column.label as filter label if filterType = 'textField'
+    ✓ should data table filter view with TextFields if filterType = 'textfield'
+    ✓ should data table filter view with no TextFields if filter=false when filterType = 'textField'
+    ✓ should data table filter view with checkboxes if column.filterType = 'checkbox' irrespective of global filterType value
+    ✓ should render a filter dialog with custom footer when customFooter is provided
+    ✓ should invoke applyFilters from customFooter callback
+    ✓ should invoke onFilterReset when reset is pressed
+    ✓ should trigger onFilterUpdate prop callback when calling method handleCheckboxChange
+    ✓ should trigger onFilterUpdate prop callback when calling method handleDropdownChange
+    ✓ should trigger onFilterUpdate prop callback when calling method handleMultiselectChange
+    ✓ should trigger onFilterUpdate prop callback when calling method handleTextFieldChange
+
+  <TableToolbar />
+    ✓ should render a toolbar
+    ✓ should render a toolbar with custom title if title is not string
+    ✓ should render a toolbar with search text initialized if option.searchText = some_text
+    ✓ should render a toolbar with search if option.searchOpen = true
+    ✓ should render a toolbar with no search icon if option.search = false
+    ✓ should render a toolbar with no download icon if option.download = false
+    ✓ should render a toolbar with no print icon if option.print = false
+    ✓ should render a toolbar with no view columns icon if option.viewColumns = false
+    ✓ should render a toolbar with no filter icon if option.filter = false
+    ✓ should render a toolbar with custom search when option.customSearchRender is provided
+    ✓ should render a toolbar with a search clicking search icon
+    ✓ should hide search after clicking cancel icon
+    ✓ should hide search when search icon is clicked while search is open without content
+    ✓ should not hide search when search icon is clicked while search is open with content
+    ✓ should call onFilterDialogOpen when opening filters via toolbar
+    ✓ should call onFilterDialogClose when closing filters dialog
+    ✓ should set icon when calling method setActiveIcon
+    ✓ should render search icon as active if option.searchOpen = true
+    ✓ should render search icon as active if option.searchText = some_text
+    ✓ should download CSV when calling method handleCSVDownload
+    ✓ should trigger onDownload prop callback when calling method handleCSVDownload
+
+  <TableToolbarSelect />
+    ✓ should render table toolbar select
+    ✓ should call customToolbarSelect with 3 arguments
+    ✓ should throw TypeError if selectedRows is not an array of numbers
+    ✓ should call selectRowUpdate when customToolbarSelect passed and setSelectedRows was called
+    ✓ should throw an error when multiple rows are selected and selectableRows="single"
+
+  <TableResize />
+    ✓ should render a table resize component
+    ✓ should create a coordinate map for each column
+    ✓ should execute resize methods correctly
+
+  useColumnDrop
+    ✓ should reorder columns when reorderColumns is called
+    ✓ should build a column model object when getColModel is called
+    ✓ should build a column model object when getColModel is called and no select cell exists
+    ✓ should set columnShift on timers when handleHover is called
+
+  utils.js
+    escapeDangerousCSVCharacters
+      ✓ properly escapes the first character in a string if it can be used for injection
+    getPageValue
+      ✓ returns the highest in bounds page value when page is out of bounds and count is greater than rowsPerPage
+      ✓ returns the highest in bounds page value when page is in bounds and count is greater than rowsPerPage
+      ✓ returns the highest in bounds page value when page is out of bounds and count is less than rowsPerPage
+      ✓ returns the highest in bounds page value when page is in bounds and count is less than rowsPerPage
+      ✓ returns the highest in bounds page value when page is out of bounds and count is equal to rowsPerPage
+      ✓ returns the highest in bounds page value when page is in bounds and count is equal to rowsPerPage
+    buildCSV
+      ✓ properly builds a csv when given a non-empty dataset
+      ✓ returns an empty csv with header when given an empty dataset
+    createCSVDownload
+      ✓ does not call download function if download callback returns `false`
+      ✓ calls download function if download callback returns truthy
+
+
+  162 passing (3s)
+
+reward=1 graded=162 found=162 failed=0 parsed=162 framework=mocha exit_code=0

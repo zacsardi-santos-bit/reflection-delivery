@@ -1,5 +1,0 @@
-I'm seeing a bug in the gossip layer's connection reading logic. When a peer sends us a message that can't be parsed correctly, we send the error to the error channel as expected — but then we don't stop the loop. The reading goroutine just keeps running after the error, which shouldn't happen. It should exit as soon as an unparseable message is detected.
-
-Related to this, I'd also like the server to actively close the stream when a remote peer keeps sending corrupted data. Right now, if you establish a valid connection and then flood the server with malformed messages, the stream doesn't get terminated from our side — the client just keeps sending bad data indefinitely. The expected behavior is that after receiving invalid messages, the server should force-close the stream and the client should get a connection-closed error.
-
-To properly test this behavior, we also need a mock implementation of the gossip stream client interface that can be used in unit tests to simulate both well-formed and malformed message sequences without setting up a real network connection.

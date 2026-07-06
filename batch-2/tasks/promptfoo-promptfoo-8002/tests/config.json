@@ -1,0 +1,39 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run src/app/src/pages/redteam/setup/components/verticalSuites.test.ts test/redteam/plugins/insurance/coverageDiscrimination.test.ts test/redteam/plugins/insurance/dataDisclosure.test.ts test/redteam/plugins/insurance/networkMisinformation.test.ts",
+  "test_files": [
+    "src/app/src/pages/redteam/setup/components/verticalSuites.test.ts",
+    "test/redteam/plugins/insurance/coverageDiscrimination.test.ts",
+    "test/redteam/plugins/insurance/dataDisclosure.test.ts",
+    "test/redteam/plugins/insurance/networkMisinformation.test.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/redteam/plugins/insurance/networkMisinformation.test.ts::InsuranceNetworkMisinformationPluginGrader should include all network misinformation categories in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/networkMisinformation.test.ts::InsuranceNetworkMisinformationPluginGrader should include failure criteria in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/networkMisinformation.test.ts::InsuranceNetworkMisinformationPluginGrader should include pass criteria in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/networkMisinformation.test.ts::InsuranceNetworkMisinformationPluginGrader should mention financial harm consequences",
+    "/workspace/repo/test/redteam/plugins/insurance/coverageDiscrimination.test.ts::InsuranceCoverageDiscriminationPluginGrader should include all discrimination categories in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/coverageDiscrimination.test.ts::InsuranceCoverageDiscriminationPluginGrader should include failure criteria in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/coverageDiscrimination.test.ts::InsuranceCoverageDiscriminationPluginGrader should include pass criteria in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/coverageDiscrimination.test.ts::InsuranceCoverageDiscriminationPluginGrader should mention civil rights laws",
+    "/workspace/repo/test/redteam/plugins/insurance/dataDisclosure.test.ts::InsuranceDataDisclosurePluginGrader should have correct id",
+    "/workspace/repo/test/redteam/plugins/insurance/dataDisclosure.test.ts::InsuranceDataDisclosurePluginGrader should render rubric with all required sections",
+    "/workspace/repo/test/redteam/plugins/insurance/dataDisclosure.test.ts::InsuranceDataDisclosurePluginGrader should include all disclosure categories in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/dataDisclosure.test.ts::InsuranceDataDisclosurePluginGrader should include failure criteria in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/dataDisclosure.test.ts::InsuranceDataDisclosurePluginGrader should include pass criteria in instructions",
+    "/workspace/repo/test/redteam/plugins/insurance/dataDisclosure.test.ts::InsuranceDataDisclosurePluginGrader should specify correct output format",
+    "/workspace/repo/test/redteam/plugins/insurance/dataDisclosure.test.ts::InsuranceDataDisclosurePluginGrader should mention regulatory context"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/test/redteam/plugins/insurance/networkMisinformation.test.ts::InsuranceNetworkMisinformationPluginGrader should have correct id",
+    "/workspace/repo/test/redteam/plugins/insurance/networkMisinformation.test.ts::InsuranceNetworkMisinformationPluginGrader should render rubric with all required sections",
+    "/workspace/repo/test/redteam/plugins/insurance/networkMisinformation.test.ts::InsuranceNetworkMisinformationPluginGrader should specify correct output format",
+    "/workspace/repo/test/redteam/plugins/insurance/networkMisinformation.test.ts::InsuranceNetworkMisinformationPluginGrader should mention balance billing for healthcare contexts",
+    "/workspace/repo/test/redteam/plugins/insurance/coverageDiscrimination.test.ts::InsuranceCoverageDiscriminationPluginGrader should have correct id",
+    "/workspace/repo/test/redteam/plugins/insurance/coverageDiscrimination.test.ts::InsuranceCoverageDiscriminationPluginGrader should render rubric with all required sections",
+    "/workspace/repo/test/redteam/plugins/insurance/coverageDiscrimination.test.ts::InsuranceCoverageDiscriminationPluginGrader should specify correct output format",
+    "/workspace/repo/test/redteam/plugins/insurance/coverageDiscrimination.test.ts::InsuranceCoverageDiscriminationPluginGrader should mention enforcement consequences"
+  ]
+}

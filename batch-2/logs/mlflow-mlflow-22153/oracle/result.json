@@ -1,0 +1,29 @@
+{
+    "id": "f426a241-af83-4834-8932-744075ee9eb4",
+    "started_at": "2026-07-06T12:18:15.604128",
+    "finished_at": "2026-07-06T12:18:58.200297",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__mlflow-mlflow-22153": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "mlflow-mlflow-22153__WotAvoN"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

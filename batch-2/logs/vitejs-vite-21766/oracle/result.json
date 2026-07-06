@@ -1,0 +1,29 @@
+{
+    "id": "4f390784-0b88-4354-97a2-3c46f2a88d33",
+    "started_at": "2026-07-04T15:40:34.214089",
+    "finished_at": "2026-07-04T15:41:07.270106",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__vitejs-vite-21766": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "vitejs-vite-21766__kpgQFiT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

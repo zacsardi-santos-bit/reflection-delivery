@@ -1,0 +1,62 @@
+FROM python:3.12
+
+RUN apt-get update && apt-get install -y \
+    git curl ca-certificates patch build-essential \
+    postgresql postgresql-client redis-server \
+    libpq-dev libxmlsec1-dev libxslt1-dev libxml2-dev \
+    pkg-config python3-dev libtool \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --upgrade pip && pip install poetry==2.1.1
+
+WORKDIR /workspace
+
+RUN git init /workspace/repo && cd /workspace/repo && \
+    git remote add origin https://github.com/prowler-cloud/prowler.git && \
+    git fetch --depth 30 --no-tags origin c159181d2773396e24449e91d472d8fedc4b5e98 && \
+    git checkout FETCH_HEAD && \
+    git remote remove origin && \
+    git reflog expire --expire=now --all && \
+    rm -rf /workspace/repo/.git/logs && \
+    git gc --prune=now
+WORKDIR /workspace/repo/api
+
+RUN poetry config virtualenvs.create false
+
+RUN poetry install --no-root 2>&1 | tail -50
+
+RUN service postgresql start && \
+    su -c "psql -c \"CREATE USER prowler_admin WITH PASSWORD 'postgres' SUPERUSER;\"" postgres && \
+    su -c "psql -c \"CREATE DATABASE prowler_db_test OWNER prowler_admin;\"" postgres && \
+    service postgresql stop
+
+ENV POSTGRES_USER=prowler_admin
+ENV POSTGRES_PASSWORD=postgres
+ENV POSTGRES_HOST=localhost
+ENV POSTGRES_PORT=5432
+ENV VALKEY_HOST=localhost
+ENV VALKEY_PORT=6379
+ENV SECRET_KEY=testing-secret-key-for-docker
+ENV PYTHONPATH=/workspace/repo/api/src/backend
+
+
+# --- baked at build time for offline harbor eval ---
+RUN (command -v tmux >/dev/null 2>&1 && command -v asciinema >/dev/null 2>&1) \
+    || (apt-get update && apt-get install -y --no-install-recommends tmux asciinema \
+        && rm -rf /var/lib/apt/lists/*) || true
+WORKDIR /workspace
+
+# --- offline-harbor: ensure grading(python3) + patch(patch/git) deps (build-time) ---
+RUN (command -v python3 >/dev/null 2>&1 && command -v patch >/dev/null 2>&1 && command -v git >/dev/null 2>&1) \
+    || (apt-get update && apt-get install -y --no-install-recommends python3 patch git ca-certificates) \
+    || (apk add --no-cache python3 patch git ca-certificates) \
+    || (dnf install -y python3 patch git ca-certificates) \
+    || (yum install -y python3 patch git ca-certificates) \
+    || true
+
+
+# offline login-shell PATH bake
+RUN printf 'export PATH="%s"\n' "$PATH" > /etc/profile.d/zzz_offline_path.sh && chmod 0644 /etc/profile.d/zzz_offline_path.sh
+
+# offline-harbor: git blob-drop shrink (client-contract .git<100MB, HEAD==base)
+RUN set +e; cd /workspace/repo 2>/dev/null && ( rm -rf .git/modules .git/worktrees 2>/dev/null; git reflog expire --expire=now --all 2>/dev/null; rm -rf .git/logs; git remote remove origin 2>/dev/null; git tag -l | xargs -r git tag -d >/dev/null 2>&1; git for-each-ref --format='%(refname)' refs/remotes refs/tags 2>/dev/null | xargs -r -n1 git update-ref -d 2>/dev/null; git cat-file --batch-all-objects --batch-check='%(objectname) %(objecttype)' 2>/dev/null | awk '$2!="blob"{print $1}' > /tmp/_keep.txt; if [ -s /tmp/_keep.txt ]; then git pack-objects --quiet /tmp/_kp < /tmp/_keep.txt >/dev/null 2>&1 && rm -rf .git/objects/pack && mkdir -p .git/objects/pack && find .git/objects -maxdepth 1 -type d -name '[0-9a-f][0-9a-f]' -exec rm -rf {} + 2>/dev/null; mv /tmp/_kp-*.pack /tmp/_kp-*.idx .git/objects/pack/ 2>/dev/null; fi; git rev-parse HEAD >/dev/null 2>&1 || echo "WARN head-broken"; du -sm .git 2>/dev/null | cut -f1 ) ; true

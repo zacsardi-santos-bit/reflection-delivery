@@ -1,0 +1,16 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/sdk/pcl/cmd/pulumi-language-pcl && go test -json -run TestLanguage/l1-builtin-string -count=1 . -timeout 300s",
+  "test_files": [
+    "pkg/testing/pulumi-test-language/tests/l1_builtin_string.go",
+    "pkg/testing/pulumi-test-language/tests/testdata/l1-builtin-string/main.pp",
+    "sdk/go/pulumi-language-go/language_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/pulumi/pulumi/sdk/pcl/v3/cmd/pulumi-language-pcl::TestLanguage/l1-builtin-string",
+    "github.com/pulumi/pulumi/sdk/pcl/v3/cmd/pulumi-language-pcl::TestLanguage"
+  ],
+  "PASS_TO_PASS": []
+}

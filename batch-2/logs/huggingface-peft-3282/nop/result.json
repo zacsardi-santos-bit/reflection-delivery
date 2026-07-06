@@ -1,0 +1,29 @@
+{
+    "id": "5787d61b-dd2d-4416-99c1-34150b9965a7",
+    "started_at": "2026-07-06T12:17:27.094987",
+    "finished_at": "2026-07-06T12:20:27.408393",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__huggingface-peft-3282": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "huggingface-peft-3282__QYjCWew"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

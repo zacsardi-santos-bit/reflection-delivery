@@ -1,0 +1,29 @@
+{
+    "id": "50010ae7-01fa-41b7-b328-c15095e5125a",
+    "started_at": "2026-07-04T15:36:03.740683",
+    "finished_at": "2026-07-04T15:45:44.969210",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__aws-aws-sdk-java-v2-5393": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "aws-aws-sdk-java-v2-5393__vK9fkB8"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

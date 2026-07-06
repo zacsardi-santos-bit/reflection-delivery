@@ -1,9 +1,0 @@
-patching file packages/experimental/Badge/src/__tests__/__snapshots__/Badge.test.tsx.snap
-PASS src/__tests__/Badge.test.tsx (9.006 s)
-
-Test Suites: 1 passed, 1 total
-Tests:       5 passed, 5 total
-Snapshots:   3 passed, 3 total
-Time:        9.089 s
-Ran all test suites.
-reward=1 graded=5 found=0 failed=0 parsed=0 framework=jest exit_code=0

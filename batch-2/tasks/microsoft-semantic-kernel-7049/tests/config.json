@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/tests/unit/connectors/mistral_ai/ -v",
+  "test_files": [
+    "python/tests/conftest.py",
+    "python/tests/integration/completions/test_chat_completions.py",
+    "python/tests/unit/connectors/mistral_ai/services/test_mistralai_chat_completion.py",
+    "python/tests/unit/connectors/mistral_ai/test_mistralai_request_settings.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit.connectors.mistral_ai.services.test_mistralai_chat_completion::test_complete_chat_contents",
+    "tests.unit.connectors.mistral_ai.services.test_mistralai_chat_completion::test_complete_chat_stream_contents",
+    "tests.unit.connectors.mistral_ai.services.test_mistralai_chat_completion::test_mistral_ai_sdk_exception",
+    "tests.unit.connectors.mistral_ai.services.test_mistralai_chat_completion::test_mistral_ai_sdk_exception_streaming",
+    "tests.unit.connectors.mistral_ai.services.test_mistralai_chat_completion::test_mistral_ai_chat_completion_init",
+    "tests.unit.connectors.mistral_ai.services.test_mistralai_chat_completion::test_mistral_ai_chat_completion_init_with_empty_api_key[exclude_list0]",
+    "tests.unit.connectors.mistral_ai.services.test_mistralai_chat_completion::test_mistral_ai_chat_completion_init_with_empty_model_id[exclude_list0]",
+    "tests.unit.connectors.mistral_ai.services.test_mistralai_chat_completion::test_prompt_execution_settings_class",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_default_mistralai_chat_prompt_execution_settings",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_custom_mistralai_chat_prompt_execution_settings",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_mistralai_chat_prompt_execution_settings_from_default_completion_config",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_mistral_chat_prompt_execution_settings_from_openai_prompt_execution_settings",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_mistral_chat_prompt_execution_settings_from_custom_completion_config",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_openai_chat_prompt_execution_settings_from_custom_completion_config_with_none",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_openai_chat_prompt_execution_settings_from_custom_completion_config_with_functions",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_create_options",
+    "tests.unit.connectors.mistral_ai.test_mistralai_request_settings::test_create_options_with_function_choice_behavior"
+  ],
+  "PASS_TO_PASS": []
+}

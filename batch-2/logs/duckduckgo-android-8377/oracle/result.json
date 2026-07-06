@@ -1,0 +1,29 @@
+{
+    "id": "78d94d40-7d17-48f1-8630-8bb1234e0049",
+    "started_at": "2026-07-06T12:19:40.653888",
+    "finished_at": "2026-07-06T12:22:05.857858",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__duckduckgo-android-8377": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "duckduckgo-android-8377__4wio2fS"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

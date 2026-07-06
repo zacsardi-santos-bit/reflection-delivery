@@ -1,0 +1,44 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && npm run gulp transpile-client-esbuild && node test/unit/browser/index.js --run src/vs/workbench/api/test/browser/mainThreadChatSessions.test.ts --browser chromium",
+  "test_files": [
+    "src/vs/workbench/api/test/browser/mainThreadChatSessions.test.ts",
+    "src/vs/workbench/contrib/chat/test/common/mockChatSessionsService.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "::ObservableChatSession initialization sets forkSession and revives forked items",
+    "::ExtHostChatSessions advertises controller fork support when only the controller registers a fork handler",
+    "::ExtHostChatSessions prefers controller fork handler over deprecated session fork handler",
+    "::ExtHostChatSessions falls back to deprecated session fork handler when no controller fork handler exists"
+  ],
+  "PASS_TO_PASS": [
+    "::ObservableChatSession constructor creates session with proper initial state",
+    "::ObservableChatSession session queues progress before initialization and processes it after",
+    "::ObservableChatSession initialization loads session history and sets up capabilities",
+    "::ObservableChatSession initialization sets title from session content",
+    "::ObservableChatSession title is undefined when not provided in session content",
+    "::ObservableChatSession initialization is idempotent and returns same promise",
+    "::ObservableChatSession initialization forwards initial session options context",
+    "::ObservableChatSession progress handling works correctly after initialization",
+    "::ObservableChatSession progress completion updates session state correctly",
+    "::ObservableChatSession session with active response callback becomes active when progress is added",
+    "::ObservableChatSession request handler forwards requests to proxy",
+    "::ObservableChatSession request handler forwards progress updates to external callback",
+    "::ObservableChatSession dispose properly cleans up resources and notifies listeners",
+    "::ObservableChatSession session with multiple request/response pairs in history",
+    "::MainThreadChatSessions provideChatSessionContent creates and initializes session",
+    "::MainThreadChatSessions provideChatSessionContent propagates title",
+    "::MainThreadChatSessions $handleProgressChunk routes to correct session",
+    "::MainThreadChatSessions $handleProgressComplete marks session complete",
+    "::MainThreadChatSessions integration with multiple request/response pairs",
+    "::MainThreadChatSessions $onDidChangeChatSessionProviderOptions refreshes option groups",
+    "::MainThreadChatSessions getSessionOption returns undefined for unset options",
+    "::MainThreadChatSessions getSessionOption returns value for explicitly set options",
+    "::MainThreadChatSessions option change notifications are sent to the extension",
+    "::MainThreadChatSessions option change notifications fail silently when provider not registered",
+    "::MainThreadChatSessions setSessionOption updates option and getSessionOption reflects change",
+    "::MainThreadChatSessions hasAnySessionOptions returns correct values"
+  ]
+}

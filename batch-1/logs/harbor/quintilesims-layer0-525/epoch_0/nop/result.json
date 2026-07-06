@@ -1,0 +1,98 @@
+{
+    "id": "c77ff2dd-808d-4df1-b809-3f008befff4f",
+    "task_name": "offline/quintilesims-layer0-525",
+    "trial_name": "quintilesims-layer0-525__kySqueG",
+    "trial_uri": "file:///tmp/nop/2026-07-01__15-08-30/quintilesims-layer0-525__kySqueG",
+    "task_id": {
+        "path": "quintilesims-layer0-525"
+    },
+    "source": "src",
+    "task_checksum": "c353bf0de6ef850a99f3856e2864b8bf07093994dc8b2680dae2e9cf2aa45ec2",
+    "config": {
+        "task": {
+            "path": "quintilesims-layer0-525",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "quintilesims-layer0-525__kySqueG",
+        "trials_dir": "/tmp/nop/2026-07-01__15-08-30",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "5d1bfccf-9451-4291-8c7c-f91a8c7a556a"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T15:08:34.756213Z",
+    "finished_at": "2026-07-01T15:09:48.186823Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T15:08:34.757491Z",
+        "finished_at": "2026-07-01T15:08:36.614766Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T15:08:36.614803Z",
+        "finished_at": "2026-07-01T15:08:36.614849Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T15:08:36.614900Z",
+        "finished_at": "2026-07-01T15:08:36.614929Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T15:08:36.615026Z",
+        "finished_at": "2026-07-01T15:09:37.591997Z"
+    }
+}

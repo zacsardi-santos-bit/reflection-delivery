@@ -1,0 +1,5 @@
+I'm working on a TrueType hinting engine and several instructions are not connected in the dispatch table. When I run a font program that uses the write-to-storage instruction, I get an "unhandled opcode" error instead of the value being written. The same is true for reading from storage, writing and reading the control value table, measuring rendering parameters like pixels per em, and modifying outline point properties like flipping on/off curve status or untouching points.
+
+All of these operations need to be wired up in the dispatch table. In addition, the instructions that modify outline points should respect a backward compatibility mode — when both horizontal and vertical interpolation have already been applied, those point-modification instructions should be skipped. The graphics state needs to track whether each of those interpolation passes has been completed.
+
+I also need to add the implementations for the instructions that aren't yet present: measuring pixels per em and point size, and flipping curve points and untouching points.

@@ -1,0 +1,50 @@
+patching file tokio-codec/tests/codecs.rs
+warning: /workspace/repo/tokio-tcp/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-io/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-current-thread/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-udp/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-codec/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-executor/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-channel/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-uds/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-threadpool/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-fs/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-reactor/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-timer/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+   Compiling libc v0.2.186
+   Compiling byteorder v1.5.0
+   Compiling futures v0.1.31
+   Compiling log v0.4.33
+   Compiling iovec v0.1.4
+   Compiling bytes v0.4.12
+   Compiling tokio-io v0.1.8 (/workspace/repo/tokio-io)
+   Compiling tokio-codec v0.1.0 (/workspace/repo/tokio-codec)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.52s
+────────────
+ Nextest run ID 8e7c7dcc-d305-430c-ad6f-eb3110f5cb5c with nextest profile: default
+    Starting 21 tests across 5 binaries
+        PASS [   0.012s] ( 1/21) tokio-codec::codecs bytes_decoder
+        PASS [   0.013s] ( 2/21) tokio-codec::codecs bytes_encoder
+        PASS [   0.013s] ( 3/21) tokio-codec::codecs lines_decoder
+        PASS [   0.011s] ( 4/21) tokio-codec::codecs lines_decoder_max_length
+        PASS [   0.013s] ( 5/21) tokio-codec::codecs lines_decoder_max_length_underrun
+        PASS [   0.013s] ( 6/21) tokio-codec::codecs lines_encoder
+        PASS [   0.013s] ( 7/21) tokio-codec::framed can_read_from_existing_buf
+        PASS [   0.014s] ( 8/21) tokio-codec::framed external_buf_does_not_shrink
+        PASS [   0.012s] ( 9/21) tokio-codec::framed external_buf_grows_to_init
+        PASS [   0.012s] (10/21) tokio-codec::framed_read data_remaining_is_error
+        PASS [   0.012s] (11/21) tokio-codec::framed_read huge_size
+        PASS [   0.013s] (12/21) tokio-codec::framed_read multi_frames_on_eof
+        PASS [   0.012s] (13/21) tokio-codec::framed_read read_err
+        PASS [   0.012s] (14/21) tokio-codec::framed_read read_multi_frame_across_packets
+        PASS [   0.013s] (15/21) tokio-codec::framed_read read_multi_frame_in_packet
+        PASS [   0.013s] (16/21) tokio-codec::framed_read read_not_ready
+        PASS [   0.012s] (17/21) tokio-codec::framed_read read_partial_then_err
+        PASS [   0.012s] (18/21) tokio-codec::framed_read read_partial_then_not_ready
+        PASS [   0.013s] (19/21) tokio-codec::framed_read read_partial_would_block_then_err
+        PASS [   0.017s] (20/21) tokio-codec::framed_write write_hits_backpressure
+        PASS [   0.014s] (21/21) tokio-codec::framed_write write_multi_frame_in_packet
+────────────
+     Summary [   0.270s] 21 tests run: 21 passed, 0 skipped
+reward=1 graded=21 found=21 failed=0 parsed=21 framework=cargo exit_code=0

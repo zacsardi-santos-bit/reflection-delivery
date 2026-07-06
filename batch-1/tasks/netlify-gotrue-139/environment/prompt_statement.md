@@ -1,0 +1,3 @@
+I'm working on the storage layer of our authentication service and I need a helper that can figure out which database columns to exclude when performing a selective update. The idea is: given a model struct and a list of column names I want to include in the update, the helper should return all the other column names — the ones I want to skip. The column names should be determined by the struct's database tag annotations.
+
+If I accidentally pass in a column name that doesn't exist on the struct, I'd expect the function to return an error rather than silently ignoring it. This function will be used internally in the storage package to power partial update operations.

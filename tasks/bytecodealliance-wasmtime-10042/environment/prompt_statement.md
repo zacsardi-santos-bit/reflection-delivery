@@ -1,5 +1,0 @@
-I'm working on the Winch baseline compiler in Wasmtime and I'm trying to add support for SIMD lane extraction operations on x86-64. Right now, when a WebAssembly module uses any of the extract-lane instructions (for 8-bit, 16-bit, 32-bit, or 64-bit integer elements, or for 32-bit and 64-bit floats), the Winch compiler fails with an unimplemented error instead of generating code.
-
-I need the compiler to correctly emit AVX instructions for these operations on x86-64 targets that have AVX available. For integer types, the signed variants should sign-extend the extracted value to a full 32-bit integer in a general-purpose register, while unsigned variants should just zero-extend. For floating-point types, extracting lane 0 requires no shuffle since the value is already in the right place, but extracting other lanes needs an appropriate shuffle to move the desired element into the low position of the register.
-
-Could you implement support for all the SIMD lane extraction operations in the Winch compiler's x86-64 backend, using AVX instructions where available?

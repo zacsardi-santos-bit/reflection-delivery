@@ -1,0 +1,1350 @@
+patching file crates/plugin_resolve/tests/browser.rs
+patching file crates/plugin_resolve/tests/exports.rs
+patching file crates/plugin_resolve/tests/imports.rs
+patching file crates/plugin_resolve/tests/mod.rs
+patching file crates/plugin_resolve/tests/side_effects.rs
+patching file crates/toolkit/tests/resolve.rs
+warning: unused import: `external::ExternalConfig`
+ --> crates/core/src/config/mod.rs:9:80
+  |
+9 |   bool_or_obj::BoolOrObj, comments::CommentsConfig, config_regex::ConfigRegex, external::ExternalConfig, html::HtmlConfig, partial_bundli...
+  |                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: `farmfe_core` (lib) generated 1 warning (run `cargo fix --lib -p farmfe_core` to apply 1 suggestion)
+warning: unused import: `GLOBALS`
+  --> crates/toolkit/src/script/mod.rs:17:50
+   |
+17 |     BytePos, FileName, LineCol, Mark, SourceMap, GLOBALS,
+   |                                                  ^^^^^^^
+   |
+   = note: `#[warn(unused_imports)]` on by default
+
+warning: unused variable: `has_deps`
+   --> crates/toolkit/src/script/mod.rs:298:3
+    |
+298 |   has_deps: bool,
+    |   ^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_has_deps`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+warning: `farmfe_toolkit` (lib) generated 2 warnings (run `cargo fix --lib -p farmfe_toolkit` to apply 2 suggestions)
+warning: `farmfe_toolkit` (lib test) generated 2 warnings (2 duplicates)
+warning: unused variable: `field_value`
+   --> crates/plugin_resolve/src/resolver.rs:648:18
+    |
+648 |       .and_then(|field_value| {
+    |                  ^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_field_value`
+    |
+    = note: `#[warn(unused_variables)]` on by default
+
+   Compiling farmfe_toolkit v0.0.9 (/workspace/repo/crates/toolkit)
+warning: `farmfe_plugin_resolve` (lib) generated 1 warning (run `cargo fix --lib -p farmfe_plugin_resolve` to apply 1 suggestion)
+warning: `farmfe_plugin_resolve` (lib test) generated 1 warning (1 duplicate)
+   Compiling farmfe_plugin_resolve v0.0.7 (/workspace/repo/crates/plugin_resolve)
+error[E0432]: unresolved import `farmfe_plugin_resolve::resolver::ResolveOptions`
+ --> crates/plugin_resolve/tests/imports.rs:8:39
+  |
+8 | use farmfe_plugin_resolve::resolver::{ResolveOptions, Resolver};
+  |                                       ^^^^^^^^^^^^^^ no `ResolveOptions` in `resolver`
+
+error[E0432]: unresolved import `farmfe_plugin_resolve::resolver::ResolveOptions`
+ --> crates/plugin_resolve/tests/mod.rs:8:39
+  |
+8 | use farmfe_plugin_resolve::resolver::{ResolveOptions, Resolver};
+  |                                       ^^^^^^^^^^^^^^ no `ResolveOptions` in `resolver`
+
+error[E0432]: unresolved import `farmfe_plugin_resolve::resolver::ResolveOptions`
+ --> crates/plugin_resolve/tests/exports.rs:8:39
+  |
+8 | use farmfe_plugin_resolve::resolver::{ResolveOptions, Resolver};
+  |                                       ^^^^^^^^^^^^^^ no `ResolveOptions` in `resolver`
+
+error[E0432]: unresolved import `farmfe_plugin_resolve::resolver::ResolveOptions`
+ --> crates/plugin_resolve/tests/side_effects.rs:4:39
+  |
+4 | use farmfe_plugin_resolve::resolver::{ResolveOptions, Resolver};
+  |                                       ^^^^^^^^^^^^^^ no `ResolveOptions` in `resolver`
+
+error[E0432]: unresolved import `farmfe_plugin_resolve::resolver::ResolveOptions`
+ --> crates/plugin_resolve/tests/browser.rs:8:39
+  |
+8 | use farmfe_plugin_resolve::resolver::{ResolveOptions, Resolver};
+  |                                       ^^^^^^^^^^^^^^ no `ResolveOptions` in `resolver`
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/side_effects.rs:13:29
+   |
+13 |       let resolved = resolver.resolve(
+   |                               ^^^^^^^
+...
+17 |         &ResolveOptions::default(),
+   |  _________________________________-
+18 | |       &Arc::new(CompilationContext::default()),
+   | |       ----------------------------------------
+   | |_______|______________________________________|
+   |         |                                      help: remove the extra argument
+   |         unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/imports.rs:21:31
+   |
+21 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+25 |           &ResolveOptions::default(),
+   |  ___________________________________-
+26 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/mod.rs:19:31
+   |
+19 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+23 |           &ResolveOptions::default(),
+   |  ___________________________________-
+24 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/exports.rs:19:31
+   |
+19 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+23 |           &ResolveOptions::default(),
+   |  ___________________________________-
+24 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/browser.rs:21:31
+   |
+21 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+25 |           &ResolveOptions::default(),
+   |  ___________________________________-
+26 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/side_effects.rs:41:29
+   |
+41 |       let resolved = resolver.resolve(
+   |                               ^^^^^^^
+...
+45 |         &ResolveOptions::default(),
+   |  _________________________________-
+46 | |       &Arc::new(CompilationContext::default()),
+   | |       ----------------------------------------
+   | |_______|______________________________________|
+   |         |                                      help: remove the extra argument
+   |         unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/imports.rs:53:31
+   |
+53 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+57 |           &ResolveOptions::default(),
+   |  ___________________________________-
+58 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/mod.rs:44:31
+   |
+44 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+48 |           &ResolveOptions::default(),
+   |  ___________________________________-
+49 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/mod.rs:53:31
+   |
+53 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+57 |           &ResolveOptions::default(),
+   |  ___________________________________-
+58 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/exports.rs:50:31
+   |
+50 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+54 |           &ResolveOptions::default(),
+   |  ___________________________________-
+55 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/side_effects.rs:69:29
+   |
+69 |       let resolved = resolver.resolve(
+   |                               ^^^^^^^
+...
+73 |         &ResolveOptions::default(),
+   |  _________________________________-
+74 | |       &Arc::new(CompilationContext::default()),
+   | |       ----------------------------------------
+   | |_______|______________________________________|
+   |         |                                      help: remove the extra argument
+   |         unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/imports.rs:85:31
+   |
+85 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+89 |           &ResolveOptions::default(),
+   |  ___________________________________-
+90 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/mod.rs:77:31
+   |
+77 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+81 |           &ResolveOptions::default(),
+   |  ___________________________________-
+82 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/exports.rs:70:31
+   |
+70 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+74 |           &ResolveOptions::default(),
+   |  ___________________________________-
+75 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:99:31
+    |
+99  |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+103 |           &ResolveOptions::default(),
+    |  ___________________________________-
+104 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/exports.rs:90:31
+   |
+90 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+94 |           &ResolveOptions::default(),
+   |  ___________________________________-
+95 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/imports.rs:118:31
+    |
+118 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+122 |           &ResolveOptions::default(),
+    |  ___________________________________-
+123 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:121:31
+    |
+121 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+125 |           &ResolveOptions::default(),
+    |  ___________________________________-
+126 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:110:31
+    |
+110 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+114 |           &ResolveOptions::default(),
+    |  ___________________________________-
+115 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:144:31
+    |
+144 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+148 |           &ResolveOptions::default(),
+    |  ___________________________________-
+149 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:167:31
+    |
+167 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+171 |           &ResolveOptions::default(),
+    |  ___________________________________-
+172 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/browser.rs:43:31
+   |
+43 |          let resolved = resolver.resolve(
+   |                                  ^^^^^^^
+...
+47 |            &ResolveOptions::default(),
+   |  ____________________________________-
+48 | |/         &Arc::new(
+49 | ||           CompilationContext::new(
+50 | ||             Config {
+51 | ||               output: OutputConfig {
+...  ||
+59 | ||           .unwrap(),
+60 | ||         ),
+   | ||         -
+   | ||_________|
+   |  |_________help: remove the extra argument
+   |            unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/imports.rs:162:31
+    |
+162 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+166 |           &ResolveOptions::default(),
+    |  ___________________________________-
+167 | |         &Arc::new(context),
+    | |         ------------------
+    | |_________|________________|
+    |           |                help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:141:31
+    |
+141 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+145 |           &ResolveOptions::default(),
+    |  ___________________________________-
+146 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:172:31
+    |
+172 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+176 |           &ResolveOptions::default(),
+    |  ___________________________________-
+177 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/imports.rs:205:31
+    |
+205 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+209 |           &ResolveOptions::default(),
+    |  ___________________________________-
+210 | |         &Arc::new(context),
+    | |         ------------------
+    | |_________|________________|
+    |           |                help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+  --> crates/plugin_resolve/tests/browser.rs:86:31
+   |
+86 |         let resolved = resolver.resolve(
+   |                                 ^^^^^^^
+...
+90 |           &ResolveOptions::default(),
+   |  ___________________________________-
+91 | |         &Arc::new(CompilationContext::default()),
+   | |         ----------------------------------------
+   | |_________|______________________________________|
+   |           |                                      help: remove the extra argument
+   |           unexpected argument of type `&Arc<CompilationContext>`
+   |
+note: method defined here
+  --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+   |
+59 |   pub fn resolve(
+   |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:105:31
+    |
+105 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+109 |           &ResolveOptions::default(),
+    |  ___________________________________-
+110 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:202:31
+    |
+202 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+206 |           &ResolveOptions::default(),
+    |  ___________________________________-
+207 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:125:31
+    |
+125 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+129 |           &ResolveOptions::default(),
+    |  ___________________________________-
+130 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:232:31
+    |
+232 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+236 |           &ResolveOptions::default(),
+    |  ___________________________________-
+237 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:251:31
+    |
+251 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+255 |           &ResolveOptions::default(),
+    |  ___________________________________-
+256 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:155:31
+    |
+155 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+159 |           &ResolveOptions::default(),
+    |  ___________________________________-
+160 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:168:31
+    |
+168 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+172 |           &ResolveOptions::default(),
+    |  ___________________________________-
+173 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:222:29
+    |
+222 |       let resolved = resolver.resolve(
+    |                               ^^^^^^^
+...
+226 |         &ResolveOptions::default(),
+    |  _________________________________-
+227 | |       &context,
+    | |       --------
+    | |_______|______|
+    |         |      help: remove the extra argument
+    |         unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:281:31
+    |
+281 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+285 |           &ResolveOptions::default(),
+    |  ___________________________________-
+286 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:241:29
+    |
+241 |       let resolved = resolver.resolve(
+    |                               ^^^^^^^
+...
+245 |         &ResolveOptions::default(),
+    |  _________________________________-
+246 | |       &context,
+    | |       --------
+    | |_______|______|
+    |         |      help: remove the extra argument
+    |         unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:260:29
+    |
+260 |       let resolved = resolver.resolve(
+    |                               ^^^^^^^
+...
+264 |         &ResolveOptions::default(),
+    |  _________________________________-
+265 | |       &context,
+    | |       --------
+    | |_______|______|
+    |         |      help: remove the extra argument
+    |         unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:312:31
+    |
+312 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+316 |           &ResolveOptions::default(),
+    |  ___________________________________-
+317 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:280:29
+    |
+280 |       let resolved = resolver.resolve(
+    |                               ^^^^^^^
+...
+284 |         &ResolveOptions::default(),
+    |  _________________________________-
+285 | |       &context,
+    | |       --------
+    | |_______|______|
+    |         |      help: remove the extra argument
+    |         unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:200:31
+    |
+200 |          let resolved = resolver.resolve(
+    |                                  ^^^^^^^
+...
+204 |            &ResolveOptions::default(),
+    |  ____________________________________-
+205 | |/         &Arc::new(
+206 | ||           CompilationContext::new(
+207 | ||             Config {
+208 | ||               output: OutputConfig {
+...   ||
+216 | ||           .unwrap(),
+217 | ||         ),
+    | ||         -
+    | ||_________|
+    |  |_________help: remove the extra argument
+    |            unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:232:31
+    |
+232 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+236 |           &ResolveOptions::default(),
+    |  ___________________________________-
+237 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:308:29
+    |
+308 |       let resolved = resolver.resolve(
+    |                               ^^^^^^^
+...
+312 |         &ResolveOptions::default(),
+    |  _________________________________-
+313 | |       &Arc::new(CompilationContext::default()),
+    | |       ----------------------------------------
+    | |_______|______________________________________|
+    |         |                                      help: remove the extra argument
+    |         unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:342:31
+    |
+342 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+346 |           &ResolveOptions::default(),
+    |  ___________________________________-
+347 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:333:31
+    |
+333 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+337 |           &ResolveOptions::default(),
+    |  ___________________________________-
+338 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:375:31
+    |
+375 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+379 |           &ResolveOptions::default(),
+    |  ___________________________________-
+380 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:262:31
+    |
+262 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+266 |           &ResolveOptions::default(),
+    |  ___________________________________-
+267 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:395:31
+    |
+395 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+399 |           &ResolveOptions::default(),
+    |  ___________________________________-
+400 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:282:32
+    |
+282 |         let resolved1 = resolver.resolve(
+    |                                  ^^^^^^^
+...
+286 |           &ResolveOptions::default(),
+    |  ___________________________________-
+287 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:364:31
+    |
+364 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+368 |           &ResolveOptions::default(),
+    |  ___________________________________-
+369 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+Some errors have detailed explanations: E0061, E0432.
+For more information about an error, try `rustc --explain E0061`.
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:376:31
+    |
+376 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+380 |           &ResolveOptions::default(),
+    |  ___________________________________-
+381 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:426:31
+    |
+426 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+430 |           &ResolveOptions::default(),
+    |  ___________________________________-
+431 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:314:31
+    |
+314 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+318 |           &ResolveOptions::default(),
+    |  ___________________________________-
+319 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:333:32
+    |
+333 |         let resolved1 = resolver.resolve(
+    |                                  ^^^^^^^
+...
+337 |           &ResolveOptions::default(),
+    |  ___________________________________-
+338 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:407:31
+    |
+407 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+411 |           &ResolveOptions::default(),
+    |  ___________________________________-
+412 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:456:31
+    |
+456 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+460 |           &ResolveOptions::default(),
+    |  ___________________________________-
+461 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:431:31
+    |
+431 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+435 |           &ResolveOptions::default(),
+    |  ___________________________________-
+436 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/browser.rs:364:31
+    |
+364 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+368 |           &ResolveOptions::default(),
+    |  ___________________________________-
+369 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/mod.rs:464:31
+    |
+464 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+468 |           &ResolveOptions::default(),
+    |  ___________________________________-
+469 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:490:31
+    |
+490 |          let resolved = resolver.resolve(
+    |                                  ^^^^^^^
+...
+494 |            &ResolveOptions::default(),
+    |  ____________________________________-
+495 | |          // &Arc::new(CompilationContext::default()),
+496 | |/         &Arc::new(
+497 | ||           CompilationContext::new(
+498 | ||             Config {
+499 | ||               output: OutputConfig {
+...   ||
+507 | ||           .unwrap(),
+508 | ||         ),
+    | ||         -
+    | ||_________|
+    |  |_________help: remove the extra argument
+    |            unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> crates/plugin_resolve/tests/exports.rs:535:31
+    |
+535 |         let resolved = resolver.resolve(
+    |                                 ^^^^^^^
+...
+539 |           &ResolveOptions::default(),
+    |  ___________________________________-
+540 | |         &Arc::new(CompilationContext::default()),
+    | |         ----------------------------------------
+    | |_________|______________________________________|
+    |           |                                      help: remove the extra argument
+    |           unexpected argument of type `&Arc<CompilationContext>`
+    |
+note: method defined here
+   --> /workspace/repo/crates/plugin_resolve/src/resolver.rs:59:10
+    |
+59  |   pub fn resolve(
+    |          ^^^^^^^
+
+error: could not compile `farmfe_plugin_resolve` (test "side_effects") due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: could not compile `farmfe_plugin_resolve` (test "imports") due to 7 previous errors
+error: could not compile `farmfe_plugin_resolve` (test "exports") due to 20 previous errors
+error: could not compile `farmfe_plugin_resolve` (test "mod") due to 20 previous errors
+error: could not compile `farmfe_plugin_resolve` (test "browser") due to 15 previous errors
+error[E0599]: no method named `get_cache_key` found for struct `PACKAGE_JSON_LOADER` in the current scope
+  --> crates/toolkit/tests/resolve.rs:45:53
+   |
+45 |     assert!(cache.contains_key(&PACKAGE_JSON_LOADER.get_cache_key(&main, &Default::default())));
+   |                                                     ^^^^^^^^^^^^^ method not found in `PACKAGE_JSON_LOADER`
+
+error[E0599]: no method named `get_cache_key` found for struct `PACKAGE_JSON_LOADER` in the current scope
+  --> crates/toolkit/tests/resolve.rs:47:47
+   |
+47 |       cache.contains_key(&PACKAGE_JSON_LOADER.get_cache_key(&dir.join("src"), &Default::default()))
+   |                                               ^^^^^^^^^^^^^ method not found in `PACKAGE_JSON_LOADER`
+
+error[E0599]: no method named `get_cache_key` found for struct `PACKAGE_JSON_LOADER` in the current scope
+  --> crates/toolkit/tests/resolve.rs:50:42
+   |
+50 |       .contains_key(&PACKAGE_JSON_LOADER.get_cache_key(&dir.to_path_buf(), &Default::default())));
+   |                                          ^^^^^^^^^^^^^ method not found in `PACKAGE_JSON_LOADER`
+
+error[E0599]: no method named `get_cache_key` found for struct `PACKAGE_JSON_LOADER` in the current scope
+  --> crates/toolkit/tests/resolve.rs:53:33
+   |
+53 |       .get(&PACKAGE_JSON_LOADER.get_cache_key(&dir.join("src"), &Default::default()))
+   |                                 ^^^^^^^^^^^^^ method not found in `PACKAGE_JSON_LOADER`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `farmfe_toolkit` (test "resolve") due to 4 previous errors
+error: command `/usr/local/rustup/toolchains/nightly-2023-11-04-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package farmfe_plugin_resolve --package farmfe_toolkit` exited with code 101
+reward=0 graded=50 found=0 failed=0 parsed=0 framework=cargo exit_code=101

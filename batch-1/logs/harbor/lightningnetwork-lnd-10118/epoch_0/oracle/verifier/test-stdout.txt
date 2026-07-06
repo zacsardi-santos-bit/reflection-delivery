@@ -1,0 +1,63 @@
+patching file graph/db/benchmark_test.go
+patching file itest/lnd_graph_migration_test.go
+patching file sqldb/paginate_test.go
+=== RUN   TestExecuteBatchQuery
+=== PAUSE TestExecuteBatchQuery
+=== RUN   TestSQLSliceQueries
+=== PAUSE TestSQLSliceQueries
+=== RUN   TestExecutePaginatedQuery
+=== PAUSE TestExecutePaginatedQuery
+=== CONT  TestExecuteBatchQuery
+=== RUN   TestExecuteBatchQuery/empty_input_returns_nil
+=== CONT  TestExecutePaginatedQuery
+=== CONT  TestSQLSliceQueries
+    sqlite_test.go:20: Creating new SQLite DB for testing
+=== RUN   TestExecutePaginatedQuery/happy_path_multiple_pages
+=== PAUSE TestExecutePaginatedQuery/happy_path_multiple_pages
+=== RUN   TestExecuteBatchQuery/single_page_processes_all_items
+=== RUN   TestExecutePaginatedQuery/empty_results
+=== PAUSE TestExecutePaginatedQuery/empty_results
+=== RUN   TestExecutePaginatedQuery/single_page
+=== RUN   TestExecuteBatchQuery/multiple_pages_process_correctly
+=== RUN   TestExecuteBatchQuery/query_function_error_is_propagated
+=== RUN   TestExecuteBatchQuery/callback_error_is_propagated
+=== RUN   TestExecuteBatchQuery/query_error_in_second_page_is_propagated
+--- PASS: TestExecuteBatchQuery (0.00s)
+    --- PASS: TestExecuteBatchQuery/empty_input_returns_nil (0.00s)
+    --- PASS: TestExecuteBatchQuery/single_page_processes_all_items (0.00s)
+    --- PASS: TestExecuteBatchQuery/multiple_pages_process_correctly (0.00s)
+    --- PASS: TestExecuteBatchQuery/query_function_error_is_propagated (0.00s)
+    --- PASS: TestExecuteBatchQuery/callback_error_is_propagated (0.00s)
+    --- PASS: TestExecuteBatchQuery/query_error_in_second_page_is_propagated (0.00s)
+=== PAUSE TestExecutePaginatedQuery/single_page
+=== RUN   TestExecutePaginatedQuery/query_error_first_call
+=== PAUSE TestExecutePaginatedQuery/query_error_first_call
+=== RUN   TestExecutePaginatedQuery/query_error_second_call
+=== PAUSE TestExecutePaginatedQuery/query_error_second_call
+=== RUN   TestExecutePaginatedQuery/process_error_first_item
+=== PAUSE TestExecutePaginatedQuery/process_error_first_item
+=== RUN   TestExecutePaginatedQuery/process_error_second_item
+=== PAUSE TestExecutePaginatedQuery/process_error_second_item
+=== RUN   TestExecutePaginatedQuery/different_initial_cursor
+=== PAUSE TestExecutePaginatedQuery/different_initial_cursor
+=== CONT  TestExecutePaginatedQuery/happy_path_multiple_pages
+=== CONT  TestExecutePaginatedQuery/query_error_first_call
+=== CONT  TestExecutePaginatedQuery/query_error_second_call
+=== CONT  TestExecutePaginatedQuery/single_page
+=== CONT  TestExecutePaginatedQuery/process_error_second_item
+=== CONT  TestExecutePaginatedQuery/empty_results
+=== CONT  TestExecutePaginatedQuery/process_error_first_item
+=== CONT  TestExecutePaginatedQuery/different_initial_cursor
+--- PASS: TestExecutePaginatedQuery (0.00s)
+    --- PASS: TestExecutePaginatedQuery/happy_path_multiple_pages (0.00s)
+    --- PASS: TestExecutePaginatedQuery/query_error_first_call (0.00s)
+    --- PASS: TestExecutePaginatedQuery/single_page (0.00s)
+    --- PASS: TestExecutePaginatedQuery/empty_results (0.00s)
+    --- PASS: TestExecutePaginatedQuery/process_error_second_item (0.00s)
+    --- PASS: TestExecutePaginatedQuery/query_error_second_call (0.00s)
+    --- PASS: TestExecutePaginatedQuery/process_error_first_item (0.00s)
+    --- PASS: TestExecutePaginatedQuery/different_initial_cursor (0.00s)
+--- PASS: TestSQLSliceQueries (5.89s)
+PASS
+ok  	github.com/lightningnetwork/lnd/sqldb	5.903s
+reward=1 graded=17 found=0 failed=0 parsed=0 framework=go exit_code=0

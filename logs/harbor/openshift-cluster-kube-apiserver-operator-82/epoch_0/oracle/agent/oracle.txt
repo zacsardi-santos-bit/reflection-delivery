@@ -1,2 +1,0 @@
-patching file cmd/cluster-kube-apiserver-operator/main.go
-patching file pkg/cmd/installer/cmd.go

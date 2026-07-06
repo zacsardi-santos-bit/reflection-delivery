@@ -1,0 +1,238 @@
+patching file adyen_test.go
+patching file checkout_gateway_test.go
+patching file checkout_test.go
+patching file environment_test.go
+{"Time":"2026-06-29T15:15:05.117669213Z","Action":"start","Package":"github.com/zhutik/adyen-api-go"}
+{"Time":"2026-06-29T15:15:05.141808502Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithTimeout"}
+{"Time":"2026-06-29T15:15:05.141926691Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithTimeout","Output":"=== RUN   TestNewWithTimeout\n"}
+{"Time":"2026-06-29T15:15:05.141977711Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithTimeout","Output":"--- PASS: TestNewWithTimeout (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.142198542Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithTimeout","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.142523211Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithCurrency"}
+{"Time":"2026-06-29T15:15:05.142589142Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithCurrency","Output":"=== RUN   TestNewWithCurrency\n"}
+{"Time":"2026-06-29T15:15:05.142950602Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithCurrency","Output":"--- PASS: TestNewWithCurrency (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.143041362Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithCurrency","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.143082202Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithCustomOptions"}
+{"Time":"2026-06-29T15:15:05.143096831Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithCustomOptions","Output":"=== RUN   TestNewWithCustomOptions\n"}
+{"Time":"2026-06-29T15:15:05.143117751Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithCustomOptions","Output":"--- PASS: TestNewWithCustomOptions (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.143163111Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestNewWithCustomOptions","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.143180331Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal"}
+{"Time":"2026-06-29T15:15:05.143202842Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal","Output":"=== RUN   TestStringBool_Unmarshal\n"}
+{"Time":"2026-06-29T15:15:05.143545811Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/empty"}
+{"Time":"2026-06-29T15:15:05.143591591Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/empty","Output":"=== RUN   TestStringBool_Unmarshal/empty\n"}
+{"Time":"2026-06-29T15:15:05.144479861Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/empty","Output":"--- PASS: TestStringBool_Unmarshal/empty (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.144698751Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/empty","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.144743651Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/true"}
+{"Time":"2026-06-29T15:15:05.144814841Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/true","Output":"=== RUN   TestStringBool_Unmarshal/true\n"}
+{"Time":"2026-06-29T15:15:05.144836431Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/true","Output":"--- PASS: TestStringBool_Unmarshal/true (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.144858061Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/true","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.144868811Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/TRUE"}
+{"Time":"2026-06-29T15:15:05.144879211Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/TRUE","Output":"=== RUN   TestStringBool_Unmarshal/TRUE\n"}
+{"Time":"2026-06-29T15:15:05.144890241Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/TRUE","Output":"--- PASS: TestStringBool_Unmarshal/TRUE (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.144909521Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/TRUE","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.144928741Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/1"}
+{"Time":"2026-06-29T15:15:05.144938441Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/1","Output":"=== RUN   TestStringBool_Unmarshal/1\n"}
+{"Time":"2026-06-29T15:15:05.144949401Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/1","Output":"--- PASS: TestStringBool_Unmarshal/1 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.144959711Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/1","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.144969771Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces"}
+{"Time":"2026-06-29T15:15:05.144981281Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces","Output":"=== RUN   TestStringBool_Unmarshal/spaces\n"}
+{"Time":"2026-06-29T15:15:05.144991581Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces","Output":"--- PASS: TestStringBool_Unmarshal/spaces (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.145003771Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.145013911Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/false"}
+{"Time":"2026-06-29T15:15:05.145023381Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/false","Output":"=== RUN   TestStringBool_Unmarshal/false\n"}
+{"Time":"2026-06-29T15:15:05.145039101Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/false","Output":"--- PASS: TestStringBool_Unmarshal/false (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.145049131Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/false","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.145183031Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/FALSE"}
+{"Time":"2026-06-29T15:15:05.145201241Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/FALSE","Output":"=== RUN   TestStringBool_Unmarshal/FALSE\n"}
+{"Time":"2026-06-29T15:15:05.145219231Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/FALSE","Output":"--- PASS: TestStringBool_Unmarshal/FALSE (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.145234391Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/FALSE","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.145406271Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/0"}
+{"Time":"2026-06-29T15:15:05.145444001Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/0","Output":"=== RUN   TestStringBool_Unmarshal/0\n"}
+{"Time":"2026-06-29T15:15:05.145466961Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/0","Output":"--- PASS: TestStringBool_Unmarshal/0 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.145481921Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/0","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.145509131Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces#01"}
+{"Time":"2026-06-29T15:15:05.145532291Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces#01","Output":"=== RUN   TestStringBool_Unmarshal/spaces#01\n"}
+{"Time":"2026-06-29T15:15:05.146454701Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces#01","Output":"--- PASS: TestStringBool_Unmarshal/spaces#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.146633161Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces#01","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.146669791Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces#02"}
+{"Time":"2026-06-29T15:15:05.146687811Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces#02","Output":"=== RUN   TestStringBool_Unmarshal/spaces#02\n"}
+{"Time":"2026-06-29T15:15:05.146708861Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces#02","Output":"--- PASS: TestStringBool_Unmarshal/spaces#02 (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.146721151Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal/spaces#02","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.146733951Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal","Output":"--- PASS: TestStringBool_Unmarshal (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.146746881Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestStringBool_Unmarshal","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.146759251Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods"}
+{"Time":"2026-06-29T15:15:05.146910461Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods","Output":"=== RUN   TestPaymentMethods\n"}
+{"Time":"2026-06-29T15:15:05.146943031Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods","Output":"=== PAUSE TestPaymentMethods\n"}
+{"Time":"2026-06-29T15:15:05.146978361Z","Action":"pause","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods"}
+{"Time":"2026-06-29T15:15:05.147062771Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseMerchantAccount"}
+{"Time":"2026-06-29T15:15:05.147108741Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseMerchantAccount","Output":"=== RUN   TestPaymentMethodsResponse_ParseMerchantAccount\n"}
+{"Time":"2026-06-29T15:15:05.147141021Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseMerchantAccount","Output":"--- PASS: TestPaymentMethodsResponse_ParseMerchantAccount (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147192981Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseMerchantAccount","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147205861Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseCountryAmount"}
+{"Time":"2026-06-29T15:15:05.147215821Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseCountryAmount","Output":"=== RUN   TestPaymentMethodsResponse_ParseCountryAmount\n"}
+{"Time":"2026-06-29T15:15:05.147237621Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseCountryAmount","Output":"--- PASS: TestPaymentMethodsResponse_ParseCountryAmount (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147251191Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseCountryAmount","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147264571Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseOneClick"}
+{"Time":"2026-06-29T15:15:05.147275381Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseOneClick","Output":"=== RUN   TestPaymentMethodsResponse_ParseOneClick\n"}
+{"Time":"2026-06-29T15:15:05.147286331Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseOneClick","Output":"--- PASS: TestPaymentMethodsResponse_ParseOneClick (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147306641Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethodsResponse_ParseOneClick","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147319581Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestTestEnvironment"}
+{"Time":"2026-06-29T15:15:05.147330891Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestTestEnvironment","Output":"=== RUN   TestTestEnvironment\n"}
+{"Time":"2026-06-29T15:15:05.147353761Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestTestEnvironment","Output":"--- PASS: TestTestEnvironment (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147365321Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestTestEnvironment","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147375481Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestBaseURLEnvironmentTesting"}
+{"Time":"2026-06-29T15:15:05.147385241Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestBaseURLEnvironmentTesting","Output":"=== RUN   TestBaseURLEnvironmentTesting\n"}
+{"Time":"2026-06-29T15:15:05.147395971Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestBaseURLEnvironmentTesting","Output":"--- PASS: TestBaseURLEnvironmentTesting (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147406011Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestBaseURLEnvironmentTesting","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147423981Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestClientURLEnvironmentTesting"}
+{"Time":"2026-06-29T15:15:05.147433431Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestClientURLEnvironmentTesting","Output":"=== RUN   TestClientURLEnvironmentTesting\n"}
+{"Time":"2026-06-29T15:15:05.147443881Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestClientURLEnvironmentTesting","Output":"--- PASS: TestClientURLEnvironmentTesting (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147454121Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestClientURLEnvironmentTesting","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147482961Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestHppURLEnvironmentTest"}
+{"Time":"2026-06-29T15:15:05.147493781Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestHppURLEnvironmentTest","Output":"=== RUN   TestHppURLEnvironmentTest\n"}
+{"Time":"2026-06-29T15:15:05.147509431Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestHppURLEnvironmentTest","Output":"--- PASS: TestHppURLEnvironmentTest (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147519721Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestHppURLEnvironmentTest","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147534341Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCheckoutURLEnvironmentTesting"}
+{"Time":"2026-06-29T15:15:05.147543711Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCheckoutURLEnvironmentTesting","Output":"=== RUN   TestCheckoutURLEnvironmentTesting\n"}
+{"Time":"2026-06-29T15:15:05.147569231Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCheckoutURLEnvironmentTesting","Output":"--- PASS: TestCheckoutURLEnvironmentTesting (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147584261Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCheckoutURLEnvironmentTesting","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147609701Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation"}
+{"Time":"2026-06-29T15:15:05.147631561Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation","Output":"=== RUN   TestEnvironmentProductionValidation\n"}
+{"Time":"2026-06-29T15:15:05.147712901Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_random"}
+{"Time":"2026-06-29T15:15:05.147735671Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_random","Output":"=== RUN   TestEnvironmentProductionValidation/missing_random\n"}
+{"Time":"2026-06-29T15:15:05.147755461Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_random","Output":"--- PASS: TestEnvironmentProductionValidation/missing_random (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147767501Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_random","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147785841Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_company_name"}
+{"Time":"2026-06-29T15:15:05.147797431Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_company_name","Output":"=== RUN   TestEnvironmentProductionValidation/missing_company_name\n"}
+{"Time":"2026-06-29T15:15:05.147810411Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_company_name","Output":"--- PASS: TestEnvironmentProductionValidation/missing_company_name (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147829021Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_company_name","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147840491Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_random_and_company_name"}
+{"Time":"2026-06-29T15:15:05.147854721Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_random_and_company_name","Output":"=== RUN   TestEnvironmentProductionValidation/missing_random_and_company_name\n"}
+{"Time":"2026-06-29T15:15:05.147874061Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_random_and_company_name","Output":"--- PASS: TestEnvironmentProductionValidation/missing_random_and_company_name (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147885791Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation/missing_random_and_company_name","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147897811Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation","Output":"--- PASS: TestEnvironmentProductionValidation (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147915791Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestEnvironmentProductionValidation","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.147934351Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestBaseURLEnvironmentProduction"}
+{"Time":"2026-06-29T15:15:05.147945801Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestBaseURLEnvironmentProduction","Output":"=== RUN   TestBaseURLEnvironmentProduction\n"}
+{"Time":"2026-06-29T15:15:05.147969291Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestBaseURLEnvironmentProduction","Output":"--- PASS: TestBaseURLEnvironmentProduction (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.147988631Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestBaseURLEnvironmentProduction","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.148012531Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestClientURLEnvironmentProduction"}
+{"Time":"2026-06-29T15:15:05.148031921Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestClientURLEnvironmentProduction","Output":"=== RUN   TestClientURLEnvironmentProduction\n"}
+{"Time":"2026-06-29T15:15:05.148051991Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestClientURLEnvironmentProduction","Output":"--- PASS: TestClientURLEnvironmentProduction (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.148069491Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestClientURLEnvironmentProduction","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.148087631Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestHppURLEnvironmentProduction"}
+{"Time":"2026-06-29T15:15:05.148098881Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestHppURLEnvironmentProduction","Output":"=== RUN   TestHppURLEnvironmentProduction\n"}
+{"Time":"2026-06-29T15:15:05.148110951Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestHppURLEnvironmentProduction","Output":"--- PASS: TestHppURLEnvironmentProduction (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.148149881Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestHppURLEnvironmentProduction","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.148186161Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCheckoutURLEnvironmentProduction"}
+{"Time":"2026-06-29T15:15:05.148200191Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCheckoutURLEnvironmentProduction","Output":"=== RUN   TestCheckoutURLEnvironmentProduction\n"}
+{"Time":"2026-06-29T15:15:05.148222181Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCheckoutURLEnvironmentProduction","Output":"--- PASS: TestCheckoutURLEnvironmentProduction (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.148247801Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCheckoutURLEnvironmentProduction","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.148266721Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestNotificationRequest"}
+{"Time":"2026-06-29T15:15:05.148289321Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNotificationRequest","Output":"=== RUN   TestNotificationRequest\n"}
+{"Time":"2026-06-29T15:15:05.148311851Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNotificationRequest","Output":"=== PAUSE TestNotificationRequest\n"}
+{"Time":"2026-06-29T15:15:05.148321941Z","Action":"pause","Package":"github.com/zhutik/adyen-api-go","Test":"TestNotificationRequest"}
+{"Time":"2026-06-29T15:15:05.148344871Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseErrorResponseStatus"}
+{"Time":"2026-06-29T15:15:05.148355161Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseErrorResponseStatus","Output":"=== RUN   TestResponseErrorResponseStatus\n"}
+{"Time":"2026-06-29T15:15:05.148379731Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseErrorResponseStatus","Output":"=== PAUSE TestResponseErrorResponseStatus\n"}
+{"Time":"2026-06-29T15:15:05.148394741Z","Action":"pause","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseErrorResponseStatus"}
+{"Time":"2026-06-29T15:15:05.148893011Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseNotValidJson"}
+{"Time":"2026-06-29T15:15:05.148975211Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseNotValidJson","Output":"=== RUN   TestResponseNotValidJson\n"}
+{"Time":"2026-06-29T15:15:05.149090441Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseNotValidJson","Output":"=== PAUSE TestResponseNotValidJson\n"}
+{"Time":"2026-06-29T15:15:05.149103821Z","Action":"pause","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseNotValidJson"}
+{"Time":"2026-06-29T15:15:05.149118461Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse"}
+{"Time":"2026-06-29T15:15:05.149155511Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse","Output":"=== RUN   TestCaptureResponse\n"}
+{"Time":"2026-06-29T15:15:05.149228001Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse/capture_response"}
+{"Time":"2026-06-29T15:15:05.149246101Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse/capture_response","Output":"=== RUN   TestCaptureResponse/capture_response\n"}
+{"Time":"2026-06-29T15:15:05.149483311Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse/capture_response","Output":"--- PASS: TestCaptureResponse/capture_response (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.149596611Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse/capture_response","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.149666621Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse/capture_returns_errors"}
+{"Time":"2026-06-29T15:15:05.149682111Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse/capture_returns_errors","Output":"=== RUN   TestCaptureResponse/capture_returns_errors\n"}
+{"Time":"2026-06-29T15:15:05.149765061Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse/capture_returns_errors","Output":"--- PASS: TestCaptureResponse/capture_returns_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.149783471Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse/capture_returns_errors","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.149796111Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse","Output":"--- PASS: TestCaptureResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.149812451Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCaptureResponse","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.149833901Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse"}
+{"Time":"2026-06-29T15:15:05.149844901Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse","Output":"=== RUN   TestCancelResponse\n"}
+{"Time":"2026-06-29T15:15:05.149959031Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse/cancel_response"}
+{"Time":"2026-06-29T15:15:05.149980361Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse/cancel_response","Output":"=== RUN   TestCancelResponse/cancel_response\n"}
+{"Time":"2026-06-29T15:15:05.150002661Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse/cancel_response","Output":"--- PASS: TestCancelResponse/cancel_response (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150224551Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse/cancel_response","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150267551Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse/cancel_returns_errors"}
+{"Time":"2026-06-29T15:15:05.150287451Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse/cancel_returns_errors","Output":"=== RUN   TestCancelResponse/cancel_returns_errors\n"}
+{"Time":"2026-06-29T15:15:05.150303901Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse/cancel_returns_errors","Output":"--- PASS: TestCancelResponse/cancel_returns_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150318791Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse/cancel_returns_errors","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150332761Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse","Output":"--- PASS: TestCancelResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150345601Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelResponse","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150357721Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse"}
+{"Time":"2026-06-29T15:15:05.150372881Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse","Output":"=== RUN   TestCancelOrRefundResponse\n"}
+{"Time":"2026-06-29T15:15:05.150392991Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse/cancelOrRefund_response"}
+{"Time":"2026-06-29T15:15:05.150419791Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse/cancelOrRefund_response","Output":"=== RUN   TestCancelOrRefundResponse/cancelOrRefund_response\n"}
+{"Time":"2026-06-29T15:15:05.150433951Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse/cancelOrRefund_response","Output":"--- PASS: TestCancelOrRefundResponse/cancelOrRefund_response (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150449831Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse/cancelOrRefund_response","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150465041Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse/cancelOrRefund_returns_errors"}
+{"Time":"2026-06-29T15:15:05.150476841Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse/cancelOrRefund_returns_errors","Output":"=== RUN   TestCancelOrRefundResponse/cancelOrRefund_returns_errors\n"}
+{"Time":"2026-06-29T15:15:05.150490201Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse/cancelOrRefund_returns_errors","Output":"--- PASS: TestCancelOrRefundResponse/cancelOrRefund_returns_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150590791Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse/cancelOrRefund_returns_errors","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150626111Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse","Output":"--- PASS: TestCancelOrRefundResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150637001Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestCancelOrRefundResponse","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150648351Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse"}
+{"Time":"2026-06-29T15:15:05.150658111Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse","Output":"=== RUN   TestRefundResponse\n"}
+{"Time":"2026-06-29T15:15:05.150674031Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse/refund_response"}
+{"Time":"2026-06-29T15:15:05.150684951Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse/refund_response","Output":"=== RUN   TestRefundResponse/refund_response\n"}
+{"Time":"2026-06-29T15:15:05.150700741Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse/refund_response","Output":"--- PASS: TestRefundResponse/refund_response (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150735521Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse/refund_response","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150818591Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse/refund_returns_errors"}
+{"Time":"2026-06-29T15:15:05.150832891Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse/refund_returns_errors","Output":"=== RUN   TestRefundResponse/refund_returns_errors\n"}
+{"Time":"2026-06-29T15:15:05.150850221Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse/refund_returns_errors","Output":"--- PASS: TestRefundResponse/refund_returns_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150867021Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse/refund_returns_errors","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150901881Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse","Output":"--- PASS: TestRefundResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.150912191Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestRefundResponse","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.150927551Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse"}
+{"Time":"2026-06-29T15:15:05.150942821Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse","Output":"=== RUN   TestAdjustAuthorisationResponse\n"}
+{"Time":"2026-06-29T15:15:05.151029151Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse/adjustAuthorisation_response"}
+{"Time":"2026-06-29T15:15:05.151055271Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse/adjustAuthorisation_response","Output":"=== RUN   TestAdjustAuthorisationResponse/adjustAuthorisation_response\n"}
+{"Time":"2026-06-29T15:15:05.151082621Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse/adjustAuthorisation_response","Output":"--- PASS: TestAdjustAuthorisationResponse/adjustAuthorisation_response (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.151105421Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse/adjustAuthorisation_response","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.151167821Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse/adjustAuthorisation_returns_errors"}
+{"Time":"2026-06-29T15:15:05.151193071Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse/adjustAuthorisation_returns_errors","Output":"=== RUN   TestAdjustAuthorisationResponse/adjustAuthorisation_returns_errors\n"}
+{"Time":"2026-06-29T15:15:05.151213751Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse/adjustAuthorisation_returns_errors","Output":"--- PASS: TestAdjustAuthorisationResponse/adjustAuthorisation_returns_errors (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.151235271Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse/adjustAuthorisation_returns_errors","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.151255021Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse","Output":"--- PASS: TestAdjustAuthorisationResponse (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.151273571Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestAdjustAuthorisationResponse","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.151320071Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignature"}
+{"Time":"2026-06-29T15:15:05.151332221Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignature","Output":"=== RUN   TestSignatureCalculateSignature\n"}
+{"Time":"2026-06-29T15:15:05.151356311Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignature","Output":"=== PAUSE TestSignatureCalculateSignature\n"}
+{"Time":"2026-06-29T15:15:05.151367851Z","Action":"pause","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignature"}
+{"Time":"2026-06-29T15:15:05.151386971Z","Action":"run","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignatureForSkipHppRequest"}
+{"Time":"2026-06-29T15:15:05.151418861Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignatureForSkipHppRequest","Output":"=== RUN   TestSignatureCalculateSignatureForSkipHppRequest\n"}
+{"Time":"2026-06-29T15:15:05.151448101Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignatureForSkipHppRequest","Output":"=== PAUSE TestSignatureCalculateSignatureForSkipHppRequest\n"}
+{"Time":"2026-06-29T15:15:05.151465081Z","Action":"pause","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignatureForSkipHppRequest"}
+{"Time":"2026-06-29T15:15:05.151486131Z","Action":"cont","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods"}
+{"Time":"2026-06-29T15:15:05.151718391Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods","Output":"=== CONT  TestPaymentMethods\n"}
+{"Time":"2026-06-29T15:15:05.152179831Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods","Output":"    checkout_gateway_test.go:10: This test requires CheckoutAPI access.  To obtain, visit https://docs.adyen.com/developers/user-management/how-to-get-the-checkout-api-key.\n"}
+{"Time":"2026-06-29T15:15:05.152280131Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods","Output":"--- SKIP: TestPaymentMethods (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.152305791Z","Action":"skip","Package":"github.com/zhutik/adyen-api-go","Test":"TestPaymentMethods","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.152325401Z","Action":"cont","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseNotValidJson"}
+{"Time":"2026-06-29T15:15:05.152357491Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseNotValidJson","Output":"=== CONT  TestResponseNotValidJson\n"}
+{"Time":"2026-06-29T15:15:05.152483671Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseNotValidJson","Output":"--- PASS: TestResponseNotValidJson (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.152644081Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseNotValidJson","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.152830041Z","Action":"cont","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignature"}
+{"Time":"2026-06-29T15:15:05.152859031Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignature","Output":"=== CONT  TestSignatureCalculateSignature\n"}
+{"Time":"2026-06-29T15:15:05.153018061Z","Action":"cont","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignatureForSkipHppRequest"}
+{"Time":"2026-06-29T15:15:05.153338291Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignatureForSkipHppRequest","Output":"=== CONT  TestSignatureCalculateSignatureForSkipHppRequest\n"}
+{"Time":"2026-06-29T15:15:05.153394311Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignature","Output":"--- PASS: TestSignatureCalculateSignature (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.153408421Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignature","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.153420781Z","Action":"cont","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseErrorResponseStatus"}
+{"Time":"2026-06-29T15:15:05.153432601Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseErrorResponseStatus","Output":"=== CONT  TestResponseErrorResponseStatus\n"}
+{"Time":"2026-06-29T15:15:05.153458341Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignatureForSkipHppRequest","Output":"--- PASS: TestSignatureCalculateSignatureForSkipHppRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.153483801Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestSignatureCalculateSignatureForSkipHppRequest","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.153498341Z","Action":"cont","Package":"github.com/zhutik/adyen-api-go","Test":"TestNotificationRequest"}
+{"Time":"2026-06-29T15:15:05.153520991Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNotificationRequest","Output":"=== CONT  TestNotificationRequest\n"}
+{"Time":"2026-06-29T15:15:05.153552171Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseErrorResponseStatus","Output":"--- PASS: TestResponseErrorResponseStatus (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.153574951Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestResponseErrorResponseStatus","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.153604141Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Test":"TestNotificationRequest","Output":"--- PASS: TestNotificationRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:15:05.153662821Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Test":"TestNotificationRequest","Elapsed":0}
+{"Time":"2026-06-29T15:15:05.153680431Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Output":"PASS\n"}
+{"Time":"2026-06-29T15:15:05.15513997Z","Action":"output","Package":"github.com/zhutik/adyen-api-go","Output":"ok  \tgithub.com/zhutik/adyen-api-go\t0.037s\n"}
+{"Time":"2026-06-29T15:15:05.15519793Z","Action":"pass","Package":"github.com/zhutik/adyen-api-go","Elapsed":0.038}
+reward=1 graded=50 found=50 failed=0 parsed=51 framework=go exit_code=0

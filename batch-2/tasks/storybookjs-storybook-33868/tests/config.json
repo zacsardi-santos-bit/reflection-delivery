@@ -1,0 +1,19 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code && NODE_OPTIONS=--max_old_space_size=4096 yarn vitest run --config core/vitest.config.ts --reporter=verbose core/src/core-server/utils/safeString.test.ts",
+  "test_files": [
+    "code/core/src/core-server/utils/get-new-story-file.test.ts",
+    "code/core/src/core-server/utils/safeString.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/core/src/core-server/utils/safeString.test.ts::safeString escapeForTemplate should escape backticks in template strings",
+    "/workspace/repo/code/core/src/core-server/utils/safeString.test.ts::safeString escapeForTemplate should escape dollar signs for template expressions",
+    "/workspace/repo/code/core/src/core-server/utils/safeString.test.ts::safeString escapeForTemplate should escape backslashes",
+    "/workspace/repo/code/core/src/core-server/utils/safeString.test.ts::safeString escapeForTemplate should escape quotes",
+    "/workspace/repo/code/core/src/core-server/utils/safeString.test.ts::safeString escapeForTemplate should handle multiple special characters",
+    "/workspace/repo/code/core/src/core-server/utils/safeString.test.ts::safeString escapeForTemplate should preserve normal file paths"
+  ],
+  "PASS_TO_PASS": []
+}

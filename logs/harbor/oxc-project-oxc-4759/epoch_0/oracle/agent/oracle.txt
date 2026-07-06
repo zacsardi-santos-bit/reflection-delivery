@@ -1,4 +1,0 @@
-patching file crates/oxc_minifier/src/lib.rs
-patching file crates/oxc_minifier/src/plugins/inject_global_variables.rs
-patching file crates/oxc_minifier/src/plugins/mod.rs
-patching file crates/oxc_minifier/src/plugins/replace_global_defines.rs

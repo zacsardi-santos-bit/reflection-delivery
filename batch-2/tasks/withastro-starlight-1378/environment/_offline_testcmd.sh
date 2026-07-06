@@ -1,0 +1,1 @@
+cd /workspace/repo && pnpm install --frozen-lockfile > /dev/null 2>&1 && cd packages/tailwind && compact-vitest run __tests__/tailwind.test.ts

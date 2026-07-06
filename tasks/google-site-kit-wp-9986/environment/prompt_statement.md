@@ -1,5 +1,0 @@
-I'm working on migrating the consent mode setup banner in Site Kit to use the centralized notification system instead of being a standalone widget component. Right now it has its own bespoke visibility logic and is rendered independently in the dashboard. I want it to be registered as a proper notification with requirements that the notification system can evaluate to decide when to show it.
-
-The banner should only appear when a user has ads connected but has not yet enabled consent mode — if consent mode is already enabled or ads isn't connected, the notification shouldn't be active. I need the registration to include this requirement check so the system knows when to display it.
-
-At the same time, the component itself needs to be updated to accept the standard props that the notification system passes (such as a unique identifier and a wrapper component for the notification), rather than the widget-system props it currently expects. The component should also return nothing when the banner has been dismissed or while dismissal state is still being loaded.

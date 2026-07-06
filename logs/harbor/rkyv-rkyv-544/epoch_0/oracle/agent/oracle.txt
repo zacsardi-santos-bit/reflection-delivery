@@ -1,7 +1,0 @@
-patching file rkyv_derive/src/archive/enum.rs
-patching file rkyv_derive/src/archive/mod.rs
-patching file rkyv_derive/src/archive/struct.rs
-patching file rkyv_derive/src/attributes.rs
-patching file rkyv_derive/src/deserialize.rs
-patching file rkyv_derive/src/serialize.rs
-patching file rkyv_derive/src/util.rs

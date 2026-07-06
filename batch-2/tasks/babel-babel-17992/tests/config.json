@@ -1,0 +1,19 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && NODE_OPTIONS=\"--experimental-strip-types\" BABEL_ENV=development yarn gulp build-no-bundle && NODE_OPTIONS=\"--experimental-strip-types\" BABEL_ENV=test yarn jest packages/babel-core/test/transformation.js --testNamePattern=input.source.map.external.preserve.original.name --coverage=false --ci",
+  "test_files": [
+    "packages/babel-core/test/fixtures/transformation/source-maps/input-source-map-external-preserve-original-name/input.js",
+    "packages/babel-core/test/fixtures/transformation/source-maps/input-source-map-external-preserve-original-name/input.js.map",
+    "packages/babel-core/test/fixtures/transformation/source-maps/input-source-map-external-preserve-original-name/options.json",
+    "packages/babel-core/test/fixtures/transformation/source-maps/input-source-map-external-preserve-original-name/output.mjs",
+    "packages/babel-core/test/fixtures/transformation/source-maps/input-source-map-external-preserve-original-name/plugin.js",
+    "packages/babel-core/test/fixtures/transformation/source-maps/input-source-map-external-preserve-original-name/source-map-visual.txt",
+    "packages/babel-core/test/fixtures/transformation/source-maps/input-source-map-external-preserve-original-name/source-map.json"
+  ],
+  "num_test_files": 7,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/babel-core/test/transformation.js::input source map external preserve original name"
+  ],
+  "PASS_TO_PASS": []
+}

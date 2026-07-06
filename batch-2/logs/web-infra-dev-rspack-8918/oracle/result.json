@@ -1,0 +1,29 @@
+{
+    "id": "2b4daad8-b379-4df5-a2bf-6285377bcf21",
+    "started_at": "2026-07-04T15:38:56.305370",
+    "finished_at": "2026-07-04T15:39:22.923258",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__web-infra-dev-rspack-8918": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "web-infra-dev-rspack-8918__FrJmZLo"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

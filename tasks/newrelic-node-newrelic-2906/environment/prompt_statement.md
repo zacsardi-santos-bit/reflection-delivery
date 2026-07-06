@@ -1,7 +1,0 @@
-I'm working on the New Relic Node.js agent and need to implement a bridge that captures spans created via the OpenTelemetry tracing API and converts them into New Relic transaction segments. Currently, when application code uses the OpenTelemetry API to create spans, those spans are not visible in New Relic at all — they don't show up in transaction traces and generate no metrics.
-
-The bridge should be controlled by a feature flag so it can be enabled or disabled. When the flag is off, initialization should be skipped and a warning logged. When the flag is on, spans started through the OpenTelemetry tracer should be automatically translated to New Relic segments, preserving the span name, parent-child hierarchy, and timing. Internal spans should produce custom metrics, and outbound HTTP spans should produce external call metrics with the standard naming conventions.
-
-The bridge also needs to hook into the OpenTelemetry context propagation system so that when context values tagged with New Relic synthesis metadata are propagated, the active transaction and segment state is correctly picked up by the context manager. The context object should support getting, setting, and deleting values, and should expose the active transaction and segment as properties.
-
-Successful setup should be tracked with a supportability metric. Additionally, the internal custom segment naming should use the span name directly rather than adding any prefix.

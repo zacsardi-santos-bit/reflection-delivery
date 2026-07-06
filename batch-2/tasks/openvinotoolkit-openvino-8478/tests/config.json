@@ -1,0 +1,48 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/model-optimizer/unit_tests/extensions/ops/gatherelements_test.py /workspace/repo/model-optimizer/unit_tests/extensions/ops/sparse_reshape_test.py /workspace/repo/model-optimizer/unit_tests/utils/graph.py -v",
+  "test_files": [
+    "model-optimizer/unit_tests/extensions/ops/gatherelements_test.py",
+    "model-optimizer/unit_tests/extensions/ops/sparse_reshape_test.py",
+    "model-optimizer/unit_tests/utils/graph.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_negative_shape_infer_axis_out_of_bound",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_negative_shape_infer_inconsistent_shapes",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_12",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_13",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_9",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_10",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_12",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_2",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_3",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_4",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_8"
+  ],
+  "PASS_TO_PASS": [
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_gatherelements_value_infer[([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [[1, 2, 0], [2, 0, 0]], 0, [[4, 8, 3], [7, 2, 3]])]",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_gatherelements_value_infer[([[1, 2], [3, 4]], [[0, 1], [0, 0]], -1, [[1, 2], [3, 3]])]",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_gatherelements_value_infer[([[1, 2], [3, 4]], [[0, 1], [0, 0]], 0, [[1, 4], [1, 2]])]",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_gatherelements_value_infer[([[1, 2], [3, 4]], [[0, 1], [0, 0]], 1, [[1, 2], [3, 3]])]",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_gatherelements_value_infer[([[[1, 2], [3, 4]], [[5, 6], [7, 8]], [[9, 10], [11, 12]]], [[[1, 0], [0, 1]], [[1, 1], [1, 0]], [[0, 0], [1, 1]]], -1, [[[2, 1], [3, 4]], [[6, 6], [8, 7]], [[9, 9], [12, 12]]])]",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_negative_shape_infer_ranks_differ",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_1",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_10",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_11",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_2",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_3",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_4",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_5",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_6",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_7",
+    "unit_tests.extensions.ops.gatherelements_test.GatherElementsInferTest::test_shape_infer_8",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_1",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_11",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_5",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_6",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_7",
+    "unit_tests.extensions.ops.sparse_reshape_test.TestSparseReshape::test_sparse_shape_9"
+  ]
+}

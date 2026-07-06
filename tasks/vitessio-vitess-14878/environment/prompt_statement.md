@@ -1,7 +1,0 @@
-I'm working on a MySQL schema migration tool and I need two things done.
-
-First, the constants and function type that represent MySQL server capabilities (things like whether the server supports instant DDL, fast table drops, JSON columns, and so on) are currently embedded in the core MySQL connection package. I want to move them into a dedicated sub-package so that other parts of the codebase can use them without importing the full MySQL connection layer. All existing references throughout the codebase should be updated to point to the new location.
-
-Second, the schema comparison library needs a new public function that can determine whether a specific ALTER TABLE statement is eligible to run via instant DDL on a MySQL server with given capabilities. The function should inspect each operation in the ALTER statement — adding columns (at the end versus in the middle), dropping columns (virtual versus non-virtual, and whether the table uses compressed row format), changing column defaults, and appending values to enum or set columns — and return true only if every operation in the statement qualifies under instant DDL rules. Inserting enum values in the middle, crossing storage-size thresholds for set columns, or changing a column's data type alongside its default should all be disqualifying.
-
-Additionally, the schema diff type should gain a method that checks whether an entire collection of schema differences can be applied instantaneously, treating trivially-instantaneous operations like table creation or view changes as always qualifying.

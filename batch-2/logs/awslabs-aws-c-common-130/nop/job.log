@@ -1,0 +1,4 @@
+Trial awslabs-aws-c-common-130__YK2u8SS failed: internal server error
+Failed to download logs to /tmp/delivbatch1_jobs/awslabs-aws-c-common-130/nop_a0/2026-07-04__15-36-16/awslabs-aws-c-common-130__YK2u8SS/agent
+Convention artifacts dir not found or download failed (best-effort)
+Not retrying trial because the maximum number of retries has been reached

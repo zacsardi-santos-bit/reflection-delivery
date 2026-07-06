@@ -1,2 +1,0 @@
-patching file thirdparty/download-thirdparty.sh
-patching file thirdparty/patches/brpc-1.3.0-2479.patch

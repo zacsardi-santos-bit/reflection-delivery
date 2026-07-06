@@ -1,0 +1,29 @@
+{
+    "id": "2d8a2736-f4ab-4bcf-ba29-31f7ab49f80c",
+    "started_at": "2026-07-04T15:39:19.384445",
+    "finished_at": "2026-07-04T15:40:41.104875",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__consensys-teku-7892": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "consensys-teku-7892__x4MbrDj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

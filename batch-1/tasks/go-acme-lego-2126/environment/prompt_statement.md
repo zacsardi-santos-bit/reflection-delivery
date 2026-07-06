@@ -1,0 +1,5 @@
+I'd like to add a new DNS provider for the Shellrent hosting platform to lego so that Shellrent customers can automate ACME DNS-01 certificate challenges. Right now there's no Shellrent integration at all, so users on that platform can't use lego to manage their certificates automatically.
+
+The provider needs to authenticate using a username and API token. These credentials should be readable from environment variables, and there should also be a programmatic configuration path. Both approaches should validate that the credentials are present and return clear error messages if either one is missing.
+
+On the API side, the provider needs to list the user's purchased services, fetch details for a specific service and the domain associated with it, and create or delete DNS TXT records on that domain to satisfy the challenge. The platform only supports a fixed set of TTL values, so any TTL passed in should automatically be rounded up to the nearest valid one — and if the value is higher than the largest supported TTL, it should fall back to the smallest supported value rather than failing.

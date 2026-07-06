@@ -1,0 +1,5 @@
+patching file lib/document.js
+patching file lib/model.js
+patching file lib/modifiedPathsSnapshot.js
+patching file lib/stateMachine.js
+patching file types/document.d.ts

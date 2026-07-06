@@ -1,0 +1,579 @@
+patching file kolibri/core/content/test/utils/test_assignment.py
+patching file kolibri/core/exams/test/test_exam_api.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+django: settings: kolibri.deployment.default.settings.test (from ini)
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: Faker-40.23.0, env-1.6.0, django-3.10.0, cov-7.1.0
+collecting ... collected 45 items
+
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_downloadable_assignments__dataset_id PASSED [  2%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_downloadable_assignments__one_parameter PASSED [  4%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_downloadable_assignments__transfer_session_id PASSED [  6%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_removable_assignments__dataset_id PASSED [  8%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_removable_assignments__one_parameter PASSED [ 11%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_find_removable_assignments__transfer_session_id PASSED [ 13%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_get_assignments__lookup_func PASSED [ 15%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_get_assignments__no_lookup_func PASSED [ 17%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerTestCase::test_get_assignments__one_to_many PASSED [ 20%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__exam FAILED [ 22%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__individual_syncable_exam FAILED [ 24%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__individual_syncable_lesson PASSED [ 26%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__lesson PASSED [ 28%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_removable_assignment__lesson PASSED [ 31%]
+kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_removable_assignment__lesson__deletion PASSED [ 33%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_can_get_quiz_size PASSED [ 35%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_cannot_create_exam_same_title_case_insensitive FAILED [ 37%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_complete_mastery_logs_when_exam_is_closed PASSED [ 40%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_model_get_questions_v2_v1 FAILED [ 42%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_model_get_questions_v3 FAILED [ 44%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_invalid_exercise_id PASSED [ 46%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_invalid_question_id PASSED [ 48%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_no_counter_in_exercise_fails PASSED [ 51%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_no_exercise_id PASSED [ 53%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_no_question_id_succeeds FAILED [ 55%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_valid_question_sources_succeeds FAILED [ 57%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_get_on_older_versions_of_exam_model PASSED [ 60%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create FAILED [ 62%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create_with_assignments FAILED [ 64%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create_with_learner_assignments FAILED [ 66%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create_with_learner_assignments_for_wrong_collection PASSED [ 68%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_delete PASSED [ 71%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update PASSED [ 73%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_additional_assignments FAILED [ 75%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_different_assignments FAILED [ 77%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_no_assignments FAILED [ 80%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_user_exam_no_create FAILED [ 82%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_user_exam_no_delete PASSED [ 84%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_user_exam_no_update PASSED [ 86%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_post_exam_v2_model_fails FAILED [ 88%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_invalid_section_id PASSED [ 91%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_question_count PASSED [ 93%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_question_succeds FAILED [ 95%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_resource_pool PASSED [ 97%]
+kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_section_id PASSED [100%]
+
+=================================== FAILURES ===================================
+_ ContentAssignmentManagerIntegrationTestCase.test_on_downloadable_assignment__exam _
+
+self = <kolibri.core.content.test.utils.test_assignment.ContentAssignmentManagerIntegrationTestCase testMethod=test_on_downloadable_assignment__exam>
+
+    def test_on_downloadable_assignment__exam(self):
+        callable_mock = mock.MagicMock()
+        Exam.content_assignments.on_downloadable_assignment(callable_mock)
+        questions = [
+            {
+                "exercise_id": uuid.uuid4().hex,
+                "question_id": uuid.uuid4().hex,
+                "title": "Test question Title 1",
+                "counter_in_exercise": 0,
+            }
+        ]
+        resources = [
+            {
+                "section_id": uuid.uuid4().hex,
+                "section_title": "Test Section Title",
+                "description": "Test descripton for Section",
+                "questions": questions,
+                "resource_pool": [],
+                "question_count": len(questions),
+                "learners_see_fixed_order": False,
+            }
+        ]
+    
+        exam = Exam(
+            title="My Lesson",
+            question_count=1,
+            collection=self.classroom,
+            creator=self.admin_user,
+            active=False,
+            question_sources=resources,
+        )
+>       exam.save()
+
+kolibri/core/content/test/utils/test_assignment.py:505: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+kolibri/core/exams/models.py:204: in save
+    super(Exam, self).save(*args, **kwargs)
+kolibri/core/auth/models.py:310: in save
+    super(AbstractFacilityDataModel, self).save(*args, **kwargs)
+/usr/local/lib/python3.11/site-packages/morango/models/core.py:832: in save
+    super(SyncableModel, self).save(*args, **kwargs)
+/usr/local/lib/python3.11/site-packages/morango/models/fields/uuids.py:125: in save
+    super(UUIDModelMixin, self).save(*args, **kwargs)
+/usr/local/lib/python3.11/site-packages/django/db/models/base.py:807: in save
+    self.save_base(using=using, force_insert=force_insert,
+/usr/local/lib/python3.11/site-packages/django/db/models/base.py:846: in save_base
+    post_save.send(
+/usr/local/lib/python3.11/site-packages/django/dispatch/dispatcher.py:191: in send
+    return [
+/usr/local/lib/python3.11/site-packages/django/dispatch/dispatcher.py:192: in <listcomp>
+    (receiver, receiver(signal=self, sender=sender, **named))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+kolibri/core/content/utils/assignment.py:228: in on_save
+    callable_func(instance.dataset_id, assignments)
+kolibri/core/content/signals.py:58: in add_removal_requests
+    create_content_removal_requests(facility, assignments)
+kolibri/core/content/utils/content_request.py:121: in create_content_removal_requests
+    for assignment in removable_assignments:
+kolibri/core/content/utils/assignment.py:176: in _get_assignments
+    assignments.extend(self.lookup_func(lookup_field_value))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+question_sources = [{'section_id': '1b16305ea31f4f079bc941fce9c609cc', 'section_title': 'Test Section Title', 'description': 'Test descri... 'question_id': '52f26d733ea14ce2bb70a1dc977993c8', 'title': 'Test question Title 1', 'counter_in_exercise': 0}], ...}]
+
+    def exam_assignment_lookup(question_sources):
+        """
+        Lookup function for the ContentAssignmentManager
+        :param question_sources: a list of dicts from an Exam
+        :return: a tuple of contentnode_id and metadata
+        """
+        for question_source in question_sources:
+>           yield (question_source["exercise_id"], None)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'exercise_id'
+
+kolibri/core/exams/models.py:26: KeyError
+---------------------------- Captured stdout setup -----------------------------
+Installed 2 object(s) from 1 fixture(s)
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:50,446 Processing new content removal requests
+------------------------------ Captured log call -------------------------------
+INFO     kolibri.core.content.utils.content_request:content_request.py:120 Processing new content removal requests
+_ ContentAssignmentManagerIntegrationTestCase.test_on_downloadable_assignment__individual_syncable_exam _
+
+self = <kolibri.core.content.test.utils.test_assignment.ContentAssignmentManagerIntegrationTestCase testMethod=test_on_downloadable_assignment__individual_syncable_exam>
+
+    def test_on_downloadable_assignment__individual_syncable_exam(self):
+        callable_mock = mock.MagicMock()
+        IndividualSyncableExam.content_assignments.on_downloadable_assignment(
+            callable_mock
+        )
+        questions = [
+            {
+                "exercise_id": uuid.uuid4().hex,
+                "question_id": uuid.uuid4().hex,
+                "title": "Test question Title 1",
+                "counter_in_exercise": 0,
+            }
+        ]
+        resources = [
+            {
+                "section_id": uuid.uuid4().hex,
+                "section_title": "Test Section Title",
+                "description": "Test descripton for Section",
+                "questions": questions,
+                "resource_pool": [],
+                "question_count": len(questions),
+                "learners_see_fixed_order": False,
+            }
+        ]
+    
+        exam = Exam(
+            title="My Lesson",
+            question_count=1,
+            collection=self.classroom,
+            creator=self.admin_user,
+            active=True,
+            question_sources=resources,
+        )
+>       exam.save()
+
+kolibri/core/content/test/utils/test_assignment.py:556: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+kolibri/core/exams/models.py:204: in save
+    super(Exam, self).save(*args, **kwargs)
+kolibri/core/auth/models.py:310: in save
+    super(AbstractFacilityDataModel, self).save(*args, **kwargs)
+/usr/local/lib/python3.11/site-packages/morango/models/core.py:832: in save
+    super(SyncableModel, self).save(*args, **kwargs)
+/usr/local/lib/python3.11/site-packages/morango/models/fields/uuids.py:125: in save
+    super(UUIDModelMixin, self).save(*args, **kwargs)
+/usr/local/lib/python3.11/site-packages/django/db/models/base.py:807: in save
+    self.save_base(using=using, force_insert=force_insert,
+/usr/local/lib/python3.11/site-packages/django/db/models/base.py:846: in save_base
+    post_save.send(
+/usr/local/lib/python3.11/site-packages/django/dispatch/dispatcher.py:191: in send
+    return [
+/usr/local/lib/python3.11/site-packages/django/dispatch/dispatcher.py:192: in <listcomp>
+    (receiver, receiver(signal=self, sender=sender, **named))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+kolibri/core/content/utils/assignment.py:209: in on_save
+    callable_func(instance.dataset_id, assignments)
+kolibri/core/content/signals.py:44: in add_download_requests
+    create_content_download_requests(facility, assignments)
+kolibri/core/content/utils/content_request.py:89: in create_content_download_requests
+    for assignment in assignments:
+kolibri/core/content/utils/assignment.py:176: in _get_assignments
+    assignments.extend(self.lookup_func(lookup_field_value))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+question_sources = [{'section_id': '3a6a68bb697945c1be335320b0ff4555', 'section_title': 'Test Section Title', 'description': 'Test descri... 'question_id': 'e2a93598faad4572bad31a7e6340808b', 'title': 'Test question Title 1', 'counter_in_exercise': 0}], ...}]
+
+    def exam_assignment_lookup(question_sources):
+        """
+        Lookup function for the ContentAssignmentManager
+        :param question_sources: a list of dicts from an Exam
+        :return: a tuple of contentnode_id and metadata
+        """
+        for question_source in question_sources:
+>           yield (question_source["exercise_id"], None)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'exercise_id'
+
+kolibri/core/exams/models.py:26: KeyError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:50,694 Processing new content assignment requests
+------------------------------ Captured log call -------------------------------
+INFO     kolibri.core.content.utils.content_request:content_request.py:88 Processing new content assignment requests
+_____ ExamAPITestCase.test_cannot_create_exam_same_title_case_insensitive ______
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_cannot_create_exam_same_title_case_insensitive>
+
+    def test_cannot_create_exam_same_title_case_insensitive(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        self.post_new_exam(exam)
+        exam["title"] = "EXAM"
+        response = self.post_new_exam(exam)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+>       self.assertEqual(response.data[0]["id"], error_constants.UNIQUE)
+                         ^^^^^^^^^^^^^^^^
+E       KeyError: 0
+
+kolibri/core/exams/test/test_exam_api.py:289: KeyError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,035 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+INFO     2026-06-29 15:25:52,037 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+_____________ ExamAPITestCase.test_exam_model_get_questions_v2_v1 ______________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_exam_model_get_questions_v2_v1>
+
+    def test_exam_model_get_questions_v2_v1(self):
+        self.login_as_admin()
+        self.exam.data_model_version = 2
+        self.exam.question_sources.append(
+            {
+                "exercise_id": uuid.uuid4().hex,
+                "question_id": uuid.uuid4().hex,
+                "title": "Title",
+                "counter_in_exercise": 0,
+            }
+        )
+    
+        self.exam.save()
+>       self.assertEqual(len(self.exam.get_questions()), 1)
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Exam' object has no attribute 'get_questions'
+
+kolibri/core/exams/test/test_exam_api.py:551: AttributeError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,093 Processing new content assignment requests
+------------------------------ Captured log call -------------------------------
+INFO     kolibri.core.content.utils.content_request:content_request.py:88 Processing new content assignment requests
+_______________ ExamAPITestCase.test_exam_model_get_questions_v3 _______________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_exam_model_get_questions_v3>
+
+    def test_exam_model_get_questions_v3(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        response = self.post_new_exam(exam)
+>       exam_id = response.data["id"]
+                  ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'id'
+
+kolibri/core/exams/test/test_exam_api.py:533: KeyError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,114 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+____________ ExamAPITestCase.test_exam_with_no_question_id_succeeds ____________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_exam_with_no_question_id_succeeds>
+
+    def test_exam_with_no_question_id_succeeds(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        exam["question_sources"][0]["questions"].append(
+            {
+                "exercise_id": uuid.uuid4().hex,
+                "title": "Title",
+                "counter_in_exercise": 1,
+            }
+        )
+        response = self.post_new_exam(exam)
+>       self.assertEqual(response.status_code, 201)
+E       AssertionError: 400 != 201
+
+kolibri/core/exams/test/test_exam_api.py:360: AssertionError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,181 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+________ ExamAPITestCase.test_exam_with_valid_question_sources_succeeds ________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_exam_with_valid_question_sources_succeeds>
+
+    def test_exam_with_valid_question_sources_succeeds(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        exam["question_sources"][0]["questions"].append(
+            {
+                "exercise_id": uuid.uuid4().hex,
+                "question_id": uuid.uuid4().hex,
+                "title": "Title",
+                "counter_in_exercise": 1,
+            }
+        )
+        response = self.post_new_exam(exam)
+>       self.assertEqual(response.status_code, 201)
+E       AssertionError: 400 != 201
+
+kolibri/core/exams/test/test_exam_api.py:374: AssertionError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,199 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+_______________ ExamAPITestCase.test_logged_in_admin_exam_create _______________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_logged_in_admin_exam_create>
+
+    def test_logged_in_admin_exam_create(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        response = self.post_new_exam(exam)
+>       self.assertEqual(response.status_code, 201)
+E       AssertionError: 400 != 201
+
+kolibri/core/exams/test/test_exam_api.py:123: AssertionError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,236 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+______ ExamAPITestCase.test_logged_in_admin_exam_create_with_assignments _______
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_logged_in_admin_exam_create_with_assignments>
+
+    def test_logged_in_admin_exam_create_with_assignments(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        exam["assignments"] = [self.facility.id]
+        response = self.post_new_exam(exam)
+>       exam_id = response.data["id"]
+                  ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'id'
+
+kolibri/core/exams/test/test_exam_api.py:130: KeyError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,255 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+__ ExamAPITestCase.test_logged_in_admin_exam_create_with_learner_assignments ___
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_logged_in_admin_exam_create_with_learner_assignments>
+
+    def test_logged_in_admin_exam_create_with_learner_assignments(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        user = FacilityUser.objects.create(username="u", facility=self.facility)
+    
+        self.classroom.add_member(user)
+        exam["learner_ids"] = [user.id]
+        response = self.post_new_exam(exam)
+>       exam_id = response.data["id"]
+                  ^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'id'
+
+kolibri/core/exams/test/test_exam_api.py:145: KeyError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,274 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+___ ExamAPITestCase.test_logged_in_admin_exam_update_additional_assignments ____
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_logged_in_admin_exam_update_additional_assignments>
+
+    def test_logged_in_admin_exam_update_additional_assignments(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        exam["assignments"] = [self.facility.id]
+        post_response = self.post_new_exam(exam)
+>       exam_id = post_response.data["id"]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'id'
+
+kolibri/core/exams/test/test_exam_api.py:198: KeyError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,341 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+____ ExamAPITestCase.test_logged_in_admin_exam_update_different_assignments ____
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_logged_in_admin_exam_update_different_assignments>
+
+    def test_logged_in_admin_exam_update_different_assignments(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        exam["assignments"] = [self.facility.id]
+        post_response = self.post_new_exam(exam)
+>       exam_id = post_response.data["id"]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'id'
+
+kolibri/core/exams/test/test_exam_api.py:184: KeyError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,414 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+_______ ExamAPITestCase.test_logged_in_admin_exam_update_no_assignments ________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_logged_in_admin_exam_update_no_assignments>
+
+    def test_logged_in_admin_exam_update_no_assignments(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        exam["assignments"] = [self.facility.id]
+        post_response = self.post_new_exam(exam)
+>       exam_id = post_response.data["id"]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'id'
+
+kolibri/core/exams/test/test_exam_api.py:173: KeyError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,432 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+______________ ExamAPITestCase.test_logged_in_user_exam_no_create ______________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_logged_in_user_exam_no_create>
+
+    def test_logged_in_user_exam_no_create(self):
+        self.login_as_learner()
+        response = self.post_new_exam(self.make_basic_exam())
+>       self.assertEqual(response.status_code, 403)
+E       AssertionError: 400 != 403
+
+kolibri/core/exams/test/test_exam_api.py:211: AssertionError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,457 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+________________ ExamAPITestCase.test_post_exam_v2_model_fails _________________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_post_exam_v2_model_fails>
+
+    def test_post_exam_v2_model_fails(self):
+        self.login_as_admin()
+        basic_exam = {
+            "title": "Exam",
+            "question_count": 1,
+            "active": True,
+            "collection": self.classroom.id,
+            "learners_see_fixed_order": False,
+            "question_sources": [],
+            "assignments": [],
+            "date_activated": None,
+            "date_archived": None,
+            "creator": self.admin.id,
+        }
+        basic_exam["question_sources"] = [
+            {
+                "exercise_id": uuid.uuid4().hex,
+                "question_id": uuid.uuid4().hex,
+                "title": "Title",
+                "counter_in_exercise": 0,
+            }
+        ]
+    
+        response = self.post_new_exam(basic_exam)
+>       self.assertEqual(response.status_code, 400)
+E       AssertionError: 201 != 400
+
+kolibri/core/exams/test/test_exam_api.py:527: AssertionError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,522 Processing new content assignment requests
+INFO     2026-06-29 15:25:52,533 127.0.0.1 - - "POST /api/exams/exam/" 201 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     kolibri.core.content.utils.content_request:content_request.py:88 Processing new content assignment requests
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 201 0 "" "unknown"
+__________ ExamAPITestCase.test_quiz_section_with_no_question_succeds __________
+
+self = <kolibri.core.exams.test.test_exam_api.ExamAPITestCase testMethod=test_quiz_section_with_no_question_succeds>
+
+    def test_quiz_section_with_no_question_succeds(self):
+        self.login_as_admin()
+        exam = self.make_basic_exam()
+        title = "invalid_question_sources"
+        exam["title"] = title
+        exam["question_sources"].append(
+            {
+                "section_id": uuid.uuid4().hex,
+                "section_title": "Test Section Title",
+                "description": "Test descripton for Section",
+                "resource_pool": [],
+                "question_count": 0,
+                "learners_see_fixed_order": False,
+            }
+        )
+        response = self.post_new_exam(exam)
+>       self.assertEqual(response.status_code, 201)
+E       AssertionError: 400 != 201
+
+kolibri/core/exams/test/test_exam_api.py:481: AssertionError
+----------------------------- Captured stdout call -----------------------------
+INFO     2026-06-29 15:25:52,577 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+------------------------------ Captured log call -------------------------------
+INFO     cherrypy.access:middleware.py:89 127.0.0.1 - - "POST /api/exams/exam/" 400 0 "" "unknown"
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/django/utils/encoding.py:279
+  /usr/local/lib/python3.11/site-packages/django/utils/encoding.py:279: DeprecationWarning: 'locale.getdefaultlocale' is deprecated and slated for removal in Python 3.15. Use setlocale(), getencoding() and getlocale() instead.
+    encoding = locale.getdefaultlocale()[1] or 'ascii'
+
+../../usr/local/lib/python3.11/site-packages/django/http/multipartparser.py:11
+  /usr/local/lib/python3.11/site-packages/django/http/multipartparser.py:11: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
+    import cgi
+
+../../usr/local/lib/python3.11/site-packages/importlib_resources/_py3.py:12
+../../usr/local/lib/python3.11/site-packages/importlib_resources/_py3.py:12
+  /usr/local/lib/python3.11/site-packages/importlib_resources/_py3.py:12: DeprecationWarning: typing.io is deprecated, import directly from typing instead. typing.io will be removed in Python 3.12.
+    from typing.io import BinaryIO, TextIO
+
+kolibri/utils/i18n.py:84
+  /workspace/repo/kolibri/utils/i18n.py:84: DeprecationWarning: 'locale.getdefaultlocale' is deprecated and slated for removal in Python 3.15. Use setlocale(), getencoding() and getlocale() instead.
+    for loc in (locale.getlocale()[0], locale.getdefaultlocale()[0]):
+
+kolibri/core/tasks/storage.py:36
+  /workspace/repo/kolibri/core/tasks/storage.py:36: MovedIn20Warning: Deprecated API features detected! These feature(s) are not compatible with SQLAlchemy 2.0. To prevent incompatible upgrades prior to updating applications, ensure requirements files are pinned to "sqlalchemy<2.0". Set environment variable SQLALCHEMY_WARN_20=1 to show all deprecation warnings.  Set environment variable SQLALCHEMY_SILENCE_UBER_WARNING=1 to silence this message. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+    Base = declarative_base()
+
+../../usr/local/lib/python3.11/site-packages/_pytest/config/__init__.py:1464
+  /usr/local/lib/python3.11/site-packages/_pytest/config/__init__.py:1464: PytestConfigWarning: Unknown config option: python_paths
+  
+    self._warn_or_fail_if_strict(f"Unknown config option: {key}\n")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__exam
+FAILED kolibri/core/content/test/utils/test_assignment.py::ContentAssignmentManagerIntegrationTestCase::test_on_downloadable_assignment__individual_syncable_exam
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_cannot_create_exam_same_title_case_insensitive
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_model_get_questions_v2_v1
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_model_get_questions_v3
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_no_question_id_succeeds
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_exam_with_valid_question_sources_succeeds
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create_with_assignments
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_create_with_learner_assignments
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_additional_assignments
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_different_assignments
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_admin_exam_update_no_assignments
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_logged_in_user_exam_no_create
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_post_exam_v2_model_fails
+FAILED kolibri/core/exams/test/test_exam_api.py::ExamAPITestCase::test_quiz_section_with_no_question_succeds
+================== 16 failed, 29 passed, 7 warnings in 12.55s ==================
+reward=0 graded=45 found=0 failed=0 parsed=45 framework=pytest exit_code=1

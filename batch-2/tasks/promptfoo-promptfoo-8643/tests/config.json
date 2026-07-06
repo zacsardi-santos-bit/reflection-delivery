@@ -1,0 +1,46 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run test/providers/mistral.test.ts",
+  "test_files": [
+    "test/providers/mistral.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should call Mistral API and return output with correct structure",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should hash request params in cache keys",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should isolate hashed cache keys by resolved API key",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should keep auth cache identity stable across module reloads",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should deduplicate in-flight chat requests without using raw fetch cache keys",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should avoid logging prompts and generated outputs in debug metadata",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should not use cache when disabled",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should use custom API base URL if provided",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should use API host if provided",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should call Mistral Embedding API and return embedding with correct structure",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should use cache for embedding when enabled",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should not use cache for embedding when disabled",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should hash embedding cache keys and avoid logging inputs or embeddings",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should return cached embeddings from hashed provider cache keys",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should propagate cached embeddings through callApi",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should use custom API base URL if provided"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should create a provider with default options",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should create a provider with custom options",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should support new Magistral reasoning models",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should support Pixtral multimodal model",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should calculate cost correctly for Pixtral model",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should preserve explicit zero for top_p, random_seed, and max_tokens",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should include tools configuration in the request body",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should calculate cost correctly for Magistral models",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should use cache when enabled",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should isolate in-flight chat request dedupe by cache namespace",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should handle API errors",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should return tool_calls as output when content is null (tool call response)",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should return full message when both content and tool_calls are present",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralChatCompletionProvider should return content when tool_calls is an empty array",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should create a provider with default options",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should handle API errors",
+    "/workspace/repo/test/providers/mistral.test.ts::Mistral MistralEmbeddingProvider should return provider id and string representation"
+  ]
+}

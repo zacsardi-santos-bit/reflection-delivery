@@ -1,5 +1,0 @@
-I'm working on the partial caching feature in a GraphQL gateway and running into a problem with type conditions. When a schema has a union type or an interface and a query uses inline or named fragments to request different fields per concrete type, the partial caching system doesn't handle it correctly. The cache merging step doesn't know the concrete type of each returned object, so it can't correctly apply type-specific cached fields to the right items.
-
-What I need is for the cache merging process to be aware of the concrete object type so it can look up the right shape to apply. Also, when the caching layer generates its own sub-queries to fetch cached fields, it needs to include type metadata in the selection sets so that it can later figure out which type each returned item belongs to. This type metadata should be added automatically whenever a selection set contains type-condition fragments (either inline or named).
-
-The fix should work for union types with inline fragments, union types with named fragments, interface types with inline fragments, interface types with named fragments, and all of those cases combined with deferred loading.

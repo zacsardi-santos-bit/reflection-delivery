@@ -1,0 +1,571 @@
+diff --git a/codex-rs/Cargo.lock b/codex-rs/Cargo.lock
+index 8398d0b99c..2ab1d5943c 100644
+--- a/codex-rs/Cargo.lock
++++ b/codex-rs/Cargo.lock
+@@ -1603,6 +1603,7 @@ dependencies = [
+  "codex-protocol",
+  "codex-responses-api-proxy",
+  "codex-rmcp-client",
++ "codex-state",
+  "codex-stdio-to-uds",
+  "codex-tui",
+  "codex-utils-cargo-bin",
+@@ -1614,6 +1615,7 @@ dependencies = [
+  "pretty_assertions",
+  "regex-lite",
+  "serde_json",
++ "sqlx",
+  "supports-color 3.0.2",
+  "tempfile",
+  "tokio",
+diff --git a/codex-rs/app-server/tests/suite/v2/account.rs b/codex-rs/app-server/tests/suite/v2/account.rs
+index d4d702a0d9..0c96800958 100644
+--- a/codex-rs/app-server/tests/suite/v2/account.rs
++++ b/codex-rs/app-server/tests/suite/v2/account.rs
+@@ -1227,45 +1227,3 @@ async fn get_account_with_chatgpt() -> Result<()> {
+     assert_eq!(received, expected);
+     Ok(())
+ }
+-
+-#[tokio::test]
+-async fn get_account_with_chatgpt_missing_plan_claim_returns_unknown() -> Result<()> {
+-    let codex_home = TempDir::new()?;
+-    create_config_toml(
+-        codex_home.path(),
+-        CreateConfigTomlParams {
+-            requires_openai_auth: Some(true),
+-            ..Default::default()
+-        },
+-    )?;
+-    write_chatgpt_auth(
+-        codex_home.path(),
+-        ChatGptAuthFixture::new("access-chatgpt").email("user@example.com"),
+-        AuthCredentialsStoreMode::File,
+-    )?;
+-
+-    let mut mcp = McpProcess::new_with_env(codex_home.path(), &[("OPENAI_API_KEY", None)]).await?;
+-    timeout(DEFAULT_READ_TIMEOUT, mcp.initialize()).await??;
+-
+-    let params = GetAccountParams {
+-        refresh_token: false,
+-    };
+-    let request_id = mcp.send_get_account_request(params).await?;
+-
+-    let resp: JSONRPCResponse = timeout(
+-        DEFAULT_READ_TIMEOUT,
+-        mcp.read_stream_until_response_message(RequestId::Integer(request_id)),
+-    )
+-    .await??;
+-    let received: GetAccountResponse = to_response(resp)?;
+-
+-    let expected = GetAccountResponse {
+-        account: Some(Account::Chatgpt {
+-            email: "user@example.com".to_string(),
+-            plan_type: AccountPlanType::Unknown,
+-        }),
+-        requires_openai_auth: true,
+-    };
+-    assert_eq!(received, expected);
+-    Ok(())
+-}
+diff --git a/codex-rs/cli/Cargo.toml b/codex-rs/cli/Cargo.toml
+index 1d955bbaaf..b197cc3d59 100644
+--- a/codex-rs/cli/Cargo.toml
++++ b/codex-rs/cli/Cargo.toml
+@@ -35,6 +35,7 @@ codex-mcp-server = { workspace = true }
+ codex-protocol = { workspace = true }
+ codex-responses-api-proxy = { workspace = true }
+ codex-rmcp-client = { workspace = true }
++codex-state = { workspace = true }
+ codex-stdio-to-uds = { workspace = true }
+ codex-tui = { workspace = true }
+ libc = { workspace = true }
+@@ -62,3 +63,4 @@ assert_matches = { workspace = true }
+ codex-utils-cargo-bin = { workspace = true }
+ predicates = { workspace = true }
+ pretty_assertions = { workspace = true }
++sqlx = { workspace = true }
+diff --git a/codex-rs/cli/src/main.rs b/codex-rs/cli/src/main.rs
+index c271fe0b9e..f818b743e9 100644
+--- a/codex-rs/cli/src/main.rs
++++ b/codex-rs/cli/src/main.rs
+@@ -22,6 +22,8 @@ use codex_exec::Command as ExecCommand;
+ use codex_exec::ReviewArgs;
+ use codex_execpolicy::ExecPolicyCheckCommand;
+ use codex_responses_api_proxy::Args as ResponsesApiProxyArgs;
++use codex_state::StateRuntime;
++use codex_state::state_db_path;
+ use codex_tui::AppExitInfo;
+ use codex_tui::Cli as TuiCli;
+ use codex_tui::ExitReason;
+@@ -163,6 +165,10 @@ struct DebugCommand {
+ enum DebugSubcommand {
+     /// Tooling: helps debug the app server.
+     AppServer(DebugAppServerCommand),
++
++    /// Internal: reset local memory state for a fresh start.
++    #[clap(hide = true)]
++    ClearMemories,
+ }
+ 
+ #[derive(Debug, Parser)]
+@@ -751,6 +757,9 @@ async fn cli_main(arg0_paths: Arg0DispatchPaths) -> anyhow::Result<()> {
+             DebugSubcommand::AppServer(cmd) => {
+                 run_debug_app_server_command(cmd)?;
+             }
++            DebugSubcommand::ClearMemories => {
++                run_debug_clear_memories_command(&root_config_overrides, &interactive).await?;
++            }
+         },
+         Some(Subcommand::Execpolicy(ExecpolicyCommand { sub })) => match sub {
+             ExecpolicySubcommand::Check(cmd) => run_execpolicycheck(cmd)?,
+@@ -877,6 +886,60 @@ fn maybe_print_under_development_feature_warning(
+     );
+ }
+ 
++async fn run_debug_clear_memories_command(
++    root_config_overrides: &CliConfigOverrides,
++    interactive: &TuiCli,
++) -> anyhow::Result<()> {
++    let cli_kv_overrides = root_config_overrides
++        .parse_overrides()
++        .map_err(anyhow::Error::msg)?;
++    let overrides = ConfigOverrides {
++        config_profile: interactive.config_profile.clone(),
++        ..Default::default()
++    };
++    let config =
++        Config::load_with_cli_overrides_and_harness_overrides(cli_kv_overrides, overrides).await?;
++
++    let state_path = state_db_path(config.sqlite_home.as_path());
++    let mut cleared_state_db = false;
++    if tokio::fs::try_exists(&state_path).await? {
++        let state_db = StateRuntime::init(
++            config.sqlite_home.clone(),
++            config.model_provider_id.clone(),
++            None,
++        )
++        .await?;
++        state_db.reset_memory_data_for_fresh_start().await?;
++        cleared_state_db = true;
++    }
++
++    let memory_root = config.codex_home.join("memories");
++    let removed_memory_root = match tokio::fs::remove_dir_all(&memory_root).await {
++        Ok(()) => true,
++        Err(err) if err.kind() == std::io::ErrorKind::NotFound => false,
++        Err(err) => return Err(err.into()),
++    };
++
++    let mut message = if cleared_state_db {
++        format!("Cleared memory state from {}.", state_path.display())
++    } else {
++        format!("No state db found at {}.", state_path.display())
++    };
++
++    if removed_memory_root {
++        message.push_str(&format!(" Removed {}.", memory_root.display()));
++    } else {
++        message.push_str(&format!(
++            " No memory directory found at {}.",
++            memory_root.display()
++        ));
++    }
++
++    println!("{message}");
++
++    Ok(())
++}
++
+ /// Prepend root-level overrides so they have lower precedence than
+ /// CLI-specific ones specified after the subcommand (if any).
+ fn prepend_config_flags(
+diff --git a/codex-rs/core/src/auth.rs b/codex-rs/core/src/auth.rs
+index cca57d5c0f..217334b2a5 100644
+--- a/codex-rs/core/src/auth.rs
++++ b/codex-rs/core/src/auth.rs
+@@ -266,8 +266,6 @@ impl CodexAuth {
+     /// Returns a high-level `AccountPlanType` (e.g., Free/Plus/Pro/Team/…)
+     /// mapped from the ID token's internal plan value. Prefer this when you
+     /// need to make UI or product decisions based on the user's subscription.
+-    /// When ChatGPT auth is active but the token omits the plan claim, report
+-    /// `Unknown` instead of treating the account as invalid.
+     pub fn account_plan_type(&self) -> Option<AccountPlanType> {
+         let map_known = |kp: &InternalKnownPlan| match kp {
+             InternalKnownPlan::Free => AccountPlanType::Free,
+@@ -280,15 +278,12 @@ impl CodexAuth {
+             InternalKnownPlan::Edu => AccountPlanType::Edu,
+         };
+ 
+-        self.get_current_token_data().map(|t| {
+-            t.id_token
+-                .chatgpt_plan_type
+-                .map(|pt| match pt {
+-                    InternalPlanType::Known(k) => map_known(&k),
+-                    InternalPlanType::Unknown(_) => AccountPlanType::Unknown,
+-                })
+-                .unwrap_or(AccountPlanType::Unknown)
+-        })
++        self.get_current_token_data()
++            .and_then(|t| t.id_token.chatgpt_plan_type)
++            .map(|pt| match pt {
++                InternalPlanType::Known(k) => map_known(&k),
++                InternalPlanType::Unknown(_) => AccountPlanType::Unknown,
++            })
+     }
+ 
+     /// Returns `None` if `is_chatgpt_auth()` is false.
+@@ -1382,7 +1377,7 @@ mod tests {
+         let fake_jwt = write_auth_file(
+             AuthFileParams {
+                 openai_api_key: None,
+-                chatgpt_plan_type: Some("pro".to_string()),
++                chatgpt_plan_type: "pro".to_string(),
+                 chatgpt_account_id: None,
+             },
+             codex_home.path(),
+@@ -1452,7 +1447,7 @@ mod tests {
+         let fake_jwt = write_auth_file(
+             AuthFileParams {
+                 openai_api_key: None,
+-                chatgpt_plan_type: Some("pro".to_string()),
++                chatgpt_plan_type: "pro".to_string(),
+                 chatgpt_account_id: None,
+             },
+             codex_home.path(),
+@@ -1533,7 +1528,7 @@ mod tests {
+ 
+     struct AuthFileParams {
+         openai_api_key: Option<String>,
+-        chatgpt_plan_type: Option<String>,
++        chatgpt_plan_type: String,
+         chatgpt_account_id: Option<String>,
+     }
+ 
+@@ -1550,14 +1545,11 @@ mod tests {
+             typ: "JWT",
+         };
+         let mut auth_payload = serde_json::json!({
++            "chatgpt_plan_type": params.chatgpt_plan_type,
+             "chatgpt_user_id": "user-12345",
+             "user_id": "user-12345",
+         });
+ 
+-        if let Some(chatgpt_plan_type) = params.chatgpt_plan_type {
+-            auth_payload["chatgpt_plan_type"] = serde_json::Value::String(chatgpt_plan_type);
+-        }
+-
+         if let Some(chatgpt_account_id) = params.chatgpt_account_id {
+             let org_value = serde_json::Value::String(chatgpt_account_id);
+             auth_payload["chatgpt_account_id"] = org_value;
+@@ -1658,7 +1650,7 @@ mod tests {
+         let _jwt = write_auth_file(
+             AuthFileParams {
+                 openai_api_key: None,
+-                chatgpt_plan_type: Some("pro".to_string()),
++                chatgpt_plan_type: "pro".to_string(),
+                 chatgpt_account_id: Some("org_another_org".to_string()),
+             },
+             codex_home.path(),
+@@ -1683,7 +1675,7 @@ mod tests {
+         let _jwt = write_auth_file(
+             AuthFileParams {
+                 openai_api_key: None,
+-                chatgpt_plan_type: Some("pro".to_string()),
++                chatgpt_plan_type: "pro".to_string(),
+                 chatgpt_account_id: Some("org_mine".to_string()),
+             },
+             codex_home.path(),
+@@ -1737,7 +1729,7 @@ mod tests {
+         let _jwt = write_auth_file(
+             AuthFileParams {
+                 openai_api_key: None,
+-                chatgpt_plan_type: Some("pro".to_string()),
++                chatgpt_plan_type: "pro".to_string(),
+                 chatgpt_account_id: None,
+             },
+             codex_home.path(),
+@@ -1757,27 +1749,7 @@ mod tests {
+         let _jwt = write_auth_file(
+             AuthFileParams {
+                 openai_api_key: None,
+-                chatgpt_plan_type: Some("mystery-tier".to_string()),
+-                chatgpt_account_id: None,
+-            },
+-            codex_home.path(),
+-        )
+-        .expect("failed to write auth file");
+-
+-        let auth = super::load_auth(codex_home.path(), false, AuthCredentialsStoreMode::File)
+-            .expect("load auth")
+-            .expect("auth available");
+-
+-        pretty_assertions::assert_eq!(auth.account_plan_type(), Some(AccountPlanType::Unknown));
+-    }
+-
+-    #[test]
+-    fn missing_plan_type_maps_to_unknown() {
+-        let codex_home = tempdir().unwrap();
+-        let _jwt = write_auth_file(
+-            AuthFileParams {
+-                openai_api_key: None,
+-                chatgpt_plan_type: None,
++                chatgpt_plan_type: "mystery-tier".to_string(),
+                 chatgpt_account_id: None,
+             },
+             codex_home.path(),
+diff --git a/codex-rs/state/src/runtime/memories.rs b/codex-rs/state/src/runtime/memories.rs
+index 908919d0aa..a36f9e5aa5 100644
+--- a/codex-rs/state/src/runtime/memories.rs
++++ b/codex-rs/state/src/runtime/memories.rs
+@@ -30,6 +30,19 @@ impl StateRuntime {
+     /// stage-1 (`memory_stage1`) and phase-2 (`memory_consolidate_global`)
+     /// memory pipelines.
+     pub async fn clear_memory_data(&self) -> anyhow::Result<()> {
++        self.clear_memory_data_inner(false).await
++    }
++
++    /// Resets persisted memory state for a clean-slate local start.
++    ///
++    /// In addition to clearing persisted stage-1 outputs and memory pipeline
++    /// jobs, this disables memory generation for all existing threads so
++    /// historical rollouts are not immediately picked up again.
++    pub async fn reset_memory_data_for_fresh_start(&self) -> anyhow::Result<()> {
++        self.clear_memory_data_inner(true).await
++    }
++
++    async fn clear_memory_data_inner(&self, disable_existing_threads: bool) -> anyhow::Result<()> {
+         let mut tx = self.pool.begin().await?;
+ 
+         sqlx::query(
+@@ -51,6 +64,18 @@ WHERE kind = ? OR kind = ?
+         .execute(&mut *tx)
+         .await?;
+ 
++        if disable_existing_threads {
++            sqlx::query(
++                r#"
++UPDATE threads
++SET memory_mode = 'disabled'
++WHERE memory_mode = 'enabled'
++                "#,
++            )
++            .execute(&mut *tx)
++            .await?;
++        }
++
+         tx.commit().await?;
+         Ok(())
+     }
+@@ -1158,6 +1183,8 @@ ON CONFLICT(kind, job_key) DO UPDATE SET
+ 
+ #[cfg(test)]
+ mod tests {
++    use super::JOB_KIND_MEMORY_CONSOLIDATE_GLOBAL;
++    use super::JOB_KIND_MEMORY_STAGE1;
+     use super::StateRuntime;
+     use super::test_support::test_thread_metadata;
+     use super::test_support::unique_temp_dir;
+@@ -1664,6 +1691,115 @@ mod tests {
+         let _ = tokio::fs::remove_dir_all(codex_home).await;
+     }
+ 
++    #[tokio::test]
++    async fn reset_memory_data_for_fresh_start_clears_rows_and_disables_threads() {
++        let codex_home = unique_temp_dir();
++        let runtime = StateRuntime::init(codex_home.clone(), "test-provider".to_string(), None)
++            .await
++            .expect("initialize runtime");
++
++        let now = Utc::now() - Duration::hours(13);
++        let worker_id = ThreadId::from_string(&Uuid::new_v4().to_string()).expect("worker id");
++        let enabled_thread_id =
++            ThreadId::from_string(&Uuid::new_v4().to_string()).expect("enabled thread id");
++        let disabled_thread_id =
++            ThreadId::from_string(&Uuid::new_v4().to_string()).expect("disabled thread id");
++
++        let mut enabled =
++            test_thread_metadata(&codex_home, enabled_thread_id, codex_home.join("enabled"));
++        enabled.created_at = now;
++        enabled.updated_at = now;
++        runtime
++            .upsert_thread(&enabled)
++            .await
++            .expect("upsert enabled thread");
++
++        let claim = runtime
++            .try_claim_stage1_job(
++                enabled_thread_id,
++                worker_id,
++                enabled.updated_at.timestamp(),
++                3600,
++                64,
++            )
++            .await
++            .expect("claim enabled thread");
++        let ownership_token = match claim {
++            Stage1JobClaimOutcome::Claimed { ownership_token } => ownership_token,
++            other => panic!("unexpected claim outcome: {other:?}"),
++        };
++        assert!(
++            runtime
++                .mark_stage1_job_succeeded(
++                    enabled_thread_id,
++                    ownership_token.as_str(),
++                    enabled.updated_at.timestamp(),
++                    "raw",
++                    "summary",
++                    None,
++                )
++                .await
++                .expect("mark enabled thread succeeded"),
++            "stage1 success should be recorded"
++        );
++        runtime
++            .enqueue_global_consolidation(enabled.updated_at.timestamp())
++            .await
++            .expect("enqueue global consolidation");
++
++        let mut disabled =
++            test_thread_metadata(&codex_home, disabled_thread_id, codex_home.join("disabled"));
++        disabled.created_at = now;
++        disabled.updated_at = now;
++        runtime
++            .upsert_thread(&disabled)
++            .await
++            .expect("upsert disabled thread");
++        sqlx::query("UPDATE threads SET memory_mode = 'disabled' WHERE id = ?")
++            .bind(disabled_thread_id.to_string())
++            .execute(runtime.pool.as_ref())
++            .await
++            .expect("disable existing thread");
++
++        runtime
++            .reset_memory_data_for_fresh_start()
++            .await
++            .expect("reset memory data");
++
++        let stage1_outputs_count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM stage1_outputs")
++            .fetch_one(runtime.pool.as_ref())
++            .await
++            .expect("count stage1 outputs");
++        assert_eq!(stage1_outputs_count, 0);
++
++        let memory_jobs_count: i64 =
++            sqlx::query_scalar("SELECT COUNT(*) FROM jobs WHERE kind = ? OR kind = ?")
++                .bind(JOB_KIND_MEMORY_STAGE1)
++                .bind(JOB_KIND_MEMORY_CONSOLIDATE_GLOBAL)
++                .fetch_one(runtime.pool.as_ref())
++                .await
++                .expect("count memory jobs");
++        assert_eq!(memory_jobs_count, 0);
++
++        let enabled_memory_mode: String =
++            sqlx::query_scalar("SELECT memory_mode FROM threads WHERE id = ?")
++                .bind(enabled_thread_id.to_string())
++                .fetch_one(runtime.pool.as_ref())
++                .await
++                .expect("read enabled thread memory mode");
++        assert_eq!(enabled_memory_mode, "disabled");
++
++        let disabled_memory_mode: String =
++            sqlx::query_scalar("SELECT memory_mode FROM threads WHERE id = ?")
++                .bind(disabled_thread_id.to_string())
++                .fetch_one(runtime.pool.as_ref())
++                .await
++                .expect("read disabled thread memory mode");
++        assert_eq!(disabled_memory_mode, "disabled");
++
++        let _ = tokio::fs::remove_dir_all(codex_home).await;
++    }
++
+     #[tokio::test]
+     async fn claim_stage1_jobs_enforces_global_running_cap() {
+         let codex_home = unique_temp_dir();
+diff --git a/codex-rs/tui/src/bottom_pane/chat_composer.rs b/codex-rs/tui/src/bottom_pane/chat_composer.rs
+index 5ea67d8c32..fe40f4fa7b 100644
+--- a/codex-rs/tui/src/bottom_pane/chat_composer.rs
++++ b/codex-rs/tui/src/bottom_pane/chat_composer.rs
+@@ -2085,10 +2085,16 @@ impl ChatComposer {
+             path.to_string()
+         };
+ 
+-        // Replace just the active `@token` so unrelated text elements, such as
+-        // large-paste placeholders, remain atomic and can still expand on submit.
+-        self.textarea
+-            .replace_range(start_idx..end_idx, &format!("{inserted} "));
++        // Replace the slice `[start_idx, end_idx)` with the chosen path and a trailing space.
++        let mut new_text =
++            String::with_capacity(text.len() - (end_idx - start_idx) + inserted.len() + 1);
++        new_text.push_str(&text[..start_idx]);
++        new_text.push_str(&inserted);
++        new_text.push(' ');
++        new_text.push_str(&text[end_idx..]);
++
++        // Path replacement is plain text; rebuild without carrying elements.
++        self.textarea.set_text_clearing_elements(&new_text);
+         let new_cursor = start_idx.saturating_add(inserted.len()).saturating_add(1);
+         self.textarea.set_cursor(new_cursor);
+     }
+@@ -6925,61 +6931,6 @@ mod tests {
+         }
+     }
+ 
+-    #[test]
+-    fn file_completion_preserves_large_paste_placeholder_elements() {
+-        use crossterm::event::KeyCode;
+-        use crossterm::event::KeyEvent;
+-        use crossterm::event::KeyModifiers;
+-
+-        let (tx, _rx) = unbounded_channel::<AppEvent>();
+-        let sender = AppEventSender::new(tx);
+-        let mut composer = ChatComposer::new(
+-            true,
+-            sender,
+-            false,
+-            "Ask Codex to do anything".to_string(),
+-            false,
+-        );
+-
+-        let large = "x".repeat(LARGE_PASTE_CHAR_THRESHOLD + 5);
+-        let placeholder = format!("[Pasted Content {} chars]", large.chars().count());
+-
+-        composer.handle_paste(large.clone());
+-        composer.insert_str(" @ma");
+-        composer.on_file_search_result(
+-            "ma".to_string(),
+-            vec![FileMatch {
+-                score: 1,
+-                path: PathBuf::from("src/main.rs"),
+-                root: PathBuf::from("/tmp"),
+-                indices: None,
+-            }],
+-        );
+-
+-        let (_result, _needs_redraw) =
+-            composer.handle_key_event(KeyEvent::new(KeyCode::Tab, KeyModifiers::NONE));
+-
+-        let text = composer.textarea.text().to_string();
+-        assert_eq!(text, format!("{placeholder} src/main.rs "));
+-        let elements = composer.textarea.text_elements();
+-        assert_eq!(elements.len(), 1);
+-        assert_eq!(elements[0].placeholder(&text), Some(placeholder.as_str()));
+-
+-        let (result, _needs_redraw) =
+-            composer.handle_key_event(KeyEvent::new(KeyCode::Enter, KeyModifiers::NONE));
+-
+-        match result {
+-            InputResult::Submitted {
+-                text,
+-                text_elements,
+-            } => {
+-                assert_eq!(text, format!("{large} src/main.rs"));
+-                assert!(text_elements.is_empty());
+-            }
+-            _ => panic!("expected Submitted"),
+-        }
+-    }
+-
+     /// Behavior: multiple paste operations can coexist; placeholders should be expanded to their
+     /// original content on submission.
+     #[test]

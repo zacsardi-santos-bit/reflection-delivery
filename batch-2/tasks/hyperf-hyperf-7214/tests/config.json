@@ -1,0 +1,39 @@
+{
+  "test_framework": "pytest",
+  "test_command": "bash -c 'mkdir -p /workspace/test-results && vendor/bin/phpunit --bootstrap vendor/autoload.php --log-junit /workspace/test-results/output.xml src/support/tests/FluentTest.php'",
+  "test_files": [
+    "src/support/tests/FluentTest.php",
+    "src/support/tests/Stub/Enums.php"
+  ],
+  "num_test_files": 2,
+  "language": "php",
+  "FAIL_TO_PASS": [
+    "HyperfTest.Support.FluentTest::testSetMethodSetsAttribute",
+    "HyperfTest.Support.FluentTest::testScope",
+    "HyperfTest.Support.FluentTest::testToCollection",
+    "HyperfTest.Support.FluentTest::testStringMethod",
+    "HyperfTest.Support.FluentTest::testBooleanMethod",
+    "HyperfTest.Support.FluentTest::testIntegerMethod",
+    "HyperfTest.Support.FluentTest::testFloatMethod",
+    "HyperfTest.Support.FluentTest::testArrayMethod",
+    "HyperfTest.Support.FluentTest::testCollectMethod",
+    "HyperfTest.Support.FluentTest::testDateMethod",
+    "HyperfTest.Support.FluentTest::testDateMethodExceptionWhenValueInvalid",
+    "HyperfTest.Support.FluentTest::testDateMethodExceptionWhenFormatInvalid",
+    "HyperfTest.Support.FluentTest::testEnumMethod",
+    "HyperfTest.Support.FluentTest::testEnumsMethod",
+    "HyperfTest.Support.FluentTest::testFill",
+    "HyperfTest.Support.FluentTest::testMacroable"
+  ],
+  "PASS_TO_PASS": [
+    "HyperfTest.Support.FluentTest::testAttributesAreSetByConstructor",
+    "HyperfTest.Support.FluentTest::testAttributesAreSetByConstructorGivenstdClass",
+    "HyperfTest.Support.FluentTest::testAttributesAreSetByConstructorGivenArrayIterator",
+    "HyperfTest.Support.FluentTest::testGetMethodReturnsAttribute",
+    "HyperfTest.Support.FluentTest::testArrayAccessToAttributes",
+    "HyperfTest.Support.FluentTest::testMagicMethodsCanBeUsedToSetAttributes",
+    "HyperfTest.Support.FluentTest::testIssetMagicMethod",
+    "HyperfTest.Support.FluentTest::testToArrayReturnsAttribute",
+    "HyperfTest.Support.FluentTest::testToJsonEncodesTheToArrayResult"
+  ]
+}

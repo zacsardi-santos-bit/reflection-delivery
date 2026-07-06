@@ -1,0 +1,29 @@
+{
+    "id": "5598c5d8-2b34-4521-a985-560cad1153c3",
+    "started_at": "2026-07-06T12:20:54.996375",
+    "finished_at": "2026-07-06T12:21:21.029265",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__payloadcms-payload-17054": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "payloadcms-payload-17054__LoziJsT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

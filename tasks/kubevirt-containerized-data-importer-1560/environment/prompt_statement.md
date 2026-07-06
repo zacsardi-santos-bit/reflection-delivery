@@ -1,5 +1,0 @@
-I'm running into a problem with CDI data volumes when using a storage class that defers volume binding until a consumer is scheduled. When this deferred-binding mode is enabled via the feature gate, any data volume I create just stalls — the PVC never gets bound, so nothing gets imported. I need a way to tell the controller "yes, I know the storage class defers binding, but please bind this volume immediately anyway."
-
-I'd like to support a per-data-volume annotation that signals an immediate binding request. When that annotation is present on a DataVolume, the import controller should treat it as eligible for reconciliation and proceed even if the deferred-binding feature gate is active. When the annotation is absent and the feature gate is on, the existing skip behavior should remain.
-
-This should work for all data volume types — HTTP imports, blank image creation, uploads, and clones. The per-data-volume override should take precedence over the global feature gate setting, allowing users to selectively force immediate binding on specific data volumes without changing the global configuration.

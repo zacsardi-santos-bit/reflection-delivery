@@ -1,3 +1,0 @@
-patching file README.md
-patching file client.go
-patching file search_shards.go

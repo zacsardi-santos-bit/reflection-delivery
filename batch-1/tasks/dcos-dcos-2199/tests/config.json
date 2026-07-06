@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/gen/tests/test_adminrouter_tls_conf.py -v",
+  "test_files": [
+    "gen/tests/test_adminrouter_tls_conf.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "gen.tests.test_adminrouter_tls_conf.TestAdminRouterTLSConfig::test_master[true-TLSv1 TLSv1.1 TLSv1.2]",
+    "gen.tests.test_adminrouter_tls_conf.TestAdminRouterTLSConfig::test_master[false-TLSv1.1 TLSv1.2]",
+    "gen.tests.test_adminrouter_tls_conf.TestAdminRouterTLSConfig::test_agent[true]",
+    "gen.tests.test_adminrouter_tls_conf.TestAdminRouterTLSConfig::test_agent[false]",
+    "gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride::test_cipher_agent_default",
+    "gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride::test_cipher_master_default",
+    "gen.tests.test_adminrouter_tls_conf.TestSetCipherOverride::test_cipher_master_custom",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_validation_1_1",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_validation_1_2",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_default[new_arguments0]",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_default[new_arguments1]",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_enable_custom_tls_versions[enabled0-expected_protocols0]",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_enable_custom_tls_versions[enabled1-expected_protocols1]",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_enable_custom_tls_versions[enabled2-expected_protocols2]",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_enable_custom_tls_versions[enabled3-expected_protocols3]",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_enable_custom_tls_versions[enabled4-expected_protocols4]",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_enable_custom_tls_versions[enabled5-expected_protocols5]",
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_no_tls_version_enabled"
+  ],
+  "PASS_TO_PASS": [
+    "gen.tests.test_adminrouter_tls_conf.TestToggleTLSVersions::test_validation_1_0"
+  ]
+}

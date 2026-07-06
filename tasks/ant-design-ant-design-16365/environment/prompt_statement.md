@@ -1,5 +1,0 @@
-I'm working on the collapsible panel component and would like to add support for controlling the position of the expand icon — whether it appears on the left or right side of the panel header. Right now there's no built-in way to do this; the docs even include a FAQ entry telling users to apply custom CSS overrides to move the icon to the right. It would be much better to have a proper prop for this.
-
-The prop should default to left so nothing breaks for existing users, and the currently active position should be reflected as a CSS class on the component's root element so that position-specific styles are easy to write. The class should also respect any custom CSS prefix that might be configured.
-
-I'd also like to update the demo that shows extra content in panel headers to showcase this new feature interactively — showing a dropdown that lets viewers switch between left and right icon positions and see the result immediately. Once this prop exists, the FAQ entry about manually repositioning the icon via CSS can be removed.

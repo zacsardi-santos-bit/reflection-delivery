@@ -1,0 +1,29 @@
+{
+    "id": "b64fe94e-5bc5-49ae-b6ce-7034a685a7be",
+    "started_at": "2026-07-04T15:40:51.853702",
+    "finished_at": "2026-07-04T15:41:19.668004",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__docling-project-docling-3408": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "docling-project-docling-3408__uBtBDWT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

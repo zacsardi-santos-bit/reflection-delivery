@@ -1,0 +1,649 @@
+diff --git a/homeassistant/components/alexa_devices/manifest.json b/homeassistant/components/alexa_devices/manifest.json
+index ed17385e825..a6210eb432b 100644
+--- a/homeassistant/components/alexa_devices/manifest.json
++++ b/homeassistant/components/alexa_devices/manifest.json
+@@ -8,5 +8,5 @@
+   "iot_class": "cloud_polling",
+   "loggers": ["aioamazondevices"],
+   "quality_scale": "platinum",
+-  "requirements": ["aioamazondevices==13.4.1"]
++  "requirements": ["aioamazondevices==13.4.3"]
+ }
+diff --git a/homeassistant/components/frontend/manifest.json b/homeassistant/components/frontend/manifest.json
+index e9ec83fd8e4..f5ba1caabf7 100644
+--- a/homeassistant/components/frontend/manifest.json
++++ b/homeassistant/components/frontend/manifest.json
+@@ -21,5 +21,5 @@
+   "integration_type": "system",
+   "preview_features": { "winter_mode": {} },
+   "quality_scale": "internal",
+-  "requirements": ["home-assistant-frontend==20260325.7"]
++  "requirements": ["home-assistant-frontend==20260325.8"]
+ }
+diff --git a/homeassistant/components/gardena_bluetooth/sensor.py b/homeassistant/components/gardena_bluetooth/sensor.py
+index d31a00f73da..9cb7316c783 100644
+--- a/homeassistant/components/gardena_bluetooth/sensor.py
++++ b/homeassistant/components/gardena_bluetooth/sensor.py
+@@ -133,7 +133,7 @@ DESCRIPTIONS = (
+         key=FlowStatistics.overall.unique_id,
+         translation_key="flow_statistics_overall",
+         state_class=SensorStateClass.TOTAL_INCREASING,
+-        device_class=SensorDeviceClass.VOLUME,
++        device_class=SensorDeviceClass.WATER,
+         entity_category=EntityCategory.DIAGNOSTIC,
+         native_unit_of_measurement=UnitOfVolume.LITERS,
+         char=FlowStatistics.overall,
+@@ -141,6 +141,7 @@ DESCRIPTIONS = (
+     GardenaBluetoothSensorEntityDescription(
+         key=FlowStatistics.current.unique_id,
+         translation_key="flow_statistics_current",
++        state_class=SensorStateClass.MEASUREMENT,
+         device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
+         entity_category=EntityCategory.DIAGNOSTIC,
+         native_unit_of_measurement=UnitOfVolumeFlowRate.LITERS_PER_MINUTE,
+@@ -150,7 +151,7 @@ DESCRIPTIONS = (
+         key=FlowStatistics.resettable.unique_id,
+         translation_key="flow_statistics_resettable",
+         state_class=SensorStateClass.TOTAL_INCREASING,
+-        device_class=SensorDeviceClass.VOLUME,
++        device_class=SensorDeviceClass.WATER,
+         entity_category=EntityCategory.DIAGNOSTIC,
+         native_unit_of_measurement=UnitOfVolume.LITERS,
+         char=FlowStatistics.resettable,
+@@ -166,6 +167,7 @@ DESCRIPTIONS = (
+     GardenaBluetoothSensorEntityDescription(
+         key=Spray.current_distance.unique_id,
+         translation_key="spray_current_distance",
++        state_class=SensorStateClass.MEASUREMENT,
+         entity_category=EntityCategory.DIAGNOSTIC,
+         native_unit_of_measurement=PERCENTAGE,
+         char=Spray.current_distance,
+diff --git a/homeassistant/components/google_generative_ai_conversation/helpers.py b/homeassistant/components/google_generative_ai_conversation/helpers.py
+index 3d053aa9f1a..c1708f9caec 100644
+--- a/homeassistant/components/google_generative_ai_conversation/helpers.py
++++ b/homeassistant/components/google_generative_ai_conversation/helpers.py
+@@ -49,7 +49,7 @@ def _parse_audio_mime_type(mime_type: str) -> dict[str, int]:
+         integers if found, otherwise None.
+ 
+     """
+-    if not mime_type.startswith("audio/L"):
++    if not mime_type.lower().startswith("audio/l"):
+         LOGGER.warning("Received unexpected MIME type %s", mime_type)
+         raise HomeAssistantError(f"Unsupported audio MIME type: {mime_type}")
+ 
+@@ -65,9 +65,9 @@ def _parse_audio_mime_type(mime_type: str) -> dict[str, int]:
+             with suppress(ValueError, IndexError):
+                 rate_str = param.split("=", 1)[1]
+                 rate = int(rate_str)
+-        elif param.startswith("audio/L"):
++        elif param.lower().startswith("audio/l"):
+             # Keep bits_per_sample as default if conversion fails
+             with suppress(ValueError, IndexError):
+-                bits_per_sample = int(param.split("L", 1)[1])
++                bits_per_sample = int(param.upper().split("L", 1)[1])
+ 
+     return {"bits_per_sample": bits_per_sample, "rate": rate}
+diff --git a/homeassistant/components/hive/manifest.json b/homeassistant/components/hive/manifest.json
+index a03bf9279cb..5ebe678e73b 100644
+--- a/homeassistant/components/hive/manifest.json
++++ b/homeassistant/components/hive/manifest.json
+@@ -10,5 +10,5 @@
+   "integration_type": "hub",
+   "iot_class": "cloud_polling",
+   "loggers": ["apyhiveapi"],
+-  "requirements": ["pyhive-integration==1.0.8"]
++  "requirements": ["pyhive-integration==1.0.9"]
+ }
+diff --git a/homeassistant/components/http/auth.py b/homeassistant/components/http/auth.py
+index 50b3812dd7d..6ce5d6d56d1 100644
+--- a/homeassistant/components/http/auth.py
++++ b/homeassistant/components/http/auth.py
+@@ -4,7 +4,6 @@ from __future__ import annotations
+ 
+ from collections.abc import Awaitable, Callable
+ from datetime import timedelta
+-from ipaddress import ip_address
+ import logging
+ import secrets
+ import time
+@@ -24,16 +23,14 @@ from yarl import URL
+ 
+ from homeassistant.auth import jwt_wrapper
+ from homeassistant.auth.const import GROUP_ID_READ_ONLY
+-from homeassistant.auth.models import User
+ from homeassistant.components import websocket_api
+ from homeassistant.const import HASSIO_USER_NAME
+ from homeassistant.core import HomeAssistant, callback
+ from homeassistant.helpers.http import current_request
+ from homeassistant.helpers.json import json_bytes
+-from homeassistant.helpers.network import is_cloud_connection
+ from homeassistant.helpers.storage import Store
+-from homeassistant.util.network import is_local
+ 
++from .auth_util import async_user_not_allowed_do_auth
+ from .const import (
+     KEY_AUTHENTICATED,
+     KEY_HASS_REFRESH_TOKEN_ID,
+@@ -99,38 +96,6 @@ def async_sign_path(
+     return f"{url.path}?{url.query_string}"
+ 
+ 
+-@callback
+-def async_user_not_allowed_do_auth(
+-    hass: HomeAssistant, user: User, request: Request | None = None
+-) -> str | None:
+-    """Validate that user is not allowed to do auth things."""
+-    if not user.is_active:
+-        return "User is not active"
+-
+-    if not user.local_only:
+-        return None
+-
+-    # User is marked as local only, check if they are allowed to do auth
+-    if request is None:
+-        request = current_request.get()
+-
+-    if not request:
+-        return "No request available to validate local access"
+-
+-    if is_cloud_connection(hass):
+-        return "User is local only"
+-
+-    try:
+-        remote_address = ip_address(request.remote)  # type: ignore[arg-type]
+-    except ValueError:
+-        return "Invalid remote IP"
+-
+-    if is_local(remote_address):
+-        return None
+-
+-    return "User cannot authenticate remotely"
+-
+-
+ async def async_setup_auth(  # noqa: C901
+     hass: HomeAssistant,
+     app: Application,
+@@ -217,6 +182,9 @@ async def async_setup_auth(  # noqa: C901
+         if refresh_token is None:
+             return False
+ 
++        if async_user_not_allowed_do_auth(hass, refresh_token.user, request):
++            return False
++
+         request[KEY_HASS_USER] = refresh_token.user
+         request[KEY_HASS_REFRESH_TOKEN_ID] = refresh_token.id
+         return True
+diff --git a/homeassistant/components/http/auth_util.py b/homeassistant/components/http/auth_util.py
+new file mode 100644
+index 00000000000..18a827bbc3b
+--- /dev/null
++++ b/homeassistant/components/http/auth_util.py
+@@ -0,0 +1,45 @@
++"""Auth utilities for the HTTP component."""
++
++from __future__ import annotations
++
++from ipaddress import ip_address
++
++from aiohttp.web import Request
++
++from homeassistant.auth.models import User
++from homeassistant.core import HomeAssistant, callback
++from homeassistant.helpers.http import current_request
++from homeassistant.helpers.network import is_cloud_connection
++from homeassistant.util.network import is_local
++
++
++@callback
++def async_user_not_allowed_do_auth(
++    hass: HomeAssistant, user: User, request: Request | None = None
++) -> str | None:
++    """Validate that user is not allowed to do auth things."""
++    if not user.is_active:
++        return "User is not active"
++
++    if not user.local_only:
++        return None
++
++    # User is marked as local only, check if they are allowed to do auth
++    if request is None:
++        request = current_request.get()
++
++    if not request:
++        return "No request available to validate local access"
++
++    if is_cloud_connection(hass):
++        return "User is local only"
++
++    try:
++        remote_address = ip_address(request.remote)  # type: ignore[arg-type]
++    except ValueError:
++        return "Invalid remote IP"
++
++    if is_local(remote_address):
++        return None
++
++    return "User cannot authenticate remotely"
+diff --git a/homeassistant/components/imap/coordinator.py b/homeassistant/components/imap/coordinator.py
+index 157db4da174..b914388e270 100644
+--- a/homeassistant/components/imap/coordinator.py
++++ b/homeassistant/components/imap/coordinator.py
+@@ -494,6 +494,7 @@ class ImapPushDataUpdateCoordinator(ImapDataUpdateCoordinator):
+ 
+     async def _async_wait_push_loop(self) -> None:
+         """Wait for data push from server."""
++        idle: asyncio.Future | None = None
+         while True:
+             try:
+                 self.number_of_messages = await self._async_fetch_number_of_messages()
+@@ -527,8 +528,9 @@ class ImapPushDataUpdateCoordinator(ImapDataUpdateCoordinator):
+             else:
+                 self.auth_errors = 0
+                 self.async_set_updated_data(self.number_of_messages)
++
+             try:
+-                idle: asyncio.Future = await self.imap_client.idle_start()
++                idle = await self.imap_client.idle_start()
+                 await self.imap_client.wait_server_push()
+                 self.imap_client.idle_done()
+                 async with asyncio.timeout(10):
+@@ -543,6 +545,24 @@ class ImapPushDataUpdateCoordinator(ImapDataUpdateCoordinator):
+                 await self._cleanup()
+                 await asyncio.sleep(BACKOFF_TIME)
+ 
++            finally:
++                # Ensure no pending IDLE future survives
++                if idle is not None and not idle.done():
++                    idle.cancel()
++                    _LOGGER.debug(
++                        "Canceling IDLE wait for %s",
++                        self.config_entry.data[CONF_SERVER],
++                    )
++                    try:
++                        await idle
++                    except asyncio.CancelledError:
++                        if (
++                            current_task := asyncio.current_task()
++                        ) and current_task.cancelling():
++                            raise
++                    except AioImapException:
++                        pass
++
+     async def shutdown(self, *_: Any) -> None:
+         """Close resources."""
+         if self._push_wait_task:
+diff --git a/homeassistant/components/kodi/browse_media.py b/homeassistant/components/kodi/browse_media.py
+index aa98ca7e8be..1106a2ea80a 100644
+--- a/homeassistant/components/kodi/browse_media.py
++++ b/homeassistant/components/kodi/browse_media.py
+@@ -70,7 +70,7 @@ async def build_item_response(media_library, payload, get_thumbnail_url=None):
+         media_content_id=search_id,
+         media_content_type=search_type,
+         title=title,
+-        can_play=search_type in PLAYABLE_MEDIA_TYPES and search_id,
++        can_play=bool(search_type in PLAYABLE_MEDIA_TYPES and search_id),
+         can_expand=True,
+         children=children,
+         thumbnail=thumbnail,
+diff --git a/homeassistant/components/mqtt/light/schema_json.py b/homeassistant/components/mqtt/light/schema_json.py
+index b388cdebb65..080e15c77b6 100644
+--- a/homeassistant/components/mqtt/light/schema_json.py
++++ b/homeassistant/components/mqtt/light/schema_json.py
+@@ -337,8 +337,8 @@ class MqttLightJson(MqttEntity, LightEntity, RestoreEntity):
+             self._attr_brightness = last_attributes.get(
+                 ATTR_BRIGHTNESS, self.brightness
+             )
+-            self._attr_color_mode = last_attributes.get(
+-                ATTR_COLOR_MODE, self.color_mode
++            self._attr_color_mode = (
++                last_attributes.get(ATTR_COLOR_MODE) or self.color_mode
+             )
+             self._attr_color_temp_kelvin = last_attributes.get(
+                 ATTR_COLOR_TEMP_KELVIN, self.color_temp_kelvin
+diff --git a/homeassistant/components/roborock/vacuum.py b/homeassistant/components/roborock/vacuum.py
+index 68259aa15d7..cda6c8fe781 100644
+--- a/homeassistant/components/roborock/vacuum.py
++++ b/homeassistant/components/roborock/vacuum.py
+@@ -240,14 +240,16 @@ class RoborockVacuum(RoborockCoordinatedEntityV1, StateVacuumEntity):
+                 translation_domain=DOMAIN,
+                 translation_key="update_options_failed",
+             )
+-        await self.send(
+-            RoborockCommand.SET_CUSTOM_MODE,
+-            [
+-                {v: k for k, v in self._status_trait.fan_speed_mapping.items()}[
+-                    fan_speed
+-                ]
+-            ],
+-        )
++        code_mapping = {v: k for k, v in self._status_trait.fan_speed_mapping.items()}
++        if (fan_speed_code := code_mapping.get(fan_speed)) is None:
++            raise ServiceValidationError(
++                translation_domain=DOMAIN,
++                translation_key="invalid_fan_speed",
++                translation_placeholders={
++                    "fan_speed": fan_speed,
++                },
++            )
++        await self.send(RoborockCommand.SET_CUSTOM_MODE, [fan_speed_code])
+ 
+     async def async_set_vacuum_goto_position(self, x: int, y: int) -> None:
+         """Send vacuum to a specific target point."""
+@@ -458,9 +460,17 @@ class RoborockQ7Vacuum(RoborockCoordinatedEntityB01Q7, StateVacuumEntity):
+     async def async_set_fan_speed(self, fan_speed: str, **kwargs: Any) -> None:
+         """Set vacuum fan speed."""
+         try:
+-            await self.coordinator.api.set_fan_speed(
+-                SCWindMapping.from_value(fan_speed)
+-            )
++            fan_speed_code = SCWindMapping.from_value(fan_speed)
++        except ValueError as err:
++            raise ServiceValidationError(
++                translation_domain=DOMAIN,
++                translation_key="invalid_fan_speed",
++                translation_placeholders={
++                    "fan_speed": fan_speed,
++                },
++            ) from err
++        try:
++            await self.coordinator.api.set_fan_speed(fan_speed_code)
+         except RoborockException as err:
+             raise HomeAssistantError(
+                 translation_domain=DOMAIN,
+diff --git a/homeassistant/components/tibber/manifest.json b/homeassistant/components/tibber/manifest.json
+index 066d2cced5f..774f4d0ee4a 100644
+--- a/homeassistant/components/tibber/manifest.json
++++ b/homeassistant/components/tibber/manifest.json
+@@ -8,5 +8,5 @@
+   "integration_type": "hub",
+   "iot_class": "cloud_polling",
+   "loggers": ["tibber"],
+-  "requirements": ["pyTibber==0.37.1"]
++  "requirements": ["pyTibber==0.37.2"]
+ }
+diff --git a/homeassistant/components/tractive/__init__.py b/homeassistant/components/tractive/__init__.py
+index 87e408b2a58..921913413b7 100644
+--- a/homeassistant/components/tractive/__init__.py
++++ b/homeassistant/components/tractive/__init__.py
+@@ -102,13 +102,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: TractiveConfigEntry) ->
+ 
+     tractive = TractiveClient(hass, client, creds["user_id"], entry)
+ 
++    trackables = []
+     try:
+-        trackable_objects = await client.trackable_objects()
+-        trackables = await asyncio.gather(
+-            *(_generate_trackables(client, item) for item in trackable_objects)
+-        )
++        for obj in await client.trackable_objects():
++            # To avoid hitting Tractive API rate limits, we add a small
++            # delay between requests to fetch trackable details.
++            await asyncio.sleep(2)
++            trackables.append(await _generate_trackables(client, obj))
+     except aiotractive.exceptions.TractiveError as error:
++        await client.close()
+         raise ConfigEntryNotReady from error
++    except ConfigEntryNotReady:
++        await client.close()
++        raise
+ 
+     # When the pet defined in Tractive has no tracker linked we get None as `trackable`.
+     # So we have to remove None values from trackables list.
+@@ -164,12 +170,11 @@ async def _generate_trackables(
+     tracker = client.tracker(trackable_data["device_id"])
+     trackable_pet = client.trackable_object(trackable_data["_id"])
+ 
+-    tracker_details, hw_info, pos_report, health_overview = await asyncio.gather(
+-        tracker.details(),
+-        tracker.hw_info(),
+-        tracker.pos_report(),
+-        trackable_pet.health_overview(),
+-    )
++    # Sequential fetching to prevent HTTP 429 Rate Limits
++    tracker_details = await tracker.details()
++    hw_info = await tracker.hw_info()
++    pos_report = await tracker.pos_report()
++    health_overview = await trackable_pet.health_overview()
+ 
+     if not tracker_details.get("_id"):
+         raise ConfigEntryNotReady(
+diff --git a/homeassistant/components/tractive/manifest.json b/homeassistant/components/tractive/manifest.json
+index 96abbf24ade..200bda0d885 100644
+--- a/homeassistant/components/tractive/manifest.json
++++ b/homeassistant/components/tractive/manifest.json
+@@ -7,5 +7,5 @@
+   "integration_type": "device",
+   "iot_class": "cloud_push",
+   "loggers": ["aiotractive"],
+-  "requirements": ["aiotractive==1.0.2"]
++  "requirements": ["aiotractive==1.0.3"]
+ }
+diff --git a/homeassistant/components/victron_ble/__init__.py b/homeassistant/components/victron_ble/__init__.py
+index 7c79d733154..fd4cd0b4fd6 100644
+--- a/homeassistant/components/victron_ble/__init__.py
++++ b/homeassistant/components/victron_ble/__init__.py
+@@ -3,9 +3,11 @@
+ from __future__ import annotations
+ 
+ import logging
++from struct import error as struct_error
+ 
+ from sensor_state_data import SensorUpdate
+ from victron_ble_ha_parser import VictronBluetoothDeviceData
++from victron_ble_ha_parser.parser import detect_device_type
+ 
+ from homeassistant.components.bluetooth import (
+     BluetoothScanningMode,
+@@ -38,25 +40,33 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+         nonlocal consecutive_failures
+         update = data.update(service_info)
+ 
+-        # Only consider a reauth when the device type is recognised (devices
+-        # populated) but the advertisement key fails the quick-check built into
+-        # validate_advertisement_key.  Using the key check instead of counting
+-        # entity values avoids false positives: some devices legitimately return
+-        # few (or zero) sensor values when in certain error or alarm states.
++        # Only assess key validity for instant-readout advertisements
++        # (0x10 prefix) whose device type the parser actually recognizes.
++        # Unrecognized mode bytes or non-instant-readout packets are neutral:
++        # they say nothing about whether the encryption key is correct, so
++        # they must not increment or reset the failure counter.
+         raw_data = service_info.manufacturer_data.get(VICTRON_IDENTIFIER)
+         if update.devices and raw_data is not None:
+-            if not data.validate_advertisement_key(raw_data):
+-                consecutive_failures += 1
+-                if consecutive_failures >= REAUTH_AFTER_FAILURES:
+-                    _LOGGER.debug(
+-                        "Triggering reauth for %s after %d consecutive failures",
+-                        address,
+-                        consecutive_failures,
+-                    )
+-                    entry.async_start_reauth(hass)
++            try:
++                is_recognizable = (
++                    raw_data[:1] == b"\x10" and detect_device_type(raw_data) is not None
++                )
++            except struct_error, IndexError:
++                is_recognizable = False
++
++            if is_recognizable:
++                if not data.validate_advertisement_key(raw_data):
++                    consecutive_failures += 1
++                    if consecutive_failures >= REAUTH_AFTER_FAILURES:
++                        _LOGGER.debug(
++                            "Triggering reauth for %s after %d consecutive failures",
++                            address,
++                            consecutive_failures,
++                        )
++                        entry.async_start_reauth(hass)
++                        consecutive_failures = 0
++                else:
+                     consecutive_failures = 0
+-            else:
+-                consecutive_failures = 0
+         else:
+             consecutive_failures = 0
+ 
+diff --git a/homeassistant/components/websocket_api/auth.py b/homeassistant/components/websocket_api/auth.py
+index b0e319bbce5..ae4844cd69a 100644
+--- a/homeassistant/components/websocket_api/auth.py
++++ b/homeassistant/components/websocket_api/auth.py
+@@ -9,6 +9,7 @@ from aiohttp.web import Request
+ import voluptuous as vol
+ from voluptuous.humanize import humanize_error
+ 
++from homeassistant.components.http.auth_util import async_user_not_allowed_do_auth
+ from homeassistant.components.http.ban import process_success_login, process_wrong_login
+ from homeassistant.components.http.const import KEY_HASS_USER
+ from homeassistant.const import __version__
+@@ -97,6 +98,13 @@ class AuthPhase:
+         if (access_token := valid_msg.get("access_token")) and (
+             refresh_token := self._hass.auth.async_validate_access_token(access_token)
+         ):
++            if user_access_error := async_user_not_allowed_do_auth(
++                self._hass, refresh_token.user, self._request
++            ):
++                await self._send_bytes_text(auth_invalid_message(user_access_error))
++                await process_wrong_login(self._request)
++                raise Disconnect
++
+             conn = ActiveConnection(
+                 self._logger,
+                 self._hass,
+diff --git a/homeassistant/const.py b/homeassistant/const.py
+index ef7e86b3665..75bee8f442b 100644
+--- a/homeassistant/const.py
++++ b/homeassistant/const.py
+@@ -17,7 +17,7 @@ if TYPE_CHECKING:
+ APPLICATION_NAME: Final = "HomeAssistant"
+ MAJOR_VERSION: Final = 2026
+ MINOR_VERSION: Final = 4
+-PATCH_VERSION: Final = "3"
++PATCH_VERSION: Final = "4"
+ __short_version__: Final = f"{MAJOR_VERSION}.{MINOR_VERSION}"
+ __version__: Final = f"{__short_version__}.{PATCH_VERSION}"
+ REQUIRED_PYTHON_VER: Final[tuple[int, int, int]] = (3, 14, 2)
+diff --git a/homeassistant/package_constraints.txt b/homeassistant/package_constraints.txt
+index 090cb2f94c9..fce7f8c72c3 100644
+--- a/homeassistant/package_constraints.txt
++++ b/homeassistant/package_constraints.txt
+@@ -39,7 +39,7 @@ habluetooth==5.11.1
+ hass-nabucasa==2.2.0
+ hassil==3.5.0
+ home-assistant-bluetooth==1.13.1
+-home-assistant-frontend==20260325.7
++home-assistant-frontend==20260325.8
+ home-assistant-intents==2026.3.24
+ httpx==0.28.1
+ ifaddr==0.2.0
+diff --git a/pyproject.toml b/pyproject.toml
+index f89c595533b..e6e4b4caccc 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
+ 
+ [project]
+ name = "homeassistant"
+-version = "2026.4.3"
++version = "2026.4.4"
+ license = "Apache-2.0"
+ license-files = ["LICENSE*", "homeassistant/backports/LICENSE*"]
+ description = "Open-source home automation platform running on Python 3."
+diff --git a/requirements_all.txt b/requirements_all.txt
+index 3390f1b9348..387249aa1b7 100644
+--- a/requirements_all.txt
++++ b/requirements_all.txt
+@@ -190,7 +190,7 @@ aioairzone-cloud==0.7.2
+ aioairzone==1.0.5
+ 
+ # homeassistant.components.alexa_devices
+-aioamazondevices==13.4.1
++aioamazondevices==13.4.3
+ 
+ # homeassistant.components.ambient_network
+ # homeassistant.components.ambient_station
+@@ -425,7 +425,7 @@ aiotankerkoenig==0.5.1
+ aiotedee==0.3.0
+ 
+ # homeassistant.components.tractive
+-aiotractive==1.0.2
++aiotractive==1.0.3
+ 
+ # homeassistant.components.unifi
+ aiounifi==88
+@@ -1229,7 +1229,7 @@ hole==0.9.0
+ holidays==0.94
+ 
+ # homeassistant.components.frontend
+-home-assistant-frontend==20260325.7
++home-assistant-frontend==20260325.8
+ 
+ # homeassistant.components.conversation
+ home-assistant-intents==2026.3.24
+@@ -1925,7 +1925,7 @@ pyRFXtrx==0.31.1
+ pySDCP==1
+ 
+ # homeassistant.components.tibber
+-pyTibber==0.37.1
++pyTibber==0.37.2
+ 
+ # homeassistant.components.dlink
+ pyW215==0.8.0
+@@ -2155,7 +2155,7 @@ pyhaversion==22.8.0
+ pyheos==1.0.6
+ 
+ # homeassistant.components.hive
+-pyhive-integration==1.0.8
++pyhive-integration==1.0.9
+ 
+ # homeassistant.components.homematic
+ pyhomematic==0.1.77
+diff --git a/requirements_test_all.txt b/requirements_test_all.txt
+index 76ab5cabd4b..79db7d7fdcf 100644
+--- a/requirements_test_all.txt
++++ b/requirements_test_all.txt
+@@ -181,7 +181,7 @@ aioairzone-cloud==0.7.2
+ aioairzone==1.0.5
+ 
+ # homeassistant.components.alexa_devices
+-aioamazondevices==13.4.1
++aioamazondevices==13.4.3
+ 
+ # homeassistant.components.ambient_network
+ # homeassistant.components.ambient_station
+@@ -410,7 +410,7 @@ aiotankerkoenig==0.5.1
+ aiotedee==0.3.0
+ 
+ # homeassistant.components.tractive
+-aiotractive==1.0.2
++aiotractive==1.0.3
+ 
+ # homeassistant.components.unifi
+ aiounifi==88
+@@ -1093,7 +1093,7 @@ hole==0.9.0
+ holidays==0.94
+ 
+ # homeassistant.components.frontend
+-home-assistant-frontend==20260325.7
++home-assistant-frontend==20260325.8
+ 
+ # homeassistant.components.conversation
+ home-assistant-intents==2026.3.24
+@@ -1668,7 +1668,7 @@ pyHomee==1.3.8
+ pyRFXtrx==0.31.1
+ 
+ # homeassistant.components.tibber
+-pyTibber==0.37.1
++pyTibber==0.37.2
+ 
+ # homeassistant.components.dlink
+ pyW215==0.8.0
+@@ -1847,7 +1847,7 @@ pyhaversion==22.8.0
+ pyheos==1.0.6
+ 
+ # homeassistant.components.hive
+-pyhive-integration==1.0.8
++pyhive-integration==1.0.9
+ 
+ # homeassistant.components.homematic
+ pyhomematic==0.1.77

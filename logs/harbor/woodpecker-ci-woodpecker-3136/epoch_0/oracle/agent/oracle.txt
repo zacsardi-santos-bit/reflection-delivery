@@ -1,4 +1,0 @@
-patching file pipeline/backend/local/clone.go
-patching file pipeline/backend/local/local.go
-patching file pipeline/error.go
-patching file pipeline/pipeline.go

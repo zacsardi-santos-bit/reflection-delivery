@@ -1,0 +1,7 @@
+I'm running into confusing validation errors when building a Neo4j GraphQL schema. When I apply directives like those for relationships, authorization, or custom resolvers to a type that doesn't have the node annotation, the error message just says something like "Directive X is not supported on fields of type Y." That message doesn't help me understand what I need to do — I'd expect it to say something like "this directive requires the containing type to be annotated as a node."
+
+On top of that, when I use these directives inside relationship property types or within type extensions, the error paths in the validation output don't include the directive name, so it's hard to know exactly where to look. And the error message for an invalid default value on a date-time field is vague — it would be much more helpful if it clearly stated what type the value needs to be.
+
+I'd also like the validation to be consistent: whether I'm using one of these directives at the field level, the object level, or inside a type extension, the error message and error path format should be the same. Additionally, when an authorization directive is used on a root query field, the error should suggest the correct alternative to use. And when an authorization directive is used with no valid arguments, I'd prefer to see just one clear error rather than multiple confusing ones.
+
+Could you improve the validation error messages and paths so they give clearer, more actionable feedback?

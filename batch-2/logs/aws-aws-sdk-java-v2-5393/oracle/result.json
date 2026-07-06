@@ -1,0 +1,29 @@
+{
+    "id": "873c529f-0128-4358-9dc3-87a17d658321",
+    "started_at": "2026-07-04T15:45:50.318085",
+    "finished_at": "2026-07-04T15:46:11.447063",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__aws-aws-sdk-java-v2-5393": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "aws-aws-sdk-java-v2-5393__SDvvtNt"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

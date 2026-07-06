@@ -1,0 +1,529 @@
+patching file test/spec/modules/r2b2AnalytiscAdapter_spec.js
+[15:30:34] Using gulpfile /workspace/repo/gulpfile.js
+[15:30:34] Starting 'test'...
+[15:30:34] Starting 'clean'...
+[15:30:34] Finished 'clean' after 7.07 ms
+[15:30:34] Starting 'lint'...
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[15:31:39] 
+/workspace/repo/src/prebid.js
+  843:1  warning  The type 'setPriceGranularity' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/src/utils.js
+  1248:1  warning  Syntax error in type: any, undefined  jsdoc/valid-types
+
+/workspace/repo/src/activities/params.js
+  42:1  warning  @private should be empty  jsdoc/empty-tags
+
+/workspace/repo/src/utils/focusTimeout.js
+  29:1  warning  Syntax error in type: function(*): ()  jsdoc/valid-types
+
+/workspace/repo/src/utils/perfMetrics.js
+  132:1  warning  Syntax error in type: Function(T): void  jsdoc/valid-types
+  136:1  warning  Syntax error in type: Function(): void   jsdoc/valid-types
+
+/workspace/repo/src/utils/ttlCollection.js
+  12:1  warning  @param "ttl" does not match an existing function parameter     jsdoc/check-param-names
+  26:1  warning  Syntax error in type: function(function(*)): function(): void  jsdoc/valid-types
+
+/workspace/repo/modules/1plusXRtdProvider.js
+   79:1  warning  Missing @param "prebid.gdpr"                                                      jsdoc/check-param-names
+  122:1  warning  Expected @param names to be "customerId, consent, fpid". Got "consent, oneplusx"  jsdoc/check-param-names
+  168:1  warning  Missing @param "targetingData.segments"                                           jsdoc/check-param-names
+  168:1  warning  Missing @param "targetingData.topics"                                             jsdoc/check-param-names
+
+/workspace/repo/modules/33acrossAnalyticsAdapter.js
+   60:1  warning  Syntax error in type: `${number}x${number}`  jsdoc/valid-types
+  379:1  warning  Syntax error in type: EVENTS[keyof EVENTS]   jsdoc/valid-types
+
+/workspace/repo/modules/adhashBidAdapter.js
+  45:1  warning  The type 'integer' is undefined  jsdoc/no-undefined-types
+  46:1  warning  The type 'integer' is undefined  jsdoc/no-undefined-types
+  47:1  warning  The type 'float' is undefined    jsdoc/no-undefined-types
+
+/workspace/repo/modules/adlooxRtdProvider.js
+  9:1  warning  Invalid JSDoc tag name "optional"  jsdoc/check-tag-names
+
+/workspace/repo/modules/adotBidAdapter.js
+   56:1  warning  The type 'OpenRTBBid' is undefined                                    jsdoc/no-undefined-types
+  145:1  warning  The type 'Regs' is undefined                                          jsdoc/no-undefined-types
+  155:1  warning  @param "bidderRequest" does not match an existing function parameter  jsdoc/check-param-names
+  156:1  warning  The type 'Ext' is undefined                                           jsdoc/no-undefined-types
+  183:1  warning  The type 'OpenRtbBanner' is undefined                                 jsdoc/no-undefined-types
+  211:1  warning  The type 'OpenRtbVideo' is undefined                                  jsdoc/no-undefined-types
+  239:1  warning  The type 'NativeMedia' is undefined                                   jsdoc/no-undefined-types
+  240:1  warning  The type 'OpenRtbNativeAssets' is undefined                           jsdoc/no-undefined-types
+  258:1  warning  The type 'NativeMedia' is undefined                                   jsdoc/no-undefined-types
+  259:1  warning  The type 'OpenRtbNative' is undefined                                 jsdoc/no-undefined-types
+  334:1  warning  The type 'VideoMedia' is undefined                                    jsdoc/no-undefined-types
+  361:1  warning  The type 'OpenRTBBidRequest' is undefined                             jsdoc/no-undefined-types
+  397:1  warning  The type 'PrebidBidRequest' is undefined                              jsdoc/no-undefined-types
+  398:1  warning  The type 'Dictionnary' is undefined                                   jsdoc/no-undefined-types
+  398:1  warning  The type 'PrebidBidRequest' is undefined                              jsdoc/no-undefined-types
+  414:1  warning  The type 'PrebidBidRequest' is undefined                              jsdoc/no-undefined-types
+  416:1  warning  The type 'AjaxRequest' is undefined                                   jsdoc/no-undefined-types
+  434:1  warning  The type 'NativeAssets' is undefined                                  jsdoc/no-undefined-types
+  545:1  warning  The type 'PrebidJSResponse' is undefined                              jsdoc/no-undefined-types
+  610:1  warning  The type 'PrebidJSResponse' is undefined                              jsdoc/no-undefined-types
+  655:1  warning  The type 'Format' is undefined                                        jsdoc/no-undefined-types
+
+/workspace/repo/modules/adplusBidAdapter.js
+  146:1  warning  The type 'HeaderBiddingResponse' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/adpod.js
+  453:1  warning  Expected @param names to be "a, b". Got "bid"  jsdoc/check-param-names
+
+/workspace/repo/modules/adtelligentBidAdapter.js
+  119:1  warning  Missing @param "adapterRequest.adapterRequest"  jsdoc/check-param-names
+
+/workspace/repo/modules/adyoulikeBidAdapter.js
+  190:1  warning  The type 'syncs' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/bliinkBidAdapter.js
+  312:1  warning  The type 'onTimeout' is undefined       jsdoc/no-undefined-types
+  312:1  warning  The type 'onSetTargeting' is undefined  jsdoc/no-undefined-types
+  312:1  warning  The type 'onBidWon' is undefined        jsdoc/no-undefined-types
+
+/workspace/repo/modules/concertBidAdapter.js
+   36:1  warning  Syntax error in namepath: -                           jsdoc/valid-types
+   37:1  warning  Syntax error in namepath: -                           jsdoc/valid-types
+   37:1  warning  Duplicate @param "-"                                  jsdoc/check-param-names
+  146:1  warning  The type 'data' is undefined                          jsdoc/no-undefined-types
+  146:1  warning  Expected @param names to be "data". Got "Containing"  jsdoc/check-param-names
+  155:1  warning  Expected @param names to be "bid". Got "The"          jsdoc/check-param-names
+  221:1  warning  The type 'BidderRequest' is undefined                 jsdoc/no-undefined-types
+
+/workspace/repo/modules/consumableBidAdapter.js
+  36:1  warning  Syntax error in namepath: -  jsdoc/valid-types
+
+/workspace/repo/modules/criteoIdSystem.js
+  227:1  warning  Expected @param names to be "submoduleConfig". Got "config, consentData"  jsdoc/check-param-names
+
+/workspace/repo/modules/dailymotionBidAdapter.js
+   12:1  warning  The type 'BidRequest' is undefined     jsdoc/no-undefined-types
+  151:1  warning  The type 'BidRequest' is undefined     jsdoc/no-undefined-types
+  152:1  warning  The type 'BidderRequest' is undefined  jsdoc/no-undefined-types
+  262:1  warning  The type 'Bid' is undefined            jsdoc/no-undefined-types
+
+/workspace/repo/modules/datawrkzBidAdapter.js
+  48:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "bidRequests"  jsdoc/check-param-names
+
+/workspace/repo/modules/discoveryBidAdapter.js
+  134:1  warning  Expected @param names to be "bidRequest, bidderRequest". Got "validBidRequest, bidderRequest"  jsdoc/check-param-names
+  527:1  warning  The type 'data' is undefined                                                                   jsdoc/no-undefined-types
+  527:1  warning  Expected @param names to be "data". Got "Containing"                                           jsdoc/check-param-names
+  536:1  warning  Expected @param names to be "bid". Got "The"                                                   jsdoc/check-param-names
+
+/workspace/repo/modules/dmdIdSystem.js
+  45:1  warning  Expected @param names to be "config, consentData, cacheIdObj". Got "config, , cacheIdObj"  jsdoc/check-param-names
+
+/workspace/repo/modules/dsp_genieeBidAdapter.js
+  102:1  warning  The type 'bids' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/dxkultureBidAdapter.js
+  290:1  warning  Syntax error in namepath: bidRequest,                        jsdoc/valid-types
+  290:1  warning  Expected @param names to be "bidRequest". Got "bidRequest,"  jsdoc/check-param-names
+
+/workspace/repo/modules/fabrickIdSystem.js
+  46:1  warning  Expected @param names to be "config, consentData, cacheIdObj". Got "config, , cacheIdObj"  jsdoc/check-param-names
+
+/workspace/repo/modules/feedadBidAdapter.js
+   93:1  warning  The type 'ServerResponse' is undefined  jsdoc/no-undefined-types
+  188:1  warning  The type 'MediaTypes' is undefined      jsdoc/no-undefined-types
+  189:1  warning  The type 'MediaTypes' is undefined      jsdoc/no-undefined-types
+  201:1  warning  The type 'MediaTypes' is undefined      jsdoc/no-undefined-types
+
+/workspace/repo/modules/gmosspBidAdapter.js
+  93:1  warning  Expected @param names to be "bidderResponse, requests". Got "serverResponse"  jsdoc/check-param-names
+
+/workspace/repo/modules/gppControl_usstates.js
+  33:1  warning  Expected @param names to be "nullify?, fields". Got "nullify?, move?, fn?, fields"  jsdoc/check-param-names
+  36:1  warning  Syntax error in type: ({}, {}) => void                                              jsdoc/valid-types
+
+/workspace/repo/modules/hybridBidAdapter.js
+  206:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  206:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/iasRtdProvider.js
+  224:1  warning  The type 'RtdSubmodule' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/identityLinkIdSystem.js
+  52:1  warning  Expected @param names to be "config, consentData". Got "consentData, config"  jsdoc/check-param-names
+
+/workspace/repo/modules/idxIdSystem.js
+  51:1  warning  @param "config" does not match an existing function parameter  jsdoc/check-param-names
+
+/workspace/repo/modules/impactifyBidAdapter.js
+   34:1  warning  Syntax error in type: {getExtParamsFromBid(*): {impactify: {appId}}, createOrtbImpVideoObj(*): {context: string, playerSize: [number,number], id: string, mimes: [string]}, getDeviceType(): (number), createOrtbImpBannerObj(*, *): {format: [], id: string}}  jsdoc/valid-types
+  250:1  warning  Syntax error in namepath: -                                                                                                                                                                                                                                     jsdoc/valid-types
+  251:1  warning  Syntax error in namepath: -                                                                                                                                                                                                                                     jsdoc/valid-types
+  251:1  warning  Duplicate @param "-"                                                                                                                                                                                                                                            jsdoc/check-param-names
+  366:1  warning  Expected @param names to be "bid". Got "The"                                                                                                                                                                                                                    jsdoc/check-param-names
+  379:1  warning  The type 'data' is undefined                                                                                                                                                                                                                                    jsdoc/no-undefined-types
+  379:1  warning  Expected @param names to be "data". Got "Containing"                                                                                                                                                                                                            jsdoc/check-param-names
+
+/workspace/repo/modules/improvedigitalBidAdapter.js
+  73:1  warning  Missing @param "bidderRequest.ortbRequest"  jsdoc/check-param-names
+
+/workspace/repo/modules/integr8BidAdapter.js
+  37:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  37:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/ivsBidAdapter.js
+  62:1  warning  Syntax error in namepath: -            jsdoc/valid-types
+  63:1  warning  The type 'bidderRequest' is undefined  jsdoc/no-undefined-types
+  63:1  warning  Syntax error in namepath: -            jsdoc/valid-types
+  63:1  warning  Duplicate @param "-"                   jsdoc/check-param-names
+
+/workspace/repo/modules/jixieBidAdapter.js
+  23:1  warning  Syntax error in type: float||null  jsdoc/valid-types
+
+/workspace/repo/modules/kinessoIdSystem.js
+   32:1  warning  Expected @param names to be "currPrng". Got "the"                        jsdoc/check-param-names
+   49:1  warning  Expected @param names to be "prng". Got "the"                            jsdoc/check-param-names
+  116:1  warning  Expected @param names to be "message". Got "error"                       jsdoc/check-param-names
+  129:1  warning  Expected @param names to be "root". Got "error"                          jsdoc/check-param-names
+  149:1  warning  Expected @param names to be "storedId". Got "result, callback"           jsdoc/check-param-names
+  151:1  warning  The type 'success' is undefined                                          jsdoc/no-undefined-types
+  182:1  warning  Expected @param names to be "accountId, consentData". Got "consentData"  jsdoc/check-param-names
+  210:1  warning  Invalid name: unpaired curlies                                           jsdoc/valid-types
+  221:1  warning  The type 'knssoId' is undefined                                          jsdoc/no-undefined-types
+
+/workspace/repo/modules/lemmaDigitalBidAdapter.js
+  65:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  65:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/limelightDigitalBidAdapter.js
+  70:1  warning  Expected @param names to be "bid". Got "The"  jsdoc/check-param-names
+
+/workspace/repo/modules/lmpIdSystem.js
+  24:1  warning  The type 'Submodule' is undefined        jsdoc/no-undefined-types
+  45:1  warning  The type 'SubmoduleConfig' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/malltvBidAdapter.js
+  36:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  36:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/mediaforceBidAdapter.js
+  273:1  warning  Expected @param names to be "bid". Got "The"  jsdoc/check-param-names
+
+/workspace/repo/modules/mediagoBidAdapter.js
+  425:1  warning  The type 'data' is undefined                  jsdoc/no-undefined-types
+  434:1  warning  Expected @param names to be "bid". Got "The"  jsdoc/check-param-names
+
+/workspace/repo/modules/medianetBidAdapter.js
+  514:1  warning  The type 'BidderRequests' is undefined                jsdoc/no-undefined-types
+  588:1  warning  Expected @param names to be "bid". Got "timeoutData"  jsdoc/check-param-names
+
+/workspace/repo/modules/mediasquareBidAdapter.js
+   43:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+   43:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+  181:1  warning  Expected @param names to be "bid". Got "The"                            jsdoc/check-param-names
+
+/workspace/repo/modules/merkleIdSystem.js
+  106:1  warning  The type 'arrayofields' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/mwOpenLinkIdSystem.js
+  127:1  warning  The type 'MwOlId' is undefined                                        jsdoc/no-undefined-types
+  128:1  warning  Syntax error in type: (Object|undefined                               jsdoc/valid-types
+  138:1  warning  Expected @param names to be "submoduleConfig". Got "submoduleParams"  jsdoc/check-param-names
+  139:1  warning  Syntax error in type: id:MwOlId | undefined                           jsdoc/valid-types
+
+/workspace/repo/modules/nativoBidAdapter.js
+   56:1  warning  The type 'Integer' is undefined               jsdoc/no-undefined-types
+   67:1  warning  Syntax error in type: Array/String            jsdoc/valid-types
+  132:1  warning  The type 'BidRequest' is undefined            jsdoc/no-undefined-types
+  724:1  warning  Expected @param names to be "arr". Got "obj"  jsdoc/check-param-names
+
+/workspace/repo/modules/netIdSystem.js
+  37:1  warning  @param "consentData" does not match an existing function parameter  jsdoc/check-param-names
+
+/workspace/repo/modules/neuwoRtdProvider.js
+  159:1  warning  Syntax error in type: Array[{ID: string}]  jsdoc/valid-types
+
+/workspace/repo/modules/nextrollBidAdapter.js
+  35:1  warning  Expected @param names to be "bidRequest". Got "bid"                     jsdoc/check-param-names
+  45:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  45:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/nobidBidAdapter.js
+  393:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  393:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+  498:1  warning  The type 'data' is undefined                                            jsdoc/no-undefined-types
+  498:1  warning  Expected @param names to be "data". Got "Containing"                    jsdoc/check-param-names
+
+/workspace/repo/modules/novatiqIdSystem.js
+  38:1  warning  Syntax error in type: novatiq: {snowflake: string}  jsdoc/valid-types
+  63:1  warning  Syntax error in type: id: string                    jsdoc/valid-types
+
+/workspace/repo/modules/oneKeyIdSystem.js
+  64:1  warning  Expected @param names to be "data". Got "value"                     jsdoc/check-param-names
+  74:1  warning  @param "consentData" does not match an existing function parameter  jsdoc/check-param-names
+
+/workspace/repo/modules/oneKeyRtdProvider.js
+  25:1  warning  Expected @param names to be "reqBidsConfigObj, done, rtdConfig". Got "reqBidsConfigObj, callback, rtdConfig, userConsent"  jsdoc/check-param-names
+
+/workspace/repo/modules/onetagBidAdapter.js
+  55:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  55:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/operaadsBidAdapter.js
+  189:1  warning  The type 'data' is undefined                                jsdoc/no-undefined-types
+  231:1  warning  The type 'BidderRequest' is undefined                       jsdoc/no-undefined-types
+  290:1  warning  The type 'OpenRtbBid' is undefined                          jsdoc/no-undefined-types
+  292:1  warning  The type 'OpenRtbResponseBody' is undefined                 jsdoc/no-undefined-types
+  293:1  warning  The type 'BidResponse' is undefined                         jsdoc/no-undefined-types
+  387:1  warning  The type 'OpenRtbNativeResponse' is undefined               jsdoc/no-undefined-types
+  390:1  warning  The type 'BidNative' is undefined                           jsdoc/no-undefined-types
+  490:1  warning  The type 'Currency' is undefined                            jsdoc/no-undefined-types
+  490:1  warning  @param "cur" does not match an existing function parameter  jsdoc/check-param-names
+  491:1  warning  The type 'Imp' is undefined                                 jsdoc/no-undefined-types
+  567:1  warning  The type 'Size' is undefined                                jsdoc/no-undefined-types
+  567:1  warning  The type 'Size' is undefined                                jsdoc/no-undefined-types
+  568:1  warning  The type 'Size' is undefined                                jsdoc/no-undefined-types
+  581:1  warning  The type 'Asset' is undefined                               jsdoc/no-undefined-types
+  653:1  warning  The type 'NativeImage' is undefined                         jsdoc/no-undefined-types
+  707:1  warning  The type 'Params' is undefined                              jsdoc/no-undefined-types
+  708:1  warning  The type 'Floor' is undefined                               jsdoc/no-undefined-types
+
+/workspace/repo/modules/optidigitalBidAdapter.js
+  43:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  43:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/orbidderBidAdapter.js
+  150:1  warning  Syntax error in type: float||undefined  jsdoc/valid-types
+
+/workspace/repo/modules/paapi.js
+  360:1  warning  Missing @param "auctionId.auctionId"   jsdoc/check-param-names
+  360:1  warning  Missing @param "auctionId.adUnitCode"  jsdoc/check-param-names
+
+/workspace/repo/modules/pilotxBidAdapter.js
+  48:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  48:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/priceFloors.js
+  633:1  warning  Expected @param names to be "floorEndpoint". Got "floorsConfig"  jsdoc/check-param-names
+
+/workspace/repo/modules/prismaBidAdapter.js
+  41:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  41:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/pubwiseBidAdapter.js
+  184:1  warning  Syntax error in namepath: -                                                 jsdoc/valid-types
+  184:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"      jsdoc/check-param-names
+  293:1  warning  Expected @param names to be "response, request". Got "serverResponse"       jsdoc/check-param-names
+  950:1  warning  Syntax error in namepath: }                                                 jsdoc/valid-types
+  950:1  warning  Expected @param names to be "key, value, datatype". Got "key, }, datatype"  jsdoc/check-param-names
+
+/workspace/repo/modules/radsBidAdapter.js
+  257:1  warning  Expected @param names to be "size". Got "sizes"  jsdoc/check-param-names
+  258:1  warning  Syntax error in type: width: number, h: height   jsdoc/valid-types
+
+/workspace/repo/modules/raynRtdProvider.js
+   53:1  warning  Expected @param names to be "segtax, segment, maxTier". Got "segtax, segmentIds, maxTier"  jsdoc/check-param-names
+  109:1  warning  Expected @param names to be "stringValue". Got "url"                                       jsdoc/check-param-names
+
+/workspace/repo/modules/relevadRtdProvider.js
+   34:1  warning  Syntax error in type: <type>                jsdoc/valid-types
+   36:1  warning  Syntax error in type: <type>                jsdoc/valid-types
+   37:1  warning  Syntax error in type: <type>                jsdoc/valid-types
+   84:1  warning  The type 'dictionary' is undefined          jsdoc/no-undefined-types
+   85:1  warning  The type 'dictionary' is undefined          jsdoc/no-undefined-types
+   99:1  warning  The type 'dictionary' is undefined          jsdoc/no-undefined-types
+  101:1  warning  The type 'dictionary' is undefined          jsdoc/no-undefined-types
+  130:1  warning  The type 'dictionary' is undefined          jsdoc/no-undefined-types
+  153:1  warning  Syntax error in type: array of {key:value}  jsdoc/valid-types
+  155:1  warning  The type 'array' is undefined               jsdoc/no-undefined-types
+  209:1  warning  Syntax error in type: <type>                jsdoc/valid-types
+  210:1  warning  Syntax error in type: <type>                jsdoc/valid-types
+  211:1  warning  Syntax error in type: <type>                jsdoc/valid-types
+
+/workspace/repo/modules/retailspotBidAdapter.js
+  36:1  warning  The type 'BidRequests' is undefined                                jsdoc/no-undefined-types
+  36:1  warning  Syntax error in namepath: -                                        jsdoc/valid-types
+  36:1  warning  Expected @param names to be "bidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/sizeMappingV2.js
+   64:1  warning  Invalid JSDoc tag name "params"             jsdoc/check-tag-names
+   64:1  warning  The type 'AdUnits' is undefined             jsdoc/no-undefined-types
+   65:1  warning  The type 'AdUnits' is undefined             jsdoc/no-undefined-types
+  275:1  warning  The type 'BidOrAdUnit' is undefined         jsdoc/no-undefined-types
+  317:1  warning  The type 'MediaTypes' is undefined          jsdoc/no-undefined-types
+  318:1  warning  The type 'FilteredMediaTypes' is undefined  jsdoc/no-undefined-types
+  396:1  warning  The type 'SizeConfig' is undefined          jsdoc/no-undefined-types
+  417:1  warning  The type 'SizeConfig' is undefined          jsdoc/no-undefined-types
+
+/workspace/repo/modules/slimcutBidAdapter.js
+  38:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "an"  jsdoc/check-param-names
+
+/workspace/repo/modules/sovrnBidAdapter.js
+  215:1  warning  Syntax error in type: id, seatbid, ext  jsdoc/valid-types
+
+/workspace/repo/modules/sublimeBidAdapter.js
+  287:1  warning  Syntax error in type: Array[{}]  jsdoc/valid-types
+
+/workspace/repo/modules/teadsBidAdapter.js
+  50:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "an"  jsdoc/check-param-names
+
+/workspace/repo/modules/temedyaBidAdapter.js
+  34:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  34:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/theAdxBidAdapter.js
+  151:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  151:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/ttdBidAdapter.js
+  393:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "an, bidderRequest"   jsdoc/check-param-names
+  460:1  warning  The type 'ttdResponseObj' is undefined                                                   jsdoc/no-undefined-types
+  460:1  warning  Expected @param names to be "response, serverRequest". Got "bidResponse, serverRequest"  jsdoc/check-param-names
+
+/workspace/repo/modules/ucfunnelBidAdapter.js
+  51:1  warning  Expected @param names to be "bids, bidderRequest". Got "bidRequests, bidderRequest"  jsdoc/check-param-names
+  71:1  warning  The type 'ucfunnelResponseObj' is undefined                                          jsdoc/no-undefined-types
+  71:1  warning  Expected @param names to be "ucfunnelResponseObj, request". Got "ucfunnelResponse"   jsdoc/check-param-names
+
+/workspace/repo/modules/utiqIdSystem.js
+  22:1  warning  @param "config" does not match an existing function parameter  jsdoc/check-param-names
+  71:1  warning  The type 'Submodule' is undefined                              jsdoc/no-undefined-types
+  90:1  warning  The type 'result' is undefined                                 jsdoc/no-undefined-types
+
+/workspace/repo/modules/utiqMtpIdSystem.js
+  22:1  warning  @param "config" does not match an existing function parameter  jsdoc/check-param-names
+  58:1  warning  The type 'Submodule' is undefined                              jsdoc/no-undefined-types
+  77:1  warning  The type 'result' is undefined                                 jsdoc/no-undefined-types
+
+/workspace/repo/modules/viantOrtbBidAdapter.js
+  50:1  warning  The type 'Bid' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/vibrantmediaBidAdapter.js
+  118:1  warning  The type 'BidderRequest' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/videobyteBidAdapter.js
+  90:1  warning  @param "bidRequest" does not match an existing function parameter  jsdoc/check-param-names
+
+/workspace/repo/modules/viewdeosDXBidAdapter.js
+  76:1  warning  Missing @param "bidderRequest.bidderRequest"  jsdoc/check-param-names
+  78:1  warning  The type 'Bid' is undefined                   jsdoc/no-undefined-types
+
+/workspace/repo/modules/viouslyBidAdapter.js
+  24:1  warning  The type 'BidRequest' is undefined  jsdoc/no-undefined-types
+
+/workspace/repo/modules/voxBidAdapter.js
+  211:1  warning  Syntax error in namepath: -                                             jsdoc/valid-types
+  211:1  warning  Expected @param names to be "validBidRequests, bidderRequest". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/welectBidAdapter.js
+  36:1  warning  Syntax error in namepath: -                              jsdoc/valid-types
+  36:1  warning  Expected @param names to be "validBidRequests". Got "-"  jsdoc/check-param-names
+
+/workspace/repo/modules/yieldoneBidAdapter.js
+   26:1  warning  Tag @type must have a type                                                                   jsdoc/valid-types
+  124:1  warning  Expected @param names to be "serverResponse, bidRequest". Got "serverResponse, bidRequests"  jsdoc/check-param-names
+  336:1  warning  @param path declaration ("serverResponse.body") appears before any real parameter            jsdoc/check-param-names
+  367:1  warning  @param path declaration ("serverResponse.body") appears before any real parameter            jsdoc/check-param-names
+
+/workspace/repo/modules/zeotapIdPlusIdSystem.js
+  62:1  warning  @param "config" does not match an existing function parameter  jsdoc/check-param-names
+
+/workspace/repo/modules/multibid/index.js
+   49:1  warning  Expected @param names to be "conf". Got "multibid"                                                                                           jsdoc/check-param-names
+   82:1  warning  Expected @param names to be "fn, bidderRequests". Got "fn, array"                                                                            jsdoc/check-param-names
+  167:1  warning  Expected @param names to be "fn, bidsReceived, highestCpmCallback, adUnitBidLimit, hasModified". Got "fn, array, function, adUnit, default"  jsdoc/check-param-names
+
+/workspace/repo/modules/debugging/bidInterceptor.js
+   66:1  warning  The type 'BidRequest' is undefined                                         jsdoc/no-undefined-types
+   69:1  warning  Syntax error in type: {[key]: Scalar|RegExp|MatchPredicate|ObjectMatcher}  jsdoc/valid-types
+  105:1  warning  The type 'BidRequest' is undefined                                         jsdoc/no-undefined-types
+  109:1  warning  Syntax error in type: {[key]: ReplacerFn|ObjectReplacer|*}                 jsdoc/valid-types
+  222:1  warning  The type 'BidRequest' is undefined                                         jsdoc/no-undefined-types
+  222:1  warning  @param "bidRequest" does not match an existing function parameter          jsdoc/check-param-names
+  223:1  warning  Syntax error in type: function(*)                                          jsdoc/valid-types
+  225:1  warning  Syntax error in type: function()                                           jsdoc/valid-types
+  226:1  warning  Invalid name: unpaired curlies                                             jsdoc/valid-types
+
+/workspace/repo/modules/userId/index.js
+   39:1  warning  Syntax error in type: IdResponse|function(callback:function)  jsdoc/valid-types
+   85:1  warning  The type 'array' is undefined                                 jsdoc/no-undefined-types
+  825:1  warning  Missing @param "submoduleNames?.submoduleNames"               jsdoc/check-param-names
+
+/workspace/repo/modules/prebidServerBidAdapter/index.js
+  327:1  warning  Syntax error in namepath: timeout:                                                                       jsdoc/valid-types
+  327:1  warning  Expected @param names to be "type, url, bidder, done, timeout". Got "type, url, bidder, done, timeout:"  jsdoc/check-param-names
+  413:1  warning  The type 'Bid' is undefined                                                                              jsdoc/no-undefined-types
+
+/workspace/repo/libraries/intentIqUtils/detectBrowserUtils.js
+  67:1  warning  The type 'NavigatorUAData' is undefined  jsdoc/no-undefined-types
+
+✖ 259 problems (0 errors, 259 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+
+[15:31:39] Finished 'lint' after 1.08 min
+[15:31:39] Starting 'test-all-features-disabled'...
+[46m[30mStarting chunk 1 of 1: test/spec/modules/r2b2AnalytiscAdapter_spec.js[0m
+
+START:
+Webpack bundling...
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+asset [1m[32mcommons.js[39m[22m 3 MiB [1m[32m[emitted][39m[22m (name: commons) (id hint: commons)
+asset [1m[32mruntime.js[39m[22m 14 KiB [1m[32m[emitted][39m[22m (name: runtime)
+asset [1m[32mr2b2AnalytiscAdapter_spec.2089394973.js[39m[22m 472 bytes [1m[32m[emitted][39m[22m (name: r2b2AnalytiscAdapter_spec.2089394973)
+asset [1m[32mpipeline_setup.3886514974.js[39m[22m 437 bytes [1m[32m[emitted][39m[22m (name: pipeline_setup.3886514974)
+asset [1m[32mhookSetup.1062899543.js[39m[22m 435 bytes [1m[32m[emitted][39m[22m (name: hookSetup.1062899543)
+asset [1m[32mtest_deps.3365363711.js[39m[22m 427 bytes [1m[32m[emitted][39m[22m (name: test_deps.3365363711)
+asset [1m[32mdependencies.json[39m[22m 307 bytes [1m[32m[emitted][39m[22m
+Entrypoint [1mtest_deps.3365363711[39m[22m 3.02 MiB = [1m[32mruntime.js[39m[22m 14 KiB [1m[32mcommons.js[39m[22m 3 MiB [1m[32mtest_deps.3365363711.js[39m[22m 427 bytes
+Entrypoint [1mpipeline_setup.3886514974[39m[22m 3.02 MiB = [1m[32mruntime.js[39m[22m 14 KiB [1m[32mcommons.js[39m[22m 3 MiB [1m[32mpipeline_setup.3886514974.js[39m[22m 437 bytes
+Entrypoint [1mr2b2AnalytiscAdapter_spec.2089394973[39m[22m 3.02 MiB = [1m[32mruntime.js[39m[22m 14 KiB [1m[32mcommons.js[39m[22m 3 MiB [1m[32mr2b2AnalytiscAdapter_spec.2089394973.js[39m[22m 472 bytes
+Entrypoint [1mhookSetup.1062899543[39m[22m 3.02 MiB = [1m[32mruntime.js[39m[22m 14 KiB [1m[32mcommons.js[39m[22m 3 MiB [1m[32mhookSetup.1062899543.js[39m[22m 435 bytes
+webpack 5.94.0 compiled [1m[32msuccessfully[39m[22m in 2530 ms
+[32m29 06 2026 15:31:43.312:INFO [karma-server]: [39mKarma v6.4.3 server started at http://localhost:9876/
+[32m29 06 2026 15:31:43.313:INFO [launcher]: [39mLaunching browsers ChromeCustom with concurrency 5
+[32m29 06 2026 15:31:43.321:INFO [launcher]: [39mStarting browser ChromeHeadless
+[32m29 06 2026 15:31:44.027:INFO [Chrome Headless 149.0.0.0 (Linux x86_64)]: [39mConnected on socket KQDDhlYY_N3tTbrJAAAB with id 78444571
+
+Finished in 0.043 secs / 0.015 secs @ 15:31:44 GMT+0000 (Coordinated Universal Time)
+
+SUMMARY:
+✔ 24 tests completed
+[46m[30mChunk 1 of 1: done[0m
+
+[15:31:44] Finished 'test-all-features-disabled' after 5.22 s
+[15:31:44] Starting 'test-only'...
+[46m[30mStarting chunk 1 of 1: test/spec/modules/r2b2AnalytiscAdapter_spec.js[0m
+
+START:
+Webpack bundling...
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+asset [1m[32mcommons.js[39m[22m 3.01 MiB [1m[32m[emitted][39m[22m (name: commons) (id hint: commons)
+asset [1m[32mruntime.js[39m[22m 14 KiB [1m[32m[emitted][39m[22m (name: runtime)
+asset [1m[32mr2b2AnalytiscAdapter_spec.2089394973.js[39m[22m 472 bytes [1m[32m[emitted][39m[22m (name: r2b2AnalytiscAdapter_spec.2089394973)
+asset [1m[32mpipeline_setup.3886514974.js[39m[22m 437 bytes [1m[32m[emitted][39m[22m (name: pipeline_setup.3886514974)
+asset [1m[32mhookSetup.1062899543.js[39m[22m 435 bytes [1m[32m[emitted][39m[22m (name: hookSetup.1062899543)
+asset [1m[32mtest_deps.3365363711.js[39m[22m 427 bytes [1m[32m[emitted][39m[22m (name: test_deps.3365363711)
+asset [1m[32mdependencies.json[39m[22m 307 bytes [1m[32m[emitted][39m[22m
+Entrypoint [1mtest_deps.3365363711[39m[22m 3.03 MiB = [1m[32mruntime.js[39m[22m 14 KiB [1m[32mcommons.js[39m[22m 3.01 MiB [1m[32mtest_deps.3365363711.js[39m[22m 427 bytes
+Entrypoint [1mpipeline_setup.3886514974[39m[22m 3.03 MiB = [1m[32mruntime.js[39m[22m 14 KiB [1m[32mcommons.js[39m[22m 3.01 MiB [1m[32mpipeline_setup.3886514974.js[39m[22m 437 bytes
+Entrypoint [1mr2b2AnalytiscAdapter_spec.2089394973[39m[22m 3.03 MiB = [1m[32mruntime.js[39m[22m 14 KiB [1m[32mcommons.js[39m[22m 3.01 MiB [1m[32mr2b2AnalytiscAdapter_spec.2089394973.js[39m[22m 472 bytes
+Entrypoint [1mhookSetup.1062899543[39m[22m 3.03 MiB = [1m[32mruntime.js[39m[22m 14 KiB [1m[32mcommons.js[39m[22m 3.01 MiB [1m[32mhookSetup.1062899543.js[39m[22m 435 bytes
+webpack 5.94.0 compiled [1m[32msuccessfully[39m[22m in 2436 ms
+[32m29 06 2026 15:31:48.248:INFO [karma-server]: [39mKarma v6.4.3 server started at http://localhost:9876/
+[32m29 06 2026 15:31:48.249:INFO [launcher]: [39mLaunching browsers ChromeCustom with concurrency 5
+[32m29 06 2026 15:31:48.264:INFO [launcher]: [39mStarting browser ChromeHeadless
+[32m29 06 2026 15:31:48.753:INFO [Chrome Headless 149.0.0.0 (Linux x86_64)]: [39mConnected on socket WxrixWq8-yteADhRAAAB with id 81753708
+
+Finished in 0.039 secs / 0.019 secs @ 15:31:49 GMT+0000 (Coordinated Universal Time)
+
+SUMMARY:
+✔ 24 tests completed
+[46m[30mChunk 1 of 1: done[0m
+
+[15:31:49] Finished 'test-only' after 4.63 s
+[15:31:49] Finished 'test' after 1.24 min
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=mocha exit_code=0

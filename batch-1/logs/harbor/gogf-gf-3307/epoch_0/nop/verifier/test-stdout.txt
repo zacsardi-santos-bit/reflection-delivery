@@ -1,0 +1,25 @@
+patching file cmd/gf/internal/cmd/cmd_z_unit_gen_dao_test.go
+Starting MariaDB database server: mariadbd.
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+=== RUN   Test_Gen_Dao_Issue2616
+the src path "/workspace/repo/cmd/gf/internal/cmd/testdata/issue/2616" does not exist: stat /workspace/repo/cmd/gf/internal/cmd/testdata/issue/2616: no such file or directory
+1. the src path "/workspace/repo/cmd/gf/internal/cmd/testdata/issue/2616" does not exist
+   1).  github.com/gogf/gf/v2/os/gfile.Copy
+        /workspace/repo/os/gfile/gfile_copy.go:55
+   2).  github.com/gogf/gf/cmd/gf/v2/internal/cmd.Test_Gen_Dao_Issue2616.func1
+        /workspace/repo/cmd/gf/internal/cmd/cmd_z_unit_gen_dao_test.go:355
+   3).  github.com/gogf/gf/v2/test/gtest.C
+        /workspace/repo/test/gtest/gtest_util.go:35
+   4).  github.com/gogf/gf/cmd/gf/v2/internal/cmd.Test_Gen_Dao_Issue2616
+        /workspace/repo/cmd/gf/internal/cmd/cmd_z_unit_gen_dao_test.go:308
+2. stat /workspace/repo/cmd/gf/internal/cmd/testdata/issue/2616: no such file or directory
+
+1.  github.com/gogf/gf/cmd/gf/v2/internal/cmd.Test_Gen_Dao_Issue2616.func1
+    /workspace/repo/cmd/gf/internal/cmd/cmd_z_unit_gen_dao_test.go:356
+2.  github.com/gogf/gf/cmd/gf/v2/internal/cmd.Test_Gen_Dao_Issue2616
+    /workspace/repo/cmd/gf/internal/cmd/cmd_z_unit_gen_dao_test.go:308
+--- FAIL: Test_Gen_Dao_Issue2616 (0.03s)
+FAIL
+FAIL	github.com/gogf/gf/cmd/gf/v2/internal/cmd	0.042s
+FAIL
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=1

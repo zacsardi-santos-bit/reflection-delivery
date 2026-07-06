@@ -1,0 +1,29 @@
+{
+    "id": "b067106d-728a-4ec0-a118-1910cf7edb57",
+    "started_at": "2026-07-06T12:17:54.406664",
+    "finished_at": "2026-07-06T12:19:50.959966",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__dream-num-univer-6705": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "dream-num-univer-6705__QTEygqQ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

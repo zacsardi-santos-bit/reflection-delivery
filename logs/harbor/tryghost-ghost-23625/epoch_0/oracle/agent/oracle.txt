@@ -1,7 +1,0 @@
-patching file apps/stats/src/hooks/useTopPostsViews.ts
-patching file apps/stats/src/views/Stats/Overview.tsx
-patching file ghost/core/core/server/api/endpoints/stats.js
-patching file ghost/core/core/server/services/stats/PostsStatsService.js
-patching file ghost/core/core/server/services/stats/StatsService.js
-patching file ghost/core/core/server/services/stats/utils/tinybird.js
-patching file ghost/core/core/server/web/api/endpoints/admin/routes.js

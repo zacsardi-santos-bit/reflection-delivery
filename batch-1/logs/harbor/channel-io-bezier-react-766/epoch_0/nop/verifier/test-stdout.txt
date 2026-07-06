@@ -1,0 +1,165 @@
+patching file src/components/Avatars/Avatar/Avatar.test.tsx
+Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+FAIL src/components/Avatars/Avatar/Avatar.test.tsx (15.722 s)
+  Avatar >
+    ✓ Snapshot (60 ms)
+    ✓ renders image with correct style (72 ms)
+    ✓ renders disabled style (18 ms)
+    ✓ renders border style (19 ms)
+    ✓ should have right -2px, bottom -2px style on StatusWrapper (26 ms)
+    ✓ should have right 2px, bottom 2px style on StatusWrapper when show border (20 ms)
+    ✕ should have right 4px, bottom 4px style on StatusWrapper when size grater then 72 (25 ms)
+    ✕ should have right 8px, bottom 8px style on StatusWrapper when size grater then 72 and show border (17 ms)
+    ✓ should have right 4px, bottom 4px style on StatusWrapper when size grater then 90 (19 ms)
+    ✓ should have right 8px, bottom 8px style on StatusWrapper when size grater then 90 and show border (17 ms)
+
+  ● Avatar > › should have right 4px, bottom 4px style on StatusWrapper when size grater then 72
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Avatar > should have right 4px, bottom 4px style on StatusWrapper when size grater then 72 1`
+
+    New snapshot was not written. The update flag must be explicitly passed to write a new snapshot.
+
+    This is likely because this test is run in a continuous integration (CI) environment in which snapshots are not written by default.
+
+    Received:
+    .c1 {
+      box-sizing: border-box;
+      border-color: #FFFFFF;
+      border-style: solid solid solid solid;
+      border-width: 2px;
+      position: relative;
+      box-sizing: content-box;
+      width: 8px;
+      height: 8px;
+      background-color: #FFFFFF;
+      border-radius: 50%;
+    }
+
+    .c1::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 8px;
+      height: 8px;
+      content: '';
+      background-color: #31A552;
+      border-radius: 50%;
+    }
+
+    .c0 {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+    }
+
+    @supports (background:paint(smooth-corners)) {
+
+    }
+
+    <div
+      class="c0"
+      data-testid="bezier-react-status-wrapper"
+      size="8"
+    >
+      <div
+        class="c1"
+        color="bgtxt-green-normal"
+        data-testid="bezier-react-status"
+        size="8"
+      />
+    </div>
+
+      93 |     const statusWrapper = getByTestId(STATUS_WRAPPER_TEST_ID)
+      94 |
+    > 95 |     expect(statusWrapper).toMatchSnapshot()
+         |                           ^
+      96 |   })
+      97 |
+      98 |   it('should have right 8px, bottom 8px style on StatusWrapper when size grater then 72 and show border', () => {
+
+      at Object.<anonymous> (src/components/Avatars/Avatar/Avatar.test.tsx:95:27)
+
+  ● Avatar > › should have right 8px, bottom 8px style on StatusWrapper when size grater then 72 and show border
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `Avatar > should have right 8px, bottom 8px style on StatusWrapper when size grater then 72 and show border 1`
+
+    New snapshot was not written. The update flag must be explicitly passed to write a new snapshot.
+
+    This is likely because this test is run in a continuous integration (CI) environment in which snapshots are not written by default.
+
+    Received:
+    .c1 {
+      box-sizing: border-box;
+      border-color: #FFFFFF;
+      border-style: solid solid solid solid;
+      border-width: 2px;
+      position: relative;
+      box-sizing: content-box;
+      width: 8px;
+      height: 8px;
+      background-color: #FFFFFF;
+      border-radius: 50%;
+    }
+
+    .c1::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 8px;
+      height: 8px;
+      content: '';
+      background-color: #31A552;
+      border-radius: 50%;
+    }
+
+    .c0 {
+      position: absolute;
+      right: 2px;
+      bottom: 2px;
+    }
+
+    @supports (background:paint(smooth-corners)) {
+
+    }
+
+    <div
+      class="c0"
+      data-testid="bezier-react-status-wrapper"
+      size="8"
+    >
+      <div
+        class="c1"
+        color="bgtxt-green-normal"
+        data-testid="bezier-react-status"
+        size="8"
+      />
+    </div>
+
+      100 |     const statusWrapper = getByTestId(STATUS_WRAPPER_TEST_ID)
+      101 |
+    > 102 |     expect(statusWrapper).toMatchSnapshot()
+          |                           ^
+      103 |   })
+      104 |
+      105 |   it('should have right 4px, bottom 4px style on StatusWrapper when size grater then 90', () => {
+
+      at Object.<anonymous> (src/components/Avatars/Avatar/Avatar.test.tsx:102:27)
+
+ › 2 snapshots failed.
+Snapshot Summary
+ › 2 snapshots failed from 1 test suite. Inspect your code changes or run `npm run npx -- -u` to update them.
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 8 passed, 10 total
+Snapshots:   2 failed, 6 passed, 8 total
+Time:        16.356 s
+Ran all test suites matching /src\/components\/Avatars\/Avatar\/Avatar.test.tsx/i.
+reward=0 graded=10 found=0 failed=0 parsed=0 framework=jest exit_code=1

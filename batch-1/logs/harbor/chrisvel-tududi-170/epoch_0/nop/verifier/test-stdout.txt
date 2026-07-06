@@ -1,0 +1,1047 @@
+patching file backend/tests/helpers/setup.js
+patching file backend/tests/integration/subtasks-completion.test.js
+patching file backend/tests/integration/subtasks.test.js
+patching file backend/tests/integration/tasks.test.js
+patching file backend/tests/unit/models/subtasks.test.js
+patching file backend/tests/unit/services/parentChildRelationship.test.js
+  console.log
+    Using database file '/tmp/test-7f9a48fc.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+  console.log
+    Using database file '/tmp/test-a768cf00.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+  console.log
+    Using database file '/tmp/test-205136d2.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+  console.log
+    Using database file '/tmp/test-61ff980e.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+  console.log
+    Using database file '/tmp/test-4c268d06.sqlite3'
+
+      at Object.log (config/config.js:75:9)
+
+FAIL tests/unit/models/subtasks.test.js
+  Task Model - Subtasks
+    Subtask Creation
+      ✕ should create a task with subtasks (60 ms)
+      ✕ should allow multiple subtasks for a parent task (41 ms)
+      ✓ should allow null parent_task_id (top-level tasks) (37 ms)
+    Subtask Associations
+      ✕ should retrieve parent task from subtask (35 ms)
+      ✕ should retrieve all subtasks from parent task (34 ms)
+    Subtask Validation
+      ✕ should validate parent_task_id references existing task (31 ms)
+      ✕ should not allow subtask to reference itself as parent (25 ms)
+    Subtask Filtering
+      ✕ should filter parent tasks only (40 ms)
+      ✕ should filter subtasks only (32 ms)
+    Cascade Operations
+      ✕ should delete subtasks when parent is deleted (35 ms)
+
+  ● Task Model - Subtasks › Subtask Creation › should create a task with subtasks
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: undefined
+
+      29 |             });
+      30 |
+    > 31 |             expect(subtask.parent_task_id).toBe(parentTask.id);
+         |                                            ^
+      32 |             expect(subtask.name).toBe('Subtask 1');
+      33 |         });
+      34 |
+
+      at Object.toBe (tests/unit/models/subtasks.test.js:31:44)
+
+  ● Task Model - Subtasks › Subtask Creation › should allow multiple subtasks for a parent task
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 3
+    Received: undefined
+
+      57 |             });
+      58 |
+    > 59 |             expect(subtask1.parent_task_id).toBe(parentTask.id);
+         |                                             ^
+      60 |             expect(subtask2.parent_task_id).toBe(parentTask.id);
+      61 |         });
+      62 |
+
+      at Object.toBe (tests/unit/models/subtasks.test.js:59:45)
+
+  ● Task Model - Subtasks › Subtask Associations › should retrieve parent task from subtask
+
+    SequelizeEagerLoadingError: Task is not associated to Task!
+
+      90 |             });
+      91 |
+    > 92 |             const subtaskWithParent = await Task.findByPk(subtask.id, {
+         |                                       ^
+      93 |                 include: [{ model: Task, as: 'ParentTask' }],
+      94 |             });
+      95 |
+
+      at Function._getIncludedAssociation (../node_modules/sequelize/src/model.js:742:13)
+      at Function._validateIncludedElement (../node_modules/sequelize/src/model.js:646:53)
+      at ../node_modules/sequelize/src/model.js:542:37
+          at Array.map (<anonymous>)
+      at Function._validateIncludedElements (../node_modules/sequelize/src/model.js:537:39)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1794:12)
+      at Function.findOne (../node_modules/sequelize/src/model.js:1998:12)
+      at Function.findByPk (../node_modules/sequelize/src/model.js:1955:12)
+      at Object.<anonymous> (tests/unit/models/subtasks.test.js:92:39)
+
+  ● Task Model - Subtasks › Subtask Associations › should retrieve all subtasks from parent task
+
+    SequelizeEagerLoadingError: Task is not associated to Task!
+
+      123 |             });
+      124 |
+    > 125 |             const parentWithSubtasks = await Task.findByPk(parentTask.id, {
+          |                                        ^
+      126 |                 include: [{ model: Task, as: 'Subtasks' }],
+      127 |             });
+      128 |
+
+      at Function._getIncludedAssociation (../node_modules/sequelize/src/model.js:742:13)
+      at Function._validateIncludedElement (../node_modules/sequelize/src/model.js:646:53)
+      at ../node_modules/sequelize/src/model.js:542:37
+          at Array.map (<anonymous>)
+      at Function._validateIncludedElements (../node_modules/sequelize/src/model.js:537:39)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1794:12)
+      at Function.findOne (../node_modules/sequelize/src/model.js:1998:12)
+      at Function.findByPk (../node_modules/sequelize/src/model.js:1955:12)
+      at Object.<anonymous> (tests/unit/models/subtasks.test.js:125:40)
+
+  ● Task Model - Subtasks › Subtask Validation › should validate parent_task_id references existing task
+
+    expect(received).rejects.toThrow()
+
+    Received promise resolved instead of rejected
+    Resolved to value: {"completion_based": false, "created_at": 2026-06-29T15:13:29.409Z, "id": 12, "name": "Invalid Subtask", "priority": 1, "recurrence_type": "none", "status": 0, "today": false, "updated_at": 2026-06-29T15:13:29.409Z, "user_id": 6, "uuid": "1ebf720a-f3bc-4e7a-9e09-34faf6d7944d"}
+
+      137 |         it('should validate parent_task_id references existing task', async () => {
+      138 |             // Foreign key constraints are enabled in test environment, so this should throw an error
+    > 139 |             await expect(
+          |                   ^
+      140 |                 Task.create({
+      141 |                     name: 'Invalid Subtask',
+      142 |                     user_id: testUser.id,
+
+      at expect (../node_modules/expect/build/index.js:113:15)
+      at Object.expect (tests/unit/models/subtasks.test.js:139:19)
+
+  ● Task Model - Subtasks › Subtask Validation › should not allow subtask to reference itself as parent
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 13
+    Received: undefined
+
+      162 |             });
+      163 |
+    > 164 |             expect(updatedTask.parent_task_id).toBe(task.id);
+          |                                                ^
+      165 |         });
+      166 |     });
+      167 |
+
+      at Object.toBe (tests/unit/models/subtasks.test.js:164:48)
+
+  ● Task Model - Subtasks › Subtask Filtering › should filter parent tasks only
+
+
+
+      183 |             });
+      184 |
+    > 185 |             const parentTasks = await Task.findAll({
+          |                                 ^
+      186 |                 where: {
+      187 |                     user_id: testUser.id,
+      188 |                     parent_task_id: null,
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/unit/models/subtasks.test.js:185:33)
+
+  ● Task Model - Subtasks › Subtask Filtering › should filter subtasks only
+
+
+
+      210 |             });
+      211 |
+    > 212 |             const subtasks = await Task.findAll({
+          |                              ^
+      213 |                 where: {
+      214 |                     user_id: testUser.id,
+      215 |                     parent_task_id: parentTask.id,
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/unit/models/subtasks.test.js:212:30)
+
+  ● Task Model - Subtasks › Cascade Operations › should delete subtasks when parent is deleted
+
+
+
+      241 |             // In test environment, we need to manually handle cascade delete
+      242 |             // In production, this would be handled by database constraints or application logic
+    > 243 |             await Task.destroy({ where: { parent_task_id: parentTask.id } });
+          |             ^
+      244 |             await parentTask.destroy();
+      245 |
+      246 |             const remainingSubtasks = await Task.findAll({
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.bulkDelete (../node_modules/sequelize/src/dialects/abstract/query-interface.js:992:12)
+      at Function.destroy (../node_modules/sequelize/src/model.js:3083:16)
+      at Object.<anonymous> (tests/unit/models/subtasks.test.js:243:13)
+
+FAIL tests/unit/services/parentChildRelationship.test.js
+  Parent-Child Relationship Functionality
+    Task Instance Creation
+      ✓ should create child task with correct parent relationship (61 ms)
+      ✓ should preserve project assignment in child task (42 ms)
+      ✓ should handle null description and note correctly (34 ms)
+    Parent-Child Task Queries
+      ✓ should find all child tasks for a parent (40 ms)
+      ✓ should find parent task from child (34 ms)
+      ✓ should distinguish between parent and child tasks (41 ms)
+      ✓ should handle tasks with no parent relationship (38 ms)
+    Completion-Based Recurring Task Generation
+      ✓ should create next instance when completing completion-based parent task (34 ms)
+      ✓ should not create multiple children when called repeatedly (29 ms)
+      ✓ should handle child task completion properly (24 ms)
+    Parent Task Updates Through Child Tasks
+      ✓ should update parent recurrence settings through child task (30 ms)
+      ✓ should preserve child task properties when updating parent (32 ms)
+    Task Deletion Scenarios
+      ✓ should allow deleting child tasks without affecting parent (31 ms)
+      ✕ should allow deleting parent and set child recurring_parent_id to null (FK SET NULL) (34 ms)
+      ✓ should allow deleting parent after deleting all child tasks (32 ms)
+    Complex Parent-Child Scenarios
+      ✓ should handle multiple parents with different recurrence patterns (21 ms)
+      ✓ should maintain data integrity across multiple child generations (64 ms)
+      ✓ should handle orphaned child tasks gracefully (23 ms)
+    Data Consistency and Validation
+      ✓ should ensure child tasks cannot have recurrence settings (20 ms)
+      ✓ should ensure parent tasks have valid recurrence settings (17 ms)
+      ✓ should maintain user isolation for parent-child relationships (28 ms)
+
+  ● Parent-Child Relationship Functionality › Task Deletion Scenarios › should allow deleting parent and set child recurring_parent_id to null (FK SET NULL)
+
+
+
+      364 |             // With FK constraint SET NULL, deleting parent should nullify recurring_parent_id in children
+      365 |
+    > 366 |             const result = await parentTask.destroy();
+          |                            ^
+      367 |             expect(result).toBeTruthy();
+      368 |
+      369 |             // Verify parent is deleted but children remain (orphaned)
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.delete (../node_modules/sequelize/src/dialects/abstract/query-interface.js:963:12)
+      at model.destroy (../node_modules/sequelize/src/model.js:4394:16)
+      at Object.<anonymous> (tests/unit/services/parentChildRelationship.test.js:366:28)
+
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/task HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/1/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "GET /api/task/1/subtasks HTTP/1.1" 404 76 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/task HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/5/toggle_completion HTTP/1.1" 200 534 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "GET /api/task/4/subtasks HTTP/1.1" 404 76 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/task HTTP/1.1" 400 34 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/9/toggle_completion HTTP/1.1" 200 554 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/10/toggle_completion HTTP/1.1" 200 555 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "GET /api/task/999999/subtasks HTTP/1.1" 404 76 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "GET /api/task/5/subtasks HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/12/toggle_completion HTTP/1.1" 200 533 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/14/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/task HTTP/1.1" 201 569 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "GET /api/tasks?type=today HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "GET /api/tasks HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/17/toggle_completion HTTP/1.1" 200 555 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/task HTTP/1.1" 201 569 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/18/toggle_completion HTTP/1.1" 200 555 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/8 HTTP/1.1" 200 594 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/task HTTP/1.1" 201 569 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/20/toggle_completion HTTP/1.1" 200 553 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/20/toggle_completion HTTP/1.1" 200 531 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "PATCH /api/task/20/toggle_completion HTTP/1.1" 200 553 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:31 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/999999 HTTP/1.1" 404 27 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/9 HTTP/1.1" 200 577 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 98 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/11 HTTP/1.1" 200 570 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/24/toggle_completion HTTP/1.1" 200 555 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/25/toggle_completion HTTP/1.1" 200 555 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/11 HTTP/1.1" 404 27 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/14 HTTP/1.1" 200 571 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/12 HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "DELETE /api/task/26 HTTP/1.1" 200 39 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/16/toggle_completion HTTP/1.1" 200 558 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "DELETE /api/task/13 HTTP/1.1" 200 39 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/19/toggle_completion HTTP/1.1" 200 536 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "DELETE /api/task/999999 HTTP/1.1" 404 27 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/23/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/24/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "DELETE /api/task/16 HTTP/1.1" 404 27 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:32 +0000] "PATCH /api/task/26/toggle_completion HTTP/1.1" 200 534 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "DELETE /api/task/17 HTTP/1.1" 401 35 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/34/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/47/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/49/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/29/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/51/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/31/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/53/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/55/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/39/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/63/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/65/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/67/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/33/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/69/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/30/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/71/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/73/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/task HTTP/1.1" 201 635 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/75/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/36/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/57/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/32/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/45/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/35/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/37/toggle_completion HTTP/1.1" 200 556 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/38/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/56/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/40/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/41/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/64/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/66/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/42/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/43/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/68/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/44/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/74/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/46/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/77/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/48/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/50/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/52/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/54/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/58/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/59/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/62/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/61/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/60/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/70/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/72/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/78/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "PATCH /api/task/76/toggle_completion HTTP/1.1" 200 557 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+FAIL tests/integration/tasks.test.js (6.538 s)
+  Tasks Routes
+    POST /api/task
+      ✓ should create a new task (224 ms)
+      ✓ should require authentication (103 ms)
+      ✓ should require task name (108 ms)
+    GET /api/tasks
+      ✓ should get all user tasks (163 ms)
+      ✓ should filter today tasks (returns all user tasks) (154 ms)
+      ✓ should require authentication (105 ms)
+    PATCH /api/task/:id
+      ✓ should update task (141 ms)
+      ✓ should return 404 for non-existent task (115 ms)
+      ✓ should not allow updating other user's tasks (342 ms)
+      ✓ should require authentication (103 ms)
+    DELETE /api/task/:id
+      ✓ should delete task (145 ms)
+      ✓ should return 404 for non-existent task (122 ms)
+      ✓ should not allow deleting other user's tasks (179 ms)
+      ✓ should require authentication (106 ms)
+    Task with tags
+      ✓ should create task with tags (134 ms)
+    Subtasks filtering
+      ✕ should not include subtasks at first level when retrieving /tasks (216 ms)
+
+  ● Tasks Routes › Subtasks filtering › should not include subtasks at first level when retrieving /tasks
+
+    expect(received).not.toContain(expected) // indexOf
+
+    Expected value: not 20
+    Received array:     [22, 21, 20, 19]
+
+      304 |             expect(taskIds).toContain(parentTask.id);
+      305 |             expect(taskIds).toContain(regularTask.id);
+    > 306 |             expect(taskIds).not.toContain(subtask1.id);
+          |                                 ^
+      307 |             expect(taskIds).not.toContain(subtask2.id);
+      308 |
+      309 |             expect(taskNames).toContain('Parent Task');
+
+      at Object.toContain (tests/integration/tasks.test.js:306:33)
+
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+FAIL tests/integration/subtasks-completion.test.js (6.539 s)
+  Subtasks Completion Logic Integration
+    Parent Task Completion Affects Subtasks
+      ✕ should complete all subtasks when parent task is completed (223 ms)
+      ✕ should undone all subtasks when parent task is undone (134 ms)
+    Subtask Completion Affects Parent Task
+      ✕ should complete parent task when all subtasks are completed (143 ms)
+      ✕ should undone parent task when any subtask is undone (125 ms)
+      ✓ should not affect parent task when no subtasks exist (111 ms)
+    Complex Completion Scenarios
+      ✕ should handle mixed subtask states correctly (143 ms)
+      ✕ should handle rapid completion toggles correctly (156 ms)
+    Edge Cases
+      ✕ should cascade delete subtasks when parent is deleted (103 ms)
+      ✕ should handle concurrent completion updates (277 ms)
+      ✕ should handle deleted parent task gracefully (FK constraints disabled) (148 ms)
+    Performance Considerations
+      ✕ should handle many subtasks efficiently (887 ms)
+
+  ● Subtasks Completion Logic Integration › Parent Task Completion Affects Subtasks › should complete all subtasks when parent task is completed
+
+
+
+      68 |
+      69 |             // Verify all subtasks are completed
+    > 70 |             const updatedSubtasks = await Task.findAll({
+         |                                     ^
+      71 |                 where: { parent_task_id: parentTask.id },
+      72 |                 order: [['id', 'ASC']],
+      73 |             });
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks-completion.test.js:70:37)
+
+  ● Subtasks Completion Logic Integration › Parent Task Completion Affects Subtasks › should undone all subtasks when parent task is undone
+
+
+
+      121 |
+      122 |             // Verify all subtasks are undone
+    > 123 |             const updatedSubtasks = await Task.findAll({
+          |                                     ^
+      124 |                 where: { parent_task_id: parentTask.id },
+      125 |             });
+      126 |
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks-completion.test.js:123:37)
+
+  ● Subtasks Completion Logic Integration › Subtask Completion Affects Parent Task › should complete parent task when all subtasks are completed
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 0
+
+      178 |             // Parent should now be completed
+      179 |             updatedParent = await Task.findByPk(parentTask.id);
+    > 180 |             expect(updatedParent.status).toBe(Task.STATUS.DONE);
+          |                                          ^
+      181 |             expect(updatedParent.completed_at).not.toBeNull();
+      182 |         });
+      183 |
+
+      at Object.toBe (tests/integration/subtasks-completion.test.js:180:42)
+
+  ● Subtasks Completion Logic Integration › Subtask Completion Affects Parent Task › should undone parent task when any subtask is undone
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 2
+
+      219 |             // Parent should be undone
+      220 |             const updatedParent = await Task.findByPk(parentTask.id);
+    > 221 |             expect(updatedParent.status).toBe(Task.STATUS.NOT_STARTED);
+          |                                          ^
+      222 |             expect(updatedParent.completed_at).toBeNull();
+      223 |
+      224 |             // Other subtask should remain done
+
+      at Object.toBe (tests/integration/subtasks-completion.test.js:221:42)
+
+  ● Subtasks Completion Logic Integration › Complex Completion Scenarios › should handle mixed subtask states correctly
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 0
+
+      303 |             // Parent should now be completed
+      304 |             updatedParent = await Task.findByPk(parentTask.id);
+    > 305 |             expect(updatedParent.status).toBe(Task.STATUS.DONE);
+          |                                          ^
+      306 |         });
+      307 |
+      308 |         it('should handle rapid completion toggles correctly', async () => {
+
+      at Object.toBe (tests/integration/subtasks-completion.test.js:305:42)
+
+  ● Subtasks Completion Logic Integration › Complex Completion Scenarios › should handle rapid completion toggles correctly
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 0
+
+      349 |                     ? updatedParent.status
+      350 |                     : updatedParent.status
+    > 351 |             ).toBe(
+          |               ^
+      352 |                 updatedSubtask.status === Task.STATUS.DONE
+      353 |                     ? Task.STATUS.DONE
+      354 |                     : Task.STATUS.NOT_STARTED
+
+      at Object.toBe (tests/integration/subtasks-completion.test.js:351:15)
+
+  ● Subtasks Completion Logic Integration › Edge Cases › should cascade delete subtasks when parent is deleted
+
+
+
+      380 |             // In test environment, FK constraints are disabled, so we need to manually handle cascade delete
+      381 |             // In production, this would be handled by database FK constraints with CASCADE
+    > 382 |             await Task.destroy({ where: { parent_task_id: parentTask.id } });
+          |             ^
+      383 |             await parentTask.destroy();
+      384 |
+      385 |             // Verify subtask was also deleted (CASCADE behavior)
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.bulkDelete (../node_modules/sequelize/src/dialects/abstract/query-interface.js:992:12)
+      at Function.destroy (../node_modules/sequelize/src/model.js:3083:16)
+      at Object.<anonymous> (tests/integration/subtasks-completion.test.js:382:13)
+
+  ● Subtasks Completion Logic Integration › Edge Cases › should handle concurrent completion updates
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 0
+
+      427 |             // Final state should be consistent
+      428 |             const updatedParent = await Task.findByPk(parentTask.id);
+    > 429 |             expect(updatedParent.status).toBe(Task.STATUS.DONE);
+          |                                          ^
+      430 |         });
+      431 |
+      432 |         it('should handle deleted parent task gracefully (FK constraints disabled)', async () => {
+
+      at Object.toBe (tests/integration/subtasks-completion.test.js:429:42)
+
+  ● Subtasks Completion Logic Integration › Edge Cases › should handle deleted parent task gracefully (FK constraints disabled)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 26
+    Received: undefined
+
+      457 |             const remainingSubtask = await Task.findByPk(subtask.id);
+      458 |             expect(remainingSubtask).not.toBeNull();
+    > 459 |             expect(remainingSubtask.parent_task_id).toBe(parentTask.id); // Points to deleted parent
+          |                                                     ^
+      460 |         });
+      461 |     });
+      462 |
+
+      at Object.toBe (tests/integration/subtasks-completion.test.js:459:53)
+
+  ● Subtasks Completion Logic Integration › Performance Considerations › should handle many subtasks efficiently
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 0
+
+      501 |             // Parent should be completed
+      502 |             const updatedParent = await Task.findByPk(parentTask.id);
+    > 503 |             expect(updatedParent.status).toBe(Task.STATUS.DONE);
+          |                                          ^
+      504 |         });
+      505 |     });
+      506 | });
+
+      at Object.toBe (tests/integration/subtasks-completion.test.js:503:42)
+
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "GET /api/tasks HTTP/1.1" 200 - "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "GET /api/task/36/subtasks HTTP/1.1" 404 76 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/login HTTP/1.1" 200 99 "-" "-"
+::ffff:127.0.0.1 - - [29/Jun/2026:15:13:33 +0000] "POST /api/task HTTP/1.1" 201 567 "-" "-"
+FAIL tests/integration/subtasks.test.js (6.891 s)
+  Subtasks API
+    GET /api/task/:id/subtasks
+      ✕ should return subtasks for a parent task (223 ms)
+      ✕ should return empty array for task with no subtasks (144 ms)
+      ✕ should return empty array for non-existent task (130 ms)
+      ✓ should require authentication (109 ms)
+    POST /api/task - Creating task with subtasks
+      ✕ should create a task with subtasks (136 ms)
+      ✕ should ignore empty subtask names (126 ms)
+      ✕ should create task without subtasks when subtasks array is empty (123 ms)
+    PATCH /api/task/:id - Updating task with subtasks
+      ✕ should update subtasks for existing task (141 ms)
+      ✕ should delete removed subtasks (268 ms)
+      ✕ should clear all subtasks when empty array is provided (131 ms)
+    Task Completion Logic
+      ✕ should complete all subtasks when parent is completed (122 ms)
+      ✕ should undone all subtasks when parent is undone (122 ms)
+      ✕ should complete parent when all subtasks are done (142 ms)
+      ✕ should undone parent when subtask is undone (126 ms)
+    Task Lists Filtering
+      ✕ should exclude subtasks from main task lists (160 ms)
+      ✕ should exclude subtasks from completed today section (163 ms)
+      ✕ should include subtasks nested within parent tasks, not at first level (190 ms)
+    Authentication and Authorization
+      ✕ should not allow access to subtasks of other users (123 ms)
+      ✕ should not allow creating subtasks for other users tasks (108 ms)
+
+  ● Subtasks API › GET /api/task/:id/subtasks › should return subtasks for a parent task
+
+    expected 200 "OK", got 404 "Not Found"
+
+      48 |             const response = await agent
+      49 |                 .get(`/api/task/${parentTask.id}/subtasks`)
+    > 50 |                 .expect(200);
+         |                  ^
+      51 |
+      52 |             expect(response.body).toHaveLength(2);
+      53 |             expect(response.body[0].name).toBe('Subtask 1');
+
+      at Object.expect (tests/integration/subtasks.test.js:50:18)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● Subtasks API › GET /api/task/:id/subtasks › should return empty array for task with no subtasks
+
+    expected 200 "OK", got 404 "Not Found"
+
+      68 |                 .get(`/api/task/${task.id}/subtasks`)
+      69 |
+    > 70 |                 .expect(200);
+         |                  ^
+      71 |
+      72 |             expect(response.body).toHaveLength(0);
+      73 |         });
+
+      at Object.expect (tests/integration/subtasks.test.js:70:18)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● Subtasks API › GET /api/task/:id/subtasks › should return empty array for non-existent task
+
+    expected 200 "OK", got 404 "Not Found"
+
+      76 |             const response = await agent
+      77 |                 .get('/api/task/999999/subtasks')
+    > 78 |                 .expect(200);
+         |                  ^
+      79 |
+      80 |             expect(response.body).toHaveLength(0);
+      81 |         });
+
+      at Object.expect (tests/integration/subtasks.test.js:78:18)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● Subtasks API › POST /api/task - Creating task with subtasks › should create a task with subtasks
+
+
+
+      118 |
+      119 |             // Verify subtasks were created
+    > 120 |             const subtasks = await Task.findAll({
+          |                              ^
+      121 |                 where: { parent_task_id: response.body.id },
+      122 |             });
+      123 |
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks.test.js:120:30)
+
+  ● Subtasks API › POST /api/task - Creating task with subtasks › should ignore empty subtask names
+
+
+
+      147 |                 .expect(201);
+      148 |
+    > 149 |             const subtasks = await Task.findAll({
+          |                              ^
+      150 |                 where: { parent_task_id: response.body.id },
+      151 |             });
+      152 |
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks.test.js:149:30)
+
+  ● Subtasks API › POST /api/task - Creating task with subtasks › should create task without subtasks when subtasks array is empty
+
+
+
+      170 |                 .expect(201);
+      171 |
+    > 172 |             const subtasks = await Task.findAll({
+          |                              ^
+      173 |                 where: { parent_task_id: response.body.id },
+      174 |             });
+      175 |
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks.test.js:172:30)
+
+  ● Subtasks API › PATCH /api/task/:id - Updating task with subtasks › should update subtasks for existing task
+
+
+
+      215 |             expect(response.body.name).toBe('Updated Parent Task');
+      216 |
+    > 217 |             const subtasks = await Task.findAll({
+          |                              ^
+      218 |                 where: { parent_task_id: parentTask.id },
+      219 |                 order: [['id', 'ASC']],
+      220 |             });
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks.test.js:217:30)
+
+  ● Subtasks API › PATCH /api/task/:id - Updating task with subtasks › should delete removed subtasks
+
+
+
+      261 |                 .expect(200);
+      262 |
+    > 263 |             const remainingSubtasks = await Task.findAll({
+          |                                       ^
+      264 |                 where: { parent_task_id: parentTask.id },
+      265 |             });
+      266 |
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks.test.js:263:39)
+
+  ● Subtasks API › PATCH /api/task/:id - Updating task with subtasks › should clear all subtasks when empty array is provided
+
+
+
+      299 |                 .expect(200);
+      300 |
+    > 301 |             const subtasks = await Task.findAll({
+          |                              ^
+      302 |                 where: { parent_task_id: parentTask.id },
+      303 |             });
+      304 |
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks.test.js:301:30)
+
+  ● Subtasks API › Task Completion Logic › should complete all subtasks when parent is completed
+
+
+
+      339 |
+      340 |             // Check that all subtasks are completed
+    > 341 |             const updatedSubtasks = await Task.findAll({
+          |                                     ^
+      342 |                 where: { parent_task_id: parentTask.id },
+      343 |             });
+      344 |
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks.test.js:341:37)
+
+  ● Subtasks API › Task Completion Logic › should undone all subtasks when parent is undone
+
+
+
+      384 |
+      385 |             // Check that all subtasks are undone
+    > 386 |             const updatedSubtasks = await Task.findAll({
+          |                                     ^
+      387 |                 where: { parent_task_id: parentTask.id },
+      388 |             });
+      389 |
+
+      at Database.<anonymous> (../node_modules/sequelize/src/dialects/sqlite/query.js:236:27)
+      at ../node_modules/sequelize/src/dialects/sqlite/query.js:234:50
+      at Query.run (../node_modules/sequelize/src/dialects/sqlite/query.js:234:12)
+      at ../node_modules/sequelize/src/sequelize.js:650:28
+      at SQLiteQueryInterface.select (../node_modules/sequelize/src/dialects/abstract/query-interface.js:1001:12)
+      at Function.findAll (../node_modules/sequelize/src/model.js:1824:21)
+      at Object.<anonymous> (tests/integration/subtasks.test.js:386:37)
+
+  ● Subtasks API › Task Completion Logic › should complete parent when all subtasks are done
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 0
+
+      437 |             // Parent should now be completed
+      438 |             updatedParent = await Task.findByPk(parentTask.id);
+    > 439 |             expect(updatedParent.status).toBe(Task.STATUS.DONE);
+          |                                          ^
+      440 |             expect(updatedParent.completed_at).not.toBeNull();
+      441 |         });
+      442 |
+
+      at Object.toBe (tests/integration/subtasks.test.js:439:42)
+
+  ● Subtasks API › Task Completion Logic › should undone parent when subtask is undone
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 2
+
+      476 |             // Parent should be undone
+      477 |             const updatedParent = await Task.findByPk(parentTask.id);
+    > 478 |             expect(updatedParent.status).toBe(Task.STATUS.NOT_STARTED);
+          |                                          ^
+      479 |             expect(updatedParent.completed_at).toBeNull();
+      480 |         });
+      481 |     });
+
+      at Object.toBe (tests/integration/subtasks.test.js:478:42)
+
+  ● Subtasks API › Task Lists Filtering › should exclude subtasks from main task lists
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [{"Project": null, "Tags": [], "completed_at": null, "completion_based": false, "created_at": "2026-06-29T15:13:33.045Z", "description": null, "due_date": null, "id": 29, "last_generated_date": null, "name": "Subtask", "note": null, "priority": 1, "project_id": null, "recurrence_end_date": null, "recurrence_interval": null, "recurrence_month_day": null, "recurrence_type": "none", "recurrence_week_of_month": null, "recurrence_weekday": null, "recurring_parent_id": null, "status": 0, "tags": [], "today": false, "today_move_count": 0, "updated_at": "2026-06-29T15:13:33.045Z", "user_id": 15, "uuid": "0a4e32fd-f30b-48c9-83be-8535aeb414c7"}, {"Project": null, "Tags": [], "completed_at": null, "completion_based": false, "created_at": "2026-06-29T15:13:33.042Z", "description": null, "due_date": null, "id": 28, "last_generated_date": null, "name": "Parent Task", "note": null, "priority": 1, "project_id": null, "recurrence_end_date": null, "recurrence_interval": null, "recurrence_month_day": null, "recurrence_type": "none", "recurrence_week_of_month": null, "recurrence_weekday": null, "recurring_parent_id": null, "status": 0, "tags": [], "today": false, "today_move_count": 0, "updated_at": "2026-06-29T15:13:33.042Z", "user_id": 15, "uuid": "81ba3b35-a607-4971-825d-fd6cb51b4f05"}]
+
+      504 |
+      505 |             // Should only return parent task, not subtask
+    > 506 |             expect(response.body.tasks).toHaveLength(1);
+          |                                         ^
+      507 |             expect(response.body.tasks[0].id).toBe(parentTask.id);
+      508 |             expect(response.body.tasks[0].name).toBe('Parent Task');
+      509 |         });
+
+      at Object.toHaveLength (tests/integration/subtasks.test.js:506:41)
+
+  ● Subtasks API › Task Lists Filtering › should exclude subtasks from completed today section
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [{"Project": null, "Tags": [], "completed_at": "2026-06-29T15:13:33.209Z", "completion_based": false, "created_at": "2026-06-29T15:13:33.209Z", "description": null, "due_date": null, "id": 31, "last_generated_date": null, "name": "Subtask", "note": null, "priority": 1, "project_id": null, "recurrence_end_date": null, "recurrence_interval": null, "recurrence_month_day": null, "recurrence_type": "none", "recurrence_week_of_month": null, "recurrence_weekday": null, "recurring_parent_id": null, "status": 2, "tags": [], "today": false, "today_move_count": 0, "updated_at": "2026-06-29T15:13:33.209Z", "user_id": 16, "uuid": "1ff45562-5c94-4b6d-9e32-2f700e4220bb"}, {"Project": null, "Tags": [], "completed_at": "2026-06-29T15:13:33.206Z", "completion_based": false, "created_at": "2026-06-29T15:13:33.206Z", "description": null, "due_date": null, "id": 30, "last_generated_date": null, "name": "Parent Task", "note": null, "priority": 1, "project_id": null, "recurrence_end_date": null, "recurrence_interval": null, "recurrence_month_day": null, "recurrence_type": "none", "recurrence_week_of_month": null, "recurrence_weekday": null, "recurring_parent_id": null, "status": 2, "tags": [], "today": false, "today_move_count": 0, "updated_at": "2026-06-29T15:13:33.206Z", "user_id": 16, "uuid": "f1417e6d-028f-423a-bd35-0627af210f36"}]
+
+      533 |
+      534 |             // Should only show parent task in completed today, not subtask
+    > 535 |             expect(response.body.metrics.tasks_completed_today).toHaveLength(1);
+          |                                                                 ^
+      536 |             expect(response.body.metrics.tasks_completed_today[0].id).toBe(
+      537 |                 parentTask.id
+      538 |             );
+
+      at Object.toHaveLength (tests/integration/subtasks.test.js:535:65)
+
+  ● Subtasks API › Task Lists Filtering › should include subtasks nested within parent tasks, not at first level
+
+    expect(received).toHaveLength(expected)
+
+    Expected length: 2
+    Received length: 3
+    Received array:  [{"Project": null, "Tags": [], "completed_at": null, "completion_based": false, "created_at": "2026-06-29T15:13:33.393Z", "description": null, "due_date": null, "id": 35, "last_generated_date": null, "name": "Standalone Task", "note": null, "priority": 0, "project_id": null, "recurrence_end_date": null, "recurrence_interval": null, "recurrence_month_day": null, "recurrence_type": "none", "recurrence_week_of_month": null, "recurrence_weekday": null, "recurring_parent_id": null, "status": 1, "tags": [], "today": false, "today_move_count": 0, "updated_at": "2026-06-29T15:13:33.393Z", "user_id": 17, "uuid": "a96f9388-5032-4356-b29b-abaf546c0622"}, {"Project": null, "Tags": [], "completed_at": null, "completion_based": false, "created_at": "2026-06-29T15:13:33.383Z", "description": null, "due_date": null, "id": 33, "last_generated_date": null, "name": "Subtask 1", "note": null, "priority": 1, "project_id": null, "recurrence_end_date": null, "recurrence_interval": null, "recurrence_month_day": null, "recurrence_type": "none", "recurrence_week_of_month": null, "recurrence_weekday": null, "recurring_parent_id": null, "status": 0, "tags": [], "today": false, "today_move_count": 0, "updated_at": "2026-06-29T15:13:33.383Z", "user_id": 17, "uuid": "44560b6d-7921-4f07-9e70-e1a032365ebc"}, {"Project": null, "Tags": [], "completed_at": null, "completion_based": false, "created_at": "2026-06-29T15:13:33.380Z", "description": null, "due_date": null, "id": 32, "last_generated_date": null, "name": "Parent Task", "note": null, "priority": 1, "project_id": null, "recurrence_end_date": null, "recurrence_interval": null, "recurrence_month_day": null, "recurrence_type": "none", "recurrence_week_of_month": null, "recurrence_weekday": null, "recurring_parent_id": null, "status": 0, "tags": [], "today": false, "today_move_count": 0, "updated_at": "2026-06-29T15:13:33.380Z", "user_id": 17, "uuid": "c9158867-a950-4104-a94a-6473e4fbe169"}]
+
+      574 |
+      575 |             // Should only return parent and standalone tasks at first level, not subtasks
+    > 576 |             expect(response.body.tasks).toHaveLength(2);
+          |                                         ^
+      577 |
+      578 |             // Find the parent task in response
+      579 |             const parentTaskInResponse = response.body.tasks.find(
+
+      at Object.toHaveLength (tests/integration/subtasks.test.js:576:41)
+
+  ● Subtasks API › Authentication and Authorization › should not allow access to subtasks of other users
+
+    expected 200 "OK", got 404 "Not Found"
+
+      631 |             const response = await agent
+      632 |                 .get(`/api/task/${otherTask.id}/subtasks`)
+    > 633 |                 .expect(200);
+          |                  ^
+      634 |
+      635 |             expect(response.body).toHaveLength(0);
+      636 |         });
+
+      at Object.expect (tests/integration/subtasks.test.js:633:18)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+  ● Subtasks API › Authentication and Authorization › should not allow creating subtasks for other users tasks
+
+    expected 400 "Bad Request", got 201 "Created"
+
+      657 |                 .post('/api/task')
+      658 |                 .send(taskData)
+    > 659 |                 .expect(400);
+          |                  ^
+      660 |             expect(response.status).toBe(400);
+      661 |         });
+      662 |     });
+
+      at Object.expect (tests/integration/subtasks.test.js:659:18)
+      ----
+      at Test._assertStatus (../node_modules/supertest/lib/test.js:309:14)
+      at ../node_modules/supertest/lib/test.js:365:13
+      at Test._assertFunction (../node_modules/supertest/lib/test.js:342:13)
+      at Test.assert (../node_modules/supertest/lib/test.js:195:23)
+      at localAssert (../node_modules/supertest/lib/test.js:138:14)
+      at Server.<anonymous> (../node_modules/supertest/lib/test.js:152:11)
+
+Test Suites: 5 failed, 5 total
+Tests:       39 failed, 38 passed, 77 total
+Snapshots:   0 total
+Time:        7.642 s
+Ran all test suites matching /tests\/integration\/subtasks-completion.test.js|tests\/integration\/subtasks.test.js|tests\/integration\/tasks.test.js|tests\/unit\/models\/subtasks.test.js|tests\/unit\/services\/parentChildRelationship.test.js/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=0 graded=77 found=0 failed=0 parsed=0 framework=jest exit_code=1

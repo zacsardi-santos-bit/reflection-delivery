@@ -1,0 +1,7 @@
+I'm working on the Kong Kubernetes Ingress Controller and I've identified two issues with how admin API clients are managed.
+
+The first issue is with endpoint discovery. Right now, endpoints are excluded if they are marked as "not ready," but this is too broad — an endpoint that is temporarily not responding but is NOT being terminated should still be considered a valid candidate. The exclusion criterion should be the "terminating" flag, not the "ready" flag. Endpoints that are ready but terminating should be excluded, while endpoints that are not-ready but not-terminating should be included.
+
+The second issue is that the client manager doesn't have a way to handle clients that are discovered but can't connect yet. When the controller learns about new admin API addresses, some of them might not be reachable right away. Currently those are just dropped. I need the manager to maintain a "pending" set of not-yet-reachable clients and a "ready" set of active clients. The system should periodically check both sets: promoting pending clients that have become reachable, and demoting ready clients that have become unreachable. This readiness-checking concern should be extracted into its own component so it can be tested and replaced independently.
+
+The manager should expose a method to start its processing loop explicitly, and should support configuration of the interval at which periodic readiness reconciliation happens. Creating a manager with no initial clients should result in a clear error message indicating that at least one initial client is required.

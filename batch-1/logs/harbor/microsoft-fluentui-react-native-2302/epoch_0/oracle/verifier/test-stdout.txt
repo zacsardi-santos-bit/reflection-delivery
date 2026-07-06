@@ -1,0 +1,9 @@
+patching file packages/theming/android-theme/src/__tests__/__snapshots__/android-theme.test.ts.snap
+PASS src/__tests__/android-theme.test.ts (5.564 s)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   6 passed, 6 total
+Time:        5.653 s
+Ran all test suites.
+reward=1 graded=6 found=0 failed=0 parsed=0 framework=jest exit_code=0

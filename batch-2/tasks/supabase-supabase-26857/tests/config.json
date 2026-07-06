@@ -1,0 +1,24 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/apps/studio && npx vitest run components/interfaces/SQLEditor/SQLEditor.utils.test.ts",
+  "test_files": [
+    "apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return false if limit passed is <= 0",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return true if limit passed is > 0",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return false if query already has a limit",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return false if query already has a limit, even if no value provided for limit",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return false if query is not a select statement",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return false if there are multiple queries I",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return false if there are multiple queries II",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return false if query has with a comment I",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:checkIfAppendLimitRequired Should return false if query has with a comment II",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:suffixWithLimit Should add the limit param properly if query ends without a semi colon",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:suffixWithLimit Should add the limit param properly if query ends with a semi colon",
+    "/workspace/repo/apps/studio/components/interfaces/SQLEditor/SQLEditor.utils.test.ts:: SQLEditor.utils.ts:suffixWithLimit Should add the limit param properly if query ends with multiple semi colon"
+  ],
+  "PASS_TO_PASS": []
+}

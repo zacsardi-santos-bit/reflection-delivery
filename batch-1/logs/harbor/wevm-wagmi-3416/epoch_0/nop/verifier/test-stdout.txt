@@ -1,0 +1,576 @@
+patching file packages/core/src/actions/getTransactionReceipt.test.ts
+patching file packages/core/src/exports/actions.test.ts
+patching file packages/core/src/exports/index.test.ts
+patching file packages/core/src/exports/query.test.ts
+patching file packages/core/src/query/getTransactionReceipt.test.ts
+patching file packages/react/src/exports/actions.test.ts
+patching file packages/react/src/exports/index.test.ts
+patching file packages/react/src/exports/query.test.ts
+patching file packages/react/src/hooks/useTransactionReceipt.test.ts
+
+ RUN  v0.34.5 /workspace/repo
+
+ × packages/core/src/exports/query.test.ts > exports
+   → Snapshot `exports 1` mismatched
+ × packages/core/src/exports/actions.test.ts > exports
+   → Snapshot `exports 1` mismatched
+ × packages/react/src/exports/query.test.ts > exports
+   → Snapshot `exports 1` mismatched
+ × packages/react/src/exports/actions.test.ts > exports
+   → Snapshot `exports 1` mismatched
+ × packages/core/src/exports/index.test.ts > exports
+   → Snapshot `exports 1` mismatched
+ × packages/react/src/exports/index.test.ts > exports
+   → Snapshot `exports 1` mismatched
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |@wagmi/core| packages/core/src/exports/actions.test.ts > exports
+Error: Snapshot `exports 1` mismatched
+
+- Expected
++ Received
+
+  [
+    "call",
+    "connect",
+    "disconnect",
+    "estimateGas",
+    "estimateFeesPerGas",
+    "estimateMaxPriorityFeePerGas",
+    "getAccount",
+    "getBalance",
+    "fetchBalance",
+    "getBlock",
+    "getBlockNumber",
+    "fetchBlockNumber",
+    "getBlockTransactionCount",
+    "getChainId",
+    "getClient",
+    "getConnections",
+    "getConnectors",
+    "getConnectorClient",
+    "getEnsAddress",
+    "fetchEnsAddress",
+    "getEnsAvatar",
+    "fetchEnsAvatar",
+    "getEnsName",
+    "fetchEnsName",
+    "getEnsResolver",
+    "fetchEnsResolver",
+    "getFeeHistory",
+    "getGasPrice",
+    "getPublicClient",
+    "getToken",
+    "fetchToken",
+    "getTransaction",
+    "fetchTransaction",
+    "getTransactionCount",
+-   "getTransactionReceipt",
+    "getWalletClient",
+    "multicall",
+    "readContract",
+    "readContracts",
+    "reconnect",
+    "sendTransaction",
+    "signMessage",
+    "signTypedData",
+    "simulateContract",
+    "switchAccount",
+    "switchChain",
+    "switchNetwork",
+    "verifyMessage",
+    "verifyTypedData",
+    "watchAccount",
+    "watchBlocks",
+    "watchBlockNumber",
+    "watchChainId",
+    "watchClient",
+    "watchConnections",
+    "watchConnectors",
+    "watchContractEvent",
+    "watchPendingTransactions",
+    "watchPublicClient",
+    "waitForTransactionReceipt",
+    "waitForTransaction",
+    "writeContract",
+  ]
+
+ ❯ packages/core/src/exports/actions.test.ts:6:32
+      4| 
+      5| test('exports', () => {
+      6|   expect(Object.keys(actions)).toMatchInlineSnapshot(`
+       |                                ^
+      7|     [
+      8|       "call",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  |@wagmi/core| packages/core/src/exports/index.test.ts > exports
+Error: Snapshot `exports 1` mismatched
+
+- Expected
++ Received
+
+  [
+    "call",
+    "connect",
+    "disconnect",
+    "estimateGas",
+    "estimateFeesPerGas",
+    "estimateMaxPriorityFeePerGas",
+    "getAccount",
+    "getBalance",
+    "fetchBalance",
+    "getBlock",
+    "getBlockNumber",
+    "fetchBlockNumber",
+    "getBlockTransactionCount",
+    "getChainId",
+    "getClient",
+    "getConnections",
+    "getConnectors",
+    "getConnectorClient",
+    "getEnsAddress",
+    "fetchEnsAddress",
+    "getEnsAvatar",
+    "fetchEnsAvatar",
+    "getEnsName",
+    "fetchEnsName",
+    "getEnsResolver",
+    "fetchEnsResolver",
+    "getFeeHistory",
+    "getGasPrice",
+    "getPublicClient",
+    "getToken",
+    "fetchToken",
+    "getTransaction",
+    "fetchTransaction",
+    "getTransactionCount",
+-   "getTransactionReceipt",
+    "getWalletClient",
+    "multicall",
+    "readContract",
+    "readContracts",
+    "reconnect",
+    "sendTransaction",
+    "signMessage",
+    "signTypedData",
+    "simulateContract",
+    "switchAccount",
+    "switchChain",
+    "switchNetwork",
+    "verifyMessage",
+    "verifyTypedData",
+    "watchAccount",
+    "watchBlocks",
+    "watchBlockNumber",
+    "watchChainId",
+    "watchClient",
+    "watchConnections",
+    "watchConnectors",
+    "watchContractEvent",
+    "watchPendingTransactions",
+    "watchPublicClient",
+    "waitForTransactionReceipt",
+    "waitForTransaction",
+    "writeContract",
+    "createConnector",
+    "injected",
+    "mock",
+    "createConfig",
+    "createStorage",
+    "noopStorage",
+    "hydrate",
+    "BaseError",
+    "ChainNotConfiguredError",
+    "ConnectorNotConnectedError",
+    "ConnectorAlreadyConnectedError",
+    "ConnectorNotFoundError",
+    "ConnectorAccountNotFoundError",
+    "ProviderNotFoundError",
+    "SwitchChainNotSupportedError",
+    "custom",
+    "http",
+    "webSocket",
+    "unstable_connector",
+    "fallback",
+    "cookieStorage",
+    "cookieToInitialState",
+    "parseCookie",
+    "deepEqual",
+    "deserialize",
+    "normalizeChainId",
+    "serialize",
+    "version",
+  ]
+
+ ❯ packages/core/src/exports/index.test.ts:6:29
+      4| 
+      5| test('exports', () => {
+      6|   expect(Object.keys(core)).toMatchInlineSnapshot(`
+       |                             ^
+      7|     [
+      8|       "call",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  |@wagmi/core| packages/core/src/exports/query.test.ts > exports
+Error: Snapshot `exports 1` mismatched
+
+- Expected
++ Received
+
+  [
+    "callQueryKey",
+    "callQueryOptions",
+    "connectMutationOptions",
+    "disconnectMutationOptions",
+    "estimateFeesPerGasQueryKey",
+    "estimateFeesPerGasQueryOptions",
+    "estimateGasQueryKey",
+    "estimateGasQueryOptions",
+    "estimateMaxPriorityFeePerGasQueryKey",
+    "estimateMaxPriorityFeePerGasQueryOptions",
+    "getBalanceQueryKey",
+    "getBalanceQueryOptions",
+    "getBlockQueryKey",
+    "getBlockQueryOptions",
+    "getBlockNumberQueryKey",
+    "getBlockNumberQueryOptions",
+    "getBlockTransactionCountQueryKey",
+    "getBlockTransactionCountQueryOptions",
+    "getConnectorClientQueryKey",
+    "getConnectorClientQueryOptions",
+    "getEnsAddressQueryKey",
+    "getEnsAddressQueryOptions",
+    "getEnsAvatarQueryKey",
+    "getEnsAvatarQueryOptions",
+    "getEnsNameQueryKey",
+    "getEnsNameQueryOptions",
+    "getEnsResolverQueryKey",
+    "getEnsResolverQueryOptions",
+    "getFeeHistoryQueryKey",
+    "getFeeHistoryQueryOptions",
+    "getGasPriceQueryKey",
+    "getGasPriceQueryOptions",
+    "getTokenQueryKey",
+    "getTokenQueryOptions",
+    "getTransactionQueryKey",
+    "getTransactionQueryOptions",
+    "getTransactionCountQueryKey",
+    "getTransactionCountQueryOptions",
+-   "getTransactionReceiptQueryKey",
+-   "getTransactionReceiptQueryOptions",
+    "getWalletClientQueryKey",
+    "getWalletClientQueryOptions",
+    "infiniteReadContractsQueryKey",
+    "infiniteReadContractsQueryOptions",
+    "readContractQueryKey",
+    "readContractQueryOptions",
+    "readContractsQueryKey",
+    "readContractsQueryOptions",
+    "reconnectMutationOptions",
+    "sendTransactionMutationOptions",
+    "signMessageMutationOptions",
+    "signTypedDataMutationOptions",
+    "switchAccountMutationOptions",
+    "simulateContractQueryKey",
+    "simulateContractQueryOptions",
+    "switchChainMutationOptions",
+    "verifyMessageQueryKey",
+    "verifyMessageQueryOptions",
+    "verifyTypedDataQueryKey",
+    "verifyTypedDataQueryOptions",
+    "waitForTransactionReceiptQueryKey",
+    "waitForTransactionReceiptQueryOptions",
+    "writeContractMutationOptions",
+    "hashFn",
+  ]
+
+ ❯ packages/core/src/exports/query.test.ts:6:30
+      4| 
+      5| test('exports', () => {
+      6|   expect(Object.keys(query)).toMatchInlineSnapshot(`
+       |                              ^
+      7|     [
+      8|       "callQueryKey",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  |wagmi| packages/react/src/exports/actions.test.ts > exports
+Error: Snapshot `exports 1` mismatched
+
+- Expected
++ Received
+
+  [
+    "call",
+    "connect",
+    "disconnect",
+    "estimateGas",
+    "estimateFeesPerGas",
+    "estimateMaxPriorityFeePerGas",
+    "getAccount",
+    "getBalance",
+    "fetchBalance",
+    "getBlock",
+    "getBlockNumber",
+    "fetchBlockNumber",
+    "getBlockTransactionCount",
+    "getChainId",
+    "getClient",
+    "getConnections",
+    "getConnectors",
+    "getConnectorClient",
+    "getEnsAddress",
+    "fetchEnsAddress",
+    "getEnsAvatar",
+    "fetchEnsAvatar",
+    "getEnsName",
+    "fetchEnsName",
+    "getEnsResolver",
+    "fetchEnsResolver",
+    "getFeeHistory",
+    "getGasPrice",
+    "getPublicClient",
+    "getToken",
+    "fetchToken",
+    "getTransaction",
+    "fetchTransaction",
+    "getTransactionCount",
+-   "getTransactionReceipt",
+    "getWalletClient",
+    "multicall",
+    "readContract",
+    "readContracts",
+    "reconnect",
+    "sendTransaction",
+    "signMessage",
+    "signTypedData",
+    "simulateContract",
+    "switchAccount",
+    "switchChain",
+    "switchNetwork",
+    "verifyMessage",
+    "verifyTypedData",
+    "watchAccount",
+    "watchBlocks",
+    "watchBlockNumber",
+    "watchChainId",
+    "watchClient",
+    "watchConnections",
+    "watchConnectors",
+    "watchContractEvent",
+    "watchPendingTransactions",
+    "watchPublicClient",
+    "waitForTransactionReceipt",
+    "waitForTransaction",
+    "writeContract",
+  ]
+
+ ❯ packages/react/src/exports/actions.test.ts:6:32
+      4| 
+      5| test('exports', () => {
+      6|   expect(Object.keys(actions)).toMatchInlineSnapshot(`
+       |                                ^
+      7|     [
+      8|       "call",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  |wagmi| packages/react/src/exports/index.test.ts > exports
+Error: Snapshot `exports 1` mismatched
+
+- Expected
++ Received
+
+  [
+    "WagmiContext",
+    "WagmiProvider",
+    "Context",
+    "WagmiConfig",
+    "BaseError",
+    "WagmiProviderNotFoundError",
+    "useAccount",
+    "useAccountEffect",
+    "useBalance",
+    "useBlock",
+    "useBlockNumber",
+    "useBlockTransactionCount",
+    "useCall",
+    "useChainId",
+    "useClient",
+    "useConfig",
+    "useConnect",
+    "useConnections",
+    "useConnectors",
+    "useConnectorClient",
+    "useDisconnect",
+    "useEnsAddress",
+    "useEnsAvatar",
+    "useEnsName",
+    "useEnsResolver",
+    "useEstimateFeesPerGas",
+    "useFeeData",
+    "useEstimateGas",
+    "useEstimateMaxPriorityFeePerGas",
+    "useFeeHistory",
+    "useGasPrice",
+    "useInfiniteReadContracts",
+    "useContractInfiniteReads",
+    "usePublicClient",
+    "useReadContract",
+    "useContractRead",
+    "useReadContracts",
+    "useContractReads",
+    "useReconnect",
+    "useSendTransaction",
+    "useSignMessage",
+    "useSignTypedData",
+    "useSimulateContract",
+    "useSwitchAccount",
+    "useSwitchChain",
+    "useToken",
+    "useTransaction",
+    "useTransactionCount",
+-   "useTransactionReceipt",
+    "useVerifyMessage",
+    "useVerifyTypedData",
+    "useWalletClient",
+    "useWaitForTransactionReceipt",
+    "useWatchBlocks",
+    "useWatchBlockNumber",
+    "useWatchContractEvent",
+    "useWatchPendingTransactions",
+    "useWriteContract",
+    "useContractWrite",
+    "Hydrate",
+    "createConfig",
+    "createConnector",
+    "ChainNotConfiguredError",
+    "ConnectorAlreadyConnectedError",
+    "ConnectorNotFoundError",
+    "ConnectorAccountNotFoundError",
+    "ProviderNotFoundError",
+    "SwitchChainNotSupportedError",
+    "createStorage",
+    "noopStorage",
+    "custom",
+    "fallback",
+    "http",
+    "webSocket",
+    "unstable_connector",
+    "cookieStorage",
+    "cookieToInitialState",
+    "deepEqual",
+    "deserialize",
+    "normalizeChainId",
+    "parseCookie",
+    "serialize",
+    "version",
+  ]
+
+ ❯ packages/react/src/exports/index.test.ts:6:30
+      4| 
+      5| test('exports', () => {
+      6|   expect(Object.keys(react)).toMatchInlineSnapshot(`
+       |                              ^
+      7|     [
+      8|       "WagmiContext",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  |wagmi| packages/react/src/exports/query.test.ts > exports
+Error: Snapshot `exports 1` mismatched
+
+- Expected
++ Received
+
+  [
+    "callQueryKey",
+    "callQueryOptions",
+    "connectMutationOptions",
+    "disconnectMutationOptions",
+    "estimateFeesPerGasQueryKey",
+    "estimateFeesPerGasQueryOptions",
+    "estimateGasQueryKey",
+    "estimateGasQueryOptions",
+    "estimateMaxPriorityFeePerGasQueryKey",
+    "estimateMaxPriorityFeePerGasQueryOptions",
+    "getBalanceQueryKey",
+    "getBalanceQueryOptions",
+    "getBlockQueryKey",
+    "getBlockQueryOptions",
+    "getBlockNumberQueryKey",
+    "getBlockNumberQueryOptions",
+    "getBlockTransactionCountQueryKey",
+    "getBlockTransactionCountQueryOptions",
+    "getConnectorClientQueryKey",
+    "getConnectorClientQueryOptions",
+    "getEnsAddressQueryKey",
+    "getEnsAddressQueryOptions",
+    "getEnsAvatarQueryKey",
+    "getEnsAvatarQueryOptions",
+    "getEnsNameQueryKey",
+    "getEnsNameQueryOptions",
+    "getEnsResolverQueryKey",
+    "getEnsResolverQueryOptions",
+    "getFeeHistoryQueryKey",
+    "getFeeHistoryQueryOptions",
+    "getGasPriceQueryKey",
+    "getGasPriceQueryOptions",
+    "getTokenQueryKey",
+    "getTokenQueryOptions",
+    "getTransactionQueryKey",
+    "getTransactionQueryOptions",
+    "getTransactionCountQueryKey",
+    "getTransactionCountQueryOptions",
+-   "getTransactionReceiptQueryKey",
+-   "getTransactionReceiptQueryOptions",
+    "getWalletClientQueryKey",
+    "getWalletClientQueryOptions",
+    "infiniteReadContractsQueryKey",
+    "infiniteReadContractsQueryOptions",
+    "readContractQueryKey",
+    "readContractQueryOptions",
+    "readContractsQueryKey",
+    "readContractsQueryOptions",
+    "reconnectMutationOptions",
+    "sendTransactionMutationOptions",
+    "signMessageMutationOptions",
+    "signTypedDataMutationOptions",
+    "switchAccountMutationOptions",
+    "simulateContractQueryKey",
+    "simulateContractQueryOptions",
+    "switchChainMutationOptions",
+    "verifyMessageQueryKey",
+    "verifyMessageQueryOptions",
+    "verifyTypedDataQueryKey",
+    "verifyTypedDataQueryOptions",
+    "waitForTransactionReceiptQueryKey",
+    "waitForTransactionReceiptQueryOptions",
+    "writeContractMutationOptions",
+    "hashFn",
+  ]
+
+ ❯ packages/react/src/exports/query.test.ts:6:30
+      4| 
+      5| test('exports', () => {
+      6|   expect(Object.keys(query)).toMatchInlineSnapshot(`
+       |                              ^
+      7|     [
+      8|       "callQueryKey",
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+  Snapshots  6 failed
+ Test Files  6 failed (6)
+      Tests  6 failed (6)
+   Start at  15:23:56
+   Duration  4.55s (transform 1.98s, setup 158ms, collect 8.13s, tests 91ms, environment 2.30s, prepare 1.29s)
+
+close timed out after 10000ms
+Tests closed successfully but something prevents the main process from exiting
+You can try to identify the cause by enabling "hanging-process" reporter. See https://vitest.dev/config/#reporters
+reward=0 graded=6 found=0 failed=0 parsed=0 framework=vitest exit_code=1

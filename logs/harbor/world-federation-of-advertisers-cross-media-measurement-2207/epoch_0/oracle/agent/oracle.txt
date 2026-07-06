@@ -1,9 +1,0 @@
-patching file src/main/kotlin/org/wfanet/measurement/eventdataprovider/privacybudgetmanagement/PrivacyBucketFilter.kt
-patching file src/main/kotlin/org/wfanet/measurement/kingdom/service/api/v2alpha/MeasurementsService.kt
-patching file src/main/kotlin/org/wfanet/measurement/measurementconsumer/stats/Covariances.kt
-patching file src/main/kotlin/org/wfanet/measurement/reporting/deploy/v2/common/ReportingApiServerFlags.kt
-patching file src/main/kotlin/org/wfanet/measurement/reporting/deploy/v2/common/server/V2AlphaPublicApiServer.kt
-patching file src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/MetricSpecDefaults.kt
-patching file src/main/kotlin/org/wfanet/measurement/reporting/service/api/v2alpha/ReportsService.kt
-patching file src/main/proto/wfa/measurement/config/reporting/metric_spec_config.proto
-patching file src/main/proto/wfa/measurement/reporting/v2alpha/metric.proto

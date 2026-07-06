@@ -1,0 +1,129 @@
+patching file airflow/www/static/js/login/index.test.tsx
+patching file tests/auth/managers/simple/__init__.py
+patching file tests/auth/managers/simple/test_simple_auth_manager.py
+patching file tests/auth/managers/simple/test_user.py
+patching file tests/auth/managers/simple/views/__init__.py
+patching file tests/auth/managers/simple/views/test_auth.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.14.1, asyncio-1.4.0, mock-3.15.1, time-machine-3.2.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 102 items / 1 deselected / 101 selected
+
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_init_with_no_user PASSED [  0%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_init_with_users PASSED [  1%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_logged_in PASSED [  2%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_logged_in_return_false_when_no_user_in_session PASSED [  3%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_get_url_login PASSED [  4%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_get_url_logout PASSED [  5%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_get_user PASSED [  6%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_get_user_return_none_when_not_logged_in PASSED [  7%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-GET-True-is_authorized_configuration] PASSED [  8%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-GET-True-is_authorized_connection] PASSED [  9%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-GET-True-is_authorized_dag] PASSED [ 10%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-GET-True-is_authorized_dataset] PASSED [ 11%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-GET-True-is_authorized_pool] PASSED [ 12%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-GET-True-is_authorized_variable] PASSED [ 13%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-DELETE-True-is_authorized_configuration] PASSED [ 14%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-DELETE-True-is_authorized_connection] PASSED [ 15%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-DELETE-True-is_authorized_dag] PASSED [ 16%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-DELETE-True-is_authorized_dataset] PASSED [ 17%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-DELETE-True-is_authorized_pool] PASSED [ 18%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-ADMIN-DELETE-True-is_authorized_variable] PASSED [ 19%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-POST-False-is_authorized_configuration] PASSED [ 20%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-POST-False-is_authorized_connection] PASSED [ 21%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-POST-False-is_authorized_dag] PASSED [ 22%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-POST-False-is_authorized_dataset] PASSED [ 23%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-POST-False-is_authorized_pool] PASSED [ 24%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-POST-False-is_authorized_variable] PASSED [ 25%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-PUT-False-is_authorized_configuration] PASSED [ 26%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-PUT-False-is_authorized_connection] PASSED [ 27%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-PUT-False-is_authorized_dag] PASSED [ 28%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-PUT-False-is_authorized_dataset] PASSED [ 29%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-PUT-False-is_authorized_pool] PASSED [ 30%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-PUT-False-is_authorized_variable] PASSED [ 31%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-DELETE-False-is_authorized_configuration] PASSED [ 32%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-DELETE-False-is_authorized_connection] PASSED [ 33%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-DELETE-False-is_authorized_dag] PASSED [ 34%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-DELETE-False-is_authorized_dataset] PASSED [ 35%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-DELETE-False-is_authorized_pool] PASSED [ 36%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[True-VIEWER-DELETE-False-is_authorized_variable] PASSED [ 37%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[False-ADMIN-GET-False-is_authorized_configuration] PASSED [ 38%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[False-ADMIN-GET-False-is_authorized_connection] PASSED [ 39%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[False-ADMIN-GET-False-is_authorized_dag] PASSED [ 40%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[False-ADMIN-GET-False-is_authorized_dataset] PASSED [ 41%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[False-ADMIN-GET-False-is_authorized_pool] PASSED [ 42%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods[False-ADMIN-GET-False-is_authorized_variable] PASSED [ 43%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[True-ADMIN-True-is_authorized_view-kwargs0] PASSED [ 44%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[True-ADMIN-True-is_authorized_custom_view-kwargs1] PASSED [ 45%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[True-VIEWER-True-is_authorized_view-kwargs0] PASSED [ 46%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[True-VIEWER-True-is_authorized_custom_view-kwargs1] PASSED [ 47%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[True-USER-True-is_authorized_view-kwargs0] PASSED [ 48%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[True-USER-True-is_authorized_custom_view-kwargs1] PASSED [ 49%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[True-OP-True-is_authorized_view-kwargs0] PASSED [ 50%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[True-OP-True-is_authorized_custom_view-kwargs1] PASSED [ 51%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[False-ADMIN-False-is_authorized_view-kwargs0] PASSED [ 52%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_view_methods[False-ADMIN-False-is_authorized_custom_view-kwargs1] PASSED [ 53%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[ADMIN-GET-True-is_authorized_configuration] PASSED [ 54%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[ADMIN-GET-True-is_authorized_connection] PASSED [ 55%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[ADMIN-GET-True-is_authorized_dataset] PASSED [ 56%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[ADMIN-GET-True-is_authorized_pool] PASSED [ 57%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[ADMIN-GET-True-is_authorized_variable] PASSED [ 58%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[OP-DELETE-True-is_authorized_configuration] PASSED [ 59%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[OP-DELETE-True-is_authorized_connection] PASSED [ 60%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[OP-DELETE-True-is_authorized_dataset] PASSED [ 61%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[OP-DELETE-True-is_authorized_pool] PASSED [ 62%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[OP-DELETE-True-is_authorized_variable] PASSED [ 63%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[USER-DELETE-False-is_authorized_configuration] PASSED [ 64%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[USER-DELETE-False-is_authorized_connection] PASSED [ 65%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[USER-DELETE-False-is_authorized_dataset] PASSED [ 66%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[USER-DELETE-False-is_authorized_pool] PASSED [ 67%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[USER-DELETE-False-is_authorized_variable] PASSED [ 68%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[VIEWER-PUT-False-is_authorized_configuration] PASSED [ 69%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[VIEWER-PUT-False-is_authorized_connection] PASSED [ 70%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[VIEWER-PUT-False-is_authorized_dataset] PASSED [ 71%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[VIEWER-PUT-False-is_authorized_pool] PASSED [ 72%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_op_role_required[VIEWER-PUT-False-is_authorized_variable] PASSED [ 73%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_user_role_required[ADMIN-GET-True-is_authorized_dag] PASSED [ 74%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_user_role_required[OP-DELETE-True-is_authorized_dag] PASSED [ 75%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_user_role_required[USER-GET-True-is_authorized_dag] PASSED [ 76%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_user_role_required[USER-DELETE-True-is_authorized_dag] PASSED [ 77%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_user_role_required[VIEWER-PUT-False-is_authorized_dag] PASSED [ 78%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[ADMIN-GET-True-is_authorized_dag] PASSED [ 79%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[ADMIN-GET-True-is_authorized_dataset] PASSED [ 80%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[ADMIN-GET-True-is_authorized_pool] PASSED [ 81%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[VIEWER-GET-True-is_authorized_dag] PASSED [ 82%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[VIEWER-GET-True-is_authorized_dataset] PASSED [ 83%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[VIEWER-GET-True-is_authorized_pool] PASSED [ 84%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[OP-GET-True-is_authorized_dag] PASSED [ 85%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[OP-GET-True-is_authorized_dataset] PASSED [ 86%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[OP-GET-True-is_authorized_pool] PASSED [ 87%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[USER-GET-True-is_authorized_dag] PASSED [ 88%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[USER-GET-True-is_authorized_dataset] PASSED [ 89%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[USER-GET-True-is_authorized_pool] PASSED [ 90%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[VIEWER-POST-False-is_authorized_dag] PASSED [ 91%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[VIEWER-POST-False-is_authorized_dataset] PASSED [ 92%]
+tests/auth/managers/simple/test_simple_auth_manager.py::TestSimpleAuthManager::test_is_authorized_methods_viewer_role_required_for_get[VIEWER-POST-False-is_authorized_pool] PASSED [ 93%]
+tests/auth/managers/simple/test_user.py::TestSimpleAuthManagerUser::test_get_id PASSED [ 94%]
+tests/auth/managers/simple/test_user.py::TestSimpleAuthManagerUser::test_get_name PASSED [ 95%]
+tests/auth/managers/simple/test_user.py::TestSimpleAuthManagerUser::test_get_role PASSED [ 96%]
+tests/auth/managers/simple/views/test_auth.py::TestSimpleAuthManagerAuthenticationViews::test_logout_redirects_to_login_and_clear_user PASSED [ 97%]
+tests/auth/managers/simple/views/test_auth.py::TestSimpleAuthManagerAuthenticationViews::test_login_submit[test-test-True] PASSED [ 98%]
+tests/auth/managers/simple/views/test_auth.py::TestSimpleAuthManagerAuthenticationViews::test_login_submit[test-test2-False] PASSED [ 99%]
+tests/auth/managers/simple/views/test_auth.py::TestSimpleAuthManagerAuthenticationViews::test_login_submit[--False] PASSED [100%]
+==================== Warning summary. Total: 13, Unique: 8 =====================
+airflow: total 3, unique 3
+  runtest: total 3, unique 3
+other: total 3, unique 2
+  runtest: total 3, unique 2
+providers: total 3, unique 1
+  runtest: total 3, unique 1
+tests: total 4, unique 2
+  runtest: total 4, unique 2
+Warnings saved into /workspace/repo/tests/warnings.txt file.
+
+====================== 101 passed, 1 deselected in 19.32s ======================
+reward=1 graded=101 found=0 failed=0 parsed=12 framework=pytest exit_code=0

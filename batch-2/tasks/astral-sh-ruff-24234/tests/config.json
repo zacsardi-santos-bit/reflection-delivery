@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p ruff_linter -E 'test(rule_unnecessaryif_path_new_ruf050_py_expects)'",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/ruff/RUF050.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) ruff_linter rules::ruff::tests::rules::rule_unnecessaryif_path_new_ruf050_py_expects"
+  ],
+  "PASS_TO_PASS": []
+}

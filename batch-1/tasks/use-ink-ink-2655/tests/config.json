@@ -1,0 +1,39 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p ink_primitives --no-fail-fast",
+  "test_files": [
+    "crates/primitives/src/sol/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/27) ink_primitives key::tests::from_str_works_correct",
+    "( 2/27) ink_primitives arithmetic::tests::saturating_mul",
+    "( 3/27) ink_primitives key::tests::from_bytes_works_correct",
+    "( 4/27) ink_primitives arithmetic::tests::saturating_pow",
+    "( 5/27) ink_primitives arithmetic::tests::saturating_sub",
+    "( 6/27) ink_primitives sol::tests::encode_refs_works",
+    "( 7/27) ink_primitives sol::tests::hash_works",
+    "( 8/27) ink_primitives sol::tests::address_works",
+    "( 9/27) ink_primitives arithmetic::tests::saturating_add",
+    "(10/27) ink_primitives key::tests::concat_works_correct",
+    "(11/27) ink_primitives sol::tests::fixed_bytes_works",
+    "(12/27) ink_primitives key::tests::compute_key_works_correct",
+    "(13/27) ink_primitives sol::tests::bool_works",
+    "(14/27) ink_primitives sol::tests::account_id_works",
+    "(15/27) ink_primitives sol::tests::h256_works",
+    "(16/27) ink_primitives sol::tests::bytes_works",
+    "(17/27) ink_primitives sol::tests::custom_type_works",
+    "(18/27) ink_primitives sol::tests::fixed_array_works",
+    "(19/27) ink_primitives sol::tests::event_topic_works",
+    "(20/27) ink_primitives sol::tests::dynamic_array_works",
+    "(21/27) ink_primitives sol::tests::string_works",
+    "(22/27) ink_primitives sol::tests::option_works",
+    "(23/27) ink_primitives sol::tests::signed_int_works",
+    "(24/27) ink_primitives sol::tests::unsigned_int_works",
+    "(25/27) ink_primitives sol::tests::weight_works",
+    "(26/27) ink_primitives sol::tests::params_works",
+    "(27/27) ink_primitives sol::tests::tuple_works"
+  ],
+  "PASS_TO_PASS": []
+}

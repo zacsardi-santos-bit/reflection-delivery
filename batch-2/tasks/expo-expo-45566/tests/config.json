@@ -1,0 +1,21 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/expo-observe && pnpm exec jest src/__tests__/module.test.native.ts --coverage=false --verbose --json",
+  "test_files": [
+    "packages/expo-observe/src/__tests__/module.test.native.ts",
+    "packages/expo-observe/src/__tests__/useObserve.test.native.tsx",
+    "packages/expo-observe/src/integrations/expo-router/__tests__/useObserveForRouter.test.android.tsx",
+    "packages/expo-observe/src/integrations/expo-router/__tests__/useObserveForRouter.test.ios.tsx"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/expo-observe/src/__tests__/module.test.native.ts::module Proxy strips disableRouterIntegration from the config forwarded to native",
+    "/workspace/repo/packages/expo-observe/src/__tests__/module.test.native.ts::module Proxy calls initRouterIntegration when router is installed and integration is enabled",
+    "/workspace/repo/packages/expo-observe/src/__tests__/module.test.native.ts::module Proxy skips initRouterIntegration when disableRouterIntegration is true",
+    "/workspace/repo/packages/expo-observe/src/__tests__/module.test.native.ts::module Proxy skips initRouterIntegration when router is not installed",
+    "/workspace/repo/packages/expo-observe/src/__tests__/module.test.native.ts::module Proxy passes through dispatchEvents and setBundleDefaults to native",
+    "/workspace/repo/packages/expo-observe/src/__tests__/module.test.native.ts::module Proxy returns the native function via Reflect.get for unknown props"
+  ],
+  "PASS_TO_PASS": []
+}

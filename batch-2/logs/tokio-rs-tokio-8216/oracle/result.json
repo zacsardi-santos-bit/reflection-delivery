@@ -1,0 +1,29 @@
+{
+    "id": "73167407-e565-4e96-a877-9d337bc213f0",
+    "started_at": "2026-07-06T12:20:05.060623",
+    "finished_at": "2026-07-06T12:20:25.980325",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tokio-rs-tokio-8216": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tokio-rs-tokio-8216__hqZ4wpg"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

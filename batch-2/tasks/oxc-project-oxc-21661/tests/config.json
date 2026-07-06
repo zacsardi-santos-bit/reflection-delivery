@@ -1,0 +1,23 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && pnpm --filter \"./apps/oxfmt\" build-dev && cd apps/oxfmt && pnpm exec vitest run --reporter=verbose test/cli/cli.test.ts -t oxfmtrc_overrides_invalid",
+  "test_files": [
+    "apps/oxfmt/test/cli/oxfmtrc_overrides_invalid/0.snap.md",
+    "apps/oxfmt/test/cli/oxfmtrc_overrides_invalid/1.snap.md",
+    "apps/oxfmt/test/cli/oxfmtrc_overrides_invalid/2.snap.md",
+    "apps/oxfmt/test/cli/oxfmtrc_overrides_invalid/fixtures/cross_field_conflict.json",
+    "apps/oxfmt/test/cli/oxfmtrc_overrides_invalid/fixtures/invalid_value.json",
+    "apps/oxfmt/test/cli/oxfmtrc_overrides_invalid/fixtures/root_invalid.json",
+    "apps/oxfmt/test/cli/oxfmtrc_overrides_invalid/fixtures/test.js",
+    "apps/oxfmt/test/cli/oxfmtrc_overrides_invalid/options.json"
+  ],
+  "num_test_files": 8,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/oxfmt/test/cli/cli.test.ts::oxfmt CLI oxfmtrc_overrides_invalid oxfmtrc_overrides_invalid/1",
+    "/workspace/repo/apps/oxfmt/test/cli/cli.test.ts::oxfmt CLI oxfmtrc_overrides_invalid oxfmtrc_overrides_invalid/2"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/apps/oxfmt/test/cli/cli.test.ts::oxfmt CLI oxfmtrc_overrides_invalid oxfmtrc_overrides_invalid/0"
+  ]
+}

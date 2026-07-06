@@ -1,0 +1,29 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl hudi-client/hudi-client-common,hudi-common -am -Dtest=\"TestHoodieIndexUtils,TestMetadataPartitionType\" -DfailIfNoTests=false -DskipITs",
+  "test_files": [
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/index/TestHoodieIndexUtils.java",
+    "hudi-common/src/test/java/org/apache/hudi/metadata/TestMetadataPartitionType.java",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/functional/RecordLevelIndexTestBase.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/functional/SecondaryIndexTestBase.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/functional/TestFunctionalIndex.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/functional/TestSecondaryIndexWithSql.scala"
+  ],
+  "num_test_files": 6,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jar:::test_1",
+    "jar:::test_2",
+    "jar:::test_3",
+    "jar:::test_4",
+    "jar:::test_5",
+    "jar:::test_6",
+    "jar:::test_7",
+    "jar:::test_8",
+    "jar:::test_9",
+    "jar:::test_10",
+    "jar:::test_11",
+    "jar:::test_12"
+  ],
+  "PASS_TO_PASS": []
+}

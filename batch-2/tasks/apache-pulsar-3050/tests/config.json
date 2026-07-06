@@ -1,0 +1,14 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn install -DskipTests -pl pulsar-common && mvn install -DskipTests -pl pulsar-functions/worker && mvn test -pl pulsar-broker -Dtest=PulsarFunctionE2ETest -DfailIfNoTests=false",
+  "test_files": [
+    "pulsar-broker/src/test/java/org/apache/pulsar/io/PulsarFunctionE2ETest.java",
+    "tests/integration/src/test/java/org/apache/pulsar/tests/integration/functions/PulsarFunctionsTest.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.apache.pulsar.io.PulsarFunctionE2ETest::testPulsarFunctionStats"
+  ],
+  "PASS_TO_PASS": []
+}

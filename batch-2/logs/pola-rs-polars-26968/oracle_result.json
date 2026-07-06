@@ -1,0 +1,29 @@
+{
+    "id": "4948b3f1-d93c-484c-8cda-24ce42303fa1",
+    "started_at": "2026-07-02T19:20:45.248667",
+    "finished_at": "2026-07-02T19:21:45.693559",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pola-rs-polars-26968__DaUhdcj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

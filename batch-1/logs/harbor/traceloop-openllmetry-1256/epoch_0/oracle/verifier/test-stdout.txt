@@ -1,0 +1,111 @@
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/cassettes/test_assistant/test_new_assistant_with_polling.yaml
+patching file packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/packages/opentelemetry-instrumentation-openai
+configfile: pytest.ini
+plugins: asyncio-0.23.8, sugar-1.0.0, anyio-4.14.1, recording-0.13.4
+asyncio: mode=Mode.AUTO
+collecting ... collected 5 items
+
+packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py::test_new_assistant PASSED [ 20%]
+packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py::test_new_assistant_with_polling PASSED [ 40%]
+packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py::test_existing_assistant PASSED [ 60%]
+packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py::test_streaming_new_assistant PASSED [ 80%]
+packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py::test_streaming_existing_assistant PASSED [100%]
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.11/site-packages/opentelemetry/instrumentation/dependencies.py:4
+  /usr/local/lib/python3.11/site-packages/opentelemetry/instrumentation/dependencies.py:4: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    from pkg_resources import (
+
+tests/traces/test_assistant.py::test_new_assistant
+tests/traces/test_assistant.py::test_new_assistant_with_polling
+tests/traces/test_assistant.py::test_streaming_new_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/assistant_wrappers.py:30: DeprecationWarning: deprecated
+    response = wrapped(*args, **kwargs)
+
+tests/traces/test_assistant.py::test_new_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:19: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    thread = openai_client.beta.threads.create()
+
+tests/traces/test_assistant.py::test_new_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:21: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    openai_client.beta.threads.messages.create(
+
+tests/traces/test_assistant.py::test_new_assistant
+tests/traces/test_assistant.py::test_new_assistant_with_polling
+tests/traces/test_assistant.py::test_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/assistant_wrappers.py:48: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    response = wrapped(*args, **kwargs)
+
+tests/traces/test_assistant.py: 33 warnings
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/assistant_wrappers.py:76: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    response = wrapped(*args, **kwargs)
+
+tests/traces/test_assistant.py::test_new_assistant
+tests/traces/test_assistant.py::test_new_assistant_with_polling
+tests/traces/test_assistant.py::test_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/assistant_wrappers.py:89: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    response = wrapped(*args, **kwargs)
+
+tests/traces/test_assistant.py::test_new_assistant
+tests/traces/test_assistant.py::test_new_assistant_with_polling
+tests/traces/test_assistant.py::test_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/assistant_wrappers.py:109: DeprecationWarning: deprecated
+    instance._client.beta.assistants.retrieve(run["assistant_id"])
+
+tests/traces/test_assistant.py::test_new_assistant_with_polling
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:74: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    thread = openai_client.beta.threads.create()
+
+tests/traces/test_assistant.py::test_new_assistant_with_polling
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:76: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    openai_client.beta.threads.messages.create(
+
+tests/traces/test_assistant.py::test_new_assistant_with_polling
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:82: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    run = openai_client.beta.threads.runs.create_and_poll(
+
+tests/traces/test_assistant.py::test_new_assistant_with_polling
+  /usr/local/lib/python3.11/site-packages/openai/resources/beta/threads/runs/runs.py:900: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    return self.poll(  # pyright: ignore[reportDeprecated]
+
+tests/traces/test_assistant.py::test_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:123: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    thread = openai_client.beta.threads.create()
+
+tests/traces/test_assistant.py::test_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:125: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    openai_client.beta.threads.messages.create(
+
+tests/traces/test_assistant.py::test_streaming_new_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:177: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    thread = openai_client.beta.threads.create()
+
+tests/traces/test_assistant.py::test_streaming_new_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:179: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    openai_client.beta.threads.messages.create(
+
+tests/traces/test_assistant.py::test_streaming_new_assistant
+tests/traces/test_assistant.py::test_streaming_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/assistant_wrappers.py:169: DeprecationWarning: deprecated
+    instance._client.beta.assistants.retrieve(assistant_id)
+
+tests/traces/test_assistant.py::test_streaming_new_assistant
+tests/traces/test_assistant.py::test_streaming_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/opentelemetry/instrumentation/openai/v1/assistant_wrappers.py:201: DeprecationWarning: use `stream` instead
+    response = wrapped(*args, **kwargs)
+
+tests/traces/test_assistant.py::test_streaming_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:231: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    thread = openai_client.beta.threads.create()
+
+tests/traces/test_assistant.py::test_streaming_existing_assistant
+  /workspace/repo/packages/opentelemetry-instrumentation-openai/tests/traces/test_assistant.py:233: DeprecationWarning: The Assistants API is deprecated in favor of the Responses API
+    openai_client.beta.threads.messages.create(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 5 passed, 62 warnings in 33.50s ========================
+reward=1 graded=5 found=0 failed=0 parsed=5 framework=pytest exit_code=0

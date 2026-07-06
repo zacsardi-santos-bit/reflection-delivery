@@ -1,7 +1,0 @@
-I'd like to extend our integration test framework so that certain test scenarios can be designated as "demos" for recording and documentation purposes, rather than as automated correctness checks. Right now every integration test gets run by the automated test suite, but demo scenarios have artificial delays and other characteristics that make them unsuitable for CI. I need a way to flag a test as a demo so the automated runner skips it automatically.
-
-In addition to the flag, I need the test driver to support setting a visible caption on screen during recording — both a prefix label (like the current task name) and a body caption (like the current key being pressed). These should be methods available on the test driver and on the view driver so that demo scripts can annotate what is happening mid-scenario.
-
-The shell helper used to set up repositories also needs a new method for creating several commits with realistic-sounding randomized messages and file names, which makes demos look natural without using sequential test fixture names.
-
-Once the infrastructure is in place, please add a small demo package with four initial scenarios: staging a file, making a commit, and pushing to a remote; cherry-picking commits from another branch; doing an interactive rebase; and using git bisect to find a bad commit. Each demo scenario should be registered in the global test list and marked so the automated runner skips it.

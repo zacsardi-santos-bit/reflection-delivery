@@ -1,0 +1,29 @@
+{
+    "id": "d941b298-7187-4eba-983e-8e2f958dec93",
+    "started_at": "2026-07-06T12:16:45.005926",
+    "finished_at": "2026-07-06T12:17:34.587167",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__concourse-concourse-9484": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "concourse-concourse-9484__WnKVuga"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

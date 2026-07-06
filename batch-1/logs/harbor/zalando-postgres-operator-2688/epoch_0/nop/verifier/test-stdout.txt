@@ -1,0 +1,11 @@
+patching file e2e/tests/test_e2e.py
+patching file pkg/cluster/cluster_test.go
+patching file pkg/cluster/connection_pooler_test.go
+patching file pkg/cluster/k8sres_test.go
+# github.com/zalando/postgres-operator/pkg/cluster [github.com/zalando/postgres-operator/pkg/cluster.test]
+pkg/cluster/connection_pooler_test.go:1081:6: unknown field EnableOwnerReferences in struct literal of type config.Resources
+pkg/cluster/k8sres_test.go:2477:126: unknown field EnableOwnerReferences in struct literal of type config.Resources
+{"Time":"2026-06-29T15:14:31.383984982Z","Action":"start","Package":"github.com/zalando/postgres-operator/pkg/cluster"}
+{"Time":"2026-06-29T15:14:31.384112121Z","Action":"output","Package":"github.com/zalando/postgres-operator/pkg/cluster","Output":"FAIL\tgithub.com/zalando/postgres-operator/pkg/cluster [build failed]\n"}
+{"Time":"2026-06-29T15:14:31.384150511Z","Action":"fail","Package":"github.com/zalando/postgres-operator/pkg/cluster","Elapsed":0}
+reward=0 graded=122 found=0 failed=0 parsed=1 framework=go exit_code=1

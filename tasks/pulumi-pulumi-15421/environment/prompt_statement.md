@@ -1,5 +1,0 @@
-I'm working with a Pulumi Node.js project that's part of a monorepo organized with npm or yarn workspaces. When I run dependency installation via Pulumi, it doesn't detect that my project is part of a workspace — it just installs from my project's subdirectory rather than the workspace root. This means local packages from sibling workspace members can't be found, so my program fails to run.
-
-I need Pulumi to detect when a Node.js project is part of a workspace setup and install dependencies from the workspace root instead. It should handle both npm and yarn workspace configurations, including yarn's nohoist option. It should also correctly handle the edge case where a project has a parent directory with workspace configuration, but the project itself is not listed as a workspace member — in that case, it should install from the project directory as normal, not from the parent's workspace root.
-
-The detection logic should walk up the directory tree from a given project path to find a workspace root. If no workspace membership is found, it should indicate that clearly with a distinguishable error so the caller can fall back to regular installation behavior.

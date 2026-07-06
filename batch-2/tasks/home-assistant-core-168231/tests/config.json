@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest tests/components/duco/test_diagnostics.py -v",
+  "test_files": [
+    "tests/components/duco/conftest.py",
+    "tests/components/duco/snapshots/test_diagnostics.ambr",
+    "tests/components/duco/test_diagnostics.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.duco.test_diagnostics::test_diagnostics"
+  ],
+  "PASS_TO_PASS": []
+}

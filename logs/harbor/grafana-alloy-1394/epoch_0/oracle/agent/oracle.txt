@@ -1,8 +1,0 @@
-patching file docs/sources/reference/cli/run.md
-patching file internal/alloycli/cluster_builder.go
-patching file internal/alloycli/cmd_run.go
-patching file internal/service/cluster/cluster.go
-patching file internal/service/cluster/discovery/common.go
-patching file internal/service/cluster/discovery/dynamic.go
-patching file internal/service/cluster/discovery/peer_discovery.go
-patching file internal/service/cluster/discovery/static.go

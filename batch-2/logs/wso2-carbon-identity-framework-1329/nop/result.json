@@ -1,0 +1,29 @@
+{
+    "id": "b5644a73-78b0-493f-b39e-a2fd91f7db82",
+    "started_at": "2026-07-04T15:38:08.769232",
+    "finished_at": "2026-07-04T15:42:22.981727",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__wso2-carbon-identity-framework-1329": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "wso2-carbon-identity-framework-1__Wid6yyF"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

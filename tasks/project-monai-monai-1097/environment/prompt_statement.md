@@ -1,7 +1,0 @@
-I'm working with MONAI's Gaussian filtering utilities and I need several enhancements. Right now the Gaussian kernel function only supports one approximation method and always returns a normalized kernel. I'd like it to support at least two additional discrete kernel approximation strategies — specifically a sampled approach and a scale-space approach using modified Bessel functions — along with a flag to control whether the kernel is normalized. Passing an unknown approximation method name should raise a clear "not implemented" error rather than silently misbehaving. The validation for negative sigma should also be relaxed since some calling conventions may pass it through.
-
-I also need a general polynomial evaluation utility that works with Python lists, numeric arrays, and tensors for both the coefficients and the input variable, supports gradients through both inputs, and returns zeros for empty coefficient sequences.
-
-Additionally, I need the Gaussian filter layer to support trainable sigma parameters. When a flag is set at construction time, sigma should become a learnable parameter that appears in the module's parameter iterator and can be updated by a gradient-based optimizer. The filter must be differentiable through sigma for all supported kernel approximation types so that gradient-based training converges correctly.
-
-Finally, all of the randomized Gaussian smoothing and sharpening transforms should accept a parameter to select the kernel approximation method, and pass it through to the underlying filter.

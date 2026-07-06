@@ -1,6 +1,0 @@
-patching file cmd/buildctl/build.go
-patching file cmd/buildctl/build/ssh.go
-patching file docs/reference/buildctl.md
-patching file session/sshforward/sshprovider/agentprovider.go
-patching file session/sshforward/sshprovider/raw_provider.go
-patching file util/testutil/integration/run.go

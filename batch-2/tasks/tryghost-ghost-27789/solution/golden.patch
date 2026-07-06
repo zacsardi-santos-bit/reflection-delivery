@@ -1,0 +1,685 @@
+diff --git a/apps/portal/package.json b/apps/portal/package.json
+index b191e4160d..c8e0728e04 100644
+--- a/apps/portal/package.json
++++ b/apps/portal/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@tryghost/portal",
+-  "version": "2.68.34",
++  "version": "2.68.33",
+   "license": "MIT",
+   "repository": "https://github.com/TryGhost/Ghost",
+   "author": "Ghost Foundation",
+diff --git a/apps/portal/src/components/pages/offer-page.js b/apps/portal/src/components/pages/offer-page.js
+index 2054b180e8..9fd6a515a4 100644
+--- a/apps/portal/src/components/pages/offer-page.js
++++ b/apps/portal/src/components/pages/offer-page.js
+@@ -523,7 +523,7 @@ export default class OfferPage extends React.Component {
+         };
+ 
+         const originalPrice = this.getOriginalPrice({offer, product});
+-        const renewsLabel = t(`Renews at {price}.`, {price: originalPrice});
++        const renewsLabel = t(`Renews at {price}.`, {price: originalPrice, interpolation: {escapeValue: false}});
+ 
+         let offerLabel = '';
+         let useRenewsLabel = false;
+@@ -546,7 +546,8 @@ export default class OfferPage extends React.Component {
+             return (
+                 <p className="footnote" data-testid="offer-message">{t('Try free for {amount} days, then {originalPrice}.', {
+                     amount: offer.amount,
+-                    originalPrice: originalPrice
++                    originalPrice: originalPrice,
++                    interpolation: {escapeValue: false}
+                 })} <span className="gh-portal-cancel">{t('Cancel anytime.')}</span></p>
+             );
+         }
+diff --git a/apps/portal/src/components/pages/recommendations-page.js b/apps/portal/src/components/pages/recommendations-page.js
+index 9d41a1d315..8437c7d215 100644
+--- a/apps/portal/src/components/pages/recommendations-page.js
++++ b/apps/portal/src/components/pages/recommendations-page.js
+@@ -323,7 +323,7 @@ const RecommendationsPage = () => {
+         return <LoadingPage/>;
+     }
+ 
+-    const heading = pageData && pageData.signup ? t('Welcome to {siteTitle}', {siteTitle: title}) : t('Recommendations');
++    const heading = pageData && pageData.signup ? t('Welcome to {siteTitle}', {siteTitle: title, interpolation: {escapeValue: false}}) : t('Recommendations');
+ 
+     /* Possible cases:
+     - no recommendations found - subhead says no recommendations are available.
+diff --git a/ghost/core/core/frontend/apps/private-blogging/lib/middleware.js b/ghost/core/core/frontend/apps/private-blogging/lib/middleware.js
+index e98eb96fdf..827603ed59 100644
+--- a/ghost/core/core/frontend/apps/private-blogging/lib/middleware.js
++++ b/ghost/core/core/frontend/apps/private-blogging/lib/middleware.js
+@@ -12,27 +12,16 @@ const privateRoute = '/private/';
+ 
+ const messages = {
+     pageNotFound: 'Page not found.',
+-    wrongAccessCode: 'Incorrect access code.'
++    wrongPassword: 'Incorrect password.'
+ };
+ 
+-function getAccessCode() {
+-    const accessCode = settingsCache.get('password');
+-    return typeof accessCode === 'string' ? accessCode : '';
+-}
+-
+-function hasAccessCode(accessCode) {
+-    return typeof accessCode === 'string' && accessCode.trim().length > 0;
+-}
+-
+ function verifySessionHash(salt, hash) {
+-    const accessCode = getAccessCode();
+-
+-    if (!salt || !hash || !hasAccessCode(accessCode)) {
++    if (!salt || !hash) {
+         return false;
+     }
+ 
+     let hasher = crypto.createHash('sha256');
+-    hasher.update(accessCode + salt, 'utf8');
++    hasher.update(settingsCache.get('password') + salt, 'utf8');
+     return hasher.digest('hex') === hash;
+ }
+ 
+@@ -163,21 +152,21 @@ const privateBlogging = {
+             return next();
+         }
+ 
+-        const submittedAccessCode = req.body && req.body.password;
+-        const accessCode = getAccessCode();
++        const bodyPass = req.body.password;
++        const pass = settingsCache.get('password');
+         const hasher = crypto.createHash('sha256');
+         const salt = Date.now().toString();
+         const forward = getRedirectUrl(req.query);
+ 
+-        if (hasAccessCode(accessCode) && hasAccessCode(submittedAccessCode) && accessCode === submittedAccessCode) {
+-            hasher.update(submittedAccessCode + salt, 'utf8');
++        if (pass === bodyPass) {
++            hasher.update(bodyPass + salt, 'utf8');
+             req.session.token = hasher.digest('hex');
+             req.session.salt = salt;
+ 
+             return res.redirect(urlUtils.urlFor({relativeUrl: forward}));
+         } else {
+             res.error = {
+-                message: tpl(messages.wrongAccessCode)
++                message: tpl(messages.wrongPassword)
+             };
+             return next();
+         }
+diff --git a/ghost/core/core/server/models/member.js b/ghost/core/core/server/models/member.js
+index e46a986ef9..e7f18ea7e8 100644
+--- a/ghost/core/core/server/models/member.js
++++ b/ghost/core/core/server/models/member.js
+@@ -312,32 +312,29 @@ const Member = ghostBookshelf.Model.extend({
+     },
+ 
+     onSaving: function onSaving(model, attr, options) {
+-        let labelsToSave = [];
++        const rawLabels = this.get('labels');
+ 
+-        if (_.isUndefined(this.get('labels'))) {
++        if (_.isUndefined(rawLabels)) {
+             this.unset('labels');
+             return;
+         }
+ 
+-        // CASE: detect lowercase/uppercase label slugs
+-        if (!_.isUndefined(this.get('labels')) && !_.isNull(this.get('labels'))) {
+-            labelsToSave = [];
+-
+-            //  and deduplicate upper/lowercase tags
+-            _.each(this.get('labels'), function each(item) {
+-                item.name = item.name && item.name.trim();
+-                for (let i = 0; i < labelsToSave.length; i = i + 1) {
+-                    if (labelsToSave[i].name && item.name && labelsToSave[i].name.toLocaleLowerCase() === item.name.toLocaleLowerCase()) {
+-                        return;
+-                    }
+-                }
+-
+-                labelsToSave.push(item);
+-            });
+-
+-            this.set('labels', labelsToSave);
+-        }
++        // CASE: trim, drop nameless, and dedupe by case-insensitive name (first wins)
++        const seen = new Set();
++        const labelsToSave = (rawLabels || []).filter((item) => {
++            item.name = item.name && item.name.trim();
++            if (!item.name) {
++                return false;
++            }
++            const key = item.name.toLowerCase();
++            if (seen.has(key)) {
++                return false;
++            }
++            seen.add(key);
++            return true;
++        });
+ 
++        this.set('labels', labelsToSave);
+         this.handleAttachedModels(model);
+ 
+         // CASE: Detect existing labels with same case-insensitive name and replace
+@@ -346,12 +343,20 @@ const Member = ghostBookshelf.Model.extend({
+                 columns: ['id', 'name']
+             }, _.pick(options, 'transacting')))
+             .then((labels) => {
++                const existingByName = new Map();
++                for (const lab of labels.models) {
++                    const name = lab.get('name');
++                    if (name) {
++                        existingByName.set(name.toLowerCase(), lab);
++                    }
++                }
++
+                 labelsToSave.forEach((label) => {
+-                    let existingLabel = labels.find((lab) => {
+-                        return label.name.toLowerCase() === lab.get('name').toLowerCase();
+-                    });
+-                    label.name = (existingLabel && existingLabel.get('name')) || label.name;
+-                    label.id = (existingLabel && existingLabel.id) || label.id;
++                    const match = existingByName.get(label.name.toLowerCase());
++                    if (match) {
++                        label.name = match.get('name');
++                        label.id = match.id;
++                    }
+                 });
+ 
+                 model.set('labels', labelsToSave);
+diff --git a/ghost/core/core/server/services/automations/temporary-fake-database.js b/ghost/core/core/server/services/automations/temporary-fake-database.js
+index bc2ecf788a..9ea93715ee 100644
+--- a/ghost/core/core/server/services/automations/temporary-fake-database.js
++++ b/ghost/core/core/server/services/automations/temporary-fake-database.js
+@@ -10,9 +10,6 @@
+  * migration once we're sure this schema is correct.
+  */
+ 
+-const errors = require('@tryghost/errors');
+-const ObjectId = require('bson-objectid').default;
+-
+ /**
+  * @returns {import('node:sqlite').DatabaseSync}
+  */
+@@ -21,32 +18,11 @@ function createTemporaryFakeAutomationsDatabase() {
+ 
+     const database = new DatabaseSync(':memory:');
+ 
+-    const id = () => ObjectId().toHexString();
+-    const now = () => new Date().toISOString();
+-
+-    const fakeLexical = JSON.stringify({
+-        root: {
+-            children: [{
+-                type: 'paragraph',
+-                children: [{
+-                    type: 'text',
+-                    text: 'Lorem ipsum.'
+-                }]
+-            }],
+-            direction: null,
+-            format: '',
+-            indent: 0,
+-            type: 'root',
+-            version: 1
+-        }
+-    });
+-    const fakeEmailDesignSettingId = id();
+-
+     database.exec(`
+ CREATE TABLE automations (
+   id TEXT PRIMARY KEY,
+-  created_at TEXT NOT NULL,
+-  updated_at TEXT NOT NULL,
++  created_at INTEGER NOT NULL,
++  updated_at INTEGER NOT NULL,
+   slug TEXT NOT NULL,
+   name TEXT NOT NULL,
+   status TEXT NOT NULL
+@@ -54,16 +30,16 @@ CREATE TABLE automations (
+ 
+ CREATE TABLE automation_actions (
+   id TEXT PRIMARY KEY,
+-  created_at TEXT NOT NULL,
+-  updated_at TEXT NOT NULL,
+-  deleted_at TEXT,
++  created_at INTEGER NOT NULL,
++  updated_at INTEGER NOT NULL,
++  deleted_at INTEGER,
+   automation_id TEXT NOT NULL REFERENCES automations(id),
+   type TEXT NOT NULL
+ ) STRICT;
+ 
+ CREATE TABLE automation_action_revisions (
+   id TEXT PRIMARY KEY,
+-  created_at TEXT NOT NULL,
++  created_at INTEGER NOT NULL,
+   action_id TEXT NOT NULL REFERENCES automation_actions(id),
+   wait_hours INTEGER,
+   email_subject TEXT,
+@@ -83,8 +59,8 @@ CREATE TABLE automation_action_edges (
+ 
+ CREATE TABLE automation_runs (
+   id TEXT PRIMARY KEY,
+-  created_at TEXT NOT NULL,
+-  updated_at TEXT NOT NULL,
++  created_at INTEGER NOT NULL,
++  updated_at INTEGER NOT NULL,
+   automation_id TEXT NOT NULL REFERENCES automations(id),
+   member_id TEXT, -- not a real foreign key here
+   member_email TEXT NOT NULL
+@@ -92,240 +68,55 @@ CREATE TABLE automation_runs (
+ 
+ CREATE TABLE automation_run_steps (
+   id TEXT PRIMARY KEY,
+-  created_at TEXT NOT NULL,
+-  updated_at TEXT NOT NULL,
++  created_at INTEGER NOT NULL,
++  updated_at INTEGER NOT NULL,
+   automation_run_id TEXT NOT NULL REFERENCES automation_runs(id),
+   automation_action_revision_id TEXT NOT NULL REFERENCES automation_action_revisions(id),
+-  ready_at TEXT NOT NULL,
++  ready_at INTEGER NOT NULL,
+   step_attempts INTEGER NOT NULL,
+-  started_at TEXT,
+-  finished_at TEXT,
++  started_at INTEGER,
++  finished_at INTEGER,
+   status TEXT NOT NULL,
+   locked_by TEXT,
+-  locked_at TEXT
++  locked_at INTEGER
+ ) STRICT;
+-`);
+-
+-    const freeAutomationId = id();
+-    const paidAutomationId = id();
+-    const insertAutomation = database.prepare(`
+-        INSERT INTO automations
+-        (id, created_at, updated_at, slug, name, status) VALUES
+-        (:id, :created_at, :updated_at, :slug, :name, :status)
+-    `);
+-    insertAutomation.run({
+-        id: freeAutomationId,
+-        created_at: now(),
+-        updated_at: now(),
+-        slug: 'member-welcome-email-free',
+-        name: 'Welcome Email (Free)',
+-        status: 'active'
+-    });
+-    insertAutomation.run({
+-        id: paidAutomationId,
+-        created_at: now(),
+-        updated_at: now(),
+-        slug: 'member-welcome-email-paid',
+-        name: 'Welcome Email (Paid)',
+-        status: 'active'
+-    });
+-
+-    const freeAction1Id = id();
+-    const freeAction2Id = id();
+-    const freeAction3Id = id();
+-    const freeAction4Id = id();
+-    const paidAction1Id = id();
+-    const paidAction2Id = id();
+-    const paidAction3Id = id();
+-    const paidAction4Id = id();
+-    const insertAction = database.prepare(`
+-        INSERT INTO automation_actions
+-        (id, created_at, updated_at, automation_id, type) VALUES
+-        (:id, :created_at, :updated_at, :automation_id, :type)
+-    `);
+-    insertAction.run({
+-        id: freeAction1Id,
+-        created_at: now(),
+-        updated_at: now(),
+-        automation_id: freeAutomationId,
+-        type: 'wait'
+-    });
+-    insertAction.run({
+-        id: freeAction2Id,
+-        created_at: now(),
+-        updated_at: now(),
+-        automation_id: freeAutomationId,
+-        type: 'send email'
+-    });
+-    insertAction.run({
+-        id: freeAction3Id,
+-        created_at: now(),
+-        updated_at: now(),
+-        automation_id: freeAutomationId,
+-        type: 'wait'
+-    });
+-    insertAction.run({
+-        id: freeAction4Id,
+-        created_at: now(),
+-        updated_at: now(),
+-        automation_id: freeAutomationId,
+-        type: 'send email'
+-    });
+-    insertAction.run({
+-        id: paidAction1Id,
+-        created_at: now(),
+-        updated_at: now(),
+-        automation_id: paidAutomationId,
+-        type: 'wait'
+-    });
+-    insertAction.run({
+-        id: paidAction2Id,
+-        created_at: now(),
+-        updated_at: now(),
+-        automation_id: paidAutomationId,
+-        type: 'send email'
+-    });
+-    insertAction.run({
+-        id: paidAction3Id,
+-        created_at: now(),
+-        updated_at: now(),
+-        automation_id: paidAutomationId,
+-        type: 'wait'
+-    });
+-    insertAction.run({
+-        id: paidAction4Id,
+-        created_at: now(),
+-        updated_at: now(),
+-        automation_id: paidAutomationId,
+-        type: 'send email'
+-    });
+-
+-    const insertActionRevision = database.prepare(`
+-        INSERT INTO automation_action_revisions
+-        (id, created_at, action_id, wait_hours, email_subject, email_lexical, email_design_setting_id) VALUES
+-        (:id, :created_at, :action_id, :wait_hours, :email_subject, :email_lexical, :email_design_setting_id)
+-    `);
+-    insertActionRevision.run({
+-        id: id(),
+-        created_at: now(),
+-        action_id: freeAction1Id,
+-        wait_hours: 48,
+-        email_subject: null,
+-        email_lexical: null,
+-        email_design_setting_id: null
+-    });
+-    insertActionRevision.run({
+-        id: id(),
+-        created_at: now(),
+-        action_id: freeAction2Id,
+-        wait_hours: null,
+-        email_subject: 'Welcome!',
+-        email_lexical: fakeLexical,
+-        email_design_setting_id: fakeEmailDesignSettingId
+-    });
+-    insertActionRevision.run({
+-        id: id(),
+-        created_at: now(),
+-        action_id: freeAction3Id,
+-        wait_hours: 72,
+-        email_subject: null,
+-        email_lexical: null,
+-        email_design_setting_id: null
+-    });
+-    insertActionRevision.run({
+-        id: id(),
+-        created_at: now(),
+-        action_id: freeAction4Id,
+-        wait_hours: null,
+-        email_subject: 'Follow up',
+-        email_lexical: fakeLexical,
+-        email_design_setting_id: fakeEmailDesignSettingId
+-    });
+-    insertActionRevision.run({
+-        id: id(),
+-        created_at: now(),
+-        action_id: paidAction1Id,
+-        wait_hours: 48,
+-        email_subject: null,
+-        email_lexical: null,
+-        email_design_setting_id: null
+-    });
+-    insertActionRevision.run({
+-        id: id(),
+-        created_at: now(),
+-        action_id: paidAction2Id,
+-        wait_hours: null,
+-        email_subject: 'Welcome to Paid!',
+-        email_lexical: fakeLexical,
+-        email_design_setting_id: fakeEmailDesignSettingId
+-    });
+-    insertActionRevision.run({
+-        id: id(),
+-        created_at: now(),
+-        action_id: paidAction3Id,
+-        wait_hours: 72,
+-        email_subject: null,
+-        email_lexical: null,
+-        email_design_setting_id: null
+-    });
+-    insertActionRevision.run({
+-        id: id(),
+-        created_at: now(),
+-        action_id: paidAction4Id,
+-        wait_hours: null,
+-        email_subject: 'Exclusive Insights',
+-        email_lexical: fakeLexical,
+-        email_design_setting_id: fakeEmailDesignSettingId
+-    });
+ 
+-    const insertActionEdge = database.prepare(`
+-        INSERT INTO automation_action_edges
+-        (source_action_id, target_action_id) VALUES
+-        (:source_action_id, :target_action_id)
+-    `);
+-    insertActionEdge.run({
+-        source_action_id: freeAction1Id,
+-        target_action_id: freeAction2Id
+-    });
+-    insertActionEdge.run({
+-        source_action_id: freeAction2Id,
+-        target_action_id: freeAction3Id
+-    });
+-    insertActionEdge.run({
+-        source_action_id: freeAction3Id,
+-        target_action_id: freeAction4Id
+-    });
+-    insertActionEdge.run({
+-        source_action_id: paidAction1Id,
+-        target_action_id: paidAction2Id
+-    });
+-    insertActionEdge.run({
+-        source_action_id: paidAction2Id,
+-        target_action_id: paidAction3Id
+-    });
+-    insertActionEdge.run({
+-        source_action_id: paidAction3Id,
+-        target_action_id: paidAction4Id
+-    });
++INSERT INTO automations (id, created_at, updated_at, slug, name, status) VALUES
++('auto_free_01', 1715016000, 1715016000, 'member-welcome-email-free', 'Welcome Email (Free)', 'active'),
++('auto_paid_01', 1715016000, 1715016000, 'member-welcome-email-paid', 'Welcome Email (Paid)', 'active');
++
++INSERT INTO automation_actions (id, created_at, updated_at, automation_id, type) VALUES
++('f_act_1', 1715016000, 1715016000, 'auto_free_01', 'wait'),
++('f_act_2', 1715016000, 1715016000, 'auto_free_01', 'send email'),
++('f_act_3', 1715016000, 1715016000, 'auto_free_01', 'wait'),
++('f_act_4', 1715016000, 1715016000, 'auto_free_01', 'send email');
++
++INSERT INTO automation_actions (id, created_at, updated_at, automation_id, type) VALUES
++('p_act_1', 1715016000, 1715016000, 'auto_paid_01', 'wait'),
++('p_act_2', 1715016000, 1715016000, 'auto_paid_01', 'send email'),
++('p_act_3', 1715016000, 1715016000, 'auto_paid_01', 'wait'),
++('p_act_4', 1715016000, 1715016000, 'auto_paid_01', 'send email');
++
++INSERT INTO automation_action_revisions (id, created_at, action_id, wait_hours, email_subject, email_lexical) VALUES
++('f_rev_1', 1715016001, 'f_act_1', 48, NULL, NULL),
++('f_rev_2', 1715016002, 'f_act_2', NULL, 'Welcome!', '{"root":{"children":[]}}'),
++('f_rev_3', 1715016003, 'f_act_3', 72, NULL, NULL),
++('f_rev_4', 1715016004, 'f_act_4', NULL, 'Follow up', '{"root":{"children":[]}}'),
++('p_rev_1', 1715016005, 'p_act_1', 48, NULL, NULL),
++('p_rev_2', 1715016006, 'p_act_2', NULL, 'Welcome to Paid!', '{"root":{"children":[]}}'),
++('p_rev_3', 1715016007, 'p_act_3', 72, NULL, NULL),
++('p_rev_4', 1715016008, 'p_act_4', NULL, 'Exclusive Insights', '{"root":{"children":[]}}');
++
++INSERT INTO automation_action_edges (source_action_id, target_action_id) VALUES
++('f_act_1', 'f_act_2'),
++('f_act_2', 'f_act_3'),
++('f_act_3', 'f_act_4'),
++('p_act_1', 'p_act_2'),
++('p_act_2', 'p_act_3'),
++('p_act_3', 'p_act_4');
++`);
+ 
+     return database;
+ }
+ 
+-/** @type {null | import('node:sqlite').DatabaseSync} */
+-let cachedDatabase = null;
+-
+-/**
+- * @returns {import('node:sqlite').DatabaseSync}
+- */
+-function getTemporaryFakeAutomationsDatabase() {
+-    if (process.env.NODE_ENV !== 'development') {
+-        throw new errors.IncorrectUsageError({
+-            message: 'Fake automations database should only be used in development'
+-        });
+-    }
+-    cachedDatabase ??= createTemporaryFakeAutomationsDatabase();
+-    return cachedDatabase;
+-}
+-
+-exports.createTemporaryFakeAutomationsDatabase = createTemporaryFakeAutomationsDatabase;
+-exports.getTemporaryFakeAutomationsDatabase = getTemporaryFakeAutomationsDatabase;
++exports.temporaryFakeAutomationsDatabase = process.env.NODE_ENV === 'development' ? createTemporaryFakeAutomationsDatabase() : null;
+diff --git a/ghost/core/test/unit/frontend/apps/private-blogging/middleware.test.js b/ghost/core/test/unit/frontend/apps/private-blogging/middleware.test.js
+index df797db58f..fc7461ad86 100644
+--- a/ghost/core/test/unit/frontend/apps/private-blogging/middleware.test.js
++++ b/ghost/core/test/unit/frontend/apps/private-blogging/middleware.test.js
+@@ -8,9 +8,9 @@ const settingsCache = require('../../../../../core/shared/settings-cache');
+ const config = require('../../../../../core/shared/config');
+ const privateBlogging = require('../../../../../core/frontend/apps/private-blogging/lib/middleware');
+ 
+-function hash(accessCode, salt) {
++function hash(password, salt) {
+     const hasher = crypto.createHash('sha256');
+-    hasher.update(accessCode + salt, 'utf8');
++    hasher.update(password + salt, 'utf8');
+     return hasher.digest('hex');
+ }
+ 
+@@ -239,69 +239,15 @@ describe('Private Blogging', function () {
+                 sinon.assert.called(next);
+             });
+ 
+-            it('doLoginToPrivateSite should return next if access code is incorrect', function () {
++            it('doLoginToPrivateSite should return next if password is incorrect', function () {
+                 req.body = {password: 'wrongpassword'};
+ 
+                 privateBlogging.doLoginToPrivateSite(req, res, next);
+                 assertExists(res.error);
+-                assert.equal(res.error.message, 'Incorrect access code.');
+                 sinon.assert.called(next);
+             });
+ 
+-            it('doLoginToPrivateSite should return next if stored access code is empty', function () {
+-                settingsStub.withArgs('password').returns('');
+-                req.body = {password: 'rightpassword'};
+-
+-                privateBlogging.doLoginToPrivateSite(req, res, next);
+-                assertExists(res.error);
+-                assert.equal(res.error.message, 'Incorrect access code.');
+-                sinon.assert.notCalled(res.redirect);
+-                sinon.assert.called(next);
+-            });
+-
+-            it('doLoginToPrivateSite should return next if stored access code is undefined', function () {
+-                settingsStub.withArgs('password').returns(undefined);
+-                req.body = {password: 'rightpassword'};
+-
+-                privateBlogging.doLoginToPrivateSite(req, res, next);
+-                assertExists(res.error);
+-                assert.equal(res.error.message, 'Incorrect access code.');
+-                sinon.assert.notCalled(res.redirect);
+-                sinon.assert.called(next);
+-            });
+-
+-            it('doLoginToPrivateSite should return next if stored access code is null', function () {
+-                settingsStub.withArgs('password').returns(null);
+-                req.body = {password: 'rightpassword'};
+-
+-                privateBlogging.doLoginToPrivateSite(req, res, next);
+-                assertExists(res.error);
+-                assert.equal(res.error.message, 'Incorrect access code.');
+-                sinon.assert.notCalled(res.redirect);
+-                sinon.assert.called(next);
+-            });
+-
+-            it('doLoginToPrivateSite should return next if submitted access code is empty', function () {
+-                req.body = {password: ''};
+-
+-                privateBlogging.doLoginToPrivateSite(req, res, next);
+-                assertExists(res.error);
+-                assert.equal(res.error.message, 'Incorrect access code.');
+-                sinon.assert.notCalled(res.redirect);
+-                sinon.assert.called(next);
+-            });
+-
+-            it('doLoginToPrivateSite should return next if submitted access code is missing', function () {
+-                req.body = {};
+-
+-                privateBlogging.doLoginToPrivateSite(req, res, next);
+-                assertExists(res.error);
+-                assert.equal(res.error.message, 'Incorrect access code.');
+-                sinon.assert.notCalled(res.redirect);
+-                sinon.assert.called(next);
+-            });
+-
+-            it('doLoginToPrivateSite should redirect if access code is correct', function () {
++            it('doLoginToPrivateSite should redirect if password is correct', function () {
+                 req.body = {password: 'rightpassword'};
+                 req.session = {};
+                 res.redirect = sinon.spy();
+@@ -375,7 +321,7 @@ describe('Private Blogging', function () {
+                 assert.equal(res.redirect.args[0][0], '/');
+             });
+ 
+-            describe('Bad access code', function () {
++            describe('Bad Password', function () {
+                 beforeEach(function () {
+                     req.session = {
+                         token: 'wrongpassword',
+@@ -412,21 +358,6 @@ describe('Private Blogging', function () {
+                 sinon.assert.called(next);
+             });
+ 
+-            it('authenticatePrivateSession should redirect when stored access code is empty', function () {
+-                const salt = Date.now().toString();
+-                settingsStub.withArgs('password').returns('');
+-                req.url = '/welcome';
+-                req.session = {
+-                    token: hash('', salt),
+-                    salt
+-                };
+-
+-                privateBlogging.authenticatePrivateSession(req, res, next);
+-                sinon.assert.notCalled(next);
+-                sinon.assert.called(res.redirect);
+-                sinon.assert.calledWith(res.redirect, '/private/?r=%2Fwelcome');
+-            });
+-
+             it('handle404 should still 404', function () {
+                 privateBlogging.handle404(new errors.NotFoundError(), req, res, next);
+                 sinon.assert.called(next);
+diff --git a/ghost/i18n/lib/i18n.js b/ghost/i18n/lib/i18n.js
+index f56ec54f6f..dea7bf519e 100644
+--- a/ghost/i18n/lib/i18n.js
++++ b/ghost/i18n/lib/i18n.js
+@@ -111,7 +111,7 @@ module.exports = (lng = 'en', ns = 'portal', options = {}) => {
+         prefix: '{',
+         suffix: '}'
+     };
+-    if (ns === 'theme' || ns === 'portal') {
++    if (ns === 'theme') {
+         interpolation.escapeValue = false;
+     }
+     let resources;

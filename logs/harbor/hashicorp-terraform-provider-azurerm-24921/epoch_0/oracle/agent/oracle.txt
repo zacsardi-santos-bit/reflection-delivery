@@ -1,4 +1,0 @@
-patching file internal/services/datafactory/azuresdkhacks/models.go
-patching file internal/services/datafactory/azuresdkhacks/pipelines.go
-patching file internal/services/datafactory/data_factory.go
-patching file internal/services/datafactory/data_factory_pipeline_resource.go

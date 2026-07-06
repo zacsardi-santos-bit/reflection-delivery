@@ -1,0 +1,29 @@
+{
+    "id": "85ae6304-0a8c-4c0f-bc10-81edd2e2d231",
+    "started_at": "2026-07-06T12:17:37.347647",
+    "finished_at": "2026-07-06T12:17:58.695382",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__schemastore-schemastore-5639": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "schemastore-schemastore-5639__SZ9rNMC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

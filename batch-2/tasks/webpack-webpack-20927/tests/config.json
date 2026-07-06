@@ -1,0 +1,33 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest test/walkHtmlTokens.unittest.js --coverage=false --verbose --json",
+  "test_files": [
+    "test/__snapshots__/walkHtmlTokens.unittest.js.snap",
+    "test/configCases/html/basic/__snapshots__/ConfigCacheTest.snap",
+    "test/configCases/html/basic/__snapshots__/ConfigTest.snap",
+    "test/configCases/html/basic/page.html",
+    "test/fixtures/html/parsing/cases/attributes.html",
+    "test/fixtures/html/parsing/cases/basic.html",
+    "test/fixtures/html/parsing/cases/comments.html",
+    "test/fixtures/html/parsing/cases/nested.html",
+    "test/fixtures/html/parsing/cases/self-closing.html",
+    "test/walkHtmlTokens.unittest.js"
+  ],
+  "num_test_files": 10,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should tokenize and roundtrip \"attributes.html\"",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should tokenize and roundtrip \"basic.html\"",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should tokenize and roundtrip \"comments.html\"",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should tokenize and roundtrip \"nested.html\"",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should tokenize and roundtrip \"self-closing.html\"",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should handle empty input",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should handle plain text with no tags",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should detect self-closing tags",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should parse boolean attributes",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should handle all quote types",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should parse comments",
+    "/workspace/repo/test/walkHtmlTokens.unittest.js::walkHtmlTokens should handle lone < at EOF"
+  ],
+  "PASS_TO_PASS": []
+}

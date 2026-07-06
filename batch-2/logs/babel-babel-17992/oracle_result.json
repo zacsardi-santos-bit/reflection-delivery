@@ -1,0 +1,29 @@
+{
+    "id": "c002a186-28a9-4f37-80b7-68305caf2028",
+    "started_at": "2026-07-02T17:48:39.740075",
+    "finished_at": "2026-07-02T17:50:43.652287",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "babel-babel-17992__257NfCJ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

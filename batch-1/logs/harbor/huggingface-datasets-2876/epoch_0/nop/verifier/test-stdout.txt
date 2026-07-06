@@ -1,0 +1,30 @@
+patching file tests/test_streaming_download_manager.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: xdist-3.8.0
+collecting ... collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+__________ ERROR collecting tests/test_streaming_download_manager.py ___________
+ImportError while importing test module '/workspace/repo/tests/test_streaming_download_manager.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_streaming_download_manager.py:11: in <module>
+    from datasets.utils.streaming_download_manager import (
+E   ImportError: cannot import name 'xpathglob' from 'datasets.utils.streaming_download_manager' (/workspace/repo/src/datasets/utils/streaming_download_manager.py)
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.9/site-packages/fsspec/spec.py:92
+../../usr/local/lib/python3.9/site-packages/fsspec/spec.py:92
+  /usr/local/lib/python3.9/site-packages/fsspec/spec.py:92: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+    if pa_version and LooseVersion(pa_version) < LooseVersion("2.0"):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_streaming_download_manager.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+========================= 2 warnings, 1 error in 0.24s =========================
+reward=0 graded=10 found=0 failed=0 parsed=0 framework=pytest exit_code=2

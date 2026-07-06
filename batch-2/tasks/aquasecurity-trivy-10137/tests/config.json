@@ -1,0 +1,37 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/dependency/parser/python/pylock ./pkg/dependency/parser/python/pyproject ./pkg/fanal/analyzer/language/python/pylock -count=1",
+  "test_files": [
+    "integration/integration_test.go",
+    "integration/repo_test.go",
+    "pkg/dependency/parser/python/pylock/parse_test.go",
+    "pkg/dependency/parser/python/pyproject/pyproject_test.go",
+    "pkg/fanal/analyzer/language/python/pylock/pylock_test.go"
+  ],
+  "num_test_files": 5,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/python/pylock::TestParser_Parse/happy_path",
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/python/pylock::TestParser_Parse/sad_path",
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/python/pylock::TestParser_Parse",
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/python/pyproject::TestParser_Parse/happy_path",
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/python/pyproject::TestParser_Parse/happy_path_v2",
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/python/pyproject::TestParser_Parse/with_optional_dependencies",
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/python/pyproject::TestParser_Parse/sad_path",
+    "github.com/aquasecurity/trivy/pkg/dependency/parser/python/pyproject::TestParser_Parse",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Analyze/happy_path",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Analyze/broken_file",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Analyze",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/happy_path",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/nested_path",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/named_lock_file",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/named_lock_file_with_nested_path",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/invalid_-_multiple_dots_in_identifier",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/invalid_-_empty_identifier",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/wrong_file",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/similar_but_not_pylock",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required/pyproject.toml",
+    "github.com/aquasecurity/trivy/pkg/fanal/analyzer/language/python/pylock::Test_pylockAnalyzer_Required"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /tmp/test_null_safety.py -v",
+  "test_files": [
+    "paddle/fluid/inference/tests/api/analyzer_seq_conv1_tester.cc"
+  ],
+  "num_test_files": 1,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "test_null_safety::test_block_null_init",
+    "test_null_safety::test_api_null_check",
+    "test_null_safety::test_api_impl_null_check",
+    "test_null_safety::test_predictor_null_check",
+    "test_null_safety::test_gpc_box_check",
+    "test_null_safety::test_l2_dist_check"
+  ],
+  "PASS_TO_PASS": [
+    "test_null_safety::test_seq_conv1_data_check"
+  ]
+}

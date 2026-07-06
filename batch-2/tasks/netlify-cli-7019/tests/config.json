@@ -1,0 +1,18 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npm ci 2>&1 | tail -5 && npm run build 2>&1 | tail -5 && npx vitest run tests/unit/utils/copy-template-dir/copy-template-dir.test.js",
+  "test_files": [
+    "tests/unit/utils/copy-template-dir/copy-template-dir.test.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tests/unit/utils/copy-template-dir/copy-template-dir.test.js:: copyTemplateDir should write a bunch of files"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/tests/unit/utils/copy-template-dir/copy-template-dir.test.js:: copyTemplateDir should assert input values",
+    "/workspace/repo/tests/unit/utils/copy-template-dir/copy-template-dir.test.js:: copyTemplateDir should inject context variables strings",
+    "/workspace/repo/tests/unit/utils/copy-template-dir/copy-template-dir.test.js:: copyTemplateDir should inject context variables strings into filenames",
+    "/workspace/repo/tests/unit/utils/copy-template-dir/copy-template-dir.test.js:: copyTemplateDir should inject context variables strings into directory names"
+  ]
+}

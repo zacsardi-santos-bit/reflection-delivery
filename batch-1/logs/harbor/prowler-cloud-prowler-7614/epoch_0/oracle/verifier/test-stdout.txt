@@ -1,0 +1,40 @@
+patching file tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py
+patching file tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py
+patching file tests/providers/m365/services/defender/m365_defender_service_test.py
+patching file tests/providers/m365/services/teams/teams_security_reporting_enabled/teams_security_reporting_enabled_test.py
+patching file tests/providers/m365/services/teams/teams_service_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+Using --randomly-seed=2336111943
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.9.0, dash-2.18.2, cov-6.0.0, env-1.1.5, randomly-3.16.0, xdist-3.6.1
+collecting ... collected 23 items
+
+tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py::Test_defender_chat_report_policy_configured::test_report_policy_configured_none PASSED [  4%]
+tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py::Test_defender_chat_report_policy_configured::test_report_policy_configured_pass PASSED [  8%]
+tests/providers/m365/services/defender/defender_chat_report_policy_configured/defender_chat_report_policy_configured_test.py::Test_defender_chat_report_policy_configured::test_report_policy_configured_fail PASSED [ 13%]
+tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py::Test_defender_chat_report_policy_configured::test_report_policy_configured_fail PASSED [ 17%]
+tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py::Test_defender_chat_report_policy_configured::test_report_policy_configured_pass PASSED [ 21%]
+tests/providers/m365/services/defender/defender_report_policy_configured/defender_report_policy_configured_test.py::Test_defender_chat_report_policy_configured::test_report_policy_configured_none PASSED [ 26%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test_get_report_submission_policy PASSED [ 30%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test__get_connection_filter_policy PASSED [ 34%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test_get_antiphising_policy PASSED [ 39%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test__get_malware_filter_policy PASSED [ 43%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test_get_client PASSED [ 47%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test_get_dkim_config PASSED [ 52%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test_get_antiphising_rules PASSED [ 56%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test_get_outbound_spam_filter_rule PASSED [ 60%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test__get_inbound_spam_filter_policy PASSED [ 65%]
+tests/providers/m365/services/defender/m365_defender_service_test.py::Test_Defender_Service::test_get_outbound_spam_filter_policy PASSED [ 69%]
+tests/providers/m365/services/teams/teams_service_test.py::Test_Teams_Service::test_get_global_messaging_policy PASSED [ 73%]
+tests/providers/m365/services/teams/teams_service_test.py::Test_Teams_Service::test_get_client PASSED [ 78%]
+tests/providers/m365/services/teams/teams_service_test.py::Test_Teams_Service::test_get_settings PASSED [ 82%]
+tests/providers/m365/services/teams/teams_service_test.py::Test_Teams_Service::test_get_user_settings PASSED [ 86%]
+tests/providers/m365/services/teams/teams_service_test.py::Test_Teams_Service::test_get_global_meeting_policy PASSED [ 91%]
+tests/providers/m365/services/teams/teams_security_reporting_enabled/teams_security_reporting_enabled_test.py::Test_teams_security_reporting_enabled::test_no_policies PASSED [ 95%]
+tests/providers/m365/services/teams/teams_security_reporting_enabled/teams_security_reporting_enabled_test.py::Test_teams_security_reporting_enabled::test_security_reporting_properly_configured PASSED [100%]
+
+============================= 23 passed in 19.51s ==============================
+reward=1 graded=23 found=0 failed=0 parsed=23 framework=pytest exit_code=0

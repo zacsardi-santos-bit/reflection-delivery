@@ -1,7 +1,0 @@
-patching file src/dbnode/persist/fs/commitlog/commit_log_conc_test.go
-patching file src/dbnode/persist/fs/commitlog/commit_log_test.go
-patching file src/dbnode/persist/fs/commitlog/read_write_prop_test.go
-# github.com/m3db/m3/src/dbnode/persist/fs/commitlog [github.com/m3db/m3/src/dbnode/persist/fs/commitlog.test]
-src/dbnode/persist/fs/commitlog/commit_log_test.go:889:26: commitLog.RotateLogs undefined (type *commitLog has no field or method RotateLogs)
-FAIL	github.com/m3db/m3/src/dbnode/persist/fs/commitlog [build failed]
-reward=0 (grader error: Extra data: line 29 column 1 (char 1648); fell back to exit_code=1)

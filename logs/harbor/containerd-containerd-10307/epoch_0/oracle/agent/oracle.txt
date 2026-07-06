@@ -1,4 +1,0 @@
-patching file client/container_opts_unix.go
-patching file client/snapshotter_opts_unix.go
-patching file cmd/ctr/commands/run/run_unix.go
-patching file internal/userns/idmap.go

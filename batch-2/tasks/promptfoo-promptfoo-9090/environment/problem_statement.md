@@ -1,0 +1,9 @@
+I'm cleaning up our red team security testing setup wizard because it looks fine on desktop but falls apart on narrow or mobile screens. Right now form rows, tab strips, and panels all try to sit side-by-side even when there's no room, so stuff overflows and content gets clipped. I want those layouts to stack vertically on small screens and flip back to horizontal (side-by-side) once the viewport's wide enough.
+
+There's also a dialog problem: dialogs with long scrollable content currently scroll the whole thing, so the action buttons at the bottom scroll out of view. I need dialogs to have a fixed max height where only the content body scrolls and the footer buttons stay anchored at the bottom.
+
+On accessibility, a bunch of the interactive buttons (the ones to remove, configure, edit, or view documentation for items in lists) have no descriptive label, so screen reader users can't tell which item a button acts on. Each of these buttons needs an accessible label naming both the action and the specific item, plus its position in the list when there's more than one (so the remove button for the second item clearly says it removes that item and calls out it's second). Oh and when only a single removable item's left, its remove button should be disabled so you can't accidentally wipe out all the entries.
+
+Also the main setup page has its own layout thing: the sidebar nav shouldn't show up at all on mobile. Instead there should be a dedicated menu available only on mobile giving access to config management actions like saving a configuration.
+
+Last thing, I need a new component that shows estimated run duration and cost side-by-side on wide screens and stacks them vertically on narrow ones. All of this is about making the wizard actually usable on mobile and tablet and getting us compliant with accessibility standards so screen reader folks can navigate the setup flow.

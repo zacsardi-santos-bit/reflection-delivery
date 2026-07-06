@@ -1,0 +1,39 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./go/mysql/sqlerror -count=1",
+  "test_files": [
+    "go/mysql/sqlerror/sql_error_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/vttablet:_rpc_error:_code_=_AlreadyExists_desc_=_Duplicate_entry_'1'_for_key_'PRIMARY'_(errno_1062)_(sqlstate_23000)_(CallerID:_userData1):_Sql:_\"insert_into_test(id,_`name`)_values_(:vtg1_/*_INT64_*/,_:vtg2_/*_VARCHAR_*/)\",_BindVars:_{vtg1:_\"type:INT64_value:\\\"1\\\"\"vtg2:_\"type:VARCHAR_value:\\\"(errno_1366)_(sqlstate_10000)\\\"\"}",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError"
+  ],
+  "PASS_TO_PASS": [
+    "vitess.io/vitess/go/mysql/sqlerror::TestDemuxResourceExhaustedErrors",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/ok",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/cancelled",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/unknown",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/invalid_argument",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/deadline_exceeded",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/code_not_found",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/already_exists",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/permission_denied",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/unauthenticated",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/resource_exhausted",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/failed_precondition",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/aborted",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/out_of_range",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/unimplemented",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/internal",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/unavailable",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/data_loss",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/create_db_exists",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/no_db_selected",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/just_some_random_text_here",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/task_error:_Column_'val'_cannot_be_null_(errno_1048)_(sqlstate_23000)_during_query:_insert_into__edf4846d_ab65_11ed_abb1_0a43f95f28a3_20230213061619_vrepl(id,val,ts)_values_(1,2,'2023-02-13_04:46:16'),_(2,3,'2023-02-13_04:46:16'),_(3,null,'2023-02-13_04:46:16')",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/task_error:_17:_Column_'val'_cannot_be_null_(errno_1048)_(sqlstate_23000)_during_query:_insert_into__edf4846d_ab65_11ed_abb1_0a43f95f28a3_20230213061619_vrepl(id,val,ts)_values_(1,2,'2023-02-13_04:46:16'),_(2,3,'2023-02-13_04:46:16'),_(3,null,'2023-02-13_04:46:16')",
+    "vitess.io/vitess/go/mysql/sqlerror::TestNewSQLErrorFromError/vttablet:_rpc_error:_code_=_ResourceExhausted_desc_=_Transaction_throttled"
+  ]
+}

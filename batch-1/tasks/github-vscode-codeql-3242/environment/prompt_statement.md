@@ -1,0 +1,7 @@
+I'm working on a suggest box component in a VS Code extension's webview UI. Users should be able to open the suggestion dropdown using a keyboard shortcut (Ctrl+Space) when the input is focused and the dropdown is not already open. Right now there's no keyboard shortcut support for triggering the dropdown at all.
+
+I need to add a hook that listens for keyboard events on the reference element and opens the floating suggestion popup when Ctrl+Space is pressed — but only when the popup is currently closed. Any variant of that key combination that includes additional modifiers like Shift, Alt, or Cmd should not trigger it. When the shortcut fires, the default browser behavior for that key should be prevented.
+
+The hook also needs to maintain a stable function reference for its event handler across re-renders — when the surrounding context (like the open/closed state) changes and the hook re-runs, the returned handler function should remain the same object identity. This requires a utility hook that wraps a callback and always returns the same stable reference while still calling the latest version of the callback internally.
+
+Additionally, the mock object utility used in tests is currently duplicated in the VS Code integration test helpers. It should be extracted into a shared top-level file so view-layer tests can also use it, and the existing integration test helper should re-export it from that shared location rather than defining it locally.

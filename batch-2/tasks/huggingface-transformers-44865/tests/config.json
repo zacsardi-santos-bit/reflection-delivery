@@ -1,0 +1,47 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/repo_utils/test_check_modeling_structure.py -v --noconftest",
+  "test_files": [
+    "tests/repo_utils/test_check_modeling_structure.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_allows_config_based_lookup",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_allows_nn_module_attrs",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_allows_nn_module_attrs_on_direct_pp_submodule",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_flags_embedding_attr_access",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_flags_enumerate_loop_variant",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_flags_final_norm_attr_access",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_flags_layer_attr_access_in_forward_loop",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_flags_non_layers_pp_loop",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_flags_sliced_layers_loop",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_skips_models_without_pp_plan",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf011_suppression_works"
+  ],
+  "PASS_TO_PASS": [
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_analyze_file_allows_subscripted_class_bases",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_get_changed_modeling_files_includes_configuration_files",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_get_changed_modeling_files_includes_uncommitted_worktree_changes",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf001_invalid_config_class",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf001_valid_config_class",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf002_invalid_empty_prefix",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf002_valid_prefix",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf003_allows_no_return_dict_arg",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf003_allows_return_dict_without_branching",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf003_flags_old_return_dict_branching",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf004_allows_no_tie_weights",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf004_flags_any_tie_weights_override",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf005_invalid_empty_string",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf005_valid_no_split_modules",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf006_catches_unused_cache_args",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf007_allows_post_init_at_end",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf007_flags_assignment_after_post_init",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf009_allows_same_model_import_in_modeling_file",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf009_flags_cross_model_import_in_modeling_file",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf009_ignores_modular_files",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf010_allows_direct_config_with_strict",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf010_flags_missing_strict_on_direct_config",
+    "tests.repo_utils.test_check_modeling_structure.CheckModelingStructureTest::test_trf010_ignores_non_direct_config_alias_wrappers"
+  ]
+}

@@ -1,0 +1,582 @@
+diff --git a/internal/bsoncoreutil/bsoncoreutil.go b/internal/bsoncoreutil/bsoncoreutil.go
+new file mode 100644
+index 00000000..ff0f6493
+--- /dev/null
++++ b/internal/bsoncoreutil/bsoncoreutil.go
+@@ -0,0 +1,40 @@
++// Copyright (C) MongoDB, Inc. 2024-present.
++//
++// Licensed under the Apache License, Version 2.0 (the "License"); you may
++// not use this file except in compliance with the License. You may obtain
++// a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
++
++package bsoncoreutil
++
++// Truncate truncates a given string for a certain width
++func Truncate(str string, width int) string {
++	if width == 0 {
++		return ""
++	}
++
++	if len(str) <= width {
++		return str
++	}
++
++	// Truncate the byte slice of the string to the given width.
++	newStr := str[:width]
++
++	// Check if the last byte is at the beginning of a multi-byte character.
++	// If it is, then remove the last byte.
++	if newStr[len(newStr)-1]&0xC0 == 0xC0 {
++		return newStr[:len(newStr)-1]
++	}
++
++	// Check if the last byte is a multi-byte character
++	if newStr[len(newStr)-1]&0xC0 == 0x80 {
++		// If it is, step back until you we are at the start of a character
++		for i := len(newStr) - 1; i >= 0; i-- {
++			if newStr[i]&0xC0 == 0xC0 {
++				// Truncate at the end of the character before the character we stepped back to
++				return newStr[:i]
++			}
++		}
++	}
++
++	return newStr
++}
+diff --git a/internal/logger/logger.go b/internal/logger/logger.go
+index 2250286e..c43e37c2 100644
+--- a/internal/logger/logger.go
++++ b/internal/logger/logger.go
+@@ -13,6 +13,10 @@ import (
+ 	"os"
+ 	"strconv"
+ 	"strings"
++
++	"go.mongodb.org/mongo-driver/v2/bson"
++	"go.mongodb.org/mongo-driver/v2/internal/bsoncoreutil"
++	"go.mongodb.org/mongo-driver/v2/x/bsonx/bsoncore"
+ )
+ 
+ // DefaultMaxDocumentLength is the default maximum number of bytes that can be
+@@ -230,46 +234,32 @@ func selectComponentLevels(componentLevels map[Component]Level) map[Component]Le
+ 	return selected
+ }
+ 
+-// truncate will truncate a string to the given width, appending "..." to the
+-// end of the string if it is truncated. This routine is safe for multi-byte
+-// characters.
+-func truncate(str string, width uint) string {
+-	if width == 0 {
+-		return ""
+-	}
+-
+-	if len(str) <= int(width) {
+-		return str
++// FormatDocument formats a BSON document or RawValue for logging. The document is truncated
++// to the given width.
++func FormatDocument(msg bson.Raw, width uint) string {
++	if len(msg) == 0 {
++		return "{}"
+ 	}
+ 
+-	// Truncate the byte slice of the string to the given width.
+-	newStr := str[:width]
++	str := bsoncore.Document(msg).StringN(int(width))
+ 
+-	// Check if the last byte is at the beginning of a multi-byte character.
+-	// If it is, then remove the last byte.
+-	if newStr[len(newStr)-1]&0xC0 == 0xC0 {
+-		return newStr[:len(newStr)-1] + TruncationSuffix
++	// If the last byte is not a closing bracket, then the document was truncated
++	if len(str) > 0 && str[len(str)-1] != '}' {
++		str += TruncationSuffix
+ 	}
+ 
+-	// Check if the last byte is in the middle of a multi-byte character. If
+-	// it is, then step back until we find the beginning of the character.
+-	if newStr[len(newStr)-1]&0xC0 == 0x80 {
+-		for i := len(newStr) - 1; i >= 0; i-- {
+-			if newStr[i]&0xC0 == 0xC0 {
+-				return newStr[:i] + TruncationSuffix
+-			}
+-		}
+-	}
+-
+-	return newStr + TruncationSuffix
++	return str
+ }
+ 
+-// FormatMessage formats a BSON document for logging. The document is truncated
++// FormatString formats a String for logging. The string is truncated
+ // to the given width.
+-func FormatMessage(msg string, width uint) string {
+-	if len(msg) == 0 {
+-		return "{}"
++func FormatString(str string, width uint) string {
++	strTrunc := bsoncoreutil.Truncate(str, int(width))
++
++	// Checks if the string was truncating by comparing the lengths of the two strings.
++	if len(strTrunc) < len(str) {
++		strTrunc += TruncationSuffix
+ 	}
+ 
+-	return truncate(msg, width)
++	return strTrunc
+ }
+diff --git a/x/bsonx/bsoncore/array.go b/x/bsonx/bsoncore/array.go
+index 6bc0afa7..0efbdc0f 100644
+--- a/x/bsonx/bsoncore/array.go
++++ b/x/bsonx/bsoncore/array.go
+@@ -9,6 +9,7 @@ package bsoncore
+ import (
+ 	"fmt"
+ 	"io"
++	"math"
+ 	"strconv"
+ 	"strings"
+ )
+@@ -82,34 +83,54 @@ func (a Array) DebugString() string {
+ // String outputs an ExtendedJSON version of Array. If the Array is not valid, this method
+ // returns an empty string.
+ func (a Array) String() string {
+-	if len(a) < 5 {
++	return a.StringN(math.MaxInt)
++}
++
++// StringN stringifies an array upto N bytes
++func (a Array) StringN(n int) string {
++	if lens, _, _ := ReadLength(a); lens < 5 || n <= 0 {
+ 		return ""
+ 	}
++
+ 	var buf strings.Builder
+ 	buf.WriteByte('[')
+ 
+ 	length, rem, _ := ReadLength(a) // We know we have enough bytes to read the length
+-
+ 	length -= 4
+ 
+ 	var elem Element
+ 	var ok bool
+-	for length > 1 {
+-		elem, rem, ok = ReadElement(rem)
+-		length -= int32(len(elem))
+-		if !ok {
+-			return ""
++
++	if n > 0 {
++		for length > 1 {
++			elem, rem, ok = ReadElement(rem)
++
++			length -= int32(len(elem))
++			if !ok {
++				return ""
++			}
++
++			str := elem.Value().StringN(n - buf.Len())
++
++			buf.WriteString(str)
++
++			if buf.Len() == n {
++				return buf.String()
++			}
++
++			if length > 1 {
++				buf.WriteByte(',')
++			}
+ 		}
+-		buf.WriteString(elem.Value().String())
+-		if length > 1 {
+-			buf.WriteByte(',')
++		if length != 1 { // Missing final null byte or inaccurate length
++			return ""
+ 		}
+ 	}
+-	if length != 1 { // Missing final null byte or inaccurate length
+-		return ""
++
++	if buf.Len()+1 <= n {
++		buf.WriteByte(']')
+ 	}
+ 
+-	buf.WriteByte(']')
+ 	return buf.String()
+ }
+ 
+diff --git a/x/bsonx/bsoncore/bsoncore.go b/x/bsonx/bsoncore/bsoncore.go
+index 25ed144d..13219ee5 100644
+--- a/x/bsonx/bsoncore/bsoncore.go
++++ b/x/bsonx/bsoncore/bsoncore.go
+@@ -102,21 +102,22 @@ func ReadElement(src []byte) (Element, []byte, bool) {
+ 		return nil, src, false
+ 	}
+ 	t := Type(src[0])
+-	idx := bytes.IndexByte(src[1:], 0x00)
+-	if idx == -1 {
++	idx := 1
++	for idx < len(src) && src[idx] != 0x00 {
++		idx++
++	}
++	if idx >= len(src) {
+ 		return nil, src, false
+ 	}
+-	length, ok := valueLength(src[idx+2:], t) // We add 2 here because we called IndexByte with src[1:]
++	idx++ // Move past the null byte
++	length, ok := valueLength(src[idx:], t)
+ 	if !ok {
+ 		return nil, src, false
+ 	}
+-	elemLength := 1 + idx + 1 + int(length)
++	elemLength := idx + int(length)
+ 	if elemLength > len(src) {
+ 		return nil, src, false
+ 	}
+-	if elemLength < 0 {
+-		return nil, src, false
+-	}
+ 	return src[:elemLength], src[elemLength:], true
+ }
+ 
+diff --git a/x/bsonx/bsoncore/document.go b/x/bsonx/bsoncore/document.go
+index 539fc692..6a59908d 100644
+--- a/x/bsonx/bsoncore/document.go
++++ b/x/bsonx/bsoncore/document.go
+@@ -10,8 +10,11 @@ import (
+ 	"errors"
+ 	"fmt"
+ 	"io"
++	"math"
+ 	"strconv"
+ 	"strings"
++
++	"go.mongodb.org/mongo-driver/v2/internal/bsoncoreutil"
+ )
+ 
+ // ValidationError is an error type returned when attempting to validate a document or array.
+@@ -261,32 +264,56 @@ func (d Document) DebugString() string {
+ // String outputs an ExtendedJSON version of Document. If the document is not valid, this method
+ // returns an empty string.
+ func (d Document) String() string {
+-	if len(d) < 5 {
++	return d.StringN(math.MaxInt)
++}
++
++// StringN stringifies a document upto N bytes
++func (d Document) StringN(n int) string {
++	if len(d) < 5 || n <= 0 {
+ 		return ""
+ 	}
++
+ 	var buf strings.Builder
+-	buf.WriteByte('{')
+ 
+-	length, rem, _ := ReadLength(d) // We know we have enough bytes to read the length
++	buf.WriteByte('{')
+ 
++	length, rem, _ := ReadLength(d)
+ 	length -= 4
+ 
+ 	var elem Element
+ 	var ok bool
++
+ 	first := true
+-	for length > 1 {
+-		if !first {
+-			buf.WriteByte(',')
+-		}
+-		elem, rem, ok = ReadElement(rem)
+-		length -= int32(len(elem))
+-		if !ok {
+-			return ""
++	truncated := false
++
++	if n > 0 {
++		for length > 1 {
++			if !first {
++				buf.WriteByte(',')
++			}
++			elem, rem, ok = ReadElement(rem)
++			length -= int32(len(elem))
++			if !ok {
++				return ""
++			}
++
++			str := elem.StringN(n)
++			if buf.Len()+len(str) > n {
++				truncatedStr := bsoncoreutil.Truncate(str, n-buf.Len())
++				buf.WriteString(truncatedStr)
++
++				truncated = true
++				break
++			}
++
++			buf.WriteString(str)
++			first = false
+ 		}
+-		buf.WriteString(elem.String())
+-		first = false
+ 	}
+-	buf.WriteByte('}')
++
++	if !truncated {
++		buf.WriteByte('}')
++	}
+ 
+ 	return buf.String()
+ }
+diff --git a/x/bsonx/bsoncore/element.go b/x/bsonx/bsoncore/element.go
+index 61917445..8720c407 100644
+--- a/x/bsonx/bsoncore/element.go
++++ b/x/bsonx/bsoncore/element.go
+@@ -9,6 +9,7 @@ package bsoncore
+ import (
+ 	"bytes"
+ 	"fmt"
++	"math"
+ )
+ 
+ // MalformedElementError represents a class of errors that RawElement methods return.
+@@ -114,6 +115,11 @@ func (e Element) ValueErr() (Value, error) {
+ 
+ // String implements the fmt.String interface. The output will be in extended JSON format.
+ func (e Element) String() string {
++	return e.StringN(math.MaxInt)
++}
++
++// StringN implements the fmt.String interface for upto N bytes. The output will be in extended JSON format.
++func (e Element) StringN(n int) string {
+ 	if len(e) <= 0 {
+ 		return ""
+ 	}
+@@ -127,7 +133,17 @@ func (e Element) String() string {
+ 	if !valid {
+ 		return ""
+ 	}
+-	return "\"" + string(key) + "\": " + val.String()
++
++	var str string
++	if _, ok := val.StringValueOK(); ok {
++		str = val.StringN(n)
++	} else if arr, ok := val.ArrayOK(); ok {
++		str = arr.StringN(n)
++	} else {
++		str = val.String()
++	}
++
++	return "\"" + string(key) + "\": " + str
+ }
+ 
+ // DebugString outputs a human readable version of RawElement. It will attempt to stringify the
+diff --git a/x/bsonx/bsoncore/value.go b/x/bsonx/bsoncore/value.go
+index d8ac10c5..c459485b 100644
+--- a/x/bsonx/bsoncore/value.go
++++ b/x/bsonx/bsoncore/value.go
+@@ -18,6 +18,7 @@ import (
+ 	"time"
+ 	"unicode/utf8"
+ 
++	"go.mongodb.org/mongo-driver/v2/internal/bsoncoreutil"
+ 	"go.mongodb.org/mongo-driver/v2/internal/decimal128"
+ )
+ 
+@@ -217,120 +218,135 @@ func idHex(id [12]byte) string {
+ // String implements the fmt.String interface. This method will return values in extended JSON
+ // format. If the value is not valid, this returns an empty string
+ func (v Value) String() string {
++	return v.StringN(math.MaxInt)
++}
++
++// StringN implements the fmt.String interface. This method will return values in extended JSON
++// format that will stringify a value upto N bytes. If the value is not valid, this returns an empty string
++func (v Value) StringN(n int) string {
++	if n <= 0 {
++		return ""
++	}
++
+ 	switch v.Type {
+-	case TypeDouble:
+-		f64, ok := v.DoubleOK()
+-		if !ok {
+-			return ""
+-		}
+-		return fmt.Sprintf(`{"$numberDouble":"%s"}`, formatDouble(f64))
+ 	case TypeString:
+ 		str, ok := v.StringValueOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return escapeString(str)
++		str = escapeString(str)
++		if len(str) > n {
++			truncatedStr := bsoncoreutil.Truncate(str, n)
++			return truncatedStr
++		}
++		return str
+ 	case TypeEmbeddedDocument:
+ 		doc, ok := v.DocumentOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return doc.String()
++		return doc.StringN(n)
+ 	case TypeArray:
+ 		arr, ok := v.ArrayOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return arr.String()
++		return arr.StringN(n)
++	case TypeDouble:
++		f64, ok := v.DoubleOK()
++		if !ok {
++			return ""
++		}
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$numberDouble":"%s"}`, formatDouble(f64)), n)
+ 	case TypeBinary:
+ 		subtype, data, ok := v.BinaryOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$binary":{"base64":"%s","subType":"%02x"}}`, base64.StdEncoding.EncodeToString(data), subtype)
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$binary":{"base64":"%s","subType":"%02x"}}`, base64.StdEncoding.EncodeToString(data), subtype), n)
+ 	case TypeUndefined:
+-		return `{"$undefined":true}`
++		return bsoncoreutil.Truncate(`{"$undefined":true}`, n)
+ 	case TypeObjectID:
+ 		oid, ok := v.ObjectIDOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$oid":"%s"}`, idHex(oid))
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$oid":"%s"}`, idHex(oid)), n)
+ 	case TypeBoolean:
+ 		b, ok := v.BooleanOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return strconv.FormatBool(b)
++		return bsoncoreutil.Truncate(strconv.FormatBool(b), n)
+ 	case TypeDateTime:
+ 		dt, ok := v.DateTimeOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$date":{"$numberLong":"%d"}}`, dt)
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$date":{"$numberLong":"%d"}}`, dt), n)
+ 	case TypeNull:
+-		return "null"
++		return bsoncoreutil.Truncate("null", n)
+ 	case TypeRegex:
+ 		pattern, options, ok := v.RegexOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(
++		return bsoncoreutil.Truncate(fmt.Sprintf(
+ 			`{"$regularExpression":{"pattern":%s,"options":"%s"}}`,
+ 			escapeString(pattern), sortStringAlphebeticAscending(options),
+-		)
++		), n)
+ 	case TypeDBPointer:
+ 		ns, pointer, ok := v.DBPointerOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$dbPointer":{"$ref":%s,"$id":{"$oid":"%s"}}}`, escapeString(ns), idHex(pointer))
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$dbPointer":{"$ref":%s,"$id":{"$oid":"%s"}}}`, escapeString(ns), idHex(pointer)), n)
+ 	case TypeJavaScript:
+ 		js, ok := v.JavaScriptOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$code":%s}`, escapeString(js))
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$code":%s}`, escapeString(js)), n)
+ 	case TypeSymbol:
+ 		symbol, ok := v.SymbolOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$symbol":%s}`, escapeString(symbol))
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$symbol":%s}`, escapeString(symbol)), n)
+ 	case TypeCodeWithScope:
+ 		code, scope, ok := v.CodeWithScopeOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$code":%s,"$scope":%s}`, code, scope)
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$code":%s,"$scope":%s}`, code, scope), n)
+ 	case TypeInt32:
+ 		i32, ok := v.Int32OK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$numberInt":"%d"}`, i32)
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$numberInt":"%d"}`, i32), n)
+ 	case TypeTimestamp:
+ 		t, i, ok := v.TimestampOK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$timestamp":{"t":%v,"i":%v}}`, t, i)
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$timestamp":{"t":%v,"i":%v}}`, t, i), n)
+ 	case TypeInt64:
+ 		i64, ok := v.Int64OK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$numberLong":"%d"}`, i64)
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$numberLong":"%d"}`, i64), n)
+ 	case TypeDecimal128:
+ 		h, l, ok := v.Decimal128OK()
+ 		if !ok {
+ 			return ""
+ 		}
+-		return fmt.Sprintf(`{"$numberDecimal":"%s"}`, decimal128.String(h, l))
++		return bsoncoreutil.Truncate(fmt.Sprintf(`{"$numberDecimal":"%s"}`, decimal128.String(h, l)), n)
+ 	case TypeMinKey:
+-		return `{"$minKey":1}`
++		return bsoncoreutil.Truncate(`{"$minKey":1}`, n)
+ 	case TypeMaxKey:
+-		return `{"$maxKey":1}`
++		return bsoncoreutil.Truncate(`{"$maxKey":1}`, n)
+ 	default:
+ 		return ""
+ 	}
+diff --git a/x/mongo/driver/operation.go b/x/mongo/driver/operation.go
+index b241a2f0..8c2e3e8e 100644
+--- a/x/mongo/driver/operation.go
++++ b/x/mongo/driver/operation.go
+@@ -2030,8 +2030,9 @@ func (op Operation) publishStartedEvent(ctx context.Context, info startedInforma
+ 	if op.canLogCommandMessage() {
+ 		host, port, _ := net.SplitHostPort(info.serverAddress.String())
+ 
+-		redactedCmd := redactStartedInformationCmd(op, info).String()
+-		formattedCmd := logger.FormatMessage(redactedCmd, op.Logger.MaxDocumentLength)
++		redactedCmd := redactStartedInformationCmd(op, info)
++
++		formattedCmd := logger.FormatDocument(redactedCmd, op.Logger.MaxDocumentLength)
+ 
+ 		op.Logger.Print(logger.LevelDebug,
+ 			logger.ComponentCommand,
+@@ -2082,8 +2083,9 @@ func (op Operation) publishFinishedEvent(ctx context.Context, info finishedInfor
+ 	if op.canLogCommandMessage() && info.success() {
+ 		host, port, _ := net.SplitHostPort(info.serverAddress.String())
+ 
+-		redactedReply := redactFinishedInformationResponse(info).String()
+-		formattedReply := logger.FormatMessage(redactedReply, op.Logger.MaxDocumentLength)
++		redactedReply := redactFinishedInformationResponse(info)
++
++		formattedReply := logger.FormatDocument(redactedReply, op.Logger.MaxDocumentLength)
+ 
+ 		op.Logger.Print(logger.LevelDebug,
+ 			logger.ComponentCommand,
+@@ -2106,7 +2108,7 @@ func (op Operation) publishFinishedEvent(ctx context.Context, info finishedInfor
+ 	if op.canLogCommandMessage() && !info.success() {
+ 		host, port, _ := net.SplitHostPort(info.serverAddress.String())
+ 
+-		formattedReply := logger.FormatMessage(info.cmdErr.Error(), op.Logger.MaxDocumentLength)
++		formattedReply := logger.FormatString(info.cmdErr.Error(), op.Logger.MaxDocumentLength)
+ 
+ 		op.Logger.Print(logger.LevelDebug,
+ 			logger.ComponentCommand,

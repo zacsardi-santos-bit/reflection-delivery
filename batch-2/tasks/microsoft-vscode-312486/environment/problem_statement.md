@@ -1,0 +1,9 @@
+I'm fixing the Claude Code session replay in VS Code Copilot, the thing that renders past conversation history in the chat panel, and I've got two tangled issues.
+
+First, the SDK renamed the tool that spawns subagents. Our code only knows the old name so any session recorded with the newer SDK just silently drops its subagent tool calls from the history. I want both the old and the new tool name handled identically everywhere it matters, formatting, completion detection, and the chat history reconstruction should all behave the same regardless of which name shows up.
+
+Second, the subagent-to-parent correlation is way more complicated than it needs to be. Right now we read raw session files off disk, parse a special field out of each tool result entry to build an in-memory correlation map, and thread that map through several layers of the loading pipeline just to link a subagent conversation under the tool call that spawned it. Turns out the subagent's own conversation data already carries a reference back to the parent tool call ID, so I want to use that embedded reference directly and rip out the filesystem reads, the correlation map, and all the extra bookkeeping. Use that parent tool call ID to nest the subagent's tool calls under the right parent entry in the chat UI. Subagents that don't have such a reference should just be skipped rather than injected into the parent or blowing up.
+
+Oh and while I'm in here, session loading shouldn't require a working directory argument when the session context already makes the directory unnecessary, and it should return gracefully (not error) when the session isn't found or when the underlying service fails.
+
+Net effect I'm after: no disk I/O just to establish subagent correlation, newer SDK sessions stop dropping subagent history, and the pipeline gets simpler.

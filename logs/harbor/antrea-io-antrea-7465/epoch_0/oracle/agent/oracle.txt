@@ -1,5 +1,0 @@
-patching file cmd/antrea-controller/controller.go
-patching file pkg/apiserver/apiserver.go
-patching file pkg/controller/externalippool/validate.go
-patching file pkg/controller/ipam/validate.go
-patching file pkg/controller/validation/ippool.go

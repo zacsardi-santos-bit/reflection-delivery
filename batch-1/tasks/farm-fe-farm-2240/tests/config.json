@@ -1,0 +1,13 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx tsc -b packages/core/tsconfig.build.json && npx vitest run -c vitest.config.e2e.ts examples/react-fast-refresh/e2e.spec.ts",
+  "test_files": [
+    "examples/react-fast-refresh/e2e.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/examples/react-fast-refresh/e2e.spec.ts::e2e tests - e2e.spec.ts exmaples e2e.spec.ts run start"
+  ],
+  "PASS_TO_PASS": []
+}

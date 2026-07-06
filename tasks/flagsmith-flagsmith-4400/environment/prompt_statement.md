@@ -1,7 +1,0 @@
-We're using Flagsmith and we'd like to configure our Grafana integration at the organization level rather than having to set it up separately for every project. Right now there's only a project-level Grafana configuration, but we have dozens of projects under one organization and it's painful to repeat the setup everywhere.
-
-I'd like to be able to POST, update, and delete a Grafana configuration scoped to an organization, with only admin users having access. If someone tries to create a second configuration for the same organization, the API should reject it. The configuration should also be used when routing audit log events to Grafana — if no project-level Grafana integration is found, the system should fall back to the organization-level one.
-
-It would also be helpful if audit log records had a way to derive which organization they belong to — by walking up through the related project, environment, author, or other linked objects — and returning nothing if no organization is found. This would help route audit events to organization-level integrations correctly.
-
-Additionally, a dedicated handler for forwarding audit log events to the Dynatrace integration should be in place, similar to how Grafana events are forwarded. And the API schema documentation should be accessible in both JSON and YAML formats as well as through the interactive UI, for both authenticated and unauthenticated users.

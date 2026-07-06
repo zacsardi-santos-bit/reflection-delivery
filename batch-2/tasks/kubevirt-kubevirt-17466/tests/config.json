@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/storage/snapshot ./pkg/virt-controller/watch/vm -count=1",
+  "test_files": [
+    "pkg/storage/snapshot/snapshot_test.go",
+    "pkg/virt-controller/watch/vm/vm_test.go",
+    "tests/storage/snapshot.go",
+    "tests/vm_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "kubevirt.io/kubevirt/pkg/storage/snapshot::TestSnapshot",
+    "kubevirt.io/kubevirt/pkg/virt-controller/watch/vm::TestVM"
+  ],
+  "PASS_TO_PASS": []
+}

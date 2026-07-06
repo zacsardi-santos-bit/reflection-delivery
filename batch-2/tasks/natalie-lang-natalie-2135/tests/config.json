@@ -1,0 +1,30 @@
+{
+  "test_framework": "telescope",
+  "test_command": "bash -c 'set -o pipefail; cd /workspace/repo && bin/natalie test/natalie/pattern_matching_test.rb -f spec 2>/dev/null | ruby /workspace/nat_to_rspec.rb'",
+  "test_files": [
+    "spec/language/pattern_matching/3.1.rb",
+    "spec/language/pattern_matching_spec.rb",
+    "test/natalie/pattern_matching_test.rb"
+  ],
+  "num_test_files": 3,
+  "language": "ruby",
+  "FAIL_TO_PASS": [
+    "can assign a single value",
+    "does not define a local variable if the expression fails",
+    "does not change an existing variable if the expression fails",
+    "has no used mode, always returns nil",
+    "can match against a constant read node",
+    "can match against a constant path node",
+    "can match against anything that implements #===",
+    "will raise NoMatchingPatternError on invalid match with the constant",
+    "will raise NoMatchingPatternError on invalid match with the constant path",
+    "has the correct scoping for the lhs",
+    "evaluates the lhs only once and uses that value in the error message",
+    "can handle array targets with fixed size and only local variable target nodes",
+    "can handle array targets with any input that implements #deconstruct",
+    "raises an exception for input that does not implement #deconstruct",
+    "raises an exception for array target with invalid size",
+    "is a subclass of StandardError"
+  ],
+  "PASS_TO_PASS": []
+}

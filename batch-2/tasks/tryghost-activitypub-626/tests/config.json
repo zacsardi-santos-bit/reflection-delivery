@@ -1,0 +1,19 @@
+{
+  "test_framework": "vitest",
+  "test_command": "mkdir -p /run/mysqld && chown mysql:mysql /run/mysqld && mysqld --user=mysql 2>/dev/null & sleep 8 && cd /workspace/repo && yarn install --frozen-lockfile 2>/dev/null && MYSQL_HOST=127.0.0.1 MYSQL_PORT=3306 MYSQL_USER=ghost MYSQL_PASSWORD=password MYSQL_DATABASE=activitypub npx vitest run src/http/api/views/account.follows.view.integration.test.ts",
+  "test_files": [
+    "src/http/api/views/account.follows.view.integration.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/http/api/views/account.follows.view.integration.test.ts::AccountFollowsView getFollowsByAccount should return following accounts with correct format",
+    "/workspace/repo/src/http/api/views/account.follows.view.integration.test.ts::AccountFollowsView getFollowsByAccount should return follower accounts with correct format",
+    "/workspace/repo/src/http/api/views/account.follows.view.integration.test.ts::AccountFollowsView getFollowsByAccount should handle empty results",
+    "/workspace/repo/src/http/api/views/account.follows.view.integration.test.ts::AccountFollowsView getFollowsByRemoteLookUp should handle invalid next parameter error",
+    "/workspace/repo/src/http/api/views/account.follows.view.integration.test.ts::AccountFollowsView getFollowsByRemoteLookUp should handle not-an-actor error",
+    "/workspace/repo/src/http/api/views/account.follows.view.integration.test.ts::AccountFollowsView getFollowsByRemoteLookUp should return followers collection when available",
+    "/workspace/repo/src/http/api/views/account.follows.view.integration.test.ts::AccountFollowsView getFollowsByRemoteLookUp should return following collection when available"
+  ],
+  "PASS_TO_PASS": []
+}

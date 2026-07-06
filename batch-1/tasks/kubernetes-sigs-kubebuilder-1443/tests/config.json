@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/config ./pkg/model/config -count=1",
+  "test_files": [
+    "internal/config/config_test.go",
+    "pkg/model/config/config_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "sigs.k8s.io/kubebuilder/pkg/model/config::TestEncodeDecodeExtraFields",
+    "sigs.k8s.io/kubebuilder/internal/config::TestSaveReadFrom"
+  ],
+  "PASS_TO_PASS": []
+}

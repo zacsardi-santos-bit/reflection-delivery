@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/rust && cargo nextest run --no-fail-fast -p vllm-chat -E 'test(factory_new_resolves_default_patterns)'",
+  "test_files": [
+    "rust/src/chat/src/parser/tool/tests.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) vllm-chat parser::tool::tests::factory_new_resolves_default_patterns"
+  ],
+  "PASS_TO_PASS": []
+}

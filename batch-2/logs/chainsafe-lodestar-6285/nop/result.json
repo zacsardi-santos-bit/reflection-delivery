@@ -1,0 +1,29 @@
+{
+    "id": "cff14665-50ca-4b1a-98ea-888ce8d5f039",
+    "started_at": "2026-07-04T15:37:26.662544",
+    "finished_at": "2026-07-04T15:38:26.037410",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__chainsafe-lodestar-6285": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "chainsafe-lodestar-6285__KKnDyJh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

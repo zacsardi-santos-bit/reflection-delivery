@@ -1,0 +1,29 @@
+{
+    "id": "7b496000-3e85-4b7b-af09-0fae5aa04ec3",
+    "started_at": "2026-07-04T15:37:35.308151",
+    "finished_at": "2026-07-04T15:39:29.880808",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__jdx-mise-4049": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "jdx-mise-4049__Lov8fgh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

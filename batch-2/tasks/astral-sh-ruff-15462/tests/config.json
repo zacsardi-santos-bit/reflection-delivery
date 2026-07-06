@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cd /workspace/repo && cargo nextest run -p ruff_linter -- fastapi",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/fastapi/FAST002_0.py",
+    "crates/ruff_linter/resources/test/fixtures/fastapi/FAST002_1.py"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/6) ruff_linter rules::fastapi::tests::rules_py38::rule_fastapinonannotateddependency_path_new_fast002_0_py_expects",
+    "(2/6) ruff_linter rules::fastapi::tests::rules::rule_fastapiunusedpathparameter_path_new_fast003_py_expects",
+    "(3/6) ruff_linter rules::fastapi::tests::rules::rule_fastapinonannotateddependency_path_new_fast002_1_py_expects",
+    "(4/6) ruff_linter rules::fastapi::tests::rules::rule_fastapinonannotateddependency_path_new_fast002_0_py_expects",
+    "(5/6) ruff_linter rules::fastapi::tests::rules::rule_fastapiredundantresponsemodel_path_new_fast001_py_expects",
+    "(6/6) ruff_linter rules::fastapi::tests::rules_py38::rule_fastapinonannotateddependency_path_new_fast002_1_py_expects"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npx vitest run test/providers/openai/codexDefaults.test.ts",
+  "test_files": [
+    "test/providers/openai/codexDefaults.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers isolates cached default providers by process API credential without using raw keys in cache keys",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers isolates cached default providers by process OpenAI API credential",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers isolates cached default providers by env override API credential",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers evicts and shuts down idle least-recently-used cached providers when credentials rotate",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers defers evicted provider shutdown until in-flight calls finish",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers keeps evicted providers usable for sequential calls before the eviction grace period elapses",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers returns true when only OPENAI_API_KEY is set, mirroring the provider api-key resolution",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers resurrects providers that received a callApi after eviction shutdown completed",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers partitions cache by the resolved api key, not by every raw credential slot",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers keeps resurrected bundles bounded by re-entering eviction-pending after their next idle"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers returns true when CODEX_API_KEY exists and the Codex SDK package can be resolved",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers returns true when Codex auth state exists and the Codex SDK package can be resolved",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers returns false when Codex auth state exists but the Codex SDK package cannot be resolved",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers returns false when neither CODEX_API_KEY nor Codex auth state exists",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers creates reusable Codex text and web-search providers with a read-only sandbox",
+    "/workspace/repo/test/providers/openai/codexDefaults.test.ts::Codex default providers does not re-arm an eviction timer after clearCodexDefaultProvidersForTesting"
+  ]
+}

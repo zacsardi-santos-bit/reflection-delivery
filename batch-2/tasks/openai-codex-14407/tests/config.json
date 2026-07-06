@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd codex-rs && cargo nextest run -p codex-app-server --no-fail-fast -E 'test(plugin_install_returns_apps_needing_auth) | test(plugin_install_filters_disallowed_apps_needing_auth) | test(plugin_list_includes_install_and_enabled_state_from_config) | test(plugin_list_returns_plugin_interface_with_absolute_asset_paths)'",
+  "test_files": [
+    "codex-rs/app-server/tests/suite/v2/plugin_install.rs",
+    "codex-rs/app-server/tests/suite/v2/plugin_list.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/4) codex-app-server::all suite::v2::plugin_install::plugin_install_filters_disallowed_apps_needing_auth",
+    "(2/4) codex-app-server::all suite::v2::plugin_install::plugin_install_returns_apps_needing_auth",
+    "(3/4) codex-app-server::all suite::v2::plugin_list::plugin_list_includes_install_and_enabled_state_from_config",
+    "(4/4) codex-app-server::all suite::v2::plugin_list::plugin_list_returns_plugin_interface_with_absolute_asset_paths"
+  ],
+  "PASS_TO_PASS": []
+}

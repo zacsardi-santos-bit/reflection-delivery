@@ -1,0 +1,29 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && npx mocha --ui bdd --timeout 5000 --exit --invert --grep 'throw on open and verify when a different domain is used' test/record/envelope.spec.js test/record/peer-record.spec.js 2>/dev/null",
+  "test_files": [
+    "test/connection-manager/index.node.js",
+    "test/peer-store/address-book.spec.js",
+    "test/record/envelope.spec.js",
+    "test/record/peer-record.spec.js",
+    "test/upgrading/upgrader.spec.js"
+  ],
+  "num_test_files": 5,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/record/envelope.spec.js::Envelope creates an envelope with a random key",
+    "/workspace/repo/test/record/envelope.spec.js::Envelope can seal a record",
+    "/workspace/repo/test/record/envelope.spec.js::Envelope can open and verify a sealed record",
+    "/workspace/repo/test/record/peer-record.spec.js::interface-record compliance record has domain and codec",
+    "/workspace/repo/test/record/peer-record.spec.js::interface-record compliance record is able to marshal",
+    "/workspace/repo/test/record/peer-record.spec.js::interface-record compliance record is able to compare two records",
+    "/workspace/repo/test/record/peer-record.spec.js::PeerRecord creates a peer record with peerId",
+    "/workspace/repo/test/record/peer-record.spec.js::PeerRecord creates a peer record with provided data",
+    "/workspace/repo/test/record/peer-record.spec.js::PeerRecord marshals and unmarshals a peer record",
+    "/workspace/repo/test/record/peer-record.spec.js::PeerRecord equals returns false if the peer record has a different peerId",
+    "/workspace/repo/test/record/peer-record.spec.js::PeerRecord equals returns false if the peer record has a different seqNumber",
+    "/workspace/repo/test/record/peer-record.spec.js::PeerRecord equals returns false if the peer record has a different multiaddrs",
+    "/workspace/repo/test/record/peer-record.spec.js::PeerRecord inside Envelope creates an envelope with the PeerRecord and can unmarshal it"
+  ],
+  "PASS_TO_PASS": []
+}

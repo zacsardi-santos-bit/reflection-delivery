@@ -1,0 +1,51 @@
+patching file tokio-codec/tests/codecs.rs
+warning: /workspace/repo/tokio-tcp/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-timer/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-codec/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-reactor/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-current-thread/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-udp/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-io/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-threadpool/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-uds/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-channel/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-fs/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+warning: /workspace/repo/tokio-executor/Cargo.toml: no edition set: defaulting to the 2015 edition while the latest is 2024
+   Compiling libc v0.2.186
+   Compiling byteorder v1.5.0
+   Compiling futures v0.1.31
+   Compiling log v0.4.33
+   Compiling iovec v0.1.4
+   Compiling bytes v0.4.12
+   Compiling tokio-io v0.1.8 (/workspace/repo/tokio-io)
+   Compiling tokio-codec v0.1.0 (/workspace/repo/tokio-codec)
+error[E0599]: no function or associated item named `with_max_length` found for struct `LinesCodec` in the current scope
+  --> tokio-codec/tests/codecs.rs:62:33
+   |
+62 |     let mut codec = LinesCodec::with_max_length(MAX_LENGTH);
+   |                                 ^^^^^^^^^^^^^^^ function or associated item not found in `LinesCodec`
+   |
+note: if you're trying to build a new `LinesCodec`, consider using `LinesCodec::new` which returns `LinesCodec`
+  --> /workspace/repo/tokio-codec/src/lines_codec.rs:19:5
+   |
+19 |     pub fn new() -> LinesCodec {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no function or associated item named `with_max_length` found for struct `LinesCodec` in the current scope
+   --> tokio-codec/tests/codecs.rs:104:33
+    |
+104 |     let mut codec = LinesCodec::with_max_length(MAX_LENGTH);
+    |                                 ^^^^^^^^^^^^^^^ function or associated item not found in `LinesCodec`
+    |
+note: if you're trying to build a new `LinesCodec`, consider using `LinesCodec::new` which returns `LinesCodec`
+   --> /workspace/repo/tokio-codec/src/lines_codec.rs:19:5
+    |
+ 19 |     pub fn new() -> LinesCodec {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `tokio-codec` (test "codecs") due to 2 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.91.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package tokio-codec` exited with code 101
+reward=0 graded=21 found=0 failed=0 parsed=0 framework=cargo exit_code=101

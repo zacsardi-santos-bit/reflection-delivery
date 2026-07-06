@@ -1,5 +1,0 @@
-patching file doc/releases/changelog-dev.md
-patching file pennylane/__init__.py
-patching file pennylane/spin/__init__.py
-patching file pennylane/spin/lattice.py
-patching file pennylane/spin/spin_hamiltonian.py

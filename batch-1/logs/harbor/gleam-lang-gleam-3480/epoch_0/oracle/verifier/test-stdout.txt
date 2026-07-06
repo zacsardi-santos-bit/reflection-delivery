@@ -1,0 +1,48 @@
+patching file compiler-core/src/language_server/tests/completion.rs
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_anonymous_function.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_as.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_bit_array.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_case_expression.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_function_call.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_args_nested.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_anonymous_function_returned.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignore_within_function.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_ignored.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_inside_nested_exprs.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_nested_anonymous_function.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_pipe_with_args.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_string.snap
+patching file compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__completion__local_variable_tuple.snap
+   Compiling gleam-core v1.4.1 (/workspace/repo/compiler-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 26.34s
+────────────
+ Nextest run ID a8037773-dfea-4114-9f4d-dd198509fb07 with nextest profile: default
+    Starting 22 tests across 1 binary (2690 tests skipped)
+        PASS [   0.103s] ( 1/22) gleam-core language_server::tests::completion::local_variable_function_call
+        PASS [   0.103s] ( 2/22) gleam-core language_server::tests::completion::local_variable_pipe
+        PASS [   0.103s] ( 3/22) gleam-core language_server::tests::completion::local_variable_pipe_with_args
+        PASS [   0.104s] ( 4/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_args
+        PASS [   0.107s] ( 5/22) gleam-core language_server::tests::definition::goto_definition_local_variable
+        PASS [   0.107s] ( 6/22) gleam-core language_server::tests::completion::local_variable_case_expression
+        PASS [   0.108s] ( 7/22) gleam-core language_server::tests::completion::local_variable_ignore_within_function
+        PASS [   0.109s] ( 8/22) gleam-core language_server::tests::completion::local_variable_as
+        PASS [   0.109s] ( 9/22) gleam-core language_server::tests::completion::local_variable_ignored
+        PASS [   0.111s] (10/22) gleam-core language_server::tests::completion::local_variable
+        PASS [   0.111s] (11/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_returned
+        PASS [   0.113s] (12/22) gleam-core language_server::tests::completion::local_variable_nested_anonymous_function
+        PASS [   0.114s] (13/22) gleam-core language_server::tests::completion::local_variable_bit_array
+        PASS [   0.116s] (14/22) gleam-core language_server::tests::completion::local_variable_tuple
+        PASS [   0.115s] (15/22) gleam-core language_server::tests::completion::local_variable_inside_nested_exprs
+        PASS [   0.117s] (16/22) gleam-core language_server::tests::completion::local_variable_ignore_anonymous_function_args_nested
+        PASS [   0.118s] (17/22) gleam-core language_server::tests::completion::local_variable_string
+        PASS [   0.119s] (18/22) gleam-core language_server::tests::completion::local_variable_anonymous_function
+        PASS [   0.063s] (19/22) gleam-core language_server::tests::signature_help::help_for_calling_local_variable_referencing_constant_referencing_function
+        PASS [   0.064s] (20/22) gleam-core language_server::tests::signature_help::help_for_calling_local_variable_last_arg
+        PASS [   0.064s] (21/22) gleam-core language_server::tests::signature_help::help_for_calling_local_variable_first_arg
+        PASS [   0.061s] (22/22) gleam-core language_server::tests::signature_help::help_for_calling_local_variable_with_module_function
+────────────
+     Summary [   0.172s] 22 tests run: 22 passed, 2690 skipped
+reward=1 graded=22 found=3 failed=0 parsed=22 framework=cargo exit_code=0

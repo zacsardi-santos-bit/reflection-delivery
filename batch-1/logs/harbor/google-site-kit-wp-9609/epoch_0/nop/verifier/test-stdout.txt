@@ -1,0 +1,310 @@
+patching file assets/js/components/notifications/ErrorNotifications.test.js
+patching file assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js
+patching file tests/js/utils.js
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+FAIL assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js (139.79 s)
+  GA4AdSenseLinkedNotification
+    ✕ does not render if AdSense module is not active (918 ms)
+    ✕ does not render if AdSense and Analytics are not linked (102 ms)
+    ✕ does not render if report has data, and it is not already dismissed (95 ms)
+    ✕ does not render if already dismissed (88 ms)
+    ✕ does not render when not on the main or entity dashboard (27 ms)
+    ✕ renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed (70 ms)
+
+  ● GA4AdSenseLinkedNotification › does not render if AdSense module is not active
+
+    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')
+
+      71 | 				{
+      72 | 					[ GA4_ADSENSE_LINKED_NOTIFICATION ]:
+    > 73 | 						DEFAULT_NOTIFICATIONS[
+         | 						^
+      74 | 							GA4_ADSENSE_LINKED_NOTIFICATION
+      75 | 						],
+      76 | 				},
+
+      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)
+
+  ● GA4AdSenseLinkedNotification › does not render if AdSense module is not active
+
+    expect(jest.fn()).not.toHaveErrored(expected)
+
+    Expected mock function not to be called but it was called with:
+    ["Google Site Kit API Error", "method:GET", "datapoint:dismissed-items", "type:core", "identifier:user", "error:\"window.fetch is not a function\""]
+
+      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)
+
+  ● GA4AdSenseLinkedNotification › does not render if AdSense and Analytics are not linked
+
+    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')
+
+      71 | 				{
+      72 | 					[ GA4_ADSENSE_LINKED_NOTIFICATION ]:
+    > 73 | 						DEFAULT_NOTIFICATIONS[
+         | 						^
+      74 | 							GA4_ADSENSE_LINKED_NOTIFICATION
+      75 | 						],
+      76 | 				},
+
+      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)
+
+  ● GA4AdSenseLinkedNotification › does not render if AdSense and Analytics are not linked
+
+    expect(jest.fn()).not.toHaveErrored(expected)
+
+    Expected mock function not to be called but it was called with:
+    ["Google Site Kit API Error", "method:GET", "datapoint:dismissed-items", "type:core", "identifier:user", "error:\"window.fetch is not a function\""]
+
+      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)
+
+  ● GA4AdSenseLinkedNotification › does not render if report has data, and it is not already dismissed
+
+    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')
+
+      71 | 				{
+      72 | 					[ GA4_ADSENSE_LINKED_NOTIFICATION ]:
+    > 73 | 						DEFAULT_NOTIFICATIONS[
+         | 						^
+      74 | 							GA4_ADSENSE_LINKED_NOTIFICATION
+      75 | 						],
+      76 | 				},
+
+      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)
+
+  ● GA4AdSenseLinkedNotification › does not render if report has data, and it is not already dismissed
+
+    expect(jest.fn()).not.toHaveErrored(expected)
+
+    Expected mock function not to be called but it was called with:
+    ["Google Site Kit API Error", "method:GET", "datapoint:dismissed-items", "type:core", "identifier:user", "error:\"window.fetch is not a function\""]
+
+      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)
+
+  ● GA4AdSenseLinkedNotification › does not render if already dismissed
+
+    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')
+
+      71 | 				{
+      72 | 					[ GA4_ADSENSE_LINKED_NOTIFICATION ]:
+    > 73 | 						DEFAULT_NOTIFICATIONS[
+         | 						^
+      74 | 							GA4_ADSENSE_LINKED_NOTIFICATION
+      75 | 						],
+      76 | 				},
+
+      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)
+
+  ● GA4AdSenseLinkedNotification › does not render when not on the main or entity dashboard
+
+    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')
+
+      71 | 				{
+      72 | 					[ GA4_ADSENSE_LINKED_NOTIFICATION ]:
+    > 73 | 						DEFAULT_NOTIFICATIONS[
+         | 						^
+      74 | 							GA4_ADSENSE_LINKED_NOTIFICATION
+      75 | 						],
+      76 | 				},
+
+      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)
+
+  ● GA4AdSenseLinkedNotification › does not render when not on the main or entity dashboard
+
+    expect(jest.fn()).not.toHaveErrored(expected)
+
+    Expected mock function not to be called but it was called with:
+    ["Google Site Kit API Error", "method:GET", "datapoint:dismissed-items", "type:core", "identifier:user", "error:\"window.fetch is not a function\""]
+
+      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)
+
+  ● GA4AdSenseLinkedNotification › renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed
+
+    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')
+
+      71 | 				{
+      72 | 					[ GA4_ADSENSE_LINKED_NOTIFICATION ]:
+    > 73 | 						DEFAULT_NOTIFICATIONS[
+         | 						^
+      74 | 							GA4_ADSENSE_LINKED_NOTIFICATION
+      75 | 						],
+      76 | 				},
+
+      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)
+
+  ● GA4AdSenseLinkedNotification › renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed
+
+    expect(element).toHaveTextContent()
+
+    Expected element to have text content:
+      Your AdSense and Analytics accounts are linked
+    Received:
+
+      224 | 		await act( waitForDefaultTimeouts );
+      225 | 
+    > 226 | 		expect( container ).toHaveTextContent(
+          | 		                    ^
+      227 | 			'Your AdSense and Analytics accounts are linked'
+      228 | 		);
+      229 | 		expect( container ).toMatchSnapshot();
+
+      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:226:23)
+
+  ● GA4AdSenseLinkedNotification › renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed
+
+    expect(jest.fn()).not.toHaveErrored(expected)
+
+    Expected mock function not to be called but it was called with:
+    ["Google Site Kit API Error", "method:GET", "datapoint:dismissed-items", "type:core", "identifier:user", "error:\"window.fetch is not a function\""]
+
+      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)
+
+ › 1 snapshot obsolete.
+   • GA4AdSenseLinkedNotification renders when both Analytics and AdSense modules are active and linked 1
+FAIL assets/js/components/notifications/ErrorNotifications.test.js (139.887 s)
+  ErrorNotifications
+    ✕ does not render UnsatisfiedScopesAlert when user is not authenticated (321 ms)
+    ✕ renders UnsatisfiedScopesAlert when user is authenticated (597 ms)
+    ✓ renders `Get help` link (285 ms)
+    ✕ renders the GTE message when the only unsatisfied scope is the tagmanager readonly scope (13 ms)
+    ✕ does not render the GTE message if there are multiple unsatisfied scopes (8 ms)
+    ✕ does render the redo setup CTA if initial Site Kit setup authentication is not granted (9 ms)
+    ✕ does not render the redo setup CTA if it is not due to the interruption of plugin setup and no permission is temporarily persisted (61 ms)
+    ✓ does render the grant permission CTA if additional permissions were not granted and permission is temporarily persisted (25 ms)
+
+  ● ErrorNotifications › does not render UnsatisfiedScopesAlert when user is not authenticated
+
+    TypeError: Cannot read properties of undefined (reading 'authentication-error')
+
+      69 | 			{
+      70 | 				'authentication-error':
+    > 71 | 					DEFAULT_NOTIFICATIONS[ 'authentication-error' ],
+         | 					^
+      72 | 			},
+      73 | 			true
+      74 | 		);
+
+      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:71:6)
+
+  ● ErrorNotifications › renders UnsatisfiedScopesAlert when user is authenticated
+
+    TypeError: Cannot read properties of undefined (reading 'authentication-error')
+
+       99 | 				{
+      100 | 					'authentication-error':
+    > 101 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error' ],
+          | 						^
+      102 | 				},
+      103 | 				true
+      104 | 			);
+
+      at fn (assets/js/components/notifications/ErrorNotifications.test.js:101:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:83:3)
+
+  ● ErrorNotifications › renders the GTE message when the only unsatisfied scope is the tagmanager readonly scope
+
+    TypeError: Cannot read properties of undefined (reading 'authentication-error')
+
+      162 | 				{
+      163 | 					'authentication-error':
+    > 164 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error' ],
+          | 						^
+      165 | 					'authentication-error-gte':
+      166 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error-gte' ],
+      167 | 				},
+
+      at fn (assets/js/components/notifications/ErrorNotifications.test.js:164:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:147:3)
+
+  ● ErrorNotifications › does not render the GTE message if there are multiple unsatisfied scopes
+
+    TypeError: Cannot read properties of undefined (reading 'authentication-error')
+
+      203 | 				{
+      204 | 					'authentication-error':
+    > 205 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error' ],
+          | 						^
+      206 | 					'authentication-error-gte':
+      207 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error-gte' ],
+      208 | 				},
+
+      at fn (assets/js/components/notifications/ErrorNotifications.test.js:205:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:187:3)
+
+  ● ErrorNotifications › does render the redo setup CTA if initial Site Kit setup authentication is not granted
+
+    TypeError: Cannot read properties of undefined (reading 'authentication-error')
+
+      245 | 				{
+      246 | 					'authentication-error':
+    > 247 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error' ],
+          | 						^
+      248 | 					'authentication-error-gte':
+      249 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error-gte' ],
+      250 | 				},
+
+      at fn (assets/js/components/notifications/ErrorNotifications.test.js:247:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:228:3)
+
+  ● ErrorNotifications › does not render the redo setup CTA if it is not due to the interruption of plugin setup and no permission is temporarily persisted
+
+    TypeError: Cannot read properties of undefined (reading 'authentication-error')
+
+      282 | 				{
+      283 | 					'authentication-error':
+    > 284 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error' ],
+          | 						^
+      285 | 					'authentication-error-gte':
+      286 | 						DEFAULT_NOTIFICATIONS[ 'authentication-error-gte' ],
+      287 | 				},
+
+      at fn (assets/js/components/notifications/ErrorNotifications.test.js:284:7)
+      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:271:3)
+
+ › 1 snapshot obsolete.
+   • ErrorNotifications does not render the GTE message if the GTE feature is not enabled 1
+Snapshot Summary
+ › 2 snapshots obsolete from 2 test suites. To remove them all, run `npm run npx -- -u`.
+   ↳ assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js
+       • GA4AdSenseLinkedNotification renders when both Analytics and AdSense modules are active and linked 1
+   ↳ assets/js/components/notifications/ErrorNotifications.test.js
+       • ErrorNotifications does not render the GTE message if the GTE feature is not enabled 1
+
+Test Suites: 2 failed, 2 total
+Tests:       12 failed, 2 passed, 14 total
+Snapshots:   2 obsolete, 0 total
+Time:        142.033 s
+Ran all test suites matching /assets\/js\/components\/notifications\/ErrorNotifications.test.js|assets\/js\/components\/notifications\/GA4AdSenseLinkedNotification.test.js/i.
+{"numFailedTestSuites":2,"numFailedTests":12,"numPassedTestSuites":0,"numPassedTests":2,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":2,"numTotalTests":14,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":true,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":2,"uncheckedKeysByFile":[{"filePath":"/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js","keys":["GA4AdSenseLinkedNotification renders when both Analytics and AdSense modules are active and linked 1"]},{"filePath":"/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js","keys":["ErrorNotifications does not render the GTE message if the GTE feature is not enabled 1"]}],"unmatched":0,"updated":0},"startTime":1782917451436,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":["GA4AdSenseLinkedNotification"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n    at fn (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)","Error: expect(jest.fn()).not.toHaveErrored(expected)\n\nExpected mock function not to be called but it was called with:\n[\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n    at Object.assertExpectedCalls (/workspace/repo/node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"GA4AdSenseLinkedNotification does not render if AdSense module is not active","location":null,"status":"failed","title":"does not render if AdSense module is not active"},{"ancestorTitles":["GA4AdSenseLinkedNotification"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n    at fn (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41","Error: expect(jest.fn()).not.toHaveErrored(expected)\n\nExpected mock function not to be called but it was called with:\n[\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n    at Object.assertExpectedCalls (/workspace/repo/node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"GA4AdSenseLinkedNotification does not render if AdSense and Analytics are not linked","location":null,"status":"failed","title":"does not render if AdSense and Analytics are not linked"},{"ancestorTitles":["GA4AdSenseLinkedNotification"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n    at fn (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41","Error: expect(jest.fn()).not.toHaveErrored(expected)\n\nExpected mock function not to be called but it was called with:\n[\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n    at Object.assertExpectedCalls (/workspace/repo/node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"GA4AdSenseLinkedNotification does not render if report has data, and it is not already dismissed","location":null,"status":"failed","title":"does not render if report has data, and it is not already dismissed"},{"ancestorTitles":["GA4AdSenseLinkedNotification"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n    at fn (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"GA4AdSenseLinkedNotification does not render if already dismissed","location":null,"status":"failed","title":"does not render if already dismissed"},{"ancestorTitles":["GA4AdSenseLinkedNotification"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n    at fn (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41","Error: expect(jest.fn()).not.toHaveErrored(expected)\n\nExpected mock function not to be called but it was called with:\n[\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n    at Object.assertExpectedCalls (/workspace/repo/node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"GA4AdSenseLinkedNotification does not render when not on the main or entity dashboard","location":null,"status":"failed","title":"does not render when not on the main or entity dashboard"},{"ancestorTitles":["GA4AdSenseLinkedNotification"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n    at fn (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41","Error: expect(element).toHaveTextContent()\n\nExpected element to have text content:\n  Your AdSense and Analytics accounts are linked\nReceived:\n\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:226:23)","Error: expect(jest.fn()).not.toHaveErrored(expected)\n\nExpected mock function not to be called but it was called with:\n[\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n    at Object.assertExpectedCalls (/workspace/repo/node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n    at Object.asyncJestLifecycle (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:58:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"GA4AdSenseLinkedNotification renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed","location":null,"status":"failed","title":"renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed"}],"endTime":1782917593229,"message":"  ● GA4AdSenseLinkedNotification › does not render if AdSense module is not active\n\n    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n\n      71 | \t\t\t\t{\n      72 | \t\t\t\t\t[ GA4_ADSENSE_LINKED_NOTIFICATION ]:\n    > 73 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[\n         | \t\t\t\t\t\t^\n      74 | \t\t\t\t\t\t\tGA4_ADSENSE_LINKED_NOTIFICATION\n      75 | \t\t\t\t\t\t],\n      76 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n\n  ● GA4AdSenseLinkedNotification › does not render if AdSense module is not active\n\n    expect(jest.fn()).not.toHaveErrored(expected)\n\n    Expected mock function not to be called but it was called with:\n    [\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n\n      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n\n  ● GA4AdSenseLinkedNotification › does not render if AdSense and Analytics are not linked\n\n    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n\n      71 | \t\t\t\t{\n      72 | \t\t\t\t\t[ GA4_ADSENSE_LINKED_NOTIFICATION ]:\n    > 73 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[\n         | \t\t\t\t\t\t^\n      74 | \t\t\t\t\t\t\tGA4_ADSENSE_LINKED_NOTIFICATION\n      75 | \t\t\t\t\t\t],\n      76 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n\n  ● GA4AdSenseLinkedNotification › does not render if AdSense and Analytics are not linked\n\n    expect(jest.fn()).not.toHaveErrored(expected)\n\n    Expected mock function not to be called but it was called with:\n    [\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n\n      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n\n  ● GA4AdSenseLinkedNotification › does not render if report has data, and it is not already dismissed\n\n    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n\n      71 | \t\t\t\t{\n      72 | \t\t\t\t\t[ GA4_ADSENSE_LINKED_NOTIFICATION ]:\n    > 73 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[\n         | \t\t\t\t\t\t^\n      74 | \t\t\t\t\t\t\tGA4_ADSENSE_LINKED_NOTIFICATION\n      75 | \t\t\t\t\t\t],\n      76 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n\n  ● GA4AdSenseLinkedNotification › does not render if report has data, and it is not already dismissed\n\n    expect(jest.fn()).not.toHaveErrored(expected)\n\n    Expected mock function not to be called but it was called with:\n    [\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n\n      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n\n  ● GA4AdSenseLinkedNotification › does not render if already dismissed\n\n    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n\n      71 | \t\t\t\t{\n      72 | \t\t\t\t\t[ GA4_ADSENSE_LINKED_NOTIFICATION ]:\n    > 73 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[\n         | \t\t\t\t\t\t^\n      74 | \t\t\t\t\t\t\tGA4_ADSENSE_LINKED_NOTIFICATION\n      75 | \t\t\t\t\t\t],\n      76 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n\n  ● GA4AdSenseLinkedNotification › does not render when not on the main or entity dashboard\n\n    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n\n      71 | \t\t\t\t{\n      72 | \t\t\t\t\t[ GA4_ADSENSE_LINKED_NOTIFICATION ]:\n    > 73 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[\n         | \t\t\t\t\t\t^\n      74 | \t\t\t\t\t\t\tGA4_ADSENSE_LINKED_NOTIFICATION\n      75 | \t\t\t\t\t\t],\n      76 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n\n  ● GA4AdSenseLinkedNotification › does not render when not on the main or entity dashboard\n\n    expect(jest.fn()).not.toHaveErrored(expected)\n\n    Expected mock function not to be called but it was called with:\n    [\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n\n      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n\n  ● GA4AdSenseLinkedNotification › renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed\n\n    TypeError: Cannot read properties of undefined (reading 'top-earning-pages-success-notification')\n\n      71 | \t\t\t\t{\n      72 | \t\t\t\t\t[ GA4_ADSENSE_LINKED_NOTIFICATION ]:\n    > 73 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[\n         | \t\t\t\t\t\t^\n      74 | \t\t\t\t\t\t\tGA4_ADSENSE_LINKED_NOTIFICATION\n      75 | \t\t\t\t\t\t],\n      76 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:73:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:56:3)\n\n  ● GA4AdSenseLinkedNotification › renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed\n\n    expect(element).toHaveTextContent()\n\n    Expected element to have text content:\n      Your AdSense and Analytics accounts are linked\n    Received:\n\n      224 | \t\tawait act( waitForDefaultTimeouts );\n      225 | \n    > 226 | \t\texpect( container ).toHaveTextContent(\n          | \t\t                    ^\n      227 | \t\t\t'Your AdSense and Analytics accounts are linked'\n      228 | \t\t);\n      229 | \t\texpect( container ).toMatchSnapshot();\n\n      at Object.<anonymous> (assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js:226:23)\n\n  ● GA4AdSenseLinkedNotification › renders when both Analytics & AdSense modules are active & linked, when report has no data and when it was not previously dismissed\n\n    expect(jest.fn()).not.toHaveErrored(expected)\n\n    Expected mock function not to be called but it was called with:\n    [\"Google Site Kit API Error\", \"method:GET\", \"datapoint:dismissed-items\", \"type:core\", \"identifier:user\", \"error:\\\"window.fetch is not a function\\\"\"]\n\n      at Object.assertExpectedCalls (node_modules/@wordpress/jest-preset-default/node_modules/@wordpress/jest-console/build/@wordpress/jest-console/src/index.js:36:4)\n","name":"/workspace/repo/assets/js/components/notifications/GA4AdSenseLinkedNotification.test.js","startTime":1782917453439,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["ErrorNotifications"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'authentication-error')\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:71:6)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"],"fullName":"ErrorNotifications does not render UnsatisfiedScopesAlert when user is not authenticated","location":null,"status":"failed","title":"does not render UnsatisfiedScopesAlert when user is not authenticated"},{"ancestorTitles":["ErrorNotifications"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'authentication-error')\n    at fn (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:101:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:83:3)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ErrorNotifications renders UnsatisfiedScopesAlert when user is authenticated","location":null,"status":"failed","title":"renders UnsatisfiedScopesAlert when user is authenticated"},{"ancestorTitles":["ErrorNotifications"],"failureMessages":[],"fullName":"ErrorNotifications renders `Get help` link","location":null,"status":"passed","title":"renders `Get help` link"},{"ancestorTitles":["ErrorNotifications"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'authentication-error')\n    at fn (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:164:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:147:3)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ErrorNotifications renders the GTE message when the only unsatisfied scope is the tagmanager readonly scope","location":null,"status":"failed","title":"renders the GTE message when the only unsatisfied scope is the tagmanager readonly scope"},{"ancestorTitles":["ErrorNotifications"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'authentication-error')\n    at fn (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:205:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:187:3)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ErrorNotifications does not render the GTE message if there are multiple unsatisfied scopes","location":null,"status":"failed","title":"does not render the GTE message if there are multiple unsatisfied scopes"},{"ancestorTitles":["ErrorNotifications"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'authentication-error')\n    at fn (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:247:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:228:3)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ErrorNotifications does render the redo setup CTA if initial Site Kit setup authentication is not granted","location":null,"status":"failed","title":"does render the redo setup CTA if initial Site Kit setup authentication is not granted"},{"ancestorTitles":["ErrorNotifications"],"failureMessages":["TypeError: Cannot read properties of undefined (reading 'authentication-error')\n    at fn (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:284:7)\n    at batchedUpdates (/workspace/repo/node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n    at act (/workspace/repo/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n    at Object.<anonymous> (/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js:271:3)\n    at Object.asyncJestTest (/workspace/repo/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:106:37)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:45:12\n    at new Promise (<anonymous>)\n    at mapper (/workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:28:19)\n    at /workspace/repo/node_modules/jest-jasmine2/build/queueRunner.js:75:41"],"fullName":"ErrorNotifications does not render the redo setup CTA if it is not due to the interruption of plugin setup and no permission is temporarily persisted","location":null,"status":"failed","title":"does not render the redo setup CTA if it is not due to the interruption of plugin setup and no permission is temporarily persisted"},{"ancestorTitles":["ErrorNotifications"],"failureMessages":[],"fullName":"ErrorNotifications does render the grant permission CTA if additional permissions were not granted and permission is temporarily persisted","location":null,"status":"passed","title":"does render the grant permission CTA if additional permissions were not granted and permission is temporarily persisted"}],"endTime":1782917593244,"message":"  ● ErrorNotifications › does not render UnsatisfiedScopesAlert when user is not authenticated\n\n    TypeError: Cannot read properties of undefined (reading 'authentication-error')\n\n      69 | \t\t\t{\n      70 | \t\t\t\t'authentication-error':\n    > 71 | \t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error' ],\n         | \t\t\t\t\t^\n      72 | \t\t\t},\n      73 | \t\t\ttrue\n      74 | \t\t);\n\n      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:71:6)\n\n  ● ErrorNotifications › renders UnsatisfiedScopesAlert when user is authenticated\n\n    TypeError: Cannot read properties of undefined (reading 'authentication-error')\n\n       99 | \t\t\t\t{\n      100 | \t\t\t\t\t'authentication-error':\n    > 101 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error' ],\n          | \t\t\t\t\t\t^\n      102 | \t\t\t\t},\n      103 | \t\t\t\ttrue\n      104 | \t\t\t);\n\n      at fn (assets/js/components/notifications/ErrorNotifications.test.js:101:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:83:3)\n\n  ● ErrorNotifications › renders the GTE message when the only unsatisfied scope is the tagmanager readonly scope\n\n    TypeError: Cannot read properties of undefined (reading 'authentication-error')\n\n      162 | \t\t\t\t{\n      163 | \t\t\t\t\t'authentication-error':\n    > 164 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error' ],\n          | \t\t\t\t\t\t^\n      165 | \t\t\t\t\t'authentication-error-gte':\n      166 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error-gte' ],\n      167 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/ErrorNotifications.test.js:164:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:147:3)\n\n  ● ErrorNotifications › does not render the GTE message if there are multiple unsatisfied scopes\n\n    TypeError: Cannot read properties of undefined (reading 'authentication-error')\n\n      203 | \t\t\t\t{\n      204 | \t\t\t\t\t'authentication-error':\n    > 205 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error' ],\n          | \t\t\t\t\t\t^\n      206 | \t\t\t\t\t'authentication-error-gte':\n      207 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error-gte' ],\n      208 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/ErrorNotifications.test.js:205:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:187:3)\n\n  ● ErrorNotifications › does render the redo setup CTA if initial Site Kit setup authentication is not granted\n\n    TypeError: Cannot read properties of undefined (reading 'authentication-error')\n\n      245 | \t\t\t\t{\n      246 | \t\t\t\t\t'authentication-error':\n    > 247 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error' ],\n          | \t\t\t\t\t\t^\n      248 | \t\t\t\t\t'authentication-error-gte':\n      249 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error-gte' ],\n      250 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/ErrorNotifications.test.js:247:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:228:3)\n\n  ● ErrorNotifications › does not render the redo setup CTA if it is not due to the interruption of plugin setup and no permission is temporarily persisted\n\n    TypeError: Cannot read properties of undefined (reading 'authentication-error')\n\n      282 | \t\t\t\t{\n      283 | \t\t\t\t\t'authentication-error':\n    > 284 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error' ],\n          | \t\t\t\t\t\t^\n      285 | \t\t\t\t\t'authentication-error-gte':\n      286 | \t\t\t\t\t\tDEFAULT_NOTIFICATIONS[ 'authentication-error-gte' ],\n      287 | \t\t\t\t},\n\n      at fn (assets/js/components/notifications/ErrorNotifications.test.js:284:7)\n      at batchedUpdates (node_modules/react-dom/cjs/react-dom.development.js:21856:12)\n      at act (node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)\n      at Object.<anonymous> (assets/js/components/notifications/ErrorNotifications.test.js:271:3)\n","name":"/workspace/repo/assets/js/components/notifications/ErrorNotifications.test.js","startTime":1782917453357,"status":"failed","summary":""}],"wasInterrupted":false}reward=0 graded=14 found=14 failed=12 parsed=14 framework=jest exit_code=1

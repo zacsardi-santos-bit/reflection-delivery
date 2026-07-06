@@ -1,7 +1,0 @@
-patching file internal/httputil/httputil_test.go
-# github.com/pomerium/pomerium/internal/httputil [github.com/pomerium/pomerium/internal/httputil.test]
-internal/httputil/httputil_test.go:14:31: undefined: GetClientIPAddress
-internal/httputil/httputil_test.go:19:31: undefined: GetClientIPAddress
-internal/httputil/httputil_test.go:25:31: undefined: GetClientIPAddress
-FAIL	github.com/pomerium/pomerium/internal/httputil [build failed]
-reward=0 graded=36 found=36 failed=36 parsed=1 framework=go exit_code=1

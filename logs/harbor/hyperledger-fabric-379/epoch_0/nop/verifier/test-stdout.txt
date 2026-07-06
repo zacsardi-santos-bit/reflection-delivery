@@ -1,8 +1,0 @@
-patching file core/comm/client_test.go
-patching file integration/e2e/etcdraft_reconfig_test.go
-# github.com/hyperledger/fabric/core/comm_test [github.com/hyperledger/fabric/core/comm.test]
-core/comm/client_test.go:616:58: too many arguments in call to client.NewConnection
-	have (string, string, func(tlsConfig *tls.Config))
-	want (string, string)
-FAIL	github.com/hyperledger/fabric/core/comm [build failed]
-reward=0 graded=79 found=79 failed=79 parsed=1 framework=go exit_code=1

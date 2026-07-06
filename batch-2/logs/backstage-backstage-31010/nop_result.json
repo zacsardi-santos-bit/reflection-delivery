@@ -1,0 +1,29 @@
+{
+    "id": "c0381f1a-0929-4a9b-832f-69717a068db1",
+    "started_at": "2026-07-02T17:56:44.128631",
+    "finished_at": "2026-07-02T17:57:01.817176",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "backstage-backstage-31010__K3Vqbn3"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

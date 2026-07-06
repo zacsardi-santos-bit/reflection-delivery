@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/kubevela/kubevela/pull/7102"
+source_type = "pr"
+
+[task]
+name = "kubevela/kubevela"
+description = "I'm working on the CUE code generator for component definitions (the KubeVela-style toolkit) and it keeps emitting invalid CUE whenever a parameter is an optional collection like a list or a map. R..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["go", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:kubevela-kubevela-7102"
+os = "linux"
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/13"
+category = "Software Engineering"
+subcategory = "Compilers, interpreters, and programming languages"
+objective_labels = ["Implement"]
+artifact_type_labels = ["Codebase", "Generated output artifact"]
+expert_time_estimate = 7200
+junior_time_estimate = 21600

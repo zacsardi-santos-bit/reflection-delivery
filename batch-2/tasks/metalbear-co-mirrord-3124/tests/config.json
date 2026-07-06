@@ -1,0 +1,30 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p mirrord-protocol 2>&1",
+  "test_files": [
+    "tests/Cargo.toml",
+    "tests/go-e2e/main.go",
+    "tests/python-e2e/app_flask.py",
+    "tests/src/http.rs",
+    "tests/src/issue1317.rs",
+    "tests/src/operator.rs",
+    "tests/src/operator/concurrent_steal.rs",
+    "tests/src/operator/policies.rs",
+    "tests/src/operator/steal_tls.rs",
+    "tests/src/traffic/steal.rs",
+    "tests/src/utils.rs",
+    "tests/src/utils/service_addr.rs",
+    "tests/src/utils/sqs_resources.rs",
+    "tests/src/utils/watch.rs"
+  ],
+  "num_test_files": 14,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/5) mirrord-protocol codec::tests::sanity_daemon_encode_decode",
+    "(2/5) mirrord-protocol codec::tests::decode_client_invalid_data",
+    "(3/5) mirrord-protocol codec::tests::decode_daemon_invalid_data",
+    "(4/5) mirrord-protocol codec::tests::sanity_client_encode_decode",
+    "(5/5) mirrord-protocol codec::tests::decode_client_partial_data"
+  ],
+  "PASS_TO_PASS": []
+}

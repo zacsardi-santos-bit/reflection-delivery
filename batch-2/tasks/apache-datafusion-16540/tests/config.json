@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p datafusion-sql --no-fail-fast -E 'test(roundtrip_statement_with_dialect_special_char_alias)'",
+  "test_files": [
+    "datafusion/sql/tests/cases/plan_to_sql.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) datafusion-sql::sql_integration cases::plan_to_sql::roundtrip_statement_with_dialect_special_char_alias"
+  ],
+  "PASS_TO_PASS": []
+}

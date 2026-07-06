@@ -1,0 +1,29 @@
+{
+    "id": "71568a44-663e-4a79-8bd6-069677105907",
+    "started_at": "2026-07-04T15:37:21.712279",
+    "finished_at": "2026-07-04T15:43:59.301233",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__zaproxy-zap-extensions-5393": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "zaproxy-zap-extensions-5393__xuCRKdU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

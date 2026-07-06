@@ -1,7 +1,0 @@
-patching file docs/content/configuration/miscellaneous/logging.md
-patching file internal/commands/const.go
-patching file internal/commands/context.go
-patching file internal/commands/services.go
-patching file internal/logging/const.go
-patching file internal/logging/file.go
-patching file internal/logging/logger.go

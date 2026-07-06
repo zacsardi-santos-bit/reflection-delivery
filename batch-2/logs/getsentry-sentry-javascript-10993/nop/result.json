@@ -1,0 +1,29 @@
+{
+    "id": "90069f90-f2c6-4083-9654-ef016a72a3e4",
+    "started_at": "2026-07-04T15:36:30.107212",
+    "finished_at": "2026-07-04T15:42:58.774727",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__getsentry-sentry-javascript-10993": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "getsentry-sentry-javascript-1099__LDhz7i2"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

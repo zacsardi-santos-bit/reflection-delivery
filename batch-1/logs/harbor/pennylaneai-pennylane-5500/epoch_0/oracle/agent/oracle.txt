@@ -1,0 +1,5 @@
+patching file doc/_static/templates/qubitization/thumbnail_qubitization.png
+patching file doc/introduction/templates.rst
+patching file doc/releases/changelog-dev.md
+patching file pennylane/templates/subroutines/__init__.py
+patching file pennylane/templates/subroutines/qubitization.py

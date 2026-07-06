@@ -1,0 +1,29 @@
+{
+    "id": "0cbc222c-8b87-401f-8e64-7b03f97c77f8",
+    "started_at": "2026-07-06T12:18:52.425969",
+    "finished_at": "2026-07-06T12:19:28.208698",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__riverqueue-river-1155": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "riverqueue-river-1155__K264CcT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "ed423dd9-530e-439d-b919-8bd3a48503ff",
+    "started_at": "2026-07-06T12:18:46.588220",
+    "finished_at": "2026-07-06T12:23:14.292179",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__prefecthq-prefect-22041": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "prefecthq-prefect-22041__3ksrMw8"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

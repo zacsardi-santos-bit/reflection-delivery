@@ -1,0 +1,36 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/packages/flutter_tools && pub run --no-sound-null-safety test --reporter json test/general.shard/build_system/depfile_test.dart test/general.shard/build_system/targets/assets_test.dart test/general.shard/build_system/targets/desktop_test.dart test/general.shard/build_system/targets/windows_test.dart 2>&1 | python3 /usr/local/bin/dart_to_pytest.py",
+  "test_files": [
+    "packages/flutter_tools/test/commands.shard/hermetic/unpack_test.dart",
+    "packages/flutter_tools/test/general.shard/build_system/depfile_test.dart",
+    "packages/flutter_tools/test/general.shard/build_system/targets/assets_test.dart",
+    "packages/flutter_tools/test/general.shard/build_system/targets/desktop_test.dart",
+    "packages/flutter_tools/test/general.shard/build_system/targets/web_test.dart",
+    "packages/flutter_tools/test/general.shard/build_system/targets/windows_test.dart"
+  ],
+  "num_test_files": 6,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "common::Can_escape_depfile_with_windows_file_paths_and_spaces_in_directory_names",
+    "common::Can_escape_depfile_with_spaces_in_directory_names",
+    "common::unpackDesktopArtifacts_copies_files_directories_to_target",
+    "common::unpackDesktopArtifacts_throws_when_attempting_to_copy_missing_file",
+    "common::UnpackWindows_copies_files_to_the_correct_cache_directory",
+    "context::DebugBundleWindowsAssets_creates_correct_bundle_structure"
+  ],
+  "PASS_TO_PASS": [
+    "common::Can_parse_depfile_from_file",
+    "common::Can_parse_depfile_with_multiple_inputs",
+    "common::Can_parse_depfile_with_multiple_outputs",
+    "common::Can_parse_depfile_with_windows_file_paths",
+    "common::Resillient_to_weird_whitespace",
+    "common::Resillient_to_duplicate_files",
+    "common::Resillient_to_malformed_file__missing__",
+    "common::Can_parse_dart2js_output_format",
+    "common::Can_parse_handle_invalid_uri",
+    "context::includes_LICENSE_file_inputs_in_dependencies",
+    "context::Copies_files_to_correct_asset_directory",
+    "context::Throws_exception_if_pubspec_contains_missing_files"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cd /workspace/repo && cargo nextest run --test disas -E 'test(/i64_add128|i64_sub128|i64_mul_wide/)'",
+  "test_files": [
+    "tests/disas/winch/aarch64/i64_add128/const.wat",
+    "tests/disas/winch/aarch64/i64_add128/locals.wat",
+    "tests/disas/winch/aarch64/i64_add128/params.wat",
+    "tests/disas/winch/aarch64/i64_mul_wide_s/const.wat",
+    "tests/disas/winch/aarch64/i64_mul_wide_s/locals.wat",
+    "tests/disas/winch/aarch64/i64_mul_wide_s/params.wat",
+    "tests/disas/winch/aarch64/i64_mul_wide_u/const.wat",
+    "tests/disas/winch/aarch64/i64_mul_wide_u/locals.wat",
+    "tests/disas/winch/aarch64/i64_mul_wide_u/params.wat",
+    "tests/disas/winch/aarch64/i64_sub128/const.wat",
+    "tests/disas/winch/aarch64/i64_sub128/locals.wat",
+    "tests/disas/winch/aarch64/i64_sub128/params.wat"
+  ],
+  "num_test_files": 12,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_mul_wide_u/params.wat",
+    "( 2/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_add128/const.wat",
+    "( 3/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_mul_wide_s/params.wat",
+    "( 4/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_mul_wide_u/locals.wat",
+    "( 5/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_add128/params.wat",
+    "( 6/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_sub128/locals.wat",
+    "( 7/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_mul_wide_s/locals.wat",
+    "( 8/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_sub128/const.wat",
+    "( 9/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_mul_wide_s/const.wat",
+    "(10/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_add128/locals.wat",
+    "(11/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_sub128/params.wat",
+    "(12/12) wasmtime-cli::disas ./tests/disas/winch/aarch64/i64_mul_wide_u/const.wat"
+  ],
+  "PASS_TO_PASS": []
+}

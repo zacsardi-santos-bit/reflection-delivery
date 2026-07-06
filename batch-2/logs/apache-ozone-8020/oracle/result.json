@@ -1,0 +1,29 @@
+{
+    "id": "2b58c59e-fa7b-4771-93f8-c2008b8dbe15",
+    "started_at": "2026-07-04T15:43:22.147469",
+    "finished_at": "2026-07-04T15:44:00.481262",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-ozone-8020": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-ozone-8020__9QzLMa3"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

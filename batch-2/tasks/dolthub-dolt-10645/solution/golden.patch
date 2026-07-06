@@ -1,0 +1,2047 @@
+diff --git a/go/cmd/dolt/commands/cherry-pick.go b/go/cmd/dolt/commands/cherry-pick.go
+index 735883d0d6..5cc82c175c 100644
+--- a/go/cmd/dolt/commands/cherry-pick.go
++++ b/go/cmd/dolt/commands/cherry-pick.go
+@@ -26,7 +26,6 @@ import (
+ 	"github.com/dolthub/dolt/go/cmd/dolt/errhand"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/branch_control"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/env"
+-	"github.com/dolthub/dolt/go/libraries/doltcore/env/actions"
+ 	"github.com/dolthub/dolt/go/libraries/utils/argparser"
+ 	"github.com/dolthub/dolt/go/store/util/outputpager"
+ 	eventsapi "github.com/dolthub/eventsapi_schema/dolt/services/eventsapi/v1alpha1"
+@@ -52,12 +51,6 @@ var ErrCherryPickConflictsOrViolations = errors.NewKind("error: Unable to apply
+ 	"To undo all changes from this cherry-pick operation, use `dolt cherry-pick --abort`.\n" +
+ 	"For more information on handling conflicts, see: https://docs.dolthub.com/concepts/dolt/git/conflicts")
+ 
+-var ErrCherryPickVerificationFailed = errors.NewKind("error: Commit verification failed. Your changes are staged " +
+-	"in the working set. Fix the failing tests, use `dolt add` to stage your changes, then " +
+-	"`dolt cherry-pick --continue` to complete the cherry-pick.\n" +
+-	"To undo all changes from this cherry-pick operation, use `dolt cherry-pick --abort`.\n" +
+-	"Run `dolt sql -q 'select * from dolt_test_run()` to see which tests are failing.")
+-
+ type CherryPickCmd struct{}
+ 
+ // Name returns the name of the Dolt cli command. This is what is used on the command line to invoke the command.
+@@ -173,10 +166,6 @@ hint: commit your changes (dolt commit -am \"<message>\") or reset them (dolt re
+ 	}
+ 	rows, err := cli.GetRowsForSql(queryist, sqlCtx, q)
+ 	if err != nil {
+-		if actions.ErrCommitVerificationFailed.Is(err) {
+-			cli.PrintErrln(err.Error())
+-			return ErrCherryPickVerificationFailed.New()
+-		}
+ 		errorText := err.Error()
+ 		switch {
+ 		case strings.Contains("nothing to commit", errorText):
+@@ -261,27 +250,20 @@ func cherryPickContinue(sqlCtx *sql.Context, queryist cli.Queryist) error {
+ 	query := "call dolt_cherry_pick('--continue')"
+ 	rows, err := cli.GetRowsForSql(queryist, sqlCtx, query)
+ 	if err != nil {
+-		if actions.ErrCommitVerificationFailed.Is(err) {
+-			cli.PrintErrln(err.Error())
+-			return ErrCherryPickVerificationFailed.New()
+-		}
+ 		return err
+ 	}
+ 
+ 	if len(rows) != 1 {
+ 		return fmt.Errorf("error: unexpected number of rows returned from dolt_cherry_pick: %d", len(rows))
+ 	}
+-
+-	// No version of dolt_cherry_pick has ever returned less than 4 columns. We don't set an upper bound here to
+-	// allow for servers to add more columns in the future without breaking compatibility with older clients.
+-	if len(rows[0]) < 4 {
++	if len(rows[0]) != 4 {
+ 		return fmt.Errorf("error: unexpected number of columns returned from dolt_cherry_pick: %d", len(rows[0]))
+ 	}
+ 
+ 	row := rows[0]
+ 
+ 	// We expect to get an error if there were problems, but we also could get any of the conflicts and
+-	// violation counts being greater than 0 if there were problems. If we got here without an error,
++	// vacation counts being greater than 0 if there were problems. If we got here without an error,
+ 	// but we have conflicts or violations, we should report and stop.
+ 	dataConflicts, err := getInt64ColAsInt64(row[1])
+ 	if err != nil {
+diff --git a/go/cmd/dolt/commands/merge.go b/go/cmd/dolt/commands/merge.go
+index 9c65f8c3c5..db5aea5ab0 100644
+--- a/go/cmd/dolt/commands/merge.go
++++ b/go/cmd/dolt/commands/merge.go
+@@ -33,7 +33,6 @@ import (
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/diff"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/doltdb"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/env"
+-	"github.com/dolthub/dolt/go/libraries/doltcore/env/actions"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/merge"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/sqle/dprocedures"
+ 	"github.com/dolthub/dolt/go/libraries/utils/argparser"
+@@ -166,11 +165,6 @@ func (cmd MergeCmd) Exec(ctx context.Context, commandStr string, args []string,
+ 		return 1
+ 	}
+ 
+-	if msg := getMergeMessage(mergeResultRow); strings.HasPrefix(msg, actions.CommitVerificationFailedPrefix) {
+-		cli.Println(msg)
+-		return 1
+-	}
+-
+ 	if !apr.Contains(cli.AbortParam) {
+ 		//todo: refs with the `remotes/` prefix will fail to get a hash
+ 		headHash, headHashErr := getHashOf(queryist.Queryist, queryist.Context, "HEAD")
+@@ -757,17 +751,3 @@ func everythingUpToDate(row sql.Row) (bool, error) {
+ 
+ 	return false, nil
+ }
+-
+-// getMergeMessage extracts the message column from a merge result row.
+-func getMergeMessage(row sql.Row) string {
+-	if len(row) == 3 {
+-		if msg, ok := row[2].(string); ok {
+-			return msg
+-		}
+-	} else if len(row) == 4 {
+-		if msg, ok := row[3].(string); ok {
+-			return msg
+-		}
+-	}
+-	return ""
+-}
+diff --git a/go/cmd/dolt/commands/rebase.go b/go/cmd/dolt/commands/rebase.go
+index cce2010b26..ea8ec288a1 100644
+--- a/go/cmd/dolt/commands/rebase.go
++++ b/go/cmd/dolt/commands/rebase.go
+@@ -28,7 +28,6 @@ import (
+ 	"github.com/dolthub/dolt/go/cmd/dolt/errhand"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/dconfig"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/env"
+-	"github.com/dolthub/dolt/go/libraries/doltcore/env/actions"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/rebase"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/sqle/dprocedures"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/sqle/dsess"
+@@ -430,8 +429,7 @@ func syncCliBranchToSqlSessionBranch(ctx *sql.Context, dEnv *env.DoltEnv) error
+ }
+ 
+ // isRebaseConflictError checks if the given error represents a rebase pause condition
+-// (data conflicts or verification failure) that should not abort the rebase but instead
+-// allow the user to resolve/continue.
++// (data conflicts) that should not abort the rebase but instead allow the user to resolve/continue.
+ func isRebaseConflictError(err error) bool {
+ 	if err == nil {
+ 		return false
+@@ -441,16 +439,8 @@ func isRebaseConflictError(err error) bool {
+ 	if dprocedures.ErrRebaseDataConflict.Is(err) {
+ 		return true
+ 	}
+-	if dprocedures.ErrRebaseVerificationFailed.Is(err) {
+-		return true
+-	}
+-	if actions.ErrCommitVerificationFailed.Is(err) {
+-		return true
+-	}
+ 
+ 	// For over-the-wire errors that lose their type, match against error message patterns
+ 	errMsg := err.Error()
+-	return strings.HasPrefix(errMsg, dprocedures.RebaseDataConflictPrefix) ||
+-		strings.HasPrefix(errMsg, dprocedures.RebaseVerificationFailedPrefix) ||
+-		strings.HasPrefix(errMsg, actions.CommitVerificationFailedPrefix)
++	return strings.HasPrefix(errMsg, dprocedures.RebaseDataConflictPrefix)
+ }
+diff --git a/go/libraries/doltcore/cherry_pick/cherry_pick.go b/go/libraries/doltcore/cherry_pick/cherry_pick.go
+index 95ea09f3cd..b7172dc381 100644
+--- a/go/libraries/doltcore/cherry_pick/cherry_pick.go
++++ b/go/libraries/doltcore/cherry_pick/cherry_pick.go
+@@ -82,14 +82,6 @@ func CherryPick(ctx *sql.Context, commit string, options CherryPickOptions) (str
+ 		return "", nil, fmt.Errorf("failed to get roots for current session")
+ 	}
+ 
+-	// Capture the working set BEFORE applying cherry-pick changes. If commit verification
+-	// fails later, we need to set the merge state with preMergeWorking = original working
+-	// root so that --abort properly restores the pre-cherry-pick state.
+-	preApplyWs, wsErr := doltSession.WorkingSet(ctx, dbName)
+-	if wsErr != nil {
+-		return "", nil, wsErr
+-	}
+-
+ 	mergeResult, commitMsg, originalCommit, err := cherryPick(ctx, doltSession, roots, dbName, commit, options.EmptyCommitHandling)
+ 	if err != nil {
+ 		return "", mergeResult, err
+@@ -139,20 +131,6 @@ func CherryPick(ctx *sql.Context, commit string, options CherryPickOptions) (str
+ 
+ 	pendingCommit, err := doltSession.NewPendingCommit(ctx, dbName, roots, *commitProps)
+ 	if err != nil {
+-		// If verification failed, set merge state and return via the result (not as a Go error).
+-		// Returning a Go error would roll back the transaction, undoing all working set changes.
+-		// Returning nil error instead lets CommitTransaction persist the staged changes and merge
+-		// state, so the user can fix the failing tests and --continue.
+-		if actions.ErrCommitVerificationFailed.Is(err) {
+-			newWs := preApplyWs.StartCherryPick(originalCommit, commit).
+-				WithWorkingRoot(roots.Working).
+-				WithStagedRoot(roots.Staged)
+-			if wsErr := doltSession.SetWorkingSet(ctx, dbName, newWs); wsErr != nil {
+-				return "", nil, wsErr
+-			}
+-			mergeResult.CommitVerificationErr = err
+-			return "", mergeResult, nil
+-		}
+ 		return "", nil, err
+ 	}
+ 	if pendingCommit == nil {
+@@ -253,10 +231,9 @@ func AbortCherryPick(ctx *sql.Context, dbName string) error {
+ 	return doltSession.SetWorkingSet(ctx, dbName, newWs)
+ }
+ 
+-// ContinueCherryPick continues a cherry-pick merge that was paused due to conflicts or
+-// commit verification failure. It checks that conflicts have been resolved and creates
+-// the final commit with the original commit's metadata. Returns (hash, dataConflicts,
+-// schemaConflicts, constraintViolations, verificationFailures, error).
++// ContinueCherryPick continues a cherry-pick merge that was paused due to conflicts.
++// It checks that conflicts have been resolved and creates the final commit with the
++// original commit's metadata.
+ func ContinueCherryPick(ctx *sql.Context, dbName string) (string, int, int, int, error) {
+ 	doltSession := dsess.DSessFromSess(ctx.Session)
+ 
+@@ -333,9 +310,6 @@ func ContinueCherryPick(ctx *sql.Context, dbName string) (string, int, int, int,
+ 
+ 	pendingCommit, err := doltSession.NewPendingCommit(ctx, dbName, roots, commitProps)
+ 	if err != nil {
+-		if actions.ErrCommitVerificationFailed.Is(err) {
+-			return "", 0, 0, 0, err
+-		}
+ 		return "", 0, 0, 0, fmt.Errorf("error: failed to create pending commit: %w", err)
+ 	}
+ 	if pendingCommit == nil {
+diff --git a/go/libraries/doltcore/env/actions/commit.go b/go/libraries/doltcore/env/actions/commit.go
+index c85ee4497e..15b1a619e2 100644
+--- a/go/libraries/doltcore/env/actions/commit.go
++++ b/go/libraries/doltcore/env/actions/commit.go
+@@ -22,17 +22,12 @@ import (
+ 
+ 	gms "github.com/dolthub/go-mysql-server"
+ 	"github.com/dolthub/go-mysql-server/sql"
+-	goerrors "gopkg.in/src-d/go-errors.v1"
+ 
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/diff"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/doltdb"
+ 	"github.com/dolthub/dolt/go/store/datas"
+ )
+ 
+-const CommitVerificationFailedPrefix = "commit verification failed:"
+-
+-var ErrCommitVerificationFailed = goerrors.NewKind(CommitVerificationFailedPrefix + " %s")
+-
+ type CommitStagedProps struct {
+ 	Message          string
+ 	Date             time.Time
+@@ -50,10 +45,10 @@ const (
+ 	DoltCommitVerificationGroups = "dolt_commit_verification_groups"
+ )
+ 
+-// getCommitRunTestGroups returns the test groups to run for commit operations
++// GetCommitRunTestGroups returns the test groups to run for commit operations
+ // Returns empty slice if no tests should be run, ["*"] if all tests should be run,
+ // or specific group names if only those groups should be run
+-func getCommitRunTestGroups() []string {
++func GetCommitRunTestGroups() []string {
+ 	_, val, ok := sql.SystemVariables.GetGlobal(DoltCommitVerificationGroups)
+ 	if !ok {
+ 		return nil
+@@ -152,7 +147,7 @@ func GetCommitStaged(
+ 	}
+ 
+ 	if !props.SkipVerification {
+-		testGroups := getCommitRunTestGroups()
++		testGroups := GetCommitRunTestGroups()
+ 		if len(testGroups) > 0 {
+ 			err := runCommitVerification(ctx, testGroups)
+ 			if err != nil {
+@@ -169,9 +164,6 @@ func GetCommitStaged(
+ 	return db.NewPendingCommit(ctx, roots, mergeParents, props.Amend, meta)
+ }
+ 
+-// runCommitVerification runs the commit verification tests for the given test groups.
+-// If any tests fail, it returns ErrCommitVerificationFailed wrapping the failure details.
+-// Callers can use errors.Is(err, ErrCommitVerificationFailed) to detect this case.
+ func runCommitVerification(ctx *sql.Context, testGroups []string) error {
+ 	type sessionInterface interface {
+ 		sql.Session
+@@ -224,7 +216,7 @@ func runTestsUsingDtablefunctions(ctx *sql.Context, engine *gms.Engine, testGrou
+ 	}
+ 
+ 	if len(allFailures) > 0 {
+-		return ErrCommitVerificationFailed.New(strings.Join(allFailures, ", "))
++		return fmt.Errorf("commit verification failed: %s", strings.Join(allFailures, ", "))
+ 	}
+ 
+ 	return nil
+diff --git a/go/libraries/doltcore/merge/merge.go b/go/libraries/doltcore/merge/merge.go
+index c8f066f47b..ec84f0f3e6 100644
+--- a/go/libraries/doltcore/merge/merge.go
++++ b/go/libraries/doltcore/merge/merge.go
+@@ -87,10 +87,9 @@ func MergeCommits(ctx *sql.Context, tableResolver doltdb.TableResolver, commit,
+ }
+ 
+ type Result struct {
+-	Root                  doltdb.RootValue
+-	SchemaConflicts       []SchemaConflict
+-	Stats                 map[doltdb.TableName]*MergeStats
+-	CommitVerificationErr error
++	Root            doltdb.RootValue
++	SchemaConflicts []SchemaConflict
++	Stats           map[doltdb.TableName]*MergeStats
+ }
+ 
+ func (r Result) HasSchemaConflicts() bool {
+diff --git a/go/libraries/doltcore/sqle/dprocedures/dolt_cherry_pick.go b/go/libraries/doltcore/sqle/dprocedures/dolt_cherry_pick.go
+index 3623a193e7..ce6833490a 100644
+--- a/go/libraries/doltcore/sqle/dprocedures/dolt_cherry_pick.go
++++ b/go/libraries/doltcore/sqle/dprocedures/dolt_cherry_pick.go
+@@ -25,7 +25,6 @@ import (
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/branch_control"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/cherry_pick"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/doltdb"
+-	"github.com/dolthub/dolt/go/libraries/doltcore/sqle/dsess"
+ )
+ 
+ var ErrEmptyCherryPick = errors.New("cannot cherry-pick empty string")
+@@ -65,7 +64,6 @@ func doltCherryPick(ctx *sql.Context, args ...string) (sql.RowIter, error) {
+ // doDoltCherryPick attempts to perform a cherry-pick merge based on the arguments specified in |args| and returns
+ // the new, created commit hash (if it was successful created), a count of the number of tables with data conflicts,
+ // a count of the number of tables with schema conflicts, and a count of the number of tables with constraint violations.
+-// Verification failures are returned as errors.
+ func doDoltCherryPick(ctx *sql.Context, args []string) (string, int, int, int, error) {
+ 	// Get the information for the sql context.
+ 	dbName := ctx.GetCurrentDatabase()
+@@ -121,15 +119,6 @@ func doDoltCherryPick(ctx *sql.Context, args []string) (string, int, int, int, e
+ 	}
+ 
+ 	if mergeResult != nil {
+-		if mergeResult.CommitVerificationErr != nil {
+-			// Commit the transaction to persist the dirty working set to the staged working set.
+-			// This allows the user to address the verification failure and then `--continue` the cherry-pick.
+-			doltSession := dsess.DSessFromSess(ctx.Session)
+-			if txErr := doltSession.CommitTransaction(ctx, doltSession.GetTransaction()); txErr != nil {
+-				return "", 0, 0, 0, txErr
+-			}
+-			return "", 0, 0, 0, mergeResult.CommitVerificationErr
+-		}
+ 		return "",
+ 			mergeResult.CountOfTablesWithDataConflicts(),
+ 			mergeResult.CountOfTablesWithSchemaConflicts(),
+diff --git a/go/libraries/doltcore/sqle/dprocedures/dolt_merge.go b/go/libraries/doltcore/sqle/dprocedures/dolt_merge.go
+index 083d8df48f..1f68de8e79 100644
+--- a/go/libraries/doltcore/sqle/dprocedures/dolt_merge.go
++++ b/go/libraries/doltcore/sqle/dprocedures/dolt_merge.go
+@@ -245,10 +245,6 @@ func performMerge(
+ 				}
+ 				ctx.Warn(DoltMergeWarningCode, "%s", err.Error())
+ 				return ws, "", hasConflictsOrViolations, threeWayMerge, "", err
+-			} else if actions.ErrCommitVerificationFailed.Is(err) {
+-				// We don't return an error here because that rolls back the transaction, while we actually need the
+-				// staged data to allow the user to address the verification problem.
+-				return ws, "", noConflictsOrViolations, threeWayMerge, err.Error(), nil
+ 			} else if err != nil {
+ 				return ws, "", noConflictsOrViolations, threeWayMerge, "", err
+ 			}
+@@ -318,9 +314,6 @@ func performMerge(
+ 		}
+ 		commit, _, err = doDoltCommit(ctx, args)
+ 		if err != nil {
+-			if actions.ErrCommitVerificationFailed.Is(err) {
+-				return ws, "", noConflictsOrViolations, threeWayMerge, err.Error(), nil
+-			}
+ 			return ws, commit, noConflictsOrViolations, threeWayMerge, "", err
+ 		}
+ 	}
+@@ -464,9 +457,6 @@ func executeNoFFMerge(
+ 		SkipVerification: skipVerification,
+ 	})
+ 	if err != nil {
+-		if actions.ErrCommitVerificationFailed.Is(err) {
+-			return ws, nil, err
+-		}
+ 		return nil, nil, err
+ 	}
+ 
+diff --git a/go/libraries/doltcore/sqle/dprocedures/dolt_rebase.go b/go/libraries/doltcore/sqle/dprocedures/dolt_rebase.go
+index 7d665f0240..a770f6485f 100644
+--- a/go/libraries/doltcore/sqle/dprocedures/dolt_rebase.go
++++ b/go/libraries/doltcore/sqle/dprocedures/dolt_rebase.go
+@@ -144,13 +144,6 @@ var ErrRebaseDataConflict = goerrors.NewKind(RebaseDataConflictPrefix + " %s (%s
+ 	"Resolve the conflicts and remove them from the dolt_conflicts_<table> tables, " +
+ 	"then continue the rebase by calling dolt_rebase('--continue')")
+ 
+-const RebaseVerificationFailedPrefix = "commit verification failed while rebasing commit"
+-
+-// ErrRebaseVerificationFailed is used when commit verification tests fail while rebasing a commit.
+-// The workspace is left dirty so the user can fix the failing tests and retry using --continue.
+-var ErrRebaseVerificationFailed = goerrors.NewKind(RebaseVerificationFailedPrefix + " %s (%s): %s\n\n" +
+-	"Fix the failing tests and stage your changes, then continue the rebase by calling dolt_rebase('--continue')")
+-
+ var EditPausePrefix = "edit action paused at commit"
+ 
+ // createEditPauseMessage creates a pause message for edit actions
+@@ -992,19 +985,6 @@ func handleRebaseCherryPick(
+ 		return newRebaseError(ErrRebaseDataConflict.New(planStep.CommitHash, planStep.CommitMsg))
+ 	}
+ 
+-	if mergeResult != nil && mergeResult.CommitVerificationErr != nil {
+-		if doltSession.GetTransaction() == nil {
+-			_, txErr := doltSession.StartTransaction(ctx, sql.ReadWrite)
+-			if txErr != nil {
+-				return newRebaseError(txErr)
+-			}
+-		}
+-		if txErr := doltSession.CommitTransaction(ctx, doltSession.GetTransaction()); txErr != nil {
+-			return newRebaseError(txErr)
+-		}
+-		return newRebaseError(mergeResult.CommitVerificationErr)
+-	}
+-
+ 	// If this is an edit action and no conflicts occurred, pause the rebase to allow user modifications
+ 	if planStep.Action == rebase.RebaseActionEdit && err == nil {
+ 		return newRebasePause(createEditPauseMessage(planStep.CommitHash, planStep.CommitMsg))
+diff --git a/go/libraries/doltcore/sqle/dtables/diff_table.go b/go/libraries/doltcore/sqle/dtables/diff_table.go
+index be1a6c571b..869aa56bf5 100644
+--- a/go/libraries/doltcore/sqle/dtables/diff_table.go
++++ b/go/libraries/doltcore/sqle/dtables/diff_table.go
+@@ -19,12 +19,13 @@ import (
+ 	"errors"
+ 	"fmt"
+ 	"io"
++	"time"
+ 
+ 	"github.com/dolthub/go-mysql-server/sql"
++	gmstypes "github.com/dolthub/go-mysql-server/sql/types"
+ 
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/diff"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/doltdb"
+-	"github.com/dolthub/dolt/go/libraries/doltcore/row"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/schema"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/sqle/expreval"
+ 	"github.com/dolthub/dolt/go/libraries/doltcore/sqle/index"
+@@ -161,7 +162,7 @@ func (dt *DiffTable) Partitions(ctx *sql.Context) (sql.PartitionIter, error) {
+ func (dt *DiffTable) PartitionRanges(ctx *sql.Context, ranges []prolly.Range) (sql.PartitionIter, error) {
+ 	cmItr := doltdb.CommitItrForRoots[*sql.Context](dt.ddb, dt.head)
+ 
+-	sf, err := SelectFuncForFilters(ctx, dt.ddb.ValueReadWriter(), dt.partitionFilters)
++	sf, err := SelectFuncForFilters(ctx, dt.partitionFilters)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -353,7 +354,7 @@ func (dt *DiffTable) fromCommitLookupPartitions(ctx *sql.Context, hashes []hash.
+ 		return sql.PartitionsToPartitionIter(), nil
+ 	}
+ 
+-	sf, err := SelectFuncForFilters(ctx, dt.ddb.ValueReadWriter(), dt.partitionFilters)
++	sf, err := SelectFuncForFilters(ctx, dt.partitionFilters)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -556,7 +557,7 @@ func (dt *DiffTable) toCommitLookupPartitions(ctx *sql.Context, hashes []hash.Ha
+ 		return sql.PartitionsToPartitionIter(), nil
+ 	}
+ 
+-	sf, err := SelectFuncForFilters(ctx, dt.ddb.ValueReadWriter(), dt.partitionFilters)
++	sf, err := SelectFuncForFilters(ctx, dt.partitionFilters)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+@@ -687,42 +688,29 @@ func (dp *DiffPartition) isDiffablePartition(ctx *sql.Context) (simpleDiff bool,
+ 
+ type partitionSelectFunc func(*sql.Context, DiffPartition) (bool, error)
+ 
+-func SelectFuncForFilters(ctx *sql.Context, vr types.ValueReader, filters []sql.Expression) (partitionSelectFunc, error) {
+-	const (
+-		toCommitTag uint64 = iota
+-		fromCommitTag
+-		toCommitDateTag
+-		fromCommitDateTag
+-	)
+-
+-	colColl := schema.NewColCollection(
+-		schema.NewColumn(toCommit, toCommitTag, types.StringKind, false),
+-		schema.NewColumn(fromCommit, fromCommitTag, types.StringKind, false),
+-		schema.NewColumn(toCommitDate, toCommitDateTag, types.TimestampKind, false),
+-		schema.NewColumn(fromCommitDate, fromCommitDateTag, types.TimestampKind, false),
+-	)
+-
+-	expFunc, err := expreval.ExpressionFuncFromSQLExpressions(ctx, vr, schema.UnkeyedSchemaFromCols(colColl), filters)
++func SelectFuncForFilters(ctx *sql.Context, filters []sql.Expression) (partitionSelectFunc, error) {
++	sch := sql.Schema{
++		{Name: toCommit, Type: gmstypes.LongText},
++		{Name: fromCommit, Type: gmstypes.LongText},
++		{Name: toCommitDate, Type: gmstypes.Datetime},
++		{Name: fromCommitDate, Type: gmstypes.Datetime},
++	}
+ 
++	expFunc, err := expreval.ExpressionFuncFromSQLExpressions(ctx, sch, filters)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+ 
+ 	return func(ctx *sql.Context, partition DiffPartition) (bool, error) {
+-		vals := row.TaggedValues{
+-			toCommitTag:   types.String(partition.toName),
+-			fromCommitTag: types.String(partition.fromName),
+-		}
+-
++		var toDate, fromDate interface{}
+ 		if partition.toDate != nil {
+-			vals[toCommitDateTag] = *partition.toDate
++			toDate = time.Time(*partition.toDate)
+ 		}
+-
+ 		if partition.fromDate != nil {
+-			vals[fromCommitDateTag] = *partition.fromDate
++			fromDate = time.Time(*partition.fromDate)
+ 		}
+-
+-		return expFunc(ctx, vals)
++		row := sql.Row{partition.toName, partition.fromName, toDate, fromDate}
++		return expFunc(ctx, row)
+ 	}, nil
+ }
+ 
+diff --git a/go/libraries/doltcore/sqle/enginetest/dolt_queries_commit_verification.go b/go/libraries/doltcore/sqle/enginetest/dolt_queries_commit_verification.go
+index 08eb75e175..0a2251cc95 100644
+--- a/go/libraries/doltcore/sqle/enginetest/dolt_queries_commit_verification.go
++++ b/go/libraries/doltcore/sqle/enginetest/dolt_queries_commit_verification.go
+@@ -188,7 +188,7 @@ var DoltCommitVerificationScripts = []queries.ScriptTest{
+ 		},
+ 	},
+ 	{
+-		Name: "cherry-pick with test verification enabled - test pass, then test fails",
++		Name: "cherry-pick with test verification enabled - tests pass",
+ 		SetUpScript: []string{
+ 			"SET GLOBAL dolt_commit_verification_groups = '*'",
+ 			"CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100))",
+@@ -209,7 +209,6 @@ var DoltCommitVerificationScripts = []queries.ScriptTest{
+ 		},
+ 		Assertions: []queries.ScriptTestAssertion{
+ 			{
+-				// Verify that tests _can_ pass by cherry-picking the first commit, which adds Bob and updates the test to expect 2 users.
+ 				Query:    "CALL dolt_cherry_pick(@commit_1_hash)",
+ 				Expected: []sql.Row{{commitHash, int64(0), int64(0), int64(0)}},
+ 			},
+@@ -217,21 +216,6 @@ var DoltCommitVerificationScripts = []queries.ScriptTest{
+ 				Query:          "CALL dolt_cherry_pick(@commit_2_hash)",
+ 				ExpectedErrStr: "commit verification failed: test_user_count_update (Assertion failed: expected_single_value equal to 2, got 3)",
+ 			},
+-			{
+-				// users table is staged (merged content with charlie added is preserved)
+-				Query:    "SELECT staged FROM dolt_status WHERE table_name = 'users'",
+-				Expected: []sql.Row{{uint64(1)}},
+-			},
+-			{
+-				// --abort restores clean state, with Bob in the table (from first cherry-pick).
+-				Query:            "CALL dolt_cherry_pick('--abort')",
+-				SkipResultsCheck: true,
+-			},
+-			{
+-				Query:    "SELECT COUNT(*) FROM users",
+-				Expected: []sql.Row{{int64(2)}},
+-			},
+-			{},
+ 			{ // Test harness bleeds GLOBAL variable changes across tests, so reset after each test.
+ 				Query:            "SET GLOBAL dolt_commit_verification_groups = ''",
+ 				SkipResultsCheck: true,
+@@ -239,7 +223,7 @@ var DoltCommitVerificationScripts = []queries.ScriptTest{
+ 		},
+ 	},
+ 	{
+-		Name: "cherry-pick with test verification enabled - tests fail, leaves dirty state",
++		Name: "cherry-pick with test verification enabled - tests fail, aborted",
+ 		SetUpScript: []string{
+ 			"SET GLOBAL dolt_commit_verification_groups = '*'",
+ 			"CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100))",
+@@ -256,86 +240,18 @@ var DoltCommitVerificationScripts = []queries.ScriptTest{
+ 		},
+ 		Assertions: []queries.ScriptTestAssertion{
+ 			{
+-				// Verification fails; returns specific error, dirty state preserved via explicit CommitTransaction
+ 				Query:          "CALL dolt_cherry_pick(@commit_hash)",
+ 				ExpectedErrStr: "commit verification failed: test_users_count (Assertion failed: expected_single_value equal to 1, got 2)",
+ 			},
+ 			{
+-				// users table should be staged (cherry-pick changes are preserved by the committed transaction)
+-				Query:    "SELECT staged FROM dolt_status WHERE table_name = 'users'",
+-				Expected: []sql.Row{{uint64(1)}},
+-			},
+-			{
+-				// --continue without fixing still fails with specific error, dirty state preserved
+-				Query:          "CALL dolt_cherry_pick('--continue')",
+-				ExpectedErrStr: "commit verification failed: test_users_count (Assertion failed: expected_single_value equal to 1, got 2)",
+-			},
+-			{
+-				// Abort restores clean state
+-				Query:            "CALL dolt_cherry_pick('--abort')",
+-				SkipResultsCheck: true,
+-			},
+-			{
+-				// After abort, workspace is clean
+-				Query:    "SELECT COUNT(*) FROM dolt_status",
+-				Expected: []sql.Row{{int64(0)}},
+-			},
+-			{
+-				// Now cherry-pick succeeds with --skip-verification
+ 				Query:    "CALL dolt_cherry_pick('--skip-verification', @commit_hash)",
+ 				Expected: []sql.Row{{commitHash, int64(0), int64(0), int64(0)}},
+ 			},
+-			{ // Test harness bleeds GLOBAL variable changes across tests, so reset after each test.
+-				Query:            "SET GLOBAL dolt_commit_verification_groups = ''",
+-				SkipResultsCheck: true,
+-			},
+-		},
+-	},
+-	{
+-		Name: "cherry-pick with test verification enabled - fix data and --continue succeeds",
+-		SetUpScript: []string{
+-			"SET GLOBAL dolt_commit_verification_groups = '*'",
+-			"CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100))",
+-			"INSERT INTO users VALUES (1, 'Alice', 'alice@example.com')",
+-			"INSERT INTO dolt_tests (test_name, test_group, test_query, assertion_type, assertion_comparator, assertion_value) VALUES " +
+-				"('test_users_count', 'unit', 'SELECT COUNT(*) FROM users', 'expected_single_value', '==', '1')",
+-			"CALL dolt_add('.')",
+-			"CALL dolt_commit('-m', 'Initial commit')",
+-			"CALL dolt_checkout('-b', 'feature')",
+-			"INSERT INTO users VALUES (2, 'Bob', 'bob@example.com')",
+-			"CALL dolt_add('.')",
+-			"call dolt_commit_hash_out(@commit_hash,'--skip-verification', '-m', 'Add Bob but dont update test')",
+-			"CALL dolt_checkout('main')",
+-		},
+-		Assertions: []queries.ScriptTestAssertion{
+-			{
+-				// Verification fails; returns specific error, dirty state preserved via explicit CommitTransaction
+-				Query:          "CALL dolt_cherry_pick(@commit_hash)",
+-				ExpectedErrStr: "commit verification failed: test_users_count (Assertion failed: expected_single_value equal to 1, got 2)",
+-			},
+-			{
+-				// Fix the test to match the new row count and stage
+-				Query:            "UPDATE dolt_tests SET assertion_value = '2' WHERE test_name = 'test_users_count'",
+-				SkipResultsCheck: true,
+-			},
+-			{
+-				Query:            "CALL dolt_add('.')",
+-				SkipResultsCheck: true,
+-			},
+-			{
+-				// --continue now passes verification and creates the commit
+-				Query:    "CALL dolt_cherry_pick('--continue')",
+-				Expected: []sql.Row{{commitHash, int64(0), int64(0), int64(0)}},
+-			},
+ 			{
+-				// Workspace is clean after successful --continue
+-				Query:    "SELECT COUNT(*) FROM dolt_status",
+-				Expected: []sql.Row{{int64(0)}},
+-			},
+-			{
+-				// Both users are present
+-				Query:    "SELECT COUNT(*) FROM users",
+-				Expected: []sql.Row{{int64(2)}},
++				Query: "select * from dolt_test_run('*')",
++				Expected: []sql.Row{
++					{"test_users_count", "unit", "SELECT COUNT(*) FROM users", "FAIL", "Assertion failed: expected_single_value equal to 1, got 2"},
++				},
+ 			},
+ 			{ // Test harness bleeds GLOBAL variable changes across tests, so reset after each test.
+ 				Query:            "SET GLOBAL dolt_commit_verification_groups = ''",
+@@ -554,7 +470,7 @@ var DoltCommitVerificationScripts = []queries.ScriptTest{
+ 		},
+ 	},
+ 	{
+-		Name: "merge with test verification enabled - tests fail, leaves dirty state",
++		Name: "merge with test verification enabled - tests fail, merge aborted",
+ 		SetUpScript: []string{
+ 			"SET GLOBAL dolt_commit_verification_groups = '*'",
+ 			"CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100))",
+@@ -574,81 +490,8 @@ var DoltCommitVerificationScripts = []queries.ScriptTest{
+ 		},
+ 		Assertions: []queries.ScriptTestAssertion{
+ 			{
+-				// Verification fails; returns verification failure in message field with no SQL error
+-				// so dirty merge state is preserved (transaction commits).
+-				Query:    "CALL dolt_merge('feature')",
+-				Expected: []sql.Row{{"", int64(0), int64(0), "commit verification failed: test_will_fail (Assertion failed: expected_single_value equal to 999, got 3)"}},
+-			},
+-			{
+-				// users table is staged (merged content with Bob added is preserved)
+-				Query:    "SELECT staged FROM dolt_status WHERE table_name = 'users'",
+-				Expected: []sql.Row{{uint64(1)}},
+-			},
+-			{ // Test harness bleeds GLOBAL variable changes across tests, so reset after each test.
+-				Query:            "SET GLOBAL dolt_commit_verification_groups = ''",
+-				SkipResultsCheck: true,
+-			},
+-		},
+-	},
+-	{
+-		Name: "merge with test verification enabled - fix data and dolt_commit succeeds",
+-		SetUpScript: []string{
+-			"SET GLOBAL dolt_commit_verification_groups = '*'",
+-			"CREATE TABLE users (id INT PRIMARY KEY, name VARCHAR(100) NOT NULL, email VARCHAR(100))",
+-			"INSERT INTO users VALUES (1, 'Alice', 'alice@example.com')",
+-			"INSERT INTO dolt_tests (test_name, test_group, test_query, assertion_type, assertion_comparator, assertion_value) VALUES " +
+-				"('test_users_count', 'unit', 'SELECT COUNT(*) FROM users', 'expected_single_value', '==', '1')",
+-			"CALL dolt_add('.')",
+-			"CALL dolt_commit('-m', 'Initial commit')",
+-			"CALL dolt_checkout('-b', 'feature')",
+-			"INSERT INTO users VALUES (2, 'Bob', 'bob@example.com')",
+-			"CALL dolt_add('.')",
+-			"CALL dolt_commit('--skip-verification', '-m', 'Add Bob but dont update test')",
+-			"CALL dolt_checkout('main')",
+-			"INSERT INTO users VALUES (3, 'Charlie', 'charlie@example.com')",
+-			"CALL dolt_add('.')",
+-			"CALL dolt_commit('--skip-verification', '-m', 'Add Charlie to force non-FF merge')",
+-		},
+-		Assertions: []queries.ScriptTestAssertion{
+-			{
+-				// Verification fails; returns verification failure in message field with no SQL error
+-				// so dirty merge state is preserved (transaction commits).
+-				Query:    "CALL dolt_merge('feature')",
+-				Expected: []sql.Row{{"", int64(0), int64(0), "commit verification failed: test_users_count (Assertion failed: expected_single_value equal to 1, got 3)"}},
+-			},
+-			{
+-				// dolt_commit without fixing still fails with verification error; dirty state still preserved
+-				Query:          "CALL dolt_commit('-m', 'Complete merge without fixing')",
+-				ExpectedErrStr: "commit verification failed: test_users_count (Assertion failed: expected_single_value equal to 1, got 3)",
+-			},
+-			{
+-				// users table is still staged (dirty state was not lost by the failed dolt_commit)
+-				Query:    "SELECT staged FROM dolt_status WHERE table_name = 'users'",
+-				Expected: []sql.Row{{uint64(1)}},
+-			},
+-			{
+-				// Fix the test expectation to match the merged user count
+-				Query:            "UPDATE dolt_tests SET assertion_value = '3' WHERE test_name = 'test_users_count'",
+-				SkipResultsCheck: true,
+-			},
+-			{
+-				Query:            "CALL dolt_add('.')",
+-				SkipResultsCheck: true,
+-			},
+-			{
+-				// Now dolt_commit succeeds and creates a merge commit
+-				Query:    "CALL dolt_commit('-m', 'Complete merge after fixing test')",
+-				Expected: []sql.Row{{commitHash}},
+-			},
+-			{
+-				// Workspace is clean after successful merge commit
+-				Query:    "SELECT COUNT(*) FROM dolt_status",
+-				Expected: []sql.Row{{int64(0)}},
+-			},
+-			{
+-				// All three users are present after merge
+-				Query:    "SELECT COUNT(*) FROM users",
+-				Expected: []sql.Row{{int64(3)}},
++				Query:          "CALL dolt_merge('feature')",
++				ExpectedErrStr: "commit verification failed: test_will_fail (Assertion failed: expected_single_value equal to 999, got 3)",
+ 			},
+ 			{ // Test harness bleeds GLOBAL variable changes across tests, so reset after each test.
+ 				Query:            "SET GLOBAL dolt_commit_verification_groups = ''",
+diff --git a/go/libraries/doltcore/sqle/expreval/compare_ops.go b/go/libraries/doltcore/sqle/expreval/compare_ops.go
+index a7fa9d91ab..a38608fe1b 100644
+--- a/go/libraries/doltcore/sqle/expreval/compare_ops.go
++++ b/go/libraries/doltcore/sqle/expreval/compare_ops.go
+@@ -15,188 +15,65 @@
+ package expreval
+ 
+ import (
+-	"context"
+-
+ 	"github.com/dolthub/go-mysql-server/sql"
+ 	"github.com/dolthub/go-mysql-server/sql/expression"
+-
+-	"github.com/dolthub/dolt/go/store/types"
+ )
+ 
+ func compareLiterals(ctx *sql.Context, l1, l2 *expression.Literal) (int, error) {
+ 	return l1.Type().Compare(ctx, l1.Value(), l2.Value())
+ }
+ 
+-// CompareOp is an interface for comparing values
++// CompareOp is an interface for comparing values using SQL type semantics.
+ type CompareOp interface {
+-	// CompareLiterals compares two go-mysql-server literals
+-	CompareLiterals(ctx *sql.Context, l1, l2 *expression.Literal) (bool, error)
+-	// CompareNomsValues compares two noms values
+-	CompareNomsValues(ctx context.Context, v1, v2 types.Value) (bool, error)
+-	// CompareToNil compares a noms value to nil using sql logic rules
+-	CompareToNil(v2 types.Value) (bool, error)
++	// ApplyCmp applies the comparison operator to the result of sql.Type.Compare,
++	// returning true if the comparison satisfies the operator.
++	ApplyCmp(n int) bool
++	// CompareToNil returns the comparison result when the column value is null.
++	// otherIsNull indicates whether the value being compared to is also null.
++	CompareToNil(otherIsNull bool) bool
+ }
+ 
+ // EqualsOp implements the CompareOp interface implementing equality logic
+ type EqualsOp struct{}
+ 
+-// CompareLiterals compares two go-mysql-server literals for equality
+-func (op EqualsOp) CompareLiterals(ctx *sql.Context, l1, l2 *expression.Literal) (bool, error) {
+-	n, err := compareLiterals(ctx, l1, l2)
+-
+-	if err != nil {
+-		return false, err
+-	}
++// ApplyCmp implements CompareOp, returning true when the values are equal.
++func (op EqualsOp) ApplyCmp(n int) bool { return n == 0 }
+ 
+-	return n == 0, nil
+-}
+-
+-// CompareNomsValues compares two noms values for equality
+-func (op EqualsOp) CompareNomsValues(_ context.Context, v1, v2 types.Value) (bool, error) {
+-	return v1.Equals(v2), nil
+-}
+-
+-// CompareToNil always returns false as values are neither greater than, less than, or equal to nil
+-// except for equality op, the compared value is null.
+-func (op EqualsOp) CompareToNil(v types.Value) (bool, error) {
+-	if v == types.NullValue {
+-		return true, nil
+-	}
+-	return false, nil
+-}
++// CompareToNil implements CompareOp, returning true only when both values are null.
++func (op EqualsOp) CompareToNil(otherIsNull bool) bool { return otherIsNull }
+ 
+ // GreaterOp implements the CompareOp interface implementing greater than logic
+-type GreaterOp struct {
+-	vr types.ValueReader
+-}
+-
+-// CompareLiterals compares two go-mysql-server literals returning true if the value of the first
+-// is greater than the second.
+-func (op GreaterOp) CompareLiterals(ctx *sql.Context, l1, l2 *expression.Literal) (bool, error) {
+-	n, err := compareLiterals(ctx, l1, l2)
+-
+-	if err != nil {
+-		return false, err
+-	}
++type GreaterOp struct{}
+ 
+-	return n > 0, nil
+-}
+-
+-// CompareNomsValues compares two noms values returning true if the of the first
+-// is greater than the second.
+-func (op GreaterOp) CompareNomsValues(ctx context.Context, v1, v2 types.Value) (bool, error) {
+-	eq := v1.Equals(v2)
+-
+-	if eq {
+-		return false, nil
+-	}
++// ApplyCmp implements CompareOp, returning true when the first value is greater than the second.
++func (op GreaterOp) ApplyCmp(n int) bool { return n > 0 }
+ 
+-	lt, err := v1.Less(ctx, op.vr.Format(), v2)
+-
+-	if err != nil {
+-		return false, nil
+-	}
+-
+-	return !lt, err
+-}
+-
+-// CompareToNil always returns false as values are neither greater than, less than, or equal to nil
+-func (op GreaterOp) CompareToNil(types.Value) (bool, error) {
+-	return false, nil
+-}
++// CompareToNil implements CompareOp, always returning false as null comparisons are never greater than.
++func (op GreaterOp) CompareToNil(bool) bool { return false }
+ 
+ // GreaterEqualOp implements the CompareOp interface implementing greater than or equal to logic
+-type GreaterEqualOp struct {
+-	vr types.ValueReader
+-}
+-
+-// CompareLiterals compares two go-mysql-server literals returning true if the value of the first
+-// is greater than or equal to the second.
+-func (op GreaterEqualOp) CompareLiterals(ctx *sql.Context, l1, l2 *expression.Literal) (bool, error) {
+-	n, err := compareLiterals(ctx, l1, l2)
+-
+-	if err != nil {
+-		return false, err
+-	}
++type GreaterEqualOp struct{}
+ 
+-	return n >= 0, nil
+-}
+-
+-// CompareNomsValues compares two noms values returning true if the of the first
+-// is greater or equal to than the second.
+-func (op GreaterEqualOp) CompareNomsValues(ctx context.Context, v1, v2 types.Value) (bool, error) {
+-	res, err := v1.Less(ctx, op.vr.Format(), v2)
+-
+-	if err != nil {
+-		return false, err
+-	}
++// ApplyCmp implements CompareOp, returning true when the first value is greater than or equal to the second.
++func (op GreaterEqualOp) ApplyCmp(n int) bool { return n >= 0 }
+ 
+-	return !res, nil
+-}
+-
+-// CompareToNil always returns false as values are neither greater than, less than, or equal to nil
+-func (op GreaterEqualOp) CompareToNil(types.Value) (bool, error) {
+-	return false, nil
+-}
++// CompareToNil implements CompareOp, always returning false as null comparisons are never greater than or equal.
++func (op GreaterEqualOp) CompareToNil(bool) bool { return false }
+ 
+ // LessOp implements the CompareOp interface implementing less than logic
+-type LessOp struct {
+-	vr types.ValueReader
+-}
+-
+-// CompareLiterals compares two go-mysql-server literals returning true if the value of the first
+-// is less than the second.
+-func (op LessOp) CompareLiterals(ctx *sql.Context, l1, l2 *expression.Literal) (bool, error) {
+-	n, err := compareLiterals(ctx, l1, l2)
+-
+-	if err != nil {
+-		return false, err
+-	}
+-
+-	return n < 0, nil
+-}
++type LessOp struct{}
+ 
+-// CompareNomsValues compares two noms values returning true if the of the first
+-// is less than the second.
+-func (op LessOp) CompareNomsValues(ctx context.Context, v1, v2 types.Value) (bool, error) {
+-	return v1.Less(ctx, op.vr.Format(), v2)
+-}
++// ApplyCmp implements CompareOp, returning true when the first value is less than the second.
++func (op LessOp) ApplyCmp(n int) bool { return n < 0 }
+ 
+-// CompareToNil always returns false as values are neither greater than, less than, or equal to nil
+-func (op LessOp) CompareToNil(types.Value) (bool, error) {
+-	return false, nil
+-}
++// CompareToNil implements CompareOp, always returning false as null comparisons are never less than.
++func (op LessOp) CompareToNil(bool) bool { return false }
+ 
+ // LessEqualOp implements the CompareOp interface implementing less than or equal to logic
+-type LessEqualOp struct {
+-	vr types.ValueReader
+-}
++type LessEqualOp struct{}
+ 
+-// CompareLiterals compares two go-mysql-server literals returning true if the value of the first
+-// is less than or equal to the second.
+-func (op LessEqualOp) CompareLiterals(ctx *sql.Context, l1, l2 *expression.Literal) (bool, error) {
+-	n, err := compareLiterals(ctx, l1, l2)
+-
+-	if err != nil {
+-		return false, err
+-	}
+-
+-	return n <= 0, nil
+-}
++// ApplyCmp implements CompareOp, returning true when the first value is less than or equal to the second.
++func (op LessEqualOp) ApplyCmp(n int) bool { return n <= 0 }
+ 
+-// CompareNomsValues compares two noms values returning true if the of the first
+-// is less than or equal to the second.
+-func (op LessEqualOp) CompareNomsValues(ctx context.Context, v1, v2 types.Value) (bool, error) {
+-	eq := v1.Equals(v2)
+-
+-	if eq {
+-		return true, nil
+-	}
+-
+-	return v1.Less(ctx, op.vr.Format(), v2)
+-}
+-
+-// CompareToNil always returns false as values are neither greater than, less than, or equal to nil
+-func (op LessEqualOp) CompareToNil(types.Value) (bool, error) {
+-	return false, nil
+-}
++// CompareToNil implements CompareOp, always returning false as null comparisons are never less than or equal.
++func (op LessEqualOp) CompareToNil(bool) bool { return false }
+diff --git a/go/libraries/doltcore/sqle/expreval/doc.go b/go/libraries/doltcore/sqle/expreval/doc.go
+index 24bac4f00c..c2682d1efd 100644
+--- a/go/libraries/doltcore/sqle/expreval/doc.go
++++ b/go/libraries/doltcore/sqle/expreval/doc.go
+@@ -12,6 +12,6 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-// Package expreval provides go-mysql-server expression evaluation logic that works directly on
+-// noms types.
++// Package expreval provides go-mysql-server expression evaluation logic that maps column values
++// stored as noms types to SQL type comparisons.
+ package expreval
+diff --git a/go/libraries/doltcore/sqle/expreval/expression_evaluator.go b/go/libraries/doltcore/sqle/expreval/expression_evaluator.go
+index 2fdabf9845..f2eb8183be 100644
+--- a/go/libraries/doltcore/sqle/expreval/expression_evaluator.go
++++ b/go/libraries/doltcore/sqle/expreval/expression_evaluator.go
+@@ -15,31 +15,28 @@
+ package expreval
+ 
+ import (
+-	"context"
++	"strings"
+ 
+ 	"github.com/dolthub/go-mysql-server/sql"
+ 	"github.com/dolthub/go-mysql-server/sql/expression"
+ 	gmstypes "github.com/dolthub/go-mysql-server/sql/types"
+ 	"gopkg.in/src-d/go-errors.v1"
+-
+-	"github.com/dolthub/dolt/go/libraries/doltcore/schema"
+-	"github.com/dolthub/dolt/go/store/types"
+ )
+ 
+ var errUnsupportedComparisonType = errors.NewKind("Unsupported Comparison Type.")
+ var errUnknownColumn = errors.NewKind("Column %s not found.")
+-var errInvalidConversion = errors.NewKind("Could not convert %s from %s to %s.")
+ var errNotImplemented = errors.NewKind("Not Implemented: %s")
+ 
+-// ExpressionFunc is a function that takes a map of tag to value and returns whether some set of criteria are true for
+-// the set of values
+-type ExpressionFunc func(ctx context.Context, vals map[uint64]types.Value) (bool, error)
++// ExpressionFunc is a function that takes a sql.Row and returns whether some set of criteria are true for
++// the row's values.
++type ExpressionFunc func(ctx *sql.Context, row sql.Row) (bool, error)
+ 
+-// ExpressionFuncFromSQLExpressions returns an ExpressionFunc which represents the slice of sql.Expressions passed in
+-func ExpressionFuncFromSQLExpressions(ctx *sql.Context, vr types.ValueReader, sch schema.Schema, expressions []sql.Expression) (ExpressionFunc, error) {
++// ExpressionFuncFromSQLExpressions returns an ExpressionFunc which represents the slice of sql.Expressions passed in.
++// The schema defines column names, types, and positions for row lookups.
++func ExpressionFuncFromSQLExpressions(ctx *sql.Context, sch sql.Schema, expressions []sql.Expression) (ExpressionFunc, error) {
+ 	var root ExpressionFunc
+ 	for _, exp := range expressions {
+-		expFunc, err := getExpFunc(ctx, vr, sch, exp)
++		expFunc, err := getExpFunc(ctx, sch, exp)
+ 
+ 		if err != nil {
+ 			return nil, err
+@@ -53,7 +50,7 @@ func ExpressionFuncFromSQLExpressions(ctx *sql.Context, vr types.ValueReader, sc
+ 	}
+ 
+ 	if root == nil {
+-		root = func(ctx context.Context, vals map[uint64]types.Value) (bool, error) {
++		root = func(ctx *sql.Context, row sql.Row) (bool, error) {
+ 			return true, nil
+ 		}
+ 	}
+@@ -61,26 +58,26 @@ func ExpressionFuncFromSQLExpressions(ctx *sql.Context, vr types.ValueReader, sc
+ 	return root, nil
+ }
+ 
+-func getExpFunc(ctx *sql.Context, vr types.ValueReader, sch schema.Schema, exp sql.Expression) (ExpressionFunc, error) {
++func getExpFunc(ctx *sql.Context, sch sql.Schema, exp sql.Expression) (ExpressionFunc, error) {
+ 	switch typedExpr := exp.(type) {
+ 	case *expression.Equals:
+ 		return newComparisonFunc(ctx, EqualsOp{}, typedExpr, sch)
+ 	case *expression.GreaterThan:
+-		return newComparisonFunc(ctx, GreaterOp{vr}, typedExpr, sch)
++		return newComparisonFunc(ctx, GreaterOp{}, typedExpr, sch)
+ 	case *expression.GreaterThanOrEqual:
+-		return newComparisonFunc(ctx, GreaterEqualOp{vr}, typedExpr, sch)
++		return newComparisonFunc(ctx, GreaterEqualOp{}, typedExpr, sch)
+ 	case *expression.LessThan:
+-		return newComparisonFunc(ctx, LessOp{vr}, typedExpr, sch)
++		return newComparisonFunc(ctx, LessOp{}, typedExpr, sch)
+ 	case *expression.LessThanOrEqual:
+-		return newComparisonFunc(ctx, LessEqualOp{vr}, typedExpr, sch)
++		return newComparisonFunc(ctx, LessEqualOp{}, typedExpr, sch)
+ 	case *expression.Or:
+-		leftFunc, err := getExpFunc(ctx, vr, sch, typedExpr.Left())
++		leftFunc, err := getExpFunc(ctx, sch, typedExpr.Left())
+ 
+ 		if err != nil {
+ 			return nil, err
+ 		}
+ 
+-		rightFunc, err := getExpFunc(ctx, vr, sch, typedExpr.Right())
++		rightFunc, err := getExpFunc(ctx, sch, typedExpr.Right())
+ 
+ 		if err != nil {
+ 			return nil, err
+@@ -88,13 +85,13 @@ func getExpFunc(ctx *sql.Context, vr types.ValueReader, sch schema.Schema, exp s
+ 
+ 		return newOrFunc(leftFunc, rightFunc), nil
+ 	case *expression.And:
+-		leftFunc, err := getExpFunc(ctx, vr, sch, typedExpr.Left())
++		leftFunc, err := getExpFunc(ctx, sch, typedExpr.Left())
+ 
+ 		if err != nil {
+ 			return nil, err
+ 		}
+ 
+-		rightFunc, err := getExpFunc(ctx, vr, sch, typedExpr.Right())
++		rightFunc, err := getExpFunc(ctx, sch, typedExpr.Right())
+ 
+ 		if err != nil {
+ 			return nil, err
+@@ -104,7 +101,7 @@ func getExpFunc(ctx *sql.Context, vr types.ValueReader, sch schema.Schema, exp s
+ 	case *expression.InTuple:
+ 		return newComparisonFunc(ctx, EqualsOp{}, typedExpr, sch)
+ 	case *expression.Not:
+-		expFunc, err := getExpFunc(ctx, vr, sch, typedExpr.Child)
++		expFunc, err := getExpFunc(ctx, sch, typedExpr.Child)
+ 		if err != nil {
+ 			return nil, err
+ 		}
+@@ -117,8 +114,8 @@ func getExpFunc(ctx *sql.Context, vr types.ValueReader, sch schema.Schema, exp s
+ }
+ 
+ func newOrFunc(left ExpressionFunc, right ExpressionFunc) ExpressionFunc {
+-	return func(ctx context.Context, vals map[uint64]types.Value) (b bool, err error) {
+-		lRes, err := left(ctx, vals)
++	return func(ctx *sql.Context, row sql.Row) (b bool, err error) {
++		lRes, err := left(ctx, row)
+ 
+ 		if err != nil {
+ 			return false, err
+@@ -128,13 +125,13 @@ func newOrFunc(left ExpressionFunc, right ExpressionFunc) ExpressionFunc {
+ 			return true, nil
+ 		}
+ 
+-		return right(ctx, vals)
++		return right(ctx, row)
+ 	}
+ }
+ 
+ func newAndFunc(left ExpressionFunc, right ExpressionFunc) ExpressionFunc {
+-	return func(ctx context.Context, vals map[uint64]types.Value) (b bool, err error) {
+-		lRes, err := left(ctx, vals)
++	return func(ctx *sql.Context, row sql.Row) (b bool, err error) {
++		lRes, err := left(ctx, row)
+ 
+ 		if err != nil {
+ 			return false, err
+@@ -144,13 +141,13 @@ func newAndFunc(left ExpressionFunc, right ExpressionFunc) ExpressionFunc {
+ 			return false, nil
+ 		}
+ 
+-		return right(ctx, vals)
++		return right(ctx, row)
+ 	}
+ }
+ 
+ func newNotFunc(exp ExpressionFunc) ExpressionFunc {
+-	return func(ctx context.Context, vals map[uint64]types.Value) (b bool, err error) {
+-		res, err := exp(ctx, vals)
++	return func(ctx *sql.Context, row sql.Row) (b bool, err error) {
++		res, err := exp(ctx, row)
+ 		if err != nil {
+ 			return false, err
+ 		}
+@@ -216,10 +213,20 @@ func GetComparisonType(be expression.BinaryExpression) ([]*expression.GetField,
+ 	return variables, consts, compType, nil
+ }
+ 
+-var trueFunc = func(ctx context.Context, vals map[uint64]types.Value) (b bool, err error) { return true, nil }
+-var falseFunc = func(ctx context.Context, vals map[uint64]types.Value) (b bool, err error) { return false, nil }
++var trueFunc = func(ctx *sql.Context, row sql.Row) (b bool, err error) { return true, nil }
++var falseFunc = func(ctx *sql.Context, row sql.Row) (b bool, err error) { return false, nil }
++
++// findSchemaCol finds a column in a sql.Schema by name (case-insensitive), returning its index and column.
++func findSchemaCol(name string, sch sql.Schema) (int, *sql.Column, bool) {
++	for i, col := range sch {
++		if strings.EqualFold(col.Name, name) {
++			return i, col, true
++		}
++	}
++	return -1, nil, false
++}
+ 
+-func newComparisonFunc(ctx *sql.Context, op CompareOp, exp expression.BinaryExpression, sch schema.Schema) (ExpressionFunc, error) {
++func newComparisonFunc(ctx *sql.Context, op CompareOp, exp expression.BinaryExpression, sch sql.Schema) (ExpressionFunc, error) {
+ 	vars, consts, compType, err := GetComparisonType(exp)
+ 
+ 	if err != nil {
+@@ -227,111 +234,122 @@ func newComparisonFunc(ctx *sql.Context, op CompareOp, exp expression.BinaryExpr
+ 	}
+ 
+ 	if compType == ConstConstCompare {
+-		res, err := op.CompareLiterals(ctx, consts[0], consts[1])
+-
++		n, err := compareLiterals(ctx, consts[0], consts[1])
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-
+-		if res {
++		if op.ApplyCmp(n) {
+ 			return trueFunc, nil
+-		} else {
+-			return falseFunc, nil
+ 		}
++		return falseFunc, nil
+ 	} else if compType == VariableConstCompare {
+ 		colName := vars[0].Name()
+-		col, ok := sch.GetAllCols().GetByNameCaseInsensitive(colName)
++		colIdx, col, ok := findSchemaCol(colName, sch)
+ 
+ 		if !ok {
+ 			return nil, errUnknownColumn.New(colName)
+ 		}
+ 
+-		tag := col.Tag
+-		nomsVal, err := LiteralToNomsValue(col.Kind, consts[0])
++		sqlType := col.Type
++		litIsNull := consts[0].Value() == nil
+ 
+-		if err != nil {
+-			return nil, err
++		var sqlLitVal interface{}
++		if !litIsNull {
++			sqlLitVal, _, err = sqlType.Convert(ctx, consts[0].Value())
++			if err != nil {
++				return nil, err
++			}
+ 		}
+ 
+-		compareNomsValues := op.CompareNomsValues
+-		compareToNil := op.CompareToNil
+-
+-		return func(ctx context.Context, vals map[uint64]types.Value) (b bool, err error) {
+-			colVal, ok := vals[tag]
+-
+-			if ok && !types.IsNull(colVal) {
+-				return compareNomsValues(ctx, colVal, nomsVal)
+-			} else {
+-				return compareToNil(nomsVal)
++		return func(ctx *sql.Context, row sql.Row) (b bool, err error) {
++			val := row[colIdx]
++			if val != nil {
++				if litIsNull {
++					return false, nil
++				}
++				n, err := sqlType.Compare(ctx, val, sqlLitVal)
++				if err != nil {
++					return false, err
++				}
++				return op.ApplyCmp(n), nil
+ 			}
++			return op.CompareToNil(litIsNull), nil
+ 		}, nil
+ 	} else if compType == VariableVariableCompare {
+ 		col1Name := vars[0].Name()
+-		col1, ok := sch.GetAllCols().GetByNameCaseInsensitive(col1Name)
++		col1Idx, col1, ok := findSchemaCol(col1Name, sch)
+ 
+ 		if !ok {
+ 			return nil, errUnknownColumn.New(col1Name)
+ 		}
+ 
+ 		col2Name := vars[1].Name()
+-		col2, ok := sch.GetAllCols().GetByNameCaseInsensitive(col2Name)
++		col2Idx, _, ok := findSchemaCol(col2Name, sch)
+ 
+ 		if !ok {
+ 			return nil, errUnknownColumn.New(col2Name)
+ 		}
+ 
+-		compareNomsValues := op.CompareNomsValues
+-		compareToNull := op.CompareToNil
++		sqlType := col1.Type
++		return func(ctx *sql.Context, row sql.Row) (b bool, err error) {
++			v1 := row[col1Idx]
++			v2 := row[col2Idx]
+ 
+-		tag1, tag2 := col1.Tag, col2.Tag
+-		return func(ctx context.Context, vals map[uint64]types.Value) (b bool, err error) {
+-			v1 := vals[tag1]
+-			v2 := vals[tag2]
+-
+-			if types.IsNull(v1) {
+-				return compareToNull(v2)
+-			} else {
+-				return compareNomsValues(ctx, v1, v2)
++			if v1 == nil {
++				return op.CompareToNil(v2 == nil), nil
+ 			}
++			if v2 == nil {
++				return false, nil
++			}
++			n, err := sqlType.Compare(ctx, v1, v2)
++			if err != nil {
++				return false, err
++			}
++			return op.ApplyCmp(n), nil
+ 		}, nil
+ 	} else if compType == VariableInLiteralList {
+ 		colName := vars[0].Name()
+-		col, ok := sch.GetAllCols().GetByNameCaseInsensitive(colName)
++		colIdx, col, ok := findSchemaCol(colName, sch)
+ 
+ 		if !ok {
+ 			return nil, errUnknownColumn.New(colName)
+ 		}
+ 
+-		tag := col.Tag
++		sqlType := col.Type
+ 
+-		// Get all the noms values
+-		nomsVals := make([]types.Value, len(consts))
++		// Pre-convert all literal values to the column's SQL type
++		sqlVals := make([]interface{}, len(consts))
++		nullFlags := make([]bool, len(consts))
+ 		for i, c := range consts {
+-			nomsVal, err := LiteralToNomsValue(col.Kind, c)
+-			if err != nil {
+-				return nil, err
++			if c.Value() == nil {
++				nullFlags[i] = true
++			} else {
++				sqlVals[i], _, err = sqlType.Convert(ctx, c.Value())
++				if err != nil {
++					return nil, err
++				}
+ 			}
+-			nomsVals[i] = nomsVal
+ 		}
+ 
+-		compareNomsValues := op.CompareNomsValues
+-		compareToNil := op.CompareToNil
++		return func(ctx *sql.Context, row sql.Row) (b bool, err error) {
++			val := row[colIdx]
++			colIsNull := val == nil
+ 
+-		return func(ctx context.Context, vals map[uint64]types.Value) (b bool, err error) {
+-			colVal, ok := vals[tag]
+-
+-			for _, nv := range nomsVals {
+-				var lb bool
+-				if ok && !types.IsNull(colVal) {
+-					lb, err = compareNomsValues(ctx, colVal, nv)
++			for i, sv := range sqlVals {
++				var result bool
++				if colIsNull {
++					result = op.CompareToNil(nullFlags[i])
++				} else if nullFlags[i] {
++					result = false
+ 				} else {
+-					lb, err = compareToNil(nv)
++					n, err := sqlType.Compare(ctx, val, sv)
++					if err != nil {
++						return false, err
++					}
++					result = op.ApplyCmp(n)
+ 				}
+ 
+-				if err != nil {
+-					return false, err
+-				}
+-				if lb {
++				if result {
+ 					return true, nil
+ 				}
+ 			}
+diff --git a/go/libraries/doltcore/sqle/expreval/literal_helpers.go b/go/libraries/doltcore/sqle/expreval/literal_helpers.go
+deleted file mode 100644
+index b99386ca13..0000000000
+--- a/go/libraries/doltcore/sqle/expreval/literal_helpers.go
++++ /dev/null
+@@ -1,341 +0,0 @@
+-// Copyright 2020 Dolthub, Inc.
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//     http://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
+-
+-package expreval
+-
+-import (
+-	"strconv"
+-	"time"
+-
+-	"github.com/dolthub/go-mysql-server/sql/expression"
+-	gmstypes "github.com/dolthub/go-mysql-server/sql/types"
+-
+-	"github.com/dolthub/dolt/go/store/types"
+-)
+-
+-func literalAsInt64(literal *expression.Literal) (int64, error) {
+-	v := literal.Value()
+-	switch typedVal := v.(type) {
+-	case bool:
+-		if typedVal {
+-			return 1, nil
+-		} else {
+-			return 0, nil
+-		}
+-	case int:
+-		return int64(typedVal), nil
+-	case int8:
+-		return int64(typedVal), nil
+-	case int16:
+-		return int64(typedVal), nil
+-	case int32:
+-		return int64(typedVal), nil
+-	case int64:
+-		return typedVal, nil
+-	case uint:
+-		return int64(typedVal), nil
+-	case uint8:
+-		return int64(typedVal), nil
+-	case uint16:
+-		return int64(typedVal), nil
+-	case uint32:
+-		return int64(typedVal), nil
+-	case uint64:
+-		if typedVal&0x8000000000000000 != 0 {
+-			return 0, errInvalidConversion.New(literal.String(), "uint64", "int64")
+-		}
+-
+-		return int64(typedVal), nil
+-	case float64:
+-		i64 := int64(typedVal)
+-		if i64 == int64(typedVal+0.9999) {
+-			return i64, nil
+-		} else {
+-			return 0, errInvalidConversion.New(literal.String(), "float64", "int64")
+-		}
+-	case float32:
+-		i64 := int64(typedVal)
+-		if i64 == int64(typedVal+0.9999) {
+-			return i64, nil
+-		} else {
+-			return 0, errInvalidConversion.New(literal.String(), "float32", "int64")
+-		}
+-	case string:
+-		return strconv.ParseInt(typedVal, 10, 64)
+-	}
+-
+-	return 0, errInvalidConversion.New(literal.String(), literal.Type().String(), "int64")
+-}
+-
+-func literalAsUint64(literal *expression.Literal) (uint64, error) {
+-	v := literal.Value()
+-	switch typedVal := v.(type) {
+-	case bool:
+-		if typedVal {
+-			return 1, nil
+-		} else {
+-			return 0, nil
+-		}
+-	case int:
+-		if typedVal < 0 {
+-			return 0, errInvalidConversion.New(literal.String(), "int", "uint64")
+-		}
+-
+-		return uint64(typedVal), nil
+-	case int8:
+-		if typedVal < 0 {
+-			return 0, errInvalidConversion.New(literal.String(), "int8", "uint64")
+-		}
+-
+-		return uint64(typedVal), nil
+-	case int16:
+-		if typedVal < 0 {
+-			return 0, errInvalidConversion.New(literal.String(), "int16", "uint64")
+-		}
+-
+-		return uint64(typedVal), nil
+-	case int32:
+-		if typedVal < 0 {
+-			return 0, errInvalidConversion.New(literal.String(), "int32", "uint64")
+-		}
+-
+-		return uint64(typedVal), nil
+-	case int64:
+-		if typedVal < 0 {
+-			return 0, errInvalidConversion.New(literal.String(), "int64", "uint64")
+-		}
+-
+-		return uint64(typedVal), nil
+-	case uint:
+-		return uint64(typedVal), nil
+-	case uint8:
+-		return uint64(typedVal), nil
+-	case uint16:
+-		return uint64(typedVal), nil
+-	case uint32:
+-		return uint64(typedVal), nil
+-	case uint64:
+-		return typedVal, nil
+-	case float64:
+-		if typedVal < 0 {
+-			return 0, errInvalidConversion.New(literal.String(), "float64", "uint64")
+-		}
+-
+-		u64 := uint64(typedVal)
+-		if u64 == uint64(typedVal+0.9999) {
+-			return u64, nil
+-		} else {
+-			return 0, errInvalidConversion.New(literal.String(), "float64", "uint64")
+-		}
+-	case float32:
+-		u64 := uint64(typedVal)
+-		if u64 == uint64(typedVal+0.9999) {
+-			return u64, nil
+-		} else {
+-			return 0, errInvalidConversion.New(literal.String(), "float32", "uint64")
+-		}
+-	case string:
+-		return strconv.ParseUint(typedVal, 10, 64)
+-	}
+-
+-	return 0, errInvalidConversion.New(literal.String(), literal.Type().String(), "int64")
+-}
+-
+-func literalAsFloat64(literal *expression.Literal) (float64, error) {
+-	v := literal.Value()
+-	switch typedVal := v.(type) {
+-	case int:
+-		return float64(typedVal), nil
+-	case int8:
+-		return float64(typedVal), nil
+-	case int16:
+-		return float64(typedVal), nil
+-	case int32:
+-		return float64(typedVal), nil
+-	case int64:
+-		return float64(typedVal), nil
+-	case uint:
+-		return float64(typedVal), nil
+-	case uint8:
+-		return float64(typedVal), nil
+-	case uint16:
+-		return float64(typedVal), nil
+-	case uint32:
+-		return float64(typedVal), nil
+-	case uint64:
+-		return float64(typedVal), nil
+-	case float64:
+-		return typedVal, nil
+-	case float32:
+-		return float64(typedVal), nil
+-	case string:
+-		return strconv.ParseFloat(typedVal, 64)
+-	}
+-
+-	return 0, errInvalidConversion.New(literal.String(), literal.Type().String(), "float64")
+-}
+-
+-func literalAsBool(literal *expression.Literal) (bool, error) {
+-	v := literal.Value()
+-	switch typedVal := v.(type) {
+-	case bool:
+-		return typedVal, nil
+-	case string:
+-		b, err := strconv.ParseBool(typedVal)
+-
+-		if err == nil {
+-			return b, nil
+-		}
+-
+-		return false, errInvalidConversion.New(literal.String(), literal.Type().String(), "bool")
+-	case int:
+-		return typedVal != 0, nil
+-	case int8:
+-		return typedVal != 0, nil
+-	case int16:
+-		return typedVal != 0, nil
+-	case int32:
+-		return typedVal != 0, nil
+-	case int64:
+-		return typedVal != 0, nil
+-	case uint:
+-		return typedVal != 0, nil
+-	case uint8:
+-		return typedVal != 0, nil
+-	case uint16:
+-		return typedVal != 0, nil
+-	case uint32:
+-		return typedVal != 0, nil
+-	case uint64:
+-		return typedVal != 0, nil
+-	}
+-
+-	return false, errInvalidConversion.New(literal.String(), literal.Type().String(), "bool")
+-}
+-
+-func literalAsString(literal *expression.Literal) (string, error) {
+-	v := literal.Value()
+-	switch typedVal := v.(type) {
+-	case string:
+-		return typedVal, nil
+-	case int, int8, int16, int32, int64:
+-		i64, _ := literalAsInt64(literal)
+-		return strconv.FormatInt(i64, 10), nil
+-	case uint, uint8, uint16, uint32, uint64:
+-		u64, _ := literalAsUint64(literal)
+-		return strconv.FormatUint(u64, 10), nil
+-	case float32, float64:
+-		f64, _ := literalAsFloat64(literal)
+-		return strconv.FormatFloat(f64, 'f', -1, 64), nil
+-	case bool:
+-		return strconv.FormatBool(typedVal), nil
+-	}
+-
+-	return "", errInvalidConversion.New(literal.String(), literal.Type().String(), "bool")
+-}
+-
+-func parseDate(s string) (time.Time, error) {
+-	for _, layout := range gmstypes.TimestampDatetimeLayouts {
+-		res, err := time.Parse(layout, s)
+-
+-		if err == nil {
+-			return res, nil
+-		}
+-	}
+-
+-	return time.Time{}, gmstypes.ErrConvertingToTime.New(s)
+-}
+-
+-func literalAsTimestamp(literal *expression.Literal) (time.Time, error) {
+-	v := literal.Value()
+-	switch typedVal := v.(type) {
+-	case time.Time:
+-		return typedVal, nil
+-	case string:
+-		ts, err := parseDate(typedVal)
+-
+-		if err != nil {
+-			return time.Time{}, err
+-		}
+-
+-		return ts, nil
+-	}
+-
+-	return time.Time{}, errInvalidConversion.New(literal.String(), literal.Type().String(), "datetime")
+-}
+-
+-// LiteralToNomsValue converts a go-mysql-servel Literal into a noms value.
+-func LiteralToNomsValue(kind types.NomsKind, literal *expression.Literal) (types.Value, error) {
+-	if literal.Value() == nil {
+-		return types.NullValue, nil
+-	}
+-
+-	switch kind {
+-	case types.IntKind:
+-		i64, err := literalAsInt64(literal)
+-
+-		if err != nil {
+-			return nil, err
+-		}
+-
+-		return types.Int(i64), nil
+-
+-	case types.UintKind:
+-		u64, err := literalAsUint64(literal)
+-
+-		if err != nil {
+-			return nil, err
+-		}
+-
+-		return types.Uint(u64), nil
+-
+-	case types.FloatKind:
+-		f64, err := literalAsFloat64(literal)
+-
+-		if err != nil {
+-			return nil, err
+-		}
+-
+-		return types.Float(f64), nil
+-
+-	case types.BoolKind:
+-		b, err := literalAsBool(literal)
+-
+-		if err != nil {
+-			return nil, err
+-		}
+-
+-		return types.Bool(b), err
+-
+-	case types.StringKind:
+-		s, err := literalAsString(literal)
+-
+-		if err != nil {
+-			return nil, err
+-		}
+-
+-		return types.String(s), nil
+-
+-	case types.TimestampKind:
+-		ts, err := literalAsTimestamp(literal)
+-
+-		if err != nil {
+-			return nil, err
+-		}
+-
+-		return types.Timestamp(ts), nil
+-	}
+-
+-	return nil, errInvalidConversion.New(literal.String(), literal.Type().String(), kind.String())
+-}
+diff --git a/integration-tests/bats/cherry-pick.bats b/integration-tests/bats/cherry-pick.bats
+index 79b3d3c4c1..6dd8a26e48 100644
+--- a/integration-tests/bats/cherry-pick.bats
++++ b/integration-tests/bats/cherry-pick.bats
+@@ -730,4 +730,4 @@ teardown() {
+     [ $status -eq 1 ]
+     [[ $output =~ "Unable to apply commit cleanly due to conflicts" ]] || false
+     
+-}
++}
+\ No newline at end of file
+diff --git a/integration-tests/bats/commit_verification.bats b/integration-tests/bats/commit_verification.bats
+index c76be36ef8..7a0d9b7b86 100644
+--- a/integration-tests/bats/commit_verification.bats
++++ b/integration-tests/bats/commit_verification.bats
+@@ -107,37 +107,33 @@ SQL
+     [ "$status" -eq 0 ]
+ }
+ 
+-@test "commit_verification: merge with tests enabled - tests fail, can abort and retry with --skip-verification" {
++@test "commit_verification: merge with tests enabled - tests fail, merge aborted" {
+     dolt sql -q "SET @@PERSIST.dolt_commit_verification_groups = '*'"
+-
++    
+     dolt sql <<SQL
+-INSERT INTO dolt_tests (test_name, test_group, test_query, assertion_type, assertion_comparator, assertion_value) VALUES
++INSERT INTO dolt_tests (test_name, test_group, test_query, assertion_type, assertion_comparator, assertion_value) VALUES 
+ ('test_will_fail', 'unit', 'SELECT COUNT(*) FROM users', 'expected_single_value', '==', '999');
+ SQL
+     dolt add .
+     dolt commit --skip-verification -m "Initial commit with failing test"
+-
++    
+     dolt checkout -b feature
+     dolt sql -q "INSERT INTO users VALUES (2, 'Bob', 'bob@example.com')"
+     dolt add .
+     dolt commit --skip-verification -m "Add Bob"
+-
++    
+     # Add Charlie to main to force non-fast-forward merge
+     dolt checkout main
+     dolt sql -q "INSERT INTO users VALUES (3, 'Charlie', 'charlie@example.com')"
+     dolt add .
+     dolt commit --skip-verification -m "Add Charlie"
+-
++    
+     run dolt merge feature
+     [ "$status" -ne 0 ]
+     [[ "$output" =~ "commit verification failed" ]] || false
+     [[ "$output" =~ "test_will_fail" ]] || false
+     [[ "$output" =~ "expected_single_value equal to 999, got 3" ]] || false
+ 
+-    # Merge state is preserved; abort before retrying with --skip-verification
+-    run dolt merge --abort
+-    [ "$status" -eq 0 ]
+-
+     run dolt merge --skip-verification feature
+     [ "$status" -eq 0 ]
+ }
+@@ -164,34 +160,29 @@ SQL
+     [ "$status" -eq 0 ]
+ }
+ 
+-@test "commit_verification: cherry-pick with tests enabled - tests fail, can abort and retry with --skip-verification" {
++@test "commit_verification: cherry-pick with tests enabled - tests fail, aborted" {
+     dolt sql -q "SET @@PERSIST.dolt_commit_verification_groups = '*'"
+-
++    
+     dolt sql <<SQL
+-INSERT INTO dolt_tests (test_name, test_group, test_query, assertion_type, assertion_comparator, assertion_value) VALUES
++INSERT INTO dolt_tests (test_name, test_group, test_query, assertion_type, assertion_comparator, assertion_value) VALUES 
+ ('test_users_count', 'unit', 'SELECT COUNT(*) FROM users', 'expected_single_value', '==', '1');
+ SQL
+     dolt add .
+     dolt commit -m "Initial commit"
+-
++    
+     dolt checkout -b feature
+     dolt sql -q "INSERT INTO users VALUES (2, 'Bob', 'bob@example.com')"
+     dolt add .
+     dolt commit --skip-verification -m "Add Bob but don't update test"
+     commit_hash=$(getHeadHash)
+-
++    
+     dolt checkout main
+     run dolt cherry-pick $commit_hash
++    [ "$status" -ne 0 ]
+     [[ "$output" =~ "commit verification failed" ]] || false
+     [[ "$output" =~ "test_users_count" ]] || false
+     [[ "$output" =~ "expected_single_value equal to 1, got 2" ]] || false
+-    [[ "$output" =~ "commit verification failed" ]] || false
+-    [[ "$output" =~ "dolt cherry-pick --continue" ]] || false
+-    [[ "$output" =~ "dolt cherry-pick --abort" ]] || false
+ 
+-    # Cherry-pick state is preserved; abort before retrying with --skip-verification
+-    run dolt cherry-pick --abort
+-    [ "$status" -eq 0 ]
+     run dolt cherry-pick --skip-verification $commit_hash
+     [ "$status" -eq 0 ]
+ }
+@@ -225,246 +216,38 @@ SQL
+     [[ "$output" =~ "Successfully rebased" ]] || false
+ }
+ 
+-## Common pattern to seed a commit with a single test which enforces that there is only one row in the user table.
+-add_dolt_test() {
+-  dolt sql <<SQL
+-    INSERT INTO dolt_tests ( test_name, test_group, test_query, assertion_type, assertion_comparator, assertion_value )
+-    VALUES (
+-      'user_count',
+-      'unit',
+-      'SELECT COUNT(*) FROM users',
+-      'expected_single_value',
+-      '==',
+-      '1'
+-    );
+-SQL
++@test "commit_verification: rebase with tests enabled - tests fail, aborted" {
++    skip "Rebase restart of workflow on failed verification is currently busted."
+ 
+-  dolt add .
+-  dolt commit -m "Add verification test"
+-}
+-
+-
+-@test "commit_verification: rebase with tests enabled - tests fail, can abort and restart with --skip-verification" {
+     dolt sql -q "SET @@PERSIST.dolt_commit_verification_groups = '*'"
+-
+-    add_dolt_test
+-
++    
++    dolt sql <<SQL
++INSERT INTO dolt_tests (test_name, test_group, test_query, assertion_type, assertion_comparator, assertion_value) VALUES 
++('test_users_count', 'unit', 'SELECT COUNT(*) FROM users', 'expected_single_value', '==', '1');
++SQL
++    dolt add .
++    dolt commit -m "Initial commit"
++    
+     dolt checkout -b feature
+     dolt sql -q "INSERT INTO users VALUES (2, 'Bob', 'bob@example.com')"
+-    dolt sql -q "UPDATE dolt_tests SET assertion_value = '2' WHERE test_name = 'user_count'"
++    dolt sql -q "UPDATE dolt_tests SET assertion_value = '2' WHERE test_name = 'test_users_count'"
+     dolt add .
+     dolt commit -m "Add Bob and update test"
+-
++    
+     dolt checkout main
+     dolt sql -q "INSERT INTO users VALUES (3, 'Charlie', 'charlie@example.com')"
+     dolt add .
+     dolt commit --skip-verification -m "Add Charlie"
+-
++    
+     dolt checkout feature
+-
++    
+     run dolt rebase main
+     [ "$status" -ne 0 ]
+     [[ "$output" =~ "commit verification failed" ]] || false
+-    [[ "$output" =~ "user_count" ]] || false
+-
+-    # Abort the failed rebase and retry with --skip-verification
+-    run dolt rebase --abort
+-    [ "$status" -eq 0 ]
++    [[ "$output" =~ "test_users_count" ]] || false
++    [[ "$output" =~ "Expected '2' but got '3'" ]] || false
+ 
+     run dolt rebase --skip-verification main
+     [ "$status" -eq 0 ]
+     [[ "$output" =~ "Successfully rebased" ]] || false
+ }
+-
+-@test "commit_verification: cherry-pick verification failure halts with dirty state preserved" {
+-    dolt sql -q "SET @@PERSIST.dolt_commit_verification_groups = '*';"
+-
+-    add_dolt_test
+-
+-    dolt checkout -b feature
+-    dolt sql -q "INSERT INTO users VALUES (2, 'Bob', 'bob@example.com')"
+-    dolt add .
+-    dolt commit --skip-verification -m "Add Bob without updating test"
+-    CHERRY_HASH=$(getHeadHash)
+-
+-    dolt checkout main
+-
+-    run dolt cherry-pick "$CHERRY_HASH"
+-    [ "$status" -eq 1 ]
+-    [[ "$output" =~ "commit verification failed" ]] || false
+-    [[ "$output" =~ "user_count" ]] || false
+-    [[ "$output" =~ "expected_single_value equal to 1, got 2" ]] || false
+-    [[ "$output" =~ "dolt cherry-pick --continue" ]] || false
+-    [[ "$output" =~ "dolt cherry-pick --abort" ]] || false
+-
+-    # Dirty state is preserved: users table should be staged
+-    run dolt sql -r csv -q "SELECT * FROM dolt_status"
+-    [ "$status" -eq 0 ]
+-    [[ "$output" =~ "users,1,modified" ]] || false
+-
+-    # --continue without fixing still fails
+-    run dolt cherry-pick --continue
+-    [ "$status" -eq 1 ]
+-    [[ "$output" =~ "commit verification failed" ]] || false
+-    [[ "$output" =~ "user_count" ]] || false
+-    [[ "$output" =~ "expected_single_value equal to 1, got 2" ]] || false
+-    [[ "$output" =~ "dolt cherry-pick --continue" ]] || false
+-    [[ "$output" =~ "dolt cherry-pick --abort" ]] || false
+-
+-    # --abort restores clean state
+-    run dolt cherry-pick --abort
+-    [ "$status" -eq 0 ]
+-
+-    run dolt status
+-    [ "$status" -eq 0 ]
+-    ! [[ "$output" =~ "users" ]] || false
+-
+-    run dolt sql -r csv -q "SELECT * FROM users"
+-    [ "$status" -eq 0 ]
+-    [[ "$output" =~ "1,Alice,alice@example.com" ]] || false
+-    [[ "${#lines[@]}" -eq 2 ]] || false
+-}
+-
+-@test "commit_verification: cherry-pick fix data then --continue succeeds" {
+-    dolt sql -q "SET @@PERSIST.dolt_commit_verification_groups = '*';"
+-
+-    add_dolt_test
+-
+-    dolt checkout -b feature
+-    dolt sql -q "INSERT INTO users VALUES (2, 'Bob', 'bob@example.com')"
+-    dolt add .
+-    dolt commit --skip-verification -m "Add Bob without updating test"
+-    CHERRY_HASH=$(getHeadHash)
+-
+-    dolt checkout main
+-
+-    run dolt cherry-pick "$CHERRY_HASH"
+-    [ "$status" -eq 1 ]
+-    [[ "$output" =~ "commit verification failed" ]] || false
+-    [[ "$output" =~ "user_count" ]] || false
+-    [[ "$output" =~ "expected_single_value equal to 1, got 2" ]] || false
+-    [[ "$output" =~ "dolt cherry-pick --continue" ]] || false
+-    [[ "$output" =~ "dolt cherry-pick --abort" ]] || false
+-
+-    # Fix the test expectation and stage it
+-    dolt sql -q "UPDATE dolt_tests SET assertion_value = '2' WHERE test_name = 'user_count';"
+-    dolt add .
+-
+-    # --continue should now succeed
+-    run dolt cherry-pick --continue
+-    [ "$status" -eq 0 ]
+-
+-    run dolt status
+-    [ "$status" -eq 0 ]
+-    [[ "$output" =~ "nothing to commit" ]] || false
+-
+-    run dolt sql -r csv -q "SELECT * FROM users"
+-    [ "$status" -eq 0 ]
+-    [[ "$output" =~ "1,Alice,alice@example.com" ]] || false
+-    [[ "$output" =~ "2,Bob,bob@example.com" ]] || false
+-    [[ "${#lines[@]}" -eq 3 ]] || false
+-}
+-
+-@test "commit_verification: merge verification failure halts with dirty state preserved" {
+-    dolt sql -q "SET @@PERSIST.dolt_commit_verification_groups = '*';"
+-
+-    add_dolt_test
+-
+-    dolt checkout -b feature
+-    dolt sql -q "INSERT INTO users VALUES (2, 'Bob', 'bob@example.com')"
+-    dolt add .
+-    dolt commit --skip-verification -m "Add Bob without updating test"
+-    dolt checkout main
+-    dolt sql -q "INSERT INTO users VALUES (3, 'Charlie', 'charlie@example.com')"
+-    dolt add .
+-    dolt commit --skip-verification -m "Add Charlie to force non-FF merge"
+-
+-    run dolt merge feature
+-    [ "$status" -eq 1 ]
+-    [[ "$output" =~ "commit verification failed" ]] || false
+-    [[ "$output" =~ "user_count" ]] || false
+-    [[ "$output" =~ "expected_single_value equal to 1, got 3" ]] || false
+-
+-    # Dirty state is preserved: users table should be staged
+-    run dolt sql -r csv -q "SELECT * FROM dolt_status"
+-    [ "$status" -eq 0 ]
+-    [[ "$output" =~ "users,1,modified" ]] || false
+-
+-    # Merge does not have a --continue option, the expectation is you modify the data, stage, commit.
+-    # Addres by updating the test.
+-    dolt sql -q "UPDATE dolt_tests SET assertion_value = '3' WHERE test_name = 'user_count';"
+-    dolt add .
+-
+-    run dolt commit -m "Complete merge after fixing test"
+-    [ "$status" -eq 0 ]
+-}
+-
+-@test "commit_verification: rebase verification failure halts with dirty state preserved" {
+-    dolt sql -q "SET @@PERSIST.dolt_commit_verification_groups = '*';"
+-
+-    add_dolt_test
+-
+-    # Create divergence: main gets Charlie, b1 branch gets Bob without updating test
+-    dolt sql -q "INSERT INTO users VALUES (3, 'Charlie', 'charlie@example.com');"
+-    dolt add .
+-    dolt commit --skip-verification -m "Add Charlie to main"
+-    dolt checkout -b b1 HEAD~1
+-    dolt sql -q "INSERT INTO users VALUES (2, 'Bob', 'bob@example.com');"
+-    dolt add .
+-    dolt commit --skip-verification -m "Add Bob without updating test"
+-
+-    # Rebase b1 onto main: applying Bob's commit on top of Alice+Charlie gives 3 rows, test expects 1
+-    run dolt rebase main
+-    [ "$status" -eq 1 ]
+-    [[ "$output" =~ "commit verification failed" ]] || false
+-    [[ "$output" =~ "user_count" ]] || false
+-    [[ "$output" =~ "expected_single_value equal to 1, got 3" ]] || false
+-
+-    # Dirty state is preserved: we are on dolt_rebase_b1 with users staged
+-    run dolt sql -r csv -q "SELECT * FROM dolt_status"
+-    [ "$status" -eq 0 ]
+-    [[ "$output" =~ "users,1,modified" ]] || false
+-
+-    # --abort restores clean state
+-    run dolt rebase --abort
+-    [ "$status" -eq 0 ]
+-
+-    run dolt status
+-    [ "$status" -eq 0 ]
+-    ! [[ "$output" =~ "rebase in progress" ]] || false
+-}
+-
+-@test "commit_verification: rebase fix data then --continue succeeds" {
+-    dolt sql -q "SET @@PERSIST.dolt_commit_verification_groups = '*';"
+-
+-    add_dolt_test
+-
+-    dolt branch b1
+-    dolt sql -q "INSERT INTO users VALUES (3, 'Charlie', 'charlie@example.com');"
+-    dolt add .
+-    dolt commit --skip-verification -m "Add Charlie to main"
+-
+-    dolt checkout b1
+-    dolt sql -q "INSERT INTO users VALUES (2, 'Bob', 'bob@example.com');"
+-    dolt add .
+-    dolt commit --skip-verification -m "Add Bob without updating test"
+-
+-    run dolt rebase main
+-    [ "$status" -eq 1 ]
+-    [[ "$output" =~ "commit verification failed" ]] || false
+-    [[ "$output" =~ "user_count" ]] || false
+-    [[ "$output" =~ "expected_single_value equal to 1, got 3" ]] || false
+-
+-    # Fix the test expectation (3 users after rebase: Alice + Charlie + Bob) and stage
+-    dolt sql -q "UPDATE dolt_tests SET assertion_value = '3' WHERE test_name = 'user_count';"
+-    dolt add .
+-
+-    # --continue should now succeed
+-    run dolt rebase --continue
+-    [ "$status" -eq 0 ]
+-    [[ "$output" =~ "Successfully rebased" ]] || false
+-
+-    run dolt status
+-    [ "$status" -eq 0 ]
+-    ! [[ "$output" =~ "rebase in progress" ]] || false
+-}

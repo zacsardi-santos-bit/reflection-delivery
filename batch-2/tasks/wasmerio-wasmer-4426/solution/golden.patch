@@ -1,0 +1,1324 @@
+diff --git a/Cargo.lock b/Cargo.lock
+index 3abbf40c748..3c4895caf54 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -6299,8 +6299,7 @@ dependencies = [
+  "wasmer-derive",
+  "wasmer-types",
+  "wasmer-vm",
+- "wasmparser 0.83.0",
+- "wasmparser 0.95.0",
++ "wasmparser 0.121.0",
+  "wat",
+  "winapi 0.3.9",
+ ]
+@@ -6776,7 +6775,7 @@ dependencies = [
+  "url",
+  "wasmer-toml",
+  "wasmer-wasm-interface",
+- "wasmparser 0.51.4",
++ "wasmparser 0.121.0",
+  "whoami",
+ ]
+ 
+@@ -6983,7 +6982,7 @@ dependencies = [
+  "either",
+  "nom",
+  "serde",
+- "wasmparser 0.51.4",
++ "wasmparser 0.121.0",
+  "wat",
+ ]
+ 
+@@ -7038,18 +7037,6 @@ dependencies = [
+  "wasmer-wast",
+ ]
+ 
+-[[package]]
+-name = "wasmparser"
+-version = "0.51.4"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "aeb1956b19469d1c5e63e459d29e7b5aa0f558d9f16fcef09736f8a265e6c10a"
+-
+-[[package]]
+-name = "wasmparser"
+-version = "0.83.0"
+-source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "718ed7c55c2add6548cca3ddd6383d738cd73b892df400e96b9aa876f0141d7a"
+-
+ [[package]]
+ name = "wasmparser"
+ version = "0.95.0"
+diff --git a/lib/api/Cargo.toml b/lib/api/Cargo.toml
+index 2c9268b6dc4..8efc21d3f04 100644
+--- a/lib/api/Cargo.toml
++++ b/lib/api/Cargo.toml
+@@ -52,7 +52,7 @@ wasmer-compiler-llvm = { path = "../compiler-llvm", version = "=4.2.5", optional
+ wasm-bindgen = { version = "0.2.74", optional = true }
+ js-sys = { version = "0.3.51", optional = true }
+ rusty_jsc = { version = "0.1.0", optional = true }
+-wasmparser = { version = "0.83", default-features = false, optional = true }
++wasmparser = { workspace = true, default-features = false, optional = true }
+ 
+ # - Mandatory dependencies for `sys` on Windows.
+ [target.'cfg(all(not(target_arch = "wasm32"), target_os = "windows"))'.dependencies]
+@@ -72,7 +72,7 @@ wasm-bindgen = "0.2.74"
+ js-sys = "0.3.51"
+ wasmer-derive = { path = "../derive", version = "=4.2.5" }
+ # - Optional dependencies for `js`.
+-wasmparser = { version = "0.95", default-features = false, optional = true }
++wasmparser = { workspace = true, default-features = false, optional = true }
+ hashbrown = { version = "0.11", optional = true }
+ serde-wasm-bindgen = { version = "0.4.5" }
+ serde = { version = "1.0", features = ["derive"] }
+diff --git a/lib/api/src/js/mod.rs b/lib/api/src/js/mod.rs
+index ef105260d73..0584da25f29 100644
+--- a/lib/api/src/js/mod.rs
++++ b/lib/api/src/js/mod.rs
+@@ -32,8 +32,6 @@ pub(crate) mod instance;
+ mod js_handle;
+ pub(crate) mod mem_access;
+ pub(crate) mod module;
+-#[cfg(feature = "wasm-types-polyfill")]
+-mod module_info_polyfill;
+ pub(crate) mod store;
+ pub(crate) mod trap;
+ pub(crate) mod typed_function;
+diff --git a/lib/api/src/js/module.rs b/lib/api/src/js/module.rs
+index f8ae569f700..61866abcf5f 100644
+--- a/lib/api/src/js/module.rs
++++ b/lib/api/src/js/module.rs
+@@ -89,7 +89,7 @@ impl Module {
+         // The module is now validated, so we can safely parse it's types
+         #[cfg(feature = "wasm-types-polyfill")]
+         let (type_hints, name) = {
+-            let info = crate::js::module_info_polyfill::translate_module(&binary[..]).unwrap();
++            let info = crate::module_info_polyfill::translate_module(&binary[..]).unwrap();
+ 
+             (
+                 Some(ModuleTypeHints {
+diff --git a/lib/api/src/jsc/mod.rs b/lib/api/src/jsc/mod.rs
+index 9436192e0a1..3a195e32258 100644
+--- a/lib/api/src/jsc/mod.rs
++++ b/lib/api/src/jsc/mod.rs
+@@ -33,7 +33,6 @@ pub(crate) mod externals;
+ pub(crate) mod instance;
+ pub(crate) mod mem_access;
+ pub(crate) mod module;
+-mod module_info_polyfill;
+ pub(crate) mod store;
+ pub(crate) mod trap;
+ pub(crate) mod typed_function;
+diff --git a/lib/api/src/jsc/module.rs b/lib/api/src/jsc/module.rs
+index d08cceb0e59..1eda38c57c8 100644
+--- a/lib/api/src/jsc/module.rs
++++ b/lib/api/src/jsc/module.rs
+@@ -68,7 +68,7 @@ impl Module {
+     pub(crate) unsafe fn from_js_module(module: JSObject, binary: impl IntoBytes) -> Self {
+         let binary = binary.into_bytes();
+         // The module is now validated, so we can safely parse it's types
+-        let info = crate::jsc::module_info_polyfill::translate_module(&binary[..])
++        let info = crate::module_info_polyfill::translate_module(&binary[..])
+             .unwrap()
+             .info;
+ 
+diff --git a/lib/api/src/jsc/module_info_polyfill.rs b/lib/api/src/jsc/module_info_polyfill.rs
+deleted file mode 100644
+index 80f7cccfc21..00000000000
+--- a/lib/api/src/jsc/module_info_polyfill.rs
++++ /dev/null
+@@ -1,613 +0,0 @@
+-//! Polyfill skeleton that traverses the whole WebAssembly module and
+-//! creates the corresponding import and export types.
+-//!
+-//! This shall not be needed once the JS type reflection API is available
+-//! for the Wasm imports and exports.
+-//!  
+-//! https://github.com/WebAssembly/js-types/blob/master/proposals/js-types/Overview.md
+-use core::convert::TryFrom;
+-use std::vec::Vec;
+-use wasmer_types::entity::EntityRef;
+-use wasmer_types::{
+-    ExportIndex, FunctionIndex, FunctionType, GlobalIndex, GlobalType, ImportIndex, MemoryIndex,
+-    MemoryType, ModuleInfo, Pages, SignatureIndex, TableIndex, TableType, Type,
+-};
+-
+-use wasmparser::{
+-    self, BinaryReaderError, Export, ExportSectionReader, ExternalKind, FuncType as WPFunctionType,
+-    FunctionSectionReader, GlobalSectionReader, GlobalType as WPGlobalType, ImportSectionEntryType,
+-    ImportSectionReader, MemorySectionReader, MemoryType as WPMemoryType, NameSectionReader,
+-    Parser, Payload, TableSectionReader, TypeDef, TypeSectionReader,
+-};
+-
+-pub type WasmResult<T> = Result<T, String>;
+-
+-#[derive(Default)]
+-pub struct ModuleInfoPolyfill {
+-    pub(crate) info: ModuleInfo,
+-}
+-
+-impl ModuleInfoPolyfill {
+-    pub(crate) fn declare_export(&mut self, export: ExportIndex, name: &str) -> WasmResult<()> {
+-        self.info.exports.insert(String::from(name), export);
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_import(
+-        &mut self,
+-        import: ImportIndex,
+-        module: &str,
+-        field: &str,
+-    ) -> WasmResult<()> {
+-        self.info.imports.insert(
+-            wasmer_types::ImportKey {
+-                module: String::from(module),
+-                field: String::from(field),
+-                import_idx: self.info.imports.len() as u32,
+-            },
+-            import,
+-        );
+-        Ok(())
+-    }
+-
+-    pub(crate) fn reserve_signatures(&mut self, num: u32) -> WasmResult<()> {
+-        self.info
+-            .signatures
+-            .reserve_exact(usize::try_from(num).unwrap());
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_signature(&mut self, sig: FunctionType) -> WasmResult<()> {
+-        self.info.signatures.push(sig);
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_func_import(
+-        &mut self,
+-        sig_index: SignatureIndex,
+-        module: &str,
+-        field: &str,
+-    ) -> WasmResult<()> {
+-        debug_assert_eq!(
+-            self.info.functions.len(),
+-            self.info.num_imported_functions,
+-            "Imported functions must be declared first"
+-        );
+-        self.declare_import(
+-            ImportIndex::Function(FunctionIndex::from_u32(
+-                self.info.num_imported_functions as _,
+-            )),
+-            module,
+-            field,
+-        )?;
+-        self.info.functions.push(sig_index);
+-        self.info.num_imported_functions += 1;
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_table_import(
+-        &mut self,
+-        table: TableType,
+-        module: &str,
+-        field: &str,
+-    ) -> WasmResult<()> {
+-        debug_assert_eq!(
+-            self.info.tables.len(),
+-            self.info.num_imported_tables,
+-            "Imported tables must be declared first"
+-        );
+-        self.declare_import(
+-            ImportIndex::Table(TableIndex::from_u32(self.info.num_imported_tables as _)),
+-            module,
+-            field,
+-        )?;
+-        self.info.tables.push(table);
+-        self.info.num_imported_tables += 1;
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_memory_import(
+-        &mut self,
+-        memory: MemoryType,
+-        module: &str,
+-        field: &str,
+-    ) -> WasmResult<()> {
+-        debug_assert_eq!(
+-            self.info.memories.len(),
+-            self.info.num_imported_memories,
+-            "Imported memories must be declared first"
+-        );
+-        self.declare_import(
+-            ImportIndex::Memory(MemoryIndex::from_u32(self.info.num_imported_memories as _)),
+-            module,
+-            field,
+-        )?;
+-        self.info.memories.push(memory);
+-        self.info.num_imported_memories += 1;
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_global_import(
+-        &mut self,
+-        global: GlobalType,
+-        module: &str,
+-        field: &str,
+-    ) -> WasmResult<()> {
+-        debug_assert_eq!(
+-            self.info.globals.len(),
+-            self.info.num_imported_globals,
+-            "Imported globals must be declared first"
+-        );
+-        self.declare_import(
+-            ImportIndex::Global(GlobalIndex::from_u32(self.info.num_imported_globals as _)),
+-            module,
+-            field,
+-        )?;
+-        self.info.globals.push(global);
+-        self.info.num_imported_globals += 1;
+-        Ok(())
+-    }
+-
+-    pub(crate) fn reserve_func_types(&mut self, num: u32) -> WasmResult<()> {
+-        self.info
+-            .functions
+-            .reserve_exact(usize::try_from(num).unwrap());
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_func_type(&mut self, sig_index: SignatureIndex) -> WasmResult<()> {
+-        self.info.functions.push(sig_index);
+-        Ok(())
+-    }
+-
+-    pub(crate) fn reserve_tables(&mut self, num: u32) -> WasmResult<()> {
+-        self.info
+-            .tables
+-            .reserve_exact(usize::try_from(num).unwrap());
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_table(&mut self, table: TableType) -> WasmResult<()> {
+-        self.info.tables.push(table);
+-        Ok(())
+-    }
+-
+-    pub(crate) fn reserve_memories(&mut self, num: u32) -> WasmResult<()> {
+-        self.info
+-            .memories
+-            .reserve_exact(usize::try_from(num).unwrap());
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_memory(&mut self, memory: MemoryType) -> WasmResult<()> {
+-        self.info.memories.push(memory);
+-        Ok(())
+-    }
+-
+-    pub(crate) fn reserve_globals(&mut self, num: u32) -> WasmResult<()> {
+-        self.info
+-            .globals
+-            .reserve_exact(usize::try_from(num).unwrap());
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_global(&mut self, global: GlobalType) -> WasmResult<()> {
+-        self.info.globals.push(global);
+-        Ok(())
+-    }
+-
+-    pub(crate) fn reserve_exports(&mut self, num: u32) -> WasmResult<()> {
+-        self.info.exports.reserve(usize::try_from(num).unwrap());
+-        Ok(())
+-    }
+-
+-    pub(crate) fn reserve_imports(&mut self, num: u32) -> WasmResult<()> {
+-        self.info.imports.reserve(usize::try_from(num).unwrap());
+-        Ok(())
+-    }
+-
+-    pub(crate) fn declare_func_export(
+-        &mut self,
+-        func_index: FunctionIndex,
+-        name: &str,
+-    ) -> WasmResult<()> {
+-        self.declare_export(ExportIndex::Function(func_index), name)
+-    }
+-
+-    pub(crate) fn declare_table_export(
+-        &mut self,
+-        table_index: TableIndex,
+-        name: &str,
+-    ) -> WasmResult<()> {
+-        self.declare_export(ExportIndex::Table(table_index), name)
+-    }
+-
+-    pub(crate) fn declare_memory_export(
+-        &mut self,
+-        memory_index: MemoryIndex,
+-        name: &str,
+-    ) -> WasmResult<()> {
+-        self.declare_export(ExportIndex::Memory(memory_index), name)
+-    }
+-
+-    pub(crate) fn declare_global_export(
+-        &mut self,
+-        global_index: GlobalIndex,
+-        name: &str,
+-    ) -> WasmResult<()> {
+-        self.declare_export(ExportIndex::Global(global_index), name)
+-    }
+-
+-    pub(crate) fn declare_module_name(&mut self, name: &str) -> WasmResult<()> {
+-        self.info.name = Some(name.to_string());
+-        Ok(())
+-    }
+-}
+-
+-fn transform_err(err: BinaryReaderError) -> String {
+-    err.message().into()
+-}
+-
+-/// Translate a sequence of bytes forming a valid Wasm binary into a
+-/// parsed ModuleInfo `ModuleInfoPolyfill`.
+-pub fn translate_module<'data>(data: &'data [u8]) -> WasmResult<ModuleInfoPolyfill> {
+-    let mut module_info: ModuleInfoPolyfill = Default::default();
+-
+-    for payload in Parser::new(0).parse_all(data) {
+-        match payload.map_err(transform_err)? {
+-            Payload::TypeSection(types) => {
+-                parse_type_section(types, &mut module_info)?;
+-            }
+-
+-            Payload::ImportSection(imports) => {
+-                parse_import_section(imports, &mut module_info)?;
+-            }
+-
+-            Payload::FunctionSection(functions) => {
+-                parse_function_section(functions, &mut module_info)?;
+-            }
+-
+-            Payload::TableSection(tables) => {
+-                parse_table_section(tables, &mut module_info)?;
+-            }
+-
+-            Payload::MemorySection(memories) => {
+-                parse_memory_section(memories, &mut module_info)?;
+-            }
+-
+-            Payload::GlobalSection(globals) => {
+-                parse_global_section(globals, &mut module_info)?;
+-            }
+-
+-            Payload::ExportSection(exports) => {
+-                parse_export_section(exports, &mut module_info)?;
+-            }
+-
+-            Payload::CustomSection {
+-                name: "name",
+-                data,
+-                data_offset,
+-                ..
+-            } => parse_name_section(
+-                NameSectionReader::new(data, data_offset).map_err(transform_err)?,
+-                &mut module_info,
+-            )?,
+-
+-            _ => {}
+-        }
+-    }
+-
+-    Ok(module_info)
+-}
+-
+-/// Helper function translating wasmparser types to Wasm Type.
+-pub fn wptype_to_type(ty: wasmparser::Type) -> WasmResult<Type> {
+-    match ty {
+-        wasmparser::Type::I32 => Ok(Type::I32),
+-        wasmparser::Type::I64 => Ok(Type::I64),
+-        wasmparser::Type::F32 => Ok(Type::F32),
+-        wasmparser::Type::F64 => Ok(Type::F64),
+-        wasmparser::Type::V128 => Ok(Type::V128),
+-        wasmparser::Type::ExternRef => Ok(Type::ExternRef),
+-        wasmparser::Type::FuncRef => Ok(Type::FuncRef),
+-        ty => Err(format!("wptype_to_type: wasmparser type {:?}", ty)),
+-    }
+-}
+-
+-/// Parses the Type section of the wasm module.
+-pub fn parse_type_section(
+-    types: TypeSectionReader,
+-    module_info: &mut ModuleInfoPolyfill,
+-) -> WasmResult<()> {
+-    let count = types.get_count();
+-    module_info.reserve_signatures(count)?;
+-
+-    for entry in types {
+-        if let Ok(TypeDef::Func(WPFunctionType { params, returns })) = entry {
+-            let sig_params: Vec<Type> = params
+-                .iter()
+-                .map(|ty| {
+-                    wptype_to_type(*ty)
+-                        .expect("only numeric types are supported in function signatures")
+-                })
+-                .collect();
+-            let sig_returns: Vec<Type> = returns
+-                .iter()
+-                .map(|ty| {
+-                    wptype_to_type(*ty)
+-                        .expect("only numeric types are supported in function signatures")
+-                })
+-                .collect();
+-            let sig = FunctionType::new(sig_params, sig_returns);
+-            module_info.declare_signature(sig)?;
+-        } else {
+-            unimplemented!("module linking not implemented yet")
+-        }
+-    }
+-
+-    Ok(())
+-}
+-
+-/// Parses the Import section of the wasm module.
+-pub fn parse_import_section<'data>(
+-    imports: ImportSectionReader<'data>,
+-    module_info: &mut ModuleInfoPolyfill,
+-) -> WasmResult<()> {
+-    module_info.reserve_imports(imports.get_count())?;
+-
+-    for entry in imports {
+-        let import = entry.map_err(transform_err)?;
+-        let module_name = import.module;
+-        let field_name = import.field;
+-
+-        match import.ty {
+-            ImportSectionEntryType::Function(sig) => {
+-                module_info.declare_func_import(
+-                    SignatureIndex::from_u32(sig),
+-                    module_name,
+-                    field_name.unwrap_or_default(),
+-                )?;
+-            }
+-            ImportSectionEntryType::Module(_) | ImportSectionEntryType::Instance(_) => {
+-                unimplemented!("module linking not implemented yet")
+-            }
+-            ImportSectionEntryType::Tag(_) => {
+-                unimplemented!("exception handling not implemented yet")
+-            }
+-            ImportSectionEntryType::Memory(WPMemoryType {
+-                shared,
+-                memory64,
+-                initial,
+-                maximum,
+-            }) => {
+-                if memory64 {
+-                    unimplemented!("64bit memory not implemented yet");
+-                }
+-                module_info.declare_memory_import(
+-                    MemoryType {
+-                        minimum: Pages(initial as u32),
+-                        maximum: maximum.map(|p| Pages(p as u32)),
+-                        shared,
+-                    },
+-                    module_name,
+-                    field_name.unwrap_or_default(),
+-                )?;
+-            }
+-            ImportSectionEntryType::Global(ref ty) => {
+-                module_info.declare_global_import(
+-                    GlobalType {
+-                        ty: wptype_to_type(ty.content_type).unwrap(),
+-                        mutability: ty.mutable.into(),
+-                    },
+-                    module_name,
+-                    field_name.unwrap_or_default(),
+-                )?;
+-            }
+-            ImportSectionEntryType::Table(ref tab) => {
+-                module_info.declare_table_import(
+-                    TableType {
+-                        ty: wptype_to_type(tab.element_type).unwrap(),
+-                        minimum: tab.initial,
+-                        maximum: tab.maximum,
+-                    },
+-                    module_name,
+-                    field_name.unwrap_or_default(),
+-                )?;
+-            }
+-        }
+-    }
+-    Ok(())
+-}
+-
+-/// Parses the Function section of the wasm module.
+-pub fn parse_function_section(
+-    functions: FunctionSectionReader,
+-    module_info: &mut ModuleInfoPolyfill,
+-) -> WasmResult<()> {
+-    let num_functions = functions.get_count();
+-    module_info.reserve_func_types(num_functions)?;
+-
+-    for entry in functions {
+-        let sigindex = entry.map_err(transform_err)?;
+-        module_info.declare_func_type(SignatureIndex::from_u32(sigindex))?;
+-    }
+-
+-    Ok(())
+-}
+-
+-/// Parses the Table section of the wasm module.
+-pub fn parse_table_section(
+-    tables: TableSectionReader,
+-    module_info: &mut ModuleInfoPolyfill,
+-) -> WasmResult<()> {
+-    module_info.reserve_tables(tables.get_count())?;
+-
+-    for entry in tables {
+-        let table = entry.map_err(transform_err)?;
+-        module_info.declare_table(TableType {
+-            ty: wptype_to_type(table.element_type).unwrap(),
+-            minimum: table.initial,
+-            maximum: table.maximum,
+-        })?;
+-    }
+-
+-    Ok(())
+-}
+-
+-/// Parses the Memory section of the wasm module.
+-pub fn parse_memory_section(
+-    memories: MemorySectionReader,
+-    module_info: &mut ModuleInfoPolyfill,
+-) -> WasmResult<()> {
+-    module_info.reserve_memories(memories.get_count())?;
+-
+-    for entry in memories {
+-        let WPMemoryType {
+-            shared,
+-            memory64,
+-            initial,
+-            maximum,
+-        } = entry.map_err(transform_err)?;
+-        if memory64 {
+-            unimplemented!("64bit memory not implemented yet");
+-        }
+-        module_info.declare_memory(MemoryType {
+-            minimum: Pages(initial as u32),
+-            maximum: maximum.map(|p| Pages(p as u32)),
+-            shared,
+-        })?;
+-    }
+-
+-    Ok(())
+-}
+-
+-/// Parses the Global section of the wasm module.
+-pub fn parse_global_section(
+-    globals: GlobalSectionReader,
+-    module_info: &mut ModuleInfoPolyfill,
+-) -> WasmResult<()> {
+-    module_info.reserve_globals(globals.get_count())?;
+-
+-    for entry in globals {
+-        let WPGlobalType {
+-            content_type,
+-            mutable,
+-        } = entry.map_err(transform_err)?.ty;
+-        let global = GlobalType {
+-            ty: wptype_to_type(content_type).unwrap(),
+-            mutability: mutable.into(),
+-        };
+-        module_info.declare_global(global)?;
+-    }
+-
+-    Ok(())
+-}
+-
+-/// Parses the Export section of the wasm module.
+-pub fn parse_export_section<'data>(
+-    exports: ExportSectionReader<'data>,
+-    module_info: &mut ModuleInfoPolyfill,
+-) -> WasmResult<()> {
+-    module_info.reserve_exports(exports.get_count())?;
+-
+-    for entry in exports {
+-        let Export {
+-            field,
+-            ref kind,
+-            index,
+-        } = entry.map_err(transform_err)?;
+-
+-        // The input has already been validated, so we should be able to
+-        // assume valid UTF-8 and use `from_utf8_unchecked` if performance
+-        // becomes a concern here.
+-        let index = index as usize;
+-        match *kind {
+-            ExternalKind::Function => {
+-                module_info.declare_func_export(FunctionIndex::new(index), field)?
+-            }
+-            ExternalKind::Table => {
+-                module_info.declare_table_export(TableIndex::new(index), field)?
+-            }
+-            ExternalKind::Memory => {
+-                module_info.declare_memory_export(MemoryIndex::new(index), field)?
+-            }
+-            ExternalKind::Global => {
+-                module_info.declare_global_export(GlobalIndex::new(index), field)?
+-            }
+-            ExternalKind::Type | ExternalKind::Module | ExternalKind::Instance => {
+-                unimplemented!("module linking not implemented yet")
+-            }
+-            ExternalKind::Tag => {
+-                unimplemented!("exception handling not implemented yet")
+-            }
+-        }
+-    }
+-    Ok(())
+-}
+-
+-// /// Parses the Start section of the wasm module.
+-// pub fn parse_start_section(index: u32, module_info: &mut ModuleInfoPolyfill) -> WasmResult<()> {
+-//     module_info.declare_start_function(FunctionIndex::from_u32(index))?;
+-//     Ok(())
+-// }
+-
+-/// Parses the Name section of the wasm module.
+-pub fn parse_name_section<'data>(
+-    mut names: NameSectionReader<'data>,
+-    module_info: &mut ModuleInfoPolyfill,
+-) -> WasmResult<()> {
+-    while let Ok(subsection) = names.read() {
+-        match subsection {
+-            wasmparser::Name::Function(_function_subsection) => {
+-                // if let Some(function_names) = function_subsection
+-                //     .get_map()
+-                //     .ok()
+-                //     .and_then(parse_function_name_subsection)
+-                // {
+-                //     for (index, name) in function_names {
+-                //         module_info.declare_function_name(index, name)?;
+-                //     }
+-                // }
+-            }
+-            wasmparser::Name::Module(module) => {
+-                if let Ok(name) = module.get_name() {
+-                    module_info.declare_module_name(name)?;
+-                }
+-            }
+-            wasmparser::Name::Local(_) => {}
+-            wasmparser::Name::Label(_)
+-            | wasmparser::Name::Type(_)
+-            | wasmparser::Name::Table(_)
+-            | wasmparser::Name::Memory(_)
+-            | wasmparser::Name::Global(_)
+-            | wasmparser::Name::Element(_)
+-            | wasmparser::Name::Data(_)
+-            | wasmparser::Name::Unknown { .. } => {}
+-        };
+-    }
+-    Ok(())
+-}
+-
+-// fn parse_function_name_subsection(
+-//     mut naming_reader: NamingReader<'_>,
+-// ) -> Option<HashMap<FunctionIndex, &str>> {
+-//     let mut function_names = HashMap::new();
+-//     for _ in 0..naming_reader.get_count() {
+-//         let Naming { index, name } = naming_reader.read().ok()?;
+-//         if index == std::u32::MAX {
+-//             // We reserve `u32::MAX` for our own use.
+-//             return None;
+-//         }
+-
+-//         if function_names
+-//             .insert(FunctionIndex::from_u32(index), name)
+-//             .is_some()
+-//         {
+-//             // If the function index has been previously seen, then we
+-//             // break out of the loop and early return `None`, because these
+-//             // should be unique.
+-//             return None;
+-//         }
+-//     }
+-//     Some(function_names)
+-// }
+diff --git a/lib/api/src/lib.rs b/lib/api/src/lib.rs
+index 4c54ae45ba5..fe6f928f649 100644
+--- a/lib/api/src/lib.rs
++++ b/lib/api/src/lib.rs
+@@ -445,6 +445,9 @@ mod typed_function;
+ mod value;
+ pub mod vm;
+ 
++#[cfg(any(feature = "wasm-types-polyfill", feature = "jsc"))]
++mod module_info_polyfill;
++
+ #[cfg(feature = "sys")]
+ /// sys
+ pub mod sys;
+diff --git a/lib/api/src/js/module_info_polyfill.rs b/lib/api/src/module_info_polyfill.rs
+similarity index 87%
+rename from lib/api/src/js/module_info_polyfill.rs
+rename to lib/api/src/module_info_polyfill.rs
+index 5ddf5746be3..43c3aa3181f 100644
+--- a/lib/api/src/js/module_info_polyfill.rs
++++ b/lib/api/src/module_info_polyfill.rs
+@@ -288,8 +288,7 @@ pub fn translate_module<'data>(data: &'data [u8]) -> WasmResult<ModuleInfoPolyfi
+                 let name = sectionreader.name();
+                 if name == "name" {
+                     parse_name_section(
+-                        NameSectionReader::new(sectionreader.data(), sectionreader.data_offset())
+-                            .map_err(transform_err)?,
++                        NameSectionReader::new(sectionreader.data(), sectionreader.data_offset()),
+                         &mut module_info,
+                     )?;
+                 }
+@@ -310,41 +309,57 @@ pub fn wptype_to_type(ty: wasmparser::ValType) -> WasmResult<Type> {
+         wasmparser::ValType::F32 => Ok(Type::F32),
+         wasmparser::ValType::F64 => Ok(Type::F64),
+         wasmparser::ValType::V128 => Ok(Type::V128),
+-        wasmparser::ValType::ExternRef => Ok(Type::ExternRef),
+-        wasmparser::ValType::FuncRef => Ok(Type::FuncRef),
++        wasmparser::ValType::Ref(ty) => wpreftype_to_type(ty),
++    }
++}
++
++/// Converts a wasmparser ref type to a [`Type`].
++pub fn wpreftype_to_type(ty: wasmparser::RefType) -> WasmResult<Type> {
++    if ty.is_extern_ref() {
++        Ok(Type::ExternRef)
++    } else if ty.is_func_ref() {
++        Ok(Type::FuncRef)
++    } else {
++        Err(format!("Unsupported ref type: {:?}", ty))
+     }
+ }
+ 
+ /// Parses the Type section of the wasm module.
+ pub fn parse_type_section(
+-    types: TypeSectionReader,
++    reader: TypeSectionReader,
+     module_info: &mut ModuleInfoPolyfill,
+ ) -> WasmResult<()> {
+-    let count = types.get_count();
+-    module_info.reserve_signatures(count)?;
+-
+-    for entry in types {
+-        if let Ok(wasmparser::Type::Func(functype)) = entry {
+-            let params = functype.params();
+-            let returns = functype.results();
+-            let sig_params: Vec<Type> = params
+-                .iter()
+-                .map(|ty| {
+-                    wptype_to_type(*ty)
+-                        .expect("only numeric types are supported in function signatures")
+-                })
+-                .collect();
+-            let sig_returns: Vec<Type> = returns
+-                .iter()
+-                .map(|ty| {
+-                    wptype_to_type(*ty)
+-                        .expect("only numeric types are supported in function signatures")
+-                })
+-                .collect();
+-            let sig = FunctionType::new(sig_params, sig_returns);
+-            module_info.declare_signature(sig)?;
+-        } else {
+-            unimplemented!("module linking not implemented yet")
++    module_info.reserve_signatures(reader.count())?;
++
++    for res in reader {
++        let group = res.map_err(transform_err)?;
++
++        for ty in group.into_types() {
++            match ty.composite_type {
++                wasmparser::CompositeType::Func(functype) => {
++                    let params = functype.params();
++                    let returns = functype.results();
++                    let sig_params: Vec<Type> = params
++                        .iter()
++                        .map(|ty| {
++                            wptype_to_type(*ty)
++                                .expect("only numeric types are supported in function signatures")
++                        })
++                        .collect();
++                    let sig_returns: Vec<Type> = returns
++                        .iter()
++                        .map(|ty| {
++                            wptype_to_type(*ty)
++                                .expect("only numeric types are supported in function signatures")
++                        })
++                        .collect();
++                    let sig = FunctionType::new(sig_params, sig_returns);
++                    module_info.declare_signature(sig)?;
++                }
++                _ => {
++                    unimplemented!("GC is  not implemented yet")
++                }
++            }
+         }
+     }
+ 
+@@ -356,7 +371,7 @@ pub fn parse_import_section<'data>(
+     imports: ImportSectionReader<'data>,
+     module_info: &mut ModuleInfoPolyfill,
+ ) -> WasmResult<()> {
+-    module_info.reserve_imports(imports.get_count())?;
++    module_info.reserve_imports(imports.count())?;
+ 
+     for entry in imports {
+         let import = entry.map_err(transform_err)?;
+@@ -406,7 +421,7 @@ pub fn parse_import_section<'data>(
+             TypeRef::Table(ref tab) => {
+                 module_info.declare_table_import(
+                     TableType {
+-                        ty: wptype_to_type(tab.element_type).unwrap(),
++                        ty: wpreftype_to_type(tab.element_type).unwrap(),
+                         minimum: tab.initial,
+                         maximum: tab.maximum,
+                     },
+@@ -424,7 +439,7 @@ pub fn parse_function_section(
+     functions: FunctionSectionReader,
+     module_info: &mut ModuleInfoPolyfill,
+ ) -> WasmResult<()> {
+-    let num_functions = functions.get_count();
++    let num_functions = functions.count();
+     module_info.reserve_func_types(num_functions)?;
+ 
+     for entry in functions {
+@@ -440,14 +455,14 @@ pub fn parse_table_section(
+     tables: TableSectionReader,
+     module_info: &mut ModuleInfoPolyfill,
+ ) -> WasmResult<()> {
+-    module_info.reserve_tables(tables.get_count())?;
++    module_info.reserve_tables(tables.count())?;
+ 
+     for entry in tables {
+         let table = entry.map_err(transform_err)?;
+         module_info.declare_table(TableType {
+-            ty: wptype_to_type(table.element_type).unwrap(),
+-            minimum: table.initial,
+-            maximum: table.maximum,
++            ty: wpreftype_to_type(table.ty.element_type).unwrap(),
++            minimum: table.ty.initial,
++            maximum: table.ty.maximum,
+         })?;
+     }
+ 
+@@ -459,7 +474,7 @@ pub fn parse_memory_section(
+     memories: MemorySectionReader,
+     module_info: &mut ModuleInfoPolyfill,
+ ) -> WasmResult<()> {
+-    module_info.reserve_memories(memories.get_count())?;
++    module_info.reserve_memories(memories.count())?;
+ 
+     for entry in memories {
+         let WPMemoryType {
+@@ -486,7 +501,7 @@ pub fn parse_global_section(
+     globals: GlobalSectionReader,
+     module_info: &mut ModuleInfoPolyfill,
+ ) -> WasmResult<()> {
+-    module_info.reserve_globals(globals.get_count())?;
++    module_info.reserve_globals(globals.count())?;
+ 
+     for entry in globals {
+         let WPGlobalType {
+@@ -508,7 +523,7 @@ pub fn parse_export_section<'data>(
+     exports: ExportSectionReader<'data>,
+     module_info: &mut ModuleInfoPolyfill,
+ ) -> WasmResult<()> {
+-    module_info.reserve_exports(exports.get_count())?;
++    module_info.reserve_exports(exports.count())?;
+ 
+     for entry in exports {
+         let Export {
+@@ -553,7 +568,7 @@ pub fn parse_name_section<'data>(
+     mut names: NameSectionReader<'data>,
+     module_info: &mut ModuleInfoPolyfill,
+ ) -> WasmResult<()> {
+-    while let Ok(subsection) = names.read() {
++    while let Some(Ok(subsection)) = names.next() {
+         match subsection {
+             wasmparser::Name::Function(_function_subsection) => {
+                 //for naming in function_subsection.into_iter().flatten() {
+@@ -579,6 +594,7 @@ pub fn parse_name_section<'data>(
+             | wasmparser::Name::Global(_)
+             | wasmparser::Name::Element(_)
+             | wasmparser::Name::Data(_)
++            | wasmparser::Name::Tag(_)
+             | wasmparser::Name::Unknown { .. } => {}
+         };
+     }
+@@ -589,7 +605,7 @@ pub fn parse_name_section<'data>(
+ //     mut naming_reader: NamingReader<'_>,
+ // ) -> Option<HashMap<FunctionIndex, &str>> {
+ //     let mut function_names = HashMap::new();
+-//     for _ in 0..naming_reader.get_count() {
++//     for _ in 0..naming_reader.count() {
+ //         let Naming { index, name } = naming_reader.read().ok()?;
+ //         if index == std::u32::MAX {
+ //             // We reserve `u32::MAX` for our own use.
+diff --git a/lib/registry/Cargo.toml b/lib/registry/Cargo.toml
+index 0c71ad4fa00..ba8693f14ab 100644
+--- a/lib/registry/Cargo.toml
++++ b/lib/registry/Cargo.toml
+@@ -50,7 +50,7 @@ tracing = "0.1.40"
+ url = "2.3.1"
+ wasmer-toml = { workspace = true }
+ wasmer-wasm-interface = { version = "4.2.5", path = "../wasm-interface", optional = true }
+-wasmparser = { version = "0.51.4", optional = true }
++wasmparser = { workspace = true, optional = true }
+ whoami = "1.2.3"
+ 
+ [dev-dependencies]
+diff --git a/lib/registry/src/package/builder.rs b/lib/registry/src/package/builder.rs
+index 326db4d28ae..ab804f0f34d 100644
+--- a/lib/registry/src/package/builder.rs
++++ b/lib/registry/src/package/builder.rs
+@@ -786,32 +786,22 @@ mod validate {
+         wasm: &[u8],
+         file_name: String,
+     ) -> Result<(), ValidationError> {
+-        use wasmparser::WasmDecoder;
+-        let mut parser = wasmparser::ValidatingParser::new(
+-            wasm,
+-            Some(wasmparser::ValidatingParserConfig {
+-                operator_config: wasmparser::OperatorValidatorConfig {
+-                    enable_threads: true,
+-                    enable_reference_types: true,
+-                    enable_simd: true,
+-                    enable_bulk_memory: true,
+-                    enable_multi_value: true,
+-                },
+-            }),
+-        );
+-        loop {
+-            let state = parser.read();
+-            match state {
+-                wasmparser::ParserState::EndWasm => return Ok(()),
+-                wasmparser::ParserState::Error(e) => {
+-                    return Err(ValidationError::InvalidWasm {
+-                        file: file_name,
+-                        error: format!("{}", e),
+-                    });
+-                }
+-                _ => {}
+-            }
+-        }
++        let mut val = wasmparser::Validator::new_with_features(wasmparser::WasmFeatures {
++            threads: true,
++            reference_types: true,
++            simd: true,
++            bulk_memory: true,
++            multi_value: true,
++            ..Default::default()
++        });
++
++        val.validate_all(wasm)
++            .map_err(|e| ValidationError::InvalidWasm {
++                file: file_name.clone(),
++                error: format!("{}", e),
++            })?;
++
++        Ok(())
+     }
+ 
+     /// How should validation be treated by the publishing process?
+diff --git a/lib/wasm-interface/Cargo.toml b/lib/wasm-interface/Cargo.toml
+index 479fd1bd68c..c071307414d 100644
+--- a/lib/wasm-interface/Cargo.toml
++++ b/lib/wasm-interface/Cargo.toml
+@@ -15,7 +15,7 @@ bincode = { version = "1", optional = true }
+ either = "1.5"
+ nom = "5"
+ serde = { version = "1", features = ["derive"] }
+-wasmparser = { version = "0.51.4", optional = true }
++wasmparser = { workspace = true, optional = true }
+ 
+ [dev-dependencies]
+ wat = "1.0"
+diff --git a/lib/wasm-interface/src/validate.rs b/lib/wasm-interface/src/validate.rs
+index c25bb70223a..7901eeb3023 100644
+--- a/lib/wasm-interface/src/validate.rs
++++ b/lib/wasm-interface/src/validate.rs
+@@ -6,14 +6,12 @@
+ 
+ use crate::{Export, Import, Interface, WasmType};
+ use std::collections::HashMap;
+-use wasmparser::{ExternalKind, FuncType, GlobalType, ImportSectionEntryType};
++use wasmparser::{CompositeType, ExternalKind, FuncType, GlobalType, Payload, TypeRef};
+ 
+ pub fn validate_wasm_and_report_errors(
+     wasm: &[u8],
+     interface: &Interface,
+ ) -> Result<(), WasmValidationError> {
+-    use wasmparser::WasmDecoder;
+-
+     let mut errors: Vec<String> = vec![];
+     let mut import_fns: HashMap<(String, String), u32> = HashMap::new();
+     let mut export_fns: HashMap<String, u32> = HashMap::new();
+@@ -22,90 +20,122 @@ pub fn validate_wasm_and_report_errors(
+     let mut global_types: Vec<GlobalType> = vec![];
+     let mut fn_sigs: Vec<u32> = vec![];
+ 
+-    let mut parser = wasmparser::ValidatingParser::new(
+-        wasm,
+-        Some(wasmparser::ValidatingParserConfig {
+-            operator_config: wasmparser::OperatorValidatorConfig {
+-                enable_threads: true,
+-                enable_reference_types: true,
+-                enable_simd: true,
+-                enable_bulk_memory: true,
+-                enable_multi_value: true,
+-            },
+-        }),
+-    );
+-    loop {
+-        let state = parser.read();
+-        match state {
+-            wasmparser::ParserState::EndWasm => break,
+-            wasmparser::ParserState::Error(e) => {
+-                return Err(WasmValidationError::InvalidWasm {
+-                    error: format!("{}", e),
+-                });
+-            }
+-            wasmparser::ParserState::ImportSectionEntry {
+-                module,
+-                field,
+-                ref ty,
+-            } => match ty {
+-                ImportSectionEntryType::Function(idx) => {
+-                    import_fns.insert(Import::format_key(module, field), *idx);
+-                    fn_sigs.push(*idx);
+-                }
+-                ImportSectionEntryType::Global(GlobalType { content_type, .. }) => {
+-                    let global_type =
+-                        wasmparser_type_into_wasm_type(*content_type).map_err(|err| {
+-                            WasmValidationError::UnsupportedType {
+-                                error: format!(
+-                                    "Invalid type found in import \"{}\" \"{}\": {}",
+-                                    module, field, err
+-                                ),
+-                            }
+-                        })?;
+-                    if let Some(val) = interface.imports.get(&Import::format_key(module, field)) {
+-                        if let Import::Global { var_type, .. } = val {
+-                            if *var_type != global_type {
++    let mut val = wasmparser::Validator::new_with_features(wasmparser::WasmFeatures {
++        threads: true,
++        reference_types: true,
++        simd: true,
++        bulk_memory: true,
++        multi_value: true,
++        ..Default::default()
++    });
++
++    val.validate_all(wasm)
++        .map_err(|e| WasmValidationError::InvalidWasm {
++            error: format!("{}", e),
++        })?;
++
++    let parser = wasmparser::Parser::new(0).parse_all(wasm);
++
++    for res in parser {
++        let payload = res.map_err(|e| WasmValidationError::InvalidWasm {
++            error: format!("{}", e),
++        })?;
++        match payload {
++            Payload::End(_) => break,
++            Payload::ImportSection(reader) => {
++                for item in reader.into_iter_with_offsets() {
++                    let (_offset, import) = item.map_err(|e| WasmValidationError::InvalidWasm {
++                        error: format!("{}", e),
++                    })?;
++
++                    match import.ty {
++                        TypeRef::Func(idx) => {
++                            import_fns.insert(Import::format_key(import.module, import.name), idx);
++                            fn_sigs.push(idx);
++                        }
++                        TypeRef::Global(GlobalType { content_type, .. }) => {
++                            let global_type = wasmparser_type_into_wasm_type(content_type)
++                                .map_err(|err| WasmValidationError::UnsupportedType {
++                                    error: format!(
++                                        "Invalid type found in import \"{}\" \"{}\": {}",
++                                        import.module, import.name, err
++                                    ),
++                                })?;
++                            if let Some(val) = interface
++                                .imports
++                                .get(&Import::format_key(import.module, import.name))
++                            {
++                                if let Import::Global { var_type, .. } = val {
++                                    if *var_type != global_type {
++                                        errors.push(format!(
++                                            "Invalid type on Global \"{}\". Expected {} found {}",
++                                            import.name, var_type, global_type
++                                        ));
++                                    }
++                                } else {
++                                    errors.push(format!(
++                                        "Invalid import type. Expected Global, found {:?}",
++                                        val
++                                    ));
++                                }
++                            } else {
+                                 errors.push(format!(
+-                                    "Invalid type on Global \"{}\". Expected {} found {}",
+-                                    field, var_type, global_type
++                                    "Global import \"{}\" not found in the specified interface",
++                                    import.name
+                                 ));
+                             }
+-                        } else {
+-                            errors.push(format!(
+-                                "Invalid import type. Expected Global, found {:?}",
+-                                val
+-                            ));
+                         }
+-                    } else {
+-                        errors.push(format!(
+-                            "Global import \"{}\" not found in the specified interface",
+-                            field
+-                        ));
++                        _ => (),
+                     }
+                 }
+-                _ => (),
+-            },
+-            wasmparser::ParserState::ExportSectionEntry {
+-                field,
+-                index,
+-                ref kind,
+-            } => match kind {
+-                ExternalKind::Function => {
+-                    export_fns.insert(Export::format_key(field), *index);
++            }
++            Payload::ExportSection(reader) => {
++                for res in reader.into_iter() {
++                    let export = res.map_err(|e| WasmValidationError::InvalidWasm {
++                        error: format!("{}", e),
++                    })?;
++
++                    match export.kind {
++                        ExternalKind::Func => {
++                            export_fns.insert(Export::format_key(export.name), export.index);
++                        }
++                        ExternalKind::Global => {
++                            export_globals.insert(Export::format_key(export.name), export.index);
++                        }
++                        _ => (),
++                    }
+                 }
+-                ExternalKind::Global => {
+-                    export_globals.insert(Export::format_key(field), *index);
++            }
++            Payload::GlobalSection(reader) => {
++                for res in reader.into_iter() {
++                    let global = res.map_err(|e| WasmValidationError::InvalidWasm {
++                        error: format!("{}", e),
++                    })?;
++
++                    global_types.push(global.ty);
+                 }
+-                _ => (),
+-            },
+-            wasmparser::ParserState::BeginGlobalSectionEntry(gt) => {
+-                global_types.push(*gt);
+             }
+-            wasmparser::ParserState::TypeSectionEntry(ft) => {
+-                type_defs.push(ft.clone());
++            Payload::TypeSection(reader) => {
++                for res in reader.into_iter() {
++                    let group = res.map_err(|e| WasmValidationError::InvalidWasm {
++                        error: format!("{}", e),
++                    })?;
++
++                    for ty in group.into_types() {
++                        if let CompositeType::Func(ft) = ty.composite_type {
++                            type_defs.push(ft);
++                        }
++                    }
++                }
+             }
+-            wasmparser::ParserState::FunctionSectionEntry(n) => {
+-                fn_sigs.push(*n);
++            Payload::FunctionSection(reader) => {
++                for res in reader.into_iter() {
++                    let func = res.map_err(|e| WasmValidationError::InvalidWasm {
++                        error: format!("{}", e),
++                    })?;
++
++                    fn_sigs.push(func);
++                }
+             }
+             _ => {}
+         }
+@@ -142,9 +172,8 @@ fn validate_imports(
+                 continue;
+             };
+             if let Import::Func { params, result, .. } = interface_def {
+-                debug_assert!(type_sig.form == wasmparser::Type::Func);
+                 for (i, param) in type_sig
+-                    .params
++                    .params()
+                     .iter()
+                     .cloned()
+                     .map(wasmparser_type_into_wasm_type)
+@@ -170,7 +199,7 @@ fn validate_imports(
+                     }
+                 }
+                 for (i, ret) in type_sig
+-                    .returns
++                    .results()
+                     .iter()
+                     .cloned()
+                     .map(wasmparser_type_into_wasm_type)
+@@ -236,9 +265,8 @@ fn validate_export_fns(
+                 continue;
+             };
+             if let Export::Func { params, result, .. } = interface_def {
+-                debug_assert!(type_sig.form == wasmparser::Type::Func);
+                 for (i, param) in type_sig
+-                    .params
++                    .params()
+                     .iter()
+                     .cloned()
+                     .map(wasmparser_type_into_wasm_type)
+@@ -247,7 +275,7 @@ fn validate_export_fns(
+                     match param {
+                         Ok(t) => {
+                             if params.get(i).is_none() {
+-                                errors.push(format!("Found {} args but the interface only expects {} for exported function \"{}\"", type_sig.params.len(), params.len(), &key));
++                                errors.push(format!("Found {} args but the interface only expects {} for exported function \"{}\"", type_sig.params().len(), params.len(), &key));
+                                 continue 'export_loop;
+                             }
+                             if t != params[i] {
+@@ -262,7 +290,7 @@ fn validate_export_fns(
+                     }
+                 }
+                 for (i, ret) in type_sig
+-                    .returns
++                    .results()
+                     .iter()
+                     .cloned()
+                     .map(wasmparser_type_into_wasm_type)
+@@ -328,13 +356,13 @@ fn validate_export_globals(
+ ///
+ /// Additionally wasmerparser containers more advanced types like references that
+ /// wasm-interface does not yet support
+-fn wasmparser_type_into_wasm_type(ty: wasmparser::Type) -> Result<WasmType, String> {
+-    use wasmparser::Type;
++fn wasmparser_type_into_wasm_type(ty: wasmparser::ValType) -> Result<WasmType, String> {
++    use wasmparser::ValType;
+     Ok(match ty {
+-        Type::I32 => WasmType::I32,
+-        Type::I64 => WasmType::I64,
+-        Type::F32 => WasmType::F32,
+-        Type::F64 => WasmType::F64,
++        ValType::I32 => WasmType::I32,
++        ValType::I64 => WasmType::I64,
++        ValType::F32 => WasmType::F32,
++        ValType::F64 => WasmType::F64,
+         e => {
+             return Err(format!("Invalid type found: {:?}", e));
+         }

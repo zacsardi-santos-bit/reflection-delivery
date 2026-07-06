@@ -1,0 +1,36 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl indexing-service test -Dtest=TombstoneHelperTest -DfailIfNoTests=false -Dcheckstyle.skip=true -Dfindbugs.skip=true -Dpmd.skip=true -Denforcer.skip=true -Dmaven.javadoc.skip=true -Dlicense.skip=true -Dweb.console.skip=true -Dcyclonedx.skip=true 2>&1",
+  "test_files": [
+    "extensions-core/multi-stage-query/src/test/java/org/apache/druid/msq/exec/MSQFaultsTest.java",
+    "extensions-core/multi-stage-query/src/test/java/org/apache/druid/msq/exec/MSQInsertTest.java",
+    "extensions-core/multi-stage-query/src/test/java/org/apache/druid/msq/exec/MSQReplaceTest.java",
+    "extensions-core/multi-stage-query/src/test/java/org/apache/druid/msq/sql/resources/SqlMSQStatementResourcePostTest.java",
+    "extensions-core/multi-stage-query/src/test/java/org/apache/druid/msq/test/MSQTestBase.java",
+    "indexing-service/src/test/java/org/apache/druid/indexing/common/task/batch/parallel/TombstoneHelperTest.java"
+  ],
+  "num_test_files": 6,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "druid-indexing-service::test_1",
+    "druid-indexing-service::test_2",
+    "druid-indexing-service::test_3",
+    "druid-indexing-service::test_4",
+    "druid-indexing-service::test_5",
+    "druid-indexing-service::test_6",
+    "druid-indexing-service::test_7",
+    "druid-indexing-service::test_8",
+    "druid-indexing-service::test_9",
+    "druid-indexing-service::test_10",
+    "druid-indexing-service::test_11",
+    "druid-indexing-service::test_12",
+    "druid-indexing-service::test_13",
+    "druid-indexing-service::test_14",
+    "druid-indexing-service::test_15",
+    "druid-indexing-service::test_16",
+    "druid-indexing-service::test_17",
+    "druid-indexing-service::test_18",
+    "druid-indexing-service::test_19"
+  ],
+  "PASS_TO_PASS": []
+}

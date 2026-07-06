@@ -1,0 +1,5 @@
+I'm working on the CKB node and I've found an inconsistency in how transaction rejections are classified. When a script execution fails because the arguments passed to it are too large, the transaction should obviously be treated as permanently invalid — it will fail deterministically every time regardless of chain state. However, the current code has a special exception that prevents this type of error from being classified as a "malformed transaction."
+
+This means peers who relay transactions with oversized script arguments aren't being penalized the way they should be, and the node might try to re-accept something that can never succeed.
+
+I'd like to remove this special exception so that all script-level verification failures — including the oversized argument case — are consistently treated as malformed transactions. Additionally, there's an old test assertion that verified the incorrect behavior (asserting that this error is NOT a malformed transaction), which conflicts with the corrected behavior and needs to be removed along with any now-unused constants or imports that supported the old logic.

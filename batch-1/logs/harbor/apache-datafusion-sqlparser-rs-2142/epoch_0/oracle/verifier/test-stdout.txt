@@ -1,0 +1,10 @@
+patching file tests/sqlparser_common.rs
+   Compiling sqlparser v0.60.0 (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 23.28s
+────────────
+ Nextest run ID 4fe3cb3d-af2f-445d-819c-b237ef84e824 with nextest profile: default
+    Starting 1 test across 18 binaries (1297 tests skipped)
+        PASS [   0.023s] (1/1) sqlparser::sqlparser_common test_parse_alter_user
+────────────
+     Summary [   0.027s] 1 test run: 1 passed, 1297 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

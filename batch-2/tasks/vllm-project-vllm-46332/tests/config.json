@@ -1,0 +1,34 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/v1/kv_connector/unit/test_moriio_connector.py /workspace/repo/tests/v1/kv_connector/unit/test_moriio_kv_layout.py /workspace/repo/tests/v1/kv_connector/unit/test_moriio_tp_ack.py -v --noconftest",
+  "test_files": [
+    "tests/v1/kv_connector/unit/test_moriio_connector.py",
+    "tests/v1/kv_connector/unit/test_moriio_kv_layout.py",
+    "tests/v1/kv_connector/unit/test_moriio_tp_ack.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_remote_tp_rank_same_tp_maps_to_self",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_remote_tp_rank_p4_d8_floor_maps_decode_to_prefill",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_remote_tp_rank_p8_d4_maps_to_first_prefill_rank_per_pair",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_remote_tp_rank_invalid_non_multiple_tp_raises[0-6-4]",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_remote_tp_rank_invalid_non_multiple_tp_raises[0-4-6]",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_heterogeneous_tp_head_guard_allows_supported_layouts[4-4-8]",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_heterogeneous_tp_head_guard_allows_supported_layouts[8-4-4]",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_heterogeneous_tp_head_guard_allows_supported_layouts[4-8-4]",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_heterogeneous_tp_head_guard_allows_mla_layouts",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_heterogeneous_tp_head_guard_rejects_split_kv_heads[4-2-4]",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_heterogeneous_tp_head_guard_rejects_split_kv_heads[2-4-4]",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_expected_ack_count_for_homogeneous_or_smaller_consumer_tp_is_one",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_expected_ack_count_for_decode_fan_in",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_expected_ack_count_rejects_non_multiple_fan_in",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_plain_string_ack_is_backward_compatible_single_ack",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_structured_release_ack_waits_for_all_expected_acks",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_duplicate_ack_after_completion_does_not_resolve_twice",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_ack_for_non_live_transfer_is_ignored",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_worker_get_finished_counts_structured_release_fan_in",
+    "tests.v1.kv_connector.unit.test_moriio_tp_ack::test_read_completion_sends_structured_release_with_consumer_tp_size"
+  ],
+  "PASS_TO_PASS": []
+}

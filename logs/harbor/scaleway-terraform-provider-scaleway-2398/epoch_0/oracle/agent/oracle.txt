@@ -1,3 +1,0 @@
-patching file scaleway/helpers_jobs.go
-patching file scaleway/resource_job_definition.go
-patching file scaleway/testdata/job-definition-cron.cassette.yaml

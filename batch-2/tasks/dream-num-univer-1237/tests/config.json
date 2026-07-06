@@ -1,0 +1,23 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/engine-formula && pnpm exec vitest run src/engine/analysis/__tests__/parser.spec.ts src/engine/utils/__tests__/object-compare.spec.ts src/functions/information/isblank/__tests__/index.spec.ts src/functions/logical/and/__tests__/index.spec.ts src/functions/logical/if/__tests__/index.spec.ts src/functions/logical/iferror/__tests__/index.spec.ts src/functions/logical/makearray/__test__/index.spec.ts src/functions/math/sumif/__tests__/index.spec.ts src/functions/text/concatenate/__tests__/index.spec.ts && cd /workspace/repo/packages/sheets-ui && pnpm exec vitest run src/commands/commands/__tests__/set-format-painter.command.spec.ts && cd /workspace/repo/packages/sheets && pnpm exec vitest run src/commands/commands/__tests__/set-tab-color.command.spec.ts",
+  "test_files": [
+    "packages/engine-formula/src/engine/analysis/__tests__/parser.spec.ts",
+    "packages/engine-formula/src/engine/utils/__tests__/object-compare.spec.ts",
+    "packages/engine-formula/src/functions/information/isblank/__tests__/index.spec.ts",
+    "packages/engine-formula/src/functions/logical/and/__tests__/index.spec.ts",
+    "packages/engine-formula/src/functions/logical/if/__tests__/index.spec.ts",
+    "packages/engine-formula/src/functions/logical/iferror/__tests__/index.spec.ts",
+    "packages/engine-formula/src/functions/logical/makearray/__test__/index.spec.ts",
+    "packages/engine-formula/src/functions/math/sumif/__tests__/index.spec.ts",
+    "packages/engine-formula/src/functions/text/concatenate/__tests__/index.spec.ts",
+    "packages/sheets-ui/src/commands/commands/__tests__/set-format-painter.command.spec.ts",
+    "packages/sheets/src/commands/commands/__tests__/set-tab-color.command.spec.ts"
+  ],
+  "num_test_files": 11,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/sheets/src/commands/commands/__tests__/set-tab-color.command.spec.ts:: Test tab color commands Set several specific colors correct situations will set tab color"
+  ],
+  "PASS_TO_PASS": []
+}

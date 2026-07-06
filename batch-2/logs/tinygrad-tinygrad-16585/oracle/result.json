@@ -1,0 +1,29 @@
+{
+    "id": "4a8ab63e-fc5d-499e-addc-1932038b8abe",
+    "started_at": "2026-07-06T12:19:30.074928",
+    "finished_at": "2026-07-06T12:19:57.149789",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tinygrad-tinygrad-16585": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tinygrad-tinygrad-16585__TnwHpBp"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

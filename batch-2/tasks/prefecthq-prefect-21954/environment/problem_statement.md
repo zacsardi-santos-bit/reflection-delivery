@@ -1,0 +1,7 @@
+I want to add column resizing to the deployments data table because right now the columns are locked at fixed widths and there's no way for anyone to adjust them. If you've got deployments with long names or a bunch of tags, the layout just doesn't fit the data and you're stuck. So the ask is real-time drag resizing off the edge of a column header, plus persistence so whatever widths I set stick around.
+
+The way I picture it, I drag the edge of a resizable column header and the width updates live as I drag. Those custom widths should get saved automatically to the browser (localStorage or similar) so when I reload the page they come right back, persists across sessions. And if I double-click a column's resize handle it resets that column to its original default width, so I'm never stuck in a bad layout.
+
+Not everything should be resizable though. The actions column needs to stay fixed with no resize handle shown at all. Resize handles should only render on columns that are actually configured as resizable, non-resizable ones don't get a handle. Also if resizing isn't enabled on the table at all, no handles anywhere.
+
+Oh and the important bit, do this in the underlying core data table component that the deployments table is built on, not just as a one-off. Make it generic so any table can opt into resizing and get the same drag behavior, per-column persistence, double-click-to-reset, and the handle visibility rules. The deployments table then just turns it on for the columns that make sense and leaves actions alone.

@@ -1,0 +1,6 @@
+patching file .changeset/quick-snakes-heal.md
+patching file crates/compiler/src/update/handle_update_modules.rs
+patching file e2e/vitestSetup.ts
+patching file examples/react-fast-refresh/src/index.tsx
+patching file packages/core/src/server/hmr-engine.ts
+patching file packages/runtime-plugin-hmr/src/overlay.ts

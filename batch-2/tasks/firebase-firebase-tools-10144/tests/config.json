@@ -1,0 +1,24 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && npx mocha src/deploy/functions/services/ailogic.spec.ts src/gcp/ailogic.spec.ts",
+  "test_files": [
+    "src/deploy/functions/services/ailogic.spec.ts",
+    "src/gcp/ailogic.spec.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/deploy/functions/services/ailogic.spec.ts::AILogicService validateTrigger should throw if two regional triggers of same type in same region",
+    "/workspace/repo/src/deploy/functions/services/ailogic.spec.ts::AILogicService validateTrigger should NOT throw if two regional triggers of same type in DIFFERENT regions",
+    "/workspace/repo/src/deploy/functions/services/ailogic.spec.ts::AILogicService validateTrigger should throw if two global triggers of same type",
+    "/workspace/repo/src/deploy/functions/services/ailogic.spec.ts::AILogicService validateTrigger should NOT throw if one regional and one global of same type",
+    "/workspace/repo/src/deploy/functions/services/ailogic.spec.ts::AILogicService validateTrigger should NOT throw if two different types",
+    "/workspace/repo/src/deploy/functions/services/ailogic.spec.ts::AILogicService registerTrigger should call upsertBlockingFunction",
+    "/workspace/repo/src/deploy/functions/services/ailogic.spec.ts::AILogicService unregisterTrigger should call deleteBlockingFunction",
+    "/workspace/repo/src/gcp/ailogic.spec.ts::ailogic upsertBlockingFunction should create trigger for beforeGenerateContent",
+    "/workspace/repo/src/gcp/ailogic.spec.ts::ailogic upsertBlockingFunction should update trigger if create fails with 409",
+    "/workspace/repo/src/gcp/ailogic.spec.ts::ailogic upsertBlockingFunction should throw error if create fails with non-409",
+    "/workspace/repo/src/gcp/ailogic.spec.ts::ailogic deleteBlockingFunction should delete trigger"
+  ],
+  "PASS_TO_PASS": []
+}

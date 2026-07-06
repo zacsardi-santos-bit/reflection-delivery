@@ -1,0 +1,29 @@
+{
+    "id": "2590fb2d-7793-449d-8f9a-85f9b61cd55e",
+    "started_at": "2026-07-06T12:18:47.959327",
+    "finished_at": "2026-07-06T12:19:53.530096",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__cilium-cilium-43128": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "cilium-cilium-43128__BwZreUx"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

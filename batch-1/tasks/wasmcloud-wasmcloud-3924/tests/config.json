@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci --no-fail-fast -p wasmcloud -p wasmcloud-host -E 'package(wasmcloud-host)'",
+  "test_files": [
+    "tests/builtins.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/4) wasmcloud-host wasmbus::test::can_compute_component_links",
+    "(2/4) wasmcloud-host parse_references",
+    "(3/4) wasmcloud-host wasmbus::providers::http_server::path::test::can_manage_paths",
+    "(4/4) wasmcloud-host wasmbus::config::tests::test_config_bundle"
+  ],
+  "PASS_TO_PASS": []
+}

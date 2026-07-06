@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/scripts && pytest tests/ci/prek/test_upgrade_important_versions.py -v",
+  "test_files": [
+    "scripts/tests/ci/prek/test_upgrade_important_versions.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[12 hours-12.0]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[6 hours-6.0]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[1 hour-1.0]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[1 day-24.0]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[4 days-96.0]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[30 minutes-0.5]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[2026-05-21T21:58:56Z-None]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[garbage-None]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_duration_hours[-None]",
+    "tests.ci.prek.test_upgrade_important_versions::test_parse_manual_overrides_returns_duration_entries_only",
+    "tests.ci.prek.test_upgrade_important_versions::test_remove_override_entry_drops_both_section_occurrences",
+    "tests.ci.prek.test_upgrade_important_versions::test_remove_override_entry_is_idempotent",
+    "tests.ci.prek.test_upgrade_important_versions::test_remove_override_entry_no_match_is_noop",
+    "tests.ci.prek.test_upgrade_important_versions::test_is_version_within_cooldown_uses_per_package_override"
+  ],
+  "PASS_TO_PASS": [
+    "tests.ci.prek.test_upgrade_important_versions::test_get_latest_image_version_rejects_date_shaped_tags[alpine-real-tag-mix-rejects-date-and-edge]",
+    "tests.ci.prek.test_upgrade_important_versions::test_get_latest_image_version_rejects_date_shaped_tags[busybox-style-tags]",
+    "tests.ci.prek.test_upgrade_important_versions::test_get_latest_image_version_rejects_date_shaped_tags[v-prefixed-tags-with-date]",
+    "tests.ci.prek.test_upgrade_important_versions::test_get_latest_image_version_rejects_date_shaped_tags[date-with-revision-suffix-still-rejected]",
+    "tests.ci.prek.test_upgrade_important_versions::test_date_shaped_tag_regex_matches_only_date_stamps"
+  ]
+}

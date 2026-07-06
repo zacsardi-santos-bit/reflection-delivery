@@ -1,0 +1,19 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p mountpoint-s3 -E 'test(max_ttl_exceeded) | test(invalid_ttl) | test(test_lookup_negative_cached)' --features negative_cache --no-fail-fast",
+  "test_files": [
+    "mountpoint-s3/tests/cli.rs",
+    "mountpoint-s3/tests/direct_io.rs",
+    "mountpoint-s3/tests/fs.rs",
+    "mountpoint-s3/tests/fuse_tests/lookup_test.rs",
+    "mountpoint-s3/tests/reftests/harness.rs"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/3) mountpoint-s3::fs test_lookup_negative_cached",
+    "(2/3) mountpoint-s3::cli max_ttl_exceeded",
+    "(3/3) mountpoint-s3::cli invalid_ttl"
+  ],
+  "PASS_TO_PASS": []
+}

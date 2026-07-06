@@ -1,0 +1,5 @@
+I'm seeing incorrect result detection in the module state execution system. When a module function returns a dictionary that contains result status, numeric return codes, or nested state change data, the system doesn't always determine success or failure correctly.
+
+The helper responsible for checking whether a function call succeeded currently requires two separate arguments, but this design fails when the function returns all relevant information in a single dict. I need this helper to be refactored to accept just one argument — the full return value — and correctly derive the success status from it.
+
+The logic should handle several cases: if the return value is a plain boolean, pass it through directly. If it's a dict, check for a result flag and a numeric return code at the top level, where a non-zero return code should override a positive result flag. The helper should also inspect any nested state changes dict within the return value using the same rules. All existing call sites of this helper within the module state file need to be updated to use the new single-argument form as well.

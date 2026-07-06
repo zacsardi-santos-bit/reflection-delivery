@@ -1,0 +1,43 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /tmp/test_generate.py -v",
+  "test_files": [
+    ".pfnci/linux/tests/benchmark.Dockerfile",
+    ".pfnci/linux/tests/benchmark.head.Dockerfile",
+    ".pfnci/linux/tests/cuda-example.Dockerfile",
+    ".pfnci/linux/tests/cuda-head.Dockerfile",
+    ".pfnci/linux/tests/cuda-slow.Dockerfile",
+    ".pfnci/linux/tests/cuda112.Dockerfile",
+    ".pfnci/linux/tests/cuda112.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda113.Dockerfile",
+    ".pfnci/linux/tests/cuda113.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda114.Dockerfile",
+    ".pfnci/linux/tests/cuda114.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda115.Dockerfile",
+    ".pfnci/linux/tests/cuda115.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda116.Dockerfile",
+    ".pfnci/linux/tests/cuda116.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda117.Dockerfile",
+    ".pfnci/linux/tests/cuda117.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda118.Dockerfile",
+    ".pfnci/linux/tests/cuda118.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda11x-cuda-python.Dockerfile",
+    ".pfnci/linux/tests/cuda120.Dockerfile",
+    ".pfnci/linux/tests/cuda120.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda121.Dockerfile",
+    ".pfnci/linux/tests/cuda121.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda122.Dockerfile",
+    ".pfnci/linux/tests/cuda122.multi.Dockerfile",
+    ".pfnci/linux/tests/cuda123.Dockerfile",
+    ".pfnci/linux/tests/cuda123.multi.Dockerfile",
+    ".pfnci/linux/tests/rocm-4-3.Dockerfile",
+    ".pfnci/linux/tests/rocm-5-0.Dockerfile",
+    ".pfnci/linux/tests/rocm-5-3.Dockerfile"
+  ],
+  "num_test_files": 31,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_generate::test_generate_dry_run"
+  ],
+  "PASS_TO_PASS": []
+}

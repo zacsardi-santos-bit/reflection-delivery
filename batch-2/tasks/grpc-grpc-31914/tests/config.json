@@ -1,0 +1,21 @@
+{
+  "test_framework": "ctest",
+  "test_command": "mkdir -p /workspace/test-results && cd /workspace/repo && OVERRIDE_BAZEL_VERSION=6.0.0 ./tools/bazel build //test/core/client_channel/lb_policy:xds_override_host_test && ./bazel-bin/test/core/client_channel/lb_policy/xds_override_host_test --gtest_output=xml:/workspace/test-results/output.xml",
+  "test_files": [
+    "test/core/client_channel/lb_policy/lb_policy_test_lib.h",
+    "test/core/client_channel/lb_policy/xds_override_host_test.cc"
+  ],
+  "num_test_files": 2,
+  "language": "c",
+  "FAIL_TO_PASS": [
+    "XdsOverrideHostTest::FailedSubchannelIsNotPicked",
+    "XdsOverrideHostTest::ConnectingSubchannelIsQueued"
+  ],
+  "PASS_TO_PASS": [
+    "XdsOverrideHostTest::DelegatesToChild",
+    "XdsOverrideHostTest::NoConfigReportsError",
+    "XdsOverrideHostTest::OverrideHost",
+    "XdsOverrideHostTest::SubchannelNotFound",
+    "XdsOverrideHostTest::SubchannelsComeAndGo"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+    "id": "40844784-36a2-41fc-9113-aa27ff38b0b9",
+    "started_at": "2026-07-06T12:18:33.239660",
+    "finished_at": "2026-07-06T12:19:04.693621",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__facebook-lexical-8265": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "facebook-lexical-8265__k8qV86w"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

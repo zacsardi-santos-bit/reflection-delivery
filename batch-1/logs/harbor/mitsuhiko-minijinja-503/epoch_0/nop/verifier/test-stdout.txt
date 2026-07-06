@@ -1,0 +1,50 @@
+patching file minijinja/tests/lexer-inputs/line-comment.txt
+patching file minijinja/tests/lexer-inputs/line-statement.txt
+patching file minijinja/tests/snapshots/test_lexer__lexer@line-comment.txt.snap
+patching file minijinja/tests/snapshots/test_lexer__lexer@line-statement.txt.snap
+patching file minijinja/tests/test_lexer.rs
+   Compiling proc-macro2 v1.0.79
+   Compiling memchr v2.7.1
+   Compiling unicode-ident v1.0.12
+   Compiling serde v1.0.197
+   Compiling lazy_static v1.4.0
+   Compiling libc v0.2.153
+   Compiling regex-automata v0.1.10
+   Compiling unicode-segmentation v1.11.0
+   Compiling regex-syntax v0.8.2
+   Compiling same-file v1.0.6
+   Compiling log v0.4.21
+   Compiling serde_json v1.0.114
+   Compiling linked-hash-map v0.5.6
+   Compiling ryu v1.0.17
+   Compiling itoa v1.0.10
+   Compiling walkdir v2.5.0
+   Compiling aho-corasick v1.1.3
+   Compiling bstr v0.2.17
+   Compiling bstr v1.9.1
+   Compiling similar v2.4.0
+   Compiling regex-automata v0.4.6
+   Compiling quote v1.0.35
+   Compiling console v0.15.8
+   Compiling syn v2.0.53
+   Compiling similar-asserts v1.5.0
+   Compiling globset v0.4.14
+   Compiling serde_derive v1.0.197
+   Compiling insta v1.38.0
+   Compiling minijinja v2.0.0-alpha.0 (/workspace/repo/minijinja)
+error[E0599]: no method named `line_statement_prefix` found for struct `SyntaxConfigBuilder` in the current scope
+  --> minijinja/tests/test_lexer.rs:30:21
+   |
+30 |             builder.line_statement_prefix(prefix);
+   |                     ^^^^^^^^^^^^^^^^^^^^^ method not found in `SyntaxConfigBuilder`
+
+error[E0599]: no method named `line_comment_prefix` found for struct `SyntaxConfigBuilder` in the current scope
+  --> minijinja/tests/test_lexer.rs:33:21
+   |
+33 |             builder.line_comment_prefix(prefix);
+   |                     ^^^^^^^^^^^^^^^^^^^ method not found in `SyntaxConfigBuilder`
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `minijinja` (test "test_lexer") due to 2 previous errors
+error: command `/usr/local/rustup/toolchains/1.70.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --test test_lexer --features unstable_machinery,custom_syntax` exited with code 101
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=cargo exit_code=101

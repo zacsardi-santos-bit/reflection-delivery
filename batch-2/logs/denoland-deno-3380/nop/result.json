@@ -1,0 +1,29 @@
+{
+    "id": "35e1532b-35f8-4b09-b6d8-fcdabc6580c7",
+    "started_at": "2026-07-04T15:36:48.370733",
+    "finished_at": "2026-07-04T15:37:11.987424",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__denoland-deno-3380": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "denoland-deno-3380__bdzcKuA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

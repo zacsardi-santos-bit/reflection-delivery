@@ -1,5 +1,0 @@
-patching file .github/workflows/ci.yaml
-patching file compiler/natives/src/testing/quick/quick.go
-patching file node-syscall/package-lock.json
-patching file node-syscall/syscall.cc
-patching file package-lock.json

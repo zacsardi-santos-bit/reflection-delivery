@@ -1,0 +1,411 @@
+diff --git a/src/commands/export.ts b/src/commands/export.ts
+index 9d0dbe051..e9b4e1407 100644
+--- a/src/commands/export.ts
++++ b/src/commands/export.ts
+@@ -1,4 +1,5 @@
+ import fs from 'fs';
++import fsPromises from 'fs/promises';
+ import path from 'path';
+ import zlib from 'zlib';
+ 
+@@ -6,7 +7,7 @@ import logger from '../logger';
+ import Eval from '../models/eval';
+ import telemetry from '../telemetry';
+ import { createOutputMetadata, writeOutput } from '../util/index';
+-import { getLogDirectory, getLogFilesSync } from '../util/logs';
++import { getLogDirectory, getLogFiles } from '../util/logs';
+ import type { Command } from 'commander';
+ 
+ /**
+@@ -18,9 +19,13 @@ async function createLogArchive(logFiles: string[], outputPath: string): Promise
+     const gzip = zlib.createGzip({ level: 9 });
+ 
+     output.on('close', () => {
+-      const stats = fs.statSync(outputPath);
+-      logger.info(`Created log archive: ${outputPath} (${stats.size} bytes)`);
+-      resolve();
++      fsPromises
++        .stat(outputPath)
++        .then((stats) => {
++          logger.info(`Created log archive: ${outputPath} (${stats.size} bytes)`);
++          resolve();
++        })
++        .catch(reject);
+     });
+ 
+     output.on('error', reject);
+@@ -28,67 +33,86 @@ async function createLogArchive(logFiles: string[], outputPath: string): Promise
+ 
+     gzip.pipe(output);
+ 
+-    for (const logFile of logFiles) {
+-      if (fs.existsSync(logFile)) {
+-        const fileName = path.basename(logFile);
+-        const fileContent = fs.readFileSync(logFile);
+-        const fileStats = fs.statSync(logFile);
++    void (async () => {
++      try {
++        for (const logFile of logFiles) {
++          let fileContent: Buffer;
++          let fileStats: Awaited<ReturnType<typeof fsPromises.stat>>;
++
++          try {
++            [fileContent, fileStats] = await Promise.all([
++              fsPromises.readFile(logFile),
++              fsPromises.stat(logFile),
++            ]);
++          } catch (error) {
++            if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
++              continue;
++            }
++            throw error;
++          }
+ 
+-        // Create tar header (simplified version)
+-        const header = Buffer.alloc(512);
++          const fileName = path.basename(logFile);
+ 
+-        // File name (100 bytes)
+-        Buffer.from(fileName).copy(header, 0, 0, Math.min(fileName.length, 100));
++          // Create tar header (simplified version)
++          const header = Buffer.alloc(512);
+ 
+-        // File mode (8 bytes) - default 644
+-        Buffer.from('0000644 ').copy(header, 100);
++          // File name (100 bytes)
++          Buffer.from(fileName).copy(header, 0, 0, Math.min(fileName.length, 100));
+ 
+-        // User ID (8 bytes)
+-        Buffer.from('0000000 ').copy(header, 108);
++          // File mode (8 bytes) - default 644
++          Buffer.from('0000644 ').copy(header, 100);
+ 
+-        // Group ID (8 bytes)
+-        Buffer.from('0000000 ').copy(header, 116);
++          // User ID (8 bytes)
++          Buffer.from('0000000 ').copy(header, 108);
+ 
+-        // File size (12 bytes) - octal
+-        const sizeOctal = fileStats.size.toString(8).padStart(11, '0') + ' ';
+-        Buffer.from(sizeOctal).copy(header, 124);
++          // Group ID (8 bytes)
++          Buffer.from('0000000 ').copy(header, 116);
+ 
+-        // Modification time (12 bytes) - octal
+-        const mtime = Math.floor(fileStats.mtime.getTime() / 1000);
+-        const mtimeOctal = mtime.toString(8).padStart(11, '0') + ' ';
+-        Buffer.from(mtimeOctal).copy(header, 136);
++          // File size (12 bytes) - octal
++          const sizeOctal = fileStats.size.toString(8).padStart(11, '0') + ' ';
++          Buffer.from(sizeOctal).copy(header, 124);
+ 
+-        // Checksum placeholder (8 bytes)
+-        Buffer.from('        ').copy(header, 148);
++          // Modification time (12 bytes) - octal
++          const mtime = Math.floor(fileStats.mtime.getTime() / 1000);
++          const mtimeOctal = mtime.toString(8).padStart(11, '0') + ' ';
++          Buffer.from(mtimeOctal).copy(header, 136);
+ 
+-        // Type flag (1 byte) - regular file
+-        header[156] = 0x30; // '0'
++          // Checksum placeholder (8 bytes)
++          Buffer.from('        ').copy(header, 148);
+ 
+-        // Calculate checksum
+-        let checksum = 0;
+-        for (let i = 0; i < 512; i++) {
+-          checksum += header[i];
+-        }
+-        const checksumOctal = checksum.toString(8).padStart(6, '0') + '\0 ';
+-        Buffer.from(checksumOctal).copy(header, 148);
++          // Type flag (1 byte) - regular file
++          header[156] = 0x30; // '0'
++
++          // Calculate checksum
++          let checksum = 0;
++          for (let i = 0; i < 512; i++) {
++            checksum += header[i];
++          }
++          const checksumOctal = checksum.toString(8).padStart(6, '0') + '\0 ';
++          Buffer.from(checksumOctal).copy(header, 148);
+ 
+-        // Write header
+-        gzip.write(header);
++          // Write header
++          gzip.write(header);
+ 
+-        // Write file content
+-        gzip.write(fileContent);
++          // Write file content
++          gzip.write(fileContent);
+ 
+-        // Pad to 512-byte boundary
+-        const padding = 512 - (fileContent.length % 512);
+-        if (padding < 512) {
+-          gzip.write(Buffer.alloc(padding));
++          // Pad to 512-byte boundary
++          const padding = 512 - (fileContent.length % 512);
++          if (padding < 512) {
++            gzip.write(Buffer.alloc(padding));
++          }
+         }
+-      }
+-    }
+ 
+-    // Write two empty 512-byte blocks to end the tar
+-    gzip.write(Buffer.alloc(1024));
+-    gzip.end();
++        // Write two empty 512-byte blocks to end the tar
++        gzip.write(Buffer.alloc(1024));
++        gzip.end();
++      } catch (error) {
++        gzip.destroy(error as Error);
++        output.destroy(error as Error);
++        reject(error);
++      }
++    })();
+   });
+ }
+ 
+@@ -154,7 +178,9 @@ export function exportCommand(program: Command) {
+       try {
+         const logDir = getLogDirectory();
+ 
+-        if (!fs.existsSync(logDir)) {
++        try {
++          await fsPromises.access(logDir);
++        } catch {
+           logger.error(
+             `No log directory found. Logs are created when running commands like "promptfoo eval".\nLog directory: ${logDir}`,
+           );
+@@ -162,7 +188,7 @@ export function exportCommand(program: Command) {
+           return;
+         }
+ 
+-        const allLogFiles = getLogFilesSync();
++        const allLogFiles = await getLogFiles();
+ 
+         if (allLogFiles.length === 0) {
+           logger.error(
+diff --git a/src/providers/azure/video.ts b/src/providers/azure/video.ts
+index 4eca7e984..28e802425 100644
+--- a/src/providers/azure/video.ts
++++ b/src/providers/azure/video.ts
+@@ -433,7 +433,7 @@ export class AzureVideoProvider extends AzureGenericProvider {
+     const cost = calculateAzureVideoCost(seconds, false);
+ 
+     // Store cache mapping for future lookups
+-    storeCacheMapping(cacheKey, storageRef.key, undefined, undefined, PROVIDER_NAME);
++    await storeCacheMapping(cacheKey, storageRef.key, undefined, undefined, PROVIDER_NAME);
+ 
+     // Build output
+     const videoUrl = buildStorageRefUrl(storageRef.key);
+diff --git a/src/providers/openai/video.ts b/src/providers/openai/video.ts
+index 37620e2d1..679887f98 100644
+--- a/src/providers/openai/video.ts
++++ b/src/providers/openai/video.ts
+@@ -388,7 +388,7 @@ export class OpenAiVideoProvider extends OpenAiGenericProvider {
+       const storage = getMediaStorage();
+ 
+       // Read the cache mapping from filesystem to get thumbnail/spritesheet keys
+-      const mapping = readCacheMapping(cacheKey);
++      const mapping = await readCacheMapping(cacheKey);
+       const thumbnailKey = mapping?.thumbnailKey;
+       const spritesheetKey = mapping?.spritesheetKey;
+ 
+@@ -508,7 +508,7 @@ export class OpenAiVideoProvider extends OpenAiGenericProvider {
+     const cost = calculateVideoCost(model, seconds, false);
+ 
+     // Store cache mapping for future lookups
+-    storeCacheMapping(
++    await storeCacheMapping(
+       cacheKey,
+       videoRef.key,
+       thumbnailRef?.key,
+diff --git a/src/providers/opencode-sdk.ts b/src/providers/opencode-sdk.ts
+index 61d339c81..0de4133ec 100644
+--- a/src/providers/opencode-sdk.ts
++++ b/src/providers/opencode-sdk.ts
+@@ -1,5 +1,6 @@
+ import { createRequire } from 'node:module';
+ import fs from 'fs';
++import fsPromises from 'fs/promises';
+ import os from 'os';
+ import path from 'path';
+ 
+@@ -1451,7 +1452,7 @@ export class OpenCodeSDKProvider implements ApiProvider {
+ 
+       // Clean up temp directory
+       if (isTempDir && workingDir) {
+-        fs.rmSync(workingDir, { recursive: true, force: true });
++        await fsPromises.rm(workingDir, { recursive: true, force: true });
+       }
+     }
+   }
+diff --git a/src/providers/video/utils.ts b/src/providers/video/utils.ts
+index 754c93fce..7d511b551 100644
+--- a/src/providers/video/utils.ts
++++ b/src/providers/video/utils.ts
+@@ -5,7 +5,6 @@
+  * and storage operations used across different video generation providers.
+  */
+ import crypto from 'crypto';
+-import fs from 'fs';
+ import fsPromises from 'fs/promises';
+ import path from 'path';
+ 
+@@ -40,12 +39,7 @@ export const DEFAULT_MAX_POLL_TIME_MS = 600000;
+  */
+ export function getCacheMappingPath(cacheKey: string): string {
+   const basePath = path.join(getConfigDirectoryPath(true), MEDIA_DIR);
+-  const cacheDir = path.join(basePath, CACHE_DIR);
+-  // Ensure directory exists
+-  if (!fs.existsSync(cacheDir)) {
+-    fs.mkdirSync(cacheDir, { recursive: true });
+-  }
+-  return path.join(cacheDir, `${cacheKey}.json`);
++  return path.join(basePath, CACHE_DIR, `${cacheKey}.json`);
+ }
+ 
+ /**
+@@ -126,15 +120,11 @@ export async function checkVideoCache(
+  * @param cacheKey - The cache key to look up
+  * @returns The cache mapping if it exists, null otherwise
+  */
+-export function readCacheMapping(cacheKey: string): VideoCacheMapping | null {
++export async function readCacheMapping(cacheKey: string): Promise<VideoCacheMapping | null> {
+   const mappingPath = getCacheMappingPath(cacheKey);
+ 
+-  if (!fs.existsSync(mappingPath)) {
+-    return null;
+-  }
+-
+   try {
+-    const mappingData = fs.readFileSync(mappingPath, 'utf8');
++    const mappingData = await fsPromises.readFile(mappingPath, 'utf8');
+     return JSON.parse(mappingData) as VideoCacheMapping;
+   } catch {
+     return null;
+@@ -151,13 +141,13 @@ export function readCacheMapping(cacheKey: string): VideoCacheMapping | null {
+  * @param spritesheetKey - Optional spritesheet storage key
+  * @param providerName - Provider name for logging
+  */
+-export function storeCacheMapping(
++export async function storeCacheMapping(
+   cacheKey: string,
+   videoKey: string,
+   thumbnailKey?: string,
+   spritesheetKey?: string,
+   providerName: string = 'Video',
+-): void {
++): Promise<void> {
+   const mapping: VideoCacheMapping = {
+     videoKey,
+     thumbnailKey,
+@@ -166,7 +156,8 @@ export function storeCacheMapping(
+   };
+ 
+   const mappingPath = getCacheMappingPath(cacheKey);
+-  fs.writeFileSync(mappingPath, JSON.stringify(mapping, null, 2), 'utf8');
++  await fsPromises.mkdir(path.dirname(mappingPath), { recursive: true });
++  await fsPromises.writeFile(mappingPath, JSON.stringify(mapping, null, 2), 'utf8');
+   logger.debug(`[${providerName}] Stored cache mapping at ${mappingPath}`);
+ }
+ 
+diff --git a/src/providers/xai/video.ts b/src/providers/xai/video.ts
+index 37bcac3a5..ef7d893f3 100644
+--- a/src/providers/xai/video.ts
++++ b/src/providers/xai/video.ts
+@@ -530,7 +530,7 @@ export class XAIVideoProvider implements ApiProvider {
+ 
+     // Store cache mapping (skip for edits)
+     if (!isEdit) {
+-      storeCacheMapping(cacheKey, storageKey, undefined, undefined, PROVIDER_NAME);
++      await storeCacheMapping(cacheKey, storageKey, undefined, undefined, PROVIDER_NAME);
+     }
+ 
+     const storedVideoUrl = buildStorageRefUrl(storageKey);
+diff --git a/src/redteam/strategies/simpleVideo.ts b/src/redteam/strategies/simpleVideo.ts
+index fcd8040e3..49378ff5d 100644
+--- a/src/redteam/strategies/simpleVideo.ts
++++ b/src/redteam/strategies/simpleVideo.ts
+@@ -1,5 +1,4 @@
+ import { randomUUID } from 'crypto';
+-import fs from 'fs';
+ import fsPromises from 'fs/promises';
+ import os from 'os';
+ import path from 'path';
+@@ -16,7 +15,7 @@ function shouldShowProgressBar(): boolean {
+   return !cliState.webUI && logger.level !== 'debug';
+ }
+ 
+-function getSystemFont(): string {
++async function getSystemFont(): Promise<string> {
+   const platform = os.platform();
+ 
+   if (platform === 'darwin') {
+@@ -34,8 +33,11 @@ function getSystemFont(): string {
+     ];
+ 
+     for (const fontPath of linuxFonts) {
+-      if (fs.existsSync(fontPath)) {
++      try {
++        await fsPromises.access(fontPath);
+         return fontPath;
++      } catch {
++        continue;
+       }
+     }
+ 
+@@ -80,21 +82,20 @@ export function escapeDrawtextString(text: string): string {
+ async function createTempVideoEnvironment(): Promise<{
+   tempDir: string;
+   outputPath: string;
+-  cleanup: () => void;
++  cleanup: () => Promise<void>;
+ }> {
+   const tempDir = path.join(os.tmpdir(), 'promptfoo-video');
+-  if (!fs.existsSync(tempDir)) {
+-    fs.mkdirSync(tempDir, { recursive: true });
+-  }
++  await fsPromises.mkdir(tempDir, { recursive: true });
+ 
+   const outputPath = path.join(tempDir, `output-video-${randomUUID()}.mp4`);
+ 
+-  const cleanup = () => {
++  const cleanup = async () => {
+     try {
+-      if (fs.existsSync(outputPath)) {
+-        fs.unlinkSync(outputPath);
+-      }
++      await fsPromises.unlink(outputPath);
+     } catch (error) {
++      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
++        return;
++      }
+       logger.warn(`Failed to clean up temporary files: ${error}`);
+     }
+   };
+@@ -114,7 +115,7 @@ async function textToVideo(text: string): Promise<string> {
+ 
+       try {
+         const escapedText = escapeDrawtextString(text);
+-        const systemFont = getSystemFont();
++        const systemFont = await getSystemFont();
+ 
+         // Create a 5-second video with white background and text overlay
+         const { execa } = await import('execa');
+@@ -131,11 +132,11 @@ async function textToVideo(text: string): Promise<string> {
+ 
+         const videoData = await fsPromises.readFile(outputPath);
+         const base64Video = videoData.toString('base64');
+-        cleanup();
++        await cleanup();
+         return base64Video;
+       } catch (error) {
+         logger.error(`Error creating video with ffmpeg: ${error}`);
+-        cleanup();
++        await cleanup();
+         throw error;
+       }
+     } else {

@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/Packs/GCP-Enrichment-Remediation/Scripts/GCPOffendingFirewallRule/GCPOffendingFirewallRule_test.py -v",
+  "test_files": [
+    "Packs/GCP-Enrichment-Remediation/Scripts/GCPOffendingFirewallRule/GCPOffendingFirewallRule_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.GCP-Enrichment-Remediation.Scripts.GCPOffendingFirewallRule.GCPOffendingFirewallRule_test::test_is_port_in_range_func",
+    "Packs.GCP-Enrichment-Remediation.Scripts.GCPOffendingFirewallRule.GCPOffendingFirewallRule_test::test_is_there_traffic_match_func",
+    "Packs.GCP-Enrichment-Remediation.Scripts.GCPOffendingFirewallRule.GCPOffendingFirewallRule_test::test_gcp_offending_firewall_rule_command[Firewall rule match-command_return0-Potential Offending GCP Firewall Rule(s) Found: ['rule1']]"
+  ],
+  "PASS_TO_PASS": []
+}

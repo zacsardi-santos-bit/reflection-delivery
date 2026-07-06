@@ -1,0 +1,50 @@
+patching file dask/array/_array_expr/tests/__init__.py
+patching file dask/array/_array_expr/tests/test_collection.py
+patching file dask/array/tests/test_array_core.py
+patching file dask/array/tests/test_array_expr_incompatible.py
+patching file dask/array/tests/test_array_function.py
+patching file dask/array/tests/test_array_utils.py
+patching file dask/array/tests/test_dispatch.py
+patching file dask/array/tests/test_fft.py
+patching file dask/array/tests/test_random.py
+patching file dask/array/tests/test_rechunk.py
+patching file dask/array/tests/test_routines.py
+patching file dask/dataframe/tests/test_ufunc.py
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.11.15, pytest-9.0.3, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: xdist-3.8.0, mock-3.15.1, timeout-2.4.0, rerunfailures-16.3, hypothesis-6.155.7, cov-7.1.0
+timeout: 300.0s
+timeout method: thread
+timeout func_only: False
+[1mcollecting ... [0mcollected 12 items
+
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__add__] [32mPASSED[0m[32m [  8%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__sub__] [32mPASSED[0m[32m [ 16%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__mul__] [32mPASSED[0m[32m [ 25%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__truediv__] [32mPASSED[0m[32m [ 33%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__floordiv__] [32mPASSED[0m[32m [ 41%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__pow__] [32mPASSED[0m[32m [ 50%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__radd__] [32mPASSED[0m[32m [ 58%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__rsub__] [32mPASSED[0m[32m [ 66%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__rmul__] [32mPASSED[0m[32m [ 75%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__rtruediv__] [32mPASSED[0m[32m [ 83%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__rfloordiv__] [32mPASSED[0m[32m [ 91%][0m
+dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__rpow__] [32mPASSED[0m[32m [100%][0m
+
+============================= slowest 10 durations =============================
+0.04s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__rsub__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__add__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__rmul__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__floordiv__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__mul__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__pow__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__sub__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__truediv__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__radd__]
+0.01s call     dask/array/_array_expr/tests/test_collection.py::test_arithmetic_ops[__rtruediv__]
+[32m============================== [32m[1m12 passed[0m[32m in 0.81s[0m[32m ==============================[0m
+reward=1 graded=12 found=0 failed=0 parsed=12 framework=pytest exit_code=0

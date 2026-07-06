@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/components/energy/test_data.py -v -k \"external_stat\" --noconftest",
+  "test_files": [
+    "tests/components/energy/test_data.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.energy.test_data::test_flow_from_rejects_entity_price_for_external_stat",
+    "tests.components.energy.test_data::test_flow_from_rejects_number_price_for_external_stat",
+    "tests.components.energy.test_data::test_flow_to_rejects_entity_price_for_external_stat",
+    "tests.components.energy.test_data::test_flow_to_rejects_number_price_for_external_stat",
+    "tests.components.energy.test_data::test_gas_rejects_entity_price_for_external_stat",
+    "tests.components.energy.test_data::test_gas_rejects_number_price_for_external_stat",
+    "tests.components.energy.test_data::test_water_rejects_entity_price_for_external_stat",
+    "tests.components.energy.test_data::test_water_rejects_number_price_for_external_stat"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.energy.test_data::test_flow_from_allows_stat_cost_for_external_stat",
+    "tests.components.energy.test_data::test_flow_from_allows_no_cost_for_external_stat",
+    "tests.components.energy.test_data::test_grid_allows_stat_cost_for_external_stat",
+    "tests.components.energy.test_data::test_flow_from_allows_price_with_stat_cost_for_external_stat",
+    "tests.components.energy.test_data::test_flow_to_allows_price_with_stat_compensation_for_external_stat",
+    "tests.components.energy.test_data::test_grid_allows_price_with_stat_cost_for_external_stat",
+    "tests.components.energy.test_data::test_gas_allows_price_with_stat_cost_for_external_stat",
+    "tests.components.energy.test_data::test_water_allows_price_with_stat_cost_for_external_stat"
+  ]
+}

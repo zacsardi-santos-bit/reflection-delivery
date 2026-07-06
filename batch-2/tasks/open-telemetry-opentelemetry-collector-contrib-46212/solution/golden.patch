@@ -1,0 +1,1281 @@
+diff --git a/.chloggen/feat_aws-logs-cloudtrail-streaming.yaml b/.chloggen/feat_aws-logs-cloudtrail-streaming.yaml
+new file mode 100644
+index 0000000000..f07b452d00
+--- /dev/null
++++ b/.chloggen/feat_aws-logs-cloudtrail-streaming.yaml
+@@ -0,0 +1,27 @@
++# Use this changelog template to create an entry for release notes.
++
++# One of 'breaking', 'deprecation', 'new_component', 'enhancement', 'bug_fix'
++change_type: enhancement
++
++# The name of the component, or a single word describing the area of concern, (e.g. receiver/filelog)
++component: extension/awslogs_encoding
++
++# A brief description of the change.  Surround your text with quotes ("") if it needs to start with a backtick (`).
++note: Adopt streaming for CloudTrail signal
++
++# Mandatory: One or more tracking issues related to the change. You can use the PR number here if no issue exists.
++issues: [46214]
++
++# (Optional) One or more lines of additional information to render under the primary note.
++# These lines will be padded with 2 spaces and then inserted directly into the document.
++# Use pipe (|) for multiline entries.
++subtext:
++
++# If your change doesn't affect end users or the exported elements of any package,
++# you should instead start your pull request title with [chore] or use the "Skip Changelog" label.
++# Optional: The change log or logs in which this entry should be included.
++# e.g. '[user]' or '[user, api]'
++# Include 'user' if the change is relevant to end users.
++# Include 'api' if there is a change to a library API.
++# Default: '[user]'
++change_logs: []
+diff --git a/extension/encoding/awslogsencodingextension/README.md b/extension/encoding/awslogsencodingextension/README.md
+index aa2d99f969..da9b5cadb5 100644
+--- a/extension/encoding/awslogsencodingextension/README.md
++++ b/extension/encoding/awslogsencodingextension/README.md
+@@ -183,6 +183,9 @@ The table below summarizes streaming support details for each log type, along wi
+ 
+ | Log Type            | Sub Log Type/Source            | Offset Tracking             | Notes                                                                                                                 |
+ |---------------------|--------------------------------|-----------------------------|-----------------------------------------------------------------------------------------------------------------------|
++| CloudTrail          | Generic records                | Number of records processed | Number of records are used as CloudTrail logs arrives as a JSON. Streaming is done on internal `Records` array        |
++| CloudTrail          | CloudWatch trigger             | Number of bytes processed   | If non-zero offset is given, then invocation returns EOF with an empty log. The offset carries the full record length |
++| CloudTrail          | Digest record                  | Number of bytes processed   | If non-zero offset is given, then invocation returns EOF with an empty log. The offset carries the full record length |
+ | ELB Access Logs     | ALB/NLB/CLB                    | Bytes processed             |                                                                                                                       |
+ | Network Firewall    | Alert/Flow/TLS                 | Bytes processed             |                                                                                                                       |
+ | S3 Access Logs      | -                              | Bytes processed             |                                                                                                                       |
+diff --git a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/cloudtrail_log_expected.yaml b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/cloudtrail_log_expected.yaml
+index ac3f469834..c4b469394a 100644
+--- a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/cloudtrail_log_expected.yaml
++++ b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/cloudtrail_log_expected.yaml
+@@ -6,10 +6,10 @@ resourceLogs:
+             stringValue: aws
+         - key: cloud.region
+           value:
+-            stringValue: us-east-1
++            stringValue: us-west-2
+         - key: cloud.account.id
+           value:
+-            stringValue: "123456789012"
++            stringValue: "111122223333"
+     scopeLogs:
+       - logRecords:
+           - attributes:
+@@ -124,29 +124,29 @@ resourceLogs:
+                                     values:
+                                       - kvlistValue:
+                                           values:
+-                                            - key: instanceId
+-                                              value:
+-                                                stringValue: i-EXAMPLEaff4840c22
+-                                            - key: currentState
++                                            - key: previousState
+                                               value:
+                                                 kvlistValue:
+                                                   values:
+                                                     - key: code
+                                                       value:
+-                                                        doubleValue: 0
++                                                        doubleValue: 80
+                                                     - key: name
+                                                       value:
+-                                                        stringValue: pending
+-                                            - key: previousState
++                                                        stringValue: stopped
++                                            - key: instanceId
++                                              value:
++                                                stringValue: i-EXAMPLEaff4840c22
++                                            - key: currentState
+                                               value:
+                                                 kvlistValue:
+                                                   values:
+                                                     - key: code
+                                                       value:
+-                                                        doubleValue: 80
++                                                        doubleValue: 0
+                                                     - key: name
+                                                       value:
+-                                                        stringValue: stopped
++                                                        stringValue: pending
+                                       - kvlistValue:
+                                           values:
+                                             - key: instanceId
+@@ -166,12 +166,12 @@ resourceLogs:
+                                               value:
+                                                 kvlistValue:
+                                                   values:
+-                                                    - key: code
+-                                                      value:
+-                                                        doubleValue: 80
+                                                     - key: name
+                                                       value:
+                                                         stringValue: stopped
++                                                    - key: code
++                                                      value:
++                                                        doubleValue: 80
+             body: {}
+             timeUnixNano: "1689801448000000000"
+           - attributes:
+@@ -359,9 +359,6 @@ resourceLogs:
+                 value:
+                   kvlistValue:
+                     values:
+-                      - key: topicArn
+-                        value:
+-                          stringValue: arn:aws:sns:us-east-1:123456789012:ExampleSNSTopic
+                       - key: message
+                         value:
+                           stringValue: HIDDEN_DUE_TO_SECURITY_REASONS
+@@ -374,6 +371,9 @@ resourceLogs:
+                       - key: messageAttributes
+                         value:
+                           stringValue: HIDDEN_DUE_TO_SECURITY_REASONS
++                      - key: topicArn
++                        value:
++                          stringValue: arn:aws:sns:us-east-1:123456789012:ExampleSNSTopic
+               - key: aws.response.elements
+                 value:
+                   kvlistValue:
+@@ -611,15 +611,15 @@ resourceLogs:
+                 value:
+                   kvlistValue:
+                     values:
++                      - key: MFAUsed
++                        value:
++                          boolValue: true
+                       - key: MobileVersion
+                         value:
+                           stringValue: "No"
+                       - key: LoginTo
+                         value:
+                           stringValue: https://console.aws.amazon.com/console/home?region=us
+-                      - key: MFAUsed
+-                        value:
+-                          boolValue: true
+             body: {}
+             timeUnixNano: "1749997800000000000"
+           - attributes:
+@@ -679,4 +679,4 @@ resourceLogs:
+               value:
+                 stringValue: aws.cloudtrail
+           name: github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding/awslogsencodingextension
+-          version: test-version
++          version: test-version
+\ No newline at end of file
+diff --git a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/cloudtrail_log_expected_with_uid_feature.yaml b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/cloudtrail_log_expected_with_uid_feature.yaml
+index 4bc3c5ecb6..8fe77a5c03 100644
+--- a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/cloudtrail_log_expected_with_uid_feature.yaml
++++ b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/cloudtrail_log_expected_with_uid_feature.yaml
+@@ -6,10 +6,10 @@ resourceLogs:
+             stringValue: aws
+         - key: cloud.region
+           value:
+-            stringValue: us-east-1
++            stringValue: us-west-2
+         - key: cloud.account.id
+           value:
+-            stringValue: "123456789012"
++            stringValue: "111122223333"
+     scopeLogs:
+       - logRecords:
+           - attributes:
+@@ -141,12 +141,12 @@ resourceLogs:
+                                               value:
+                                                 kvlistValue:
+                                                   values:
+-                                                    - key: name
+-                                                      value:
+-                                                        stringValue: stopped
+                                                     - key: code
+                                                       value:
+                                                         doubleValue: 80
++                                                    - key: name
++                                                      value:
++                                                        stringValue: stopped
+                                       - kvlistValue:
+                                           values:
+                                             - key: instanceId
+@@ -166,12 +166,12 @@ resourceLogs:
+                                               value:
+                                                 kvlistValue:
+                                                   values:
+-                                                    - key: name
+-                                                      value:
+-                                                        stringValue: stopped
+                                                     - key: code
+                                                       value:
+                                                         doubleValue: 80
++                                                    - key: name
++                                                      value:
++                                                        stringValue: stopped
+             body: {}
+             timeUnixNano: "1689801448000000000"
+           - attributes:
+@@ -418,9 +418,6 @@ resourceLogs:
+                 value:
+                   kvlistValue:
+                     values:
+-                      - key: state
+-                        value:
+-                          stringValue: Start
+                       - key: eventSource
+                         value:
+                           stringValue: ssm.amazonaws.com
+@@ -452,6 +449,9 @@ resourceLogs:
+                                               - key: average
+                                                 value:
+                                                   doubleValue: 669
++                      - key: state
++                        value:
++                          stringValue: Start
+             body: {}
+             timeUnixNano: "1672627860000000000"
+           - attributes:
+@@ -611,15 +611,15 @@ resourceLogs:
+                 value:
+                   kvlistValue:
+                     values:
++                      - key: MFAUsed
++                        value:
++                          boolValue: true
+                       - key: MobileVersion
+                         value:
+                           stringValue: "No"
+                       - key: LoginTo
+                         value:
+                           stringValue: https://console.aws.amazon.com/console/home?region=us
+-                      - key: MFAUsed
+-                        value:
+-                          boolValue: true
+             body: {}
+             timeUnixNano: "1749997800000000000"
+           - attributes:
+@@ -679,4 +679,4 @@ resourceLogs:
+               value:
+                 stringValue: aws.cloudtrail
+           name: github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding/awslogsencodingextension
+-          version: test-version
++          version: test-version
+\ No newline at end of file
+diff --git a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log.json b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log.json
+new file mode 100644
+index 0000000000..8ae01efb66
+--- /dev/null
++++ b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log.json
+@@ -0,0 +1,192 @@
++{
++  "Records": [
++    {
++      "eventVersion": "1.08",
++      "userIdentity": {
++        "type": "IAMUser",
++        "principalId": "EXAMPLE6E4XEGITWATV6R",
++        "arn": "arn:aws:iam::123456789012:user/Mateo",
++        "accountId": "123456789012",
++        "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
++        "userName": "Mateo",
++        "sessionContext": {
++          "sessionIssuer": {},
++          "webIdFederationData": {},
++          "attributes": {
++            "creationDate": "2023-07-19T21:11:57Z",
++            "mfaAuthenticated": "false"
++          }
++        }
++      },
++      "eventTime": "2023-07-19T21:17:28Z",
++      "eventSource": "ec2.amazonaws.com",
++      "eventName": "StartInstances",
++      "awsRegion": "us-east-1",
++      "sourceIPAddress": "192.0.2.0",
++      "userAgent": "aws-cli/2.13.5 Python/3.11.4 Linux/4.14.255-314-253.539.amzn2.x86_64 exec-env/CloudShell exe/x86_64.amzn.2 prompt/off command/ec2.start-instances",
++      "requestParameters": {
++        "instancesSet": {
++          "items": [
++            {
++              "instanceId": "i-EXAMPLE56126103cb"
++            },
++            {
++              "instanceId": "i-EXAMPLEaff4840c22"
++            }
++          ]
++        }
++      },
++      "responseElements": {
++        "requestId": "e4336db0-149f-4a6b-844d-EXAMPLEb9d16",
++        "instancesSet": {
++          "items": [
++            {
++              "instanceId": "i-EXAMPLEaff4840c22",
++              "currentState": {
++                "code": 0,
++                "name": "pending"
++              },
++              "previousState": {
++                "code": 80,
++                "name": "stopped"
++              }
++            },
++            {
++              "instanceId": "i-EXAMPLE56126103cb",
++              "currentState": {
++                "code": 0,
++                "name": "pending"
++              },
++              "previousState": {
++                "code": 80,
++                "name": "stopped"
++              }
++            }
++          ]
++        }
++      },
++      "requestID": "e4336db0-149f-4a6b-844d-EXAMPLEb9d16",
++      "eventID": "e755e09c-42f9-4c5c-9064-EXAMPLE228c7",
++      "readOnly": false,
++      "eventType": "AwsApiCall",
++      "apiVersion": "v1",
++      "managementEvent": true,
++      "recipientAccountId": "123456789012",
++      "eventCategory": "Management",
++      "tlsDetails": {
++        "tlsVersion": "TLSv1.2",
++        "cipherSuite": "ECDHE-RSA-AES128-GCM-SHA256",
++        "clientProvidedHostHeader": "ec2.us-east-1.amazonaws.com"
++      },
++      "sessionCredentialFromConsole": "true"
++    },
++    {
++      "eventVersion": "1.08",
++      "userIdentity": {
++        "type": "IAMUser",
++        "principalId": "AIDA6ON6E4XEGITEXAMPLE",
++        "arn": "arn:aws:iam::123456789012:user/Mary",
++        "accountId": "123456789012",
++        "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
++        "userName": "Mary",
++        "sessionContext": {
++          "sessionIssuer": {},
++          "webIdFederationData": {},
++          "attributes": {
++            "creationDate": "2023-07-19T21:11:57Z",
++            "mfaAuthenticated": "false"
++          }
++        }
++      },
++      "eventTime": "2023-07-19T21:25:09Z",
++      "eventSource": "iam.amazonaws.com",
++      "eventName": "CreateUser",
++      "awsRegion": "us-east-1",
++      "sourceIPAddress": "192.0.2.0",
++      "userAgent": "aws-cli/2.13.5 Python/3.11.4 Linux/4.14.255-314-253.539.amzn2.x86_64 exec-env/CloudShell exe/x86_64.amzn.2 prompt/off command/iam.create-user",
++      "requestParameters": {
++        "userName": "Richard"
++      },
++      "responseElements": {
++        "user": {
++          "path": "/",
++          "arn": "arn:aws:iam::123456789012:user/Richard",
++          "userId": "AIDA6ON6E4XEP7EXAMPLE",
++          "createDate": "Jul 19, 2023 9:25:09 PM",
++          "userName": "Richard"
++        }
++      },
++      "requestID": "2d528c76-329e-410b-9516-EXAMPLE565dc",
++      "eventID": "ba0801a1-87ec-4d26-be87-EXAMPLE75bbb",
++      "readOnly": false,
++      "eventType": "AwsApiCall",
++      "managementEvent": true,
++      "recipientAccountId": "123456789012",
++      "eventCategory": "Management",
++      "tlsDetails": {
++        "tlsVersion": "TLSv1.2",
++        "cipherSuite": "ECDHE-RSA-AES128-GCM-SHA256",
++        "clientProvidedHostHeader": "iam.amazonaws.com"
++      },
++      "sessionCredentialFromConsole": "true"
++    },
++    {
++      "eventVersion": "1.08",
++      "userIdentity": {
++        "type": "AssumedRole",
++        "principalId": "EX_PRINCIPAL_ID",
++        "arn": "arn:aws:iam::123456789012:user/Bob",
++        "accountId": "123456789012",
++        "accessKeyId": "AKIAIOSFODNN7EXAMPLE",
++        "sessionContext": {
++          "sessionIssuer": {
++            "type": "Role",
++            "principalId": "AKIAIOSFODNN7EXAMPLE",
++            "arn": "arn:aws:iam::123456789012:role/Admin",
++            "accountId": "123456789012",
++            "userName": "ExampleUser"
++          },
++          "attributes": {
++            "creationDate": "2023-08-21T16:44:05Z",
++            "mfaAuthenticated": "true"
++          }
++        }
++      },
++      "eventTime": "2023-08-21T16:48:37Z",
++      "eventSource": "sns.amazonaws.com",
++      "eventName": "Publish",
++      "awsRegion": "us-east-1",
++      "sourceIPAddress": "192.0.2.0",
++      "userAgent": "aws-cli/1.29.16 md/Botocore#1.31.16 ua/2.0 os/linux#5.4.250-173.369.amzn2int.x86_64 md/arch#x86_64 lang/python#3.8.17 md/pyimpl#CPython cfg/retry-mode#legacy botocore/1.31.16",
++      "requestParameters": {
++        "topicArn": "arn:aws:sns:us-east-1:123456789012:ExampleSNSTopic",
++        "message": "HIDDEN_DUE_TO_SECURITY_REASONS",
++        "subject": "HIDDEN_DUE_TO_SECURITY_REASONS",
++        "messageStructure": "json",
++        "messageAttributes": "HIDDEN_DUE_TO_SECURITY_REASONS"
++      },
++      "responseElements": {
++        "messageId": "0787cd1e-d92b-521c-a8b4-90434e8ef840"
++      },
++      "requestID": "0a8ab208-11bf-5e01-bd2d-ef55861b545d",
++      "eventID": "bb3496d4-5252-4660-9c28-3c6aebdb21c0",
++      "readOnly": false,
++      "resources": [
++        {
++          "accountId": "123456789012",
++          "type": "AWS::SNS::Topic",
++          "ARN": "arn:aws:sns:us-east-1:123456789012:ExampleSNSTopic"
++        }
++      ],
++      "eventType": "AwsApiCall",
++      "managementEvent": false,
++      "recipientAccountId": "123456789012",
++      "eventCategory": "Data",
++      "tlsDetails": {
++        "tlsVersion": "TLSv1.2",
++        "cipherSuite": "ECDHE-RSA-AES128-GCM-SHA256",
++        "clientProvidedHostHeader": "sns.us-east-1.amazonaws.com"
++      }
++    }
++  ]
++}
+\ No newline at end of file
+diff --git a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_1.yaml b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_1.yaml
+new file mode 100644
+index 0000000000..1970181f10
+--- /dev/null
++++ b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_1.yaml
+@@ -0,0 +1,183 @@
++resourceLogs:
++  - resource:
++      attributes:
++        - key: cloud.provider
++          value:
++            stringValue: aws
++        - key: cloud.region
++          value:
++            stringValue: us-east-1
++        - key: cloud.account.id
++          value:
++            stringValue: "123456789012"
++    scopeLogs:
++      - logRecords:
++          - attributes:
++              - key: aws.cloudtrail.event_version
++                value:
++                  stringValue: "1.08"
++              - key: aws.cloudtrail.event_id
++                value:
++                  stringValue: e755e09c-42f9-4c5c-9064-EXAMPLE228c7
++              - key: rpc.method
++                value:
++                  stringValue: StartInstances
++              - key: rpc.system
++                value:
++                  stringValue: AwsApiCall
++              - key: aws.cloudtrail.api_version
++                value:
++                  stringValue: v1
++              - key: rpc.service
++                value:
++                  stringValue: ec2.amazonaws.com
++              - key: aws.request_id
++                value:
++                  stringValue: e4336db0-149f-4a6b-844d-EXAMPLEb9d16
++              - key: aws.event.category
++                value:
++                  stringValue: Management
++              - key: aws.event.read_only
++                value:
++                  boolValue: false
++              - key: aws.event.management
++                value:
++                  boolValue: true
++              - key: source.address
++                value:
++                  stringValue: 192.0.2.0
++              - key: user_agent.original
++                value:
++                  stringValue: aws-cli/2.13.5 Python/3.11.4 Linux/4.14.255-314-253.539.amzn2.x86_64 exec-env/CloudShell exe/x86_64.amzn.2 prompt/off command/ec2.start-instances
++              - key: aws.session.console
++                value:
++                  boolValue: true
++              - key: user.name
++                value:
++                  stringValue: Mateo
++              - key: aws.user_identity.account_id
++                value:
++                  stringValue: "123456789012"
++              - key: aws.access_key.id
++                value:
++                  stringValue: AKIAIOSFODNN7EXAMPLE
++              - key: aws.principal.id
++                value:
++                  stringValue: EXAMPLE6E4XEGITWATV6R
++              - key: aws.principal.arn
++                value:
++                  stringValue: arn:aws:iam::123456789012:user/Mateo
++              - key: aws.principal.type
++                value:
++                  stringValue: IAMUser
++              - key: aws.user_identity.session_context.attributes.mfa_authenticated
++                value:
++                  boolValue: false
++              - key: aws.user_identity.session_context.attributes.creation_date
++                value:
++                  stringValue: "2023-07-19T21:11:57Z"
++              - key: tls.protocol.version
++                value:
++                  stringValue: "1.2"
++              - key: tls.cipher
++                value:
++                  stringValue: ECDHE-RSA-AES128-GCM-SHA256
++              - key: server.address
++                value:
++                  stringValue: ec2.us-east-1.amazonaws.com
++              - key: aws.request.parameters
++                value:
++                  kvlistValue:
++                    values:
++                      - key: instancesSet
++                        value:
++                          kvlistValue:
++                            values:
++                              - key: items
++                                value:
++                                  arrayValue:
++                                    values:
++                                      - kvlistValue:
++                                          values:
++                                            - key: instanceId
++                                              value:
++                                                stringValue: i-EXAMPLE56126103cb
++                                      - kvlistValue:
++                                          values:
++                                            - key: instanceId
++                                              value:
++                                                stringValue: i-EXAMPLEaff4840c22
++              - key: aws.response.elements
++                value:
++                  kvlistValue:
++                    values:
++                      - key: requestId
++                        value:
++                          stringValue: e4336db0-149f-4a6b-844d-EXAMPLEb9d16
++                      - key: instancesSet
++                        value:
++                          kvlistValue:
++                            values:
++                              - key: items
++                                value:
++                                  arrayValue:
++                                    values:
++                                      - kvlistValue:
++                                          values:
++                                            - key: instanceId
++                                              value:
++                                                stringValue: i-EXAMPLEaff4840c22
++                                            - key: currentState
++                                              value:
++                                                kvlistValue:
++                                                  values:
++                                                    - key: code
++                                                      value:
++                                                        doubleValue: 0
++                                                    - key: name
++                                                      value:
++                                                        stringValue: pending
++                                            - key: previousState
++                                              value:
++                                                kvlistValue:
++                                                  values:
++                                                    - key: code
++                                                      value:
++                                                        doubleValue: 80
++                                                    - key: name
++                                                      value:
++                                                        stringValue: stopped
++                                      - kvlistValue:
++                                          values:
++                                            - key: previousState
++                                              value:
++                                                kvlistValue:
++                                                  values:
++                                                    - key: code
++                                                      value:
++                                                        doubleValue: 80
++                                                    - key: name
++                                                      value:
++                                                        stringValue: stopped
++                                            - key: instanceId
++                                              value:
++                                                stringValue: i-EXAMPLE56126103cb
++                                            - key: currentState
++                                              value:
++                                                kvlistValue:
++                                                  values:
++                                                    - key: code
++                                                      value:
++                                                        doubleValue: 0
++                                                    - key: name
++                                                      value:
++                                                        stringValue: pending
++            body: {}
++            timeUnixNano: "1689801448000000000"
++        scope:
++          attributes:
++            - key: encoding.format
++              value:
++                stringValue: aws.cloudtrail
++          name: github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding/awslogsencodingextension
++          version: test-version
+\ No newline at end of file
+diff --git a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_2.yaml b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_2.yaml
+new file mode 100644
+index 0000000000..5308a6865f
+--- /dev/null
++++ b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_2.yaml
+@@ -0,0 +1,123 @@
++resourceLogs:
++  - resource:
++      attributes:
++        - key: cloud.provider
++          value:
++            stringValue: aws
++        - key: cloud.region
++          value:
++            stringValue: us-east-1
++        - key: cloud.account.id
++          value:
++            stringValue: "123456789012"
++    scopeLogs:
++      - logRecords:
++          - attributes:
++              - key: aws.cloudtrail.event_version
++                value:
++                  stringValue: "1.08"
++              - key: aws.cloudtrail.event_id
++                value:
++                  stringValue: ba0801a1-87ec-4d26-be87-EXAMPLE75bbb
++              - key: rpc.method
++                value:
++                  stringValue: CreateUser
++              - key: rpc.system
++                value:
++                  stringValue: AwsApiCall
++              - key: rpc.service
++                value:
++                  stringValue: iam.amazonaws.com
++              - key: aws.request_id
++                value:
++                  stringValue: 2d528c76-329e-410b-9516-EXAMPLE565dc
++              - key: aws.event.category
++                value:
++                  stringValue: Management
++              - key: aws.event.read_only
++                value:
++                  boolValue: false
++              - key: aws.event.management
++                value:
++                  boolValue: true
++              - key: source.address
++                value:
++                  stringValue: 192.0.2.0
++              - key: user_agent.original
++                value:
++                  stringValue: aws-cli/2.13.5 Python/3.11.4 Linux/4.14.255-314-253.539.amzn2.x86_64 exec-env/CloudShell exe/x86_64.amzn.2 prompt/off command/iam.create-user
++              - key: aws.session.console
++                value:
++                  boolValue: true
++              - key: user.name
++                value:
++                  stringValue: Mary
++              - key: aws.user_identity.account_id
++                value:
++                  stringValue: "123456789012"
++              - key: aws.access_key.id
++                value:
++                  stringValue: AKIAIOSFODNN7EXAMPLE
++              - key: aws.principal.id
++                value:
++                  stringValue: AIDA6ON6E4XEGITEXAMPLE
++              - key: aws.principal.arn
++                value:
++                  stringValue: arn:aws:iam::123456789012:user/Mary
++              - key: aws.principal.type
++                value:
++                  stringValue: IAMUser
++              - key: aws.user_identity.session_context.attributes.mfa_authenticated
++                value:
++                  boolValue: false
++              - key: aws.user_identity.session_context.attributes.creation_date
++                value:
++                  stringValue: "2023-07-19T21:11:57Z"
++              - key: tls.protocol.version
++                value:
++                  stringValue: "1.2"
++              - key: tls.cipher
++                value:
++                  stringValue: ECDHE-RSA-AES128-GCM-SHA256
++              - key: server.address
++                value:
++                  stringValue: iam.amazonaws.com
++              - key: aws.request.parameters
++                value:
++                  kvlistValue:
++                    values:
++                      - key: userName
++                        value:
++                          stringValue: Richard
++              - key: aws.response.elements
++                value:
++                  kvlistValue:
++                    values:
++                      - key: user
++                        value:
++                          kvlistValue:
++                            values:
++                              - key: path
++                                value:
++                                  stringValue: /
++                              - key: arn
++                                value:
++                                  stringValue: arn:aws:iam::123456789012:user/Richard
++                              - key: userId
++                                value:
++                                  stringValue: AIDA6ON6E4XEP7EXAMPLE
++                              - key: createDate
++                                value:
++                                  stringValue: Jul 19, 2023 9:25:09 PM
++                              - key: userName
++                                value:
++                                  stringValue: Richard
++            body: {}
++            timeUnixNano: "1689801909000000000"
++        scope:
++          attributes:
++            - key: encoding.format
++              value:
++                stringValue: aws.cloudtrail
++          name: github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding/awslogsencodingextension
++          version: test-version
+\ No newline at end of file
+diff --git a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_3.yaml b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_3.yaml
+new file mode 100644
+index 0000000000..4e09223b9a
+--- /dev/null
++++ b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/testdata/stream/cloudtrail_log_expect_3.yaml
+@@ -0,0 +1,143 @@
++resourceLogs:
++  - resource:
++      attributes:
++        - key: cloud.provider
++          value:
++            stringValue: aws
++        - key: cloud.region
++          value:
++            stringValue: us-east-1
++        - key: cloud.account.id
++          value:
++            stringValue: "123456789012"
++    scopeLogs:
++      - logRecords:
++          - attributes:
++              - key: aws.cloudtrail.event_version
++                value:
++                  stringValue: "1.08"
++              - key: aws.cloudtrail.event_id
++                value:
++                  stringValue: bb3496d4-5252-4660-9c28-3c6aebdb21c0
++              - key: rpc.method
++                value:
++                  stringValue: Publish
++              - key: rpc.system
++                value:
++                  stringValue: AwsApiCall
++              - key: rpc.service
++                value:
++                  stringValue: sns.amazonaws.com
++              - key: aws.request_id
++                value:
++                  stringValue: 0a8ab208-11bf-5e01-bd2d-ef55861b545d
++              - key: aws.event.category
++                value:
++                  stringValue: Data
++              - key: aws.event.read_only
++                value:
++                  boolValue: false
++              - key: aws.event.management
++                value:
++                  boolValue: false
++              - key: source.address
++                value:
++                  stringValue: 192.0.2.0
++              - key: user_agent.original
++                value:
++                  stringValue: aws-cli/1.29.16 md/Botocore#1.31.16 ua/2.0 os/linux#5.4.250-173.369.amzn2int.x86_64 md/arch#x86_64 lang/python#3.8.17 md/pyimpl#CPython cfg/retry-mode#legacy botocore/1.31.16
++              - key: aws.user_identity.account_id
++                value:
++                  stringValue: "123456789012"
++              - key: aws.access_key.id
++                value:
++                  stringValue: AKIAIOSFODNN7EXAMPLE
++              - key: aws.principal.id
++                value:
++                  stringValue: EX_PRINCIPAL_ID
++              - key: aws.principal.arn
++                value:
++                  stringValue: arn:aws:iam::123456789012:user/Bob
++              - key: aws.principal.type
++                value:
++                  stringValue: AssumedRole
++              - key: aws.user_identity.session_context.attributes.mfa_authenticated
++                value:
++                  boolValue: true
++              - key: aws.user_identity.session_context.attributes.creation_date
++                value:
++                  stringValue: "2023-08-21T16:44:05Z"
++              - key: aws.user_identity.session_context.issuer.type
++                value:
++                  stringValue: Role
++              - key: aws.user_identity.session_context.issuer.principal_id
++                value:
++                  stringValue: AKIAIOSFODNN7EXAMPLE
++              - key: aws.user_identity.session_context.issuer.arn
++                value:
++                  stringValue: arn:aws:iam::123456789012:role/Admin
++              - key: aws.user_identity.session_context.issuer.account_id
++                value:
++                  stringValue: "123456789012"
++              - key: aws.user_identity.session_context.issuer.user_name
++                value:
++                  stringValue: ExampleUser
++              - key: tls.protocol.version
++                value:
++                  stringValue: "1.2"
++              - key: tls.cipher
++                value:
++                  stringValue: ECDHE-RSA-AES128-GCM-SHA256
++              - key: server.address
++                value:
++                  stringValue: sns.us-east-1.amazonaws.com
++              - key: aws.request.parameters
++                value:
++                  kvlistValue:
++                    values:
++                      - key: topicArn
++                        value:
++                          stringValue: arn:aws:sns:us-east-1:123456789012:ExampleSNSTopic
++                      - key: message
++                        value:
++                          stringValue: HIDDEN_DUE_TO_SECURITY_REASONS
++                      - key: subject
++                        value:
++                          stringValue: HIDDEN_DUE_TO_SECURITY_REASONS
++                      - key: messageStructure
++                        value:
++                          stringValue: json
++                      - key: messageAttributes
++                        value:
++                          stringValue: HIDDEN_DUE_TO_SECURITY_REASONS
++              - key: aws.response.elements
++                value:
++                  kvlistValue:
++                    values:
++                      - key: messageId
++                        value:
++                          stringValue: 0787cd1e-d92b-521c-a8b4-90434e8ef840
++              - key: aws.resources
++                value:
++                  arrayValue:
++                    values:
++                      - kvlistValue:
++                          values:
++                            - key: account.id
++                              value:
++                                stringValue: "123456789012"
++                            - key: type
++                              value:
++                                stringValue: AWS::SNS::Topic
++                            - key: arn
++                              value:
++                                stringValue: arn:aws:sns:us-east-1:123456789012:ExampleSNSTopic
++            body: {}
++            timeUnixNano: "1692636517000000000"
++        scope:
++          attributes:
++            - key: encoding.format
++              value:
++                stringValue: aws.cloudtrail
++          name: github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding/awslogsencodingextension
++          version: test-version
+\ No newline at end of file
+diff --git a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/unmarshaler.go b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/unmarshaler.go
+index 80fc05f1c0..d16c133d5d 100644
+--- a/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/unmarshaler.go
++++ b/extension/encoding/awslogsencodingextension/internal/unmarshaler/cloudtraillog/unmarshaler.go
+@@ -18,21 +18,23 @@ import (
+ 	"go.opentelemetry.io/collector/pdata/plog"
+ 	conventions "go.opentelemetry.io/otel/semconv/v1.38.0"
+ 
++	"github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding"
+ 	"github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding/awslogsencodingextension/internal/constants"
+ 	"github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding/awslogsencodingextension/internal/metadata"
+ 	"github.com/open-telemetry/opentelemetry-collector-contrib/extension/encoding/awslogsencodingextension/internal/unmarshaler"
++	"github.com/open-telemetry/opentelemetry-collector-contrib/pkg/xstreamencoding"
+ )
+ 
+ // readerBufferSize defines the buffer size for buffered readers.
+ const readerBufferSize = 128 * 1024 // 128KB buffer size
+ 
++var _ unmarshaler.StreamingLogsUnmarshaler = (*CloudTrailLogUnmarshaler)(nil)
++
+ type CloudTrailLogUnmarshaler struct {
+ 	buildInfo         component.BuildInfo
+ 	uIDFeatureEnabled bool
+ }
+ 
+-var _ unmarshaler.AWSUnmarshaler = (*CloudTrailLogUnmarshaler)(nil)
+-
+ // UserIdentity represents the user identity information in CloudTrail logs
+ type UserIdentity struct {
+ 	Type             string          `json:"type"`
+@@ -149,17 +151,51 @@ func NewCloudTrailLogUnmarshaler(buildInfo component.BuildInfo, uIDFeatureEnable
+ }
+ 
+ func (u *CloudTrailLogUnmarshaler) UnmarshalAWSLogs(reader io.Reader) (plog.Logs, error) {
+-	bufferedReader := bufio.NewReaderSize(reader, readerBufferSize)
++	// Decode as a stream but flush all at once using flush options
++	streamDecoder, err := u.NewLogsDecoder(reader, encoding.WithFlushItems(0), encoding.WithFlushBytes(0))
++	if err != nil {
++		return plog.Logs{}, err
++	}
++
++	logs, err := streamDecoder.DecodeLogs()
++	if err != nil {
++		// we must check for EOF with direct comparison and avoid wrapped EOF that can come from stream itself
++		//nolint:errorlint
++		if err == io.EOF {
++			// EOF indicates no logs were found, return any logs that's available
++			return logs, nil
++		}
++
++		return plog.Logs{}, err
++	}
++
++	return logs, nil
++}
++
++// NewLogsDecoder returns a streaming logs decoder. It detects format type for CloudTrail logs and processes accordingly.
++// Supported sub formats, how they are processed and what offset conveys for each:
++//   - S3 Records: Offset tracked by the number of records processed
++//   - CloudWatch subscription filter: Processes full payload; offset tracked by bytes processed
++//   - Digest file: Single record output; offset tracked by bytes processed
++func (u *CloudTrailLogUnmarshaler) NewLogsDecoder(reader io.Reader, options ...encoding.DecoderOption) (encoding.LogsDecoder, error) {
++	var bufferedReader *bufio.Reader
++	if br, ok := reader.(*bufio.Reader); ok {
++		bufferedReader = br
++	} else {
++		bufferedReader = bufio.NewReaderSize(reader, readerBufferSize)
++	}
+ 
+ 	// Peek into the first 64 bytes to determine the type of CloudTrail log
+ 	peekBytes, err := bufferedReader.Peek(64)
+-	if err != nil && !errors.Is(err, io.EOF) {
+-		return plog.Logs{}, fmt.Errorf("failed to peek into CloudTrail log: %w", err)
++	if err != nil {
++		if !errors.Is(err, io.EOF) {
++			return nil, fmt.Errorf("failed to peek into CloudTrail log: %w", err)
++		}
+ 	}
+ 
+ 	firstKey, err := extractFirstKey(peekBytes)
+ 	if err != nil {
+-		return plog.Logs{}, fmt.Errorf("failed to extract the first JSON key: %w", err)
++		return nil, fmt.Errorf("failed to extract the first JSON key: %w", err)
+ 	}
+ 
+ 	decoder := gojson.NewDecoder(bufferedReader)
+@@ -171,7 +207,31 @@ func (u *CloudTrailLogUnmarshaler) UnmarshalAWSLogs(reader io.Reader) (plog.Logs
+ 
+ 	// Check for S3 CloudTrail log format (most common)
+ 	if firstKey == "Records" {
+-		return u.fromS3(decoder)
++		return u.processRecords(decoder, options...)
++	}
++
++	decoderOptions := encoding.DecoderOptions{}
++	for _, option := range options {
++		option(&decoderOptions)
++	}
++
++	// For the rest of the format, if offset is set, return EOF after consuming the whole record.
++	// This confirms to our contract for these formats - process full record.
++	// But given we need full record processing, we emit empty value with an EOF & full record offset.
++	if decoderOptions.Offset > 0 {
++		err = decoder.Decode(&gojson.RawMessage{})
++		if err != nil {
++			return nil, fmt.Errorf("failed to read the input stream: %w", err)
++		}
++
++		return xstreamencoding.NewLogsDecoderAdapter(
++			func() (plog.Logs, error) {
++				return plog.NewLogs(), io.EOF
++			},
++			func() int64 {
++				return decoder.InputOffset()
++			},
++		), nil
+ 	}
+ 
+ 	// Check for CloudWatch subscription filter format
+@@ -182,93 +242,155 @@ func (u *CloudTrailLogUnmarshaler) UnmarshalAWSLogs(reader io.Reader) (plog.Logs
+ 
+ 	// Otherwise, assume it's a CloudTrail digest record and attempt to decode
+ 	var cloudTrailDigest CloudTrailDigest
+-	if err := decoder.Decode(&cloudTrailDigest); err != nil {
+-		return plog.Logs{}, fmt.Errorf("failed to unmarshal payload as a CloudTrail digest: %w", err)
++	if err = decoder.Decode(&cloudTrailDigest); err != nil {
++		return nil, fmt.Errorf("failed to unmarshal payload as a CloudTrail digest: %w", err)
+ 	}
+ 
+-	return u.processDigestRecord(cloudTrailDigest)
++	isEOF := false
++	record, err := u.processDigestRecord(cloudTrailDigest)
++
++	decoderF := func() (plog.Logs, error) {
++		if err != nil {
++			return plog.Logs{}, err
++		}
++
++		if isEOF {
++			return plog.Logs{}, io.EOF
++		}
++
++		isEOF = true
++		return record, nil
++	}
++	return xstreamencoding.NewLogsDecoderAdapter(decoderF, func() int64 { return decoder.InputOffset() }), nil
+ }
+ 
+-// fromCloudWatch handles CloudTrail logs from CloudWatch Logs subscription filter
+-func (u *CloudTrailLogUnmarshaler) fromCloudWatch(reader *bufio.Reader) (plog.Logs, error) {
+-	var cwLog events.CloudwatchLogsData
+-	if err := gojson.NewDecoder(reader).Decode(&cwLog); err != nil {
+-		return plog.Logs{}, fmt.Errorf("failed to unmarshal data as cloudwatch logs event: %w", err)
++// processRecords is specialized in processing CloudTrail log records with streaming support
++// Implementation works with a gojson.Decoder to efficiently stream through potentially large log files.
++func (u *CloudTrailLogUnmarshaler) processRecords(decoder *gojson.Decoder, options ...encoding.DecoderOption) (encoding.LogsDecoder, error) {
++	// Check opening bracket
++	if token, err := decoder.Token(); err != nil || token != gojson.Delim('{') {
++		return nil, fmt.Errorf("expected '{': %w", err)
+ 	}
+ 
+-	if len(cwLog.LogEvents) == 0 {
+-		return plog.NewLogs(), nil
++	// Move to Records array
++	if _, err := decoder.Token(); err != nil {
++		return nil, fmt.Errorf("expected 'Records' key: %w", err)
+ 	}
+ 
+-	logs, resourceLogs, scopeLogs := u.createLogs()
++	// Check for array opening
++	if token, err := decoder.Token(); err != nil || token != gojson.Delim('[') {
++		return nil, fmt.Errorf("expected '[': %w", err)
++	}
+ 
+-	// Set CloudWatch-specific resource attributes
+-	resourceAttrs := resourceLogs.Resource().Attributes()
+-	resourceAttrs.PutStr(string(conventions.CloudProviderKey), conventions.CloudProviderAWS.Value.AsString())
+-	resourceAttrs.PutStr(string(conventions.AWSLogGroupNamesKey), cwLog.LogGroup)
+-	resourceAttrs.PutStr(string(conventions.AWSLogStreamNamesKey), cwLog.LogStream)
++	offsetRecord := int64(0)
++	batchHelper := xstreamencoding.NewBatchHelper(options...)
+ 
+-	logRecords := scopeLogs.LogRecords()
+-	logRecords.EnsureCapacity(len(cwLog.LogEvents))
++	for offsetRecord < batchHelper.Options().Offset {
++		if !decoder.More() {
++			return nil, fmt.Errorf("EOF reached before offset %d records were discarded", batchHelper.Options().Offset)
++		}
++		var skip gojson.RawMessage
++		if err := decoder.Decode(&skip); err != nil {
++			return nil, err
++		}
++		offsetRecord++
++	}
+ 
+-	init := true
++	offsetFunc := func() int64 {
++		return offsetRecord
++	}
++
++	decoderF := func() (plog.Logs, error) {
++		logs := plog.NewLogs()
++		resourceLogs := logs.ResourceLogs().AppendEmpty()
++		scopeLogs := resourceLogs.ScopeLogs().AppendEmpty()
++		u.setCommonScopeAttributes(scopeLogs)
++
++		logRecords := scopeLogs.LogRecords()
++		// Pre-allocate space for log records to improve performance
++		logRecords.EnsureCapacity(100)
+ 
+-	for _, event := range cwLog.LogEvents {
+-		// Parse message as a single CloudTrail record
+ 		var record CloudTrailRecord
+-		if err := gojson.Unmarshal([]byte(event.Message), &record); err != nil {
+-			return plog.Logs{}, fmt.Errorf("failed to unmarshal CloudTrail event from message: %w", err)
+-		}
+ 
+-		// Set resource attributes from first record (region, account)
+-		if init {
+-			u.setResourceAttributes(resourceLogs.Resource().Attributes(), record)
+-			init = false
++		for decoder.More() {
++			startOffset := decoder.InputOffset()
++			record = CloudTrailRecord{}
++			err := decoder.Decode(&record)
++			if err != nil {
++				return plog.Logs{}, err
++			}
++
++			logRecord := logRecords.AppendEmpty()
++			if err := u.setLogRecord(logRecord, &record); err != nil {
++				return plog.Logs{}, err
++			}
++
++			batchHelper.IncrementBytes(decoder.InputOffset() - startOffset)
++			batchHelper.IncrementItems(1)
++			offsetRecord++
++
++			if batchHelper.ShouldFlush() {
++				batchHelper.Reset()
++				// Set resource attributes before flushing
++				u.setResourceAttributes(resourceLogs.Resource().Attributes(), record)
++				return logs, nil
++			}
+ 		}
+ 
+-		logRecord := logRecords.AppendEmpty()
+-		if err := u.setLogRecord(logRecord, &record); err != nil {
+-			return plog.Logs{}, err
++		if logRecords.Len() == 0 {
++			return logs, io.EOF
+ 		}
++
++		// Set resource attributes before final flush
++		u.setResourceAttributes(resourceLogs.Resource().Attributes(), record)
++		return logs, nil
+ 	}
+ 
+-	return logs, nil
++	return xstreamencoding.NewLogsDecoderAdapter(decoderF, offsetFunc), nil
+ }
+ 
+-// processRecords is specialized in processing CloudTrail log records.
+-// Implementation works with a gojson.Decoder to efficiently stream through potentially large log files.
+-func (u *CloudTrailLogUnmarshaler) fromS3(decoder *gojson.Decoder) (plog.Logs, error) {
+-	// Check opening bracket
+-	if token, err := decoder.Token(); err != nil || token != gojson.Delim('{') {
+-		return plog.Logs{}, fmt.Errorf("expected '{': %w", err)
+-	}
++// fromCloudWatch handles CloudTrail logs from CloudWatch Logs subscription filter.
++// Processes full record and track offset by full processed bytes.
++func (u *CloudTrailLogUnmarshaler) fromCloudWatch(reader *bufio.Reader) (encoding.LogsDecoder, error) {
++	var cwLog events.CloudwatchLogsData
+ 
+-	// Move to Records array
+-	if _, err := decoder.Token(); err != nil {
+-		return plog.Logs{}, fmt.Errorf("expected 'Records' key: %w", err)
++	decoder := gojson.NewDecoder(reader)
++	if err := decoder.Decode(&cwLog); err != nil {
++		return nil, fmt.Errorf("failed to unmarshal data as cloudwatch logs event: %w", err)
+ 	}
+ 
+-	// Check for array opening
+-	if token, err := decoder.Token(); err != nil || token != gojson.Delim('[') {
+-		return plog.Logs{}, fmt.Errorf("expected '[': %w", err)
++	if len(cwLog.LogEvents) == 0 {
++		return xstreamencoding.NewLogsDecoderAdapter(
++				func() (plog.Logs, error) {
++					return plog.Logs{}, io.EOF
++				},
++				func() int64 {
++					return 0
++				}),
++			nil
+ 	}
+ 
+ 	logs, resourceLogs, scopeLogs := u.createLogs()
+ 
++	// Set CloudWatch-specific resource attributes
++	resourceAttrs := resourceLogs.Resource().Attributes()
++	resourceAttrs.PutStr(string(conventions.CloudProviderKey), conventions.CloudProviderAWS.Value.AsString())
++	resourceAttrs.PutStr(string(conventions.AWSLogGroupNamesKey), cwLog.LogGroup)
++	resourceAttrs.PutStr(string(conventions.AWSLogStreamNamesKey), cwLog.LogStream)
++
+ 	logRecords := scopeLogs.LogRecords()
+-	// Pre-allocate space for log records to improve performance
+-	logRecords.EnsureCapacity(100)
++	logRecords.EnsureCapacity(len(cwLog.LogEvents))
+ 
+-	var record CloudTrailRecord
+ 	init := true
+ 
+-	for decoder.More() {
+-		record = CloudTrailRecord{}
+-		err := decoder.Decode(&record)
+-		if err != nil {
+-			return plog.Logs{}, err
++	for _, event := range cwLog.LogEvents {
++		// Parse message as a single CloudTrail record
++		var record CloudTrailRecord
++		if err := gojson.Unmarshal([]byte(event.Message), &record); err != nil {
++			return nil, fmt.Errorf("failed to unmarshal CloudTrail event from message: %w", err)
+ 		}
+ 
++		// Set resource attributes from first record (region, account)
+ 		if init {
+ 			u.setResourceAttributes(resourceLogs.Resource().Attributes(), record)
+ 			init = false
+@@ -276,11 +398,21 @@ func (u *CloudTrailLogUnmarshaler) fromS3(decoder *gojson.Decoder) (plog.Logs, e
+ 
+ 		logRecord := logRecords.AppendEmpty()
+ 		if err := u.setLogRecord(logRecord, &record); err != nil {
+-			return plog.Logs{}, err
++			return nil, err
+ 		}
+ 	}
+ 
+-	return logs, nil
++	isEOF := false
++	decoderF := func() (plog.Logs, error) {
++		if isEOF {
++			return plog.Logs{}, io.EOF
++		}
++
++		isEOF = true
++		return logs, nil
++	}
++
++	return xstreamencoding.NewLogsDecoderAdapter(decoderF, func() int64 { return decoder.InputOffset() }), nil
+ }
+ 
+ // processDigestRecord is specialized in processing CloudTrail digest records

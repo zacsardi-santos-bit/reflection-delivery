@@ -1,0 +1,11 @@
+patching file .github/workflows/cd.yml
+patching file .github/workflows/static.yml
+patching file Cargo.toml
+patching file apt/dists/stable/InRelease
+patching file apt/dists/stable/Release
+patching file apt/dists/stable/Release.gpg
+patching file apt/dists/stable/main/binary-amd64/Packages
+patching file apt/dists/stable/main/binary-amd64/Packages.gz
+patching file apt/dists/stable/main/binary-amd64/Release
+patching file apt/repository-key.asc
+patching file apt/reprepro/conf/distributions

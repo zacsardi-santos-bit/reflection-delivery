@@ -1,0 +1,29 @@
+{
+    "id": "e633b7da-6d6d-45dd-8485-3d6e311cc65e",
+    "started_at": "2026-07-06T12:17:03.163418",
+    "finished_at": "2026-07-06T12:17:55.012193",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__automattic-mongoose-16089": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "automattic-mongoose-16089__Jm9tkSK"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

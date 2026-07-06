@@ -1,5 +1,0 @@
-patching file prowler/__main__.py
-patching file prowler/lib/outputs/compliance/compliance_output.py
-patching file prowler/lib/outputs/output.py
-patching file prowler/providers/aws/lib/quick_inventory/quick_inventory.py
-patching file prowler/providers/aws/lib/s3/s3.py

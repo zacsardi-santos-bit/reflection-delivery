@@ -1,7 +1,0 @@
-I'm working on a molecular dynamics simulation framework and I need to add support for position restraints. Right now, there's no way to anchor specific particles to fixed positions in space during a simulation. I'd like to be able to assign each particle a target anchor position and a spring-like restoring force that pulls the particle back toward that anchor if it drifts away — and pushes it away if it gets too close (based on a configurable equilibrium distance).
-
-The framework already has external potential and interaction patterns for things like wall potentials. I'd like this new restraint to follow the same design: a potential class that computes energy and forces given a particle index and its distance from the anchor, and an interaction class that applies those forces to each restrained particle in the simulation system.
-
-I also need the configuration to be readable from the framework's standard input file format. Each restrained particle should be configurable with an anchor position (as a 3D coordinate), a spring constant, and an equilibrium distance. The framework's existing input reader for external interactions should recognize this new restraint type and instantiate the correct classes.
-
-The implementation should work correctly for both single and double floating-point precision, and the analytical force (derivative of the potential with respect to distance) should be numerically consistent with the actual gradient of the potential energy function.

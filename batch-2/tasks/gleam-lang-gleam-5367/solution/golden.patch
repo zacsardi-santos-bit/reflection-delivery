@@ -1,0 +1,357 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index db04eb994..9ff82a70b 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -220,6 +220,10 @@
+   rather than always being applied to the outermost one.
+   ([Giacomo Cavalieri](https://github.com/giacomocavalieri))
+ 
++- Fixed a bug where the compiler would not detect and reject duplicate modules
++  in a project's dependencies.
++  ([Giacomo Cavalieri](https://github.com/giacomocavalieri))
++
+ - The language server no longer recommends the deprecated `@target` attribute.
+   ([Hari Mohan](https://github.com/seafoamteal))
+ 
+diff --git a/compiler-core/src/build/package_compiler.rs b/compiler-core/src/build/package_compiler.rs
+index 296e81c70..1d50d1154 100644
+--- a/compiler-core/src/build/package_compiler.rs
++++ b/compiler-core/src/build/package_compiler.rs
+@@ -1,5 +1,10 @@
++#[cfg(test)]
++mod tests;
++
+ use crate::analyse::{ModuleAnalyzerConstructor, TargetSupport};
+ use crate::build::package_loader::CacheFiles;
++
++use crate::error::DefinedModuleOrigin;
+ use crate::inline;
+ use crate::io::files_with_extension;
+ use crate::line_numbers::{self, LineNumbers};
+@@ -33,6 +38,7 @@ use camino::{Utf8Path, Utf8PathBuf};
+ 
+ use super::{ErlangAppCodegenConfiguration, TargetCodegenConfiguration, Telemetry};
+ 
++#[derive(Debug)]
+ pub struct Compiled {
+     /// The modules which were just compiled
+     pub modules: Vec<Module>,
+@@ -112,7 +118,7 @@ where
+         mut self,
+         warnings: &WarningEmitter,
+         existing_modules: &mut im::HashMap<EcoString, type_::ModuleInterface>,
+-        already_defined_modules: &mut im::HashMap<EcoString, Utf8PathBuf>,
++        already_defined_modules: &mut im::HashMap<EcoString, DefinedModuleOrigin>,
+         stale_modules: &mut StaleTracker,
+         incomplete_modules: &mut HashSet<EcoString>,
+         telemetry: &dyn Telemetry,
+diff --git a/compiler-core/src/build/package_compiler/snapshots/gleam_core__build__package_compiler__tests__different_packages_defining_duplicate_module.snap b/compiler-core/src/build/package_compiler/snapshots/gleam_core__build__package_compiler__tests__different_packages_defining_duplicate_module.snap
+new file mode 100644
+index 000000000..e316c75d0
+--- /dev/null
++++ b/compiler-core/src/build/package_compiler/snapshots/gleam_core__build__package_compiler__tests__different_packages_defining_duplicate_module.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/build/package_compiler/tests.rs
++expression: output
++---
++error: Duplicate module
++
++The module `a_module` is defined multiple times.
++
++It is first defined by the package dep1
++It is defined a second time by the package a_package
+diff --git a/compiler-core/src/build/package_compiler/snapshots/gleam_core__build__package_compiler__tests__same_package_defining_duplicate_module.snap b/compiler-core/src/build/package_compiler/snapshots/gleam_core__build__package_compiler__tests__same_package_defining_duplicate_module.snap
+new file mode 100644
+index 000000000..75228b6c0
+--- /dev/null
++++ b/compiler-core/src/build/package_compiler/snapshots/gleam_core__build__package_compiler__tests__same_package_defining_duplicate_module.snap
+@@ -0,0 +1,10 @@
++---
++source: compiler-core/src/build/package_compiler/tests.rs
++expression: output
++---
++error: Duplicate module
++
++The module `a_module` is defined multiple times.
++
++It is first defined at a_package/a_module.gleam
++It is defined a second time at /src/a_module.gleam
+diff --git a/compiler-core/src/build/package_loader.rs b/compiler-core/src/build/package_loader.rs
+index d6fbf8a24..a5c73d99a 100644
+--- a/compiler-core/src/build/package_loader.rs
++++ b/compiler-core/src/build/package_loader.rs
+@@ -20,7 +20,7 @@ use crate::{
+     build::{Module, Origin, module_loader::ModuleLoader},
+     config::PackageConfig,
+     dep_tree,
+-    error::{FileIoAction, FileKind, ImportCycleLocationDetails},
++    error::{DefinedModuleOrigin, FileIoAction, FileKind, ImportCycleLocationDetails},
+     io::{self, CommandExecutor, FileSystemReader, FileSystemWriter, files_with_extension},
+     metadata,
+     paths::ProjectPaths,
+@@ -65,7 +65,7 @@ pub struct PackageLoader<'a, IO> {
+     package_name: &'a EcoString,
+     target: Target,
+     stale_modules: &'a mut StaleTracker,
+-    already_defined_modules: &'a mut im::HashMap<EcoString, Utf8PathBuf>,
++    already_defined_modules: &'a mut im::HashMap<EcoString, DefinedModuleOrigin>,
+     incomplete_modules: &'a HashSet<EcoString>,
+     cached_warnings: CachedWarnings,
+ }
+@@ -86,7 +86,7 @@ where
+         target: Target,
+         package_name: &'a EcoString,
+         stale_modules: &'a mut StaleTracker,
+-        already_defined_modules: &'a mut im::HashMap<EcoString, Utf8PathBuf>,
++        already_defined_modules: &'a mut im::HashMap<EcoString, DefinedModuleOrigin>,
+         incomplete_modules: &'a HashSet<EcoString>,
+     ) -> Self {
+         Self {
+@@ -127,10 +127,10 @@ where
+         let mut dep_location_map = HashMap::new();
+         let deps = inputs
+             .values()
+-            .map(|m| {
+-                let name = m.name().clone();
+-                let _ = dep_location_map.insert(name.clone(), m);
+-                (name, m.dependencies())
++            .map(|(_, module)| {
++                let name = module.name().clone();
++                let _ = dep_location_map.insert(name.clone(), module);
++                (name, module.dependencies())
+             })
+             // Making sure that the module order is deterministic, to prevent different
+             // compilations of the same project compiling in different orders. This could impact
+@@ -139,14 +139,14 @@ where
+             .sorted_by(|(a, _), (b, _)| a.cmp(b))
+             .collect();
+         let sequence = dep_tree::toposort_deps(deps)
+-            .map_err(|e| self.convert_deps_tree_error(e, dep_location_map))?;
++            .map_err(|error| self.convert_deps_tree_error(error, dep_location_map))?;
+ 
+         // Now that we have loaded sources and caches we check to see if any of
+         // the caches need to be invalidated because their dependencies have
+         // changed.
+         let mut loaded = Loaded::default();
+         for name in sequence {
+-            let input = inputs
++            let (_, input) = inputs
+                 .remove(&name)
+                 .expect("Getting parsed module for name");
+ 
+@@ -225,11 +225,13 @@ where
+         Ok(module)
+     }
+ 
+-    fn read_sources_and_caches(&self) -> Result<HashMap<EcoString, Input>> {
++    fn read_sources_and_caches(
++        &mut self,
++    ) -> Result<HashMap<EcoString, (DefinedModuleOrigin, Input)>> {
+         let span = tracing::info_span!("load");
+         let _enter = span.enter();
+ 
+-        let mut inputs = Inputs::new(self.already_defined_modules);
++        let mut inputs = Inputs::new(self.package_name.clone(), self.already_defined_modules);
+ 
+         let src = self.paths.src_directory();
+         let mut loader = ModuleLoader {
+@@ -292,7 +294,7 @@ where
+         // This would most commonly happen for modules like "user" and
+         // "code". Emit an error so this never happens.
+         if self.target.is_erlang() {
+-            for input in inputs.collection.values() {
++            for (_, input) in inputs.collection.values() {
+                 ensure_gleam_module_does_not_overwrite_standard_erlang_module(&input)?;
+             }
+         }
+@@ -1686,13 +1688,19 @@ impl StaleTracker {
+ 
+ #[derive(Debug)]
+ pub struct Inputs<'a> {
+-    collection: HashMap<EcoString, Input>,
+-    already_defined_modules: &'a im::HashMap<EcoString, Utf8PathBuf>,
++    /// The name of the package for which we're loading the inputs.
++    package: EcoString,
++    collection: HashMap<EcoString, (DefinedModuleOrigin, Input)>,
++    already_defined_modules: &'a mut im::HashMap<EcoString, DefinedModuleOrigin>,
+ }
+ 
+ impl<'a> Inputs<'a> {
+-    fn new(already_defined_modules: &'a im::HashMap<EcoString, Utf8PathBuf>) -> Self {
++    fn new(
++        package: EcoString,
++        already_defined_modules: &'a mut im::HashMap<EcoString, DefinedModuleOrigin>,
++    ) -> Self {
+         Self {
++            package,
+             collection: Default::default(),
+             already_defined_modules,
+         }
+@@ -1703,20 +1711,30 @@ impl<'a> Inputs<'a> {
+     fn insert(&mut self, input: Input) -> Result<()> {
+         let name = input.name().clone();
+ 
+-        if let Some(first) = self.already_defined_modules.get(&name) {
++        let origin = DefinedModuleOrigin {
++            package_name: self.package.clone(),
++            path: input.source_path().to_path_buf(),
++        };
++
++        if let Some(first) = self
++            .already_defined_modules
++            .insert(name.clone(), origin.clone())
++        {
+             return Err(Error::DuplicateModule {
+                 module: name.clone(),
+-                first: first.to_path_buf(),
+-                second: input.source_path().to_path_buf(),
++                first,
++                second: origin,
+             });
+         }
+ 
+-        let second = input.source_path().to_path_buf();
+-        if let Some(first) = self.collection.insert(name.clone(), input) {
++        if let Some((first, _)) = self
++            .collection
++            .insert(name.clone(), (origin.clone(), input))
++        {
+             return Err(Error::DuplicateModule {
+                 module: name,
+-                first: first.source_path().to_path_buf(),
+-                second,
++                first,
++                second: origin,
+             });
+         }
+ 
+diff --git a/compiler-core/src/build/project_compiler.rs b/compiler-core/src/build/project_compiler.rs
+index 44492ef01..a5a5797ae 100644
+--- a/compiler-core/src/build/project_compiler.rs
++++ b/compiler-core/src/build/project_compiler.rs
+@@ -11,7 +11,7 @@ use crate::{
+     codegen::{self, ErlangApp},
+     config::PackageConfig,
+     dep_tree,
+-    error::{FileIoAction, FileKind, ShellCommandFailureReason},
++    error::{DefinedModuleOrigin, FileIoAction, FileKind, ShellCommandFailureReason},
+     io::{BeamCompiler, Command, CommandExecutor, FileSystemReader, FileSystemWriter, Stdio},
+     manifest::{ManifestPackage, ManifestPackageSource},
+     metadata,
+@@ -104,7 +104,7 @@ pub struct ProjectCompiler<IO> {
+     pub config: PackageConfig,
+     pub packages: HashMap<String, ManifestPackage>,
+     importable_modules: im::HashMap<EcoString, type_::ModuleInterface>,
+-    pub(crate) defined_modules: im::HashMap<EcoString, Utf8PathBuf>,
++    pub(crate) defined_modules: im::HashMap<EcoString, DefinedModuleOrigin>,
+     stale_modules: StaleTracker,
+     /// The set of modules that have had partial compilation done since the last
+     /// successful compilation.
+@@ -173,6 +173,11 @@ where
+         // LSP engine so state could be reused if we don't reset it.
+ 
+         self.stale_modules.empty();
++
++        /// We also clear the defined modules, otherwise the language server
++        /// would start throwing errors for modules defined twice when compiling
++        /// a second time!
++        self.defined_modules.clear();
+     }
+ 
+     /// Compiles all packages in the project and returns the compiled
+diff --git a/compiler-core/src/error.rs b/compiler-core/src/error.rs
+index 1a751875c..35da616f5 100644
+--- a/compiler-core/src/error.rs
++++ b/compiler-core/src/error.rs
+@@ -60,6 +60,15 @@ pub struct ImportCycleLocationDetails {
+     pub src: EcoString,
+ }
+ 
++/// Describes where a defined module comes from.
++#[derive(Debug, Clone, Eq, PartialEq)]
++pub struct DefinedModuleOrigin {
++    /// The package defining the module
++    pub package_name: EcoString,
++    /// The path to the module
++    pub path: Utf8PathBuf,
++}
++
+ #[derive(Debug, Eq, PartialEq, Error, Clone)]
+ pub enum Error {
+     #[error("failed to parse Gleam source code")]
+@@ -87,8 +96,8 @@ pub enum Error {
+     #[error("duplicate module {module}")]
+     DuplicateModule {
+         module: Name,
+-        first: Utf8PathBuf,
+-        second: Utf8PathBuf,
++        first: DefinedModuleOrigin,
++        second: DefinedModuleOrigin,
+     },
+ 
+     #[error("duplicate source file {file}")]
+@@ -1409,11 +1418,25 @@ This was error from the Hex client library:
+                 first,
+                 second,
+             } => {
++                // If the conflicting modules come from the same package just
++                // showing the same package name twice is not all that useful.
++                // So we will show the path to each one!
++                let should_show_path = first.package_name == second.package_name;
++                let format_origin = |origin: &DefinedModuleOrigin| {
++                    if should_show_path {
++                        format!("at {}", origin.path)
++                    } else {
++                        format!("by the package {}", origin.package_name)
++                    }
++                };
++
+                 let text = format!(
+                     "The module `{module}` is defined multiple times.
+ 
+-First:  {first}
+-Second: {second}"
++It is first defined {}
++It is defined a second time {}",
++                    format_origin(first),
++                    format_origin(second)
+                 );
+ 
+                 vec![Diagnostic {
+diff --git a/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module.snap b/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module.snap
+index 5861b1d51..406489cf9 100644
+--- a/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module.snap
++++ b/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module.snap
+@@ -6,5 +6,5 @@ error: Duplicate module
+ 
+ The module `main` is defined multiple times.
+ 
+-First:  src/main.gleam
+-Second: test/main.gleam
++It is first defined at src/main.gleam
++It is defined a second time at test/main.gleam
+diff --git a/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module_dev.snap b/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module_dev.snap
+index 23f78c91c..328d4c2bf 100644
+--- a/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module_dev.snap
++++ b/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module_dev.snap
+@@ -6,5 +6,5 @@ error: Duplicate module
+ 
+ The module `main` is defined multiple times.
+ 
+-First:  src/main.gleam
+-Second: dev/main.gleam
++It is first defined at src/main.gleam
++It is defined a second time at dev/main.gleam
+diff --git a/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module_test_dev.snap b/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module_test_dev.snap
+index e5e6f98cf..200bf9f6d 100644
+--- a/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module_test_dev.snap
++++ b/test-package-compiler/src/snapshots/test_package_compiler__generated_tests__duplicate_module_test_dev.snap
+@@ -6,5 +6,5 @@ error: Duplicate module
+ 
+ The module `main` is defined multiple times.
+ 
+-First:  test/main.gleam
+-Second: dev/main.gleam
++It is first defined at test/main.gleam
++It is defined a second time at dev/main.gleam

@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/sdk/pcl && go test -json -v ./cmd/pulumi-language-pcl -run TestLanguage/l3-component-simple -count=1 -timeout=600s",
+  "test_files": [
+    "pkg/testing/pulumi-test-language/tests/l3_component_simple.go",
+    "pkg/testing/pulumi-test-language/tests/testdata/l3-component-simple/main.pp"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/pulumi/pulumi/sdk/pcl/v3/cmd/pulumi-language-pcl::TestLanguage/l3-component-simple",
+    "github.com/pulumi/pulumi/sdk/pcl/v3/cmd/pulumi-language-pcl::TestLanguage"
+  ],
+  "PASS_TO_PASS": []
+}

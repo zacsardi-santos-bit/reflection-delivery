@@ -1,0 +1,29 @@
+{
+    "id": "fffd3159-587e-4d91-aafb-068288350458",
+    "started_at": "2026-07-04T15:37:30.581187",
+    "finished_at": "2026-07-04T15:38:55.105647",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__consensys-teku-7892": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "consensys-teku-7892__kCEnWB7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

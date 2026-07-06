@@ -1,0 +1,98 @@
+{
+    "id": "6b0950ba-789a-4f5f-9ca8-68f84c8ec2c3",
+    "task_name": "offline/trustwallet-wallet-core-4408",
+    "trial_name": "trustwallet-wallet-core-4408__PbzsfvV",
+    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/trustwallet-wallet-core-4408__PbzsfvV",
+    "task_id": {
+        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/trustwallet-wallet-core-4408"
+    },
+    "source": "harbor",
+    "task_checksum": "95f646b8d9b5644d01797bf2c983581dd886c8e2aa466d929ca128ab0ff2251f",
+    "config": {
+        "task": {
+            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/trustwallet-wallet-core-4408",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "harbor"
+        },
+        "trial_name": "trustwallet-wallet-core-4408__PbzsfvV",
+        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "modal",
+            "import_path": null,
+            "force_build": false,
+            "delete": false,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-06-29T15:24:59.998719Z",
+    "finished_at": "2026-06-29T15:26:38.481113Z",
+    "environment_setup": {
+        "started_at": "2026-06-29T15:25:00.011334Z",
+        "finished_at": "2026-06-29T15:25:12.618389Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-06-29T15:25:12.618396Z",
+        "finished_at": "2026-06-29T15:25:12.618417Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-06-29T15:25:12.618436Z",
+        "finished_at": "2026-06-29T15:25:12.618451Z"
+    },
+    "verifier": {
+        "started_at": "2026-06-29T15:25:22.136300Z",
+        "finished_at": "2026-06-29T15:26:30.954447Z"
+    }
+}

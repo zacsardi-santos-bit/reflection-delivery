@@ -1,0 +1,189 @@
+patching file py-polars/tests/unit/datatypes/test_binary.py
+patching file py-polars/tests/unit/sql/test_sql.py
+🍹 Building a mixed python/rust project
+🔗 Found pyo3 bindings with abi3 support for Python ≥ 3.8
+🐍 Not using a specific python interpreter
+Ignoring adbc_driver_sqlite: markers 'extra == "adbc"' don't match your environment
+Ignoring cloudpickle: markers 'extra == "cloudpickle"' don't match your environment
+Ignoring connectorx: markers 'extra == "connectorx"' don't match your environment
+Ignoring deltalake: markers 'extra == "deltalake"' don't match your environment
+Ignoring fsspec: markers 'extra == "fsspec"' don't match your environment
+Ignoring gevent: markers 'extra == "gevent"' don't match your environment
+Ignoring hvplot: markers 'extra == "plot"' don't match your environment
+Ignoring matplotlib: markers 'extra == "matplotlib"' don't match your environment
+Ignoring numpy: markers 'extra == "numpy"' don't match your environment
+Ignoring openpyxl: markers 'extra == "openpyxl"' don't match your environment
+Ignoring pyarrow: markers 'extra == "pandas"' don't match your environment
+Ignoring pandas: markers 'extra == "pandas"' don't match your environment
+Ignoring pyarrow: markers 'extra == "pyarrow"' don't match your environment
+Ignoring pydantic: markers 'extra == "pydantic"' don't match your environment
+Ignoring pyiceberg: markers 'extra == "pyiceberg"' don't match your environment
+Ignoring pyxlsb: markers 'extra == "pyxlsb"' don't match your environment
+Ignoring sqlalchemy: markers 'extra == "sqlalchemy"' don't match your environment
+Ignoring pandas: markers 'extra == "sqlalchemy"' don't match your environment
+Ignoring backports.zoneinfo: markers 'python_version < "3.9" and extra == "timezone"' don't match your environment
+Ignoring tzdata: markers 'platform_system == "Windows" and extra == "timezone"' don't match your environment
+Ignoring xlsx2csv: markers 'extra == "xlsx2csv"' don't match your environment
+Ignoring xlsxwriter: markers 'extra == "xlsxwriter"' don't match your environment
+Ignoring polars: markers 'extra == "all"' don't match your environment
+    Finished dev [unoptimized + debuginfo] target(s) in 2.80s
+📦 Built wheel for abi3 Python ≥ 3.8 to /tmp/.tmpLP6PPT/polars-0.20.3-cp38-abi3-linux_x86_64.whl
+🛠 Installed polars-0.20.3
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /workspace/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace/repo/py-polars
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 94 items
+
+py-polars/tests/unit/datatypes/test_binary.py::test_binary_filter PASSED [  1%]
+py-polars/tests/unit/datatypes/test_binary.py::test_binary_to_list PASSED [  2%]
+py-polars/tests/unit/datatypes/test_binary.py::test_string_to_binary PASSED [  3%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_bin_hex_literals FAILED   [  4%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_bin_hex_filter FAILED     [  5%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_bin_hex_errors FAILED     [  6%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_case_when PASSED          [  7%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_cast FAILED               [  8%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_any_all PASSED            [  9%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_distinct PASSED           [ 10%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_div PASSED                [ 11%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_equal_not_equal PASSED    [ 12%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_arctan2 PASSED            [ 13%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_trig PASSED               [ 14%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_group_by PASSED           [ 15%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_left PASSED               [ 17%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_limit_offset PASSED       [ 18%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_anti_semi[SELECT * FROM tbl_a LEFT SEMI JOIN tbl_b USING (a,c)-expected0] PASSED [ 19%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_anti_semi[SELECT * FROM tbl_a LEFT SEMI JOIN tbl_b USING (a)-expected1] PASSED [ 20%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_anti_semi[SELECT * FROM tbl_a LEFT ANTI JOIN tbl_b USING (a)-expected2] PASSED [ 21%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_anti_semi[SELECT * FROM tbl_a LEFT SEMI JOIN tbl_b USING (b) LEFT SEMI JOIN tbl_c USING (c)-expected3] PASSED [ 22%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_anti_semi[SELECT * FROM tbl_a LEFT ANTI JOIN tbl_b USING (b) LEFT SEMI JOIN tbl_c USING (c)-expected4] PASSED [ 23%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_anti_semi[SELECT * FROM tbl_a RIGHT ANTI JOIN tbl_b USING (b) LEFT SEMI JOIN tbl_c USING (c)-expected5] PASSED [ 24%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_anti_semi[SELECT * FROM tbl_a RIGHT SEMI JOIN tbl_b USING (b) RIGHT SEMI JOIN tbl_c USING (c)-expected6] PASSED [ 25%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_anti_semi[SELECT * FROM tbl_a RIGHT SEMI JOIN tbl_b USING (b) RIGHT ANTI JOIN tbl_c USING (c)-expected7] PASSED [ 26%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_inner[ON foods1.category = foods2.category] PASSED [ 27%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_inner[ON foods2.category = foods1.category] PASSED [ 28%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_inner[USING (category)] PASSED [ 29%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_join_left PASSED          [ 30%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_non_equi_joins[tbl.a != tbl.b] PASSED [ 31%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_non_equi_joins[tbl.a > tbl.b] PASSED [ 32%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_non_equi_joins[a >= b] PASSED [ 34%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_non_equi_joins[a < b] PASSED [ 35%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_non_equi_joins[b <= a] PASSED [ 36%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_stddev_variance PASSED    [ 37%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_is_between PASSED         [ 38%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[~-^veg-vegetables] PASSED [ 39%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[~-^VEG-None] PASSED [ 40%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[~*-^VEG-vegetables] PASSED [ 41%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[!~-(t|s)$-seafood] PASSED [ 42%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[!~*-(T|S)$-seafood] PASSED [ 43%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[!~*-^.E-fruit] PASSED [ 44%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[!~*-[aeiOU]-None] PASSED [ 45%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[RLIKE-^veg-vegetables] PASSED [ 46%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[RLIKE-^VEG-None] PASSED [ 47%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[RLIKE-(?i)^VEG-vegetables] PASSED [ 48%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[NOT RLIKE-(t|s)$-seafood] PASSED [ 50%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[NOT RLIKE-(?i)(T|S)$-seafood] PASSED [ 51%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[NOT RLIKE-(?i)^.E-fruit] PASSED [ 52%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[NOT RLIKE-(?i)[aeiOU]-None] PASSED [ 53%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[REGEXP-^veg-vegetables] PASSED [ 54%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[REGEXP-^VEG-None] PASSED [ 55%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[REGEXP-(?i)^VEG-vegetables] PASSED [ 56%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[NOT REGEXP-(t|s)$-seafood] PASSED [ 57%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[NOT REGEXP-(?i)(T|S)$-seafood] PASSED [ 58%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[NOT REGEXP-(?i)^.E-fruit] PASSED [ 59%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators[NOT REGEXP-(?i)[aeiOU]-None] PASSED [ 60%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_expr_match[RLIKE-expected0] PASSED [ 61%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_expr_match[REGEXP-expected1] PASSED [ 62%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_expr_match[NOT RLIKE-expected2] PASSED [ 63%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_expr_match[NOT REGEXP-expected3] PASSED [ 64%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regex_operators_error PASSED [ 65%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regexp_like[-^veg-None-vegetables] PASSED [ 67%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regexp_like[-^VEG-None-None] PASSED [ 68%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regexp_like[-(?i)^VEG-None-vegetables] PASSED [ 69%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regexp_like[NOT-(t|s)$-None-seafood] PASSED [ 70%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regexp_like[NOT-T|S$-i-seafood] PASSED [ 71%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regexp_like[NOT-^.E-i-fruit] PASSED [ 72%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regexp_like[NOT-[aeiOU]-i-None] PASSED [ 73%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_regexp_like_errors PASSED [ 74%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_round_ndigits[0-expected0] PASSED [ 75%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_round_ndigits[1-expected1] PASSED [ 76%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_round_ndigits[2-expected2] PASSED [ 77%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_round_ndigits[3-expected3] PASSED [ 78%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_round_ndigits[4-expected4] PASSED [ 79%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_round_ndigits_errors PASSED [ 80%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_string_case PASSED        [ 81%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_string_lengths FAILED     [ 82%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_substr PASSED             [ 84%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_trim PASSED               [ 85%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_union[cols10-cols20--expected0] PASSED [ 86%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_union[cols11-cols21-ALL-expected1] PASSED [ 87%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_union[cols12-cols22-DISTINCT-expected2] PASSED [ 88%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_union[cols13-cols23-ALL BY NAME-expected3] PASSED [ 89%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_union[cols14-cols24-BY NAME-expected4] PASSED [ 90%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_union[cols15-cols25-DISTINCT BY NAME-expected5] PASSED [ 91%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_nullif_coalesce PASSED    [ 92%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_order_by PASSED           [ 93%]
+py-polars/tests/unit/sql/test_sql.py::test_register_context PASSED       [ 94%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_expr PASSED               [ 95%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_unary_ops_8890[False] PASSED [ 96%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_unary_ops_8890[True] PASSED [ 97%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_in_no_ops_11946 PASSED    [ 98%]
+py-polars/tests/unit/sql/test_sql.py::test_sql_date PASSED               [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_sql_bin_hex_literals ___________________________
+py-polars/tests/unit/sql/test_sql.py:22: in test_sql_bin_hex_literals
+    with pl.SQLContext(df=None, eager_execution=True) as ctx:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+py-polars/polars/sql/context.py:127: in __init__
+    self.register_many(frames, **named_frames)
+py-polars/polars/sql/context.py:406: in register_many
+    self.register(name, frame)
+py-polars/polars/sql/context.py:311: in register
+    self._ctxt.register(name, frame._ldf)
+                              ^^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute '_ldf'
+___________________________ test_sql_bin_hex_filter ____________________________
+py-polars/tests/unit/sql/test_sql.py:58: in test_sql_bin_hex_filter
+    out = ctx.execute(f"SELECT val FROM test WHERE bin > {two}", eager=True)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+py-polars/polars/sql/context.py:274: in execute
+    res = wrap_ldf(self._ctxt.execute(query))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   polars.exceptions.ComputeError: SQL value SingleQuotedByteStringLiteral("10") is not yet supported
+___________________________ test_sql_bin_hex_errors ____________________________
+py-polars/tests/unit/sql/test_sql.py:63: in test_sql_bin_hex_errors
+    with pl.SQLContext(test=None) as ctx:
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+py-polars/polars/sql/context.py:127: in __init__
+    self.register_many(frames, **named_frames)
+py-polars/polars/sql/context.py:406: in register_many
+    self.register(name, frame)
+py-polars/polars/sql/context.py:311: in register
+    self._ctxt.register(name, frame._ldf)
+                              ^^^^^^^^^^
+E   AttributeError: 'NoneType' object has no attribute '_ldf'
+________________________________ test_sql_cast _________________________________
+py-polars/tests/unit/sql/test_sql.py:110: in test_sql_cast
+    res = ctx.execute(
+py-polars/polars/sql/context.py:274: in execute
+    res = wrap_ldf(self._ctxt.execute(query))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   polars.exceptions.ComputeError: SQL datatype Bytes(None) is not yet supported
+___________________________ test_sql_string_lengths ____________________________
+py-polars/tests/unit/sql/test_sql.py:1017: in test_sql_string_lengths
+    res = ctx.execute(
+py-polars/polars/sql/context.py:274: in execute
+    res = wrap_ldf(self._ctxt.execute(query))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   polars.exceptions.InvalidOperationError: unsupported SQL function: char_length
+=========================== short test summary info ============================
+FAILED py-polars/tests/unit/sql/test_sql.py::test_sql_bin_hex_literals - Attr...
+FAILED py-polars/tests/unit/sql/test_sql.py::test_sql_bin_hex_filter - polars...
+FAILED py-polars/tests/unit/sql/test_sql.py::test_sql_bin_hex_errors - Attrib...
+FAILED py-polars/tests/unit/sql/test_sql.py::test_sql_cast - polars.exception...
+FAILED py-polars/tests/unit/sql/test_sql.py::test_sql_string_lengths - polars...
+========================= 5 failed, 89 passed in 0.81s =========================
+reward=0 graded=94 found=0 failed=0 parsed=89 framework=pytest exit_code=1

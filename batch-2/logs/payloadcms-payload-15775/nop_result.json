@@ -1,0 +1,29 @@
+{
+    "id": "300324ee-9400-4b9f-968c-0de9fb5d0b7e",
+    "started_at": "2026-07-02T19:11:44.114900",
+    "finished_at": "2026-07-02T19:13:01.853190",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "payloadcms-payload-15775__6ywayxy"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

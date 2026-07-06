@@ -1,4 +1,0 @@
-patching file pkg/k8s/client.go
-patching file pkg/k8s/init.go
-patching file pkg/k8s/metrics/metrics.go
-patching file pkg/k8s/watchers/watcher.go

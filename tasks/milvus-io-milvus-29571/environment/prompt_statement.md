@@ -1,5 +1,0 @@
-I'm working on the data node's write buffer and noticed there's no good way to observe how much data is sitting in memory before it gets flushed to storage. The existing metric for tracking buffer data size doesn't seem to be updated correctly — it appears to be computing the size from only the primary key fields rather than the full insert data, so the numbers don't reflect actual memory usage.
-
-I'd like to fix this in two ways. First, the internal method that buffers incoming insert records should return the actual memory size of the data it buffered, so upstream code can use that figure directly instead of recomputing it. Second, the metric that tracks buffered data size per node and per collection should be updated using this accurate memory size. When data is flushed from the buffer, the metric should drop accordingly and reach zero once all data has been synced.
-
-This would give operators real visibility into write buffer memory consumption and make the metric actually useful for monitoring and alerting.

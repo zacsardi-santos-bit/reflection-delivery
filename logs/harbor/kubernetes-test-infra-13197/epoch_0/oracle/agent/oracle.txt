@@ -1,5 +1,0 @@
-patching file prow/cluster/deck_rbac.yaml
-patching file prow/cmd/deck/BUILD.bazel
-patching file prow/cmd/deck/main.go
-patching file prow/cmd/deck/static/prow/prow.ts
-patching file prow/githuboauth/githuboauth.go

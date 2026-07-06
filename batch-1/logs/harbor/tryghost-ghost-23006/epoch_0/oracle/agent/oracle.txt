@@ -1,0 +1,19 @@
+patching file .gitignore
+patching file ghost/core/bin/minify-assets.js
+patching file ghost/core/core/bridge.js
+patching file ghost/core/core/frontend/public/admin-auth/index.html (renamed from ghost/core/core/frontend/src/admin-auth/index.html)
+patching file ghost/core/core/frontend/public/ghost-stats.js
+patching file ghost/core/core/frontend/services/assets-minification/AdminAuthAssets.js
+patching file ghost/core/core/frontend/services/assets-minification/CommentCountsAssets.js
+patching file ghost/core/core/frontend/services/assets-minification/GhostStatsAssets.js
+patching file ghost/core/core/frontend/services/assets-minification/MemberAttributionAssets.js
+patching file ghost/core/core/frontend/services/assets-minification/index.js
+patching file ghost/core/core/frontend/src/comment-counts/comment-counts.js (renamed from ghost/core/core/frontend/src/comment-counts/js/comment-counts.js)
+patching file ghost/core/core/frontend/src/ghost-stats/ghost-stats.js
+patching file ghost/core/core/frontend/src/member-attribution/.eslintrc
+patching file ghost/core/core/frontend/src/member-attribution/member-attribution.js
+patching file ghost/core/core/frontend/web/site.js
+patching file ghost/core/core/server/web/admin/app.js
+patching file ghost/core/core/server/web/admin/middleware/serve-auth-frame-file.js
+patching file ghost/core/core/shared/config/helpers.js
+patching file ghost/core/package.json

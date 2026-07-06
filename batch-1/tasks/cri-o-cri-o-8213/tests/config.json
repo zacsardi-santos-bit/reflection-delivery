@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && CGO_ENABLED=0 go test ./pkg/config/... -count=1 -v -run TestReloadPinnedImagesEmpty",
+  "test_files": [
+    "contrib/test/ci/integration.yml",
+    "contrib/test/ci/vars.yml",
+    "test/reload_config.bats"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cri-o/cri-o/pkg/config::TestReloadPinnedImagesEmpty"
+  ],
+  "PASS_TO_PASS": []
+}

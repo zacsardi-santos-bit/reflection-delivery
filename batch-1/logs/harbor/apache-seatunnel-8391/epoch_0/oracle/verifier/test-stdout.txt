@@ -1,0 +1,1913 @@
+patching file seatunnel-connectors-v2/connector-kafka/src/test/java/org/apache/seatunnel/connectors/seatunnel/kafka/source/KafkaSourceConfigTest.java
+patching file seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroConverterTest.java
+patching file seatunnel-formats/seatunnel-format-avro/src/test/java/org/apache/seatunnel/format/avro/AvroSerializationSchemaTest.java
+patching file seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonDeserializationSchemaDispatcherTest.java
+patching file seatunnel-formats/seatunnel-format-json/src/test/java/org/apache/seatunnel/format/json/debezium/DebeziumJsonSerDeSchemaTest.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.seatunnel:connector-activemq:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.seatunnel:seatunnel-format-json:jar -> duplicate declaration of version ${project.version} @ org.apache.seatunnel:connector-activemq:${revision}, /workspace/repo/seatunnel-connectors-v2/connector-activemq/pom.xml, line 53, column 21
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.seatunnel:connector-kafka-e2e:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: mysql:mysql-connector-java:jar -> duplicate declaration of version (?) @ org.apache.seatunnel:connector-kafka-e2e:${revision}, /workspace/repo/seatunnel-e2e/seatunnel-connector-v2-e2e/connector-kafka-e2e/pom.xml, line 118, column 21
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.seatunnel:seatunnel-dist:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] 'profiles.profile[seatunnel].dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.seatunnel:connector-doris:jar -> duplicate declaration of version ${project.version} @ org.apache.seatunnel:seatunnel-dist:${revision}, /workspace/repo/seatunnel-dist/pom.xml, line 485, column 29
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] It is highly recommended to fix these problems because they threaten the stability of your build.
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] For this reason, future Maven versions might no longer support building such malformed projects.
+[[1;33mWARNING[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Build Order:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] SeaTunnel :                                                        [pom]
+[[1;34mINFO[m] SeaTunnel : Config :                                               [pom]
+[[1;34mINFO[m] SeaTunnel : Config : Base                                          [jar]
+[[1;34mINFO[m] SeaTunnel : Config : Shade                                         [jar]
+[[1;34mINFO[m] SeaTunnel : Shade :                                                [pom]
+[[1;34mINFO[m] SeaTunnel : Shade : Guava                                          [jar]
+[[1;34mINFO[m] SeaTunnel : Shade : Jackson                                        [jar]
+[[1;34mINFO[m] SeaTunnel : Shade : Arrow                                          [jar]
+[[1;34mINFO[m] SeaTunnel : Common                                                 [jar]
+[[1;34mINFO[m] SeaTunnel : Api                                                    [jar]
+[[1;34mINFO[m] SeaTunnel : Connectors V2 :                                        [pom]
+[[1;34mINFO[m] SeaTunnel : Connectors V2 : Common                                 [jar]
+[[1;34mINFO[m] SeaTunnel : Formats :                                              [pom]
+[[1;34mINFO[m] SeaTunnel : Formats : Json                                         [jar]
+[[1;34mINFO[m] SeaTunnel : Formats : Text                                         [jar]
+[[1;34mINFO[m] SeaTunnel : Formats : Compatible Debezium Json                     [jar]
+[[1;34mINFO[m] SeaTunnel : Formats : Compatible Kafka Connect Json                [jar]
+[[1;34mINFO[m] SeaTunnel : Formats : Avro                                         [jar]
+[[1;34mINFO[m] SeaTunnel : Formats : Protobuf                                     [jar]
+[[1;34mINFO[m] SeaTunnel : Connectors V2 : Kafka                                  [jar]
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------------< [0;36morg.apache.seatunnel:seatunnel[0;1m >-------------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : 2.3.9-SNAPSHOT                               [1/20][m
+[[1;34mINFO[m]   from pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel:pom:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] No site descriptor found: nothing to attach.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel/2.3.9-SNAPSHOT/seatunnel-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.seatunnel:seatunnel-config[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Config : 2.3.9-SNAPSHOT                      [2/20][m
+[[1;34mINFO[m]   from seatunnel-config/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-config:pom:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] No site descriptor found: nothing to attach.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-config[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-config/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-config/2.3.9-SNAPSHOT/seatunnel-config-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.seatunnel:seatunnel-config-base[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Config : Base 2.3.9-SNAPSHOT                 [3/20][m
+[[1;34mINFO[m]   from seatunnel-config/seatunnel-config-base/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-config/seatunnel-config-base/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-config-base:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-config/seatunnel-config-base/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-config/seatunnel-config-base/target/seatunnel-config-base-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mshade:3.4.1:shade[m [1m(default)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Including com.typesafe:config:jar:1.3.3 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel_agent:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_hotspot:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_httpserver:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:slf4j-api:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-slf4j-impl:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-core:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:jcl-over-slf4j:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-1.2-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Minimizing jar org.apache.seatunnel:seatunnel-config-base:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT.jar, simpleclient-0.16.0.jar, simpleclient_common-0.16.0.jar, simpleclient_hotspot-0.16.0.jar, simpleclient_httpserver-0.16.0.jar, simpleclient_tracer_common-0.16.0.jar, simpleclient_tracer_otel-0.16.0.jar, simpleclient_tracer_otel_agent-0.16.0.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;34mINFO[m] Minimized 268 -> 178 (66%)
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar, simpleclient_tracer_otel_agent-0.16.0-sources.jar define 3 overlapping resources: 
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_tracer_otel_agent/pom.properties
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_tracer_otel_agent/pom.xml
+[[1;33mWARNING[m]   - io/prometheus/client/exemplars/tracer/otel_agent/OpenTelemetryAgentSpanContextSupplier.java
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar, simpleclient_tracer_common-0.16.0-sources.jar define 3 overlapping resources: 
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_tracer_common/pom.properties
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_tracer_common/pom.xml
+[[1;33mWARNING[m]   - io/prometheus/client/exemplars/tracer/common/SpanContextSupplier.java
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar, simpleclient_common-0.16.0-sources.jar define 3 overlapping resources: 
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_common/pom.properties
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_common/pom.xml
+[[1;33mWARNING[m]   - io/prometheus/client/exporter/common/TextFormat.java
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar, simpleclient_httpserver-0.16.0-sources.jar define 4 overlapping resources: 
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_httpserver/pom.properties
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_httpserver/pom.xml
+[[1;33mWARNING[m]   - io/prometheus/client/exporter/HTTPServer.java
+[[1;33mWARNING[m]   - io/prometheus/client/exporter/SampleNameFilterSupplier.java
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar, simpleclient-0.16.0-sources.jar, simpleclient_common-0.16.0-sources.jar, simpleclient_hotspot-0.16.0-sources.jar, simpleclient_httpserver-0.16.0-sources.jar, simpleclient_tracer_common-0.16.0-sources.jar, simpleclient_tracer_otel-0.16.0-sources.jar, simpleclient_tracer_otel_agent-0.16.0-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar, simpleclient_tracer_otel-0.16.0-sources.jar define 3 overlapping resources: 
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_tracer_otel/pom.properties
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_tracer_otel/pom.xml
+[[1;33mWARNING[m]   - io/prometheus/client/exemplars/tracer/otel/OpenTelemetrySpanContextSupplier.java
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar, simpleclient_hotspot-0.16.0-sources.jar define 11 overlapping resources: 
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_hotspot/pom.properties
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient_hotspot/pom.xml
+[[1;33mWARNING[m]   - io/prometheus/client/hotspot/BufferPoolsExports.java
+[[1;33mWARNING[m]   - io/prometheus/client/hotspot/ClassLoadingExports.java
+[[1;33mWARNING[m]   - io/prometheus/client/hotspot/DefaultExports.java
+[[1;33mWARNING[m]   - io/prometheus/client/hotspot/GarbageCollectorExports.java
+[[1;33mWARNING[m]   - io/prometheus/client/hotspot/MemoryAllocationExports.java
+[[1;33mWARNING[m]   - io/prometheus/client/hotspot/MemoryPoolsExports.java
+[[1;33mWARNING[m]   - io/prometheus/client/hotspot/StandardExports.java
+[[1;33mWARNING[m]   - io/prometheus/client/hotspot/ThreadExports.java
+[[1;33mWARNING[m]   - 1 more...
+[[1;33mWARNING[m] seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar, simpleclient-0.16.0-sources.jar define 30 overlapping resources: 
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient/pom.properties
+[[1;33mWARNING[m]   - META-INF/maven/io.prometheus/simpleclient/pom.xml
+[[1;33mWARNING[m]   - io/prometheus/client/CKMSQuantiles.java
+[[1;33mWARNING[m]   - io/prometheus/client/Collector.java
+[[1;33mWARNING[m]   - io/prometheus/client/CollectorRegistry.java
+[[1;33mWARNING[m]   - io/prometheus/client/Counter.java
+[[1;33mWARNING[m]   - io/prometheus/client/CounterMetricFamily.java
+[[1;33mWARNING[m]   - io/prometheus/client/DoubleAdder.java
+[[1;33mWARNING[m]   - io/prometheus/client/Enumeration.java
+[[1;33mWARNING[m]   - io/prometheus/client/Environment.java
+[[1;33mWARNING[m]   - 20 more...
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;34mINFO[m] Minimized 581 -> 491 (84%)
+[[1;34mINFO[m] Replacing original artifact with shaded artifact.
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-config/seatunnel-config-base/target/seatunnel-config-base-2.3.9-SNAPSHOT.jar with /workspace/repo/seatunnel-config/seatunnel-config-base/target/seatunnel-config-base-2.3.9-SNAPSHOT-shaded.jar
+[[1;34mINFO[m] Replacing original source artifact with shaded source artifact.
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-config/seatunnel-config-base/target/seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar with /workspace/repo/seatunnel-config/seatunnel-config-base/target/seatunnel-config-base-2.3.9-SNAPSHOT-shaded-sources.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper:3.2.0:attach-artifact[m [1m(compile)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-config-base[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-config/seatunnel-config-base/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-config-base/2.3.9-SNAPSHOT/seatunnel-config-base-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-config/seatunnel-config-base/target/seatunnel-config-base-2.3.9-SNAPSHOT.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-config-base/2.3.9-SNAPSHOT/seatunnel-config-base-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-config/seatunnel-config-base/target/seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-config-base/2.3.9-SNAPSHOT/seatunnel-config-base-2.3.9-SNAPSHOT-sources.jar
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-config/seatunnel-config-base/target/seatunnel-config-base-2.3.9-SNAPSHOT.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-config-base/2.3.9-SNAPSHOT/seatunnel-config-base-2.3.9-SNAPSHOT-optional.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------< [0;36morg.apache.seatunnel:seatunnel-config-shade[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Config : Shade 2.3.9-SNAPSHOT                [4/20][m
+[[1;34mINFO[m]   from seatunnel-config/seatunnel-config-shade/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-config/seatunnel-config-shade/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-config-shade:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 9 source files to /workspace/repo/seatunnel-config/seatunnel-config-shade/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Copying 5 resources from src/test/resources to target/test-classes
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 6 source files to /workspace/repo/seatunnel-config/seatunnel-config-shade/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-config/seatunnel-config-shade/target/seatunnel-config-shade-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper:3.2.0:attach-artifact[m [1m(compile)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-config-shade[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-config/seatunnel-config-shade/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-config-shade/2.3.9-SNAPSHOT/seatunnel-config-shade-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-config/seatunnel-config-shade/target/seatunnel-config-shade-2.3.9-SNAPSHOT.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-config-shade/2.3.9-SNAPSHOT/seatunnel-config-shade-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-config/seatunnel-config-shade/target/seatunnel-config-shade-2.3.9-SNAPSHOT.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-config-shade/2.3.9-SNAPSHOT/seatunnel-config-shade-2.3.9-SNAPSHOT-optional.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.seatunnel:seatunnel-shade[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Shade : 2.3.9-SNAPSHOT                       [5/20][m
+[[1;34mINFO[m]   from seatunnel-shade/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-shade:pom:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] No site descriptor found: nothing to attach.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mshade:3.4.1:shade[m [1m(default)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] Including io.prometheus:simpleclient:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel_agent:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_hotspot:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_httpserver:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:slf4j-api:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-slf4j-impl:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-core:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:jcl-over-slf4j:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-1.2-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Dependency-reduced POM written at: /workspace/repo/seatunnel-shade/dependency-reduced-pom.xml
+[[1;33mWARNING[m] simpleclient-0.16.0.jar, simpleclient_common-0.16.0.jar, simpleclient_hotspot-0.16.0.jar, simpleclient_httpserver-0.16.0.jar, simpleclient_tracer_common-0.16.0.jar, simpleclient_tracer_otel-0.16.0.jar, simpleclient_tracer_otel_agent-0.16.0.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;34mINFO[m] Replacing original artifact with shaded artifact.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-shade[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-shade/2.3.9-SNAPSHOT/seatunnel-shade-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.seatunnel:seatunnel-guava[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Shade : Guava 2.3.9-SNAPSHOT                 [6/20][m
+[[1;34mINFO[m]   from seatunnel-shade/seatunnel-guava/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-shade/seatunnel-guava/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-guava:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-shade/seatunnel-guava/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-shade/seatunnel-guava/target/seatunnel-guava-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mshade:3.4.1:shade[m [1m(default)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Including com.google.guava:guava:jar:27.0-jre in the shaded jar.
+[[1;34mINFO[m] Including com.google.guava:failureaccess:jar:1.0 in the shaded jar.
+[[1;34mINFO[m] Including com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava in the shaded jar.
+[[1;33mWARNING[m] Could not get sources for com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[[1;34mINFO[m] Including com.google.code.findbugs:jsr305:jar:3.0.2 in the shaded jar.
+[[1;34mINFO[m] Including org.checkerframework:checker-qual:jar:3.10.0 in the shaded jar.
+[[1;34mINFO[m] Including com.google.errorprone:error_prone_annotations:jar:2.2.0 in the shaded jar.
+[[1;34mINFO[m] Including com.google.j2objc:j2objc-annotations:jar:1.1 in the shaded jar.
+[[1;34mINFO[m] Including org.codehaus.mojo:animal-sniffer-annotations:jar:1.17 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel_agent:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_hotspot:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_httpserver:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:slf4j-api:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-slf4j-impl:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-core:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:jcl-over-slf4j:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-1.2-api:jar:2.17.1 from the shaded jar.
+[[1;33mWARNING[m] Could not get sources for com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile
+[[1;33mWARNING[m] Could not get sources for org.apache.seatunnel:seatunnel-guava:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] failureaccess-1.0.jar, guava-27.0-jre.jar define 2 overlapping classes: 
+[[1;33mWARNING[m]   - com.google.common.util.concurrent.internal.InternalFutureFailureAccess
+[[1;33mWARNING[m]   - com.google.common.util.concurrent.internal.InternalFutures
+[[1;33mWARNING[m] animal-sniffer-annotations-1.17.jar, checker-qual-3.10.0.jar, error_prone_annotations-2.2.0.jar, failureaccess-1.0.jar, guava-27.0-jre.jar, j2objc-annotations-1.1.jar, jsr305-3.0.2.jar, listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar, seatunnel-guava-2.3.9-SNAPSHOT-2.12.15.jar, simpleclient-0.16.0.jar, simpleclient_common-0.16.0.jar, simpleclient_hotspot-0.16.0.jar, simpleclient_httpserver-0.16.0.jar, simpleclient_tracer_common-0.16.0.jar, simpleclient_tracer_otel-0.16.0.jar, simpleclient_tracer_otel_agent-0.16.0.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;33mWARNING[m] animal-sniffer-annotations-1.17-sources.jar, checker-qual-3.10.0-sources.jar, error_prone_annotations-2.2.0-sources.jar, failureaccess-1.0-sources.jar, guava-27.0-jre-sources.jar, j2objc-annotations-1.1-sources.jar, jsr305-3.0.2-sources.jar, simpleclient-0.16.0-sources.jar, simpleclient_common-0.16.0-sources.jar, simpleclient_hotspot-0.16.0-sources.jar, simpleclient_httpserver-0.16.0-sources.jar, simpleclient_tracer_common-0.16.0-sources.jar, simpleclient_tracer_otel-0.16.0-sources.jar, simpleclient_tracer_otel_agent-0.16.0-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-shade/seatunnel-guava/target/seatunnel-guava.jar with /workspace/repo/seatunnel-shade/seatunnel-guava/target/seatunnel-guava-2.3.9-SNAPSHOT-shaded.jar
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-shade/seatunnel-guava/target/seatunnel-guava-sources.jar with /workspace/repo/seatunnel-shade/seatunnel-guava/target/seatunnel-guava-2.3.9-SNAPSHOT-shaded-sources.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper:3.2.0:attach-artifact[m [1m(attach-artifacts)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-guava[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-guava/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-guava/2.3.9-SNAPSHOT/seatunnel-guava-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-guava/target/seatunnel-guava-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-guava/2.3.9-SNAPSHOT/seatunnel-guava-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-guava/target/seatunnel-guava.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-guava/2.3.9-SNAPSHOT/seatunnel-guava-2.3.9-SNAPSHOT-optional.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.seatunnel:seatunnel-jackson[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Shade : Jackson 2.3.9-SNAPSHOT               [7/20][m
+[[1;34mINFO[m]   from seatunnel-shade/seatunnel-jackson/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-shade/seatunnel-jackson/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-jackson:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-shade/seatunnel-jackson/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-shade/seatunnel-jackson/target/seatunnel-jackson-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mshade:3.4.1:shade[m [1m(default)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Including com.fasterxml.jackson.dataformat:jackson-dataformat-properties:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-annotations:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-core:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-databind:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel_agent:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_hotspot:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_httpserver:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:slf4j-api:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-slf4j-impl:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-core:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:jcl-over-slf4j:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-1.2-api:jar:2.17.1 from the shaded jar.
+[[1;33mWARNING[m] Could not get sources for org.apache.seatunnel:seatunnel-jackson:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] Discovered module-info.class. Shading will break its strong encapsulation.
+[[1;33mWARNING[m] jackson-annotations-2.13.3.jar, jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, jackson-dataformat-properties-2.13.3.jar, jackson-datatype-jsr310-2.13.3.jar, seatunnel-jackson-2.3.9-SNAPSHOT-2.12.15.jar, simpleclient-0.16.0.jar, simpleclient_common-0.16.0.jar, simpleclient_hotspot-0.16.0.jar, simpleclient_httpserver-0.16.0.jar, simpleclient_tracer_common-0.16.0.jar, simpleclient_tracer_otel-0.16.0.jar, simpleclient_tracer_otel_agent-0.16.0.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] jackson-annotations-2.13.3.jar, jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, jackson-dataformat-properties-2.13.3.jar, jackson-datatype-jsr310-2.13.3.jar, seatunnel-jackson-2.3.9-SNAPSHOT-2.12.15.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/LICENSE
+[[1;33mWARNING[m] jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, jackson-dataformat-properties-2.13.3.jar, seatunnel-jackson-2.3.9-SNAPSHOT-2.12.15.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/NOTICE
+[[1;33mWARNING[m] jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, jackson-dataformat-properties-2.13.3.jar, jackson-datatype-jsr310-2.13.3.jar define 1 overlapping classes: 
+[[1;33mWARNING[m]   - META-INF.versions.9.module-info
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;33mWARNING[m] jackson-annotations-2.13.3-sources.jar, jackson-core-2.13.3-sources.jar, jackson-databind-2.13.3-sources.jar, jackson-dataformat-properties-2.13.3-sources.jar, jackson-datatype-jsr310-2.13.3-sources.jar, simpleclient-0.16.0-sources.jar, simpleclient_common-0.16.0-sources.jar, simpleclient_hotspot-0.16.0-sources.jar, simpleclient_httpserver-0.16.0-sources.jar, simpleclient_tracer_common-0.16.0-sources.jar, simpleclient_tracer_otel-0.16.0-sources.jar, simpleclient_tracer_otel_agent-0.16.0-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] jackson-core-2.13.3-sources.jar, jackson-databind-2.13.3-sources.jar, jackson-dataformat-properties-2.13.3-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/NOTICE
+[[1;33mWARNING[m] jackson-annotations-2.13.3-sources.jar, jackson-core-2.13.3-sources.jar, jackson-databind-2.13.3-sources.jar, jackson-dataformat-properties-2.13.3-sources.jar, jackson-datatype-jsr310-2.13.3-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/LICENSE
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-shade/seatunnel-jackson/target/seatunnel-jackson.jar with /workspace/repo/seatunnel-shade/seatunnel-jackson/target/seatunnel-jackson-2.3.9-SNAPSHOT-shaded.jar
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-shade/seatunnel-jackson/target/seatunnel-jackson-sources.jar with /workspace/repo/seatunnel-shade/seatunnel-jackson/target/seatunnel-jackson-2.3.9-SNAPSHOT-shaded-sources.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper:3.2.0:attach-artifact[m [1m(attach-artifacts)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-jackson[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-jackson/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-jackson/2.3.9-SNAPSHOT/seatunnel-jackson-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-jackson/target/seatunnel-jackson-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-jackson/2.3.9-SNAPSHOT/seatunnel-jackson-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-jackson/target/seatunnel-jackson.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-jackson/2.3.9-SNAPSHOT/seatunnel-jackson-2.3.9-SNAPSHOT-optional.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.seatunnel:seatunnel-arrow[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Shade : Arrow 2.3.9-SNAPSHOT                 [8/20][m
+[[1;34mINFO[m]   from seatunnel-shade/seatunnel-arrow/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-shade/seatunnel-arrow/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-arrow:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-shade/seatunnel-arrow/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-shade/seatunnel-arrow/target/seatunnel-arrow-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mshade:3.4.1:shade[m [1m(default)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Including org.apache.arrow:arrow-vector:jar:15.0.1 in the shaded jar.
+[[1;34mINFO[m] Including org.apache.arrow:arrow-format:jar:15.0.1 in the shaded jar.
+[[1;34mINFO[m] Including org.apache.arrow:arrow-memory-core:jar:15.0.1 in the shaded jar.
+[[1;34mINFO[m] Including com.google.code.findbugs:jsr305:jar:3.0.2 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-core:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-annotations:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-databind:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including commons-codec:commons-codec:jar:1.13 in the shaded jar.
+[[1;34mINFO[m] Including com.google.flatbuffers:flatbuffers-java:jar:23.5.26 in the shaded jar.
+[[1;34mINFO[m] Including org.eclipse.collections:eclipse-collections:jar:11.1.0 in the shaded jar.
+[[1;34mINFO[m] Including org.eclipse.collections:eclipse-collections-api:jar:11.1.0 in the shaded jar.
+[[1;34mINFO[m] Including org.apache.arrow:arrow-memory-netty:jar:15.0.1 in the shaded jar.
+[[1;34mINFO[m] Including io.netty:netty-buffer:jar:4.1.104.Final in the shaded jar.
+[[1;34mINFO[m] Including io.netty:netty-common:jar:4.1.104.Final in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel_agent:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_hotspot:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_httpserver:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:slf4j-api:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-slf4j-impl:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-core:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:jcl-over-slf4j:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-1.2-api:jar:2.17.1 from the shaded jar.
+[[1;33mWARNING[m] Could not get sources for org.apache.seatunnel:seatunnel-arrow:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] Discovered module-info.class. Shading will break its strong encapsulation.
+[[1;33mWARNING[m] arrow-format-15.0.1.jar, arrow-memory-core-15.0.1.jar, arrow-memory-netty-15.0.1.jar, arrow-vector-15.0.1.jar, jackson-annotations-2.13.3.jar, jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, jackson-datatype-jsr310-2.13.3.jar, seatunnel-arrow-2.3.9-SNAPSHOT-2.12.15.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/LICENSE
+[[1;33mWARNING[m] eclipse-collections-11.1.0.jar, eclipse-collections-api-11.1.0.jar define 3 overlapping resources: 
+[[1;33mWARNING[m]   - LICENSE-EDL-1.0.txt
+[[1;33mWARNING[m]   - LICENSE-EPL-1.0.txt
+[[1;33mWARNING[m]   - about.html
+[[1;33mWARNING[m] arrow-format-15.0.1.jar, arrow-memory-core-15.0.1.jar, arrow-memory-netty-15.0.1.jar, arrow-vector-15.0.1.jar, seatunnel-arrow-2.3.9-SNAPSHOT-2.12.15.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/DEPENDENCIES
+[[1;33mWARNING[m] netty-buffer-4.1.104.Final.jar, netty-common-4.1.104.Final.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/io.netty.versions.properties
+[[1;33mWARNING[m] arrow-format-15.0.1.jar, arrow-memory-core-15.0.1.jar, arrow-memory-netty-15.0.1.jar, arrow-vector-15.0.1.jar, jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, seatunnel-arrow-2.3.9-SNAPSHOT-2.12.15.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/NOTICE
+[[1;33mWARNING[m] arrow-format-15.0.1.jar, arrow-memory-core-15.0.1.jar, arrow-memory-netty-15.0.1.jar, arrow-vector-15.0.1.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - arrow-git.properties
+[[1;33mWARNING[m] arrow-format-15.0.1.jar, arrow-memory-core-15.0.1.jar, arrow-memory-netty-15.0.1.jar, arrow-vector-15.0.1.jar, commons-codec-1.13.jar, eclipse-collections-11.1.0.jar, eclipse-collections-api-11.1.0.jar, flatbuffers-java-23.5.26.jar, jackson-annotations-2.13.3.jar, jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, jackson-datatype-jsr310-2.13.3.jar, jsr305-3.0.2.jar, netty-buffer-4.1.104.Final.jar, netty-common-4.1.104.Final.jar, seatunnel-arrow-2.3.9-SNAPSHOT-2.12.15.jar, simpleclient-0.16.0.jar, simpleclient_common-0.16.0.jar, simpleclient_hotspot-0.16.0.jar, simpleclient_httpserver-0.16.0.jar, simpleclient_tracer_common-0.16.0.jar, simpleclient_tracer_otel-0.16.0.jar, simpleclient_tracer_otel_agent-0.16.0.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, jackson-datatype-jsr310-2.13.3.jar define 1 overlapping classes: 
+[[1;33mWARNING[m]   - META-INF.versions.9.module-info
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;33mWARNING[m] arrow-format-15.0.1-sources.jar, arrow-memory-core-15.0.1-sources.jar, arrow-memory-netty-15.0.1-sources.jar, arrow-vector-15.0.1-sources.jar, commons-codec-1.13-sources.jar, eclipse-collections-11.1.0-sources.jar, eclipse-collections-api-11.1.0-sources.jar, flatbuffers-java-23.5.26-sources.jar, jackson-annotations-2.13.3-sources.jar, jackson-core-2.13.3-sources.jar, jackson-databind-2.13.3-sources.jar, jackson-datatype-jsr310-2.13.3-sources.jar, jsr305-3.0.2-sources.jar, netty-buffer-4.1.104.Final-sources.jar, netty-common-4.1.104.Final-sources.jar, simpleclient-0.16.0-sources.jar, simpleclient_common-0.16.0-sources.jar, simpleclient_hotspot-0.16.0-sources.jar, simpleclient_httpserver-0.16.0-sources.jar, simpleclient_tracer_common-0.16.0-sources.jar, simpleclient_tracer_otel-0.16.0-sources.jar, simpleclient_tracer_otel_agent-0.16.0-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] arrow-format-15.0.1-sources.jar, arrow-memory-core-15.0.1-sources.jar, arrow-memory-netty-15.0.1-sources.jar, arrow-vector-15.0.1-sources.jar, jackson-core-2.13.3-sources.jar, jackson-databind-2.13.3-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/NOTICE
+[[1;33mWARNING[m] eclipse-collections-11.1.0-sources.jar, eclipse-collections-api-11.1.0-sources.jar define 3 overlapping resources: 
+[[1;33mWARNING[m]   - LICENSE-EDL-1.0.txt
+[[1;33mWARNING[m]   - LICENSE-EPL-1.0.txt
+[[1;33mWARNING[m]   - about.html
+[[1;33mWARNING[m] arrow-format-15.0.1-sources.jar, arrow-memory-core-15.0.1-sources.jar, arrow-memory-netty-15.0.1-sources.jar, arrow-vector-15.0.1-sources.jar, jackson-annotations-2.13.3-sources.jar, jackson-core-2.13.3-sources.jar, jackson-databind-2.13.3-sources.jar, jackson-datatype-jsr310-2.13.3-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/LICENSE
+[[1;33mWARNING[m] arrow-format-15.0.1-sources.jar, arrow-memory-core-15.0.1-sources.jar, arrow-memory-netty-15.0.1-sources.jar, arrow-vector-15.0.1-sources.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/DEPENDENCIES
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-shade/seatunnel-arrow/target/seatunnel-arrow.jar with /workspace/repo/seatunnel-shade/seatunnel-arrow/target/seatunnel-arrow-2.3.9-SNAPSHOT-shaded.jar
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-shade/seatunnel-arrow/target/seatunnel-arrow-sources.jar with /workspace/repo/seatunnel-shade/seatunnel-arrow/target/seatunnel-arrow-2.3.9-SNAPSHOT-shaded-sources.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper:3.2.0:attach-artifact[m [1m(attach-artifacts)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-arrow[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-arrow/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-arrow/2.3.9-SNAPSHOT/seatunnel-arrow-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-arrow/target/seatunnel-arrow-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-arrow/2.3.9-SNAPSHOT/seatunnel-arrow-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-shade/seatunnel-arrow/target/seatunnel-arrow.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-arrow/2.3.9-SNAPSHOT/seatunnel-arrow-2.3.9-SNAPSHOT-optional.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.seatunnel:seatunnel-common[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Common 2.3.9-SNAPSHOT                        [9/20][m
+[[1;34mINFO[m]   from seatunnel-common/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-common/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-common:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 41 source files to /workspace/repo/seatunnel-common/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-common/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 16 source files to /workspace/repo/seatunnel-common/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-common/target/seatunnel-common-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-common[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-common/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-common/2.3.9-SNAPSHOT/seatunnel-common-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-common/target/seatunnel-common-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-common/2.3.9-SNAPSHOT/seatunnel-common-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------< [0;36morg.apache.seatunnel:seatunnel-api[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Api 2.3.9-SNAPSHOT                          [10/20][m
+[[1;34mINFO[m]   from seatunnel-api/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-api/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-api:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 218 source files to /workspace/repo/seatunnel-api/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Copying 9 resources from src/test/resources to target/test-classes
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 25 source files to /workspace/repo/seatunnel-api/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-api/target/seatunnel-api-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-api[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-api/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-api/2.3.9-SNAPSHOT/seatunnel-api-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-api/target/seatunnel-api-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-api/2.3.9-SNAPSHOT/seatunnel-api-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------< [0;36morg.apache.seatunnel:seatunnel-connectors-v2[0;1m >------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Connectors V2 : 2.3.9-SNAPSHOT              [11/20][m
+[[1;34mINFO[m]   from seatunnel-connectors-v2/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-connectors-v2:pom:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] No site descriptor found: nothing to attach.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mshade:3.4.1:shade[m [1m(default)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] Including io.prometheus:simpleclient:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel_agent:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_hotspot:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_httpserver:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:slf4j-api:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-slf4j-impl:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-core:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:jcl-over-slf4j:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-1.2-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Dependency-reduced POM written at: /workspace/repo/seatunnel-connectors-v2/dependency-reduced-pom.xml
+[[1;33mWARNING[m] simpleclient-0.16.0.jar, simpleclient_common-0.16.0.jar, simpleclient_hotspot-0.16.0.jar, simpleclient_httpserver-0.16.0.jar, simpleclient_tracer_common-0.16.0.jar, simpleclient_tracer_otel-0.16.0.jar, simpleclient_tracer_otel_agent-0.16.0.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;34mINFO[m] Replacing original artifact with shaded artifact.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-connectors-v2[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-connectors-v2/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-connectors-v2/2.3.9-SNAPSHOT/seatunnel-connectors-v2-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.seatunnel:connector-common[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Connectors V2 : Common 2.3.9-SNAPSHOT       [12/20][m
+[[1;34mINFO[m]   from seatunnel-connectors-v2/connector-common/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Copying 1 resource from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:connector-common:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 39 source files to /workspace/repo/seatunnel-connectors-v2/connector-common/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-connectors-v2/connector-common/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 2 source files to /workspace/repo/seatunnel-connectors-v2/connector-common/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-connectors-v2/connector-common/target/connector-common-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mshade:3.4.1:shade[m [1m(default)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Shading has been skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mconnector-common[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-connectors-v2/connector-common/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/connector-common/2.3.9-SNAPSHOT/connector-common-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-connectors-v2/connector-common/target/connector-common-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/connector-common/2.3.9-SNAPSHOT/connector-common-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.seatunnel:seatunnel-formats[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : 2.3.9-SNAPSHOT                    [13/20][m
+[[1;34mINFO[m]   from seatunnel-formats/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-formats:pom:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] No site descriptor found: nothing to attach.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-formats[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-formats/2.3.9-SNAPSHOT/seatunnel-formats-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.seatunnel:seatunnel-format-json[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : Json 2.3.9-SNAPSHOT               [14/20][m
+[[1;34mINFO[m]   from seatunnel-formats/seatunnel-format-json/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-json/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-format-json:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 21 source files to /workspace/repo/seatunnel-formats/seatunnel-format-json/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Copying 8 resources from src/test/resources to target/test-classes
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 6 source files to /workspace/repo/seatunnel-formats/seatunnel-format-json/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-formats/seatunnel-format-json/target/seatunnel-format-json-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-json/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-json/2.3.9-SNAPSHOT/seatunnel-format-json-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-json/target/seatunnel-format-json-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-json/2.3.9-SNAPSHOT/seatunnel-format-json-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.seatunnel:seatunnel-format-text[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : Text 2.3.9-SNAPSHOT               [15/20][m
+[[1;34mINFO[m]   from seatunnel-formats/seatunnel-format-text/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-text/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-format-text:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 7 source files to /workspace/repo/seatunnel-formats/seatunnel-format-text/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-text/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 2 source files to /workspace/repo/seatunnel-formats/seatunnel-format-text/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-formats/seatunnel-format-text/target/seatunnel-format-text-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-format-text[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-text/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-text/2.3.9-SNAPSHOT/seatunnel-format-text-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-text/target/seatunnel-format-text-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-text/2.3.9-SNAPSHOT/seatunnel-format-text-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---< [0;36morg.apache.seatunnel:seatunnel-format-compatible-debezium-json[0;1m >---[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : Compatible Debezium Json 2.3.9-SNAPSHOT [16/20][m
+[[1;34mINFO[m]   from seatunnel-formats/seatunnel-format-compatible-debezium-json/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-compatible-debezium-json/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-format-compatible-debezium-json:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/seatunnel-formats/seatunnel-format-compatible-debezium-json/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-compatible-debezium-json/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 2 source files to /workspace/repo/seatunnel-formats/seatunnel-format-compatible-debezium-json/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-formats/seatunnel-format-compatible-debezium-json/target/seatunnel-format-compatible-debezium-json-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-format-compatible-debezium-json[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-compatible-debezium-json/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-compatible-debezium-json/2.3.9-SNAPSHOT/seatunnel-format-compatible-debezium-json-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-compatible-debezium-json/target/seatunnel-format-compatible-debezium-json-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-compatible-debezium-json/2.3.9-SNAPSHOT/seatunnel-format-compatible-debezium-json-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---< [0;36morg.apache.seatunnel:seatunnel-format-compatible-connect-json[0;1m >----[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : Compatible Kafka Connect Json 2.3.9-SNAPSHOT [17/20][m
+[[1;34mINFO[m]   from seatunnel-formats/seatunnel-format-compatible-connect-json/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-compatible-connect-json/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-format-compatible-connect-json:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 2 source files to /workspace/repo/seatunnel-formats/seatunnel-format-compatible-connect-json/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-compatible-connect-json/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-formats/seatunnel-format-compatible-connect-json/target/seatunnel-format-compatible-connect-json-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-format-compatible-connect-json[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-compatible-connect-json/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-compatible-connect-json/2.3.9-SNAPSHOT/seatunnel-format-compatible-connect-json-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-compatible-connect-json/target/seatunnel-format-compatible-connect-json-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-compatible-connect-json/2.3.9-SNAPSHOT/seatunnel-format-compatible-connect-json-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.seatunnel:seatunnel-format-avro[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : Avro 2.3.9-SNAPSHOT               [18/20][m
+[[1;34mINFO[m]   from seatunnel-formats/seatunnel-format-avro/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-avro/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-format-avro:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 7 source files to /workspace/repo/seatunnel-formats/seatunnel-format-avro/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-avro/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 2 source files to /workspace/repo/seatunnel-formats/seatunnel-format-avro/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-formats/seatunnel-format-avro/target/seatunnel-format-avro-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-avro/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-avro/2.3.9-SNAPSHOT/seatunnel-format-avro-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-avro/target/seatunnel-format-avro-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-avro/2.3.9-SNAPSHOT/seatunnel-format-avro-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------< [0;36morg.apache.seatunnel:seatunnel-format-protobuf[0;1m >-----------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : Protobuf 2.3.9-SNAPSHOT           [19/20][m
+[[1;34mINFO[m]   from seatunnel-formats/seatunnel-format-protobuf/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-protobuf/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-format-protobuf:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 7 source files to /workspace/repo/seatunnel-formats/seatunnel-format-protobuf/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-protobuf/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 1 source file to /workspace/repo/seatunnel-formats/seatunnel-format-protobuf/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-formats/seatunnel-format-protobuf/target/seatunnel-format-protobuf-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mseatunnel-format-protobuf[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-protobuf/.flattened-pom.xml to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-protobuf/2.3.9-SNAPSHOT/seatunnel-format-protobuf-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-formats/seatunnel-format-protobuf/target/seatunnel-format-protobuf-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/seatunnel-format-protobuf/2.3.9-SNAPSHOT/seatunnel-format-protobuf-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.seatunnel:connector-kafka[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Connectors V2 : Kafka 2.3.9-SNAPSHOT        [20/20][m
+[[1;34mINFO[m]   from seatunnel-connectors-v2/connector-kafka/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Spotless check skipped
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-connectors-v2/connector-kafka/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:connector-kafka:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 33 source files to /workspace/repo/seatunnel-connectors-v2/connector-kafka/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-connectors-v2/connector-kafka/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 5 source files to /workspace/repo/seatunnel-connectors-v2/connector-kafka/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjar:3.3.0:jar[m [1m(default-jar)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Building jar: /workspace/repo/seatunnel-connectors-v2/connector-kafka/target/connector-kafka-2.3.9-SNAPSHOT-2.12.15.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msite:3.12.1:attach-descriptor[m [1m(attach-descriptor)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Skipping because packaging 'jar' is not pom.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mshade:3.4.1:shade[m [1m(default)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Including org.apache.seatunnel:connector-common:jar:2.3.9-SNAPSHOT in the shaded jar.
+[[1;34mINFO[m] Including org.apache.kafka:kafka-clients:jar:3.2.0 in the shaded jar.
+[[1;34mINFO[m] Including com.github.luben:zstd-jni:jar:1.5.2-1 in the shaded jar.
+[[1;34mINFO[m] Including org.lz4:lz4-java:jar:1.8.0 in the shaded jar.
+[[1;34mINFO[m] Including org.xerial.snappy:snappy-java:jar:1.1.8.3 in the shaded jar.
+[[1;34mINFO[m] Including org.apache.seatunnel:seatunnel-format-json:jar:2.3.9-SNAPSHOT in the shaded jar.
+[[1;34mINFO[m] Including org.apache.seatunnel:seatunnel-format-text:jar:2.3.9-SNAPSHOT in the shaded jar.
+[[1;34mINFO[m] Including org.apache.seatunnel:seatunnel-format-compatible-debezium-json:jar:2.3.9-SNAPSHOT in the shaded jar.
+[[1;34mINFO[m] Including org.apache.seatunnel:seatunnel-format-compatible-connect-json:jar:2.3.9-SNAPSHOT in the shaded jar.
+[[1;34mINFO[m] Including org.apache.kafka:connect-json:jar:3.2.0 in the shaded jar.
+[[1;34mINFO[m] Including org.apache.kafka:connect-api:jar:3.2.0 in the shaded jar.
+[[1;34mINFO[m] Including javax.ws.rs:javax.ws.rs-api:jar:2.1.1 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-databind:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-annotations:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.core:jackson-core:jar:2.13.3 in the shaded jar.
+[[1;34mINFO[m] Including com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.12.6 in the shaded jar.
+[[1;34mINFO[m] Including org.apache.seatunnel:seatunnel-format-avro:jar:2.3.9-SNAPSHOT in the shaded jar.
+[[1;34mINFO[m] Including org.apache.avro:avro:jar:1.11.1 in the shaded jar.
+[[1;34mINFO[m] Including org.apache.commons:commons-compress:jar:1.20 in the shaded jar.
+[[1;34mINFO[m] Including org.apache.seatunnel:seatunnel-format-protobuf:jar:2.3.9-SNAPSHOT in the shaded jar.
+[[1;34mINFO[m] Including com.google.protobuf:protobuf-java:jar:3.25.3 in the shaded jar.
+[[1;34mINFO[m] Including com.google.protobuf:protobuf-java-util:jar:3.25.3 in the shaded jar.
+[[1;34mINFO[m] Including com.google.code.findbugs:jsr305:jar:3.0.2 in the shaded jar.
+[[1;34mINFO[m] Including com.google.code.gson:gson:jar:2.8.9 in the shaded jar.
+[[1;34mINFO[m] Including com.google.errorprone:error_prone_annotations:jar:2.18.0 in the shaded jar.
+[[1;34mINFO[m] Including com.google.j2objc:j2objc-annotations:jar:2.8 in the shaded jar.
+[[1;34mINFO[m] Including com.github.os72:protoc-jar:jar:3.11.4 in the shaded jar.
+[[1;34mINFO[m] Including com.google.guava:guava:jar:27.0-jre in the shaded jar.
+[[1;34mINFO[m] Including com.google.guava:failureaccess:jar:1.0 in the shaded jar.
+[[1;34mINFO[m] Including com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava in the shaded jar.
+[[1;34mINFO[m] Including org.checkerframework:checker-qual:jar:3.10.0 in the shaded jar.
+[[1;34mINFO[m] Including org.codehaus.mojo:animal-sniffer-annotations:jar:1.17 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_tracer_otel_agent:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_hotspot:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_httpserver:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Including io.prometheus:simpleclient_common:jar:0.16.0 in the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:slf4j-api:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-slf4j-impl:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-core:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Excluding org.slf4j:jcl-over-slf4j:jar:1.7.25 from the shaded jar.
+[[1;34mINFO[m] Excluding org.apache.logging.log4j:log4j-1.2-api:jar:2.17.1 from the shaded jar.
+[[1;34mINFO[m] Dependency-reduced POM written at: /workspace/repo/seatunnel-connectors-v2/connector-kafka/dependency-reduced-pom.xml
+[[1;33mWARNING[m] Discovered module-info.class. Shading will break its strong encapsulation.
+[[1;33mWARNING[m] Discovered module-info.class. Shading will break its strong encapsulation.
+[[1;33mWARNING[m] Discovered module-info.class. Shading will break its strong encapsulation.
+[[1;33mWARNING[m] Discovered module-info.class. Shading will break its strong encapsulation.
+[[1;33mWARNING[m] jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar define 1 overlapping classes: 
+[[1;33mWARNING[m]   - META-INF.versions.9.module-info
+[[1;33mWARNING[m] avro-1.11.1.jar, connector-common-2.3.9-SNAPSHOT-2.12.15.jar, connector-kafka-2.3.9-SNAPSHOT-2.12.15.jar, jackson-annotations-2.13.3.jar, jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, seatunnel-format-avro-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-compatible-connect-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-compatible-debezium-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-protobuf-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-text-2.3.9-SNAPSHOT-2.12.15.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/LICENSE
+[[1;33mWARNING[m] animal-sniffer-annotations-1.17.jar, avro-1.11.1.jar, checker-qual-3.10.0.jar, commons-compress-1.20.jar, connect-api-3.2.0.jar, connect-json-3.2.0.jar, connector-common-2.3.9-SNAPSHOT-2.12.15.jar, connector-kafka-2.3.9-SNAPSHOT-2.12.15.jar, error_prone_annotations-2.18.0.jar, failureaccess-1.0.jar, gson-2.8.9.jar, guava-27.0-jre.jar, j2objc-annotations-2.8.jar, jackson-annotations-2.13.3.jar, jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, jackson-datatype-jdk8-2.12.6.jar, javax.ws.rs-api-2.1.1.jar, jsr305-3.0.2.jar, kafka-clients-3.2.0.jar, listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar, lz4-java-1.8.0.jar, protobuf-java-3.25.3.jar, protobuf-java-util-3.25.3.jar, protoc-jar-3.11.4.jar, seatunnel-format-avro-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-compatible-connect-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-compatible-debezium-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-protobuf-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-text-2.3.9-SNAPSHOT-2.12.15.jar, simpleclient-0.16.0.jar, simpleclient_common-0.16.0.jar, simpleclient_hotspot-0.16.0.jar, simpleclient_httpserver-0.16.0.jar, simpleclient_tracer_common-0.16.0.jar, simpleclient_tracer_otel-0.16.0.jar, simpleclient_tracer_otel_agent-0.16.0.jar, snappy-java-1.1.8.3.jar, zstd-jni-1.5.2-1.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/MANIFEST.MF
+[[1;33mWARNING[m] connect-api-3.2.0.jar, connect-json-3.2.0.jar, kafka-clients-3.2.0.jar define 2 overlapping resources: 
+[[1;33mWARNING[m]   - LICENSE
+[[1;33mWARNING[m]   - NOTICE
+[[1;33mWARNING[m] avro-1.11.1.jar, connector-common-2.3.9-SNAPSHOT-2.12.15.jar, connector-kafka-2.3.9-SNAPSHOT-2.12.15.jar, jackson-core-2.13.3.jar, jackson-databind-2.13.3.jar, seatunnel-format-avro-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-compatible-connect-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-compatible-debezium-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-protobuf-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-text-2.3.9-SNAPSHOT-2.12.15.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/NOTICE
+[[1;33mWARNING[m] failureaccess-1.0.jar, guava-27.0-jre.jar define 2 overlapping classes: 
+[[1;33mWARNING[m]   - com.google.common.util.concurrent.internal.InternalFutureFailureAccess
+[[1;33mWARNING[m]   - com.google.common.util.concurrent.internal.InternalFutures
+[[1;33mWARNING[m] checker-qual-3.10.0.jar, commons-compress-1.20.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/LICENSE.txt
+[[1;33mWARNING[m] avro-1.11.1.jar, connector-common-2.3.9-SNAPSHOT-2.12.15.jar, connector-kafka-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-avro-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-compatible-connect-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-compatible-debezium-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-json-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-protobuf-2.3.9-SNAPSHOT-2.12.15.jar, seatunnel-format-text-2.3.9-SNAPSHOT-2.12.15.jar define 1 overlapping resource: 
+[[1;33mWARNING[m]   - META-INF/DEPENDENCIES
+[[1;33mWARNING[m] maven-shade-plugin has detected that some class files are
+[[1;33mWARNING[m] present in two or more JARs. When this happens, only one
+[[1;33mWARNING[m] single version of the class is copied to the uber jar.
+[[1;33mWARNING[m] Usually this is not harmful and you can skip these warnings,
+[[1;33mWARNING[m] otherwise try to manually exclude artifacts based on
+[[1;33mWARNING[m] mvn dependency:tree -Ddetail=true and the above output.
+[[1;33mWARNING[m] See https://maven.apache.org/plugins/maven-shade-plugin/
+[[1;34mINFO[m] Replacing original artifact with shaded artifact.
+[[1;34mINFO[m] Replacing /workspace/repo/seatunnel-connectors-v2/connector-kafka/target/connector-kafka-2.3.9-SNAPSHOT-2.12.15.jar with /workspace/repo/seatunnel-connectors-v2/connector-kafka/target/connector-kafka-2.3.9-SNAPSHOT-shaded.jar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:integration-test[m [1m(default)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfailsafe:2.22.2:verify[m [1m(default)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Tests are skipped.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32minstall:3.1.1:install[m [1m(default-install)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-connectors-v2/connector-kafka/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/seatunnel/connector-kafka/2.3.9-SNAPSHOT/connector-kafka-2.3.9-SNAPSHOT.pom
+[[1;34mINFO[m] Installing /workspace/repo/seatunnel-connectors-v2/connector-kafka/target/connector-kafka-2.3.9-SNAPSHOT-2.12.15.jar to /root/.m2/repository/org/apache/seatunnel/connector-kafka/2.3.9-SNAPSHOT/connector-kafka-2.3.9-SNAPSHOT.jar
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Summary for SeaTunnel : 2.3.9-SNAPSHOT:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] SeaTunnel : ........................................ [1;32mSUCCESS[m [  2.207 s]
+[[1;34mINFO[m] SeaTunnel : Config : ............................... [1;32mSUCCESS[m [  0.096 s]
+[[1;34mINFO[m] SeaTunnel : Config : Base .......................... [1;32mSUCCESS[m [  1.389 s]
+[[1;34mINFO[m] SeaTunnel : Config : Shade ......................... [1;32mSUCCESS[m [  1.896 s]
+[[1;34mINFO[m] SeaTunnel : Shade : ................................ [1;32mSUCCESS[m [  0.143 s]
+[[1;34mINFO[m] SeaTunnel : Shade : Guava .......................... [1;32mSUCCESS[m [  1.747 s]
+[[1;34mINFO[m] SeaTunnel : Shade : Jackson ........................ [1;32mSUCCESS[m [  1.725 s]
+[[1;34mINFO[m] SeaTunnel : Shade : Arrow .......................... [1;32mSUCCESS[m [ 11.613 s]
+[[1;34mINFO[m] SeaTunnel : Common ................................. [1;32mSUCCESS[m [  1.909 s]
+[[1;34mINFO[m] SeaTunnel : Api .................................... [1;32mSUCCESS[m [  3.725 s]
+[[1;34mINFO[m] SeaTunnel : Connectors V2 : ........................ [1;32mSUCCESS[m [  0.112 s]
+[[1;34mINFO[m] SeaTunnel : Connectors V2 : Common ................. [1;32mSUCCESS[m [  1.313 s]
+[[1;34mINFO[m] SeaTunnel : Formats : .............................. [1;32mSUCCESS[m [  0.064 s]
+[[1;34mINFO[m] SeaTunnel : Formats : Json ......................... [1;32mSUCCESS[m [  1.344 s]
+[[1;34mINFO[m] SeaTunnel : Formats : Text ......................... [1;32mSUCCESS[m [  1.044 s]
+[[1;34mINFO[m] SeaTunnel : Formats : Compatible Debezium Json ..... [1;32mSUCCESS[m [  1.130 s]
+[[1;34mINFO[m] SeaTunnel : Formats : Compatible Kafka Connect Json  [1;32mSUCCESS[m [  0.616 s]
+[[1;34mINFO[m] SeaTunnel : Formats : Avro ......................... [1;32mSUCCESS[m [  0.877 s]
+[[1;34mINFO[m] SeaTunnel : Formats : Protobuf ..................... [1;32mSUCCESS[m [  0.995 s]
+[[1;34mINFO[m] SeaTunnel : Connectors V2 : Kafka .................. [1;32mSUCCESS[m [  6.185 s]
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  41.293 s
+[[1;34mINFO[m] Finished at: 2026-06-29T15:27:20Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Scanning for projects...
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.seatunnel:connector-activemq:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.seatunnel:seatunnel-format-json:jar -> duplicate declaration of version ${project.version} @ org.apache.seatunnel:connector-activemq:${revision}, /workspace/repo/seatunnel-connectors-v2/connector-activemq/pom.xml, line 53, column 21
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.seatunnel:connector-kafka-e2e:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: mysql:mysql-connector-java:jar -> duplicate declaration of version (?) @ org.apache.seatunnel:connector-kafka-e2e:${revision}, /workspace/repo/seatunnel-e2e/seatunnel-connector-v2-e2e/connector-kafka-e2e/pom.xml, line 118, column 21
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] Some problems were encountered while building the effective model for org.apache.seatunnel:seatunnel-dist:jar:2.3.9-SNAPSHOT
+[[1;33mWARNING[m] 'profiles.profile[seatunnel].dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.seatunnel:connector-doris:jar -> duplicate declaration of version ${project.version} @ org.apache.seatunnel:seatunnel-dist:${revision}, /workspace/repo/seatunnel-dist/pom.xml, line 485, column 29
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] It is highly recommended to fix these problems because they threaten the stability of your build.
+[[1;33mWARNING[m] 
+[[1;33mWARNING[m] For this reason, future Maven versions might no longer support building such malformed projects.
+[[1;33mWARNING[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Build Order:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] SeaTunnel : Formats : Json                                         [jar]
+[[1;34mINFO[m] SeaTunnel : Formats : Avro                                         [jar]
+[[1;34mINFO[m] SeaTunnel : Connectors V2 : Kafka                                  [jar]
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.seatunnel:seatunnel-format-json[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : Json 2.3.9-SNAPSHOT                 [1/3][m
+[[1;34mINFO[m]   from pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Up-to-date checking enabled
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-json/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-format-json:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 21 source files to /workspace/repo/seatunnel-formats/seatunnel-format-json/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Copying 8 resources from src/test/resources to target/test-classes
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 6 source files to /workspace/repo/seatunnel-formats/seatunnel-format-json/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-format-json[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.seatunnel.format.json.debezium.[1mDebeziumJsonSerDeSchemaTest[m
+ERROR StatusLogger Could not determine local host name
+ java.net.UnknownHostException: modal: modal: Temporary failure in name resolution
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1670)
+	at org.apache.logging.log4j.core.util.NetUtils.getLocalHostname(NetUtils.java:54)
+	at org.apache.logging.log4j.core.LoggerContext.lambda$setConfiguration$0(LoggerContext.java:620)
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1705)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:620)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:699)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:716)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:270)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:155)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:47)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:196)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getContext(AbstractLoggerAdapter.java:137)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getContext(Log4jLoggerFactory.java:55)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getLogger(AbstractLoggerAdapter.java:47)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getLogger(Log4jLoggerFactory.java:33)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:358)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:383)
+	at org.apache.seatunnel.api.table.catalog.CatalogTableUtil.<clinit>(CatalogTableUtil.java:49)
+	at org.apache.seatunnel.format.json.debezium.DebeziumJsonSerDeSchemaTest.<clinit>(DebeziumJsonSerDeSchemaTest.java:71)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:490)
+	at org.junit.platform.commons.util.ReflectionUtils.newInstance(ReflectionUtils.java:552)
+	at org.junit.jupiter.engine.execution.ConstructorInvocation.proceed(ConstructorInvocation.java:56)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.api.extension.InvocationInterceptor.interceptTestClassConstructor(InvocationInterceptor.java:73)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:62)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestClassConstructor(ClassBasedTestDescriptor.java:363)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateTestClass(ClassBasedTestDescriptor.java:310)
+	at org.junit.jupiter.engine.descriptor.ClassTestDescriptor.instantiateTestClass(ClassTestDescriptor.java:79)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:286)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:278)
+	at java.base/java.util.Optional.orElseGet(Optional.java:369)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:277)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:31)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:105)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:104)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:123)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:90)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:220)
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:188)
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:202)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:181)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:128)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:150)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:124)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418)
+Caused by: java.net.UnknownHostException: modal: Temporary failure in name resolution
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:930)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:848)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1665)
+	... 83 more
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m10[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.552 s - in org.apache.seatunnel.format.json.debezium.[1mDebeziumJsonSerDeSchemaTest[m
+[[1;34mINFO[m] Running org.apache.seatunnel.format.json.debezium.[1mDebeziumJsonDeserializationSchemaDispatcherTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m3[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s - in org.apache.seatunnel.format.json.debezium.[1mDebeziumJsonDeserializationSchemaDispatcherTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 13, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.seatunnel:seatunnel-format-avro[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Formats : Avro 2.3.9-SNAPSHOT                 [2/3][m
+[[1;34mINFO[m]   from /workspace/repo/seatunnel-formats/seatunnel-format-avro/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Up-to-date checking enabled
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-avro/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:seatunnel-format-avro:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-formats/seatunnel-format-avro/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mseatunnel-format-avro[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.seatunnel.format.avro.[1mAvroConverterTest[m
+ERROR StatusLogger Could not determine local host name
+ java.net.UnknownHostException: modal: modal: Temporary failure in name resolution
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1670)
+	at org.apache.logging.log4j.core.util.NetUtils.getLocalHostname(NetUtils.java:54)
+	at org.apache.logging.log4j.core.LoggerContext.lambda$setConfiguration$0(LoggerContext.java:620)
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1705)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:620)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:699)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:716)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:270)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:155)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:47)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:196)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getContext(AbstractLoggerAdapter.java:137)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getContext(Log4jLoggerFactory.java:55)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getLogger(AbstractLoggerAdapter.java:47)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getLogger(Log4jLoggerFactory.java:33)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:358)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:383)
+	at org.apache.avro.Schema.<clinit>(Schema.java:114)
+	at org.apache.seatunnel.format.avro.SeaTunnelRowTypeToAvroSchemaConverter.seaTunnelDataType2AvroDataType(SeaTunnelRowTypeToAvroSchemaConverter.java:86)
+	at org.apache.seatunnel.format.avro.SeaTunnelRowTypeToAvroSchemaConverter.generateField(SeaTunnelRowTypeToAvroSchemaConverter.java:51)
+	at org.apache.seatunnel.format.avro.SeaTunnelRowTypeToAvroSchemaConverter.buildAvroSchemaWithRowType(SeaTunnelRowTypeToAvroSchemaConverter.java:42)
+	at org.apache.seatunnel.format.avro.RowToAvroConverter.<init>(RowToAvroConverter.java:53)
+	at org.apache.seatunnel.format.avro.AvroConverterTest.testConverter(AvroConverterTest.java:169)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:217)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:220)
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:188)
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:202)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:181)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:128)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:150)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:124)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418)
+Caused by: java.net.UnknownHostException: modal: Temporary failure in name resolution
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:930)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:848)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1665)
+	... 87 more
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.494 s - in org.apache.seatunnel.format.avro.[1mAvroConverterTest[m
+[[1;34mINFO[m] Running org.apache.seatunnel.format.avro.[1mAvroSerializationSchemaTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m2[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 s - in org.apache.seatunnel.format.avro.[1mAvroSerializationSchemaTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 3, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.seatunnel:connector-kafka[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding SeaTunnel : Connectors V2 : Kafka 2.3.9-SNAPSHOT          [3/3][m
+[[1;34mINFO[m]   from /workspace/repo/seatunnel-connectors-v2/connector-kafka/pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-maven-version)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32menforcer:3.4.1:enforce[m [1m(enforce-java-version)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspotless:2.29.0:check[m [1m(spotless-check)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Up-to-date checking enabled
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mremote-resources:3.1.0:process[m [1m(process-resource-bundles)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:resources[m [1m(default-resources)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-connectors-v2/connector-kafka/src/main/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mflatten:1.3.0:flatten[m [1m(flatten)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Generating flattened POM of project org.apache.seatunnel:connector-kafka:jar:2.3.9-SNAPSHOT...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:compile[m [1m(default-compile)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 33 source files to /workspace/repo/seatunnel-connectors-v2/connector-kafka/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.3.1:testResources[m [1m(default-testResources)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/seatunnel-connectors-v2/connector-kafka/src/test/resources
+[[1;34mINFO[m] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.10.1:testCompile[m [1m(default-testCompile)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 5 source files to /workspace/repo/seatunnel-connectors-v2/connector-kafka/target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32msurefire:2.22.2:test[m [1m(default-test)[m @ [36mconnector-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.seatunnel.connectors.seatunnel.kafka.source.[1mKafkaSourceConfigTest[m
+ERROR StatusLogger Could not determine local host name
+ java.net.UnknownHostException: modal: modal: Temporary failure in name resolution
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1670)
+	at org.apache.logging.log4j.core.util.NetUtils.getLocalHostname(NetUtils.java:54)
+	at org.apache.logging.log4j.core.LoggerContext.lambda$setConfiguration$0(LoggerContext.java:620)
+	at java.base/java.util.concurrent.ConcurrentHashMap.computeIfAbsent(ConcurrentHashMap.java:1705)
+	at org.apache.logging.log4j.core.LoggerContext.setConfiguration(LoggerContext.java:620)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:699)
+	at org.apache.logging.log4j.core.LoggerContext.reconfigure(LoggerContext.java:716)
+	at org.apache.logging.log4j.core.LoggerContext.start(LoggerContext.java:270)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:155)
+	at org.apache.logging.log4j.core.impl.Log4jContextFactory.getContext(Log4jContextFactory.java:47)
+	at org.apache.logging.log4j.LogManager.getContext(LogManager.java:196)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getContext(AbstractLoggerAdapter.java:137)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getContext(Log4jLoggerFactory.java:55)
+	at org.apache.logging.log4j.spi.AbstractLoggerAdapter.getLogger(AbstractLoggerAdapter.java:47)
+	at org.apache.logging.slf4j.Log4jLoggerFactory.getLogger(Log4jLoggerFactory.java:33)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:358)
+	at org.slf4j.LoggerFactory.getLogger(LoggerFactory.java:383)
+	at org.apache.seatunnel.api.configuration.ReadonlyConfig.<clinit>(ReadonlyConfig.java:38)
+	at org.apache.seatunnel.connectors.seatunnel.kafka.source.KafkaSourceConfigTest.testDebeziumJsonDeserializationSchemaDispatcher(KafkaSourceConfigTest.java:63)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:727)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:217)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:220)
+	at org.junit.platform.launcher.core.DefaultLauncher.lambda$execute$6(DefaultLauncher.java:188)
+	at org.junit.platform.launcher.core.DefaultLauncher.withInterceptedStreams(DefaultLauncher.java:202)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:181)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:128)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:150)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:124)
+	at org.apache.maven.surefire.booter.ForkedBooter.invokeProviderInSameClassLoader(ForkedBooter.java:384)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:345)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:126)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:418)
+Caused by: java.net.UnknownHostException: modal: Temporary failure in name resolution
+	at java.base/java.net.Inet6AddressImpl.lookupAllHostAddr(Native Method)
+	at java.base/java.net.InetAddress$PlatformNameService.lookupAllHostAddr(InetAddress.java:930)
+	at java.base/java.net.InetAddress.getAddressesFromNameService(InetAddress.java:1543)
+	at java.base/java.net.InetAddress$NameServiceAddresses.get(InetAddress.java:848)
+	at java.base/java.net.InetAddress.getAllByName0(InetAddress.java:1533)
+	at java.base/java.net.InetAddress.getLocalHost(InetAddress.java:1665)
+	... 83 more
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m1[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.672 s - in org.apache.seatunnel.connectors.seatunnel.kafka.source.[1mKafkaSourceConfigTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 1, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Summary for SeaTunnel : Formats : Json 2.3.9-SNAPSHOT:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] SeaTunnel : Formats : Json ......................... [1;32mSUCCESS[m [  6.336 s]
+[[1;34mINFO[m] SeaTunnel : Formats : Avro ......................... [1;32mSUCCESS[m [  1.738 s]
+[[1;34mINFO[m] SeaTunnel : Connectors V2 : Kafka .................. [1;32mSUCCESS[m [  3.608 s]
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  12.541 s
+[[1;34mINFO[m] Finished at: 2026-06-29T15:27:34Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+reward=1 graded=13 found=13 failed=0 parsed=13 framework=maven exit_code=0

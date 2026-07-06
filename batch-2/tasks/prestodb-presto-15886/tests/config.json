@@ -1,0 +1,31 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl presto-main -am install -DskipTests -Dair.check.skip-all -Dmaven.javadoc.skip=true -B -q && mvn -pl presto-main test -Dtest=TestFileBasedSystemAccessControl -Dair.check.skip-all -Dmaven.javadoc.skip=true -B",
+  "test_files": [
+    "presto-main/src/test/java/com/facebook/presto/security/TestFileBasedSystemAccessControl.java",
+    "presto-main/src/test/resources/file-based-system-access-schema.json",
+    "presto-main/src/test/resources/security-config-file-with-unknown-rules.json"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "presto-main::test_1",
+    "presto-main::test_2",
+    "presto-main::test_3",
+    "presto-main::test_4",
+    "presto-main::test_5",
+    "presto-main::test_6",
+    "presto-main::test_7",
+    "presto-main::test_8",
+    "presto-main::test_9",
+    "presto-main::test_10",
+    "presto-main::test_11",
+    "presto-main::test_12",
+    "presto-main::test_13",
+    "presto-main::test_14",
+    "presto-main::test_15",
+    "presto-main::test_16",
+    "presto-main::test_17"
+  ],
+  "PASS_TO_PASS": []
+}

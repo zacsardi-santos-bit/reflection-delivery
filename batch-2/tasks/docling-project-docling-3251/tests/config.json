@@ -1,0 +1,18 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_backend_markdown.py -v",
+  "test_files": [
+    "tests/data/groundtruth/docling_v2/signature_stamp_01.md.json",
+    "tests/data/groundtruth/docling_v2/signature_stamp_01.md.md",
+    "tests/data/md/signature_stamp_01.md",
+    "tests/test_backend_markdown.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_backend_markdown::test_convert_valid"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_backend_markdown::test_e2e_md_conversions"
+  ]
+}

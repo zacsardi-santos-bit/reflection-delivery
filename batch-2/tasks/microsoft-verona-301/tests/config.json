@@ -1,0 +1,15 @@
+{
+  "test_framework": "ctest",
+  "test_command": "cd /workspace/repo/src/rt && mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release -DVERONA_CI_BUILD=ON && make -j$(nproc) func-con-cown_weak_ref func-con-memory && mkdir -p /workspace/test-results && ctest -R \"func-con-cown_weak_ref|func-con-memory\"",
+  "test_files": [
+    "src/rt/test/func/cown_weak_ref/cown_weak_ref.cc",
+    "src/rt/test/func/memory/memory.cc"
+  ],
+  "num_test_files": 2,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "func-con-cown_weak_ref::func-con-cown_weak_ref",
+    "func-con-memory::func-con-memory"
+  ],
+  "PASS_TO_PASS": []
+}

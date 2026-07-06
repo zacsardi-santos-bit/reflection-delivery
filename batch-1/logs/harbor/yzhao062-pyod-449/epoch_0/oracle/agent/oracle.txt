@@ -1,0 +1,12 @@
+patching file CHANGES.txt
+patching file README.rst
+patching file docs/index.rst
+patching file docs/pyod.models.rst
+patching file docs/zreferences.bib
+patching file examples/ALL.png
+patching file examples/compare_all_models.py
+patching file examples/kpca_example.py
+patching file pyod/models/auto_encoder_torch.py
+patching file pyod/models/knn.py
+patching file pyod/models/kpca.py
+patching file pyod/version.py

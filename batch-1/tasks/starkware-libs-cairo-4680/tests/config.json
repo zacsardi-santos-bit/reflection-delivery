@@ -1,0 +1,51 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p cairo-lang-lowering --no-fail-fast",
+  "test_files": [
+    "crates/cairo-lang-lowering/src/lower/generated_test.rs",
+    "crates/cairo-lang-lowering/src/lower/usage_test.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "cairo-lang-lowering lower::generated_test::generated::while_"
+  ],
+  "PASS_TO_PASS": [
+    "cairo-lang-lowering optimizations::match_optimizer::test::match_optimizer::arm_pattern_destructure",
+    "cairo-lang-lowering lower::usage::test::usage::usage",
+    "cairo-lang-lowering optimizations::const_folding::test::match_optimizer::const_folding",
+    "cairo-lang-lowering optimizations::branch_inversion::test::branch_inversion::branch_inversion",
+    "cairo-lang-lowering test::lowering::assignment",
+    "cairo-lang-lowering test::lowering::arm_pattern_destructure",
+    "cairo-lang-lowering test::lowering::constant",
+    "cairo-lang-lowering test::lowering::enums",
+    "cairo-lang-lowering inline::test::inlining::inline_diagnostics",
+    "cairo-lang-lowering test::lowering::error_propagate",
+    "cairo-lang-lowering test::lowering::extern_",
+    "cairo-lang-lowering test::lowering::call",
+    "cairo-lang-lowering optimizations::reorder_statements::test::reorder_statements::reorder_statements",
+    "cairo-lang-lowering optimizations::match_optimizer::test::match_optimizer::option",
+    "cairo-lang-lowering test::lowering::generics",
+    "cairo-lang-lowering test::lowering::destruct",
+    "cairo-lang-lowering borrow_check::test::borrow_check::borrow_check",
+    "cairo-lang-lowering inline::test::inlining::inline",
+    "cairo-lang-lowering lower::generated_test::generated::loop_",
+    "cairo-lang-lowering test::lowering::logical_operator",
+    "cairo-lang-lowering test::lowering::loop_",
+    "cairo-lang-lowering test::lowering::rebindings",
+    "cairo-lang-lowering test::lowering::if_",
+    "cairo-lang-lowering test::lowering::literal",
+    "cairo-lang-lowering test::lowering::members",
+    "cairo-lang-lowering test::lowering::struct_",
+    "cairo-lang-lowering test::lowering_phases::tests",
+    "cairo-lang-lowering test::lowering::tuple",
+    "cairo-lang-lowering test::lowering::panic",
+    "cairo-lang-lowering test::lowering::implicits",
+    "cairo-lang-lowering test::lowering::while_",
+    "cairo-lang-lowering test::test_diagnostics",
+    "cairo-lang-lowering test::lowering::snapshot",
+    "cairo-lang-lowering test::lowering::match_",
+    "cairo-lang-lowering test::lowering::tests",
+    "cairo-lang-lowering test::lowering::strings"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/superset-frontend && npx jest --watchAll=false plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/buildQuery.test.ts plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/transformProps.test.ts plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts src/explore/components/controls/ViewQuery.test.tsx",
+  "test_files": [
+    "superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/buildQuery.test.ts",
+    "superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/transformProps.test.ts",
+    "superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts",
+    "superset-frontend/src/explore/components/controls/ViewQuery.test.tsx"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/buildQuery.test.ts::BigNumberWithTrendline buildQuery returns single query for aggregation methods that can be computed client-side",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/buildQuery.test.ts::BigNumberWithTrendline buildQuery returns single query for LAST_VALUE aggregation",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/buildQuery.test.ts::BigNumberWithTrendline buildQuery returns two queries only for raw aggregation",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline transformProps() should fallback and format time",
+    "/workspace/repo/superset-frontend/src/explore/components/controls/ViewQuery.test.tsx::renders the component with Formatted SQL and buttons",
+    "/workspace/repo/superset-frontend/src/explore/components/controls/ViewQuery.test.tsx::shows the original SQL when Format switch is unchecked",
+    "/workspace/repo/superset-frontend/src/explore/components/controls/ViewQuery.test.tsx::toggles back to formatted SQL when Format switch is clicked"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/transformProps.test.ts::BigNumberWithTrendline transformProps should return null bigNumber when no data is provided",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/transformProps.test.ts::BigNumberWithTrendline transformProps should calculate subheader as percent change with suffix",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/transformProps.test.ts::BigNumberWithTrendline transformProps should compute bigNumber from parseMetricValue",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/transformProps.test.ts::BigNumberWithTrendline transformProps should use formatTime as headerFormatter for Temporal/String or forced",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/transformProps.test.ts::BigNumberWithTrendline transformProps should use numberFormatter when not Temporal/String and not forced",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/transformProps.test.ts::BigNumberWithTrendline transformProps should use last data point for comparison when big number comes from aggregated data",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/src/BigNumber/BigNumberWithTrendline/buildQuery.test.ts::BigNumberWithTrendline buildQuery creates raw metric query when aggregation is \"raw\"",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline transformProps() should respect datasource d3 format",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline transformProps() should format with datasource currency",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline - Aggregation Tests should correctly calculate SUM",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline - Aggregation Tests should correctly calculate AVG",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline - Aggregation Tests should correctly calculate MIN",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline - Aggregation Tests should correctly calculate MAX",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline - Aggregation Tests should correctly calculate MEDIAN (odd count)",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline - Aggregation Tests should correctly calculate MEDIAN (even count)",
+    "/workspace/repo/superset-frontend/plugins/plugin-chart-echarts/test/BigNumber/transformProps.test.ts::BigNumberWithTrendline - Aggregation Tests should return the LAST_VALUE correctly",
+    "/workspace/repo/superset-frontend/src/explore/components/controls/ViewQuery.test.tsx::copies the SQL to the clipboard when Copy button is clicked",
+    "/workspace/repo/superset-frontend/src/explore/components/controls/ViewQuery.test.tsx::navigates to SQL Lab when View in SQL Lab button is clicked",
+    "/workspace/repo/superset-frontend/src/explore/components/controls/ViewQuery.test.tsx::opens SQL Lab in a new tab when View in SQL Lab button is clicked with meta key",
+    "/workspace/repo/superset-frontend/src/explore/components/controls/ViewQuery.test.tsx::hides View in SQL Lab button when user does not have SQL Lab access"
+  ]
+}

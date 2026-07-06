@@ -1,0 +1,84 @@
+patching file internal/cmd/gocdk/apply_test.go
+patching file internal/cmd/gocdk/main_test.go
+{"Time":"2026-06-29T15:17:12.106152546Z","Action":"start","Package":"gocloud.dev/internal/cmd/gocdk"}
+{"Time":"2026-06-29T15:17:12.115905133Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestApply"}
+{"Time":"2026-06-29T15:17:12.116033556Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestApply","Output":"=== RUN   TestApply\n"}
+{"Time":"2026-06-29T15:17:12.11701039Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestApply","Output":"    apply_test.go:39: terraform not found: exec: \"terraform\": executable file not found in $PATH\n"}
+{"Time":"2026-06-29T15:17:12.117450311Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestApply","Output":"--- SKIP: TestApply (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.117516523Z","Action":"skip","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestApply","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.117546483Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile"}
+{"Time":"2026-06-29T15:17:12.117562104Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile","Output":"=== RUN   TestParseImageNameFromDockerfile\n"}
+{"Time":"2026-06-29T15:17:12.117595934Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/Empty"}
+{"Time":"2026-06-29T15:17:12.117611405Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/Empty","Output":"=== RUN   TestParseImageNameFromDockerfile/Empty\n"}
+{"Time":"2026-06-29T15:17:12.117657576Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/Empty","Output":"--- PASS: TestParseImageNameFromDockerfile/Empty (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.117683547Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/Empty","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.117715408Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/NoComment"}
+{"Time":"2026-06-29T15:17:12.117726638Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/NoComment","Output":"=== RUN   TestParseImageNameFromDockerfile/NoComment\n"}
+{"Time":"2026-06-29T15:17:12.117745868Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/NoComment","Output":"--- PASS: TestParseImageNameFromDockerfile/NoComment (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.117765849Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/NoComment","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.117785029Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentAtStart"}
+{"Time":"2026-06-29T15:17:12.11779473Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentAtStart","Output":"=== RUN   TestParseImageNameFromDockerfile/CommentAtStart\n"}
+{"Time":"2026-06-29T15:17:12.11781583Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentAtStart","Output":"--- PASS: TestParseImageNameFromDockerfile/CommentAtStart (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.11782603Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentAtStart","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.117857981Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentNoEOL"}
+{"Time":"2026-06-29T15:17:12.117870591Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentNoEOL","Output":"=== RUN   TestParseImageNameFromDockerfile/CommentNoEOL\n"}
+{"Time":"2026-06-29T15:17:12.117888362Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentNoEOL","Output":"--- PASS: TestParseImageNameFromDockerfile/CommentNoEOL (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.117947983Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentNoEOL","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.117975294Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentLastLine"}
+{"Time":"2026-06-29T15:17:12.117987044Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentLastLine","Output":"=== RUN   TestParseImageNameFromDockerfile/CommentLastLine\n"}
+{"Time":"2026-06-29T15:17:12.118021505Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentLastLine","Output":"--- PASS: TestParseImageNameFromDockerfile/CommentLastLine (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118034455Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile/CommentLastLine","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118046685Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile","Output":"--- PASS: TestParseImageNameFromDockerfile (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118060616Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestParseImageNameFromDockerfile","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118072016Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet"}
+{"Time":"2026-06-29T15:17:12.118196839Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet","Output":"=== RUN   TestFlagSet\n"}
+{"Time":"2026-06-29T15:17:12.11823457Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/EmptyArgs"}
+{"Time":"2026-06-29T15:17:12.11824625Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/EmptyArgs","Output":"=== RUN   TestFlagSet/EmptyArgs\n"}
+{"Time":"2026-06-29T15:17:12.118270191Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/EmptyArgs","Output":"--- PASS: TestFlagSet/EmptyArgs (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118281741Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/EmptyArgs","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118306262Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/BadFlag"}
+{"Time":"2026-06-29T15:17:12.118321982Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/BadFlag","Output":"=== RUN   TestFlagSet/BadFlag\n"}
+{"Time":"2026-06-29T15:17:12.118344073Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/BadFlag","Output":"--- PASS: TestFlagSet/BadFlag (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118360773Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/BadFlag","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118373453Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/Help"}
+{"Time":"2026-06-29T15:17:12.118383454Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/Help","Output":"=== RUN   TestFlagSet/Help\n"}
+{"Time":"2026-06-29T15:17:12.118431015Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/Help","Output":"--- PASS: TestFlagSet/Help (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118465316Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet/Help","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118489276Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet","Output":"--- PASS: TestFlagSet (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118508907Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFlagSet","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118521937Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef"}
+{"Time":"2026-06-29T15:17:12.118534648Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef","Output":"=== RUN   TestUsagef\n"}
+{"Time":"2026-06-29T15:17:12.118563858Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/StringOnly"}
+{"Time":"2026-06-29T15:17:12.118580649Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/StringOnly","Output":"=== RUN   TestUsagef/StringOnly\n"}
+{"Time":"2026-06-29T15:17:12.118596829Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/StringOnly","Output":"--- PASS: TestUsagef/StringOnly (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118613249Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/StringOnly","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.11863355Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/Wrap"}
+{"Time":"2026-06-29T15:17:12.118654931Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/Wrap","Output":"=== RUN   TestUsagef/Wrap\n"}
+{"Time":"2026-06-29T15:17:12.118667801Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/Wrap","Output":"--- PASS: TestUsagef/Wrap (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118687551Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/Wrap","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118697892Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/Opaque"}
+{"Time":"2026-06-29T15:17:12.118728592Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/Opaque","Output":"=== RUN   TestUsagef/Opaque\n"}
+{"Time":"2026-06-29T15:17:12.118749743Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/Opaque","Output":"--- PASS: TestUsagef/Opaque (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118765663Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef/Opaque","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118776623Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef","Output":"--- PASS: TestUsagef (0.00s)\n"}
+{"Time":"2026-06-29T15:17:12.118814354Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestUsagef","Elapsed":0}
+{"Time":"2026-06-29T15:17:12.118836015Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot"}
+{"Time":"2026-06-29T15:17:12.118846165Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot","Output":"=== RUN   TestFindModuleRoot\n"}
+{"Time":"2026-06-29T15:17:12.118856415Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/SameDirAsModule"}
+{"Time":"2026-06-29T15:17:12.118867685Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/SameDirAsModule","Output":"=== RUN   TestFindModuleRoot/SameDirAsModule\n"}
+{"Time":"2026-06-29T15:17:12.126734017Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/SameDirAsModule","Output":"--- PASS: TestFindModuleRoot/SameDirAsModule (0.01s)\n"}
+{"Time":"2026-06-29T15:17:12.128038229Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/SameDirAsModule","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:12.128092001Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/NoModFile"}
+{"Time":"2026-06-29T15:17:12.128108261Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/NoModFile","Output":"=== RUN   TestFindModuleRoot/NoModFile\n"}
+{"Time":"2026-06-29T15:17:12.134694351Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/NoModFile","Output":"--- PASS: TestFindModuleRoot/NoModFile (0.01s)\n"}
+{"Time":"2026-06-29T15:17:12.134748083Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/NoModFile","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:12.134772724Z","Action":"run","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/ParentDirectory"}
+{"Time":"2026-06-29T15:17:12.134792744Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/ParentDirectory","Output":"=== RUN   TestFindModuleRoot/ParentDirectory\n"}
+{"Time":"2026-06-29T15:17:12.143726892Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/ParentDirectory","Output":"--- PASS: TestFindModuleRoot/ParentDirectory (0.01s)\n"}
+{"Time":"2026-06-29T15:17:12.143807494Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot/ParentDirectory","Elapsed":0.01}
+{"Time":"2026-06-29T15:17:12.143851185Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot","Output":"--- PASS: TestFindModuleRoot (0.03s)\n"}
+{"Time":"2026-06-29T15:17:12.143891176Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Test":"TestFindModuleRoot","Elapsed":0.03}
+{"Time":"2026-06-29T15:17:12.143904676Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Output":"PASS\n"}
+{"Time":"2026-06-29T15:17:12.144251255Z","Action":"output","Package":"gocloud.dev/internal/cmd/gocdk","Output":"ok  \tgocloud.dev/internal/cmd/gocdk\t0.038s\n"}
+{"Time":"2026-06-29T15:17:12.144287536Z","Action":"pass","Package":"gocloud.dev/internal/cmd/gocdk","Elapsed":0.038}
+reward=1 graded=18 found=18 failed=0 parsed=19 framework=go exit_code=0

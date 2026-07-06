@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/ops/nn_test.py -v -k \"ctc\"",
+  "test_files": [
+    "keras/src/ops/nn_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.ops.nn_test.NNOpsDynamicShapeTest::test_ctc_decode",
+    "keras.src.ops.nn_test.NNOpsStaticShapeTest::test_ctc_decode",
+    "keras.src.ops.nn_test.NNOpsCorrectnessTest::test_ctc_decode",
+    "keras.src.ops.nn_test.NNOpsCorrectnessTest::test_ctc_loss",
+    "keras.src.ops.nn_test.NNOpsDtypeTest::test_ctc_decode_bfloat16",
+    "keras.src.ops.nn_test.NNOpsDtypeTest::test_ctc_decode_float16",
+    "keras.src.ops.nn_test.NNOpsDtypeTest::test_ctc_decode_float32",
+    "keras.src.ops.nn_test.NNOpsDtypeTest::test_ctc_decode_float64",
+    "keras.src.ops.nn_test.NNOpsDtypeTest::test_ctc_loss_bfloat16",
+    "keras.src.ops.nn_test.NNOpsDtypeTest::test_ctc_loss_float16",
+    "keras.src.ops.nn_test.NNOpsDtypeTest::test_ctc_loss_float32",
+    "keras.src.ops.nn_test.NNOpsDtypeTest::test_ctc_loss_float64",
+    "keras.src.ops.nn_test.NNOpsBehaviorTest::test_invalid_strategy_ctc_decode"
+  ],
+  "PASS_TO_PASS": [
+    "keras.src.ops.nn_test.NNOpsStaticShapeTest::test_ctc_loss"
+  ]
+}

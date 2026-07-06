@@ -1,0 +1,21 @@
+patching file server/events_test.go
+patching file server/jwt_test.go
+patching file server/norace_test.go
+patching file test/tls_test.go
+{"Time":"2026-06-29T15:30:55.167497019Z","Action":"start","Package":"github.com/nats-io/nats-server/v2/server"}
+{"Time":"2026-06-29T15:30:55.186840431Z","Action":"run","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestJWTAccountImportSignerDeadlock"}
+{"Time":"2026-06-29T15:30:55.186913632Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestJWTAccountImportSignerDeadlock","Output":"=== RUN   TestJWTAccountImportSignerDeadlock\n"}
+{"Time":"2026-06-29T15:30:55.191387549Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestJWTAccountImportSignerDeadlock","Output":"--- PASS: TestJWTAccountImportSignerDeadlock (0.00s)\n"}
+{"Time":"2026-06-29T15:30:55.191418646Z","Action":"pass","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestJWTAccountImportSignerDeadlock","Elapsed":0}
+{"Time":"2026-06-29T15:30:55.191459218Z","Action":"run","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestJWTAccountImportWrongIssuerAccount"}
+{"Time":"2026-06-29T15:30:55.191472288Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestJWTAccountImportWrongIssuerAccount","Output":"=== RUN   TestJWTAccountImportWrongIssuerAccount\n"}
+{"Time":"2026-06-29T15:30:55.19307835Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestJWTAccountImportWrongIssuerAccount","Output":"--- PASS: TestJWTAccountImportWrongIssuerAccount (0.00s)\n"}
+{"Time":"2026-06-29T15:30:55.19313766Z","Action":"pass","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestJWTAccountImportWrongIssuerAccount","Elapsed":0}
+{"Time":"2026-06-29T15:30:55.195381329Z","Action":"run","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestNoRaceFetchAccountDoesNotRegisterAccountTwice"}
+{"Time":"2026-06-29T15:30:55.195433708Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestNoRaceFetchAccountDoesNotRegisterAccountTwice","Output":"=== RUN   TestNoRaceFetchAccountDoesNotRegisterAccountTwice\n"}
+{"Time":"2026-06-29T15:30:55.45368684Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestNoRaceFetchAccountDoesNotRegisterAccountTwice","Output":"--- PASS: TestNoRaceFetchAccountDoesNotRegisterAccountTwice (0.26s)\n"}
+{"Time":"2026-06-29T15:30:55.453793341Z","Action":"pass","Package":"github.com/nats-io/nats-server/v2/server","Test":"TestNoRaceFetchAccountDoesNotRegisterAccountTwice","Elapsed":0.26}
+{"Time":"2026-06-29T15:30:55.458921219Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/server","Output":"PASS\n"}
+{"Time":"2026-06-29T15:30:55.460203051Z","Action":"output","Package":"github.com/nats-io/nats-server/v2/server","Output":"ok  \tgithub.com/nats-io/nats-server/v2/server\t0.292s\n"}
+{"Time":"2026-06-29T15:30:55.460238625Z","Action":"pass","Package":"github.com/nats-io/nats-server/v2/server","Elapsed":0.293}
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=go exit_code=0

@@ -1,0 +1,29 @@
+{
+    "id": "ea63cf80-0295-42f8-b10f-74289756bdeb",
+    "started_at": "2026-07-04T15:43:58.099866",
+    "finished_at": "2026-07-04T15:45:07.002987",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-hadoop-6700": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-hadoop-6700__Y8DCQ3S"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

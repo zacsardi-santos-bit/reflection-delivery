@@ -1,7 +1,0 @@
-patching file debian/changelog
-patching file paasta_tools/__init__.py
-patching file paasta_tools/cli/cmds/local_run.py
-patching file paasta_tools/cli/cmds/secret.py
-patching file paasta_tools/cli/schemas/tron_schema.json
-patching file paasta_tools/secret_tools.py
-patching file yelp_package/Makefile

@@ -1,0 +1,11 @@
+patching file CHANGELOG.md
+patching file cmd/run/flags.go
+patching file cmd/run/run.go
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 320 with fuzz 1 (offset 149 lines).
+patching file internal/authz/authz.go
+patching file internal/server/config/config.go
+patching file pkg/server/batch_check.go
+patching file pkg/server/commands/batch_check_command.go
+patching file pkg/server/server.go

@@ -1,0 +1,262 @@
+patching file engine/crates/integration-tests/src/helpers.rs
+patching file engine/crates/integration-tests/tests/caching/mod.rs
+patching file engine/crates/integration-tests/tests/integration_tests.rs
+patching file engine/crates/integration-tests/tests/partial_caching/defer.rs (renamed from engine/crates/integration-tests/tests/caching/partial_caching_defer.rs)
+patching file engine/crates/integration-tests/tests/partial_caching/mod.rs
+patching file engine/crates/integration-tests/tests/partial_caching/type_conditions.rs
+patching file engine/crates/partial-caching/src/output/tests.rs
+patching file engine/crates/partial-caching/tests/query-splitting.rs
+   Compiling partial-caching v0.76.0 (/workspace/repo/engine/crates/partial-caching)
+error[E0061]: this method takes 3 arguments but 4 arguments were supplied
+  --> engine/crates/partial-caching/src/output/tests.rs:86:11
+   |
+86 |       store.merge_cache_entry(
+   |             ^^^^^^^^^^^^^^^^^
+...
+97 |           &active_defers,
+   |  _______________________-
+98 | |         &NoSubtypes,
+   | |         -----------
+   | |_________|_________|
+   |           |         help: remove the extra argument
+   |           unexpected argument of type `&NoSubtypes`
+   |
+note: method defined here
+  --> engine/crates/partial-caching/src/output/cache_merging.rs:14:12
+   |
+14 |     pub fn merge_cache_entry<'a>(
+   |            ^^^^^^^^^^^^^^^^^
+15 |         &'a mut self,
+16 |         json: &mut serde_json::Value,
+   |         ----------------------------
+17 |         shapes: &'a OutputShapes,
+   |         ------------------------
+18 |         active_defers: &HashSet<DeferId>,
+   |         --------------------------------
+
+error[E0061]: this method takes 3 arguments but 4 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:151:11
+    |
+151 |       store.merge_cache_entry(
+    |             ^^^^^^^^^^^^^^^^^
+...
+162 |           &active_defers,
+    |  _______________________-
+163 | |         &NoSubtypes,
+    | |         -----------
+    | |_________|_________|
+    |           |         help: remove the extra argument
+    |           unexpected argument of type `&NoSubtypes`
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:14:12
+    |
+14  |     pub fn merge_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^
+15  |         &'a mut self,
+16  |         json: &mut serde_json::Value,
+    |         ----------------------------
+17  |         shapes: &'a OutputShapes,
+    |         ------------------------
+18  |         active_defers: &HashSet<DeferId>,
+    |         --------------------------------
+
+error[E0061]: this method takes 3 arguments but 4 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:211:11
+    |
+211 |       store.merge_cache_entry(
+    |             ^^^^^^^^^^^^^^^^^
+...
+222 |           &active_defers,
+    |  _______________________-
+223 | |         &NoSubtypes,
+    | |         -----------
+    | |_________|_________|
+    |           |         help: remove the extra argument
+    |           unexpected argument of type `&NoSubtypes`
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:14:12
+    |
+14  |     pub fn merge_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^
+15  |         &'a mut self,
+16  |         json: &mut serde_json::Value,
+    |         ----------------------------
+17  |         shapes: &'a OutputShapes,
+    |         ------------------------
+18  |         active_defers: &HashSet<DeferId>,
+    |         --------------------------------
+
+error[E0061]: this method takes 3 arguments but 4 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:287:11
+    |
+287 |     store.merge_cache_entry(&mut cache_entry, &shapes, &active_defers, &NoSubtypes);
+    |           ^^^^^^^^^^^^^^^^^                                          -------------
+    |                                                                      | |
+    |                                                                      | unexpected argument of type `&NoSubtypes`
+    |                                                                      help: remove the extra argument
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:14:12
+    |
+14  |     pub fn merge_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^
+15  |         &'a mut self,
+16  |         json: &mut serde_json::Value,
+    |         ----------------------------
+17  |         shapes: &'a OutputShapes,
+    |         ------------------------
+18  |         active_defers: &HashSet<DeferId>,
+    |         --------------------------------
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:289:11
+    |
+289 |     store.merge_specific_defer_from_cache_entry(&mut cache_entry, &shapes, defer_id, &HashSet::new(), &NoSubtypes);
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                                     -------------
+    |                                                                                                     | |
+    |                                                                                                     | unexpected argument of type `&NoSubtypes`
+    |                                                                                                     help: remove the extra argument
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:28:12
+    |
+28  |     pub fn merge_specific_defer_from_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+29  |         &'a mut self,
+30  |         json: &mut serde_json::Value,
+    |         ----------------------------
+31  |         shapes: &'a OutputShapes,
+    |         ------------------------
+32  |         defer: DeferId,
+    |         --------------
+33  |         active_nested_defers: &HashSet<DeferId>,
+    |         ---------------------------------------
+
+error[E0061]: this method takes 3 arguments but 4 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:377:11
+    |
+377 |     store.merge_cache_entry(&mut cache_entry, &shapes, &active_defers, &NoSubtypes);
+    |           ^^^^^^^^^^^^^^^^^                                          -------------
+    |                                                                      | |
+    |                                                                      | unexpected argument of type `&NoSubtypes`
+    |                                                                      help: remove the extra argument
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:14:12
+    |
+14  |     pub fn merge_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^
+15  |         &'a mut self,
+16  |         json: &mut serde_json::Value,
+    |         ----------------------------
+17  |         shapes: &'a OutputShapes,
+    |         ------------------------
+18  |         active_defers: &HashSet<DeferId>,
+    |         --------------------------------
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:390:11
+    |
+390 |     store.merge_specific_defer_from_cache_entry(&mut cache_entry, &shapes, first_defer_id, &active_defers, &NoSubtypes);
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                                          -------------
+    |                                                                                                          | |
+    |                                                                                                          | unexpected argument of type `&NoSubtypes`
+    |                                                                                                          help: remove the extra argument
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:28:12
+    |
+28  |     pub fn merge_specific_defer_from_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+29  |         &'a mut self,
+30  |         json: &mut serde_json::Value,
+    |         ----------------------------
+31  |         shapes: &'a OutputShapes,
+    |         ------------------------
+32  |         defer: DeferId,
+    |         --------------
+33  |         active_nested_defers: &HashSet<DeferId>,
+    |         ---------------------------------------
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:415:11
+    |
+415 |       store.merge_specific_defer_from_cache_entry(
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+...
+419 |           &active_defers,
+    |  _______________________-
+420 | |         &NoSubtypes,
+    | |         -----------
+    | |_________|_________|
+    |           |         help: remove the extra argument
+    |           unexpected argument of type `&NoSubtypes`
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:28:12
+    |
+28  |     pub fn merge_specific_defer_from_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+29  |         &'a mut self,
+30  |         json: &mut serde_json::Value,
+    |         ----------------------------
+31  |         shapes: &'a OutputShapes,
+    |         ------------------------
+32  |         defer: DeferId,
+    |         --------------
+33  |         active_nested_defers: &HashSet<DeferId>,
+    |         ---------------------------------------
+
+error[E0061]: this method takes 3 arguments but 4 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:490:11
+    |
+490 |     store.merge_cache_entry(&mut cache_entry, &shapes, &active_defers, &NoSubtypes);
+    |           ^^^^^^^^^^^^^^^^^                                          -------------
+    |                                                                      | |
+    |                                                                      | unexpected argument of type `&NoSubtypes`
+    |                                                                      help: remove the extra argument
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:14:12
+    |
+14  |     pub fn merge_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^
+15  |         &'a mut self,
+16  |         json: &mut serde_json::Value,
+    |         ----------------------------
+17  |         shapes: &'a OutputShapes,
+    |         ------------------------
+18  |         active_defers: &HashSet<DeferId>,
+    |         --------------------------------
+
+error[E0061]: this method takes 4 arguments but 5 arguments were supplied
+   --> engine/crates/partial-caching/src/output/tests.rs:509:11
+    |
+509 |     store.merge_specific_defer_from_cache_entry(&mut cache_entry, &shapes, first_defer_id, &active_defers, &NoSubtypes);
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                                          -------------
+    |                                                                                                          | |
+    |                                                                                                          | unexpected argument of type `&NoSubtypes`
+    |                                                                                                          help: remove the extra argument
+    |
+note: method defined here
+   --> engine/crates/partial-caching/src/output/cache_merging.rs:28:12
+    |
+28  |     pub fn merge_specific_defer_from_cache_entry<'a>(
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+29  |         &'a mut self,
+30  |         json: &mut serde_json::Value,
+    |         ----------------------------
+31  |         shapes: &'a OutputShapes,
+    |         ------------------------
+32  |         defer: DeferId,
+    |         --------------
+33  |         active_nested_defers: &HashSet<DeferId>,
+    |         ---------------------------------------
+
+For more information about this error, try `rustc --explain E0061`.
+error: could not compile `partial-caching` (lib test) due to 10 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: command `/usr/local/rustup/toolchains/1.78.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package partial-caching` exited with code 101
+reward=0 graded=34 found=0 failed=0 parsed=0 framework=cargo exit_code=101

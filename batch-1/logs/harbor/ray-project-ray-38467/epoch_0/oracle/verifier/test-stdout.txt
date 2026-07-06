@@ -1,0 +1,25 @@
+patching file python/ray/serve/tests/test_proxy_request_response.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pytest.ini
+plugins: anyio-4.14.1
+collecting ... collected 13 items
+
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_request_type PASSED [  7%]
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_client PASSED [ 15%]
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_method PASSED [ 23%]
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_root_path PASSED [ 30%]
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_path PASSED [ 38%]
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_headers PASSED [ 46%]
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_request_object PASSED [ 53%]
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_is_route_request PASSED [ 61%]
+python/ray/serve/tests/test_proxy_request_response.py::TestASGIProxyRequest::test_is_health_request PASSED [ 69%]
+python/ray/serve/tests/test_proxy_request_response.py::TestgRPCProxyRequest::test_calling_list_applications_method PASSED [ 76%]
+python/ray/serve/tests/test_proxy_request_response.py::TestgRPCProxyRequest::test_calling_healthz_method PASSED [ 84%]
+python/ray/serve/tests/test_proxy_request_response.py::TestgRPCProxyRequest::test_calling_user_defined_method PASSED [ 92%]
+python/ray/serve/tests/test_proxy_request_response.py::test_proxy_response PASSED [100%]
+
+============================== 13 passed in 0.17s ==============================
+reward=1 graded=13 found=0 failed=0 parsed=13 framework=pytest exit_code=0

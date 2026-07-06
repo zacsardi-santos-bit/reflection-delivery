@@ -1,0 +1,3 @@
+I'm working with the nix Rust library for low-level network programming and I've noticed there's no way to set the "don't fragment" flag on IP sockets through the library's socket options interface. This is something I need for implementing path MTU discovery — I want to tell the kernel not to fragment packets sent on a particular socket.
+
+Specifically, I need to be able to toggle this flag on both IPv4 sockets (on Apple platforms) and IPv6 sockets (on Linux and Apple platforms). It should work for both TCP stream sockets and UDP datagram sockets, and should fit naturally into the existing way socket options are configured in the library — passing a boolean to enable or disable the behavior. Could you add these missing socket options?

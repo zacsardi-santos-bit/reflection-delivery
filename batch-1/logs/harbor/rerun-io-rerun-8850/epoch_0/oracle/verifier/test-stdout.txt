@@ -1,0 +1,175 @@
+patching file crates/utils/re_video/src/decode/mod.rs
+Hunk #1 succeeded at 464 (offset 12 lines).
+   Compiling proc-macro2 v1.0.89
+   Compiling unicode-ident v1.0.13
+   Compiling autocfg v1.4.0
+   Compiling quote v1.0.37
+   Compiling syn v2.0.87
+   Compiling libm v0.2.11
+   Compiling num-traits v0.2.19
+   Compiling libc v0.2.161
+   Compiling cfg-if v1.0.0
+   Compiling version_check v0.9.5
+   Compiling serde v1.0.214
+   Compiling num-integer v0.1.46
+   Compiling num-bigint v0.4.6
+   Compiling byteorder v1.5.0
+   Compiling half v2.4.1
+   Compiling bytes v1.9.0
+   Compiling once_cell v1.20.2
+   Compiling num-iter v0.1.45
+   Compiling num-complex v0.4.6
+   Compiling ryu v1.0.18
+   Compiling ahash v0.8.11
+   Compiling static_assertions v1.1.0
+   Compiling getrandom v0.2.15
+   Compiling iana-time-zone v0.1.61
+   Compiling arrow-schema v53.4.0
+   Compiling memchr v2.7.4
+   Compiling serde_derive v1.0.214
+   Compiling zerocopy-derive v0.7.35
+   Compiling zerocopy v0.7.35
+   Compiling chrono v0.4.38
+   Compiling hashbrown v0.15.2
+   Compiling crossbeam-utils v0.8.20
+   Compiling typenum v1.17.0
+   Compiling itoa v1.0.11
+   Compiling lexical-util v1.0.3
+   Compiling generic-array v0.14.7
+   Compiling thiserror v1.0.65
+   Compiling thiserror-impl v1.0.65
+   Compiling num-rational v0.4.2
+   Compiling num v0.4.3
+   Compiling arrow-buffer v53.4.0
+   Compiling arrow-data v53.4.0
+   Compiling arrow-array v53.4.0
+   Compiling anyhow v1.0.91
+   Compiling smallvec v1.13.2
+   Compiling aho-corasick v1.1.3
+   Compiling lock_api v0.4.12
+   Compiling either v1.13.0
+   Compiling parking_lot_core v0.9.10
+   Compiling regex-syntax v0.8.5
+   Compiling regex-automata v0.4.8
+   Compiling arrow-select v53.4.0
+   Compiling lexical-write-integer v1.0.2
+   Compiling lexical-parse-integer v1.0.2
+   Compiling scopeguard v1.2.0
+   Compiling camino v1.1.9
+   Compiling semver v1.0.23
+   Compiling serde_json v1.0.132
+   Compiling lexical-parse-float v1.0.2
+   Compiling lexical-write-float v1.0.2
+   Compiling regex v1.11.1
+   Compiling crypto-common v0.1.6
+   Compiling block-buffer v0.10.4
+   Compiling crossbeam-epoch v0.9.18
+   Compiling syn v1.0.109
+   Compiling same-file v1.0.6
+   Compiling rustversion v1.0.18
+   Compiling powerfmt v0.2.0
+   Compiling deranged v0.3.11
+   Compiling walkdir v2.5.0
+   Compiling crossbeam-deque v0.8.5
+   Compiling digest v0.10.7
+   Compiling parking_lot v0.12.3
+   Compiling lexical-core v1.0.2
+   Compiling itertools v0.10.5
+   Compiling cargo-platform v0.1.8
+   Compiling jobserver v0.1.32
+   Compiling atoi v2.0.0
+   Compiling cpufeatures v0.2.14
+   Compiling time-core v0.1.2
+   Compiling num-conv v0.1.0
+   Compiling rayon-core v1.12.1
+   Compiling base64 v0.22.1
+   Compiling shlex v1.3.0
+   Compiling cc v1.1.31
+   Compiling arrow-cast v53.4.0
+   Compiling time v0.3.36
+   Compiling sha2 v0.10.8
+   Compiling nasm-rs v0.3.0
+   Compiling cargo_metadata v0.18.1
+   Compiling arrow-string v53.4.0
+   Compiling arrow-ord v53.4.0
+   Compiling arrow-row v53.4.0
+   Compiling arrow-arith v53.4.0
+   Compiling heck v0.5.0
+   Compiling unindent v0.2.3
+   Compiling clap_lex v0.7.2
+   Compiling ciborium-io v0.2.2
+   Compiling anstyle v1.0.9
+   Compiling paste v1.0.15
+   Compiling log v0.4.22
+   Compiling portable-atomic v1.9.0
+   Compiling plotters-backend v0.3.7
+   Compiling glob v0.3.1
+   Compiling re_build_tools v0.22.0-alpha.1+dev (/workspace/repo/crates/build/re_build_tools)
+   Compiling plotters-svg v0.3.7
+   Compiling clap_builder v4.5.20
+   Compiling ciborium-ll v0.2.2
+   Compiling strum_macros v0.26.4
+   Compiling arrow v53.4.0
+   Compiling atomig-macro v0.3.0
+   Compiling re_rav1d v0.1.3
+   Compiling num-derive v0.4.2
+   Compiling cfg_aliases v0.2.1
+   Compiling litrs v0.4.1
+   Compiling lazy_static v1.5.0
+   Compiling tracing-core v0.1.32
+   Compiling unicode-width v0.1.14
+   Compiling pin-project-lite v0.2.15
+   Compiling byte-slice-cast v1.2.2
+   Compiling cast v0.3.0
+   Compiling bitflags v2.8.0
+   Compiling av-data v0.4.3
+   Compiling raw-cpuid v11.2.0
+   Compiling criterion-plot v0.5.0
+   Compiling tracing v0.1.40
+   Compiling strum v0.26.3
+   Compiling console v0.15.8
+   Compiling document-features v0.2.10
+   Compiling re_video v0.22.0-alpha.1+dev (/workspace/repo/crates/utils/re_video)
+   Compiling rayon v1.10.0
+   Compiling atomig v0.4.2
+   Compiling re_byte_size v0.22.0-alpha.1+dev (/workspace/repo/crates/utils/re_byte_size)
+   Compiling ciborium v0.2.2
+   Compiling clap v4.5.20
+   Compiling plotters v0.3.7
+   Compiling log-once v0.4.1
+   Compiling tinytemplate v1.2.1
+   Compiling puffin v0.19.1
+   Compiling crossbeam-channel v0.5.13
+   Compiling crossbeam-queue v0.3.11
+   Compiling is-terminal v0.4.13
+   Compiling anes v0.1.6
+   Compiling number_prefix v0.4.0
+   Compiling oorandom v11.1.4
+   Compiling assert_matches v1.5.0
+   Compiling to_method v1.1.0
+   Compiling criterion v0.5.1
+   Compiling indicatif v0.17.8
+   Compiling crossbeam v0.8.4
+   Compiling re_tracing v0.22.0-alpha.1+dev (/workspace/repo/crates/utils/re_tracing)
+   Compiling re_log v0.22.0-alpha.1+dev (/workspace/repo/crates/utils/re_log)
+   Compiling re_build_info v0.22.0-alpha.1+dev (/workspace/repo/crates/build/re_build_info)
+   Compiling poll-promise v0.3.0
+   Compiling re_mp4 v0.3.0
+   Compiling ffmpeg-sidecar v2.0.2
+   Compiling itertools v0.13.0
+   Compiling econtext v0.2.0
+   Compiling bit-vec v0.8.0
+    Finished `test` profile [optimized + debuginfo] target(s) in 6m 15s
+────────────
+ Nextest run ID b757b5ae-10f6-45f9-9f85-73d2a6be60c7 with nextest profile: default
+    Starting 7 tests across 1 binary
+        PASS [   0.006s] (1/7) re_video decode::ffmpeg_h264::ffmpeg::tests::test_sanitize_ffmpeg_log_message
+        PASS [   0.006s] (2/7) re_video decode::ffmpeg_h264::sps::tests::test_read_bits
+        PASS [   0.004s] (3/7) re_video decode::ffmpeg_h264::sps::tests::test_read_exponential_golomb
+        PASS [   0.005s] (4/7) re_video decode::ffmpeg_h264::version::tests::test_parse_ffmpeg_version
+        PASS [   0.005s] (5/7) re_video decode::tests_enqueue_ahead::test_min_num_samples_to_enqueue_ahead_default
+        PASS [   0.004s] (6/7) re_video demux::tests::test_latest_at_idx
+        PASS [   0.004s] (7/7) re_video demux::tests::test_latest_sample_index_at_presentation_timestamp
+────────────
+     Summary [   0.020s] 7 tests run: 7 passed, 0 skipped
+reward=1 graded=7 found=2 failed=0 parsed=7 framework=cargo exit_code=0

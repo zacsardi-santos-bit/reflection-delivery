@@ -1,0 +1,13 @@
+patching file packages/playwright/src/migrations/update-17-3-1/add-project-to-config.spec.ts
+PASS playwright src/migrations/update-17-3-1/add-project-to-config.spec.ts (12.436 s)
+  update-nx-next-dependency
+    ✓ should update playwright.config.ts (29 ms)
+    ✓ should not update playwright.config.ts if projects is already defined (3 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   2 passed, 2 total
+Time:        12.512 s
+Ran all test suites matching /src\/migrations\/update-17-3-1\/add-project-to-config.spec.ts/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":1,"numPassedTests":2,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":1,"numTotalTests":2,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":2,"total":2,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782918000277,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["update-nx-next-dependency"],"duration":29,"failureDetails":[],"failureMessages":[],"fullName":"update-nx-next-dependency should update playwright.config.ts","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should update playwright.config.ts"},{"ancestorTitles":["update-nx-next-dependency"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"update-nx-next-dependency should not update playwright.config.ts if projects is already defined","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should not update playwright.config.ts if projects is already defined"}],"endTime":1782918012786,"message":"","name":"/workspace/repo/packages/playwright/src/migrations/update-17-3-1/add-project-to-config.spec.ts","startTime":1782918000350,"status":"passed","summary":""}],"wasInterrupted":false}
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=jest exit_code=0

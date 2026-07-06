@@ -1,0 +1,21 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cp /tmp/conftest_mock.py /workspace/repo/libs/partners/anthropic/tests/integration_tests/conftest.py && cd /workspace/repo/libs/partners/anthropic && pytest tests/integration_tests/test_experimental.py -v -k 'not test_tools'",
+  "test_files": [
+    "libs/partners/anthropic/tests/integration_tests/test_experimental.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.integration_tests.test_experimental::test_stream",
+    "tests.integration_tests.test_experimental::test_astream",
+    "tests.integration_tests.test_experimental::test_abatch",
+    "tests.integration_tests.test_experimental::test_abatch_tags",
+    "tests.integration_tests.test_experimental::test_batch",
+    "tests.integration_tests.test_experimental::test_ainvoke",
+    "tests.integration_tests.test_experimental::test_invoke",
+    "tests.integration_tests.test_experimental::test_system_invoke",
+    "tests.integration_tests.test_experimental::test_with_structured_output"
+  ],
+  "PASS_TO_PASS": []
+}

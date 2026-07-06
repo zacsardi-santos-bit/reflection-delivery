@@ -1,0 +1,9 @@
+We're about to flip on a strict exports map for the devkit package, which kills all the deep import paths people have been using where they reach straight into internal source dirs inside the package. Once that lands, anything importing from those deep paths breaks at build or runtime, so I need an automated migration that runs across the whole workspace and rewrites the broken deep imports to the officially supported entry points.
+
+Here's the deal: it should scan TypeScript source only, so `.ts`, `.tsx`, `.cts`, and `.mts`, and leave everything else (docs, etc) alone. For named imports it splits by symbol: the ones that are part of the stable public API get redirected to the main package, and the ones that only live in the internal subpath get routed there instead. When one import statement mixes both kinds, split it into two separate declarations, one to the main package and one to the internal subpath.
+
+Oh and it needs to handle a bunch of import shapes gracefully: aliased specifiers, type-only imports, inline type modifiers on individual specifiers, multi-line formatting, plus default imports, namespace imports, side-effect imports, synchronous module loading calls (require), and dynamic imports. For those last forms that can't be split by symbol (default, namespace, side-effect, require, dynamic import) just fall back to the internal subpath since that's the safest default.
+
+After rewriting, dedupe: a file should never end up with two import lines pointing at the same specifier, and that includes merging into imports that were already present in the file before the migration ran.
+
+Also export a constant listing all the symbol names considered internal so it's obvious which symbols route to the internal subpath vs which are treated as public. Basically without this, upgrading devkit silently breaks every project relying on deep imports, and I don't want people manually auditing every file.

@@ -1,0 +1,21 @@
+patching file app/ide-desktop/lib/dashboard/src/utilities/__tests__/ShortcutManager.test.ts
+patching file app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts
+
+ RUN  v0.34.4 /workspace/repo/app/ide-desktop/lib/dashboard
+
+ ❯ src/utilities/__tests__/jsonSchema.test.ts  (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/utilities/__tests__/jsonSchema.test.ts [ src/utilities/__tests__/jsonSchema.test.ts ]
+Error: Failed to load url /src/utilities/jsonSchema (resolved id: /workspace/repo/app/ide-desktop/lib/dashboard/src/utilities/jsonSchema) in /workspace/repo/app/ide-desktop/lib/dashboard/src/utilities/__tests__/jsonSchema.test.ts. Does the file exist?
+ ❯ loadAndTransform ../../../../node_modules/vite/dist/node/chunks/dep-bb8a8339.js:55015:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  15:14:46
+   Duration  2.40s (transform 78ms, setup 0ms, collect 0ms, tests 0ms, environment 481ms, prepare 178ms)
+
+reward=0 graded=6 found=0 failed=0 parsed=0 framework=vitest exit_code=1

@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p pacquet-package-manager -E 'test(should_error_when_frozen_lockfile_and_update_checksums_are_both_set)' 2>&1",
+  "test_files": [
+    "installing/deps-installer/test/brokenLockfileIntegrity.ts",
+    "pacquet/crates/package-manager/src/install/tests.rs",
+    "pacquet/crates/resolving-npm-resolver/src/pick_package/tests.rs"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) pacquet-package-manager install::tests::should_error_when_frozen_lockfile_and_update_checksums_are_both_set"
+  ],
+  "PASS_TO_PASS": []
+}

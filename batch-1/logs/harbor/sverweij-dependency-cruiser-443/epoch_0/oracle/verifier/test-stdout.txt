@@ -1,0 +1,43 @@
+patching file test/cli/fixtures/result-has-a-dependency-violation.json
+patching file test/enrich/derive/reachable/index.spec.js
+patching file test/validate/fixtures/rules.reachable.capturing-group.json
+patching file test/validate/index.reachable.spec.js
+
+
+  enrich/derive/reachable/index - reachability detection
+    ✓ does not explode when passed an empty graph & an empty rule set
+    ✓ returns the input graph when passed an empty rule set
+    ✓ returns the reachability annotated graph when a rule set with forbidden "reachable" in it
+    ✓ returns the reachability annotated graph when a rule set with allowed "reachable" in it (with a rule name)
+    ✓ returns the reachability annotated graph when a rule set with allowed "reachable" in it (without a rule name)
+    ✓ returns the reachability annotated graph when a rule set with allowed "reachable" in it (without a rule name - multiple matches)
+    ✓ returns the reachability annotated graph when passed a rule set with forbidden "reachable" in it (and a pathNot from)
+    ✓ returns the reachability annotated graph when with forbidden "reachable" in it that has a pathNot
+    ✓ returns the reachability annotated graph when with forbidden "reachable" in it that has a path
+    ✓ clubs together reachability from the same rule
+    ✓ leaves reachability on the same object, but from the another rule alone
+    ✓ leaves reaches on the same object, but from the another rule alone
+    ✓ correctly processes capture groups
+
+  validate/index - reachable (in forbidden set)
+    ✓ Skips modules that have no reachable attribute (reachable false) (116ms)
+    ✓ Skips modules that have no reachable attribute (reachable true)
+    ✓ Triggers on modules that have a reachable attribute (non-matching, reachable false)
+    ✓ Triggers on modules that have a reachable attribute (non-matching, reachable true)
+    ✓ Triggers on modules that have a reachable attribute (reachable false) (57ms)
+    ✓ Triggers on modules that have a reachable attribute (reachable true)
+    ✓ Triggers on modules that have a reachable attribute (with a path, reachable false)
+    ✓ Triggers on modules that have a reachable attribute (with a path, reachable true)
+    ✓ Triggers on modules that have a reachable attribute (with a pathNot, reachable false)
+    ✓ Triggers on modules that have a reachable attribute (with a pathNot, reachable true)
+
+  validate/index - reachable (in allowed set)
+    ✓ Triggers on modules that have no reachable attribute ('allowed' rule set)
+    ✓ Skips on modules that have a reachable attribute (match - 'allowed' rule set)
+    ✓ Triggers on modules that have a reachable attribute (no match - 'allowed' rule set)
+    ✓ Respects capturing groups
+
+
+  27 passing (207ms)
+
+reward=1 graded=27 found=27 failed=0 parsed=27 framework=mocha exit_code=0

@@ -1,0 +1,7 @@
+I'm building out an auditing service for the Backstage backend framework because right now there's no built-in, standardized way for plugins to record audit events. Plugins that need to track security-relevant stuff (data access, config changes, entity mutations, that kind of thing) have nowhere structured to capture what happened, whether it worked, and the metadata tied to it. I want to fix that.
+
+The core idea is a service that lets backend plugins record structured audit events with lifecycle stages, so you track when an operation kicks off (initiated) and then whether it ultimately succeeded or failed. When an event gets created with some initial metadata, that metadata should carry through to the success or failure record, merging with whatever extra context gets passed in at completion. And if the operation fails, I want the error captured in string form as part of the record.
+
+I need two concrete classes here. There's a root-level auditor that can be instantiated with optional config, and it should expose a way to spin up a plugin-scoped child instance by accepting auth, HTTP auth, and plugin metadata dependencies. The plugin-scoped instance then exposes a method to create events that returns an event handle, and that handle has methods for recording success or failure.
+
+Oh and separately, the catalog backend router's setup function needs to accept this auditing service as part of its options, alongside the other services it already receives. Wire it in there too.

@@ -1,0 +1,21 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/sheets-ui && npx vitest run src/views/defined-name/defined-name.utils.spec.ts",
+  "test_files": [
+    "packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should reject duplicate defined names during validation",
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should resolve Enter on an existing defined name to focus the name",
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should resolve Enter on a typed reference to focus the selection",
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should resolve Enter on a valid new name to create a defined name",
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should reset when Enter is pressed on an invalid name",
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should build the absolute reference string for a single selected cell",
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should build the absolute reference string for a selected range",
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should use the standard editor-exit operation when the sheet editor is visible",
+    "/workspace/repo/packages/sheets-ui/src/views/defined-name/defined-name.utils.spec.ts::defined-name.utils should restore normal sheet keyboard focus when the sheet editor is not visible"
+  ],
+  "PASS_TO_PASS": []
+}

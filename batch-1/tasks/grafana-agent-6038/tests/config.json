@@ -1,0 +1,42 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && go test -v -count=1 ./converter/internal/prometheusconvert/...",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/grafana/agent/converter/internal/prometheusconvert/component::TestValidateDiscoveryHttp",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/http.yaml"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/azure.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/bad_config.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/broken_yaml.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/consul.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/digitalocean.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/discovery.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/discovery_relabel.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/dns.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/docker.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/dockerswarm.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/ec2.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/empty.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/file.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/gce.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/ionos.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/kubernetes.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/kuma.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/lightsail.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/linode.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/marathon.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/metric_relabel.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/nerve.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/openstack.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/scaleway.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/scrape.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/serverset.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/triton.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert/unsupported.yaml",
+    "github.com/grafana/agent/converter/internal/prometheusconvert::TestConvert"
+  ]
+}

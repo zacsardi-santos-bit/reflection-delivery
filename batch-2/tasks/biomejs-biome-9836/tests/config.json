@@ -1,0 +1,41 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_cli -E 'test(eslint_to_biome::tests::migrate_eslint)'",
+  "test_files": [
+    "crates/biome_cli/tests/specs/migrate_eslint/jestConsistentTestIt/defaults.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/jestConsistentTestIt/defaults.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/jestConsistentTestIt/withOptions.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/jestConsistentTestIt/withOptions.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/jsxA11yAriaRole/basic.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/jsxA11yAriaRole/basic.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/noRestrictedGlobals/basic.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/noRestrictedGlobals/basic.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/typescriptArrayType/generic.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/typescriptArrayType/generic.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/typescriptConsistentTypeImports/inlineTypeImports.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/typescriptConsistentTypeImports/inlineTypeImports.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/typescriptExplicitMemberAccessibility/explicit.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/typescriptExplicitMemberAccessibility/explicit.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/typescriptNamingConvention/basic.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/typescriptNamingConvention/basic.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/unicornFilenameCase/basic.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/unicornFilenameCase/basic.jsonc.snap",
+    "crates/biome_cli/tests/specs/migrate_eslint/vitestConsistentTestIt/withOptions.jsonc",
+    "crates/biome_cli/tests/specs/migrate_eslint/vitestConsistentTestIt/withOptions.jsonc.snap"
+  ],
+  "num_test_files": 20,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::unicorn_filename_case::basic_jsonc",
+    "( 2/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::jsx_a11y_aria_role::basic_jsonc",
+    "( 3/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::typescript_array_type::generic_jsonc",
+    "( 4/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::typescript_explicit_member_accessibility::explicit_jsonc",
+    "( 5/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::no_restricted_globals::basic_jsonc",
+    "( 6/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::vitest_consistent_test_it::with_options_jsonc",
+    "( 7/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::typescript_consistent_type_imports::inline_type_imports_jsonc",
+    "( 8/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::jest_consistent_test_it::defaults_jsonc",
+    "( 9/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::jest_consistent_test_it::with_options_jsonc",
+    "(10/10) biome_cli execute::migrate::eslint_to_biome::tests::migrate_eslint::typescript_naming_convention::basic_jsonc"
+  ],
+  "PASS_TO_PASS": []
+}

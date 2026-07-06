@@ -1,0 +1,356 @@
+diff --git a/doc/source/data/working-with-llms.rst b/doc/source/data/working-with-llms.rst
+index f98567119f..5eaefdc7f5 100644
+--- a/doc/source/data/working-with-llms.rst
++++ b/doc/source/data/working-with-llms.rst
+@@ -487,6 +487,9 @@ Ray Data LLM supports cross-node parallelism, including tensor parallelism and p
+ 
+ You can customize the placement group configuration to control how Ray places vLLM engine workers across nodes. Use ``bundle_per_worker`` for basic per-worker resource specification (auto-replicated based on TP*PP), or ``bundles`` for full control over individual bundles. While you can specify the degree of tensor and pipeline parallelism, the specific assignment of model ranks to GPUs is managed by the vLLM engine.
+ 
++.. note::
++   In each bundle dict, omitted ``CPU`` or ``GPU`` keys are treated as **0**. Specify the resources each worker needs explicitly.
++
+ .. literalinclude:: doc_code/working-with-llms/basic_llm_example.py
+     :language: python
+     :start-after: __custom_placement_group_strategy_config_example_start__
+diff --git a/doc/source/serve/llm/user-guides/cross-node-parallelism.md b/doc/source/serve/llm/user-guides/cross-node-parallelism.md
+index 5abf71ae0d..5a7fadb09b 100644
+--- a/doc/source/serve/llm/user-guides/cross-node-parallelism.md
++++ b/doc/source/serve/llm/user-guides/cross-node-parallelism.md
+@@ -79,6 +79,10 @@ You can customize how Ray places vLLM engine workers across nodes using `placeme
+ 
+ The `bundle_per_worker` option inside `placement_group_config` lets you specify resources for each worker without manually creating the full bundle list. Ray automatically replicates this bundle based on `tensor_parallel_size * pipeline_parallel_size`. This field is mutually exclusive with `bundles`.
+ 
++:::{note}
++In each bundle dict, `CPU` and `GPU` are numeric amounts. If you omit either key, it is treated as **0** — set both explicitly when your workers need CPUs and GPUs (there is no implicit default GPU when you only specify CPU, or vice versa).
++:::
++
+ ::::{tab-set}
+ 
+ :::{tab-item} Python
+diff --git a/python/ray/dashboard/client/src/components/DataOverviewTable.tsx b/python/ray/dashboard/client/src/components/DataOverviewTable.tsx
+index 87c3560884..c3538ba9cc 100644
+--- a/python/ray/dashboard/client/src/components/DataOverviewTable.tsx
++++ b/python/ray/dashboard/client/src/components/DataOverviewTable.tsx
+@@ -33,14 +33,6 @@ const columns = [
+   },
+   { label: "State", align: "center" },
+   { label: "Rows Outputted" },
+-  {
+-    label: "Queued Blocks",
+-    helpInfo: (
+-      <Typography>
+-        Number of blocks waiting in an input queue to be processed.
+-      </Typography>
+-    ),
+-  },
+   {
+     label: "Memory Usage (current / max)",
+     helpInfo: (
+@@ -220,9 +212,6 @@ const DataRow = ({
+         <StatusChip type="task" status={data.state} />
+       </TableCell>
+       <TableCell align="right">{data.ray_data_output_rows.max}</TableCell>
+-      <TableCell align="right">
+-        {isOperatorRow ? operatorMetrics.queued_blocks : ""}
+-      </TableCell>
+       <TableCell align="right">
+         {memoryConverter(Number(data.ray_data_current_bytes.value))}/
+         {memoryConverter(Number(data.ray_data_current_bytes.max))}
+diff --git a/python/ray/dashboard/client/src/pages/data/DataOverview.component.test.tsx b/python/ray/dashboard/client/src/pages/data/DataOverview.component.test.tsx
+index df3649e420..107cd2037c 100644
+--- a/python/ray/dashboard/client/src/pages/data/DataOverview.component.test.tsx
++++ b/python/ray/dashboard/client/src/pages/data/DataOverview.component.test.tsx
+@@ -40,7 +40,6 @@ describe("DataOverview", () => {
+             state: "RUNNING",
+             progress: 99,
+             total: 101,
+-            queued_blocks: 3,
+             ray_data_output_rows: {
+               max: 11,
+             },
+@@ -109,8 +108,6 @@ describe("DataOverview", () => {
+     expect(screen.queryByText("test_ds1_op")).toBeNull();
+     await user.click(screen.getByTitle("Expand Dataset test_ds1"));
+     expect(screen.getByText("test_ds1_op")).toBeVisible();
+-    // Verify queued_blocks is rendered for operator row
+-    expect(screen.getByText("3")).toBeVisible();
+     await user.click(screen.getByTitle("Collapse Dataset test_ds1"));
+     expect(screen.queryByText("test_ds1_op")).toBeNull();
+ 
+diff --git a/python/ray/dashboard/client/src/type/data.ts b/python/ray/dashboard/client/src/type/data.ts
+index 687f1da568..64d91a0065 100644
+--- a/python/ray/dashboard/client/src/type/data.ts
++++ b/python/ray/dashboard/client/src/type/data.ts
+@@ -13,7 +13,6 @@ export type DatasetMetrics = DataMetrics & {
+ export type OperatorMetrics = DataMetrics & {
+   operator: string;
+   name: string;
+-  queued_blocks: number;
+ };
+ 
+ export type DataMetrics = {
+diff --git a/python/ray/llm/_internal/batch/processor/vllm_engine_proc.py b/python/ray/llm/_internal/batch/processor/vllm_engine_proc.py
+index ec6dba717a..6126ecd14b 100644
+--- a/python/ray/llm/_internal/batch/processor/vllm_engine_proc.py
++++ b/python/ray/llm/_internal/batch/processor/vllm_engine_proc.py
+@@ -1,10 +1,10 @@
+ """The vLLM engine processor."""
+ 
+ import logging
+-from typing import Any, Dict, List, Literal, Optional
++from typing import Any, Dict, Optional
+ 
+ import transformers
+-from pydantic import ConfigDict, Field, model_validator, root_validator
++from pydantic import Field, field_validator, model_validator
+ 
+ import ray
+ from ray.data.block import UserDefinedFunction
+@@ -40,8 +40,8 @@ from ray.llm._internal.batch.stages.configs import (
+     TokenizerStageConfig,
+     resolve_stage_config,
+ )
+-from ray.llm._internal.common.base_pydantic import BaseModelExtended
+ from ray.llm._internal.common.observability.telemetry_utils import DEFAULT_GPU_TYPE
++from ray.llm._internal.common.placement import PlacementGroupConfig
+ from ray.llm._internal.common.utils.download_utils import (
+     STREAMING_LOAD_FORMATS,
+     NodeModelDownloadable,
+@@ -54,43 +54,6 @@ logger = logging.getLogger(__name__)
+ DEFAULT_MODEL_ARCHITECTURE = "UNKNOWN_MODEL_ARCHITECTURE"
+ 
+ 
+-class BundleSchema(BaseModelExtended):
+-    model_config = ConfigDict(extra="allow")
+-    CPU: Optional[int] = Field(default=1, description="The number of CPUs per bundle.")
+-    GPU: Optional[int] = Field(default=1, description="The number of GPUs per bundle.")
+-
+-
+-class PlacementGroupSchema(BaseModelExtended):
+-    bundle_per_worker: Optional[BundleSchema] = Field(
+-        default=None,
+-        description="Resource bundle specification for each worker. "
+-        "Auto-replicated based on tensor_parallel_size * pipeline_parallel_size. "
+-        "Cannot be used together with 'bundles'.",
+-    )
+-    bundles: Optional[List[BundleSchema]] = Field(
+-        default=None, description="The bundles for the placement group."
+-    )
+-    strategy: Literal["PACK", "STRICT_PACK", "SPREAD", "STRICT_SPREAD"] = Field(
+-        default="PACK", description="The strategy for the placement group."
+-    )
+-
+-    @model_validator(mode="after")
+-    def validate_bundle_options(self):
+-        if self.bundle_per_worker is not None and self.bundles is not None:
+-            raise ValueError(
+-                "Cannot specify both 'bundle_per_worker' and 'bundles' in "
+-                "placement_group_config. Use 'bundle_per_worker' for simple "
+-                "per-worker resource specification (auto-replicated by tp*pp), "
+-                "or 'bundles' for full control."
+-            )
+-        if self.bundle_per_worker is None and self.bundles is None:
+-            raise ValueError(
+-                "placement_group_config must specify either 'bundle_per_worker' "
+-                "or 'bundles'."
+-            )
+-        return self
+-
+-
+ class vLLMEngineProcessorConfig(OfflineProcessorConfig):
+     """The configuration for the vLLM engine processor."""
+ 
+@@ -133,7 +96,8 @@ class vLLMEngineProcessorConfig(OfflineProcessorConfig):
+         "Example with bundles: {'bundles': [{'CPU': 1, 'GPU': 1}] * 4, 'strategy': 'SPREAD'}.",
+     )
+ 
+-    @root_validator(pre=True)
++    @model_validator(mode="before")
++    @classmethod
+     def validate_task_type(cls, values):
+         task_type = values.get("task_type", vLLMTaskType.GENERATE)
+         if task_type not in vLLMTaskType.values():
+@@ -154,14 +118,14 @@ class vLLMEngineProcessorConfig(OfflineProcessorConfig):
+         values["engine_kwargs"] = engine_kwargs
+         return values
+ 
+-    @root_validator(pre=True)
+-    def validate_placement_group_config(cls, values):
+-        placement_group_config = values.get("placement_group_config")
+-        if placement_group_config is not None:
+-            values["placement_group_config"] = PlacementGroupSchema(
+-                **placement_group_config
+-            ).model_dump()
+-        return values
++    @field_validator("placement_group_config")
++    @classmethod
++    def validate_placement_group_config(cls, value):
++        if value is None:
++            return None
++        # Validate through PlacementGroupConfig, then dump back to dict
++        validated = PlacementGroupConfig(**value)
++        return validated.model_dump()
+ 
+ 
+ def build_vllm_engine_processor(
+diff --git a/python/ray/llm/_internal/common/placement.py b/python/ray/llm/_internal/common/placement.py
+new file mode 100644
+index 0000000000..10b6669749
+--- /dev/null
++++ b/python/ray/llm/_internal/common/placement.py
+@@ -0,0 +1,79 @@
++from typing import List, Literal, Optional
++
++from pydantic import ConfigDict, Field, model_validator
++
++from ray.llm._internal.common.base_pydantic import BaseModelExtended
++
++
++class BundleConfig(BaseModelExtended):
++    """Configuration for a single placement group bundle.
++
++    Resource counts are floats to align with Ray's internal resource
++    representation, which supports fractional values (e.g. GPU=0.5).
++    Both CPU and GPU default to 0.0 — the schema does not inject hidden
++    resource requests. Extra fields are allowed for custom Ray resources (e.g. TPU,
++    accelerator_type:L4).
++    """
++
++    model_config = ConfigDict(extra="allow")
++
++    CPU: float = Field(
++        default=0.0,
++        ge=0.0,
++        description="The number of CPUs per bundle.",
++    )
++    GPU: float = Field(
++        default=0.0,
++        ge=0.0,
++        description="The number of GPUs per bundle.",
++    )
++
++    @model_validator(mode="after")
++    def validate_extra_resources(self):
++        """Ensure custom resources (TPU, accelerator_type, etc.) are non-negative."""
++        extra_resources = self.model_extra
++        if not extra_resources:
++            return self
++        for key, value in extra_resources.items():
++            if not isinstance(value, (int, float)):
++                raise ValueError(
++                    f"Resource '{key}' must be a number, got {type(value).__name__}"
++                )
++            if value < 0:
++                raise ValueError(f"Resource '{key}' must be non-negative, got {value}")
++        return self
++
++
++class PlacementGroupConfig(BaseModelExtended):
++    """Configuration for placement group."""
++
++    bundle_per_worker: Optional[BundleConfig] = Field(
++        default=None,
++        description=(
++            "Resource bundle specification for each worker. "
++            "Auto-replicated based on tensor_parallel_size * pipeline_parallel_size. "
++            "Cannot be used together with 'bundles'."
++        ),
++    )
++    bundles: Optional[List[BundleConfig]] = Field(
++        default=None, description="List of resource bundles"
++    )
++    strategy: Literal["PACK", "SPREAD", "STRICT_PACK", "STRICT_SPREAD"] = Field(
++        default="PACK", description="Placement group strategy"
++    )
++
++    @model_validator(mode="after")
++    def validate_bundle_options(self):
++        if self.bundle_per_worker is not None and self.bundles is not None:
++            raise ValueError(
++                "Cannot specify both 'bundle_per_worker' and 'bundles' in "
++                "placement_group_config. Use 'bundle_per_worker' for simple "
++                "per-worker resource specification (auto-replicated by tp*pp), "
++                "or 'bundles' for full control."
++            )
++        if self.bundle_per_worker is None and self.bundles is None:
++            raise ValueError(
++                "placement_group_config must specify either 'bundle_per_worker' "
++                "or 'bundles'."
++            )
++        return self
+diff --git a/python/ray/llm/_internal/serve/engines/vllm/vllm_models.py b/python/ray/llm/_internal/serve/engines/vllm/vllm_models.py
+index 2e737cba53..d028125421 100644
+--- a/python/ray/llm/_internal/serve/engines/vllm/vllm_models.py
++++ b/python/ray/llm/_internal/serve/engines/vllm/vllm_models.py
+@@ -1,13 +1,14 @@
+ import copy
+ import dataclasses
+ import os
+-from typing import Any, Dict, List, Literal, Optional
++from typing import Any, Dict, List, Optional
+ 
+-from pydantic import ConfigDict, Field, field_validator, model_validator
++from pydantic import ConfigDict, Field, field_validator
+ from vllm.engine.arg_utils import AsyncEngineArgs
+ from vllm.entrypoints.openai.cli_args import FrontendArgs
+ 
+ from ray.llm._internal.common.base_pydantic import BaseModelExtended
++from ray.llm._internal.common.placement import PlacementGroupConfig
+ from ray.llm._internal.common.utils.cloud_utils import CloudMirrorConfig
+ from ray.llm._internal.common.utils.import_utils import try_import
+ from ray.llm._internal.serve.constants import (
+@@ -32,54 +33,6 @@ vllm = try_import("vllm")
+ logger = get_logger(__name__)
+ 
+ 
+-class BundleConfig(BaseModelExtended):
+-    """Configuration for placement group bundle.
+-
+-    Note: Counts are floats to align with Ray resource typing.
+-    """
+-
+-    CPU: float = Field(default=0.0, ge=0.0, description="Number of CPUs per bundle")
+-    GPU: float = Field(default=1.0, ge=0.0, description="Number of GPUs per bundle")
+-
+-    class Config:
+-        extra = "allow"  # Allow arbitrary resource types
+-
+-
+-class PlacementGroupConfig(BaseModelExtended):
+-    """Configuration for placement group."""
+-
+-    bundle_per_worker: Optional[BundleConfig] = Field(
+-        default=None,
+-        description=(
+-            "Resource bundle specification for each worker. "
+-            "Auto-replicated based on tensor_parallel_size * pipeline_parallel_size. "
+-            "Cannot be used together with 'bundles'."
+-        ),
+-    )
+-    bundles: Optional[List[BundleConfig]] = Field(
+-        default=None, description="List of resource bundles"
+-    )
+-    strategy: Literal["PACK", "SPREAD", "STRICT_PACK", "STRICT_SPREAD"] = Field(
+-        default="PACK", description="Placement group strategy"
+-    )
+-
+-    @model_validator(mode="after")
+-    def validate_bundle_options(self):
+-        if self.bundle_per_worker is not None and self.bundles is not None:
+-            raise ValueError(
+-                "Cannot specify both 'bundle_per_worker' and 'bundles' in "
+-                "placement_group_config. Use 'bundle_per_worker' for simple "
+-                "per-worker resource specification (auto-replicated by tp*pp), "
+-                "or 'bundles' for full control."
+-            )
+-        if self.bundle_per_worker is None and self.bundles is None:
+-            raise ValueError(
+-                "placement_group_config must specify either 'bundle_per_worker' "
+-                "or 'bundles'."
+-            )
+-        return self
+-
+-
+ class VLLMEngineConfig(BaseModelExtended):
+     model_config = ConfigDict(
+         use_enum_values=True,

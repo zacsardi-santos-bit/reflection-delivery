@@ -1,0 +1,34 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/storage -count=1",
+  "test_files": [
+    "pkg/storage/piece_test.go",
+    "pkg/storage/stat_task_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_is_0",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_results_in_pieceLength_less_than_MIN_PIECE_LENGTH_(after_nextPowerOfTwo)",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_results_in_pieceLength_greater_than_MAX_PIECE_LENGTH_(after_nextPowerOfTwo)",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_where_initial_pieceLength_becomes_MIN_PIECE_LENGTH",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_where_initial_pieceLength_becomes_MAX_PIECE_LENGTH",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_results_in_pieceLength_that's_a_power_of_two_(8MB)_and_in_range",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_results_in_pieceLength_rounded_up_to_next_power_of_two_(8MB)_and_in_range",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_results_in_MIN_PIECE_LENGTH_after_rounding_up_from_pieceLength=(MIN_PIECE_LENGTH/2)+1",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_results_in_MAX_PIECE_LENGTH_after_rounding_up_from_pieceLength=(MAX_PIECE_LENGTH/2)+1",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/calculated_pieceLength_(e.g._256_bytes)_is_power_of_two_but_less_than_MIN_PIECE_LENGTH",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/calculated_pieceLength_(e.g._128MB)_is_power_of_two_but_greater_than_MAX_PIECE_LENGTH",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_1GB",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_10GB",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength/contentLength_makes_pieceLength_just_under_a_power_of_two_(results_in_8MB)",
+    "d7y.io/dragonfly/v2/pkg/storage::TestCalculatePieceLength",
+    "d7y.io/dragonfly/v2/pkg/storage::TestStatTask_Success",
+    "d7y.io/dragonfly/v2/pkg/storage::TestStatTask_MissingPath",
+    "d7y.io/dragonfly/v2/pkg/storage::TestStatTask_MissingURL",
+    "d7y.io/dragonfly/v2/pkg/storage::TestStatTask_MissingContentLengthAndPieceLength",
+    "d7y.io/dragonfly/v2/pkg/storage::TestStatTask_WithPieceLength",
+    "d7y.io/dragonfly/v2/pkg/storage::TestStatTask_WithFilteredQueryParams"
+  ],
+  "PASS_TO_PASS": []
+}

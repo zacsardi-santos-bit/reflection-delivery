@@ -1,0 +1,5 @@
+I'm working on the ContextualMenu component and need to add support for configuring focus behavior when the menu opens. Right now there's no way to tell the menu whether it should automatically grab focus when it mounts, or whether its inner container should be independently focusable via keyboard or accessibility tools.
+
+I'd like two new optional boolean props added to the component. The first controls whether the menu sets focus on mount — it should default to enabled. The second controls whether the inner container element accepts keyboard and accessibility focus — it should default to disabled. When neither prop is specified, the menu should behave according to those defaults automatically.
+
+As part of this change, the menu's children should be wrapped in an inner container view element that sits between the callout root and the menu items. The accessibility and keyboard focus settings should be applied to that container. The "focus on mount" setting should be forwarded to the callout itself.

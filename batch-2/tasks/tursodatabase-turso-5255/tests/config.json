@@ -1,0 +1,24 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/bindings/javascript && npx vitest run --reporter verbose packages/native/turso-sql-runner-split.test.ts",
+  "test_files": [
+    "bindings/javascript/packages/native/turso-sql-runner-split.test.ts",
+    "testing/runner/tests/collate.sqltest",
+    "testing/runner/tests/create_table.sqltest",
+    "testing/runner/tests/insert.sqltest",
+    "testing/runner/tests/join/memory.sqltest",
+    "testing/runner/tests/select/default.sqltest",
+    "testing/runner/tests/select/memory.sqltest",
+    "testing/runner/tests/trigger.sqltest",
+    "testing/runner/tests/update.sqltest"
+  ],
+  "num_test_files": 9,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/bindings/javascript/packages/native/turso-sql-runner-split.test.ts::splitStatements keeps trigger body as one statement",
+    "/workspace/repo/bindings/javascript/packages/native/turso-sql-runner-split.test.ts::splitStatements handles trigger followed by select",
+    "/workspace/repo/bindings/javascript/packages/native/turso-sql-runner-split.test.ts::splitStatements ignores END inside trigger string literal",
+    "/workspace/repo/bindings/javascript/packages/native/turso-sql-runner-split.test.ts::splitStatements handles create temp trigger and explain create trigger"
+  ],
+  "PASS_TO_PASS": []
+}

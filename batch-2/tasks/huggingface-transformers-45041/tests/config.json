@@ -1,0 +1,34 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/utils/test_core_model_loading.py /workspace/repo/tests/utils/test_fusion_mapping.py -v",
+  "test_files": [
+    "tests/utils/test_core_model_loading.py",
+    "tests/utils/test_fusion_mapping.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_anchor_full_match_only",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_anychar_star_accepts_nondigits",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_digits_only_star_accepts_digits",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_exact_match",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_large_batch_performance_smoke",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_leftmost_alternative_wins_for_overlapping_patterns",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_multiple_patterns_same_prefix",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_no_match",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_sub_key_no_match_returns_original",
+    "tests.utils.test_core_model_loading.TestWeightGlobMatching::test_sub_key_rewrites_targets",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_ernie4_5_vl_moe_conversion",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_ernie4_5_vl_moe_conversion_reversed",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_moe_and_qkv_conversion",
+    "tests.utils.test_core_model_loading.TestConvertAndLoadStateDict::test_moe_and_qkv_conversion_reversed",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_conv3d_linear_conversion_ops",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_register_checkpoint_conversion_mapping",
+    "tests.utils.test_core_model_loading.TestConversionMapping::test_register_checkpoint_conversion_mapping_overwrites",
+    "tests.utils.test_fusion_mapping.FusionMappingTest::test_from_pretrained_uses_serialized_fusion_config",
+    "tests.utils.test_fusion_mapping.FusionMappingTest::test_register_fusion_patches_is_effective_on_dummy_model",
+    "tests.utils.test_fusion_mapping.FusionMappingTest::test_register_fusion_patches_raises_on_transform_conflicts",
+    "tests.utils.test_fusion_mapping.FusionMappingTest::test_register_fusion_patches_skips_when_no_modules_match"
+  ],
+  "PASS_TO_PASS": []
+}

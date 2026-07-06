@@ -1,0 +1,18 @@
+{
+  "test_framework": "lust",
+  "test_command": "cargo test --test disas -- inline --format pretty",
+  "test_files": [
+    "tests/disas/array-copy-inline.wat",
+    "tests/disas/memory-copy-inline.wat",
+    "tests/disas/pulley-be-inline-copy.wat",
+    "tests/misc_testsuite/gc/array-copy-inline.wast"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "test ./tests/disas/memory-copy-inline.wat",
+    "test ./tests/disas/array-copy-inline.wat",
+    "test ./tests/disas/pulley-be-inline-copy.wat"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,56 @@
+patching file link_test.go
+patching file toxics/toxic_test.go
+{"Time":"2026-06-29T15:18:45.665273836Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2/toxics"}
+{"Time":"2026-06-29T15:18:45.672146056Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2"}
+{"Time":"2026-06-29T15:18:45.672267326Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2/client"}
+{"Time":"2026-06-29T15:18:45.672371655Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/client","Output":"?   \tgithub.com/Shopify/toxiproxy/v2/client\t[no test files]\n"}
+{"Time":"2026-06-29T15:18:45.672405255Z","Action":"skip","Package":"github.com/Shopify/toxiproxy/v2/client","Elapsed":0}
+{"Time":"2026-06-29T15:18:45.672478465Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2/cmd/cli"}
+{"Time":"2026-06-29T15:18:45.672549344Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/cmd/cli","Output":"?   \tgithub.com/Shopify/toxiproxy/v2/cmd/cli\t[no test files]\n"}
+{"Time":"2026-06-29T15:18:45.672581464Z","Action":"skip","Package":"github.com/Shopify/toxiproxy/v2/cmd/cli","Elapsed":0}
+{"Time":"2026-06-29T15:18:45.672611324Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2/cmd/server"}
+{"Time":"2026-06-29T15:18:45.672660374Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/cmd/server","Output":"?   \tgithub.com/Shopify/toxiproxy/v2/cmd/server\t[no test files]\n"}
+{"Time":"2026-06-29T15:18:45.672693733Z","Action":"skip","Package":"github.com/Shopify/toxiproxy/v2/cmd/server","Elapsed":0}
+{"Time":"2026-06-29T15:18:45.672693733Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2/collectors"}
+{"Time":"2026-06-29T15:18:45.672753003Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/collectors","Output":"?   \tgithub.com/Shopify/toxiproxy/v2/collectors\t[no test files]\n"}
+{"Time":"2026-06-29T15:18:45.672777403Z","Action":"skip","Package":"github.com/Shopify/toxiproxy/v2/collectors","Elapsed":0}
+{"Time":"2026-06-29T15:18:45.672794693Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2/stream"}
+{"Time":"2026-06-29T15:18:45.672868212Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2/test/e2e"}
+{"Time":"2026-06-29T15:18:45.673036681Z","Action":"start","Package":"github.com/Shopify/toxiproxy/v2/testhelper"}
+{"Time":"2026-06-29T15:18:45.673176511Z","Action":"run","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput"}
+{"Time":"2026-06-29T15:18:45.67320543Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput","Output":"=== RUN   TestToxicStub_WriteOutput\n"}
+{"Time":"2026-06-29T15:18:45.67323215Z","Action":"run","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput/when_no_read_in_1_second"}
+{"Time":"2026-06-29T15:18:45.67329078Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput/when_no_read_in_1_second","Output":"=== RUN   TestToxicStub_WriteOutput/when_no_read_in_1_second\n"}
+{"Time":"2026-06-29T15:18:45.676119684Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/stream","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-06-29T15:18:45.676157074Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/stream","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:45.676436052Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/stream","Output":"ok  \tgithub.com/Shopify/toxiproxy/v2/stream\t0.004s [no tests to run]\n"}
+{"Time":"2026-06-29T15:18:45.676482372Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2/stream","Elapsed":0.004}
+{"Time":"2026-06-29T15:18:45.68039489Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/testhelper","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-06-29T15:18:45.682389698Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/testhelper","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:45.681088106Z","Action":"run","Package":"github.com/Shopify/toxiproxy/v2","Test":"TestRemoveToxicWithBrokenConnection"}
+{"Time":"2026-06-29T15:18:45.682468368Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2","Test":"TestRemoveToxicWithBrokenConnection","Output":"=== RUN   TestRemoveToxicWithBrokenConnection\n"}
+{"Time":"2026-06-29T15:18:45.682515637Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2","Test":"TestRemoveToxicWithBrokenConnection","Output":"{\"level\":\"trace\",\"component\":\"BandwidthToxic\",\"method\":\"Pipe\",\"toxic_type\":\"bandwidth\",\"addr\":\"0xc0002243b8\",\"time\":\"2026-06-29T15:18:45Z\",\"message\":\"BandwidthToxic was interrupted during writing data\"}\n"}
+{"Time":"2026-06-29T15:18:45.681155705Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/test/e2e","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-06-29T15:18:45.682570727Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/test/e2e","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:45.682441658Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/testhelper","Output":"ok  \tgithub.com/Shopify/toxiproxy/v2/testhelper\t0.009s [no tests to run]\n"}
+{"Time":"2026-06-29T15:18:45.682638867Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2/testhelper","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:45.682619247Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/test/e2e","Output":"ok  \tgithub.com/Shopify/toxiproxy/v2/test/e2e\t0.010s [no tests to run]\n"}
+{"Time":"2026-06-29T15:18:45.682832336Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2/test/e2e","Elapsed":0.01}
+{"Time":"2026-06-29T15:18:46.673795871Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput/when_no_read_in_1_second","Output":"--- PASS: TestToxicStub_WriteOutput/when_no_read_in_1_second (1.00s)\n"}
+{"Time":"2026-06-29T15:18:46.673860831Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput/when_no_read_in_1_second","Elapsed":1}
+{"Time":"2026-06-29T15:18:46.673887401Z","Action":"run","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput/when_read_is_available"}
+{"Time":"2026-06-29T15:18:46.673910811Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput/when_read_is_available","Output":"=== RUN   TestToxicStub_WriteOutput/when_read_is_available\n"}
+{"Time":"2026-06-29T15:18:46.673949981Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput/when_read_is_available","Output":"--- PASS: TestToxicStub_WriteOutput/when_read_is_available (0.00s)\n"}
+{"Time":"2026-06-29T15:18:46.67397352Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput/when_read_is_available","Elapsed":0}
+{"Time":"2026-06-29T15:18:46.67399786Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput","Output":"--- PASS: TestToxicStub_WriteOutput (1.00s)\n"}
+{"Time":"2026-06-29T15:18:46.67402518Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2/toxics","Test":"TestToxicStub_WriteOutput","Elapsed":1}
+{"Time":"2026-06-29T15:18:46.674151909Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/toxics","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:46.674309469Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2/toxics","Output":"ok  \tgithub.com/Shopify/toxiproxy/v2/toxics\t1.009s\n"}
+{"Time":"2026-06-29T15:18:46.674352258Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2/toxics","Elapsed":1.009}
+{"Time":"2026-06-29T15:18:50.681791374Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2","Test":"TestRemoveToxicWithBrokenConnection","Output":"{\"level\":\"warn\",\"component\":\"BandwidthToxic\",\"method\":\"Pipe\",\"toxic_type\":\"bandwidth\",\"addr\":\"0xc0002243b8\",\"error\":\"timeout: could not write to output in 5 seconds\",\"time\":\"2026-06-29T15:18:50Z\",\"message\":\"Could not write last packets after interrupt to Output\"}\n"}
+{"Time":"2026-06-29T15:19:05.684001665Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2","Test":"TestRemoveToxicWithBrokenConnection","Output":"--- PASS: TestRemoveToxicWithBrokenConnection (20.00s)\n"}
+{"Time":"2026-06-29T15:19:05.684085284Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2","Test":"TestRemoveToxicWithBrokenConnection","Elapsed":20}
+{"Time":"2026-06-29T15:19:05.684726681Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2","Output":"PASS\n"}
+{"Time":"2026-06-29T15:19:05.685192738Z","Action":"output","Package":"github.com/Shopify/toxiproxy/v2","Output":"ok  \tgithub.com/Shopify/toxiproxy/v2\t20.013s\n"}
+{"Time":"2026-06-29T15:19:05.685228358Z","Action":"pass","Package":"github.com/Shopify/toxiproxy/v2","Elapsed":20.013}
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=go exit_code=0

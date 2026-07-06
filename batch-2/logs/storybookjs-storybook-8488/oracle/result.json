@@ -1,0 +1,29 @@
+{
+    "id": "fb061996-b058-45ad-abff-edad76689d53",
+    "started_at": "2026-07-04T15:43:31.115939",
+    "finished_at": "2026-07-04T15:43:46.696973",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__storybookjs-storybook-8488": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "storybookjs-storybook-8488__C94u7xV"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

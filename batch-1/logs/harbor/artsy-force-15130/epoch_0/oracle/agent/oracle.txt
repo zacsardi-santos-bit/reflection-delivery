@@ -1,0 +1,16 @@
+patching file package.json
+patching file src/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar.tsx
+patching file src/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarShippingInformation.tsx
+patching file src/Components/ArtsyShippingEstimate.tsx
+patching file src/Components/Artwork/SidebarExpandable.tsx
+patching file src/Components/NavBar/NavBar.tsx
+patching file src/Server/bootstrapSharify.ts
+patching file src/Server/config.ts
+patching file src/Typings/sharify.d.ts
+patching file src/__generated__/ArtsyShippingEstimate_artwork.graphql.ts
+patching file src/__generated__/ArtworkAppTestQuery.graphql.ts
+patching file src/__generated__/ArtworkSidebarQuery.graphql.ts
+patching file src/__generated__/ArtworkSidebar_Test_Query.graphql.ts
+patching file src/__generated__/ArtworkSidebar_artwork.graphql.ts
+patching file src/__generated__/artworkRoutes_ArtworkQuery.graphql.ts
+patching file yarn.lock

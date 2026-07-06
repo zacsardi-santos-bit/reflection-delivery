@@ -1,2 +1,0 @@
-patching file cmd/migrate/load_balancer_pool.go
-patching file cmd/migrate/transformations/config_block_to_attribute.go

@@ -1,0 +1,9 @@
+I'm working on adding a unified class-based interface for tool management in SiliconCompiler. Right now, tool-related operations like finding an executable, checking its version, building environment variables, and constructing a command line are handled in scattered ways. I'd like to introduce a dedicated class that consolidates all of this.
+
+The class needs to be exportable from the main package. It should support binding itself to a chip's runtime context (step, index, and flow), and raise clear errors if those aren't configured. Once bound, it should expose methods for locating the executable (raising a specific error if not found), running a version check subprocess and comparing the result against configured version specifiers (supporting equality, range, compound, and multiple acceptable sets), assembling the runtime environment variables (global, tool-level license server variables, task-level overrides, and optional PATH management), and building the full command list.
+
+The base class should have default stub implementations for methods that tool implementors are expected to override — like parsing the version string from subprocess output (which should raise a not-implemented error by default), normalizing version strings (identity by default), and providing additional runtime options (empty list by default).
+
+Runtime state like the logger, schema references, and step/index/task context should be cleanly separated from configuration, and deep-copying the object should reset that runtime state while preserving configuration.
+
+Alongside this, I need to update several tool-level configuration parameters (executable name, path, version specifier, format, vendor, license servers, etc.) that are currently job-scoped to instead be globally scoped, since those settings belong to the tool rather than any particular run. The schema version should be bumped to reflect this change.

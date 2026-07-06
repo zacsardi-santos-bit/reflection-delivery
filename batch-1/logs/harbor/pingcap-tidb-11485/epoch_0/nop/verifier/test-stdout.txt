@@ -1,0 +1,17 @@
+patching file util/chunk/chunk_test.go
+patching file util/chunk/codec_test.go
+patching file util/chunk/column_test.go
+# github.com/pingcap/tidb/util/chunk [github.com/pingcap/tidb/util/chunk.test]
+util/chunk/chunk_test.go:163:11: invalid operation: cannot call non-function dst.columns[0].nullCount (variable of type int)
+util/chunk/chunk_test.go:170:11: invalid operation: cannot call non-function dst.columns[1].nullCount (variable of type int)
+util/chunk/chunk_test.go:177:11: invalid operation: cannot call non-function dst.columns[2].nullCount (variable of type int)
+util/chunk/chunk_test.go:216:11: invalid operation: cannot call non-function src.columns[0].nullCount (variable of type int)
+util/chunk/chunk_test.go:223:11: invalid operation: cannot call non-function src.columns[1].nullCount (variable of type int)
+util/chunk/chunk_test.go:230:11: invalid operation: cannot call non-function src.columns[2].nullCount (variable of type int)
+util/chunk/chunk_test.go:658:12: invalid operation: cannot call non-function srcCol.nullCount (variable of type int)
+util/chunk/chunk_test.go:658:46: invalid operation: cannot call non-function destCol.nullCount (variable of type int)
+util/chunk/column_test.go:29:3: invalid operation: cannot call non-function c1.nullCount (variable of type int)
+util/chunk/column_test.go:29:21: invalid operation: cannot call non-function c2.nullCount (variable of type int)
+util/chunk/column_test.go:29:21: too many errors
+FAIL	github.com/pingcap/tidb/util/chunk [build failed]
+reward=0 graded=2 found=2 failed=2 parsed=1 framework=go exit_code=1

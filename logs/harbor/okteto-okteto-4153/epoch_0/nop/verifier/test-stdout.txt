@@ -1,6 +1,0 @@
-patching file pkg/deps/deps_test.go
-go: finding module for package github.com/chainguard-dev/git-urls
-# github.com/okteto/okteto/pkg/deps
-pkg/deps/deps_test.go:20:2: cannot find module providing package github.com/chainguard-dev/git-urls: module lookup disabled by GOPROXY=off
-FAIL	github.com/okteto/okteto/pkg/deps [setup failed]
-reward=0 graded=17 found=0 failed=0 parsed=0 framework=go exit_code=1

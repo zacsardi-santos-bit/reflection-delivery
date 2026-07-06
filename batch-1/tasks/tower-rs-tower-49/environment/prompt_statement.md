@@ -1,0 +1,5 @@
+I'm working on a Tower middleware that limits the number of requests that can be simultaneously in-flight to a wrapped service. The idea is that you configure a maximum concurrency at construction time, and once that many requests are in-flight, the service should report that it's not ready until a slot opens up.
+
+There are a few capacity-release scenarios I need to handle correctly: capacity should be released when a response future completes (whether successfully or with an error), when a response future is dropped before completing, and when a service clone that reserved capacity via a readiness check is dropped before actually sending a request. Multiple clones of the middleware should all share the same capacity pool so the total in-flight count across all clones is bounded by the configured maximum.
+
+If a caller skips the readiness check and calls the service directly when it's at capacity, the returned future should immediately resolve to an error rather than panicking or blocking. With a maximum of zero, the service should always report not-ready and any direct call should fail.

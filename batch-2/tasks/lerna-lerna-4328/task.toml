@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/lerna/lerna/pull/4328"
+source_type = "pr"
+
+[task]
+name = "lerna/lerna"
+description = "I'm trying to get us off a few tiny deprecated npm packages we still lean on for terminal stuff, three of them actually, one that detects whether the terminal supports Unicode, one that figures out..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["typescript", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:lerna-lerna-4328"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/13"
+category = "Build, Dependency, and Release Management"
+subcategory = "Dependency and lockfile resolution"
+objective_labels = ["Implement", "Refactor", "Migrate"]
+artifact_type_labels = ["Codebase", "Single script or program"]
+expert_time_estimate = 7200
+junior_time_estimate = 21600

@@ -1,0 +1,47 @@
+patching file contrib/test/ci/integration.yml
+patching file contrib/test/ci/vars.yml
+patching file internal/config/seccomp/seccomp_test.go
+patching file internal/config/seccomp/seccompociartifact/seccompociartifact_test.go
+patching file internal/config/seccomp/seccompociartifact/suite_test.go
+patching file test/mocks/ociartifact/ociartifact.go
+patching file test/seccomp_oci_artifacts.bats
+{"Time":"2026-06-29T15:21:03.267746163Z","Action":"start","Package":"github.com/cri-o/cri-o/internal/config/seccomp"}
+{"Time":"2026-06-29T15:21:03.311505366Z","Action":"start","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact"}
+{"Time":"2026-06-29T15:21:03.311658796Z","Action":"start","Package":"github.com/cri-o/cri-o/test/mocks/ociartifact"}
+{"Time":"2026-06-29T15:21:03.311699066Z","Action":"output","Package":"github.com/cri-o/cri-o/test/mocks/ociartifact","Output":"?   \tgithub.com/cri-o/cri-o/test/mocks/ociartifact\t[no test files]\n"}
+{"Time":"2026-06-29T15:21:03.311728666Z","Action":"skip","Package":"github.com/cri-o/cri-o/test/mocks/ociartifact","Elapsed":0}
+{"Time":"2026-06-29T15:21:03.33143359Z","Action":"run","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun"}
+{"Time":"2026-06-29T15:21:03.33149373Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"=== RUN   TestRun\n"}
+{"Time":"2026-06-29T15:21:03.331883139Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"Running Suite: SeccompOCIArtifact - /workspace/repo/internal/config/seccomp/seccompociartifact\n"}
+{"Time":"2026-06-29T15:21:03.331945919Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"==============================================================================================\n"}
+{"Time":"2026-06-29T15:21:03.331969329Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"Random Seed: \u001b[1m1782746463\u001b[0m\n"}
+{"Time":"2026-06-29T15:21:03.331993949Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"\n"}
+{"Time":"2026-06-29T15:21:03.332016939Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"Will run \u001b[1m7\u001b[0m of \u001b[1m7\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:21:03.332546768Z","Action":"run","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig"}
+{"Time":"2026-06-29T15:21:03.332581418Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"=== RUN   TestLibConfig\n"}
+{"Time":"2026-06-29T15:21:03.332880688Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"Running Suite: SeccompConfig - /workspace/repo/internal/config/seccomp\n"}
+{"Time":"2026-06-29T15:21:03.332914248Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"======================================================================\n"}
+{"Time":"2026-06-29T15:21:03.332938598Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"Random Seed: \u001b[1m1782746463\u001b[0m\n"}
+{"Time":"2026-06-29T15:21:03.332963608Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"\n"}
+{"Time":"2026-06-29T15:21:03.332986668Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"Will run \u001b[1m6\u001b[0m of \u001b[1m6\u001b[0m specs\n"}
+{"Time":"2026-06-29T15:21:03.333360557Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"\u001b[38;5;10m•\u001b[0mtime=\"2026-06-29T15:21:03Z\" level=info msg=\"Using the internal default seccomp profile\"\n"}
+{"Time":"2026-06-29T15:21:03.333970737Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"\u001b[38;5;10m•\u001b[0mtime=\"2026-06-29T15:21:03Z\" level=info msg=\"Successfully loaded seccomp profile \\\"/tmp/2641161852\\\"\"\n"}
+{"Time":"2026-06-29T15:21:03.334709146Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:21:03.334749706Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"\n"}
+{"Time":"2026-06-29T15:21:03.334775146Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"\u001b[38;5;10m\u001b[1mRan 6 of 6 Specs in 0.002 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:21:03.334809446Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"\u001b[38;5;10m\u001b[1mSUCCESS!\u001b[0m -- \u001b[38;5;10m\u001b[1m6 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m0 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:21:03.334846625Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Output":"--- PASS: TestLibConfig (0.00s)\n"}
+{"Time":"2026-06-29T15:21:03.334871625Z","Action":"pass","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Test":"TestLibConfig","Elapsed":0}
+{"Time":"2026-06-29T15:21:03.334896715Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:03.335446795Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Output":"ok  \tgithub.com/cri-o/cri-o/internal/config/seccomp\t0.024s\n"}
+{"Time":"2026-06-29T15:21:03.335493715Z","Action":"pass","Package":"github.com/cri-o/cri-o/internal/config/seccomp","Elapsed":0.068}
+{"Time":"2026-06-29T15:21:03.336295634Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\u001b[38;5;10m•\u001b[0m\n"}
+{"Time":"2026-06-29T15:21:03.345219582Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"\n"}
+{"Time":"2026-06-29T15:21:03.357807775Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"\u001b[38;5;10m\u001b[1mRan 7 of 7 Specs in 0.005 seconds\u001b[0m\n"}
+{"Time":"2026-06-29T15:21:03.357968945Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"\u001b[38;5;10m\u001b[1mSUCCESS!\u001b[0m -- \u001b[38;5;10m\u001b[1m7 Passed\u001b[0m | \u001b[38;5;9m\u001b[1m0 Failed\u001b[0m | \u001b[38;5;11m\u001b[1m0 Pending\u001b[0m | \u001b[38;5;14m\u001b[1m0 Skipped\u001b[0m\n"}
+{"Time":"2026-06-29T15:21:03.358026945Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Output":"--- PASS: TestRun (0.01s)\n"}
+{"Time":"2026-06-29T15:21:03.358050315Z","Action":"pass","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Test":"TestRun","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:03.358074065Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Output":"PASS\n"}
+{"Time":"2026-06-29T15:21:03.358138825Z","Action":"output","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Output":"ok  \tgithub.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact\t0.046s\n"}
+{"Time":"2026-06-29T15:21:03.358167415Z","Action":"pass","Package":"github.com/cri-o/cri-o/internal/config/seccomp/seccompociartifact","Elapsed":0.047}
+reward=1 (grader error: Extra data: line 21 column 1 (char 793); fell back to exit_code=0)

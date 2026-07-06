@@ -1,0 +1,29 @@
+{
+    "id": "f344bb22-7253-4454-aa69-7a89a1c0c3db",
+    "started_at": "2026-07-06T12:17:35.545758",
+    "finished_at": "2026-07-06T12:18:05.612660",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__rails-rails-50623": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "rails-rails-50623__5Yj2tVP"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

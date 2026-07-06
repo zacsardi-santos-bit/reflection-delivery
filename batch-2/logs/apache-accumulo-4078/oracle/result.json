@@ -1,0 +1,29 @@
+{
+    "id": "057649f8-c43e-42ba-864b-c80d2a983ef1",
+    "started_at": "2026-07-06T12:19:24.041769",
+    "finished_at": "2026-07-06T12:22:44.845185",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-accumulo-4078": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-accumulo-4078__WBEp9ML"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

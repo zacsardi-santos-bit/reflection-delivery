@@ -1,6 +1,0 @@
-patching file README.md
-patching file aws/adapter.go
-patching file aws/cf.go
-patching file kubernetes/adapter.go
-patching file kubernetes/ingress.go
-patching file worker.go

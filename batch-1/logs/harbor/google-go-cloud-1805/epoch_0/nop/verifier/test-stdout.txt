@@ -1,0 +1,6 @@
+patching file internal/cmd/gocdk/apply_test.go
+patching file internal/cmd/gocdk/main_test.go
+# gocloud.dev/internal/cmd/gocdk [gocloud.dev/internal/cmd/gocdk.test]
+./apply_test.go:71:32: undefined: findBiomeDir
+FAIL	gocloud.dev/internal/cmd/gocdk [build failed]
+reward=0 graded=18 found=18 failed=18 parsed=1 framework=go exit_code=1

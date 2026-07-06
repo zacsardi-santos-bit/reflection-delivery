@@ -1,0 +1,32 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && yarn test --testPathPattern=\"StructuredMetadataTable.test|DeploymentDrawer.test|IngressDrawer.test|ServiceDrawer.test|StatefulSetDrawer.test\" --watchAll=false",
+  "test_files": [
+    "packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx",
+    "plugins/kubernetes-react/src/components/DeploymentsAccordions/DeploymentDrawer.test.tsx",
+    "plugins/kubernetes-react/src/components/IngressesAccordions/IngressDrawer.test.tsx",
+    "plugins/kubernetes-react/src/components/ServicesAccordions/ServiceDrawer.test.tsx",
+    "plugins/kubernetes-react/src/components/StatefulSetsAccordions/StatefulSetDrawer.test.tsx"
+  ],
+  "num_test_files": 5,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> renders without exploding",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Item Mappings Iterates over and displays every field in the map",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Item Mappings Supports primitive value fields",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Item Mappings Supports array fields",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Item Mappings Supports boolean values",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Item Mappings Supports react elements",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Item Mappings Supports object elements",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Title formatting should make keys human readable",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Title formatting should be possible to disable it",
+    "/workspace/repo/packages/core-components/src/components/StructuredMetadataTable/StructuredMetadataTable.test.tsx::<StructuredMetadataTable /> Title formatting should be customizable",
+    "/workspace/repo/plugins/kubernetes-react/src/components/IngressesAccordions/IngressDrawer.test.tsx::IngressDrawer should render ingress drawer",
+    "/workspace/repo/plugins/kubernetes-react/src/components/ServicesAccordions/ServiceDrawer.test.tsx::ServiceDrawer should render deployment drawer",
+    "/workspace/repo/plugins/kubernetes-react/src/components/DeploymentsAccordions/DeploymentDrawer.test.tsx::DeploymentDrawer should render deployment drawer",
+    "/workspace/repo/plugins/kubernetes-react/src/components/DeploymentsAccordions/DeploymentDrawer.test.tsx::DeploymentDrawer should render deployment drawer without namespace",
+    "/workspace/repo/plugins/kubernetes-react/src/components/StatefulSetsAccordions/StatefulSetDrawer.test.tsx::StatefulSetDrawer should render statefulset drawer",
+    "/workspace/repo/plugins/kubernetes-react/src/components/StatefulSetsAccordions/StatefulSetDrawer.test.tsx::StatefulSetDrawer should render statefulset drawer without namespace"
+  ],
+  "PASS_TO_PASS": []
+}

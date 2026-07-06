@@ -1,0 +1,29 @@
+{
+    "id": "3f241f15-9238-420d-998a-8f5209ab3359",
+    "started_at": "2026-07-06T12:17:23.627562",
+    "finished_at": "2026-07-06T12:18:11.684293",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__huggingface-datasets-8148": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "huggingface-datasets-8148__ePuPCht"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

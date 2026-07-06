@@ -1,0 +1,30 @@
+patching file pkg/recipes/terraform/module_test.go
+patching file test/functional/shared/resources/recipe_terraform_test.go
+patching file test/functional/shared/resources/testdata/corerp-resources-terraform-redis.bicep
+patching file test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/modules/main.tf (renamed from test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/main.tf)
+patching file test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/modules/variables.tf (renamed from test/functional/shared/resources/testdata/recipes/test-terraform-recipes/kubernetes-redis/variables.tf)
+{"Time":"2026-07-01T15:21:33.353590462Z","Action":"start","Package":"github.com/radius-project/radius/pkg/recipes/terraform"}
+{"Time":"2026-07-01T15:21:33.383112636Z","Action":"run","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig"}
+{"Time":"2026-07-01T15:21:33.383146905Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig","Output":"=== RUN   Test_InspectTFModuleConfig\n"}
+{"Time":"2026-07-01T15:21:33.383163418Z","Action":"run","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/aws_provider_only"}
+{"Time":"2026-07-01T15:21:33.383167979Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/aws_provider_only","Output":"=== RUN   Test_InspectTFModuleConfig/aws_provider_only\n"}
+{"Time":"2026-07-01T15:21:33.38342373Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/aws_provider_only","Output":"--- PASS: Test_InspectTFModuleConfig/aws_provider_only (0.00s)\n"}
+{"Time":"2026-07-01T15:21:33.383433382Z","Action":"pass","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/aws_provider_only","Elapsed":0}
+{"Time":"2026-07-01T15:21:33.383450186Z","Action":"run","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/aws_provider_with_recipe_context_variable,_output_and_parameters"}
+{"Time":"2026-07-01T15:21:33.383455463Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/aws_provider_with_recipe_context_variable,_output_and_parameters","Output":"=== RUN   Test_InspectTFModuleConfig/aws_provider_with_recipe_context_variable,_output_and_parameters\n"}
+{"Time":"2026-07-01T15:21:33.384060859Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/aws_provider_with_recipe_context_variable,_output_and_parameters","Output":"--- PASS: Test_InspectTFModuleConfig/aws_provider_with_recipe_context_variable,_output_and_parameters (0.00s)\n"}
+{"Time":"2026-07-01T15:21:33.384085203Z","Action":"pass","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/aws_provider_with_recipe_context_variable,_output_and_parameters","Elapsed":0}
+{"Time":"2026-07-01T15:21:33.384123196Z","Action":"run","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/invalid_module_name_-_non_existent_module_directory"}
+{"Time":"2026-07-01T15:21:33.384128837Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/invalid_module_name_-_non_existent_module_directory","Output":"=== RUN   Test_InspectTFModuleConfig/invalid_module_name_-_non_existent_module_directory\n"}
+{"Time":"2026-07-01T15:21:33.384146156Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/invalid_module_name_-_non_existent_module_directory","Output":"--- PASS: Test_InspectTFModuleConfig/invalid_module_name_-_non_existent_module_directory (0.00s)\n"}
+{"Time":"2026-07-01T15:21:33.384155328Z","Action":"pass","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/invalid_module_name_-_non_existent_module_directory","Elapsed":0}
+{"Time":"2026-07-01T15:21:33.384162602Z","Action":"run","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/submodule_path"}
+{"Time":"2026-07-01T15:21:33.384167138Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/submodule_path","Output":"=== RUN   Test_InspectTFModuleConfig/submodule_path\n"}
+{"Time":"2026-07-01T15:21:33.384335365Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/submodule_path","Output":"--- PASS: Test_InspectTFModuleConfig/submodule_path (0.00s)\n"}
+{"Time":"2026-07-01T15:21:33.384354724Z","Action":"pass","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig/submodule_path","Elapsed":0}
+{"Time":"2026-07-01T15:21:33.384363006Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig","Output":"--- PASS: Test_InspectTFModuleConfig (0.00s)\n"}
+{"Time":"2026-07-01T15:21:33.38436764Z","Action":"pass","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Test":"Test_InspectTFModuleConfig","Elapsed":0}
+{"Time":"2026-07-01T15:21:33.384372746Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Output":"PASS\n"}
+{"Time":"2026-07-01T15:21:33.386336005Z","Action":"output","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Output":"ok  \tgithub.com/radius-project/radius/pkg/recipes/terraform\t0.033s\n"}
+{"Time":"2026-07-01T15:21:33.386353615Z","Action":"pass","Package":"github.com/radius-project/radius/pkg/recipes/terraform","Elapsed":0.033}
+reward=1 graded=5 found=5 failed=0 parsed=5 framework=go exit_code=0

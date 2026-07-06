@@ -1,0 +1,454 @@
+diff --git a/.mockery.yaml b/.mockery.yaml
+index aef561a2..e89bce5d 100644
+--- a/.mockery.yaml
++++ b/.mockery.yaml
+@@ -69,3 +69,4 @@ packages:
+   github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore:
+     interfaces:
+       CoreSpanReader: {}
++      CoreSpanWriter: {}
+diff --git a/internal/storage/v1/cassandra/factory.go b/internal/storage/v1/cassandra/factory.go
+index 54a6d033..9ed84f20 100644
+--- a/internal/storage/v1/cassandra/factory.go
++++ b/internal/storage/v1/cassandra/factory.go
+@@ -6,7 +6,6 @@ package cassandra
+ 
+ import (
+ 	"context"
+-	"errors"
+ 	"io"
+ 
+ 	"go.opentelemetry.io/otel/trace"
+@@ -22,12 +21,9 @@ import (
+ 	"github.com/jaegertracing/jaeger/internal/storage/v1"
+ 	"github.com/jaegertracing/jaeger/internal/storage/v1/api/dependencystore"
+ 	"github.com/jaegertracing/jaeger/internal/storage/v1/api/samplingstore"
+-	"github.com/jaegertracing/jaeger/internal/storage/v1/api/spanstore"
+ 	cdepstore "github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/dependencystore"
+ 	csamplingstore "github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/samplingstore"
+ 	"github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/schema"
+-	cspanstore "github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore"
+-	"github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore/dbmodel"
+ )
+ 
+ var ( // interface comformance checks
+@@ -123,20 +119,6 @@ func NewSession(c *config.Configuration) (cassandra.Session, error) {
+ 	return createSession(c)
+ }
+ 
+-// CreateSpanReader implements storage.Factory
+-func (*Factory) CreateSpanReader() (spanstore.Reader, error) {
+-	return nil, errors.New("not implemented")
+-}
+-
+-// CreateSpanWriter creates a spanstore.Writer.
+-func (f *Factory) CreateSpanWriter() (spanstore.Writer, error) {
+-	options, err := writerOptions(f.Options)
+-	if err != nil {
+-		return nil, err
+-	}
+-	return cspanstore.NewSpanWriter(f.session, f.Options.SpanStoreWriteCacheTTL, f.metricsFactory, f.logger, options...)
+-}
+-
+ // CreateDependencyReader creates a dependencystore.Reader.
+ func (f *Factory) CreateDependencyReader() (dependencystore.Reader, error) {
+ 	version := cdepstore.GetDependencyVersion(f.session)
+@@ -166,35 +148,6 @@ func (f *Factory) CreateSamplingStore(int /* maxBuckets */) (samplingstore.Store
+ 	return csamplingstore.New(f.session, samplingMetricsFactory, f.logger), nil
+ }
+ 
+-func writerOptions(opts *Options) ([]cspanstore.Option, error) {
+-	var tagFilters []dbmodel.TagFilter
+-
+-	// drop all tag filters
+-	if !opts.Index.Tags || !opts.Index.ProcessTags || !opts.Index.Logs {
+-		tagFilters = append(tagFilters, dbmodel.NewTagFilterDropAll(!opts.Index.Tags, !opts.Index.ProcessTags, !opts.Index.Logs))
+-	}
+-
+-	// black/white list tag filters
+-	tagIndexBlacklist := opts.TagIndexBlacklist()
+-	tagIndexWhitelist := opts.TagIndexWhitelist()
+-	if len(tagIndexBlacklist) > 0 && len(tagIndexWhitelist) > 0 {
+-		return nil, errors.New("only one of TagIndexBlacklist and TagIndexWhitelist can be specified")
+-	}
+-	if len(tagIndexBlacklist) > 0 {
+-		tagFilters = append(tagFilters, dbmodel.NewBlacklistFilter(tagIndexBlacklist))
+-	} else if len(tagIndexWhitelist) > 0 {
+-		tagFilters = append(tagFilters, dbmodel.NewWhitelistFilter(tagIndexWhitelist))
+-	}
+-
+-	if len(tagFilters) == 0 {
+-		return nil, nil
+-	} else if len(tagFilters) == 1 {
+-		return []cspanstore.Option{cspanstore.TagFilter(tagFilters[0])}, nil
+-	}
+-
+-	return []cspanstore.Option{cspanstore.TagFilter(dbmodel.NewChainedTagFilter(tagFilters...))}, nil
+-}
+-
+ var _ io.Closer = (*Factory)(nil)
+ 
+ // Close closes the resources held by the factory
+diff --git a/internal/storage/v1/cassandra/spanstore/dbmodel/model.go b/internal/storage/v1/cassandra/spanstore/dbmodel/model.go
+index d4c0080b..8838e88f 100644
+--- a/internal/storage/v1/cassandra/spanstore/dbmodel/model.go
++++ b/internal/storage/v1/cassandra/spanstore/dbmodel/model.go
+@@ -246,3 +246,12 @@ func TraceIDFromDomain(traceID model.TraceID) TraceID {
+ 	binary.BigEndian.PutUint64(dbTraceID[8:], uint64(traceID.Low))
+ 	return dbTraceID
+ }
++
++func GetSpanKind(ds *Span) string {
++	for _, tag := range ds.Tags {
++		if tag.Key == model.SpanKindKey {
++			return tag.ValueString
++		}
++	}
++	return ""
++}
+diff --git a/internal/storage/v1/cassandra/spanstore/mocks/mocks.go b/internal/storage/v1/cassandra/spanstore/mocks/mocks.go
+index 4d3a743b..8a18526c 100644
+--- a/internal/storage/v1/cassandra/spanstore/mocks/mocks.go
++++ b/internal/storage/v1/cassandra/spanstore/mocks/mocks.go
+@@ -370,3 +370,125 @@ func (_c *CoreSpanReader_GetTrace_Call) RunAndReturn(run func(ctx context.Contex
+ 	_c.Call.Return(run)
+ 	return _c
+ }
++
++// NewCoreSpanWriter creates a new instance of CoreSpanWriter. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.
++// The first argument is typically a *testing.T value.
++func NewCoreSpanWriter(t interface {
++	mock.TestingT
++	Cleanup(func())
++}) *CoreSpanWriter {
++	mock := &CoreSpanWriter{}
++	mock.Mock.Test(t)
++
++	t.Cleanup(func() { mock.AssertExpectations(t) })
++
++	return mock
++}
++
++// CoreSpanWriter is an autogenerated mock type for the CoreSpanWriter type
++type CoreSpanWriter struct {
++	mock.Mock
++}
++
++type CoreSpanWriter_Expecter struct {
++	mock *mock.Mock
++}
++
++func (_m *CoreSpanWriter) EXPECT() *CoreSpanWriter_Expecter {
++	return &CoreSpanWriter_Expecter{mock: &_m.Mock}
++}
++
++// Close provides a mock function for the type CoreSpanWriter
++func (_mock *CoreSpanWriter) Close() error {
++	ret := _mock.Called()
++
++	if len(ret) == 0 {
++		panic("no return value specified for Close")
++	}
++
++	var r0 error
++	if returnFunc, ok := ret.Get(0).(func() error); ok {
++		r0 = returnFunc()
++	} else {
++		r0 = ret.Error(0)
++	}
++	return r0
++}
++
++// CoreSpanWriter_Close_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Close'
++type CoreSpanWriter_Close_Call struct {
++	*mock.Call
++}
++
++// Close is a helper method to define mock.On call
++func (_e *CoreSpanWriter_Expecter) Close() *CoreSpanWriter_Close_Call {
++	return &CoreSpanWriter_Close_Call{Call: _e.mock.On("Close")}
++}
++
++func (_c *CoreSpanWriter_Close_Call) Run(run func()) *CoreSpanWriter_Close_Call {
++	_c.Call.Run(func(args mock.Arguments) {
++		run()
++	})
++	return _c
++}
++
++func (_c *CoreSpanWriter_Close_Call) Return(err error) *CoreSpanWriter_Close_Call {
++	_c.Call.Return(err)
++	return _c
++}
++
++func (_c *CoreSpanWriter_Close_Call) RunAndReturn(run func() error) *CoreSpanWriter_Close_Call {
++	_c.Call.Return(run)
++	return _c
++}
++
++// WriteSpan provides a mock function for the type CoreSpanWriter
++func (_mock *CoreSpanWriter) WriteSpan(ds *dbmodel.Span) error {
++	ret := _mock.Called(ds)
++
++	if len(ret) == 0 {
++		panic("no return value specified for WriteSpan")
++	}
++
++	var r0 error
++	if returnFunc, ok := ret.Get(0).(func(*dbmodel.Span) error); ok {
++		r0 = returnFunc(ds)
++	} else {
++		r0 = ret.Error(0)
++	}
++	return r0
++}
++
++// CoreSpanWriter_WriteSpan_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'WriteSpan'
++type CoreSpanWriter_WriteSpan_Call struct {
++	*mock.Call
++}
++
++// WriteSpan is a helper method to define mock.On call
++//   - ds *dbmodel.Span
++func (_e *CoreSpanWriter_Expecter) WriteSpan(ds interface{}) *CoreSpanWriter_WriteSpan_Call {
++	return &CoreSpanWriter_WriteSpan_Call{Call: _e.mock.On("WriteSpan", ds)}
++}
++
++func (_c *CoreSpanWriter_WriteSpan_Call) Run(run func(ds *dbmodel.Span)) *CoreSpanWriter_WriteSpan_Call {
++	_c.Call.Run(func(args mock.Arguments) {
++		var arg0 *dbmodel.Span
++		if args[0] != nil {
++			arg0 = args[0].(*dbmodel.Span)
++		}
++		run(
++			arg0,
++		)
++	})
++	return _c
++}
++
++func (_c *CoreSpanWriter_WriteSpan_Call) Return(err error) *CoreSpanWriter_WriteSpan_Call {
++	_c.Call.Return(err)
++	return _c
++}
++
++func (_c *CoreSpanWriter_WriteSpan_Call) RunAndReturn(run func(ds *dbmodel.Span) error) *CoreSpanWriter_WriteSpan_Call {
++	_c.Call.Return(run)
++	return _c
++}
+diff --git a/internal/storage/v1/cassandra/spanstore/writer.go b/internal/storage/v1/cassandra/spanstore/writer.go
+index f10152a9..77dec6b8 100644
+--- a/internal/storage/v1/cassandra/spanstore/writer.go
++++ b/internal/storage/v1/cassandra/spanstore/writer.go
+@@ -5,7 +5,6 @@
+ package spanstore
+ 
+ import (
+-	"context"
+ 	"encoding/json"
+ 	"fmt"
+ 	"strings"
+@@ -76,6 +75,11 @@ type spanWriterMetrics struct {
+ 	durationIndex         *casmetrics.Table
+ }
+ 
++type CoreSpanWriter interface {
++	WriteSpan(ds *dbmodel.Span) error
++	Close() error
++}
++
+ // SpanWriter handles all writes to Cassandra for the Jaeger data model
+ type SpanWriter struct {
+ 	session              cassandra.Session
+@@ -130,22 +134,21 @@ func (s *SpanWriter) Close() error {
+ }
+ 
+ // WriteSpan saves the span into Cassandra
+-func (s *SpanWriter) WriteSpan(_ context.Context, span *model.Span) error {
+-	ds := dbmodel.FromDomain(span)
++func (s *SpanWriter) WriteSpan(ds *dbmodel.Span) error {
+ 	if s.storageMode&storeFlag == storeFlag {
+-		if err := s.writeSpanToDB(span, ds); err != nil {
++		if err := s.writeSpanToDB(ds); err != nil {
+ 			return err
+ 		}
+ 	}
+ 	if s.storageMode&indexFlag == indexFlag {
+-		if err := s.writeIndexes(span, ds); err != nil {
++		if err := s.writeIndexes(ds); err != nil {
+ 			return err
+ 		}
+ 	}
+ 	return nil
+ }
+ 
+-func (s *SpanWriter) writeSpanToDB(_ *model.Span, ds *dbmodel.Span) error {
++func (s *SpanWriter) writeSpanToDB(ds *dbmodel.Span) error {
+ 	mainQuery := s.session.Query(
+ 		insertSpan,
+ 		ds.TraceID,
+@@ -167,8 +170,8 @@ func (s *SpanWriter) writeSpanToDB(_ *model.Span, ds *dbmodel.Span) error {
+ 	return nil
+ }
+ 
+-func (s *SpanWriter) writeIndexes(span *model.Span, ds *dbmodel.Span) error {
+-	spanKind, _ := span.GetSpanKind() // if not found it returns ""
++func (s *SpanWriter) writeIndexes(ds *dbmodel.Span) error {
++	spanKind := dbmodel.GetSpanKind(ds) // if not found it returns ""
+ 	if err := s.saveServiceNameAndOperationName(dbmodel.Operation{
+ 		ServiceName:   ds.ServiceName,
+ 		SpanKind:      string(spanKind),
+@@ -190,16 +193,13 @@ func (s *SpanWriter) writeIndexes(span *model.Span, ds *dbmodel.Span) error {
+ 		}
+ 	}
+ 
+-	if span.Flags.IsFirehoseEnabled() {
+-		return nil // skipping expensive indexing
+-	}
+-
+ 	if err := s.indexByTags(ds); err != nil {
+ 		return s.logError(ds, err, "Failed to index tags", s.logger)
+ 	}
+ 
+ 	if s.indexFilter(ds, dbmodel.DurationIndex) {
+-		if err := s.indexByDuration(ds, span.StartTime); err != nil {
++		//nolint:gosec // G115
++		if err := s.indexByDuration(ds, model.EpochMicrosecondsAsTime(uint64(ds.StartTime))); err != nil {
+ 			return s.logError(ds, err, "Failed to index duration", s.logger)
+ 		}
+ 	}
+diff --git a/internal/storage/v2/cassandra/factory.go b/internal/storage/v2/cassandra/factory.go
+index 30d87183..26949824 100644
+--- a/internal/storage/v2/cassandra/factory.go
++++ b/internal/storage/v2/cassandra/factory.go
+@@ -5,6 +5,7 @@ package cassandra
+ 
+ import (
+ 	"context"
++	"errors"
+ 
+ 	"go.opentelemetry.io/otel/trace"
+ 	"go.uber.org/zap"
+@@ -14,6 +15,7 @@ import (
+ 	"github.com/jaegertracing/jaeger/internal/storage/v1/api/samplingstore"
+ 	"github.com/jaegertracing/jaeger/internal/storage/v1/cassandra"
+ 	cspanstore "github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore"
++	"github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore/dbmodel"
+ 	"github.com/jaegertracing/jaeger/internal/storage/v2/api/depstore"
+ 	"github.com/jaegertracing/jaeger/internal/storage/v2/api/tracestore"
+ 	"github.com/jaegertracing/jaeger/internal/storage/v2/api/tracestore/tracestoremetrics"
+@@ -61,11 +63,20 @@ func (f *Factory) CreateTraceReader() (tracestore.Reader, error) {
+ }
+ 
+ func (f *Factory) CreateTraceWriter() (tracestore.Writer, error) {
+-	writer, err := f.v1Factory.CreateSpanWriter()
++	options, err := writerOptions(f.v1Factory.Options)
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	return v1adapter.NewTraceWriter(writer), nil
++	writer, err := ctracestore.NewTraceWriter(
++		f.v1Factory.GetSession(),
++		f.v1Factory.Options.SpanStoreWriteCacheTTL,
++		f.metricsFactory,
++		f.logger,
++		options...)
++	if err != nil {
++		return nil, err
++	}
++	return writer, nil
+ }
+ 
+ func (f *Factory) CreateDependencyReader() (depstore.Reader, error) {
+@@ -132,3 +143,32 @@ func (b *withConfigBuilder) build() (*cassandra.Factory, error) {
+ 	}
+ 	return b.f, nil
+ }
++
++func writerOptions(opts *cassandra.Options) ([]cspanstore.Option, error) {
++	var tagFilters []dbmodel.TagFilter
++
++	// drop all tag filters
++	if !opts.Index.Tags || !opts.Index.ProcessTags || !opts.Index.Logs {
++		tagFilters = append(tagFilters, dbmodel.NewTagFilterDropAll(!opts.Index.Tags, !opts.Index.ProcessTags, !opts.Index.Logs))
++	}
++
++	// black/white list tag filters
++	tagIndexBlacklist := opts.TagIndexBlacklist()
++	tagIndexWhitelist := opts.TagIndexWhitelist()
++	if len(tagIndexBlacklist) > 0 && len(tagIndexWhitelist) > 0 {
++		return nil, errors.New("only one of TagIndexBlacklist and TagIndexWhitelist can be specified")
++	}
++	if len(tagIndexBlacklist) > 0 {
++		tagFilters = append(tagFilters, dbmodel.NewBlacklistFilter(tagIndexBlacklist))
++	} else if len(tagIndexWhitelist) > 0 {
++		tagFilters = append(tagFilters, dbmodel.NewWhitelistFilter(tagIndexWhitelist))
++	}
++
++	if len(tagFilters) == 0 {
++		return nil, nil
++	} else if len(tagFilters) == 1 {
++		return []cspanstore.Option{cspanstore.TagFilter(tagFilters[0])}, nil
++	}
++
++	return []cspanstore.Option{cspanstore.TagFilter(dbmodel.NewChainedTagFilter(tagFilters...))}, nil
++}
+diff --git a/internal/storage/v2/cassandra/tracestore/writer.go b/internal/storage/v2/cassandra/tracestore/writer.go
+new file mode 100644
+index 00000000..4086e3e7
+--- /dev/null
++++ b/internal/storage/v2/cassandra/tracestore/writer.go
+@@ -0,0 +1,53 @@
++// Copyright (c) 2026 The Jaeger Authors.
++// SPDX-License-Identifier: Apache-2.0
++
++package tracestore
++
++import (
++	"context"
++	"errors"
++	"time"
++
++	"go.opentelemetry.io/collector/pdata/ptrace"
++	"go.uber.org/zap"
++
++	"github.com/jaegertracing/jaeger/internal/metrics"
++	"github.com/jaegertracing/jaeger/internal/storage/cassandra"
++	"github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore"
++	"github.com/jaegertracing/jaeger/internal/storage/v2/api/tracestore"
++)
++
++var _ tracestore.Writer = &TraceWriter{}
++
++type TraceWriter struct {
++	writer spanstore.CoreSpanWriter
++}
++
++func NewTraceWriter(
++	session cassandra.Session,
++	writeCacheTTL time.Duration,
++	metricsFactory metrics.Factory,
++	logger *zap.Logger,
++	options ...spanstore.Option,
++) (*TraceWriter, error) {
++	writer, err := spanstore.NewSpanWriter(session, writeCacheTTL, metricsFactory, logger, options...)
++	if err != nil {
++		return nil, err
++	}
++	return &TraceWriter{writer: writer}, nil
++}
++
++func (t *TraceWriter) WriteTraces(_ context.Context, td ptrace.Traces) error {
++	dbSpans := ToDBModel(td)
++	var errs error
++	for i := range dbSpans {
++		if err := t.writer.WriteSpan(&dbSpans[i]); err != nil {
++			errs = errors.Join(errs, err)
++		}
++	}
++	return errs
++}
++
++func (t *TraceWriter) Close() error {
++	return t.writer.Close()
++}

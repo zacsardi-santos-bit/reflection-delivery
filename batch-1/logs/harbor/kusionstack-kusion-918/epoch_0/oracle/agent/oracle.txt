@@ -1,0 +1,100 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 50 (offset 8 lines).
+Hunk #2 succeeded at 78 with fuzz 3 (offset 16 lines).
+Hunk #3 succeeded at 259 with fuzz 3 (offset 70 lines).
+Hunk #4 succeeded at 316 with fuzz 1 (offset 103 lines).
+Hunk #5 succeeded at 350 with fuzz 3 (offset 103 lines).
+Hunk #6 succeeded at 497 (offset 137 lines).
+Hunk #7 succeeded at 595 with fuzz 3 (offset 160 lines).
+Hunk #8 succeeded at 778 with fuzz 3 (offset 206 lines).
+Hunk #9 succeeded at 891 with fuzz 1 (offset 229 lines).
+Hunk #10 succeeded at 904 with fuzz 3 (offset 231 lines).
+Hunk #11 succeeded at 944 with fuzz 3 (offset 231 lines).
+Hunk #12 succeeded at 1117 (offset 291 lines).
+Hunk #13 succeeded at 1155 (offset 291 lines).
+Hunk #14 succeeded at 1204 (offset 291 lines).
+Hunk #15 succeeded at 1334 with fuzz 1 (offset 314 lines).
+patching file pkg/backend/backend.go
+patching file pkg/cmd/apply/apply.go
+patching file pkg/cmd/apply/options.go
+patching file pkg/cmd/apply/options_test.go
+patching file pkg/cmd/destroy/destroy.go
+patching file pkg/cmd/destroy/options.go
+patching file pkg/cmd/destroy/options_test.go
+patching file pkg/cmd/preview/options.go
+patching file pkg/cmd/preview/options_test.go
+patching file pkg/cmd/preview/preview.go
+patching file pkg/engine/backend/config.go
+patching file pkg/engine/backend/config_test.go
+patching file pkg/engine/backend/init/init.go
+patching file pkg/engine/backend/options.go
+patching file pkg/engine/backend/options_test.go
+patching file pkg/engine/backend/testdata/workspaces/invalid_backend_ws.yaml
+patching file pkg/engine/backend/testdata/workspaces/invalid_ws.yaml
+patching file pkg/engine/backend/testdata/workspaces/s3_backend_ws.yaml
+patching file pkg/engine/backend/util.go
+patching file pkg/engine/backend/util_test.go
+patching file pkg/engine/dal/mapper/state.go
+patching file pkg/engine/operation/apply.go
+patching file pkg/engine/operation/apply_test.go
+patching file pkg/engine/operation/destory.go
+patching file pkg/engine/operation/destory_test.go
+patching file pkg/engine/operation/diff.go
+patching file pkg/engine/operation/graph/executable_node.go
+patching file pkg/engine/operation/graph/resource_node.go
+patching file pkg/engine/operation/graph/resource_node_test.go
+patching file pkg/engine/operation/models/change.go
+patching file pkg/engine/operation/models/change_test.go
+patching file pkg/engine/operation/models/operation_context.go
+patching file pkg/engine/operation/parser/delete_resource_parser.go
+patching file pkg/engine/operation/parser/delete_resource_parser_test.go
+patching file pkg/engine/operation/parser/parser.go
+patching file pkg/engine/operation/parser/spec_parser.go
+patching file pkg/engine/operation/parser/spec_parser_test.go
+patching file pkg/engine/operation/preview.go
+patching file pkg/engine/operation/preview_test.go
+patching file pkg/engine/operation/test_data/kusion_state.json (renamed from pkg/engine/operation/testdata/state.yaml)
+patching file pkg/engine/operation/watch.go
+patching file pkg/engine/operation/watch_test.go
+patching file pkg/engine/state/storages/local.go
+patching file pkg/engine/states/backend.go
+patching file pkg/engine/states/doc.go
+patching file pkg/engine/states/local/backend.go
+patching file pkg/engine/states/local/backend_test.go
+patching file pkg/engine/states/local/filesystem_state.go
+patching file pkg/engine/states/local/filesystem_state_test.go
+patching file pkg/engine/states/local/testdata/deprecated_test_stack/kusion_state.json
+patching file pkg/engine/states/local/testdata/deprecated_test_stack_for_delete/kusion_state.json
+patching file pkg/engine/states/local/testdata/deprecated_test_stack_for_delete/kusion_state.yaml
+patching file pkg/engine/states/local/testdata/test_stack/kusion_state.yaml
+patching file pkg/engine/states/local/testdata/test_stack_for_delete/kusion_state.yaml
+patching file pkg/engine/states/remote/http/http_backend.go
+patching file pkg/engine/states/remote/http/http_backend_test.go
+patching file pkg/engine/states/remote/http/http_state.go
+patching file pkg/engine/states/remote/http/http_state_test.go
+patching file pkg/engine/states/remote/mysql/mysql_backend.go
+patching file pkg/engine/states/remote/mysql/mysql_backend_test.go
+patching file pkg/engine/states/remote/mysql/mysql_state.go
+patching file pkg/engine/states/remote/mysql/mysql_state_test.go
+patching file pkg/engine/states/remote/oss/oss_backend.go
+patching file pkg/engine/states/remote/oss/oss_backend_test.go
+patching file pkg/engine/states/remote/oss/oss_state.go
+patching file pkg/engine/states/remote/oss/oss_state_test.go
+patching file pkg/engine/states/remote/s3/s3_backend.go
+patching file pkg/engine/states/remote/s3/s3_backend_test.go
+patching file pkg/engine/states/remote/s3/s3_state.go
+patching file pkg/engine/states/remote/s3/s3_state_test.go
+patching file pkg/engine/states/state_deprecated.go
+patching file pkg/oci/client/build.go
+patching file pkg/oci/client/client.go
+patching file pkg/oci/client/push.go
+patching file pkg/oci/client/ref.go
+patching file pkg/oci/client/testdata/artifact/deploy/repo.yaml
+patching file pkg/oci/client/testdata/artifact/deployment.yaml
+patching file pkg/oci/client/testdata/artifact/ignore-dir/deployment.yaml
+patching file pkg/oci/client/testdata/artifact/ignore.txt
+patching file pkg/oci/client/testdata/artifact/somedir/git/repo.yaml
+patching file pkg/oci/client/testdata/artifact/somedir/repo.yaml
+patching file pkg/oci/metadata/metadata.go
+patching file test/e2e/e2e_suite_test.go

@@ -1,0 +1,29 @@
+{
+    "id": "16f39e99-52ec-4fdf-b7cc-d3b097ae3866",
+    "started_at": "2026-07-06T12:18:47.071578",
+    "finished_at": "2026-07-06T12:19:13.559540",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__lancedb-lancedb-1458": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "lancedb-lancedb-1458__FpygiPa"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

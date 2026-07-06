@@ -1,0 +1,8 @@
+patching file api/v1beta1/common_types.go
+patching file controllers/remote/cluster_cache_tracker.go
+patching file docs/book/src/reference/labels_and_annotations.md
+patching file internal/controllers/topology/cluster/scope/state.go
+patching file internal/topology/check/upgrade.go
+patching file internal/webhooks/cluster.go
+patching file main.go
+patching file webhooks/alias.go

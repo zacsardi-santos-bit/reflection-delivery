@@ -1,0 +1,18 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/tests/unit/planning/action_planner/test_action_planner.py -v",
+  "test_files": [
+    "python/tests/unit/planning/action_planner/test_action_planner.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.tests.unit.planning.action_planner.test_action_planner::test_throw_without_kernel",
+    "python.tests.unit.planning.action_planner.test_action_planner::test_throw_without_completion_service",
+    "python.tests.unit.planning.action_planner.test_action_planner::test_plan_creation_async",
+    "python.tests.unit.planning.action_planner.test_action_planner::test_available_functions",
+    "python.tests.unit.planning.action_planner.test_action_planner::test_invalid_json_throw_async",
+    "python.tests.unit.planning.action_planner.test_action_planner::test_empty_goal_throw_async"
+  ],
+  "PASS_TO_PASS": []
+}

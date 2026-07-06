@@ -1,0 +1,24 @@
+{
+  "test_framework": "cargo",
+  "test_command": "set -o pipefail && CARGO_TERM_COLOR=never cargo test -p graph --lib -- append_row 2>/dev/null | awk '/^test [^ ]+ \\.\\.\\. ok$/{count++; printf \"PASS [   0.000s] %s\\n\", $2} /^test [^ ]+ \\.\\.\\. FAILED$/{count++; printf \"FAIL [   0.000s] %s\\n\", $2} END{if (count==0) exit 1}'",
+  "test_files": [
+    "store/test-store/tests/postgres/relational.rs",
+    "store/test-store/tests/postgres/relational_bytes.rs",
+    "tests/runner-tests/skip-duplicates/abis/Contract.abi",
+    "tests/runner-tests/skip-duplicates/package.json",
+    "tests/runner-tests/skip-duplicates/schema.graphql",
+    "tests/runner-tests/skip-duplicates/src/mapping.ts",
+    "tests/runner-tests/skip-duplicates/subgraph.yaml",
+    "tests/tests/runner_tests.rs"
+  ],
+  "num_test_files": 8,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "components::store::write::test::append_row_skip_duplicates_same_block_still_pushes",
+    "components::store::write::test::append_row_skip_duplicates_allows_overwrite",
+    "components::store::write::test::append_row_skip_duplicates_allows_remove",
+    "components::store::write::test::append_row_skip_duplicates_allows_cross_block_duplicate",
+    "components::store::write::test::append_row_immutable_default_rejects_cross_block_duplicate"
+  ],
+  "PASS_TO_PASS": []
+}

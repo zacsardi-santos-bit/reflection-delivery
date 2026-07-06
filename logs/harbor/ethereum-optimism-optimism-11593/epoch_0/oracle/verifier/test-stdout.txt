@@ -1,7 +1,0 @@
-patching file packages/contracts-bedrock/test/DeployOPChain.t.sol
-ok 1 - test_getters_whenNotSet_revert
-ok 2 - test_loadInput_succeeds
-ok 3 - test_getters_whenAddrHasNoCode_reverts
-ok 4 - test_getters_whenNotSet_revert
-ok 5 - test_set_succeeds
-reward=1 graded=4 found=4 failed=0 parsed=4 framework=tap exit_code=0

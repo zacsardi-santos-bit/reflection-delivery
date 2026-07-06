@@ -1,5 +1,0 @@
-I'm working on pgvecto.rs and need to add support for calling an external embedding service (like OpenAI's API) to generate vector embeddings from text. Right now the extension has no way to reach out to a remote API, so I'd like to create a new crate in the workspace that handles everything: constructing the HTTP request with the right auth headers, sending it to the configured endpoint, parsing the JSON response, and returning either the embedding vector or an appropriate error.
-
-The crate needs to handle three cases properly: when the service returns a valid response with embedding data (success), when the service returns a valid response but with no embedding entries in the data array (which should be treated as an error when trying to extract the vector), and when the service itself returns an HTTP error or an unparseable response (which should also be an error). The connection should be configurable with a base URL and API key.
-
-Could you implement this new embedding crate with all the necessary types and the HTTP client logic, and wire it into the workspace?

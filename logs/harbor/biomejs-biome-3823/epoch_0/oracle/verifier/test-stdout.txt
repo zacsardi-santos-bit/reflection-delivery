@@ -1,7 +1,0 @@
-patching file crates/biome_js_analyze/tests/specs/nursery/noSecrets/invalid.js
-patching file crates/biome_js_analyze/tests/specs/nursery/noSecrets/invalid.js.snap
-patching file crates/biome_js_analyze/tests/specs/nursery/noSecrets/valid.js
-patching file crates/biome_js_analyze/tests/specs/nursery/noSecrets/valid.js.snap
-{"Action":"pass","Test":"specs/nursery/no_secrets/valid_js"}
-{"Action":"pass","Test":"specs/nursery/no_secrets/invalid_js"}
-reward=1 graded=2 found=2 failed=0 parsed=2 framework=go exit_code=0

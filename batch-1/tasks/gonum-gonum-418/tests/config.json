@@ -1,0 +1,17 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./graph -count=1",
+  "test_files": [
+    "graph/graph_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "gonum.org/v1/gonum/graph::TestCopy",
+    "gonum.org/v1/gonum/graph::TestCopyWeighted"
+  ],
+  "PASS_TO_PASS": [
+    "gonum.org/v1/gonum/graph::TestUndirect",
+    "gonum.org/v1/gonum/graph::TestUndirectWeighted"
+  ]
+}

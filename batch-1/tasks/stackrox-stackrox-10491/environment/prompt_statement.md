@@ -1,0 +1,7 @@
+I'm working on cleaning up the database migration code in our system. We've decided that as of release 4.5, we no longer need to support upgrading from or restoring backups that originated from releases predating version 4.0. Right now, the code tries to handle these old migration paths, but that just makes things more complicated than necessary.
+
+What I need is for the system to explicitly reject any attempt to upgrade or restore from these very old database versions with a clear error message, rather than trying to handle them. Specifically: when an upgrade is attempted from a pre-4.0 database, the relevant function should return an error indicating that upgrades from pre-4.0 releases are no longer supported as of the 4.5 release. Similarly, when a restore is attempted from a pre-4.0 backup, it should return an error indicating that restores from pre-4.0 releases are no longer supported as of the 4.5 release.
+
+Along with this, I want to simplify the internal interface for selecting which database clone to migrate. There's currently an extra parameter for handling the "restore from legacy database" case that should be removed since we're dropping support for that path entirely.
+
+I also want to make sure that the various migration helper methods properly return errors to their callers instead of silently swallowing failures — this makes it easier to detect when something goes wrong during the migration process.

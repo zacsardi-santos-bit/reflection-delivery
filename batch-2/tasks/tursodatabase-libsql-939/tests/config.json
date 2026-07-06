@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cargo nextest run -p libsql-server -E 'test(basic_query_fail)' --color never",
+  "test_files": [
+    "libsql-server/tests/standalone/snapshots/tests__standalone__basic_query_fail.snap"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) libsql-server::tests standalone::basic_query_fail"
+  ],
+  "PASS_TO_PASS": []
+}

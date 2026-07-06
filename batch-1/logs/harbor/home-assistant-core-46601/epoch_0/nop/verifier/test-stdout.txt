@@ -1,0 +1,34 @@
+patching file tests/components/zwave_js/test_api.py
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-6.2.2, py-1.11.0, pluggy-1.0.0.dev0 -- /usr/local/bin/python3.8
+cachedir: .pytest_cache
+rootdir: /workspace/repo, configfile: pyproject.toml
+plugins: timeout-1.4.2, xdist-2.1.0, aiohttp-0.3.0, cov-2.10.1, forked-1.6.0, requests-mock-1.8.0, typeguard-4.3.0
+collecting ... collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+____________ ERROR collecting tests/components/zwave_js/test_api.py ____________
+ImportError while importing test module '/workspace/repo/tests/components/zwave_js/test_api.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.8/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/components/zwave_js/test_api.py:8: in <module>
+    from homeassistant.components.zwave_js.api import (
+E   ImportError: cannot import name 'CONFIG' from 'homeassistant.components.zwave_js.api' (/workspace/repo/homeassistant/components/zwave_js/api.py)
+=============================== warnings summary ===============================
+homeassistant/util/package.py:12
+  /workspace/repo/homeassistant/util/package.py:12: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    import pkg_resources
+
+../../usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154
+  /usr/local/lib/python3.8/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('ruamel')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+-- Docs: https://docs.pytest.org/en/stable/warnings.html
+=========================== short test summary info ============================
+ERROR tests/components/zwave_js/test_api.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+========================= 2 warnings, 1 error in 0.08s =========================
+reward=0 graded=8 found=0 failed=0 parsed=0 framework=pytest exit_code=2

@@ -1,6 +1,0 @@
-patching file skrifa/src/outline/glyf/hint/engine/data.rs
-patching file skrifa/src/outline/glyf/hint/engine/definition.rs
-patching file skrifa/src/outline/glyf/hint/engine/dispatch.rs
-patching file skrifa/src/outline/glyf/hint/engine/mod.rs
-patching file skrifa/src/outline/glyf/hint/engine/outline.rs
-patching file skrifa/src/outline/glyf/hint/graphics_state/mod.rs

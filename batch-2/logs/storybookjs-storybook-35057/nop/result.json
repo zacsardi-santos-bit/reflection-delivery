@@ -1,0 +1,29 @@
+{
+    "id": "9b05105e-a60c-410f-8a61-4e31ce970990",
+    "started_at": "2026-07-04T15:37:04.108953",
+    "finished_at": "2026-07-04T15:39:23.542083",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__storybookjs-storybook-35057": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "storybookjs-storybook-35057__Qw7nDFf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

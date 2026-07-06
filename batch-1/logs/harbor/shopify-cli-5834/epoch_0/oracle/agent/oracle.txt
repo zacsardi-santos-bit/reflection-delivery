@@ -1,0 +1,4 @@
+patching file .changeset/hungry-ravens-wink.md
+patching file .changeset/sharp-kiwis-invite.md
+patching file packages/theme/src/cli/utilities/theme-environment/hot-reload/server.ts
+patching file packages/theme/src/cli/utilities/theme-environment/local-assets.ts

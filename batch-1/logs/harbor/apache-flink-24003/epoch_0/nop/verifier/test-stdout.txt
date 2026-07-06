@@ -1,0 +1,2076 @@
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExecutionFailureHandlerTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/TestRestartBackoffTimeStrategy.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/DefaultSchedulerTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java
+patching file flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/RootExceptionHistoryEntryTest.java
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-scala_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-scala/pom.xml, line 30, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-streaming-scala_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-streaming-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-streaming-scala/pom.xml, line 30, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-hadoop-compatibility_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-hadoop-compatibility_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-connectors/flink-hadoop-compatibility/pom.xml, line 31, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-hive_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-connector-hive_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-connectors/flink-connector-hive/pom.xml, line 32, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-connector-base:jar:1.19-SNAPSHOT
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.flink:flink-streaming-java:test-jar -> duplicate declaration of version ${project.version} @ line 89, column 15
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-hive-2.3.9_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-hive-2.3.9_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-hive-2.3.9/pom.xml, line 32, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-sql-connector-hive-3.1.3_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-sql-connector-hive-3.1.3_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-connectors/flink-sql-connector-hive-3.1.3/pom.xml, line 32, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-examples-table_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-examples-table_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-examples/flink-examples-table/pom.xml, line 32, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-tests:jar:1.19-SNAPSHOT
+[WARNING] 'dependencies.dependency.(groupId:artifactId:type:classifier)' must be unique: org.apache.flink:flink-shaded-guava:jar -> duplicate declaration of version (?) @ line 235, column 15
+[WARNING] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.codehaus.mojo:build-helper-maven-plugin @ line 738, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-cep-scala_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-cep-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-libraries/flink-cep-scala/pom.xml, line 32, column 17
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-table-api-scala_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-api-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-table/flink-table-api-scala/pom.xml, line 29, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-table-api-scala-bridge_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-api-scala-bridge_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-table/flink-table-api-scala-bridge/pom.xml, line 29, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-table-planner_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-table-planner_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-table/flink-table-planner/pom.xml, line 29, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-dist_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-dist_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-dist/pom.xml, line 31, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-dist-scala_2.12:jar:1.19-SNAPSHOT
+[WARNING] 'artifactId' contains an expression but should be a constant. @ org.apache.flink:flink-dist-scala_${scala.binary.version}:1.19-SNAPSHOT, /workspace/repo/flink-dist-scala/pom.xml, line 31, column 14
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.flink:flink-python:jar:1.19-SNAPSHOT
+[WARNING] 'build.plugins.plugin.(groupId:artifactId)' must be unique but found duplicate declaration of plugin org.apache.maven.plugins:maven-dependency-plugin @ line 607, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Flink :                                                            [pom]
+[INFO] Flink : Annotations                                                [jar]
+[INFO] Flink : Architecture Tests                                         [pom]
+[INFO] Flink : Architecture Tests : Base                                  [jar]
+[INFO] Flink : Test utils :                                               [pom]
+[INFO] Flink : Test utils : Junit                                         [jar]
+[INFO] Flink : Metrics :                                                  [pom]
+[INFO] Flink : Metrics : Core                                             [jar]
+[INFO] Flink : Architecture Tests : Test                                  [jar]
+[INFO] Flink : Test utils : MigrationTestUtils                            [jar]
+[INFO] Flink : Core                                                       [jar]
+[INFO] Flink : Java                                                       [jar]
+[INFO] Flink : RPC :                                                      [pom]
+[INFO] Flink : RPC : Core                                                 [jar]
+[INFO] Flink : RPC : Akka                                                 [jar]
+[INFO] Flink : RPC : Akka-Loader                                          [jar]
+[INFO] Flink : Queryable state :                                          [pom]
+[INFO] Flink : Queryable state : Client Java                              [jar]
+[INFO] Flink : FileSystems :                                              [pom]
+[INFO] Flink : FileSystems : Hadoop FS                                    [jar]
+[INFO] Flink : Runtime                                                    [jar]
+[INFO] 
+[INFO] -------------------< org.apache.flink:flink-parent >--------------------
+[INFO] Building Flink : 1.19-SNAPSHOT                                    [1/21]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- apache-rat-plugin:0.13:check (default) @ flink-parent ---
+[INFO] RAT will not execute since it is configured to be skipped via system property 'rat.skip'.
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-parent ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-parent ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-parent ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-parent ---
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-parent ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-parent ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-parent ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 3 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/target/bom.xml
+[INFO]            attaching as flink-parent-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/target/bom.json
+[WARNING] Unknown keyword additionalItems - you should define your own Meta Schema. If the keyword is irrelevant for validation, just use a NonValidationKeyword
+[INFO]            attaching as flink-parent-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-parent ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-parent ---
+[INFO] Skipping execution because parameter 'skipPomModules' was set to true and this is artifact is of type pom.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-parent ---
+[INFO] Installing /workspace/repo/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-parent/1.19-SNAPSHOT/flink-parent-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-parent/1.19-SNAPSHOT/flink-parent-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/target/bom.json to /root/.m2/repository/org/apache/flink/flink-parent/1.19-SNAPSHOT/flink-parent-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] -----------------< org.apache.flink:flink-annotations >-----------------
+[INFO] Building Flink : Annotations 1.19-SNAPSHOT                        [2/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-annotations ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-annotations ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-annotations ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-annotations ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-annotations ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-annotations ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-annotations ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-annotations ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-annotations ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-annotations ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-annotations ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-annotations ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-annotations/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-annotations ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-annotations ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-annotations/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-annotations ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-annotations ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-annotations ---
+[INFO] Building jar: /workspace/repo/flink-annotations/target/flink-annotations-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-annotations ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-annotations/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-annotations/target/flink-annotations-1.19-SNAPSHOT.jar with /workspace/repo/flink-annotations/target/flink-annotations-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-annotations ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 3 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-annotations/target/bom.xml
+[INFO]            attaching as flink-annotations-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-annotations/target/bom.json
+[INFO]            attaching as flink-annotations-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-annotations ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-annotations ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-annotations/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-annotations/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-annotations/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-annotations ---
+[INFO] Installing /workspace/repo/flink-annotations/target/flink-annotations-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-annotations/1.19-SNAPSHOT/flink-annotations-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-annotations/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-annotations/1.19-SNAPSHOT/flink-annotations-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-annotations/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-annotations/1.19-SNAPSHOT/flink-annotations-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-annotations/target/bom.json to /root/.m2/repository/org/apache/flink/flink-annotations/1.19-SNAPSHOT/flink-annotations-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] -------------< org.apache.flink:flink-architecture-tests >--------------
+[INFO] Building Flink : Architecture Tests 1.19-SNAPSHOT                 [3/21]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-architecture-tests ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-architecture-tests ---
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-architecture-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-architecture-tests ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-architecture-tests/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-architecture-tests ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 3 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-architecture-tests/target/bom.xml
+[INFO]            attaching as flink-architecture-tests-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-architecture-tests/target/bom.json
+[INFO]            attaching as flink-architecture-tests-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-architecture-tests ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-architecture-tests ---
+[INFO] Skipping execution because parameter 'skipPomModules' was set to true and this is artifact is of type pom.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-architecture-tests ---
+[INFO] Installing /workspace/repo/flink-architecture-tests/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-architecture-tests/1.19-SNAPSHOT/flink-architecture-tests-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-architecture-tests/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-architecture-tests/1.19-SNAPSHOT/flink-architecture-tests-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-architecture-tests/target/bom.json to /root/.m2/repository/org/apache/flink/flink-architecture-tests/1.19-SNAPSHOT/flink-architecture-tests-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] -----------< org.apache.flink:flink-architecture-tests-base >-----------
+[INFO] Building Flink : Architecture Tests : Base 1.19-SNAPSHOT          [4/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-architecture-tests-base ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-architecture-tests-base ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-architecture-tests-base ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-architecture-tests-base ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-architecture-tests-base ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-architecture-tests-base ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-architecture-tests-base ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-architecture-tests-base ---
+[INFO] Building jar: /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/target/flink-architecture-tests-base-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-architecture-tests-base ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding com.tngtech.archunit:archunit:jar:1.2.0 from the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/target/flink-architecture-tests-base-1.19-SNAPSHOT.jar with /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/target/flink-architecture-tests-base-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-architecture-tests-base ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 4 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/target/bom.xml
+[INFO]            attaching as flink-architecture-tests-base-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/target/bom.json
+[INFO]            attaching as flink-architecture-tests-base-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-architecture-tests-base ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-architecture-tests-base ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-architecture-tests-base/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-architecture-tests-base/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-architecture-tests-base/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-architecture-tests-base ---
+[INFO] Installing /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/target/flink-architecture-tests-base-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-architecture-tests-base/1.19-SNAPSHOT/flink-architecture-tests-base-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-architecture-tests-base/1.19-SNAPSHOT/flink-architecture-tests-base-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-architecture-tests-base/1.19-SNAPSHOT/flink-architecture-tests-base-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-architecture-tests/flink-architecture-tests-base/target/bom.json to /root/.m2/repository/org/apache/flink/flink-architecture-tests-base/1.19-SNAPSHOT/flink-architecture-tests-base-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --------------< org.apache.flink:flink-test-utils-parent >--------------
+[INFO] Building Flink : Test utils : 1.19-SNAPSHOT                       [5/21]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-test-utils-parent ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-test-utils-parent ---
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-test-utils-parent ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-test-utils-parent ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-test-utils-parent/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-test-utils-parent ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 3 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-test-utils-parent/target/bom.xml
+[INFO]            attaching as flink-test-utils-parent-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-test-utils-parent/target/bom.json
+[INFO]            attaching as flink-test-utils-parent-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-test-utils-parent ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-test-utils-parent ---
+[INFO] Skipping execution because parameter 'skipPomModules' was set to true and this is artifact is of type pom.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-test-utils-parent ---
+[INFO] Installing /workspace/repo/flink-test-utils-parent/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-test-utils-parent/1.19-SNAPSHOT/flink-test-utils-parent-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-test-utils-parent/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-test-utils-parent/1.19-SNAPSHOT/flink-test-utils-parent-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-test-utils-parent/target/bom.json to /root/.m2/repository/org/apache/flink/flink-test-utils-parent/1.19-SNAPSHOT/flink-test-utils-parent-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --------------< org.apache.flink:flink-test-utils-junit >---------------
+[INFO] Building Flink : Test utils : Junit 1.19-SNAPSHOT                 [6/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-test-utils-junit ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-test-utils-junit ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-test-utils-junit ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-test-utils-junit ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-test-utils-junit ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-test-utils-junit ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-test-utils-junit ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-test-utils-junit ---
+[INFO] Building jar: /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/target/flink-test-utils-junit-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-test-utils-junit ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.junit.jupiter:junit-jupiter:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.jupiter:junit-jupiter-api:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.opentest4j:opentest4j:jar:1.3.0 from the shaded jar.
+[INFO] Excluding org.junit.platform:junit-platform-commons:jar:1.10.1 from the shaded jar.
+[INFO] Excluding org.junit.jupiter:junit-jupiter-params:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.jupiter:junit-jupiter-engine:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.vintage:junit-vintage-engine:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.platform:junit-platform-engine:jar:1.10.1 from the shaded jar.
+[INFO] Excluding junit:junit:jar:4.13.2 from the shaded jar.
+[INFO] Excluding org.hamcrest:hamcrest-core:jar:1.3 from the shaded jar.
+[INFO] Excluding org.apiguardian:apiguardian-api:jar:1.1.2 from the shaded jar.
+[INFO] Excluding org.assertj:assertj-core:jar:3.23.1 from the shaded jar.
+[INFO] Excluding net.bytebuddy:byte-buddy:jar:1.14.4 from the shaded jar.
+[INFO] Excluding org.apache.logging.log4j:log4j-slf4j-impl:jar:2.17.1 from the shaded jar.
+[INFO] Excluding org.apache.logging.log4j:log4j-api:jar:2.17.1 from the shaded jar.
+[INFO] Excluding org.apache.logging.log4j:log4j-core:jar:2.17.1 from the shaded jar.
+[INFO] Excluding org.testcontainers:testcontainers:jar:1.19.1 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-compress:jar:1.24.0 from the shaded jar.
+[INFO] Excluding org.rnorth.duct-tape:duct-tape:jar:1.0.8 from the shaded jar.
+[INFO] Excluding org.jetbrains:annotations:jar:17.0.0 from the shaded jar.
+[INFO] Excluding com.github.docker-java:docker-java-api:jar:3.3.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-annotations:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.github.docker-java:docker-java-transport-zerodep:jar:3.3.3 from the shaded jar.
+[INFO] Excluding com.github.docker-java:docker-java-transport:jar:3.3.3 from the shaded jar.
+[INFO] Excluding net.java.dev.jna:jna:jar:5.12.1 from the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/target/flink-test-utils-junit-1.19-SNAPSHOT.jar with /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/target/flink-test-utils-junit-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-test-utils-junit ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 28 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/target/bom.xml
+[INFO]            attaching as flink-test-utils-junit-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/target/bom.json
+[INFO]            attaching as flink-test-utils-junit-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-test-utils-junit ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-test-utils-junit ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-test-utils-junit/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-test-utils-junit/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-test-utils-junit/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-test-utils-junit ---
+[INFO] Installing /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/target/flink-test-utils-junit-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-test-utils-junit/1.19-SNAPSHOT/flink-test-utils-junit-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-test-utils-junit/1.19-SNAPSHOT/flink-test-utils-junit-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-test-utils-junit/1.19-SNAPSHOT/flink-test-utils-junit-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-test-utils-parent/flink-test-utils-junit/target/bom.json to /root/.m2/repository/org/apache/flink/flink-test-utils-junit/1.19-SNAPSHOT/flink-test-utils-junit-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] -------------------< org.apache.flink:flink-metrics >-------------------
+[INFO] Building Flink : Metrics : 1.19-SNAPSHOT                          [7/21]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-metrics ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-metrics ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-metrics ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-metrics ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-metrics ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-metrics ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-metrics ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-metrics ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-metrics ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-metrics ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-metrics ---
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-metrics ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-metrics ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-metrics/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-metrics ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 3 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-metrics/target/bom.xml
+[INFO]            attaching as flink-metrics-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-metrics/target/bom.json
+[INFO]            attaching as flink-metrics-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-metrics ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-metrics ---
+[INFO] Skipping execution because parameter 'skipPomModules' was set to true and this is artifact is of type pom.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-metrics ---
+[INFO] Installing /workspace/repo/flink-metrics/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-metrics/1.19-SNAPSHOT/flink-metrics-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-metrics/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-metrics/1.19-SNAPSHOT/flink-metrics-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-metrics/target/bom.json to /root/.m2/repository/org/apache/flink/flink-metrics/1.19-SNAPSHOT/flink-metrics-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] ----------------< org.apache.flink:flink-metrics-core >-----------------
+[INFO] Building Flink : Metrics : Core 1.19-SNAPSHOT                     [8/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-metrics-core ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-metrics-core ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-metrics-core ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-metrics/flink-metrics-core/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-metrics-core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-metrics-core ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-metrics-core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-metrics-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-metrics-core ---
+[INFO] Building jar: /workspace/repo/flink-metrics/flink-metrics-core/target/flink-metrics-core-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:test-jar (default) @ flink-metrics-core ---
+[INFO] Building jar: /workspace/repo/flink-metrics/flink-metrics-core/target/flink-metrics-core-1.19-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-metrics-core ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.apache.flink:flink-annotations:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-metrics/flink-metrics-core/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-metrics/flink-metrics-core/target/flink-metrics-core-1.19-SNAPSHOT.jar with /workspace/repo/flink-metrics/flink-metrics-core/target/flink-metrics-core-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-metrics-core ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 4 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-metrics/flink-metrics-core/target/bom.xml
+[INFO]            attaching as flink-metrics-core-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-metrics/flink-metrics-core/target/bom.json
+[INFO]            attaching as flink-metrics-core-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-metrics-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-metrics-core ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-metrics-core/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-metrics-core/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-metrics-core/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-metrics-core ---
+[INFO] Installing /workspace/repo/flink-metrics/flink-metrics-core/target/flink-metrics-core-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-metrics-core/1.19-SNAPSHOT/flink-metrics-core-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-metrics/flink-metrics-core/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-metrics-core/1.19-SNAPSHOT/flink-metrics-core-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-metrics/flink-metrics-core/target/flink-metrics-core-1.19-SNAPSHOT-tests.jar to /root/.m2/repository/org/apache/flink/flink-metrics-core/1.19-SNAPSHOT/flink-metrics-core-1.19-SNAPSHOT-tests.jar
+[INFO] Installing /workspace/repo/flink-metrics/flink-metrics-core/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-metrics-core/1.19-SNAPSHOT/flink-metrics-core-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-metrics/flink-metrics-core/target/bom.json to /root/.m2/repository/org/apache/flink/flink-metrics-core/1.19-SNAPSHOT/flink-metrics-core-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] -----------< org.apache.flink:flink-architecture-tests-test >-----------
+[INFO] Building Flink : Architecture Tests : Test 1.19-SNAPSHOT          [9/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-architecture-tests-test ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-architecture-tests-test ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-architecture-tests-test ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-architecture-tests-test ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-architecture-tests-test ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-architecture-tests-test ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-architecture-tests-test ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-architecture-tests-test ---
+[INFO] Building jar: /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/target/flink-architecture-tests-test-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-architecture-tests-test ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.apache.flink:flink-architecture-tests-base:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding com.tngtech.archunit:archunit:jar:1.2.0 from the shaded jar.
+[INFO] Excluding com.tngtech.archunit:archunit-junit5:jar:1.2.0 from the shaded jar.
+[INFO] Excluding com.tngtech.archunit:archunit-junit5-api:jar:1.2.0 from the shaded jar.
+[INFO] Excluding com.tngtech.archunit:archunit-junit5-engine:jar:1.2.0 from the shaded jar.
+[INFO] Excluding com.tngtech.archunit:archunit-junit5-engine-api:jar:1.2.0 from the shaded jar.
+[INFO] Excluding org.junit.jupiter:junit-jupiter:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.jupiter:junit-jupiter-api:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.opentest4j:opentest4j:jar:1.3.0 from the shaded jar.
+[INFO] Excluding org.junit.platform:junit-platform-commons:jar:1.10.1 from the shaded jar.
+[INFO] Excluding org.junit.jupiter:junit-jupiter-params:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.jupiter:junit-jupiter-engine:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.vintage:junit-vintage-engine:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.platform:junit-platform-engine:jar:1.10.1 from the shaded jar.
+[INFO] Excluding junit:junit:jar:4.13.2 from the shaded jar.
+[INFO] Excluding org.hamcrest:hamcrest-core:jar:1.3 from the shaded jar.
+[INFO] Excluding org.apiguardian:apiguardian-api:jar:1.1.2 from the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/target/flink-architecture-tests-test-1.19-SNAPSHOT.jar with /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/target/flink-architecture-tests-test-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-architecture-tests-test ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 20 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/target/bom.xml
+[INFO]            attaching as flink-architecture-tests-test-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/target/bom.json
+[INFO]            attaching as flink-architecture-tests-test-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-architecture-tests-test ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-architecture-tests-test ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-architecture-tests-test/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-architecture-tests-test/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-architecture-tests-test/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-architecture-tests-test ---
+[INFO] Installing /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/target/flink-architecture-tests-test-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-architecture-tests-test/1.19-SNAPSHOT/flink-architecture-tests-test-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-architecture-tests-test/1.19-SNAPSHOT/flink-architecture-tests-test-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-architecture-tests-test/1.19-SNAPSHOT/flink-architecture-tests-test-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-architecture-tests/flink-architecture-tests-test/target/bom.json to /root/.m2/repository/org/apache/flink/flink-architecture-tests-test/1.19-SNAPSHOT/flink-architecture-tests-test-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] -------------< org.apache.flink:fink-migration-test-utils >-------------
+[INFO] Building Flink : Test utils : MigrationTestUtils 1.19-SNAPSHOT   [10/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ fink-migration-test-utils ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ fink-migration-test-utils ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ fink-migration-test-utils ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ fink-migration-test-utils ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ fink-migration-test-utils ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ fink-migration-test-utils ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ fink-migration-test-utils ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ fink-migration-test-utils ---
+[INFO] Building jar: /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/target/fink-migration-test-utils-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ fink-migration-test-utils ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.apache.flink:flink-annotations:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.junit.vintage:junit-vintage-engine:jar:5.10.1 from the shaded jar.
+[INFO] Excluding org.junit.platform:junit-platform-engine:jar:1.10.1 from the shaded jar.
+[INFO] Excluding org.opentest4j:opentest4j:jar:1.3.0 from the shaded jar.
+[INFO] Excluding org.junit.platform:junit-platform-commons:jar:1.10.1 from the shaded jar.
+[INFO] Excluding junit:junit:jar:4.13.2 from the shaded jar.
+[INFO] Excluding org.hamcrest:hamcrest-core:jar:1.3 from the shaded jar.
+[INFO] Excluding org.apiguardian:apiguardian-api:jar:1.1.2 from the shaded jar.
+[INFO] Excluding commons-cli:commons-cli:jar:1.5.0 from the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/target/fink-migration-test-utils-1.19-SNAPSHOT.jar with /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/target/fink-migration-test-utils-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ fink-migration-test-utils ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 12 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/target/bom.xml
+[INFO]            attaching as fink-migration-test-utils-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/target/bom.json
+[INFO]            attaching as fink-migration-test-utils-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ fink-migration-test-utils ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ fink-migration-test-utils ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/fink-migration-test-utils/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/fink-migration-test-utils/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/fink-migration-test-utils/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ fink-migration-test-utils ---
+[INFO] Installing /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/target/fink-migration-test-utils-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/fink-migration-test-utils/1.19-SNAPSHOT/fink-migration-test-utils-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/fink-migration-test-utils/1.19-SNAPSHOT/fink-migration-test-utils-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/target/bom.xml to /root/.m2/repository/org/apache/flink/fink-migration-test-utils/1.19-SNAPSHOT/fink-migration-test-utils-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-test-utils-parent/flink-migration-test-utils/target/bom.json to /root/.m2/repository/org/apache/flink/fink-migration-test-utils/1.19-SNAPSHOT/fink-migration-test-utils-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --------------------< org.apache.flink:flink-core >---------------------
+[INFO] Building Flink : Core 1.19-SNAPSHOT                              [11/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-core ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-core ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-core ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-core ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-core ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-core/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-core ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1038 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-core ---
+[INFO] Building jar: /workspace/repo/flink-core/target/flink-core-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:test-jar (default) @ flink-core ---
+[INFO] Building jar: /workspace/repo/flink-core/target/flink-core-1.19-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-core ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.apache.flink:flink-annotations:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-metrics-core:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-asm-9:jar:9.6-18.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-jackson:jar:2.15.3-18.0 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-core:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-annotations:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-databind:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.yaml:snakeyaml:jar:1.33 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.dataformat:jackson-dataformat-csv:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-lang3:jar:3.12.0 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-text:jar:1.10.0 from the shaded jar.
+[INFO] Excluding com.esotericsoftware.kryo:kryo:jar:2.24.0 from the shaded jar.
+[INFO] Excluding com.esotericsoftware.minlog:minlog:jar:1.2 from the shaded jar.
+[INFO] Excluding org.objenesis:objenesis:jar:2.1 from the shaded jar.
+[INFO] Excluding commons-collections:commons-collections:jar:3.2.2 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-compress:jar:1.24.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-guava:jar:32.1.3-jre-18.0 from the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-core/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-core/target/flink-core-1.19-SNAPSHOT.jar with /workspace/repo/flink-core/target/flink-core-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-core ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 23 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-core/target/bom.xml
+[INFO]            attaching as flink-core-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-core/target/bom.json
+[INFO]            attaching as flink-core-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-core ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-core/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-core/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-core/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-core ---
+[INFO] Installing /workspace/repo/flink-core/target/flink-core-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-core/1.19-SNAPSHOT/flink-core-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-core/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-core/1.19-SNAPSHOT/flink-core-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-core/target/flink-core-1.19-SNAPSHOT-tests.jar to /root/.m2/repository/org/apache/flink/flink-core/1.19-SNAPSHOT/flink-core-1.19-SNAPSHOT-tests.jar
+[INFO] Installing /workspace/repo/flink-core/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-core/1.19-SNAPSHOT/flink-core-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-core/target/bom.json to /root/.m2/repository/org/apache/flink/flink-core/1.19-SNAPSHOT/flink-core-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --------------------< org.apache.flink:flink-java >---------------------
+[INFO] Building Flink : Java 1.19-SNAPSHOT                              [12/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-java ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-java ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-java ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-java ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-java ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-java/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-java ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-java ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 3 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-java ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-java ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-java ---
+[INFO] Building jar: /workspace/repo/flink-java/target/flink-java-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:test-jar (default) @ flink-java ---
+[INFO] Building jar: /workspace/repo/flink-java/target/flink-java-1.19-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-java ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.apache.flink:flink-core:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-annotations:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-metrics-core:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-asm-9:jar:9.6-18.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-jackson:jar:2.15.3-18.0 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-core:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-annotations:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-databind:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.yaml:snakeyaml:jar:1.33 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.dataformat:jackson-dataformat-csv:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-text:jar:1.10.0 from the shaded jar.
+[INFO] Excluding com.esotericsoftware.kryo:kryo:jar:2.24.0 from the shaded jar.
+[INFO] Excluding com.esotericsoftware.minlog:minlog:jar:1.2 from the shaded jar.
+[INFO] Excluding commons-collections:commons-collections:jar:3.2.2 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-compress:jar:1.24.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-guava:jar:32.1.3-jre-18.0 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-lang3:jar:3.12.0 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-math3:jar:3.6.1 from the shaded jar.
+[INFO] Excluding com.twitter:chill-java:jar:0.7.6 from the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] Excluding org.objenesis:objenesis:jar:2.1 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-java/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-java/target/flink-java-1.19-SNAPSHOT.jar with /workspace/repo/flink-java/target/flink-java-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-java ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 26 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-java/target/bom.xml
+[INFO]            attaching as flink-java-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-java/target/bom.json
+[INFO]            attaching as flink-java-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-java ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-java ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-java/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-java/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-java/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-java ---
+[INFO] Installing /workspace/repo/flink-java/target/flink-java-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-java/1.19-SNAPSHOT/flink-java-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-java/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-java/1.19-SNAPSHOT/flink-java-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-java/target/flink-java-1.19-SNAPSHOT-tests.jar to /root/.m2/repository/org/apache/flink/flink-java/1.19-SNAPSHOT/flink-java-1.19-SNAPSHOT-tests.jar
+[INFO] Installing /workspace/repo/flink-java/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-java/1.19-SNAPSHOT/flink-java-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-java/target/bom.json to /root/.m2/repository/org/apache/flink/flink-java/1.19-SNAPSHOT/flink-java-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] ---------------------< org.apache.flink:flink-rpc >---------------------
+[INFO] Building Flink : RPC : 1.19-SNAPSHOT                             [13/21]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-rpc ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-rpc ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-rpc ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-rpc ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-rpc ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-rpc ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-rpc ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-rpc ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-rpc ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-rpc ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-rpc ---
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-rpc ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-rpc ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-rpc/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-rpc ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 3 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-rpc/target/bom.xml
+[INFO]            attaching as flink-rpc-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-rpc/target/bom.json
+[INFO]            attaching as flink-rpc-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-rpc ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-rpc ---
+[INFO] Skipping execution because parameter 'skipPomModules' was set to true and this is artifact is of type pom.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-rpc ---
+[INFO] Installing /workspace/repo/flink-rpc/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-rpc/1.19-SNAPSHOT/flink-rpc-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-rpc/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-rpc/1.19-SNAPSHOT/flink-rpc-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-rpc/target/bom.json to /root/.m2/repository/org/apache/flink/flink-rpc/1.19-SNAPSHOT/flink-rpc-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] ------------------< org.apache.flink:flink-rpc-core >-------------------
+[INFO] Building Flink : RPC : Core 1.19-SNAPSHOT                        [14/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-rpc-core ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-rpc-core ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-rpc-core ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-rpc/flink-rpc-core/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-rpc-core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-rpc-core ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-rpc-core ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-rpc-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-rpc-core ---
+[INFO] Building jar: /workspace/repo/flink-rpc/flink-rpc-core/target/flink-rpc-core-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-rpc-core ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-rpc/flink-rpc-core/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-rpc/flink-rpc-core/target/flink-rpc-core-1.19-SNAPSHOT.jar with /workspace/repo/flink-rpc/flink-rpc-core/target/flink-rpc-core-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-rpc-core ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 24 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-rpc/flink-rpc-core/target/bom.xml
+[INFO]            attaching as flink-rpc-core-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-rpc/flink-rpc-core/target/bom.json
+[INFO]            attaching as flink-rpc-core-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-rpc-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-rpc-core ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-core/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-core/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-core/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-rpc-core ---
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-core/target/flink-rpc-core-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-rpc-core/1.19-SNAPSHOT/flink-rpc-core-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-core/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-rpc-core/1.19-SNAPSHOT/flink-rpc-core-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-core/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-rpc-core/1.19-SNAPSHOT/flink-rpc-core-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-core/target/bom.json to /root/.m2/repository/org/apache/flink/flink-rpc-core/1.19-SNAPSHOT/flink-rpc-core-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] ------------------< org.apache.flink:flink-rpc-akka >-------------------
+[INFO] Building Flink : RPC : Akka 1.19-SNAPSHOT                        [15/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-rpc-akka ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-rpc-akka ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-rpc-akka ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 6 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-rpc-akka ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-rpc-akka ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-rpc-akka ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-rpc-akka ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-rpc-akka ---
+[INFO] Building jar: /workspace/repo/flink-rpc/flink-rpc-akka/target/flink-rpc-akka-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:test-jar (default) @ flink-rpc-akka ---
+[INFO] Building jar: /workspace/repo/flink-rpc/flink-rpc-akka/target/flink-rpc-akka-1.19-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-rpc-akka ---
+[INFO] Including org.apache.pekko:pekko-actor_2.12:jar:1.0.1 in the shaded jar.
+[INFO] Including org.scala-lang:scala-library:jar:2.12.16 in the shaded jar.
+[INFO] Including org.scala-lang.modules:scala-java8-compat_2.12:jar:1.0.2 in the shaded jar.
+[INFO] Including com.typesafe:config:jar:1.4.2 in the shaded jar.
+[INFO] Including org.apache.pekko:pekko-remote_2.12:jar:1.0.1 in the shaded jar.
+[INFO] Including org.apache.pekko:pekko-stream_2.12:jar:1.0.1 in the shaded jar.
+[INFO] Including org.apache.pekko:pekko-protobuf-v3_2.12:jar:1.0.1 in the shaded jar.
+[INFO] Including org.reactivestreams:reactive-streams:jar:1.0.4 in the shaded jar.
+[INFO] Including com.typesafe:ssl-config-core_2.12:jar:0.6.1 in the shaded jar.
+[INFO] Including org.apache.pekko:pekko-pki_2.12:jar:1.0.1 in the shaded jar.
+[INFO] Including com.hierynomus:asn-one:jar:0.5.0 in the shaded jar.
+[INFO] Including org.agrona:agrona:jar:1.15.1 in the shaded jar.
+[INFO] Including org.apache.pekko:pekko-slf4j_2.12:jar:1.0.1 in the shaded jar.
+[INFO] Including io.netty:netty:jar:3.10.6.Final in the shaded jar.
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-rpc/flink-rpc-akka/dependency-reduced-pom.xml
+[WARNING] flink-rpc-akka-1.19-SNAPSHOT.jar, pekko-actor_2.12-1.0.1.jar, pekko-pki_2.12-1.0.1.jar, pekko-protobuf-v3_2.12-1.0.1.jar, pekko-remote_2.12-1.0.1.jar, pekko-slf4j_2.12-1.0.1.jar, pekko-stream_2.12-1.0.1.jar define 1 overlapping resource: 
+[WARNING]   - META-INF/LICENSE
+[WARNING] pekko-actor_2.12-1.0.1.jar, pekko-pki_2.12-1.0.1.jar, pekko-protobuf-v3_2.12-1.0.1.jar, pekko-remote_2.12-1.0.1.jar, pekko-slf4j_2.12-1.0.1.jar, pekko-stream_2.12-1.0.1.jar define 1 overlapping resource: 
+[WARNING]   - META-INF/DISCLAIMER
+[WARNING] agrona-1.15.1.jar, asn-one-0.5.0.jar, config-1.4.2.jar, flink-rpc-akka-1.19-SNAPSHOT.jar, netty-3.10.6.Final.jar, pekko-actor_2.12-1.0.1.jar, pekko-pki_2.12-1.0.1.jar, pekko-protobuf-v3_2.12-1.0.1.jar, pekko-remote_2.12-1.0.1.jar, pekko-slf4j_2.12-1.0.1.jar, pekko-stream_2.12-1.0.1.jar, reactive-streams-1.0.4.jar, scala-java8-compat_2.12-1.0.2.jar, scala-library-2.12.16.jar, ssl-config-core_2.12-0.6.1.jar define 1 overlapping resource: 
+[WARNING]   - META-INF/MANIFEST.MF
+[WARNING] maven-shade-plugin has detected that some files are
+[WARNING] present in two or more JARs. When this happens, only one
+[WARNING] single version of the file is copied to the uber jar.
+[WARNING] Usually this is not harmful and you can skip these warnings,
+[WARNING] otherwise try to manually exclude artifacts based on
+[WARNING] mvn dependency:tree -Ddetail=true and the above output.
+[WARNING] See https://maven.apache.org/plugins/maven-shade-plugin/
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-rpc/flink-rpc-akka/target/flink-rpc-akka-1.19-SNAPSHOT.jar with /workspace/repo/flink-rpc/flink-rpc-akka/target/flink-rpc-akka-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-rpc-akka ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 40 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-rpc/flink-rpc-akka/target/bom.xml
+[INFO]            attaching as flink-rpc-akka-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-rpc/flink-rpc-akka/target/bom.json
+[INFO]            attaching as flink-rpc-akka-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-rpc-akka ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-rpc-akka ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-akka/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-akka/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-akka/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-rpc-akka ---
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka/target/flink-rpc-akka-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-rpc-akka/1.19-SNAPSHOT/flink-rpc-akka-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-rpc-akka/1.19-SNAPSHOT/flink-rpc-akka-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka/target/flink-rpc-akka-1.19-SNAPSHOT-tests.jar to /root/.m2/repository/org/apache/flink/flink-rpc-akka/1.19-SNAPSHOT/flink-rpc-akka-1.19-SNAPSHOT-tests.jar
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-rpc-akka/1.19-SNAPSHOT/flink-rpc-akka-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka/target/bom.json to /root/.m2/repository/org/apache/flink/flink-rpc-akka/1.19-SNAPSHOT/flink-rpc-akka-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] ---------------< org.apache.flink:flink-rpc-akka-loader >---------------
+[INFO] Building Flink : RPC : Akka-Loader 1.19-SNAPSHOT                 [16/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-rpc-akka-loader ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-rpc-akka-loader ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-rpc-akka-loader ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-rpc-akka-loader ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-rpc-akka-loader ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-rpc-akka-loader ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-rpc-akka-loader ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-dependency-plugin:3.2.0:copy (copy-rpc-akka-jars) @ flink-rpc-akka-loader ---
+[INFO] Configured Artifact: org.apache.flink:flink-rpc-akka:1.19-SNAPSHOT:jar
+[INFO] Copying flink-rpc-akka-1.19-SNAPSHOT.jar to /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/classes/flink-rpc-akka.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-rpc-akka-loader ---
+[INFO] Building jar: /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/flink-rpc-akka-loader-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:test-jar (default) @ flink-rpc-akka-loader ---
+[INFO] Building jar: /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/flink-rpc-akka-loader-1.19-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-rpc-akka-loader ---
+[INFO] Including org.apache.flink:flink-rpc-akka:jar:1.19-SNAPSHOT in the shaded jar.
+[INFO] Excluding org.apache.flink:flink-core:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-annotations:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-metrics-core:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-asm-9:jar:9.6-18.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-jackson:jar:2.15.3-18.0 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-core:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-annotations:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-databind:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.yaml:snakeyaml:jar:1.33 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.dataformat:jackson-dataformat-csv:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-lang3:jar:3.12.0 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-text:jar:1.10.0 from the shaded jar.
+[INFO] Excluding com.esotericsoftware.kryo:kryo:jar:2.24.0 from the shaded jar.
+[INFO] Excluding com.esotericsoftware.minlog:minlog:jar:1.2 from the shaded jar.
+[INFO] Excluding commons-collections:commons-collections:jar:3.2.2 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-compress:jar:1.24.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-guava:jar:32.1.3-jre-18.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-rpc-core:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-force-shading:jar:18.0 from the shaded jar.
+[INFO] Excluding org.slf4j:slf4j-api:jar:1.7.36 from the shaded jar.
+[INFO] Excluding com.google.code.findbugs:jsr305:jar:1.3.9 from the shaded jar.
+[INFO] Excluding org.objenesis:objenesis:jar:2.1 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-rpc/flink-rpc-akka-loader/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/flink-rpc-akka-loader-1.19-SNAPSHOT.jar with /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/flink-rpc-akka-loader-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-rpc-akka-loader ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 26 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/bom.xml
+[INFO]            attaching as flink-rpc-akka-loader-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/bom.json
+[INFO]            attaching as flink-rpc-akka-loader-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-rpc-akka-loader ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-rpc-akka-loader ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-akka-loader/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-akka-loader/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-rpc-akka-loader/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-rpc-akka-loader ---
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/flink-rpc-akka-loader-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-rpc-akka-loader/1.19-SNAPSHOT/flink-rpc-akka-loader-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka-loader/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-rpc-akka-loader/1.19-SNAPSHOT/flink-rpc-akka-loader-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/flink-rpc-akka-loader-1.19-SNAPSHOT-tests.jar to /root/.m2/repository/org/apache/flink/flink-rpc-akka-loader/1.19-SNAPSHOT/flink-rpc-akka-loader-1.19-SNAPSHOT-tests.jar
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-rpc-akka-loader/1.19-SNAPSHOT/flink-rpc-akka-loader-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-rpc/flink-rpc-akka-loader/target/bom.json to /root/.m2/repository/org/apache/flink/flink-rpc-akka-loader/1.19-SNAPSHOT/flink-rpc-akka-loader-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] ---------------< org.apache.flink:flink-queryable-state >---------------
+[INFO] Building Flink : Queryable state : 1.19-SNAPSHOT                 [17/21]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-queryable-state ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-queryable-state ---
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-queryable-state ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-queryable-state ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-queryable-state/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-queryable-state ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 3 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-queryable-state/target/bom.xml
+[INFO]            attaching as flink-queryable-state-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-queryable-state/target/bom.json
+[INFO]            attaching as flink-queryable-state-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-queryable-state ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-queryable-state ---
+[INFO] Skipping execution because parameter 'skipPomModules' was set to true and this is artifact is of type pom.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-queryable-state ---
+[INFO] Installing /workspace/repo/flink-queryable-state/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-queryable-state/1.19-SNAPSHOT/flink-queryable-state-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-queryable-state/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-queryable-state/1.19-SNAPSHOT/flink-queryable-state-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-queryable-state/target/bom.json to /root/.m2/repository/org/apache/flink/flink-queryable-state/1.19-SNAPSHOT/flink-queryable-state-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] ---------< org.apache.flink:flink-queryable-state-client-java >---------
+[INFO] Building Flink : Queryable state : Client Java 1.19-SNAPSHOT     [18/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-queryable-state-client-java ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-queryable-state-client-java ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-queryable-state-client-java ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-queryable-state-client-java ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-queryable-state-client-java ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-queryable-state-client-java ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-queryable-state-client-java ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-queryable-state-client-java ---
+[INFO] Building jar: /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/flink-queryable-state-client-java-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:test-jar (default) @ flink-queryable-state-client-java ---
+[INFO] Building jar: /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/flink-queryable-state-client-java-1.19-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-queryable-state-client-java ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-netty:jar:4.1.100.Final-18.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-guava:jar:32.1.3-jre-18.0 from the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/flink-queryable-state-client-java-1.19-SNAPSHOT.jar with /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/flink-queryable-state-client-java-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-queryable-state-client-java ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 25 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/bom.xml
+[INFO]            attaching as flink-queryable-state-client-java-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/bom.json
+[INFO]            attaching as flink-queryable-state-client-java-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-queryable-state-client-java ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-queryable-state-client-java ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-queryable-state-client-java/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-queryable-state-client-java/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-queryable-state-client-java/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-queryable-state-client-java ---
+[INFO] Installing /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/flink-queryable-state-client-java-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-queryable-state-client-java/1.19-SNAPSHOT/flink-queryable-state-client-java-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-queryable-state-client-java/1.19-SNAPSHOT/flink-queryable-state-client-java-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/flink-queryable-state-client-java-1.19-SNAPSHOT-tests.jar to /root/.m2/repository/org/apache/flink/flink-queryable-state-client-java/1.19-SNAPSHOT/flink-queryable-state-client-java-1.19-SNAPSHOT-tests.jar
+[INFO] Installing /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-queryable-state-client-java/1.19-SNAPSHOT/flink-queryable-state-client-java-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-queryable-state/flink-queryable-state-client-java/target/bom.json to /root/.m2/repository/org/apache/flink/flink-queryable-state-client-java/1.19-SNAPSHOT/flink-queryable-state-client-java-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] -----------------< org.apache.flink:flink-filesystems >-----------------
+[INFO] Building Flink : FileSystems : 1.19-SNAPSHOT                     [19/21]
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-filesystems ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-filesystems ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-filesystems ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-filesystems ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-filesystems ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-filesystems ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-filesystems ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-filesystems ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-filesystems ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-filesystems ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-filesystems ---
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-filesystems ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-filesystems ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] No artifact matching filter io.netty:netty
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-filesystems/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-filesystems ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 3 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-filesystems/target/bom.xml
+[INFO]            attaching as flink-filesystems-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-filesystems/target/bom.json
+[INFO]            attaching as flink-filesystems-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-filesystems ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-filesystems ---
+[INFO] Skipping execution because parameter 'skipPomModules' was set to true and this is artifact is of type pom.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-filesystems ---
+[INFO] Installing /workspace/repo/flink-filesystems/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-filesystems/1.19-SNAPSHOT/flink-filesystems-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-filesystems/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-filesystems/1.19-SNAPSHOT/flink-filesystems-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-filesystems/target/bom.json to /root/.m2/repository/org/apache/flink/flink-filesystems/1.19-SNAPSHOT/flink-filesystems-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] ------------------< org.apache.flink:flink-hadoop-fs >------------------
+[INFO] Building Flink : FileSystems : Hadoop FS 1.19-SNAPSHOT           [20/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-hadoop-fs ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-hadoop-fs ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-hadoop-fs ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/flink-filesystems/flink-hadoop-fs/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-hadoop-fs ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-hadoop-fs ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 4 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-hadoop-fs ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (default-test) @ flink-hadoop-fs ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ flink-hadoop-fs ---
+[INFO] Building jar: /workspace/repo/flink-filesystems/flink-hadoop-fs/target/flink-hadoop-fs-1.19-SNAPSHOT.jar
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:test-jar (default) @ flink-hadoop-fs ---
+[INFO] Building jar: /workspace/repo/flink-filesystems/flink-hadoop-fs/target/flink-hadoop-fs-1.19-SNAPSHOT-tests.jar
+[INFO] 
+[INFO] --- maven-shade-plugin:3.5.1:shade (shade-flink) @ flink-hadoop-fs ---
+[INFO] Including org.apache.flink:flink-shaded-force-shading:jar:18.0 in the shaded jar.
+[INFO] Excluding org.apache.flink:flink-core:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-annotations:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-metrics-core:jar:1.19-SNAPSHOT from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-asm-9:jar:9.6-18.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-jackson:jar:2.15.3-18.0 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-core:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-annotations:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.yaml:snakeyaml:jar:1.33 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.dataformat:jackson-dataformat-csv:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.15.3 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-lang3:jar:3.12.0 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-text:jar:1.10.0 from the shaded jar.
+[INFO] Excluding com.esotericsoftware.kryo:kryo:jar:2.24.0 from the shaded jar.
+[INFO] Excluding com.esotericsoftware.minlog:minlog:jar:1.2 from the shaded jar.
+[INFO] Excluding commons-collections:commons-collections:jar:3.2.2 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-compress:jar:1.24.0 from the shaded jar.
+[INFO] Excluding org.apache.flink:flink-shaded-guava:jar:32.1.3-jre-18.0 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-common:jar:2.10.2 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-annotations:jar:2.10.2 from the shaded jar.
+[INFO] Excluding com.google.guava:guava:jar:11.0.2 from the shaded jar.
+[INFO] Excluding commons-cli:commons-cli:jar:1.5.0 from the shaded jar.
+[INFO] Excluding org.apache.commons:commons-math3:jar:3.6.1 from the shaded jar.
+[INFO] Excluding xmlenc:xmlenc:jar:0.52 from the shaded jar.
+[INFO] Excluding org.apache.httpcomponents:httpclient:jar:4.5.13 from the shaded jar.
+[INFO] Excluding org.apache.httpcomponents:httpcore:jar:4.4.14 from the shaded jar.
+[INFO] Excluding commons-codec:commons-codec:jar:1.15 from the shaded jar.
+[INFO] Excluding commons-io:commons-io:jar:2.11.0 from the shaded jar.
+[INFO] Excluding commons-net:commons-net:jar:3.1 from the shaded jar.
+[INFO] Excluding javax.servlet:servlet-api:jar:2.5 from the shaded jar.
+[INFO] Excluding org.mortbay.jetty:jetty:jar:6.1.26 from the shaded jar.
+[INFO] Excluding org.mortbay.jetty:jetty-util:jar:6.1.26 from the shaded jar.
+[INFO] Excluding org.mortbay.jetty:jetty-sslengine:jar:6.1.26 from the shaded jar.
+[INFO] Excluding javax.servlet.jsp:jsp-api:jar:2.1 from the shaded jar.
+[INFO] Excluding com.sun.jersey:jersey-core:jar:1.9 from the shaded jar.
+[INFO] Excluding com.sun.jersey:jersey-json:jar:1.9 from the shaded jar.
+[INFO] Excluding org.codehaus.jettison:jettison:jar:1.1 from the shaded jar.
+[INFO] Excluding com.sun.xml.bind:jaxb-impl:jar:2.2.3-1 from the shaded jar.
+[INFO] Excluding org.codehaus.jackson:jackson-jaxrs:jar:1.8.3 from the shaded jar.
+[INFO] Excluding org.codehaus.jackson:jackson-xc:jar:1.8.3 from the shaded jar.
+[INFO] Excluding com.sun.jersey:jersey-server:jar:1.9 from the shaded jar.
+[INFO] Excluding asm:asm:jar:3.1 from the shaded jar.
+[INFO] Excluding commons-logging:commons-logging:jar:1.1.3 from the shaded jar.
+[INFO] Excluding net.java.dev.jets3t:jets3t:jar:0.9.0 from the shaded jar.
+[INFO] Excluding com.jamesmurty.utils:java-xmlbuilder:jar:0.4 from the shaded jar.
+[INFO] Excluding commons-lang:commons-lang:jar:2.6 from the shaded jar.
+[INFO] Excluding commons-configuration:commons-configuration:jar:1.7 from the shaded jar.
+[INFO] Excluding commons-digester:commons-digester:jar:1.8 from the shaded jar.
+[INFO] Excluding commons-beanutils:commons-beanutils:jar:1.9.4 from the shaded jar.
+[INFO] Excluding org.codehaus.jackson:jackson-core-asl:jar:1.9.13 from the shaded jar.
+[INFO] Excluding org.codehaus.jackson:jackson-mapper-asl:jar:1.9.13 from the shaded jar.
+[INFO] Excluding org.apache.avro:avro:jar:1.11.3 from the shaded jar.
+[INFO] Excluding com.google.protobuf:protobuf-java:jar:2.5.0 from the shaded jar.
+[INFO] Excluding com.google.code.gson:gson:jar:2.2.4 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-auth:jar:2.10.2 from the shaded jar.
+[INFO] Excluding com.nimbusds:nimbus-jose-jwt:jar:7.9 from the shaded jar.
+[INFO] Excluding com.github.stephenc.jcip:jcip-annotations:jar:1.0-1 from the shaded jar.
+[INFO] Excluding net.minidev:json-smart:jar:2.3 from the shaded jar.
+[INFO] Excluding net.minidev:accessors-smart:jar:1.2 from the shaded jar.
+[INFO] Excluding org.ow2.asm:asm:jar:5.0.4 from the shaded jar.
+[INFO] Excluding org.apache.directory.server:apacheds-kerberos-codec:jar:2.0.0-M15 from the shaded jar.
+[INFO] Excluding org.apache.directory.server:apacheds-i18n:jar:2.0.0-M15 from the shaded jar.
+[INFO] Excluding org.apache.directory.api:api-asn1-api:jar:1.0.0-M20 from the shaded jar.
+[INFO] Excluding org.apache.directory.api:api-util:jar:1.0.0-M20 from the shaded jar.
+[INFO] Excluding org.apache.curator:curator-framework:jar:2.13.0 from the shaded jar.
+[INFO] Excluding com.jcraft:jsch:jar:0.1.55 from the shaded jar.
+[INFO] Excluding org.apache.curator:curator-client:jar:2.13.0 from the shaded jar.
+[INFO] Excluding org.apache.curator:curator-recipes:jar:2.13.0 from the shaded jar.
+[INFO] Excluding org.apache.htrace:htrace-core4:jar:4.1.0-incubating from the shaded jar.
+[INFO] Excluding org.apache.zookeeper:zookeeper:jar:3.7.2 from the shaded jar.
+[INFO] Excluding org.apache.zookeeper:zookeeper-jute:jar:3.7.2 from the shaded jar.
+[INFO] Excluding org.apache.yetus:audience-annotations:jar:0.12.0 from the shaded jar.
+[INFO] Excluding org.codehaus.woodstox:stax2-api:jar:4.2.1 from the shaded jar.
+[INFO] Excluding com.fasterxml.woodstox:woodstox-core:jar:5.3.0 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-hdfs:jar:2.10.2 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-hdfs-client:jar:2.10.2 from the shaded jar.
+[INFO] Excluding com.squareup.okhttp:okhttp:jar:2.7.5 from the shaded jar.
+[INFO] Excluding com.squareup.okio:okio:jar:1.6.0 from the shaded jar.
+[INFO] Excluding commons-daemon:commons-daemon:jar:1.0.13 from the shaded jar.
+[INFO] Excluding io.netty:netty:jar:3.10.6.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-all:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-buffer:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-dns:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-haproxy:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-http:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-http2:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-memcache:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-mqtt:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-redis:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-smtp:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-socks:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-stomp:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-codec-xml:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-common:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-handler:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-native-unix-common:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-handler-proxy:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-handler-ssl-ocsp:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-resolver:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-resolver-dns:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-rxtx:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-sctp:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-udt:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-classes-epoll:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-classes-kqueue:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-resolver-dns-classes-macos:jar:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-native-epoll:jar:linux-x86_64:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-native-epoll:jar:linux-aarch_64:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-native-kqueue:jar:osx-x86_64:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-transport-native-kqueue:jar:osx-aarch_64:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-resolver-dns-native-macos:jar:osx-x86_64:4.1.100.Final from the shaded jar.
+[INFO] Excluding io.netty:netty-resolver-dns-native-macos:jar:osx-aarch_64:4.1.100.Final from the shaded jar.
+[INFO] Excluding xerces:xercesImpl:jar:2.12.0 from the shaded jar.
+[INFO] Excluding xml-apis:xml-apis:jar:1.4.01 from the shaded jar.
+[INFO] Excluding org.fusesource.leveldbjni:leveldbjni-all:jar:1.8 from the shaded jar.
+[INFO] Excluding com.fasterxml.jackson.core:jackson-databind:jar:2.15.3 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-mapreduce-client-core:jar:2.10.2 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-yarn-client:jar:2.10.2 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-yarn-api:jar:2.10.2 from the shaded jar.
+[INFO] Excluding org.apache.hadoop:hadoop-yarn-common:jar:2.10.2 from the shaded jar.
+[INFO] Excluding javax.xml.bind:jaxb-api:jar:2.3.1 from the shaded jar.
+[INFO] Excluding javax.activation:javax.activation-api:jar:1.2.0 from the shaded jar.
+[INFO] Excluding com.sun.jersey:jersey-client:jar:1.9 from the shaded jar.
+[INFO] Excluding com.google.inject:guice:jar:3.0 from the shaded jar.
+[INFO] Excluding javax.inject:javax.inject:jar:1 from the shaded jar.
+[INFO] Excluding aopalliance:aopalliance:jar:1.0 from the shaded jar.
+[INFO] Excluding com.sun.jersey.contribs:jersey-guice:jar:1.9 from the shaded jar.
+[INFO] Excluding com.google.inject.extensions:guice-servlet:jar:3.0 from the shaded jar.
+[INFO] Excluding org.objenesis:objenesis:jar:2.1 from the shaded jar.
+[INFO] Dependency-reduced POM written at: /workspace/repo/flink-filesystems/flink-hadoop-fs/dependency-reduced-pom.xml
+[INFO] Replacing original artifact with shaded artifact.
+[INFO] Replacing /workspace/repo/flink-filesystems/flink-hadoop-fs/target/flink-hadoop-fs-1.19-SNAPSHOT.jar with /workspace/repo/flink-filesystems/flink-hadoop-fs/target/flink-hadoop-fs-1.19-SNAPSHOT-shaded.jar
+[INFO] 
+[INFO] --- cyclonedx-maven-plugin:2.7.7:makeBom (default) @ flink-hadoop-fs ---
+[INFO] CycloneDX: Resolving Dependencies
+[INFO] CycloneDX: Creating BOM version 1.4 with 135 component(s)
+[INFO] CycloneDX: Writing and validating BOM (XML): /workspace/repo/flink-filesystems/flink-hadoop-fs/target/bom.xml
+[INFO]            attaching as flink-hadoop-fs-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] CycloneDX: Writing and validating BOM (JSON): /workspace/repo/flink-filesystems/flink-hadoop-fs/target/bom.json
+[INFO]            attaching as flink-hadoop-fs-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.2:test (integration-tests) @ flink-hadoop-fs ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- japicmp-maven-plugin:0.17.1:cmp (default) @ flink-hadoop-fs ---
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-hadoop-fs/japicmp/japicmp.diff'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-hadoop-fs/japicmp/japicmp.xml'.
+[INFO] Written file '/workspace/repo/tools/japicmp-output/flink-hadoop-fs/japicmp/japicmp.html'.
+[INFO] 
+[INFO] --- maven-install-plugin:2.5.2:install (default-install) @ flink-hadoop-fs ---
+[INFO] Installing /workspace/repo/flink-filesystems/flink-hadoop-fs/target/flink-hadoop-fs-1.19-SNAPSHOT.jar to /root/.m2/repository/org/apache/flink/flink-hadoop-fs/1.19-SNAPSHOT/flink-hadoop-fs-1.19-SNAPSHOT.jar
+[INFO] Installing /workspace/repo/flink-filesystems/flink-hadoop-fs/dependency-reduced-pom.xml to /root/.m2/repository/org/apache/flink/flink-hadoop-fs/1.19-SNAPSHOT/flink-hadoop-fs-1.19-SNAPSHOT.pom
+[INFO] Installing /workspace/repo/flink-filesystems/flink-hadoop-fs/target/flink-hadoop-fs-1.19-SNAPSHOT-tests.jar to /root/.m2/repository/org/apache/flink/flink-hadoop-fs/1.19-SNAPSHOT/flink-hadoop-fs-1.19-SNAPSHOT-tests.jar
+[INFO] Installing /workspace/repo/flink-filesystems/flink-hadoop-fs/target/bom.xml to /root/.m2/repository/org/apache/flink/flink-hadoop-fs/1.19-SNAPSHOT/flink-hadoop-fs-1.19-SNAPSHOT-cyclonedx.xml
+[INFO] Installing /workspace/repo/flink-filesystems/flink-hadoop-fs/target/bom.json to /root/.m2/repository/org/apache/flink/flink-hadoop-fs/1.19-SNAPSHOT/flink-hadoop-fs-1.19-SNAPSHOT-cyclonedx.json
+[INFO] 
+[INFO] -------------------< org.apache.flink:flink-runtime >-------------------
+[INFO] Building Flink : Runtime 1.19-SNAPSHOT                           [21/21]
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.1.2:check (validate) @ flink-runtime ---
+[INFO] 
+[INFO] --- spotless-maven-plugin:2.27.1:check (spotless-check) @ flink-runtime ---
+[INFO] 
+[INFO] --- git-commit-id-plugin:4.0.2:revision (get-the-git-infos) @ flink-runtime ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven-version) @ flink-runtime ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (enforce-maven) @ flink-runtime ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-snakeyaml) @ flink-runtime ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (ban-unsafe-jackson) @ flink-runtime ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-log4j-1) @ flink-runtime ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-akka-rpc-dependencies) @ flink-runtime ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.1.0:enforce (forbid-direct-table-planner-dependencies) @ flink-runtime ---
+[INFO] 
+[INFO] --- directory-maven-plugin:0.1:directory-of (directories) @ flink-runtime ---
+[INFO] Directory of org.apache.flink:flink-parent set to: /workspace/repo
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ flink-runtime ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ flink-runtime ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 6 resources
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @ flink-runtime ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ flink-runtime ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 76 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.0:testCompile (default-testCompile) @ flink-runtime ---
+[INFO] Compiling 7 source files to /workspace/repo/flink-runtime/target/test-classes
+[INFO] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/DefaultSchedulerTest.java: /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/DefaultSchedulerTest.java uses or overrides a deprecated API.
+[INFO] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/DefaultSchedulerTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/DefaultSchedulerTest.java: /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/DefaultSchedulerTest.java uses unchecked or unsafe operations.
+[INFO] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/DefaultSchedulerTest.java: Recompile with -Xlint:unchecked for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java:[67,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+  required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+  found: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java:[85,26] cannot find symbol
+  symbol:   method isRootCause()
+  location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java:[99,38] method unrecoverable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+  required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,boolean
+  found: <nulltype>,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,boolean,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java:[107,26] cannot find symbol
+  symbol:   method isRootCause()
+  location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/TestRestartBackoffTimeStrategy.java:[25,8] org.apache.flink.runtime.executiongraph.failover.TestRestartBackoffTimeStrategy is not abstract and does not override abstract method notifyFailure(java.lang.Throwable) in org.apache.flink.runtime.executiongraph.failover.RestartBackoffTimeStrategy
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/TestRestartBackoffTimeStrategy.java:[55,20] notifyFailure(java.lang.Throwable) in org.apache.flink.runtime.executiongraph.failover.TestRestartBackoffTimeStrategy cannot implement notifyFailure(java.lang.Throwable) in org.apache.flink.runtime.executiongraph.failover.RestartBackoffTimeStrategy
+  return type boolean is not compatible with void
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/TestRestartBackoffTimeStrategy.java:[54,5] method does not override or implement a method from a supertype
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[52,53] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[113,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[118,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[125,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[149,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[153,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[157,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[226,65] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[253,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[259,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[265,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[271,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[277,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[316,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[366,57] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/RootExceptionHistoryEntryTest.java:[91,17] constructor FailureHandlingResultSnapshot in class org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot cannot be applied to given types;
+  required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.executiongraph.Execution>
+  found: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.executiongraph.Execution>,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/RootExceptionHistoryEntryTest.java:[120,20] cannot find symbol
+  symbol:   method addConcurrentExceptions(java.util.Collection<org.apache.flink.runtime.executiongraph.Execution>)
+  location: variable actualEntry of type org.apache.flink.runtime.scheduler.exceptionhistory.RootExceptionHistoryEntry
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExecutionFailureHandlerTest.java:[181,26] cannot find symbol
+  symbol:   method isRootCause()
+  location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExecutionFailureHandlerTest.java:[227,26] cannot find symbol
+  symbol:   method isRootCause()
+  location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExecutionFailureHandlerTest.java:[241,26] cannot find symbol
+  symbol:   method isRootCause()
+  location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[88,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+  required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+  found: org.apache.flink.runtime.executiongraph.Execution,java.lang.RuntimeException,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[116,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+  required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+  found: org.apache.flink.runtime.executiongraph.Execution,<nulltype>,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[150,32] cannot find symbol
+  symbol:   method isRootCause()
+  location: variable testInstance of type org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[165,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+  required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+  found: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[190,32] cannot find symbol
+  symbol:   method isRootCause()
+  location: variable testInstance of type org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[199,33] constructor FailureHandlingResultSnapshot in class org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot cannot be applied to given types;
+  required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.executiongraph.Execution>
+  found: org.apache.flink.runtime.executiongraph.Execution,java.lang.RuntimeException,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.executiongraph.Execution>,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[224,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+  required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+  found: <nulltype>,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+  reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[254,32] cannot find symbol
+  symbol:   method isRootCause()
+  location: variable testInstance of type org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot
+[INFO] 35 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Flink : 1.19-SNAPSHOT:
+[INFO] 
+[INFO] Flink : ............................................ SUCCESS [ 10.012 s]
+[INFO] Flink : Annotations ................................ SUCCESS [  7.610 s]
+[INFO] Flink : Architecture Tests ......................... SUCCESS [  3.283 s]
+[INFO] Flink : Architecture Tests : Base .................. SUCCESS [  4.097 s]
+[INFO] Flink : Test utils : ............................... SUCCESS [  3.003 s]
+[INFO] Flink : Test utils : Junit ......................... SUCCESS [  5.714 s]
+[INFO] Flink : Metrics : .................................. SUCCESS [  3.376 s]
+[INFO] Flink : Metrics : Core ............................. SUCCESS [  4.419 s]
+[INFO] Flink : Architecture Tests : Test .................. SUCCESS [  3.296 s]
+[INFO] Flink : Test utils : MigrationTestUtils ............ SUCCESS [  2.706 s]
+[INFO] Flink : Core ....................................... SUCCESS [ 38.898 s]
+[INFO] Flink : Java ....................................... SUCCESS [ 10.700 s]
+[INFO] Flink : RPC : ...................................... SUCCESS [  2.476 s]
+[INFO] Flink : RPC : Core ................................. SUCCESS [  5.236 s]
+[INFO] Flink : RPC : Akka ................................. SUCCESS [ 13.668 s]
+[INFO] Flink : RPC : Akka-Loader .......................... SUCCESS [  9.128 s]
+[INFO] Flink : Queryable state : .......................... SUCCESS [  2.682 s]
+[INFO] Flink : Queryable state : Client Java .............. SUCCESS [  4.587 s]
+[INFO] Flink : FileSystems : .............................. SUCCESS [  2.337 s]
+[INFO] Flink : FileSystems : Hadoop FS .................... SUCCESS [ 14.299 s]
+[INFO] Flink : Runtime .................................... FAILURE [ 55.998 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  03:32 min
+[INFO] Finished at: 2026-07-01T14:47:43Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:testCompile (default-testCompile) on project flink-runtime: Compilation failure: Compilation failure: 
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java:[67,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+[ERROR]   required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+[ERROR]   found: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java:[85,26] cannot find symbol
+[ERROR]   symbol:   method isRootCause()
+[ERROR]   location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java:[99,38] method unrecoverable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+[ERROR]   required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,boolean
+[ERROR]   found: <nulltype>,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,boolean,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/FailureHandlingResultTest.java:[107,26] cannot find symbol
+[ERROR]   symbol:   method isRootCause()
+[ERROR]   location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/TestRestartBackoffTimeStrategy.java:[25,8] org.apache.flink.runtime.executiongraph.failover.TestRestartBackoffTimeStrategy is not abstract and does not override abstract method notifyFailure(java.lang.Throwable) in org.apache.flink.runtime.executiongraph.failover.RestartBackoffTimeStrategy
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/TestRestartBackoffTimeStrategy.java:[55,20] notifyFailure(java.lang.Throwable) in org.apache.flink.runtime.executiongraph.failover.TestRestartBackoffTimeStrategy cannot implement notifyFailure(java.lang.Throwable) in org.apache.flink.runtime.executiongraph.failover.RestartBackoffTimeStrategy
+[ERROR]   return type boolean is not compatible with void
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/TestRestartBackoffTimeStrategy.java:[54,5] method does not override or implement a method from a supertype
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[52,53] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[113,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[118,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[125,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[149,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[153,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[157,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[226,65] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[253,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[259,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[265,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[271,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[277,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[316,49] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExponentialDelayRestartBackoffTimeStrategyTest.java:[366,57] 'void' type not allowed here
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/RootExceptionHistoryEntryTest.java:[91,17] constructor FailureHandlingResultSnapshot in class org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot cannot be applied to given types;
+[ERROR]   required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.executiongraph.Execution>
+[ERROR]   found: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.executiongraph.Execution>,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/RootExceptionHistoryEntryTest.java:[120,20] cannot find symbol
+[ERROR]   symbol:   method addConcurrentExceptions(java.util.Collection<org.apache.flink.runtime.executiongraph.Execution>)
+[ERROR]   location: variable actualEntry of type org.apache.flink.runtime.scheduler.exceptionhistory.RootExceptionHistoryEntry
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExecutionFailureHandlerTest.java:[181,26] cannot find symbol
+[ERROR]   symbol:   method isRootCause()
+[ERROR]   location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExecutionFailureHandlerTest.java:[227,26] cannot find symbol
+[ERROR]   symbol:   method isRootCause()
+[ERROR]   location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/executiongraph/failover/ExecutionFailureHandlerTest.java:[241,26] cannot find symbol
+[ERROR]   symbol:   method isRootCause()
+[ERROR]   location: variable result of type org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[88,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+[ERROR]   required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+[ERROR]   found: org.apache.flink.runtime.executiongraph.Execution,java.lang.RuntimeException,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[116,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+[ERROR]   required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+[ERROR]   found: org.apache.flink.runtime.executiongraph.Execution,<nulltype>,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[150,32] cannot find symbol
+[ERROR]   symbol:   method isRootCause()
+[ERROR]   location: variable testInstance of type org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[165,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+[ERROR]   required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+[ERROR]   found: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[190,32] cannot find symbol
+[ERROR]   symbol:   method isRootCause()
+[ERROR]   location: variable testInstance of type org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[199,33] constructor FailureHandlingResultSnapshot in class org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot cannot be applied to given types;
+[ERROR]   required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.executiongraph.Execution>
+[ERROR]   found: org.apache.flink.runtime.executiongraph.Execution,java.lang.RuntimeException,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.executiongraph.Execution>,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[224,38] method restartable in class org.apache.flink.runtime.executiongraph.failover.FailureHandlingResult cannot be applied to given types;
+[ERROR]   required: org.apache.flink.runtime.executiongraph.Execution,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean
+[ERROR]   found: <nulltype>,java.lang.Throwable,long,java.util.concurrent.CompletableFuture<java.util.Map<java.lang.String,java.lang.String>>,java.util.Set<org.apache.flink.runtime.scheduler.strategy.ExecutionVertexID>,long,boolean,boolean
+[ERROR]   reason: actual and formal argument lists differ in length
+[ERROR] /workspace/repo/flink-runtime/src/test/java/org/apache/flink/runtime/scheduler/exceptionhistory/FailureHandlingResultSnapshotTest.java:[254,32] cannot find symbol
+[ERROR]   symbol:   method isRootCause()
+[ERROR]   location: variable testInstance of type org.apache.flink.runtime.scheduler.exceptionhistory.FailureHandlingResultSnapshot
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :flink-runtime
+reward=0 graded=77 found=0 failed=0 parsed=7 framework=maven exit_code=1

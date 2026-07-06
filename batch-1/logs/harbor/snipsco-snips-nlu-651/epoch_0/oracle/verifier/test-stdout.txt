@@ -1,0 +1,124 @@
+patching file snips_nlu/tests/test_crf_slot_filler.py
+patching file snips_nlu/tests/test_deterministic_intent_parser.py
+patching file snips_nlu/tests/test_log_reg_intent_classifier.py
+patching file snips_nlu/tests/test_nlu_engine.py
+patching file snips_nlu/tests/test_probabilistic_intent_parser.py
+patching file snips_nlu/tests/utils.py
+============================= test session starts ==============================
+platform linux -- Python 3.6.15, pytest-7.0.1, pluggy-1.0.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 88 items
+
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_augment_slots PASSED [  1%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_filter_overlapping_builtins PASSED [  2%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_generate_slots_permutations PASSED [  3%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_be_deserializable PASSED [  4%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_be_deserializable_before_fit PASSED [  5%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_be_deserializable_when_fitted_without_slots PASSED [  6%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_be_serializable PASSED [  7%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_be_serializable_before_fit PASSED [  9%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_be_serializable_into_bytearray PASSED [ 10%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_be_serializable_when_fitted_without_slots PASSED [ 11%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_compute_features PASSED [ 12%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_compute_sequence_probability_when_no_slots PASSED [ 13%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_disambiguate_builtin_entities PASSED [ 14%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_fit_and_parse_with_non_ascii_tags PASSED [ 15%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_fit_with_naughty_strings_no_tags PASSED [ 17%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_get_builtin_slots PASSED [ 18%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_get_slots PASSED [ 19%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_get_slots_after_deserialization PASSED [ 20%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_not_get_sequence_probability_when_not_fitted PASSED [ 21%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_not_get_slots_when_not_fitted PASSED [ 22%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_not_log_weights_when_not_fitted PASSED [ 23%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_not_use_crf_when_dataset_with_no_slots PASSED [ 25%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_should_parse_naughty_strings PASSED [ 26%]
+snips_nlu/tests/test_crf_slot_filler.py::TestCRFSlotFiller::test_spans_to_tokens_indexes PASSED [ 27%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_be_deserializable PASSED [ 28%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_be_deserializable_before_fitting PASSED [ 29%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_be_serializable PASSED [ 30%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_be_serializable_before_fitting PASSED [ 31%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_be_serializable_into_bytearray PASSED [ 32%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_deduplicate_overlapping_slots PASSED [ 34%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_fit_and_parse_with_non_ascii_tags PASSED [ 35%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_fit_with_naughty_strings_no_tags PASSED [ 36%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_get_intent PASSED [ 37%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_get_intent_after_deserialization PASSED [ 38%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_get_intent_when_filter PASSED [ 39%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_get_range_shift PASSED [ 40%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_get_slots PASSED [ 42%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_get_slots_after_deserialization PASSED [ 43%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_limit_nb_queries PASSED [ 44%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_limit_patterns_length PASSED [ 45%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_not_parse_when_not_fitted PASSED [ 46%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_parse_naughty_strings PASSED [ 47%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_replace_builtin_entities PASSED [ 48%]
+snips_nlu/tests/test_deterministic_intent_parser.py::TestDeterministicIntentParser::test_should_replace_tokenized_out_characters PASSED [ 50%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_add_unknown_words_to_utterances PASSED [ 51%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_empty_vocabulary_should_fit_and_return_none_intent PASSED [ 52%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_generate_noise_utterances PASSED [ 53%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_generate_noise_utterances_should_replace_unknown_words PASSED [ 54%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_intent_classifier_should_get_intent PASSED [ 55%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_intent_classifier_should_get_intent_when_filter PASSED [ 56%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_remove_builtin_slots PASSED [ 57%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_be_deserializable PASSED [ 59%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_be_serializable PASSED [ 60%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_be_serializable_into_bytearray PASSED [ 61%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_build_training_data_with_no_data PASSED [ 62%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_build_training_data_with_no_stemming_no_noise PASSED [ 63%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_build_training_data_with_noise PASSED [ 64%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_build_training_data_with_unknown_noise PASSED [ 65%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_get_intent_after_deserialization PASSED [ 67%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_get_none_if_empty_dataset PASSED [ 68%]
+snips_nlu/tests/test_log_reg_intent_classifier.py::TestLogRegIntentClassifier::test_should_not_get_intent_when_not_fitted PASSED [ 69%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_engine_should_fit_with_builtins_entities PASSED [ 70%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_nlu_engine_should_raise_error_with_bytes_input PASSED [ 71%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_nlu_engine_should_train_and_parse_in_all_languages PASSED [ 72%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_be_deserializable_from_dir PASSED [ 73%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_be_deserializable_from_dir_when_empty PASSED [ 75%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_be_serializable_into_bytearray PASSED [ 76%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_be_serializable_into_dir_when_empty PASSED [ 77%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_be_serializable_into_zip PASSED [ 78%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_handle_empty_dataset PASSED [ 79%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_handle_keyword_entities PASSED [ 80%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_not_get_slots_when_not_fitted PASSED [ 81%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_parse_after_deserialization_from_dir PASSED [ 82%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_retrain_only_non_trained_subunits PASSED [ 84%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_serialize_duplicated_intent_parsers PASSED [ 85%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_should_use_parsers_sequentially PASSED [ 86%]
+snips_nlu/tests/test_nlu_engine.py::TestSnipsNLUEngine::test_synonyms_should_point_to_base_value PASSED [ 87%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_fitting_should_be_reproducible_after_serialization PASSED [ 88%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_be_deserializable PASSED [ 89%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_be_deserializable_before_fitting PASSED [ 90%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_be_serializable PASSED [ 92%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_be_serializable_before_fitting PASSED [ 93%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_be_serializable_into_bytearray PASSED [ 94%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_not_parse_when_not_fitted PASSED [ 95%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_not_retrain_intent_classifier_when_no_force_retrain PASSED [ 96%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_not_retrain_slot_filler_when_no_force_retrain PASSED [ 97%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_retrain_intent_classifier_when_force_retrain PASSED [ 98%]
+snips_nlu/tests/test_probabilistic_intent_parser.py::TestProbabilisticIntentParser::test_should_retrain_slot_filler_when_force_retrain PASSED [100%]
+
+=============================== warnings summary ===============================
+snips_nlu/tests/test_nlu_engine.py:761
+  /workspace/repo/snips_nlu/tests/test_nlu_engine.py:761: PytestCollectionWarning: cannot collect test class 'TestIntentParser1' because it has a __init__ constructor (from: snips_nlu/tests/test_nlu_engine.py)
+    class TestIntentParser1(IntentParser):
+
+snips_nlu/tests/test_nlu_engine.py:802
+  /workspace/repo/snips_nlu/tests/test_nlu_engine.py:802: PytestCollectionWarning: cannot collect test class 'TestIntentParser2' because it has a __init__ constructor (from: snips_nlu/tests/test_nlu_engine.py)
+    class TestIntentParser2(IntentParser):
+
+snips_nlu/tests/test_probabilistic_intent_parser.py:292
+  /workspace/repo/snips_nlu/tests/test_probabilistic_intent_parser.py:292: PytestCollectionWarning: cannot collect test class 'TestIntentClassifier' because it has a __init__ constructor (from: snips_nlu/tests/test_probabilistic_intent_parser.py)
+    class TestIntentClassifier(IntentClassifier):
+
+snips_nlu/tests/test_probabilistic_intent_parser.py:328
+  /workspace/repo/snips_nlu/tests/test_probabilistic_intent_parser.py:328: PytestCollectionWarning: cannot collect test class 'TestSlotFiller' because it has a __init__ constructor (from: snips_nlu/tests/test_probabilistic_intent_parser.py)
+    class TestSlotFiller(SlotFiller):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 88 passed, 4 warnings in 25.86s ========================
+  File "/tests/grade.py", line 1
+    from __future__ import annotations
+    ^
+SyntaxError: future feature annotations is not defined

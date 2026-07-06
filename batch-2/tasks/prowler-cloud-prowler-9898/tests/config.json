@@ -1,0 +1,39 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/providers/azure/services/entra/entra_conditional_access_policy_require_mfa_for_management_api/entra_conditional_access_policy_require_mfa_for_management_api_test.py /workspace/repo/tests/providers/m365/services/entra/entra_default_app_management_policy_enabled/entra_default_app_management_policy_enabled_test.py /workspace/repo/tests/providers/m365/services/entra/microsoft365_entra_service_test.py -v",
+  "test_files": [
+    "tests/providers/azure/services/entra/entra_conditional_access_policy_require_mfa_for_management_api/entra_conditional_access_policy_require_mfa_for_management_api_test.py",
+    "tests/providers/m365/services/entra/entra_default_app_management_policy_enabled/entra_default_app_management_policy_enabled_test.py",
+    "tests/providers/m365/services/entra/microsoft365_entra_service_test.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.providers.m365.services.entra.entra_default_app_management_policy_enabled.entra_default_app_management_policy_enabled_test.Test_entra_default_app_management_policy_enabled::test_no_policy",
+    "tests.providers.m365.services.entra.entra_default_app_management_policy_enabled.entra_default_app_management_policy_enabled_test.Test_entra_default_app_management_policy_enabled::test_missing_password_restriction",
+    "tests.providers.m365.services.entra.entra_default_app_management_policy_enabled.entra_default_app_management_policy_enabled_test.Test_entra_default_app_management_policy_enabled::test_all_restrictions_configured",
+    "tests.providers.m365.services.entra.entra_default_app_management_policy_enabled.entra_default_app_management_policy_enabled_test.Test_entra_default_app_management_policy_enabled::test_policy_not_enabled",
+    "tests.providers.m365.services.entra.entra_default_app_management_policy_enabled.entra_default_app_management_policy_enabled_test.Test_entra_default_app_management_policy_enabled::test_missing_key_restriction",
+    "tests.providers.m365.services.entra.entra_default_app_management_policy_enabled.entra_default_app_management_policy_enabled_test.Test_entra_default_app_management_policy_enabled::test_restriction_with_disabled_state",
+    "tests.providers.m365.services.entra.entra_default_app_management_policy_enabled.entra_default_app_management_policy_enabled_test.Test_entra_default_app_management_policy_enabled::test_no_restrictions_configured",
+    "tests.providers.m365.services.entra.entra_default_app_management_policy_enabled.entra_default_app_management_policy_enabled_test.Test_entra_default_app_management_policy_enabled::test_uses_tenant_domain_when_no_id",
+    "tests.providers.azure.services.entra.entra_conditional_access_policy_require_mfa_for_management_api.entra_conditional_access_policy_require_mfa_for_management_api_test.Test_entra_conditional_access_policy_require_mfa_for_management_api::test_entra_tenant_policy_mfa_no_users",
+    "tests.providers.azure.services.entra.entra_conditional_access_policy_require_mfa_for_management_api.entra_conditional_access_policy_require_mfa_for_management_api_test.Test_entra_conditional_access_policy_require_mfa_for_management_api::test_entra_tenant_policy_mfa_no_target",
+    "tests.providers.azure.services.entra.entra_conditional_access_policy_require_mfa_for_management_api.entra_conditional_access_policy_require_mfa_for_management_api_test.Test_entra_conditional_access_policy_require_mfa_for_management_api::test_entra_tenant_policy_mfa",
+    "tests.providers.azure.services.entra.entra_conditional_access_policy_require_mfa_for_management_api.entra_conditional_access_policy_require_mfa_for_management_api_test.Test_entra_conditional_access_policy_require_mfa_for_management_api::test_entra_tenant_policy_mfa_disabled",
+    "tests.providers.azure.services.entra.entra_conditional_access_policy_require_mfa_for_management_api.entra_conditional_access_policy_require_mfa_for_management_api_test.Test_entra_conditional_access_policy_require_mfa_for_management_api::test_entra_no_subscriptions",
+    "tests.providers.azure.services.entra.entra_conditional_access_policy_require_mfa_for_management_api.entra_conditional_access_policy_require_mfa_for_management_api_test.Test_entra_conditional_access_policy_require_mfa_for_management_api::test_entra_tenant_no_policies",
+    "tests.providers.azure.services.entra.entra_conditional_access_policy_require_mfa_for_management_api.entra_conditional_access_policy_require_mfa_for_management_api_test.Test_entra_conditional_access_policy_require_mfa_for_management_api::test_entra_tenant_policy_no_mfa",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test_get_conditional_access_policies",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test_get_organization",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test__get_users_paginates_through_next_links",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test_get_groups",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test_get_users",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test_get_admin_consent_policy",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test__get_user_registration_details_handles_pagination",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test_get_authorization_policy",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test_get_default_app_management_policy",
+    "tests.providers.m365.services.entra.microsoft365_entra_service_test.Test_Entra_Service::test_get_client"
+  ],
+  "PASS_TO_PASS": []
+}

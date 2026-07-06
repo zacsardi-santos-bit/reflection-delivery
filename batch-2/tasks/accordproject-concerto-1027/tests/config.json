@@ -1,0 +1,24 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npm install && cd packages/concerto-linter && npx jest test/rules/naming-ruleset.test.ts",
+  "test_files": [
+    "packages/concerto-linter/test/fixtures/ENUM_Constans-invaild.cto",
+    "packages/concerto-linter/test/fixtures/ENUM_Constans-vaild.cto",
+    "packages/concerto-linter/test/fixtures/declarations-valid-camelCase.cto",
+    "packages/concerto-linter/test/fixtures/declarations-violate-camelCase.cto",
+    "packages/concerto-linter/test/fixtures/properties-valid-PascalCase.cto",
+    "packages/concerto-linter/test/fixtures/properties-violate-PascalCase.cto",
+    "packages/concerto-linter/test/rules/naming-ruleset.test.ts"
+  ],
+  "num_test_files": 7,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/concerto-linter/test/rules/naming-ruleset.test.ts::Naming Convention Linting Rules should not report any camelCase naming violations for correctly named declarations",
+    "/workspace/repo/packages/concerto-linter/test/rules/naming-ruleset.test.ts::Naming Convention Linting Rules should report a camelCase naming violation for an invalid declaration name",
+    "/workspace/repo/packages/concerto-linter/test/rules/naming-ruleset.test.ts::Naming Convention Linting Rules should not report any pascal naming violations for correctly named properties",
+    "/workspace/repo/packages/concerto-linter/test/rules/naming-ruleset.test.ts::Naming Convention Linting Rules should report a pascalCase naming violation for an invalid declaration name",
+    "/workspace/repo/packages/concerto-linter/test/rules/naming-ruleset.test.ts::Naming Convention Linting Rules should not report any UPPER_SNAKE_CASE naming violations for correctly named enum constants",
+    "/workspace/repo/packages/concerto-linter/test/rules/naming-ruleset.test.ts::Naming Convention Linting Rules should report a UPPER_SNAKE_CASE naming violation for an invalid enum constants"
+  ],
+  "PASS_TO_PASS": []
+}

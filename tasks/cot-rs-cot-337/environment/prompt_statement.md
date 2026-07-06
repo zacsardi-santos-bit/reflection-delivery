@@ -1,5 +1,0 @@
-I'm building a web application with this Rust framework and I need better control over how my session cookies are configured. Right now it seems like the session middleware configuration only lets me set whether the cookie is marked as secure, but I need to control a lot more than that.
-
-Specifically, I need to be able to set the same-site attribute for my session cookies so I can control how the browser handles them on cross-site requests — for example, I want to use the "lax" setting for some applications and "strict" for others. I also need to configure the HTTP-only flag, the cookie's domain and path, the cookie name, and how long the session lasts before it expires (whether that's when the browser closes, after a period of inactivity, or at a specific date and time).
-
-All of this should be configurable through the TOML project configuration file so I don't have to change any code to adjust these settings. Invalid values (like a malformed expiry string) should produce a clear error when the config is loaded. Is it possible to add these options to the session middleware configuration?

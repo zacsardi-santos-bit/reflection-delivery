@@ -1,0 +1,7 @@
+I'm digging into the Python dependency graphing in Dependabot and hitting a gap with Poetry projects that don't commit a lockfile. Right now when there's no lockfile the grapher just returns package names with no resolved versions and no transitive relationships, so we can't build an accurate graph for those repos, which hurts security scanning quality.
+
+I want to add a new lockfile generator component for Python that runs the needed package manager commands in a temp directory and hands back the resulting lockfile as a dependency file object. It's gotta fail gracefully: if the command errors out or the lockfile just never gets produced, return nothing instead of crashing, and log an appropriate error or warning message in each of those failure cases so we can see what happened.
+
+Then the main Python dependency grapher should use this generator whenever no lockfile is present. If generation succeeds, inject the result and use it for full relationship and exact resolved version data; if it fails, fall back to returning the unversioned dependency data without any relationship info. One thing that matters here, the "relevant dependency file" the grapher reports should always stay the project manifest, not the temporary lockfile we generated.
+
+Oh and there's a related bug in the npm/yarn dependency grapher while I'm at it. It currently emits a warning to users saying a temporary lockfile was generated regardless of whether generation actually worked, which is misleading if it failed. That warning should only fire when generation genuinely succeeded.

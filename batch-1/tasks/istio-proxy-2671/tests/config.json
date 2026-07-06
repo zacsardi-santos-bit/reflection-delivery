@@ -1,0 +1,25 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./test/envoye2e/basic_flow ./test/envoye2e/driver ./test/envoye2e/env ./test/envoye2e/http_metadata_exchange ./test/envoye2e/stackdriver_plugin ./test/envoye2e/stats ./test/envoye2e/stats_plugin ./test/envoye2e/tcp_metadata_exchange -count=1",
+  "test_files": [
+    "test/envoye2e/basic_flow/basic_xds_test.go",
+    "test/envoye2e/driver/envoy.go",
+    "test/envoye2e/driver/xds.go",
+    "test/envoye2e/env/envoy.go",
+    "test/envoye2e/http_metadata_exchange/http_metadata_exchange_test.go",
+    "test/envoye2e/http_metadata_exchange/testoutput/client.yaml",
+    "test/envoye2e/http_metadata_exchange/testoutput/server.yaml",
+    "test/envoye2e/stackdriver_plugin/stackdriver_xds_test.go",
+    "test/envoye2e/stats/stats_xds_test.go",
+    "test/envoye2e/stats_plugin/stats_plugin_test.go",
+    "test/envoye2e/tcp_metadata_exchange/tcp_metadata_exchange_test.go",
+    "test/envoye2e/tcp_metadata_exchange/testoutput/client.yaml",
+    "test/envoye2e/tcp_metadata_exchange/testoutput/server.yaml"
+  ],
+  "num_test_files": 13,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "istio.io/proxy/test/envoye2e/basic_flow::TestBasicFlow"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,8 +1,0 @@
-patching file cli/app.go
-patching file cli/commands/graph/action.go
-patching file cli/commands/graph/command.go
-patching file cli/commands/run-all/action.go
-patching file configstack/module.go
-patching file docs/_docs/04_reference/cli-options.md
-patching file docs/assets/img/collections/documentation/dependency-graph.png
-patching file options/options.go

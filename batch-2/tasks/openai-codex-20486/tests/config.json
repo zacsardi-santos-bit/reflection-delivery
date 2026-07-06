@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run -p codex-app-server --no-fail-fast -E 'test(thread_read_loaded_include_turns_reads_store_history_without_rollout_path)'",
+  "test_files": [
+    "codex-rs/app-server/tests/suite/v2/thread_read.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) codex-app-server::all suite::v2::thread_read::thread_read_loaded_include_turns_reads_store_history_without_rollout_path"
+  ],
+  "PASS_TO_PASS": []
+}

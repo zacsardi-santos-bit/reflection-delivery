@@ -1,0 +1,21 @@
+patching file api/go.mod
+patching file api/go.sum
+Hunk #1 succeeded at 288 (offset 268 lines).
+patching file cmd/tracee-rules/input.go
+patching file cmd/tracee-rules/input_test.go
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 1403 (offset 552 lines).
+patching file pkg/cmd/initialize/sigs.go
+patching file pkg/ebpf/ksymbols.go
+patching file pkg/ebpf/tracee.go
+patching file pkg/events/dependencies/event.go
+patching file pkg/events/dependencies/manager.go
+patching file pkg/filters/args.go
+patching file pkg/filters/args_test.go
+patching file pkg/filters/benchmarks/string_test.go
+patching file pkg/filters/context.go
+patching file pkg/filters/filters.go
+patching file pkg/filters/string.go
+patching file pkg/filters/string_test.go
+patching file pkg/policy/policy.go

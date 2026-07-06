@@ -1,0 +1,72 @@
+patching file prqlc/prqlc/tests/integration/sql.rs
+   Compiling strsim v0.11.1
+   Compiling rustix v1.1.2
+   Compiling darling_core v0.20.11
+   Compiling terminal_size v0.4.3
+   Compiling clap_builder v4.5.53
+   Compiling darling_macro v0.20.11
+   Compiling darling v0.20.11
+   Compiling clap_derive v4.5.49
+   Compiling clap v4.5.53
+   Compiling derive_builder_core v0.20.2
+   Compiling hashbrown v0.16.1
+   Compiling indexmap v2.11.4
+   Compiling derive_builder_macro v0.20.2
+   Compiling tracing-core v0.1.35
+   Compiling derive_builder v0.20.2
+   Compiling lazy_static v1.5.0
+   Compiling object v0.36.7
+   Compiling sharded-slab v0.1.7
+   Compiling vergen-lib v0.1.5
+   Compiling thread_local v1.1.9
+   Compiling gimli v0.31.1
+   Compiling adler2 v2.0.1
+   Compiling owo-colors v4.2.3
+   Compiling miniz_oxide v0.8.9
+   Compiling tracing-subscriber v0.3.22
+   Compiling addr2line v0.24.2
+   Compiling vergen v9.0.2
+   Compiling tracing v0.1.43
+   Compiling clap_complete v4.5.61
+   Compiling color-spantrace v0.3.0
+   Compiling rustc-demangle v0.1.26
+   Compiling eyre v0.6.12
+   Compiling tracing-error v0.2.1
+   Compiling vergen-gitcl v1.0.2
+   Compiling inotify-sys v0.1.5
+   Compiling instant v0.1.13
+   Compiling anyhow v1.0.100
+   Compiling bitflags v1.3.2
+   Compiling backtrace v0.3.74
+   Compiling unsafe-libyaml v0.2.11
+   Compiling indenter v0.3.4
+   Compiling toml_edit v0.23.5
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling inotify v0.10.2
+   Compiling tempfile v3.23.0
+   Compiling notify-types v1.0.1
+   Compiling prqlc v0.13.11 (/workspace/repo/prqlc/prqlc)
+   Compiling clap_complete_fig v4.5.2
+   Compiling clap_complete_nushell v0.1.11
+   Compiling mio v1.1.1
+   Compiling filetime v0.2.26
+   Compiling is-terminal v0.4.17
+   Compiling clio v0.3.5
+   Compiling notify v7.0.0
+   Compiling prqlc-parser v0.13.11 (/workspace/repo/prqlc/prqlc-parser)
+   Compiling clap_complete_command v0.5.1
+   Compiling color-eyre v0.6.5
+   Compiling proc-macro-crate v3.4.0
+   Compiling colorchoice-clap v1.0.7
+   Compiling minijinja v2.14.0
+   Compiling rstest_macros v0.26.1
+   Compiling criterion v0.8.1
+   Compiling rstest v0.26.1
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 59.49s
+────────────
+ Nextest run ID 6653454a-e0ff-42b8-a1d8-0efecb854069 with nextest profile: default
+    Starting 1 test across 3 binaries (507 tests skipped)
+        PASS [   0.052s] (1/1) prqlc::integration sql::test_mssql_distinct_fetch
+────────────
+     Summary [   0.053s] 1 test run: 1 passed, 507 skipped
+reward=1 graded=1 found=1 failed=0 parsed=1 framework=cargo exit_code=0

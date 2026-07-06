@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/Packs/EUVD/Integrations/EuropeanUnionVulnerabilityDatabase && pytest EuropeanUnionVulnerabilityDatabase_test.py -v",
+  "test_files": [
+    "Packs/EUVD/Integrations/EuropeanUnionVulnerabilityDatabase/EuropeanUnionVulnerabilityDatabase_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_main",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_test_module",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_test_module_negative",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_advisory_by_id_command[]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_advisory_by_id_command[advisory-id]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_advisory_by_id_command[None]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_vulnerability_by_enisa_id_command[]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_vulnerability_by_enisa_id_command[EUVD-2]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_vulnerability_by_enisa_id_command[None]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_latest_critical_vulnerabilities_command",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_latest_exploited_vulnerabilities_command",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_latest_vulnerabilities_command",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_vulnerability_by_id_command[]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_vulnerability_by_id_command[CVE-1]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_get_vulnerability_by_id_command[None]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_query_vulnerabilities_command[0-10-0-10-2024-01-01-2024-12-31-product-vendor-assigner-True-1-text-10]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_query_vulnerabilities_command[0-10--------False-None--None]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_query_vulnerabilities_command[--0-10-2024-01-01-2024-12-31----True-1-text-10]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_query_vulnerabilities_command[0-10-0-10------False-None--None]",
+    "Packs.EUVD.Integrations.EuropeanUnionVulnerabilityDatabase.EuropeanUnionVulnerabilityDatabase_test::test_query_vulnerabilities_command[0-10-0-10-2024-01-01-2024-12-31----True-1-text-10]"
+  ],
+  "PASS_TO_PASS": []
+}

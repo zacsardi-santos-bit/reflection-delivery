@@ -1,0 +1,29 @@
+{
+    "id": "aec88181-7b46-4514-9c81-5d523ba2fd50",
+    "started_at": "2026-07-06T12:19:55.023674",
+    "finished_at": "2026-07-06T12:22:51.791909",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-datafusion-21115": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-datafusion-21115__YPYugJg"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

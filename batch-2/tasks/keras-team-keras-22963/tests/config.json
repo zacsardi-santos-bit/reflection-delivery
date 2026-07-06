@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && KERAS_BACKEND=numpy pytest keras/src/ops/nn_test.py::NNOpsBehaviorTest::test_softmax_and_normalize_reject_out_of_range_axis keras/src/ops/numpy_test.py::NumpyOneInputOpsStaticShapeTest::test_swapaxes_and_moveaxis_reject_out_of_range_axis -v",
+  "test_files": [
+    "keras/src/ops/nn_test.py",
+    "keras/src/ops/numpy_test.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.ops.nn_test.NNOpsBehaviorTest::test_softmax_and_normalize_reject_out_of_range_axis",
+    "keras.src.ops.numpy_test.NumpyOneInputOpsStaticShapeTest::test_swapaxes_and_moveaxis_reject_out_of_range_axis"
+  ],
+  "PASS_TO_PASS": []
+}

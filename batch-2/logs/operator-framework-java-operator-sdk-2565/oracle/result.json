@@ -1,0 +1,29 @@
+{
+    "id": "e3122348-43e9-4ea1-88c8-3847d8a04b8e",
+    "started_at": "2026-07-04T15:39:20.881991",
+    "finished_at": "2026-07-04T15:40:06.232128",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__operator-framework-java-operator-sdk-2565": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "operator-framework-java-operator__eEQuqyM"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

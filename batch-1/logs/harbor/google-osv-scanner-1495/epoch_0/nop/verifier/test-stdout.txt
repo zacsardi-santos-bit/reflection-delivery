@@ -1,0 +1,11 @@
+patching file internal/resolution/datasource/http_auth_test.go
+patching file internal/resolution/datasource/maven_registry_test.go
+patching file internal/resolution/datasource/maven_settings_test.go
+patching file internal/resolution/datasource/npmrc_test.go
+# github.com/google/osv-scanner/internal/resolution/datasource [github.com/google/osv-scanner/internal/resolution/datasource.test]
+internal/resolution/datasource/maven_registry_test.go:122:63: cannot use MavenRegistry{…} (value of type MavenRegistry) as *"net/url".URL value in argument to client.getArtifactMetadata
+internal/resolution/datasource/maven_registry_test.go:180:62: cannot use MavenRegistry{…} (value of type MavenRegistry) as *"net/url".URL value in argument to client.getVersionMetadata
+{"Time":"2026-06-29T15:18:30.007577615Z","Action":"start","Package":"github.com/google/osv-scanner/internal/resolution/datasource"}
+{"Time":"2026-06-29T15:18:30.007683162Z","Action":"output","Package":"github.com/google/osv-scanner/internal/resolution/datasource","Output":"FAIL\tgithub.com/google/osv-scanner/internal/resolution/datasource [build failed]\n"}
+{"Time":"2026-06-29T15:18:30.007726056Z","Action":"fail","Package":"github.com/google/osv-scanner/internal/resolution/datasource","Elapsed":0}
+reward=0 graded=41 found=0 failed=0 parsed=1 framework=go exit_code=1

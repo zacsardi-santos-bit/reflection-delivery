@@ -1,0 +1,26 @@
+patching file crates/nu-derive-value/src/tests.rs
+   Compiling version_check v0.9.5
+   Compiling proc-macro2 v1.0.86
+   Compiling unicode-ident v1.0.12
+   Compiling heck v0.5.0
+   Compiling proc-macro-error-attr v1.0.4
+   Compiling proc-macro-error v1.0.4
+   Compiling quote v1.0.37
+   Compiling syn v2.0.75
+   Compiling nu-derive-value v0.97.2 (/workspace/repo/crates/nu-derive-value)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.76s
+────────────
+ Nextest run ID a51be7e0-e53e-4336-b067-0a3e3b285b67 with nextest profile: default
+    Starting 9 tests across 1 binary
+        PASS [   0.017s] (1/9) nu-derive-value tests::unexpected_attribute_on_enum_variant
+        PASS [   0.017s] (2/9) nu-derive-value tests::unsupported_unions
+        PASS [   0.018s] (3/9) nu-derive-value tests::unexpected_attribute
+        PASS [   0.018s] (4/9) nu-derive-value tests::invalid_attribute_position_in_tuple_struct
+        PASS [   0.018s] (5/9) nu-derive-value tests::non_unique_enum_variants
+        PASS [   0.018s] (6/9) nu-derive-value tests::unexpected_attribute_on_struct_field
+        PASS [   0.020s] (7/9) nu-derive-value tests::non_unique_struct_keys
+        PASS [   0.020s] (8/9) nu-derive-value tests::unsupported_enums
+        PASS [   0.020s] (9/9) nu-derive-value tests::invalid_attribute_value
+────────────
+     Summary [   0.023s] 9 tests run: 9 passed, 0 skipped
+reward=1 graded=9 found=0 failed=0 parsed=9 framework=cargo exit_code=0

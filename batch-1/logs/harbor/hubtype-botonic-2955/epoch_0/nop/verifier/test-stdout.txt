@@ -1,0 +1,315 @@
+patching file packages/botonic-react/tests/components/__snapshots__/whatsapp-media-carousel.test.jsx.snap
+patching file packages/botonic-react/tests/components/__snapshots__/whatsapp-product-carousel.test.jsx.snap
+patching file packages/botonic-react/tests/components/__snapshots__/whatsapp-product-list.test.jsx.snap
+patching file packages/botonic-react/tests/components/__snapshots__/whatsapp-product.test.jsx.snap
+patching file packages/botonic-react/tests/components/whatsapp-media-carousel.test.jsx
+patching file packages/botonic-react/tests/components/whatsapp-product-carousel.test.jsx
+patching file packages/botonic-react/tests/components/whatsapp-product-list.test.jsx
+patching file packages/botonic-react/tests/components/whatsapp-product.test.jsx
+patching file packages/botonic-react/tests/utils.test.js
+FAIL tests/components/whatsapp-product.test.jsx
+  ● Console
+
+    console.error
+      Warning: React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+      15 |   }
+      16 |
+    > 17 |   const tree = renderToJSON(<WhatsappProduct {...props} />)
+         |                             ^
+      18 |   expect(tree).toMatchSnapshot()
+      19 | })
+      20 |
+
+      at printWarning (../../node_modules/react/cjs/react-jsx-runtime.development.js:87:30)
+      at error (../../node_modules/react/cjs/react-jsx-runtime.development.js:61:7)
+      at jsxWithValidation (../../node_modules/react/cjs/react-jsx-runtime.development.js:1245:7)
+      at jsxWithValidationDynamic (../../node_modules/react/cjs/react-jsx-runtime.development.js:1320:12)
+      at Object.<anonymous> (tests/components/whatsapp-product.test.jsx:17:29)
+
+  ● renders Whatsapp Product component
+
+    Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+       5 | import { WhatsappProduct } from '../../src/components'
+       6 |
+    >  7 | const renderToJSON = sut => TestRenderer.create(sut).toJSON()
+         |                                          ^
+       8 |
+       9 | test('renders Whatsapp Product component', () => {
+      10 |   const props = {
+
+      at createFiberFromTypeAndProps (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17557:17)
+      at createFiberFromElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17583:15)
+      at reconcileSingleElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4143:23)
+      at reconcileChildFibers (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4201:35)
+      at reconcileChildren (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9122:28)
+      at updateHostRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9721:5)
+      at beginWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11379:14)
+      at performUnitOfWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15850:12)
+      at workLoopSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15784:5)
+      at renderRootSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15756:7)
+      at performSyncWorkOnRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15461:20)
+      at flushSyncCallbacks (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2597:22)
+      at flushSyncCallbacksOnlyInLegacyMode (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2576:5)
+      at scheduleUpdateOnFiber (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14949:7)
+      at updateContainer (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17809:5)
+      at Object.create (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:18549:3)
+      at create (tests/components/whatsapp-product.test.jsx:7:42)
+      at Object.renderToJSON (tests/components/whatsapp-product.test.jsx:17:16)
+
+FAIL tests/components/whatsapp-product-carousel.test.jsx
+  ● Console
+
+    console.error
+      Warning: React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+      38 | test('renders Whatsapp Product Carousel component without card indexes', () => {
+      39 |   const props = getProps(false)
+    > 40 |   const tree = renderToJSON(<WhatsappProductCarousel {...props} />)
+         |                             ^
+      41 |   expect(tree).toMatchSnapshot()
+      42 | })
+      43 |
+
+      at printWarning (../../node_modules/react/cjs/react-jsx-runtime.development.js:87:30)
+      at error (../../node_modules/react/cjs/react-jsx-runtime.development.js:61:7)
+      at jsxWithValidation (../../node_modules/react/cjs/react-jsx-runtime.development.js:1245:7)
+      at jsxWithValidationDynamic (../../node_modules/react/cjs/react-jsx-runtime.development.js:1320:12)
+      at Object.<anonymous> (tests/components/whatsapp-product-carousel.test.jsx:40:29)
+
+    console.error
+      Warning: React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+      44 | test('renders Whatsapp Product Carousel component with card indexes', () => {
+      45 |   const props = getProps(true)
+    > 46 |   const tree = renderToJSON(<WhatsappProductCarousel {...props} />)
+         |                             ^
+      47 |   expect(tree).toMatchSnapshot()
+      48 | })
+      49 |
+
+      at printWarning (../../node_modules/react/cjs/react-jsx-runtime.development.js:87:30)
+      at error (../../node_modules/react/cjs/react-jsx-runtime.development.js:61:7)
+      at jsxWithValidation (../../node_modules/react/cjs/react-jsx-runtime.development.js:1245:7)
+      at jsxWithValidationDynamic (../../node_modules/react/cjs/react-jsx-runtime.development.js:1320:12)
+      at Object.<anonymous> (tests/components/whatsapp-product-carousel.test.jsx:46:29)
+
+  ● renders Whatsapp Product Carousel component without card indexes
+
+    Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+       5 | import { WhatsappProductCarousel } from '../../src/components'
+       6 |
+    >  7 | const renderToJSON = sut => TestRenderer.create(sut).toJSON()
+         |                                          ^
+       8 |
+       9 | const getProps = withIndexes => {
+      10 |   return {
+
+      at createFiberFromTypeAndProps (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17557:17)
+      at createFiberFromElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17583:15)
+      at reconcileSingleElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4143:23)
+      at reconcileChildFibers (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4201:35)
+      at reconcileChildren (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9122:28)
+      at updateHostRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9721:5)
+      at beginWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11379:14)
+      at performUnitOfWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15850:12)
+      at workLoopSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15784:5)
+      at renderRootSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15756:7)
+      at performSyncWorkOnRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15461:20)
+      at flushSyncCallbacks (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2597:22)
+      at flushSyncCallbacksOnlyInLegacyMode (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2576:5)
+      at scheduleUpdateOnFiber (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14949:7)
+      at updateContainer (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17809:5)
+      at Object.create (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:18549:3)
+      at create (tests/components/whatsapp-product-carousel.test.jsx:7:42)
+      at Object.renderToJSON (tests/components/whatsapp-product-carousel.test.jsx:40:16)
+
+  ● renders Whatsapp Product Carousel component with card indexes
+
+    Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+       5 | import { WhatsappProductCarousel } from '../../src/components'
+       6 |
+    >  7 | const renderToJSON = sut => TestRenderer.create(sut).toJSON()
+         |                                          ^
+       8 |
+       9 | const getProps = withIndexes => {
+      10 |   return {
+
+      at createFiberFromTypeAndProps (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17557:17)
+      at createFiberFromElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17583:15)
+      at reconcileSingleElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4143:23)
+      at reconcileChildFibers (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4201:35)
+      at reconcileChildren (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9122:28)
+      at updateHostRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9721:5)
+      at beginWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11379:14)
+      at performUnitOfWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15850:12)
+      at workLoopSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15784:5)
+      at renderRootSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15756:7)
+      at performSyncWorkOnRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15461:20)
+      at flushSyncCallbacks (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2597:22)
+      at flushSyncCallbacksOnlyInLegacyMode (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2576:5)
+      at scheduleUpdateOnFiber (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14949:7)
+      at updateContainer (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17809:5)
+      at Object.create (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:18549:3)
+      at create (tests/components/whatsapp-product-carousel.test.jsx:7:42)
+      at Object.renderToJSON (tests/components/whatsapp-product-carousel.test.jsx:46:16)
+
+FAIL tests/components/whatsapp-media-carousel.test.jsx
+  ● Console
+
+    console.error
+      Warning: React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+      66 | test('renders Whatsapp Media Carousel component without indexes', () => {
+      67 |   const props = getProps(false)
+    > 68 |   const tree = renderToJSON(<WhatsappMediaCarousel {...props} />)
+         |                             ^
+      69 |   expect(tree).toMatchSnapshot()
+      70 | })
+      71 |
+
+      at printWarning (../../node_modules/react/cjs/react-jsx-runtime.development.js:87:30)
+      at error (../../node_modules/react/cjs/react-jsx-runtime.development.js:61:7)
+      at jsxWithValidation (../../node_modules/react/cjs/react-jsx-runtime.development.js:1245:7)
+      at jsxWithValidationDynamic (../../node_modules/react/cjs/react-jsx-runtime.development.js:1320:12)
+      at Object.<anonymous> (tests/components/whatsapp-media-carousel.test.jsx:68:29)
+
+    console.error
+      Warning: React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+      72 | test('renders Whatsapp Media Carousel component with indexes', () => {
+      73 |   const props = getProps(true)
+    > 74 |   const tree = renderToJSON(<WhatsappMediaCarousel {...props} />)
+         |                             ^
+      75 |   expect(tree).toMatchSnapshot()
+      76 | })
+      77 |
+
+      at printWarning (../../node_modules/react/cjs/react-jsx-runtime.development.js:87:30)
+      at error (../../node_modules/react/cjs/react-jsx-runtime.development.js:61:7)
+      at jsxWithValidation (../../node_modules/react/cjs/react-jsx-runtime.development.js:1245:7)
+      at jsxWithValidationDynamic (../../node_modules/react/cjs/react-jsx-runtime.development.js:1320:12)
+      at Object.<anonymous> (tests/components/whatsapp-media-carousel.test.jsx:74:29)
+
+  ● renders Whatsapp Media Carousel component without indexes
+
+    Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+       5 | import { WhatsappMediaCarousel } from '../../src/components'
+       6 |
+    >  7 | const renderToJSON = sut => TestRenderer.create(sut).toJSON()
+         |                                          ^
+       8 |
+       9 | const getProps = withIndexes => {
+      10 |   return {
+
+      at createFiberFromTypeAndProps (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17557:17)
+      at createFiberFromElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17583:15)
+      at reconcileSingleElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4143:23)
+      at reconcileChildFibers (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4201:35)
+      at reconcileChildren (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9122:28)
+      at updateHostRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9721:5)
+      at beginWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11379:14)
+      at performUnitOfWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15850:12)
+      at workLoopSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15784:5)
+      at renderRootSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15756:7)
+      at performSyncWorkOnRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15461:20)
+      at flushSyncCallbacks (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2597:22)
+      at flushSyncCallbacksOnlyInLegacyMode (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2576:5)
+      at scheduleUpdateOnFiber (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14949:7)
+      at updateContainer (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17809:5)
+      at Object.create (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:18549:3)
+      at create (tests/components/whatsapp-media-carousel.test.jsx:7:42)
+      at Object.renderToJSON (tests/components/whatsapp-media-carousel.test.jsx:68:16)
+
+  ● renders Whatsapp Media Carousel component with indexes
+
+    Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+       5 | import { WhatsappMediaCarousel } from '../../src/components'
+       6 |
+    >  7 | const renderToJSON = sut => TestRenderer.create(sut).toJSON()
+         |                                          ^
+       8 |
+       9 | const getProps = withIndexes => {
+      10 |   return {
+
+      at createFiberFromTypeAndProps (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17557:17)
+      at createFiberFromElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17583:15)
+      at reconcileSingleElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4143:23)
+      at reconcileChildFibers (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4201:35)
+      at reconcileChildren (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9122:28)
+      at updateHostRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9721:5)
+      at beginWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11379:14)
+      at performUnitOfWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15850:12)
+      at workLoopSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15784:5)
+      at renderRootSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15756:7)
+      at performSyncWorkOnRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15461:20)
+      at flushSyncCallbacks (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2597:22)
+      at flushSyncCallbacksOnlyInLegacyMode (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2576:5)
+      at scheduleUpdateOnFiber (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14949:7)
+      at updateContainer (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17809:5)
+      at Object.create (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:18549:3)
+      at create (tests/components/whatsapp-media-carousel.test.jsx:7:42)
+      at Object.renderToJSON (tests/components/whatsapp-media-carousel.test.jsx:74:16)
+
+FAIL tests/components/whatsapp-product-list.test.jsx
+  ● Console
+
+    console.error
+      Warning: React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+      28 |   }
+      29 |
+    > 30 |   const tree = renderToJSON(<WhatsappProductList {...props} />)
+         |                             ^
+      31 |   expect(tree).toMatchSnapshot()
+      32 | })
+      33 |
+
+      at printWarning (../../node_modules/react/cjs/react-jsx-runtime.development.js:87:30)
+      at error (../../node_modules/react/cjs/react-jsx-runtime.development.js:61:7)
+      at jsxWithValidation (../../node_modules/react/cjs/react-jsx-runtime.development.js:1245:7)
+      at jsxWithValidationDynamic (../../node_modules/react/cjs/react-jsx-runtime.development.js:1320:12)
+      at Object.<anonymous> (tests/components/whatsapp-product-list.test.jsx:30:29)
+
+  ● renders Whatsapp Product List component
+
+    Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: undefined. You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.
+
+       5 | import { WhatsappProductList } from '../../src/components'
+       6 |
+    >  7 | const renderToJSON = sut => TestRenderer.create(sut).toJSON()
+         |                                          ^
+       8 |
+       9 | test('renders Whatsapp Product List component', () => {
+      10 |   const props = {
+
+      at createFiberFromTypeAndProps (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17557:17)
+      at createFiberFromElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17583:15)
+      at reconcileSingleElement (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4143:23)
+      at reconcileChildFibers (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:4201:35)
+      at reconcileChildren (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9122:28)
+      at updateHostRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:9721:5)
+      at beginWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:11379:14)
+      at performUnitOfWork (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15850:12)
+      at workLoopSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15784:5)
+      at renderRootSync (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15756:7)
+      at performSyncWorkOnRoot (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:15461:20)
+      at flushSyncCallbacks (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2597:22)
+      at flushSyncCallbacksOnlyInLegacyMode (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:2576:5)
+      at scheduleUpdateOnFiber (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:14949:7)
+      at updateContainer (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:17809:5)
+      at Object.create (../../node_modules/react-test-renderer/cjs/react-test-renderer.development.js:18549:3)
+      at create (tests/components/whatsapp-product-list.test.jsx:7:42)
+      at Object.renderToJSON (tests/components/whatsapp-product-list.test.jsx:30:16)
+
+Test Suites: 4 failed, 4 total
+Tests:       6 failed, 6 total
+Snapshots:   0 total
+Time:        5.293 s
+Ran all test suites matching /tests\/components\/whatsapp-media-carousel.test.jsx|tests\/components\/whatsapp-product-carousel.test.jsx|tests\/components\/whatsapp-product-list.test.jsx|tests\/components\/whatsapp-product.test.jsx/i.
+reward=0 graded=6 found=0 failed=0 parsed=0 framework=jest exit_code=1

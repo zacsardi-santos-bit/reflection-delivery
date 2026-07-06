@@ -1,0 +1,29 @@
+{
+    "id": "60a3f54c-0afb-4e1b-b931-854ce8778eae",
+    "started_at": "2026-07-06T12:17:12.863364",
+    "finished_at": "2026-07-06T12:17:55.344748",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__expo-expo-45566": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "expo-expo-45566__3hfR92x"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

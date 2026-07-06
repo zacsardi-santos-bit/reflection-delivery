@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "printf '[workspace]\\nmembers = [\\n  \"tokio-trace\",\\n  \"tokio-trace/tokio-trace-core\",\\n]\\n' > /workspace/repo/Cargo.toml && cd /workspace/repo/tokio-trace && RUSTFLAGS='--allow bare-trait-objects' cargo nextest run --lib --tests --no-fail-fast 2>&1; cd /workspace/repo/tokio-trace/test-log-support && RUSTFLAGS='--allow bare-trait-objects' cargo nextest run --no-fail-fast 2>&1",
+  "test_files": [
+    "tokio-trace/test-log-support/tests/log_no_trace.rs",
+    "tokio-trace/tests/filter_caching_is_lexically_scoped.rs",
+    "tokio-trace/tests/filters_are_not_reevaluated_for_the_same_span.rs",
+    "tokio-trace/tests/filters_are_reevaluated_for_different_call_sites.rs",
+    "tokio-trace/tests/span.rs"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "test_log_support::log_no_trace test_always_log"
+  ],
+  "PASS_TO_PASS": []
+}

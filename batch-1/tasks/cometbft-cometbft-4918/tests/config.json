@@ -1,0 +1,45 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/blocksync -count=1",
+  "test_files": [
+    "internal/blocksync/pool_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlockPoolMaliciousNodeMaxInt64"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlockPoolBasic",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlockPoolTimeout",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlockPoolRemovePeer",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlockPoolMaliciousNode",
+    "github.com/cometbft/cometbft/internal/blocksync::TestNoBlockResponse",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBadBlockStopsPeer",
+    "github.com/cometbft/cometbft/internal/blocksync::TestCheckSwitchToConsensusLastHeightZero",
+    "github.com/cometbft/cometbft/internal/blocksync::TestCheckExtendedCommitExtra",
+    "github.com/cometbft/cometbft/internal/blocksync::TestCheckExtendedCommitMissing",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcBlockRequestMessageValidateBasic/Valid_Request_Message",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcBlockRequestMessageValidateBasic/Valid_Request_Message#01",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcBlockRequestMessageValidateBasic/Invalid_Request_Message",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcBlockRequestMessageValidateBasic",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcNoBlockResponseMessageValidateBasic/Valid_Non-Response_Message",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcNoBlockResponseMessageValidateBasic/Valid_Non-Response_Message#01",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcNoBlockResponseMessageValidateBasic/Invalid_Non-Response_Message",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcNoBlockResponseMessageValidateBasic",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcStatusRequestMessageValidateBasic",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcStatusResponseMessageValidateBasic/Valid_Response_Message",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcStatusResponseMessageValidateBasic/Valid_Response_Message#01",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcStatusResponseMessageValidateBasic/Invalid_Response_Message",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBcStatusResponseMessageValidateBasic",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors/BlockRequestMessage",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors/BlockRequestMessage#01",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors/BlockResponseMessage",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors/NoBlockResponseMessage",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors/NoBlockResponseMessage#01",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors/StatusRequestMessage",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors/StatusResponseMessage",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors/StatusResponseMessage#01",
+    "github.com/cometbft/cometbft/internal/blocksync::TestBlocksyncMessageVectors"
+  ]
+}

@@ -1,0 +1,59 @@
+patching file tests/spin/test_lattice.py
+patching file tests/spin/test_spin_hamiltonian.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo/tests
+configfile: pytest.ini
+plugins: xdist-3.8.0, mock-3.15.1, cov-7.1.0, benchmark-5.2.3
+collecting ... collected 45 items
+
+tests/spin/test_lattice.py::test_boundary_condition_type_error[boundary_condition0] PASSED [  2%]
+tests/spin/test_lattice.py::test_boundary_condition_type_error[boundary_condition1] PASSED [  4%]
+tests/spin/test_lattice.py::test_vectors_error PASSED                    [  6%]
+tests/spin/test_lattice.py::test_positions_error PASSED                  [  8%]
+tests/spin/test_lattice.py::test_vectors_shape_error PASSED              [ 11%]
+tests/spin/test_lattice.py::test_n_cells_type_error[n_cells0] PASSED     [ 13%]
+tests/spin/test_lattice.py::test_n_cells_type_error[n_cells1] PASSED     [ 15%]
+tests/spin/test_lattice.py::test_positions[vectors0-positions0-n_cells0-expected_points0] PASSED [ 17%]
+tests/spin/test_lattice.py::test_positions[vectors1-positions1-n_cells1-expected_points1] PASSED [ 20%]
+tests/spin/test_lattice.py::test_positions[vectors2-positions2-n_cells2-expected_points2] PASSED [ 22%]
+tests/spin/test_lattice.py::test_positions[vectors3-positions3-n_cells3-expected_points3] PASSED [ 24%]
+tests/spin/test_lattice.py::test_lattice_points[vectors0-positions0-n_cells0-9] PASSED [ 26%]
+tests/spin/test_lattice.py::test_lattice_points[vectors1-positions1-n_cells1-42] PASSED [ 28%]
+tests/spin/test_lattice.py::test_lattice_points[vectors2-positions2-n_cells2-8] PASSED [ 31%]
+tests/spin/test_lattice.py::test_lattice_points[vectors3-None-n_cells3-36] PASSED [ 33%]
+tests/spin/test_lattice.py::test_boundary_condition[vectors0-positions0-n_cells0-boundary_condition0-expected_edges0] PASSED [ 35%]
+tests/spin/test_lattice.py::test_boundary_condition[vectors1-positions1-n_cells1-boundary_condition1-expected_edges1] PASSED [ 37%]
+tests/spin/test_lattice.py::test_boundary_condition[vectors2-positions2-n_cells2-True-expected_edges2] PASSED [ 40%]
+tests/spin/test_lattice.py::test_boundary_condition[vectors3-positions3-n_cells3-False-expected_edges3] PASSED [ 42%]
+tests/spin/test_lattice.py::test_neighbour_order[vectors0-positions0-n_cells0-2-expected_edges0] PASSED [ 44%]
+tests/spin/test_lattice.py::test_neighbour_order[vectors1-positions1-n_cells1-3-expected_edges1] PASSED [ 46%]
+tests/spin/test_lattice.py::test_neighbour_order[vectors2-positions2-n_cells2-0-expected_edges2] PASSED [ 48%]
+tests/spin/test_lattice.py::test_attributes[vectors0-positions0-n_cells0-True-2-expected_bc0] PASSED [ 51%]
+tests/spin/test_lattice.py::test_attributes[vectors1-positions1-n_cells1-False-2-expected_bc1] PASSED [ 53%]
+tests/spin/test_lattice.py::test_attributes[vectors2-positions2-n_cells2-boundary_condition2-2-expected_bc2] PASSED [ 55%]
+tests/spin/test_lattice.py::test_attributes[vectors3-positions3-n_cells3-boundary_condition3-2-expected_bc3] PASSED [ 57%]
+tests/spin/test_lattice.py::test_attributes[vectors4-positions4-n_cells4-True-3-expected_bc4] PASSED [ 60%]
+tests/spin/test_lattice.py::test_add_edge_error PASSED                   [ 62%]
+tests/spin/test_lattice.py::test_add_edge_error_wrong_type PASSED        [ 64%]
+tests/spin/test_lattice.py::test_add_edge PASSED                         [ 66%]
+tests/spin/test_lattice.py::test_edges_for_shapes[chAin -n_cells0-expected_edges0] PASSED [ 68%]
+tests/spin/test_lattice.py::test_edges_for_shapes[Square-n_cells1-expected_edges1] PASSED [ 71%]
+tests/spin/test_lattice.py::test_edges_for_shapes[ Rectangle -n_cells2-expected_edges2] PASSED [ 73%]
+tests/spin/test_lattice.py::test_edges_for_shapes[honeycomb-n_cells3-expected_edges3] PASSED [ 75%]
+tests/spin/test_lattice.py::test_edges_for_shapes[TRIANGLE-n_cells4-expected_edges4] PASSED [ 77%]
+tests/spin/test_lattice.py::test_edges_for_shapes[Kagome-n_cells5-expected_edges5] PASSED [ 80%]
+tests/spin/test_lattice.py::test_shape_error PASSED                      [ 82%]
+tests/spin/test_spin_hamiltonian.py::test_coupling_error PASSED          [ 84%]
+tests/spin/test_spin_hamiltonian.py::test_ising_hamiltonian[chain-n_cells0-None-0-expected_ham0] PASSED [ 86%]
+tests/spin/test_spin_hamiltonian.py::test_ising_hamiltonian[chain-n_cells1-1.0-0-expected_ham1] PASSED [ 88%]
+tests/spin/test_spin_hamiltonian.py::test_ising_hamiltonian[chain-n_cells2-J2--0.17676768-expected_ham2] PASSED [ 91%]
+tests/spin/test_spin_hamiltonian.py::test_ising_hamiltonian[rectangle-n_cells3-J3--0.25252525-expected_ham3] PASSED [ 93%]
+tests/spin/test_spin_hamiltonian.py::test_ising_hamiltonian[rectangle-n_cells4-J4--0.44444444-expected_ham4] PASSED [ 95%]
+tests/spin/test_spin_hamiltonian.py::test_ising_hamiltonian_matrix[chain-n_cells0-J0-0-expected_ham0] PASSED [ 97%]
+tests/spin/test_spin_hamiltonian.py::test_ising_hamiltonian_matrix[square-n_cells1-J1--1.0-expected_ham1] PASSED [100%]
+
+============================== 45 passed in 0.17s ==============================
+reward=1 graded=45 found=0 failed=0 parsed=8 framework=pytest exit_code=0

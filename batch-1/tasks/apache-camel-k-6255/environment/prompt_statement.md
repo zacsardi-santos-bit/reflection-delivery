@@ -1,0 +1,7 @@
+I'm working with an integration framework that deploys applications on Kubernetes. Currently, both the container configuration and service exposure parts of the trait system only manage a single primary HTTP port automatically. I need to add support for declaring a list of additional named ports — for both the container and the Kubernetes service — so that integrations can expose services on custom ports or using protocols other than TCP.
+
+Specifically, I'd like each trait to accept a list of port definitions using a simple semicolon-separated format: for the container side, each entry should specify a port name and port number, with an optional protocol that defaults to TCP when omitted. For the service side, each entry should specify a port name, the external service port, the internal container port, and an optional protocol.
+
+When the format is wrong — for example, if the entry is missing required fields or the port number isn't a valid integer — the configuration should fail with a descriptive error message explaining what went wrong and what the expected format is. Custom-declared ports should be additive, appearing alongside any ports that the framework already configures by default.
+
+I also need the activation logic for the service exposure trait to recognize that custom ports are sufficient reason to enable the service, even if the default HTTP exposure flag isn't set.

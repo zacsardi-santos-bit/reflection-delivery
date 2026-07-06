@@ -1,0 +1,29 @@
+{
+    "id": "d0f5398b-1750-4b5e-aa4f-537a5a27e440",
+    "started_at": "2026-07-06T12:16:45.375139",
+    "finished_at": "2026-07-06T12:17:04.664307",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__dependabot-dependabot-core-13998": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "dependabot-dependabot-core-13998__HQPBXcW"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

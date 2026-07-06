@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run --package codex-cli --test debug_clear_memories --no-fail-fast",
+  "test_files": [
+    "codex-rs/cli/tests/debug_clear_memories.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "codex-cli::debug_clear_memories debug_clear_memories_resets_state_and_removes_memory_dir"
+  ],
+  "PASS_TO_PASS": []
+}

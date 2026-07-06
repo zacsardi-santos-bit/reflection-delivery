@@ -1,0 +1,7 @@
+patching file CHANGELOG.md
+patching file README.md
+patching file cmd/sloth/commands/generate.go
+patching file cmd/sloth/commands/validate.go
+patching file internal/k8sprometheus/spec.go
+patching file internal/openslo/spec.go
+patching file internal/prometheus/spec.go

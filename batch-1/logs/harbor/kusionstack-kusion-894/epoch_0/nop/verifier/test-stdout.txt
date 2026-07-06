@@ -1,0 +1,10 @@
+patching file pkg/backend/storages/local_test.go
+patching file pkg/backend/storages/mysql_test.go
+patching file pkg/backend/storages/oss_test.go
+patching file pkg/backend/storages/s3_test.go
+patching file pkg/backend/storages/validation_test.go
+go: finding module for package gorm.io/gorm
+# kusionstack.io/kusion/pkg/backend/storages
+pkg/backend/storages/mysql_test.go:8:2: cannot find module providing package gorm.io/gorm: module lookup disabled by GOPROXY=off
+FAIL	kusionstack.io/kusion/pkg/backend/storages [setup failed]
+reward=0 graded=8 found=0 failed=0 parsed=0 framework=go exit_code=1

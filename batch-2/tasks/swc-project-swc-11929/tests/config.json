@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p swc_ecma_parser --features flow -E 'test(/issue_11928/)'",
+  "test_files": [
+    "crates/swc_ecma_parser/tests/flow/issue-11928-bare-renders-type/basic.js",
+    "crates/swc_ecma_parser/tests/flow/issue-11928-bare-renders-type/basic.js.json",
+    "crates/swc_ecma_parser/tests/flow/issue-11928-bare-renders-type/config.json"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) swc_ecma_parser::flow spec_tests__flow__issue_11928_bare_renders_type__basic_js"
+  ],
+  "PASS_TO_PASS": []
+}

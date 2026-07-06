@@ -1,6 +1,0 @@
-patching file docs/tutorials/configuration_file.md
-patching file prowler/config/config.yaml
-patching file prowler/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/__init__.py
-patching file prowler/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables.metadata.json
-patching file prowler/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables.py
-patching file prowler/providers/aws/services/codebuild/codebuild_service.py

@@ -1,0 +1,47 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --coverage=false src/code_assist/setup.test.ts src/utils/cache.test.ts",
+  "test_files": [
+    "packages/core/src/code_assist/setup.test.ts",
+    "packages/core/src/utils/cache.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser caching should cache setup result for same client and projectId",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser caching should re-fetch if projectId changes",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser caching should re-fetch if cache expires",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser caching should retry if previous attempt failed",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser existing user should use GOOGLE_CLOUD_PROJECT when set and project from server is undefined",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser existing user should pass httpOptions to CodeAssistServer when provided",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser existing user should ignore GOOGLE_CLOUD_PROJECT when project from server is set",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser existing user should throw ProjectIdRequiredError when no project ID is available",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser new user should onboard a new paid user with GOOGLE_CLOUD_PROJECT",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser new user should onboard a new free user when project ID is not set",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser new user should use GOOGLE_CLOUD_PROJECT when onboard response has no project ID",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser new user should poll getOperation when onboardUser returns done=false",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser validation and errors should retry if validation handler returns verify",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser validation and errors should throw ValidationCancelledError if handler returns cancel",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::setupUser validation and errors should throw error if LoadCodeAssist returns empty response",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService Basic operations should store and retrieve values by default (Map)",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService Basic operations should return undefined for missing keys",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService Basic operations should delete entries",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService Basic operations should clear all entries (Map)",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService Basic operations should throw on clear() for WeakMap",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService TTL and Expiration should expire entries based on defaultTtl",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService TTL and Expiration should expire entries based on specific ttl override",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService TTL and Expiration should not expire if ttl is undefined",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService getOrCreate should return existing value if not expired",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService getOrCreate should create and store value if missing",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService getOrCreate should recreate value if expired",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService Promise Support should remove failed promises from cache by default",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService Promise Support should NOT remove failed promises if deleteOnPromiseFailure is false",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService Promise Support should only delete the specific failed entry",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService WeakMap Storage should work with object keys explicitly",
+    "/workspace/repo/packages/core/src/utils/cache.test.ts::CacheService WeakMap Storage should default to Map for objects"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::ValidationRequiredError should be an instance of Error",
+    "/workspace/repo/packages/core/src/code_assist/setup.test.ts::ValidationRequiredError should have the correct properties"
+  ]
+}

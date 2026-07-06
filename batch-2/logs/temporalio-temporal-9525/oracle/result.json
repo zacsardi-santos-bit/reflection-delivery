@@ -1,0 +1,29 @@
+{
+    "id": "5bf8f78b-45aa-48e3-9656-ebdfb2ca6a66",
+    "started_at": "2026-07-06T12:19:16.250011",
+    "finished_at": "2026-07-06T12:20:35.062613",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__temporalio-temporal-9525": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "temporalio-temporal-9525__SFwPhY5"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

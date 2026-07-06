@@ -1,0 +1,98 @@
+{
+    "id": "91b2fdfa-31b1-406c-ad36-c14bb426f9a1",
+    "task_name": "offline/aquasecurity-tracee-3931",
+    "trial_name": "aquasecurity-tracee-3931__Cr7Nenh",
+    "trial_uri": "file:///tmp/nop/2026-07-01__14-35-23/aquasecurity-tracee-3931__Cr7Nenh",
+    "task_id": {
+        "path": "aquasecurity-tracee-3931"
+    },
+    "source": "src",
+    "task_checksum": "354b95b2a5fcfedb40f80ca4b2abb37212bbc93849c36ca1f664ae26c6bf5e48",
+    "config": {
+        "task": {
+            "path": "aquasecurity-tracee-3931",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "aquasecurity-tracee-3931__Cr7Nenh",
+        "trials_dir": "/tmp/nop/2026-07-01__14-35-23",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "aaaffa13-c945-42c6-bfb3-d0d73f8ae17f"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T14:35:27.868492Z",
+    "finished_at": "2026-07-01T14:35:40.861535Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T14:35:27.870668Z",
+        "finished_at": "2026-07-01T14:35:29.806939Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T14:35:29.806975Z",
+        "finished_at": "2026-07-01T14:35:29.807022Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T14:35:29.807073Z",
+        "finished_at": "2026-07-01T14:35:29.807102Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T14:35:29.807198Z",
+        "finished_at": "2026-07-01T14:35:30.536155Z"
+    }
+}

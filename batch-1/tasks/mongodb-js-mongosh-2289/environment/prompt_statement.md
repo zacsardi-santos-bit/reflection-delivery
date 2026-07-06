@@ -1,0 +1,7 @@
+I'm working on the release tooling for a JavaScript monorepo and I need to split the package release process into two separate pathways: one for the main shell release packages and one for auxiliary packages that have their own independent release schedule.
+
+Right now the publish function takes a simple boolean flag to indicate a dry run. I need to change it to accept an options object so I can also pass a flag indicating whether we're only publishing auxiliary packages. When publishing all packages (not auxiliary-only mode), the tooling should look up the version of the main "mongosh" package in the list and throw a clear error if it's not found. It should also automatically create an annotated git tag for that version and push it after publishing completes. When running in auxiliary-only mode, no git tags or pushes should happen.
+
+I also need two new exported functions for the bump side. One should bump only the main release packages by reading the target version from an environment variable — it should throw a descriptive error if that variable isn't set. The other should update a version constant embedded in the shell API source file by reading that file, replacing the old version string, and writing it back.
+
+The publish command invocation also needs to be cleaned up: the flags that previously prevented the tool from pushing and tagging on its own are no longer needed since we're handling git tags manually now.

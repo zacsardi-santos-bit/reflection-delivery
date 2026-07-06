@@ -1,0 +1,52 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/entrypoints/openai/test_render_token_offsets.py /workspace/repo/tests/renderers/test_completions.py /workspace/repo/tests/renderers/test_token_offsets.py -v --noconftest",
+  "test_files": [
+    "tests/entrypoints/openai/test_render_token_offsets.py",
+    "tests/entrypoints/serve/render/test_render.py",
+    "tests/renderers/test_completions.py",
+    "tests/renderers/test_token_offsets.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.entrypoints.openai.test_render_token_offsets::test_completion_flag_forwarded_to_tok_params",
+    "tests.entrypoints.openai.test_render_token_offsets::test_chat_flag_forwarded_to_tok_params",
+    "tests.entrypoints.openai.test_render_token_offsets::test_generate_request_token_offsets_default_none",
+    "tests.entrypoints.openai.test_render_token_offsets::test_generate_request_token_offsets_survive_json_round_trip",
+    "tests.renderers.test_token_offsets.TestTokenizePromptOffsets::test_fast_tokenizer_with_flag_returns_offsets",
+    "tests.renderers.test_token_offsets.TestTokenizePromptOffsets::test_base_renderer_without_override_yields_no_offsets",
+    "tests.renderers.test_token_offsets.TestTokenizePromptOffsets::test_slow_tokenizer_with_flag_no_offsets",
+    "tests.renderers.test_token_offsets.TestTokenizePromptOffsets::test_multimodal_with_flag_no_offsets[multi_modal_data]",
+    "tests.renderers.test_token_offsets.TestTokenizePromptOffsets::test_multimodal_with_flag_no_offsets[multi_modal_uuids]",
+    "tests.renderers.test_token_offsets.TestTokenizePromptOffsets::test_tokenize_prompt_async_returns_offsets",
+    "tests.renderers.test_token_offsets.TestProcessTokensForwardsOffsets::test_sync_forwards_offsets_to_engine_input",
+    "tests.renderers.test_token_offsets.TestProcessTokensForwardsOffsets::test_async_forwards_offsets_to_engine_input"
+  ],
+  "PASS_TO_PASS": [
+    "tests.renderers.test_completions.TestValidatePrompt::test_empty_input",
+    "tests.renderers.test_completions.TestValidatePrompt::test_invalid_type",
+    "tests.renderers.test_completions.TestRenderPrompt::test_tokens_input",
+    "tests.renderers.test_completions.TestRenderPrompt::test_token_list_input",
+    "tests.renderers.test_completions.TestRenderPrompt::test_text_input",
+    "tests.renderers.test_completions.TestRenderPrompt::test_text_list_input",
+    "tests.renderers.test_completions.TestRenderPrompt::test_zero_truncation",
+    "tests.renderers.test_completions.TestRenderPrompt::test_pos_truncation",
+    "tests.renderers.test_completions.TestRenderPrompt::test_neg_truncation",
+    "tests.renderers.test_completions.TestRenderPrompt::test_truncation_left",
+    "tests.renderers.test_completions.TestRenderPrompt::test_truncation_right",
+    "tests.renderers.test_completions.TestRenderPrompt::test_text_max_length_exceeded_obvious",
+    "tests.renderers.test_completions.TestRenderPrompt::test_text_max_length_exceeded_nonobvious",
+    "tests.renderers.test_completions.TestRenderPrompt::test_token_max_length_exceeded",
+    "tests.renderers.test_completions.TestRenderPrompt::test_no_tokenizer_for_text",
+    "tests.renderers.test_completions.TestRenderPrompt::test_tokens_input_with_needs_detokenization",
+    "tests.renderers.test_completions.TestRenderEmbedPrompt::test_single_prompt_embed",
+    "tests.renderers.test_completions.TestRenderEmbedPrompt::test_multiple_prompt_embeds",
+    "tests.renderers.test_completions.TestRenderEmbedPrompt::test_prompt_embed_truncation",
+    "tests.renderers.test_completions.TestRenderEmbedPrompt::test_prompt_embed_different_dtypes",
+    "tests.renderers.test_completions.TestRenderEmbedPrompt::test_prompt_embed_squeeze_batch_dim",
+    "tests.renderers.test_completions.TestRenderEmbedPrompt::test_both_prompts_and_embeds",
+    "tests.renderers.test_token_offsets.TestTokenizePromptOffsets::test_default_flag_no_offsets",
+    "tests.renderers.test_token_offsets.TestProcessTokensForwardsOffsets::test_no_offsets_forwarded_when_flag_off"
+  ]
+}

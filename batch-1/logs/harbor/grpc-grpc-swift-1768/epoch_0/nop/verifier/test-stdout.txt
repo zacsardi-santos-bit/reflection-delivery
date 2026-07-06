@@ -1,0 +1,637 @@
+patching file Tests/GRPCHTTP2CoreTests/GRPCMessageFramerTests.swift
+patching file Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift
+warning: 'repo': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /workspace/repo/Sources/GRPCHTTP2Core/README.md
+[0/1] Planning build
+[1/1] Compiling plugin GRPCSwiftPlugin
+[2/2] Compiling plugin GenerateDoccReference
+[3/3] Compiling plugin GenerateManual
+[4/4] Compiling plugin Swift-DocC
+[5/5] Compiling plugin Swift-DocC Preview
+[6/6] Compiling plugin SwiftProtobufPlugin
+Building for debugging...
+[6/23] Compiling CGRPCZlib empty.c
+[7/501] Compiling CNIOWindows WSAStartup.c
+[7/501] Compiling CNIOWindows shim.c
+[7/501] Compiling CNIODarwin shim.c
+[10/501] Copying PrivacyInfo.xcprivacy
+[12/501] Compiling CNIOLLHTTP c_nio_http.c
+[13/501] Copying Generated
+[13/501] Compiling CNIOBoringSSLShims shims.c
+[15/501] Compiling fiat_curve25519_adx_mul.S
+[15/501] Compiling CNIOLinux liburing_shims.c
+[15/501] Compiling fiat_curve25519_adx_square.S
+[15/501] Compiling CNIOWASI CNIOWASI.c
+[19/501] Compiling CNIOLLHTTP c_nio_api.c
+[20/501] Compiling fiat_p256_adx_mul.S
+[21/501] Compiling _AtomicsShims.c
+[22/501] Compiling fiat_p256_adx_sqr.S
+[23/501] Compiling CNIOLinux shim.c
+[24/505] Compiling CNIOLLHTTP c_nio_llhttp.c
+[26/505] Emitting module ServiceContextModule
+[29/509] Emitting module Logging
+[30/510] Emitting module _NIOBase64
+[35/513] Emitting module _NIODataStructures
+[37/517] Compiling ssl_versions.cc
+[38/518] Wrapping AST for _NIOBase64 for debugging
+[39/518] Compiling tls13_client.cc
+[40/518] Compiling tls_record.cc
+[41/519] Compiling ssl_stat.cc
+[43/519] Emitting module Instrumentation
+[43/520] Wrapping AST for _NIODataStructures for debugging
+[44/520] Compiling tls_method.cc
+[44/520] Compiling tls13_server.cc
+[46/520] Wrapping AST for ServiceContextModule for debugging
+[46/520] Wrapping AST for Logging for debugging
+[48/520] Compiling ssl_transcript.cc
+[49/520] Compiling tls13_both.cc
+[51/520] Compiling t1_enc.cc
+[52/521] Compiling tls13_enc.cc
+[54/521] Emitting module InternalCollectionsUtilities
+[54/522] Compiling ssl_x509.cc
+[59/523] Emitting module ArgumentParserToolInfo
+[62/526] Emitting module Tracing
+[64/529] Compiling ssl_session.cc
+[65/529] Compiling ssl_file.cc
+[65/529] Compiling ssl_buffer.cc
+[67/529] Compiling ssl_asn1.cc
+[68/529] Wrapping AST for Tracing for debugging
+[69/529] Compiling ssl_privkey.cc
+[70/529] Compiling ssl_aead_ctx.cc
+[71/529] Compiling ssl_key_share.cc
+[72/529] Wrapping AST for InternalCollectionsUtilities for debugging
+[73/529] Wrapping AST for Instrumentation for debugging
+[74/529] Compiling ssl_cert.cc
+[75/529] Compiling s3_pkt.cc
+[76/529] Compiling ssl_credential.cc
+[77/529] Compiling ssl_cipher.cc
+[78/530] Compiling ssl_lib.cc
+[80/530] Emitting module SwiftProtobuf
+[82/532] Emitting module DequeModule
+[84/534] Compiling s3_lib.cc
+[86/534] Compiling s3_both.cc
+[88/534] Emitting module GRPCCodeGen
+[89/534] Emitting module Atomics
+[89/536] Wrapping AST for SwiftProtobuf for debugging
+[90/536] Compiling handshake_server.cc
+[93/538] Compiling dtls_method.cc
+[94/538] Compiling handshake.cc
+[95/538] Compiling handoff.cc
+[97/538] Emitting module ArgumentParser
+[97/539] Compiling d1_srtp.cc
+[98/539] Compiling handshake_client.cc
+[99/539] Compiling dtls_record.cc
+[101/539] Compiling encrypted_client_hello.cc
+[103/539] Compiling md5-x86_64-apple.S
+[105/540] Compiling md5-586-linux.S
+[106/540] Wrapping AST for DequeModule for debugging
+[107/540] Compiling md5-586-apple.S
+[108/540] Compiling extensions.cc
+[109/540] Compiling md5-x86_64-linux.S
+[110/541] Compiling chacha20_poly1305_armv8-win.S
+[112/541] Compiling chacha-x86_64-linux.S
+[113/541] Compiling chacha-x86-linux.S
+[114/541] Compiling chacha20_poly1305_x86_64-linux.S
+[115/541] Compiling chacha20_poly1305_armv8-linux.S
+[116/541] Compiling chacha-x86_64-apple.S
+[116/541] Compiling chacha20_poly1305_armv8-apple.S
+[118/541] Compiling chacha20_poly1305_x86_64-apple.S
+[119/541] Wrapping AST for GRPCCodeGen for debugging
+[120/541] Compiling chacha-x86-apple.S
+[121/541] Compiling d1_pkt.cc
+[122/541] Compiling chacha-armv8-win.S
+[123/541] Compiling chacha-armv8-linux.S
+[124/541] Compiling chacha-armv4-linux.S
+[125/541] Compiling aes128gcmsiv-x86_64-linux.S
+[126/541] Compiling chacha-armv8-apple.S
+[127/541] Compiling err_data.cc
+[128/541] Compiling x86_64-mont5-linux.S
+[129/541] Compiling aes128gcmsiv-x86_64-apple.S
+[130/541] Compiling x86_64-mont-linux.S
+[131/541] Compiling vpaes-x86_64-apple.S
+[131/541] Compiling x86-mont-apple.S
+[133/541] Compiling x86_64-mont5-apple.S
+[134/541] Compiling x86_64-mont-apple.S
+[135/542] Compiling x86-mont-linux.S
+[136/542] Compiling vpaes-x86-linux.S
+[137/542] Compiling vpaes-x86_64-linux.S
+[138/543] Compiling vpaes-armv8-apple.S
+[139/543] Compiling vpaes-armv7-linux.S
+[140/543] Compiling sha512-x86_64-linux.S
+[140/543] Compiling vpaes-x86-apple.S
+[142/543] Compiling vpaes-armv8-linux.S
+[142/543] Compiling vpaes-armv8-win.S
+[142/543] Compiling sha512-armv8-apple.S
+[145/543] Compiling sha512-armv8-linux.S
+[146/543] Compiling sha512-x86_64-apple.S
+[147/543] Compiling sha512-armv8-win.S
+[148/543] Compiling sha512-586-linux.S
+[149/543] Compiling sha512-armv4-linux.S
+[150/543] Compiling sha512-586-apple.S
+[151/543] Compiling sha256-x86_64-apple.S
+[152/543] Compiling sha256-586-linux.S
+[153/543] Compiling sha256-armv8-linux.S
+[154/543] Compiling sha256-x86_64-linux.S
+[155/543] Compiling sha256-586-apple.S
+[156/543] Compiling sha256-armv8-win.S
+[157/543] Compiling sha256-armv4-linux.S
+[158/543] Compiling sha256-armv8-apple.S
+[159/543] Compiling sha1-armv8-linux.S
+[160/543] Compiling sha1-armv8-win.S
+[161/543] Compiling sha1-armv8-apple.S
+[162/543] Compiling bio_ssl.cc
+[163/543] Compiling sha1-armv4-large-linux.S
+[164/543] Compiling sha1-x86_64-apple.S
+[165/543] Compiling sha1-586-apple.S
+[166/543] Compiling sha1-586-linux.S
+[167/543] Compiling p256_beeu-x86_64-asm-linux.S
+[168/543] Compiling rdrand-x86_64-linux.S
+[169/543] Compiling p256_beeu-x86_64-asm-apple.S
+[170/543] Compiling sha1-x86_64-linux.S
+[171/543] Compiling rdrand-x86_64-apple.S
+[172/543] Compiling rsaz-avx2-apple.S
+[173/543] Compiling p256_beeu-armv8-asm-win.S
+[174/543] Compiling rsaz-avx2-linux.S
+[175/543] Compiling p256_beeu-armv8-asm-linux.S
+[176/543] Compiling p256_beeu-armv8-asm-apple.S
+[177/543] Compiling p256-armv8-asm-apple.S
+[178/543] Compiling ghashv8-armv8-win.S
+[178/543] Compiling ghashv8-armv8-linux.S
+[180/543] Compiling ghashv8-armv8-apple.S
+[181/543] Compiling p256-x86_64-asm-apple.S
+[182/543] Compiling ghashv8-armv7-linux.S
+[183/543] Compiling p256-armv8-asm-win.S
+[184/543] Compiling p256-armv8-asm-linux.S
+[185/543] Compiling p256-x86_64-asm-linux.S
+[186/543] Compiling d1_lib.cc
+[187/543] Compiling ghash-x86-apple.S
+[189/543] Emitting module GRPCCodeGenTests
+[189/543] Compiling ghash-x86_64-linux.S
+[190/544] Compiling d1_both.cc
+[191/544] Compiling ghash-neon-armv8-win.S
+[191/544] Compiling ghash-x86-linux.S
+[192/544] Compiling ghash-ssse3-x86_64-linux.S
+[194/544] Compiling ghash-x86_64-apple.S
+[195/544] Compiling ghash-neon-armv8-linux.S
+[196/544] Compiling ghash-ssse3-x86_64-apple.S
+[197/544] Compiling ghash-ssse3-x86-linux.S
+[198/544] Compiling ghash-ssse3-x86-apple.S
+[199/544] Compiling ghash-neon-armv8-apple.S
+[201/545] Compiling bn-armv8-linux.S
+[202/545] Compiling bsaes-armv7-linux.S
+[203/545] Compiling ghash-armv4-linux.S
+[204/545] Compiling co-586-linux.S
+[205/545] Compiling bn-586-apple.S
+[206/545] Compiling armv8-mont-linux.S
+[207/545] Compiling bn-armv8-win.S
+[207/545] Compiling armv8-mont-win.S
+[207/545] Compiling bn-armv8-apple.S
+[211/545] Compiling bn-586-linux.S
+[212/545] Compiling co-586-apple.S
+[213/545] Compiling aesv8-gcm-armv8-win.S
+[214/545] Compiling armv8-mont-apple.S
+[215/545] Compiling armv4-mont-linux.S
+[216/545] Compiling aesv8-gcm-armv8-linux.S
+[217/545] Compiling aesv8-gcm-armv8-apple.S
+[218/545] Compiling aesv8-armv8-linux.S
+[219/545] Compiling aesv8-armv8-win.S
+[220/545] Compiling aesv8-armv8-apple.S
+[221/545] Compiling aesni-x86_64-apple.S
+[222/545] Compiling aesni-gcm-x86_64-apple.S
+[223/545] Compiling aesni-x86-apple.S
+[224/545] Compiling aesni-x86-linux.S
+[225/545] Compiling aesni-gcm-x86_64-linux.S
+[226/545] Compiling aesv8-armv7-linux.S
+[227/545] Compiling aesni-x86_64-linux.S
+[228/545] Compiling aes-gcm-avx2-x86_64-apple.S
+[229/545] Compiling aes-gcm-avx10-x86_64-apple.S
+[230/545] Compiling aes-gcm-avx2-x86_64-linux.S
+[231/545] Compiling aes-gcm-avx10-x86_64-linux.S
+[232/545] Wrapping AST for GRPCCodeGenTests for debugging
+[234/545] Emitting module SwiftProtobufPluginLibrary
+[236/547] Compiling x_req.cc
+[237/547] Compiling x_spki.cc
+[238/547] Compiling x_x509.cc
+[239/547] Compiling x_pubkey.cc
+[240/547] Compiling x_exten.cc
+[241/547] Compiling x509spki.cc
+[242/547] Compiling x_val.cc
+[243/547] Compiling x_algor.cc
+[244/547] Compiling x_attrib.cc
+[245/547] Compiling x_name.cc
+[246/547] Compiling x_sig.cc
+[247/547] Compiling x_x509a.cc
+[248/547] Compiling x509rset.cc
+[249/547] Wrapping AST for SwiftProtobufPluginLibrary for debugging
+[250/547] Compiling x_crl.cc
+[251/547] Compiling x_all.cc
+[252/548] Compiling x509name.cc
+[254/548] Emitting module protoc_gen_grpc_swift
+[254/549] Compiling x509_obj.cc
+[255/549] Compiling x509_vpm.cc
+[256/549] Compiling x509_trs.cc
+[258/550] Compiling x509_set.cc
+[259/550] Compiling x509_v3.cc
+[260/550] Compiling x509cset.cc
+[262/550] Compiling x509_d2.cc
+[263/550] Compiling x509_def.cc
+[264/550] Compiling x509_vfy.cc
+[265/550] Compiling x509_ext.cc
+[266/550] Compiling x509_txt.cc
+[267/550] Compiling x509_req.cc
+[268/550] Compiling x509_cmp.cc
+[269/550] Compiling x509_lu.cc
+[270/550] Wrapping AST for protoc-gen-grpc-swift for debugging
+[271/550] Compiling x509_att.cc
+[273/550] Emitting module GRPCCore
+[273/551] Compiling x509.cc
+[274/551] Compiling v3_skey.cc
+[275/551] Compiling v3_prn.cc
+[276/551] Compiling v3_ia5.cc
+[277/551] Compiling v3_pmaps.cc
+[278/551] Compiling v3_lib.cc
+[279/551] Compiling v3_int.cc
+[281/552] Compiling v3_utl.cc
+[282/552] Compiling v3_info.cc
+[283/552] Compiling v3_ocsp.cc
+[284/552] Compiling v3_ncons.cc
+[286/552] Compiling v3_purp.cc
+[287/552] Compiling v3_genn.cc
+[288/552] Compiling v3_pcons.cc
+[289/552] Compiling v3_extku.cc
+[290/552] Linking protoc-gen-grpc-swift
+[291/552] Compiling v3_bitst.cc
+[292/552] Compiling v3_cpols.cc
+[293/552] Compiling v3_enum.cc
+[294/552] Compiling v3_crld.cc
+[295/552] Compiling v3_conf.cc
+[296/552] Wrapping AST for GRPCCore for debugging
+[297/553] Compiling v3_bcons.cc
+[298/553] Compiling v3_akeya.cc
+[299/554] Compiling t_crl.cc
+[300/554] Compiling v3_alt.cc
+[301/554] Compiling t_x509a.cc
+[302/555] Compiling t_req.cc
+[303/555] Compiling t_x509.cc
+[304/555] Compiling v3_akey.cc
+[305/555] Compiling rsa_pss.cc
+[307/555] Emitting module GRPCProtobuf
+[307/555] Compiling policy.cc
+[309/556] Emitting module GRPCInterceptors
+[310/557] Emitting module GRPCInProcessTransport
+[312/559] Compiling i2d_pr.cc
+[317/561] Compiling thread_win.cc
+[318/561] Wrapping AST for GRPCInterceptors for debugging
+[319/561] Compiling thread_pthread.cc
+[320/561] Compiling name_print.cc
+[321/561] Compiling by_dir.cc
+[322/561] Compiling a_sign.cc
+[323/561] Wrapping AST for GRPCProtobuf for debugging
+[324/561] Compiling thread.cc
+[325/561] Compiling thread_none.cc
+[326/561] Wrapping AST for GRPCInProcessTransport for debugging
+[327/561] Compiling trust_token.cc
+[328/561] Compiling asn1_gen.cc
+[329/561] Compiling a_digest.cc
+[330/562] Compiling pmbtoken.cc
+[331/562] Compiling algorithm.cc
+[332/562] Compiling by_file.cc
+[333/563] Compiling voprf.cc
+[334/563] Compiling a_verify.cc
+[335/563] Compiling stack.cc
+[336/564] Compiling siphash.cc
+[337/564] Compiling sha512.cc
+[338/564] Compiling sha256.cc
+[339/564] Compiling sha1.cc
+[340/564] Compiling rc4.cc
+[341/564] Compiling rsa_print.cc
+[342/564] Compiling rsa_extra.cc
+[344/564] Emitting module GRPCInProcessTransportTests
+[344/565] Compiling slhdsa.cc
+[345/565] Compiling refcount.cc
+[347/565] Emitting module GRPCProtobufTests
+[347/566] Compiling windows.cc
+[348/566] Compiling spake2plus.cc
+[350/566] Compiling rsa_crypt.cc
+[352/568] Compiling trusty.cc
+[353/568] Compiling urandom.cc
+[356/568] Compiling rand.cc
+[357/568] Compiling poly1305_arm_asm.S
+[358/568] Compiling rsa_asn1.cc
+[359/568] Compiling passive.cc
+[360/568] Compiling ios.cc
+[361/568] Compiling getentropy.cc
+[362/568] Compiling deterministic.cc
+[363/568] Wrapping AST for GRPCProtobufTests for debugging
+[364/568] Wrapping AST for GRPCInProcessTransportTests for debugging
+[365/568] Compiling forkunsafe.cc
+[366/568] Compiling fork_detect.cc
+[368/568] Emitting module GRPCCoreTests
+[368/569] Compiling poly1305.cc
+[369/569] Compiling poly1305_arm.cc
+[371/570] Compiling poly1305_vec.cc
+[372/570] Compiling pool.cc
+[374/570] Compiling pkcs7.cc
+[375/570] Compiling mlkem.cc
+[376/570] Compiling pkcs8_x509.cc
+[377/570] Wrapping AST for GRPCCoreTests for debugging
+[378/570] Compiling pem_xaux.cc
+[379/570] Compiling p5_pbev2.cc
+[380/570] Compiling pem_pkey.cc
+[381/570] Compiling obj_xref.cc
+[382/570] Compiling pkcs7_x509.cc
+[383/570] Compiling mldsa.cc
+[384/570] Compiling pem_oth.cc
+[385/570] Compiling pkcs8.cc
+[386/570] Compiling pem_info.cc
+[387/570] Compiling pem_lib.cc
+[388/570] Compiling fips_shared_support.cc
+[389/570] Compiling pem_all.cc
+[390/570] Compiling pem_x509.cc
+[391/570] Compiling poly_rq_mul.S
+[392/570] Compiling mem.cc
+[392/570] Compiling md5.cc
+[394/570] Compiling pem_pk8.cc
+[395/570] Compiling obj.cc
+[396/570] Compiling lhash.cc
+[397/570] Compiling md4.cc
+[398/570] Compiling kyber.cc
+[399/570] Compiling sign.cc
+[400/570] Compiling scrypt.cc
+[401/570] Compiling print.cc
+[402/570] Compiling ex_data.cc
+[403/570] Compiling p_ed25519.cc
+[404/570] Compiling hrss.cc
+[405/570] Compiling p_x25519.cc
+[406/570] Compiling pbkdf.cc
+[407/570] Compiling p_rsa.cc
+[408/570] Compiling p_rsa_asn1.cc
+[409/570] Compiling p_x25519_asn1.cc
+[410/570] Compiling p_hkdf.cc
+[411/570] Compiling hpke.cc
+[412/570] Compiling p_ed25519_asn1.cc
+[413/570] Compiling p_dh_asn1.cc
+[414/570] Compiling p_ec.cc
+[415/570] Compiling p_dh.cc
+[416/570] Compiling engine.cc
+[417/570] Compiling evp_ctx.cc
+[418/570] Compiling p_ec_asn1.cc
+[419/570] Compiling evp.cc
+[420/570] Compiling err.cc
+[421/570] Compiling ecdh.cc
+[422/570] Compiling p_dsa_asn1.cc
+[423/570] Compiling x25519-asm-arm.S
+[424/570] Compiling ec_derive.cc
+[425/570] Compiling ecdsa_asn1.cc
+[426/570] Compiling hash_to_curve.cc
+[427/570] Compiling evp_asn1.cc
+[428/570] Compiling params.cc
+[429/570] Compiling dsa.cc
+[430/570] Compiling dsa_asn1.cc
+[431/570] Compiling des.cc
+[432/570] Compiling ec_asn1.cc
+[433/570] Compiling digest_extra.cc
+[434/570] Compiling crypto.cc
+[435/570] Compiling cpu_intel.cc
+[436/570] Compiling dh_asn1.cc
+[437/570] Compiling spake25519.cc
+[438/570] Compiling cpu_arm_linux.cc
+[439/570] Compiling cpu_arm_freebsd.cc
+[440/570] Compiling curve25519.cc
+[441/570] Compiling cpu_aarch64_openbsd.cc
+[442/570] Compiling cpu_aarch64_sysreg.cc
+[443/570] Compiling cpu_aarch64_win.cc
+[444/570] Compiling cpu_aarch64_linux.cc
+[445/570] Compiling cpu_aarch64_apple.cc
+[446/570] Compiling cpu_aarch64_fuchsia.cc
+[447/570] Compiling conf.cc
+[448/570] Compiling get_cipher.cc
+[449/570] Compiling tls_cbc.cc
+[450/570] Compiling e_tls.cc
+[451/570] Compiling curve25519_64_adx.cc
+[452/570] Compiling e_rc2.cc
+[453/570] Compiling e_rc4.cc
+[454/570] Compiling e_null.cc
+[455/570] Compiling derive_key.cc
+[456/570] Compiling e_aesgcmsiv.cc
+[457/570] Compiling e_des.cc
+[458/570] Compiling e_aesctrhmac.cc
+[459/570] Compiling e_chacha20poly1305.cc
+[460/570] Compiling chacha.cc
+[461/570] Compiling unicode.cc
+[462/570] Compiling buf.cc
+[463/570] Compiling blake2.cc
+[463/570] Compiling printf.cc
+[465/570] Compiling cbs.cc
+[466/570] Compiling socket.cc
+[467/570] Compiling socket_helper.cc
+[468/570] Compiling cbb.cc
+[469/570] Compiling hexdump.cc
+[470/570] Compiling ber.cc
+[471/570] Compiling pair.cc
+[472/570] Compiling file.cc
+[472/570] Compiling asn1_compat.cc
+[474/570] Compiling bn_asn1.cc
+[475/570] Compiling convert.cc
+[476/570] Compiling fd.cc
+[477/570] Compiling errno.cc
+[478/570] Compiling bio_mem.cc
+[479/570] Compiling bcm.cc
+[480/570] Compiling connect.cc
+[481/570] Compiling f_string.cc
+[482/570] Compiling tasn_typ.cc
+[483/570] Compiling tasn_fre.cc
+[484/570] Compiling base64.cc
+[485/570] Compiling asn_pack.cc
+[486/570] Compiling bio.cc
+[487/570] Compiling f_int.cc
+[488/570] Compiling posix_time.cc
+[489/570] Compiling asn1_par.cc
+[490/570] Compiling tasn_enc.cc
+[491/570] Compiling tasn_new.cc
+[492/570] Compiling tasn_utl.cc
+[493/570] Compiling tasn_dec.cc
+[494/570] Compiling a_octet.cc
+[495/570] Compiling a_utctm.cc
+[496/570] Compiling asn1_lib.cc
+[497/570] Compiling a_i2d_fp.cc
+[498/570] Compiling a_type.cc
+[499/570] Compiling a_time.cc
+[500/570] Wrapping AST for Atomics for debugging
+[501/570] Wrapping AST for ArgumentParserToolInfo for debugging
+[502/570] Compiling a_d2i_fp.cc
+[503/570] Compiling a_dup.cc
+[504/570] Compiling a_strnid.cc
+[505/570] Wrapping AST for ArgumentParser for debugging
+[506/570] Compiling a_gentm.cc
+[507/570] Compiling a_object.cc
+[508/570] Compiling a_mbstr.cc
+[509/570] Compiling a_int.cc
+[510/570] Compiling a_strex.cc
+[511/570] Compiling a_bitstr.cc
+[512/570] Compiling a_bool.cc
+[513/570] Compiling c-nioatomics.c
+[514/570] Compiling c-atomics.c
+[516/571] Emitting module NIOConcurrencyHelpers
+[518/573] Wrapping AST for NIOConcurrencyHelpers for debugging
+[520/574] Emitting module NIOCore
+[522/576] Wrapping AST for NIOCore for debugging
+[524/579] Emitting module GRPCInterceptorsTests
+/workspace/repo/Tests/GRPCInterceptorsTests/TracingTestsUtilities.swift:24:15: warning: stored property 'testSpans' of 'Sendable'-conforming class 'TestTracer' is mutable
+  private var testSpans: NIOLockedValueBox<[String: TestSpan]> = .init([:])
+              ^
+/workspace/repo/Tests/GRPCInterceptorsTests/TracingTestsUtilities.swift:70:7: warning: non-final class 'TestSpan' cannot conform to 'Sendable'; use '@unchecked Sendable'
+class TestSpan: Span {
+      ^
+/workspace/repo/Tests/GRPCInterceptorsTests/TracingTestsUtilities.swift:71:7: warning: stored property 'context' of 'Sendable'-conforming class 'TestSpan' is mutable
+  var context: ServiceContextModule.ServiceContext
+      ^
+[527/581] Emitting module NIOEmbedded
+[527/582] Wrapping AST for GRPCInterceptorsTests for debugging
+[530/583] Wrapping AST for NIOEmbedded for debugging
+[532/583] Emitting module NIOPosix
+[534/585] Wrapping AST for NIOPosix for debugging
+[536/586] Emitting module NIO
+[538/588] Wrapping AST for NIO for debugging
+[540/591] Emitting module NIOTLS
+[542/593] Emitting module NIOFoundationCompat
+[544/595] Wrapping AST for NIOTLS for debugging
+[546/595] Wrapping AST for NIOFoundationCompat for debugging
+[548/595] Emitting module NIOHTTP1
+[550/599] Wrapping AST for NIOHTTP1 for debugging
+[552/599] Emitting module NIOTransportServices
+[554/603] Wrapping AST for NIOTransportServices for debugging
+[556/603] Emitting module NIOSSL
+[558/605] Emitting module NIOHPACK
+[560/606] Emitting module NIOExtras
+[563/609] Wrapping AST for NIOSSL for debugging
+[565/609] Wrapping AST for NIOHPACK for debugging
+[566/609] Wrapping AST for NIOExtras for debugging
+[568/611] Emitting module GRPCSampleData
+[570/613] Wrapping AST for GRPCSampleData for debugging
+[572/613] Emitting module NIOHTTP2
+[574/615] Wrapping AST for NIOHTTP2 for debugging
+[576/616] Emitting module GRPCHTTP2Core
+[578/628] Wrapping AST for GRPCHTTP2Core for debugging
+[580/630] Emitting module GRPCHTTP2TransportNIOPosix
+[581/631] Emitting module GRPCHTTP2TransportNIOTransportServices
+[585/637] Wrapping AST for GRPCHTTP2TransportNIOTransportServices for debugging
+[586/637] Wrapping AST for GRPCHTTP2TransportNIOPosix for debugging
+[588/637] Compiling GRPC GRPCChannel+AsyncAwaitSupport.swift
+[589/637] Compiling GRPC GRPCClient+AsyncAwaitSupport.swift
+[590/637] Compiling GRPC GRPCAsyncServerStreamingCall.swift
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerStreamingCall.swift:105:61: warning: 'makeSequence(elementType:failureType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+    let sequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                            ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerStreamingCall.swift:105:61: note: use 'makeSequence(elementType:failureType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+    let sequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                            ^
+[591/638] Compiling GRPC GRPCAsyncClientStreamingCall.swift
+[592/638] Compiling GRPC GRPCAsyncResponseStream.swift
+[593/638] Compiling GRPC GRPCAsyncRequestStream.swift
+[594/638] Compiling GRPC GRPCAsyncServerHandler.swift
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:454:70: warning: 'makeSequence(elementType:failureType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+      let requestSequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                                     ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:454:70: note: use 'makeSequence(elementType:failureType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+      let requestSequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                                     ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:461:43: warning: 'makeWriter(elementType:isWritable:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+      let responseWriter = NIOAsyncWriter.makeWriter(
+                                          ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:461:43: note: use 'makeWriter(elementType:isWritable:finishOnDeinit:delegate:)' instead
+      let responseWriter = NIOAsyncWriter.makeWriter(
+                                          ^
+[595/638] Compiling GRPC GRPCAsyncResponseStreamWriter.swift
+[596/638] Compiling GRPC GRPCAsyncBidirectionalStreamingCall.swift
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncBidirectionalStreamingCall.swift:107:7: warning: 'makeSequence(elementType:failureType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+    >.makeSequence(
+      ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncBidirectionalStreamingCall.swift:107:7: note: use 'makeSequence(elementType:failureType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+    >.makeSequence(
+      ^
+error: emit-module command failed with exit code 1 (use -v to see invocation)
+[597/639] Emitting module GRPCHTTP2CoreTests
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:130:11: error: cannot find type 'OneOrManyQueue' in scope
+extension OneOrManyQueue where Element == Int {
+          ^~~~~~~~~~~~~~
+[598/639] Compiling GRPCHTTP2CoreTests GRPCMessageFramerTests.swift
+/workspace/repo/Tests/GRPCHTTP2CoreTests/GRPCMessageFramerTests.swift:24:18: error: cannot find 'GRPCMessageFramer' in scope
+    var framer = GRPCMessageFramer()
+                 ^~~~~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/GRPCMessageFramerTests.swift:27:22: error: generic parameter 'T' could not be inferred
+    var buffer = try XCTUnwrap(framer.next())
+                     ^
+XCTest.XCTUnwrap:1:13: note: in call to function 'XCTUnwrap(_:_:file:line:)'
+public func XCTUnwrap<T>(_ expression: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) throws -> T
+            ^
+/workspace/repo/Tests/GRPCHTTP2CoreTests/GRPCMessageFramerTests.swift:39:18: error: cannot find 'GRPCMessageFramer' in scope
+    var framer = GRPCMessageFramer()
+                 ^~~~~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/GRPCMessageFramerTests.swift:46:22: error: generic parameter 'T' could not be inferred
+    var buffer = try XCTUnwrap(framer.next())
+                     ^
+XCTest.XCTUnwrap:1:13: note: in call to function 'XCTUnwrap(_:_:file:line:)'
+public func XCTUnwrap<T>(_ expression: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) throws -> T
+            ^
+[599/639] Compiling GRPCHTTP2CoreTests OneOrManyQueueTests.swift
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:130:11: error: cannot find type 'OneOrManyQueue' in scope
+extension OneOrManyQueue where Element == Int {
+          ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:23:19: error: cannot find 'OneOrManyQueue' in scope
+    XCTAssertTrue(OneOrManyQueue<Int>().isEmpty)
+                  ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:27:19: error: cannot find 'OneOrManyQueue' in scope
+    XCTAssertTrue(OneOrManyQueue<Int>.manyBacked.isEmpty)
+                  ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:31:17: error: cannot find 'OneOrManyQueue' in scope
+    var queue = OneOrManyQueue<Int>()
+                ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:38:22: error: cannot find 'OneOrManyQueue' in scope
+    var manyBacked = OneOrManyQueue<Int>.manyBacked
+                     ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:47:17: error: cannot find 'OneOrManyQueue' in scope
+    var queue = OneOrManyQueue<Int>()
+                ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:60:22: error: cannot find 'OneOrManyQueue' in scope
+    var manyBacked = OneOrManyQueue<Int>.manyBacked
+                     ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:79:17: error: cannot find 'OneOrManyQueue' in scope
+    var queue = OneOrManyQueue<Int>()
+                ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:90:17: error: cannot find 'OneOrManyQueue' in scope
+    var queue = OneOrManyQueue<Int>.manyBacked
+                ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:102:17: error: cannot find 'OneOrManyQueue' in scope
+    var queue = OneOrManyQueue<Int>()
+                ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:112:17: error: cannot find 'OneOrManyQueue' in scope
+    var queue = OneOrManyQueue<Int>()
+                ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:114:21: error: generic parameter 'T' could not be inferred
+    let index = try XCTUnwrap(queue.firstIndex(of: 42))
+                    ^
+XCTest.XCTUnwrap:1:13: note: in call to function 'XCTUnwrap(_:_:file:line:)'
+public func XCTUnwrap<T>(_ expression: @autoclosure () throws -> T?, _ message: @autoclosure () -> String = "", file: StaticString = #file, line: UInt = #line) throws -> T
+            ^
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:119:17: error: cannot find 'OneOrManyQueue' in scope
+    var queue = OneOrManyQueue<Int>.manyBacked
+                ^~~~~~~~~~~~~~
+/workspace/repo/Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift:130:26: error: 'where' clause cannot be applied to a non-generic top-level declaration
+extension OneOrManyQueue where Element == Int {
+                         ^
+error: fatalError
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:454:70: warning: 'makeSequence(elementType:failureType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+      let requestSequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                                     ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:454:70: note: use 'makeSequence(elementType:failureType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+      let requestSequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                                     ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:461:43: warning: 'makeWriter(elementType:isWritable:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+      let responseWriter = NIOAsyncWriter.makeWriter(
+                                          ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:461:43: note: use 'makeWriter(elementType:isWritable:finishOnDeinit:delegate:)' instead
+      let responseWriter = NIOAsyncWriter.makeWriter(
+                                          ^
+error: fatalError
+reward=0 (grader error: Extra data: line 63 column 1 (char 4803); fell back to exit_code=1)

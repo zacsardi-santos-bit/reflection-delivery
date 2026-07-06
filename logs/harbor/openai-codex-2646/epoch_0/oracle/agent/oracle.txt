@@ -1,7 +1,0 @@
-patching file codex-rs/Cargo.lock
-patching file codex-rs/apply-patch/Cargo.toml
-patching file codex-rs/apply-patch/src/lib.rs
-patching file codex-rs/apply-patch/src/main.rs
-patching file codex-rs/apply-patch/src/standalone_executable.rs
-patching file codex-rs/arg0/Cargo.toml
-patching file codex-rs/arg0/src/lib.rs

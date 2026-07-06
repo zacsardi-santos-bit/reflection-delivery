@@ -1,7 +1,0 @@
-I'm working on the ActivityPub publishing system and need to make a couple of improvements.
-
-First, the way we handle content transformations is scattered and hard to test. I'd like a dedicated, reusable content preparation utility that can apply transformations on demand — things like stripping out the member-only portion of a post, escaping HTML, converting newlines to line break tags, and wrapping content in a paragraph. Each transformation should be opt-in and off by default so it's safe to use without changing existing behavior. This utility should be its own module in the publishing directory and should expose a well-known marker constant that identifies where member-only content begins in a post body.
-
-Second, the publishing service currently only handles full blog posts. I need to add support for publishing standalone short-form notes as well. These notes have a content body and an author handle, and should be distributed to the author's followers via ActivityPub. If the actor can't be resolved for the given handle, it should throw an informative error.
-
-Finally, both the existing post-publishing method and the new note-publishing method should return a structured result so callers know whether publishing actually happened or was skipped (for example, when a members-only post has no publicly visible content). The result should include a status indicator and the activity payload. The publishing service should accept the new content preparation utility as a constructor dependency.

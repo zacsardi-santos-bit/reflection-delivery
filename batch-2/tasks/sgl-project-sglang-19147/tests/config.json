@@ -1,0 +1,23 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/sglang/test/kits/cache_hit_kit.py /workspace/repo/test/registered/bench_fn/test_benchmark_datasets_api.py -v",
+  "test_files": [
+    "python/sglang/test/kits/cache_hit_kit.py",
+    "test/registered/bench_fn/test_benchmark_datasets_api.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_custom_sampler",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_dataset_mapping_and_dispatch",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_generated_shared_prefix_sampler",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_get_dataset_unknown_dataset",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_image_sampler",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_mmmu_sampler",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_mooncake_scheduler",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_openai_sampler",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_random_sampler",
+    "registered.bench_fn.test_benchmark_datasets_api.TestBenchmarkDatasetsAPI::test_sharegpt_sampler"
+  ],
+  "PASS_TO_PASS": []
+}

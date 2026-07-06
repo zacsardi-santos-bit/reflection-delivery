@@ -1,0 +1,25 @@
+patching file lib/tests/runner.rs
+patching file lib/tests/test_fix.rs
+   Compiling jj-lib v0.27.0 (/workspace/repo/lib)
+   Compiling testutils v0.27.0 (/workspace/repo/lib/testutils)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 39.64s
+────────────
+ Nextest run ID 533758ae-3271-4060-a96f-b526d075fd2b with nextest profile: ci
+    Starting 11 tests across 2 binaries (832 tests skipped)
+        PASS [   0.092s] ( 1/11) jj-lib::runner test_fix::test_unchanged_file_is_not_fixed
+        PASS [   0.094s] ( 2/11) jj-lib::runner test_fix::test_unchanged_file_is_fixed
+        PASS [   0.095s] ( 3/11) jj-lib::runner test_fix::test_fixer_does_not_change_content
+        PASS [   0.096s] ( 4/11) jj-lib::runner test_fix::test_fix_multiple_revisions
+        PASS [   0.097s] ( 5/11) jj-lib::runner test_fix::test_empty_commit
+        PASS [   0.098s] ( 6/11) jj-lib::runner test_fix::test_fix_one_file
+        PASS [   0.098s] ( 7/11) jj-lib::runner test_fix::test_fixer_fails
+        PASS [   0.098s] ( 8/11) jj-lib::runner test_fix::test_parallel_fixer_basic
+        PASS [   0.104s] ( 9/11) jj-lib::runner test_fix::test_parallel_fixer_does_not_change_content
+        PASS [   0.105s] (10/11) jj-lib::runner test_fix::test_parallel_fixer_no_changes_upon_partial_failure
+        PASS [   0.112s] (11/11) jj-lib::runner test_fix::test_parallel_fixer_fixes_files
+────────────
+     Summary [   0.114s] 11 tests run: 11 passed, 832 skipped
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

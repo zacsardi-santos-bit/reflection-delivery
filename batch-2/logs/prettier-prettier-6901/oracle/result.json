@@ -1,0 +1,29 @@
+{
+    "id": "d6f352d1-0914-4a78-87b0-5d062b8dd82d",
+    "started_at": "2026-07-04T15:38:00.278669",
+    "finished_at": "2026-07-04T15:38:16.721043",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__prettier-prettier-6901": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "prettier-prettier-6901__tfqVmFd"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

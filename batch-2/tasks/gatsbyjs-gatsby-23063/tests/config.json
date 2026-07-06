@@ -1,0 +1,18 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && FORCE_COLOR=1 ./node_modules/.bin/jest packages/gatsby/src/recipes/providers/gatsby/plugin.test.js packages/gatsby/src/recipes/providers/gatsby/shadow-file.test.js --coverage=false --verbose --watchAll=false --colors",
+  "test_files": [
+    "packages/gatsby/src/recipes/providers/gatsby/plugin.test.js",
+    "packages/gatsby/src/recipes/providers/gatsby/shadow-file.test.js"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/gatsby/src/recipes/providers/gatsby/shadow-file.test.js::Shadow File resource e2e shadow file resource test",
+    "/workspace/repo/packages/gatsby/src/recipes/providers/gatsby/plugin.test.js::gatsby-plugin resource e2e plugin resource test",
+    "/workspace/repo/packages/gatsby/src/recipes/providers/gatsby/plugin.test.js::gatsby-plugin resource e2e plugin resource test with hello world starter",
+    "/workspace/repo/packages/gatsby/src/recipes/providers/gatsby/plugin.test.js::gatsby-plugin resource does not add the same plugin twice by default",
+    "/workspace/repo/packages/gatsby/src/recipes/providers/gatsby/plugin.test.js::gatsby-plugin resource all returns an array of plugins"
+  ],
+  "PASS_TO_PASS": []
+}

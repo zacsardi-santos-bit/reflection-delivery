@@ -1,0 +1,21 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run -p ruff_linter perflint",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/perflint/PERF102.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/9) ruff_linter rules::perflint::tests::rules::rule_manuallistcomprehension_path_new_perf401_py_expects",
+    "(2/9) ruff_linter rules::perflint::tests::rules::rule_manualdictcomprehension_path_new_perf403_py_expects",
+    "(3/9) ruff_linter rules::perflint::tests::rules::rule_manuallistcopy_path_new_perf402_py_expects",
+    "(4/9) ruff_linter rules::perflint::tests::preview_rules::rule_incorrectdictiterator_path_new_perf102_py_expects",
+    "(5/9) ruff_linter rules::perflint::tests::preview_rules::rule_manualdictcomprehension_path_new_perf403_py_expects",
+    "(6/9) ruff_linter rules::perflint::tests::preview_rules::rule_manuallistcomprehension_path_new_perf401_py_expects",
+    "(7/9) ruff_linter rules::perflint::tests::rules::rule_tryexceptinloop_path_new_perf203_py_expects",
+    "(8/9) ruff_linter rules::perflint::tests::rules::rule_unnecessarylistcast_path_new_perf101_py_expects",
+    "(9/9) ruff_linter rules::perflint::tests::rules::rule_incorrectdictiterator_path_new_perf102_py_expects"
+  ],
+  "PASS_TO_PASS": []
+}

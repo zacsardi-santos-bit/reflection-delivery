@@ -1,0 +1,24 @@
+{
+  "test_framework": "gtest",
+  "test_command": "mkdir -p /tmp/envoy-test-tmp && cd /workspace/repo && bazel build //test/extensions/stats_sinks/common/statsd:udp_statsd_test --spawn_strategy=local --strategy=GenRule=local > /dev/null 2>&1 && ENVOY_IP_TEST_VERSIONS=v4only TEST_TMPDIR=/tmp/envoy-test-tmp ./bazel-bin/test/extensions/stats_sinks/common/statsd/udp_statsd_test > /dev/null 2>&1",
+  "test_files": [
+    "test/common/network/udp_listener_impl_test.cc",
+    "test/extensions/filters/udp/udp_proxy/udp_proxy_integration_test.cc",
+    "test/extensions/stats_sinks/common/statsd/udp_statsd_test.cc",
+    "test/test_common/network_utility.cc",
+    "test/test_common/network_utility.h"
+  ],
+  "num_test_files": 5,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "UdpOverUdsStatsdSinkTest::InitWithPipeAddress",
+    "UdpStatsdSinkTest::CheckActualStats",
+    "UdpStatsdSinkTest::CheckActualStatsWithCustomPrefix",
+    "UdpStatsdSinkTest::SiSuffix",
+    "UdpStatsdSinkWithTagsTest::CheckActualStats",
+    "UdpStatsdSinkWithTagsTest::SiSuffix",
+    "IpVersions/UdpStatsdSinkTest::InitWithIpAddress/IPv4",
+    "IpVersions/UdpStatsdSinkWithTagsTest::InitWithIpAddress/IPv4"
+  ],
+  "PASS_TO_PASS": []
+}

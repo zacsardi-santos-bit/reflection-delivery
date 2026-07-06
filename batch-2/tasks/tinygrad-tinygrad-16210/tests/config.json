@@ -1,0 +1,52 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/backend/test_setitem.py -v",
+  "test_files": [
+    "test/backend/test_setitem.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.backend.test_setitem.TestWithGrad::test_setitem_raises_on_aliased_uop",
+    "test.backend.test_setitem.TestWithGrad::test_setitem_raises_on_unrealized_compute_base",
+    "test.backend.test_setitem.TestWithGrad::test_setitem_raises_with_unrealized_downstream"
+  ],
+  "PASS_TO_PASS": [
+    "test.backend.test_setitem.TestSetitem::test_cross_assign_independence",
+    "test.backend.test_setitem.TestSetitem::test_fancy_setitem",
+    "test.backend.test_setitem.TestSetitem::test_jit_setitem_variable_offset",
+    "test.backend.test_setitem.TestSetitem::test_lazy_sum_between_writes",
+    "test.backend.test_setitem.TestSetitem::test_padded_setitem",
+    "test.backend.test_setitem.TestSetitem::test_setitem_2d_tensor_indexing",
+    "test.backend.test_setitem.TestSetitem::test_setitem_advanced_indexing",
+    "test.backend.test_setitem.TestSetitem::test_setitem_big",
+    "test.backend.test_setitem.TestSetitem::test_setitem_chained_indexing",
+    "test.backend.test_setitem.TestSetitem::test_setitem_consecutive_inplace_operator",
+    "test.backend.test_setitem.TestSetitem::test_setitem_detach",
+    "test.backend.test_setitem.TestSetitem::test_setitem_dtype",
+    "test.backend.test_setitem.TestSetitem::test_setitem_dtype_mismatch",
+    "test.backend.test_setitem.TestSetitem::test_setitem_fancy_on_unrealized_view",
+    "test.backend.test_setitem.TestSetitem::test_setitem_flip",
+    "test.backend.test_setitem.TestSetitem::test_setitem_inplace_mul",
+    "test.backend.test_setitem.TestSetitem::test_setitem_inplace_operator",
+    "test.backend.test_setitem.TestSetitem::test_setitem_multiple_disjoint_on_invalid",
+    "test.backend.test_setitem.TestSetitem::test_setitem_overlapping_indices",
+    "test.backend.test_setitem.TestSetitem::test_setitem_overlapping_indices_with_0",
+    "test.backend.test_setitem.TestSetitem::test_setitem_overlapping_inplace1",
+    "test.backend.test_setitem.TestSetitem::test_setitem_overlapping_inplace2",
+    "test.backend.test_setitem.TestSetitem::test_setitem_permute",
+    "test.backend.test_setitem.TestSetitem::test_setitem_swap_rows",
+    "test.backend.test_setitem.TestSetitem::test_setitem_tensor_int_indexing",
+    "test.backend.test_setitem.TestSetitem::test_setitem_tensor_slice_indexing",
+    "test.backend.test_setitem.TestSetitem::test_setitem_with_1_in_shape",
+    "test.backend.test_setitem.TestSetitem::test_simple_jit_setitem",
+    "test.backend.test_setitem.TestSetitem::test_simple_setitem",
+    "test.backend.test_setitem.TestWithGrad::test_no_requires_grad_works",
+    "test.backend.test_setitem.TestWithGrad::test_set_iadd_requires_grad",
+    "test.backend.test_setitem.TestWithGrad::test_set_nonleaf_requires_grad",
+    "test.backend.test_setitem.TestWithGrad::test_set_overlapping_requires_grad",
+    "test.backend.test_setitem.TestWithGrad::test_set_used_before_setitem",
+    "test.backend.test_setitem.TestWithGrad::test_set_with_requires_grad",
+    "test.backend.test_setitem.TestSetitemLoop::test_arange"
+  ]
+}

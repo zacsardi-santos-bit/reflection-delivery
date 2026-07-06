@@ -1,0 +1,1657 @@
+diff --git a/CODEOWNERS b/CODEOWNERS
+index 7fe7458bea6..939d0adbc3c 100644
+--- a/CODEOWNERS
++++ b/CODEOWNERS
+@@ -1905,8 +1905,6 @@ build.json @home-assistant/supervisor
+ /tests/components/wiffi/ @mampfes
+ /homeassistant/components/wilight/ @leofig-rj
+ /tests/components/wilight/ @leofig-rj
+-/homeassistant/components/window/ @home-assistant/core
+-/tests/components/window/ @home-assistant/core
+ /homeassistant/components/wirelesstag/ @sergeymaysak
+ /homeassistant/components/withings/ @joostlek
+ /tests/components/withings/ @joostlek
+diff --git a/homeassistant/bootstrap.py b/homeassistant/bootstrap.py
+index 0efef6cf9ab..fede20375c0 100644
+--- a/homeassistant/bootstrap.py
++++ b/homeassistant/bootstrap.py
+@@ -245,7 +245,6 @@ DEFAULT_INTEGRATIONS = {
+     "garage_door",
+     "gate",
+     "humidity",
+-    "window",
+ }
+ DEFAULT_INTEGRATIONS_RECOVERY_MODE = {
+     # These integrations are set up if recovery mode is activated.
+diff --git a/homeassistant/components/automation/__init__.py b/homeassistant/components/automation/__init__.py
+index 39020a80d45..9792b2e41db 100644
+--- a/homeassistant/components/automation/__init__.py
++++ b/homeassistant/components/automation/__init__.py
+@@ -161,7 +161,6 @@ _EXPERIMENTAL_TRIGGER_PLATFORMS = {
+     "text",
+     "update",
+     "vacuum",
+-    "window",
+ }
+ 
+ 
+diff --git a/homeassistant/components/backup/manager.py b/homeassistant/components/backup/manager.py
+index 520ea8ea38b..a57daa73211 100644
+--- a/homeassistant/components/backup/manager.py
++++ b/homeassistant/components/backup/manager.py
+@@ -144,7 +144,6 @@ class CreateBackupStage(StrEnum):
+     ADDONS = "addons"
+     AWAIT_ADDON_RESTARTS = "await_addon_restarts"
+     DOCKER_CONFIG = "docker_config"
+-    CLEANING_UP = "cleaning_up"
+     FINISHING_FILE = "finishing_file"
+     FOLDERS = "folders"
+     HOME_ASSISTANT = "home_assistant"
+@@ -1291,13 +1290,6 @@ class BackupManager:
+                 )
+             # delete old backups more numerous than copies
+             # try this regardless of agent errors above
+-            self.async_on_backup_event(
+-                CreateBackupEvent(
+-                    reason=None,
+-                    stage=CreateBackupStage.CLEANING_UP,
+-                    state=CreateBackupState.IN_PROGRESS,
+-                )
+-            )
+             await delete_backups_exceeding_configured_count(self)
+ 
+         finally:
+diff --git a/homeassistant/components/cloud/http_api.py b/homeassistant/components/cloud/http_api.py
+index 53ed41d5b6d..5dafed419ee 100644
+--- a/homeassistant/components/cloud/http_api.py
++++ b/homeassistant/components/cloud/http_api.py
+@@ -516,8 +516,6 @@ class DownloadSupportPackageView(HomeAssistantView):
+         hass_info: dict[str, Any],
+         domains_info: dict[str, dict[str, str]],
+     ) -> str:
+-        cloud = hass.data[DATA_CLOUD]
+-
+         def get_domain_table_markdown(domain_info: dict[str, Any]) -> str:
+             if len(domain_info) == 0:
+                 return "No information available\n"
+@@ -574,15 +572,6 @@ class DownloadSupportPackageView(HomeAssistantView):
+                 "</details>\n\n"
+             )
+ 
+-        # Add stored latency response if available
+-        if locations := cloud.remote.latency_by_location:
+-            markdown += "## Latency by location\n\n"
+-            markdown += "Location | Latency (ms)\n"
+-            markdown += "--- | ---\n"
+-            for location in sorted(locations):
+-                markdown += f"{location} | {locations[location]['avg'] or 'N/A'}\n"
+-            markdown += "\n"
+-
+         # Add installed packages section
+         try:
+             installed_packages = await async_get_installed_packages()
+diff --git a/homeassistant/components/growatt_server/strings.json b/homeassistant/components/growatt_server/strings.json
+index bb8ddb6ef3f..6c4a5e845f2 100644
+--- a/homeassistant/components/growatt_server/strings.json
++++ b/homeassistant/components/growatt_server/strings.json
+@@ -38,16 +38,16 @@
+       "token_auth": {
+         "data": {
+           "region": "[%key:component::growatt_server::config::step::password_auth::data::region%]",
+-          "token": "API token"
++          "token": "API Token"
+         },
+         "description": "Token authentication is only supported for MIN/TLX devices. For other device types, please use username/password authentication.",
+         "title": "Enter your API token"
+       },
+       "user": {
+-        "description": "Note: Token authentication is currently only supported for MIN/TLX devices. For other device types, please use username/password authentication.",
++        "description": "Note: API Token authentication is currently only supported for MIN/TLX devices. For other device types, please use Username & Password authentication.",
+         "menu_options": {
+-          "password_auth": "Username/password",
+-          "token_auth": "API token (MIN/TLX only)"
++          "password_auth": "Username & Password",
++          "token_auth": "API Token (MIN/TLX only)"
+         },
+         "title": "Choose authentication method"
+       }
+diff --git a/homeassistant/components/intellifire/manifest.json b/homeassistant/components/intellifire/manifest.json
+index 4feef90a7f7..ae9067ca01e 100644
+--- a/homeassistant/components/intellifire/manifest.json
++++ b/homeassistant/components/intellifire/manifest.json
+@@ -12,5 +12,5 @@
+   "integration_type": "device",
+   "iot_class": "local_polling",
+   "loggers": ["intellifire4py"],
+-  "requirements": ["intellifire4py==4.4.0"]
++  "requirements": ["intellifire4py==4.3.1"]
+ }
+diff --git a/homeassistant/components/openai_conversation/config_flow.py b/homeassistant/components/openai_conversation/config_flow.py
+index 5dfa53d6b33..5843e2f36c8 100644
+--- a/homeassistant/components/openai_conversation/config_flow.py
++++ b/homeassistant/components/openai_conversation/config_flow.py
+@@ -54,6 +54,7 @@ from .const import (
+     CONF_REASONING_EFFORT,
+     CONF_REASONING_SUMMARY,
+     CONF_RECOMMENDED,
++    CONF_SERVICE_TIER,
+     CONF_TEMPERATURE,
+     CONF_TOP_P,
+     CONF_TTS_SPEED,
+@@ -80,6 +81,7 @@ from .const import (
+     RECOMMENDED_MAX_TOKENS,
+     RECOMMENDED_REASONING_EFFORT,
+     RECOMMENDED_REASONING_SUMMARY,
++    RECOMMENDED_SERVICE_TIER,
+     RECOMMENDED_STT_MODEL,
+     RECOMMENDED_STT_OPTIONS,
+     RECOMMENDED_TEMPERATURE,
+@@ -92,8 +94,10 @@ from .const import (
+     RECOMMENDED_WEB_SEARCH_INLINE_CITATIONS,
+     RECOMMENDED_WEB_SEARCH_USER_LOCATION,
+     UNSUPPORTED_CODE_INTERPRETER_MODELS,
++    UNSUPPORTED_FLEX_SERVICE_TIERS_MODELS,
+     UNSUPPORTED_IMAGE_MODELS,
+     UNSUPPORTED_MODELS,
++    UNSUPPORTED_PRIORITY_SERVICE_TIERS_MODELS,
+     UNSUPPORTED_WEB_SEARCH_MODELS,
+ )
+ 
+@@ -443,6 +447,25 @@ class OpenAISubentryFlowHandler(ConfigSubentryFlow):
+             if not model.startswith("gpt-5"):
+                 options.pop(CONF_REASONING_SUMMARY)
+ 
++        service_tiers = self._get_service_tiers(model)
++        if "flex" in service_tiers or "priority" in service_tiers:
++            step_schema[
++                vol.Optional(
++                    CONF_SERVICE_TIER,
++                    default=RECOMMENDED_SERVICE_TIER,
++                )
++            ] = SelectSelector(
++                SelectSelectorConfig(
++                    options=service_tiers,
++                    translation_key=CONF_SERVICE_TIER,
++                    mode=SelectSelectorMode.DROPDOWN,
++                )
++            )
++        else:
++            options.pop(CONF_SERVICE_TIER, None)
++        if options.get(CONF_SERVICE_TIER) not in service_tiers:
++            options.pop(CONF_SERVICE_TIER, None)
++
+         if self._subentry_type == "conversation" and not model.startswith(
+             tuple(UNSUPPORTED_WEB_SEARCH_MODELS)
+         ):
+@@ -563,6 +586,20 @@ class OpenAISubentryFlowHandler(ConfigSubentryFlow):
+                 return options
+         return []  # pragma: no cover
+ 
++    def _get_service_tiers(self, model: str) -> list[str]:
++        """Get service tier options based on model."""
++        service_tiers = ["auto"]
++
++        if not model.startswith(tuple(UNSUPPORTED_FLEX_SERVICE_TIERS_MODELS)):
++            service_tiers.append("flex")
++
++        service_tiers.append("default")
++
++        if not model.startswith(tuple(UNSUPPORTED_PRIORITY_SERVICE_TIERS_MODELS)):
++            service_tiers.append("priority")
++
++        return service_tiers
++
+     async def _get_location_data(self) -> dict[str, str]:
+         """Get approximate location data of the user."""
+         location_data: dict[str, str] = {}
+diff --git a/homeassistant/components/openai_conversation/const.py b/homeassistant/components/openai_conversation/const.py
+index b039ac216b5..2acf2aa9791 100644
+--- a/homeassistant/components/openai_conversation/const.py
++++ b/homeassistant/components/openai_conversation/const.py
+@@ -24,6 +24,7 @@ CONF_PROMPT = "prompt"
+ CONF_REASONING_EFFORT = "reasoning_effort"
+ CONF_REASONING_SUMMARY = "reasoning_summary"
+ CONF_RECOMMENDED = "recommended"
++CONF_SERVICE_TIER = "service_tier"
+ CONF_TEMPERATURE = "temperature"
+ CONF_TOP_P = "top_p"
+ CONF_TTS_SPEED = "tts_speed"
+@@ -42,6 +43,7 @@ RECOMMENDED_IMAGE_MODEL = "gpt-image-1.5"
+ RECOMMENDED_MAX_TOKENS = 3000
+ RECOMMENDED_REASONING_EFFORT = "low"
+ RECOMMENDED_REASONING_SUMMARY = "auto"
++RECOMMENDED_SERVICE_TIER = "auto"
+ RECOMMENDED_STT_MODEL = "gpt-4o-mini-transcribe"
+ RECOMMENDED_TEMPERATURE = 1.0
+ RECOMMENDED_TOP_P = 1.0
+@@ -119,3 +121,38 @@ RECOMMENDED_TTS_OPTIONS = {
+     CONF_PROMPT: "",
+     CONF_CHAT_MODEL: "gpt-4o-mini-tts",
+ }
++
++UNSUPPORTED_FLEX_SERVICE_TIERS_MODELS: list[str] = [
++    "gpt-5.3",
++    "gpt-5.2-chat",
++    "gpt-5.1-chat",
++    "gpt-5-chat",
++    "gpt-5.2-codex",
++    "gpt-5.1-codex",
++    "gpt-5-codex",
++    "gpt-5.2-pro",
++    "gpt-5-pro",
++    "gpt-4",
++    "o1",
++    "o3-pro",
++    "o3-deep-research",
++    "o4-mini-deep-research",
++    "o3-mini",
++    "codex-mini",
++]
++UNSUPPORTED_PRIORITY_SERVICE_TIERS_MODELS: list[str] = [
++    "gpt-5-nano",
++    "gpt-5.3-chat",
++    "gpt-5.2-chat",
++    "gpt-5.1-chat",
++    "gpt-5.1-codex-mini",
++    "gpt-5-chat",
++    "gpt-5.2-pro",
++    "gpt-5-pro",
++    "o1",
++    "o3-pro",
++    "o3-deep-research",
++    "o4-mini-deep-research",
++    "o3-mini",
++    "codex-mini",
++]
+diff --git a/homeassistant/components/openai_conversation/entity.py b/homeassistant/components/openai_conversation/entity.py
+index 64f8dbee105..399da7ce4d8 100644
+--- a/homeassistant/components/openai_conversation/entity.py
++++ b/homeassistant/components/openai_conversation/entity.py
+@@ -74,6 +74,7 @@ from .const import (
+     CONF_MAX_TOKENS,
+     CONF_REASONING_EFFORT,
+     CONF_REASONING_SUMMARY,
++    CONF_SERVICE_TIER,
+     CONF_TEMPERATURE,
+     CONF_TOP_P,
+     CONF_VERBOSITY,
+@@ -92,6 +93,7 @@ from .const import (
+     RECOMMENDED_MAX_TOKENS,
+     RECOMMENDED_REASONING_EFFORT,
+     RECOMMENDED_REASONING_SUMMARY,
++    RECOMMENDED_SERVICE_TIER,
+     RECOMMENDED_STT_MODEL,
+     RECOMMENDED_TEMPERATURE,
+     RECOMMENDED_TOP_P,
+@@ -499,6 +501,7 @@ class OpenAIBaseLLMEntity(Entity):
+             input=messages,
+             max_output_tokens=options.get(CONF_MAX_TOKENS, RECOMMENDED_MAX_TOKENS),
+             user=chat_log.conversation_id,
++            service_tier=options.get(CONF_SERVICE_TIER, RECOMMENDED_SERVICE_TIER),
+             store=False,
+             stream=True,
+         )
+@@ -655,6 +658,15 @@ class OpenAIBaseLLMEntity(Entity):
+                     )
+                 )
+             except openai.RateLimitError as err:
++                if (
++                    model_args["service_tier"] == "flex"
++                    and "resource unavailable" in (err.message or "").lower()
++                ):
++                    LOGGER.info(
++                        "Flex tier is not available at the moment, continuing with default tier"
++                    )
++                    model_args["service_tier"] = "default"
++                    continue
+                 LOGGER.error("Rate limited by OpenAI: %s", err)
+                 raise HomeAssistantError("Rate limited or insufficient funds") from err
+             except openai.OpenAIError as err:
+diff --git a/homeassistant/components/openai_conversation/strings.json b/homeassistant/components/openai_conversation/strings.json
+index e29596b8b90..178910ae097 100644
+--- a/homeassistant/components/openai_conversation/strings.json
++++ b/homeassistant/components/openai_conversation/strings.json
+@@ -70,6 +70,7 @@
+             "reasoning_effort": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data::reasoning_effort%]",
+             "reasoning_summary": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data::reasoning_summary%]",
+             "search_context_size": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data::search_context_size%]",
++            "service_tier": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data::service_tier%]",
+             "user_location": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data::user_location%]",
+             "web_search": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data::web_search%]"
+           },
+@@ -80,6 +81,7 @@
+             "reasoning_effort": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data_description::reasoning_effort%]",
+             "reasoning_summary": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data_description::reasoning_summary%]",
+             "search_context_size": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data_description::search_context_size%]",
++            "service_tier": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data_description::service_tier%]",
+             "user_location": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data_description::user_location%]",
+             "web_search": "[%key:component::openai_conversation::config_subentries::conversation::step::model::data_description::web_search%]"
+           },
+@@ -131,6 +133,7 @@
+             "reasoning_effort": "Reasoning effort",
+             "reasoning_summary": "Reasoning summary",
+             "search_context_size": "Search context size",
++            "service_tier": "Service tier",
+             "user_location": "Include home location",
+             "web_search": "Enable web search"
+           },
+@@ -141,6 +144,7 @@
+             "reasoning_effort": "How many reasoning tokens the model should generate before creating a response to the prompt",
+             "reasoning_summary": "Controls the length and detail of reasoning summaries provided by the model",
+             "search_context_size": "High level guidance for the amount of context window space to use for the search",
++            "service_tier": "Controls the cost and response time",
+             "user_location": "Refine search results based on geography",
+             "web_search": "Allow the model to search the web for the latest information before generating a response"
+           },
+@@ -242,6 +246,14 @@
+         "medium": "[%key:common::state::medium%]"
+       }
+     },
++    "service_tier": {
++      "options": {
++        "auto": "[%key:common::state::auto%]",
++        "default": "Standard",
++        "flex": "Flex",
++        "priority": "Priority"
++      }
++    },
+     "verbosity": {
+       "options": {
+         "high": "[%key:common::state::high%]",
+diff --git a/homeassistant/components/waterfurnace/manifest.json b/homeassistant/components/waterfurnace/manifest.json
+index 614484d5c8b..2db75d6f363 100644
+--- a/homeassistant/components/waterfurnace/manifest.json
++++ b/homeassistant/components/waterfurnace/manifest.json
+@@ -8,5 +8,5 @@
+   "iot_class": "cloud_polling",
+   "loggers": ["waterfurnace"],
+   "quality_scale": "legacy",
+-  "requirements": ["waterfurnace==1.6.2"]
++  "requirements": ["waterfurnace==1.5.1"]
+ }
+diff --git a/homeassistant/components/webdav/manifest.json b/homeassistant/components/webdav/manifest.json
+index 91ae2e8a127..fa24d1b2086 100644
+--- a/homeassistant/components/webdav/manifest.json
++++ b/homeassistant/components/webdav/manifest.json
+@@ -8,5 +8,5 @@
+   "iot_class": "cloud_polling",
+   "loggers": ["aiowebdav2"],
+   "quality_scale": "bronze",
+-  "requirements": ["aiowebdav2==0.6.2"]
++  "requirements": ["aiowebdav2==0.6.1"]
+ }
+diff --git a/homeassistant/components/window/__init__.py b/homeassistant/components/window/__init__.py
+deleted file mode 100644
+index b4577fd370e..00000000000
+--- a/homeassistant/components/window/__init__.py
++++ /dev/null
+@@ -1,17 +0,0 @@
+-"""Integration for window triggers."""
+-
+-from __future__ import annotations
+-
+-from homeassistant.core import HomeAssistant
+-from homeassistant.helpers import config_validation as cv
+-from homeassistant.helpers.typing import ConfigType
+-
+-DOMAIN = "window"
+-CONFIG_SCHEMA = cv.empty_config_schema(DOMAIN)
+-
+-__all__ = []
+-
+-
+-async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
+-    """Set up the component."""
+-    return True
+diff --git a/homeassistant/components/window/icons.json b/homeassistant/components/window/icons.json
+deleted file mode 100644
+index 0b3235bc138..00000000000
+--- a/homeassistant/components/window/icons.json
++++ /dev/null
+@@ -1,10 +0,0 @@
+-{
+-  "triggers": {
+-    "closed": {
+-      "trigger": "mdi:window-closed"
+-    },
+-    "opened": {
+-      "trigger": "mdi:window-open"
+-    }
+-  }
+-}
+diff --git a/homeassistant/components/window/manifest.json b/homeassistant/components/window/manifest.json
+deleted file mode 100644
+index f378cffc0c9..00000000000
+--- a/homeassistant/components/window/manifest.json
++++ /dev/null
+@@ -1,8 +0,0 @@
+-{
+-  "domain": "window",
+-  "name": "Window",
+-  "codeowners": ["@home-assistant/core"],
+-  "documentation": "https://www.home-assistant.io/integrations/window",
+-  "integration_type": "system",
+-  "quality_scale": "internal"
+-}
+diff --git a/homeassistant/components/window/strings.json b/homeassistant/components/window/strings.json
+deleted file mode 100644
+index 14adf2062ca..00000000000
+--- a/homeassistant/components/window/strings.json
++++ /dev/null
+@@ -1,38 +0,0 @@
+-{
+-  "common": {
+-    "trigger_behavior_description": "The behavior of the targeted windows to trigger on.",
+-    "trigger_behavior_name": "Behavior"
+-  },
+-  "selector": {
+-    "trigger_behavior": {
+-      "options": {
+-        "any": "Any",
+-        "first": "First",
+-        "last": "Last"
+-      }
+-    }
+-  },
+-  "title": "Window",
+-  "triggers": {
+-    "closed": {
+-      "description": "Triggers after one or more windows close.",
+-      "fields": {
+-        "behavior": {
+-          "description": "[%key:component::window::common::trigger_behavior_description%]",
+-          "name": "[%key:component::window::common::trigger_behavior_name%]"
+-        }
+-      },
+-      "name": "Window closed"
+-    },
+-    "opened": {
+-      "description": "Triggers after one or more windows open.",
+-      "fields": {
+-        "behavior": {
+-          "description": "[%key:component::window::common::trigger_behavior_description%]",
+-          "name": "[%key:component::window::common::trigger_behavior_name%]"
+-        }
+-      },
+-      "name": "Window opened"
+-    }
+-  }
+-}
+diff --git a/homeassistant/components/window/trigger.py b/homeassistant/components/window/trigger.py
+deleted file mode 100644
+index 71ee204a2b0..00000000000
+--- a/homeassistant/components/window/trigger.py
++++ /dev/null
+@@ -1,36 +0,0 @@
+-"""Provides triggers for windows."""
+-
+-from homeassistant.components.binary_sensor import (
+-    DOMAIN as BINARY_SENSOR_DOMAIN,
+-    BinarySensorDeviceClass,
+-)
+-from homeassistant.components.cover import (
+-    DOMAIN as COVER_DOMAIN,
+-    CoverDeviceClass,
+-    make_cover_closed_trigger,
+-    make_cover_opened_trigger,
+-)
+-from homeassistant.core import HomeAssistant
+-from homeassistant.helpers.trigger import Trigger
+-
+-DEVICE_CLASSES_WINDOW: dict[str, str] = {
+-    BINARY_SENSOR_DOMAIN: BinarySensorDeviceClass.WINDOW,
+-    COVER_DOMAIN: CoverDeviceClass.WINDOW,
+-}
+-
+-
+-TRIGGERS: dict[str, type[Trigger]] = {
+-    "opened": make_cover_opened_trigger(
+-        device_classes=DEVICE_CLASSES_WINDOW,
+-        domains={BINARY_SENSOR_DOMAIN, COVER_DOMAIN},
+-    ),
+-    "closed": make_cover_closed_trigger(
+-        device_classes=DEVICE_CLASSES_WINDOW,
+-        domains={BINARY_SENSOR_DOMAIN, COVER_DOMAIN},
+-    ),
+-}
+-
+-
+-async def async_get_triggers(hass: HomeAssistant) -> dict[str, type[Trigger]]:
+-    """Return the triggers for windows."""
+-    return TRIGGERS
+diff --git a/homeassistant/components/window/triggers.yaml b/homeassistant/components/window/triggers.yaml
+deleted file mode 100644
+index 4d770a85d2c..00000000000
+--- a/homeassistant/components/window/triggers.yaml
++++ /dev/null
+@@ -1,29 +0,0 @@
+-.trigger_common_fields: &trigger_common_fields
+-  behavior:
+-    required: true
+-    default: any
+-    selector:
+-      select:
+-        translation_key: trigger_behavior
+-        options:
+-          - first
+-          - last
+-          - any
+-
+-closed:
+-  fields: *trigger_common_fields
+-  target:
+-    entity:
+-      - domain: binary_sensor
+-        device_class: window
+-      - domain: cover
+-        device_class: window
+-
+-opened:
+-  fields: *trigger_common_fields
+-  target:
+-    entity:
+-      - domain: binary_sensor
+-        device_class: window
+-      - domain: cover
+-        device_class: window
+diff --git a/homeassistant/helpers/service.py b/homeassistant/helpers/service.py
+index d7484f214fb..bcb1367020c 100644
+--- a/homeassistant/helpers/service.py
++++ b/homeassistant/helpers/service.py
+@@ -782,8 +782,6 @@ async def entity_service_call(
+         all_referenced,
+     )
+ 
+-    entity_candidates = [e for e in entity_candidates if e.available]
+-
+     if not target_all_entities:
+         assert referenced is not None
+         # Only report on explicit referenced entities
+@@ -794,6 +792,9 @@ async def entity_service_call(
+ 
+     entities: list[Entity] = []
+     for entity in entity_candidates:
++        if not entity.available:
++            continue
++
+         # Skip entities that don't have the required device class.
+         if (
+             entity_device_classes is not None
+diff --git a/requirements_all.txt b/requirements_all.txt
+index ff66394d17e..f9350995550 100644
+--- a/requirements_all.txt
++++ b/requirements_all.txt
+@@ -443,7 +443,7 @@ aiowaqi==3.1.0
+ aiowatttime==0.1.1
+ 
+ # homeassistant.components.webdav
+-aiowebdav2==0.6.2
++aiowebdav2==0.6.1
+ 
+ # homeassistant.components.webostv
+ aiowebostv==0.7.5
+@@ -1322,7 +1322,7 @@ inkbird-ble==1.1.1
+ insteon-frontend-home-assistant==0.6.1
+ 
+ # homeassistant.components.intellifire
+-intellifire4py==4.4.0
++intellifire4py==4.3.1
+ 
+ # homeassistant.components.iometer
+ iometer==0.4.0
+@@ -3247,7 +3247,7 @@ wallbox==0.9.0
+ watchdog==6.0.0
+ 
+ # homeassistant.components.waterfurnace
+-waterfurnace==1.6.2
++waterfurnace==1.5.1
+ 
+ # homeassistant.components.watergate
+ watergate-local-api==2025.1.0
+diff --git a/requirements_test_all.txt b/requirements_test_all.txt
+index a6cdb10c36b..3055d431fcd 100644
+--- a/requirements_test_all.txt
++++ b/requirements_test_all.txt
+@@ -428,7 +428,7 @@ aiowaqi==3.1.0
+ aiowatttime==0.1.1
+ 
+ # homeassistant.components.webdav
+-aiowebdav2==0.6.2
++aiowebdav2==0.6.1
+ 
+ # homeassistant.components.webostv
+ aiowebostv==0.7.5
+@@ -1171,7 +1171,7 @@ inkbird-ble==1.1.1
+ insteon-frontend-home-assistant==0.6.1
+ 
+ # homeassistant.components.intellifire
+-intellifire4py==4.4.0
++intellifire4py==4.3.1
+ 
+ # homeassistant.components.iometer
+ iometer==0.4.0
+@@ -2735,7 +2735,7 @@ wallbox==0.9.0
+ watchdog==6.0.0
+ 
+ # homeassistant.components.waterfurnace
+-waterfurnace==1.6.2
++waterfurnace==1.5.1
+ 
+ # homeassistant.components.watergate
+ watergate-local-api==2025.1.0
+diff --git a/script/hassfest/manifest.py b/script/hassfest/manifest.py
+index 344264c1e54..538524696c1 100644
+--- a/script/hassfest/manifest.py
++++ b/script/hassfest/manifest.py
+@@ -123,7 +123,6 @@ NO_IOT_CLASS = [
+     "web_rtc",
+     "webhook",
+     "websocket_api",
+-    "window",
+     "zone",
+ ]
+ 
+diff --git a/script/hassfest/quality_scale.py b/script/hassfest/quality_scale.py
+index 5a7f717fbc1..0681953dd3f 100644
+--- a/script/hassfest/quality_scale.py
++++ b/script/hassfest/quality_scale.py
+@@ -2157,7 +2157,6 @@ NO_QUALITY_SCALE = [
+     "web_rtc",
+     "webhook",
+     "websocket_api",
+-    "window",
+     "zone",
+ ]
+ 
+diff --git a/tests/components/backup/test_manager.py b/tests/components/backup/test_manager.py
+index d4b6e16b2ef..c9d0cc481cc 100644
+--- a/tests/components/backup/test_manager.py
++++ b/tests/components/backup/test_manager.py
+@@ -604,14 +604,6 @@ async def test_initiate_backup(
+     result = await ws_client.receive_json()
+     while "uploaded_bytes" in result["event"]:
+         result = await ws_client.receive_json()
+-    assert result["event"] == {
+-        "manager_state": BackupManagerState.CREATE_BACKUP,
+-        "reason": None,
+-        "stage": CreateBackupStage.CLEANING_UP,
+-        "state": CreateBackupState.IN_PROGRESS,
+-    }
+-
+-    result = await ws_client.receive_json()
+     assert result["event"] == {
+         "manager_state": BackupManagerState.CREATE_BACKUP,
+         "reason": None,
+@@ -862,14 +854,6 @@ async def test_initiate_backup_with_agent_error(
+     result = await ws_client.receive_json()
+     while "uploaded_bytes" in result["event"]:
+         result = await ws_client.receive_json()
+-    assert result["event"] == {
+-        "manager_state": BackupManagerState.CREATE_BACKUP,
+-        "reason": None,
+-        "stage": CreateBackupStage.CLEANING_UP,
+-        "state": CreateBackupState.IN_PROGRESS,
+-    }
+-
+-    result = await ws_client.receive_json()
+     assert result["event"] == {
+         "manager_state": BackupManagerState.CREATE_BACKUP,
+         "reason": "upload_failed",
+@@ -3565,14 +3549,6 @@ async def test_initiate_backup_per_agent_encryption(
+     result = await ws_client.receive_json()
+     while "uploaded_bytes" in result["event"]:
+         result = await ws_client.receive_json()
+-    assert result["event"] == {
+-        "manager_state": BackupManagerState.CREATE_BACKUP,
+-        "reason": None,
+-        "stage": CreateBackupStage.CLEANING_UP,
+-        "state": CreateBackupState.IN_PROGRESS,
+-    }
+-
+-    result = await ws_client.receive_json()
+     assert result["event"] == {
+         "manager_state": BackupManagerState.CREATE_BACKUP,
+         "reason": None,
+@@ -3807,7 +3783,7 @@ async def test_upload_progress_event(
+     result = await ws_client.receive_json()
+     assert result["event"]["stage"] == CreateBackupStage.UPLOAD_TO_AGENTS
+ 
+-    # Collect all upload progress events until the finishing backup stage event
++    # Collect all upload progress events until the final state event
+     progress_events = []
+     result = await ws_client.receive_json()
+     while "uploaded_bytes" in result["event"]:
+@@ -3825,9 +3801,6 @@ async def test_upload_progress_event(
+     assert len(local_progress) == 1
+     assert local_progress[0]["uploaded_bytes"] == local_progress[0]["total_bytes"]
+ 
+-    assert result["event"]["stage"] == CreateBackupStage.CLEANING_UP
+-
+-    result = await ws_client.receive_json()
+     assert result["event"]["state"] == CreateBackupState.COMPLETED
+ 
+     result = await ws_client.receive_json()
+diff --git a/tests/components/cloud/conftest.py b/tests/components/cloud/conftest.py
+index 0610567fe9b..a1bcd8095e2 100644
+--- a/tests/components/cloud/conftest.py
++++ b/tests/components/cloud/conftest.py
+@@ -66,7 +66,6 @@ async def cloud_fixture() -> AsyncGenerator[MagicMock]:
+             certificate_status=None,
+             instance_domain=None,
+             is_connected=False,
+-            latency_by_location={},
+         )
+         mock_cloud.auth = MagicMock(spec=CognitoAuth)
+         mock_cloud.iot = MagicMock(
+diff --git a/tests/components/cloud/snapshots/test_http_api.ambr b/tests/components/cloud/snapshots/test_http_api.ambr
+index 78bf98d6199..976b2c0aa9e 100644
+--- a/tests/components/cloud/snapshots/test_http_api.ambr
++++ b/tests/components/cloud/snapshots/test_http_api.ambr
+@@ -87,13 +87,6 @@
+   
+   </details>
+   
+-  ## Latency by location
+-  
+-  Location | Latency (ms)
+-  --- | ---
+-  Earth | 13.37
+-  Moon | N/A
+-  
+   ## Installed packages
+   
+   <details><summary>Installed packages</summary>
+diff --git a/tests/components/cloud/test_http_api.py b/tests/components/cloud/test_http_api.py
+index f0535c3ed35..adabbed569b 100644
+--- a/tests/components/cloud/test_http_api.py
++++ b/tests/components/cloud/test_http_api.py
+@@ -1907,10 +1907,6 @@ async def test_download_support_package(
+ 
+     cloud.remote.snitun_server = "us-west-1"
+     cloud.remote.certificate_status = CertificateStatus.READY
+-    cloud.remote.latency_by_location = {
+-        "Earth": {"avg": 13.37},
+-        "Moon": {"avg": None},
+-    }
+     cloud.expiration_date = dt_util.parse_datetime("2025-01-17T11:19:31.0+00:00")
+ 
+     await cloud.client.async_system_message({"region": "xx-earth-616"})
+diff --git a/tests/components/hassio/test_backup.py b/tests/components/hassio/test_backup.py
+index d5709dd87ca..158e22e2331 100644
+--- a/tests/components/hassio/test_backup.py
++++ b/tests/components/hassio/test_backup.py
+@@ -984,14 +984,6 @@ async def test_reader_writer_create(
+     response = await client.receive_json()
+     while "uploaded_bytes" in response["event"]:
+         response = await client.receive_json()
+-    assert response["event"] == {
+-        "manager_state": "create_backup",
+-        "reason": None,
+-        "stage": "cleaning_up",
+-        "state": "in_progress",
+-    }
+-
+-    response = await client.receive_json()
+     assert response["event"] == {
+         "manager_state": "create_backup",
+         "reason": None,
+@@ -1109,14 +1101,6 @@ async def test_reader_writer_create_addon_folder_error(
+     response = await client.receive_json()
+     while "uploaded_bytes" in response["event"]:
+         response = await client.receive_json()
+-    assert response["event"] == {
+-        "manager_state": "create_backup",
+-        "reason": None,
+-        "stage": "cleaning_up",
+-        "state": "in_progress",
+-    }
+-
+-    response = await client.receive_json()
+     assert response["event"] == {
+         "manager_state": "create_backup",
+         "reason": None,
+@@ -1237,14 +1221,6 @@ async def test_reader_writer_create_report_progress(
+     response = await client.receive_json()
+     while "uploaded_bytes" in response["event"]:
+         response = await client.receive_json()
+-    assert response["event"] == {
+-        "manager_state": "create_backup",
+-        "reason": None,
+-        "stage": "cleaning_up",
+-        "state": "in_progress",
+-    }
+-
+-    response = await client.receive_json()
+     assert response["event"] == {
+         "manager_state": "create_backup",
+         "reason": None,
+@@ -1310,14 +1286,6 @@ async def test_reader_writer_create_job_done(
+     response = await client.receive_json()
+     while "uploaded_bytes" in response["event"]:
+         response = await client.receive_json()
+-    assert response["event"] == {
+-        "manager_state": "create_backup",
+-        "reason": None,
+-        "stage": "cleaning_up",
+-        "state": "in_progress",
+-    }
+-
+-    response = await client.receive_json()
+     assert response["event"] == {
+         "manager_state": "create_backup",
+         "reason": None,
+@@ -1584,14 +1552,6 @@ async def test_reader_writer_create_per_agent_encryption(
+     response = await client.receive_json()
+     while "uploaded_bytes" in response["event"]:
+         response = await client.receive_json()
+-    assert response["event"] == {
+-        "manager_state": "create_backup",
+-        "reason": None,
+-        "stage": "cleaning_up",
+-        "state": "in_progress",
+-    }
+-
+-    response = await client.receive_json()
+     assert response["event"] == {
+         "manager_state": "create_backup",
+         "reason": None,
+@@ -1768,51 +1728,10 @@ async def test_reader_writer_create_missing_reference_error(
+ 
+ 
+ @pytest.mark.usefixtures("hassio_client", "setup_backup_integration")
++@pytest.mark.parametrize("exception", [SupervisorError("Boom!"), Exception("Boom!")])
+ @pytest.mark.parametrize(
+-    (
+-        "exception",
+-        "method",
+-        "download_call_count",
+-        "remove_call_count",
+-        "expected_events_before_failed",
+-    ),
+-    [
+-        (
+-            SupervisorError("Boom!"),
+-            "download_backup",
+-            1,
+-            1,
+-            [],
+-        ),
+-        (
+-            Exception("Boom!"),
+-            "download_backup",
+-            1,
+-            1,
+-            [
+-                {
+-                    "manager_state": "create_backup",
+-                    "reason": None,
+-                    "stage": "cleaning_up",
+-                    "state": "in_progress",
+-                }
+-            ],
+-        ),
+-        (
+-            SupervisorError("Boom!"),
+-            "remove_backup",
+-            1,
+-            1,
+-            [],
+-        ),
+-        (
+-            Exception("Boom!"),
+-            "remove_backup",
+-            1,
+-            1,
+-            [],
+-        ),
+-    ],
++    ("method", "download_call_count", "remove_call_count"),
++    [("download_backup", 1, 1), ("remove_backup", 1, 1)],
+ )
+ async def test_reader_writer_create_download_remove_error(
+     hass: HomeAssistant,
+@@ -1822,7 +1741,6 @@ async def test_reader_writer_create_download_remove_error(
+     method: str,
+     download_call_count: int,
+     remove_call_count: int,
+-    expected_events_before_failed: list[dict[str, str]],
+ ) -> None:
+     """Test download and remove error when generating a backup."""
+     client = await hass_ws_client(hass)
+@@ -1889,9 +1807,6 @@ async def test_reader_writer_create_download_remove_error(
+     response = await client.receive_json()
+     while "uploaded_bytes" in response["event"]:
+         response = await client.receive_json()
+-    for expected_event in expected_events_before_failed:
+-        assert response["event"] == expected_event
+-        response = await client.receive_json()
+     assert response["event"] == {
+         "manager_state": "create_backup",
+         "reason": "upload_failed",
+@@ -2059,14 +1974,6 @@ async def test_reader_writer_create_remote_backup(
+     response = await client.receive_json()
+     while "uploaded_bytes" in response["event"]:
+         response = await client.receive_json()
+-    assert response["event"] == {
+-        "manager_state": "create_backup",
+-        "reason": None,
+-        "stage": "cleaning_up",
+-        "state": "in_progress",
+-    }
+-
+-    response = await client.receive_json()
+     assert response["event"] == {
+         "manager_state": "create_backup",
+         "reason": None,
+diff --git a/tests/components/window/__init__.py b/tests/components/window/__init__.py
+deleted file mode 100644
+index bd812bd6bfe..00000000000
+--- a/tests/components/window/__init__.py
++++ /dev/null
+@@ -1 +0,0 @@
+-"""Tests for the window integration."""
+diff --git a/tests/components/window/test_trigger.py b/tests/components/window/test_trigger.py
+deleted file mode 100644
+index 3a8965b2bdd..00000000000
+--- a/tests/components/window/test_trigger.py
++++ /dev/null
+@@ -1,646 +0,0 @@
+-"""Test window trigger."""
+-
+-from typing import Any
+-
+-import pytest
+-
+-from homeassistant.components.cover import ATTR_IS_CLOSED, CoverState
+-from homeassistant.const import (
+-    ATTR_DEVICE_CLASS,
+-    ATTR_LABEL_ID,
+-    CONF_ENTITY_ID,
+-    STATE_OFF,
+-    STATE_ON,
+-)
+-from homeassistant.core import HomeAssistant, ServiceCall
+-
+-from tests.components import (
+-    TriggerStateDescription,
+-    arm_trigger,
+-    parametrize_target_entities,
+-    parametrize_trigger_states,
+-    set_or_remove_state,
+-    target_entities,
+-)
+-
+-
+-@pytest.fixture
+-async def target_binary_sensors(hass: HomeAssistant) -> dict[str, list[str]]:
+-    """Create multiple binary sensor entities associated with different targets."""
+-    return await target_entities(hass, "binary_sensor")
+-
+-
+-@pytest.fixture
+-async def target_covers(hass: HomeAssistant) -> dict[str, list[str]]:
+-    """Create multiple cover entities associated with different targets."""
+-    return await target_entities(hass, "cover")
+-
+-
+-@pytest.mark.parametrize(
+-    "trigger_key",
+-    [
+-        "window.opened",
+-        "window.closed",
+-    ],
+-)
+-async def test_window_triggers_gated_by_labs_flag(
+-    hass: HomeAssistant, caplog: pytest.LogCaptureFixture, trigger_key: str
+-) -> None:
+-    """Test the window triggers are gated by the labs flag."""
+-    await arm_trigger(hass, trigger_key, None, {ATTR_LABEL_ID: "test_label"})
+-    assert (
+-        "Unnamed automation failed to setup triggers and has been disabled: Trigger "
+-        f"'{trigger_key}' requires the experimental 'New triggers and conditions' "
+-        "feature to be enabled in Home Assistant Labs settings (feature flag: "
+-        "'new_triggers_conditions')"
+-    ) in caplog.text
+-
+-
+-@pytest.mark.usefixtures("enable_labs_preview_features")
+-@pytest.mark.parametrize(
+-    ("trigger_target_config", "entity_id", "entities_in_target"),
+-    parametrize_target_entities("binary_sensor"),
+-)
+-@pytest.mark.parametrize(
+-    ("trigger", "trigger_options", "states"),
+-    [
+-        *parametrize_trigger_states(
+-            trigger="window.opened",
+-            target_states=[STATE_ON],
+-            other_states=[STATE_OFF],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-        *parametrize_trigger_states(
+-            trigger="window.closed",
+-            target_states=[STATE_OFF],
+-            other_states=[STATE_ON],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-    ],
+-)
+-async def test_window_trigger_binary_sensor_behavior_any(
+-    hass: HomeAssistant,
+-    service_calls: list[ServiceCall],
+-    target_binary_sensors: dict[str, list[str]],
+-    trigger_target_config: dict,
+-    entity_id: str,
+-    entities_in_target: int,
+-    trigger: str,
+-    trigger_options: dict[str, Any],
+-    states: list[TriggerStateDescription],
+-) -> None:
+-    """Test window trigger fires for binary_sensor entities with device_class window."""
+-    other_entity_ids = set(target_binary_sensors["included"]) - {entity_id}
+-    excluded_entity_ids = set(target_binary_sensors["excluded"]) - {entity_id}
+-
+-    for eid in target_binary_sensors["included"]:
+-        set_or_remove_state(hass, eid, states[0]["included"])
+-        await hass.async_block_till_done()
+-    for eid in excluded_entity_ids:
+-        set_or_remove_state(hass, eid, states[0]["excluded"])
+-        await hass.async_block_till_done()
+-
+-    await arm_trigger(hass, trigger, {}, trigger_target_config)
+-
+-    for state in states[1:]:
+-        excluded_state = state["excluded"]
+-        included_state = state["included"]
+-        set_or_remove_state(hass, entity_id, included_state)
+-        await hass.async_block_till_done()
+-        assert len(service_calls) == state["count"]
+-        for service_call in service_calls:
+-            assert service_call.data[CONF_ENTITY_ID] == entity_id
+-        service_calls.clear()
+-
+-        for other_entity_id in other_entity_ids:
+-            set_or_remove_state(hass, other_entity_id, included_state)
+-            await hass.async_block_till_done()
+-        for excluded_entity_id in excluded_entity_ids:
+-            set_or_remove_state(hass, excluded_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        assert len(service_calls) == (entities_in_target - 1) * state["count"]
+-        service_calls.clear()
+-
+-
+-@pytest.mark.usefixtures("enable_labs_preview_features")
+-@pytest.mark.parametrize(
+-    ("trigger_target_config", "entity_id", "entities_in_target"),
+-    parametrize_target_entities("cover"),
+-)
+-@pytest.mark.parametrize(
+-    ("trigger", "trigger_options", "states"),
+-    [
+-        *parametrize_trigger_states(
+-            trigger="window.opened",
+-            target_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: False}),
+-                (CoverState.OPENING, {ATTR_IS_CLOSED: False}),
+-            ],
+-            other_states=[
+-                (CoverState.CLOSED, {ATTR_IS_CLOSED: True}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: True}),
+-            ],
+-            extra_invalid_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: None}),
+-                (CoverState.OPEN, {}),
+-            ],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-        *parametrize_trigger_states(
+-            trigger="window.closed",
+-            target_states=[
+-                (CoverState.CLOSED, {ATTR_IS_CLOSED: True}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: True}),
+-            ],
+-            other_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: False}),
+-                (CoverState.OPENING, {ATTR_IS_CLOSED: False}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: False}),
+-            ],
+-            extra_invalid_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: None}),
+-                (CoverState.OPEN, {}),
+-            ],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-    ],
+-)
+-async def test_window_trigger_cover_behavior_any(
+-    hass: HomeAssistant,
+-    service_calls: list[ServiceCall],
+-    target_covers: dict[str, list[str]],
+-    trigger_target_config: dict,
+-    entity_id: str,
+-    entities_in_target: int,
+-    trigger: str,
+-    trigger_options: dict[str, Any],
+-    states: list[TriggerStateDescription],
+-) -> None:
+-    """Test window trigger fires for cover entities with device_class window."""
+-    other_entity_ids = set(target_covers["included"]) - {entity_id}
+-    excluded_entity_ids = set(target_covers["excluded"]) - {entity_id}
+-
+-    for eid in target_covers["included"]:
+-        set_or_remove_state(hass, eid, states[0]["included"])
+-        await hass.async_block_till_done()
+-    for eid in excluded_entity_ids:
+-        set_or_remove_state(hass, eid, states[0]["excluded"])
+-        await hass.async_block_till_done()
+-
+-    await arm_trigger(hass, trigger, {}, trigger_target_config)
+-
+-    for state in states[1:]:
+-        excluded_state = state["excluded"]
+-        included_state = state["included"]
+-        set_or_remove_state(hass, entity_id, included_state)
+-        await hass.async_block_till_done()
+-        assert len(service_calls) == state["count"]
+-        for service_call in service_calls:
+-            assert service_call.data[CONF_ENTITY_ID] == entity_id
+-        service_calls.clear()
+-
+-        for other_entity_id in other_entity_ids:
+-            set_or_remove_state(hass, other_entity_id, included_state)
+-            await hass.async_block_till_done()
+-        for excluded_entity_id in excluded_entity_ids:
+-            set_or_remove_state(hass, excluded_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        assert len(service_calls) == (entities_in_target - 1) * state["count"]
+-        service_calls.clear()
+-
+-
+-@pytest.mark.usefixtures("enable_labs_preview_features")
+-@pytest.mark.parametrize(
+-    ("trigger_target_config", "entity_id", "entities_in_target"),
+-    parametrize_target_entities("binary_sensor"),
+-)
+-@pytest.mark.parametrize(
+-    ("trigger", "trigger_options", "states"),
+-    [
+-        *parametrize_trigger_states(
+-            trigger="window.opened",
+-            target_states=[STATE_ON],
+-            other_states=[STATE_OFF],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-        *parametrize_trigger_states(
+-            trigger="window.closed",
+-            target_states=[STATE_OFF],
+-            other_states=[STATE_ON],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-    ],
+-)
+-async def test_window_trigger_binary_sensor_behavior_first(
+-    hass: HomeAssistant,
+-    service_calls: list[ServiceCall],
+-    target_binary_sensors: dict[str, list[str]],
+-    trigger_target_config: dict,
+-    entity_id: str,
+-    entities_in_target: int,
+-    trigger: str,
+-    trigger_options: dict[str, Any],
+-    states: list[TriggerStateDescription],
+-) -> None:
+-    """Test window trigger fires on the first binary_sensor state change."""
+-    other_entity_ids = set(target_binary_sensors["included"]) - {entity_id}
+-    excluded_entity_ids = set(target_binary_sensors["excluded"]) - {entity_id}
+-
+-    for eid in target_binary_sensors["included"]:
+-        set_or_remove_state(hass, eid, states[0]["included"])
+-        await hass.async_block_till_done()
+-    for eid in excluded_entity_ids:
+-        set_or_remove_state(hass, eid, states[0]["excluded"])
+-        await hass.async_block_till_done()
+-
+-    await arm_trigger(hass, trigger, {"behavior": "first"}, trigger_target_config)
+-
+-    for state in states[1:]:
+-        excluded_state = state["excluded"]
+-        included_state = state["included"]
+-        set_or_remove_state(hass, entity_id, included_state)
+-        await hass.async_block_till_done()
+-        assert len(service_calls) == state["count"]
+-        for service_call in service_calls:
+-            assert service_call.data[CONF_ENTITY_ID] == entity_id
+-        service_calls.clear()
+-
+-        for other_entity_id in other_entity_ids:
+-            set_or_remove_state(hass, other_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        for excluded_entity_id in excluded_entity_ids:
+-            set_or_remove_state(hass, excluded_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        assert len(service_calls) == 0
+-
+-
+-@pytest.mark.usefixtures("enable_labs_preview_features")
+-@pytest.mark.parametrize(
+-    ("trigger_target_config", "entity_id", "entities_in_target"),
+-    parametrize_target_entities("binary_sensor"),
+-)
+-@pytest.mark.parametrize(
+-    ("trigger", "trigger_options", "states"),
+-    [
+-        *parametrize_trigger_states(
+-            trigger="window.opened",
+-            target_states=[STATE_ON],
+-            other_states=[STATE_OFF],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-        *parametrize_trigger_states(
+-            trigger="window.closed",
+-            target_states=[STATE_OFF],
+-            other_states=[STATE_ON],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-    ],
+-)
+-async def test_window_trigger_binary_sensor_behavior_last(
+-    hass: HomeAssistant,
+-    service_calls: list[ServiceCall],
+-    target_binary_sensors: dict[str, list[str]],
+-    trigger_target_config: dict,
+-    entity_id: str,
+-    entities_in_target: int,
+-    trigger: str,
+-    trigger_options: dict[str, Any],
+-    states: list[TriggerStateDescription],
+-) -> None:
+-    """Test window trigger fires when the last binary_sensor changes state."""
+-    other_entity_ids = set(target_binary_sensors["included"]) - {entity_id}
+-    excluded_entity_ids = set(target_binary_sensors["excluded"]) - {entity_id}
+-
+-    for eid in target_binary_sensors["included"]:
+-        set_or_remove_state(hass, eid, states[0]["included"])
+-        await hass.async_block_till_done()
+-    for eid in excluded_entity_ids:
+-        set_or_remove_state(hass, eid, states[0]["excluded"])
+-        await hass.async_block_till_done()
+-
+-    await arm_trigger(hass, trigger, {"behavior": "last"}, trigger_target_config)
+-
+-    for state in states[1:]:
+-        excluded_state = state["excluded"]
+-        included_state = state["included"]
+-        for other_entity_id in other_entity_ids:
+-            set_or_remove_state(hass, other_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        assert len(service_calls) == 0
+-
+-        set_or_remove_state(hass, entity_id, included_state)
+-        await hass.async_block_till_done()
+-        assert len(service_calls) == state["count"]
+-        for service_call in service_calls:
+-            assert service_call.data[CONF_ENTITY_ID] == entity_id
+-        service_calls.clear()
+-
+-        for excluded_entity_id in excluded_entity_ids:
+-            set_or_remove_state(hass, excluded_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        assert len(service_calls) == 0
+-
+-
+-@pytest.mark.usefixtures("enable_labs_preview_features")
+-@pytest.mark.parametrize(
+-    ("trigger_target_config", "entity_id", "entities_in_target"),
+-    parametrize_target_entities("cover"),
+-)
+-@pytest.mark.parametrize(
+-    ("trigger", "trigger_options", "states"),
+-    [
+-        *parametrize_trigger_states(
+-            trigger="window.opened",
+-            target_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: False}),
+-                (CoverState.OPENING, {ATTR_IS_CLOSED: False}),
+-            ],
+-            other_states=[
+-                (CoverState.CLOSED, {ATTR_IS_CLOSED: True}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: True}),
+-            ],
+-            extra_invalid_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: None}),
+-                (CoverState.OPEN, {}),
+-            ],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-        *parametrize_trigger_states(
+-            trigger="window.closed",
+-            target_states=[
+-                (CoverState.CLOSED, {ATTR_IS_CLOSED: True}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: True}),
+-            ],
+-            other_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: False}),
+-                (CoverState.OPENING, {ATTR_IS_CLOSED: False}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: False}),
+-            ],
+-            extra_invalid_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: None}),
+-                (CoverState.OPEN, {}),
+-            ],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-    ],
+-)
+-async def test_window_trigger_cover_behavior_first(
+-    hass: HomeAssistant,
+-    service_calls: list[ServiceCall],
+-    target_covers: dict[str, list[str]],
+-    trigger_target_config: dict,
+-    entity_id: str,
+-    entities_in_target: int,
+-    trigger: str,
+-    trigger_options: dict[str, Any],
+-    states: list[TriggerStateDescription],
+-) -> None:
+-    """Test window trigger fires on the first cover state change."""
+-    other_entity_ids = set(target_covers["included"]) - {entity_id}
+-    excluded_entity_ids = set(target_covers["excluded"]) - {entity_id}
+-
+-    for eid in target_covers["included"]:
+-        set_or_remove_state(hass, eid, states[0]["included"])
+-        await hass.async_block_till_done()
+-    for eid in excluded_entity_ids:
+-        set_or_remove_state(hass, eid, states[0]["excluded"])
+-        await hass.async_block_till_done()
+-
+-    await arm_trigger(hass, trigger, {"behavior": "first"}, trigger_target_config)
+-
+-    for state in states[1:]:
+-        excluded_state = state["excluded"]
+-        included_state = state["included"]
+-        set_or_remove_state(hass, entity_id, included_state)
+-        await hass.async_block_till_done()
+-        assert len(service_calls) == state["count"]
+-        for service_call in service_calls:
+-            assert service_call.data[CONF_ENTITY_ID] == entity_id
+-        service_calls.clear()
+-
+-        for other_entity_id in other_entity_ids:
+-            set_or_remove_state(hass, other_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        for excluded_entity_id in excluded_entity_ids:
+-            set_or_remove_state(hass, excluded_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        assert len(service_calls) == 0
+-
+-
+-@pytest.mark.usefixtures("enable_labs_preview_features")
+-@pytest.mark.parametrize(
+-    ("trigger_target_config", "entity_id", "entities_in_target"),
+-    parametrize_target_entities("cover"),
+-)
+-@pytest.mark.parametrize(
+-    ("trigger", "trigger_options", "states"),
+-    [
+-        *parametrize_trigger_states(
+-            trigger="window.opened",
+-            target_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: False}),
+-                (CoverState.OPENING, {ATTR_IS_CLOSED: False}),
+-            ],
+-            other_states=[
+-                (CoverState.CLOSED, {ATTR_IS_CLOSED: True}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: True}),
+-            ],
+-            extra_invalid_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: None}),
+-                (CoverState.OPEN, {}),
+-            ],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-        *parametrize_trigger_states(
+-            trigger="window.closed",
+-            target_states=[
+-                (CoverState.CLOSED, {ATTR_IS_CLOSED: True}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: True}),
+-            ],
+-            other_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: False}),
+-                (CoverState.OPENING, {ATTR_IS_CLOSED: False}),
+-                (CoverState.CLOSING, {ATTR_IS_CLOSED: False}),
+-            ],
+-            extra_invalid_states=[
+-                (CoverState.OPEN, {ATTR_IS_CLOSED: None}),
+-                (CoverState.OPEN, {}),
+-            ],
+-            additional_attributes={ATTR_DEVICE_CLASS: "window"},
+-            trigger_from_none=False,
+-        ),
+-    ],
+-)
+-async def test_window_trigger_cover_behavior_last(
+-    hass: HomeAssistant,
+-    service_calls: list[ServiceCall],
+-    target_covers: dict[str, list[str]],
+-    trigger_target_config: dict,
+-    entity_id: str,
+-    entities_in_target: int,
+-    trigger: str,
+-    trigger_options: dict[str, Any],
+-    states: list[TriggerStateDescription],
+-) -> None:
+-    """Test window trigger fires when the last cover changes state."""
+-    other_entity_ids = set(target_covers["included"]) - {entity_id}
+-    excluded_entity_ids = set(target_covers["excluded"]) - {entity_id}
+-
+-    for eid in target_covers["included"]:
+-        set_or_remove_state(hass, eid, states[0]["included"])
+-        await hass.async_block_till_done()
+-    for eid in excluded_entity_ids:
+-        set_or_remove_state(hass, eid, states[0]["excluded"])
+-        await hass.async_block_till_done()
+-
+-    await arm_trigger(hass, trigger, {"behavior": "last"}, trigger_target_config)
+-
+-    for state in states[1:]:
+-        excluded_state = state["excluded"]
+-        included_state = state["included"]
+-        for other_entity_id in other_entity_ids:
+-            set_or_remove_state(hass, other_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        assert len(service_calls) == 0
+-
+-        set_or_remove_state(hass, entity_id, included_state)
+-        await hass.async_block_till_done()
+-        assert len(service_calls) == state["count"]
+-        for service_call in service_calls:
+-            assert service_call.data[CONF_ENTITY_ID] == entity_id
+-        service_calls.clear()
+-
+-        for excluded_entity_id in excluded_entity_ids:
+-            set_or_remove_state(hass, excluded_entity_id, excluded_state)
+-            await hass.async_block_till_done()
+-        assert len(service_calls) == 0
+-
+-
+-@pytest.mark.usefixtures("enable_labs_preview_features")
+-@pytest.mark.parametrize(
+-    (
+-        "trigger_key",
+-        "binary_sensor_initial",
+-        "binary_sensor_target",
+-        "cover_initial",
+-        "cover_initial_is_closed",
+-        "cover_target",
+-        "cover_target_is_closed",
+-    ),
+-    [
+-        (
+-            "window.opened",
+-            STATE_OFF,
+-            STATE_ON,
+-            CoverState.CLOSED,
+-            True,
+-            CoverState.OPEN,
+-            False,
+-        ),
+-        (
+-            "window.closed",
+-            STATE_ON,
+-            STATE_OFF,
+-            CoverState.OPEN,
+-            False,
+-            CoverState.CLOSED,
+-            True,
+-        ),
+-    ],
+-)
+-async def test_window_trigger_excludes_non_window_device_class(
+-    hass: HomeAssistant,
+-    service_calls: list[ServiceCall],
+-    trigger_key: str,
+-    binary_sensor_initial: str,
+-    binary_sensor_target: str,
+-    cover_initial: str,
+-    cover_initial_is_closed: bool,
+-    cover_target: str,
+-    cover_target_is_closed: bool,
+-) -> None:
+-    """Test window trigger does not fire for entities without device_class window."""
+-    entity_id_window = "binary_sensor.test_window"
+-    entity_id_door = "binary_sensor.test_door"
+-    entity_id_cover_window = "cover.test_window"
+-    entity_id_cover_door = "cover.test_door"
+-
+-    # Set initial states
+-    hass.states.async_set(
+-        entity_id_window, binary_sensor_initial, {ATTR_DEVICE_CLASS: "window"}
+-    )
+-    hass.states.async_set(
+-        entity_id_door, binary_sensor_initial, {ATTR_DEVICE_CLASS: "door"}
+-    )
+-    hass.states.async_set(
+-        entity_id_cover_window,
+-        cover_initial,
+-        {ATTR_DEVICE_CLASS: "window", ATTR_IS_CLOSED: cover_initial_is_closed},
+-    )
+-    hass.states.async_set(
+-        entity_id_cover_door,
+-        cover_initial,
+-        {ATTR_DEVICE_CLASS: "door", ATTR_IS_CLOSED: cover_initial_is_closed},
+-    )
+-    await hass.async_block_till_done()
+-
+-    await arm_trigger(
+-        hass,
+-        trigger_key,
+-        {},
+-        {
+-            CONF_ENTITY_ID: [
+-                entity_id_window,
+-                entity_id_door,
+-                entity_id_cover_window,
+-                entity_id_cover_door,
+-            ]
+-        },
+-    )
+-
+-    # Window binary_sensor changes - should trigger
+-    hass.states.async_set(
+-        entity_id_window, binary_sensor_target, {ATTR_DEVICE_CLASS: "window"}
+-    )
+-    await hass.async_block_till_done()
+-    assert len(service_calls) == 1
+-    assert service_calls[0].data[CONF_ENTITY_ID] == entity_id_window
+-    service_calls.clear()
+-
+-    # Door binary_sensor changes - should NOT trigger (wrong device class)
+-    hass.states.async_set(
+-        entity_id_door, binary_sensor_target, {ATTR_DEVICE_CLASS: "door"}
+-    )
+-    await hass.async_block_till_done()
+-    assert len(service_calls) == 0
+-
+-    # Cover window changes - should trigger
+-    hass.states.async_set(
+-        entity_id_cover_window,
+-        cover_target,
+-        {ATTR_DEVICE_CLASS: "window", ATTR_IS_CLOSED: cover_target_is_closed},
+-    )
+-    await hass.async_block_till_done()
+-    assert len(service_calls) == 1
+-    assert service_calls[0].data[CONF_ENTITY_ID] == entity_id_cover_window
+-    service_calls.clear()
+-
+-    # Door cover changes - should NOT trigger (wrong device class)
+-    hass.states.async_set(
+-        entity_id_cover_door,
+-        cover_target,
+-        {ATTR_DEVICE_CLASS: "door", ATTR_IS_CLOSED: cover_target_is_closed},
+-    )
+-    await hass.async_block_till_done()
+-    assert len(service_calls) == 0
+diff --git a/tests/helpers/test_service.py b/tests/helpers/test_service.py
+index b8c455ddd15..5ebc6a51721 100644
+--- a/tests/helpers/test_service.py
++++ b/tests/helpers/test_service.py
+@@ -2411,28 +2411,6 @@ async def test_entity_service_call_warn_referenced(
+     ) in caplog.text
+ 
+ 
+-async def test_entity_service_call_warn_unavailable(
+-    hass: HomeAssistant,
+-    mock_entities: dict[str, MockEntity],
+-    caplog: pytest.LogCaptureFixture,
+-) -> None:
+-    """Test that explicitly referenced unavailable entities are logged."""
+-    mock_entities["light.kitchen"] = MockEntity(
+-        entity_id="light.kitchen", available=False
+-    )
+-
+-    call = ServiceCall(
+-        hass,
+-        "test_domain",
+-        "test_service",
+-        {"entity_id": ["light.kitchen"]},
+-    )
+-    await service.entity_service_call(hass, mock_entities, "", call)
+-    assert (
+-        "Referenced entities light.kitchen are missing or not currently available"
+-    ) in caplog.text
+-
+-
+ async def test_async_extract_entities_warn_referenced(
+     hass: HomeAssistant, caplog: pytest.LogCaptureFixture
+ ) -> None:
+diff --git a/tests/snapshots/test_bootstrap.ambr b/tests/snapshots/test_bootstrap.ambr
+index a8368b1eae2..93faf22bfdf 100644
+--- a/tests/snapshots/test_bootstrap.ambr
++++ b/tests/snapshots/test_bootstrap.ambr
+@@ -98,7 +98,6 @@
+     'weather',
+     'web_rtc',
+     'websocket_api',
+-    'window',
+     'zone',
+   })
+ # ---
+@@ -200,7 +199,6 @@
+     'weather',
+     'web_rtc',
+     'websocket_api',
+-    'window',
+     'zone',
+   })
+ # ---

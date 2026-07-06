@@ -1,0 +1,7 @@
+I'm working on adding a batch authorization check feature to our API server. Right now, every authorization check requires its own separate request, which is inefficient when callers need to evaluate many checks at once. I'd like to implement a batch check endpoint that accepts multiple check items in a single request and returns per-item results.
+
+Each check item in the batch needs a unique, non-empty identifier so that the caller can match each result back to the check that produced it. The server should validate the incoming batch — rejecting empty batches, batches with empty or duplicated identifiers, and batches that exceed a configured maximum size. When the batch is too large, the error should clearly state how many checks were received versus the maximum allowed.
+
+Individual check failures (like invalid relations, invalid tuples, resolution depth exceeded, evaluation failures, throttling, deadline exceeded, or generic errors) should be captured as per-item errors rather than failing the entire request. If the request context is cancelled, each item should report the cancellation error individually while the overall request should still succeed. If no authorization model is specified in the request, the latest model should be used and the results should match those of an equivalent request that explicitly names the model.
+
+The batch check operation also needs to be wired into the existing authorization layer so that it requires the same permissions as a regular check operation.

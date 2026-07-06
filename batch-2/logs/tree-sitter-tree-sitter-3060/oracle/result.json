@@ -1,0 +1,29 @@
+{
+    "id": "52b2ec73-72ce-454f-a352-c99b79d4c3d2",
+    "started_at": "2026-07-04T15:39:13.304939",
+    "finished_at": "2026-07-04T15:39:44.684449",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tree-sitter-tree-sitter-3060": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tree-sitter-tree-sitter-3060__wemfhRC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

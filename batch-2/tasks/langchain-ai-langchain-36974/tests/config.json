@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/.github/scripts/test_release_options.py -v",
+  "test_files": [
+    ".github/scripts/test_release_options.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    ".github.scripts.test_release_options::test_release_options_match_packages"
+  ],
+  "PASS_TO_PASS": []
+}

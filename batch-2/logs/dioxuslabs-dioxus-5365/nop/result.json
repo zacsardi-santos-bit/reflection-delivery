@@ -1,0 +1,29 @@
+{
+    "id": "cae0bd26-5dc5-48b8-99d8-8747e9844107",
+    "started_at": "2026-07-06T12:16:30.598285",
+    "finished_at": "2026-07-06T12:17:23.542319",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__dioxuslabs-dioxus-5365": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "dioxuslabs-dioxus-5365__24KNUQT"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

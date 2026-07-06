@@ -1,0 +1,21 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/null/test_device.py -v",
+  "test_files": [
+    "test/null/test_device.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.null.test_device.TestDevice::test_lowercase_canonicalizes",
+    "test.null.test_device.TestDevice::test_old_device_env_raises"
+  ],
+  "PASS_TO_PASS": [
+    "test.null.test_device.TestDevice::test_canonicalize",
+    "test.null.test_device.TestDevice::test_getitem_not_exist",
+    "test.null.test_device.TestCompiler::test_compile_cached",
+    "test.null.test_device.TestCompiler::test_compile_cached_disabled",
+    "test.null.test_device.TestCompiler::test_device_compile",
+    "test.null.test_device.TestRunAsModule::test_module_runs"
+  ]
+}

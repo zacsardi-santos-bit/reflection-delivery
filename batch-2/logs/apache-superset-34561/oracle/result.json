@@ -1,0 +1,29 @@
+{
+    "id": "d5edee28-bafe-4c69-8430-85ff625ed6db",
+    "started_at": "2026-07-04T15:38:39.466546",
+    "finished_at": "2026-07-04T15:39:12.641664",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-superset-34561": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-superset-34561__zXfQxHd"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

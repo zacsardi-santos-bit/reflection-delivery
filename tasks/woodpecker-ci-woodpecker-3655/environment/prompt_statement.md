@@ -1,7 +1,0 @@
-I'm working on the Woodpecker CI Kubernetes backend and I need to add support for referencing native Kubernetes secrets from pipeline step definitions. Right now there's no way for a pipeline step to consume a secret that already exists in the cluster — users have to duplicate everything into Woodpecker's own secret store.
-
-What I need is the ability for a step author to declare a list of secret references in their pipeline configuration. Each reference should support a few different injection modes: you can reference a secret by name only (which injects all its keys as environment variables), reference a specific key and inject it as an environment variable (with the variable name defaulting to the uppercased key name, or using an explicit name if provided), or reference a specific key and mount it as a read-only file at a given path inside the container.
-
-There also needs to be an administrator-controlled flag to enable or disable this feature globally. When the feature is disabled, any secret references in step definitions should be silently ignored — no error, just no injection. This keeps the feature opt-in so installations that don't want steps accessing cluster secrets can stay secure by default.
-
-The implementation needs to correctly wire these secret references into the Kubernetes pod spec — env references should end up as environment entries on the container, and file references should produce volumes mounted into the container.

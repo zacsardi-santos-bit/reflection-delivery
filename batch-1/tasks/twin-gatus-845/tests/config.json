@@ -1,0 +1,39 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./alerting/provider/zulip -count=1",
+  "test_files": [
+    "alerting/provider/zulip/zulip_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValid/Empty_provider",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValid/Empty_channel_id",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValid/Empty_domain",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValid/Empty_bot_api_key",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValid/Empty_bot_email",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValid/Valid_provider",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValid",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValidWithOverride/Empty_group",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValidWithOverride/Empty_override_config",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValidWithOverride/Empty_channel_id",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValidWithOverride/Empty_domain",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValidWithOverride/Empty_bot_api_key",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValidWithOverride/Empty_bot_email",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValidWithOverride/Valid_provider",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_IsValidWithOverride",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_GetChannelIdForGroup",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_BuildRequestBody/Resolved_alert_with_no_conditions",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_BuildRequestBody/Resolved_alert_with_conditions",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_BuildRequestBody/Failed_alert_with_no_conditions",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_BuildRequestBody/Failed_alert_with_conditions",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_BuildRequestBody",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_GetDefaultAlert",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_Send/resolved",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_Send/resolved_error",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_Send/triggered",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_Send/triggered_error",
+    "github.com/TwiN/gatus/v5/alerting/provider/zulip::TestAlertProvider_Send"
+  ],
+  "PASS_TO_PASS": []
+}

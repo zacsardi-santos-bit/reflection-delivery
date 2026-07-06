@@ -1,0 +1,23 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/airflow-core/src/airflow/ui && pnpm exec vitest run src/layouts/Nav/PluginMenus.test.tsx",
+  "test_files": [
+    "airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx",
+    "airflow-core/tests/unit/api_fastapi/core_api/routes/public/test_plugins.py"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders two non-promoted plugins in a submenu (backwards compatibility)",
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders three or more non-promoted plugins in a submenu (backwards compatibility)",
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders both items on toolbar when one of two plugins is promoted (no one-item submenu)",
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders promoted plugin on toolbar and remaining two plugins in a submenu",
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders all promoted plugins on the toolbar with no submenu",
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders multiple promoted plugins on toolbar and remaining two in a submenu"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders nothing when there are no plugins",
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders a single non-promoted plugin directly on the toolbar",
+    "/workspace/repo/airflow-core/src/airflow/ui/src/layouts/Nav/PluginMenus.test.tsx::PluginMenus renders a promoted plugin directly on the toolbar"
+  ]
+}

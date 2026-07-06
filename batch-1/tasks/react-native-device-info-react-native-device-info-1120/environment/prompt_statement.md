@@ -1,0 +1,7 @@
+I'm working on a cross-platform mobile device information library that supports iOS, Android, and Windows. I've noticed that several core device property getters — things like getting the device identifier, model, brand, system version, bundle ID, application name, build number, app version, and unique device ID — are supposed to support all three platforms, but something isn't right. The tests are failing because these functions aren't returning the expected native values, particularly when running against the Windows platform.
+
+On top of that, the tablet detection function isn't working properly either. It's returning a hardcoded default value even on Android, iOS, and Windows, where it should be reading the actual value from the native module.
+
+When I dig into the test setup, the mock configuration also seems wrong: some native module properties that should be plain values are set up as function mocks, the tablet detection native property is initialized to the wrong value, and the platform routing utility in the mock doesn't handle Windows or web platforms at all.
+
+I need help fixing both the implementation (so that these getters properly support all three platforms and correctly delegate to the native module) and the test mock configuration (so that the mock accurately reflects what the real native module provides). Any correct solution must ensure that tablet detection on supported platforms returns the native value, device property getters return the native value on iOS, Android, and Windows, and the mock setup aligns with these expectations.

@@ -1,0 +1,29 @@
+{
+    "id": "183a33ab-0277-48e3-be10-ca4679ae0015",
+    "started_at": "2026-07-06T12:17:26.878066",
+    "finished_at": "2026-07-06T12:17:59.828544",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__rocicorp-mono-5927": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "rocicorp-mono-5927__dhifUet"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

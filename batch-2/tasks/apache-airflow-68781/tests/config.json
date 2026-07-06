@@ -1,0 +1,36 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/providers/amazon/tests/unit/amazon/aws/log/test_cloudwatch_task_handler.py -v",
+  "test_files": [
+    "providers/amazon/tests/unit/amazon/aws/log/test_cloudwatch_task_handler.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_get_cloudwatch_logs_missing_stream_yields_hint"
+  ],
+  "PASS_TO_PASS": [
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudRemoteLogIO::test_upload_deletes_local_log_dir_when_delete_local_copy_true",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudRemoteLogIO::test_upload_does_not_delete_when_delete_local_copy_false",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudRemoteLogIO::test_upload_handles_absolute_path",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudRemoteLogIO::test_upload_skips_deletion_outside_base_log_folder",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudRemoteLogIO::test_log_message",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_hook",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_handler",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_write",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_read",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_get_cloudwatch_logs[None-None]",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_get_cloudwatch_logs[end_date1-1577923230000]",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_get_cloudwatch_logs_other_client_error_propagates",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_write_json_logs[json-serialize-legacy]",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_write_json_logs[json-serialize]",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_write_json_logs[not-set]",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_close_prevents_duplicate_calls",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_set_context_stores_ti_and_log_relative_path",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_close_calls_upload_once",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_close_skips_upload_without_set_context",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_close_deletes_local_log_dir",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_filename_template_for_backward_compatibility",
+    "providers.amazon.tests.unit.amazon.aws.log.test_cloudwatch_task_handler.TestCloudwatchTaskHandler::test_event_to_str"
+  ]
+}

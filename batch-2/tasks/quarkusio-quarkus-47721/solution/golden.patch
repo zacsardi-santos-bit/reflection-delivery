@@ -1,0 +1,1215 @@
+diff --git a/.github/workflows/ci-actions-incremental.yml b/.github/workflows/ci-actions-incremental.yml
+index 1b3b803942e..13749b94732 100644
+--- a/.github/workflows/ci-actions-incremental.yml
++++ b/.github/workflows/ci-actions-incremental.yml
+@@ -1221,7 +1221,8 @@ jobs:
+     # Ignore the following YAML Schema error
+     timeout-minutes: ${{matrix.timeout}}
+     strategy:
+-      max-parallel: ${{ fromJson(needs.configure.outputs.config).maxParallel || 12 }}
++      # fully disable for now as we have issues with RunsOn and it might come from the value being defined (even if set to 999)
++      #max-parallel: ${{ fromJson(needs.configure.outputs.config).maxParallel || 12 }}
+       fail-fast: false
+       matrix: ${{ fromJson(needs.calculate-test-jobs.outputs.native_matrix) }}
+     steps:
+diff --git a/docs/src/main/asciidoc/_includes/extension-status.adoc b/docs/src/main/asciidoc/_includes/extension-status.adoc
+index b7eace84828..13d6edf2fb1 100644
+--- a/docs/src/main/asciidoc/_includes/extension-status.adoc
++++ b/docs/src/main/asciidoc/_includes/extension-status.adoc
+@@ -1,3 +1,4 @@
++ifdef::extension-status[]
+ [NOTE]
+ ====
+ This technology is considered {extension-status}.
+@@ -21,3 +22,4 @@ endif::[]
+ 
+ For a full list of possible statuses, check our https://quarkus.io/faq/#what-are-the-extension-statuses[FAQ entry].
+ ====
++endif::[]
+diff --git a/docs/src/main/asciidoc/building-native-image.adoc b/docs/src/main/asciidoc/building-native-image.adoc
+index e2f5217c742..b17be60705a 100644
+--- a/docs/src/main/asciidoc/building-native-image.adoc
++++ b/docs/src/main/asciidoc/building-native-image.adoc
+@@ -75,10 +75,10 @@ This is particularly important when it comes to conformance and security.
+ 
+ * Mandrel is recommended for building native executables that target Linux containerized environments.
+ This means that Mandrel users are encouraged to use containers to build their native executables.
+-If you are building native executables for macOS,
++If you are building native executables for macOS on amd64/x86,
+ you should consider using Oracle GraalVM instead,
+ because Mandrel does not currently target this platform.
+-Building native executables directly on bare metal Linux or Windows is possible,
++Building native executables directly on bare metal Linux, macOS (on M processors), or Windows is possible,
+ with details available in the https://github.com/graalvm/mandrel/blob/default/README.md[Mandrel README]
+ and https://github.com/graalvm/mandrel/releases[Mandrel releases].
+ 
+@@ -111,7 +111,7 @@ We recommend the _community edition_ of GraalVM. For example, install it with `s
+ export GRAALVM_HOME=$HOME/Development/mandrel/
+ ----
+ +
+-On macOS (not supported by Mandrel), point the variable to the `Home` sub-directory:
++On macOS (amd64/x86 based Macs not supported), point the variable to the `Home` sub-directory:
+ +
+ [source,bash]
+ ----
+diff --git a/docs/src/main/asciidoc/deploying-to-openshift-docker-howto.adoc b/docs/src/main/asciidoc/deploying-to-openshift-docker-howto.adoc
+index 57efa46db63..9ae93d7f381 100644
+--- a/docs/src/main/asciidoc/deploying-to-openshift-docker-howto.adoc
++++ b/docs/src/main/asciidoc/deploying-to-openshift-docker-howto.adoc
+@@ -145,7 +145,7 @@ openshift-helloworld   openshift-helloworld-username-dev.apps.sandbox-m2.ll9k.p1
+ Be aware that the route is now listening on port 80 and is no longer on port 8080.
+ ====
+ +
+-You can test the application demonstrated in this example with a web browser or a terminal by using `curl` and the complete URL output from `oc get routes`, that is, "\http://openshift-helloworld-username-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com".
++You can test the application demonstrated in this example with a web browser or a terminal by using `curl` and the complete URL output from `oc get routes`, that is, `\http://openshift-helloworld-username-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com`.
+ +
+ For example: `curl \http://openshift-helloworld-username-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com`.
+ 
+diff --git a/docs/src/main/asciidoc/getting-started-testing.adoc b/docs/src/main/asciidoc/getting-started-testing.adoc
+index 0add6a4f5d6..2e542333f90 100644
+--- a/docs/src/main/asciidoc/getting-started-testing.adoc
++++ b/docs/src/main/asciidoc/getting-started-testing.adoc
+@@ -1431,7 +1431,7 @@ An example use of this could be the following Maven command, that forces `@Quark
+ ./mvnw verify -Dquarkus.http.test-host=1.2.3.4 -Dquarkus.http.test-port=4321
+ ----
+ 
+-To test against a running instance that only accepts SSL/TLS connection (example: `https://1.2.3.4:4321`) set the system property `quarkus.http.test-ssl-enabled` to `true`.
++To test against a running instance that only accepts SSL/TLS connection (example: `https://1.2.3.4:4321`) set the system property `quarkus.http.test-ssl-enabled` to `true` and `quarkus.http.test-ssl-port` to the target HTTPS port.
+ 
+ == Mixing `@QuarkusTest` with other type of tests
+ 
+diff --git a/docs/src/main/asciidoc/security-openid-connect-dev-services.adoc b/docs/src/main/asciidoc/security-openid-connect-dev-services.adoc
+index a69004c9b61..3b336e99c05 100644
+--- a/docs/src/main/asciidoc/security-openid-connect-dev-services.adoc
++++ b/docs/src/main/asciidoc/security-openid-connect-dev-services.adoc
+@@ -42,6 +42,11 @@ KeyCloak Dev Services Starting:
+ 2021-11-02 17:14:44,170 INFO  [io.qua.oid.dep.dev.key.KeycloakDevServicesProcessor] (build-10) Dev Services for Keycloak started.
+ ----
+ 
++[NOTE]
++====
++Adding the `quarkus.keycloak.devservices.java-opts=-XX:UseSVE=0` configuration property may help to workaround Keycloak Dev Services startup problems on some Mac OS systems.
++====
++
+ [IMPORTANT]
+ ====
+ When logging in to the Keycloak admin console, the username is `admin`, and the password is `admin`.
+diff --git a/docs/src/main/asciidoc/tls-registry-reference.adoc b/docs/src/main/asciidoc/tls-registry-reference.adoc
+index 13d4f590f35..8986fdb8612 100644
+--- a/docs/src/main/asciidoc/tls-registry-reference.adoc
++++ b/docs/src/main/asciidoc/tls-registry-reference.adoc
+@@ -849,7 +849,8 @@ quarkus.tls.http.key-store.pem.0.key=tls.key
+ [IMPORTANT]
+ ====
+ Impacted servers and clients may need to listen to the `CertificateUpdatedEvent` to apply the new certificates.
+-This is automatically done for the Quarkus HTTP server, such as the Quarkus REST server, gRPC server, and WebSocket server, as well as the management interface if it is enabled.
++This is automatically done for the Quarkus HTTP server, as well as the Quarkus REST server, gRPC server, and WebSocket server, as well as the management interface if it is enabled.
++On the client side, Quarkus REST Client automatically handles certificate update events.
+ ====
+ 
+ NOTE: In Quarkus dev mode, when files are touched, it will trigger the `CertificateUpdatedEvent` much more frequently.
+diff --git a/docs/src/main/asciidoc/websockets-next-reference.adoc b/docs/src/main/asciidoc/websockets-next-reference.adoc
+index f25fa3b0a1d..675f4490ba0 100644
+--- a/docs/src/main/asciidoc/websockets-next-reference.adoc
++++ b/docs/src/main/asciidoc/websockets-next-reference.adoc
+@@ -5,7 +5,6 @@ https://github.com/quarkusio/quarkus/tree/main/docs/src/main/asciidoc
+ ////
+ [id="websockets-next-reference-guide"]
+ = WebSockets Next reference guide
+-:extension-status: preview
+ include::_attributes.adoc[]
+ :numbered:
+ :sectnums:
+@@ -14,8 +13,6 @@ include::_attributes.adoc[]
+ :topics: web,websockets
+ :extensions: io.quarkus:quarkus-websockets-next
+ 
+-include::{includes}/extension-status.adoc[]
+-
+ The `quarkus-websockets-next` extension provides a modern declarative API to define WebSocket server and client endpoints.
+ 
+ == The WebSocket protocol
+diff --git a/docs/src/main/asciidoc/websockets-next-tutorial.adoc b/docs/src/main/asciidoc/websockets-next-tutorial.adoc
+index 93b97cfa263..cdf496d4ae2 100644
+--- a/docs/src/main/asciidoc/websockets-next-tutorial.adoc
++++ b/docs/src/main/asciidoc/websockets-next-tutorial.adoc
+@@ -14,9 +14,6 @@ include::_attributes.adoc[]
+ This guide explains how your Quarkus application can utilize web sockets to create interactive web applications.
+ In this guide, we will develop a very simple chat application using web sockets to receive and send messages to the other connected users.
+ 
+-include::{includes}/extension-status.adoc[]
+-
+-
+ == Prerequisites
+ 
+ include::{includes}/prerequisites.adoc[]
+diff --git a/docs/src/main/asciidoc/websockets.adoc b/docs/src/main/asciidoc/websockets.adoc
+index 522c710f95f..6cf96b15138 100644
+--- a/docs/src/main/asciidoc/websockets.adoc
++++ b/docs/src/main/asciidoc/websockets.adoc
+@@ -3,14 +3,22 @@ This guide is maintained in the main Quarkus repository
+ and pull requests should be submitted there:
+ https://github.com/quarkusio/quarkus/tree/main/docs/src/main/asciidoc
+ ////
+-= Using WebSockets
++= Using WebSockets with Undertow
+ include::_attributes.adoc[]
+ :categories: web
+ :summary: This guide explains how your Quarkus application can utilize web sockets to create interactive web applications. Because it’s the canonical web socket application, we are going to create a simple chat application.
+ :topics: web,websockets
+ :extensions: io.quarkus:quarkus-websockets,io.quarkus:quarkus-websockets-client
+ 
+-This guide explains how your Quarkus application can utilize web sockets to create interactive web applications.
++This guide explains how your Quarkus application can utilize web sockets to create interactive web applications,
++in the context of an Undertow-based Quarkus application, or if you rely on https://jakarta.ee/specifications/websocket/[Jakarta WebSocket].
++
++[TIP]
++====
++If you don't use Undertow or https://jakarta.ee/specifications/websocket/[Jakarta WebSocket],
++it is recommended to use the more modern xref:websockets-next-tutorial.adoc[WebSockets Next extensions].
++====
++
+ Because it's the _canonical_ web socket application, we are going to create a simple chat application.
+ 
+ == Prerequisites
+diff --git a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/ArcDevModeConfig.java b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/ArcDevModeConfig.java
+index 03396f07283..ca179be04c4 100644
+--- a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/ArcDevModeConfig.java
++++ b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/ArcDevModeConfig.java
+@@ -15,9 +15,17 @@ public interface ArcDevModeConfig {
+     boolean monitoringEnabled();
+ 
+     /**
+-     * If set to true then the dependency graphs are generated and available in the Dev UI.
++     * If set to {@code true} then the dependency graphs are generated and available in the Dev UI. If set to {@code auto}
++     * then the dependency graphs are generated if there's less than 1000 beans in the application. If set to {@code false} the
++     * dependency graphs are not generated.
+      */
+-    @WithDefault("true")
+-    boolean generateDependencyGraphs();
++    @WithDefault("auto")
++    GenerateDependencyGraphs generateDependencyGraphs();
++
++    public enum GenerateDependencyGraphs {
++        TRUE,
++        FALSE,
++        AUTO
++    }
+ 
+ }
+diff --git a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/ArcDevModeApiProcessor.java b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/ArcDevModeApiProcessor.java
+index 34b69850382..4114294e924 100644
+--- a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/ArcDevModeApiProcessor.java
++++ b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/ArcDevModeApiProcessor.java
+@@ -10,6 +10,8 @@
+ import java.util.Set;
+ import java.util.stream.Collectors;
+ 
++import org.jboss.logging.Logger;
++
+ import io.quarkus.arc.deployment.ArcConfig;
+ import io.quarkus.arc.deployment.CompletedApplicationClassPredicateBuildItem;
+ import io.quarkus.arc.deployment.ValidationPhaseBuildItem;
+@@ -29,6 +31,19 @@
+ 
+ public class ArcDevModeApiProcessor {
+ 
++    private static final Logger LOG = Logger.getLogger(ArcDevModeApiProcessor.class);
++
++    /**
++     * Do not generate dependency graphs for apps with more than N beans
++     */
++    private static final int DEPENCENY_GRAPH_BEANS_LIMIT = 1000;
++
++    /**
++     * If a dependency graph exceeds the limit then we apply the {@link DevBeanInfos#MAX_DEPENDENCY_LEVEL} and if still exceeds
++     * the limit it's skipped completely, i.e. dependency graph is not available
++     */
++    private static final int DEPENCENY_GRAPH_NODES_LIMIT = 30;
++
+     @BuildStep(onlyIf = IsDevelopment.class)
+     public void collectBeanInfo(ArcConfig config, ValidationPhaseBuildItem validationPhaseBuildItem,
+             CompletedApplicationClassPredicateBuildItem predicate,
+@@ -65,7 +80,7 @@ public void collectBeanInfo(ArcConfig config, ValidationPhaseBuildItem validatio
+ 
+         // Build dependency graphs
+         Map<String, List<String>> beanDependenciesMap = new HashMap<>();
+-        if (config.devMode().generateDependencyGraphs()) {
++        if (generateDependencyGraphs(config, beanInfos)) {
+             BeanResolver resolver = validationPhaseBuildItem.getBeanResolver();
+             Collection<BeanInfo> beans = validationContext.get(BuildExtension.Key.BEANS);
+             Map<BeanInfo, List<InjectionPointInfo>> directDependents = new HashMap<>();
+@@ -85,11 +100,27 @@ public void collectBeanInfo(ArcConfig config, ValidationPhaseBuildItem validatio
+                 DependencyGraph dependencyGraph = buildDependencyGraph(bean, validationContext, resolver, beanInfos,
+                         allInjectionPoints, declaringToProducers,
+                         directDependents);
++                if (dependencyGraph.links.isEmpty()) {
++                    // Skip the graph if no links exist
++                    continue;
++                }
++                if (dependencyGraph.nodes.size() > DEPENCENY_GRAPH_NODES_LIMIT) {
++                    DependencyGraph visibleGraph = dependencyGraph.forLevel(DevBeanInfos.DEFAULT_MAX_DEPENDENCY_LEVEL);
++                    if (visibleGraph.nodes.size() > DEPENCENY_GRAPH_NODES_LIMIT) {
++                        LOG.debugf("Skip dependency graph for %s - too many visible nodes: %s", bean,
++                                visibleGraph.nodes.size());
++                        continue;
++                    } else {
++                        LOG.debugf("Dependency graph for %s was reduced to visible nodes: %s", bean,
++                                dependencyGraph.nodes.size());
++                        dependencyGraph = visibleGraph;
++                    }
++                }
+                 beanInfos.addDependencyGraph(bean.getIdentifier(), dependencyGraph);
+                 // id -> [dep1Id, dep2Id]
+                 beanDependenciesMap.put(bean.getIdentifier(),
+                         dependencyGraph.filterLinks(link -> link.type.equals("directDependency")).nodes.stream()
+-                                .map(DevBeanInfo::getId).filter(id -> !id.equals(bean.getIdentifier()))
++                                .map(Node::getId).filter(id -> !id.equals(bean.getIdentifier()))
+                                 .collect(Collectors.toList()));
+             }
+         }
+@@ -111,7 +142,7 @@ DependencyGraph buildDependencyGraph(BeanInfo bean, ValidationContext validation
+         addNodesDependencies(0, bean, nodes, links, bean, devBeanInfos);
+         addNodesDependents(0, bean, nodes, links, bean, allInjectionPoints, declaringToProducers, resolver, devBeanInfos,
+                 directDependents);
+-        return new DependencyGraph(nodes, links);
++        return new DependencyGraph(nodes.stream().map(Node::from).collect(Collectors.toSet()), links);
+     }
+ 
+     private void addNodesDependencies(int level, BeanInfo root, Set<DevBeanInfo> nodes, Set<Link> links, BeanInfo bean,
+@@ -184,4 +215,13 @@ private void addNodesDependents(int level, BeanInfo root, Set<DevBeanInfo> nodes
+         }
+     }
+ 
++    private boolean generateDependencyGraphs(ArcConfig config, DevBeanInfos beanInfos) {
++        return switch (config.devMode().generateDependencyGraphs()) {
++            case TRUE -> true;
++            case FALSE -> false;
++            case AUTO -> beanInfos.getBeans().size() < DEPENCENY_GRAPH_BEANS_LIMIT;
++            default -> throw new IllegalArgumentException("Unexpected value: " + config.devMode().generateDependencyGraphs());
++        };
++    }
++
+ }
+diff --git a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/DependencyGraph.java b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/DependencyGraph.java
+index c7c0ae9f2cc..4638c76185c 100644
+--- a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/DependencyGraph.java
++++ b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/DependencyGraph.java
+@@ -8,11 +8,11 @@ public class DependencyGraph {
+ 
+     static final DependencyGraph EMPTY = new DependencyGraph(Set.of(), Set.of());
+ 
+-    public final Set<DevBeanInfo> nodes;
++    public final Set<Node> nodes;
+     public final Set<Link> links;
+     public final int maxLevel;
+ 
+-    public DependencyGraph(Set<DevBeanInfo> nodes, Set<Link> links) {
++    public DependencyGraph(Set<Node> nodes, Set<Link> links) {
+         this.nodes = nodes;
+         this.links = links;
+         this.maxLevel = links.stream().mapToInt(l -> l.level).max().orElse(0);
+@@ -25,7 +25,7 @@ DependencyGraph forLevel(int level) {
+     DependencyGraph filterLinks(Predicate<Link> predicate) {
+         // Filter out links first
+         Set<Link> newLinks = new HashSet<>();
+-        Set<DevBeanInfo> newNodes = new HashSet<>();
++        Set<Node> newNodes = new HashSet<>();
+         Set<String> usedIds = new HashSet<>();
+         for (Link link : links) {
+             if (predicate.test(link)) {
+@@ -35,7 +35,7 @@ DependencyGraph filterLinks(Predicate<Link> predicate) {
+             }
+         }
+         // Now keep only nodes for which a link exists...
+-        for (DevBeanInfo node : nodes) {
++        for (Node node : nodes) {
+             if (usedIds.contains(node.getId())) {
+                 newNodes.add(node);
+             }
+diff --git a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/DevBeanInfos.java b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/DevBeanInfos.java
+index c01240a68f3..fb006f37a86 100644
+--- a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/DevBeanInfos.java
++++ b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/DevBeanInfos.java
+@@ -90,6 +90,7 @@ public DevInterceptorInfo getInterceptor(String id) {
+     }
+ 
+     public DependencyGraph getDependencyGraph(String beanId) {
++        // Note that MAX_DEPENDENCY_LEVEL is not implemented in UI yet
+         Integer maxLevel = DevConsoleManager.getGlobal(MAX_DEPENDENCY_LEVEL);
+         if (maxLevel == null) {
+             maxLevel = DEFAULT_MAX_DEPENDENCY_LEVEL;
+diff --git a/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/Node.java b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/Node.java
+new file mode 100644
+index 00000000000..7d6b0b33d75
+--- /dev/null
++++ b/extensions/arc/deployment/src/main/java/io/quarkus/arc/deployment/devui/Node.java
+@@ -0,0 +1,31 @@
++package io.quarkus.arc.deployment.devui;
++
++public class Node {
++
++    static Node from(DevBeanInfo beanInfo) {
++        return new Node(beanInfo.getId(), beanInfo.getDescription(), beanInfo.getSimpleDescription());
++    }
++
++    private final String id;
++    private final String description;
++    private final String simpleDescription;
++
++    Node(String id, String description, String simpleDescription) {
++        this.id = id;
++        this.description = description;
++        this.simpleDescription = simpleDescription;
++    }
++
++    public String getId() {
++        return id;
++    }
++
++    public String getDescription() {
++        return description;
++    }
++
++    public String getSimpleDescription() {
++        return simpleDescription;
++    }
++
++}
+diff --git a/extensions/arc/deployment/src/main/resources/dev-ui/qwc-arc-bean-graph.js b/extensions/arc/deployment/src/main/resources/dev-ui/qwc-arc-bean-graph.js
+index b21f08e348f..9fc1bfb2684 100644
+--- a/extensions/arc/deployment/src/main/resources/dev-ui/qwc-arc-bean-graph.js
++++ b/extensions/arc/deployment/src/main/resources/dev-ui/qwc-arc-bean-graph.js
+@@ -92,7 +92,6 @@ export class QwcArcBeanGraph extends LitElement {
+             }else {
+                 newNode.category = catindex;
+             }
+-            //console.log('Adding node: ' + newNode.name);
+             return this._nodes.push(newNode) - 1;
+         }
+         return index;
+diff --git a/extensions/grpc/runtime/src/main/java/io/quarkus/grpc/runtime/GrpcServerRecorder.java b/extensions/grpc/runtime/src/main/java/io/quarkus/grpc/runtime/GrpcServerRecorder.java
+index df2f642cbaf..33029aa6224 100644
+--- a/extensions/grpc/runtime/src/main/java/io/quarkus/grpc/runtime/GrpcServerRecorder.java
++++ b/extensions/grpc/runtime/src/main/java/io/quarkus/grpc/runtime/GrpcServerRecorder.java
+@@ -142,8 +142,11 @@ public void initializeGrpcServer(boolean hasNoBindableServiceBeans, BeanContaine
+         if (configuration.useSeparateServer()) {
+             if (provider == null) {
+                 LOGGER.warn(
+-                        "Using legacy gRPC support, with separate new HTTP server instance. " +
+-                                "Switch to single HTTP server instance usage with quarkus.grpc.server.use-separate-server=false property");
++                        """
++                                Using legacy gRPC support with a separate HTTP server instance. This is the current default to maintain compatibility.
++                                You can switch to the new unified HTTP server by setting quarkus.grpc.server.use-separate-server=false
++                                This change is recommended for new applications and will become the default in future versions.
++                                """);
+             }
+ 
+             if (launchMode == LaunchMode.DEVELOPMENT) {
+diff --git a/extensions/oidc-common/runtime/src/main/java/io/quarkus/oidc/common/runtime/ClientAssertionProvider.java b/extensions/oidc-common/runtime/src/main/java/io/quarkus/oidc/common/runtime/ClientAssertionProvider.java
+index f5b8cd0a29d..916f9e396aa 100644
+--- a/extensions/oidc-common/runtime/src/main/java/io/quarkus/oidc/common/runtime/ClientAssertionProvider.java
++++ b/extensions/oidc-common/runtime/src/main/java/io/quarkus/oidc/common/runtime/ClientAssertionProvider.java
+@@ -75,6 +75,11 @@ private ClientAssertion loadFromFileSystem() {
+         if (Files.exists(bearerTokenPath)) {
+             try {
+                 String bearerToken = Files.readString(bearerTokenPath).trim();
++                if (bearerToken.isEmpty()) {
++                    LOG.error(String.format("Bearer token file at path %s is empty or contains only whitespace",
++                            bearerTokenPath));
++                    return null;
++                }
+                 Long expiresAt = getExpiresAtFromExpClaim(bearerToken);
+                 if (expiresAt != null) {
+                     return new ClientAssertion(bearerToken, expiresAt, scheduleRefresh(expiresAt));
+diff --git a/extensions/quartz/deployment/src/main/java/io/quarkus/quartz/deployment/QuartzProcessor.java b/extensions/quartz/deployment/src/main/java/io/quarkus/quartz/deployment/QuartzProcessor.java
+index baa5f31e07d..19b71b8747d 100644
+--- a/extensions/quartz/deployment/src/main/java/io/quarkus/quartz/deployment/QuartzProcessor.java
++++ b/extensions/quartz/deployment/src/main/java/io/quarkus/quartz/deployment/QuartzProcessor.java
+@@ -263,7 +263,10 @@ List<ReflectiveClassBuildItem> reflectiveClasses(QuartzBuildTimeConfig config,
+         reflectiveClasses.addAll(getAdditionalConfigurationReflectiveClasses(config.triggerListeners(), TriggerListener.class));
+         reflectiveClasses.addAll(getAdditionalConfigurationReflectiveClasses(config.jobListeners(), JobListener.class));
+         reflectiveClasses.addAll(getAdditionalConfigurationReflectiveClasses(config.plugins(), SchedulerPlugin.class));
+-
++        reflectiveClasses
++                .add(ReflectiveClassBuildItem.builder("io.quarkus.quartz.runtime.QuartzSchedulerImpl$NonconcurrentInvokerJob")
++                        .reason(getClass().getName())
++                        .methods().build());
+         return reflectiveClasses;
+     }
+ 
+diff --git a/extensions/resteasy-classic/rest-client-config/runtime/src/main/java/io/quarkus/restclient/config/RestClientsConfig.java b/extensions/resteasy-classic/rest-client-config/runtime/src/main/java/io/quarkus/restclient/config/RestClientsConfig.java
+index 4c1292398be..c88d275eefd 100644
+--- a/extensions/resteasy-classic/rest-client-config/runtime/src/main/java/io/quarkus/restclient/config/RestClientsConfig.java
++++ b/extensions/resteasy-classic/rest-client-config/runtime/src/main/java/io/quarkus/restclient/config/RestClientsConfig.java
+@@ -260,12 +260,13 @@ public interface RestClientsConfig {
+     /**
+      * The name of the TLS configuration to use.
+      * <p>
+-     * If not set and the default TLS configuration is configured ({@code quarkus.tls.*}) then that will be used.
+      * If a name is configured, it uses the configuration from {@code quarkus.tls.<name>.*}
+      * If a name is configured, but no TLS configuration is found with that name then an error will be thrown.
+      * <p>
+      * If no TLS configuration is set, then the keys-tore, trust-store, etc. properties will be used.
+      * <p>
++     * The default TLS configuration is <strong>not</strong> used by default.
++     * <p>
+      * This property is not applicable to the RESTEasy Client.
+      */
+     Optional<String> tlsConfigurationName();
+@@ -543,12 +544,13 @@ default Optional<String> uriReload() {
+         /**
+          * The name of the TLS configuration to use.
+          * <p>
+-         * If not set and the default TLS configuration is configured ({@code quarkus.tls.*}) then that will be used.
+          * If a name is configured, it uses the configuration from {@code quarkus.tls.<name>.*}
+          * If a name is configured, but no TLS configuration is found with that name then an error will be thrown.
+          * <p>
+          * If no TLS configuration is set, then the keys-tore, trust-store, etc. properties will be used.
+          * <p>
++         * The default TLS configuration is <strong>not</strong> used by default.
++         * <p>
+          * This property is not applicable to the RESTEasy Client.
+          */
+         Optional<String> tlsConfigurationName();
+diff --git a/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonCodeGenerator.java b/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonCodeGenerator.java
+index 53b1c494efd..019b547d256 100644
+--- a/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonCodeGenerator.java
++++ b/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonCodeGenerator.java
+@@ -230,13 +230,30 @@ private MethodInfo getterMethodInfo(ClassInfo classInfo, FieldInfo fieldInfo) {
+         return findMethod(classInfo, methodName);
+     }
+ 
+-    protected FieldSpecs fieldSpecsFromField(ClassInfo classInfo, FieldInfo fieldInfo) {
++    protected Optional<MethodInfo> findConstructor(ClassInfo classInfo) {
++        Optional<MethodInfo> ctorOpt = classInfo.constructors().stream()
++                .filter(ctor -> Modifier.isPublic(ctor.flags()) && ctor.hasAnnotation(JsonCreator.class))
++                .findFirst();
++
++        if (ctorOpt.isEmpty()) {
++            if (classInfo.hasNoArgsConstructor() && !classInfo.isRecord()) {
++                return classInfo.constructors().stream()
++                        .filter(ctor -> ctor.parametersCount() == 0)
++                        .findFirst();
++            }
++            ctorOpt = classInfo.isRecord() ? Optional.of(classInfo.canonicalRecordConstructor())
++                    : classInfo.constructors().stream().filter(ctor -> Modifier.isPublic(ctor.flags())).findFirst();
++        }
++        return ctorOpt;
++    }
++
++    protected FieldSpecs fieldSpecsFromField(ClassInfo classInfo, MethodInfo constructor, FieldInfo fieldInfo) {
+         if (Modifier.isStatic(fieldInfo.flags())) {
+             return null;
+         }
+         MethodInfo getterMethodInfo = getterMethodInfo(classInfo, fieldInfo);
+         if (getterMethodInfo != null) {
+-            return new FieldSpecs(fieldInfo, getterMethodInfo);
++            return new FieldSpecs(constructor, fieldInfo, getterMethodInfo);
+         }
+         if (Modifier.isPublic(fieldInfo.flags())) {
+             return new FieldSpecs(fieldInfo);
+@@ -260,14 +277,14 @@ protected static class FieldSpecs {
+         FieldInfo fieldInfo;
+ 
+         FieldSpecs(FieldInfo fieldInfo) {
+-            this(fieldInfo, null);
++            this(null, fieldInfo, null);
+         }
+ 
+         FieldSpecs(MethodInfo methodInfo) {
+-            this(null, methodInfo);
++            this(null, null, methodInfo);
+         }
+ 
+-        FieldSpecs(FieldInfo fieldInfo, MethodInfo methodInfo) {
++        FieldSpecs(MethodInfo constructor, FieldInfo fieldInfo, MethodInfo methodInfo) {
+             if (fieldInfo != null) {
+                 this.fieldInfo = fieldInfo;
+                 readAnnotations(fieldInfo);
+@@ -278,14 +295,14 @@ protected static class FieldSpecs {
+             }
+             this.fieldType = fieldType();
+             this.fieldName = fieldName();
+-            this.jsonName = jsonName();
++            this.jsonName = jsonName(constructor);
+         }
+ 
+         FieldSpecs(MethodParameterInfo paramInfo) {
+             readAnnotations(paramInfo);
+             this.fieldType = paramInfo.type();
+             this.fieldName = paramInfo.name();
+-            this.jsonName = jsonName();
++            this.jsonName = jsonName(null);
+         }
+ 
+         private void readAnnotations(AnnotationTarget target) {
+@@ -306,8 +323,15 @@ private Type fieldType() {
+             return methodInfo.returnType();
+         }
+ 
+-        private String jsonName() {
++        private String jsonName(MethodInfo constructor) {
+             AnnotationInstance jsonProperty = annotations.get(JsonProperty.class.getName());
++            if (jsonProperty == null && constructor != null) {
++                jsonProperty = constructor.parameters().stream()
++                        .filter(parameter -> parameter.name().equals(fieldName)).findFirst()
++                        .map(parameter -> parameter.annotation(JsonProperty.class.getName()))
++                        .orElse(null);
++            }
++
+             if (jsonProperty != null) {
+                 AnnotationValue value = jsonProperty.value();
+                 if (value != null && !value.asString().isEmpty()) {
+diff --git a/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonDeserializerFactory.java b/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonDeserializerFactory.java
+index b893bebedbc..8b94c0c4b8e 100644
+--- a/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonDeserializerFactory.java
++++ b/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonDeserializerFactory.java
+@@ -25,7 +25,6 @@
+ import org.jboss.jandex.TypeVariable;
+ import org.jboss.jandex.VoidType;
+ 
+-import com.fasterxml.jackson.annotation.JsonCreator;
+ import com.fasterxml.jackson.core.JacksonException;
+ import com.fasterxml.jackson.core.JsonParser;
+ import com.fasterxml.jackson.core.ObjectCodec;
+@@ -219,9 +218,19 @@ protected boolean createSerializationMethod(ClassInfo classInfo, ClassCreator cl
+                 .addException(IOException.class)
+                 .addException(JacksonException.class);
+ 
+-        DeserializationData deserData = new DeserializationData(classInfo, classCreator, deserialize,
++        Optional<MethodInfo> ctorOpt = findConstructor(classInfo);
++        if (ctorOpt.isEmpty()) {
++            return false;
++        }
++
++        MethodInfo ctor = ctorOpt.get();
++        DeserializationData deserData = new DeserializationData(classInfo, ctor, classCreator, deserialize,
+                 getJsonNode(deserialize), parseTypeParameters(classInfo, classCreator), new HashSet<>());
+-        ResultHandle deserializedHandle = createDeserializedObject(deserData);
++
++        ResultHandle deserializedHandle = ctor.parametersCount() == 0
++                ? deserData.methodCreator.newInstance(MethodDescriptor.ofConstructor(deserData.classInfo.name().toString()))
++                : createDeserializedObject(deserData);
++
+         if (deserializedHandle == null) {
+             return false;
+         }
+@@ -242,26 +251,9 @@ private static ResultHandle getJsonNode(MethodCreator deserialize) {
+     }
+ 
+     private ResultHandle createDeserializedObject(DeserializationData deserData) {
+-        var ctorOpt = deserData.classInfo.constructors().stream()
+-                .filter(ctor -> Modifier.isPublic(ctor.flags()) && ctor.hasAnnotation(JsonCreator.class))
+-                .findFirst();
+-
+-        if (ctorOpt.isEmpty()) {
+-            if (deserData.classInfo.hasNoArgsConstructor() && !deserData.classInfo.isRecord()) {
+-                return deserData.methodCreator
+-                        .newInstance(MethodDescriptor.ofConstructor(deserData.classInfo.name().toString()));
+-            }
+-            ctorOpt = deserData.classInfo.isRecord() ? Optional.of(deserData.classInfo.canonicalRecordConstructor())
+-                    : deserData.classInfo.constructors().stream().filter(ctor -> Modifier.isPublic(ctor.flags())).findFirst();
+-            if (ctorOpt.isEmpty()) {
+-                return null;
+-            }
+-        }
+-
+-        MethodInfo ctor = ctorOpt.get();
+-        ResultHandle[] params = new ResultHandle[ctor.parameters().size()];
++        ResultHandle[] params = new ResultHandle[deserData.constructor.parameters().size()];
+         int i = 0;
+-        for (MethodParameterInfo paramInfo : ctor.parameters()) {
++        for (MethodParameterInfo paramInfo : deserData.constructor.parameters()) {
+             FieldSpecs fieldSpecs = fieldSpecsFromFieldParam(paramInfo);
+             deserData.constructorFields.add(fieldSpecs.jsonName);
+             ResultHandle fieldValue = deserData.methodCreator.invokeVirtualMethod(
+@@ -271,7 +263,7 @@ private ResultHandle createDeserializedObject(DeserializationData deserData) {
+             params[i++] = readValueFromJson(deserData.classCreator, deserData.methodCreator,
+                     deserData.methodCreator.getMethodParam(1), fieldSpecs, deserData.typeParametersIndex, fieldValue);
+         }
+-        return deserData.methodCreator.newInstance(ctor, params);
++        return deserData.methodCreator.newInstance(deserData.constructor, params);
+     }
+ 
+     private boolean deserializeObjectFields(DeserializationData deserData, ResultHandle objHandle) {
+@@ -344,7 +336,8 @@ private boolean deserializeFields(DeserializationData deserData, ResultHandle de
+ 
+         for (FieldInfo fieldInfo : classFields(deserData.classInfo)) {
+             if (!deserializeFieldSpecs(deserData, deserializationContext, objHandle, fieldValue,
+-                    deserializedFields, strSwitch, fieldSpecsFromField(deserData.classInfo, fieldInfo), valid))
++                    deserializedFields, strSwitch, fieldSpecsFromField(deserData.classInfo, deserData.constructor, fieldInfo),
++                    valid))
+                 return false;
+         }
+ 
+@@ -529,7 +522,8 @@ protected boolean shouldGenerateCodeFor(ClassInfo classInfo) {
+         return super.shouldGenerateCodeFor(classInfo) && classInfo.hasNoArgsConstructor();
+     }
+ 
+-    private record DeserializationData(ClassInfo classInfo, ClassCreator classCreator, MethodCreator methodCreator,
++    private record DeserializationData(ClassInfo classInfo, MethodInfo constructor, ClassCreator classCreator,
++            MethodCreator methodCreator,
+             ResultHandle jsonNode, Map<String, Integer> typeParametersIndex, Set<String> constructorFields) {
+     }
+ }
+diff --git a/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonSerializerFactory.java b/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonSerializerFactory.java
+index 9453c51f453..8d73e03c5a8 100644
+--- a/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonSerializerFactory.java
++++ b/extensions/resteasy-reactive/rest-jackson/deployment/src/main/java/io/quarkus/resteasy/reactive/jackson/deployment/processor/JacksonSerializerFactory.java
+@@ -220,8 +220,10 @@ private boolean serializeObjectData(ClassInfo classInfo, ClassCreator classCreat
+ 
+     private boolean serializeFields(ClassInfo classInfo, ClassCreator classCreator, MethodCreator serialize,
+             SerializationContext ctx, Set<String> serializedFields) {
++        MethodInfo constructor = findConstructor(classInfo).orElse(null);
++
+         for (FieldInfo fieldInfo : classFields(classInfo)) {
+-            FieldSpecs fieldSpecs = fieldSpecsFromField(classInfo, fieldInfo);
++            FieldSpecs fieldSpecs = fieldSpecsFromField(classInfo, constructor, fieldInfo);
+             if (fieldSpecs != null && serializedFields.add(fieldSpecs.jsonName)) {
+                 if (fieldSpecs.isIgnoredField()) {
+                     continue;
+diff --git a/extensions/smallrye-health/deployment/src/main/java/io/quarkus/smallrye/health/deployment/HealthOpenAPIFilter.java b/extensions/smallrye-health/deployment/src/main/java/io/quarkus/smallrye/health/deployment/HealthOpenAPIFilter.java
+index 2730fe38d15..89e14b5b819 100644
+--- a/extensions/smallrye-health/deployment/src/main/java/io/quarkus/smallrye/health/deployment/HealthOpenAPIFilter.java
++++ b/extensions/smallrye-health/deployment/src/main/java/io/quarkus/smallrye/health/deployment/HealthOpenAPIFilter.java
+@@ -3,6 +3,7 @@
+ import java.util.Collections;
+ import java.util.List;
+ import java.util.Map;
++import java.util.TreeMap;
+ 
+ import org.eclipse.microprofile.openapi.OASFactory;
+ import org.eclipse.microprofile.openapi.OASFilter;
+@@ -13,6 +14,7 @@
+ import org.eclipse.microprofile.openapi.models.media.Content;
+ import org.eclipse.microprofile.openapi.models.media.Schema;
+ import org.eclipse.microprofile.openapi.models.responses.APIResponses;
++import org.eclipse.microprofile.openapi.models.tags.Tag;
+ 
+ /**
+  * Create OpenAPI entries (if configured)
+@@ -25,8 +27,7 @@ public class HealthOpenAPIFilter implements OASFilter {
+ 
+     private static final Schema healthResponseSchemaDefinition = OASFactory.createSchema()
+             .type(Collections.singletonList(Schema.SchemaType.OBJECT))
+-            .properties(Map.ofEntries(
+-
++            .properties(new TreeMap<>(Map.ofEntries(
+                     Map.entry("status",
+                             OASFactory.createSchema()
+                                     .type(Collections.singletonList(Schema.SchemaType.STRING))
+@@ -36,12 +37,11 @@ public class HealthOpenAPIFilter implements OASFilter {
+                             OASFactory.createSchema()
+                                     .type(Collections.singletonList(Schema.SchemaType.ARRAY))
+                                     .items(OASFactory.createSchema()
+-                                            .ref("#/components/schemas/" + HEALTH_CHECK_SCHEMA_NAME)))));
++                                            .ref("#/components/schemas/" + HEALTH_CHECK_SCHEMA_NAME))))));
+ 
+     private static final Schema healthCheckSchemaDefinition = OASFactory.createSchema()
+             .type(Collections.singletonList(Schema.SchemaType.OBJECT))
+-            .properties(Map.ofEntries(
+-
++            .properties(new TreeMap<>(Map.ofEntries(
+                     Map.entry("name",
+                             OASFactory.createSchema()
+                                     .type(Collections.singletonList(Schema.SchemaType.STRING))),
+@@ -53,7 +53,7 @@ public class HealthOpenAPIFilter implements OASFilter {
+ 
+                     Map.entry("data",
+                             OASFactory.createSchema()
+-                                    .type(List.of(Schema.SchemaType.OBJECT, Schema.SchemaType.NULL)))));
++                                    .type(List.of(Schema.SchemaType.OBJECT, Schema.SchemaType.NULL))))));
+ 
+     private final String rootPath;
+     private final String livenessPath;
+@@ -80,6 +80,11 @@ public void filterOpenAPI(OpenAPI openAPI) {
+             openAPI.setPaths(OASFactory.createPaths());
+         }
+ 
++        Tag tag = OASFactory.createTag();
++        tag.setName(MICROPROFILE_HEALTH_TAG.get(0));
++        tag.setDescription("Check the health of the application");
++        openAPI.addTag(tag);
++
+         final Paths paths = openAPI.getPaths();
+ 
+         // Health
+diff --git a/extensions/smallrye-health/deployment/src/main/java/io/quarkus/smallrye/health/deployment/SmallRyeHealthProcessor.java b/extensions/smallrye-health/deployment/src/main/java/io/quarkus/smallrye/health/deployment/SmallRyeHealthProcessor.java
+index e7795f2b157..97c2429a3fb 100644
+--- a/extensions/smallrye-health/deployment/src/main/java/io/quarkus/smallrye/health/deployment/SmallRyeHealthProcessor.java
++++ b/extensions/smallrye-health/deployment/src/main/java/io/quarkus/smallrye/health/deployment/SmallRyeHealthProcessor.java
+@@ -215,7 +215,7 @@ public void defineHealthRoutes(BuildProducer<RouteBuildItem> routes,
+                 .route(healthConfig.rootPath())
+                 .routeConfigKey("quarkus.smallrye-health.root-path")
+                 .handler(new SmallRyeHealthHandler())
+-                .displayOnNotFoundPage()
++                .displayOnNotFoundPage("Health Check")
+                 .build());
+ 
+         // Register the liveness handler
+@@ -223,7 +223,7 @@ public void defineHealthRoutes(BuildProducer<RouteBuildItem> routes,
+                 .management(CONFIG_KEY_HEALTH_MANAGEMENT_ENABLED)
+                 .nestedRoute(healthConfig.rootPath(), healthConfig.livenessPath())
+                 .handler(new SmallRyeLivenessHandler())
+-                .displayOnNotFoundPage()
++                .displayOnNotFoundPage("Health Liveness Check")
+                 .build());
+ 
+         // Register the readiness handler
+@@ -231,7 +231,7 @@ public void defineHealthRoutes(BuildProducer<RouteBuildItem> routes,
+                 .management(CONFIG_KEY_HEALTH_MANAGEMENT_ENABLED)
+                 .nestedRoute(healthConfig.rootPath(), healthConfig.readinessPath())
+                 .handler(new SmallRyeReadinessHandler())
+-                .displayOnNotFoundPage()
++                .displayOnNotFoundPage("Health Readiness Check")
+                 .build());
+ 
+         // Register the health group handlers
+@@ -239,7 +239,7 @@ public void defineHealthRoutes(BuildProducer<RouteBuildItem> routes,
+                 .management(CONFIG_KEY_HEALTH_MANAGEMENT_ENABLED)
+                 .nestedRoute(healthConfig.rootPath(), healthConfig.groupPath())
+                 .handler(new SmallRyeHealthGroupHandler())
+-                .displayOnNotFoundPage()
++                .displayOnNotFoundPage("Health Group Check")
+                 .build());
+ 
+         SmallRyeIndividualHealthGroupHandler handler = new SmallRyeIndividualHealthGroupHandler();
+@@ -247,7 +247,7 @@ public void defineHealthRoutes(BuildProducer<RouteBuildItem> routes,
+                 .management(CONFIG_KEY_HEALTH_MANAGEMENT_ENABLED)
+                 .nestedRoute(healthConfig.rootPath(), healthConfig.groupPath() + "/*")
+                 .handler(handler)
+-                .displayOnNotFoundPage()
++                .displayOnNotFoundPage("Health Group Check")
+                 .build());
+ 
+         // Register the wellness handler
+@@ -255,7 +255,7 @@ public void defineHealthRoutes(BuildProducer<RouteBuildItem> routes,
+                 .management(CONFIG_KEY_HEALTH_MANAGEMENT_ENABLED)
+                 .nestedRoute(healthConfig.rootPath(), healthConfig.wellnessPath())
+                 .handler(new SmallRyeWellnessHandler())
+-                .displayOnNotFoundPage()
++                .displayOnNotFoundPage("Health Wellness Check")
+                 .build());
+ 
+         // Register the startup handler
+@@ -263,7 +263,7 @@ public void defineHealthRoutes(BuildProducer<RouteBuildItem> routes,
+                 .management(CONFIG_KEY_HEALTH_MANAGEMENT_ENABLED)
+                 .nestedRoute(healthConfig.rootPath(), healthConfig.startupPath())
+                 .handler(new SmallRyeStartupHandler())
+-                .displayOnNotFoundPage()
++                .displayOnNotFoundPage("Health Started Check")
+                 .build());
+ 
+     }
+diff --git a/extensions/smallrye-jwt-build/deployment/src/main/java/io/quarkus/smallrye/jwt/build/deployment/SmallRyeJwtBuildProcessor.java b/extensions/smallrye-jwt-build/deployment/src/main/java/io/quarkus/smallrye/jwt/build/deployment/SmallRyeJwtBuildProcessor.java
+index 5c9c2b2d82a..08f0baa70a4 100644
+--- a/extensions/smallrye-jwt-build/deployment/src/main/java/io/quarkus/smallrye/jwt/build/deployment/SmallRyeJwtBuildProcessor.java
++++ b/extensions/smallrye-jwt-build/deployment/src/main/java/io/quarkus/smallrye/jwt/build/deployment/SmallRyeJwtBuildProcessor.java
+@@ -19,6 +19,7 @@
+ class SmallRyeJwtBuildProcessor {
+ 
+     private static final Logger log = Logger.getLogger(SmallRyeJwtBuildProcessor.class.getName());
++    private static final String CLASSPATH_SCHEME = "classpath:";
+ 
+     @BuildStep
+     void addClassesForReflection(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses) {
+@@ -45,9 +46,20 @@ private void registerKeyLocationResource(Config config, String propertyName,
+             BuildProducer<NativeImageResourceBuildItem> nativeImageResource) {
+         Optional<String> keyLocation = config.getOptionalValue(propertyName, String.class);
+         if (keyLocation.isPresent() && keyLocation.get().length() > 1
+-                && (keyLocation.get().indexOf(':') < 0 || keyLocation.get().startsWith("classpath:"))) {
++                && (keyLocation.get().indexOf(':') < 0 || (keyLocation.get().startsWith(CLASSPATH_SCHEME)
++                        && keyLocation.get().length() > CLASSPATH_SCHEME.length()))) {
+             log.infof("Adding %s to native image", keyLocation.get());
+-            String location = keyLocation.get().startsWith("/") ? keyLocation.get().substring(1) : keyLocation.get();
++
++            String location = keyLocation.get();
++
++            // It can only be `classpath:` at this point
++            if (location.startsWith(CLASSPATH_SCHEME)) {
++                location = location.substring(CLASSPATH_SCHEME.length());
++            }
++            if (location.startsWith("/")) {
++                location = location.substring(1);
++            }
++
+             nativeImageResource.produce(new NativeImageResourceBuildItem(location));
+         }
+     }
+diff --git a/extensions/smallrye-jwt/deployment/src/main/java/io/quarkus/smallrye/jwt/deployment/SmallRyeJwtProcessor.java b/extensions/smallrye-jwt/deployment/src/main/java/io/quarkus/smallrye/jwt/deployment/SmallRyeJwtProcessor.java
+index 609cf9eeee6..36c60097bc7 100644
+--- a/extensions/smallrye-jwt/deployment/src/main/java/io/quarkus/smallrye/jwt/deployment/SmallRyeJwtProcessor.java
++++ b/extensions/smallrye-jwt/deployment/src/main/java/io/quarkus/smallrye/jwt/deployment/SmallRyeJwtProcessor.java
+@@ -64,6 +64,8 @@ class SmallRyeJwtProcessor {
+ 
+     private static final Logger log = Logger.getLogger(SmallRyeJwtProcessor.class.getName());
+ 
++    private static final String CLASSPATH_SCHEME = "classpath:";
++
+     static final String MP_JWT_VERIFY_KEY_LOCATION = "mp.jwt.verify.publickey.location";
+     private static final String MP_JWT_DECRYPT_KEY_LOCATION = "mp.jwt.decrypt.key.location";
+ 
+@@ -146,9 +148,20 @@ private void registerKeyLocationResource(Config config, String propertyName,
+             BuildProducer<NativeImageResourceBuildItem> nativeImageResource) {
+         Optional<String> keyLocation = config.getOptionalValue(propertyName, String.class);
+         if (keyLocation.isPresent() && keyLocation.get().length() > 1
+-                && (keyLocation.get().indexOf(':') < 0 || keyLocation.get().startsWith("classpath:"))) {
++                && (keyLocation.get().indexOf(':') < 0 || (keyLocation.get().startsWith(CLASSPATH_SCHEME)
++                        && keyLocation.get().length() > CLASSPATH_SCHEME.length()))) {
+             log.infof("Adding %s to native image", keyLocation.get());
+-            String location = keyLocation.get().startsWith("/") ? keyLocation.get().substring(1) : keyLocation.get();
++
++            String location = keyLocation.get();
++
++            // It can only be `classpath:` at this point
++            if (location.startsWith(CLASSPATH_SCHEME)) {
++                location = location.substring(CLASSPATH_SCHEME.length());
++            }
++            if (location.startsWith("/")) {
++                location = location.substring(1);
++            }
++
+             nativeImageResource.produce(new NativeImageResourceBuildItem(location));
+         }
+     }
+diff --git a/extensions/smallrye-openapi-common/deployment/src/main/java/io/quarkus/smallrye/openapi/common/deployment/SmallRyeOpenApiConfig.java b/extensions/smallrye-openapi-common/deployment/src/main/java/io/quarkus/smallrye/openapi/common/deployment/SmallRyeOpenApiConfig.java
+index 224f297da9e..ef1fce2e826 100644
+--- a/extensions/smallrye-openapi-common/deployment/src/main/java/io/quarkus/smallrye/openapi/common/deployment/SmallRyeOpenApiConfig.java
++++ b/extensions/smallrye-openapi-common/deployment/src/main/java/io/quarkus/smallrye/openapi/common/deployment/SmallRyeOpenApiConfig.java
+@@ -234,12 +234,12 @@ public interface SmallRyeOpenApiConfig {
+     Optional<OperationIdStrategy> operationIdStrategy();
+ 
+     /**
+-     * Set this boolean value to enable the merging of the deprecated `@Schema`
++     * Set this boolean value to enable or disable the merging of the deprecated `@Schema`
+      * `example` property into the `examples` array introduced in OAS 3.1.0. If
+-     * not set, it will default to `false` and the deprecated `example` will be
+-     * kept as a separate annotation on the schema in the OpenAPI model.
++     * set to `false`, the deprecated `example` will be kept as a separate
++     * annotation on the schema in the OpenAPI model.
+      */
+-    @WithDefault("false")
++    @WithDefault("true")
+     boolean mergeSchemaExamples();
+ 
+     public enum SecurityScheme {
+diff --git a/extensions/vertx-http/deployment/src/main/java/io/quarkus/devui/deployment/menu/WorkspaceProcessor.java b/extensions/vertx-http/deployment/src/main/java/io/quarkus/devui/deployment/menu/WorkspaceProcessor.java
+index cc8315f815b..9f73643eb22 100644
+--- a/extensions/vertx-http/deployment/src/main/java/io/quarkus/devui/deployment/menu/WorkspaceProcessor.java
++++ b/extensions/vertx-http/deployment/src/main/java/io/quarkus/devui/deployment/menu/WorkspaceProcessor.java
+@@ -96,7 +96,7 @@ public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IO
+             }
+ 
+             sortWorkspaceItems(workspaceItems);
+-            workspaceProducer.produce(new WorkspaceBuildItem(workspaceItems));
++            workspaceProducer.produce(new WorkspaceBuildItem(projectRoot, workspaceItems));
+         }
+     }
+ 
+@@ -185,7 +185,7 @@ void createBuildTimeActions(Optional<WorkspaceBuildItem> workspaceBuildItem,
+                     String content = params.get("content");
+                     Path path = Paths.get(URI.create(params.get("path")));
+                     writeContent(path, content);
+-                    return new SavedResult(path, true, null);
++                    return new SavedResult(workspaceBuildItem.get().getRootPath().relativize(path).toString(), true, null);
+                 }
+                 return new SavedResult(null, false, "Invalid input");
+             });
+@@ -283,7 +283,7 @@ private String getFileTypeManually(Path filePath) {
+         return fileName.contains(".") ? fileName.substring(fileName.lastIndexOf('.') + 1) : "";
+     }
+ 
+-    static record SavedResult(Path path, boolean success, String errorMessage) {
++    static record SavedResult(String path, boolean success, String errorMessage) {
+     }
+ 
+     static record WorkspaceContent(String type, String content, boolean isBinary) {
+diff --git a/extensions/vertx-http/deployment/src/main/java/io/quarkus/vertx/http/deployment/StaticResourcesProcessor.java b/extensions/vertx-http/deployment/src/main/java/io/quarkus/vertx/http/deployment/StaticResourcesProcessor.java
+index f6a6b675ef9..63ae1dd6722 100644
+--- a/extensions/vertx-http/deployment/src/main/java/io/quarkus/vertx/http/deployment/StaticResourcesProcessor.java
++++ b/extensions/vertx-http/deployment/src/main/java/io/quarkus/vertx/http/deployment/StaticResourcesProcessor.java
+@@ -3,6 +3,7 @@
+ import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
+ 
+ import java.nio.file.Files;
++import java.nio.file.Path;
+ import java.util.ArrayList;
+ import java.util.HashSet;
+ import java.util.List;
+@@ -107,11 +108,17 @@ public void nativeImageResource(Optional<StaticResourcesBuildItem> staticResourc
+      */
+     private Set<StaticResourcesBuildItem.Entry> getClasspathResources() {
+         Set<StaticResourcesBuildItem.Entry> knownPaths = new HashSet<>();
++        final String prefix = StaticResourcesRecorder.META_INF_RESOURCES;
+         visitRuntimeMetaInfResources(visit -> {
+-            if (!Files.isDirectory(visit.getPath())) {
+-                knownPaths.add(new StaticResourcesBuildItem.Entry(
+-                        visit.getRelativePath().substring(StaticResourcesRecorder.META_INF_RESOURCES.length()),
+-                        false));
++            Path visitPath = visit.getPath();
++            if (!Files.isDirectory(visitPath)) {
++                String rel = visit.getRelativePath();
++                // Ensure that the relative path starts with the prefix before calling substring
++                if (rel.startsWith(prefix)) {
++                    // Strip the "META-INF/resources/" prefix and add the remainder
++                    String subPath = rel.substring(prefix.length());
++                    knownPaths.add(new StaticResourcesBuildItem.Entry(subPath, false));
++                }
+             }
+         });
+         return knownPaths;
+diff --git a/extensions/vertx-http/dev-ui-resources/src/main/resources/dev-ui/controller/router-controller.js b/extensions/vertx-http/dev-ui-resources/src/main/resources/dev-ui/controller/router-controller.js
+index 39310d9d34b..cce3269352e 100644
+--- a/extensions/vertx-http/dev-ui-resources/src/main/resources/dev-ui/controller/router-controller.js
++++ b/extensions/vertx-http/dev-ui-resources/src/main/resources/dev-ui/controller/router-controller.js
+@@ -33,21 +33,54 @@ export class RouterController {
+         };
+ 
+         document.addEventListener('click', async (e) => {
+-            const anchor = e.composedPath().find(el => el.tagName === 'A' && el.href);
+-            if (anchor && anchor.href.startsWith(window.location.origin)) {
+-                e.preventDefault();
+-                e.stopImmediatePropagation();
+-
+-                const shouldProceed = await RouterController._checkUnsavedChanges();
+-                if (shouldProceed) {
++            
++            if(RouterController.guardedComponents.size < 1){
++                return;
++            }
++            
++            var location = RouterController.router.location;
++            if (location.route && location.route.path) {
++                let p = RouterController.pageMap.get(location.route.path);
++                let currentComponentName = p.componentName;
++                // Now check if it's guarded
++                const isCurrentComponentGuarded = Array.from(RouterController.guardedComponents).some(
++                    (el) => el.tagName.toLowerCase() === currentComponentName
++                );
++
++                if(!isCurrentComponentGuarded){
++                    return;
++                }
++                const anchor = e.composedPath().find(el => el.tagName === 'A' && el.href);
++                if (anchor && anchor.href.startsWith(window.location.origin)) {
+                     const url = new URL(anchor.href);
+-                    RouterController._skipNextGuard = true;
+-                    RouterController.router.constructor.go(url.pathname + url.search + url.hash);
++                    const relativePath = url.pathname + url.search + url.hash;
++
++                    try {
++                        const matchingRoute = await RouterController.router.resolve(relativePath);
++
++                        // If no matching route, let the browser handle it (likely REST or external link)
++                        if (!matchingRoute || !matchingRoute.route || !matchingRoute.route.component) {
++                            return;
++                        }
++
++                        // Intercept SPA route
++                        e.preventDefault();
++                        e.stopImmediatePropagation();
++
++                        const shouldProceed = await RouterController._checkUnsavedChanges();
++                        if (shouldProceed) {
++                            RouterController._skipNextGuard = true;
++                            RouterController.router.constructor.go(relativePath);
++                        }
++                    } catch (err) {
++                        return;
++                    }
+                 }
+             }
+         }, true);
++
+     }
+-c
++    
+     static async _checkUnsavedChanges() {
+         try {
+             for (const component of RouterController.guardedComponents) {
+diff --git a/extensions/vertx-http/dev-ui-resources/src/main/resources/dev-ui/qwc/qwc-workspace.js b/extensions/vertx-http/dev-ui-resources/src/main/resources/dev-ui/qwc/qwc-workspace.js
+index 3b9e4ad417d..22ae3d2d331 100644
+--- a/extensions/vertx-http/dev-ui-resources/src/main/resources/dev-ui/qwc/qwc-workspace.js
++++ b/extensions/vertx-http/dev-ui-resources/src/main/resources/dev-ui/qwc/qwc-workspace.js
+@@ -85,7 +85,7 @@ export class QwcWorkspace extends observeState(QwcHotReloadElement) {
+         _changeToWorkspaceItem: {state: true},
+         _actionResult: {state: true},
+         _showActionProgress: {state: true},
+-        _confirmDialogOpened: {state: true},
++        _confirmDialogOpened: {state: true}
+     };
+ 
+     constructor() { 
+@@ -474,7 +474,6 @@ export class QwcWorkspace extends observeState(QwcHotReloadElement) {
+             if(jsonRpcResponse.result.success){
+                 notifier.showInfoMessage(jsonRpcResponse.result.path + " saved successfully");
+                 if(select) this._selectedWorkspaceItem = { ...this._selectedWorkspaceItem, content: content, isDirty: false };
+-                //super.forceRestart();
+             }else {
+                 notifier.showErrorMessage(jsonRpcResponse.result.path + " NOT saved. " + jsonRpcResponse.result.errorMessage);
+             }
+diff --git a/extensions/vertx-http/dev-ui-spi/src/main/java/io/quarkus/devui/spi/workspace/WorkspaceBuildItem.java b/extensions/vertx-http/dev-ui-spi/src/main/java/io/quarkus/devui/spi/workspace/WorkspaceBuildItem.java
+index 925f5066038..4c014fa16de 100644
+--- a/extensions/vertx-http/dev-ui-spi/src/main/java/io/quarkus/devui/spi/workspace/WorkspaceBuildItem.java
++++ b/extensions/vertx-http/dev-ui-spi/src/main/java/io/quarkus/devui/spi/workspace/WorkspaceBuildItem.java
+@@ -11,8 +11,10 @@
+  */
+ public final class WorkspaceBuildItem extends SimpleBuildItem {
+     private final List<WorkspaceItem> workspaceItems;
++    private final Path rootPath;
+ 
+-    public WorkspaceBuildItem(List<WorkspaceItem> workspaceItems) {
++    public WorkspaceBuildItem(Path rootPath, List<WorkspaceItem> workspaceItems) {
++        this.rootPath = rootPath;
+         this.workspaceItems = workspaceItems;
+     }
+ 
+@@ -26,6 +28,10 @@ public List<Path> getPaths() {
+                 .collect(Collectors.toList());
+     }
+ 
++    public Path getRootPath() {
++        return this.rootPath;
++    }
++
+     public static record WorkspaceItem(String name, Path path) {
+ 
+     }
+diff --git a/independent-projects/resteasy-reactive/client/runtime/src/main/java/org/jboss/resteasy/reactive/client/impl/MultiInvoker.java b/independent-projects/resteasy-reactive/client/runtime/src/main/java/org/jboss/resteasy/reactive/client/impl/MultiInvoker.java
+index 235a3937d06..2f6547f2494 100644
+--- a/independent-projects/resteasy-reactive/client/runtime/src/main/java/org/jboss/resteasy/reactive/client/impl/MultiInvoker.java
++++ b/independent-projects/resteasy-reactive/client/runtime/src/main/java/org/jboss/resteasy/reactive/client/impl/MultiInvoker.java
+@@ -136,9 +136,10 @@ public <R> Multi<R> method(String name, Entity<?> entity, GenericType<R> respons
+                                             .get(RestClientRequestContext.DEFAULT_CONTENT_TYPE_PROP),
+                                     restClientRequestContext.getInvokedMethod());
+                         } else if (response.getStatus() == 200
+-                                && RestMediaType.APPLICATION_STREAM_JSON_TYPE.isCompatible(response.getMediaType())) {
++                                && isNewlineDelimited(response)) {
+                             registerForJsonStream(multiRequest, restClientRequestContext, responseType, response,
+                                     vertxResponse);
++
+                         } else {
+                             // read stuff in chunks
+                             registerForChunks(multiRequest, restClientRequestContext, responseType, response, vertxResponse);
+@@ -272,7 +273,6 @@ private <R> void registerForChunks(MultiRequest<? super R> multiRequest,
+             GenericType<R> responseType,
+             ResponseImpl response,
+             HttpClientResponse vertxClientResponse) {
+-        boolean isNewlineDelimited = isNewlineDelimited(response);
+         // make sure we get exceptions on the response, like close events, otherwise they
+         // will be logged as errors by vertx
+         vertxClientResponse.exceptionHandler(t -> {
+@@ -291,53 +291,15 @@ public void handle(Buffer buffer) {
+                 try {
+                     byte[] bytes = buffer.getBytes();
+                     MediaType mediaType = response.getMediaType();
++                    ByteArrayInputStream in = new ByteArrayInputStream(bytes);
++                    R item = restClientRequestContext.readEntity(
++                            in,
++                            responseType,
++                            mediaType,
++                            restClientRequestContext.getMethodDeclaredAnnotationsSafe(),
++                            response.getMetadata());
++                    multiRequest.emitter.emit(item);
+ 
+-                    if (isNewlineDelimited) {
+-                        String charset = mediaType.getParameters().get(MediaType.CHARSET_PARAMETER);
+-                        charset = charset == null ? "UTF-8" : charset;
+-                        byte[] separator = "\n".getBytes(charset);
+-                        int start = 0;
+-                        while (start < bytes.length) {
+-                            int end = bytes.length;
+-                            for (int i = start; i < end; i++) {
+-                                if (bytes[i] == separator[0]) {
+-                                    int j;
+-                                    boolean matches = true;
+-                                    for (j = 1; j < separator.length; j++) {
+-                                        if (bytes[i + j] != separator[j]) {
+-                                            matches = false;
+-                                            break;
+-                                        }
+-                                    }
+-                                    if (matches) {
+-                                        end = i;
+-                                        break;
+-                                    }
+-                                }
+-                            }
+-
+-                            if (start < end) {
+-                                ByteArrayInputStream in = new ByteArrayInputStream(bytes, start, end);
+-                                R item = restClientRequestContext.readEntity(
+-                                        in,
+-                                        responseType,
+-                                        mediaType,
+-                                        restClientRequestContext.getMethodDeclaredAnnotationsSafe(),
+-                                        response.getMetadata());
+-                                multiRequest.emitter.emit(item);
+-                            }
+-                            start = end + separator.length;
+-                        }
+-                    } else {
+-                        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+-                        R item = restClientRequestContext.readEntity(
+-                                in,
+-                                responseType,
+-                                mediaType,
+-                                restClientRequestContext.getMethodDeclaredAnnotationsSafe(),
+-                                response.getMetadata());
+-                        multiRequest.emitter.emit(item);
+-                    }
+                 } catch (Throwable t) {
+                     // FIXME: probably close the client too? watch out that it doesn't call our close handler
+                     // which calls emitter.complete()
+diff --git a/independent-projects/resteasy-reactive/server/processor/src/main/java/org/jboss/resteasy/reactive/server/processor/ServerEndpointIndexer.java b/independent-projects/resteasy-reactive/server/processor/src/main/java/org/jboss/resteasy/reactive/server/processor/ServerEndpointIndexer.java
+index c49c3d7db91..9c2310f8420 100644
+--- a/independent-projects/resteasy-reactive/server/processor/src/main/java/org/jboss/resteasy/reactive/server/processor/ServerEndpointIndexer.java
++++ b/independent-projects/resteasy-reactive/server/processor/src/main/java/org/jboss/resteasy/reactive/server/processor/ServerEndpointIndexer.java
+@@ -300,9 +300,18 @@ protected boolean handleBeanParam(ClassInfo actualEndpointInfo, Type paramType,
+                 actualEndpointInfo,
+                 existingConverters, additionalReaders, injectableBeans, hasRuntimeConverters);
+         if ((injectableBean.getFieldExtractorsCount() == 0) && !injectableBean.isInjectionRequired()) {
+-            throw new DeploymentException(String.format("No annotations found on fields at '%s'. "
+-                    + "Annotations like `@QueryParam` should be used in fields, not in methods.",
+-                    beanParamClassInfo.name()));
++            long declaredMethodsCount = beanParamClassInfo.methods().stream()
++                    .filter(m -> !m.name().equals("<init>") && !m.name().equals("<clinit>")).count();
++            if (declaredMethodsCount == 0) {
++                throw new DeploymentException(String.format(
++                        "Class %s has no fields. Parameters containers are only supported if they have at least one annotated field.",
++                        beanParamClassInfo.name()));
++            } else {
++                throw new DeploymentException(String.format("No annotations found on fields at '%s'. "
++                        + "Annotations like `@QueryParam` should be used in fields, not in methods.",
++                        beanParamClassInfo.name()));
++            }
++
+         }
+         fileFormNames.addAll(injectableBean.getFileFormNames());
+         return injectableBean.isFormParamRequired();
+diff --git a/pom.xml b/pom.xml
+index eee2fd4a8da..cef0186eb0e 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -76,7 +76,7 @@
+         <antlr.version>4.13.0</antlr.version> <!-- version controlled by Hibernate ORM's needs -->
+         <bytebuddy.version>1.15.11</bytebuddy.version> <!-- version controlled by Hibernate ORM's needs -->
+         <hibernate-commons-annotations.version>7.0.3.Final</hibernate-commons-annotations.version> <!-- version controlled by Hibernate ORM's needs -->
+-        <hibernate-reactive.version>2.4.6.Final</hibernate-reactive.version> <!-- highly sensitive to Hibernate ORM upgrades -->
++        <hibernate-reactive.version>2.4.7.Final</hibernate-reactive.version> <!-- highly sensitive to Hibernate ORM upgrades -->
+         <hibernate-validator.version>8.0.2.Final</hibernate-validator.version>
+         <hibernate-search.version>7.2.3.Final</hibernate-search.version>
+ 
+diff --git a/tcks/microprofile-openapi/pom.xml b/tcks/microprofile-openapi/pom.xml
+index 5f52b2bec26..e704edbf5c9 100644
+--- a/tcks/microprofile-openapi/pom.xml
++++ b/tcks/microprofile-openapi/pom.xml
+@@ -31,7 +31,6 @@
+                         <quarkus.http.non-application-root-path>/</quarkus.http.non-application-root-path>
+                         <quarkus.smallrye-openapi.auto-add-tags>false</quarkus.smallrye-openapi.auto-add-tags>
+                         <quarkus.smallrye-openapi.auto-add-bad-request-response>false</quarkus.smallrye-openapi.auto-add-bad-request-response>
+-                        <quarkus.smallrye-openapi.merge-schema-examples>true</quarkus.smallrye-openapi.merge-schema-examples>
+                     </systemPropertyVariables>
+                     <!-- This workaround allows us to run a single test using
+                         the "test" system property -->

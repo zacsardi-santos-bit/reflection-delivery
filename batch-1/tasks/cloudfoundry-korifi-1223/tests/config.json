@@ -1,0 +1,14 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./api/handlers -count=1",
+  "test_files": [
+    "api/handlers/task_handler_test.go",
+    "api/repositories/task_repository_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "code.cloudfoundry.org/korifi/api/handlers::TestApis"
+  ],
+  "PASS_TO_PASS": []
+}

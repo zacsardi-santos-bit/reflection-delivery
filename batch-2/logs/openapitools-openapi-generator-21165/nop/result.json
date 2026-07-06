@@ -1,0 +1,29 @@
+{
+    "id": "765203aa-b2ad-4807-8c00-cf03930ad75b",
+    "started_at": "2026-07-04T15:37:47.222074",
+    "finished_at": "2026-07-04T15:43:46.433622",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__openapitools-openapi-generator-21165": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "openapitools-openapi-generator-2__oKfTsZF"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

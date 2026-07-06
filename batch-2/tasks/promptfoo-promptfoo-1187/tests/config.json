@@ -1,0 +1,21 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npm install && cd /workspace/repo/src/web/nextui && npm test -- run src/app/components/InfoModal.test.tsx --reporter=verbose",
+  "test_files": [
+    "src/web/nextui/src/app/components/InfoModal.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal does not render when closed",
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal displays the correct title",
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal displays the correct version",
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal displays the correct description",
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal renders all links correctly",
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal calls onClose when Close button is clicked",
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal has correct aria-labelledby attribute",
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal has correct link targets",
+    "/workspace/repo/src/web/nextui/src/app/components/InfoModal.test.tsx::InfoModal has correct link hrefs"
+  ],
+  "PASS_TO_PASS": []
+}

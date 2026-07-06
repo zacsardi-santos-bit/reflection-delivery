@@ -1,0 +1,6 @@
+patching file pkg/cluster/k8sres_test.go
+# github.com/zalando/postgres-operator/pkg/cluster [github.com/zalando/postgres-operator/pkg/cluster.test]
+pkg/cluster/k8sres_test.go:413:21: undefined: extractPgVersionFromBinPath
+pkg/cluster/k8sres_test.go:502:29: cluster.getNewPgVersion undefined (type *Cluster has no field or method getNewPgVersion)
+FAIL	github.com/zalando/postgres-operator/pkg/cluster [build failed]
+reward=0 graded=38 found=38 failed=38 parsed=1 framework=go exit_code=1

@@ -1,0 +1,460 @@
+diff --git a/packages/core/src/services/fileDiscoveryService.ts b/packages/core/src/services/fileDiscoveryService.ts
+index d816c42e3..28b55894b 100644
+--- a/packages/core/src/services/fileDiscoveryService.ts
++++ b/packages/core/src/services/fileDiscoveryService.ts
+@@ -14,6 +14,8 @@ import {
+ } from '../utils/ignoreFileParser.js';
+ import { isGitRepository } from '../utils/gitUtils.js';
+ import { GEMINI_IGNORE_FILE_NAME } from '../config/constants.js';
++import { isNodeError } from '../utils/errors.js';
++import { debugLogger } from '../utils/debugLogger.js';
+ import fs from 'node:fs';
+ import * as path from 'node:path';
+ 
+@@ -83,6 +85,60 @@ export class FileDiscoveryService {
+     }
+   }
+ 
++  /**
++   * Returns all absolute paths (files and directories) within the project root that should be ignored.
++   */
++  async getIgnoredPaths(options: FilterFilesOptions = {}): Promise<string[]> {
++    const ignoredPaths: string[] = [];
++
++    /**
++     * Recursively walks the directory tree to find ignored paths.
++     */
++    const walk = async (currentDir: string) => {
++      let dirEntries: fs.Dirent[];
++      try {
++        dirEntries = await fs.promises.readdir(currentDir, {
++          withFileTypes: true,
++        });
++      } catch (error: unknown) {
++        if (
++          isNodeError(error) &&
++          (error.code === 'EACCES' || error.code === 'ENOENT')
++        ) {
++          // Stop if the directory is inaccessible or doesn't exist
++          debugLogger.debug(
++            `Skipping directory ${currentDir} due to ${error.code}`,
++          );
++          return;
++        }
++        throw error;
++      }
++
++      // Traverse sibling directories concurrently to improve performance.
++      await Promise.all(
++        dirEntries.map(async (entry) => {
++          const fullPath = path.join(currentDir, entry.name);
++
++          if (entry.isDirectory()) {
++            // Optimization: If a directory is ignored, its contents are not traversed.
++            if (this.shouldIgnoreDirectory(fullPath, options)) {
++              ignoredPaths.push(fullPath);
++            } else {
++              await walk(fullPath);
++            }
++          } else {
++            if (this.shouldIgnoreFile(fullPath, options)) {
++              ignoredPaths.push(fullPath);
++            }
++          }
++        }),
++      );
++    };
++
++    await walk(this.projectRoot);
++    return ignoredPaths;
++  }
++
+   private applyFilterFilesOptions(options?: FilterFilesOptions): void {
+     if (!options) return;
+ 
+@@ -100,34 +156,16 @@ export class FileDiscoveryService {
+   }
+ 
+   /**
+-   * Filters a list of file paths based on ignore rules
++   * Filters a list of file paths based on ignore rules.
++   *
++   * NOTE: Directory paths must include a trailing slash to be correctly identified and
++   * matched against directory-specific ignore patterns (e.g., 'dist/').
+    */
+   filterFiles(filePaths: string[], options: FilterFilesOptions = {}): string[] {
+-    const {
+-      respectGitIgnore = this.defaultFilterFileOptions.respectGitIgnore,
+-      respectGeminiIgnore = this.defaultFilterFileOptions.respectGeminiIgnore,
+-    } = options;
+     return filePaths.filter((filePath) => {
+-      if (
+-        respectGitIgnore &&
+-        respectGeminiIgnore &&
+-        this.combinedIgnoreFilter
+-      ) {
+-        return !this.combinedIgnoreFilter.isIgnored(filePath);
+-      }
+-
+-      // Always respect custom ignore filter if provided
+-      if (this.customIgnoreFilter?.isIgnored(filePath)) {
+-        return false;
+-      }
+-
+-      if (respectGitIgnore && this.gitIgnoreFilter?.isIgnored(filePath)) {
+-        return false;
+-      }
+-      if (respectGeminiIgnore && this.geminiIgnoreFilter?.isIgnored(filePath)) {
+-        return false;
+-      }
+-      return true;
++      // Infer directory status from the string format
++      const isDir = filePath.endsWith('/') || filePath.endsWith('\\');
++      return !this._shouldIgnore(filePath, isDir, options);
+     });
+   }
+ 
+@@ -152,13 +190,61 @@ export class FileDiscoveryService {
+   }
+ 
+   /**
+-   * Unified method to check if a file should be ignored based on filtering options
++   * Checks if a specific file should be ignored based on project ignore rules.
+    */
+   shouldIgnoreFile(
+     filePath: string,
+     options: FilterFilesOptions = {},
+   ): boolean {
+-    return this.filterFiles([filePath], options).length === 0;
++    return this._shouldIgnore(filePath, false, options);
++  }
++
++  /**
++   * Checks if a specific directory should be ignored based on project ignore rules.
++   */
++  shouldIgnoreDirectory(
++    dirPath: string,
++    options: FilterFilesOptions = {},
++  ): boolean {
++    return this._shouldIgnore(dirPath, true, options);
++  }
++
++  /**
++   * Internal unified check for paths.
++   */
++  private _shouldIgnore(
++    filePath: string,
++    isDirectory: boolean,
++    options: FilterFilesOptions = {},
++  ): boolean {
++    const {
++      respectGitIgnore = this.defaultFilterFileOptions.respectGitIgnore,
++      respectGeminiIgnore = this.defaultFilterFileOptions.respectGeminiIgnore,
++    } = options;
++
++    if (respectGitIgnore && respectGeminiIgnore && this.combinedIgnoreFilter) {
++      return this.combinedIgnoreFilter.isIgnored(filePath, isDirectory);
++    }
++
++    if (this.customIgnoreFilter?.isIgnored(filePath, isDirectory)) {
++      return true;
++    }
++
++    if (
++      respectGitIgnore &&
++      this.gitIgnoreFilter?.isIgnored(filePath, isDirectory)
++    ) {
++      return true;
++    }
++
++    if (
++      respectGeminiIgnore &&
++      this.geminiIgnoreFilter?.isIgnored(filePath, isDirectory)
++    ) {
++      return true;
++    }
++
++    return false;
+   }
+ 
+   /**
+diff --git a/packages/core/src/utils/getFolderStructure.ts b/packages/core/src/utils/getFolderStructure.ts
+index 6e1814cd9..5a2f99d72 100644
+--- a/packages/core/src/utils/getFolderStructure.ts
++++ b/packages/core/src/utils/getFolderStructure.ts
+@@ -178,7 +178,7 @@ async function readFullStructure(
+         const subFolderPath = path.join(currentPath, subFolderName);
+ 
+         const isIgnored =
+-          options.fileService?.shouldIgnoreFile(
++          options.fileService?.shouldIgnoreDirectory(
+             subFolderPath,
+             filterFileOptions,
+           ) ?? false;
+diff --git a/packages/core/src/utils/gitIgnoreParser.ts b/packages/core/src/utils/gitIgnoreParser.ts
+index 7677c60ce..f91788bcc 100644
+--- a/packages/core/src/utils/gitIgnoreParser.ts
++++ b/packages/core/src/utils/gitIgnoreParser.ts
+@@ -7,9 +7,10 @@
+ import * as fs from 'node:fs';
+ import * as path from 'node:path';
+ import ignore, { type Ignore } from 'ignore';
++import { getNormalizedRelativePath } from './ignorePathUtils.js';
+ 
+ export interface GitIgnoreFilter {
+-  isIgnored(filePath: string): boolean;
++  isIgnored(filePath: string, isDirectory: boolean): boolean;
+ }
+ 
+ export class GitIgnoreParser implements GitIgnoreFilter {
+@@ -115,37 +116,25 @@ export class GitIgnoreParser implements GitIgnoreFilter {
+       .filter((p) => p !== '');
+   }
+ 
+-  isIgnored(filePath: string): boolean {
+-    if (!filePath || typeof filePath !== 'string') {
+-      return false;
+-    }
+-
+-    const absoluteFilePath = path.resolve(this.projectRoot, filePath);
+-    if (!absoluteFilePath.startsWith(this.projectRoot)) {
++  isIgnored(filePath: string, isDirectory: boolean): boolean {
++    const normalizedPath = getNormalizedRelativePath(
++      this.projectRoot,
++      filePath,
++      isDirectory,
++    );
++    // Root directory is never ignored by gitignore
++    if (
++      normalizedPath === null ||
++      normalizedPath === '' ||
++      normalizedPath === '/'
++    ) {
+       return false;
+     }
+ 
+     try {
+-      const resolved = path.resolve(this.projectRoot, filePath);
+-      const relativePath = path.relative(this.projectRoot, resolved);
+-
+-      if (relativePath === '' || relativePath.startsWith('..')) {
+-        return false;
+-      }
+-
+-      // Even in windows, Ignore expects forward slashes.
+-      const normalizedPath = relativePath.replace(/\\/g, '/');
+-
+-      if (normalizedPath.startsWith('/') || normalizedPath === '') {
+-        return false;
+-      }
+-
+-      const ig = ignore();
++      const ig = ignore().add('.git'); // Always ignore .git
+ 
+-      // Always ignore .git directory
+-      ig.add('.git');
+-
+-      // Load global patterns from .git/info/exclude on first call
++      // Load global patterns from .git/info/exclude
+       if (this.globalPatterns === undefined) {
+         const excludeFile = path.join(
+           this.projectRoot,
+@@ -159,11 +148,12 @@ export class GitIgnoreParser implements GitIgnoreFilter {
+       }
+       ig.add(this.globalPatterns);
+ 
+-      const pathParts = relativePath.split(path.sep);
+-
+-      const dirsToVisit = [this.projectRoot];
++      // Git checks directories hierarchically. If a parent directory is ignored,
++      // its children are ignored automatically, and we can stop processing.
++      const pathParts = normalizedPath.split('/');
+       let currentAbsDir = this.projectRoot;
+-      // Collect all directories in the path
++      const dirsToVisit = [this.projectRoot];
++
+       for (let i = 0; i < pathParts.length - 1; i++) {
+         currentAbsDir = path.join(currentAbsDir, pathParts[i]);
+         dirsToVisit.push(currentAbsDir);
+@@ -172,41 +162,33 @@ export class GitIgnoreParser implements GitIgnoreFilter {
+       for (const dir of dirsToVisit) {
+         const relativeDir = path.relative(this.projectRoot, dir);
+         if (relativeDir) {
+-          const normalizedRelativeDir = relativeDir.replace(/\\/g, '/');
+-          const igPlusExtras = ignore()
+-            .add(ig)
+-            .add(this.processedExtraPatterns); // takes priority over ig patterns
+-          if (igPlusExtras.ignores(normalizedRelativeDir)) {
+-            // This directory is ignored by an ancestor's .gitignore.
+-            // According to git behavior, we don't need to process this
+-            // directory's .gitignore, as nothing inside it can be
+-            // un-ignored.
++          // Check if this parent directory is already ignored by patterns found so far
++          const parentDirRelative = getNormalizedRelativePath(
++            this.projectRoot,
++            dir,
++            true,
++          );
++          const currentIg = ignore().add(ig).add(this.processedExtraPatterns);
++          if (parentDirRelative && currentIg.ignores(parentDirRelative)) {
++            // Optimization: Stop once an ancestor is ignored
+             break;
+           }
+         }
+ 
+-        if (this.cache.has(dir)) {
+-          const patterns = this.cache.get(dir);
+-          if (patterns) {
+-            ig.add(patterns);
+-          }
+-        } else {
++        // Load and add patterns from .gitignore in the current directory
++        let patterns = this.cache.get(dir);
++        if (patterns === undefined) {
+           const gitignorePath = path.join(dir, '.gitignore');
+-          if (fs.existsSync(gitignorePath)) {
+-            const patterns = this.loadPatternsForFile(gitignorePath);
+-
+-            this.cache.set(dir, patterns);
+-            ig.add(patterns);
+-          } else {
+-            this.cache.set(dir, ignore());
+-          }
++          patterns = fs.existsSync(gitignorePath)
++            ? this.loadPatternsForFile(gitignorePath)
++            : ignore();
++          this.cache.set(dir, patterns);
+         }
++        ig.add(patterns);
+       }
+ 
+-      // Apply extra patterns (e.g. from .geminiignore) last for precedence
+-      ig.add(this.processedExtraPatterns);
+-
+-      return ig.ignores(normalizedPath);
++      // Extra patterns (like .geminiignore) have final precedence
++      return ig.add(this.processedExtraPatterns).ignores(normalizedPath);
+     } catch (_error) {
+       return false;
+     }
+diff --git a/packages/core/src/utils/ignoreFileParser.ts b/packages/core/src/utils/ignoreFileParser.ts
+index 3fbb3f45d..474b732be 100644
+--- a/packages/core/src/utils/ignoreFileParser.ts
++++ b/packages/core/src/utils/ignoreFileParser.ts
+@@ -8,9 +8,10 @@ import * as fs from 'node:fs';
+ import * as path from 'node:path';
+ import ignore from 'ignore';
+ import { debugLogger } from './debugLogger.js';
++import { getNormalizedRelativePath } from './ignorePathUtils.js';
+ 
+ export interface IgnoreFileFilter {
+-  isIgnored(filePath: string): boolean;
++  isIgnored(filePath: string, isDirectory: boolean): boolean;
+   getPatterns(): string[];
+   getIgnoreFilePaths(): string[];
+   hasPatterns(): boolean;
+@@ -74,37 +75,24 @@ export class IgnoreFileParser implements IgnoreFileFilter {
+       .filter((p) => p !== '' && !p.startsWith('#'));
+   }
+ 
+-  isIgnored(filePath: string): boolean {
++  isIgnored(filePath: string, isDirectory: boolean): boolean {
+     if (this.patterns.length === 0) {
+       return false;
+     }
+ 
+-    if (!filePath || typeof filePath !== 'string') {
+-      return false;
+-    }
+-
++    const normalizedPath = getNormalizedRelativePath(
++      this.projectRoot,
++      filePath,
++      isDirectory,
++    );
+     if (
+-      filePath.startsWith('\\') ||
+-      filePath === '/' ||
+-      filePath.includes('\0')
++      normalizedPath === null ||
++      normalizedPath === '' ||
++      normalizedPath === '/'
+     ) {
+       return false;
+     }
+ 
+-    const resolved = path.resolve(this.projectRoot, filePath);
+-    const relativePath = path.relative(this.projectRoot, resolved);
+-
+-    if (relativePath === '' || relativePath.startsWith('..')) {
+-      return false;
+-    }
+-
+-    // Even in windows, Ignore expects forward slashes.
+-    const normalizedPath = relativePath.replace(/\\/g, '/');
+-
+-    if (normalizedPath.startsWith('/') || normalizedPath === '') {
+-      return false;
+-    }
+-
+     return this.ig.ignores(normalizedPath);
+   }
+ 
+diff --git a/packages/core/src/utils/ignorePathUtils.ts b/packages/core/src/utils/ignorePathUtils.ts
+new file mode 100644
+index 000000000..389725a20
+--- /dev/null
++++ b/packages/core/src/utils/ignorePathUtils.ts
+@@ -0,0 +1,52 @@
++/**
++ * @license
++ * Copyright 2026 Google LLC
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import * as path from 'node:path';
++import { isWithinRoot } from './fileUtils.js';
++
++/**
++ * Normalizes a file path to be relative to the project root and formatted for the 'ignore' library.
++ *
++ * @returns The normalized relative path, or null if the path is invalid or outside the root.
++ */
++export function getNormalizedRelativePath(
++  projectRoot: string,
++  filePath: string,
++  isDirectory: boolean,
++): string | null {
++  if (!filePath || typeof filePath !== 'string') {
++    return null;
++  }
++
++  const absoluteFilePath = path.resolve(projectRoot, filePath);
++
++  // Ensure the path is within the project root
++  if (!isWithinRoot(absoluteFilePath, projectRoot)) {
++    return null;
++  }
++
++  const relativePath = path.relative(projectRoot, absoluteFilePath);
++
++  // Convert Windows backslashes to forward slashes for the 'ignore' library
++  let normalized = relativePath.replace(/\\/g, '/');
++
++  // Preserve trailing slash to ensure directory patterns (e.g., 'dist/') match correctly
++  if (isDirectory && !normalized.endsWith('/') && normalized !== '') {
++    normalized += '/';
++  }
++
++  // Handle the project root directory
++  if (normalized === '') {
++    return isDirectory ? '/' : '';
++  }
++
++  // Ensure relative paths don't start with a slash unless it represents the root
++  if (normalized.startsWith('/') && normalized !== '/') {
++    normalized = normalized.substring(1);
++  }
++
++  return normalized;
++}

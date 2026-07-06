@@ -1,0 +1,29 @@
+patching file services/worker/tests/fixtures/datasets.py
+patching file services/worker/tests/fixtures/hub.py
+patching file services/worker/tests/fixtures/statistics_dataset.py
+patching file services/worker/tests/job_runners/split/test_descriptive_statistics.py
+patching file services/worker/tests/test_statistics_utils.py
+============================= test session starts ==============================
+platform linux -- Python 3.9.25, pytest-8.4.2, pluggy-1.6.0 -- /usr/local/bin/python3.9
+cachedir: .pytest_cache
+rootdir: /workspace/repo/services/worker
+configfile: pyproject.toml
+plugins: asyncio-1.2.0, anyio-4.12.1
+asyncio: mode=strict, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/test_statistics_utils.py ________________
+ImportError while importing test module '/workspace/repo/services/worker/tests/test_statistics_utils.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_statistics_utils.py:16: in <module>
+    from worker.statistics_utils import (
+E   ImportError: cannot import name 'DatetimeColumn' from 'worker.statistics_utils' (/workspace/repo/services/worker/src/worker/statistics_utils.py)
+=========================== short test summary info ============================
+ERROR tests/test_statistics_utils.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.51s ===============================
+reward=0 graded=85 found=0 failed=0 parsed=0 framework=pytest exit_code=2

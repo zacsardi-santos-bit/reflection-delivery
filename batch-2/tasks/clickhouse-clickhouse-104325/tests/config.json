@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/test_keeper_s3_multipart.py -v",
+  "test_files": [
+    "tests/integration/test_keeper_snapshot_chunked_transfer/test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_keeper_s3_multipart::test_recover_after_interrupted_transfer_remote_disk",
+    "test_keeper_s3_multipart::test_recover_after_interrupted_transfer_local_disk"
+  ],
+  "PASS_TO_PASS": []
+}

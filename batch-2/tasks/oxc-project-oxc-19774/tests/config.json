@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast --package oxc_linter -E 'test(test_fix_options)'",
+  "test_files": [
+    "crates/oxc_linter/src/rules/eslint/no_unused_vars/tests/oxc.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) oxc_linter rules::eslint::no_unused_vars::options::tests::test_fix_options_sparse_defaults",
+    "(2/2) oxc_linter rules::eslint::no_unused_vars::tests::oxc::test_fix_options"
+  ],
+  "PASS_TO_PASS": []
+}

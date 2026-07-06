@@ -1,0 +1,34 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --profile ci --cargo-profile fast-build -p uv --test it -E 'test(show_settings)'",
+  "test_files": [
+    "crates/uv/tests/it/pip_compile.rs",
+    "crates/uv/tests/it/show_settings.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(12/21) uv::it show_settings::resolve_pyproject_toml",
+    "(21/21) uv::it show_settings::verify_hashes",
+    "( 1/21) uv::it show_settings::allow_insecure_host",
+    "( 2/21) uv::it show_settings::resolve_tool",
+    "( 3/21) uv::it show_settings::resolve_both",
+    "( 4/21) uv::it show_settings::resolve_poetry_toml",
+    "( 5/21) uv::it show_settings::resolve_both_special_fields",
+    "( 6/21) uv::it show_settings::resolve_find_links",
+    "( 7/21) uv::it show_settings::invalid_conflicts",
+    "( 8/21) uv::it show_settings::build_isolation_override",
+    "( 9/21) uv::it show_settings::resolve_skip_empty",
+    "(10/21) uv::it show_settings::resolve_config_file",
+    "(11/21) uv::it show_settings::resolve_index_url",
+    "(13/21) uv::it show_settings::resolve_uv_toml",
+    "(14/21) uv::it show_settings::resolve_top_level",
+    "(15/21) uv::it show_settings::valid_conflicts",
+    "(16/21) uv::it show_settings::resolve_user_configuration",
+    "(17/21) uv::it show_settings::preview_features",
+    "(18/21) uv::it show_settings::upgrade_project_cli_config_interaction",
+    "(19/21) uv::it show_settings::upgrade_pip_cli_config_interaction",
+    "(20/21) uv::it show_settings::index_priority"
+  ],
+  "PASS_TO_PASS": []
+}

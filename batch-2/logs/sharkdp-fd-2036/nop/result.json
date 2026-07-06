@@ -1,0 +1,29 @@
+{
+    "id": "57c459c0-ea04-4999-bbd1-193dedd2efba",
+    "started_at": "2026-07-06T12:17:37.599638",
+    "finished_at": "2026-07-06T12:20:54.432085",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__sharkdp-fd-2036": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "sharkdp-fd-2036__4wAU2WH"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

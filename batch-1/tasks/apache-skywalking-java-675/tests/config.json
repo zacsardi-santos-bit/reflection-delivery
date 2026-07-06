@@ -1,0 +1,29 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl apm-sniffer/apm-sdk-plugin/sofarpc-plugin test -Dcheckstyle.skip=true --batch-mode",
+  "test_files": [
+    "apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java",
+    "apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java",
+    "apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaRpcConsumerInterceptorTest.java",
+    "apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaRpcProviderInterceptorTest.java",
+    "test/plugin/scenarios/sofarpc-scenario/config/expectedData.yaml",
+    "test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/SofaRpcApplication.java",
+    "test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/callback/TestCallback.java",
+    "test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/controller/CaseController.java",
+    "test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/interfaces/SofaRpcDemoService.java",
+    "test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/service/SofaRpcDemoServiceImpl.java"
+  ],
+  "num_test_files": 10,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "sofarpc-plugin::test_1",
+    "sofarpc-plugin::test_2",
+    "sofarpc-plugin::test_3",
+    "sofarpc-plugin::test_4",
+    "sofarpc-plugin::test_5",
+    "sofarpc-plugin::test_6",
+    "sofarpc-plugin::test_7",
+    "sofarpc-plugin::test_8"
+  ],
+  "PASS_TO_PASS": []
+}

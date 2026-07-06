@@ -1,0 +1,29 @@
+{
+    "id": "be905ffd-6666-432b-a895-cc484bf7e358",
+    "started_at": "2026-07-06T12:17:06.102116",
+    "finished_at": "2026-07-06T12:19:09.079727",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__bazelbuild-bazel-28801": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "bazelbuild-bazel-28801__xdme6r5"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

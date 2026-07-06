@@ -1,0 +1,8 @@
+patching file go.mod
+patching file pkg/config/reload.go
+patching file vendor/github.com/google/go-cmp/cmp/cmpopts/equate.go
+patching file vendor/github.com/google/go-cmp/cmp/cmpopts/ignore.go
+patching file vendor/github.com/google/go-cmp/cmp/cmpopts/sort.go
+patching file vendor/github.com/google/go-cmp/cmp/cmpopts/struct_filter.go
+patching file vendor/github.com/google/go-cmp/cmp/cmpopts/xform.go
+patching file vendor/modules.txt

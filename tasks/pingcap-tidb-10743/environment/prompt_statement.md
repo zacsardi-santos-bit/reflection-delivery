@@ -1,7 +1,0 @@
-I'm working on improving the resilience of the garbage collection worker's delete range process. Right now, if any one storage node fails to handle a delete range request — whether because of a network issue, an absent or empty response, or an error string inside the response — the whole batch of delete range tasks is aborted and an error is returned immediately. This means all the remaining ranges in the queue are skipped for that GC cycle, which is unnecessarily disruptive.
-
-What I want is for the delete range loop to be fault-tolerant: when a request fails for a particular range (for any of those error types), the worker should log the error, skip that range, and continue processing the other ranges. The function itself should return successfully (with no error) even when some individual ranges failed. Crucially, any range that wasn't successfully sent to all stores must remain in the pending list so it can be retried next time — it should not be marked as complete.
-
-The same tolerance needs to apply to the "redo" delete ranges path as well: it should also continue on per-range failures and leave failed ranges in the relevant tracking table rather than removing them.
-
-One related issue: the current code doesn't detect all failure conditions from the storage nodes. It only catches outright RPC errors. It should also detect when a response is absent or empty, when the relevant response field is missing, and when the response contains an embedded error message — all of these should be treated as failures.

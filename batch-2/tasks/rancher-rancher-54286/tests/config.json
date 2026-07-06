@@ -1,0 +1,28 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/controllers/managementuser/rkecontrolplanecondition -count=1",
+  "test_files": [
+    "pkg/controllers/managementuser/rkecontrolplanecondition/rkecontrolplanecondition_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/rkeControlPlane_is_being_deleted",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/rkeControlPlane_is_for_a_different_cluster",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/chart_version_is_not_set",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/agent_is_not_connected",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/fail_to_get_the_app_with_notFound_error",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/fail_to_get_the_app_with_non-notFound_error",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/app_is_being_deleted",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/app's_chart_version_is_out_of_sync",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/app_is_deployed",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/app_is_in_failed_state",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/app_is_transitioning",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/app_is_uninstalled",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/recently_checked_downstream_API_-_call_is_skipped",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/downstream_API_last_checked_more_than_30s_ago_-_call_proceeds",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus/recently_checked_downstream_API_with_enqueue_already_pending_-_call_and_enqueue_both_skipped",
+    "github.com/rancher/rancher/pkg/controllers/managementuser/rkecontrolplanecondition::Test_handler_syncSystemUpgradeControllerStatus"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,1034 @@
+patching file api/controllers/environment_test.go
+patching file api/provider/aws/environment_create_test.go
+patching file api/provider/aws/test_aws/environment_create_test.go
+patching file api/provider/aws/test_aws/environment_read_test.go
+patching file api/provider/aws/test_aws/environment_update_test.go
+patching file cli/command/environment_test.go
+patching file cli/printer/text_test.go
+patching file plugins/terraform/layer0/data_source_layer0_environment_test.go
+patching file plugins/terraform/layer0/resource_layer0_environment_test.go
+patching file tests/smoke/environment.bats
+patching file tests/system/cases/datasources/outputs.tf
+patching file tests/system/cases/environment_link/main.tf
+patching file tests/system/cases/modules/sts/outputs.tf
+patching file tests/system/cases/service_scale/outputs.tf
+patching file tests/system/cases/windows_service/main.tf
+patching file tests/system/import_test.go
+patching file tests/system/system_test.go
+{"Time":"2026-06-29T15:18:48.239481018Z","Action":"start","Package":"github.com/quintilesims/layer0/api/controllers"}
+{"Time":"2026-06-29T15:18:48.247065387Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateDeploy"}
+{"Time":"2026-06-29T15:18:48.247111817Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateDeploy","Output":"=== RUN   TestCreateDeploy\n"}
+{"Time":"2026-06-29T15:18:48.247366527Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateDeploy","Output":"--- PASS: TestCreateDeploy (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.247407997Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateDeploy","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.247458307Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteDeploy"}
+{"Time":"2026-06-29T15:18:48.247491307Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteDeploy","Output":"=== RUN   TestDeleteDeploy\n"}
+{"Time":"2026-06-29T15:18:48.247538607Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteDeploy","Output":"--- PASS: TestDeleteDeploy (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.247570867Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteDeploy","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.247606437Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListDeploys"}
+{"Time":"2026-06-29T15:18:48.247641817Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListDeploys","Output":"=== RUN   TestListDeploys\n"}
+{"Time":"2026-06-29T15:18:48.247691967Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListDeploys","Output":"--- PASS: TestListDeploys (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.247722927Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListDeploys","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.247770257Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadDeploy"}
+{"Time":"2026-06-29T15:18:48.247799427Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadDeploy","Output":"=== RUN   TestReadDeploy\n"}
+{"Time":"2026-06-29T15:18:48.247845797Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadDeploy","Output":"--- PASS: TestReadDeploy (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.247887927Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadDeploy","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.247920017Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateEnvironment"}
+{"Time":"2026-06-29T15:18:48.247952727Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateEnvironment","Output":"=== RUN   TestCreateEnvironment\n"}
+{"Time":"2026-06-29T15:18:48.247988857Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateEnvironment","Output":"--- PASS: TestCreateEnvironment (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.248031077Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateEnvironment","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.248064827Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteEnvironment"}
+{"Time":"2026-06-29T15:18:48.248094567Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteEnvironment","Output":"=== RUN   TestDeleteEnvironment\n"}
+{"Time":"2026-06-29T15:18:48.248134247Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteEnvironment","Output":"--- PASS: TestDeleteEnvironment (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.248158447Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteEnvironment","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.248191207Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListEnvironments"}
+{"Time":"2026-06-29T15:18:48.248215497Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListEnvironments","Output":"=== RUN   TestListEnvironments\n"}
+{"Time":"2026-06-29T15:18:48.248260677Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListEnvironments","Output":"--- PASS: TestListEnvironments (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.248295667Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListEnvironments","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.248329057Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadEnvironment"}
+{"Time":"2026-06-29T15:18:48.248352657Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadEnvironment","Output":"=== RUN   TestReadEnvironment\n"}
+{"Time":"2026-06-29T15:18:48.248382627Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadEnvironment","Output":"--- PASS: TestReadEnvironment (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.248411837Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadEnvironment","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.248440217Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateEnvironment"}
+{"Time":"2026-06-29T15:18:48.248464917Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateEnvironment","Output":"=== RUN   TestUpdateEnvironment\n"}
+{"Time":"2026-06-29T15:18:48.248509987Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateEnvironment","Output":"--- PASS: TestUpdateEnvironment (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.248542927Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateEnvironment","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.248570647Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler"}
+{"Time":"2026-06-29T15:18:48.248601167Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler","Output":"=== RUN   TestErrorHandler\n"}
+{"Time":"2026-06-29T15:18:48.248642597Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/Basic_string_error"}
+{"Time":"2026-06-29T15:18:48.248676927Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/Basic_string_error","Output":"=== RUN   TestErrorHandler/Basic_string_error\n"}
+{"Time":"2026-06-29T15:18:48.248721087Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/Basic_string_error","Output":"--- PASS: TestErrorHandler/Basic_string_error (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.248756137Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/Basic_string_error","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.248792637Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/Unexpected_ServerError"}
+{"Time":"2026-06-29T15:18:48.248820297Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/Unexpected_ServerError","Output":"=== RUN   TestErrorHandler/Unexpected_ServerError\n"}
+{"Time":"2026-06-29T15:18:48.248860767Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/Unexpected_ServerError","Output":"--- PASS: TestErrorHandler/Unexpected_ServerError (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.248884157Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/Unexpected_ServerError","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.248913927Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_InvalidRequest"}
+{"Time":"2026-06-29T15:18:48.248935767Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_InvalidRequest","Output":"=== RUN   TestErrorHandler/ServerError:_InvalidRequest\n"}
+{"Time":"2026-06-29T15:18:48.248966877Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_InvalidRequest","Output":"--- PASS: TestErrorHandler/ServerError:_InvalidRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.248990197Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_InvalidRequest","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249023417Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_DeployDoesNotExist"}
+{"Time":"2026-06-29T15:18:48.249046167Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_DeployDoesNotExist","Output":"=== RUN   TestErrorHandler/ServerError:_DeployDoesNotExist\n"}
+{"Time":"2026-06-29T15:18:48.249070237Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_DeployDoesNotExist","Output":"--- PASS: TestErrorHandler/ServerError:_DeployDoesNotExist (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.249093697Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_DeployDoesNotExist","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249116627Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_EnvironmentDoesNotExist"}
+{"Time":"2026-06-29T15:18:48.249139057Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_EnvironmentDoesNotExist","Output":"=== RUN   TestErrorHandler/ServerError:_EnvironmentDoesNotExist\n"}
+{"Time":"2026-06-29T15:18:48.249167097Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_EnvironmentDoesNotExist","Output":"--- PASS: TestErrorHandler/ServerError:_EnvironmentDoesNotExist (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.249189557Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_EnvironmentDoesNotExist","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249212407Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_JobDoesNotExist"}
+{"Time":"2026-06-29T15:18:48.249235237Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_JobDoesNotExist","Output":"=== RUN   TestErrorHandler/ServerError:_JobDoesNotExist\n"}
+{"Time":"2026-06-29T15:18:48.249259407Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_JobDoesNotExist","Output":"--- PASS: TestErrorHandler/ServerError:_JobDoesNotExist (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.249282597Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_JobDoesNotExist","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249305617Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_LoadBalancerDoesNotExist"}
+{"Time":"2026-06-29T15:18:48.249329477Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_LoadBalancerDoesNotExist","Output":"=== RUN   TestErrorHandler/ServerError:_LoadBalancerDoesNotExist\n"}
+{"Time":"2026-06-29T15:18:48.249366547Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_LoadBalancerDoesNotExist","Output":"--- PASS: TestErrorHandler/ServerError:_LoadBalancerDoesNotExist (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.249410017Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_LoadBalancerDoesNotExist","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249443317Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_TaskDoesNotExist"}
+{"Time":"2026-06-29T15:18:48.249477617Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_TaskDoesNotExist","Output":"=== RUN   TestErrorHandler/ServerError:_TaskDoesNotExist\n"}
+{"Time":"2026-06-29T15:18:48.249509647Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_TaskDoesNotExist","Output":"--- PASS: TestErrorHandler/ServerError:_TaskDoesNotExist (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.249545147Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler/ServerError:_TaskDoesNotExist","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249584697Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler","Output":"--- PASS: TestErrorHandler (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.249615947Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestErrorHandler","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249647437Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateLoadBalancer"}
+{"Time":"2026-06-29T15:18:48.249682797Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateLoadBalancer","Output":"=== RUN   TestCreateLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:48.249728067Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateLoadBalancer","Output":"--- PASS: TestCreateLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.249760807Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249797477Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteLoadBalancer"}
+{"Time":"2026-06-29T15:18:48.249832027Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteLoadBalancer","Output":"=== RUN   TestDeleteLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:48.249865267Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteLoadBalancer","Output":"--- PASS: TestDeleteLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.249900927Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.249937977Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListLoadBalancers"}
+{"Time":"2026-06-29T15:18:48.249972407Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListLoadBalancers","Output":"=== RUN   TestListLoadBalancers\n"}
+{"Time":"2026-06-29T15:18:48.250011957Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListLoadBalancers","Output":"--- PASS: TestListLoadBalancers (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250048377Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListLoadBalancers","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250081507Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadLoadBalancer"}
+{"Time":"2026-06-29T15:18:48.250114887Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadLoadBalancer","Output":"=== RUN   TestReadLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:48.250165597Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadLoadBalancer","Output":"--- PASS: TestReadLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250202417Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250235017Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateLoadBalancer"}
+{"Time":"2026-06-29T15:18:48.250258827Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateLoadBalancer","Output":"=== RUN   TestUpdateLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:48.250282817Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateLoadBalancer","Output":"--- PASS: TestUpdateLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250305887Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250329447Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateService"}
+{"Time":"2026-06-29T15:18:48.250351207Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateService","Output":"=== RUN   TestCreateService\n"}
+{"Time":"2026-06-29T15:18:48.250379057Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateService","Output":"--- PASS: TestCreateService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250401957Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateService","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250424877Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteService"}
+{"Time":"2026-06-29T15:18:48.250447127Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteService","Output":"=== RUN   TestDeleteService\n"}
+{"Time":"2026-06-29T15:18:48.250470857Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteService","Output":"--- PASS: TestDeleteService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250495717Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteService","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250518787Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListServices"}
+{"Time":"2026-06-29T15:18:48.250540357Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListServices","Output":"=== RUN   TestListServices\n"}
+{"Time":"2026-06-29T15:18:48.250564177Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListServices","Output":"--- PASS: TestListServices (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250590667Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListServices","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250613917Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadService"}
+{"Time":"2026-06-29T15:18:48.250636087Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadService","Output":"=== RUN   TestReadService\n"}
+{"Time":"2026-06-29T15:18:48.250660707Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadService","Output":"--- PASS: TestReadService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250684207Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadService","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250707377Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadServiceLogs"}
+{"Time":"2026-06-29T15:18:48.250729227Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadServiceLogs","Output":"=== RUN   TestReadServiceLogs\n"}
+{"Time":"2026-06-29T15:18:48.250756927Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadServiceLogs","Output":"--- PASS: TestReadServiceLogs (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250786047Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadServiceLogs","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250809097Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateService"}
+{"Time":"2026-06-29T15:18:48.250831067Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateService","Output":"=== RUN   TestUpdateService\n"}
+{"Time":"2026-06-29T15:18:48.250855277Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateService","Output":"--- PASS: TestUpdateService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.250878917Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestUpdateService","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.250902327Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags"}
+{"Time":"2026-06-29T15:18:48.250924367Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags","Output":"=== RUN   TestListTags\n"}
+{"Time":"2026-06-29T15:18:48.250953537Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/no_params"}
+{"Time":"2026-06-29T15:18:48.250975227Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/no_params","Output":"=== RUN   TestListTags/no_params\n"}
+{"Time":"2026-06-29T15:18:48.251010147Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/no_params","Output":"--- PASS: TestListTags/no_params (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.251037387Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/no_params","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.251068327Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/type"}
+{"Time":"2026-06-29T15:18:48.251098697Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/type","Output":"=== RUN   TestListTags/type\n"}
+{"Time":"2026-06-29T15:18:48.251130967Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/type","Output":"--- PASS: TestListTags/type (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.251164077Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/type","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.251190187Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/id"}
+{"Time":"2026-06-29T15:18:48.251223297Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/id","Output":"=== RUN   TestListTags/id\n"}
+{"Time":"2026-06-29T15:18:48.251267707Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/id","Output":"--- PASS: TestListTags/id (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.251298457Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/id","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.251329887Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/name"}
+{"Time":"2026-06-29T15:18:48.251364427Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/name","Output":"=== RUN   TestListTags/name\n"}
+{"Time":"2026-06-29T15:18:48.251399217Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/name","Output":"--- PASS: TestListTags/name (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.251432777Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/name","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.251470067Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='e*'"}
+{"Time":"2026-06-29T15:18:48.251509477Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='e*'","Output":"=== RUN   TestListTags/fuzz='e*'\n"}
+{"Time":"2026-06-29T15:18:48.251558007Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='e*'","Output":"--- PASS: TestListTags/fuzz='e*' (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.251588247Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='e*'","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.251624077Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='*name*'"}
+{"Time":"2026-06-29T15:18:48.251657897Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='*name*'","Output":"=== RUN   TestListTags/fuzz='*name*'\n"}
+{"Time":"2026-06-29T15:18:48.251695317Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='*name*'","Output":"--- PASS: TestListTags/fuzz='*name*' (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.251727787Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='*name*'","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.251766847Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='*s'"}
+{"Time":"2026-06-29T15:18:48.251796607Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='*s'","Output":"=== RUN   TestListTags/fuzz='*s'\n"}
+{"Time":"2026-06-29T15:18:48.251834287Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='*s'","Output":"--- PASS: TestListTags/fuzz='*s' (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.251868087Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz='*s'","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.251904717Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/version=1"}
+{"Time":"2026-06-29T15:18:48.251943727Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/version=1","Output":"=== RUN   TestListTags/version=1\n"}
+{"Time":"2026-06-29T15:18:48.251976637Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/version=1","Output":"--- PASS: TestListTags/version=1 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.252023137Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/version=1","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.252054857Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/version=latest"}
+{"Time":"2026-06-29T15:18:48.252089577Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/version=latest","Output":"=== RUN   TestListTags/version=latest\n"}
+{"Time":"2026-06-29T15:18:48.252134357Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/version=latest","Output":"--- PASS: TestListTags/version=latest (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.252173907Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/version=latest","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.252204607Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/environment_id"}
+{"Time":"2026-06-29T15:18:48.252235787Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/environment_id","Output":"=== RUN   TestListTags/environment_id\n"}
+{"Time":"2026-06-29T15:18:48.252271887Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/environment_id","Output":"--- PASS: TestListTags/environment_id (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.252305277Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/environment_id","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.252346407Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz+type"}
+{"Time":"2026-06-29T15:18:48.252383587Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz+type","Output":"=== RUN   TestListTags/fuzz+type\n"}
+{"Time":"2026-06-29T15:18:48.252417147Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz+type","Output":"--- PASS: TestListTags/fuzz+type (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.252453427Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz+type","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.252486447Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz+type+environment_id"}
+{"Time":"2026-06-29T15:18:48.252516267Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz+type+environment_id","Output":"=== RUN   TestListTags/fuzz+type+environment_id\n"}
+{"Time":"2026-06-29T15:18:48.252554427Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz+type+environment_id","Output":"--- PASS: TestListTags/fuzz+type+environment_id (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.252586787Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags/fuzz+type+environment_id","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.252623187Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags","Output":"--- PASS: TestListTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.252650347Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.252684297Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateTask"}
+{"Time":"2026-06-29T15:18:48.252712767Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateTask","Output":"=== RUN   TestCreateTask\n"}
+{"Time":"2026-06-29T15:18:48.252750997Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateTask","Output":"--- PASS: TestCreateTask (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.252785517Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestCreateTask","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.252816227Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteTask"}
+{"Time":"2026-06-29T15:18:48.252841097Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteTask","Output":"=== RUN   TestDeleteTask\n"}
+{"Time":"2026-06-29T15:18:48.252869487Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteTask","Output":"--- PASS: TestDeleteTask (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.252906047Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestDeleteTask","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.252941977Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTasks"}
+{"Time":"2026-06-29T15:18:48.252975317Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTasks","Output":"=== RUN   TestListTasks\n"}
+{"Time":"2026-06-29T15:18:48.253010837Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTasks","Output":"--- PASS: TestListTasks (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.253041507Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestListTasks","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.253071177Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadTask"}
+{"Time":"2026-06-29T15:18:48.253104877Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadTask","Output":"=== RUN   TestReadTask\n"}
+{"Time":"2026-06-29T15:18:48.253145607Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadTask","Output":"--- PASS: TestReadTask (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.253172637Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadTask","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.253201457Z","Action":"run","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadTaskLogs"}
+{"Time":"2026-06-29T15:18:48.253232557Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadTaskLogs","Output":"=== RUN   TestReadTaskLogs\n"}
+{"Time":"2026-06-29T15:18:48.253259887Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadTaskLogs","Output":"--- PASS: TestReadTaskLogs (0.00s)\n"}
+{"Time":"2026-06-29T15:18:48.253289687Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Test":"TestReadTaskLogs","Elapsed":0}
+{"Time":"2026-06-29T15:18:48.253318717Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:48.253445697Z","Action":"output","Package":"github.com/quintilesims/layer0/api/controllers","Output":"ok  \tgithub.com/quintilesims/layer0/api/controllers\t0.013s\n"}
+{"Time":"2026-06-29T15:18:48.253511497Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/controllers","Elapsed":0.014}
+{"Time":"2026-06-29T15:18:53.853532888Z","Action":"start","Package":"github.com/quintilesims/layer0/api/provider/aws"}
+{"Time":"2026-06-29T15:18:53.861167167Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"Test_lookupDeployIDFromTaskDefinitionARN"}
+{"Time":"2026-06-29T15:18:53.861224117Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"Test_lookupDeployIDFromTaskDefinitionARN","Output":"=== RUN   Test_lookupDeployIDFromTaskDefinitionARN\n"}
+{"Time":"2026-06-29T15:18:53.861258857Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"Test_lookupDeployIDFromTaskDefinitionARN","Output":"--- PASS: Test_lookupDeployIDFromTaskDefinitionARN (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.861282817Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"Test_lookupDeployIDFromTaskDefinitionARN","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.861309057Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"Test_lookupTaskDefinitionARNFromDeployID"}
+{"Time":"2026-06-29T15:18:53.861331237Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"Test_lookupTaskDefinitionARNFromDeployID","Output":"=== RUN   Test_lookupTaskDefinitionARNFromDeployID\n"}
+{"Time":"2026-06-29T15:18:53.861355327Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"Test_lookupTaskDefinitionARNFromDeployID","Output":"--- PASS: Test_lookupTaskDefinitionARNFromDeployID (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.861378197Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"Test_lookupTaskDefinitionARNFromDeployID","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.861401477Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_createTags"}
+{"Time":"2026-06-29T15:18:53.861423387Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_createTags","Output":"=== RUN   TestDeploy_createTags\n"}
+{"Time":"2026-06-29T15:18:53.861452587Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_createTags","Output":"--- PASS: TestDeploy_createTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.861475407Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_createTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.861511697Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_renderTaskDefinition"}
+{"Time":"2026-06-29T15:18:53.861533827Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_renderTaskDefinition","Output":"=== RUN   TestDeploy_renderTaskDefinition\n"}
+{"Time":"2026-06-29T15:18:53.861793997Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_renderTaskDefinition","Output":"--- PASS: TestDeploy_renderTaskDefinition (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.861845507Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_renderTaskDefinition","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.861871497Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_renderTaskDefinition_Errors"}
+{"Time":"2026-06-29T15:18:53.861894117Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_renderTaskDefinition_Errors","Output":"=== RUN   TestDeploy_renderTaskDefinition_Errors\n"}
+{"Time":"2026-06-29T15:18:53.861928587Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_renderTaskDefinition_Errors","Output":"--- PASS: TestDeploy_renderTaskDefinition_Errors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.861952507Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_renderTaskDefinition_Errors","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.861976767Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_populateSummariesFromTaskDefinitionARNs"}
+{"Time":"2026-06-29T15:18:53.862006587Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_populateSummariesFromTaskDefinitionARNs","Output":"=== RUN   TestDeploy_populateSummariesFromTaskDefinitionARNs\n"}
+{"Time":"2026-06-29T15:18:53.862037217Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_populateSummariesFromTaskDefinitionARNs","Output":"--- PASS: TestDeploy_populateSummariesFromTaskDefinitionARNs (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862062477Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_populateSummariesFromTaskDefinitionARNs","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862086357Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_populateModelTags"}
+{"Time":"2026-06-29T15:18:53.862109417Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_populateModelTags","Output":"=== RUN   TestDeploy_populateModelTags\n"}
+{"Time":"2026-06-29T15:18:53.862133707Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_populateModelTags","Output":"--- PASS: TestDeploy_populateModelTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862156797Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestDeploy_populateModelTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862179657Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_createTags"}
+{"Time":"2026-06-29T15:18:53.862201957Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_createTags","Output":"=== RUN   TestEnvironment_createTags\n"}
+{"Time":"2026-06-29T15:18:53.862226427Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_createTags","Output":"--- PASS: TestEnvironment_createTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862249937Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_createTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862273417Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_RenderUserData"}
+{"Time":"2026-06-29T15:18:53.862305467Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_RenderUserData","Output":"=== RUN   TestEnvironment_RenderUserData\n"}
+{"Time":"2026-06-29T15:18:53.862336687Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_RenderUserData","Output":"--- PASS: TestEnvironment_RenderUserData (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862360607Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_RenderUserData","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862383677Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_makeEnvironmentSummaryModels"}
+{"Time":"2026-06-29T15:18:53.862405687Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_makeEnvironmentSummaryModels","Output":"=== RUN   TestEnvironment_makeEnvironmentSummaryModels\n"}
+{"Time":"2026-06-29T15:18:53.862430057Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_makeEnvironmentSummaryModels","Output":"--- PASS: TestEnvironment_makeEnvironmentSummaryModels (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862453227Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_makeEnvironmentSummaryModels","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862476307Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_makeEnvironmentModels"}
+{"Time":"2026-06-29T15:18:53.862499537Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_makeEnvironmentModels","Output":"=== RUN   TestEnvironment_makeEnvironmentModels\n"}
+{"Time":"2026-06-29T15:18:53.862523497Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_makeEnvironmentModels","Output":"--- PASS: TestEnvironment_makeEnvironmentModels (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862546927Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestEnvironment_makeEnvironmentModels","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862582287Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_createTags"}
+{"Time":"2026-06-29T15:18:53.862604617Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_createTags","Output":"=== RUN   TestLoadBalancer_createTags\n"}
+{"Time":"2026-06-29T15:18:53.862628417Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_createTags","Output":"--- PASS: TestLoadBalancer_createTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862653117Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_createTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862676457Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_renderLoadBalancerRolePolicy"}
+{"Time":"2026-06-29T15:18:53.862699047Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_renderLoadBalancerRolePolicy","Output":"=== RUN   TestLoadBalancer_renderLoadBalancerRolePolicy\n"}
+{"Time":"2026-06-29T15:18:53.862723147Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_renderLoadBalancerRolePolicy","Output":"--- PASS: TestLoadBalancer_renderLoadBalancerRolePolicy (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862746637Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_renderLoadBalancerRolePolicy","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862769747Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_makeLoadBalancerSummaryModels"}
+{"Time":"2026-06-29T15:18:53.862792147Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_makeLoadBalancerSummaryModels","Output":"=== RUN   TestLoadBalancer_makeLoadBalancerSummaryModels\n"}
+{"Time":"2026-06-29T15:18:53.862823647Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_makeLoadBalancerSummaryModels","Output":"--- PASS: TestLoadBalancer_makeLoadBalancerSummaryModels (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862846887Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_makeLoadBalancerSummaryModels","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862870357Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_makeLoadBalancerModel"}
+{"Time":"2026-06-29T15:18:53.862892287Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_makeLoadBalancerModel","Output":"=== RUN   TestLoadBalancer_makeLoadBalancerModel\n"}
+{"Time":"2026-06-29T15:18:53.862916157Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_makeLoadBalancerModel","Output":"--- PASS: TestLoadBalancer_makeLoadBalancerModel (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.862945037Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestLoadBalancer_makeLoadBalancerModel","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.862967967Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_createTagsWithLoadBalancer"}
+{"Time":"2026-06-29T15:18:53.862990477Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_createTagsWithLoadBalancer","Output":"=== RUN   TestService_createTagsWithLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:53.863092077Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_createTagsWithLoadBalancer","Output":"--- PASS: TestService_createTagsWithLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863114607Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_createTagsWithLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863137817Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_createTagsWithoutLoadBalancer"}
+{"Time":"2026-06-29T15:18:53.863168977Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_createTagsWithoutLoadBalancer","Output":"=== RUN   TestService_createTagsWithoutLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:53.863197647Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_createTagsWithoutLoadBalancer","Output":"--- PASS: TestService_createTagsWithoutLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863227037Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_createTagsWithoutLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863257167Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_deleteEntityTags"}
+{"Time":"2026-06-29T15:18:53.863282677Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_deleteEntityTags","Output":"=== RUN   TestService_deleteEntityTags\n"}
+{"Time":"2026-06-29T15:18:53.863311177Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_deleteEntityTags","Output":"--- PASS: TestService_deleteEntityTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863339907Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_deleteEntityTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863370877Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestServiceList_makeServiceSummaryModels"}
+{"Time":"2026-06-29T15:18:53.863407427Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestServiceList_makeServiceSummaryModels","Output":"=== RUN   TestServiceList_makeServiceSummaryModels\n"}
+{"Time":"2026-06-29T15:18:53.863442337Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestServiceList_makeServiceSummaryModels","Output":"--- PASS: TestServiceList_makeServiceSummaryModels (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863471207Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestServiceList_makeServiceSummaryModels","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863500827Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_makeDeploymentModel"}
+{"Time":"2026-06-29T15:18:53.863525127Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_makeDeploymentModel","Output":"=== RUN   TestService_makeDeploymentModel\n"}
+{"Time":"2026-06-29T15:18:53.863553577Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_makeDeploymentModel","Output":"--- PASS: TestService_makeDeploymentModel (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863576777Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_makeDeploymentModel","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863599827Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_makeServiceModel"}
+{"Time":"2026-06-29T15:18:53.863621707Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_makeServiceModel","Output":"=== RUN   TestService_makeServiceModel\n"}
+{"Time":"2026-06-29T15:18:53.863646267Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_makeServiceModel","Output":"--- PASS: TestService_makeServiceModel (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863670697Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestService_makeServiceModel","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863698707Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_createTags"}
+{"Time":"2026-06-29T15:18:53.863721627Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_createTags","Output":"=== RUN   TestTask_createTags\n"}
+{"Time":"2026-06-29T15:18:53.863745267Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_createTags","Output":"--- PASS: TestTask_createTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863768257Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_createTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863791097Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_deleteEntityTags"}
+{"Time":"2026-06-29T15:18:53.863813297Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_deleteEntityTags","Output":"=== RUN   TestTask_deleteEntityTags\n"}
+{"Time":"2026-06-29T15:18:53.863839047Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_deleteEntityTags","Output":"--- PASS: TestTask_deleteEntityTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863863407Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_deleteEntityTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863887117Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_makeTaskSummaryModels"}
+{"Time":"2026-06-29T15:18:53.863908857Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_makeTaskSummaryModels","Output":"=== RUN   TestTask_makeTaskSummaryModels\n"}
+{"Time":"2026-06-29T15:18:53.863935327Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_makeTaskSummaryModels","Output":"--- PASS: TestTask_makeTaskSummaryModels (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.863965537Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_makeTaskSummaryModels","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.863988437Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_makeTaskModel"}
+{"Time":"2026-06-29T15:18:53.864019717Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_makeTaskModel","Output":"=== RUN   TestTask_makeTaskModel\n"}
+{"Time":"2026-06-29T15:18:53.864043427Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_makeTaskModel","Output":"--- PASS: TestTask_makeTaskModel (0.00s)\n"}
+{"Time":"2026-06-29T15:18:53.864066397Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Test":"TestTask_makeTaskModel","Elapsed":0}
+{"Time":"2026-06-29T15:18:53.864088647Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:53.864156497Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws","Output":"ok  \tgithub.com/quintilesims/layer0/api/provider/aws\t0.011s\n"}
+{"Time":"2026-06-29T15:18:53.864185167Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws","Elapsed":0.011}
+{"Time":"2026-06-29T15:18:54.333292576Z","Action":"start","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws"}
+{"Time":"2026-06-29T15:18:54.333475796Z","Action":"start","Package":"github.com/quintilesims/layer0/cli/command"}
+{"Time":"2026-06-29T15:18:54.333579186Z","Action":"start","Package":"github.com/quintilesims/layer0/cli/printer"}
+{"Time":"2026-06-29T15:18:54.333658576Z","Action":"start","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0"}
+{"Time":"2026-06-29T15:18:54.337299266Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintDeploys"}
+{"Time":"2026-06-29T15:18:54.337365716Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintDeploys","Output":"=== RUN   ExampleTextPrintDeploys\n"}
+{"Time":"2026-06-29T15:18:54.337528556Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintDeploys","Output":"--- PASS: ExampleTextPrintDeploys (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.337563986Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintDeploys","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.337597716Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintDeploySummaries"}
+{"Time":"2026-06-29T15:18:54.337619856Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintDeploySummaries","Output":"=== RUN   ExampleTextPrintDeploySummaries\n"}
+{"Time":"2026-06-29T15:18:54.337725456Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintDeploySummaries","Output":"--- PASS: ExampleTextPrintDeploySummaries (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.337758896Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintDeploySummaries","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.337786916Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintEnvironments"}
+{"Time":"2026-06-29T15:18:54.337811056Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintEnvironments","Output":"=== RUN   ExampleTextPrintEnvironments\n"}
+{"Time":"2026-06-29T15:18:54.337983196Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintEnvironments","Output":"--- PASS: ExampleTextPrintEnvironments (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.338029496Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintEnvironments","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.338062706Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintEnvironmentSummaries"}
+{"Time":"2026-06-29T15:18:54.338097316Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintEnvironmentSummaries","Output":"=== RUN   ExampleTextPrintEnvironmentSummaries\n"}
+{"Time":"2026-06-29T15:18:54.338209416Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintEnvironmentSummaries","Output":"--- PASS: ExampleTextPrintEnvironmentSummaries (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.338281506Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintEnvironmentSummaries","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.338308836Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancers"}
+{"Time":"2026-06-29T15:18:54.338331596Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancers","Output":"=== RUN   ExampleTextPrintLoadBalancers\n"}
+{"Time":"2026-06-29T15:18:54.338371996Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancers","Output":"--- PASS: ExampleTextPrintLoadBalancers (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.338396006Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancers","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.338426816Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancerSummaries"}
+{"Time":"2026-06-29T15:18:54.338448916Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancerSummaries","Output":"=== RUN   ExampleTextPrintLoadBalancerSummaries\n"}
+{"Time":"2026-06-29T15:18:54.338568576Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancerSummaries","Output":"--- PASS: ExampleTextPrintLoadBalancerSummaries (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.338593916Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancerSummaries","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.338617726Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancerHealthCheck"}
+{"Time":"2026-06-29T15:18:54.338643106Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancerHealthCheck","Output":"=== RUN   ExampleTextPrintLoadBalancerHealthCheck\n"}
+{"Time":"2026-06-29T15:18:54.338819756Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancerHealthCheck","Output":"--- PASS: ExampleTextPrintLoadBalancerHealthCheck (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.338852486Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLoadBalancerHealthCheck","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.338878656Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLogs"}
+{"Time":"2026-06-29T15:18:54.338901236Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLogs","Output":"=== RUN   ExampleTextPrintLogs\n"}
+{"Time":"2026-06-29T15:18:54.338932116Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLogs","Output":"--- PASS: ExampleTextPrintLogs (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.338956386Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintLogs","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.338980856Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintServices"}
+{"Time":"2026-06-29T15:18:54.339008606Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintServices","Output":"=== RUN   ExampleTextPrintServices\n"}
+{"Time":"2026-06-29T15:18:54.339150166Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintServices","Output":"--- PASS: ExampleTextPrintServices (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.339174976Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintServices","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.339198966Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintServiceSummaries"}
+{"Time":"2026-06-29T15:18:54.339221426Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintServiceSummaries","Output":"=== RUN   ExampleTextPrintServiceSummaries\n"}
+{"Time":"2026-06-29T15:18:54.339250006Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintServiceSummaries","Output":"--- PASS: ExampleTextPrintServiceSummaries (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.339272756Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintServiceSummaries","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.339297256Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintTasks"}
+{"Time":"2026-06-29T15:18:54.339320926Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintTasks","Output":"=== RUN   ExampleTextPrintTasks\n"}
+{"Time":"2026-06-29T15:18:54.339368566Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestAdminInit"}
+{"Time":"2026-06-29T15:18:54.339391696Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestAdminInit","Output":"=== RUN   TestAdminInit\n"}
+{"Time":"2026-06-29T15:18:54.339427056Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintTasks","Output":"--- PASS: ExampleTextPrintTasks (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.339450296Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintTasks","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.339473326Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintTaskSummaries"}
+{"Time":"2026-06-29T15:18:54.339495816Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintTaskSummaries","Output":"=== RUN   ExampleTextPrintTaskSummaries\n"}
+{"Time":"2026-06-29T15:18:54.339524076Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintTaskSummaries","Output":"--- PASS: ExampleTextPrintTaskSummaries (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.339547306Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Test":"ExampleTextPrintTaskSummaries","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.339570256Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:54.339624086Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestAdminInit","Output":"--- PASS: TestAdminInit (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.339648146Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestAdminInit","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.339672346Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployCreate"}
+{"Time":"2026-06-29T15:18:54.339698876Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployCreate","Output":"=== RUN   TestDeployCreate\n"}
+{"Time":"2026-06-29T15:18:54.339730116Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/printer","Output":"ok  \tgithub.com/quintilesims/layer0/cli/printer\t0.006s\n"}
+{"Time":"2026-06-29T15:18:54.339770556Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/printer","Elapsed":0.006}
+{"Time":"2026-06-29T15:18:54.340332796Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDebugAdmin"}
+{"Time":"2026-06-29T15:18:54.340525866Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDebugAdmin","Output":"=== RUN   TestDebugAdmin\n"}
+{"Time":"2026-06-29T15:18:54.340557436Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDebugAdmin","Output":"--- PASS: TestDebugAdmin (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.340581126Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDebugAdmin","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.340605916Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeploy"}
+{"Time":"2026-06-29T15:18:54.340628506Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeploy","Output":"=== RUN   TestCreateDeploy\n"}
+{"Time":"2026-06-29T15:18:54.340665106Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployCreate","Output":"--- PASS: TestDeployCreate (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.340691916Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployCreate","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.340715206Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployDelete"}
+{"Time":"2026-06-29T15:18:54.340737416Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployDelete","Output":"=== RUN   TestDeployDelete\n"}
+{"Time":"2026-06-29T15:18:54.340763566Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployDelete","Output":"--- PASS: TestDeployDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.340786766Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.340810706Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteDeployIdempotence"}
+{"Time":"2026-06-29T15:18:54.340833186Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteDeployIdempotence","Output":"=== RUN   TestDeleteDeployIdempotence\n"}
+{"Time":"2026-06-29T15:18:54.340863486Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteDeployIdempotence","Output":"--- PASS: TestDeleteDeployIdempotence (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.340892646Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteDeployIdempotence","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.340916416Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployDelete_idempotenceViaTags"}
+{"Time":"2026-06-29T15:18:54.340938656Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployDelete_idempotenceViaTags","Output":"=== RUN   TestDeployDelete_idempotenceViaTags\n"}
+{"Time":"2026-06-29T15:18:54.340963576Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployDelete_idempotenceViaTags","Output":"--- PASS: TestDeployDelete_idempotenceViaTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.340988536Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployDelete_idempotenceViaTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341025906Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployList"}
+{"Time":"2026-06-29T15:18:54.341048416Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployList","Output":"=== RUN   TestDeployList\n"}
+{"Time":"2026-06-29T15:18:54.341072156Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployList","Output":"--- PASS: TestDeployList (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341106886Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployList","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341129976Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployRead"}
+{"Time":"2026-06-29T15:18:54.341151866Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployRead","Output":"=== RUN   TestDeployRead\n"}
+{"Time":"2026-06-29T15:18:54.341181896Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployRead","Output":"--- PASS: TestDeployRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341204826Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeployRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341228826Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreate"}
+{"Time":"2026-06-29T15:18:54.341251116Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreate","Output":"=== RUN   TestEnvironmentCreate\n"}
+{"Time":"2026-06-29T15:18:54.341278486Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreate","Output":"--- PASS: TestEnvironmentCreate (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341301056Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreate","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341324296Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreateDynamic"}
+{"Time":"2026-06-29T15:18:54.341347026Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreateDynamic","Output":"=== RUN   TestEnvironmentCreateDynamic\n"}
+{"Time":"2026-06-29T15:18:54.341398286Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeploy","Output":"--- PASS: TestCreateDeploy (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341422186Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeploy","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341445346Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors"}
+{"Time":"2026-06-29T15:18:54.341468026Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors","Output":"=== RUN   TestCreateDeployInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.341496176Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors/Missing_PATH_arg"}
+{"Time":"2026-06-29T15:18:54.341519536Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors/Missing_PATH_arg","Output":"=== RUN   TestCreateDeployInputErrors/Missing_PATH_arg\n"}
+{"Time":"2026-06-29T15:18:54.341568426Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors/Missing_PATH_arg","Output":"--- PASS: TestCreateDeployInputErrors/Missing_PATH_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341496816Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreateDynamic","Output":"--- PASS: TestEnvironmentCreateDynamic (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341635306Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreateDynamic","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341474136Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0APIRead"}
+{"Time":"2026-06-29T15:18:54.341688006Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0APIRead","Output":"=== RUN   TestDataSourceLayer0APIRead\n"}
+{"Time":"2026-06-29T15:18:54.341728066Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0APIRead","Output":"--- PASS: TestDataSourceLayer0APIRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341751116Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0APIRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341777336Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0DeployRead"}
+{"Time":"2026-06-29T15:18:54.341804046Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0DeployRead","Output":"=== RUN   TestDataSourceLayer0DeployRead\n"}
+{"Time":"2026-06-29T15:18:54.341830516Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0DeployRead","Output":"--- PASS: TestDataSourceLayer0DeployRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341853676Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0DeployRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341877486Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0EnvironmentRead"}
+{"Time":"2026-06-29T15:18:54.341900186Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0EnvironmentRead","Output":"=== RUN   TestDataSourceLayer0EnvironmentRead\n"}
+{"Time":"2026-06-29T15:18:54.341924636Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0EnvironmentRead","Output":"--- PASS: TestDataSourceLayer0EnvironmentRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341950006Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0EnvironmentRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341990076Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0LoadBalancerRead"}
+{"Time":"2026-06-29T15:18:54.342025046Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0LoadBalancerRead","Output":"=== RUN   TestDataSourceLayer0LoadBalancerRead\n"}
+{"Time":"2026-06-29T15:18:54.342050046Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0LoadBalancerRead","Output":"--- PASS: TestDataSourceLayer0LoadBalancerRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.342076206Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0LoadBalancerRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342099966Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0ServiceRead"}
+{"Time":"2026-06-29T15:18:54.342124636Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0ServiceRead","Output":"=== RUN   TestDataSourceLayer0ServiceRead\n"}
+{"Time":"2026-06-29T15:18:54.342155186Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0ServiceRead","Output":"--- PASS: TestDataSourceLayer0ServiceRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.341593906Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors/Missing_PATH_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342205966Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.342228706Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors/Missing_NAME_arg","Output":"=== RUN   TestCreateDeployInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.342262226Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors/Missing_NAME_arg","Output":"--- PASS: TestCreateDeployInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.342286856Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342314836Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors","Output":"--- PASS: TestCreateDeployInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.342338156Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateDeployInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.341664926Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreateDefaults"}
+{"Time":"2026-06-29T15:18:54.342394886Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreateDefaults","Output":"=== RUN   TestEnvironmentCreateDefaults\n"}
+{"Time":"2026-06-29T15:18:54.342432826Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreateDefaults","Output":"--- PASS: TestEnvironmentCreateDefaults (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.342456206Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentCreateDefaults","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342483486Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentDelete"}
+{"Time":"2026-06-29T15:18:54.342511636Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentDelete","Output":"=== RUN   TestEnvironmentDelete\n"}
+{"Time":"2026-06-29T15:18:54.342536926Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentDelete","Output":"--- PASS: TestEnvironmentDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.342560476Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342589126Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteEnvironmentIdempotence"}
+{"Time":"2026-06-29T15:18:54.342616076Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteEnvironmentIdempotence","Output":"=== RUN   TestDeleteEnvironmentIdempotence\n"}
+{"Time":"2026-06-29T15:18:54.342641886Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteEnvironmentIdempotence","Output":"--- PASS: TestDeleteEnvironmentIdempotence (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.342669656Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteEnvironmentIdempotence","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342694396Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentList"}
+{"Time":"2026-06-29T15:18:54.342178496Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestDataSourceLayer0ServiceRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342748326Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestProvider"}
+{"Time":"2026-06-29T15:18:54.342773756Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestProvider","Output":"=== RUN   TestProvider\n"}
+{"Time":"2026-06-29T15:18:54.342800056Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestProvider","Output":"--- PASS: TestProvider (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.342362116Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeploy"}
+{"Time":"2026-06-29T15:18:54.342859666Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeploy","Output":"=== RUN   TestDeleteDeploy\n"}
+{"Time":"2026-06-29T15:18:54.342718496Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentList","Output":"=== RUN   TestEnvironmentList\n"}
+{"Time":"2026-06-29T15:18:54.342925876Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentList","Output":"--- PASS: TestEnvironmentList (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.342960566Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentList","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342986595Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentRead"}
+{"Time":"2026-06-29T15:18:54.343029055Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentRead","Output":"=== RUN   TestEnvironmentRead\n"}
+{"Time":"2026-06-29T15:18:54.343056195Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentRead","Output":"--- PASS: TestEnvironmentRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343081595Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.343107185Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentUpdate"}
+{"Time":"2026-06-29T15:18:54.343135125Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentUpdate","Output":"=== RUN   TestEnvironmentUpdate\n"}
+{"Time":"2026-06-29T15:18:54.343160105Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentUpdate","Output":"--- PASS: TestEnvironmentUpdate (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343185575Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestEnvironmentUpdate","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.343213935Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerCreate"}
+{"Time":"2026-06-29T15:18:54.343237605Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerCreate","Output":"=== RUN   TestLoadBalancerCreate\n"}
+{"Time":"2026-06-29T15:18:54.343273265Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerCreate","Output":"--- PASS: TestLoadBalancerCreate (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343301425Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerCreate","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.342824606Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestProvider","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.343353495Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceDeployCreateRead"}
+{"Time":"2026-06-29T15:18:54.343381985Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceDeployCreateRead","Output":"=== RUN   TestResourceDeployCreateRead\n"}
+{"Time":"2026-06-29T15:18:54.342886006Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeploy","Output":"--- PASS: TestDeleteDeploy (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343433775Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeploy","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.343460815Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeployInputErrors"}
+{"Time":"2026-06-29T15:18:54.343496675Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeployInputErrors","Output":"=== RUN   TestDeleteDeployInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.343522135Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeployInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.343546545Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeployInputErrors/Missing_NAME_arg","Output":"=== RUN   TestDeleteDeployInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.343325765Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerCreateDefaults"}
+{"Time":"2026-06-29T15:18:54.343599345Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerCreateDefaults","Output":"=== RUN   TestLoadBalancerCreateDefaults\n"}
+{"Time":"2026-06-29T15:18:54.343630635Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerCreateDefaults","Output":"--- PASS: TestLoadBalancerCreateDefaults (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343655005Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerCreateDefaults","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.343679735Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerDelete"}
+{"Time":"2026-06-29T15:18:54.343703175Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerDelete","Output":"=== RUN   TestLoadBalancerDelete\n"}
+{"Time":"2026-06-29T15:18:54.343728775Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerDelete","Output":"--- PASS: TestLoadBalancerDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343752325Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.343417335Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceDeployCreateRead","Output":"--- PASS: TestResourceDeployCreateRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343806565Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceDeployCreateRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.343834185Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceDeployDelete"}
+{"Time":"2026-06-29T15:18:54.343858825Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceDeployDelete","Output":"=== RUN   TestResourceDeployDelete\n"}
+{"Time":"2026-06-29T15:18:54.343572755Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeployInputErrors/Missing_NAME_arg","Output":"--- PASS: TestDeleteDeployInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343927765Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeployInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.343955335Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeployInputErrors","Output":"--- PASS: TestDeleteDeployInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.343983525Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteDeployInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344024585Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeploy"}
+{"Time":"2026-06-29T15:18:54.343776715Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerDeleteIdempotence"}
+{"Time":"2026-06-29T15:18:54.344075395Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerDeleteIdempotence","Output":"=== RUN   TestLoadBalancerDeleteIdempotence\n"}
+{"Time":"2026-06-29T15:18:54.343889095Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceDeployDelete","Output":"--- PASS: TestResourceDeployDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344141525Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceDeployDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344167815Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentLinksCreateRead"}
+{"Time":"2026-06-29T15:18:54.344191485Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentLinksCreateRead","Output":"=== RUN   TestResourceEnvironmentLinksCreateRead\n"}
+{"Time":"2026-06-29T15:18:54.344216635Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentLinksCreateRead","Output":"--- PASS: TestResourceEnvironmentLinksCreateRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344240325Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentLinksCreateRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344051055Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeploy","Output":"=== RUN   TestReadDeploy\n"}
+{"Time":"2026-06-29T15:18:54.344288985Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeploy","Output":"--- PASS: TestReadDeploy (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344314215Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeploy","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344111155Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerDeleteIdempotence","Output":"--- PASS: TestLoadBalancerDeleteIdempotence (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344369975Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerDeleteIdempotence","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344399285Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerList"}
+{"Time":"2026-06-29T15:18:54.344424255Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerList","Output":"=== RUN   TestLoadBalancerList\n"}
+{"Time":"2026-06-29T15:18:54.344448635Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerList","Output":"--- PASS: TestLoadBalancerList (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344264335Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentLinksDelete"}
+{"Time":"2026-06-29T15:18:54.344500195Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentLinksDelete","Output":"=== RUN   TestResourceEnvironmentLinksDelete\n"}
+{"Time":"2026-06-29T15:18:54.344526675Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentLinksDelete","Output":"--- PASS: TestResourceEnvironmentLinksDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344549965Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentLinksDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344338425Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeployInputErrors"}
+{"Time":"2026-06-29T15:18:54.344596515Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeployInputErrors","Output":"=== RUN   TestReadDeployInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.344576195Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentCreateRead"}
+{"Time":"2026-06-29T15:18:54.344659105Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentCreateRead","Output":"=== RUN   TestResourceEnvironmentCreateRead\n"}
+{"Time":"2026-06-29T15:18:54.344689935Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentCreateRead","Output":"--- PASS: TestResourceEnvironmentCreateRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344717895Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentCreateRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344741925Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentDelete"}
+{"Time":"2026-06-29T15:18:54.344472805Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerList","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344792205Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerRead"}
+{"Time":"2026-06-29T15:18:54.344819555Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerRead","Output":"=== RUN   TestLoadBalancerRead\n"}
+{"Time":"2026-06-29T15:18:54.344843865Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerRead","Output":"--- PASS: TestLoadBalancerRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344867205Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.344904485Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerUpdate"}
+{"Time":"2026-06-29T15:18:54.344621965Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeployInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.344962165Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeployInputErrors/Missing_NAME_arg","Output":"=== RUN   TestReadDeployInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.344994015Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeployInputErrors/Missing_NAME_arg","Output":"--- PASS: TestReadDeployInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.345044975Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeployInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.345087295Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeployInputErrors","Output":"--- PASS: TestReadDeployInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.344764095Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentDelete","Output":"=== RUN   TestResourceEnvironmentDelete\n"}
+{"Time":"2026-06-29T15:18:54.345160895Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentDelete","Output":"--- PASS: TestResourceEnvironmentDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.345193765Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceEnvironmentDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.345227375Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceLoadBalancerCreateRead"}
+{"Time":"2026-06-29T15:18:54.345256115Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceLoadBalancerCreateRead","Output":"=== RUN   TestResourceLoadBalancerCreateRead\n"}
+{"Time":"2026-06-29T15:18:54.345302655Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceLoadBalancerCreateRead","Output":"--- PASS: TestResourceLoadBalancerCreateRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.345344295Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceLoadBalancerCreateRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.345373625Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceLoadBalancerDelete"}
+{"Time":"2026-06-29T15:18:54.344930215Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerUpdate","Output":"=== RUN   TestLoadBalancerUpdate\n"}
+{"Time":"2026-06-29T15:18:54.345452425Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerUpdate","Output":"--- PASS: TestLoadBalancerUpdate (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.345479765Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestLoadBalancerUpdate","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.345503585Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceCreate"}
+{"Time":"2026-06-29T15:18:54.345528655Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceCreate","Output":"=== RUN   TestServiceCreate\n"}
+{"Time":"2026-06-29T15:18:54.345553395Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceCreate","Output":"--- PASS: TestServiceCreate (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.345577445Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceCreate","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.345679455Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceCreate_defaults"}
+{"Time":"2026-06-29T15:18:54.345704175Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceCreate_defaults","Output":"=== RUN   TestServiceCreate_defaults\n"}
+{"Time":"2026-06-29T15:18:54.345729065Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceCreate_defaults","Output":"--- PASS: TestServiceCreate_defaults (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.345940485Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceCreate_defaults","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.346060585Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete"}
+{"Time":"2026-06-29T15:18:54.346091725Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete","Output":"=== RUN   TestServiceDelete\n"}
+{"Time":"2026-06-29T15:18:54.346130175Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete","Output":"--- PASS: TestServiceDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.346154925Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.345122885Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadDeployInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.345398185Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceLoadBalancerDelete","Output":"=== RUN   TestResourceLoadBalancerDelete\n"}
+{"Time":"2026-06-29T15:18:54.346220235Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceLoadBalancerDelete","Output":"--- PASS: TestResourceLoadBalancerDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.346236575Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete_idempotenceViaTags"}
+{"Time":"2026-06-29T15:18:54.346291755Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete_idempotenceViaTags","Output":"=== RUN   TestServiceDelete_idempotenceViaTags\n"}
+{"Time":"2026-06-29T15:18:54.346321705Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete_idempotenceViaTags","Output":"--- PASS: TestServiceDelete_idempotenceViaTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.346345425Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete_idempotenceViaTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.346244045Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceLoadBalancerDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.346409025Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceServiceCreateRead"}
+{"Time":"2026-06-29T15:18:54.346258215Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListDeploys"}
+{"Time":"2026-06-29T15:18:54.346470545Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListDeploys","Output":"=== RUN   TestListDeploys\n"}
+{"Time":"2026-06-29T15:18:54.346370905Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete_idempotenceViaAWS"}
+{"Time":"2026-06-29T15:18:54.346543505Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete_idempotenceViaAWS","Output":"=== RUN   TestServiceDelete_idempotenceViaAWS\n"}
+{"Time":"2026-06-29T15:18:54.346433405Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceServiceCreateRead","Output":"=== RUN   TestResourceServiceCreateRead\n"}
+{"Time":"2026-06-29T15:18:54.346506505Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListDeploys","Output":"--- PASS: TestListDeploys (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.346647205Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListDeploys","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.346569915Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete_idempotenceViaAWS","Output":"--- PASS: TestServiceDelete_idempotenceViaAWS (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.346709615Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceDelete_idempotenceViaAWS","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.346671905Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestFilterDeploySummaries"}
+{"Time":"2026-06-29T15:18:54.346770515Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestFilterDeploySummaries","Output":"=== RUN   TestFilterDeploySummaries\n"}
+{"Time":"2026-06-29T15:18:54.346734565Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceList"}
+{"Time":"2026-06-29T15:18:54.346819575Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestFilterDeploySummaries","Output":"--- PASS: TestFilterDeploySummaries (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.346847465Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestFilterDeploySummaries","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.346870745Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironment"}
+{"Time":"2026-06-29T15:18:54.346893085Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironment","Output":"=== RUN   TestCreateEnvironment\n"}
+{"Time":"2026-06-29T15:18:54.346931255Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironment","Output":"--- PASS: TestCreateEnvironment (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.346964075Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironment","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.346815195Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceList","Output":"=== RUN   TestServiceList\n"}
+{"Time":"2026-06-29T15:18:54.347052035Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceList","Output":"--- PASS: TestServiceList (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347006315Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors"}
+{"Time":"2026-06-29T15:18:54.347121695Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors","Output":"=== RUN   TestCreateEnvironmentInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.347154465Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.347176985Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors/Missing_NAME_arg","Output":"=== RUN   TestCreateEnvironmentInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.347201505Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors/Missing_NAME_arg","Output":"--- PASS: TestCreateEnvironmentInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347079645Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceList","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.347268635Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceRead"}
+{"Time":"2026-06-29T15:18:54.347294735Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceRead","Output":"=== RUN   TestServiceRead\n"}
+{"Time":"2026-06-29T15:18:54.347319725Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceRead","Output":"--- PASS: TestServiceRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347343135Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.347381805Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceRead_serviceNotFoundError"}
+{"Time":"2026-06-29T15:18:54.347404555Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceRead_serviceNotFoundError","Output":"=== RUN   TestServiceRead_serviceNotFoundError\n"}
+{"Time":"2026-06-29T15:18:54.347428795Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceRead_serviceNotFoundError","Output":"--- PASS: TestServiceRead_serviceNotFoundError (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347452775Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceRead_serviceNotFoundError","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.347479995Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceUpdate"}
+{"Time":"2026-06-29T15:18:54.347502195Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceUpdate","Output":"=== RUN   TestServiceUpdate\n"}
+{"Time":"2026-06-29T15:18:54.347526035Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceUpdate","Output":"--- PASS: TestServiceUpdate (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347550505Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestServiceUpdate","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.347574015Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskCreate"}
+{"Time":"2026-06-29T15:18:54.347606995Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskCreate","Output":"=== RUN   TestTaskCreate\n"}
+{"Time":"2026-06-29T15:18:54.347630645Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskCreate","Output":"--- PASS: TestTaskCreate (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347653645Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskCreate","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.347676715Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskDelete"}
+{"Time":"2026-06-29T15:18:54.347698525Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskDelete","Output":"=== RUN   TestTaskDelete\n"}
+{"Time":"2026-06-29T15:18:54.347722035Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskDelete","Output":"--- PASS: TestTaskDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347744795Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.347767655Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteTaskIdempotence"}
+{"Time":"2026-06-29T15:18:54.347789745Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteTaskIdempotence","Output":"=== RUN   TestDeleteTaskIdempotence\n"}
+{"Time":"2026-06-29T15:18:54.347813655Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteTaskIdempotence","Output":"--- PASS: TestDeleteTaskIdempotence (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347836465Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteTaskIdempotence","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.347859255Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteTaskIdempotenceWithoutTags"}
+{"Time":"2026-06-29T15:18:54.347881265Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteTaskIdempotenceWithoutTags","Output":"=== RUN   TestDeleteTaskIdempotenceWithoutTags\n"}
+{"Time":"2026-06-29T15:18:54.347905085Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteTaskIdempotenceWithoutTags","Output":"--- PASS: TestDeleteTaskIdempotenceWithoutTags (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.347927905Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestDeleteTaskIdempotenceWithoutTags","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.347950835Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskList"}
+{"Time":"2026-06-29T15:18:54.347972415Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskList","Output":"=== RUN   TestTaskList\n"}
+{"Time":"2026-06-29T15:18:54.348002095Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskList","Output":"--- PASS: TestTaskList (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.348029105Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskList","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.348052315Z","Action":"run","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskRead"}
+{"Time":"2026-06-29T15:18:54.348074165Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskRead","Output":"=== RUN   TestTaskRead\n"}
+{"Time":"2026-06-29T15:18:54.348097625Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskRead","Output":"--- PASS: TestTaskRead (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.348129425Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Test":"TestTaskRead","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.348152095Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:54.348201035Z","Action":"output","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Output":"ok  \tgithub.com/quintilesims/layer0/api/provider/aws/test_aws\t0.015s\n"}
+{"Time":"2026-06-29T15:18:54.348227155Z","Action":"pass","Package":"github.com/quintilesims/layer0/api/provider/aws/test_aws","Elapsed":0.015}
+{"Time":"2026-06-29T15:18:54.347224855Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.348336335Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors/Negative_Scale"}
+{"Time":"2026-06-29T15:18:54.348360785Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors/Negative_Scale","Output":"=== RUN   TestCreateEnvironmentInputErrors/Negative_Scale\n"}
+{"Time":"2026-06-29T15:18:54.348402815Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors/Negative_Scale","Output":"--- PASS: TestCreateEnvironmentInputErrors/Negative_Scale (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.384830032Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors/Negative_Scale","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385010732Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors","Output":"--- PASS: TestCreateEnvironmentInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385051912Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateEnvironmentInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385081002Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironment"}
+{"Time":"2026-06-29T15:18:54.385103462Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironment","Output":"=== RUN   TestDeleteEnvironment\n"}
+{"Time":"2026-06-29T15:18:54.385128052Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironment","Output":"--- PASS: TestDeleteEnvironment (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385151222Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironment","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385174062Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironmentInputErrors"}
+{"Time":"2026-06-29T15:18:54.385195842Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironmentInputErrors","Output":"=== RUN   TestDeleteEnvironmentInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.385218792Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironmentInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.385240842Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironmentInputErrors/Missing_NAME_arg","Output":"=== RUN   TestDeleteEnvironmentInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.385264572Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironmentInputErrors/Missing_NAME_arg","Output":"--- PASS: TestDeleteEnvironmentInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385287662Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironmentInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385326352Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironmentInputErrors","Output":"--- PASS: TestDeleteEnvironmentInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385349392Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteEnvironmentInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385372492Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListEnvironments"}
+{"Time":"2026-06-29T15:18:54.385394262Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListEnvironments","Output":"=== RUN   TestListEnvironments\n"}
+{"Time":"2026-06-29T15:18:54.385417782Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListEnvironments","Output":"--- PASS: TestListEnvironments (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385440562Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListEnvironments","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385463462Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironment"}
+{"Time":"2026-06-29T15:18:54.385485102Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironment","Output":"=== RUN   TestReadEnvironment\n"}
+{"Time":"2026-06-29T15:18:54.385508412Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironment","Output":"--- PASS: TestReadEnvironment (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385531472Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironment","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385556842Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironmentInputErrors"}
+{"Time":"2026-06-29T15:18:54.385578962Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironmentInputErrors","Output":"=== RUN   TestReadEnvironmentInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.385603522Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironmentInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.385625402Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironmentInputErrors/Missing_NAME_arg","Output":"=== RUN   TestReadEnvironmentInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.385648932Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironmentInputErrors/Missing_NAME_arg","Output":"--- PASS: TestReadEnvironmentInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385672012Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironmentInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385695502Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironmentInputErrors","Output":"--- PASS: TestReadEnvironmentInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385718342Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadEnvironmentInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385741592Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironments"}
+{"Time":"2026-06-29T15:18:54.385763122Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironments","Output":"=== RUN   TestLinkEnvironments\n"}
+{"Time":"2026-06-29T15:18:54.385786522Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironments","Output":"--- PASS: TestLinkEnvironments (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385809372Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironments","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385832112Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsBidirectional"}
+{"Time":"2026-06-29T15:18:54.385861642Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsBidirectional","Output":"=== RUN   TestLinkEnvironmentsBidirectional\n"}
+{"Time":"2026-06-29T15:18:54.385885732Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsBidirectional","Output":"--- PASS: TestLinkEnvironmentsBidirectional (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.385908572Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsBidirectional","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.385931342Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors"}
+{"Time":"2026-06-29T15:18:54.385953042Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors","Output":"=== RUN   TestLinkEnvironmentsInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.385975832Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors/Missing_DEST_arg"}
+{"Time":"2026-06-29T15:18:54.386003382Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors/Missing_DEST_arg","Output":"=== RUN   TestLinkEnvironmentsInputErrors/Missing_DEST_arg\n"}
+{"Time":"2026-06-29T15:18:54.386033332Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors/Missing_DEST_arg","Output":"--- PASS: TestLinkEnvironmentsInputErrors/Missing_DEST_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386056852Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors/Missing_DEST_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386079822Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors/Missing_SOURCE_arg"}
+{"Time":"2026-06-29T15:18:54.386101622Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors/Missing_SOURCE_arg","Output":"=== RUN   TestLinkEnvironmentsInputErrors/Missing_SOURCE_arg\n"}
+{"Time":"2026-06-29T15:18:54.386125312Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors/Missing_SOURCE_arg","Output":"--- PASS: TestLinkEnvironmentsInputErrors/Missing_SOURCE_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386149772Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors/Missing_SOURCE_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386173652Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors","Output":"--- PASS: TestLinkEnvironmentsInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386196502Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLinkEnvironmentsInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386219312Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironments"}
+{"Time":"2026-06-29T15:18:54.386241202Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironments","Output":"=== RUN   TestUnlinkEnvironments\n"}
+{"Time":"2026-06-29T15:18:54.386264922Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironments","Output":"--- PASS: TestUnlinkEnvironments (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386287692Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironments","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386310622Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsBidirectional"}
+{"Time":"2026-06-29T15:18:54.386332352Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsBidirectional","Output":"=== RUN   TestUnlinkEnvironmentsBidirectional\n"}
+{"Time":"2026-06-29T15:18:54.386363402Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsBidirectional","Output":"--- PASS: TestUnlinkEnvironmentsBidirectional (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386386842Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsBidirectional","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386409542Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors"}
+{"Time":"2026-06-29T15:18:54.386431142Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors","Output":"=== RUN   TestUnlinkEnvironmentsInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.386454102Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors/Missing_SOURCE_arg"}
+{"Time":"2026-06-29T15:18:54.386475842Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors/Missing_SOURCE_arg","Output":"=== RUN   TestUnlinkEnvironmentsInputErrors/Missing_SOURCE_arg\n"}
+{"Time":"2026-06-29T15:18:54.386499562Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors/Missing_SOURCE_arg","Output":"--- PASS: TestUnlinkEnvironmentsInputErrors/Missing_SOURCE_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386524132Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors/Missing_SOURCE_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386547542Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors/Missing_DEST_arg"}
+{"Time":"2026-06-29T15:18:54.386569342Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors/Missing_DEST_arg","Output":"=== RUN   TestUnlinkEnvironmentsInputErrors/Missing_DEST_arg\n"}
+{"Time":"2026-06-29T15:18:54.386592842Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors/Missing_DEST_arg","Output":"--- PASS: TestUnlinkEnvironmentsInputErrors/Missing_DEST_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386616152Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors/Missing_DEST_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386639682Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors","Output":"--- PASS: TestUnlinkEnvironmentsInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386662372Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUnlinkEnvironmentsInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386685402Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPort"}
+{"Time":"2026-06-29T15:18:54.386707062Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPort","Output":"=== RUN   TestLoadBalancerAddPort\n"}
+{"Time":"2026-06-29T15:18:54.386730632Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPort","Output":"--- PASS: TestLoadBalancerAddPort (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386753292Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPort","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386776122Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors"}
+{"Time":"2026-06-29T15:18:54.386797672Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors","Output":"=== RUN   TestLoadBalancerAddPortInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.386827762Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors/Missing_PORT_arg"}
+{"Time":"2026-06-29T15:18:54.386849382Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors/Missing_PORT_arg","Output":"=== RUN   TestLoadBalancerAddPortInputErrors/Missing_PORT_arg\n"}
+{"Time":"2026-06-29T15:18:54.386872942Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors/Missing_PORT_arg","Output":"--- PASS: TestLoadBalancerAddPortInputErrors/Missing_PORT_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386895872Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors/Missing_PORT_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.386920362Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.386941952Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors/Missing_NAME_arg","Output":"=== RUN   TestLoadBalancerAddPortInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.386965742Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors/Missing_NAME_arg","Output":"--- PASS: TestLoadBalancerAddPortInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.386988862Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387020932Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors","Output":"--- PASS: TestLoadBalancerAddPortInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387045542Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerAddPortInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387068642Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancer"}
+{"Time":"2026-06-29T15:18:54.387090372Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancer","Output":"=== RUN   TestCreateLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:54.387114632Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancer","Output":"--- PASS: TestCreateLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387137732Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387160632Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors"}
+{"Time":"2026-06-29T15:18:54.387182392Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors","Output":"=== RUN   TestCreateLoadBalancerInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.387205192Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors/Missing_ENVIRONMENT_arg"}
+{"Time":"2026-06-29T15:18:54.387226912Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors/Missing_ENVIRONMENT_arg","Output":"=== RUN   TestCreateLoadBalancerInputErrors/Missing_ENVIRONMENT_arg\n"}
+{"Time":"2026-06-29T15:18:54.387252002Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors/Missing_ENVIRONMENT_arg","Output":"--- PASS: TestCreateLoadBalancerInputErrors/Missing_ENVIRONMENT_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387275342Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors/Missing_ENVIRONMENT_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387305672Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.387327272Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors/Missing_NAME_arg","Output":"=== RUN   TestCreateLoadBalancerInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.387350862Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors/Missing_NAME_arg","Output":"--- PASS: TestCreateLoadBalancerInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387373962Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387397462Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors","Output":"--- PASS: TestCreateLoadBalancerInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387420242Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateLoadBalancerInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387442982Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancer"}
+{"Time":"2026-06-29T15:18:54.387464662Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancer","Output":"=== RUN   TestDeleteLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:54.387489442Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancer","Output":"--- PASS: TestDeleteLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387512352Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387535222Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancerInputErrors"}
+{"Time":"2026-06-29T15:18:54.387556842Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancerInputErrors","Output":"=== RUN   TestDeleteLoadBalancerInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.387579862Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancerInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.387601592Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancerInputErrors/Missing_NAME_arg","Output":"=== RUN   TestDeleteLoadBalancerInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.387625682Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancerInputErrors/Missing_NAME_arg","Output":"--- PASS: TestDeleteLoadBalancerInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387648702Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancerInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387672172Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancerInputErrors","Output":"--- PASS: TestDeleteLoadBalancerInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387695042Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteLoadBalancerInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387717602Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPort"}
+{"Time":"2026-06-29T15:18:54.387739232Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPort","Output":"=== RUN   TestLoadBalancerDropPort\n"}
+{"Time":"2026-06-29T15:18:54.387762572Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPort","Output":"--- PASS: TestLoadBalancerDropPort (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387792652Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPort","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387815792Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors"}
+{"Time":"2026-06-29T15:18:54.387837592Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors","Output":"=== RUN   TestLoadBalancerDropPortInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.387860272Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.387883772Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors/Missing_NAME_arg","Output":"=== RUN   TestLoadBalancerDropPortInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.387907602Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors/Missing_NAME_arg","Output":"--- PASS: TestLoadBalancerDropPortInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.387930612Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.387953822Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors/Missing_PORT_arg"}
+{"Time":"2026-06-29T15:18:54.387977532Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors/Missing_PORT_arg","Output":"=== RUN   TestLoadBalancerDropPortInputErrors/Missing_PORT_arg\n"}
+{"Time":"2026-06-29T15:18:54.388006622Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors/Missing_PORT_arg","Output":"--- PASS: TestLoadBalancerDropPortInputErrors/Missing_PORT_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388032792Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors/Missing_PORT_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388056452Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors","Output":"--- PASS: TestLoadBalancerDropPortInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388079302Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestLoadBalancerDropPortInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388102112Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListLoadBalancers"}
+{"Time":"2026-06-29T15:18:54.388123852Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListLoadBalancers","Output":"=== RUN   TestListLoadBalancers\n"}
+{"Time":"2026-06-29T15:18:54.388147302Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListLoadBalancers","Output":"--- PASS: TestListLoadBalancers (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388170022Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListLoadBalancers","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388194072Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancer"}
+{"Time":"2026-06-29T15:18:54.388216042Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancer","Output":"=== RUN   TestReadLoadBalancer\n"}
+{"Time":"2026-06-29T15:18:54.388239572Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancer","Output":"--- PASS: TestReadLoadBalancer (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388262452Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancer","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388287362Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancerInputErrors"}
+{"Time":"2026-06-29T15:18:54.388316592Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancerInputErrors","Output":"=== RUN   TestReadLoadBalancerInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.388339402Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancerInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.388361172Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancerInputErrors/Missing_NAME_arg","Output":"=== RUN   TestReadLoadBalancerInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.388385082Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancerInputErrors/Missing_NAME_arg","Output":"--- PASS: TestReadLoadBalancerInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388409032Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancerInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388433442Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancerInputErrors","Output":"--- PASS: TestReadLoadBalancerInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388456432Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadLoadBalancerInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388479512Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePort"}
+{"Time":"2026-06-29T15:18:54.388501352Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePort","Output":"=== RUN   TestParsePort\n"}
+{"Time":"2026-06-29T15:18:54.388524752Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePort","Output":"--- PASS: TestParsePort (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388547632Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePort","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388570342Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors"}
+{"Time":"2026-06-29T15:18:54.388592032Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors","Output":"=== RUN   TestParsePortErrors\n"}
+{"Time":"2026-06-29T15:18:54.388615042Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_PROTOCOL"}
+{"Time":"2026-06-29T15:18:54.388636812Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_PROTOCOL","Output":"=== RUN   TestParsePortErrors/Missing_PROTOCOL\n"}
+{"Time":"2026-06-29T15:18:54.388660312Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_PROTOCOL","Output":"--- PASS: TestParsePortErrors/Missing_PROTOCOL (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388683212Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_PROTOCOL","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388706072Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Non-integer_HOST_PORT"}
+{"Time":"2026-06-29T15:18:54.388727912Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Non-integer_HOST_PORT","Output":"=== RUN   TestParsePortErrors/Non-integer_HOST_PORT\n"}
+{"Time":"2026-06-29T15:18:54.388751452Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Non-integer_HOST_PORT","Output":"--- PASS: TestParsePortErrors/Non-integer_HOST_PORT (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388774362Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Non-integer_HOST_PORT","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388804592Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Non-integer_CONTAINER_PORT"}
+{"Time":"2026-06-29T15:18:54.388826422Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Non-integer_CONTAINER_PORT","Output":"=== RUN   TestParsePortErrors/Non-integer_CONTAINER_PORT\n"}
+{"Time":"2026-06-29T15:18:54.388850352Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Non-integer_CONTAINER_PORT","Output":"--- PASS: TestParsePortErrors/Non-integer_CONTAINER_PORT (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388873232Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Non-integer_CONTAINER_PORT","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388895902Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_HOST_PORT"}
+{"Time":"2026-06-29T15:18:54.388918982Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_HOST_PORT","Output":"=== RUN   TestParsePortErrors/Missing_HOST_PORT\n"}
+{"Time":"2026-06-29T15:18:54.388942632Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_HOST_PORT","Output":"--- PASS: TestParsePortErrors/Missing_HOST_PORT (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.388966752Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_HOST_PORT","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.388989662Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_CONTAINER_PORT"}
+{"Time":"2026-06-29T15:18:54.389037422Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_CONTAINER_PORT","Output":"=== RUN   TestParsePortErrors/Missing_CONTAINER_PORT\n"}
+{"Time":"2026-06-29T15:18:54.389061622Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_CONTAINER_PORT","Output":"--- PASS: TestParsePortErrors/Missing_CONTAINER_PORT (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389084652Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors/Missing_CONTAINER_PORT","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389108492Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors","Output":"--- PASS: TestParsePortErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389131392Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParsePortErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389153972Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget"}
+{"Time":"2026-06-29T15:18:54.389175592Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget","Output":"=== RUN   TestValidateTarget\n"}
+{"Time":"2026-06-29T15:18:54.389198092Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/TCP:80"}
+{"Time":"2026-06-29T15:18:54.389221762Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/TCP:80","Output":"=== RUN   TestValidateTarget/TCP:80\n"}
+{"Time":"2026-06-29T15:18:54.389246622Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/TCP:80","Output":"--- PASS: TestValidateTarget/TCP:80 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389270022Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/TCP:80","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389293612Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/HTTP:80/ping/this/path"}
+{"Time":"2026-06-29T15:18:54.389315782Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/HTTP:80/ping/this/path","Output":"=== RUN   TestValidateTarget/HTTP:80/ping/this/path\n"}
+{"Time":"2026-06-29T15:18:54.389347792Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/HTTP:80/ping/this/path","Output":"--- PASS: TestValidateTarget/HTTP:80/ping/this/path (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389370662Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/HTTP:80/ping/this/path","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389393372Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/HTTPS:443/ping/this/path"}
+{"Time":"2026-06-29T15:18:54.389415112Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/HTTPS:443/ping/this/path","Output":"=== RUN   TestValidateTarget/HTTPS:443/ping/this/path\n"}
+{"Time":"2026-06-29T15:18:54.389439742Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/HTTPS:443/ping/this/path","Output":"--- PASS: TestValidateTarget/HTTPS:443/ping/this/path (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389462972Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget/HTTPS:443/ping/this/path","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389486732Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget","Output":"--- PASS: TestValidateTarget (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389509582Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTarget","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389532462Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors"}
+{"Time":"2026-06-29T15:18:54.389554112Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors","Output":"=== RUN   TestValidateTargetErrors\n"}
+{"Time":"2026-06-29T15:18:54.389576762Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors/HTTP:80"}
+{"Time":"2026-06-29T15:18:54.389598452Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors/HTTP:80","Output":"=== RUN   TestValidateTargetErrors/HTTP:80\n"}
+{"Time":"2026-06-29T15:18:54.389621752Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors/HTTP:80","Output":"--- PASS: TestValidateTargetErrors/HTTP:80 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389644652Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors/HTTP:80","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389667342Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors/HTTPS:443"}
+{"Time":"2026-06-29T15:18:54.389689712Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors/HTTPS:443","Output":"=== RUN   TestValidateTargetErrors/HTTPS:443\n"}
+{"Time":"2026-06-29T15:18:54.389713372Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors/HTTPS:443","Output":"--- PASS: TestValidateTargetErrors/HTTPS:443 (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389736362Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors/HTTPS:443","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389759782Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors","Output":"--- PASS: TestValidateTargetErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389782832Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestValidateTargetErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389805642Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateService"}
+{"Time":"2026-06-29T15:18:54.389835612Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateService","Output":"=== RUN   TestCreateService\n"}
+{"Time":"2026-06-29T15:18:54.389859042Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateService","Output":"--- PASS: TestCreateService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.389883172Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateService","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.389906132Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors"}
+{"Time":"2026-06-29T15:18:54.389927792Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors","Output":"=== RUN   TestCreateServiceInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.389950582Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.389972412Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_NAME_arg","Output":"=== RUN   TestCreateServiceInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.390002772Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_NAME_arg","Output":"--- PASS: TestCreateServiceInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390028172Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390051232Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_DEPLOY_arg"}
+{"Time":"2026-06-29T15:18:54.390072942Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_DEPLOY_arg","Output":"=== RUN   TestCreateServiceInputErrors/Missing_DEPLOY_arg\n"}
+{"Time":"2026-06-29T15:18:54.390096632Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_DEPLOY_arg","Output":"--- PASS: TestCreateServiceInputErrors/Missing_DEPLOY_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390119732Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_DEPLOY_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390143662Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_ENVIRONMENT_arg"}
+{"Time":"2026-06-29T15:18:54.390165512Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_ENVIRONMENT_arg","Output":"=== RUN   TestCreateServiceInputErrors/Missing_ENVIRONMENT_arg\n"}
+{"Time":"2026-06-29T15:18:54.390204742Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_ENVIRONMENT_arg","Output":"--- PASS: TestCreateServiceInputErrors/Missing_ENVIRONMENT_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390227762Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors/Missing_ENVIRONMENT_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390251642Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors","Output":"--- PASS: TestCreateServiceInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390274492Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateServiceInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390297152Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteService"}
+{"Time":"2026-06-29T15:18:54.390318772Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteService","Output":"=== RUN   TestDeleteService\n"}
+{"Time":"2026-06-29T15:18:54.390350362Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteService","Output":"--- PASS: TestDeleteService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390374352Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteService","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390397242Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteServiceInputErrors"}
+{"Time":"2026-06-29T15:18:54.390418942Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteServiceInputErrors","Output":"=== RUN   TestDeleteServiceInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.390441742Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteServiceInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.390463472Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteServiceInputErrors/Missing_NAME_arg","Output":"=== RUN   TestDeleteServiceInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.390486802Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteServiceInputErrors/Missing_NAME_arg","Output":"--- PASS: TestDeleteServiceInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390509852Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteServiceInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390533532Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteServiceInputErrors","Output":"--- PASS: TestDeleteServiceInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390556292Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteServiceInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390579112Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListServices"}
+{"Time":"2026-06-29T15:18:54.390600772Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListServices","Output":"=== RUN   TestListServices\n"}
+{"Time":"2026-06-29T15:18:54.390624152Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListServices","Output":"--- PASS: TestListServices (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390646962Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListServices","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390669612Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadService"}
+{"Time":"2026-06-29T15:18:54.390691292Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadService","Output":"=== RUN   TestReadService\n"}
+{"Time":"2026-06-29T15:18:54.390714802Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadService","Output":"--- PASS: TestReadService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390737452Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadService","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390760602Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceInputErrors"}
+{"Time":"2026-06-29T15:18:54.390782362Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceInputErrors","Output":"=== RUN   TestReadServiceInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.390805242Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.390826982Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceInputErrors/Missing_NAME_arg","Output":"=== RUN   TestReadServiceInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.390850932Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceInputErrors/Missing_NAME_arg","Output":"--- PASS: TestReadServiceInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390882412Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390905792Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceInputErrors","Output":"--- PASS: TestReadServiceInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.390928652Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.390953102Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogs"}
+{"Time":"2026-06-29T15:18:54.390975082Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogs","Output":"=== RUN   TestReadServiceLogs\n"}
+{"Time":"2026-06-29T15:18:54.391005132Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogs","Output":"--- PASS: TestReadServiceLogs (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391031072Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogs","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391054162Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogsInputErrors"}
+{"Time":"2026-06-29T15:18:54.391075882Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogsInputErrors","Output":"=== RUN   TestReadServiceLogsInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.391098872Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogsInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.391120772Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogsInputErrors/Missing_NAME_arg","Output":"=== RUN   TestReadServiceLogsInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.391144352Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogsInputErrors/Missing_NAME_arg","Output":"--- PASS: TestReadServiceLogsInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391167292Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogsInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391190822Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogsInputErrors","Output":"--- PASS: TestReadServiceLogsInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391225702Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadServiceLogsInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391248582Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleService"}
+{"Time":"2026-06-29T15:18:54.391270352Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleService","Output":"=== RUN   TestScaleService\n"}
+{"Time":"2026-06-29T15:18:54.391293732Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleService","Output":"--- PASS: TestScaleService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391316402Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleService","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391339112Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors"}
+{"Time":"2026-06-29T15:18:54.391380352Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors","Output":"=== RUN   TestScaleServiceInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.391403352Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.391433492Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Missing_NAME_arg","Output":"=== RUN   TestScaleServiceInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.391458912Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Missing_NAME_arg","Output":"--- PASS: TestScaleServiceInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391482222Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391505152Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Missing_COUNT_arg"}
+{"Time":"2026-06-29T15:18:54.391527032Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Missing_COUNT_arg","Output":"=== RUN   TestScaleServiceInputErrors/Missing_COUNT_arg\n"}
+{"Time":"2026-06-29T15:18:54.391550652Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Missing_COUNT_arg","Output":"--- PASS: TestScaleServiceInputErrors/Missing_COUNT_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391573582Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Missing_COUNT_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391596342Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Non-integer_COUNT_arg"}
+{"Time":"2026-06-29T15:18:54.391618192Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Non-integer_COUNT_arg","Output":"=== RUN   TestScaleServiceInputErrors/Non-integer_COUNT_arg\n"}
+{"Time":"2026-06-29T15:18:54.391641742Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Non-integer_COUNT_arg","Output":"--- PASS: TestScaleServiceInputErrors/Non-integer_COUNT_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391664852Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors/Non-integer_COUNT_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391688392Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors","Output":"--- PASS: TestScaleServiceInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391711232Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestScaleServiceInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391733952Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateService"}
+{"Time":"2026-06-29T15:18:54.391755742Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateService","Output":"=== RUN   TestUpdateService\n"}
+{"Time":"2026-06-29T15:18:54.391779522Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateService","Output":"--- PASS: TestUpdateService (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391802232Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateService","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391824922Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors"}
+{"Time":"2026-06-29T15:18:54.391846782Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors","Output":"=== RUN   TestUpdateServiceInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.391869622Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.391891422Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors/Missing_NAME_arg","Output":"=== RUN   TestUpdateServiceInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.391922242Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors/Missing_NAME_arg","Output":"--- PASS: TestUpdateServiceInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.391945112Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.391967952Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors/Missing_DEPLOY_arg"}
+{"Time":"2026-06-29T15:18:54.391989622Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors/Missing_DEPLOY_arg","Output":"=== RUN   TestUpdateServiceInputErrors/Missing_DEPLOY_arg\n"}
+{"Time":"2026-06-29T15:18:54.392022322Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors/Missing_DEPLOY_arg","Output":"--- PASS: TestUpdateServiceInputErrors/Missing_DEPLOY_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392045432Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors/Missing_DEPLOY_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392068982Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors","Output":"--- PASS: TestUpdateServiceInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392091732Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestUpdateServiceInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392114422Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTask"}
+{"Time":"2026-06-29T15:18:54.392136122Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTask","Output":"=== RUN   TestCreateTask\n"}
+{"Time":"2026-06-29T15:18:54.392159582Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTask","Output":"--- PASS: TestCreateTask (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392182312Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTask","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392205122Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors"}
+{"Time":"2026-06-29T15:18:54.392226932Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors","Output":"=== RUN   TestCreateTaskInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.392249752Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_ENVIRONMENT_arg"}
+{"Time":"2026-06-29T15:18:54.392271672Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_ENVIRONMENT_arg","Output":"=== RUN   TestCreateTaskInputErrors/Missing_ENVIRONMENT_arg\n"}
+{"Time":"2026-06-29T15:18:54.392295272Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_ENVIRONMENT_arg","Output":"--- PASS: TestCreateTaskInputErrors/Missing_ENVIRONMENT_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392318032Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_ENVIRONMENT_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392340802Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.392362642Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_NAME_arg","Output":"=== RUN   TestCreateTaskInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.392386172Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_NAME_arg","Output":"--- PASS: TestCreateTaskInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392418542Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392441522Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_DEPLOY_arg"}
+{"Time":"2026-06-29T15:18:54.392463272Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_DEPLOY_arg","Output":"=== RUN   TestCreateTaskInputErrors/Missing_DEPLOY_arg\n"}
+{"Time":"2026-06-29T15:18:54.392486922Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_DEPLOY_arg","Output":"--- PASS: TestCreateTaskInputErrors/Missing_DEPLOY_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392509922Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors/Missing_DEPLOY_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392534442Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors","Output":"--- PASS: TestCreateTaskInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392557302Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestCreateTaskInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392580192Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTask"}
+{"Time":"2026-06-29T15:18:54.392601772Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTask","Output":"=== RUN   TestDeleteTask\n"}
+{"Time":"2026-06-29T15:18:54.392625272Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTask","Output":"--- PASS: TestDeleteTask (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392647992Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTask","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392670782Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTaskInputErrors"}
+{"Time":"2026-06-29T15:18:54.392692352Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTaskInputErrors","Output":"=== RUN   TestDeleteTaskInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.392715102Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTaskInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.392736732Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTaskInputErrors/Missing_NAME_arg","Output":"=== RUN   TestDeleteTaskInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.392760292Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTaskInputErrors/Missing_NAME_arg","Output":"--- PASS: TestDeleteTaskInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392783392Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTaskInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392806962Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTaskInputErrors","Output":"--- PASS: TestDeleteTaskInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392829552Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestDeleteTaskInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392852372Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListTasks"}
+{"Time":"2026-06-29T15:18:54.392874002Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListTasks","Output":"=== RUN   TestListTasks\n"}
+{"Time":"2026-06-29T15:18:54.392897442Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListTasks","Output":"--- PASS: TestListTasks (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.392928502Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestListTasks","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.392951092Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTask"}
+{"Time":"2026-06-29T15:18:54.392978842Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTask","Output":"=== RUN   TestReadTask\n"}
+{"Time":"2026-06-29T15:18:54.393010202Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTask","Output":"--- PASS: TestReadTask (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393036702Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTask","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393059592Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskInputErrors"}
+{"Time":"2026-06-29T15:18:54.393081342Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskInputErrors","Output":"=== RUN   TestReadTaskInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.393104512Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.393127502Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskInputErrors/Missing_NAME_arg","Output":"=== RUN   TestReadTaskInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.393151042Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskInputErrors/Missing_NAME_arg","Output":"--- PASS: TestReadTaskInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393173952Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393197492Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskInputErrors","Output":"--- PASS: TestReadTaskInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393220432Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393243242Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogs"}
+{"Time":"2026-06-29T15:18:54.393265032Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogs","Output":"=== RUN   TestReadTaskLogs\n"}
+{"Time":"2026-06-29T15:18:54.393289622Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogs","Output":"--- PASS: TestReadTaskLogs (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393312612Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogs","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393335592Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogsInputErrors"}
+{"Time":"2026-06-29T15:18:54.393357102Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogsInputErrors","Output":"=== RUN   TestReadTaskLogsInputErrors\n"}
+{"Time":"2026-06-29T15:18:54.393392112Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogsInputErrors/Missing_NAME_arg"}
+{"Time":"2026-06-29T15:18:54.393414132Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogsInputErrors/Missing_NAME_arg","Output":"=== RUN   TestReadTaskLogsInputErrors/Missing_NAME_arg\n"}
+{"Time":"2026-06-29T15:18:54.393437822Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogsInputErrors/Missing_NAME_arg","Output":"--- PASS: TestReadTaskLogsInputErrors/Missing_NAME_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393460672Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogsInputErrors/Missing_NAME_arg","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393493002Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogsInputErrors","Output":"--- PASS: TestReadTaskLogsInputErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393515852Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestReadTaskLogsInputErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393538752Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverrides"}
+{"Time":"2026-06-29T15:18:54.393560492Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverrides","Output":"=== RUN   TestParseOverrides\n"}
+{"Time":"2026-06-29T15:18:54.393584202Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverrides","Output":"--- PASS: TestParseOverrides (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393607362Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverrides","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393630582Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors"}
+{"Time":"2026-06-29T15:18:54.393652282Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors","Output":"=== RUN   TestParseOverridesErrors\n"}
+{"Time":"2026-06-29T15:18:54.393675052Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_CONTAINER"}
+{"Time":"2026-06-29T15:18:54.393697952Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_CONTAINER","Output":"=== RUN   TestParseOverridesErrors/Missing_CONTAINER\n"}
+{"Time":"2026-06-29T15:18:54.393738552Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_CONTAINER","Output":"--- PASS: TestParseOverridesErrors/Missing_CONTAINER (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393761582Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_CONTAINER","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393784412Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_KEY"}
+{"Time":"2026-06-29T15:18:54.393806282Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_KEY","Output":"=== RUN   TestParseOverridesErrors/Missing_KEY\n"}
+{"Time":"2026-06-29T15:18:54.393829732Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_KEY","Output":"--- PASS: TestParseOverridesErrors/Missing_KEY (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393852522Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_KEY","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393875192Z","Action":"run","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_VAL"}
+{"Time":"2026-06-29T15:18:54.393896932Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_VAL","Output":"=== RUN   TestParseOverridesErrors/Missing_VAL\n"}
+{"Time":"2026-06-29T15:18:54.393920492Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_VAL","Output":"--- PASS: TestParseOverridesErrors/Missing_VAL (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.393943402Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors/Missing_VAL","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.393966742Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors","Output":"--- PASS: TestParseOverridesErrors (0.00s)\n"}
+{"Time":"2026-06-29T15:18:54.394004642Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Test":"TestParseOverridesErrors","Elapsed":0}
+{"Time":"2026-06-29T15:18:54.394029732Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:54.394116642Z","Action":"output","Package":"github.com/quintilesims/layer0/cli/command","Output":"ok  \tgithub.com/quintilesims/layer0/cli/command\t0.061s\n"}
+{"Time":"2026-06-29T15:18:54.394144482Z","Action":"pass","Package":"github.com/quintilesims/layer0/cli/command","Elapsed":0.061}
+{"Time":"2026-06-29T15:18:57.345228977Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceServiceCreateRead","Output":"--- PASS: TestResourceServiceCreateRead (3.00s)\n"}
+{"Time":"2026-06-29T15:18:57.345293877Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceServiceCreateRead","Elapsed":3}
+{"Time":"2026-06-29T15:18:57.345325717Z","Action":"run","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceServiceDelete"}
+{"Time":"2026-06-29T15:18:57.345349197Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceServiceDelete","Output":"=== RUN   TestResourceServiceDelete\n"}
+{"Time":"2026-06-29T15:18:57.345379177Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceServiceDelete","Output":"--- PASS: TestResourceServiceDelete (0.00s)\n"}
+{"Time":"2026-06-29T15:18:57.345402217Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Test":"TestResourceServiceDelete","Elapsed":0}
+{"Time":"2026-06-29T15:18:57.345424747Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Output":"PASS\n"}
+{"Time":"2026-06-29T15:18:57.345829567Z","Action":"output","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Output":"ok  \tgithub.com/quintilesims/layer0/plugins/terraform/layer0\t3.012s\n"}
+{"Time":"2026-06-29T15:18:57.345872567Z","Action":"pass","Package":"github.com/quintilesims/layer0/plugins/terraform/layer0","Elapsed":3.012}
+reward=1 graded=248 found=248 failed=0 parsed=248 framework=go exit_code=0

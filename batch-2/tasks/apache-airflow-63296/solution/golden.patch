@@ -1,0 +1,85 @@
+diff --git a/airflow-core/newsfragments/63296.significant.rst b/airflow-core/newsfragments/63296.significant.rst
+new file mode 100644
+index 0000000000..566e21e0de
+--- /dev/null
++++ b/airflow-core/newsfragments/63296.significant.rst
+@@ -0,0 +1,16 @@
++Block path traversal via ``..`` in ``dag_id`` and ``run_id``
++
++DAG IDs and run IDs containing ``..`` are now rejected by default to prevent path traversal.
++A configuration flag ``[core] allow_double_dot_in_ids`` (default: ``False``) is available for
++environments that rely on ``..`` in identifiers.
++
++* Types of change
++
++  * [ ] Dag changes
++  * [x] Config changes
++  * [x] API changes
++  * [ ] CLI changes
++  * [x] Behaviour changes
++  * [ ] Plugin changes
++  * [ ] Dependency changes
++  * [ ] Code interface changes
+diff --git a/airflow-core/src/airflow/config_templates/config.yml b/airflow-core/src/airflow/config_templates/config.yml
+index 0c002f5276..55313198d5 100644
+--- a/airflow-core/src/airflow/config_templates/config.yml
++++ b/airflow-core/src/airflow/config_templates/config.yml
+@@ -439,6 +439,16 @@ core:
+       example: ~
+       default: "1024"
+ 
++    allow_double_dot_in_ids:
++      description: |
++        Allow ``..`` (consecutive dots) in DAG IDs and run IDs. By default, ``..`` is blocked to prevent
++        path traversal attacks. Set to ``True`` only if you have existing DAGs or runs whose IDs contain
++        ``..`` and cannot be renamed.
++      version_added: 3.3.0
++      type: boolean
++      example: ~
++      default: "False"
++
+     daemon_umask:
+       description: |
+         The default umask to use for process when run in daemon mode (scheduler, worker,  etc.)
+diff --git a/airflow-core/src/airflow/models/dagrun.py b/airflow-core/src/airflow/models/dagrun.py
+index 73a5a3a875..f93e7a6acd 100644
+--- a/airflow-core/src/airflow/models/dagrun.py
++++ b/airflow-core/src/airflow/models/dagrun.py
+@@ -395,6 +395,8 @@ class DagRun(Base, LoggingMixin):
+     def validate_run_id(self, key: str, run_id: str) -> str | None:
+         if not run_id:
+             return None
++        if ".." in run_id and not airflow_conf.getboolean("core", "allow_double_dot_in_ids", fallback=False):
++            raise ValueError(f"The run_id '{run_id}' must not contain '..' to prevent path traversal")
+         if re.match(RUN_ID_REGEX, run_id):
+             return run_id
+         regex = airflow_conf.get("scheduler", "allowed_run_id_pattern").strip()
+diff --git a/airflow-core/src/airflow/serialization/definitions/dag.py b/airflow-core/src/airflow/serialization/definitions/dag.py
+index a8fa92d12c..1ef9ec2762 100644
+--- a/airflow-core/src/airflow/serialization/definitions/dag.py
++++ b/airflow-core/src/airflow/serialization/definitions/dag.py
+@@ -548,6 +548,9 @@ class SerializedDAG:
+         if not isinstance(run_id, str):
+             raise ValueError(f"`run_id` should be a str, not {type(run_id)}")
+ 
++        if ".." in run_id and not airflow_conf.getboolean("core", "allow_double_dot_in_ids", fallback=False):
++            raise ValueError(f"The run_id '{run_id}' must not contain '..' to prevent path traversal")
++
+         # This is also done on the DagRun model class, but SQLAlchemy column
+         # validator does not work well for some reason.
+         if not re.match(RUN_ID_REGEX, run_id):
+diff --git a/airflow-core/src/airflow/utils/helpers.py b/airflow-core/src/airflow/utils/helpers.py
+index 5e2dd1b9de..73265463ed 100644
+--- a/airflow-core/src/airflow/utils/helpers.py
++++ b/airflow-core/src/airflow/utils/helpers.py
+@@ -61,6 +61,10 @@ def validate_key(k: str, max_length: int = 250):
+             f"The key {k!r} has to be made of alphanumeric characters, dashes, "
+             f"dots and underscores exclusively"
+         )
++    if ".." in k and not conf.getboolean("core", "allow_double_dot_in_ids", fallback=False):
++        raise AirflowException(
++            f"The key {k!r} must not contain consecutive dots ('..') to prevent path traversal"
++        )
+ 
+ 
+ def ask_yesno(question: str, default: bool | None = None, output_fn=print) -> bool:

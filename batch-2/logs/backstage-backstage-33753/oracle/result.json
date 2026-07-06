@@ -1,0 +1,29 @@
+{
+    "id": "7e75c6d4-7f4a-4f05-8160-2ecd30bc6cd5",
+    "started_at": "2026-07-06T12:18:58.925604",
+    "finished_at": "2026-07-06T12:19:47.323748",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__backstage-backstage-33753": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "backstage-backstage-33753__yDXPYms"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

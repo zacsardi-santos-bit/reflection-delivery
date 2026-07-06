@@ -1,8 +1,0 @@
-patching file object/host_storage_system.go
-patching file simulator/property_collector.go
-patching file simulator/registry.go
-patching file simulator/session_manager.go
-patching file simulator/simulator.go
-patching file simulator/view_manager.go
-patching file simulator/virtual_machine.go
-patching file simulator/virtual_machine_test.go

@@ -1,0 +1,98 @@
+{
+    "id": "8e3b0f09-be4d-4229-8ac6-558a142b9777",
+    "task_name": "apache-kafka-21468",
+    "trial_name": "apache-kafka-21468__twzr98B",
+    "trial_uri": "file:///tmp/nop/2026-07-02__17-43-19/apache-kafka-21468__twzr98B",
+    "task_id": {
+        "path": "apache-kafka-21468"
+    },
+    "source": "src",
+    "task_checksum": "75f9b07f36a62d9716783954c958b20a0cf72394817c3a6bef0b453bd4acaaa8",
+    "config": {
+        "task": {
+            "path": "apache-kafka-21468",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "apache-kafka-21468__twzr98B",
+        "trials_dir": "/tmp/nop/2026-07-02__17-43-19",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "37d88040-c995-4736-8aed-0c3bfe6b1be5"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-02T17:43:23.637522Z",
+    "finished_at": "2026-07-02T17:47:41.413459Z",
+    "environment_setup": {
+        "started_at": "2026-07-02T17:43:23.640598Z",
+        "finished_at": "2026-07-02T17:43:25.643016Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-02T17:43:25.643051Z",
+        "finished_at": "2026-07-02T17:43:25.643094Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-02T17:43:25.643142Z",
+        "finished_at": "2026-07-02T17:43:25.643168Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-02T17:43:25.643261Z",
+        "finished_at": "2026-07-02T17:47:31.024913Z"
+    }
+}

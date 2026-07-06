@@ -1,0 +1,53 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/models/functional_test.py -v",
+  "test_files": [
+    "keras/src/models/functional_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.models.functional_test.FunctionalTest::test_bad_input_spec"
+  ],
+  "PASS_TO_PASS": [
+    "keras.src.models.functional_test.FunctionalTest::test_add_loss",
+    "keras.src.models.functional_test.FunctionalTest::test_basic_flow_as_a_submodel",
+    "keras.src.models.functional_test.FunctionalTest::test_basic_flow_dict_io",
+    "keras.src.models.functional_test.FunctionalTest::test_basic_flow_multi_input",
+    "keras.src.models.functional_test.FunctionalTest::test_basic_flow_multi_output",
+    "keras.src.models.functional_test.FunctionalTest::test_deeply_nested_model",
+    "keras.src.models.functional_test.FunctionalTest::test_disconnected_output",
+    "keras.src.models.functional_test.FunctionalTest::test_dtype_standardization",
+    "keras.src.models.functional_test.FunctionalTest::test_for_functional_in_sequential",
+    "keras.src.models.functional_test.FunctionalTest::test_functional_input_shape_and_type",
+    "keras.src.models.functional_test.FunctionalTest::test_functional_slicing",
+    "keras.src.models.functional_test.FunctionalTest::test_functional_with_dtype_policy",
+    "keras.src.models.functional_test.FunctionalTest::test_input_dict_with_extra_field",
+    "keras.src.models.functional_test.FunctionalTest::test_invalid_config_deserialization_loop",
+    "keras.src.models.functional_test.FunctionalTest::test_invalid_config_deserialization_missing_node",
+    "keras.src.models.functional_test.FunctionalTest::test_layer_getters",
+    "keras.src.models.functional_test.FunctionalTest::test_layers_setter",
+    "keras.src.models.functional_test.FunctionalTest::test_list_input_with_dict_build",
+    "keras.src.models.functional_test.FunctionalTest::test_manual_input_spec",
+    "keras.src.models.functional_test.FunctionalTest::test_mask_arg",
+    "keras.src.models.functional_test.FunctionalTest::test_mutable_state",
+    "keras.src.models.functional_test.FunctionalTest::test_named_input_dict_io",
+    "keras.src.models.functional_test.FunctionalTest::test_optional_and_required_mixed_structures",
+    "keras.src.models.functional_test.FunctionalTest::test_optional_dict_inputs",
+    "keras.src.models.functional_test.FunctionalTest::test_optional_inputs",
+    "keras.src.models.functional_test.FunctionalTest::test_passing_inputs_by_name",
+    "keras.src.models.functional_test.FunctionalTest::test_rank_standardization",
+    "keras.src.models.functional_test.FunctionalTest::test_rank_standardization_failure",
+    "keras.src.models.functional_test.FunctionalTest::test_required_input_none_raises",
+    "keras.src.models.functional_test.FunctionalTest::test_restored_multi_output_type_dict",
+    "keras.src.models.functional_test.FunctionalTest::test_restored_multi_output_type_list",
+    "keras.src.models.functional_test.FunctionalTest::test_restored_multi_output_type_tuple",
+    "keras.src.models.functional_test.FunctionalTest::test_restored_nested_input",
+    "keras.src.models.functional_test.FunctionalTest::test_scalar_input",
+    "keras.src.models.functional_test.FunctionalTest::test_serialization",
+    "keras.src.models.functional_test.FunctionalTest::test_training_arg",
+    "keras.src.models.functional_test.FunctionalTest::test_unmodified_inputs",
+    "keras.src.models.functional_test.FunctionalTest::test_unused_inputs",
+    "keras.src.models.functional_test.FunctionalTest::test_warning_for_mismatched_inputs_structure"
+  ]
+}

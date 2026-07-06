@@ -1,0 +1,43 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_memorydb.py -v",
+  "test_files": [
+    "tests/data/placebo/test_memorydb_kms_encryption/kms.DescribeKey_1.json",
+    "tests/data/placebo/test_memorydb_kms_encryption/kms.ListAliases_1.json",
+    "tests/data/placebo/test_memorydb_kms_encryption/kms.ListAliases_2.json",
+    "tests/data/placebo/test_memorydb_kms_encryption/memory-db.DescribeClusters_1.json",
+    "tests/data/placebo/test_memorydb_kms_encryption/memory-db.ListTags_1.json",
+    "tests/data/placebo/test_memorydb_kms_encryption/memory-db.ListTags_2.json",
+    "tests/data/placebo/test_memorydb_kms_encryption/tagging.GetResources_1.json",
+    "tests/data/placebo/test_memorydb_network_location_filter/ec2.DescribeSecurityGroups_1.json",
+    "tests/data/placebo/test_memorydb_network_location_filter/ec2.DescribeSubnets_1.json",
+    "tests/data/placebo/test_memorydb_network_location_filter/memory-db.DescribeClusters_1.json",
+    "tests/data/placebo/test_memorydb_network_location_filter/memory-db.DescribeSubnetGroups_1.json",
+    "tests/data/placebo/test_memorydb_network_location_filter/memory-db.ListTags_1.json",
+    "tests/data/placebo/test_memorydb_network_location_filter/tagging.GetResources_1.json",
+    "tests/data/placebo/test_memorydb_security_group/ec2.DescribeSecurityGroups_1.json",
+    "tests/data/placebo/test_memorydb_security_group/memory-db.DescribeClusters_1.json",
+    "tests/data/placebo/test_memorydb_security_group/memory-db.ListTags_1.json",
+    "tests/data/placebo/test_memorydb_subnet_filter/ec2.DescribeSubnets_1.json",
+    "tests/data/placebo/test_memorydb_subnet_filter/memory-db.DescribeClusters_1.json",
+    "tests/data/placebo/test_memorydb_subnet_filter/memory-db.DescribeSubnetGroups_1.json",
+    "tests/data/placebo/test_memorydb_subnet_filter/memory-db.ListTags_1.json",
+    "tests/data/placebo/test_memorydb_subnet_filter/tagging.GetResources_1.json",
+    "tests/test_memorydb.py"
+  ],
+  "num_test_files": 22,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_memorydb.MemoryDbTest::test_memorydb_kms_encryption",
+    "tests.test_memorydb.MemoryDbTest::test_memorydb_network_location_filter",
+    "tests.test_memorydb.MemoryDbTest::test_memorydb_security_group",
+    "tests.test_memorydb.MemoryDbTest::test_memorydb_subnet_filter"
+  ],
+  "PASS_TO_PASS": [
+    "tests.test_memorydb.MemoryDbTest::test_delete_memorydb",
+    "tests.test_memorydb.MemoryDbTest::test_delete_memorydb_exception",
+    "tests.test_memorydb.MemoryDbTest::test_memorydb",
+    "tests.test_memorydb.MemoryDbTest::test_memorydb_mark_for_op",
+    "tests.test_memorydb.MemoryDbTest::test_memorydb_tag_untag"
+  ]
+}

@@ -1,0 +1,16 @@
+patching file changelog.d/+agent-mesh-exclusion.added.md
+patching file mirrord-schema.json
+patching file mirrord/agent/env/src/envs.rs
+patching file mirrord/agent/iptables/src/chain.rs
+patching file mirrord/agent/iptables/src/lib.rs
+patching file mirrord/agent/iptables/src/mesh.rs
+patching file mirrord/agent/iptables/src/mesh/exclusion.rs
+patching file mirrord/agent/iptables/src/output.rs
+patching file mirrord/agent/src/entrypoint.rs
+patching file mirrord/agent/src/entrypoint/setup.rs
+patching file mirrord/agent/src/incoming.rs
+patching file mirrord/agent/src/incoming/composed.rs
+patching file mirrord/agent/src/incoming/iptables.rs
+patching file mirrord/agent/src/incoming/task.rs
+patching file mirrord/config/src/agent.rs
+patching file mirrord/kube/src/api/container/ephemeral.rs

@@ -1,0 +1,13 @@
+patching file doc/python/python_intro.rst
+patching file include/xgboost/tree_model.h
+patching file python-package/xgboost/compat.py
+patching file python-package/xgboost/core.py
+patching file python-package/xgboost/dask/__init__.py
+patching file python-package/xgboost/data.py
+patching file python-package/xgboost/sklearn.py
+patching file src/learner.cc
+patching file src/tree/hist/evaluate_splits.h
+patching file src/tree/multi_target_tree_model.cc
+patching file src/tree/updater_quantile_hist.cc
+patching file tests/python/test_basic_models.py
+patching file tests/python/test_model_io.py

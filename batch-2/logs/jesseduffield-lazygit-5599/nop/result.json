@@ -1,0 +1,29 @@
+{
+    "id": "ecfda0af-c02d-43c3-82bc-9d35f22d3533",
+    "started_at": "2026-07-06T12:17:12.161961",
+    "finished_at": "2026-07-06T12:17:50.624365",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__jesseduffield-lazygit-5599": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "jesseduffield-lazygit-5599__PUzacX3"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

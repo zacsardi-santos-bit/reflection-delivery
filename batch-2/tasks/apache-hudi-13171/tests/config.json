@@ -1,0 +1,34 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl hudi-common -am test -Dtest=TestHoodieAvroReaderContext -DfailIfNoTests=false",
+  "test_files": [
+    "hudi-client/hudi-java-client/src/test/java/org/apache/hudi/common/table/read/HoodieFileGroupReaderOnJavaTestBase.java",
+    "hudi-client/hudi-java-client/src/test/java/org/apache/hudi/common/table/read/TestHoodieFileGroupReaderOnJava.java",
+    "hudi-client/hudi-java-client/src/test/java/org/apache/hudi/hadoop/TestHoodieFileGroupReaderOnHive.java",
+    "hudi-common/src/test/java/org/apache/hudi/avro/TestHoodieAvroReaderContext.java",
+    "hudi-common/src/test/java/org/apache/hudi/common/table/read/TestHoodieFileGroupReaderBase.java",
+    "hudi-common/src/test/java/org/apache/hudi/common/testutils/HoodieTestDataGenerator.java",
+    "hudi-common/src/test/java/org/apache/hudi/common/testutils/RawTripTestPayload.java",
+    "hudi-common/src/test/java/org/apache/hudi/common/testutils/reader/HoodieTestReaderContext.java",
+    "hudi-hadoop-common/src/test/java/org/apache/hudi/common/table/read/TestCustomMerger.java",
+    "hudi-hadoop-common/src/test/java/org/apache/hudi/common/table/read/TestEventTimeMerging.java",
+    "hudi-hadoop-common/src/test/java/org/apache/hudi/common/table/read/TestHoodieFileGroupReaderInflightCommit.java",
+    "hudi-hadoop-common/src/test/java/org/apache/hudi/common/table/read/TestOverwriteWithLatestMerger.java",
+    "hudi-hadoop-common/src/test/java/org/apache/hudi/common/testutils/reader/HoodieFileGroupReaderTestHarness.java",
+    "hudi-spark-datasource/hudi-spark/src/test/java/org/apache/hudi/TestPositionBasedFileGroupRecordBuffer.java",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/common/table/read/TestHoodieFileGroupReaderOnSpark.scala"
+  ],
+  "num_test_files": 15,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jar:::test_1",
+    "jar:::test_2",
+    "jar:::test_3",
+    "jar:::test_4",
+    "jar:::test_5",
+    "jar:::test_6",
+    "jar:::test_7",
+    "jar:::test_8"
+  ],
+  "PASS_TO_PASS": []
+}

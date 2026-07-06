@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && cargo nextest run --test integration snapshot::template_injection",
+  "test_files": [
+    "crates/zizmor/tests/integration/snapshots/integration__e2e__gha_hazmat.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-5.snap",
+    "crates/zizmor/tests/integration/snapshots/integration__snapshot__template_injection-7.snap"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) zizmor::integration snapshot::template_injection"
+  ],
+  "PASS_TO_PASS": []
+}

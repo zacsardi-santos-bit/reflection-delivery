@@ -1,0 +1,38 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo/kernel && ./gradlew :sql:test --no-daemon",
+  "test_files": [
+    "kernel/base/src/test/java/com/twosigma/beakerx/evaluator/EvaluatorTest.java",
+    "kernel/sql/src/test/java/com/twosigma/beakerx/sql/magic/command/DataSourceParamResolverImplTest.java",
+    "kernel/sql/src/test/java/com/twosigma/beakerx/sql/magic/command/DefaultDataSourcesMagicCommandTest.java",
+    "kernel/sql/src/test/java/com/twosigma/beakerx/sql/magic/command/SQLKernelTest.java",
+    "kernel/sql/src/test/java/com/twosigma/beakerx/sql/magic/command/SQLMagicCommandTest.java",
+    "test/ipynb/sql/SQL_user_password_Test.ipynb"
+  ],
+  "num_test_files": 6,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "unknown::test_1",
+    "unknown::test_2",
+    "unknown::test_3",
+    "unknown::test_4",
+    "unknown::test_5",
+    "unknown::test_6",
+    "unknown::test_7",
+    "unknown::test_8",
+    "unknown::test_9",
+    "unknown::test_10",
+    "unknown::test_11",
+    "unknown::test_12",
+    "unknown::test_13",
+    "unknown::test_14",
+    "unknown::test_15",
+    "unknown::test_16",
+    "unknown::test_17",
+    "unknown::test_18",
+    "unknown::test_19",
+    "unknown::test_20",
+    "unknown::test_21"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,5 @@
+I'm working on the kinflate command and I need help with two related improvements.
+
+First, when adding configmap entries to a manifest, I need a safe find-or-create operation: given a configmap name, look for an existing entry in the manifest and return it, or create a new one and append it if none exists. I also need a way to merge data sources into an existing configmap — specifically, literal key-value sources and file sources should accumulate across multiple operations rather than overwriting each other. Environment file sources are special: each configmap should only have one, so trying to set a second one should produce an error.
+
+Second, the code that reads and writes manifest files should be refactored into a reusable loader that accepts a pluggable filesystem. This would allow tests to use an in-memory filesystem instead of the real disk. Writing to an empty filename should fail with an error, and a manifest written through the loader should be fully recoverable when read back.

@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_css_parser -E 'test(with_slash)'",
+  "test_files": [
+    "crates/biome_css_parser/tests/css_test_suite/error/tailwind/when-disabled/utility-with-slash.css",
+    "crates/biome_css_parser/tests/css_test_suite/error/tailwind/when-disabled/utility-with-slash.css.snap",
+    "crates/biome_css_parser/tests/css_test_suite/ok/tailwind/utility/with-slash.css",
+    "crates/biome_css_parser/tests/css_test_suite/ok/tailwind/utility/with-slash.css.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_css_parser::spec_tests ok::tailwind::utility::with_slash_css",
+    "(2/2) biome_css_parser::spec_tests error::tailwind::when_disabled::utility_with_slash_css"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,98 @@
+{
+    "id": "1b726373-0654-4632-9a77-2c8b5915ca2e",
+    "task_name": "offline/builderio-mitosis-814",
+    "trial_name": "builderio-mitosis-814__4WVBoVB",
+    "trial_uri": "file:///tmp/nop/2026-07-01__14-35-26/builderio-mitosis-814__4WVBoVB",
+    "task_id": {
+        "path": "builderio-mitosis-814"
+    },
+    "source": "src",
+    "task_checksum": "fa22021ea956e3557fbed455e9eb511924de8f7e3ee51eb2623bd4bde9329ffb",
+    "config": {
+        "task": {
+            "path": "builderio-mitosis-814",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "builderio-mitosis-814__4WVBoVB",
+        "trials_dir": "/tmp/nop/2026-07-01__14-35-26",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "0b7a784e-3137-481e-8b5b-35c2995a7ed7"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-01T14:35:30.660742Z",
+    "finished_at": "2026-07-01T14:36:16.349938Z",
+    "environment_setup": {
+        "started_at": "2026-07-01T14:35:30.662514Z",
+        "finished_at": "2026-07-01T14:35:32.607162Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-01T14:35:32.607195Z",
+        "finished_at": "2026-07-01T14:35:32.607239Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-01T14:35:32.607290Z",
+        "finished_at": "2026-07-01T14:35:32.607316Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-01T14:35:32.607411Z",
+        "finished_at": "2026-07-01T14:36:06.019872Z"
+    }
+}

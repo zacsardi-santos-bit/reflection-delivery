@@ -1,0 +1,29 @@
+{
+    "id": "151d3208-836f-476d-9ac6-67597b397a7f",
+    "started_at": "2026-07-06T12:18:25.603405",
+    "finished_at": "2026-07-06T12:19:20.775223",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__ng-zorro-ng-zorro-antd-9645": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "ng-zorro-ng-zorro-antd-9645__gyjoV2S"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

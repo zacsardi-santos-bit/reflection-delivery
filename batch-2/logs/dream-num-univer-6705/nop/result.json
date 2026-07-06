@@ -1,0 +1,29 @@
+{
+    "id": "ae064918-fd4f-43ec-bde5-8a06c4d20c2c",
+    "started_at": "2026-07-06T12:16:34.809423",
+    "finished_at": "2026-07-06T12:17:10.343066",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__dream-num-univer-6705": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "dream-num-univer-6705__KRZwD3b"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && pnpm --filter ./protographic run build && npx vitest run cli/test/grpc-service.test.ts protographic/tests/sdl-validation/01-basic-validation.test.ts",
+  "test_files": [
+    "cli/test/fixtures/schema-with-nullable-list-items.graphql",
+    "cli/test/fixtures/schema-with-validation-errors.graphql",
+    "cli/test/fixtures/schema-with-warnings-and-errors.graphql",
+    "cli/test/grpc-service.test.ts",
+    "protographic/tests/sdl-validation/01-basic-validation.test.ts"
+  ],
+  "num_test_files": 5,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/cli/test/grpc-service.test.ts::gRPC Generate Command should fail when schema has validation errors",
+    "/workspace/repo/cli/test/grpc-service.test.ts::gRPC Generate Command should display warnings and stop on errors",
+    "/workspace/repo/protographic/tests/sdl-validation/01-basic-validation.test.ts::SDL Validation should validate a basic schema",
+    "/workspace/repo/protographic/tests/sdl-validation/01-basic-validation.test.ts::SDL Validation should validate a complex valid schema",
+    "/workspace/repo/protographic/tests/sdl-validation/01-basic-validation.test.ts::SDL Validation should return a warning if a list type has a nullable item",
+    "/workspace/repo/protographic/tests/sdl-validation/01-basic-validation.test.ts::SDL Validation should return a warning if a nested list type has a nullable item",
+    "/workspace/repo/protographic/tests/sdl-validation/01-basic-validation.test.ts::SDL Validation should return a warning if a type has a nested key directive",
+    "/workspace/repo/protographic/tests/sdl-validation/01-basic-validation.test.ts::SDL Validation should return a warning if a field has a requires directive"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/cli/test/grpc-service.test.ts::gRPC Generate Command should generate proto and mapping files",
+    "/workspace/repo/cli/test/grpc-service.test.ts::gRPC Generate Command should create output directory if it does not exist",
+    "/workspace/repo/cli/test/grpc-service.test.ts::gRPC Generate Command should fail when input file does not exist",
+    "/workspace/repo/cli/test/grpc-service.test.ts::gRPC Generate Command should fail when output path is a file",
+    "/workspace/repo/cli/test/grpc-service.test.ts::gRPC Generate Command should generate all files with warnings"
+  ]
+}

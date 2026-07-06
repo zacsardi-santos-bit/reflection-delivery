@@ -1,0 +1,1 @@
+cd /workspace/repo && pnpm install --frozen-lockfile 2>&1 | tail -5 && cd /workspace/repo/packages/tailwind && npx vitest run __tests__/tailwind.test.ts

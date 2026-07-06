@@ -1,0 +1,29 @@
+{
+    "id": "225873f6-0e20-42d5-b85e-f535e0e9f09b",
+    "started_at": "2026-07-04T15:37:10.751015",
+    "finished_at": "2026-07-04T15:37:59.554475",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__microsoft-msquic-2883": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "microsoft-msquic-2883__QL2XUAf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

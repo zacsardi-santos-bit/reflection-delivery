@@ -1,7 +1,0 @@
-patching file crates/rolldown/src/ast_scanner/cjs_ast_analyzer.rs
-patching file crates/rolldown/src/ast_scanner/impl_visit.rs
-patching file crates/rolldown/src/ast_scanner/mod.rs
-patching file crates/rolldown/src/module_finalizers/scope_hoisting/mod.rs
-patching file crates/rolldown/src/stages/link_stage/bind_imports_and_exports.rs
-patching file crates/rolldown/src/types/linking_metadata.rs
-patching file crates/rolldown_common/src/ecmascript/ecma_view.rs

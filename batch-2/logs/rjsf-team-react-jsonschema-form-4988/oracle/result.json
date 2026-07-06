@@ -1,0 +1,29 @@
+{
+    "id": "6eb63e9b-f2c4-4e86-b038-f81cd0ff985e",
+    "started_at": "2026-07-06T12:18:43.301553",
+    "finished_at": "2026-07-06T12:19:12.541977",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__rjsf-team-react-jsonschema-form-4988": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "rjsf-team-react-jsonschema-form__6nG57Jm"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

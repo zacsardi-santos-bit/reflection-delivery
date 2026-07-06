@@ -1,0 +1,15 @@
+patching file README.md
+patching file app/vmagent/main.go
+patching file app/vmagent/remotewrite/remotewrite.go
+patching file app/vmagent/statsd/request_handler.go
+patching file app/vminsert/common/streamaggr.go
+patching file app/vminsert/main.go
+patching file app/vminsert/statsd/request_handler.go
+patching file docs/README.md
+patching file docs/Single-server-VictoriaMetrics.md
+patching file docs/vmagent.md
+patching file lib/protoparser/statsd/parser.go
+patching file lib/protoparser/statsd/stream/streamparser.go
+patching file lib/stringsutil/less_natural.go
+patching file lib/stringsutil/less_natural_test.go
+patching file lib/stringsutil/less_natural_timing_test.go

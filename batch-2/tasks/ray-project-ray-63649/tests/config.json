@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/ray/serve/tests/unit/test_router.py::TestSingletonThreadRouter::test_choose_replica_cancel_during_entry_releases_slot -v",
+  "test_files": [
+    "python/ray/serve/tests/unit/test_router.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.ray.serve.tests.unit.test_router.TestSingletonThreadRouter::test_choose_replica_cancel_during_entry_releases_slot"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,28 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p turborepo-lockfiles -p turborepo-repository --lib -E 'test(_npm_alias)'",
+  "test_files": [
+    "lockfile-tests/fixtures/berry-npm-alias/.yarnrc.yml",
+    "lockfile-tests/fixtures/berry-npm-alias/meta.json",
+    "lockfile-tests/fixtures/berry-npm-alias/package.json",
+    "lockfile-tests/fixtures/berry-npm-alias/packages/a/package.json",
+    "lockfile-tests/fixtures/berry-npm-alias/packages/buffer/package.json",
+    "lockfile-tests/fixtures/berry-npm-alias/turbo.json",
+    "lockfile-tests/fixtures/berry-npm-alias/yarn.lock"
+  ],
+  "num_test_files": 7,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/10) turborepo-repository package_graph::dep_splitter::test::test_is_npm_alias::bare_range",
+    "( 2/10) turborepo-repository package_graph::dep_splitter::test::test_is_npm_alias::workspace_protocol",
+    "( 3/10) turborepo-repository package_graph::dep_splitter::test::test_is_npm_alias::npm_wildcard",
+    "( 4/10) turborepo-repository package_graph::dep_splitter::test::test_is_npm_alias::npm_alias_scoped",
+    "( 5/10) turborepo-repository package_graph::dep_splitter::test::test_is_npm_alias::npm_range",
+    "( 6/10) turborepo-repository package_graph::dep_splitter::test::test_is_npm_alias::npm_alias_unscoped",
+    "( 7/10) turborepo-repository package_graph::dep_splitter::test::test_matches_workspace_package::handles_npm_alias_with_scoped_package",
+    "( 8/10) turborepo-repository package_graph::dep_splitter::test::test_matches_workspace_package::handles_npm_alias_with_different_package_name",
+    "( 9/10) turborepo-repository package_graph::dep_splitter::test::test_matches_workspace_package::handles_npm_alias_with_matching_workspace_name",
+    "(10/10) turborepo-lockfiles berry::test::test_npm_alias_does_not_resolve_to_workspace"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "c89ca94d-3820-4e2a-8b71-d9876625f880",
+    "started_at": "2026-07-06T12:17:19.217025",
+    "finished_at": "2026-07-06T12:17:53.234964",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__huggingface-transformers-45847": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "huggingface-transformers-45847__uByBcRq"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

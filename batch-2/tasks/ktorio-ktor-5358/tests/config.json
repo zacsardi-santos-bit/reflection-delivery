@@ -1,0 +1,41 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :ktor-server-tests:jvmTest --tests \"*SessionTest\" --tests \"*SessionTestJvm\" --no-daemon --no-watch-fs; GRADLE_EXIT=$?; find /workspace/repo/ktor-server/ktor-server-tests/build/test-results -name \"*.xml\" 2>/dev/null | xargs cat 2>/dev/null; exit $GRADLE_EXIT",
+  "test_files": [
+    "ktor-server/ktor-server-tests/common/test/io/ktor/tests/server/sessions/SessionTest.kt",
+    "ktor-server/ktor-server-tests/jvm/test/io/ktor/server/sessions/SessionTestJvm.kt"
+  ],
+  "num_test_files": 2,
+  "language": "kotlin",
+  "FAIL_TO_PASS": [
+    "io.ktor.server.sessions.SessionTestJvm::testSessionEncryptedBackwardCompatible()[jvm]",
+    "io.ktor.server.sessions.SessionTestJvm::testSessionEncrypted()[jvm]",
+    "io.ktor.server.sessions.SessionTestJvm::testSessionEncryptedNotBackwardCompatible()[jvm]",
+    "io.ktor.server.sessions.SessionTestJvm::testSessionByValueMac()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testRoutesIsolation()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSetCookieNotAdded()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionByIdServer()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testMissingSession()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionByInvalidId()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testCustomSerializer()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionCreateDelete()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionWithEncodedCookie()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionById()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testClearSessionByIdForMultipleDevices()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionByIdAccessors()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionOverflowDuration()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testHttpSessionCookie()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::secureCookie()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testDuplicateProvidersDiagnostics()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testCustomSessionIdProvider()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testClearSessionById()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionByValue()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testMissingSessionsPlugin()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testRoutes()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionLongDuration()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::settingSessionAfterResponseTest()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionByIdCookie()[jvm]",
+    "io.ktor.tests.server.sessions.SessionTest::testSessionByIdServerWithBackwardCompatibleSerialization()[jvm]"
+  ],
+  "PASS_TO_PASS": []
+}

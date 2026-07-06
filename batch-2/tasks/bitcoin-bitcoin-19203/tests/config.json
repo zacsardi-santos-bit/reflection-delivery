@@ -1,0 +1,14 @@
+{
+  "test_framework": "cppunit",
+  "test_command": "cd /workspace/repo && autoreconf -i && ./configure --enable-fuzz && make -j$(nproc) && if echo '' | FUZZ=socks5 ./src/test/fuzz/fuzz > /dev/null 2>&1; then echo 'socks5::fuzz_target : OK'; else echo 'socks5::fuzz_target : FAIL'; fi",
+  "test_files": [
+    "src/test/fuzz/socks5.cpp",
+    "src/test/fuzz/util.h"
+  ],
+  "num_test_files": 2,
+  "language": "cpp",
+  "FAIL_TO_PASS": [
+    "socks5::fuzz_target"
+  ],
+  "PASS_TO_PASS": []
+}

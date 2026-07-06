@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/biomejs/biome/pull/2928"
+source_type = "pr"
+
+[task]
+name = "biomejs/biome"
+description = "I'm hacking on the GraphQL parser in Biome and it doesn't handle object type extension statements yet, which is a real problem because federated and composed schemas lean on these all the time to a..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["rust", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:biomejs-biome-2928"
+os = "linux"
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/8"
+category = "Software Engineering"
+subcategory = "Compilers, interpreters, and programming languages"
+objective_labels = ["Implement", "Fix"]
+artifact_type_labels = ["Codebase"]
+expert_time_estimate = 3600
+junior_time_estimate = 10800

@@ -1,0 +1,29 @@
+{
+    "id": "09e7cafc-7849-470b-823d-2cdc94627e9c",
+    "started_at": "2026-07-04T15:40:51.373543",
+    "finished_at": "2026-07-04T15:41:03.897611",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__pandas-dev-pandas-65562": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pandas-dev-pandas-65562__JY6SMcX"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

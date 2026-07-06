@@ -1,0 +1,29 @@
+{
+    "id": "453a4327-ad7f-4a47-8c89-e386ec6952f6",
+    "started_at": "2026-07-04T15:37:31.859950",
+    "finished_at": "2026-07-04T15:38:32.693772",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__microsoft-verona-301": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "microsoft-verona-301__dDky7L3"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

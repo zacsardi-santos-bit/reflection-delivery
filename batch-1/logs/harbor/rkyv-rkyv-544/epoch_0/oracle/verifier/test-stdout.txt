@@ -1,0 +1,101 @@
+patching file rkyv/tests/derive.rs
+warning: Patch `bytecheck v0.8.2 (https://github.com/rkyv/bytecheck#f97d5726)` was not used in the crate graph.
+Patch `ptr_meta v0.3.1 (https://github.com/rkyv/ptr_meta#62eb4235)` was not used in the crate graph.
+Patch `rancor v0.1.1 (https://github.com/rkyv/rancor#1ca3db90)` was not used in the crate graph.
+Patch `rend v0.5.3 (https://github.com/rkyv/rend#4434f3e0)` was not used in the crate graph.
+Check that the patched package version and available features are compatible
+with the dependency requirements. If the patch has a different version from
+what is locked in the Cargo.lock file, run `cargo update` to use the new
+version. This may also occur with an optional dependency that is not enabled.
+warning: Patch `bytecheck v0.8.2 (https://github.com/rkyv/bytecheck#f97d5726)` was not used in the crate graph.
+Patch `ptr_meta v0.3.1 (https://github.com/rkyv/ptr_meta#62eb4235)` was not used in the crate graph.
+Patch `rancor v0.1.1 (https://github.com/rkyv/rancor#1ca3db90)` was not used in the crate graph.
+Patch `rend v0.5.3 (https://github.com/rkyv/rend#4434f3e0)` was not used in the crate graph.
+Check that the patched package version and available features are compatible
+with the dependency requirements. If the patch has a different version from
+what is locked in the Cargo.lock file, run `cargo update` to use the new
+version. This may also occur with an optional dependency that is not enabled.
+   Compiling proc-macro2 v1.0.106
+   Compiling serde_core v1.0.228
+   Compiling libc v0.2.186
+   Compiling clap_lex v1.1.0
+   Compiling zmij v1.0.21
+   Compiling anstyle v1.0.14
+   Compiling cfg-if v1.0.4
+   Compiling winnow v1.0.3
+   Compiling getrandom v0.3.4
+   Compiling rand_core v0.6.4
+   Compiling zerocopy v0.8.52
+   Compiling target-triple v1.0.0
+   Compiling version_check v0.9.5
+   Compiling serde v1.0.228
+   Compiling serde_json v1.0.150
+   Compiling memchr v2.8.2
+   Compiling regex-lite v0.1.9
+   Compiling condtype v1.3.0
+   Compiling itoa v1.0.18
+   Compiling toml_writer v1.1.1+spec-1.1.0
+   Compiling rand v0.8.6
+   Compiling clap_builder v4.6.0
+   Compiling rand_pcg v0.3.1
+   Compiling termcolor v1.4.1
+   Compiling ahash v0.8.12
+   Compiling toml_parser v1.1.2+spec-1.1.0
+   Compiling once_cell v1.21.4
+   Compiling glob v0.3.3
+   Compiling quote v1.0.46
+   Compiling syn v2.0.118
+   Compiling clap v4.6.1
+   Compiling toml_datetime v1.1.1+spec-1.1.0
+   Compiling serde_spanned v1.1.1
+   Compiling toml v1.1.2+spec-1.1.0
+   Compiling ptr_meta_derive v0.3.0-rc.1
+   Compiling munge_macro v0.4.7
+   Compiling divan-macros v0.1.21
+   Compiling rkyv_derive v0.8.0-rc.1 (/workspace/repo/rkyv_derive)
+   Compiling serde_derive v1.0.228
+   Compiling ptr_meta v0.3.0-rc.1
+   Compiling rancor v0.1.0-rc.1
+   Compiling munge v0.4.7
+   Compiling divan v0.1.21
+   Compiling benchlib v0.8.0-rc.1 (/workspace/repo/benchlib)
+   Compiling rkyv v0.8.0-rc.1 (/workspace/repo/rkyv)
+   Compiling trybuild v1.0.117
+warning[E0133]: access to union field is unsafe and requires unsafe block
+   --> rkyv/src/string/repr.rs:200:30
+    |
+200 |                 out_of_line: OutOfLineRepr { len, offset, _phantom: _ }
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ access to union field
+    |
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-op-in-unsafe-fn.html>
+    = note: the field may not be properly initialized: using uninitialized data will cause undefined behavior
+note: an unsafe function restricts its caller, but its body is safe by default
+   --> rkyv/src/string/repr.rs:193:5
+    |
+193 | /     pub unsafe fn try_emplace_out_of_line<E: Source>(
+194 | |         value: &str,
+195 | |         target: usize,
+196 | |         out: Place<Self>,
+197 | |     ) -> Result<(), E> {
+    | |______________________^
+note: the lint level is defined here
+   --> rkyv/src/lib.rs:170:5
+    |
+170 |     unsafe_op_in_unsafe_fn,
+    |     ^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0133`.
+warning: `rkyv` (lib) generated 1 warning (run `cargo fix --lib -p rkyv` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.22s
+────────────
+ Nextest run ID 0faff7ee-5f84-4e87-b93b-92253ea7296a with nextest profile: default
+    Starting 6 tests across 1 binary
+        PASS [   0.013s] rkyv::derive unnamed_struct_private
+        PASS [   0.014s] rkyv::derive named_struct
+        PASS [   0.013s] rkyv::derive full_enum
+        PASS [   0.014s] rkyv::derive unnamed_struct
+        PASS [   0.015s] rkyv::derive named_struct_private
+        PASS [   0.015s] rkyv::derive unit_struct
+────────────
+     Summary [   0.016s] 6 tests run: 6 passed, 0 skipped
+reward=1 graded=6 found=6 failed=0 parsed=6 framework=cargo exit_code=0

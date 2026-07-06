@@ -1,0 +1,29 @@
+{
+    "id": "bfd99940-7001-48bd-9770-0472d64c3c05",
+    "started_at": "2026-07-04T15:37:00.612883",
+    "finished_at": "2026-07-04T15:40:16.199787",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__qdrant-qdrant-4150": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "qdrant-qdrant-4150__P3NNZVG"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

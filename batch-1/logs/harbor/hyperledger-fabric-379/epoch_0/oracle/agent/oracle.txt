@@ -1,0 +1,4 @@
+patching file core/comm/client.go
+patching file core/comm/creds.go
+patching file integration/nwo/configblock.go
+patching file orderer/common/cluster/util.go

@@ -1,0 +1,5 @@
+I'm working with a bounded async multi-producer single-consumer channel and I'd like to reserve capacity for multiple messages at once rather than one slot at a time. Right now I can only reserve a single slot before sending, but I want to atomically hold space for a batch of messages before I start producing them.
+
+I need both a blocking variant that waits until enough space is available and a non-blocking variant that returns an error immediately if there isn't enough capacity. The result should be something I can iterate over to get individual send permits, one per reserved slot.
+
+The behavior I expect: requesting zero slots should succeed (returning an empty result) as long as the channel is still open, even if it's currently full. Requesting more slots than the channel's total capacity should fail. When the channel is closed, any reservation — including for zero slots — should fail. If I drop the batch of permits before using all of them, the unused ones should be released back to the channel so that other waiting senders can proceed.

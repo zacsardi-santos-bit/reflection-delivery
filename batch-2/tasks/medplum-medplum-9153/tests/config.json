@@ -1,0 +1,28 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/cdk && npx jest --runInBand src/index.test.ts && cd /workspace/repo/packages/cli && npx jest src/aws/update-bucket-policies.test.ts",
+  "test_files": [
+    "packages/cdk/src/index.test.ts",
+    "packages/cli/src/aws/update-bucket-policies.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command Continues when App bucket update fails",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command Continues when Storage bucket update fails",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy Storage GuardDuty malware protection",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy Storage GuardDuty malware protection adds deny when existing deny is incomplete"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command Success",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command Config not found",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command Stack not found",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy Bucket not found",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy Distribution not found",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy OAI not found",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy Dry run",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy Existing allow statement throws",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy Updates bucket policy and invalidates CloudFront",
+    "/workspace/repo/packages/cli/src/aws/update-bucket-policies.test.ts::update-bucket-policies command updateBucketPolicy Storage GuardDuty malware protection does not add duplicate deny"
+  ]
+}

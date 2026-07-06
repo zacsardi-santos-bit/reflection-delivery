@@ -1,6 +1,0 @@
-patching file cmd/deploy/deploy_test.go
-# github.com/okteto/okteto/cmd/deploy [github.com/okteto/okteto/cmd/deploy.test]
-cmd/deploy/deploy_test.go:233:21: undefined: getConfigMapFromData
-cmd/deploy/deploy_test.go:333:79: undefined: errors.InvalidDockerfile
-FAIL	github.com/okteto/okteto/cmd/deploy [build failed]
-reward=0 graded=15 found=15 failed=15 parsed=1 framework=go exit_code=1

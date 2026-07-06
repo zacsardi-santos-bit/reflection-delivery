@@ -1,0 +1,18 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run src/config/extension-manager.test.ts --coverage=false --reporter=verbose",
+  "test_files": [
+    "packages/cli/src/config/extension-manager.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/config/extension-manager.test.ts::ExtensionManager loadExtensions parallel loading should prevent concurrent loading and return the same promise",
+    "/workspace/repo/packages/cli/src/config/extension-manager.test.ts::ExtensionManager loadExtensions parallel loading should throw if there are duplicate extension names"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/config/extension-manager.test.ts::ExtensionManager loadExtensions parallel loading should throw an error if loadExtensions is called after it has already resolved",
+    "/workspace/repo/packages/cli/src/config/extension-manager.test.ts::ExtensionManager loadExtensions parallel loading should not throw if extension directory does not exist",
+    "/workspace/repo/packages/cli/src/config/extension-manager.test.ts::ExtensionManager loadExtensions parallel loading should wait for loadExtensions to finish when loadExtension is called concurrently"
+  ]
+}

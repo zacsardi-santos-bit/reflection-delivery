@@ -1,0 +1,857 @@
+diff --git a/ui/actions/finding-groups/finding-groups.ts b/ui/actions/finding-groups/finding-groups.ts
+index 30798ea3e..bf5df80aa 100644
+--- a/ui/actions/finding-groups/finding-groups.ts
++++ b/ui/actions/finding-groups/finding-groups.ts
+@@ -2,7 +2,17 @@
+ 
+ import { redirect } from "next/navigation";
+ 
+-import { apiBaseUrl, getAuthHeaders } from "@/lib";
++import {
++  apiBaseUrl,
++  composeSort,
++  FG_FAIL_FIRST,
++  FG_RECENT_LAST_SEEN,
++  FG_SEVERITY_HIGH_FIRST,
++  FINDING_GROUP_RESOURCES_DEFAULT_SORT,
++  getAuthHeaders,
++  includesMutedFindings,
++  splitCsvFilterValues,
++} from "@/lib";
+ import { appendSanitizedProviderFilters } from "@/lib/provider-filters";
+ import { handleApiResponse } from "@/lib/server-actions-helper";
+ import { FilterParam } from "@/types/filters";
+@@ -24,24 +34,6 @@ function mapSearchFilter(
+   return mapped;
+ }
+ 
+-function splitCsvFilterValues(value: string | string[] | undefined): string[] {
+-  if (Array.isArray(value)) {
+-    return value
+-      .flatMap((item) => item.split(","))
+-      .map((item) => item.trim())
+-      .filter(Boolean);
+-  }
+-
+-  if (typeof value === "string") {
+-    return value
+-      .split(",")
+-      .map((item) => item.trim())
+-      .filter(Boolean);
+-  }
+-
+-  return [];
+-}
+-
+ /**
+  * Filters that belong to finding-groups but are NOT valid for the
+  * finding-group resources sub-endpoint. These must be stripped before
+@@ -82,14 +74,34 @@ function normalizeFindingGroupResourceFilters(
+   return normalized;
+ }
+ 
+-const DEFAULT_FINDING_GROUPS_SORT =
+-  "-status,-severity,-new_fail_count,-changed_fail_count,-fail_count,-last_seen_at";
+-
+-const DEFAULT_FINDING_GROUPS_SORT_WITH_MUTED =
+-  "-status,-severity,-new_fail_count,-changed_fail_count,-new_fail_muted_count,-changed_fail_muted_count,-fail_count,-fail_muted_count,-last_seen_at";
++// Composite sorts for finding-groups (Family B in lib/findings-sort.ts).
++// The `-status,-severity,...,-last_seen_at` shape is required by the API:
++// these endpoints map status/severity to weighted integer columns where
++// DESC = FAIL/critical first. The intermediate `*_count` tokens are
++// finding-group-specific impact tiebreakers and have no Family A analogue.
++const DEFAULT_FINDING_GROUPS_SORT = composeSort(
++  FG_FAIL_FIRST,
++  FG_SEVERITY_HIGH_FIRST,
++  "-new_fail_count",
++  "-changed_fail_count",
++  "-fail_count",
++  FG_RECENT_LAST_SEEN,
++);
++
++const DEFAULT_FINDING_GROUPS_SORT_WITH_MUTED = composeSort(
++  FG_FAIL_FIRST,
++  FG_SEVERITY_HIGH_FIRST,
++  "-new_fail_count",
++  "-changed_fail_count",
++  "-new_fail_muted_count",
++  "-changed_fail_muted_count",
++  "-fail_count",
++  "-fail_muted_count",
++  FG_RECENT_LAST_SEEN,
++);
+ 
+ const DEFAULT_FINDING_GROUP_RESOURCES_SORT =
+-  "-status,-severity,-delta,-last_seen_at";
++  FINDING_GROUP_RESOURCES_DEFAULT_SORT;
+ 
+ interface FetchFindingGroupsParams {
+   page?: number;
+@@ -98,18 +110,6 @@ interface FetchFindingGroupsParams {
+   filters?: Record<string, string | string[] | undefined>;
+ }
+ 
+-function includesMutedFindings(
+-  filters: Record<string, string | string[] | undefined>,
+-): boolean {
+-  const mutedFilter = filters["filter[muted]"];
+-
+-  if (Array.isArray(mutedFilter)) {
+-    return mutedFilter.includes("include");
+-  }
+-
+-  return mutedFilter === "include";
+-}
+-
+ function getDefaultFindingGroupsSort(
+   filters: Record<string, string | string[] | undefined>,
+ ): string {
+diff --git a/ui/actions/findings/findings-by-resource.ts b/ui/actions/findings/findings-by-resource.ts
+index 74a0bcb6d..3d1a6859a 100644
+--- a/ui/actions/findings/findings-by-resource.ts
++++ b/ui/actions/findings/findings-by-resource.ts
+@@ -4,7 +4,11 @@ import {
+   getFindingGroupResources,
+   getLatestFindingGroupResources,
+ } from "@/actions/finding-groups";
+-import { apiBaseUrl, getAuthHeaders } from "@/lib";
++import {
++  apiBaseUrl,
++  getAuthHeaders,
++  RESOURCE_DRAWER_OTHER_FINDINGS_SORT,
++} from "@/lib";
+ import { runWithConcurrencyLimit } from "@/lib/concurrency";
+ import { appendSanitizedProviderTypeFilters } from "@/lib/provider-filters";
+ import { handleApiResponse } from "@/lib/server-actions-helper";
+@@ -266,7 +270,7 @@ export const getLatestFindingsByResourceUid = async ({
+   url.searchParams.append("filter[resource_uid]", resourceUid);
+   url.searchParams.append("filter[status]", "FAIL");
+   url.searchParams.append("filter[muted]", includeMuted ? "include" : "false");
+-  url.searchParams.append("sort", "severity,-updated_at");
++  url.searchParams.append("sort", RESOURCE_DRAWER_OTHER_FINDINGS_SORT);
+   if (page) url.searchParams.append("page[number]", page.toString());
+   if (pageSize) url.searchParams.append("page[size]", pageSize.toString());
+ 
+diff --git a/ui/actions/resources/resources.ts b/ui/actions/resources/resources.ts
+index b0831bdb2..8af257685 100644
+--- a/ui/actions/resources/resources.ts
++++ b/ui/actions/resources/resources.ts
+@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
+ 
+ import { getLatestFindings } from "@/actions/findings";
+ import { listOrganizationsSafe } from "@/actions/organizations/organizations";
+-import { apiBaseUrl, getAuthHeaders } from "@/lib";
++import { apiBaseUrl, FINDINGS_FILTERED_SORT, getAuthHeaders } from "@/lib";
+ import { appendSanitizedProviderTypeFilters } from "@/lib/provider-filters";
+ import { handleApiResponse } from "@/lib/server-actions-helper";
+ import { OrganizationResource } from "@/types/organizations";
+@@ -285,7 +285,7 @@ export const getResourceDrawerData = async ({
+         page,
+         pageSize,
+         query,
+-        sort: "severity,-inserted_at",
++        sort: FINDINGS_FILTERED_SORT,
+         filters: {
+           "filter[resource_uid]": resourceUid,
+           "filter[status]": "FAIL",
+diff --git a/ui/app/(prowler)/_overview/attack-surface/_components/attack-surface-card-item.tsx b/ui/app/(prowler)/_overview/attack-surface/_components/attack-surface-card-item.tsx
+index 46f2b0dd8..ef92b7b4b 100644
+--- a/ui/app/(prowler)/_overview/attack-surface/_components/attack-surface-card-item.tsx
++++ b/ui/app/(prowler)/_overview/attack-surface/_components/attack-surface-card-item.tsx
+@@ -2,6 +2,7 @@ import Link from "next/link";
+ 
+ import { AttackSurfaceItem } from "@/actions/overview";
+ import { Card, CardContent } from "@/components/shadcn";
++import { applyFailNonMutedFilters } from "@/lib";
+ 
+ interface AttackSurfaceCardItemProps {
+   item: AttackSurfaceItem;
+@@ -18,8 +19,7 @@ export function AttackSurfaceCardItem({
+ 
+     // Add attack surface category filter
+     params.set("filter[category__in]", item.id);
+-    params.set("filter[status__in]", "FAIL");
+-    params.set("filter[muted]", "false");
++    applyFailNonMutedFilters(params);
+ 
+     // Add current page filters (provider, account, etc.)
+     Object.entries(filters).forEach(([key, value]) => {
+diff --git a/ui/app/(prowler)/_overview/graphs-tabs/findings-view/findings-view.ssr.tsx b/ui/app/(prowler)/_overview/graphs-tabs/findings-view/findings-view.ssr.tsx
+index cca971578..0396795cb 100644
+--- a/ui/app/(prowler)/_overview/graphs-tabs/findings-view/findings-view.ssr.tsx
++++ b/ui/app/(prowler)/_overview/graphs-tabs/findings-view/findings-view.ssr.tsx
+@@ -6,6 +6,7 @@ import { LinkToFindings } from "@/components/overview";
+ import { ColumnLatestFindings } from "@/components/overview/new-findings-table/table";
+ import { CardTitle } from "@/components/shadcn";
+ import { DataTable } from "@/components/ui/table";
++import { FINDINGS_FILTERED_SORT } from "@/lib";
+ import { createDict } from "@/lib/helper";
+ import { FindingProps, SearchParamsProps } from "@/types";
+ 
+@@ -17,7 +18,7 @@ interface FindingsViewSSRProps {
+ 
+ export async function FindingsViewSSR({ searchParams }: FindingsViewSSRProps) {
+   const page = 1;
+-  const sort = "severity,-inserted_at";
++  const sort = FINDINGS_FILTERED_SORT;
+ 
+   const defaultFilters = {
+     "filter[status]": "FAIL",
+diff --git a/ui/app/(prowler)/_overview/graphs-tabs/risk-plot/risk-plot-client.tsx b/ui/app/(prowler)/_overview/graphs-tabs/risk-plot/risk-plot-client.tsx
+index 84405fe0f..f1db02159 100644
+--- a/ui/app/(prowler)/_overview/graphs-tabs/risk-plot/risk-plot-client.tsx
++++ b/ui/app/(prowler)/_overview/graphs-tabs/risk-plot/risk-plot-client.tsx
+@@ -8,6 +8,7 @@ import { HorizontalBarChart } from "@/components/graphs/horizontal-bar-chart";
+ import { ScatterPlot } from "@/components/graphs/scatter-plot";
+ import { AlertPill } from "@/components/graphs/shared/alert-pill";
+ import type { BarDataPoint } from "@/components/graphs/types";
++import { applyFailNonMutedFilters } from "@/lib";
+ import { SEVERITY_FILTER_MAP } from "@/types/severities";
+ 
+ // Score color thresholds (0-100 scale, higher = better)
+@@ -50,11 +51,7 @@ export function RiskPlotClient({ data }: RiskPlotClientProps) {
+     // Add provider filter for the selected point
+     params.set("filter[provider_id__in]", selectedPoint.providerId);
+ 
+-    // Add exclude muted findings filter
+-    params.set("filter[muted]", "false");
+-
+-    // Filter by FAIL findings
+-    params.set("filter[status__in]", "FAIL");
++    applyFailNonMutedFilters(params);
+ 
+     // Navigate to findings page
+     router.push(`/findings?${params.toString()}`);
+diff --git a/ui/app/(prowler)/_overview/graphs-tabs/risk-radar-view/risk-radar-view-client.tsx b/ui/app/(prowler)/_overview/graphs-tabs/risk-radar-view/risk-radar-view-client.tsx
+index 5cd079ed2..41a09b480 100644
+--- a/ui/app/(prowler)/_overview/graphs-tabs/risk-radar-view/risk-radar-view-client.tsx
++++ b/ui/app/(prowler)/_overview/graphs-tabs/risk-radar-view/risk-radar-view-client.tsx
+@@ -7,6 +7,7 @@ import { HorizontalBarChart } from "@/components/graphs/horizontal-bar-chart";
+ import { RadarChart } from "@/components/graphs/radar-chart";
+ import type { BarDataPoint, RadarDataPoint } from "@/components/graphs/types";
+ import { Card } from "@/components/shadcn/card/card";
++import { applyFailNonMutedFilters } from "@/lib";
+ import { SEVERITY_FILTER_MAP } from "@/types/severities";
+ 
+ import { CategorySelector } from "./category-selector";
+@@ -50,11 +51,7 @@ export function RiskRadarViewClient({ data }: RiskRadarViewClientProps) {
+     // Add category filter for the selected point
+     params.set("filter[category__in]", selectedPoint.categoryId);
+ 
+-    // Add exclude muted findings filter
+-    params.set("filter[muted]", "false");
+-
+-    // Filter by FAIL findings
+-    params.set("filter[status__in]", "FAIL");
++    applyFailNonMutedFilters(params);
+ 
+     // Navigate to findings page
+     router.push(`/findings?${params.toString()}`);
+diff --git a/ui/app/(prowler)/_overview/severity-over-time/_components/finding-severity-over-time.tsx b/ui/app/(prowler)/_overview/severity-over-time/_components/finding-severity-over-time.tsx
+index fa127244b..9e0802d4f 100644
+--- a/ui/app/(prowler)/_overview/severity-over-time/_components/finding-severity-over-time.tsx
++++ b/ui/app/(prowler)/_overview/severity-over-time/_components/finding-severity-over-time.tsx
+@@ -6,6 +6,7 @@ import { useState } from "react";
+ import { getSeverityTrendsByTimeRange } from "@/actions/overview/severity-trends";
+ import { LineChart } from "@/components/graphs/line-chart";
+ import { LineConfig, LineDataPoint } from "@/components/graphs/types";
++import { applyFailNonMutedFilters } from "@/lib";
+ import {
+   SEVERITY_LEVELS,
+   SEVERITY_LINE_CONFIGS,
+@@ -57,11 +58,8 @@ export const FindingSeverityOverTime = ({
+   }) => {
+     const params = new URLSearchParams();
+ 
+-    // Always filter by FAIL status since this chart shows failed findings
+-    params.set("filter[status__in]", "FAIL");
+-
+-    // Exclude muted findings
+-    params.set("filter[muted]", "false");
++    // Show active failing findings only for this chart's drill-down.
++    applyFailNonMutedFilters(params);
+ 
+     // Add scan_ids filter
+     if (
+diff --git a/ui/app/(prowler)/findings/page.tsx b/ui/app/(prowler)/findings/page.tsx
+index dea6e9b4f..e22be8cb4 100644
+--- a/ui/app/(prowler)/findings/page.tsx
++++ b/ui/app/(prowler)/findings/page.tsx
+@@ -40,25 +40,22 @@ export default async function Findings({
+     getScans({ pageSize: 50 }),
+   ]);
+ 
+-  const filtersWithScanDates = applyDefaultMutedFilter(
+-    await resolveFindingScanDateFilters({
+-      filters,
+-      scans: scansData?.data || [],
+-      loadScan: async (scanId: string) => {
+-        const response = await getScan(scanId);
+-        return response?.data;
+-      },
+-    }),
+-  );
+-
++  const filtersWithScanDates = await resolveFindingScanDateFilters({
++    filters,
++    scans: scansData?.data || [],
++    loadScan: async (scanId: string) => {
++      const response = await getScan(scanId);
++      return response?.data;
++    },
++  });
++  const resolvedFilters = applyDefaultMutedFilter(filtersWithScanDates);
+   const hasHistoricalData = hasDateOrScanFilter(filtersWithScanDates);
+-
+   const metadataInfoData = await (
+     hasHistoricalData ? getMetadataInfo : getLatestMetadataInfo
+   )({
+     query,
+     sort: encodedSort,
+-    filters: filtersWithScanDates,
++    filters: resolvedFilters,
+   });
+ 
+   // Extract unique regions, services, categories, groups from the new endpoint
+@@ -102,7 +99,7 @@ export default async function Findings({
+         <Suspense fallback={<SkeletonTableFindings />}>
+           <SSRDataTable
+             searchParams={resolvedSearchParams}
+-            filters={filtersWithScanDates}
++            filters={resolvedFilters}
+           />
+         </Suspense>
+       </FilterTransitionWrapper>
+diff --git a/ui/components/compliance/compliance-accordion/client-accordion-content.tsx b/ui/components/compliance/compliance-accordion/client-accordion-content.tsx
+index 659d3a83f..5239ba9dd 100644
+--- a/ui/components/compliance/compliance-accordion/client-accordion-content.tsx
++++ b/ui/components/compliance/compliance-accordion/client-accordion-content.tsx
+@@ -10,7 +10,7 @@ import {
+ } from "@/components/findings/table";
+ import { Accordion } from "@/components/ui/accordion/Accordion";
+ import { DataTable } from "@/components/ui/table";
+-import { createDict } from "@/lib";
++import { createDict, FINDINGS_DEFAULT_SORT, MUTED_FILTER } from "@/lib";
+ import { getComplianceMapper } from "@/lib/compliance/compliance-mapper";
+ import { Requirement } from "@/types/compliance";
+ import { FindingProps, FindingsResponse } from "@/types/components";
+@@ -34,12 +34,16 @@ export const ClientAccordionContent = ({
+   const pageNumber = searchParams.get("page") || "1";
+   const complianceId = searchParams.get("complianceId");
+   const openFindingId = searchParams.get("id");
+-  const defaultSort = "severity,status,-inserted_at";
+-  const sort = searchParams.get("sort") || defaultSort;
++  const sort = searchParams.get("sort") || FINDINGS_DEFAULT_SORT;
+   const loadedPageRef = useRef<string | null>(null);
+   const loadedSortRef = useRef<string | null>(null);
++  const loadedMutedRef = useRef<string | null>(null);
+   const isExpandedRef = useRef(false);
+   const region = searchParams.get("filter[region__in]") || "";
++  // Respect the user's muted preference from the URL; default to EXCLUDE
++  // so the requirement view stays consistent with every other findings
++  // surface in the app (findings page, resource drawer, overview widgets).
++  const mutedFilter = searchParams.get("filter[muted]") || MUTED_FILTER.EXCLUDE;
+ 
+   useEffect(() => {
+     async function loadFindings() {
+@@ -49,10 +53,12 @@ export const ClientAccordionContent = ({
+         requirement.status !== "No findings" &&
+         (loadedPageRef.current !== pageNumber ||
+           loadedSortRef.current !== sort ||
++          loadedMutedRef.current !== mutedFilter ||
+           !isExpandedRef.current)
+       ) {
+         loadedPageRef.current = pageNumber;
+         loadedSortRef.current = sort;
++        loadedMutedRef.current = mutedFilter;
+         isExpandedRef.current = true;
+ 
+         try {
+@@ -62,7 +68,7 @@ export const ClientAccordionContent = ({
+             filters: {
+               "filter[check_id__in]": checkIds.join(","),
+               "filter[scan]": scanId,
+-              "filter[muted]": "false",
++              "filter[muted]": mutedFilter,
+               ...(region && { "filter[region__in]": region }),
+             },
+             page: parseInt(pageNumber, 10),
+@@ -101,7 +107,15 @@ export const ClientAccordionContent = ({
+     }
+ 
+     loadFindings();
+-  }, [requirement, scanId, pageNumber, sort, region, disableFindings]);
++  }, [
++    requirement,
++    scanId,
++    pageNumber,
++    sort,
++    region,
++    mutedFilter,
++    disableFindings,
++  ]);
+ 
+   const renderDetails = () => {
+     if (!complianceId) {
+diff --git a/ui/components/filters/custom-checkbox-muted-findings.tsx b/ui/components/filters/custom-checkbox-muted-findings.tsx
+index 779b060b4..47c267a8e 100644
+--- a/ui/components/filters/custom-checkbox-muted-findings.tsx
++++ b/ui/components/filters/custom-checkbox-muted-findings.tsx
+@@ -4,12 +4,7 @@ import { useSearchParams } from "next/navigation";
+ 
+ import { Checkbox } from "@/components/shadcn";
+ import { useUrlFilters } from "@/hooks/use-url-filters";
+-
+-// Constants for muted filter URL values
+-const MUTED_FILTER_VALUES = {
+-  EXCLUDE: "false",
+-  INCLUDE: "include",
+-} as const;
++import { MUTED_FILTER } from "@/lib";
+ 
+ /** Batch mode: caller controls both the checked state and the notification callback (all-or-nothing). */
+ interface CustomCheckboxMutedFindingsBatchProps {
+@@ -53,7 +48,7 @@ export const CustomCheckboxMutedFindings = ({
+   const includeMuted =
+     checkedProp !== undefined
+       ? checkedProp
+-      : mutedFilterValue === MUTED_FILTER_VALUES.INCLUDE;
++      : mutedFilterValue === MUTED_FILTER.INCLUDE;
+ 
+   const handleMutedChange = (checked: boolean | "indeterminate") => {
+     const isChecked = checked === true;
+@@ -62,7 +57,7 @@ export const CustomCheckboxMutedFindings = ({
+       // Batch mode: notify caller instead of navigating
+       onBatchChange(
+         "muted",
+-        isChecked ? MUTED_FILTER_VALUES.INCLUDE : MUTED_FILTER_VALUES.EXCLUDE,
++        isChecked ? MUTED_FILTER.INCLUDE : MUTED_FILTER.EXCLUDE,
+       );
+       return;
+     }
+@@ -71,10 +66,10 @@ export const CustomCheckboxMutedFindings = ({
+     navigateWithParams((params) => {
+       if (isChecked) {
+         // Include muted: set special value (API will ignore invalid value and show all)
+-        params.set("filter[muted]", MUTED_FILTER_VALUES.INCLUDE);
++        params.set("filter[muted]", MUTED_FILTER.INCLUDE);
+       } else {
+         // Exclude muted: apply filter to show only non-muted
+-        params.set("filter[muted]", MUTED_FILTER_VALUES.EXCLUDE);
++        params.set("filter[muted]", MUTED_FILTER.EXCLUDE);
+       }
+     });
+   };
+diff --git a/ui/components/findings/table/inline-resource-container.utils.ts b/ui/components/findings/table/inline-resource-container.utils.ts
+index 274304e03..c1c5f816d 100644
+--- a/ui/components/findings/table/inline-resource-container.utils.ts
++++ b/ui/components/findings/table/inline-resource-container.utils.ts
+@@ -1,48 +1,26 @@
++import {
++  FAIL_FILTER_VALUE,
++  includesMutedFindings,
++  splitCsvFilterValues,
++} from "@/lib/findings-filters";
+ import { FindingGroupRow } from "@/types";
+ 
+-function parseStatusFilterValue(statusFilterValue?: string): string[] {
+-  if (!statusFilterValue) {
+-    return [];
+-  }
+-
+-  return statusFilterValue
+-    .split(",")
+-    .map((status) => status.trim().toUpperCase())
+-    .filter(Boolean);
+-}
+-
+ export function isFailOnlyStatusFilter(
+   filters: Record<string, string | string[] | undefined>,
+ ): boolean {
+-  const directStatusValues = parseStatusFilterValue(
+-    typeof filters["filter[status]"] === "string"
+-      ? filters["filter[status]"]
+-      : undefined,
++  // Normalise both `filter[status]` and `filter[status__in]` CSV forms
++  // and uppercase so "fail", "Fail" etc. still match the wire value.
++  const direct = splitCsvFilterValues(filters["filter[status]"]).map((s) =>
++    s.toUpperCase(),
+   );
+-
+-  if (directStatusValues.length > 0) {
+-    return directStatusValues.length === 1 && directStatusValues[0] === "FAIL";
++  if (direct.length > 0) {
++    return direct.length === 1 && direct[0] === FAIL_FILTER_VALUE;
+   }
+ 
+-  const multiStatusValues = parseStatusFilterValue(
+-    typeof filters["filter[status__in]"] === "string"
+-      ? filters["filter[status__in]"]
+-      : undefined,
++  const multi = splitCsvFilterValues(filters["filter[status__in]"]).map((s) =>
++    s.toUpperCase(),
+   );
+-
+-  return multiStatusValues.length === 1 && multiStatusValues[0] === "FAIL";
+-}
+-
+-function includesMutedFindings(
+-  filters: Record<string, string | string[] | undefined>,
+-): boolean {
+-  const mutedFilter = filters["filter[muted]"];
+-
+-  if (Array.isArray(mutedFilter)) {
+-    return mutedFilter.includes("include");
+-  }
+-
+-  return mutedFilter === "include";
++  return multi.length === 1 && multi[0] === FAIL_FILTER_VALUE;
+ }
+ 
+ export function getFilteredFindingGroupResourceCount(
+diff --git a/ui/components/graphs/sankey-chart.tsx b/ui/components/graphs/sankey-chart.tsx
+index fc7a91344..0a41d0e4e 100644
+--- a/ui/components/graphs/sankey-chart.tsx
++++ b/ui/components/graphs/sankey-chart.tsx
+@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
+ import { Rectangle, ResponsiveContainer, Sankey, Tooltip } from "recharts";
+ 
+ import { PROVIDER_BADGE_BY_NAME } from "@/components/icons/providers-badge";
++import { applyFailNonMutedFilters } from "@/lib";
+ import { initializeChartColors } from "@/lib/charts/colors";
+ import { PROVIDER_DISPLAY_NAMES } from "@/types/providers";
+ import { SEVERITY_FILTER_MAP } from "@/types/severities";
+@@ -463,8 +464,7 @@ export function SankeyChart({
+     if (severityFilter) {
+       const params = new URLSearchParams(searchParams.toString());
+       params.set("filter[severity__in]", severityFilter);
+-      params.set("filter[status__in]", "FAIL");
+-      params.set("filter[muted]", "false");
++      applyFailNonMutedFilters(params);
+       router.push(`/findings?${params.toString()}`);
+     }
+   };
+@@ -484,8 +484,7 @@ export function SankeyChart({
+       }
+ 
+       params.set("filter[severity__in]", severityFilter);
+-      params.set("filter[status__in]", "FAIL");
+-      params.set("filter[muted]", "false");
++      applyFailNonMutedFilters(params);
+       router.push(`/findings?${params.toString()}`);
+     }
+   };
+diff --git a/ui/components/overview/new-findings-table/link-to-findings/link-to-findings.tsx b/ui/components/overview/new-findings-table/link-to-findings/link-to-findings.tsx
+index 41b9f69e7..e54b4aa2a 100644
+--- a/ui/components/overview/new-findings-table/link-to-findings/link-to-findings.tsx
++++ b/ui/components/overview/new-findings-table/link-to-findings/link-to-findings.tsx
+@@ -1,9 +1,17 @@
+ import Link from "next/link";
+ 
++import {
++  FAIL_FILTER_VALUE,
++  NEW_DELTA_FILTER_VALUE,
++} from "@/lib/findings-filters";
++import { FINDING_GROUPS_FILTERED_SORT } from "@/lib/findings-sort";
++
++const FINDINGS_LINK_HREF = `/findings?sort=${FINDING_GROUPS_FILTERED_SORT}&filter[status__in]=${FAIL_FILTER_VALUE}&filter[delta]=${NEW_DELTA_FILTER_VALUE}`;
++
+ export const LinkToFindings = () => {
+   return (
+     <Link
+-      href="/findings?sort=-severity,-last_seen_at&filter[status__in]=FAIL&filter[delta]=new"
++      href={FINDINGS_LINK_HREF}
+       aria-label="Go to Findings page"
+       className="text-button-tertiary hover:text-button-tertiary-hover text-sm font-medium transition-colors"
+     >
+diff --git a/ui/lib/findings-filters.ts b/ui/lib/findings-filters.ts
+index 9a2aae1d8..5222d86be 100644
+--- a/ui/lib/findings-filters.ts
++++ b/ui/lib/findings-filters.ts
+@@ -1,30 +1,67 @@
+ /**
+- * Shared helpers for findings filter handling.
++ * Shared filter constants and helpers for findings-shaped endpoints.
+  *
+- * The `/findings` SSR page and the finding-group resource drill-down both
+- * need to hide muted findings by default — unless the user has opted in via
+- * the "include muted findings" checkbox. Keeping that default in one place
+- * prevents surfaces from drifting.
++ * Pairs with `lib/findings-sort.ts` (sort tokens). This module covers the
++ * filter side of the same query language.
+  */
+ 
++// ---------------------------------------------------------------------------
++// Filter values
++// ---------------------------------------------------------------------------
++
++/**
++ * The "FAIL" status value as it crosses the wire to the API. Used in both
++ * `filter[status]` (single) and `filter[status__in]` (CSV) form.
++ *
++ * NOTE: this is a bare value, not a full enum. The broader Status/Delta
++ * enum migration is intentionally out of scope here — see PR follow-up.
++ */
++export const FAIL_FILTER_VALUE = "FAIL";
++
++/**
++ * The "new" delta value. Used in `filter[delta]` and `filter[delta__in]`.
++ */
++export const NEW_DELTA_FILTER_VALUE = "new";
++
++/**
++ * Values accepted by `filter[muted]`.
++ *
++ * - `EXCLUDE` ("false"): the API hides muted findings (default UI behaviour).
++ * - `INCLUDE` ("include"): a sentinel that the API treats as "show all
++ *   regardless of muted state". This is NOT the literal string "true" — the
++ *   server route ignores invalid values which conveniently bypasses the
++ *   filter.
++ */
+ export const MUTED_FILTER = {
+-  /** Wire value sent to the API to exclude muted findings. */
+   EXCLUDE: "false",
+-  /**
+-   * Sentinel value that tells the API to return both muted and non-muted
+-   * findings. The checkbox writes this to the URL when the user opts in.
+-   */
+   INCLUDE: "include",
+ } as const;
+ 
+ export type MutedFilterValue = (typeof MUTED_FILTER)[keyof typeof MUTED_FILTER];
+ 
++// ---------------------------------------------------------------------------
++// URL helpers
++// ---------------------------------------------------------------------------
++
++/**
++ * Drill-down preset: "FAIL findings, hide muted". Mutates `params` in place.
++ *
++ * Repeated 6+ times across overview widgets that link to /findings
++ * (attack-surface card, sankey, severity-over-time, risk-radar, risk-plot,
++ * etc). Centralising avoids drift if product later adds, say, `delta=new`
++ * to all drill-downs.
++ */
++export function applyFailNonMutedFilters(params: URLSearchParams): void {
++  params.set("filter[status__in]", FAIL_FILTER_VALUE);
++  params.set("filter[muted]", MUTED_FILTER.EXCLUDE);
++}
++
+ /**
+- * Returns a new filter object with the default muted behaviour applied:
++ * Returns a new filter object with the default findings behaviour applied:
+  * hide muted findings unless the caller already set `filter[muted]`.
+  *
+- * The default is spread BEFORE the caller filters so any explicit value
+- * (including `"false"` or the `"include"` opt-in) wins.
++ * Used by both the grouped findings SSR path and the resource drill-down so
++ * they stay aligned with the checkbox default on `/findings`.
+  */
+ export function applyDefaultMutedFilter<
+   T extends Record<string, string | string[] | undefined>,
+@@ -34,3 +71,57 @@ export function applyDefaultMutedFilter<
+     ...filters,
+   };
+ }
++
++// ---------------------------------------------------------------------------
++// Filter parsing
++// ---------------------------------------------------------------------------
++
++/**
++ * Splits a JSON:API CSV filter value into clean string tokens.
++ *
++ * Accepts both string and string[] inputs because Next.js `searchParams`
++ * surface either form depending on whether the key appears once or multiple
++ * times in the URL. Returns trimmed, non-empty tokens in input order.
++ *
++ * Previously duplicated in three call sites
++ * (actions/finding-groups, components/findings/table/inline-resource-container,
++ * implicitly inside lib/findings-groups). Single source now.
++ */
++export function splitCsvFilterValues(
++  value: string | string[] | undefined,
++): string[] {
++  if (Array.isArray(value)) {
++    return value
++      .flatMap((item) => item.split(","))
++      .map((item) => item.trim())
++      .filter(Boolean);
++  }
++
++  if (typeof value === "string") {
++    return value
++      .split(",")
++      .map((item) => item.trim())
++      .filter(Boolean);
++  }
++
++  return [];
++}
++
++/**
++ * True when the caller has opted into seeing muted findings via either the
++ * `filter[muted]=include` shorthand or a multi-value variant.
++ *
++ * Previously duplicated in actions/finding-groups and
++ * components/findings/table/inline-resource-container.
++ */
++export function includesMutedFindings(
++  filters: Record<string, string | string[] | undefined>,
++): boolean {
++  const mutedFilter = filters["filter[muted]"];
++
++  if (Array.isArray(mutedFilter)) {
++    return mutedFilter.includes(MUTED_FILTER.INCLUDE);
++  }
++
++  return mutedFilter === MUTED_FILTER.INCLUDE;
++}
+diff --git a/ui/lib/findings-sort.ts b/ui/lib/findings-sort.ts
+new file mode 100644
+index 000000000..7dffeaf3a
+--- /dev/null
++++ b/ui/lib/findings-sort.ts
+@@ -0,0 +1,130 @@
++/**
++ * Sort presets for findings-shaped endpoints.
++ *
++ * The Prowler API exposes two families of findings endpoints with INVERTED
++ * sort semantics for the same human intent. Reading them wrong inverts the
++ * triage order silently — a bug that has shipped more than once.
++ *
++ * ─── Family A: plain findings ─────────────────────────────────────────────
++ *   `/findings`, `/findings/latest`
++ *   `FindingViewSet.ordering_fields` (api/v1/views.py) maps `status` and
++ *   `severity` straight to the Postgres ENUM columns. Postgres sorts ENUMs
++ *   by DECLARATION order:
++ *     severity:  critical, high, medium, low, informational  → ASC = critical first
++ *     status:    FAIL, PASS, MANUAL                          → ASC = FAIL first
++ *   Use the bare token. NO minus prefix on `status` or `severity`.
++ *   `delta` is NOT in `ordering_fields` — sorting by delta is unsupported.
++ *
++ * ─── Family B: finding-groups ─────────────────────────────────────────────
++ *   `/finding-groups`, `/finding-groups/latest`, `/finding-groups/{id}/resources`
++ *   `_FINDING_GROUP_SORT_MAP` and `_RESOURCE_SORT_MAP` (api/v1/views.py)
++ *   REMAP the public sort keys to computed integer columns:
++ *     severity  → severity_order   (5=critical … 1=informational)
++ *     status    → status_order     (3=FAIL, 2=PASS, 1=MANUAL)
++ *     delta     → delta_order      (2=new, 1=changed, 0=otherwise)
++ *   Higher integer = more important. PREFIX with `-` to put FAIL/critical/new first.
++ *
++ * The two families look identical from the outside (`sort=...`) but require
++ * opposite tokens. Always import from this file. Never hard-code.
++ */
++
++// ---------------------------------------------------------------------------
++// Family A: plain findings (Postgres ENUM — no minus on status/severity)
++// ---------------------------------------------------------------------------
++
++export const FINDINGS_FAIL_FIRST = "status";
++export const FINDINGS_SEVERITY_HIGH_FIRST = "severity";
++export const FINDINGS_RECENT_INSERT = "-inserted_at";
++export const FINDINGS_RECENT_UPDATE = "-updated_at";
++
++// ---------------------------------------------------------------------------
++// Family B: finding-groups (computed integer — minus on status/severity/delta)
++// ---------------------------------------------------------------------------
++
++export const FG_FAIL_FIRST = "-status";
++export const FG_SEVERITY_HIGH_FIRST = "-severity";
++export const FG_DELTA_NEW_FIRST = "-delta";
++export const FG_RECENT_LAST_SEEN = "-last_seen_at";
++
++// ---------------------------------------------------------------------------
++// Composition
++// ---------------------------------------------------------------------------
++
++export const composeSort = (...tokens: string[]): string => tokens.join(",");
++
++// ---------------------------------------------------------------------------
++// Presets — Family A
++// ---------------------------------------------------------------------------
++
++/**
++ * Default for plain-findings tables WITHOUT a server-side `filter[status]`.
++ * FAIL rows first, then critical→informational, then most recent.
++ * Delta is intentionally omitted — `/findings` does not accept `delta` as a
++ * sort field (see FindingViewSet.ordering_fields).
++ */
++export const FINDINGS_DEFAULT_SORT = composeSort(
++  FINDINGS_FAIL_FIRST,
++  FINDINGS_SEVERITY_HIGH_FIRST,
++  FINDINGS_RECENT_INSERT,
++);
++
++/**
++ * Default for plain-findings tables that ALREADY apply `filter[status]=FAIL`
++ * (or equivalent) server-side. Status sort would be redundant.
++ */
++export const FINDINGS_FILTERED_SORT = composeSort(
++  FINDINGS_SEVERITY_HIGH_FIRST,
++  FINDINGS_RECENT_INSERT,
++);
++
++/**
++ * Resource-detail drawer "other findings" tab. Pairs with a server-side
++ * `filter[status]=FAIL`, so status is omitted. Uses `-updated_at` because
++ * `/findings/latest` exposes `updated_at`, not `inserted_at`.
++ */
++export const RESOURCE_DRAWER_OTHER_FINDINGS_SORT = composeSort(
++  FINDINGS_SEVERITY_HIGH_FIRST,
++  FINDINGS_RECENT_UPDATE,
++);
++
++// ---------------------------------------------------------------------------
++// Presets — Family B
++// ---------------------------------------------------------------------------
++
++/**
++ * Default for finding-groups list endpoints. FAIL groups first, then by
++ * severity, then by `new` deltas (deltas matter on group endpoints since
++ * `delta_order` is a real ordering column).
++ */
++export const FINDING_GROUPS_DEFAULT_SORT = composeSort(
++  FG_FAIL_FIRST,
++  FG_SEVERITY_HIGH_FIRST,
++  FG_DELTA_NEW_FIRST,
++  FG_RECENT_LAST_SEEN,
++);
++
++/**
++ * Default for the per-group resources sub-endpoint
++ * (`/finding-groups/{id}/resources`). Same shape as the groups list because
++ * `_RESOURCE_SORT_MAP` exposes the same computed columns.
++ */
++export const FINDING_GROUP_RESOURCES_DEFAULT_SORT = composeSort(
++  FG_FAIL_FIRST,
++  FG_SEVERITY_HIGH_FIRST,
++  FG_DELTA_NEW_FIRST,
++  FG_RECENT_LAST_SEEN,
++);
++
++/**
++ * Default for the `/findings` PAGE (which renders finding-groups, NOT plain
++ * findings) when the URL already constrains `filter[status__in]` and/or
++ * `filter[delta__in]`. Status and delta sort would be redundant.
++ *
++ * IMPORTANT: do NOT pass `inserted_at` here — `_FINDING_GROUP_SORT_MAP`
++ * does not expose it; valid recency keys are `last_seen_at`, `first_seen_at`,
++ * and `failing_since`.
++ */
++export const FINDING_GROUPS_FILTERED_SORT = composeSort(
++  FG_SEVERITY_HIGH_FIRST,
++  FG_RECENT_LAST_SEEN,
++);
+diff --git a/ui/lib/index.ts b/ui/lib/index.ts
+index 75250e5c6..64bb57435 100644
+--- a/ui/lib/index.ts
++++ b/ui/lib/index.ts
+@@ -1,6 +1,7 @@
+ export * from "./error-mappings";
+ export * from "./external-urls";
+ export * from "./findings-filters";
++export * from "./findings-sort";
+ export * from "./helper";
+ export * from "./helper-filters";
+ export * from "./menu-list";

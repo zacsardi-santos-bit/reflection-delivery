@@ -1,5 +1,0 @@
-I've been looking at how cargo unpacks packages from a registry and found two security issues I'd like to fix.
-
-The first problem is that if a published crate contains a file whose name matches the internal lock file cargo uses to mark a package as successfully extracted, and that file is a symlink pointing to one of the crate's actual source files, then when cargo writes to that lock file it will follow the symlink and overwrite the source file instead. The fix should ensure that the lock file is never extracted from the tarball — cargo should skip any such entry during extraction and always create the lock file itself from scratch, using a mode that refuses to overwrite an existing file.
-
-The second problem is that there's no upper bound on how much data can be decompressed when unpacking a registry package. I'd like to add a size limit so that if unpacking would read more than a configured maximum, the operation fails with a meaningful error that clearly identifies the package that triggered the limit. For testing purposes, the maximum size should be overridable via an environment variable.

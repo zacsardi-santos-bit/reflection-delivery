@@ -1,0 +1,10 @@
+patching file crates/cubecl-linalg/src/matmul/components/batch/base.rs
+patching file crates/cubecl-linalg/src/matmul/components/batch/cube_dispatch.rs
+patching file crates/cubecl-linalg/src/matmul/components/batch/mod.rs
+patching file crates/cubecl-linalg/src/matmul/components/batch/one_to_many.rs
+patching file crates/cubecl-linalg/src/matmul/components/batch/one_to_one.rs
+patching file crates/cubecl-linalg/src/matmul/components/batch/shared.rs
+patching file crates/cubecl-linalg/src/matmul/components/batch/span.rs
+patching file crates/cubecl-linalg/src/matmul/components/config.rs
+patching file crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/cmma.rs
+patching file crates/cubecl-linalg/src/matmul/kernels/matmul/algorithm/plane_mma.rs

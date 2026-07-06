@@ -1,0 +1,640 @@
+patching file tests/cli/test_deploy.py
+patching file tests/utilities/test_templating.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-7.4.4, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: anyio-3.7.1, asyncio-0.21.2, timeout-2.4.0, respx-0.23.1, env-1.1.3, xdist-3.3.1
+asyncio: mode=Mode.AUTO
+timeout: 60.0s
+timeout method: signal
+timeout func_only: False
+collecting ... collected 5 items
+
+tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_system_block_resolves_dict_keypath FAILED [ 20%]
+tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_resolves_dict_keypath FAILED [ 40%]
+tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_resolves_list_keypath FAILED [ 60%]
+tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_raises_on_invalid_keypath FAILED [ 80%]
+tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_resolves_block_attribute FAILED [100%]
+
+=================================== FAILURES ===================================
+_ TestResolveBlockDocumentReferences.test_resolve_block_document_system_block_resolves_dict_keypath _
+
+self = <tests.utilities.test_templating.TestResolveBlockDocumentReferences object at 0x2b73e945ff90>
+
+    async def test_resolve_block_document_system_block_resolves_dict_keypath(self):
+        # for backwards compatibility system blocks can be referenced directly
+        # they should still be able to access nested keys
+        await JSON(value={"key": {"nested-key": "nested_value"}}).save(
+            name="json-block"
+        )
+        template = {
+            "value": "{{ prefect.blocks.json.json-block}}",
+            "keypath": "{{ prefect.blocks.json.json-block.key }}",
+            "nested_keypath": "{{ prefect.blocks.json.json-block.key.nested-key }}",
+        }
+    
+>       result = await resolve_block_document_references(template)
+
+tests/utilities/test_templating.py:404: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+src/prefect/utilities/templating.py:205: in resolve_block_document_references
+    updated_value = await resolve_block_document_references(
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+template = '{{ prefect.blocks.json.json-block.key }}'
+client = <prefect.client.orchestration.PrefectClient object at 0x2b73ea0ffc50>
+
+    @inject_client
+    async def resolve_block_document_references(
+        template: T, client: "PrefectClient" = None
+    ) -> Union[T, Dict[str, Any]]:
+        """
+        Resolve block document references in a template by replacing each reference with
+        the data of the block document.
+    
+        Recursively searches for block document references in dictionaries and lists.
+    
+        Identifies block document references by the as dictionary with the following
+        structure:
+        ```
+        {
+            "$ref": {
+                "block_document_id": <block_document_id>
+            }
+        }
+        ```
+        where `<block_document_id>` is the ID of the block document to resolve.
+    
+        Once the block document is retrieved from the API, the data of the block document
+        is used to replace the reference.
+    
+        Args:
+            template: The template to resolve block documents in
+    
+        Returns:
+            The template with block documents resolved
+        """
+        if isinstance(template, dict):
+            block_document_id = template.get("$ref", {}).get("block_document_id")
+            if block_document_id:
+                block_document = await client.read_block_document(block_document_id)
+                return block_document.data
+            updated_template = {}
+            for key, value in template.items():
+                updated_value = await resolve_block_document_references(
+                    value, client=client
+                )
+                updated_template[key] = updated_value
+            return updated_template
+        elif isinstance(template, list):
+            return [
+                await resolve_block_document_references(item, client=client)
+                for item in template
+            ]
+        elif isinstance(template, str):
+            placeholders = find_placeholders(template)
+            has_block_document_placeholder = any(
+                placeholder.type is PlaceholderType.BLOCK_DOCUMENT
+                for placeholder in placeholders
+            )
+            if len(placeholders) == 0 or not has_block_document_placeholder:
+                return template
+            elif (
+                len(placeholders) == 1
+                and list(placeholders)[0].full_match == template
+                and list(placeholders)[0].type is PlaceholderType.BLOCK_DOCUMENT
+            ):
+>               block_type_slug, block_document_name = (
+                    list(placeholders)[0]
+                    .name.replace(BLOCK_DOCUMENT_PLACEHOLDER_PREFIX, "")
+                    .split(".")
+                )
+E               ValueError: too many values to unpack (expected 2)
+
+src/prefect/utilities/templating.py:228: ValueError
+---------------------------- Captured stdout setup -----------------------------
+Generating test database connection URL from 'sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db'
+----------------------------- Captured stderr call -----------------------------
+15:17:37.143 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.save at 0x2b73e60e8720> --> return coroutine for user await
+15:17:37.271 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+15:17:37.272 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.register_type_and_schema at 0x2b73e60e8360> --> return coroutine for user await
+15:17:37.476 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Running call start() in thread 'GlobalEventLoopThread'
+15:17:37.477 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' RUNNING, runtime=0.00> entered
+15:17:37.477 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Starting service <prefect.events.worker.EventsWorker object at 0x2b73eb6207d0>
+15:17:37.478 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' COMPLETED, runtime=0.00> exited
+15:17:37.478 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Finished call start(<dropped>)
+15:17:37.479 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' RUNNING, runtime=0.00> entered
+15:17:37.518 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+------------------------------ Captured log call -------------------------------
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+--------------------------- Captured stderr teardown ---------------------------
+15:17:37.590 | DEBUG   | MainThread   | prefect._internal.concurrency - Draining service <prefect.events.worker.EventsWorker object at 0x2b73eb6207d0>
+15:17:37.590 | DEBUG   | MainThread   | prefect._internal.concurrency - Stopping service <prefect.events.worker.EventsWorker object at 0x2b73eb6207d0>
+15:17:37.590 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' COMPLETED, runtime=0.11> exited
+15:17:37.591 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - Finished call get(<dropped>)
+15:17:37.591 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Exiting service <prefect.events.worker.EventsWorker object at 0x2b73eb6207d0>
+_ TestResolveBlockDocumentReferences.test_resolve_block_document_resolves_dict_keypath _
+
+self = <tests.utilities.test_templating.TestResolveBlockDocumentReferences object at 0x2b73e945d390>
+
+    async def test_resolve_block_document_resolves_dict_keypath(self):
+        await JSON(value={"key": {"nested-key": "nested_value"}}).save(
+            name="json-block"
+        )
+        template = {
+            "value": "{{ prefect.blocks.json.json-block.value }}",
+            "keypath": "{{ prefect.blocks.json.json-block.value.key }}",
+            "nested_keypath": (
+                "{{ prefect.blocks.json.json-block.value.key.nested-key }}"
+            ),
+        }
+    
+>       result = await resolve_block_document_references(template)
+
+tests/utilities/test_templating.py:423: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+src/prefect/utilities/templating.py:205: in resolve_block_document_references
+    updated_value = await resolve_block_document_references(
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+template = '{{ prefect.blocks.json.json-block.value }}'
+client = <prefect.client.orchestration.PrefectClient object at 0x2b73ebef2450>
+
+    @inject_client
+    async def resolve_block_document_references(
+        template: T, client: "PrefectClient" = None
+    ) -> Union[T, Dict[str, Any]]:
+        """
+        Resolve block document references in a template by replacing each reference with
+        the data of the block document.
+    
+        Recursively searches for block document references in dictionaries and lists.
+    
+        Identifies block document references by the as dictionary with the following
+        structure:
+        ```
+        {
+            "$ref": {
+                "block_document_id": <block_document_id>
+            }
+        }
+        ```
+        where `<block_document_id>` is the ID of the block document to resolve.
+    
+        Once the block document is retrieved from the API, the data of the block document
+        is used to replace the reference.
+    
+        Args:
+            template: The template to resolve block documents in
+    
+        Returns:
+            The template with block documents resolved
+        """
+        if isinstance(template, dict):
+            block_document_id = template.get("$ref", {}).get("block_document_id")
+            if block_document_id:
+                block_document = await client.read_block_document(block_document_id)
+                return block_document.data
+            updated_template = {}
+            for key, value in template.items():
+                updated_value = await resolve_block_document_references(
+                    value, client=client
+                )
+                updated_template[key] = updated_value
+            return updated_template
+        elif isinstance(template, list):
+            return [
+                await resolve_block_document_references(item, client=client)
+                for item in template
+            ]
+        elif isinstance(template, str):
+            placeholders = find_placeholders(template)
+            has_block_document_placeholder = any(
+                placeholder.type is PlaceholderType.BLOCK_DOCUMENT
+                for placeholder in placeholders
+            )
+            if len(placeholders) == 0 or not has_block_document_placeholder:
+                return template
+            elif (
+                len(placeholders) == 1
+                and list(placeholders)[0].full_match == template
+                and list(placeholders)[0].type is PlaceholderType.BLOCK_DOCUMENT
+            ):
+>               block_type_slug, block_document_name = (
+                    list(placeholders)[0]
+                    .name.replace(BLOCK_DOCUMENT_PLACEHOLDER_PREFIX, "")
+                    .split(".")
+                )
+E               ValueError: too many values to unpack (expected 2)
+
+src/prefect/utilities/templating.py:228: ValueError
+----------------------------- Captured stderr call -----------------------------
+15:17:37.647 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.save at 0x2b73e60e8720> --> return coroutine for user await
+15:17:37.685 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+15:17:37.685 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.register_type_and_schema at 0x2b73e60e8360> --> return coroutine for user await
+15:17:37.806 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Running call start() in thread 'GlobalEventLoopThread'
+15:17:37.806 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' RUNNING, runtime=0.00> entered
+15:17:37.807 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Starting service <prefect.events.worker.EventsWorker object at 0x2b73ea0e3ed0>
+15:17:37.807 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' COMPLETED, runtime=0.00> exited
+15:17:37.807 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Finished call start(<dropped>)
+15:17:37.808 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' RUNNING, runtime=0.00> entered
+15:17:37.848 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+------------------------------ Captured log call -------------------------------
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+--------------------------- Captured stderr teardown ---------------------------
+15:17:38.067 | DEBUG   | MainThread   | prefect._internal.concurrency - Draining service <prefect.events.worker.EventsWorker object at 0x2b73ea0e3ed0>
+15:17:38.067 | DEBUG   | MainThread   | prefect._internal.concurrency - Stopping service <prefect.events.worker.EventsWorker object at 0x2b73ea0e3ed0>
+15:17:38.068 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' COMPLETED, runtime=0.26> exited
+15:17:38.068 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - Finished call get(<dropped>)
+15:17:38.068 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Exiting service <prefect.events.worker.EventsWorker object at 0x2b73ea0e3ed0>
+_ TestResolveBlockDocumentReferences.test_resolve_block_document_resolves_list_keypath _
+
+self = <tests.utilities.test_templating.TestResolveBlockDocumentReferences object at 0x2b73e945c550>
+
+    async def test_resolve_block_document_resolves_list_keypath(self):
+        await JSON(value={"key": ["value1", "value2"]}).save(name="json-list-block")
+        await JSON(value=["value1", "value2"]).save(name="list-block")
+        await JSON(
+            value={"key": ["value1", {"nested": ["value2", "value3"]}, "value4"]}
+        ).save(name="nested-json-list-block")
+        template = {
+            "json_list": "{{ prefect.blocks.json.json-list-block.value.key[0] }}",
+            "list": "{{ prefect.blocks.json.list-block.value[1] }}",
+            "nested_json_list": (
+                "{{ prefect.blocks.json.nested-json-list-block.value.key[1].nested[1] }}"
+            ),
+        }
+    
+>       result = await resolve_block_document_references(template)
+
+tests/utilities/test_templating.py:444: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+src/prefect/utilities/templating.py:205: in resolve_block_document_references
+    updated_value = await resolve_block_document_references(
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+template = '{{ prefect.blocks.json.json-list-block.value.key[0] }}'
+client = <prefect.client.orchestration.PrefectClient object at 0x2b73e8886b90>
+
+    @inject_client
+    async def resolve_block_document_references(
+        template: T, client: "PrefectClient" = None
+    ) -> Union[T, Dict[str, Any]]:
+        """
+        Resolve block document references in a template by replacing each reference with
+        the data of the block document.
+    
+        Recursively searches for block document references in dictionaries and lists.
+    
+        Identifies block document references by the as dictionary with the following
+        structure:
+        ```
+        {
+            "$ref": {
+                "block_document_id": <block_document_id>
+            }
+        }
+        ```
+        where `<block_document_id>` is the ID of the block document to resolve.
+    
+        Once the block document is retrieved from the API, the data of the block document
+        is used to replace the reference.
+    
+        Args:
+            template: The template to resolve block documents in
+    
+        Returns:
+            The template with block documents resolved
+        """
+        if isinstance(template, dict):
+            block_document_id = template.get("$ref", {}).get("block_document_id")
+            if block_document_id:
+                block_document = await client.read_block_document(block_document_id)
+                return block_document.data
+            updated_template = {}
+            for key, value in template.items():
+                updated_value = await resolve_block_document_references(
+                    value, client=client
+                )
+                updated_template[key] = updated_value
+            return updated_template
+        elif isinstance(template, list):
+            return [
+                await resolve_block_document_references(item, client=client)
+                for item in template
+            ]
+        elif isinstance(template, str):
+            placeholders = find_placeholders(template)
+            has_block_document_placeholder = any(
+                placeholder.type is PlaceholderType.BLOCK_DOCUMENT
+                for placeholder in placeholders
+            )
+            if len(placeholders) == 0 or not has_block_document_placeholder:
+                return template
+            elif (
+                len(placeholders) == 1
+                and list(placeholders)[0].full_match == template
+                and list(placeholders)[0].type is PlaceholderType.BLOCK_DOCUMENT
+            ):
+>               block_type_slug, block_document_name = (
+                    list(placeholders)[0]
+                    .name.replace(BLOCK_DOCUMENT_PLACEHOLDER_PREFIX, "")
+                    .split(".")
+                )
+E               ValueError: too many values to unpack (expected 2)
+
+src/prefect/utilities/templating.py:228: ValueError
+----------------------------- Captured stderr call -----------------------------
+15:17:38.123 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.save at 0x2b73e60e8720> --> return coroutine for user await
+15:17:38.162 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+15:17:38.163 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.register_type_and_schema at 0x2b73e60e8360> --> return coroutine for user await
+15:17:38.285 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Running call start() in thread 'GlobalEventLoopThread'
+15:17:38.285 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' RUNNING, runtime=0.00> entered
+15:17:38.285 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Starting service <prefect.events.worker.EventsWorker object at 0x2b73ebe80cd0>
+15:17:38.285 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' COMPLETED, runtime=0.00> exited
+15:17:38.285 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Finished call start(<dropped>)
+15:17:38.286 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.save at 0x2b73e60e8720> --> return coroutine for user await
+15:17:38.286 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' RUNNING, runtime=0.00> entered
+15:17:38.326 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+15:17:38.327 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.register_type_and_schema at 0x2b73e60e8360> --> return coroutine for user await
+15:17:38.403 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.save at 0x2b73e60e8720> --> return coroutine for user await
+15:17:38.443 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+15:17:38.443 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.register_type_and_schema at 0x2b73e60e8360> --> return coroutine for user await
+15:17:38.560 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+------------------------------ Captured log call -------------------------------
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+--------------------------- Captured stderr teardown ---------------------------
+15:17:38.575 | DEBUG   | MainThread   | prefect._internal.concurrency - Draining service <prefect.events.worker.EventsWorker object at 0x2b73ebe80cd0>
+15:17:38.575 | DEBUG   | MainThread   | prefect._internal.concurrency - Stopping service <prefect.events.worker.EventsWorker object at 0x2b73ebe80cd0>
+15:17:38.576 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' COMPLETED, runtime=0.29> exited
+15:17:38.576 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - Finished call get(<dropped>)
+15:17:38.576 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Exiting service <prefect.events.worker.EventsWorker object at 0x2b73ebe80cd0>
+_ TestResolveBlockDocumentReferences.test_resolve_block_document_raises_on_invalid_keypath _
+
+self = <tests.utilities.test_templating.TestResolveBlockDocumentReferences object at 0x2b73e945c7d0>
+
+    async def test_resolve_block_document_raises_on_invalid_keypath(self):
+        await JSON(value={"key": {"nested_key": "value"}}).save(name="json-block")
+        json_template = {
+            "json": "{{ prefect.blocks.json.json-block.value.key.does_not_exist }}",
+        }
+        with pytest.raises(ValueError, match="Could not resolve the keypath"):
+>           await resolve_block_document_references(json_template)
+
+tests/utilities/test_templating.py:457: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+src/prefect/utilities/templating.py:205: in resolve_block_document_references
+    updated_value = await resolve_block_document_references(
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+template = '{{ prefect.blocks.json.json-block.value.key.does_not_exist }}'
+client = <prefect.client.orchestration.PrefectClient object at 0x2b73f8209f90>
+
+    @inject_client
+    async def resolve_block_document_references(
+        template: T, client: "PrefectClient" = None
+    ) -> Union[T, Dict[str, Any]]:
+        """
+        Resolve block document references in a template by replacing each reference with
+        the data of the block document.
+    
+        Recursively searches for block document references in dictionaries and lists.
+    
+        Identifies block document references by the as dictionary with the following
+        structure:
+        ```
+        {
+            "$ref": {
+                "block_document_id": <block_document_id>
+            }
+        }
+        ```
+        where `<block_document_id>` is the ID of the block document to resolve.
+    
+        Once the block document is retrieved from the API, the data of the block document
+        is used to replace the reference.
+    
+        Args:
+            template: The template to resolve block documents in
+    
+        Returns:
+            The template with block documents resolved
+        """
+        if isinstance(template, dict):
+            block_document_id = template.get("$ref", {}).get("block_document_id")
+            if block_document_id:
+                block_document = await client.read_block_document(block_document_id)
+                return block_document.data
+            updated_template = {}
+            for key, value in template.items():
+                updated_value = await resolve_block_document_references(
+                    value, client=client
+                )
+                updated_template[key] = updated_value
+            return updated_template
+        elif isinstance(template, list):
+            return [
+                await resolve_block_document_references(item, client=client)
+                for item in template
+            ]
+        elif isinstance(template, str):
+            placeholders = find_placeholders(template)
+            has_block_document_placeholder = any(
+                placeholder.type is PlaceholderType.BLOCK_DOCUMENT
+                for placeholder in placeholders
+            )
+            if len(placeholders) == 0 or not has_block_document_placeholder:
+                return template
+            elif (
+                len(placeholders) == 1
+                and list(placeholders)[0].full_match == template
+                and list(placeholders)[0].type is PlaceholderType.BLOCK_DOCUMENT
+            ):
+>               block_type_slug, block_document_name = (
+                    list(placeholders)[0]
+                    .name.replace(BLOCK_DOCUMENT_PLACEHOLDER_PREFIX, "")
+                    .split(".")
+                )
+E               ValueError: too many values to unpack (expected 2)
+
+src/prefect/utilities/templating.py:228: ValueError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.utilities.test_templating.TestResolveBlockDocumentReferences object at 0x2b73e945c7d0>
+
+    async def test_resolve_block_document_raises_on_invalid_keypath(self):
+        await JSON(value={"key": {"nested_key": "value"}}).save(name="json-block")
+        json_template = {
+            "json": "{{ prefect.blocks.json.json-block.value.key.does_not_exist }}",
+        }
+>       with pytest.raises(ValueError, match="Could not resolve the keypath"):
+E       AssertionError: Regex pattern did not match.
+E        Regex: 'Could not resolve the keypath'
+E        Input: 'too many values to unpack (expected 2)'
+
+tests/utilities/test_templating.py:456: AssertionError
+----------------------------- Captured stderr call -----------------------------
+15:17:38.632 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.save at 0x2b73e60e8720> --> return coroutine for user await
+15:17:38.673 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+15:17:38.673 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.register_type_and_schema at 0x2b73e60e8360> --> return coroutine for user await
+15:17:38.796 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Running call start() in thread 'GlobalEventLoopThread'
+15:17:38.796 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' RUNNING, runtime=0.00> entered
+15:17:38.796 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Starting service <prefect.events.worker.EventsWorker object at 0x2b73f820b4d0>
+15:17:38.797 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' COMPLETED, runtime=0.00> exited
+15:17:38.797 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Finished call start(<dropped>)
+15:17:38.798 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' RUNNING, runtime=0.00> entered
+15:17:38.835 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+------------------------------ Captured log call -------------------------------
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+--------------------------- Captured stderr teardown ---------------------------
+15:17:38.851 | DEBUG   | MainThread   | prefect._internal.concurrency - Draining service <prefect.events.worker.EventsWorker object at 0x2b73f820b4d0>
+15:17:38.851 | DEBUG   | MainThread   | prefect._internal.concurrency - Stopping service <prefect.events.worker.EventsWorker object at 0x2b73f820b4d0>
+15:17:38.851 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' COMPLETED, runtime=0.05> exited
+15:17:38.852 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - Finished call get(<dropped>)
+15:17:38.852 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Exiting service <prefect.events.worker.EventsWorker object at 0x2b73f820b4d0>
+_ TestResolveBlockDocumentReferences.test_resolve_block_document_resolves_block_attribute _
+
+self = <tests.utilities.test_templating.TestResolveBlockDocumentReferences object at 0x2b73e945d950>
+
+    async def test_resolve_block_document_resolves_block_attribute(self):
+        await Webhook(url="https://example.com").save(name="webhook-block")
+    
+        template = {
+            "block_attribute": "{{ prefect.blocks.webhook.webhook-block.url }}",
+        }
+>       result = await resolve_block_document_references(template)
+
+tests/utilities/test_templating.py:479: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+src/prefect/utilities/templating.py:205: in resolve_block_document_references
+    updated_value = await resolve_block_document_references(
+src/prefect/client/utilities.py:51: in with_injected_client
+    return await fn(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+template = '{{ prefect.blocks.webhook.webhook-block.url }}'
+client = <prefect.client.orchestration.PrefectClient object at 0x2b73eba47850>
+
+    @inject_client
+    async def resolve_block_document_references(
+        template: T, client: "PrefectClient" = None
+    ) -> Union[T, Dict[str, Any]]:
+        """
+        Resolve block document references in a template by replacing each reference with
+        the data of the block document.
+    
+        Recursively searches for block document references in dictionaries and lists.
+    
+        Identifies block document references by the as dictionary with the following
+        structure:
+        ```
+        {
+            "$ref": {
+                "block_document_id": <block_document_id>
+            }
+        }
+        ```
+        where `<block_document_id>` is the ID of the block document to resolve.
+    
+        Once the block document is retrieved from the API, the data of the block document
+        is used to replace the reference.
+    
+        Args:
+            template: The template to resolve block documents in
+    
+        Returns:
+            The template with block documents resolved
+        """
+        if isinstance(template, dict):
+            block_document_id = template.get("$ref", {}).get("block_document_id")
+            if block_document_id:
+                block_document = await client.read_block_document(block_document_id)
+                return block_document.data
+            updated_template = {}
+            for key, value in template.items():
+                updated_value = await resolve_block_document_references(
+                    value, client=client
+                )
+                updated_template[key] = updated_value
+            return updated_template
+        elif isinstance(template, list):
+            return [
+                await resolve_block_document_references(item, client=client)
+                for item in template
+            ]
+        elif isinstance(template, str):
+            placeholders = find_placeholders(template)
+            has_block_document_placeholder = any(
+                placeholder.type is PlaceholderType.BLOCK_DOCUMENT
+                for placeholder in placeholders
+            )
+            if len(placeholders) == 0 or not has_block_document_placeholder:
+                return template
+            elif (
+                len(placeholders) == 1
+                and list(placeholders)[0].full_match == template
+                and list(placeholders)[0].type is PlaceholderType.BLOCK_DOCUMENT
+            ):
+>               block_type_slug, block_document_name = (
+                    list(placeholders)[0]
+                    .name.replace(BLOCK_DOCUMENT_PLACEHOLDER_PREFIX, "")
+                    .split(".")
+                )
+E               ValueError: too many values to unpack (expected 2)
+
+src/prefect/utilities/templating.py:228: ValueError
+----------------------------- Captured stderr call -----------------------------
+15:17:38.903 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.save at 0x2b73e60e8720> --> return coroutine for user await
+15:17:38.942 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+15:17:38.943 | DEBUG   | MainThread   | prefect._internal.concurrency - <function Block.register_type_and_schema at 0x2b73e60e8360> --> return coroutine for user await
+15:17:39.066 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Running call start() in thread 'GlobalEventLoopThread'
+15:17:39.066 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' RUNNING, runtime=0.00> entered
+15:17:39.066 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Starting service <prefect.events.worker.EventsWorker object at 0x2b73ebde3710>
+15:17:39.066 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='start' COMPLETED, runtime=0.00> exited
+15:17:39.066 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Finished call start(<dropped>)
+15:17:39.067 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' RUNNING, runtime=0.00> entered
+15:17:39.106 | DEBUG   | prefect.client - Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+------------------------------ Captured log call -------------------------------
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+DEBUG    prefect.client:orchestration.py:2877 Using ephemeral application with database at sqlite+aiosqlite:////tmp/tmpamleuhyw/prefect.db
+--------------------------- Captured stderr teardown ---------------------------
+15:17:39.121 | DEBUG   | MainThread   | prefect._internal.concurrency - Draining service <prefect.events.worker.EventsWorker object at 0x2b73ebde3710>
+15:17:39.121 | DEBUG   | MainThread   | prefect._internal.concurrency - Stopping service <prefect.events.worker.EventsWorker object at 0x2b73ebde3710>
+15:17:39.121 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - <WatcherThreadCancelScope, name='get' COMPLETED, runtime=0.05> exited
+15:17:39.121 | DEBUG   | EventsWorkerThread | prefect._internal.concurrency - Finished call get(<dropped>)
+15:17:39.121 | DEBUG   | GlobalEventLoopThread | prefect._internal.concurrency - Exiting service <prefect.events.worker.EventsWorker object at 0x2b73ebde3710>
+=========================== short test summary info ============================
+FAILED tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_system_block_resolves_dict_keypath
+FAILED tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_resolves_dict_keypath
+FAILED tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_resolves_list_keypath
+FAILED tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_raises_on_invalid_keypath
+FAILED tests/utilities/test_templating.py::TestResolveBlockDocumentReferences::test_resolve_block_document_resolves_block_attribute
+============================== 5 failed in 18.51s ==============================
+reward=0 graded=5 found=0 failed=0 parsed=5 framework=pytest exit_code=1

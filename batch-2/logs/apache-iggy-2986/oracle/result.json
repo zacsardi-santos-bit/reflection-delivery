@@ -1,0 +1,29 @@
+{
+    "id": "3c9e3109-ea53-49eb-89bf-f7c87a507120",
+    "started_at": "2026-07-06T12:17:51.181577",
+    "finished_at": "2026-07-06T12:18:22.454959",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-iggy-2986": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-iggy-2986__8dyE4KR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

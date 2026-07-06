@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/transformers_utils/test_hf_overrides_model_type.py -v --noconftest",
+  "test_files": [
+    "tests/transformers_utils/test_hf_overrides_model_type.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.transformers_utils.test_hf_overrides_model_type::test_hf_overrides_model_type_returns_correct_config_class"
+  ],
+  "PASS_TO_PASS": []
+}

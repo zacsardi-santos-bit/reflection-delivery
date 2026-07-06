@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/unit_tests/utils/test_screenshot_utils.py -v",
+  "test_files": [
+    "tests/unit_tests/utils/test_screenshot_utils.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit_tests.utils.test_screenshot_utils.TestCombineScreenshotTiles::test_empty_tiles_returns_empty_bytes",
+    "tests.unit_tests.utils.test_screenshot_utils.TestCombineScreenshotTiles::test_single_tile_returns_original",
+    "tests.unit_tests.utils.test_screenshot_utils.TestCombineScreenshotTiles::test_combine_multiple_tiles_vertically",
+    "tests.unit_tests.utils.test_screenshot_utils.TestCombineScreenshotTiles::test_combine_tiles_different_widths",
+    "tests.unit_tests.utils.test_screenshot_utils.TestCombineScreenshotTiles::test_combine_tiles_handles_pil_error",
+    "tests.unit_tests.utils.test_screenshot_utils.TestCombineScreenshotTiles::test_combine_tiles_logs_exception",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_successful_tiled_screenshot",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_element_not_found_returns_none",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_tile_calculation_logic",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_scroll_positions_calculated_correctly",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_reset_scroll_position",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_logs_dashboard_info",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_exception_handling_returns_none",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_wait_timeouts_between_tiles",
+    "tests.unit_tests.utils.test_screenshot_utils.TestTakeTiledScreenshot::test_screenshot_clip_parameters"
+  ],
+  "PASS_TO_PASS": []
+}

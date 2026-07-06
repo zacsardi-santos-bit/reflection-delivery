@@ -1,0 +1,1342 @@
+patching file extensions/podman/packages/extension/src/configuration/registry-configuration.spec.ts
+patching file extensions/podman/packages/extension/src/extension.spec.ts
+patching file extensions/podman/packages/extension/src/podman-configuration.spec.ts
+
+ RUN  v3.0.6 /workspace/repo/extensions/podman/packages/extension
+
+ ❯ src/configuration/registry-configuration.spec.ts (0 test)
+ ✓ src/podman-configuration.spec.ts (9 tests) 14ms
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with correct values
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with correct image-path values with image URL
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with correct image-path values with registry
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with correct values with user mode networking
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with now flag if start machine after creation is enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify error contains name, message and stderr if creation fails
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with embedded image if using podman v5
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called in airgap mode will try to create image
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command with playbook
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with correct values
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with correct image-path values with image URL
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with correct image-path values with registry
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with correct values with user mode networking
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with now flag if start machine after creation is enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify error contains name, message and stderr if creation fails
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with embedded image if using podman v5
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called in airgap mode will try to create image
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command with playbook
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with correct values
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with correct image-path values with image URL
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with correct image-path values with registry
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with correct values with user mode networking
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with now flag if start machine after creation is enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify error contains name, message and stderr if creation fails
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with embedded image if using podman v5
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called in airgap mode will try to create image
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command with playbook
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > test checkDefaultMachine, if the machine running is not default, the function will prompt
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkDefaultMachine: do not prompt if the running machine is already the default
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if a machine is successfully started it changes its state to started
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if a machine is successfully reporting telemetry
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if a machine is successfully reporting an error in telemetry
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if a machine failed to start with a generic error, this is thrown
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if a machine failed to start with a wsl distro not found error, the user is asked what to do
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if a machine failed to start with a wsl distro not found error but the skipHandleError is false, the error is thrown
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > test checkDefaultMachine - if there is no machine marked as default, take the default system connection to retrieve it. Prompt as it is not running
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > test checkDefaultMachine - if there is no machine marked as default, take the default system connection to retrieve it. Do not prompt as it is running
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > test checkDefaultMachine - if user wants to change default machine, check if it is rootful and update connection
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > test checkDefaultMachine - if user wants to change machine, check that it only change the connection once if it is rootless
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > test checkDefaultMachine - if user wants to change machine, check that it only changes to rootless as machine inspect is not returning Rootful field (old versions of podman)
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > test checkDefaultMachine, if the default connection is not in sync with the default machine, the function will prompt
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > handlecompatibilitymodesetting: enable called when configuration setting has been set to true
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > handlecompatibilitymodesetting: disable compatibility called when configuration setting has been set to false
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > ensure started machine reports default configuration
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > ensure stopped machine reports stopped provider
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > ensure running and starting machine reports starting provider
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > ensure running and not starting machine reports ready provider
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > ensure started machine reports configuration
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > ensure stopped machine reports configuration
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > ensure showNotification is not called during update
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > provider is registered with edit capabilities on MacOS
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > display name is beautified version of the name
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > provider is registered without edit capabilities on Windows
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > provider is registered without edit capabilities on Linux
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkDisguisedPodmanSocket: does not run updateWarnings when called with Linux
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > checkDisguisedPodmanSocket: does not run updateWarnings when called with Linux
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkDisguisedPodmanSocket: runs updateWarnings when called not on Linux
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > checkDisguisedPodmanSocket: runs updateWarnings when called not on Linux
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > Even with getJSONMachineList erroring, do not show setup notification on Linux
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > If machine list is empty, do not show setup notification on Linux
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if there are no machines, make sure checkDefaultMachine is not being ran inside updateMachines
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > Should notify clean machine if getJSONMachineList is erroring due to an invalid format on mac
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > No updates of machines in parallel
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > initCheckAndRegisterUpdate > check there is an update
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > initCheckAndRegisterUpdate > check there is no update
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > initCheckAndRegisterUpdate > check update disappear after creating a podman machine
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > initCheckAndRegisterUpdate > check update appear after updating the version
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingMachineExistsCommand > check with error when calling podman machine ls command
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingMachineExistsCommand > check with 2 machines
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingMachineExistsCommand > check with 0 machine
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingUnsupportedPodmanMachineCommand > check with v5 and previous qemu folders
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingUnsupportedPodmanMachineCommand > check with v5 and no previous qemu folders
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingUnsupportedPodmanMachineCommand > check with v4 and qemu folders
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingUnsupportedPodmanMachineCommand > check with v5 and error in JSON of machines
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingRemoveUnsupportedMachinesCommand > check with previous qemu folders
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingRemoveUnsupportedMachinesCommand > check with previous podman v4 config files
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > registerOnboardingRemoveUnsupportedMachinesCommand > check with previous podman v4 config files on Windows
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isIncompatibleMachineOutput
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > calcPodmanMachineSetting > setValue to true if OS is MacOS
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > calcPodmanMachineSetting > setValue to true if OS is Windows and uses HyperV
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > calcPodmanMachineSetting > setValue to true if OS is Windows and uses WSL
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkForUpdate func should be called if there is no podman installed
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkRosettaMacArm > check do nothing on non-macOS
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkRosettaMacArm > check do nothing on macOS with intel
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkRosettaMacArm > check no dialog on macOS with arm64 if rosetta is working
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkRosettaMacArm > check no dialog on macOS with arm64 if rosetta is not enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > checkRosettaMacArm > check dialog on macOS with arm64 if rosetta is not working
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isLibkrunSupported should return false with 5.3.0 on intel
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isLibkrunSupported should return true with prelease older than rc1
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isLibkrunSupported should return true with 5.2.0 version
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isLibkrunSupported should return false with previous 5.1.2 version
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isPlaybookMachineInitSupported > isPlaybookMachineInitSupported should return false with 5.3.0
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isPlaybookMachineInitSupported > isPlaybookMachineInitSupported should return true with 5.4.0 version on Windows/amd
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isPlaybookMachineInitSupported > isPlaybookMachineInitSupported should return true with 5.4.0 version on arm/mac
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > sendTelemetryRecords > krunkit found
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > sendTelemetryRecords > krunkit not found
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > sendTelemetryRecords > qemu found
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > sendTelemetryRecords > qemu not found
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if a machine stopped is successfully reporting telemetry
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > if a machine stopped is successfully reporting an error in telemetry
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > activate function returns an api implementation
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > activate function returns an api implementation
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > activate on mac register commands for setting compatibility moide 
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > activate on mac register commands for setting compatibility moide 
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > podman machine properties audit on windows > reports error for image path and uri is used at the same time
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > podman machine properties audit on windows > reports error for image path and uri is used at the same time
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > podman machine properties audit on windows > reports no error for image path only is used
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > podman machine properties audit on windows > reports no error for image path only is used
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > podman machine properties audit on windows > reports no error for image uri only is used
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > podman machine properties audit on windows > reports no error for image uri only is used
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > podman machine properties audit on mac > reports error for image path and uri is used at the same time
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > podman machine properties audit on mac > reports error for image path and uri is used at the same time
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > podman machine properties audit on mac > reports no error for image path only is used
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > podman machine properties audit on mac > reports no error for image path only is used
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > podman machine properties audit on mac > reports no error for image uri only is used
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > podman machine properties audit on mac > reports no error for image uri only is used
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > podman machine properties audit on linux > is not used
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > podman machine properties audit on linux > is not used
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isHypervEnabled should return false if it is not windows
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isHypervEnabled should return false if hyperv is not enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isHypervEnabled should return true if hyperv is enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isWSLEnabled should return false if it is not windows
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isWSLEnabled should return false if wsl is not enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > isWSLEnabled should return true if wsl is enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > getJSONMachineList should only get machines from wsl if hyperv is not enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > getJSONMachineList should only get machines from hyperv if wsl is not enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > getJSONMachineList should get machines from hyperv and wsl if both are enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > updateWSLHyperVEnabledValue > setValue should be called if new value is different than wslAndHypervEnabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > updateWSLHyperVEnabledValue > setValue should not be called if new value is equal to wslAndHypervEnabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > connectionAuditor > check if podman.isCreateWSLOptionSelected is set to true if podman.factory.machine.win.provider = wsl
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > connectionAuditor > check if podman.isCreateWSLOptionSelected is set to true if podman.factory.machine.win.provider is undefined but wsl is enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > connectionAuditor > check if podman.isCreateWSLOptionSelected is set to false if podman.factory.machine.win.provider = hyperv
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > connectionAuditor > check if podman.isCreateWSLOptionSelected is set to false if podman.factory.machine.win.provider is undefined and wsl is NOT enabled
+stopping podman extension
+No machine to stop
+
+stdout | src/extension.spec.ts > activate and autostart should not duplicate machines 
+Error while pinging docker as podman Error: connect ENOENT /var/run/docker.sock
+[90m    at PipeConnectWrap.afterConnect [as oncomplete] (node:net:1611:16)[39m {
+  errno: [33m-2[39m,
+  code: [32m'ENOENT'[39m,
+  syscall: [32m'connect'[39m,
+  address: [32m'/var/run/docker.sock'[39m
+}
+
+stdout | src/extension.spec.ts > activate and autostart should not duplicate machines 
+stopping podman extension
+No machine to stop
+
+ ❯ src/extension.spec.ts (123 tests | 3 failed) 3056ms
+   ✓ test checkDefaultMachine, if the machine running is not default, the function will prompt
+   ✓ checkDefaultMachine: do not prompt if the running machine is already the default
+   ✓ if a machine is successfully started it changes its state to started
+   ✓ if a machine is successfully reporting telemetry
+   ✓ if a machine is successfully reporting an error in telemetry
+   ✓ if a machine failed to start with a generic error, this is thrown
+   ✓ if a machine failed to start with a wsl distro not found error, the user is asked what to do
+   ✓ if a machine failed to start with a wsl distro not found error but the skipHandleError is false, the error is thrown
+   ✓ test checkDefaultMachine - if there is no machine marked as default, take the default system connection to retrieve it. Prompt as it is not running
+   ✓ test checkDefaultMachine - if there is no machine marked as default, take the default system connection to retrieve it. Do not prompt as it is running
+   ✓ test checkDefaultMachine - if user wants to change default machine, check if it is rootful and update connection
+   ✓ test checkDefaultMachine - if user wants to change machine, check that it only change the connection once if it is rootless
+   ✓ test checkDefaultMachine - if user wants to change machine, check that it only changes to rootless as machine inspect is not returning Rootful field (old versions of podman)
+   ✓ test checkDefaultMachine, if the default connection is not in sync with the default machine, the function will prompt
+   ✓ handlecompatibilitymodesetting: enable called when configuration setting has been set to true
+   ✓ handlecompatibilitymodesetting: disable compatibility called when configuration setting has been set to false
+   ✓ ensure started machine reports default configuration
+   ✓ ensure stopped machine reports stopped provider
+   ✓ ensure running and starting machine reports starting provider
+   ✓ ensure running and not starting machine reports ready provider
+   ✓ ensure started machine reports configuration
+   ✓ ensure stopped machine reports configuration
+   ✓ ensure showNotification is not called during update 502ms
+   ✓ provider is registered with edit capabilities on MacOS
+   ✓ display name is beautified version of the name
+   ✓ provider is registered without edit capabilities on Windows
+   ✓ provider is registered without edit capabilities on Linux
+   ✓ checkDisguisedPodmanSocket: does not run updateWarnings when called with Linux
+   ✓ checkDisguisedPodmanSocket: runs updateWarnings when called not on Linux
+   ✓ Even with getJSONMachineList erroring, do not show setup notification on Linux
+   ✓ If machine list is empty, do not show setup notification on Linux
+   ✓ if there are no machines, make sure checkDefaultMachine is not being ran inside updateMachines
+   ✓ Should notify clean machine if getJSONMachineList is erroring due to an invalid format on mac
+   ✓ No updates of machines in parallel
+   ✓ isIncompatibleMachineOutput
+   ✓ checkForUpdate func should be called if there is no podman installed
+   ✓ isLibkrunSupported should return false with 5.3.0 on intel
+   ✓ isLibkrunSupported should return true with prelease older than rc1
+   ✓ isLibkrunSupported should return true with 5.2.0 version
+   ✓ isLibkrunSupported should return false with previous 5.1.2 version
+   ✓ if a machine stopped is successfully reporting telemetry
+   ✓ if a machine stopped is successfully reporting an error in telemetry
+   ✓ activate function returns an api implementation
+   ✓ activate on mac register commands for setting compatibility moide 
+   ✓ isHypervEnabled should return false if it is not windows
+   ✓ isHypervEnabled should return false if hyperv is not enabled
+   ✓ isHypervEnabled should return true if hyperv is enabled
+   ✓ isWSLEnabled should return false if it is not windows
+   ✓ isWSLEnabled should return false if wsl is not enabled
+   ✓ isWSLEnabled should return true if wsl is enabled
+   ✓ getJSONMachineList should only get machines from wsl if hyperv is not enabled
+   ✓ getJSONMachineList should only get machines from hyperv if wsl is not enabled
+   ✓ getJSONMachineList should get machines from hyperv and wsl if both are enabled
+   ✓ activate and autostart should not duplicate machines 
+   ✓ verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with correct values
+   ✓ verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with correct image-path values with image URL
+   ✓ verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with correct image-path values with registry
+   ✓ verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with correct values with user mode networking
+   ✓ verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with now flag if start machine after creation is enabled
+   ✓ verify create on { os: 'macos', expectedProvider: 'applehv' } > verify error contains name, message and stderr if creation fails
+   ✓ verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called with embedded image if using podman v5
+   ✓ verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command called in airgap mode will try to create image
+   × verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command with playbook 12ms
+     → expected "spy" to be called with arguments: [ 'podman', …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  [[22m
+[2m    "podman",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "applehv",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+
+[1m  2nd spy call:
+
+[22m[2m  [[22m
+[2m    "podman",[22m
+[2m    [[22m
+[2m      "machine",[22m
+[2m      "init",[22m
+[2m      "--cpus",[22m
+[2m      "2",[22m
+[2m      "--memory",[22m
+[2m      "1000",[22m
+[2m      "--disk-size",[22m
+[2m      "232",[22m
+[2m      "--image-path",[22m
+[2m      "path",[22m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[2m      "--rootful",[22m
+[2m    ],[22m
+[2m    {[22m
+[2m      "env": {[22m
+[2m        "CONTAINERS_MACHINE_PROVIDER": "applehv",[22m
+[2m      },[22m
+[2m      "logger": undefined,[22m
+[2m      "token": undefined,[22m
+[2m    },[22m
+[2m  ][22m
+
+[1m  3rd spy call:
+
+[22m[2m  [[22m
+[2m    "podman",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "applehv",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m3[22m
+[39m
+   ✓ verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with correct values
+   ✓ verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with correct image-path values with image URL
+   ✓ verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with correct image-path values with registry
+   ✓ verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with correct values with user mode networking
+   ✓ verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with now flag if start machine after creation is enabled
+   ✓ verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify error contains name, message and stderr if creation fails
+   ✓ verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called with embedded image if using podman v5
+   ✓ verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command called in airgap mode will try to create image
+   × verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command with playbook 5ms
+     → expected "spy" to be called with arguments: [ 'podman.exe', …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "wsl",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+
+[1m  2nd spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[2m      "machine",[22m
+[2m      "init",[22m
+[2m      "--cpus",[22m
+[2m      "2",[22m
+[2m      "--memory",[22m
+[2m      "1000",[22m
+[2m      "--disk-size",[22m
+[2m      "232",[22m
+[2m      "--image-path",[22m
+[2m      "path",[22m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[2m      "--rootful",[22m
+[2m    ],[22m
+[2m    {[22m
+[2m      "env": {[22m
+[2m        "CONTAINERS_MACHINE_PROVIDER": "wsl",[22m
+[2m      },[22m
+[2m      "logger": undefined,[22m
+[2m      "token": undefined,[22m
+[2m    },[22m
+[2m  ][22m
+
+[1m  3rd spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "wsl",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m3[22m
+[39m
+   ✓ verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with correct values
+   ✓ verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with correct image-path values with image URL
+   ✓ verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with correct image-path values with registry
+   ✓ verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with correct values with user mode networking
+   ✓ verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with now flag if start machine after creation is enabled
+   ✓ verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify error contains name, message and stderr if creation fails
+   ✓ verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called with embedded image if using podman v5
+   ✓ verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command called in airgap mode will try to create image
+   × verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command with playbook 5ms
+     → expected "spy" to be called with arguments: [ 'podman.exe', …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "hyperv",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+
+[1m  2nd spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[2m      "machine",[22m
+[2m      "init",[22m
+[2m      "--cpus",[22m
+[2m      "2",[22m
+[2m      "--memory",[22m
+[2m      "1000",[22m
+[2m      "--disk-size",[22m
+[2m      "232",[22m
+[2m      "--image-path",[22m
+[2m      "path",[22m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[2m      "--rootful",[22m
+[2m    ],[22m
+[2m    {[22m
+[2m      "env": {[22m
+[2m        "CONTAINERS_MACHINE_PROVIDER": "hyperv",[22m
+[2m      },[22m
+[2m      "logger": undefined,[22m
+[2m      "token": undefined,[22m
+[2m    },[22m
+[2m  ][22m
+
+[1m  3rd spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "hyperv",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m3[22m
+[39m
+   ✓ initCheckAndRegisterUpdate > check there is an update
+   ✓ initCheckAndRegisterUpdate > check there is no update
+   ✓ initCheckAndRegisterUpdate > check update disappear after creating a podman machine
+   ✓ initCheckAndRegisterUpdate > check update appear after updating the version
+   ✓ registerOnboardingMachineExistsCommand > check with error when calling podman machine ls command
+   ✓ registerOnboardingMachineExistsCommand > check with 2 machines
+   ✓ registerOnboardingMachineExistsCommand > check with 0 machine
+   ✓ registerOnboardingUnsupportedPodmanMachineCommand > check with v5 and previous qemu folders
+   ✓ registerOnboardingUnsupportedPodmanMachineCommand > check with v5 and no previous qemu folders
+   ✓ registerOnboardingUnsupportedPodmanMachineCommand > check with v4 and qemu folders
+   ✓ registerOnboardingUnsupportedPodmanMachineCommand > check with v5 and error in JSON of machines
+   ✓ registerOnboardingRemoveUnsupportedMachinesCommand > check with previous qemu folders
+   ✓ registerOnboardingRemoveUnsupportedMachinesCommand > check with previous podman v4 config files
+   ✓ registerOnboardingRemoveUnsupportedMachinesCommand > check with previous podman v4 config files on Windows
+   ✓ calcPodmanMachineSetting > setValue to true if OS is MacOS
+   ✓ calcPodmanMachineSetting > setValue to true if OS is Windows and uses HyperV
+   ✓ calcPodmanMachineSetting > setValue to true if OS is Windows and uses WSL
+   ✓ checkRosettaMacArm > check do nothing on non-macOS
+   ✓ checkRosettaMacArm > check do nothing on macOS with intel
+   ✓ checkRosettaMacArm > check no dialog on macOS with arm64 if rosetta is working
+   ✓ checkRosettaMacArm > check no dialog on macOS with arm64 if rosetta is not enabled
+   ✓ checkRosettaMacArm > check dialog on macOS with arm64 if rosetta is not working
+   ✓ isPlaybookMachineInitSupported > isPlaybookMachineInitSupported should return false with 5.3.0
+   ✓ isPlaybookMachineInitSupported > isPlaybookMachineInitSupported should return true with 5.4.0 version on Windows/amd
+   ✓ isPlaybookMachineInitSupported > isPlaybookMachineInitSupported should return true with 5.4.0 version on arm/mac
+   ✓ sendTelemetryRecords > krunkit found
+   ✓ sendTelemetryRecords > krunkit not found
+   ✓ sendTelemetryRecords > qemu found
+   ✓ sendTelemetryRecords > qemu not found
+   ✓ podman machine properties audit on windows > reports error for image path and uri is used at the same time
+   ✓ podman machine properties audit on windows > reports no error for image path only is used
+   ✓ podman machine properties audit on windows > reports no error for image uri only is used
+   ✓ podman machine properties audit on mac > reports error for image path and uri is used at the same time
+   ✓ podman machine properties audit on mac > reports no error for image path only is used
+   ✓ podman machine properties audit on mac > reports no error for image uri only is used
+   ✓ podman machine properties audit on linux > is not used
+   ✓ updateWSLHyperVEnabledValue > setValue should be called if new value is different than wslAndHypervEnabled
+   ✓ updateWSLHyperVEnabledValue > setValue should not be called if new value is equal to wslAndHypervEnabled
+   ✓ connectionAuditor > check if podman.isCreateWSLOptionSelected is set to true if podman.factory.machine.win.provider = wsl
+   ✓ connectionAuditor > check if podman.isCreateWSLOptionSelected is set to true if podman.factory.machine.win.provider is undefined but wsl is enabled
+   ✓ connectionAuditor > check if podman.isCreateWSLOptionSelected is set to false if podman.factory.machine.win.provider = hyperv
+   ✓ connectionAuditor > check if podman.isCreateWSLOptionSelected is set to false if podman.factory.machine.win.provider is undefined and wsl is NOT enabled
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/configuration/registry-configuration.spec.ts [ src/configuration/registry-configuration.spec.ts ]
+Error: Failed to load url ./registry-configuration (resolved id: ./registry-configuration) in /workspace/repo/extensions/podman/packages/extension/src/configuration/registry-configuration.spec.ts. Does the file exist?
+ ❯ loadAndTransform ../../../../node_modules/vite/dist/node/chunks/dep-ByPKlqZ5.js:41308:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/extension.spec.ts > verify create on { os: 'macos', expectedProvider: 'applehv' } > verify create command with playbook
+AssertionError: expected "spy" to be called with arguments: [ 'podman', …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  [[22m
+[2m    "podman",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "applehv",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+
+[1m  2nd spy call:
+
+[22m[2m  [[22m
+[2m    "podman",[22m
+[2m    [[22m
+[2m      "machine",[22m
+[2m      "init",[22m
+[2m      "--cpus",[22m
+[2m      "2",[22m
+[2m      "--memory",[22m
+[2m      "1000",[22m
+[2m      "--disk-size",[22m
+[2m      "232",[22m
+[2m      "--image-path",[22m
+[2m      "path",[22m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[2m      "--rootful",[22m
+[2m    ],[22m
+[2m    {[22m
+[2m      "env": {[22m
+[2m        "CONTAINERS_MACHINE_PROVIDER": "applehv",[22m
+[2m      },[22m
+[2m      "logger": undefined,[22m
+[2m      "token": undefined,[22m
+[2m    },[22m
+[2m  ][22m
+
+[1m  3rd spy call:
+
+[22m[2m  [[22m
+[2m    "podman",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "applehv",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m3[22m
+[39m
+ ❯ src/extension.spec.ts:709:50
+    707|       podmanConfiguration,
+    708|     );
+    709|     expect(vi.mocked(extensionApi.process.exec)).toBeCalledWith(
+       |                                                  ^
+    710|       podmanCli.getPodmanCli(),
+    711|       // check playbook parameter
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/extension.spec.ts > verify create on { os: 'windows-wsl', expectedProvider: 'wsl' } > verify create command with playbook
+AssertionError: expected "spy" to be called with arguments: [ 'podman.exe', …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "wsl",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+
+[1m  2nd spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[2m      "machine",[22m
+[2m      "init",[22m
+[2m      "--cpus",[22m
+[2m      "2",[22m
+[2m      "--memory",[22m
+[2m      "1000",[22m
+[2m      "--disk-size",[22m
+[2m      "232",[22m
+[2m      "--image-path",[22m
+[2m      "path",[22m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[2m      "--rootful",[22m
+[2m    ],[22m
+[2m    {[22m
+[2m      "env": {[22m
+[2m        "CONTAINERS_MACHINE_PROVIDER": "wsl",[22m
+[2m      },[22m
+[2m      "logger": undefined,[22m
+[2m      "token": undefined,[22m
+[2m    },[22m
+[2m  ][22m
+
+[1m  3rd spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "wsl",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m3[22m
+[39m
+ ❯ src/extension.spec.ts:709:50
+    707|       podmanConfiguration,
+    708|     );
+    709|     expect(vi.mocked(extensionApi.process.exec)).toBeCalledWith(
+       |                                                  ^
+    710|       podmanCli.getPodmanCli(),
+    711|       // check playbook parameter
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/extension.spec.ts > verify create on { os: 'windows-hyperv', expectedProvider: 'hyperv' } > verify create command with playbook
+AssertionError: expected "spy" to be called with arguments: [ 'podman.exe', …(2) ][90m
+
+Received: 
+
+[1m  1st spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "hyperv",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+
+[1m  2nd spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[2m      "machine",[22m
+[2m      "init",[22m
+[2m      "--cpus",[22m
+[2m      "2",[22m
+[2m      "--memory",[22m
+[2m      "1000",[22m
+[2m      "--disk-size",[22m
+[2m      "232",[22m
+[2m      "--image-path",[22m
+[2m      "path",[22m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[2m      "--rootful",[22m
+[2m    ],[22m
+[2m    {[22m
+[2m      "env": {[22m
+[2m        "CONTAINERS_MACHINE_PROVIDER": "hyperv",[22m
+[2m      },[22m
+[2m      "logger": undefined,[22m
+[2m      "token": undefined,[22m
+[2m    },[22m
+[2m  ][22m
+
+[1m  3rd spy call:
+
+[22m[2m  [[22m
+[2m    "podman.exe",[22m
+[2m    [[22m
+[32m-     "machine",[90m
+[32m-     "init",[90m
+[32m-     "--cpus",[90m
+[32m-     "2",[90m
+[32m-     "--memory",[90m
+[32m-     "1000",[90m
+[32m-     "--disk-size",[90m
+[32m-     "232",[90m
+[32m-     "--image-path",[90m
+[32m-     "path",[90m
+[32m-     "--playbook",[90m
+[32m-     "myPlaybookPath",[90m
+[32m-     "--rootful",[90m
+[31m+     "--version",[90m
+[2m    ],[22m
+[32m-   {[90m
+[32m-     "env": {[90m
+[32m-       "CONTAINERS_MACHINE_PROVIDER": "hyperv",[90m
+[32m-     },[90m
+[32m-     "logger": undefined,[90m
+[32m-     "token": undefined,[90m
+[32m-   },[90m
+[2m  ][22m
+[39m[90m
+
+Number of calls: [1m3[22m
+[39m
+ ❯ src/extension.spec.ts:709:50
+    707|       podmanConfiguration,
+    708|     );
+    709|     expect(vi.mocked(extensionApi.process.exec)).toBeCalledWith(
+       |                                                  ^
+    710|       podmanCli.getPodmanCli(),
+    711|       // check playbook parameter
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  3 failed | 129 passed (132)
+   Start at  15:18:59
+   Duration  4.04s (transform 613ms, setup 0ms, collect 783ms, tests 3.07s, environment 0ms, prepare 426ms)
+
+reward=0 graded=137 found=0 failed=0 parsed=0 framework=vitest exit_code=1

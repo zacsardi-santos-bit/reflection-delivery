@@ -1,0 +1,23 @@
+patching file clients/client-python/gravitino/api/catalog.py
+patching file clients/client-python/gravitino/api/model.py
+patching file clients/client-python/gravitino/api/model_version.py
+patching file clients/client-python/gravitino/client/base_schema_catalog.py (renamed from clients/client-python/gravitino/catalog/base_schema_catalog.py)
+patching file clients/client-python/gravitino/client/dto_converters.py (renamed from clients/client-python/gravitino/dto/dto_converters.py)
+patching file clients/client-python/gravitino/client/fileset_catalog.py (renamed from clients/client-python/gravitino/catalog/fileset_catalog.py)
+patching file clients/client-python/gravitino/client/generic_model.py (renamed from clients/client-python/gravitino/catalog/__init__.py)
+patching file clients/client-python/gravitino/client/generic_model_catalog.py
+patching file clients/client-python/gravitino/client/generic_model_version.py
+patching file clients/client-python/gravitino/client/gravitino_admin_client.py
+patching file clients/client-python/gravitino/client/gravitino_metalake.py
+patching file clients/client-python/gravitino/dto/model_dto.py
+patching file clients/client-python/gravitino/dto/model_version_dto.py
+patching file clients/client-python/gravitino/dto/requests/model_register_request.py
+patching file clients/client-python/gravitino/dto/requests/model_version_link_request.py
+patching file clients/client-python/gravitino/dto/responses/model_response.py
+patching file clients/client-python/gravitino/dto/responses/model_version_list_response.py
+patching file clients/client-python/gravitino/dto/responses/model_vesion_response.py
+patching file clients/client-python/gravitino/exceptions/base.py
+patching file clients/client-python/gravitino/exceptions/handlers/model_error_handler.py
+patching file clients/client-python/gravitino/filesystem/gvfs.py
+patching file clients/client-python/gravitino/namespace.py
+patching file docs/kafka-catalog.md

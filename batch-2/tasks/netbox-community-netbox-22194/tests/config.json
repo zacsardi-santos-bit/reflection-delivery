@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "service postgresql start && service redis-server start && sleep 5 && pytest \"/workspace/repo/netbox/dcim/tests/test_views.py::InterfaceTestCase::test_bulk_rename_label_field\" \"/workspace/repo/netbox/dcim/tests/test_views.py::InterfaceTestCase::test_bulk_rename_name_and_label_fields\" -v --ds=netbox.settings",
+  "test_files": [
+    "netbox/dcim/tests/test_views.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "netbox.dcim.tests.test_views.InterfaceTestCase::test_bulk_rename_label_field",
+    "netbox.dcim.tests.test_views.InterfaceTestCase::test_bulk_rename_name_and_label_fields"
+  ],
+  "PASS_TO_PASS": []
+}

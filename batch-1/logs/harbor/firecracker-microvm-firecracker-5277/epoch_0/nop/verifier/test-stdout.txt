@@ -1,0 +1,171 @@
+patching file src/vmm/src/devices/virtio/queue.rs
+   Compiling proc-macro2 v1.0.94
+   Compiling unicode-ident v1.0.18
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.171
+   Compiling bitflags v2.9.0
+   Compiling memchr v2.7.4
+   Compiling glob v0.3.2
+   Compiling serde v1.0.219
+   Compiling regex-syntax v0.8.5
+   Compiling minimal-lexical v0.2.1
+   Compiling version_check v0.9.5
+   Compiling shlex v1.3.0
+   Compiling typenum v1.18.0
+   Compiling zerocopy v0.8.24
+   Compiling lazy_static v1.5.0
+   Compiling lazycell v1.3.0
+   Compiling linux-raw-sys v0.4.15
+   Compiling libloading v0.8.6
+   Compiling rustc-hash v1.1.0
+   Compiling rustix v0.38.44
+   Compiling prettyplease v0.2.32
+   Compiling thiserror v1.0.69
+   Compiling either v1.15.0
+   Compiling autocfg v1.4.0
+   Compiling getrandom v0.3.1
+   Compiling generic-array v0.14.7
+   Compiling bindgen v0.69.5
+   Compiling clang-sys v1.8.1
+   Compiling home v0.5.11
+   Compiling itertools v0.10.5
+   Compiling nom v7.1.3
+   Compiling bindgen v0.68.1
+   Compiling log v0.4.27
+   Compiling bitflags v1.3.2
+   Compiling fs_extra v1.3.0
+   Compiling dunce v1.0.5
+   Compiling peeking_take_while v0.1.2
+   Compiling num-traits v0.2.19
+   Compiling subtle v2.6.1
+   Compiling cpufeatures v0.2.17
+   Compiling thiserror v2.0.12
+   Compiling serde_json v1.0.140
+   Compiling half v2.5.0
+   Compiling anstyle v1.0.10
+   Compiling ryu v1.0.20
+   Compiling opaque-debug v0.3.1
+   Compiling itoa v1.0.15
+   Compiling ciborium-io v0.2.2
+   Compiling clap_lex v0.7.4
+   Compiling byteorder v1.5.0
+   Compiling ciborium-ll v0.2.2
+   Compiling slab v0.4.9
+   Compiling quote v1.0.40
+   Compiling clap_builder v4.5.35
+   Compiling virtue v0.0.18
+   Compiling cast v0.3.0
+   Compiling micro_http v0.1.0 (https://github.com/firecracker-microvm/micro-http#e854e50b)
+   Compiling jobserver v0.1.32
+   Compiling syn v2.0.100
+   Compiling aws-lc-rs v1.13.0
+   Compiling same-file v1.0.6
+   Compiling regex-automata v0.4.9
+   Compiling cc v1.2.18
+   Compiling semver v1.0.26
+   Compiling kvm-ioctls v0.21.0
+   Compiling crypto-common v0.1.6
+   Compiling inout v0.1.4
+   Compiling universal-hash v0.5.1
+   Compiling unicode-xid v0.2.6
+   Compiling cexpr v0.6.0
+   Compiling cipher v0.4.4
+   Compiling getrandom v0.2.15
+   Compiling polyval v0.6.2
+   Compiling nix v0.27.1
+   Compiling aes v0.8.4
+   Compiling rand_core v0.6.4
+   Compiling ctr v0.9.2
+   Compiling is-terminal v0.4.16
+   Compiling bincode_derive v2.0.1
+   Compiling ghash v0.5.1
+   Compiling aead v0.5.2
+   Compiling which v4.4.2
+   Compiling rand_xorshift v0.3.0
+   Compiling criterion-plot v0.5.0
+   Compiling walkdir v2.5.0
+   Compiling oorandom v11.1.5
+   Compiling cmake v0.1.54
+   Compiling anes v0.1.6
+   Compiling once_cell v1.21.3
+   Compiling untrusted v0.7.1
+   Compiling zeroize v1.8.1
+   Compiling unty v0.0.4
+   Compiling unarray v0.1.4
+   Compiling aes-gcm v0.10.3
+   Compiling itertools v0.14.0
+   Compiling base64 v0.22.1
+   Compiling clap v4.5.35
+   Compiling crc64 v2.0.0
+   Compiling device_tree v1.1.0
+   Compiling vm-superio v0.8.0
+   Compiling regex v1.11.1
+   Compiling timerfd v1.6.0
+   Compiling memfd v0.6.4
+   Compiling serde_derive v1.0.219
+   Compiling zerocopy-derive v0.8.24
+   Compiling thiserror-impl v1.0.69
+   Compiling thiserror-impl v2.0.12
+   Compiling zerocopy-derive v0.7.35
+   Compiling uuid-macro-internal v1.16.0
+   Compiling displaydoc v0.2.5
+   Compiling derive_more-impl v2.0.1
+   Compiling zerocopy v0.7.35
+   Compiling vm-memory v0.16.1
+   Compiling vm-allocator v0.1.1
+   Compiling utils v0.1.0 (/workspace/repo/src/utils)
+   Compiling linux-loader v0.13.0
+   Compiling derive_more v2.0.1
+   Compiling userfaultfd-sys v0.5.0
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_core v0.9.0
+   Compiling acpi_tables v0.1.0 (/workspace/repo/src/acpi-tables)
+   Compiling rand_chacha v0.9.0
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.9.0
+   Compiling aws-lc-sys v0.28.0
+   Compiling rand v0.8.5
+   Compiling uuid v1.16.0
+   Compiling proptest v1.6.0
+   Compiling vmm-sys-util v0.12.1
+   Compiling ciborium v0.2.2
+   Compiling bincode v2.0.1
+   Compiling kvm-bindings v0.11.1
+   Compiling vhost v0.13.0
+   Compiling event-manager v0.4.0
+   Compiling tinytemplate v1.2.1
+   Compiling criterion v0.5.1
+   Compiling userfaultfd v0.8.1
+   Compiling vmm v0.1.0 (/workspace/repo/src/vmm)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 53.22s
+────────────
+ Nextest run ID ff987fa9-86f4-46a8-ada6-102f5ed89eec with nextest profile: default
+    Starting 2 tests across 1 binary (526 tests skipped)
+        PASS [   0.013s] (1/2) vmm devices::virtio::queue::tests::test_add_used
+        FAIL [   0.013s] (2/2) vmm devices::virtio::queue::tests::test_add_used_batches_ring_idx
+  stdout ───
+
+    running 1 test
+    test devices::virtio::queue::tests::test_add_used_batches_ring_idx ... FAILED
+
+    failures:
+
+    failures:
+        devices::virtio::queue::tests::test_add_used_batches_ring_idx
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 527 filtered out; finished in 0.00s
+
+  stderr ───
+
+    thread 'devices::virtio::queue::tests::test_add_used_batches_ring_idx' panicked at src/vmm/src/devices/virtio/queue.rs:1740:9:
+    assertion `left == right` failed
+      left: 1
+     right: 0
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 
+────────────
+     Summary [   0.016s] 2 tests run: 1 passed, 1 failed, 526 skipped
+        FAIL [   0.013s] (2/2) vmm devices::virtio::queue::tests::test_add_used_batches_ring_idx
+error: test run failed
+reward=0 graded=2 found=2 failed=1 parsed=2 framework=cargo-nextest exit_code=100

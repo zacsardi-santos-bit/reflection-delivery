@@ -1,0 +1,43 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/bruno-app && npx jest src/utils/codemirror/linkAware.spec.js --coverage=false --verbose --json",
+  "test_files": [
+    "packages/bruno-app/src/utils/codemirror/linkAware.spec.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::extendUrlWithBalancedParentheses should not modify URLs with balanced parentheses",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::extendUrlWithBalancedParentheses should extend URL to balance nested parentheses",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::extendUrlWithBalancedParentheses should stop at whitespace",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::extendUrlWithBalancedParentheses should stop when parentheses would become over-balanced",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::extendUrlWithBalancedParentheses should handle Kibana/RISON URLs with deeply nested parentheses"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware editor setup and configuration should set up link awareness on an existing editor",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware editor setup and configuration should accept options parameter",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware editor setup and configuration should return early if editor is null",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware editor setup and configuration should add _destroyLinkAware method to editor",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware platform-specific behavior should use Cmd key hint on macOS",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware platform-specific behavior should use Ctrl key hint on non-macOS",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware CSS class management should add cmd-ctrl-pressed class when modifier key is pressed",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware CSS class management should remove cmd-ctrl-pressed class when modifier key is released",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware click handling should open external URL when Cmd+clicking on a link",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware click handling should not open URL when clicking without modifier key",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware click handling should not open URL when clicking on non-link element",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware click handling should not open URL when data-url attribute is missing",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware debouncing should debounce URL marking on content changes",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware debouncing should apply link tooltips when marking URLs",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware animation frame handling should use requestAnimationFrame for URL marking",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware hover behavior should add hover class on mouseover for link elements",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware hover behavior should not add hover class for non-link elements",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware hover behavior should remove hover class on mouseout",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware hover behavior should handle multi-span links correctly on hover",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware memory cleanup should properly clean up all event listeners and marks",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware edge cases should handle missing target in mouse event",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware edge cases should handle missing ipcRenderer",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware edge cases should handle LinkifyIt returning null matches",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware edge cases should handle null siblings in mouseover events",
+    "/workspace/repo/packages/bruno-app/src/utils/codemirror/linkAware.spec.js::setupLinkAware edge cases should handle non-link siblings in mouseover events"
+  ]
+}

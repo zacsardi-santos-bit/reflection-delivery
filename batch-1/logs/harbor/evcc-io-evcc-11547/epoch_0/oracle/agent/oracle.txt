@@ -1,0 +1,9 @@
+patching file api/mock.go
+patching file charger/eebus.go
+patching file charger/eebus_test_mock.go
+patching file core/loadpoint/mock.go
+patching file core/vehicle/mock.go
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 1012 with fuzz 1 (offset 309 lines).
+patching file tools.go

@@ -1,0 +1,178 @@
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 99 with fuzz 2 (offset 30 lines).
+Hunk #2 succeeded at 186 with fuzz 2 (offset 82 lines).
+Hunk #3 succeeded at 229 with fuzz 3 (offset 82 lines).
+Hunk #4 FAILED at 167.
+Hunk #5 succeeded at 335 (offset 111 lines).
+Hunk #6 succeeded at 362 with fuzz 3 (offset 118 lines).
+Hunk #7 succeeded at 445 with fuzz 3 (offset 141 lines).
+Hunk #8 succeeded at 493 with fuzz 1 (offset 163 lines).
+Hunk #9 FAILED at 348.
+Hunk #10 succeeded at 573 with fuzz 3 (offset 163 lines).
+Hunk #11 succeeded at 650 with fuzz 3 (offset 227 lines).
+Hunk #12 succeeded at 670 (offset 227 lines).
+Hunk #13 succeeded at 829 (offset 239 lines).
+Hunk #14 FAILED at 607.
+3 out of 14 hunks FAILED -- saving rejects to file go.sum.rej
+patching file internal/controller/promotions/watches.go
+patching file internal/controller/stages/watches.go
+patching file ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts
+patching file ui/src/gen/k8s.io/api/core/v1/generated_pb.ts
+patching file ui/src/gen/k8s.io/apimachinery/pkg/apis/meta/v1/generated_pb.ts
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file go.sum.rej
+patching file internal/controller/promotions/watches.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file internal/controller/promotions/watches.go.rej
+patching file internal/controller/stages/watches.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+20 out of 20 hunks ignored -- saving rejects to file internal/controller/stages/watches.go.rej
+patching file ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts.rej
+patching file ui/src/gen/k8s.io/api/core/v1/generated_pb.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+58 out of 58 hunks ignored -- saving rejects to file ui/src/gen/k8s.io/api/core/v1/generated_pb.ts.rej
+patching file ui/src/gen/k8s.io/apimachinery/pkg/apis/meta/v1/generated_pb.ts
+Hunk #1 succeeded at 854 (offset 64 lines).
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index de50bf74..4a9d6d51 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 111
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index ee538861..0f0a5bc2 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+14 out of 14 hunks ignored
+can't find file to patch at input line 369
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/controller/promotions/watches.go b/internal/controller/promotions/watches.go
+|index 70be2b37..668b7222 100644
+|--- a/internal/controller/promotions/watches.go
+|+++ b/internal/controller/promotions/watches.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+9 out of 9 hunks ignored
+can't find file to patch at input line 454
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/internal/controller/stages/watches.go b/internal/controller/stages/watches.go
+|index 1590a5a9..1362d841 100644
+|--- a/internal/controller/stages/watches.go
+|+++ b/internal/controller/stages/watches.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+20 out of 20 hunks ignored
+can't find file to patch at input line 638
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts b/ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts
+|index 08bd6829..654206d3 100644
+|--- a/ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts
+|+++ b/ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 683
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/ui/src/gen/k8s.io/api/core/v1/generated_pb.ts b/ui/src/gen/k8s.io/api/core/v1/generated_pb.ts
+|index f4ea0288..abfa5315 100644
+|--- a/ui/src/gen/k8s.io/api/core/v1/generated_pb.ts
+|+++ b/ui/src/gen/k8s.io/api/core/v1/generated_pb.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+58 out of 58 hunks ignored
+can't find file to patch at input line 1685
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/ui/src/gen/k8s.io/apimachinery/pkg/apis/meta/v1/generated_pb.ts b/ui/src/gen/k8s.io/apimachinery/pkg/apis/meta/v1/generated_pb.ts
+|index 6041ad23..af7d6829 100644
+|--- a/ui/src/gen/k8s.io/apimachinery/pkg/apis/meta/v1/generated_pb.ts
+|+++ b/ui/src/gen/k8s.io/apimachinery/pkg/apis/meta/v1/generated_pb.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+14 out of 14 hunks ignored -- saving rejects to file go.sum.rej
+patching file internal/controller/promotions/watches.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file internal/controller/promotions/watches.go.rej
+patching file internal/controller/stages/watches.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+20 out of 20 hunks ignored -- saving rejects to file internal/controller/stages/watches.go.rej
+patching file ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file ui/src/gen/k8s.io/api/batch/v1/generated_pb.ts.rej
+patching file ui/src/gen/k8s.io/api/core/v1/generated_pb.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+58 out of 58 hunks ignored -- saving rejects to file ui/src/gen/k8s.io/api/core/v1/generated_pb.ts.rej
+patching file ui/src/gen/k8s.io/apimachinery/pkg/apis/meta/v1/generated_pb.ts
+Hunk #1 succeeded at 918 (offset 128 lines).
+ERROR: golden patch failed to apply by all strategies

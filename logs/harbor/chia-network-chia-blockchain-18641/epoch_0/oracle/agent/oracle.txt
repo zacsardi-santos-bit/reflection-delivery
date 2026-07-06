@@ -1,5 +1,0 @@
-patching file chia/cmds/cmd_classes.py
-patching file chia/cmds/cmds_util.py
-patching file chia/cmds/coin_funcs.py
-patching file chia/cmds/coins.py
-patching file chia/cmds/signer.py

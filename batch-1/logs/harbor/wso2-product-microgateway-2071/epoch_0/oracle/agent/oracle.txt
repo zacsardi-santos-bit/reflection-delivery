@@ -1,0 +1,6 @@
+patching file adapter/config/default_config.go
+patching file adapter/config/types.go
+patching file adapter/internal/oasparser/envoyconf/listener.go
+patching file adapter/internal/oasparser/envoyconf/routes_with_clusters.go
+patching file integration/mock-backend-server/src/main/java/org/wso2/choreo/connect/mockbackend/MockBackEndServer.java
+patching file resources/conf/config.toml.template

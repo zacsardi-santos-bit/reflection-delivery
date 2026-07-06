@@ -1,0 +1,5 @@
+I'm working with Arrow-rs and need to add support for two new compact decimal array types — a 32-bit decimal (for values with up to 9 significant digits) and a 64-bit decimal (for values with up to 18 significant digits). Right now, the library only supports 128-bit and 256-bit decimals, which are overkill for a lot of real-world data.
+
+I need these new types to work end-to-end with Parquet. Specifically, when I write arrays of these new decimal types to a Parquet file and then read back the row-group statistics (min, max, null count, row count), the reader should return the statistics as arrays of the correct new decimal type, not fall back to something generic. The statistics should be marked as exact. For the smaller precision ranges, the physical Parquet storage uses 32-bit or 64-bit integers, and the statistics reader needs to handle both storage widths correctly.
+
+I also need data-page-level statistics to work for these types, including the edge case where a page contains only null values.

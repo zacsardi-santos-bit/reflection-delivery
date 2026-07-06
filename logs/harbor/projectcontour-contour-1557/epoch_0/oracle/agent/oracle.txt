@@ -1,4 +1,0 @@
-patching file apis/projectcontour/v1alpha1/httpproxy.go
-patching file internal/dag/builder.go
-patching file internal/dag/dag.go
-patching file internal/envoy/route.go

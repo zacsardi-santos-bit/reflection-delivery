@@ -1,0 +1,1287 @@
+diff --git a/airflow-core/newsfragments/65590.feature.rst b/airflow-core/newsfragments/65590.feature.rst
+deleted file mode 100644
+index 840a15c6f0..0000000000
+--- a/airflow-core/newsfragments/65590.feature.rst
++++ /dev/null
+@@ -1 +0,0 @@
+-Add ``on_kill()`` hook to ``BaseTrigger`` so trigger authors can cancel external jobs (BigQuery, Databricks, etc.) when a user marks a deferred task as failed, clears it, or marks it succeeded. The hook is a no-op by default and is only invoked for user-initiated cancellations — triggerer restarts and redistributions do not trigger it.
+diff --git a/airflow-core/src/airflow/api_fastapi/common/cursors.py b/airflow-core/src/airflow/api_fastapi/common/cursors.py
+index 0d06aa10b2..21bfa23d4a 100644
+--- a/airflow-core/src/airflow/api_fastapi/common/cursors.py
++++ b/airflow-core/src/airflow/api_fastapi/common/cursors.py
+@@ -103,7 +103,7 @@ def encode_cursor(row: Any, sort_param: SortParam) -> str:
+     if not resolved:
+         raise ValueError("SortParam has no resolved columns.")
+ 
+-    parts = [getattr(row, attr_name, None) for attr_name, _col, _desc in resolved]
++    parts = [sort_param.row_value(row, attr_name) for attr_name, _col, _desc in resolved]
+     payload = msgspec.msgpack.encode(parts)
+     return base64.urlsafe_b64encode(payload).decode("ascii").rstrip("=")
+ 
+diff --git a/airflow-core/src/airflow/api_fastapi/common/parameters.py b/airflow-core/src/airflow/api_fastapi/common/parameters.py
+index 28180b4d81..98963d50a4 100644
+--- a/airflow-core/src/airflow/api_fastapi/common/parameters.py
++++ b/airflow-core/src/airflow/api_fastapi/common/parameters.py
+@@ -308,6 +308,9 @@ class SortParam(BaseParam[list[str]]):
+         resolved: list[tuple[str, ColumnElement, bool]] = []
+         for order_by_value in order_by_values:
+             lstriped_orderby = order_by_value.lstrip("-")
++            # Store the user-facing name in the resolved tuple. ``row_value`` resolves
++            # it back to the actual row accessor via ``to_replace`` when reading values
++            # for cursor encoding.
+             attr_name = lstriped_orderby
+             column: Column | None = None
+             if self.to_replace:
+@@ -330,7 +333,8 @@ class SortParam(BaseParam[list[str]]):
+ 
+         primary_key_column = self.get_primary_key_column()
+         pk_name = self.get_primary_key_string()
+-        if not any(name == pk_name for name, _, _ in resolved):
++        resolved_column_keys = {getattr(col, "key", None) for _, col, _ in resolved}
++        if pk_name not in resolved_column_keys:
+             pk_desc = bool(order_by_values and order_by_values[0].startswith("-"))
+             resolved.append((pk_name, primary_key_column, pk_desc))
+ 
+@@ -352,6 +356,31 @@ class SortParam(BaseParam[list[str]]):
+         """Return resolved sort columns as (attr_name, column_element, is_descending) tuples."""
+         return self._resolve()
+ 
++    def row_value(self, row: Any, name: str) -> Any:
++        """
++        Extract the sort-key value for ``name`` from a result row.
++
++        Resolves the accessor through ``to_replace`` for string aliases
++        (e.g. ``{"dag_run_id": "run_id"}``); otherwise reads ``name`` directly.
++        """
++        if self.to_replace:
++            replacement = self.to_replace.get(name)
++            if isinstance(replacement, str):
++                return getattr(row, replacement, None)
++            if replacement is not None:
++                # TODO: Column-form ``to_replace`` (e.g. ``{"last_run_state": DagRun.state}``)
++                # isn't supported for cursor pagination — no endpoint that uses cursor
++                # pagination needs it today. When one does, decide how the row exposes the
++                # value (projected label on the SELECT, eagerly loaded relationship, etc.)
++                # and wire it up here. Raising loudly so a future caller doesn't silently
++                # get ``None`` cursor tokens.
++                raise NotImplementedError(
++                    f"Cursor pagination does not support column-form ``to_replace`` mapping for "
++                    f"``{name}``. Use a string alias in ``to_replace`` or sort by a primary-model "
++                    f"attribute."
++                )
++        return getattr(row, name, None)
++
+     def get_primary_key_column(self) -> Column:
+         """Get the primary key column of the model of SortParam object."""
+         return inspect(self.model).primary_key[0]
+diff --git a/airflow-core/src/airflow/api_fastapi/core_api/datamodels/dag_run.py b/airflow-core/src/airflow/api_fastapi/core_api/datamodels/dag_run.py
+index 334917160b..8e5f31e09f 100644
+--- a/airflow-core/src/airflow/api_fastapi/core_api/datamodels/dag_run.py
++++ b/airflow-core/src/airflow/api_fastapi/core_api/datamodels/dag_run.py
+@@ -100,10 +100,33 @@ class DAGRunResponse(BaseModel):
+ 
+ 
+ class DAGRunCollectionResponse(BaseModel):
+-    """DAG Run Collection serializer for responses."""
++    """
++    DAG Run collection response supporting both offset and cursor pagination.
++
++    A single flat model is used instead of a discriminated union
++    (``Annotated[Offset | Cursor, Field(discriminator=...)]``) because
++    the OpenAPI ``oneOf`` + ``discriminator`` construct is not handled
++    correctly by ``@hey-api/openapi-ts`` / ``@7nohe/openapi-react-query-codegen``:
++    return types degrade to ``unknown`` in JSDoc and can produce
++    incorrect TypeScript types (see hey-api/openapi-ts#1613, #3270).
++    """
+ 
+     dag_runs: Iterable[DAGRunResponse]
+-    total_entries: int
++    total_entries: int | None = Field(
++        default=None,
++        description="Total number of matching items. Populated for offset pagination, "
++        "``null`` when using cursor pagination.",
++    )
++    next_cursor: str | None = Field(
++        default=None,
++        description="Token pointing to the next page. Populated for cursor pagination, "
++        "``null`` when using offset pagination or when there is no next page.",
++    )
++    previous_cursor: str | None = Field(
++        default=None,
++        description="Token pointing to the previous page. Populated for cursor pagination, "
++        "``null`` when using offset pagination or when on the first page.",
++    )
+ 
+ 
+ class TriggerDAGRunPostBody(StrictBaseModel):
+diff --git a/airflow-core/src/airflow/api_fastapi/core_api/openapi/v2-rest-api-generated.yaml b/airflow-core/src/airflow/api_fastapi/core_api/openapi/v2-rest-api-generated.yaml
+index 6e01355d9f..2c089c329f 100644
+--- a/airflow-core/src/airflow/api_fastapi/core_api/openapi/v2-rest-api-generated.yaml
++++ b/airflow-core/src/airflow/api_fastapi/core_api/openapi/v2-rest-api-generated.yaml
+@@ -2023,7 +2023,25 @@ paths:
+ 
+ 
+         This endpoint allows specifying `~` as the dag_id to retrieve Dag Runs for
+-        all DAGs.'
++        all DAGs.
++
++
++        Supports two pagination modes:
++
++
++        **Offset (default):** use `limit` and `offset` query parameters. Returns `total_entries`.
++
++
++        **Cursor:** pass `cursor` (empty string for the first page, then `next_cursor`
++        from the response).
++
++        When `cursor` is provided, `offset` is ignored and `total_entries` is not
++        returned.
++
++        ``next_cursor`` is ``null`` when there are no more pages; ``previous_cursor``
++        is ``null``
++
++        on the first page.'
+       operationId: get_dag_runs
+       security:
+       - OAuth2PasswordBearer: []
+@@ -2035,6 +2053,20 @@ paths:
+         schema:
+           type: string
+           title: Dag Id
++      - name: cursor
++        in: query
++        required: false
++        schema:
++          anyOf:
++          - type: string
++          - type: 'null'
++          description: Cursor for keyset-based pagination. Pass an empty string for
++            the first page, then use ``next_cursor`` from the response. When ``cursor``
++            is provided, ``offset`` is ignored.
++          title: Cursor
++        description: Cursor for keyset-based pagination. Pass an empty string for
++          the first page, then use ``next_cursor`` from the response. When ``cursor``
++          is provided, ``offset`` is ignored.
+       - name: limit
+         in: query
+         required: false
+@@ -10752,14 +10784,45 @@ components:
+           type: array
+           title: Dag Runs
+         total_entries:
+-          type: integer
++          anyOf:
++          - type: integer
++          - type: 'null'
+           title: Total Entries
++          description: Total number of matching items. Populated for offset pagination,
++            ``null`` when using cursor pagination.
++        next_cursor:
++          anyOf:
++          - type: string
++          - type: 'null'
++          title: Next Cursor
++          description: Token pointing to the next page. Populated for cursor pagination,
++            ``null`` when using offset pagination or when there is no next page.
++        previous_cursor:
++          anyOf:
++          - type: string
++          - type: 'null'
++          title: Previous Cursor
++          description: Token pointing to the previous page. Populated for cursor pagination,
++            ``null`` when using offset pagination or when on the first page.
+       type: object
+       required:
+       - dag_runs
+-      - total_entries
+       title: DAGRunCollectionResponse
+-      description: DAG Run Collection serializer for responses.
++      description: 'DAG Run collection response supporting both offset and cursor
++        pagination.
++
++
++        A single flat model is used instead of a discriminated union
++
++        (``Annotated[Offset | Cursor, Field(discriminator=...)]``) because
++
++        the OpenAPI ``oneOf`` + ``discriminator`` construct is not handled
++
++        correctly by ``@hey-api/openapi-ts`` / ``@7nohe/openapi-react-query-codegen``:
++
++        return types degrade to ``unknown`` in JSDoc and can produce
++
++        incorrect TypeScript types (see hey-api/openapi-ts#1613, #3270).'
+     DAGRunPatchBody:
+       properties:
+         state:
+diff --git a/airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_run.py b/airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_run.py
+index 575e6ae650..63e5c8fc04 100644
+--- a/airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_run.py
++++ b/airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_run.py
+@@ -35,8 +35,14 @@ from airflow.api.common.mark_tasks import (
+ )
+ from airflow.api_fastapi.app import get_auth_manager
+ from airflow.api_fastapi.auth.managers.models.resource_details import DagAccessEntity, DagDetails
++from airflow.api_fastapi.common.cursors import (
++    apply_cursor_filter,
++    encode_cursor,
++    make_backward_cursor,
++    parse_cursor,
++)
+ from airflow.api_fastapi.common.dagbag import DagBagDep, get_dag_for_run, get_latest_version_of_dag
+-from airflow.api_fastapi.common.db.common import SessionDep, paginated_select
++from airflow.api_fastapi.common.db.common import SessionDep, apply_filters_to_select, paginated_select
+ from airflow.api_fastapi.common.db.dag_runs import (
+     attach_dag_versions_to_runs,
+     eager_load_dag_run_for_list,
+@@ -64,6 +70,7 @@ from airflow.api_fastapi.common.parameters import (
+ )
+ from airflow.api_fastapi.common.router import AirflowRouter
+ from airflow.api_fastapi.common.types import Mimetype
++from airflow.api_fastapi.core_api.base import OrmClause
+ from airflow.api_fastapi.core_api.datamodels.assets import AssetEventCollectionResponse
+ from airflow.api_fastapi.core_api.datamodels.dag_run import (
+     DAGRunClearBody,
+@@ -400,12 +407,28 @@ def get_dag_runs(
+     dag_id_pattern: Annotated[_SearchParam, Depends(search_param_factory(DagRun.dag_id, "dag_id_pattern"))],
+     partition_key_pattern: QueryDagRunPartitionKeySearch,
+     consuming_asset_pattern: QueryConsumingAssetPatternSearch,
++    cursor: str | None = Query(
++        None,
++        description="Cursor for keyset-based pagination. "
++        "Pass an empty string for the first page, then use ``next_cursor`` from the response. "
++        "When ``cursor`` is provided, ``offset`` is ignored.",
++    ),
+ ) -> DAGRunCollectionResponse:
+     """
+     Get all DAG Runs.
+ 
+     This endpoint allows specifying `~` as the dag_id to retrieve Dag Runs for all DAGs.
++
++    Supports two pagination modes:
++
++    **Offset (default):** use `limit` and `offset` query parameters. Returns `total_entries`.
++
++    **Cursor:** pass `cursor` (empty string for the first page, then `next_cursor` from the response).
++    When `cursor` is provided, `offset` is ignored and `total_entries` is not returned.
++    ``next_cursor`` is ``null`` when there are no more pages; ``previous_cursor`` is ``null``
++    on the first page.
+     """
++    use_cursor = cursor is not None
+     query = select(DagRun).options(*eager_load_dag_run_for_list())
+ 
+     if dag_id != "~":
+@@ -416,27 +439,66 @@ def get_dag_runs(
+     if dag_version.value:
+         query = query.join(DagVersion, DagRun.created_dag_version_id == DagVersion.id)
+ 
++    filters: list[OrmClause] = [
++        run_after,
++        logical_date,
++        start_date_range,
++        end_date_range,
++        update_at_range,
++        duration_range,
++        conf_contains,
++        state,
++        run_type,
++        dag_version,
++        bundle_version,
++        readable_dag_runs_filter,
++        run_id_pattern,
++        triggering_user_name_pattern,
++        dag_id_pattern,
++        partition_key_pattern,
++        consuming_asset_pattern,
++    ]
++
++    if use_cursor:
++        # Fetch one extra row so we can detect whether a next page exists.
++        page_limit = cast(
++            "int", limit.value
++        )  # LimitFilter value is guaranteed to be set to the default value of QueryLimit
++        cursor_limit = LimitFilter().set_value(page_limit + 1)
++        dag_run_select = apply_filters_to_select(statement=query, filters=[*filters, order_by, cursor_limit])
++
++        is_backward = False
++        if cursor:
++            token, is_backward = parse_cursor(cursor)
++            if is_backward:
++                dag_run_select = order_by.to_orm(dag_run_select, reversed=True)
++            dag_run_select = apply_cursor_filter(dag_run_select, token, order_by, is_backward=is_backward)
++
++        fetched = list(session.scalars(dag_run_select).unique())
++        has_more = len(fetched) > page_limit
++        dag_runs = fetched[:page_limit]
++
++        if is_backward:
++            dag_runs.reverse()
++            has_prev = has_more
++            has_next = True
++        else:
++            has_prev = bool(cursor)
++            has_next = has_more
++
++        attach_dag_versions_to_runs(dag_runs, session=session)
++
++        return DAGRunCollectionResponse(
++            dag_runs=dag_runs,
++            next_cursor=(encode_cursor(dag_runs[-1], order_by) if has_next and dag_runs else None),
++            previous_cursor=(
++                make_backward_cursor(encode_cursor(dag_runs[0], order_by)) if has_prev and dag_runs else None
++            ),
++        )
++
+     dag_run_select, total_entries = paginated_select(
+         statement=query,
+-        filters=[
+-            run_after,
+-            logical_date,
+-            start_date_range,
+-            end_date_range,
+-            update_at_range,
+-            duration_range,
+-            conf_contains,
+-            state,
+-            run_type,
+-            dag_version,
+-            bundle_version,
+-            readable_dag_runs_filter,
+-            run_id_pattern,
+-            triggering_user_name_pattern,
+-            dag_id_pattern,
+-            partition_key_pattern,
+-            consuming_asset_pattern,
+-        ],
++        filters=filters,
+         order_by=order_by,
+         offset=offset,
+         limit=limit,
+diff --git a/airflow-core/src/airflow/api_fastapi/core_api/routes/public/task_instances.py b/airflow-core/src/airflow/api_fastapi/core_api/routes/public/task_instances.py
+index 3d3fa538b5..a6ed8f53ae 100644
+--- a/airflow-core/src/airflow/api_fastapi/core_api/routes/public/task_instances.py
++++ b/airflow-core/src/airflow/api_fastapi/core_api/routes/public/task_instances.py
+@@ -551,7 +551,7 @@ def get_task_instances(
+         # Fetch one extra row so we can detect whether a next page exists.
+         page_limit = cast(
+             "int", limit.value
+-        )  # LimitFilter value is guaranteed to be set of the default value of QueryLimit
++        )  # LimitFilter value is guaranteed to be set to the default value of QueryLimit
+         cursor_limit = LimitFilter().set_value(page_limit + 1)
+         task_instance_select = apply_filters_to_select(
+             statement=query, filters=[*filters, order_by, cursor_limit]
+diff --git a/airflow-core/src/airflow/config_templates/config.yml b/airflow-core/src/airflow/config_templates/config.yml
+index 8afce43000..d9ec3fe9a8 100644
+--- a/airflow-core/src/airflow/config_templates/config.yml
++++ b/airflow-core/src/airflow/config_templates/config.yml
+@@ -2690,15 +2690,6 @@ triggerer:
+       type: integer
+       example: ~
+       default: "50"
+-    on_kill_timeout:
+-      description: |
+-        Maximum number of seconds the triggerer will wait for ``BaseTrigger.on_kill()`` to complete
+-        before giving up and logging a warning. Prevents a slow or hung external API call from
+-        blocking the triggerer indefinitely when a deferred task is killed by a user.
+-      version_added: 3.2.0
+-      type: integer
+-      example: ~
+-      default: "30"
+     queues_enabled:
+       description: |
+         When set to True, deferred tasks will register triggers with the task queue they originated from,
+diff --git a/airflow-core/src/airflow/jobs/triggerer_job_runner.py b/airflow-core/src/airflow/jobs/triggerer_job_runner.py
+index 5d03094032..74b83a3851 100644
+--- a/airflow-core/src/airflow/jobs/triggerer_job_runner.py
++++ b/airflow-core/src/airflow/jobs/triggerer_job_runner.py
+@@ -105,10 +105,6 @@ if TYPE_CHECKING:
+ 
+ logger = logging.getLogger(__name__)
+ tracer = trace.get_tracer(__name__)
+-# Private sentinel passed as the cancel message when a trigger is cancelled by user action
+-_USER_ACTION_CANCEL_MSG = "__airflow_user_action__"
+-
+-_ON_CANCEL_TIMEOUT: int = conf.getint("triggerer", "on_kill_timeout", fallback=30)
+ 
+ 
+ def _make_trigger_span(
+@@ -1141,15 +1137,12 @@ class TriggerRunner:
+         Drain the to_cancel queue and ensure all triggers that are not in the DB are cancelled.
+ 
+         This allows the cleanup job to delete them.
+-        Passes "user-action" as the cancel message so that run_trigger() knows to invoke
+-        on_kill(). Triggers in this queue are always removed because this is the path in which
+-        the user performed some action on the task. Trigger redistribution goes through a separate
+-        path.
+         """
+         while self.to_cancel:
+             trigger_id = self.to_cancel.popleft()
+             if trigger_id in self.triggers:
+-                self.triggers[trigger_id]["task"].cancel(_USER_ACTION_CANCEL_MSG)
++                # We only delete if it did not exit already
++                self.triggers[trigger_id]["task"].cancel()
+             await asyncio.sleep(0)
+ 
+     async def cleanup_finished_triggers(self) -> list[int]:
+@@ -1338,32 +1331,14 @@ class TriggerRunner:
+                     self.events.append((trigger_id, event))
+                 span.set_status(Status(StatusCode.OK))
+             except asyncio.CancelledError as e:
+-                # A trigger can be cancelled for two reasons:
+-                #   - The user acted on the task (mark failed / clear / mark succeeded).
+-                #   - The triggerer is shutting down, here cancel_triggers() is not
+-                #     involved — the shutdown path cancels tasks directly without a message.
+-                # Only first case should invoke on_kill().
+-                #
+-                # For timeout, raise immediately without calling on_kill().
++                # We get cancelled by the scheduler changing the task state. But if we do lets give a nice error
++                # message about it
+                 if timeout := timeout_after:
+                     timeout = timeout.replace(tzinfo=timezone.utc) if not timeout.tzinfo else timeout
+                     if timeout < timezone.utcnow():
+                         await self.log.aerror("Trigger cancelled due to timeout")
+                         span.set_status(Status(StatusCode.ERROR), description=str(e))
+                         raise
+-                if e.args and e.args[0] == _USER_ACTION_CANCEL_MSG:
+-                    await self.log.ainfo("Trigger cancelled by user action, invoking on_kill", name=name)
+-                    try:
+-                        await asyncio.wait_for(trigger.on_kill(), timeout=_ON_CANCEL_TIMEOUT)
+-                    except TimeoutError:
+-                        await self.log.awarning("on_kill() timed out", timeout=_ON_CANCEL_TIMEOUT, name=name)
+-                    except asyncio.CancelledError:
+-                        # on_kill() was itself cancelled (e.g. triggerer shutting down
+-                        # while on_kill() was running). Swallow it so the outer
+-                        # CancelledError (variable `e`) can be re-raised below.
+-                        pass
+-                    except Exception:
+-                        await self.log.awarning("on_kill() raised an exception", name=name, exc_info=True)
+                 span.set_status(Status(StatusCode.OK), description=str(e))
+                 raise
+             except Exception as e:
+diff --git a/airflow-core/src/airflow/triggers/base.py b/airflow-core/src/airflow/triggers/base.py
+index b37448edfe..205e830c36 100644
+--- a/airflow-core/src/airflow/triggers/base.py
++++ b/airflow-core/src/airflow/triggers/base.py
+@@ -192,42 +192,6 @@ class BaseTrigger(abc.ABC, Templater, LoggingMixin):
+         and handle it appropriately (in async-compatible way).
+         """
+ 
+-    async def on_kill(self) -> None:
+-        """
+-        Kill the external job managed by this trigger when the task is killed by a user.
+-
+-        Symmetric with ``BaseOperator.on_kill()`` on the worker side: override this method
+-        to stop external work (e.g. cancel a BigQuery job, terminate a Databricks run) when
+-        a user explicitly acts on the deferred task via mark-failed, clear, or mark-succeeded.
+-
+-        **Distinction from** ``cleanup()``:
+-
+-        - ``cleanup()`` runs on every trigger exit — success, timeout, shutdown, and user
+-          kill. It is meant for releasing local resources held by this trigger instance.
+-          Putting external job cancellation in ``cleanup()`` would cancel in-flight work
+-          on every triggerer restart or rolling deploy.
+-        - ``on_kill()`` runs only when a user explicitly kills the task. It is the right
+-          place to cancel external work you do not want to keep running after the user performs an action.
+-
+-        This only fires when a user acts on the task. It does not fire on:
+-
+-        - Triggerer shutdown or restart — the trigger is redistributed, not cancelled.
+-        - Triggerer redistribution to another triggerer process.
+-        - Trigger timeout — the trigger is killed, not cancelled by user.
+-        - Normal trigger completion (the trigger fired an event).
+-
+-        This method runs in the triggerer's asyncio event loop, so
+-        it must be async-safe. Use ``await`` for any I/O; do not block the event loop.
+-
+-        Exceptions raised here are logged as warnings and do not
+-        propagate — they will not affect the task state or the triggerer. Implement your
+-        own retry or error handling inside this method if needed.
+-
+-        ``on_kill()`` is given a bounded time to complete. Implementations
+-        that call slow external APIs should apply their own timeouts rather than relying on
+-        the framework bound.
+-        """
+-
+     @staticmethod
+     def repr(classpath: str, kwargs: dict[str, Any]):
+         kwargs_str = ", ".join(f"{k}={v}" for k, v in kwargs.items())
+diff --git a/airflow-core/src/airflow/ui/openapi-gen/queries/common.ts b/airflow-core/src/airflow/ui/openapi-gen/queries/common.ts
+index 33f255bb9a..e7b2bdd631 100644
+--- a/airflow-core/src/airflow/ui/openapi-gen/queries/common.ts
++++ b/airflow-core/src/airflow/ui/openapi-gen/queries/common.ts
+@@ -143,10 +143,11 @@ export const UseDagRunServiceGetUpstreamAssetEventsKeyFn = ({ dagId, dagRunId }:
+ export type DagRunServiceGetDagRunsDefaultResponse = Awaited<ReturnType<typeof DagRunService.getDagRuns>>;
+ export type DagRunServiceGetDagRunsQueryResult<TData = DagRunServiceGetDagRunsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+ export const useDagRunServiceGetDagRunsKey = "DagRunServiceGetDagRuns";
+-export const UseDagRunServiceGetDagRunsKeyFn = ({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
++export const UseDagRunServiceGetDagRunsKeyFn = ({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
+   bundleVersion?: string;
+   confContains?: string;
+   consumingAssetPattern?: string;
++  cursor?: string;
+   dagId: string;
+   dagIdPattern?: string;
+   dagVersion?: number[];
+@@ -182,7 +183,7 @@ export const UseDagRunServiceGetDagRunsKeyFn = ({ bundleVersion, confContains, c
+   updatedAtGte?: string;
+   updatedAtLt?: string;
+   updatedAtLte?: string;
+-}, queryKey?: Array<unknown>) => [useDagRunServiceGetDagRunsKey, ...(queryKey ?? [{ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }])];
++}, queryKey?: Array<unknown>) => [useDagRunServiceGetDagRunsKey, ...(queryKey ?? [{ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }])];
+ export type DagRunServiceWaitDagRunUntilFinishedDefaultResponse = Awaited<ReturnType<typeof DagRunService.waitDagRunUntilFinished>>;
+ export type DagRunServiceWaitDagRunUntilFinishedQueryResult<TData = DagRunServiceWaitDagRunUntilFinishedDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+ export const useDagRunServiceWaitDagRunUntilFinishedKey = "DagRunServiceWaitDagRunUntilFinished";
+diff --git a/airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts b/airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts
+index e9d82da6aa..68bb6e8ded 100644
+--- a/airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts
++++ b/airflow-core/src/airflow/ui/openapi-gen/queries/ensureQueryData.ts
+@@ -261,8 +261,18 @@ export const ensureUseDagRunServiceGetUpstreamAssetEventsData = (queryClient: Qu
+ * Get all DAG Runs.
+ *
+ * This endpoint allows specifying `~` as the dag_id to retrieve Dag Runs for all DAGs.
++*
++* Supports two pagination modes:
++*
++* **Offset (default):** use `limit` and `offset` query parameters. Returns `total_entries`.
++*
++* **Cursor:** pass `cursor` (empty string for the first page, then `next_cursor` from the response).
++* When `cursor` is provided, `offset` is ignored and `total_entries` is not returned.
++* ``next_cursor`` is ``null`` when there are no more pages; ``previous_cursor`` is ``null``
++* on the first page.
+ * @param data The data for the request.
+ * @param data.dagId
++* @param data.cursor Cursor for keyset-based pagination. Pass an empty string for the first page, then use ``next_cursor`` from the response. When ``cursor`` is provided, ``offset`` is ignored.
+ * @param data.limit
+ * @param data.offset
+ * @param data.runAfterGte
+@@ -303,10 +313,11 @@ export const ensureUseDagRunServiceGetUpstreamAssetEventsData = (queryClient: Qu
+ * @returns DAGRunCollectionResponse Successful Response
+ * @throws ApiError
+ */
+-export const ensureUseDagRunServiceGetDagRunsData = (queryClient: QueryClient, { bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
++export const ensureUseDagRunServiceGetDagRunsData = (queryClient: QueryClient, { bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
+   bundleVersion?: string;
+   confContains?: string;
+   consumingAssetPattern?: string;
++  cursor?: string;
+   dagId: string;
+   dagIdPattern?: string;
+   dagVersion?: number[];
+@@ -342,7 +353,7 @@ export const ensureUseDagRunServiceGetDagRunsData = (queryClient: QueryClient, {
+   updatedAtGte?: string;
+   updatedAtLt?: string;
+   updatedAtLte?: string;
+-}) => queryClient.ensureQueryData({ queryKey: Common.UseDagRunServiceGetDagRunsKeyFn({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }), queryFn: () => DagRunService.getDagRuns({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }) });
++}) => queryClient.ensureQueryData({ queryKey: Common.UseDagRunServiceGetDagRunsKeyFn({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }), queryFn: () => DagRunService.getDagRuns({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }) });
+ /**
+ * Experimental: Wait for a dag run to complete, and return task results if requested.
+ * 🚧 This is an experimental endpoint and may change or be removed without notice.Successful response are streamed as newline-delimited JSON (NDJSON). Each line is a JSON object representing the DAG run state.
+diff --git a/airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts b/airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts
+index af819e0110..cf69e71c4f 100644
+--- a/airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts
++++ b/airflow-core/src/airflow/ui/openapi-gen/queries/prefetch.ts
+@@ -261,8 +261,18 @@ export const prefetchUseDagRunServiceGetUpstreamAssetEvents = (queryClient: Quer
+ * Get all DAG Runs.
+ *
+ * This endpoint allows specifying `~` as the dag_id to retrieve Dag Runs for all DAGs.
++*
++* Supports two pagination modes:
++*
++* **Offset (default):** use `limit` and `offset` query parameters. Returns `total_entries`.
++*
++* **Cursor:** pass `cursor` (empty string for the first page, then `next_cursor` from the response).
++* When `cursor` is provided, `offset` is ignored and `total_entries` is not returned.
++* ``next_cursor`` is ``null`` when there are no more pages; ``previous_cursor`` is ``null``
++* on the first page.
+ * @param data The data for the request.
+ * @param data.dagId
++* @param data.cursor Cursor for keyset-based pagination. Pass an empty string for the first page, then use ``next_cursor`` from the response. When ``cursor`` is provided, ``offset`` is ignored.
+ * @param data.limit
+ * @param data.offset
+ * @param data.runAfterGte
+@@ -303,10 +313,11 @@ export const prefetchUseDagRunServiceGetUpstreamAssetEvents = (queryClient: Quer
+ * @returns DAGRunCollectionResponse Successful Response
+ * @throws ApiError
+ */
+-export const prefetchUseDagRunServiceGetDagRuns = (queryClient: QueryClient, { bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
++export const prefetchUseDagRunServiceGetDagRuns = (queryClient: QueryClient, { bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
+   bundleVersion?: string;
+   confContains?: string;
+   consumingAssetPattern?: string;
++  cursor?: string;
+   dagId: string;
+   dagIdPattern?: string;
+   dagVersion?: number[];
+@@ -342,7 +353,7 @@ export const prefetchUseDagRunServiceGetDagRuns = (queryClient: QueryClient, { b
+   updatedAtGte?: string;
+   updatedAtLt?: string;
+   updatedAtLte?: string;
+-}) => queryClient.prefetchQuery({ queryKey: Common.UseDagRunServiceGetDagRunsKeyFn({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }), queryFn: () => DagRunService.getDagRuns({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }) });
++}) => queryClient.prefetchQuery({ queryKey: Common.UseDagRunServiceGetDagRunsKeyFn({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }), queryFn: () => DagRunService.getDagRuns({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }) });
+ /**
+ * Experimental: Wait for a dag run to complete, and return task results if requested.
+ * 🚧 This is an experimental endpoint and may change or be removed without notice.Successful response are streamed as newline-delimited JSON (NDJSON). Each line is a JSON object representing the DAG run state.
+diff --git a/airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts b/airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts
+index 87d2707100..efd94101d2 100644
+--- a/airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts
++++ b/airflow-core/src/airflow/ui/openapi-gen/queries/queries.ts
+@@ -261,8 +261,18 @@ export const useDagRunServiceGetUpstreamAssetEvents = <TData = Common.DagRunServ
+ * Get all DAG Runs.
+ *
+ * This endpoint allows specifying `~` as the dag_id to retrieve Dag Runs for all DAGs.
++*
++* Supports two pagination modes:
++*
++* **Offset (default):** use `limit` and `offset` query parameters. Returns `total_entries`.
++*
++* **Cursor:** pass `cursor` (empty string for the first page, then `next_cursor` from the response).
++* When `cursor` is provided, `offset` is ignored and `total_entries` is not returned.
++* ``next_cursor`` is ``null`` when there are no more pages; ``previous_cursor`` is ``null``
++* on the first page.
+ * @param data The data for the request.
+ * @param data.dagId
++* @param data.cursor Cursor for keyset-based pagination. Pass an empty string for the first page, then use ``next_cursor`` from the response. When ``cursor`` is provided, ``offset`` is ignored.
+ * @param data.limit
+ * @param data.offset
+ * @param data.runAfterGte
+@@ -303,10 +313,11 @@ export const useDagRunServiceGetUpstreamAssetEvents = <TData = Common.DagRunServ
+ * @returns DAGRunCollectionResponse Successful Response
+ * @throws ApiError
+ */
+-export const useDagRunServiceGetDagRuns = <TData = Common.DagRunServiceGetDagRunsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
++export const useDagRunServiceGetDagRuns = <TData = Common.DagRunServiceGetDagRunsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
+   bundleVersion?: string;
+   confContains?: string;
+   consumingAssetPattern?: string;
++  cursor?: string;
+   dagId: string;
+   dagIdPattern?: string;
+   dagVersion?: number[];
+@@ -342,7 +353,7 @@ export const useDagRunServiceGetDagRuns = <TData = Common.DagRunServiceGetDagRun
+   updatedAtGte?: string;
+   updatedAtLt?: string;
+   updatedAtLte?: string;
+-}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseDagRunServiceGetDagRunsKeyFn({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }, queryKey), queryFn: () => DagRunService.getDagRuns({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }) as TData, ...options });
++}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useQuery<TData, TError>({ queryKey: Common.UseDagRunServiceGetDagRunsKeyFn({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }, queryKey), queryFn: () => DagRunService.getDagRuns({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }) as TData, ...options });
+ /**
+ * Experimental: Wait for a dag run to complete, and return task results if requested.
+ * 🚧 This is an experimental endpoint and may change or be removed without notice.Successful response are streamed as newline-delimited JSON (NDJSON). Each line is a JSON object representing the DAG run state.
+diff --git a/airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts b/airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts
+index 161186260f..8f61c1729f 100644
+--- a/airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts
++++ b/airflow-core/src/airflow/ui/openapi-gen/queries/suspense.ts
+@@ -261,8 +261,18 @@ export const useDagRunServiceGetUpstreamAssetEventsSuspense = <TData = Common.Da
+ * Get all DAG Runs.
+ *
+ * This endpoint allows specifying `~` as the dag_id to retrieve Dag Runs for all DAGs.
++*
++* Supports two pagination modes:
++*
++* **Offset (default):** use `limit` and `offset` query parameters. Returns `total_entries`.
++*
++* **Cursor:** pass `cursor` (empty string for the first page, then `next_cursor` from the response).
++* When `cursor` is provided, `offset` is ignored and `total_entries` is not returned.
++* ``next_cursor`` is ``null`` when there are no more pages; ``previous_cursor`` is ``null``
++* on the first page.
+ * @param data The data for the request.
+ * @param data.dagId
++* @param data.cursor Cursor for keyset-based pagination. Pass an empty string for the first page, then use ``next_cursor`` from the response. When ``cursor`` is provided, ``offset`` is ignored.
+ * @param data.limit
+ * @param data.offset
+ * @param data.runAfterGte
+@@ -303,10 +313,11 @@ export const useDagRunServiceGetUpstreamAssetEventsSuspense = <TData = Common.Da
+ * @returns DAGRunCollectionResponse Successful Response
+ * @throws ApiError
+ */
+-export const useDagRunServiceGetDagRunsSuspense = <TData = Common.DagRunServiceGetDagRunsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
++export const useDagRunServiceGetDagRunsSuspense = <TData = Common.DagRunServiceGetDagRunsDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }: {
+   bundleVersion?: string;
+   confContains?: string;
+   consumingAssetPattern?: string;
++  cursor?: string;
+   dagId: string;
+   dagIdPattern?: string;
+   dagVersion?: number[];
+@@ -342,7 +353,7 @@ export const useDagRunServiceGetDagRunsSuspense = <TData = Common.DagRunServiceG
+   updatedAtGte?: string;
+   updatedAtLt?: string;
+   updatedAtLte?: string;
+-}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseDagRunServiceGetDagRunsKeyFn({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }, queryKey), queryFn: () => DagRunService.getDagRuns({ bundleVersion, confContains, consumingAssetPattern, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }) as TData, ...options });
++}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn">) => useSuspenseQuery<TData, TError>({ queryKey: Common.UseDagRunServiceGetDagRunsKeyFn({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }, queryKey), queryFn: () => DagRunService.getDagRuns({ bundleVersion, confContains, consumingAssetPattern, cursor, dagId, dagIdPattern, dagVersion, durationGt, durationGte, durationLt, durationLte, endDateGt, endDateGte, endDateLt, endDateLte, limit, logicalDateGt, logicalDateGte, logicalDateLt, logicalDateLte, offset, orderBy, partitionKeyPattern, runAfterGt, runAfterGte, runAfterLt, runAfterLte, runIdPattern, runType, startDateGt, startDateGte, startDateLt, startDateLte, state, triggeringUserNamePattern, updatedAtGt, updatedAtGte, updatedAtLt, updatedAtLte }) as TData, ...options });
+ /**
+ * Experimental: Wait for a dag run to complete, and return task results if requested.
+ * 🚧 This is an experimental endpoint and may change or be removed without notice.Successful response are streamed as newline-delimited JSON (NDJSON). Each line is a JSON object representing the DAG run state.
+diff --git a/airflow-core/src/airflow/ui/openapi-gen/requests/schemas.gen.ts b/airflow-core/src/airflow/ui/openapi-gen/requests/schemas.gen.ts
+index 3ae75c2db4..b97d012d8d 100644
+--- a/airflow-core/src/airflow/ui/openapi-gen/requests/schemas.gen.ts
++++ b/airflow-core/src/airflow/ui/openapi-gen/requests/schemas.gen.ts
+@@ -2555,14 +2555,53 @@ export const $DAGRunCollectionResponse = {
+             title: 'Dag Runs'
+         },
+         total_entries: {
+-            type: 'integer',
+-            title: 'Total Entries'
++            anyOf: [
++                {
++                    type: 'integer'
++                },
++                {
++                    type: 'null'
++                }
++            ],
++            title: 'Total Entries',
++            description: 'Total number of matching items. Populated for offset pagination, ``null`` when using cursor pagination.'
++        },
++        next_cursor: {
++            anyOf: [
++                {
++                    type: 'string'
++                },
++                {
++                    type: 'null'
++                }
++            ],
++            title: 'Next Cursor',
++            description: 'Token pointing to the next page. Populated for cursor pagination, ``null`` when using offset pagination or when there is no next page.'
++        },
++        previous_cursor: {
++            anyOf: [
++                {
++                    type: 'string'
++                },
++                {
++                    type: 'null'
++                }
++            ],
++            title: 'Previous Cursor',
++            description: 'Token pointing to the previous page. Populated for cursor pagination, ``null`` when using offset pagination or when on the first page.'
+         }
+     },
+     type: 'object',
+-    required: ['dag_runs', 'total_entries'],
++    required: ['dag_runs'],
+     title: 'DAGRunCollectionResponse',
+-    description: 'DAG Run Collection serializer for responses.'
++    description: `DAG Run collection response supporting both offset and cursor pagination.
++
++A single flat model is used instead of a discriminated union
++(\`\`Annotated[Offset | Cursor, Field(discriminator=...)]\`\`) because
++the OpenAPI \`\`oneOf\`\` + \`\`discriminator\`\` construct is not handled
++correctly by \`\`@hey-api/openapi-ts\`\` / \`\`@7nohe/openapi-react-query-codegen\`\`:
++return types degrade to \`\`unknown\`\` in JSDoc and can produce
++incorrect TypeScript types (see hey-api/openapi-ts#1613, #3270).`
+ } as const;
+ 
+ export const $DAGRunPatchBody = {
+diff --git a/airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts b/airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts
+index 9d40444f7c..ed3eaec39f 100644
+--- a/airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts
++++ b/airflow-core/src/airflow/ui/openapi-gen/requests/services.gen.ts
+@@ -975,8 +975,18 @@ export class DagRunService {
+      * Get all DAG Runs.
+      *
+      * This endpoint allows specifying `~` as the dag_id to retrieve Dag Runs for all DAGs.
++     *
++     * Supports two pagination modes:
++     *
++     * **Offset (default):** use `limit` and `offset` query parameters. Returns `total_entries`.
++     *
++     * **Cursor:** pass `cursor` (empty string for the first page, then `next_cursor` from the response).
++     * When `cursor` is provided, `offset` is ignored and `total_entries` is not returned.
++     * ``next_cursor`` is ``null`` when there are no more pages; ``previous_cursor`` is ``null``
++     * on the first page.
+      * @param data The data for the request.
+      * @param data.dagId
++     * @param data.cursor Cursor for keyset-based pagination. Pass an empty string for the first page, then use ``next_cursor`` from the response. When ``cursor`` is provided, ``offset`` is ignored.
+      * @param data.limit
+      * @param data.offset
+      * @param data.runAfterGte
+@@ -1025,6 +1035,7 @@ export class DagRunService {
+                 dag_id: data.dagId
+             },
+             query: {
++                cursor: data.cursor,
+                 limit: data.limit,
+                 offset: data.offset,
+                 run_after_gte: data.runAfterGte,
+diff --git a/airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts b/airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts
+index ff3e99b8cb..79f999099a 100644
+--- a/airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts
++++ b/airflow-core/src/airflow/ui/openapi-gen/requests/types.gen.ts
+@@ -674,11 +674,29 @@ export type DAGRunClearBody = {
+ };
+ 
+ /**
+- * DAG Run Collection serializer for responses.
++ * DAG Run collection response supporting both offset and cursor pagination.
++ *
++ * A single flat model is used instead of a discriminated union
++ * (``Annotated[Offset | Cursor, Field(discriminator=...)]``) because
++ * the OpenAPI ``oneOf`` + ``discriminator`` construct is not handled
++ * correctly by ``@hey-api/openapi-ts`` / ``@7nohe/openapi-react-query-codegen``:
++ * return types degrade to ``unknown`` in JSDoc and can produce
++ * incorrect TypeScript types (see hey-api/openapi-ts#1613, #3270).
+  */
+ export type DAGRunCollectionResponse = {
+     dag_runs: Array<DAGRunResponse>;
+-    total_entries: number;
++    /**
++     * Total number of matching items. Populated for offset pagination, ``null`` when using cursor pagination.
++     */
++    total_entries?: number | null;
++    /**
++     * Token pointing to the next page. Populated for cursor pagination, ``null`` when using offset pagination or when there is no next page.
++     */
++    next_cursor?: string | null;
++    /**
++     * Token pointing to the previous page. Populated for cursor pagination, ``null`` when using offset pagination or when on the first page.
++     */
++    previous_cursor?: string | null;
+ };
+ 
+ /**
+@@ -2647,6 +2665,10 @@ export type GetDagRunsData = {
+      * Filter by consuming asset name or URI using pattern matching
+      */
+     consumingAssetPattern?: string | null;
++    /**
++     * Cursor for keyset-based pagination. Pass an empty string for the first page, then use ``next_cursor`` from the response. When ``cursor`` is provided, ``offset`` is ignored.
++     */
++    cursor?: string | null;
+     dagId: string;
+     /**
+      * SQL LIKE expression — use `%` / `_` wildcards (e.g. `%customer_%`). or the pipe `|` operator for OR logic (e.g. `dag1 | dag2`). Regular expressions are **not** supported.
+diff --git a/airflow-core/src/airflow/ui/src/pages/DagRuns.tsx b/airflow-core/src/airflow/ui/src/pages/DagRuns.tsx
+index 08eb817db5..e9c979946f 100644
+--- a/airflow-core/src/airflow/ui/src/pages/DagRuns.tsx
++++ b/airflow-core/src/airflow/ui/src/pages/DagRuns.tsx
+@@ -204,11 +204,11 @@ export const DagRuns = () => {
+       partition_key: false,
+     },
+   });
+-  const { pagination, sorting } = tableURLState;
++  const { cursor, pagination, sorting } = tableURLState;
+   const [sort] = sorting;
+   const orderBy = sort ? [`${sort.desc ? "-" : ""}${sort.id}`] : ["-run_after"];
+ 
+-  const { pageIndex, pageSize } = pagination;
++  const { pageSize } = pagination;
+   const filteredState = searchParams.get(STATE_PARAM);
+   const filteredType = searchParams.get(RUN_TYPE_PARAM);
+   const filteredRunIdPattern = searchParams.get(RUN_ID_PATTERN_PARAM);
+@@ -237,6 +237,7 @@ export const DagRuns = () => {
+       bundleVersion: bundleVersion ?? undefined,
+       confContains: confContains !== null && confContains !== "" ? confContains : undefined,
+       consumingAssetPattern: filteredConsumingAsset ?? undefined,
++      cursor: cursor ?? "",
+       dagId: dagId ?? "~",
+       dagIdPattern: filteredDagIdPattern ?? undefined,
+       dagVersion:
+@@ -248,7 +249,6 @@ export const DagRuns = () => {
+       limit: pageSize,
+       logicalDateGte: logicalDateGte ?? undefined,
+       logicalDateLte: logicalDateLte ?? undefined,
+-      offset: pageIndex * pageSize,
+       orderBy,
+       partitionKeyPattern: partitionKeyPattern ?? undefined,
+       runAfterGte: runAfterGte ?? undefined,
+@@ -270,6 +270,9 @@ export const DagRuns = () => {
+ 
+   const columns = runColumns(translate, dagId);
+ 
++  const nextCursor = data?.next_cursor ?? undefined;
++  const previousCursor = data?.previous_cursor ?? undefined;
++
+   return (
+     <>
+       <DagRunsFilters dagId={dagId} />
+@@ -280,8 +283,9 @@ export const DagRuns = () => {
+         initialState={tableURLState}
+         isLoading={isLoading}
+         modelName="common:dagRun"
++        nextCursor={nextCursor}
+         onStateChange={setTableURLState}
+-        total={data?.total_entries}
++        previousCursor={previousCursor}
+       />
+     </>
+   );
+diff --git a/airflow-core/src/airflow/ui/src/pages/TaskInstances/TaskInstances.tsx b/airflow-core/src/airflow/ui/src/pages/TaskInstances/TaskInstances.tsx
+index 2958472290..69ab5c7fa5 100644
+--- a/airflow-core/src/airflow/ui/src/pages/TaskInstances/TaskInstances.tsx
++++ b/airflow-core/src/airflow/ui/src/pages/TaskInstances/TaskInstances.tsx
+@@ -330,8 +330,8 @@ export const TaskInstances = () => {
+     },
+   );
+ 
+-  const nextCursor = data && "next_cursor" in data ? data.next_cursor : undefined;
+-  const previousCursor = data && "previous_cursor" in data ? data.previous_cursor : undefined;
++  const nextCursor = data?.next_cursor ?? undefined;
++  const previousCursor = data?.previous_cursor ?? undefined;
+ 
+   const { allRowsSelected, clearSelections, handleRowSelect, handleSelectAll, selectedRows } =
+     useRowSelection({
+diff --git a/airflow-core/tests/unit/jobs/test_triggerer_job.py b/airflow-core/tests/unit/jobs/test_triggerer_job.py
+index 08c960fd33..503a3f4834 100644
+--- a/airflow-core/tests/unit/jobs/test_triggerer_job.py
++++ b/airflow-core/tests/unit/jobs/test_triggerer_job.py
+@@ -46,7 +46,6 @@ from airflow.executors import workloads
+ from airflow.executors.workloads.task import TaskInstanceDTO
+ from airflow.jobs.job import Job
+ from airflow.jobs.triggerer_job_runner import (
+-    _USER_ACTION_CANCEL_MSG,
+     ToTriggerRunner,
+     ToTriggerSupervisor,
+     TriggerCommsDecoder,
+@@ -383,87 +382,6 @@ class TestTriggerRunner:
+             )
+         assert {"event": "Trigger cancelled due to timeout", "log_level": "error"} in cap_structlog
+ 
+-    def test_run_trigger_calls_on_kill_for_user_action(self, session, cap_structlog) -> None:
+-        """on_kill() is called when CancelledError carries the user-action sentinel."""
+-        trigger_runner = TriggerRunner()
+-        trigger_runner.triggers = {
+-            1: {"task": MagicMock(spec=asyncio.Task), "is_watcher": False, "name": "mock_name", "events": 0}
+-        }
+-        mock_trigger = MagicMock(spec=BaseTrigger)
+-        mock_trigger.run.side_effect = asyncio.CancelledError(_USER_ACTION_CANCEL_MSG)
+-        mock_trigger.task_instance = MagicMock()
+-        mock_trigger.task_instance.map_index = -1
+-        mock_trigger.on_kill = AsyncMock()
+-
+-        with pytest.raises(asyncio.CancelledError):
+-            asyncio.run(trigger_runner.run_trigger(1, mock_trigger))
+-
+-        mock_trigger.on_kill.assert_awaited_once()
+-        assert {
+-            "event": "Trigger cancelled by user action, invoking on_kill",
+-            "log_level": "info",
+-            "name": "mock_name",
+-        } in cap_structlog
+-
+-    def test_run_trigger_skips_on_kill_without_user_action_message(self, session) -> None:
+-        """on_kill() is not called when CancelledError has no user-action sentinel (shutdown/EOF)."""
+-        trigger_runner = TriggerRunner()
+-        trigger_runner.triggers = {
+-            1: {"task": MagicMock(spec=asyncio.Task), "is_watcher": False, "name": "mock_name", "events": 0}
+-        }
+-        mock_trigger = MagicMock(spec=BaseTrigger)
+-        mock_trigger.run.side_effect = asyncio.CancelledError()
+-        mock_trigger.task_instance = MagicMock()
+-        mock_trigger.task_instance.map_index = -1
+-        mock_trigger.on_kill = AsyncMock()
+-
+-        with pytest.raises(asyncio.CancelledError):
+-            asyncio.run(trigger_runner.run_trigger(1, mock_trigger))
+-
+-        mock_trigger.on_kill.assert_not_called()
+-
+-    def test_run_trigger_on_kill_exception_does_not_swallow_cancelled_error(self, session) -> None:
+-        """CancelledError propagates even if on_kill() raises."""
+-        trigger_runner = TriggerRunner()
+-        trigger_runner.triggers = {
+-            1: {"task": MagicMock(spec=asyncio.Task), "is_watcher": False, "name": "mock_name", "events": 0}
+-        }
+-        mock_trigger = MagicMock(spec=BaseTrigger)
+-        mock_trigger.run.side_effect = asyncio.CancelledError(_USER_ACTION_CANCEL_MSG)
+-        mock_trigger.task_instance = MagicMock()
+-        mock_trigger.task_instance.map_index = -1
+-        mock_trigger.on_kill = AsyncMock(side_effect=RuntimeError("external API down"))
+-        mock_trigger.cleanup = AsyncMock()
+-
+-        with pytest.raises(asyncio.CancelledError):
+-            asyncio.run(trigger_runner.run_trigger(1, mock_trigger))
+-
+-        mock_trigger.on_kill.assert_awaited_once()
+-        mock_trigger.cleanup.assert_awaited_once()
+-
+-    def test_run_trigger_on_kill_timeout_does_not_block_cleanup(self, session) -> None:
+-        """A hanging on_kill() is interrupted after the timeout and cleanup still runs."""
+-        trigger_runner = TriggerRunner()
+-        trigger_runner.triggers = {
+-            1: {"task": MagicMock(spec=asyncio.Task), "is_watcher": False, "name": "mock_name", "events": 0}
+-        }
+-        mock_trigger = MagicMock(spec=BaseTrigger)
+-        mock_trigger.run.side_effect = asyncio.CancelledError(_USER_ACTION_CANCEL_MSG)
+-        mock_trigger.task_instance = MagicMock()
+-        mock_trigger.task_instance.map_index = -1
+-
+-        async def hanging_on_kill():
+-            await asyncio.sleep(9999)
+-
+-        mock_trigger.on_kill = hanging_on_kill
+-        mock_trigger.cleanup = AsyncMock()
+-
+-        with patch("airflow.jobs.triggerer_job_runner._ON_CANCEL_TIMEOUT", 0.01):
+-            with pytest.raises(asyncio.CancelledError):
+-                asyncio.run(trigger_runner.run_trigger(1, mock_trigger))
+-
+-        mock_trigger.cleanup.assert_awaited_once()
+-
+     @patch("airflow.jobs.triggerer_job_runner.Trigger._decrypt_kwargs")
+     @patch(
+         "airflow.jobs.triggerer_job_runner.TriggerRunner.get_trigger_by_classpath",
+diff --git a/airflow-ctl/src/airflowctl/api/datamodels/generated.py b/airflow-ctl/src/airflowctl/api/datamodels/generated.py
+index a5a061a9cd..4750cc528f 100644
+--- a/airflow-ctl/src/airflowctl/api/datamodels/generated.py
++++ b/airflow-ctl/src/airflowctl/api/datamodels/generated.py
+@@ -1978,11 +1978,38 @@ class DAGCollectionResponse(BaseModel):
+ 
+ class DAGRunCollectionResponse(BaseModel):
+     """
+-    DAG Run Collection serializer for responses.
++    DAG Run collection response supporting both offset and cursor pagination.
++
++    A single flat model is used instead of a discriminated union
++    (``Annotated[Offset | Cursor, Field(discriminator=...)]``) because
++    the OpenAPI ``oneOf`` + ``discriminator`` construct is not handled
++    correctly by ``@hey-api/openapi-ts`` / ``@7nohe/openapi-react-query-codegen``:
++    return types degrade to ``unknown`` in JSDoc and can produce
++    incorrect TypeScript types (see hey-api/openapi-ts#1613, #3270).
+     """
+ 
+     dag_runs: Annotated[list[DAGRunResponse], Field(title="Dag Runs")]
+-    total_entries: Annotated[int, Field(title="Total Entries")]
++    total_entries: Annotated[
++        int | None,
++        Field(
++            description="Total number of matching items. Populated for offset pagination, ``null`` when using cursor pagination.",
++            title="Total Entries",
++        ),
++    ] = None
++    next_cursor: Annotated[
++        str | None,
++        Field(
++            description="Token pointing to the next page. Populated for cursor pagination, ``null`` when using offset pagination or when there is no next page.",
++            title="Next Cursor",
++        ),
++    ] = None
++    previous_cursor: Annotated[
++        str | None,
++        Field(
++            description="Token pointing to the previous page. Populated for cursor pagination, ``null`` when using offset pagination or when on the first page.",
++            title="Previous Cursor",
++        ),
++    ] = None
+ 
+ 
+ class DAGWarningCollectionResponse(BaseModel):
+diff --git a/dev/breeze/src/airflow_breeze/commands/setup_commands.py b/dev/breeze/src/airflow_breeze/commands/setup_commands.py
+index 6392fe15ab..cf775bed47 100644
+--- a/dev/breeze/src/airflow_breeze/commands/setup_commands.py
++++ b/dev/breeze/src/airflow_breeze/commands/setup_commands.py
+@@ -48,7 +48,7 @@ from airflow_breeze.commands.main_command import main
+ from airflow_breeze.utils.cache import check_if_cache_exists, delete_cache, touch_cache_file
+ from airflow_breeze.utils.click_utils import BreezeGroup
+ from airflow_breeze.utils.confirm import STANDARD_TIMEOUT, Answer, user_confirm
+-from airflow_breeze.utils.console import console_print
++from airflow_breeze.utils.console import console_print, get_stderr_console
+ from airflow_breeze.utils.custom_param_types import BetterChoice
+ from airflow_breeze.utils.docker_command_utils import VOLUMES_FOR_SELECTED_MOUNTS
+ from airflow_breeze.utils.path_utils import (
+@@ -352,6 +352,8 @@ def get_command_hash_dict() -> dict[str, str]:
+     hashes: dict[str, str] = {}
+     with Context(main) as ctx:
+         the_context_dict = ctx.to_info_dict()
++        if get_verbose():
++            get_stderr_console().print(the_context_dict)
+         commands_dict = the_context_dict["command"]["commands"]
+         options = rich_click.rich_click.OPTION_GROUPS
+         for command in sorted(commands_dict.keys()):
+diff --git a/dev/pyproject.toml b/dev/pyproject.toml
+index 026c6e7959..4f185d506f 100644
+--- a/dev/pyproject.toml
++++ b/dev/pyproject.toml
+@@ -74,8 +74,8 @@ no_implicit_optional = true
+ warn_redundant_casts = true
+ warn_unused_ignores = false
+ plugins = [
+-    "airflow_mypy.plugins.decorators",
+-    "airflow_mypy.plugins.outputs",
++    "airflow_mypy/plugin/decorators.py",
++    "airflow_mypy/plugin/outputs.py",
+ ]
+ pretty = true
+ show_error_codes = true
+diff --git a/devel-common/pyproject.toml b/devel-common/pyproject.toml
+index 5b2dc972ce..43b7f07089 100644
+--- a/devel-common/pyproject.toml
++++ b/devel-common/pyproject.toml
+@@ -111,7 +111,6 @@ dependencies = [
+ "mypy" = [
+     # Mypy dependencies
+     # TODO: upgrade to newer versions of MyPy continuously as they are released
+-    "apache-airflow-mypy",
+     "mypy==1.20.1",
+     "types-Deprecated>=1.2.9.20240311",
+     "types-Markdown>=3.6.0.20240316",
+diff --git a/providers/google/src/airflow/providers/google/cloud/operators/bigquery.py b/providers/google/src/airflow/providers/google/cloud/operators/bigquery.py
+index c00dc2cebc..85c32a540d 100644
+--- a/providers/google/src/airflow/providers/google/cloud/operators/bigquery.py
++++ b/providers/google/src/airflow/providers/google/cloud/operators/bigquery.py
+@@ -2340,12 +2340,7 @@ class BigQueryInsertJobOperator(GoogleCloudBaseOperator, _BigQueryInsertJobOpera
+             with open(self.configuration) as file:
+                 self.configuration = json.loads(file.read())
+ 
+-    def _add_job_labels(self, hook: BigQueryHook | None = None) -> None:
+-        if hook and hook.labels and "labels" not in self.configuration:
+-            self.configuration["labels"] = dict(hook.labels)
+-        elif hook and hook.labels and isinstance(self.configuration.get("labels"), dict):
+-            self.configuration["labels"] = {**hook.labels, **self.configuration["labels"]}
+-
++    def _add_job_labels(self) -> None:
+         dag_label = self.dag_id.lower()
+         task_label = self.task_id.lower().replace(".", "-")
+ 
+@@ -2414,8 +2409,6 @@ class BigQueryInsertJobOperator(GoogleCloudBaseOperator, _BigQueryInsertJobOpera
+         if self.project_id is None:
+             self.project_id = hook.project_id
+ 
+-        self._add_job_labels(hook)
+-
+         # Handles Operator retries when a user does not explicitly set a job_id.
+         # For example, if a previous job failed due to a 429 "Too Many Requests" error,
+         # the Operator will retry and resubmit the job. We need to ensure we don't lose
+diff --git a/providers/google/tests/unit/google/cloud/operators/test_bigquery.py b/providers/google/tests/unit/google/cloud/operators/test_bigquery.py
+index 70427e794e..2655132009 100644
+--- a/providers/google/tests/unit/google/cloud/operators/test_bigquery.py
++++ b/providers/google/tests/unit/google/cloud/operators/test_bigquery.py
+@@ -1890,7 +1890,6 @@ class TestBigQueryInsertJobOperator:
+             },
+             "labels": None,
+         }
+-        mock_hook.return_value.labels = {"airflow-env": "test-env-2"}
+         mock_hook.return_value.insert_job.return_value = MagicMock(
+             state="DONE", job_id=real_job_id, error_result=False
+         )
+@@ -1906,57 +1905,6 @@ class TestBigQueryInsertJobOperator:
+         op.execute(context=MagicMock())
+         assert configuration["labels"] is None
+ 
+-    @mock.patch("airflow.providers.google.cloud.operators.bigquery.BigQueryHook")
+-    def test_execute_inherits_labels_from_connection(self, mock_hook):
+-        job_id = "123456"
+-        hash_ = "hash"
+-        real_job_id = f"{job_id}_{hash_}"
+-
+-        configuration = {
+-            "query": {
+-                "query": "SELECT * FROM any",
+-                "useLegacySql": False,
+-            },
+-        }
+-        mock_hook.return_value.labels = {"airflow-env": "test-env-2"}
+-        mock_hook.return_value.insert_job.return_value = MagicMock(
+-            state="DONE", job_id=real_job_id, error_result=False
+-        )
+-        mock_hook.return_value.generate_job_id.return_value = real_job_id
+-
+-        op = BigQueryInsertJobOperator(
+-            task_id="insert_query_job",
+-            configuration=configuration,
+-            location=TEST_DATASET_LOCATION,
+-            job_id=job_id,
+-            project_id=TEST_GCP_PROJECT_ID,
+-        )
+-        op.execute(context=MagicMock())
+-
+-        assert configuration["labels"]["airflow-env"] == "test-env-2"
+-        assert configuration["labels"]["airflow-task"] == "insert_query_job"
+-
+-    def test_add_job_labels_merges_connection_labels(self):
+-        configuration = {
+-            "query": {
+-                "query": "SELECT * FROM any",
+-                "useLegacySql": False,
+-            },
+-            "labels": {"manual-label": "manual-value"},
+-        }
+-        op = BigQueryInsertJobOperator(
+-            task_id="insert_query_job",
+-            configuration=configuration,
+-            location=TEST_DATASET_LOCATION,
+-            project_id=TEST_GCP_PROJECT_ID,
+-        )
+-
+-        op._add_job_labels(hook=MagicMock(labels={"airflow-env": "test-env-2"}))
+-
+-        assert configuration["labels"]["airflow-env"] == "test-env-2"
+-        assert configuration["labels"]["manual-label"] == "manual-value"
+-        assert configuration["labels"]["airflow-task"] == "insert_query_job"
+-
+     def test_task_label_too_big(self):
+         configuration = {
+             "query": {
+diff --git a/uv.lock b/uv.lock
+index 8da120ff98..a97fe24784 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -16,7 +16,7 @@ resolution-markers = [
+ ]
+ 
+ [options]
+-exclude-newer = "2026-04-18T12:14:40.504930901Z"
++exclude-newer = "2026-04-18T06:49:19.884005625Z"
+ exclude-newer-span = "P4D"
+ 
+ [options.exclude-newer-package]
+@@ -2106,7 +2106,6 @@ version = "0.1.0"
+ source = { editable = "devel-common" }
+ dependencies = [
+     { name = "aioresponses" },
+-    { name = "apache-airflow-mypy" },
+     { name = "black" },
+     { name = "coverage" },
+     { name = "filelock" },
+@@ -2160,7 +2159,6 @@ dependencies = [
+ 
+ [package.optional-dependencies]
+ all = [
+-    { name = "apache-airflow-mypy" },
+     { name = "beautifulsoup4" },
+     { name = "blinker" },
+     { name = "click" },
+@@ -2214,7 +2212,6 @@ all = [
+     { name = "types-toml" },
+ ]
+ basic = [
+-    { name = "apache-airflow-mypy" },
+     { name = "coverage" },
+     { name = "ipdb" },
+     { name = "mypy" },
+@@ -2312,7 +2309,6 @@ duckdb = [
+     { name = "duckdb" },
+ ]
+ mypy = [
+-    { name = "apache-airflow-mypy" },
+     { name = "mypy" },
+     { name = "types-aiofiles" },
+     { name = "types-cachetools" },
+@@ -2335,7 +2331,6 @@ mypy = [
+     { name = "types-toml" },
+ ]
+ no-doc = [
+-    { name = "apache-airflow-mypy" },
+     { name = "beautifulsoup4" },
+     { name = "blinker" },
+     { name = "click" },
+@@ -2427,7 +2422,6 @@ requires-dist = [
+     { name = "apache-airflow-devel-common", extras = ["coverage", "debuggers", "mypy", "pytest", "sqlalchemy"], marker = "extra == 'basic'", editable = "devel-common" },
+     { name = "apache-airflow-devel-common", extras = ["coverage", "duckdb", "debuggers", "devscripts", "doc", "docs-gen", "mypy", "pytest", "sentry", "sqlalchemy"], marker = "extra == 'all'", editable = "devel-common" },
+     { name = "apache-airflow-devel-common", extras = ["coverage", "duckdb", "debuggers", "devscripts", "mypy", "pytest", "sentry"], marker = "extra == 'no-doc'", editable = "devel-common" },
+-    { name = "apache-airflow-mypy", marker = "extra == 'mypy'", editable = "dev/mypy" },
+     { name = "astroid", marker = "extra == 'docs'", specifier = ">=4" },
+     { name = "beautifulsoup4", marker = "extra == 'sentry'", specifier = ">=4.7.1" },
+     { name = "black", specifier = ">=26.1.0" },
+@@ -20184,8 +20178,8 @@ name = "secretstorage"
+ version = "3.5.0"
+ source = { registry = "https://pypi.org/simple" }
+ dependencies = [
+-    { name = "cryptography", marker = "(python_full_version >= '3.14' and sys_platform == 'darwin') or (python_full_version < '3.14' and sys_platform == 'emscripten') or (python_full_version < '3.14' and sys_platform == 'win32') or (platform_machine != 'arm64' and sys_platform == 'darwin') or (sys_platform != 'darwin' and sys_platform != 'emscripten' and sys_platform != 'win32')" },
+-    { name = "jeepney", marker = "(python_full_version >= '3.14' and sys_platform == 'darwin') or (python_full_version < '3.14' and sys_platform == 'emscripten') or (python_full_version < '3.14' and sys_platform == 'win32') or (platform_machine != 'arm64' and sys_platform == 'darwin') or (sys_platform != 'darwin' and sys_platform != 'emscripten' and sys_platform != 'win32')" },
++    { name = "cryptography", marker = "python_full_version >= '3.14' or platform_machine != 'arm64' or sys_platform != 'darwin'" },
++    { name = "jeepney", marker = "python_full_version >= '3.14' or platform_machine != 'arm64' or sys_platform != 'darwin'" },
+ ]
+ sdist = { url = "https://files.pythonhosted.org/packages/1c/03/e834bcd866f2f8a49a85eaff47340affa3bfa391ee9912a952a1faa68c7b/secretstorage-3.5.0.tar.gz", hash = "sha256:f04b8e4689cbce351744d5537bf6b1329c6fc68f91fa666f60a380edddcd11be", size = 19884, upload-time = "2025-11-23T19:02:53.191Z" }
+ wheels = [

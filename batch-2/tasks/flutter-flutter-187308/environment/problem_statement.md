@@ -1,0 +1,7 @@
+I'm chasing two error-handling gaps in the Flutter tools and want them fixed together.
+
+First one is in the analyze command. When the static analysis server process crashes unexpectedly (say a fatal internal error) and exits early, the tool doesn't cleanly signal the failure. Right now it gets swallowed or surfaces as some generic exception with no exit code attached, which is bad because scripts and CI checks watch the exit code to know analysis failed. What I want instead is a proper fatal, tool-level error thrown when the server exits prematurely with a specific error code. The message should say the server exited with that code and include whatever output we captured from the server process, and the tool should exit with that same exit code so CI can actually detect it.
+
+Second one is running a Flutter web app in debug mode. If the connection to the web debug service times out before it's established, the runner currently blows up with an unhandled exception, no user-friendly message at all. I want us to catch that timeout, log a detailed error explaining that the connection to the web debug service failed (include the timeout exception details in that log), and then exit cleanly with a plain user-facing message that it failed to connect to the web debug service.
+
+Both of these are real failure modes people hit, and without clean errors it's a pain to figure out why the tool died or what to fix. Devs need actionable feedback and CI needs reliable failure detection, so no more unhandled exceptions or silent failures on either path.

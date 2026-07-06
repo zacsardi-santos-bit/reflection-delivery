@@ -1,0 +1,53 @@
+patching file src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py
+============================= test session starts ==============================
+platform linux -- Python 3.10.20, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.10
+cachedir: .pytest_cache
+rootdir: /workspace/repo/src/azure-cli
+collecting ... collected 1 item
+
+src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py::AKSUpdateDecoratorTestCase::test_update_identity FAILED [100%]
+
+=================================== FAILURES ===================================
+_______________ AKSUpdateDecoratorTestCase.test_update_identity ________________
+
+self = <azure.cli.command_modules.acs.tests.latest.test_decorator.AKSUpdateDecoratorTestCase testMethod=test_update_identity>
+
+    def test_update_identity(self):
+        # default value in `aks_update`
+        dec_1 = AKSUpdateDecorator(
+            self.cmd,
+            self.client,
+            {
+                "enable_managed_identity": False,
+                "assign_identity": None,
+            },
+            ResourceType.MGMT_CONTAINERSERVICE,
+        )
+        # fail on passing the wrong mc object
+        with self.assertRaises(CLIInternalError):
+>           dec_1.update_identity(None)
+E           AttributeError: 'AKSUpdateDecorator' object has no attribute 'update_identity'
+
+src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py:7146: AttributeError
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.10/site-packages/requests/__init__.py:43
+  /usr/local/lib/python3.10/site-packages/requests/__init__.py:43: DeprecationWarning: 'urllib3[secure]' extra is deprecated and will be removed in a future release of urllib3 2.x. Read more in this issue: https://github.com/urllib3/urllib3/issues/2680
+    import urllib3
+
+../../usr/local/lib/python3.10/site-packages/invoke/loader.py:3
+  /usr/local/lib/python3.10/site-packages/invoke/loader.py:3: DeprecationWarning: the imp module is deprecated in favour of importlib and slated for removal in Python 3.12; see the module's documentation for alternative uses
+    import imp
+
+../../usr/local/lib/python3.10/site-packages/paramiko/pkey.py:82
+  /usr/local/lib/python3.10/site-packages/paramiko/pkey.py:82: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+    "cipher": algorithms.TripleDES,
+
+../../usr/local/lib/python3.10/site-packages/paramiko/transport.py:253
+  /usr/local/lib/python3.10/site-packages/paramiko/transport.py:253: CryptographyDeprecationWarning: TripleDES has been moved to cryptography.hazmat.decrepit.ciphers.algorithms.TripleDES and will be removed from cryptography.hazmat.primitives.ciphers.algorithms in 48.0.0.
+    "class": algorithms.TripleDES,
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py::AKSUpdateDecoratorTestCase::test_update_identity
+======================== 1 failed, 4 warnings in 1.16s =========================
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=pytest exit_code=1

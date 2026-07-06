@@ -1,0 +1,23 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npm run build 2>&1 | tail -5 && cd /workspace/repo/packages/cli && npx vitest run src/acp/fileSystemService.test.ts --coverage=false --reporter=verbose",
+  "test_files": [
+    "packages/cli/src/acp/fileSystemService.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService readTextFile should use 'fallback if capability exists but fil\u2026'",
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService readTextFile should use 'fallback if file is inside global gem\u2026'",
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService readTextFile should throw normalized ENOENT error when readTextFile encounters \"Resource not found\"",
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService writeTextFile should use 'fallback if capability exists but fil\u2026'",
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService writeTextFile should use 'fallback if file is inside global gem\u2026'",
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService writeTextFile should throw normalized ENOENT error when writeTextFile encounters \"Resource not found\""
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService readTextFile should use 'connection if capability exists and f\u2026'",
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService readTextFile should use 'fallback if capability missing'",
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService writeTextFile should use 'connection if capability exists and f\u2026'",
+    "/workspace/repo/packages/cli/src/acp/fileSystemService.test.ts::AcpFileSystemService writeTextFile should use 'fallback if capability missing'"
+  ]
+}

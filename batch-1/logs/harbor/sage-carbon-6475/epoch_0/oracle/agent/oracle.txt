@@ -1,0 +1,20 @@
+patching file .storybook/locale-selector/index.js
+patching file playwright/components/card/index.ts
+patching file playwright/components/card/locators.ts
+patching file src/components/card/__internal__/card-context/index.ts
+patching file src/components/card/card-column/card-column.component.tsx
+patching file src/components/card/card-footer/__snapshots__/card-footer.spec.tsx.snap
+patching file src/components/card/card-footer/card-footer.component.tsx
+patching file src/components/card/card-footer/card-footer.style.ts
+patching file src/components/card/card-row/card-row.component.tsx
+patching file src/components/card/card-row/card-row.style.ts
+patching file src/components/card/card-test.stories.tsx
+patching file src/components/card/card.component.tsx
+patching file src/components/card/card.pw.tsx
+patching file src/components/card/card.stories.mdx
+patching file src/components/card/card.stories.tsx
+patching file src/components/card/card.style.ts
+patching file src/components/card/components.test-pw.tsx
+patching file src/components/detail/detail.stories.tsx
+patching file src/locales/__internal__/pl-pl.ts (renamed from src/locales/pl-pl.ts)
+patching file src/locales/index.ts

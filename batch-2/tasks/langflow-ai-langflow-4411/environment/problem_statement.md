@@ -1,0 +1,5 @@
+I keep hitting these ugly error messages from our data-handling components whenever someone messes up their config, and honestly they're painful to read. Two things in particular are bugging me. First, when a user configures too many fields, we cap it at a max of 15, but the error message we throw has a bunch of extra text tacked on beyond the core limit statement that's either misleading or just noise. I want that one trimmed down so it plainly says the number of fields can't exceed 15 and nothing confusing past that.
+
+Second, and this one's worse, when someone gives a text key that doesn't actually exist in their data object, the error prints the bad key name with no quotes around it and then lists the available keys jammed together with commas and no spaces, so you get something like key1,key2 which is a nightmare to scan when the keys look alike. I want the bad key wrapped in single quotes and the available keys list separated by a comma and a space, so it reads like key1, key2 instead.
+
+That's it really, just clean up both of those messages so devs can actually tell what went wrong at a glance without squinting at a dense string.

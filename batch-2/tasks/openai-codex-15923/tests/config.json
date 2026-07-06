@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run -p codex-tools",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/4) codex-tools json_schema::tests::parse_tool_input_schema_coerces_boolean_schemas",
+    "(2/4) codex-tools json_schema::tests::parse_tool_input_schema_infers_object_shape_and_defaults_properties",
+    "(3/4) codex-tools json_schema::tests::parse_tool_input_schema_normalizes_integer_and_missing_array_items",
+    "(4/4) codex-tools json_schema::tests::parse_tool_input_schema_sanitizes_additional_properties_schema"
+  ],
+  "PASS_TO_PASS": []
+}

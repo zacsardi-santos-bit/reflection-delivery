@@ -1,0 +1,29 @@
+{
+    "id": "fa6f0dd8-83c3-426f-b2e2-7f9c2994ffaf",
+    "started_at": "2026-07-04T15:37:07.045305",
+    "finished_at": "2026-07-04T15:44:50.867774",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__tikv-tikv-16967": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "tikv-tikv-16967__NkYGXXW"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

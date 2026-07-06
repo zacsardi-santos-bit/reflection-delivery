@@ -1,0 +1,29 @@
+{
+    "id": "12a99db5-69d3-4754-877c-4bb7884b337d",
+    "started_at": "2026-07-04T15:42:31.636659",
+    "finished_at": "2026-07-04T15:44:04.815781",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-james-project-2302": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-james-project-2302__xpaMn8X"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

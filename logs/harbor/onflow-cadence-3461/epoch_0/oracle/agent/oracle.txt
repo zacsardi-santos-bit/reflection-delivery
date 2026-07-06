@@ -1,2 +1,0 @@
-patching file migrations/capcons/capabilitymigration.go
-patching file migrations/capcons/linkmigration.go

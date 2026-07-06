@@ -1,0 +1,29 @@
+patching file pkg/plugins/golang/v4/scaffolds/version_test.go
+{"Time":"2026-06-29T15:17:50.885433023Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds"}
+{"Time":"2026-06-29T15:17:50.885676697Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates"}
+{"Time":"2026-06-29T15:17:50.885775619Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates","Output":"?   \tsigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates\t[no test files]\n"}
+{"Time":"2026-06-29T15:17:50.88580562Z","Action":"skip","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates","Elapsed":0}
+{"Time":"2026-06-29T15:17:50.88583835Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/api"}
+{"Time":"2026-06-29T15:17:50.885897781Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/api","Output":"?   \tsigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/api\t[no test files]\n"}
+{"Time":"2026-06-29T15:17:50.885949552Z","Action":"skip","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/api","Elapsed":0}
+{"Time":"2026-06-29T15:17:50.885920251Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/controllers"}
+{"Time":"2026-06-29T15:17:50.886006223Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/controllers","Output":"?   \tsigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/controllers\t[no test files]\n"}
+{"Time":"2026-06-29T15:17:50.886065824Z","Action":"skip","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/controllers","Elapsed":0}
+{"Time":"2026-06-29T15:17:50.886038033Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/hack"}
+{"Time":"2026-06-29T15:17:50.886123985Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/hack","Output":"?   \tsigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/hack\t[no test files]\n"}
+{"Time":"2026-06-29T15:17:50.886214396Z","Action":"skip","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/hack","Elapsed":0}
+{"Time":"2026-06-29T15:17:50.886136425Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/test/e2e"}
+{"Time":"2026-06-29T15:17:50.886287217Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/test/e2e","Output":"?   \tsigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/test/e2e\t[no test files]\n"}
+{"Time":"2026-06-29T15:17:50.886323618Z","Action":"skip","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/test/e2e","Elapsed":0}
+{"Time":"2026-06-29T15:17:50.886304817Z","Action":"start","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/test/utils"}
+{"Time":"2026-06-29T15:17:50.886380849Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/test/utils","Output":"?   \tsigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/test/utils\t[no test files]\n"}
+{"Time":"2026-06-29T15:17:50.88642239Z","Action":"skip","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds/internal/templates/test/utils","Elapsed":0}
+{"Time":"2026-06-29T15:17:50.908066442Z","Action":"run","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds","Test":"TestControllerRuntimeVersion"}
+{"Time":"2026-06-29T15:17:50.908109762Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds","Test":"TestControllerRuntimeVersion","Output":"=== RUN   TestControllerRuntimeVersion\n"}
+{"Time":"2026-06-29T15:17:50.908207894Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds","Test":"TestControllerRuntimeVersion","Output":"    version_test.go:8: ControllerRuntimeVersion = v0.17.3; want v0.18.2\n"}
+{"Time":"2026-06-29T15:17:50.908240425Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds","Test":"TestControllerRuntimeVersion","Output":"--- FAIL: TestControllerRuntimeVersion (0.00s)\n"}
+{"Time":"2026-06-29T15:17:50.908254795Z","Action":"fail","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds","Test":"TestControllerRuntimeVersion","Elapsed":0}
+{"Time":"2026-06-29T15:17:50.908278165Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:17:50.90918859Z","Action":"output","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds","Output":"FAIL\tsigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds\t0.023s\n"}
+{"Time":"2026-06-29T15:17:50.909300642Z","Action":"fail","Package":"sigs.k8s.io/kubebuilder/v3/pkg/plugins/golang/v4/scaffolds","Elapsed":0.024}
+reward=0 graded=1 found=1 failed=1 parsed=2 framework=go exit_code=1

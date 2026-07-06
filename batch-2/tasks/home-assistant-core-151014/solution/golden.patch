@@ -1,0 +1,330 @@
+diff --git a/homeassistant/components/schlage/__init__.py b/homeassistant/components/schlage/__init__.py
+index 509a335aafe..ed995d4aa3d 100644
+--- a/homeassistant/components/schlage/__init__.py
++++ b/homeassistant/components/schlage/__init__.py
+@@ -4,11 +4,16 @@ from __future__ import annotations
+ 
+ from pycognito.exceptions import WarrantException
+ import pyschlage
++import voluptuous as vol
+ 
++from homeassistant.components.lock import DOMAIN as LOCK_DOMAIN
+ from homeassistant.const import CONF_PASSWORD, CONF_USERNAME, Platform
+-from homeassistant.core import HomeAssistant
++from homeassistant.core import HomeAssistant, SupportsResponse
+ from homeassistant.exceptions import ConfigEntryAuthFailed
++from homeassistant.helpers import config_validation as cv, service
++from homeassistant.helpers.typing import ConfigType
+ 
++from .const import DOMAIN, SERVICE_ADD_CODE, SERVICE_DELETE_CODE, SERVICE_GET_CODES
+ from .coordinator import SchlageConfigEntry, SchlageDataUpdateCoordinator
+ 
+ PLATFORMS: list[Platform] = [
+@@ -19,6 +24,46 @@ PLATFORMS: list[Platform] = [
+     Platform.SWITCH,
+ ]
+ 
++CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
++
++
++async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
++    """Set up the Schlage component."""
++    service.async_register_platform_entity_service(
++        hass,
++        DOMAIN,
++        SERVICE_ADD_CODE,
++        entity_domain=LOCK_DOMAIN,
++        schema={
++            vol.Required("name"): cv.string,
++            vol.Required("code"): cv.matches_regex(r"^\d{4,8}$"),
++        },
++        func=SERVICE_ADD_CODE,
++    )
++
++    service.async_register_platform_entity_service(
++        hass,
++        DOMAIN,
++        SERVICE_DELETE_CODE,
++        entity_domain=LOCK_DOMAIN,
++        schema={
++            vol.Required("name"): cv.string,
++        },
++        func=SERVICE_DELETE_CODE,
++    )
++
++    service.async_register_platform_entity_service(
++        hass,
++        DOMAIN,
++        SERVICE_GET_CODES,
++        entity_domain=LOCK_DOMAIN,
++        schema=None,
++        func=SERVICE_GET_CODES,
++        supports_response=SupportsResponse.ONLY,
++    )
++
++    return True
++
+ 
+ async def async_setup_entry(hass: HomeAssistant, entry: SchlageConfigEntry) -> bool:
+     """Set up Schlage from a config entry."""
+diff --git a/homeassistant/components/schlage/const.py b/homeassistant/components/schlage/const.py
+index 1effd4bb334..75033520d3f 100644
+--- a/homeassistant/components/schlage/const.py
++++ b/homeassistant/components/schlage/const.py
+@@ -7,3 +7,7 @@ DOMAIN = "schlage"
+ LOGGER = logging.getLogger(__package__)
+ MANUFACTURER = "Schlage"
+ UPDATE_INTERVAL = timedelta(seconds=30)
++
++SERVICE_ADD_CODE = "add_code"
++SERVICE_DELETE_CODE = "delete_code"
++SERVICE_GET_CODES = "get_codes"
+diff --git a/homeassistant/components/schlage/icons.json b/homeassistant/components/schlage/icons.json
+new file mode 100644
+index 00000000000..c231233be51
+--- /dev/null
++++ b/homeassistant/components/schlage/icons.json
+@@ -0,0 +1,13 @@
++{
++  "services": {
++    "add_code": {
++      "service": "mdi:key-plus"
++    },
++    "delete_code": {
++      "service": "mdi:key-minus"
++    },
++    "get_codes": {
++      "service": "mdi:table-key"
++    }
++  }
++}
+diff --git a/homeassistant/components/schlage/lock.py b/homeassistant/components/schlage/lock.py
+index 83abf9214e3..739e5a0b1d7 100644
+--- a/homeassistant/components/schlage/lock.py
++++ b/homeassistant/components/schlage/lock.py
+@@ -4,10 +4,15 @@ from __future__ import annotations
+ 
+ from typing import Any
+ 
++from pyschlage.code import AccessCode
++from pyschlage.exceptions import Error as SchlageError
++
+ from homeassistant.components.lock import LockEntity
+-from homeassistant.core import HomeAssistant, callback
++from homeassistant.core import HomeAssistant, ServiceResponse, callback
++from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
+ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+ 
++from .const import DOMAIN
+ from .coordinator import LockData, SchlageConfigEntry, SchlageDataUpdateCoordinator
+ from .entity import SchlageEntity
+ 
+@@ -64,3 +69,108 @@ class SchlageLockEntity(SchlageEntity, LockEntity):
+         """Unlock the device."""
+         await self.hass.async_add_executor_job(self._lock.unlock)
+         await self.coordinator.async_request_refresh()
++
++    @staticmethod
++    def _normalize_code_name(name: str) -> str:
++        """Normalize a code name for comparison."""
++        return name.lower().strip()
++
++    def _validate_code_name(
++        self, codes: dict[str, AccessCode] | None, name: str
++    ) -> None:
++        """Validate that the code name doesn't already exist."""
++        normalized = self._normalize_code_name(name)
++        if codes and any(
++            self._normalize_code_name(code.name) == normalized
++            for code in codes.values()
++        ):
++            raise ServiceValidationError(
++                translation_domain=DOMAIN,
++                translation_key="schlage_name_exists",
++                translation_placeholders={"name": name},
++            )
++
++    def _validate_code_value(
++        self, codes: dict[str, AccessCode] | None, code: str
++    ) -> None:
++        """Validate that the code value doesn't already exist."""
++        if codes and any(
++            existing_code.code == code for existing_code in codes.values()
++        ):
++            raise ServiceValidationError(
++                translation_domain=DOMAIN,
++                translation_key="schlage_code_exists",
++            )
++
++    async def _async_fetch_access_codes(self) -> dict[str, AccessCode] | None:
++        """Fetch access codes from the lock on demand."""
++        try:
++            await self.hass.async_add_executor_job(self._lock.refresh_access_codes)
++        except SchlageError as ex:
++            raise HomeAssistantError(
++                translation_domain=DOMAIN,
++                translation_key="schlage_refresh_failed",
++            ) from ex
++        return self._lock.access_codes
++
++    async def add_code(self, name: str, code: str) -> None:
++        """Add a lock code."""
++
++        codes = await self._async_fetch_access_codes()
++        self._validate_code_name(codes, name)
++        self._validate_code_value(codes, code)
++
++        access_code = AccessCode(name=name, code=code)
++        try:
++            await self.hass.async_add_executor_job(
++                self._lock.add_access_code, access_code
++            )
++        except SchlageError as ex:
++            raise HomeAssistantError(
++                translation_domain=DOMAIN,
++                translation_key="schlage_add_code_failed",
++            ) from ex
++        await self.coordinator.async_request_refresh()
++
++    async def delete_code(self, name: str) -> None:
++        """Delete a lock code."""
++        codes = await self._async_fetch_access_codes()
++        if not codes:
++            return
++
++        normalized = self._normalize_code_name(name)
++        code_id_to_delete = next(
++            (
++                code_id
++                for code_id, code_data in codes.items()
++                if self._normalize_code_name(code_data.name) == normalized
++            ),
++            None,
++        )
++
++        if not code_id_to_delete:
++            # Code not found in defined codes, operation successful
++            return
++
++        try:
++            await self.hass.async_add_executor_job(codes[code_id_to_delete].delete)
++        except SchlageError as ex:
++            raise HomeAssistantError(
++                translation_domain=DOMAIN,
++                translation_key="schlage_delete_code_failed",
++            ) from ex
++        await self.coordinator.async_request_refresh()
++
++    async def get_codes(self) -> ServiceResponse:
++        """Get lock codes."""
++        await self._async_fetch_access_codes()
++
++        if self._lock.access_codes:
++            return {
++                code: {
++                    "name": self._lock.access_codes[code].name,
++                    "code": self._lock.access_codes[code].code,
++                }
++                for code in self._lock.access_codes
++            }
++        return {}
+diff --git a/homeassistant/components/schlage/services.yaml b/homeassistant/components/schlage/services.yaml
+new file mode 100644
+index 00000000000..97412251ea4
+--- /dev/null
++++ b/homeassistant/components/schlage/services.yaml
+@@ -0,0 +1,38 @@
++get_codes:
++  target:
++    entity:
++      domain: lock
++      integration: schlage
++
++add_code:
++  target:
++    entity:
++      domain: lock
++      integration: schlage
++  fields:
++    name:
++      required: true
++      example: "Example Person"
++      selector:
++        text:
++          multiline: false
++    code:
++      required: true
++      example: "1111"
++      selector:
++        text:
++          multiline: false
++          type: password
++
++delete_code:
++  target:
++    entity:
++      domain: lock
++      integration: schlage
++  fields:
++    name:
++      required: true
++      example: "Example Person"
++      selector:
++        text:
++          multiline: false
+diff --git a/homeassistant/components/schlage/strings.json b/homeassistant/components/schlage/strings.json
+index 838dc049808..3710fd7e3f7 100644
+--- a/homeassistant/components/schlage/strings.json
++++ b/homeassistant/components/schlage/strings.json
+@@ -56,8 +56,50 @@
+     }
+   },
+   "exceptions": {
++    "schlage_add_code_failed": {
++      "message": "Failed to add PIN code to the lock."
++    },
++    "schlage_code_exists": {
++      "message": "A PIN code with this value already exists on the lock."
++    },
++    "schlage_delete_code_failed": {
++      "message": "Failed to delete PIN code from the lock."
++    },
++    "schlage_name_exists": {
++      "message": "A PIN code with the name \"{name}\" already exists on the lock."
++    },
+     "schlage_refresh_failed": {
+-      "message": "Failed to refresh Schlage data"
++      "message": "Failed to refresh Schlage data."
++    }
++  },
++  "services": {
++    "add_code": {
++      "description": "Add a PIN code to a lock.",
++      "fields": {
++        "code": {
++          "description": "The PIN code to add. Must be unique to lock and be between 4 and 8 digits long.",
++          "name": "PIN code"
++        },
++        "name": {
++          "description": "Name for PIN code. Must be case insensitively unique to lock.",
++          "name": "PIN name"
++        }
++      },
++      "name": "Add PIN code"
++    },
++    "delete_code": {
++      "description": "Delete a PIN code from a lock.",
++      "fields": {
++        "name": {
++          "description": "Name of PIN code to delete.",
++          "name": "PIN name"
++        }
++      },
++      "name": "Delete PIN code"
++    },
++    "get_codes": {
++      "description": "Retrieve all PIN codes from the lock.",
++      "name": "Get PIN codes"
+     }
+   }
+ }

@@ -1,0 +1,600 @@
+diff --git a/packages/cli/src/CLI.ts b/packages/cli/src/CLI.ts
+index c87982fa8..092825996 100644
+--- a/packages/cli/src/CLI.ts
++++ b/packages/cli/src/CLI.ts
+@@ -140,6 +140,7 @@ Learn more at ${link('https://pris.ly/cli/pdp')}`
+              version   Displays Prisma version info
+                debug   Displays Prisma debug info
+             platform   Prisma Data Platform commands
++            postgres   Manage Prisma Postgres databases
+                  mcp   Starts an MCP server to use with AI development tools
+ 
+     ${bold('Flags')}
+diff --git a/packages/cli/src/bin.ts b/packages/cli/src/bin.ts
+index 3f2b472c3..961bc3619 100755
+--- a/packages/cli/src/bin.ts
++++ b/packages/cli/src/bin.ts
+@@ -35,6 +35,8 @@ import { Generate } from './Generate'
+ import { Init } from './Init'
+ import { Mcp } from './mcp/MCP'
+ import { Platform } from './platform/_Platform'
++import { Link as PostgresLink } from './postgres/link/Link'
++import { PostgresCommand } from './postgres/PostgresCommand'
+ import { Status } from './Status'
+ import { Studio } from './Studio'
+ /*
+@@ -111,6 +113,9 @@ async function main(): Promise<number> {
+         // drop: DbDrop.new(),
+         seed: DbSeed.new(),
+       }),
++      postgres: PostgresCommand.new({
++        link: PostgresLink.new(),
++      }),
+       generate: Generate.new(),
+       version: Version.new(),
+       validate: Validate.new(),
+diff --git a/packages/cli/src/postgres/PostgresCommand.ts b/packages/cli/src/postgres/PostgresCommand.ts
+new file mode 100644
+index 000000000..25f1b46da
+--- /dev/null
++++ b/packages/cli/src/postgres/PostgresCommand.ts
+@@ -0,0 +1,63 @@
++import type { PrismaConfigInternal } from '@prisma/config'
++import type { Command, Commands } from '@prisma/internals'
++import { arg, format, HelpError, isError, unknownCommand } from '@prisma/internals'
++import { bold, dim, red } from 'kleur/colors'
++
++export class PostgresCommand implements Command {
++  public static new(cmds: Commands): PostgresCommand {
++    return new PostgresCommand(cmds)
++  }
++
++  private static help = format(`
++${process.platform === 'win32' ? '' : '🐘  '}Manage Prisma Postgres databases
++
++${bold('Usage')}
++
++  ${dim('$')} prisma postgres [command] [options]
++
++${bold('Options')}
++
++  -h, --help   Display this help message
++
++${bold('Commands')}
++
++  link   Link a local project to a Prisma Postgres database
++
++${bold('Examples')}
++
++  Link your project to a Prisma Postgres database
++  ${dim('$')} prisma postgres link --api-key "<your-api-key>" --database "db_..."
++`)
++
++  private constructor(private readonly cmds: Commands) {}
++
++  public async parse(argv: string[], config: PrismaConfigInternal, baseDir: string): Promise<string | Error> {
++    const args = arg(argv, {
++      '--help': Boolean,
++      '-h': '--help',
++      '--telemetry-information': String,
++    })
++
++    if (isError(args)) {
++      return this.help(args.message)
++    }
++
++    if (args._.length === 0 || args['--help']) {
++      return this.help()
++    }
++
++    const cmd = this.cmds[args._[0]]
++    if (cmd) {
++      return cmd.parse(args._.slice(1), config, baseDir)
++    }
++
++    return unknownCommand(PostgresCommand.help, args._[0])
++  }
++
++  public help(error?: string): string | HelpError {
++    if (error) {
++      return new HelpError(`\n${bold(red(`!`))} ${error}\n${PostgresCommand.help}`)
++    }
++    return PostgresCommand.help
++  }
++}
+diff --git a/packages/cli/src/postgres/link/Link.ts b/packages/cli/src/postgres/link/Link.ts
+new file mode 100644
+index 000000000..f857907f7
+--- /dev/null
++++ b/packages/cli/src/postgres/link/Link.ts
+@@ -0,0 +1,210 @@
++import fs from 'node:fs'
++import path from 'node:path'
++
++import { select } from '@inquirer/prompts'
++import type { PrismaConfigInternal } from '@prisma/config'
++import type { Command } from '@prisma/internals'
++import { arg, format, HelpError, isError } from '@prisma/internals'
++import type { ManagementApiClient } from '@prisma/management-api-sdk'
++import { AuthError, createManagementApiClient } from '@prisma/management-api-sdk'
++import { bold, dim, green, red } from 'kleur/colors'
++
++import { login } from '../../management-api/auth'
++import { createAuthenticatedManagementAPI } from '../../management-api/auth-client'
++import { FileTokenStorage } from '../../management-api/token-storage'
++import { formatCompletionOutput } from './completion-output'
++import { isAlreadyLinked, writeLocalFiles } from './local-setup'
++import { createDevConnection, LinkApiError, listDatabases, listProjects, sanitizeErrorMessage } from './management-api'
++
++const DEFAULT_MANAGEMENT_API_URL = 'https://api.prisma.io'
++
++function getManagementApiUrl(): string {
++  return process.env.PRISMA_MANAGEMENT_API_URL ?? DEFAULT_MANAGEMENT_API_URL
++}
++
++async function resolveApiClient(apiKey: string | undefined): Promise<ManagementApiClient> {
++  if (apiKey) {
++    return createManagementApiClient({ baseUrl: getManagementApiUrl(), token: apiKey })
++  }
++
++  const tokenStorage = new FileTokenStorage()
++  const tokens = await tokenStorage.getTokens()
++
++  if (!tokens) {
++    console.log(`Opening browser to authenticate on ${dim('console.prisma.io')}...`)
++    await login({ utmMedium: 'command-postgres-link' })
++  }
++
++  return createAuthenticatedManagementAPI().client
++}
++
++function isExpiredSessionError(err: unknown): boolean {
++  return err instanceof AuthError && err.refreshTokenInvalid
++}
++
++async function resolveDatabase(client: ManagementApiClient): Promise<string> {
++  const projects = await listProjects(client)
++
++  if (projects.length === 0) {
++    throw new LinkApiError('No projects found in your workspace. Create one at console.prisma.io first.')
++  }
++
++  const projectId = await select({
++    message: 'Select a project:',
++    choices: projects.map((p) => ({
++      name: `${p.name}  ${dim(p.workspace.name)}`,
++      value: p.id,
++    })),
++    loop: true,
++  })
++
++  const databases = (await listDatabases(client, projectId)).filter((db) => db.status === 'ready')
++
++  if (databases.length === 0) {
++    throw new LinkApiError('No ready databases found in this project. Create one at console.prisma.io first.')
++  }
++
++  if (databases.length === 1) {
++    const db = databases[0]
++    console.log(`${green('✔')} Using database ${bold(db.name)}${db.region ? ` (${db.region.name})` : ''}`)
++    return db.id
++  }
++
++  return select({
++    message: 'Select a database:',
++    choices: databases.map((db) => ({
++      name: `${db.name}  ${dim(db.region?.name ?? 'unknown region')}`,
++      value: db.id,
++    })),
++    loop: true,
++  })
++}
++
++export class Link implements Command {
++  public static new(): Link {
++    return new Link()
++  }
++
++  private static help = format(`
++Link a local project to a Prisma Postgres database.
++
++${bold('Usage')}
++
++  ${dim('$')} prisma postgres link [options]
++
++${bold('Options')}
++
++  --api-key      Workspace API key (CI / non-interactive)
++  --database     Database ID to link to (e.g. db_abc123)
++  --force        Re-link even if already linked to Prisma Postgres
++  -h, --help     Display this help message
++
++${bold('Examples')}
++
++  Interactive (opens browser, lets you pick project & database)
++  ${dim('$')} prisma postgres link
++
++  Non-interactive with explicit credentials
++  ${dim('$')} prisma postgres link --api-key "<your-api-key>" --database "db_..."
++`)
++
++  public async parse(argv: string[], _config: PrismaConfigInternal, baseDir: string): Promise<string | Error> {
++    const args = arg(argv, {
++      '--api-key': String,
++      '--database': String,
++      '--force': Boolean,
++      '--help': Boolean,
++      '-h': '--help',
++      '--telemetry-information': String,
++    })
++
++    if (isError(args)) {
++      return this.help(args.message)
++    }
++
++    if (args['--help']) {
++      return this.help()
++    }
++
++    if (!args['--force'] && isAlreadyLinked(baseDir)) {
++      return `\nThis project is already linked to Prisma Postgres.\nRun with ${bold('--force')} to re-link.\n`
++    }
++
++    const explicitApiKey = args['--api-key']
++    const databaseId = args['--database']
++    const apiKey = explicitApiKey ?? (databaseId ? process.env.PRISMA_API_KEY : undefined)
++
++    if (explicitApiKey && !databaseId) {
++      return new HelpError(
++        `\n${bold(red('!'))} Missing ${bold('--database')} flag.\n\nWhen using ${bold('--api-key')}, you must also provide ${bold('--database')}.\n${Link.help}`,
++      )
++    }
++
++    if (databaseId && !databaseId.startsWith('db_')) {
++      return new HelpError(
++        `\n${bold(red('!'))} Invalid database ID "${databaseId}" — expected format: ${bold('db_<id>')}\n${Link.help}`,
++      )
++    }
++
++    try {
++      return await this.linkDatabase(apiKey, databaseId, baseDir)
++    } catch (err) {
++      if (!apiKey && isExpiredSessionError(err)) {
++        console.log(`Session expired. Re-authenticating via browser...`)
++        await login({ utmMedium: 'command-postgres-link' })
++        try {
++          return await this.linkDatabase(apiKey, databaseId, baseDir)
++        } catch (retryErr) {
++          return Link.formatError(retryErr)
++        }
++      }
++      return Link.formatError(err)
++    }
++  }
++
++  private async linkDatabase(
++    apiKey: string | undefined,
++    databaseId: string | undefined,
++    baseDir: string,
++  ): Promise<string> {
++    const client = await resolveApiClient(apiKey)
++
++    if (!databaseId) {
++      databaseId = await resolveDatabase(client)
++    }
++
++    const connection = await createDevConnection(client, databaseId)
++    const localFilesResult = writeLocalFiles(baseDir, connection)
++    const hasModels = schemaHasModels(baseDir)
++
++    return formatCompletionOutput({ databaseId, localFilesResult, hasModels })
++  }
++
++  private static formatError(err: unknown): HelpError {
++    if (err instanceof LinkApiError) {
++      return new HelpError(`\n${bold(red('!'))} ${sanitizeErrorMessage(err.message)}`)
++    }
++    const message = err instanceof Error ? err.message : String(err)
++    return new HelpError(`\n${bold(red('!'))} ${sanitizeErrorMessage(message)}`)
++  }
++
++  public help(error?: string): string | HelpError {
++    if (error) {
++      return new HelpError(`\n${bold(red(`!`))} ${error}\n${Link.help}`)
++    }
++    return Link.help
++  }
++}
++
++function schemaHasModels(baseDir: string): boolean {
++  const candidates = [path.join(baseDir, 'prisma', 'schema.prisma'), path.join(baseDir, 'schema.prisma')]
++
++  for (const schemaPath of candidates) {
++    if (fs.existsSync(schemaPath)) {
++      const content = fs.readFileSync(schemaPath, 'utf-8')
++      return /^\s*model\s+\w+/m.test(content)
++    }
++  }
++
++  return false
++}
+diff --git a/packages/cli/src/postgres/link/completion-output.ts b/packages/cli/src/postgres/link/completion-output.ts
+new file mode 100644
+index 000000000..d040d7bc0
+--- /dev/null
++++ b/packages/cli/src/postgres/link/completion-output.ts
+@@ -0,0 +1,35 @@
++import { getCommandWithExecutor } from '@prisma/internals'
++import { bold, dim, green } from 'kleur/colors'
++
++import { formatEnvSummary, type WriteLocalFilesResult } from './local-setup'
++
++export function formatCompletionOutput(opts: {
++  databaseId: string
++  localFilesResult: WriteLocalFilesResult
++  hasModels: boolean
++}): string {
++  const lines: string[] = []
++
++  lines.push('')
++  lines.push(green('✔') + bold(' Prisma Postgres linked successfully!'))
++  lines.push('')
++  lines.push(formatEnvSummary(opts.localFilesResult))
++  lines.push('')
++  lines.push(bold('Next steps:'))
++
++  if (opts.hasModels) {
++    lines.push(`  1. Run ${green(getCommandWithExecutor('prisma generate'))} to generate the Prisma Client`)
++    lines.push(`  2. Run ${green(getCommandWithExecutor('prisma migrate dev'))} to apply your schema to the database`)
++    lines.push(
++      `  3. Start querying: ${dim('https://www.prisma.io/docs/getting-started/quickstart#4-explore-how-to-send-queries-to-your-database-with-prisma-client')}`,
++    )
++  } else {
++    lines.push(`  1. Define your data model in ${green('prisma/schema.prisma')}`)
++    lines.push(`  2. Run ${green(getCommandWithExecutor('prisma migrate dev'))} to create the database tables`)
++    lines.push(`  3. Run ${green(getCommandWithExecutor('prisma generate'))} and start querying`)
++  }
++
++  lines.push('')
++
++  return lines.join('\n')
++}
+diff --git a/packages/cli/src/postgres/link/local-setup.ts b/packages/cli/src/postgres/link/local-setup.ts
+new file mode 100644
+index 000000000..cf6ba9f94
+--- /dev/null
++++ b/packages/cli/src/postgres/link/local-setup.ts
+@@ -0,0 +1,131 @@
++import fs from 'node:fs'
++import path from 'node:path'
++
++import dotenv from 'dotenv'
++import { bold, yellow } from 'kleur/colors'
++
++import type { ConnectionResult } from './management-api'
++
++/** Tracks which keys were created, updated, or added when writing an `.env` file. */
++export interface EnvWriteResult {
++  created: boolean
++  updated: string[]
++  added: string[]
++}
++
++/** Creates or patches an `.env` file, inserting new keys and rewriting existing ones in place. */
++export function upsertEnvFile(envPath: string, entries: Record<string, string>): EnvWriteResult {
++  const result: EnvWriteResult = { created: false, updated: [], added: [] }
++
++  if (!fs.existsSync(envPath)) {
++    const lines = Object.entries(entries).map(([key, value]) => `${key}='${value}'`)
++    fs.writeFileSync(envPath, lines.join('\n') + '\n', 'utf-8')
++    result.created = true
++    result.added = Object.keys(entries)
++    return result
++  }
++
++  let content = fs.readFileSync(envPath, 'utf-8')
++  const existingVars = dotenv.parse(content)
++
++  for (const [key, value] of Object.entries(entries)) {
++    const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
++    const regex = new RegExp(`^(\\s*${escapedKey}\\s*=).*$`, 'gm')
++    if (regex.test(content)) {
++      regex.lastIndex = 0
++      content = content.replace(regex, (_match, prefix) => `${prefix}'${value}'`)
++      result.updated.push(key)
++    } else if (key in existingVars) {
++      result.updated.push(key)
++    } else {
++      content = content.trimEnd() + `\n${key}='${value}'\n`
++      result.added.push(key)
++    }
++  }
++
++  fs.writeFileSync(envPath, content, 'utf-8')
++  return result
++}
++
++/** Whether `.gitignore` covers `.env` files: present and covering, missing the entry, or absent entirely. */
++export type GitignoreStatus = 'ok' | 'missing-entry' | 'no-file'
++
++/** Returns whether `.gitignore` in `projectDir` already ignores `.env` files. */
++export function checkGitignore(projectDir: string): GitignoreStatus {
++  const gitignorePath = path.join(projectDir, '.gitignore')
++
++  if (!fs.existsSync(gitignorePath)) {
++    return 'no-file'
++  }
++
++  const content = fs.readFileSync(gitignorePath, 'utf-8')
++  const lines = content.split('\n').map((l) => l.trim())
++
++  const hasEnvEntry = lines.some((line) => {
++    const normalized = line.startsWith('/') ? line.slice(1) : line
++    return normalized === '.env' || normalized === '.env*'
++  })
++  return hasEnvEntry ? 'ok' : 'missing-entry'
++}
++
++/** Combined result of writing `.env` and checking `.gitignore`. */
++export interface WriteLocalFilesResult {
++  env: EnvWriteResult
++  gitignoreStatus: GitignoreStatus
++}
++
++const PRISMA_POSTGRES_URL_PATTERN = /^postgres(ql)?:\/\/[^@]*@db(-pool)?\.prisma\.io/
++
++/** Checks if `DATABASE_URL` in the project's `.env` already points to a Prisma Postgres instance. */
++export function isAlreadyLinked(projectDir: string): boolean {
++  const envPath = path.join(projectDir, '.env')
++
++  if (!fs.existsSync(envPath)) {
++    return false
++  }
++
++  const parsed = dotenv.parse(fs.readFileSync(envPath, 'utf-8'))
++  return PRISMA_POSTGRES_URL_PATTERN.test(parsed.DATABASE_URL ?? '')
++}
++
++/** Writes connection strings to `.env` and reports the `.gitignore` status. */
++export function writeLocalFiles(projectDir: string, connection: ConnectionResult): WriteLocalFilesResult {
++  const envPath = path.join(projectDir, '.env')
++
++  const envEntries: Record<string, string> = {
++    DATABASE_URL: connection.connectionString,
++  }
++
++  const env = upsertEnvFile(envPath, envEntries)
++  const gitignoreStatus = checkGitignore(projectDir)
++
++  return { env, gitignoreStatus }
++}
++
++/** Formats a human-readable summary of `.env` writes and `.gitignore` warnings. */
++export function formatEnvSummary(result: WriteLocalFilesResult): string {
++  const lines: string[] = []
++
++  if (result.env.created) {
++    lines.push(`  Created ${bold('.env')} with connection strings`)
++  } else {
++    if (result.env.updated.length > 0) {
++      lines.push(`  Updated in ${bold('.env')}: ${result.env.updated.join(', ')}`)
++    }
++    if (result.env.added.length > 0) {
++      lines.push(`  Added to ${bold('.env')}: ${result.env.added.join(', ')}`)
++    }
++  }
++
++  if (result.gitignoreStatus === 'missing-entry') {
++    lines.push(
++      `  ${yellow('warn')} Your ${bold('.gitignore')} does not include ${bold('.env')} — add it to avoid committing secrets`,
++    )
++  } else if (result.gitignoreStatus === 'no-file') {
++    lines.push(
++      `  ${yellow('warn')} No ${bold('.gitignore')} found — create one and add ${bold('.env')} to avoid committing secrets`,
++    )
++  }
++
++  return lines.join('\n')
++}
+diff --git a/packages/cli/src/postgres/link/management-api.ts b/packages/cli/src/postgres/link/management-api.ts
+new file mode 100644
+index 000000000..0ad71bb2f
+--- /dev/null
++++ b/packages/cli/src/postgres/link/management-api.ts
+@@ -0,0 +1,84 @@
++import { hostname } from 'node:os'
++
++import type { ManagementApiClient } from '@prisma/management-api-sdk'
++
++export interface ConnectionResult {
++  connectionString: string
++}
++
++export class LinkApiError extends Error {
++  constructor(
++    message: string,
++    public readonly statusCode?: number,
++  ) {
++    super(message)
++    this.name = 'LinkApiError'
++  }
++}
++
++export function sanitizeErrorMessage(message: string): string {
++  return message
++    .replace(/postgres(ql)?:\/\/[^\s"']+/gi, '[REDACTED_URL]')
++    .replace(/prisma\+postgres:\/\/[^\s"']+/gi, '[REDACTED_URL]')
++    .replace(/(--api-key\s+)"[^"]*"/g, '$1"[REDACTED]"')
++    .replace(/(--api-key\s+)(\S+)/g, '$1[REDACTED]')
++}
++
++function getConnectionName(): string {
++  return `dev-${hostname()}`
++}
++
++export async function createDevConnection(client: ManagementApiClient, databaseId: string): Promise<ConnectionResult> {
++  const { data, error } = await client.POST('/v1/databases/{databaseId}/connections', {
++    params: { path: { databaseId } },
++    body: { name: getConnectionName() },
++  })
++
++  if (error) {
++    const code = error.error?.code
++    const msg = typeof error.error?.message === 'string' ? error.error.message : 'Failed to create connection'
++
++    if (code === 'unauthorized' || code === 'authentication-failed') {
++      throw new LinkApiError('Invalid credentials — check your API key or re-authenticate via browser.', 401)
++    }
++    if (code === 'not_found') {
++      throw new LinkApiError(`Database "${databaseId}" not found — check the database ID in your console.`, 404)
++    }
++
++    throw new LinkApiError(msg)
++  }
++
++  const endpoints = data?.data?.endpoints
++  const connectionString =
++    endpoints?.direct?.connectionString ?? endpoints?.pooled?.connectionString ?? data?.data?.connectionString
++
++  if (!connectionString) {
++    throw new LinkApiError('No connection string found in API response')
++  }
++
++  return { connectionString }
++}
++
++export async function listProjects(client: ManagementApiClient) {
++  const { data, error } = await client.GET('/v1/projects')
++
++  if (error) {
++    const msg = typeof error.error?.message === 'string' ? error.error.message : 'Failed to list projects'
++    throw new LinkApiError(msg)
++  }
++
++  return data?.data ?? []
++}
++
++export async function listDatabases(client: ManagementApiClient, projectId: string) {
++  const { data, error } = await client.GET('/v1/databases', {
++    params: { query: { projectId } },
++  })
++
++  if (error) {
++    const msg = typeof error.error?.message === 'string' ? error.error.message : 'Failed to list databases'
++    throw new LinkApiError(msg)
++  }
++
++  return data?.data ?? []
++}
+diff --git a/packages/cli/src/utils/checkpoint.ts b/packages/cli/src/utils/checkpoint.ts
+index 00353d358..a60d4be39 100644
+--- a/packages/cli/src/utils/checkpoint.ts
++++ b/packages/cli/src/utils/checkpoint.ts
+@@ -184,6 +184,7 @@ export const SENSITIVE_CLI_OPTIONS = [
+   '--rolled-back',
+   // 4. Platform CLI
+   '--token',
++  '--api-key',
+ ]
+ /*
+  * removes potentially sensitive information from the command array (argv strings)

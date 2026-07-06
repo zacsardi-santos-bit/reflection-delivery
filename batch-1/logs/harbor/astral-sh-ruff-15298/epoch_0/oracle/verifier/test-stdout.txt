@@ -1,0 +1,18 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_return/RET503.py
+   Compiling ruff_linter v0.8.6 (/workspace/repo/crates/ruff_linter)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 34.32s
+────────────
+ Nextest run ID 5d994ae3-b800-478c-b3b2-486996733457 with nextest profile: default
+    Starting 9 tests across 1 binary (2209 tests skipped)
+        PASS [   0.145s] (1/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsecontinue_path_new_ret507_py_expects
+        PASS [   0.145s] (2/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselseraise_path_new_ret506_py_expects
+        PASS [   0.147s] (3/9) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryreturnnone_path_new_ret501_py_expects
+        PASS [   0.148s] (4/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsebreak_path_new_ret508_py_expects
+        PASS [   0.149s] (5/9) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturnvalue_path_new_ret502_py_expects
+        PASS [   0.162s] (6/9) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+        PASS [   0.162s] (7/9) ruff_linter rules::flake8_return::tests::preview_rules::rule_implicitreturn_path_new_ret503_py_expects
+        PASS [   0.163s] (8/9) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryassign_path_new_ret504_py_expects
+        PASS [   0.166s] (9/9) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects
+────────────
+     Summary [   0.170s] 9 tests run: 9 passed, 2209 skipped
+reward=1 graded=9 found=1 failed=0 parsed=9 framework=cargo exit_code=0

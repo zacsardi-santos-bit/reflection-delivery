@@ -1,5 +1,0 @@
-patching file pkg/stdlib/datetime/hour_test.go
-patching file pkg/stdlib/datetime/minute_test.go
-patching file pkg/stdlib/datetime/second_test.go
-ok  	github.com/MontFerret/ferret/pkg/stdlib/datetime	0.010s
-reward=1 graded=9 found=0 failed=0 parsed=0 framework=go exit_code=0

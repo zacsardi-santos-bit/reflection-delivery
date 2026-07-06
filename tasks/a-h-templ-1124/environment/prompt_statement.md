@@ -1,5 +1,0 @@
-I'm working on a template language server that has a mode for large codebases where files aren't preloaded at startup. The problem is that when a user opens a template file in this mode, the server doesn't automatically load the other template files that file depends on — so the language server is missing context about the full dependency graph.
-
-I need a lazy loading component that, when a document is opened, discovers the complete package dependency graph for that file and opens all template files in it, starting from the deepest dependencies first. It should track reference counts so that a file shared by multiple open documents isn't opened multiple times. When a document is closed, it should walk the dependency graph in reverse, decrementing counts and only actually closing files whose count drops to zero. The component also needs to handle circular imports gracefully.
-
-I also need it to propagate meaningful error messages: if loading the package metadata fails, if reading a file fails, or if notifying the language server about an open/close fails — each should produce a descriptive error that includes the relevant file path and package path.

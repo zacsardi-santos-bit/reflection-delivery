@@ -1,0 +1,29 @@
+{
+    "id": "a7efa341-2fcb-4796-a8a7-b28b2d94e541",
+    "started_at": "2026-07-04T15:37:55.984935",
+    "finished_at": "2026-07-04T15:38:16.920345",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__mui-material-ui-45304": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "mui-material-ui-45304__o36Asox"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

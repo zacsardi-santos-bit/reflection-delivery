@@ -1,8 +1,0 @@
-patching file pkg/reconciler/taskrun/cancel_test.go
-patching file pkg/reconciler/taskrun/metrics_test.go
-patching file pkg/reconciler/taskrun/taskrun_test.go
-# github.com/tektoncd/pipeline/pkg/reconciler/taskrun [github.com/tektoncd/pipeline/pkg/reconciler/taskrun.test]
-pkg/reconciler/taskrun/taskrun_test.go:384:16: undefined: getPod
-pkg/reconciler/taskrun/taskrun_test.go:865:16: undefined: getPod
-FAIL	github.com/tektoncd/pipeline/pkg/reconciler/taskrun [build failed]
-reward=0 graded=69 found=69 failed=69 parsed=1 framework=go exit_code=1

@@ -1,5 +1,0 @@
-patching file src/uu/cp/src/copydir.rs
-patching file src/uu/cp/src/cp.rs
-patching file src/uu/mv/src/mv.rs
-patching file src/uucore/src/lib/features/fs.rs
-patching file util/build-gnu.sh

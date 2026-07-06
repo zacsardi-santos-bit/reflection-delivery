@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/v1/metrics/test_ray_metrics.py -v --noconftest -k 'not test_engine_log_metrics_ray'",
+  "test_files": [
+    "tests/v1/metrics/test_ray_metrics.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.v1.metrics.test_ray_metrics::test_ray_counter_labels_returns_independent_children",
+    "tests.v1.metrics.test_ray_metrics::test_ray_counter_inc_forwards_per_child_tags",
+    "tests.v1.metrics.test_ray_metrics::test_ray_gauge_labels_returns_independent_children_and_forwards_tags",
+    "tests.v1.metrics.test_ray_metrics::test_ray_histogram_labels_returns_independent_children_and_forwards_tags",
+    "tests.v1.metrics.test_ray_metrics::test_ray_counter_labels_accepts_non_string_label_values",
+    "tests.v1.metrics.test_ray_metrics::test_unlabeled_inc_carries_replica_id",
+    "tests.v1.metrics.test_ray_metrics::test_double_labels_raises"
+  ],
+  "PASS_TO_PASS": [
+    "tests.v1.metrics.test_ray_metrics::test_sanitized_opentelemetry_name",
+    "tests.v1.metrics.test_ray_metrics::test_ray_counter_labels_arity_validation"
+  ]
+}

@@ -1,0 +1,18 @@
+patching file master/internal/user/postgres_users_intg_test.go
+patching file master/pkg/model/user_test.go
+# github.com/determined-ai/determined/master/pkg/model [github.com/determined-ai/determined/master/pkg/model.test]
+master/pkg/model/user_test.go:29:12: in.Proto undefined (type UserWebSetting has no field or method Proto)
+{"Time":"2026-06-29T15:13:49.398865275Z","Action":"start","Package":"github.com/determined-ai/determined/master/internal/user"}
+{"Time":"2026-06-29T15:13:49.420370867Z","Action":"run","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestStandardAuth"}
+{"Time":"2026-06-29T15:13:49.420434637Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestStandardAuth","Output":"=== RUN   TestStandardAuth\n"}
+{"Time":"2026-06-29T15:13:49.420482177Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestStandardAuth","Output":"--- PASS: TestStandardAuth (0.00s)\n"}
+{"Time":"2026-06-29T15:13:49.420508117Z","Action":"pass","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestStandardAuth","Elapsed":0}
+{"Time":"2026-06-29T15:13:49.420546177Z","Action":"run","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestNoAuth"}
+{"Time":"2026-06-29T15:13:49.420568617Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestNoAuth","Output":"=== RUN   TestNoAuth\n"}
+{"Time":"2026-06-29T15:13:49.420599317Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestNoAuth","Output":"--- PASS: TestNoAuth (0.00s)\n"}
+{"Time":"2026-06-29T15:13:49.420622947Z","Action":"pass","Package":"github.com/determined-ai/determined/master/internal/user","Test":"TestNoAuth","Elapsed":0}
+{"Time":"2026-06-29T15:13:49.420645737Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Output":"PASS\n"}
+{"Time":"2026-06-29T15:13:49.421286327Z","Action":"output","Package":"github.com/determined-ai/determined/master/internal/user","Output":"ok  \tgithub.com/determined-ai/determined/master/internal/user\t0.022s\n"}
+{"Time":"2026-06-29T15:13:49.421324847Z","Action":"pass","Package":"github.com/determined-ai/determined/master/internal/user","Elapsed":0.022}
+FAIL	github.com/determined-ai/determined/master/pkg/model [build failed]
+reward=0 graded=38 found=38 failed=36 parsed=3 framework=go exit_code=1

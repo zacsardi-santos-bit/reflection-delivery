@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "service postgresql start && sleep 2 && cd /workspace/repo && python -m pytest tests/unit/h/tasks/indexer_test.py -v",
+  "test_files": [
+    "tests/common/fixtures/services.py",
+    "tests/unit/h/search/conftest.py",
+    "tests/unit/h/services/annotation_sync_test.py",
+    "tests/unit/h/services/search_index_test.py",
+    "tests/unit/h/tasks/indexer_test.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit.h.tasks.indexer_test.TestSearchIndexServicesWrapperTasks::test_add_annotation",
+    "tests.unit.h.tasks.indexer_test.TestSearchIndexServicesWrapperTasks::test_delete_annotation",
+    "tests.unit.h.tasks.indexer_test.TestSyncAnnotations::test_it",
+    "tests.unit.h.tasks.indexer_test.TestReportJobQueueMetrics::test_it"
+  ],
+  "PASS_TO_PASS": []
+}

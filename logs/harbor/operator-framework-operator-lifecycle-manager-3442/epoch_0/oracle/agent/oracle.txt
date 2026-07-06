@@ -1,4 +1,0 @@
-patching file pkg/controller/operators/catalog/operator.go
-patching file pkg/controller/operators/catalog/testdata/postgrestolerations/crd.yaml
-patching file pkg/controller/operators/catalog/testdata/postgrestolerations/pgadmin.cr.yaml
-patching file pkg/controller/registry/reconciler/grpc.go

@@ -1,0 +1,14 @@
+patching file sky/adaptors/azure.py
+patching file sky/backends/cloud_vm_ray_backend.py
+patching file sky/cloud_stores.py
+patching file sky/clouds/azure.py
+patching file sky/core.py
+patching file sky/data/data_utils.py
+patching file sky/data/mounting_utils.py
+patching file sky/data/storage.py
+patching file sky/exceptions.py
+patching file sky/setup_files/setup.py
+patching file sky/skylet/constants.py
+patching file sky/task.py
+patching file sky/utils/controller_utils.py
+patching file sky/utils/schemas.py

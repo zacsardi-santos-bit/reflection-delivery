@@ -1,0 +1,20 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && yarn workspaces focus @backstage/backend-defaults @backstage/backend-test-utils && redis-server --daemonize yes && sleep 1 && BACKSTAGE_TEST_DISABLE_DOCKER=1 BACKSTAGE_TEST_CACHE_REDIS7_CONNECTION_STRING=redis://127.0.0.1:6379 CI=true NODE_OPTIONS=--no-node-snapshot yarn workspace @backstage/backend-defaults test -- --testPathPattern='src/entrypoints/cache/CacheManager.test.ts' --watchAll=false",
+  "test_files": [
+    "packages/backend-defaults/src/entrypoints/cache/CacheManager.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/backend-defaults/src/entrypoints/cache/CacheManager.test.ts::CacheManager integration only creates one underlying connection per plugin, \"REDIS_7\""
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/backend-defaults/src/entrypoints/cache/CacheManager.test.ts::CacheManager integration only creates one underlying connection per plugin, \"MEMORY\"",
+    "/workspace/repo/packages/backend-defaults/src/entrypoints/cache/CacheManager.test.ts::CacheManager integration interacts correctly with store, \"REDIS_7\"",
+    "/workspace/repo/packages/backend-defaults/src/entrypoints/cache/CacheManager.test.ts::CacheManager integration interacts correctly with store, \"MEMORY\"",
+    "/workspace/repo/packages/backend-defaults/src/entrypoints/cache/CacheManager.test.ts::CacheManager integration supports both milliseconds and human durations throughout, \"REDIS_7\"",
+    "/workspace/repo/packages/backend-defaults/src/entrypoints/cache/CacheManager.test.ts::CacheManager integration supports both milliseconds and human durations throughout, \"MEMORY\"",
+    "/workspace/repo/packages/backend-defaults/src/entrypoints/cache/CacheManager.test.ts::CacheManager integration rejects invalid defaultTtl"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+    "id": "ff678633-8e9a-41f1-adc7-2aff055dc739",
+    "started_at": "2026-07-06T12:18:41.419255",
+    "finished_at": "2026-07-06T12:19:24.788264",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__bluenviron-mediamtx-5529": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "bluenviron-mediamtx-5529__rSTSXKn"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

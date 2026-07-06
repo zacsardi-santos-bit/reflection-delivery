@@ -1,0 +1,29 @@
+{
+    "id": "7d7a79eb-6437-4dbb-b9a2-2c4703b1f574",
+    "started_at": "2026-07-04T15:36:55.245225",
+    "finished_at": "2026-07-04T15:38:33.159146",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__pydata-xarray-10336": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "pydata-xarray-10336__Xps5h2G"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

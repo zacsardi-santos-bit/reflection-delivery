@@ -1,2 +1,0 @@
-patching file modules/r2b2AnalyticsAdapter.js
-patching file modules/r2b2AnalyticsAdapter.md

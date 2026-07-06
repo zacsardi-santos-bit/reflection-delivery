@@ -1,0 +1,48 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/wrangler && npx vitest run src/__tests__/containers/instances.test.ts src/__tests__/containers/list.test.ts src/__tests__/helpers/mock-cloudchamber.ts",
+  "test_files": [
+    "packages/wrangler/src/__tests__/containers/instances.test.ts",
+    "packages/wrangler/src/__tests__/containers/list.test.ts",
+    "packages/wrangler/src/__tests__/helpers/mock-cloudchamber.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should render a table (non-TTY)",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should render DO instance table (non-TTY)",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should reject --per-page 0",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should reject --per-page with negative value",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should help",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should reject --per-page 0",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should reject --per-page with negative value",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should throw UserError on 400 API response",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should throw on 500 API response",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should render a table (non-TTY)",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should handle empty results (non-TTY)",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should fetch all results in a single unpaginated request (non-TTY)",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list state derivation should derive 'active' when active > 0 and no failures",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list state derivation should derive 'degraded' when failed > 0 (even with active)",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list state derivation should derive 'provisioning' when starting > 0",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list state derivation should derive 'provisioning' when scheduling > 0",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list state derivation should derive 'ready' when all counters are zero",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list --json should output JSON matching expected schema",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list --json should output empty array for no containers",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list --json should fetch all results in a single unpaginated request",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list --json should throw JsonFriendlyFatalError on unexpected API error",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list --json should let UserError propagate through on 400 API response"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should help",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should show the correct authentication error",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should error on invalid ID format",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should error on missing ID",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should handle empty instance list",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances should fetch all results in a single unpaginated request (non-TTY)",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances --json should output flat JSON matching table columns for non-DO apps",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances --json should include name field for DO-backed apps",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances --json should output empty array for no instances",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/instances.test.ts::containers instances --json should fetch all results in a single unpaginated request",
+    "/workspace/repo/packages/wrangler/src/__tests__/containers/list.test.ts::containers list should show the correct authentication error"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+    "id": "9a3364bb-9ce0-4ed6-8c53-083c6da5a5a8",
+    "started_at": "2026-07-04T15:38:36.474034",
+    "finished_at": "2026-07-04T15:38:50.336221",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__envoyproxy-envoy-18248": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "envoyproxy-envoy-18248__LXGdiov"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

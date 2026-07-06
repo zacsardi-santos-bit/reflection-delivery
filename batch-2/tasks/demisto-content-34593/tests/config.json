@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/Packs/GoogleChronicleBackstory/Integrations/GoogleChronicleBackstoryStreamingAPI/GoogleChronicleBackstoryStreamingAPI_test.py -v",
+  "test_files": [
+    "Packs/GoogleChronicleBackstory/Integrations/GoogleChronicleBackstoryStreamingAPI/GoogleChronicleBackstoryStreamingAPI_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_validate_configuration_parameters",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_validate_configuration_parameters_with_invalid_first_fetch[invalid]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_validate_configuration_parameters_with_invalid_first_fetch[8 days]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_validate_configuration_parameters_with_invalid_credentials",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_parse_error_message_with_invalid_json",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_parse_error_message_with_invalid_region",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_validate_response",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_429_or_500_error_for_validate_response[args0]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_429_or_500_error_for_validate_response[args1]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_429_or_500_error_for_validate_response[args2]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_429_or_500_error_for_validate_response[args3]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_429_or_500_error_for_validate_response[args4]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_429_or_500_error_for_validate_response[args5]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_429_or_500_error_for_validate_response[args6]",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_test_module",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_test_module_for_error",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_fetch_samples",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_stream_detection_alerts_in_retry_loop",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_stream_detection_alerts_in_retry_loop_with_error",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_stream_detection_alerts_in_retry_loop_with_empty_response",
+    "Packs.GoogleChronicleBackstory.Integrations.GoogleChronicleBackstoryStreamingAPI.GoogleChronicleBackstoryStreamingAPI_test::test_stream_detection_alerts_in_retry_loop_with_400"
+  ],
+  "PASS_TO_PASS": []
+}

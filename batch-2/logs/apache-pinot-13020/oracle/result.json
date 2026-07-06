@@ -1,0 +1,29 @@
+{
+    "id": "b469c1e8-ced7-4a0e-8132-74e80b815584",
+    "started_at": "2026-07-04T15:38:12.501971",
+    "finished_at": "2026-07-04T15:40:01.513696",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-pinot-13020": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-pinot-13020__B88JBwe"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

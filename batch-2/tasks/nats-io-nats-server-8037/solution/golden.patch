@@ -1,0 +1,280 @@
+diff --git a/server/consumer.go b/server/consumer.go
+index d18d1b150..d0dab8cab 100644
+--- a/server/consumer.go
++++ b/server/consumer.go
+@@ -5248,9 +5248,19 @@ func (o *consumer) loopAndGatherMsgs(qch chan struct{}) {
+ 			wrn, wrb = wr.n, wr.b
+ 			dsubj = wr.reply
+ 			if o.cfg.PriorityPolicy == PriorityPinnedClient {
+-				pmsg.hdr = genHeader(pmsg.hdr, JSPullRequestNatsPinId, o.currentPinId)
+-				pmsg.buf = append(pmsg.hdr, pmsg.msg...)
++				// FIXME(jrm): Can we make this prettier?
++				if len(pmsg.hdr) == 0 {
++					pmsg.hdr = genHeader(pmsg.hdr, JSPullRequestNatsPinId, o.currentPinId)
++					pmsg.buf = append(pmsg.hdr, pmsg.msg...)
++				} else {
++					pmsg.hdr = genHeader(pmsg.hdr, JSPullRequestNatsPinId, o.currentPinId)
++					bufLen := len(pmsg.hdr) + len(pmsg.msg)
++					pmsg.buf = make([]byte, bufLen)
++					pmsg.buf = append(pmsg.hdr, pmsg.msg...)
++				}
++
+ 				sz = len(pmsg.subj) + len(ackReply) + len(pmsg.hdr) + len(pmsg.msg)
++
+ 			}
+ 			if done := wr.recycleIfDone(); done && o.node != nil {
+ 				o.removeClusterPendingRequest(dsubj)
+diff --git a/server/filestore.go b/server/filestore.go
+index 1b5837885..4a5b194a1 100644
+--- a/server/filestore.go
++++ b/server/filestore.go
+@@ -1796,6 +1796,16 @@ func (fs *fileStore) warn(format string, args ...any) {
+ 	fs.srv.Warnf(fmt.Sprintf("Filestore [%s] %s", fs.cfg.Name, format), args...)
+ }
+ 
++// For doing rate-limited warn logging.
++// Lock should be held.
++func (fs *fileStore) rateLimitWarn(format string, args ...any) {
++	// No-op if no server configured.
++	if fs.srv == nil {
++		return
++	}
++	fs.srv.RateLimitWarnf(fmt.Sprintf("Filestore [%s] %s", fs.cfg.Name, format), args...)
++}
++
+ // For doing error logging.
+ // Lock should be held.
+ func (fs *fileStore) error(format string, args ...any) {
+@@ -4997,6 +5007,19 @@ func (fs *fileStore) storeRawMsg(subj string, hdr, msg []byte, seq uint64, ts, t
+ 	return nil
+ }
+ 
++// isReadErr reports whether err originated from reading or interpreting
++// existing on-disk data rather than from a failed write. These surface through
++// cache/load paths and should not permanently disable writes.
++func isReadErr(err error) bool {
++	var badMsg errBadMsg
++	return errors.Is(err, errNoCache) ||
++		errors.Is(err, errDeletedMsg) ||
++		errors.Is(err, errPartialCache) ||
++		errors.Is(err, errCorruptState) ||
++		errors.Is(err, errPriorState) ||
++		errors.As(err, &badMsg)
++}
++
+ // Lock should be held.
+ func (fs *fileStore) setWriteErr(err error) {
+ 	if fs.werr != nil {
+@@ -5011,6 +5034,17 @@ func (fs *fileStore) setWriteErr(err error) {
+ 		fs.warn("Resource not found: %v", err)
+ 		return
+ 	}
++	// Read/decode errors surfaced from existing on-disk data are not write failures.
++	// Log and continue instead of disabling writes.
++	if isReadErr(err) {
++		fs.rateLimitWarn("Ignoring non-write error: %v", err)
++		assert.Unreachable("Filestore encountered read error", map[string]any{
++			"name":  fs.cfg.Name,
++			"err":   err,
++			"stack": string(debug.Stack()),
++		})
++		return
++	}
+ 	fs.error("Critical write error: %v", err)
+ 	fs.werr = err
+ 	assert.Unreachable("Filestore encountered write error", map[string]any{
+@@ -7074,6 +7108,18 @@ func (mb *msgBlock) writeMsgRecordLocked(rl, seq uint64, subj string, mhdr, msg
+ 	// Persist any returned errors to be used in the future.
+ 	defer func() {
+ 		if rerr != nil && mb.werr == nil {
++			// Read/decode errors surfaced from existing on-disk data are not write failures.
++			// Log and continue instead of disabling writes.
++			if isReadErr(rerr) {
++				mb.fs.rateLimitWarn("Ignoring non-write error: %v", rerr)
++				assert.Unreachable("Filestore msg block encountered read error", map[string]any{
++					"name":     mb.fs.cfg.Name,
++					"mb.index": mb.index,
++					"err":      rerr,
++					"stack":    string(debug.Stack()),
++				})
++				return
++			}
+ 			mb.werr = rerr
+ 			assert.Unreachable("Filestore msg block encountered write error", map[string]any{
+ 				"name":     mb.fs.cfg.Name,
+@@ -11230,6 +11276,9 @@ func (mb *msgBlock) generatePerSubjectInfo() error {
+ 			if err == errNoCache {
+ 				return nil
+ 			}
++			// Clear partially built fss so callers don't operate on incomplete state.
++			mb.fss = nil
++			mb.clearCacheAndOffset()
+ 			return err
+ 		}
+ 		if sm != nil && len(sm.subj) > 0 {
+diff --git a/server/jetstream_batching.go b/server/jetstream_batching.go
+index 821dec44b..6ed7a10ed 100644
+--- a/server/jetstream_batching.go
++++ b/server/jetstream_batching.go
+@@ -860,9 +860,6 @@ func checkMsgHeadersPreClusteredProposal(
+ 				bytesToString(scheduler) == subject || !IsValidPublishSubject(bytesToString(scheduler)) {
+ 				apiErr := NewJSMessageSchedulesSchedulerInvalidError()
+ 				return hdr, msg, 0, apiErr, apiErr
+-			} else if bytesToString(scheduleNext) == JSScheduleNextPurge && !allowMsgSchedules {
+-				apiErr := NewJSMessageSchedulesDisabledError()
+-				return hdr, msg, 0, apiErr, apiErr
+ 			}
+ 		}
+ 
+diff --git a/server/jetstream_cluster_1_test.go b/server/jetstream_cluster_1_test.go
+index 38740fa1c..cbedb6388 100644
+--- a/server/jetstream_cluster_1_test.go
++++ b/server/jetstream_cluster_1_test.go
+@@ -9785,37 +9785,6 @@ func TestJetStreamClusterPurgeScheduleWithInvalidScheduler(t *testing.T) {
+ 	}
+ }
+ 
+-func TestJetStreamClusterScheduledPurgeHeadersRequiresSchedulingEnabled(t *testing.T) {
+-	for _, replicas := range []int{1, 3} {
+-		t.Run(fmt.Sprintf("R%d", replicas), func(t *testing.T) {
+-			c := createJetStreamClusterExplicit(t, "R3S", 3)
+-			defer c.shutdown()
+-
+-			nc, js := jsClientConnect(t, c.randomServer())
+-			defer nc.Close()
+-
+-			_, err := jsStreamCreate(t, nc, &StreamConfig{
+-				Name:              "TEST",
+-				Storage:           FileStorage,
+-				Subjects:          []string{"foo.*"},
+-				Replicas:          replicas,
+-				AllowMsgSchedules: false,
+-			})
+-			require_NoError(t, err)
+-
+-			_, err = js.Publish("foo.victim", []byte("OK"))
+-			require_NoError(t, err)
+-
+-			m := nats.NewMsg("foo.attacker")
+-			m.Header.Set(JSScheduleNext, JSScheduleNextPurge)
+-			m.Header.Set(JSScheduler, "foo.victim")
+-
+-			_, err = js.PublishMsg(m)
+-			require_Error(t, err, NewJSMessageSchedulesDisabledError())
+-		})
+-	}
+-}
+-
+ func TestJetStreamClusterScheduledDelayedMessageReversedHeaderOrder(t *testing.T) {
+ 	for _, replicas := range []int{1, 3} {
+ 		for _, storage := range []StorageType{FileStorage, MemoryStorage} {
+diff --git a/server/jetstream_test.go b/server/jetstream_test.go
+index d860eebd4..4ffa2c35e 100644
+--- a/server/jetstream_test.go
++++ b/server/jetstream_test.go
+@@ -22063,32 +22063,6 @@ func TestJetStreamScheduledMessageNotTriggering(t *testing.T) {
+ 	}
+ }
+ 
+-func TestJetStreamScheduledPurgeHeadersRequiresSchedulingEnabled(t *testing.T) {
+-	s := RunBasicJetStreamServer(t)
+-	defer s.Shutdown()
+-
+-	nc, js := jsClientConnect(t, s)
+-	defer nc.Close()
+-
+-	_, err := jsStreamCreate(t, nc, &StreamConfig{
+-		Name:              "TEST",
+-		Storage:           FileStorage,
+-		Subjects:          []string{"foo.*"},
+-		AllowMsgSchedules: false,
+-	})
+-	require_NoError(t, err)
+-
+-	_, err = js.Publish("foo.victim", []byte("OK"))
+-	require_NoError(t, err)
+-
+-	m := nats.NewMsg("foo.attacker")
+-	m.Header.Set(JSScheduleNext, JSScheduleNextPurge)
+-	m.Header.Set(JSScheduler, "foo.victim")
+-
+-	_, err = js.PublishMsg(m)
+-	require_Error(t, err, NewJSMessageSchedulesDisabledError())
+-}
+-
+ func TestJetStreamScheduledMessageNotDeactivated(t *testing.T) {
+ 	for _, storageType := range []StorageType{FileStorage, MemoryStorage} {
+ 		t.Run(storageType.String(), func(t *testing.T) {
+diff --git a/server/raft.go b/server/raft.go
+index cba842db1..b65fd80e1 100644
+--- a/server/raft.go
++++ b/server/raft.go
+@@ -1742,7 +1742,7 @@ func (n *raft) loadLastSnapshot() (*snapshot, error) {
+ 		n.warn("Snapshot with last index 0 is invalid, cleaning up")
+ 		os.Remove(n.snapfile)
+ 		n.snapfile = _EMPTY_
+-		return nil, errNoSnapAvailable
++		return nil, nil
+ 	}
+ 
+ 	return snap, nil
+diff --git a/server/raft_test.go b/server/raft_test.go
+index bf398a7dd..bf446d312 100644
+--- a/server/raft_test.go
++++ b/server/raft_test.go
+@@ -2824,35 +2824,6 @@ func TestNRGSnapshotRecovery(t *testing.T) {
+ 	require_Equal(t, n.applied, 0)
+ }
+ 
+-func TestNRGLoadLastSnapshotCleansLegacyZeroIndexSnapshot(t *testing.T) {
+-	n, cleanup := initSingleMemRaftNode(t)
+-	defer cleanup()
+-
+-	snapDir := filepath.Join(n.sd, snapshotsDir)
+-	require_NoError(t, os.MkdirAll(snapDir, defaultDirPerms))
+-
+-	legacy := &snapshot{
+-		lastTerm:  1,
+-		lastIndex: 0,
+-		peerstate: encodePeerState(&peerState{n.peerNames(), n.csz, n.extSt}),
+-		data:      []byte("legacy"),
+-	}
+-	sfile := filepath.Join(snapDir, fmt.Sprintf(snapFileT, legacy.lastTerm, legacy.lastIndex))
+-	require_NoError(t, writeFileWithSync(sfile, n.encodeSnapshot(legacy), defaultFilePerms))
+-
+-	n.Lock()
+-	n.snapfile = sfile
+-	snap, err := n.loadLastSnapshot()
+-	snapfile := n.snapfile
+-	n.Unlock()
+-
+-	require_Error(t, err, errNoSnapAvailable)
+-	require_True(t, snap == nil)
+-	require_Equal(t, snapfile, _EMPTY_)
+-	_, err = os.Stat(sfile)
+-	require_True(t, os.IsNotExist(err))
+-}
+-
+ func TestNRGKeepRunningOnServerShutdown(t *testing.T) {
+ 	n, cleanup := initSingleMemRaftNode(t)
+ 	defer cleanup()
+diff --git a/server/stream.go b/server/stream.go
+index 5a35e5beb..eb86ef84e 100644
+--- a/server/stream.go
++++ b/server/stream.go
+@@ -6470,15 +6470,6 @@ func (mset *stream) processJetStreamMsgWithBatch(subject, reply string, hdr, msg
+ 						outq.sendMsg(reply, b)
+ 					}
+ 					return apiErr
+-				} else if bytesToString(scheduleNext) == JSScheduleNextPurge && !allowMsgSchedules {
+-					apiErr := NewJSMessageSchedulesDisabledError()
+-					if canRespond {
+-						resp.PubAck = &PubAck{Stream: name}
+-						resp.Error = apiErr
+-						b, _ := json.Marshal(resp)
+-						outq.sendMsg(reply, b)
+-					}
+-					return apiErr
+ 				}
+ 			}
+ 		}

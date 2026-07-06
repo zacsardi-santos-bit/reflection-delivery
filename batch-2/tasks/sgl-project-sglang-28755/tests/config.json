@@ -1,0 +1,37 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/registered/unit/model_executor/test_pool_configurator.py -v",
+  "test_files": [
+    "test/registered/unit/model_executor/test_pool_configurator.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "registered.unit.model_executor.test_pool_configurator.TestDefaultConfigurator::test_constraint_page_aligned",
+    "registered.unit.model_executor.test_pool_configurator.TestDefaultConfigurator::test_constraint_respected",
+    "registered.unit.model_executor.test_pool_configurator.TestDefaultConfigurator::test_memory_utilization",
+    "registered.unit.model_executor.test_pool_configurator.TestDefaultConfigurator::test_no_swa_fields",
+    "registered.unit.model_executor.test_pool_configurator.TestDefaultConfigurator::test_page_alignment",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_chunk_cache_cap_accounts_for_spec_topk_page_rounding",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_chunk_cache_cap_disagg_decode_pre_alloc",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_chunk_cache_cap_doubles_decode_alloc_for_spec_v2_overlap",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_chunk_cache_cap_drops_prefill_for_disagg_decode",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_chunk_cache_cap_prefill_holds_window_plus_chunk",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_constraint_memory_within_budget",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_constraint_respected",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_different_layer_counts",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_max_total_equals_full",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_memory_utilization",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_ratio_respected",
+    "registered.unit.model_executor.test_pool_configurator.TestHybridSWAConfigurator::test_ratio_with_page_alignment",
+    "registered.unit.model_executor.test_pool_configurator.TestAllSWAConfigurator::test_constraint_respected",
+    "registered.unit.model_executor.test_pool_configurator.TestAllSWAConfigurator::test_full_max_is_zero",
+    "registered.unit.model_executor.test_pool_configurator.TestAllSWAConfigurator::test_max_total_equals_swa",
+    "registered.unit.model_executor.test_pool_configurator.TestAllSWAConfigurator::test_memory_utilization",
+    "registered.unit.model_executor.test_pool_configurator.TestEagleConfigurator::test_eagle_does_not_exceed_budget",
+    "registered.unit.model_executor.test_pool_configurator.TestFactory::test_chunk_cap_configurator_selection",
+    "registered.unit.model_executor.test_pool_configurator.TestFactory::test_default_for_non_swa",
+    "registered.unit.model_executor.test_pool_configurator.TestFactory::test_swa_for_hybrid"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,855 @@
+patching file app/src/androidTest/java/com/duckduckgo/app/bookmarks/model/BookmarksDataRepositoryTest.kt
+patching file app/src/androidTest/java/com/duckduckgo/app/browser/BrowserTabViewModelTest.kt
+patching file app/src/test/java/com/duckduckgo/app/bookmarks/ui/bookmarkfolders/BookmarkFoldersViewModelTest.kt
+To honour the JVM settings for this build a single-use Daemon process will be forked. See https://docs.gradle.org/7.0.2/userguide/gradle_daemon.html#sec:disabling_the_daemon.
+Daemon will be stopped at the end of the build 
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:inspectClassesForKotlinIC UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+> Task :buildSrc:assemble UP-TO-DATE
+> Task :buildSrc:compileTestKotlin NO-SOURCE
+> Task :buildSrc:pluginUnderTestMetadata UP-TO-DATE
+> Task :buildSrc:compileTestJava NO-SOURCE
+> Task :buildSrc:compileTestGroovy NO-SOURCE
+> Task :buildSrc:processTestResources NO-SOURCE
+> Task :buildSrc:testClasses UP-TO-DATE
+> Task :buildSrc:test NO-SOURCE
+> Task :buildSrc:validatePlugins UP-TO-DATE
+> Task :buildSrc:check UP-TO-DATE
+> Task :buildSrc:build UP-TO-DATE
+Configuration on demand is an incubating feature.
+
+> Configure project :anrs-api
+WARNING: The option setting 'android.nonTransitiveRClass=true' is experimental.
+The current default is 'false'.
+
+> Configure project :app
+Warning: The 'kotlin-android-extensions' Gradle plugin is deprecated. Please use this migration guide (https://goo.gle/kotlin-android-extensions-deprecation) to start working with View Binding (https://developer.android.com/topic/libraries/view-binding) and the 'kotlin-parcelize' plugin.
+Signing properties not found at /root/jenkins_static/com.duckduckgo.mobile.android/ddg_android_build.properties, releases will NOT succeed
+
+> Configure project :privacy-config-impl
+Warning: The 'kotlin-android-extensions' Gradle plugin is deprecated. Please use this migration guide (https://goo.gle/kotlin-android-extensions-deprecation) to start working with View Binding (https://developer.android.com/topic/libraries/view-binding) and the 'kotlin-parcelize' plugin.
+
+> Configure project :vpn
+Warning: The 'kotlin-android-extensions' Gradle plugin is deprecated. Please use this migration guide (https://goo.gle/kotlin-android-extensions-deprecation) to start working with View Binding (https://developer.android.com/topic/libraries/view-binding) and the 'kotlin-parcelize' plugin.
+Warning: Mapping new ns http://schemas.android.com/repository/android/common/02 to old ns http://schemas.android.com/repository/android/common/01
+Warning: Mapping new ns http://schemas.android.com/repository/android/generic/02 to old ns http://schemas.android.com/repository/android/generic/01
+Warning: Mapping new ns http://schemas.android.com/sdk/android/repo/addon2/02 to old ns http://schemas.android.com/sdk/android/repo/addon2/01
+Warning: Mapping new ns http://schemas.android.com/sdk/android/repo/addon2/03 to old ns http://schemas.android.com/sdk/android/repo/addon2/01
+Warning: Mapping new ns http://schemas.android.com/sdk/android/repo/repository2/02 to old ns http://schemas.android.com/sdk/android/repo/repository2/01
+Warning: Mapping new ns http://schemas.android.com/sdk/android/repo/repository2/03 to old ns http://schemas.android.com/sdk/android/repo/repository2/01
+Warning: Mapping new ns http://schemas.android.com/sdk/android/repo/sys-img2/03 to old ns http://schemas.android.com/sdk/android/repo/sys-img2/01
+Warning: Mapping new ns http://schemas.android.com/sdk/android/repo/sys-img2/02 to old ns http://schemas.android.com/sdk/android/repo/sys-img2/01
+Warning: unexpected element (uri:"", local:"base-extension"). Expected elements are <{}codename>,<{}layoutlib>,<{}api-level>
+
+> Task :privacy-config-store:preBuild UP-TO-DATE
+> Task :browser-api:preBuild UP-TO-DATE
+> Task :vpn:preBuild UP-TO-DATE
+> Task :privacy-config-impl:preBuild UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :anrs-api:preBuild UP-TO-DATE
+> Task :di:preBuild UP-TO-DATE
+> Task :anrs-store:preBuild UP-TO-DATE
+> Task :common:preBuild UP-TO-DATE
+> Task :anrs-impl:preBuild UP-TO-DATE
+> Task :app-store:preBuild UP-TO-DATE
+> Task :common-ui:preBuild UP-TO-DATE
+> Task :feature-toggles-impl:preBuild UP-TO-DATE
+> Task :statistics:preBuild UP-TO-DATE
+> Task :browser-api:preDebugBuild UP-TO-DATE
+> Task :anrs-api:preDebugBuild UP-TO-DATE
+> Task :common:preDebugBuild UP-TO-DATE
+> Task :anrs-store:preDebugBuild UP-TO-DATE
+> Task :anrs-impl:preDebugBuild UP-TO-DATE
+> Task :common-ui:preDebugBuild UP-TO-DATE
+> Task :privacy-config-store:preDebugBuild UP-TO-DATE
+> Task :vpn:preDebugBuild UP-TO-DATE
+> Task :app:prePlayDebugBuild UP-TO-DATE
+> Task :app-store:preDebugBuild UP-TO-DATE
+> Task :statistics:preDebugBuild UP-TO-DATE
+> Task :feature-toggles-impl:preDebugBuild UP-TO-DATE
+> Task :privacy-config-impl:preDebugBuild UP-TO-DATE
+> Task :di:preDebugBuild UP-TO-DATE
+> Task :vpn-api:preBuild UP-TO-DATE
+> Task :vpn-store:preBuild UP-TO-DATE
+> Task :vpn-main:preBuild UP-TO-DATE
+> Task :vpn-main:preDebugBuild UP-TO-DATE
+> Task :vpn-store:preDebugBuild UP-TO-DATE
+> Task :vpn-api:preDebugBuild UP-TO-DATE
+> Task :privacy-config-api:processResources NO-SOURCE
+> Task :feature-toggles-impl:packageDebugRenderscript NO-SOURCE
+> Task :anrs-api:compileDebugAidl NO-SOURCE
+> Task :di:compileDebugAidl NO-SOURCE
+> Task :vpn-api:compileDebugAidl NO-SOURCE
+> Task :browser-api:compileDebugAidl NO-SOURCE
+> Task :privacy-config-impl:packageDebugRenderscript NO-SOURCE
+> Task :common-ui:packageDebugRenderscript NO-SOURCE
+> Task :app-store:compileDebugAidl NO-SOURCE
+> Task :statistics:packageDebugRenderscript NO-SOURCE
+> Task :anrs-store:packageDebugRenderscript NO-SOURCE
+> Task :vpn-store:compileDebugAidl NO-SOURCE
+> Task :common:packageDebugRenderscript NO-SOURCE
+> Task :privacy-config-store:packageDebugRenderscript NO-SOURCE
+> Task :vpn-api:packageDebugRenderscript NO-SOURCE
+> Task :browser-api:packageDebugRenderscript NO-SOURCE
+> Task :vpn-main:packageDebugRenderscript NO-SOURCE
+> Task :app-store:packageDebugRenderscript NO-SOURCE
+> Task :vpn:packageDebugRenderscript NO-SOURCE
+> Task :anrs-api:compileDebugRenderscript NO-SOURCE
+> Task :vpn-store:packageDebugRenderscript NO-SOURCE
+> Task :di:packageDebugRenderscript NO-SOURCE
+> Task :app:compilePlayDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :appbuildconfig-api:compileKotlin UP-TO-DATE
+> Task :feature-toggles-api:compileKotlin UP-TO-DATE
+> Task :appbuildconfig-api:compileJava NO-SOURCE
+> Task :feature-toggles-api:compileJava NO-SOURCE
+> Task :appbuildconfig-api:processResources NO-SOURCE
+> Task :appbuildconfig-api:classes UP-TO-DATE
+> Task :appbuildconfig-api:inspectClassesForKotlinIC UP-TO-DATE
+> Task :appbuildconfig-api:jar UP-TO-DATE
+> Task :feature-toggles-api:processResources NO-SOURCE
+> Task :feature-toggles-api:classes UP-TO-DATE
+> Task :feature-toggles-api:inspectClassesForKotlinIC UP-TO-DATE
+> Task :privacy-config-api:compileKotlin UP-TO-DATE
+> Task :feature-toggles-api:jar UP-TO-DATE
+> Task :privacy-config-api:compileJava NO-SOURCE
+> Task :privacy-config-api:classes UP-TO-DATE
+> Task :privacy-config-api:inspectClassesForKotlinIC UP-TO-DATE
+> Task :privacy-config-api:jar UP-TO-DATE
+> Task :anrs-impl:compileDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :app-store:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :browser-api:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :anrs-api:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :vpn-api:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :vpn-store:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :app-store:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :app-store:compileDebugRenderscript NO-SOURCE
+> Task :anrs-api:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :browser-api:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :vpn-api:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :app-store:generateDebugResValues UP-TO-DATE
+> Task :app-store:generateDebugResources UP-TO-DATE
+> Task :vpn-store:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :anrs-api:generateDebugResValues UP-TO-DATE
+> Task :anrs-api:generateDebugResources UP-TO-DATE
+> Task :browser-api:compileDebugRenderscript NO-SOURCE
+> Task :vpn-api:compileDebugRenderscript NO-SOURCE
+> Task :browser-api:generateDebugResValues UP-TO-DATE
+> Task :browser-api:generateDebugResources UP-TO-DATE
+> Task :vpn-api:generateDebugResValues UP-TO-DATE
+> Task :vpn-api:generateDebugResources UP-TO-DATE
+> Task :app-store:packageDebugResources UP-TO-DATE
+> Task :app-store:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :vpn-store:compileDebugRenderscript NO-SOURCE
+> Task :anrs-api:packageDebugResources UP-TO-DATE
+> Task :vpn-api:packageDebugResources UP-TO-DATE
+> Task :vpn-store:generateDebugResValues UP-TO-DATE
+> Task :vpn-store:generateDebugResources UP-TO-DATE
+> Task :browser-api:packageDebugResources UP-TO-DATE
+> Task :vpn-api:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :browser-api:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :anrs-api:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :browser-api:generateDebugBuildConfig UP-TO-DATE
+> Task :anrs-api:generateDebugBuildConfig UP-TO-DATE
+> Task :vpn-store:packageDebugResources UP-TO-DATE
+> Task :anrs-api:parseDebugLocalResources UP-TO-DATE
+> Task :browser-api:parseDebugLocalResources UP-TO-DATE
+> Task :vpn-store:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :app-store:writeDebugAarMetadata UP-TO-DATE
+> Task :vpn-api:writeDebugAarMetadata UP-TO-DATE
+> Task :vpn-store:writeDebugAarMetadata UP-TO-DATE
+> Task :anrs-api:processDebugManifest UP-TO-DATE
+> Task :browser-api:processDebugManifest UP-TO-DATE
+> Task :app-store:extractDeepLinksDebug UP-TO-DATE
+> Task :browser-api:generateDebugRFile UP-TO-DATE
+> Task :anrs-api:generateDebugRFile UP-TO-DATE
+> Task :app-store:processDebugManifest UP-TO-DATE
+> Task :vpn-api:extractDeepLinksDebug UP-TO-DATE
+> Task :vpn-store:extractDeepLinksDebug UP-TO-DATE
+> Task :app-store:compileDebugLibraryResources UP-TO-DATE
+> Task :vpn-api:processDebugManifest UP-TO-DATE
+> Task :app-store:parseDebugLocalResources UP-TO-DATE
+> Task :vpn-api:compileDebugLibraryResources UP-TO-DATE
+> Task :app-store:generateDebugRFile UP-TO-DATE
+> Task :vpn-store:processDebugManifest UP-TO-DATE
+> Task :vpn-api:parseDebugLocalResources UP-TO-DATE
+> Task :vpn-api:generateDebugRFile UP-TO-DATE
+> Task :app-store:generateDebugBuildConfig UP-TO-DATE
+> Task :vpn-store:compileDebugLibraryResources UP-TO-DATE
+> Task :vpn-store:parseDebugLocalResources UP-TO-DATE
+> Task :vpn-api:generateDebugBuildConfig UP-TO-DATE
+> Task :vpn-store:generateDebugRFile UP-TO-DATE
+> Task :anrs-store:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :statistics:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :anrs-impl:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :common-ui:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :privacy-config-impl:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :feature-toggles-impl:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :di:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :privacy-config-store:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :common:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :anrs-store:compileDebugRenderscript NO-SOURCE
+> Task :statistics:compileDebugRenderscript NO-SOURCE
+> Task :common:compileDebugAidl NO-SOURCE
+> Task :privacy-config-impl:compileDebugRenderscript NO-SOURCE
+> Task :anrs-impl:generateDebugResValues UP-TO-DATE
+> Task :common-ui:compileDebugRenderscript NO-SOURCE
+> Task :privacy-config-store:compileDebugRenderscript NO-SOURCE
+> Task :feature-toggles-impl:compileDebugRenderscript NO-SOURCE
+> Task :statistics:generateDebugResValues UP-TO-DATE
+> Task :anrs-store:generateDebugResValues UP-TO-DATE
+> Task :privacy-config-store:compileDebugAidl NO-SOURCE
+> Task :privacy-config-impl:generateDebugResValues UP-TO-DATE
+> Task :common-ui:compileDebugAidl NO-SOURCE
+> Task :feature-toggles-impl:compileDebugAidl NO-SOURCE
+> Task :anrs-store:compileDebugAidl NO-SOURCE
+> Task :common:compileDebugRenderscript NO-SOURCE
+> Task :anrs-store:generateDebugResources UP-TO-DATE
+> Task :statistics:compileDebugAidl NO-SOURCE
+> Task :statistics:generateDebugResources UP-TO-DATE
+> Task :privacy-config-impl:compileDebugAidl NO-SOURCE
+> Task :privacy-config-store:generateDebugResValues UP-TO-DATE
+> Task :privacy-config-impl:generateDebugResources UP-TO-DATE
+> Task :privacy-config-store:generateDebugResources UP-TO-DATE
+> Task :common-ui:generateDebugResValues UP-TO-DATE
+> Task :common-ui:generateDebugResources UP-TO-DATE
+> Task :feature-toggles-impl:generateDebugResValues UP-TO-DATE
+> Task :feature-toggles-impl:generateDebugResources UP-TO-DATE
+> Task :common:generateDebugResValues UP-TO-DATE
+> Task :common:generateDebugResources UP-TO-DATE
+> Task :anrs-impl:generateDebugBuildConfig UP-TO-DATE
+> Task :anrs-impl:compileDebugAidl NO-SOURCE
+> Task :anrs-impl:processDebugManifest UP-TO-DATE
+> Task :anrs-impl:processDebugJavaRes NO-SOURCE
+> Task :feature-toggles-impl:packageDebugResources UP-TO-DATE
+> Task :common:packageDebugResources UP-TO-DATE
+> Task :anrs-impl:javaPreCompileDebug UP-TO-DATE
+> Task :privacy-config-impl:packageDebugResources UP-TO-DATE
+> Task :anrs-impl:packageDebugRenderscript NO-SOURCE
+> Task :statistics:packageDebugResources UP-TO-DATE
+> Task :common:compileDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :anrs-impl:writeDebugAarMetadata UP-TO-DATE
+> Task :feature-toggles-impl:writeDebugAarMetadata UP-TO-DATE
+> Task :privacy-config-impl:writeDebugAarMetadata UP-TO-DATE
+> Task :statistics:compileDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :browser-api:compileDebugKotlin UP-TO-DATE
+> Task :anrs-store:packageDebugResources UP-TO-DATE
+> Task :common:generateDebugBuildConfig UP-TO-DATE
+> Task :anrs-impl:extractDeepLinksDebug UP-TO-DATE
+> Task :feature-toggles-impl:extractDeepLinksDebug UP-TO-DATE
+> Task :vpn-main:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :privacy-config-impl:extractDeepLinksDebug UP-TO-DATE
+> Task :common:parseDebugLocalResources UP-TO-DATE
+> Task :browser-api:javaPreCompileDebug UP-TO-DATE
+> Task :privacy-config-store:packageDebugResources UP-TO-DATE
+> Task :vpn:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :vpn-main:compileDebugRenderscript NO-SOURCE
+> Task :anrs-api:compileDebugKotlin UP-TO-DATE
+> Task :anrs-api:processDebugJavaRes NO-SOURCE
+> Task :anrs-store:generateDebugBuildConfig UP-TO-DATE
+> Task :privacy-config-store:writeDebugAarMetadata UP-TO-DATE
+> Task :statistics:generateDebugBuildConfig UP-TO-DATE
+> Task :vpn:compileDebugAidl NO-SOURCE
+> Task :anrs-store:parseDebugLocalResources UP-TO-DATE
+> Task :anrs-api:bundleLibResDebug UP-TO-DATE
+> Task :vpn:compileDebugRenderscript NO-SOURCE
+> Task :statistics:parseDebugLocalResources UP-TO-DATE
+> Task :anrs-api:javaPreCompileDebug UP-TO-DATE
+> Task :vpn:generateDebugResValues UP-TO-DATE
+> Task :common:processDebugManifest UP-TO-DATE
+> Task :vpn:generateDebugResources UP-TO-DATE
+> Task :vpn-main:generateDebugResValues UP-TO-DATE
+> Task :common:generateDebugRFile UP-TO-DATE
+> Task :vpn-main:compileDebugAidl NO-SOURCE
+> Task :vpn-main:generateDebugResources UP-TO-DATE
+> Task :vpn-api:compileDebugKotlin UP-TO-DATE
+> Task :privacy-config-store:extractDeepLinksDebug UP-TO-DATE
+> Task :privacy-config-impl:processDebugManifest UP-TO-DATE
+> Task :anrs-store:processDebugManifest UP-TO-DATE
+> Task :browser-api:compileDebugJavaWithJavac UP-TO-DATE
+> Task :vpn-api:javaPreCompileDebug UP-TO-DATE
+> Task :statistics:processDebugManifest UP-TO-DATE
+> Task :common:javaPreCompileDebug UP-TO-DATE
+> Task :feature-toggles-impl:processDebugManifest UP-TO-DATE
+> Task :browser-api:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :privacy-config-impl:compileDebugLibraryResources UP-TO-DATE
+> Task :common:writeDebugAarMetadata UP-TO-DATE
+> Task :browser-api:writeDebugAarMetadata UP-TO-DATE
+> Task :anrs-api:compileDebugJavaWithJavac UP-TO-DATE
+> Task :common:extractDeepLinksDebug UP-TO-DATE
+> Task :privacy-config-impl:parseDebugLocalResources UP-TO-DATE
+> Task :browser-api:extractDeepLinksDebug UP-TO-DATE
+> Task :statistics:generateDebugRFile UP-TO-DATE
+> Task :anrs-api:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :common:compileDebugLibraryResources UP-TO-DATE
+> Task :statistics:javaPreCompileDebug UP-TO-DATE
+> Task :browser-api:compileDebugLibraryResources UP-TO-DATE
+> Task :feature-toggles-impl:compileDebugLibraryResources UP-TO-DATE
+> Task :common-test:preBuild UP-TO-DATE
+> Task :common-test:preDebugBuild UP-TO-DATE
+> Task :anrs-api:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :privacy-config-impl:generateDebugRFile UP-TO-DATE
+> Task :statistics:writeDebugAarMetadata UP-TO-DATE
+> Task :common-test:compileDebugAidl NO-SOURCE
+> Task :anrs-api:packageDebugRenderscript NO-SOURCE
+> Task :statistics:extractDeepLinksDebug UP-TO-DATE
+> Task :feature-toggles-impl:parseDebugLocalResources UP-TO-DATE
+> Task :privacy-config-impl:compileDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :vpn-store:generateDebugBuildConfig UP-TO-DATE
+> Task :common-test:compileDebugRenderscript NO-SOURCE
+> Task :anrs-impl:compileDebugRenderscript NO-SOURCE
+> Task :anrs-api:compileDebugLibraryResources UP-TO-DATE
+> Task :anrs-impl:generateDebugResources UP-TO-DATE
+> Task :privacy-config-store:processDebugManifest UP-TO-DATE
+> Task :anrs-store:generateDebugRFile UP-TO-DATE
+> Task :statistics:compileDebugLibraryResources UP-TO-DATE
+> Task :anrs-api:writeDebugAarMetadata UP-TO-DATE
+> Task :feature-toggles-impl:generateDebugRFile UP-TO-DATE
+> Task :anrs-store:javaPreCompileDebug UP-TO-DATE
+> Task :privacy-config-store:compileDebugLibraryResources UP-TO-DATE
+> Task :anrs-api:extractDeepLinksDebug UP-TO-DATE
+> Task :privacy-config-impl:generateDebugBuildConfig UP-TO-DATE
+> Task :browser-api:processDebugJavaRes NO-SOURCE
+> Task :anrs-store:processDebugJavaRes NO-SOURCE
+> Task :vpn-api:compileDebugJavaWithJavac UP-TO-DATE
+> Task :feature-toggles-impl:compileDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :privacy-config-impl:javaPreCompileDebug UP-TO-DATE
+> Task :anrs-store:compileDebugLibraryResources UP-TO-DATE
+> Task :common:processDebugJavaRes NO-SOURCE
+> Task :privacy-config-store:parseDebugLocalResources UP-TO-DATE
+> Task :anrs-store:writeDebugAarMetadata UP-TO-DATE
+> Task :browser-api:bundleLibResDebug UP-TO-DATE
+> Task :privacy-config-impl:processDebugJavaRes NO-SOURCE
+> Task :statistics:processDebugJavaRes NO-SOURCE
+> Task :browser-api:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :anrs-store:extractDeepLinksDebug UP-TO-DATE
+> Task :feature-toggles-impl:generateDebugBuildConfig UP-TO-DATE
+> Task :feature-toggles-impl:javaPreCompileDebug UP-TO-DATE
+> Task :privacy-config-store:generateDebugRFile UP-TO-DATE
+> Task :feature-toggles-impl:processDebugJavaRes NO-SOURCE
+> Task :privacy-config-store:generateDebugBuildConfig UP-TO-DATE
+> Task :privacy-config-store:javaPreCompileDebug UP-TO-DATE
+> Task :common-test:dataBindingMergeDependencyArtifactsDebug UP-TO-DATE
+> Task :privacy-config-store:processDebugJavaRes NO-SOURCE
+> Task :di:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :common-test:generateDebugResValues UP-TO-DATE
+> Task :common-test:generateDebugResources UP-TO-DATE
+> Task :vpn-main:packageDebugResources UP-TO-DATE
+> Task :di:compileDebugRenderscript NO-SOURCE
+> Task :vpn-main:writeDebugAarMetadata UP-TO-DATE
+> Task :vpn-main:extractDeepLinksDebug UP-TO-DATE
+> Task :di:generateDebugResValues UP-TO-DATE
+> Task :di:generateDebugResources UP-TO-DATE
+> Task :anrs-impl:packageDebugResources UP-TO-DATE
+> Task :vpn-main:processDebugManifest UP-TO-DATE
+> Task :anrs-impl:parseDebugLocalResources UP-TO-DATE
+> Task :vpn-main:compileDebugLibraryResources UP-TO-DATE
+> Task :vpn-api:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :vpn-api:processDebugJavaRes NO-SOURCE
+> Task :common-test:packageDebugResources UP-TO-DATE
+> Task :vpn-main:parseDebugLocalResources UP-TO-DATE
+> Task :di:packageDebugResources UP-TO-DATE
+> Task :anrs-impl:generateDebugRFile UP-TO-DATE
+> Task :common-test:generateDebugBuildConfig UP-TO-DATE
+> Task :vpn-main:generateDebugRFile UP-TO-DATE
+> Task :common-test:parseDebugLocalResources UP-TO-DATE
+> Task :di:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :vpn-main:compileDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :di:generateDebugBuildConfig UP-TO-DATE
+> Task :common:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :vpn-api:bundleLibResDebug UP-TO-DATE
+> Task :vpn-main:generateDebugBuildConfig UP-TO-DATE
+> Task :vpn-api:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :di:parseDebugLocalResources UP-TO-DATE
+> Task :common-test:processDebugManifest UP-TO-DATE
+> Task :vpn-main:javaPreCompileDebug UP-TO-DATE
+> Task :common:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :vpn-main:processDebugJavaRes NO-SOURCE
+> Task :common-test:generateDebugRFile UP-TO-DATE
+> Task :anrs-store:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :privacy-config-store:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :statistics:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :common-test:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :di:processDebugManifest UP-TO-DATE
+> Task :privacy-config-store:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :anrs-store:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :feature-toggles-impl:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :di:generateDebugRFile UP-TO-DATE
+> Task :common-test:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :statistics:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :privacy-config-impl:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :common-test:javaPreCompileDebug UP-TO-DATE
+> Task :common-test:processDebugJavaRes NO-SOURCE
+> Task :feature-toggles-impl:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :privacy-config-impl:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :common-ui:packageDebugResources UP-TO-DATE
+> Task :common-ui:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :anrs-impl:compileDebugLibraryResources UP-TO-DATE
+> Task :common-ui:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :anrs-impl:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :common-ui:writeDebugAarMetadata UP-TO-DATE
+> Task :common-ui:extractDeepLinksDebug UP-TO-DATE
+> Task :anrs-impl:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :app-store:kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :common-ui:processDebugManifest UP-TO-DATE
+> Task :app:dataBindingMergeDependencyArtifactsPlayDebug UP-TO-DATE
+> Task :app:compilePlayDebugAidl NO-SOURCE
+> Task :app:compilePlayDebugRenderscript NO-SOURCE
+> Task :app:generatePlayDebugResValues UP-TO-DATE
+> Task :app:generatePlayDebugResources UP-TO-DATE
+> Task :app:generatePlayDebugBuildConfig UP-TO-DATE
+> Task :app:createPlayDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksPlayDebug UP-TO-DATE
+> Task :app:javaPreCompilePlayDebug UP-TO-DATE
+> Task :app:compilePlayDebugUnitTestKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :app:prePlayDebugUnitTestBuild UP-TO-DATE
+> Task :vpn:packageDebugResources UP-TO-DATE
+> Task :app:javaPreCompilePlayDebugUnitTest UP-TO-DATE
+> Task :common-ui:compileDebugLibraryResources UP-TO-DATE
+> Task :di:compileDebugKotlin UP-TO-DATE
+> Task :vpn:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :di:javaPreCompileDebug UP-TO-DATE
+> Task :common-ui:parseDebugLocalResources UP-TO-DATE
+> Task :common-ui:generateDebugRFile UP-TO-DATE
+> Task :common-ui:compileDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :common-ui:generateDebugBuildConfig UP-TO-DATE
+> Task :di:compileDebugJavaWithJavac UP-TO-DATE
+> Task :common-ui:javaPreCompileDebug UP-TO-DATE
+> Task :common-ui:processDebugJavaRes NO-SOURCE
+> Task :di:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :di:writeDebugAarMetadata UP-TO-DATE
+> Task :di:extractDeepLinksDebug UP-TO-DATE
+> Task :di:compileDebugLibraryResources UP-TO-DATE
+> Task :di:processDebugJavaRes NO-SOURCE
+> Task :vpn:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :vpn:writeDebugAarMetadata UP-TO-DATE
+> Task :vpn:extractDeepLinksDebug UP-TO-DATE
+> Task :di:bundleLibResDebug UP-TO-DATE
+> Task :vpn-main:dataBindingMergeGenClassesDebug UP-TO-DATE
+> Task :app-store:kaptDebugKotlin UP-TO-DATE
+> Task :di:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :vpn-store:kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :vpn-main:dataBindingGenBaseClassesDebug UP-TO-DATE
+> Task :vpn:processDebugManifest UP-TO-DATE
+> Task :app-store:compileDebugKotlin UP-TO-DATE
+> Task :app-store:javaPreCompileDebug UP-TO-DATE
+> Task :app-store:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app-store:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app-store:processDebugJavaRes NO-SOURCE
+> Task :app-store:bundleLibResDebug UP-TO-DATE
+> Task :app-store:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :vpn:compileDebugLibraryResources UP-TO-DATE
+> Task :vpn:parseDebugLocalResources UP-TO-DATE
+> Task :common:kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :vpn:generateDebugRFile UP-TO-DATE
+> Task :vpn:compileDebugKotlinCheckIncrementalCompilationAnvil UP-TO-DATE
+> Task :vpn:generateDebugBuildConfig UP-TO-DATE
+> Task :vpn:javaPreCompileDebug UP-TO-DATE
+> Task :vpn:processDebugJavaRes NO-SOURCE
+> Task :vpn-store:kaptDebugKotlin UP-TO-DATE
+> Task :common:kaptDebugKotlin UP-TO-DATE
+> Task :common:compileDebugKotlin UP-TO-DATE
+> Task :vpn-store:compileDebugKotlin UP-TO-DATE
+> Task :vpn-store:javaPreCompileDebug UP-TO-DATE
+> Task :vpn-store:compileDebugJavaWithJavac UP-TO-DATE
+> Task :vpn-store:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :vpn-store:processDebugJavaRes NO-SOURCE
+> Task :vpn-store:bundleLibResDebug UP-TO-DATE
+> Task :vpn-store:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :common:compileDebugJavaWithJavac UP-TO-DATE
+> Task :common:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :common:bundleLibResDebug UP-TO-DATE
+> Task :common:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :common-test:compileDebugKotlin UP-TO-DATE
+> Task :common-test:compileDebugJavaWithJavac UP-TO-DATE
+> Task :common-test:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :anrs-store:kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :common-test:bundleLibResDebug UP-TO-DATE
+> Task :common-test:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :feature-toggles-impl:compileDebugKotlin UP-TO-DATE
+> Task :feature-toggles-impl:compileDebugJavaWithJavac UP-TO-DATE
+> Task :feature-toggles-impl:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :anrs-store:kaptDebugKotlin UP-TO-DATE
+> Task :feature-toggles-impl:bundleLibResDebug UP-TO-DATE
+> Task :feature-toggles-impl:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :anrs-store:compileDebugKotlin UP-TO-DATE
+> Task :common-ui:compileDebugKotlin UP-TO-DATE
+> Task :anrs-store:compileDebugJavaWithJavac UP-TO-DATE
+> Task :anrs-store:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :anrs-store:bundleLibResDebug UP-TO-DATE
+> Task :anrs-store:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :privacy-config-store:kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :common-ui:compileDebugJavaWithJavac UP-TO-DATE
+> Task :common-ui:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :common-ui:bundleLibResDebug UP-TO-DATE
+> Task :common-ui:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :privacy-config-store:kaptDebugKotlin UP-TO-DATE
+> Task :privacy-config-store:compileDebugKotlin UP-TO-DATE
+> Task :statistics:compileDebugKotlin UP-TO-DATE
+> Task :statistics:compileDebugJavaWithJavac UP-TO-DATE
+> Task :privacy-config-store:compileDebugJavaWithJavac UP-TO-DATE
+> Task :statistics:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :privacy-config-store:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :statistics:bundleLibResDebug UP-TO-DATE
+> Task :statistics:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :privacy-config-store:bundleLibResDebug UP-TO-DATE
+> Task :privacy-config-store:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :anrs-impl:compileDebugKotlin UP-TO-DATE
+> Task :anrs-impl:bundleLibResDebug UP-TO-DATE
+> Task :anrs-impl:compileDebugJavaWithJavac UP-TO-DATE
+> Task :anrs-impl:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :anrs-impl:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :privacy-config-impl:compileDebugKotlin UP-TO-DATE
+> Task :privacy-config-impl:compileDebugJavaWithJavac UP-TO-DATE
+> Task :privacy-config-impl:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :privacy-config-impl:bundleLibResDebug UP-TO-DATE
+> Task :privacy-config-impl:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :vpn:compileDebugKotlin UP-TO-DATE
+> Task :vpn:compileDebugJavaWithJavac UP-TO-DATE
+> Task :vpn:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :vpn:bundleLibResDebug UP-TO-DATE
+> Task :vpn:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :vpn-main:kaptGenerateStubsDebugKotlin UP-TO-DATE
+> Task :app:dataBindingMergeGenClassesPlayDebug UP-TO-DATE
+> Task :app:checkPlayDebugAarMetadata UP-TO-DATE
+> Task :app:processPlayDebugMainManifest UP-TO-DATE
+> Task :app:processPlayDebugManifest UP-TO-DATE
+> Task :app:processPlayDebugManifestForPackage UP-TO-DATE
+> Task :vpn-main:kaptDebugKotlin UP-TO-DATE
+> Task :app:processPlayDebugJavaRes UP-TO-DATE
+> Task :vpn-main:compileDebugKotlin UP-TO-DATE
+> Task :app:processPlayDebugUnitTestJavaRes UP-TO-DATE
+> Task :vpn-main:compileDebugJavaWithJavac UP-TO-DATE
+> Task :vpn-main:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :vpn-main:bundleLibResDebug UP-TO-DATE
+> Task :vpn-main:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:mergePlayDebugResources
+> Task :app:dataBindingGenBaseClassesPlayDebug UP-TO-DATE
+> Task :app:processPlayDebugResources
+> Task :app:kaptGenerateStubsPlayDebugKotlin
+
+> Task :app:kaptPlayDebugKotlin
+warning: sourceTabId column references a foreign key but it is not part of an index. This may trigger full table scans whenever parent table is modified so you are highly advised to create an index that covers this column. - com.duckduckgo.app.tabs.model.TabEntity
+warning: The query returns some columns [id] which are not used by com.duckduckgo.app.tabs.model.TabEntity. You can use @ColumnInfo annotation on the fields to specify the mapping. You can annotate the method with @RewriteQueriesToDropUnusedColumns to direct Room to rewrite your query to avoid fetching unused columns.  You can suppress this warning by annotating the method with @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH). Columns returned by the query: tabId, url, title, skipHome, viewed, position, tabPreviewFile, sourceTabId, deletable, id, tabId. - com.duckduckgo.app.tabs.db.TabsDao.selectedTab()
+warning: The query returns some columns [id] which are not used by com.duckduckgo.app.tabs.model.TabEntity. You can use @ColumnInfo annotation on the fields to specify the mapping. You can annotate the method with @RewriteQueriesToDropUnusedColumns to direct Room to rewrite your query to avoid fetching unused columns.  You can suppress this warning by annotating the method with @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH). Columns returned by the query: tabId, url, title, skipHome, viewed, position, tabPreviewFile, sourceTabId, deletable, id, tabId. - com.duckduckgo.app.tabs.db.TabsDao.liveSelectedTab()
+Note: [1] Wrote GeneratedAppGlideModule with: [com.bumptech.glide.integration.okhttp3.OkHttpLibraryGlideModule]
+
+> Task :app:compilePlayDebugKotlin
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/accessibility/AccessibilitySettingsViewModel.kt: (104, 142): Unchecked cast: AccessibilitySettingsViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/service/SavedSitesImporter.kt: (52, 44): Type mismatch: inferred type is InputStream? but InputStream was expected
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/BookmarksActivity.kt: (103, 15): 'onActivityResult(Int, Int, Intent?): Unit' is deprecated. Overrides deprecated member in 'androidx.activity.ComponentActivity'. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/BookmarksActivity.kt: (221, 17): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/BookmarksActivity.kt: (236, 17): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/BookmarksEntityQueryListener.kt: (49, 36): 'toLowerCase(): String' is deprecated. Use lowercase() instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/BookmarksEntityQueryListener.kt: (51, 43): 'toLowerCase(): String' is deprecated. Use lowercase() instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/BookmarksEntityQueryListener.kt: (60, 36): 'toLowerCase(): String' is deprecated. Use lowercase() instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/BookmarksEntityQueryListener.kt: (62, 42): 'toLowerCase(): String' is deprecated. Use lowercase() instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/BookmarksViewModel.kt: (272, 23): Unchecked cast: BookmarksViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/bookmarks/ui/bookmarkfolders/BookmarkFoldersViewModel.kt: (108, 23): Unchecked cast: BookmarkFoldersViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/brokensite/BrokenSiteActivity.kt: (74, 63): 'yes: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/brokensite/BrokenSiteActivity.kt: (78, 63): 'no: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/brokensite/BrokenSiteViewModel.kt: (147, 128): Unchecked cast: BrokenSiteViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserActivity.kt: (346, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'null' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserActivity.kt: (363, 13): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserActivity.kt: (438, 19): 'onActivityResult(Int, Int, Intent?): Unit' is deprecated. Overrides deprecated member in 'androidx.activity.ComponentActivity'. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserActivity.kt: (452, 15): 'onAttachFragment(Fragment): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserActivity.kt: (458, 9): 'constructor Handler()' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (398, 15): 'onActivityCreated(Bundle?): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (425, 14): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (439, 47): 'transaction(Boolean = ..., Boolean = ..., FragmentTransaction.() -> Unit): Unit' is deprecated. Use commit { .. } or commitNow { .. } extensions
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (501, 24): 'getter for fragmentManager: FragmentManager?' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (650, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'null' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (850, 9): 'requestPermissions(Array<(out) String!>, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1357, 46): Unnecessary safe call on a non-null receiver of type ScrollAwareRefreshLayout. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1435, 23): 'constructor Handler()' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1572, 92): Unnecessary safe call on a non-null receiver of type KeyboardAwareEditText. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1580, 37): Unnecessary safe call on a non-null receiver of type KeyboardAwareEditText. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1587, 92): Unnecessary safe call on a non-null receiver of type KeyboardAwareEditText. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1671, 33): Unnecessary safe call on a non-null receiver of type FrameLayout. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1748, 9): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1756, 9): 'requestPermissions(Array<(out) String!>, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (1833, 49): 'no: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2100, 51): Unnecessary safe call on a non-null receiver of type ImageButton. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2104, 43): Unnecessary safe call on a non-null receiver of type ImageButton. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2286, 42): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2287, 42): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2289, 41): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2295, 46): Unnecessary safe call on a non-null receiver of type AppCompatCheckBox. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2296, 46): Unnecessary safe call on a non-null receiver of type AppCompatCheckBox. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2297, 34): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2298, 39): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2299, 39): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2301, 40): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2302, 48): Unnecessary safe call on a non-null receiver of type AppCompatCheckBox. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2303, 48): Unnecessary safe call on a non-null receiver of type AppCompatCheckBox. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2305, 38): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2309, 26): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2314, 34): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2322, 32): Unnecessary safe call on a non-null receiver of type ImageView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2323, 43): Unnecessary safe call on a non-null receiver of type ImageButton. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2324, 40): Unnecessary safe call on a non-null receiver of type ImageView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2325, 35): Unnecessary safe call on a non-null receiver of type ImageView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2328, 43): Unnecessary safe call on a non-null receiver of type ImageButton. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2329, 40): Unnecessary safe call on a non-null receiver of type ImageView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2330, 35): Unnecessary safe call on a non-null receiver of type ImageView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2349, 89): Unnecessary safe call on a non-null receiver of type TextView. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabFragment.kt: (2513, 47): Unnecessary safe call on a non-null receiver of type EditText. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabViewModel.kt: (541, 9): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabViewModel.kt: (541, 43): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabViewModel.kt: (667, 9): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabViewModel.kt: (667, 43): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabViewModel.kt: (997, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'Unchanged', 'Other' branches or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabViewModel.kt: (1572, 59): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserTabViewModel.kt: (2532, 19): Unchecked cast: BrowserTabViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserViewModel.kt: (117, 13): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'ShowNothing' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/BrowserViewModel.kt: (271, 19): Unchecked cast: BrowserViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/DuckDuckGoWebView.kt: (73, 27): Variable 'returnValue' initializer is redundant
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/PulseAnimation.kt: (32, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/PulseAnimation.kt: (42, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/PulseAnimation.kt: (50, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/WebViewRequestInterceptor.kt: (84, 33): Unnecessary safe call on a non-null receiver of type WebSettings. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/WebViewRequestInterceptor.kt: (192, 80): Unnecessary safe call on a non-null receiver of type WebSettings. This expression will have nullable type in future releases
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/defaultbrowsing/DefaultBrowserNavigator.kt: (38, 26): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/defaultbrowsing/DefaultBrowserNavigator.kt: (52, 18): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/defaultbrowsing/DefaultBrowserObserver.kt: (21, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/defaultbrowsing/DefaultBrowserObserver.kt: (33, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/defaultbrowsing/TopInstructionsCard.kt: (33, 9): 'setter for view: View?' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/downloader/FileDownloader.kt: (43, 43): 'getExternalStoragePublicDirectory(String!): File!' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/downloader/NetworkFileDownloader.kt: (195, 13): 'allowScanningByMediaScanner(): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/filechooser/FileChooserIntentBuilder.kt: (84, 49): 'toLowerCase(): String' is deprecated. Use lowercase() instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/httpauth/WebViewHttpAuthStore.kt: (25, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/httpauth/WebViewHttpAuthStore.kt: (85, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/httpauth/WebViewHttpAuthStore.kt: (106, 21): 'setHttpAuthUsernamePassword(String!, String!, String!, String!): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/serviceworker/ServiceWorkerLifecycleObserver.kt: (23, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/serviceworker/ServiceWorkerLifecycleObserver.kt: (37, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/shortcut/ShortcutReceiver.kt: (27, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/browser/shortcut/ShortcutReceiver.kt: (54, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/cta/ui/CtaViewModel.kt: (82, 49): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ObsoleteCoroutinesApi' or '@OptIn(kotlinx.coroutines.ObsoleteCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/cta/ui/CtaViewModel.kt: (87, 9): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ObsoleteCoroutinesApi' or '@OptIn(kotlinx.coroutines.ObsoleteCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/cta/ui/CtaViewModel.kt: (87, 47): 'asFlow(): Flow<T>' is deprecated. 'BroadcastChannel' is obsolete and all corresponding operators are deprecated in the favour of StateFlow and SharedFlow
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/cta/ui/CtaViewModel.kt: (87, 47): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ObsoleteCoroutinesApi' or '@OptIn(kotlinx.coroutines.ObsoleteCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/cta/ui/CtaViewModel.kt: (417, 21): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ObsoleteCoroutinesApi' or '@OptIn(kotlinx.coroutines.ObsoleteCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/di/component/AppConfigurationJobServiceComponent.kt: (19, 31): 'AppConfigurationJobService' is deprecated. This is the old sync service which uses JobScheduler. A new version, `AppConfigurationWorker` uses WorkManager and should be used going forwards.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/di/component/AppConfigurationJobServiceComponent.kt: (36, 65): 'AppConfigurationJobService' is deprecated. This is the old sync service which uses JobScheduler. A new version, `AppConfigurationWorker` uses WorkManager and should be used going forwards.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/di/component/AppConfigurationJobServiceComponent.kt: (38, 49): 'AppConfigurationJobService' is deprecated. This is the old sync service which uses JobScheduler. A new version, `AppConfigurationWorker` uses WorkManager and should be used going forwards.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/di/component/AppConfigurationJobServiceComponent.kt: (51, 15): 'AppConfigurationJobService' is deprecated. This is the old sync service which uses JobScheduler. A new version, `AppConfigurationWorker` uses WorkManager and should be used going forwards.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/di/component/WelcomePageComponent.kt: (36, 50): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/di/component/WelcomePageComponent.kt: (38, 49): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/di/component/WelcomePageComponent.kt: (51, 15): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/email/ui/EmailProtectionFragment.kt: (41, 15): 'onActivityCreated(Bundle?): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/email/ui/EmailProtectionSignInViewModel.kt: (167, 23): Unchecked cast: EmailProtectionSignInViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/email/ui/EmailProtectionSignOutViewModel.kt: (63, 135): Unchecked cast: EmailProtectionSignOutViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/email/ui/EmailProtectionViewModel.kt: (39, 54): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/email/ui/EmailProtectionViewModel.kt: (72, 121): Unchecked cast: EmailProtectionViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/feedback/ui/common/FeedbackActivity.kt: (151, 32): 'transaction(Boolean = ..., Boolean = ..., FragmentTransaction.() -> Unit): Unit' is deprecated. Use commit { .. } or commitNow { .. } extensions
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/feedback/ui/common/FeedbackFragment.kt: (40, 15): 'onActivityCreated(Bundle?): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/feedback/ui/common/FeedbackViewModel.kt: (358, 23): Unchecked cast: FeedbackViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/feedback/ui/initial/InitialFeedbackFragmentViewModel.kt: (52, 119): Unchecked cast: InitialFeedbackFragmentViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/feedback/ui/negative/brokensite/BrokenSiteNegativeFeedbackViewModel.kt: (52, 125): Unchecked cast: BrokenSiteNegativeFeedbackViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/feedback/ui/negative/openended/ShareOpenEndedNegativeFeedbackViewModel.kt: (61, 133): Unchecked cast: ShareOpenEndedNegativeFeedbackViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/feedback/ui/positive/initial/PositiveFeedbackLandingViewModel.kt: (56, 119): Unchecked cast: PositiveFeedbackLandingViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/AutomaticDataClearer.kt: (165, 9): Non exhaustive 'when' statements on enum will be prohibited in 1.7, add 'CLEAR_NONE' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/AutomaticDataClearer.kt: (189, 21): 'constructor Handler()' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/DataClearerForegroundAppRestartPixel.kt: (27, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/DataClearerForegroundAppRestartPixel.kt: (57, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/DataClearerForegroundAppRestartPixel.kt: (64, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/LottieFireAnimationLoader.kt: (23, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/LottieFireAnimationLoader.kt: (42, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/fireproofwebsite/ui/FireproofWebsiteAdapter.kt: (136, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'is FireproofWebsiteSimpleViewViewHolder' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/fire/fireproofwebsite/ui/FireproofWebsitesViewModel.kt: (129, 23): Unchecked cast: FireproofWebsitesViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/AlertingUncaughtExceptionHandler.kt: (49, 47): Type mismatch: inferred type is Thread? but Thread was expected
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/AlertingUncaughtExceptionHandler.kt: (49, 55): Type mismatch: inferred type is Throwable? but Throwable was expected
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/AlertingUncaughtExceptionHandler.kt: (82, 51): Type mismatch: inferred type is Thread? but Thread was expected
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/AlertingUncaughtExceptionHandler.kt: (82, 59): Type mismatch: inferred type is Throwable? but Throwable was expected
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/DuckDuckGoApplication.kt: (203, 9): This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/exception/UncaughtExceptionModule.kt: (55, 13): Type mismatch: inferred type is Thread.UncaughtExceptionHandler? but Thread.UncaughtExceptionHandler was expected
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/initialization/AppDataLoader.kt: (21, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/initialization/AppDataLoader.kt: (39, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/install/AppInstallStore.kt: (26, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/install/AppInstallStore.kt: (70, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/migrations/MigrationLifecycleObserver.kt: (21, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/migrations/MigrationLifecycleObserver.kt: (36, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/rating/AppEnjoymentAppCreationObserver.kt: (22, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/rating/AppEnjoymentAppCreationObserver.kt: (34, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/shortcut/AppShortcutCreator.kt: (31, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/shortcut/AppShortcutCreator.kt: (58, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/ActivityExtension.kt: (60, 41): 'getter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/ActivityExtension.kt: (61, 19): 'SYSTEM_UI_FLAG_HIDE_NAVIGATION: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/ActivityExtension.kt: (62, 19): 'SYSTEM_UI_FLAG_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/ActivityExtension.kt: (63, 19): 'SYSTEM_UI_FLAG_IMMERSIVE_STICKY: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/ActivityExtension.kt: (65, 22): 'setter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/ActivityExtension.kt: (69, 38): 'getter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/ActivityExtension.kt: (70, 30): 'SYSTEM_UI_FLAG_IMMERSIVE_STICKY: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/FaviconImageView.kt: (78, 57): 'toUpperCase(Locale): String' is deprecated. Use uppercase() instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/global/view/RecyclerViewExtension.kt: (27, 34): Parameter 'animator' is never used
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/globalprivacycontrol/ui/GlobalPrivacyControlViewModel.kt: (97, 23): Unchecked cast: GlobalPrivacyControlViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/httpsupgrade/HttpsUpgrader.kt: (23, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/httpsupgrade/HttpsUpgrader.kt: (72, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/icon/ui/ChangeIconActivity.kt: (82, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'null' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/icon/ui/ChangeIconViewModel.kt: (102, 23): Unchecked cast: ChangeIconViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/job/AndroidWorkScheduler.kt: (21, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/job/AndroidWorkScheduler.kt: (43, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/job/AppConfigurationSyncer.kt: (24, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/job/AppConfigurationSyncer.kt: (62, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/launch/LaunchBridgeActivity.kt: (56, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'null' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/launch/LaunchViewModel.kt: (81, 23): Unchecked cast: LaunchViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/location/ui/LocationPermissionsAdapter.kt: (157, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'is LocationPermissionsSimpleViewViewHolder' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/location/ui/LocationPermissionsViewModel.kt: (159, 23): Unchecked cast: LocationPermissionsViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/NotificationHandlerService.kt: (19, 20): 'IntentService' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/NotificationHandlerService.kt: (47, 36): 'constructor IntentService(String!)' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/NotificationHandlerService.kt: (47, 36): 'IntentService' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/NotificationHandlerService.kt: (68, 15): 'onCreate(): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/NotificationHandlerService.kt: (157, 32): 'ACTION_CLOSE_SYSTEM_DIALOGS: String' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/NotificationRegistrar.kt: (31, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/NotificationRegistrar.kt: (96, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/NotificationRegistrar.kt: (101, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/notification/model/EmailWaitlistCodeNotification.kt: (56, 5): Parameter 'code' is never used
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/OnboardingPageBuilder.kt: (23, 29): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/OnboardingPageBuilder.kt: (34, 18): This declaration overrides experimental member of supertype 'OnboardingPageBuilder' and should be annotated with '@kotlinx.coroutines.ExperimentalCoroutinesApi'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/OnboardingPageBuilder.kt: (34, 39): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/OnboardingPageManager.kt: (56, 36): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/OnboardingPageManager.kt: (72, 37): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/OnboardingPageManager.kt: (73, 38): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi' or '@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/OnboardingViewModel.kt: (77, 23): Unchecked cast: OnboardingViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/PagerAdapter.kt: (20, 30): 'FragmentPagerAdapter' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/PagerAdapter.kt: (27, 5): 'constructor FragmentPagerAdapter(FragmentManager)' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/PagerAdapter.kt: (27, 5): 'FragmentPagerAdapter' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (72, 15): 'setUserVisibleHint(Boolean): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (80, 15): 'onActivityCreated(Bundle?): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (109, 51): 'FLAG_TRANSLUCENT_STATUS: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (112, 27): 'setter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (112, 53): 'SYSTEM_UI_FLAG_LIGHT_STATUS_BAR: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (192, 13): 'setter for view: View?' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (208, 9): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (216, 17): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPage.kt: (246, 27): 'onActivityResult(Int, Int, Intent?): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/DefaultBrowserPageViewModel.kt: (220, 23): Unchecked cast: DefaultBrowserPageViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (60, 26): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ObsoleteCoroutinesApi' or '@OptIn(kotlinx.coroutines.ObsoleteCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (80, 13): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ObsoleteCoroutinesApi' or '@OptIn(kotlinx.coroutines.ObsoleteCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (80, 20): 'asFlow(): Flow<T>' is deprecated. 'BroadcastChannel' is obsolete and all corresponding operators are deprecated in the favour of StateFlow and SharedFlow
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (80, 20): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ObsoleteCoroutinesApi' or '@OptIn(kotlinx.coroutines.ObsoleteCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (137, 13): This declaration is experimental and its usage should be marked with '@kotlinx.coroutines.ObsoleteCoroutinesApi' or '@OptIn(kotlinx.coroutines.ObsoleteCoroutinesApi::class)'
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (142, 9): 'startActivityForResult(Intent!, Int): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (168, 19): 'onActivityResult(Int, Int, Intent?): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (174, 51): 'FLAG_TRANSLUCENT_STATUS: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (177, 27): 'setter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (177, 53): 'SYSTEM_UI_FLAG_LIGHT_STATUS_BAR: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (179, 23): 'setter for systemUiVisibility: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/onboarding/ui/page/WelcomePage.kt: (179, 50): 'SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/playstore/PlayStoreUtils.kt: (37, 56): 'getInstallerPackageName(String): String?' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/renderer/TrackersRenderer.kt: (80, 14): 'toLowerCase(Locale): String' is deprecated. Use lowercase() instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/PrivacyDashboardViewModel.kt: (236, 19): Unchecked cast: PrivacyDashboardViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/PrivacyPracticesAdapter.kt: (50, 55): 'capitalize(): String' is deprecated. Use replaceFirstChar instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/PrivacyPracticesViewModel.kt: (65, 124): Unchecked cast: PrivacyPracticesViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/ScorecardViewModel.kt: (106, 85): Unchecked cast: ScorecardViewModel! to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/TrackerNetworksViewModel.kt: (100, 92): Unchecked cast: TrackerNetworksViewModel! to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/WebsitesAdapter.kt: (141, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'is SimpleViewHolder' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/WhitelistActivity.kt: (106, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'null' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/WhitelistActivity.kt: (123, 48): 'no: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/WhitelistActivity.kt: (140, 48): 'no: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/WhitelistActivity.kt: (155, 48): 'yes: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/WhitelistActivity.kt: (156, 48): 'no: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/privacy/ui/WhitelistViewModel.kt: (140, 125): Unchecked cast: WhitelistViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/settings/SettingsActivity.kt: (332, 9): 'startActivityForResult(Intent!, Int, Bundle?): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/settings/SettingsActivity.kt: (357, 9): 'startActivityForResult(Intent!, Int, Bundle?): Unit' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/settings/SettingsViewModel.kt: (179, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/settings/SettingsViewModel.kt: (472, 23): Unchecked cast: SettingsViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/surrogates/ResourceSurrogateLoader.kt: (23, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/surrogates/ResourceSurrogateLoader.kt: (42, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/survey/ui/SurveyViewModel.kt: (134, 23): Unchecked cast: SurveyViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/systemsearch/SystemSearchViewModel.kt: (374, 23): Unchecked cast: SystemSearchViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/tabs/db/TabsDbSanitizer.kt: (21, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/tabs/db/TabsDbSanitizer.kt: (36, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/tabs/ui/SwipeToCloseTabListener.kt: (41, 56): 'getter for adapterPosition: Int' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/tabs/ui/TabSwitcherActivity.kt: (181, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'null' branch or 'else' branch instead
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/tabs/ui/TabSwitcherViewModel.kt: (84, 142): Unchecked cast: TabSwitcherViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/trackerdetection/TrackerDataLoader.kt: (23, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/trackerdetection/TrackerDataLoader.kt: (55, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/trackerdetection/api/TdsJson.kt: (73, 68): 'toUpperCase(Locale): String' is deprecated. Use uppercase() instead.
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/usage/app/AppDaysUsedRecorder.kt: (21, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/usage/app/AppDaysUsedRecorder.kt: (31, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/waitlist/email/EmailWaitlistCodeFetcher.kt: (21, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/waitlist/email/EmailWaitlistCodeFetcher.kt: (46, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/waitlist/trackerprotection/AppTPWaitlistCodeFetcher.kt: (21, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/waitlist/trackerprotection/AppTPWaitlistCodeFetcher.kt: (49, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/waitlist/trackerprotection/ui/AppTPWaitlistRedeemCodeViewModel.kt: (80, 23): Unchecked cast: AppTPWaitlistRedeemCodeViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/waitlist/trackerprotection/ui/AppTPWaitlistViewModel.kt: (163, 23): Unchecked cast: AppTPWaitlistViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/widget/FavoritesObserver.kt: (24, 27): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/widget/FavoritesObserver.kt: (44, 6): 'OnLifecycleEvent' is deprecated. Deprecated in Java
+w: /workspace/repo/app/src/main/java/com/duckduckgo/app/widget/ui/AddWidgetInstructionsViewModel.kt: (51, 115): Unchecked cast: AddWidgetInstructionsViewModel to T
+w: /workspace/repo/app/src/main/java/com/duckduckgo/widget/EmptyFavoritesWidgetService.kt: (44, 9): Parameter 'intent' is never used
+w: /workspace/repo/app/src/play/java/com/duckduckgo/referral/PlayStoreAppReferrerStateListener.kt: (159, 9): Non exhaustive 'when' statements on sealed class/interface will be prohibited in 1.7, add 'is ReferrerNotFound', 'is ParseFailure', 'ReferrerInitialising' branches or 'else' branch instead
+
+> Task :app:compilePlayDebugJavaWithJavac
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :app:bundlePlayDebugClasses
+> Task :app:kaptGenerateStubsPlayDebugUnitTestKotlin
+> Task :app:kaptPlayDebugUnitTestKotlin
+
+> Task :app:compilePlayDebugUnitTestKotlin
+w: /workspace/repo/app/src/test/java/com/duckduckgo/app/onboarding/ui/page/WelcomePageViewModelTest.kt: (98, 29): 'asFlow(): Flow<T>' is deprecated. 'BroadcastChannel' is obsolete and all corresponding operators are deprecated in the favour of StateFlow and SharedFlow
+w: /workspace/repo/app/src/test/java/com/duckduckgo/app/survey/api/SurveyDownloaderTest.kt: (170, 82): 'create(MediaType?, String): ResponseBody' is deprecated. Moved to extension function. Put the 'content' argument first to fix Java
+
+> Task :app:compilePlayDebugUnitTestJavaWithJavac NO-SOURCE
+> Task :app:testPlayDebugUnitTest
+
+
+== Build time summary ==
+Total build time 101s
+
+                      :app:compilePlayDebugKotlin | 39S | 39% | ???????????????????????????????????????
+            :app:kaptGenerateStubsPlayDebugKotlin | 23S | 23% | ???????????????????????
+              :app:compilePlayDebugUnitTestKotlin |  9S |  9% | ?????????
+                         :app:kaptPlayDebugKotlin |  8S |  8% | ????????
+               :app:compilePlayDebugJavaWithJavac |  4S |  4% | ????
+                   :app:processPlayDebugResources |  3S |  3% | ???
+                     :app:mergePlayDebugResources |  2S |  2% | ??
+    :app:kaptGenerateStubsPlayDebugUnitTestKotlin |  2S |  2% | ??
+                       :app:testPlayDebugUnitTest |  2S |  2% | ??
+:app:dataBindingMergeDependencyArtifactsPlayDebug |  1S |  1% | ?
+                      :app:bundlePlayDebugClasses |  1S |  1% | ?
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+java.net.UnknownHostException: modal: modal: Temporary failure in name resolution
+> modal: modal: Temporary failure in name resolution
+
+* Try:
+Run with --stacktrace option to get the stack trace. Run with --info or --debug option to get more log output. Run with --scan to get full insights.
+
+* Get more help at https://help.gradle.org
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/7.0.2/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD FAILED in 1m 59s
+360 actionable tasks: 11 executed, 349 up-to-date
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.duckduckgo.app.autocomplete.api.AutoCompleteApiTest" tests="0" skipped="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="modal" time="0.0">
+  <properties/>
+  <system-out><![CDATA[WARNING: No manifest file found at ./AndroidManifest.xml.
+Falling back to the Android OS resources only.
+To remove this warning, annotate your test class with @Config(manifest=Config.NONE).
+]]></system-out>
+  <system-err><![CDATA[No such manifest file: ./AndroidManifest.xml
+]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.duckduckgo.app.bookmarks.ui.bookmarkfolders.BookmarkFoldersViewModelTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:30:29" hostname="modal" time="0.584">
+  <properties/>
+  <testcase name="whenFetchBookmarkFoldersThenCallRepoAndUpdateViewState" classname="com.duckduckgo.app.bookmarks.ui.bookmarkfolders.BookmarkFoldersViewModelTest" time="0.58"/>
+  <testcase name="newFolderAddedThenCallRepoAndUpdateViewState" classname="com.duckduckgo.app.bookmarks.ui.bookmarkfolders.BookmarkFoldersViewModelTest" time="0.002"/>
+  <testcase name="whenItemSelectedThenIssueSelectFolderCommand" classname="com.duckduckgo.app.bookmarks.ui.bookmarkfolders.BookmarkFoldersViewModelTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=junit exit_code=0

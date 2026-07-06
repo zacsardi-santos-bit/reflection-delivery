@@ -1,0 +1,29 @@
+{
+    "id": "2c25d5ea-c175-4c01-9405-4157716dac96",
+    "started_at": "2026-07-06T12:17:19.950460",
+    "finished_at": "2026-07-06T12:18:16.657210",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__microsoft-windows-rs-4143": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "microsoft-windows-rs-4143__Tw4FWoj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

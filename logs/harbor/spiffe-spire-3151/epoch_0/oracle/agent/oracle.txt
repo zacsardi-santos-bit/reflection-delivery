@@ -1,7 +1,0 @@
-patching file support/oidc-discovery-provider/README.md
-patching file support/oidc-discovery-provider/config.go
-patching file support/oidc-discovery-provider/healthchecks_handler.go
-patching file support/oidc-discovery-provider/jwks_source.go
-patching file support/oidc-discovery-provider/main.go
-patching file support/oidc-discovery-provider/server_api.go
-patching file support/oidc-discovery-provider/workload_api.go

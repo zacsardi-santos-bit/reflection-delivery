@@ -1,0 +1,1101 @@
+diff --git a/.github/helper_makefile/build_all_extensions b/.github/helper_makefile/build_all_extensions
+index 22b9df395d..20c7659c56 100644
+--- a/.github/helper_makefile/build_all_extensions
++++ b/.github/helper_makefile/build_all_extensions
+@@ -13,4 +13,4 @@ configure_ci:
+ 	cd duckdb && BUILD_ALL_EXT=1 make extension_configuration && cp build/extension_configuration/vcpkg.json ../.
+ 
+ test_release:
+-	python3 duckdb/scripts/ci/run_tests.py ./build/release/test/unittest
++	./build/release/test/run
+diff --git a/.github/workflows/ExtendedTests.yml b/.github/workflows/ExtendedTests.yml
+index 8394220f1d..eaecd91df1 100644
+--- a/.github/workflows/ExtendedTests.yml
++++ b/.github/workflows/ExtendedTests.yml
+@@ -57,7 +57,7 @@ jobs:
+     - name: Run Tests
+       shell: bash
+       run: |
+-        python3 scripts/ci/run_tests.py --test-config=test/configs/${{ matrix.config }}.json ./build/reldebug/test/unittest "*"
++        ./build/reldebug/test/run --test-config=test/configs/${{ matrix.config }}.json "*"
+ 
+   regression-lto-benchmark-runner:
+      name: Benchmark runner lto vs non-lto (OSX)
+diff --git a/.github/workflows/Main.yml b/.github/workflows/Main.yml
+index 8f50114b22..47733466b7 100644
+--- a/.github/workflows/Main.yml
++++ b/.github/workflows/Main.yml
+@@ -491,7 +491,7 @@ jobs:
+         BUILD_JEMALLOC: 1
+         CORE_EXTENSIONS: "icu;tpch;tpcds;fts;json;inet;parquet;autocomplete;test-utils;httpfs"
+         DISABLE_SANITIZER: 1
+-        SMOKE_UNITTEST: build/release/test/unittest
++        SMOKE_RUNNER: build/release/test/run
+       with:
+         build: python3 scripts/ci/retry.py -- make release
+         test: ${{ fromJson(needs.prepare.outputs.skip_tests) && 'true' || 'make smoke T="--changed-tests=$RUNNER_TEMP/changed_tests.txt"' }}
+diff --git a/.github/workflows/NightlyTests.yml b/.github/workflows/NightlyTests.yml
+index aa27483b72..c58075fd36 100644
+--- a/.github/workflows/NightlyTests.yml
++++ b/.github/workflows/NightlyTests.yml
+@@ -152,7 +152,7 @@ jobs:
+     - name: Test
+       shell: bash
+       run: |
+-          python3 scripts/ci/run_tests.py --test-config test/configs/release_assertions.json --batch-timeout 600 build/relassert/test/unittest "*"
++          ./build/relassert/test/run --test-config test/configs/release_assertions.json --batch-timeout 600 "*"
+ 
+   release-assert-osx-storage:
+     name: Release Assertions OSX Storage
+@@ -190,7 +190,7 @@ jobs:
+     - name: Test
+       shell: bash
+       run: |
+-          python3 scripts/ci/run_tests.py --test-config test/configs/release_assertions.json --batch-timeout 600 build/relassert/test/unittest "*"
++          ./build/relassert/test/run --test-config test/configs/release_assertions.json --batch-timeout 600 "*"
+ 
+   smaller-binary:
+     name: Smaller Binary
+@@ -272,7 +272,7 @@ jobs:
+     - name: Test
+       shell: bash
+       run: |
+-          python3 scripts/ci/run_tests.py --test-config test/configs/release_assertions.json --batch-timeout 600 build/relassert/test/unittest "*"
++          ./build/relassert/test/run --test-config test/configs/release_assertions.json --batch-timeout 600 "*"
+ 
+   valgrind:
+     name: Valgrind
+@@ -314,7 +314,7 @@ jobs:
+ 
+     - name: Test
+       shell: bash
+-      run: python3 scripts/ci/run_tests.py --retry 0 --workers 1 --batch-size 1 --batch-timeout 1200 --test-command "valgrind {binary} {flags} -f {test_list}" ./build/relassert/test/unittest test/sql/tpch/tpch_sf001.test_slow
++      run: ./build/relassert/test/run --retry 0 --workers 1 --batch-size 1 --batch-timeout 1200 --test-command "valgrind {binary} {flags} -f {test_list}" test/sql/tpch/tpch_sf001.test_slow
+ 
+   sqllogic:
+      name: Sqllogic tests
+@@ -548,15 +548,15 @@ jobs:
+ 
+       - name: All tests with 512 vector size and default block size
+         shell: bash
+-        run: python3 scripts/ci/run_tests.py --test-config=test/configs/vector_size_512.json ./build/relassert/test/unittest "*"
++        run: ./build/relassert/test/run --test-config=test/configs/vector_size_512.json "*"
+ 
+       - name: All tests with 512 vector size and 16kB block size
+         shell: bash
+-        run: python3 scripts/ci/run_tests.py --test-config=test/configs/block_size_16kB.json ./build/relassert/test/unittest "*"
++        run: ./build/relassert/test/run --test-config=test/configs/block_size_16kB.json "*"
+ 
+       - name: All tests with a smaller initial column segment size
+         shell: bash
+-        run: python3 scripts/ci/run_tests.py --test-config=test/configs/initial_column_segment_size.json ./build/relassert/test/unittest "*"
++        run: ./build/relassert/test/run --test-config=test/configs/initial_column_segment_size.json "*"
+ 
+   force-blocking-sink-source:
+     name: Forcing async Sinks/Sources
+@@ -589,7 +589,7 @@ jobs:
+ 
+       - name: Test
+         shell: bash
+-        run: python3 scripts/ci/run_tests.py --batch-timeout 600 build/relassert/test/unittest
++        run: ./build/relassert/test/run --batch-timeout 600
+ 
+   linux-wasm-experimental:
+     name: WebAssembly duckdb-wasm builds
+diff --git a/.github/workflows/Windows.yml b/.github/workflows/Windows.yml
+index 5508e50694..695d68d521 100644
+--- a/.github/workflows/Windows.yml
++++ b/.github/workflows/Windows.yml
+@@ -80,7 +80,7 @@ jobs:
+       shell: bash
+       if: ${{ !inputs.skip_tests }}
+       run: |
+-        python scripts/ci/run_tests.py test/unittest.exe
++        python test/run.py
+ 
+     - name: Test with VS2019 C++ stdlib
+       shell: bash
+@@ -88,7 +88,7 @@ jobs:
+       run: |
+         python scripts/ci/retry.py -- curl -L --output ./test/msvcp140.dll https://blobs.duckdb.org/ci/msvcp140.dll
+         ls ./test
+-        python scripts/ci/run_tests.py test/unittest.exe
++        python test/run.py
+         rm ./test/msvcp140.dll
+ 
+     - name: Tools Test
+@@ -179,7 +179,7 @@ jobs:
+ 
+     - name: Test
+       shell: bash
+-      run: python scripts/ci/run_tests.py test/unittest.exe
++      run: python test/run.py
+ 
+     - name: Tools Test
+       shell: bash
+@@ -334,7 +334,7 @@ jobs:
+          run: python scripts/ci/retry.py -- make release
+ 
+        - name: Test
+-         run: make unittest_release SKIP_BUILD=1
++         run: python build/release/test/run.py
+ 
+  win-packaged-upload:
+    runs-on: ${{ fromJSON(inputs.runners).linux_slim || 'ubuntu-latest' }}
+diff --git a/Makefile b/Makefile
+index f5e2021092..ea0408eb6d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -33,6 +33,7 @@ EXE_SUFFIX := .exe
+ endif
+ UNITTEST_BINARY ?= test/unittest$(EXE_SUFFIX)
+ SMOKE_UNITTEST ?= build/relassert/$(UNITTEST_BINARY)
++SMOKE_RUNNER ?= build/relassert/test/run
+ UNITTEST_SLOW_FLAGS ?= --batch-size=5 --track-runtime=100
+ UNITTEST_HUGE_FLAGS ?= --workers=50% $(UNITTEST_SLOW_FLAGS)
+ 
+@@ -493,16 +494,16 @@ build/extension_configuration/vcpkg.json: extension/extension_config_local.cmake
+ 	$(NINJA_BUILD_WRAPPER) cmake --build . --config Release
+ 
+ unittest: debug
+-	$(PYTHON) scripts/ci/run_tests.py build/debug/$(UNITTEST_BINARY) $(T)
++	build/debug/test/run $(T)
+ 
+ unittest_reldebug:
+-	$(PYTHON) scripts/ci/run_tests.py $(UNITTEST_SLOW_FLAGS) build/reldebug/$(UNITTEST_BINARY) $(T)
++	build/reldebug/test/run $(UNITTEST_SLOW_FLAGS) $(T)
+ 
+ ifneq ($(SKIP_BUILD),1)
+ unittest_release: release
+ endif
+ unittest_release:
+-	$(PYTHON) scripts/ci/run_tests.py build/release/$(UNITTEST_BINARY) $(T)
++	build/release/test/run $(T)
+ 
+ TEST_CONFIGS := \
+ 	test/configs/verify_statement_copy.json \
+@@ -541,52 +542,52 @@ TEST_CONFIGS := \
+ 	test/configs/force_storage_mmap.json
+ 
+ test_configs:
+-	$(PYTHON) scripts/ci/run_tests.py $(foreach cfg,$(TEST_CONFIGS),--test-config=$(cfg)) ./build/release/$(UNITTEST_BINARY)
++	./build/release/test/run $(foreach cfg,$(TEST_CONFIGS),--test-config=$(cfg))
+ 
+ test_vector:
+-	$(PYTHON) scripts/ci/run_tests.py --test-flags="--verify-vector dictionary_expression --skip-compiled" ./build/release/$(UNITTEST_BINARY)
+-	$(PYTHON) scripts/ci/run_tests.py --test-flags="--verify-vector dictionary_operator --skip-compiled" ./build/release/$(UNITTEST_BINARY)
+-	$(PYTHON) scripts/ci/run_tests.py --test-flags="--verify-vector constant_operator --skip-compiled" ./build/release/$(UNITTEST_BINARY)
+-	$(PYTHON) scripts/ci/run_tests.py --test-flags="--verify-vector sequence_operator --skip-compiled" ./build/release/$(UNITTEST_BINARY)
+-	$(PYTHON) scripts/ci/run_tests.py --test-flags="--verify-vector nested_shuffle --skip-compiled" ./build/release/$(UNITTEST_BINARY)
++	./build/release/test/run --test-flags="--verify-vector dictionary_expression --skip-compiled"
++	./build/release/test/run --test-flags="--verify-vector dictionary_operator --skip-compiled"
++	./build/release/test/run --test-flags="--verify-vector constant_operator --skip-compiled"
++	./build/release/test/run --test-flags="--verify-vector sequence_operator --skip-compiled"
++	./build/release/test/run --test-flags="--verify-vector nested_shuffle --skip-compiled"
+ 
+ test_table_scan:
+-	$(PYTHON) scripts/ci/run_tests.py --test-flags='--on-init "SET debug_physical_table_scan_execution_strategy=SYNCHRONOUS;"' ./build/release/$(UNITTEST_BINARY)
++	./build/release/test/run --test-flags='--on-init "SET debug_physical_table_scan_execution_strategy=SYNCHRONOUS;"'
+ 
+ test_storage:
+ 	$(PYTHON) scripts/test_storage_compatibility.py --versions "1.2.1|1.3.2|1.4.3" --new-unittest build/release/$(UNITTEST_BINARY)
+ 
+ .PHONY: alltest_release_tag test_release_tag
+ alltest_release_tag:
+-	$(PYTHON) scripts/ci/run_tests.py --test-flags="--select-tag release" ./build/release/$(UNITTEST_BINARY) '*' $(T)
++	./build/release/test/run --test-flags="--select-tag release" '*' $(T)
+ 
+ test_release_tag:
+-	$(PYTHON) scripts/ci/run_tests.py --test-flags="--select-tag release" ./build/release/$(UNITTEST_BINARY) $(T)
++	./build/release/test/run --test-flags="--select-tag release" $(T)
+ 
+ unittest_relassert:
+-	$(PYTHON) scripts/ci/run_tests.py build/relassert/$(UNITTEST_BINARY) $(UNITTEST_SLOW_FLAGS) $(T)
++	build/relassert/test/run $(UNITTEST_SLOW_FLAGS) $(T)
+ 
+ smoke:
+-	$(PYTHON) scripts/ci/run_tests.py --batch-timeout 120 --test-list test/smoke_tests.list $(SMOKE_UNITTEST) $(T)
++	$(SMOKE_RUNNER) --batch-timeout 120 --test-list test/smoke_tests.list $(T)
+ 
+ unittestarrow:
+-	$(PYTHON) scripts/ci/run_tests.py build/debug/$(UNITTEST_BINARY) "[arrow]"
++	build/debug/test/run "[arrow]"
+ 
+ allunit:
+-	$(PYTHON) scripts/ci/run_tests.py --workers=50% build/release/$(UNITTEST_BINARY) '*' $(T)
++	./build/release/test/run --workers=50% '*' $(T)
+ ifndef CI
+ allunit: release
+ endif
+ 
+ unittest_threadsan: export TSAN_OPTIONS ?= "suppressions=./.sanitizer-thread-suppressions.txt"
+ unittest_threadsan: unittest_reldebug
+-	$(PYTHON) scripts/ci/run_tests.py $(UNITTEST_HUGE_FLAGS) --test-config test/configs/threadsan.json build/reldebug/$(UNITTEST_BINARY) "[intraquery],[interquery],[detailed_profiler],test/sql/tpch/tpch_sf01.test_slow" $(T)
+-	$(PYTHON) scripts/ci/run_tests.py $(UNITTEST_HUGE_FLAGS) --test-config test/configs/threadsan.json --test-flags="--force-storage --force-reload" build/reldebug/$(UNITTEST_BINARY) "[interquery]" $(T)
++	build/reldebug/test/run $(UNITTEST_HUGE_FLAGS) --test-config test/configs/threadsan.json "[intraquery],[interquery],[detailed_profiler],test/sql/tpch/tpch_sf01.test_slow" $(T)
++	build/reldebug/test/run $(UNITTEST_HUGE_FLAGS) --test-config test/configs/threadsan.json --test-flags="--force-storage --force-reload" "[interquery]" $(T)
+ 
+ .PHONY: unittest_threadsan_extra
+ unittest_threadsan_extra: export TSAN_OPTIONS ?= "suppressions=./.sanitizer-thread-suppressions.txt"
+ unittest_threadsan_extra: unittest_reldebug
+-	$(PYTHON) scripts/ci/run_tests.py $(UNITTEST_HUGE_FLAGS) --test-config test/configs/threadsan.json --test-flags="--force-storage" build/reldebug/$(UNITTEST_BINARY) "[interquery]" $(T)
++	build/reldebug/test/run $(UNITTEST_HUGE_FLAGS) --test-config test/configs/threadsan.json --test-flags="--force-storage" "[interquery]" $(T)
+ 
+ docs:
+ 	mkdir -p ./build/docs && \
+@@ -797,7 +798,7 @@ third_party/sqllogictest:
+ 
+ sqlite: release | third_party/sqllogictest
+ 	git --git-dir third_party/sqllogictest/.git pull
+-	$(PYTHON) scripts/ci/run_tests.py ./build/release/$(UNITTEST_BINARY) "[sqlitelogic]"
++	./build/release/test/run "[sqlitelogic]"
+ 
+ sqlsmith: debug
+ 	./build/debug/third_party/sqlsmith/sqlsmith --duckdb=:memory:
+diff --git a/scripts/ci/run_tests.py b/scripts/ci/run_tests.py
+index 51d5c85a72..ccde99365f 100644
+--- a/scripts/ci/run_tests.py
++++ b/scripts/ci/run_tests.py
+@@ -31,6 +31,10 @@ STABILIZE_FAST_TOTAL_RUNS = 10
+ STABILIZE_FAST_TOTAL_RUNS_LARGE = 3
+ STABILIZE_CHANGED_TEST_THRESHOLD = 500
+ STOP_REQUESTED = threading.Event()
++ANSI_RED = "\033[31m"
++ANSI_DARK_GRAY = "\033[90m"
++ANSI_RESET = "\033[0m"
++FAILURE_MARKER = "================================================================"
+ 
+ 
+ def enable_line_buffering():
+@@ -87,11 +91,45 @@ class FailureInfo:
+     expected: str | None
+     actual: str | None
+     snippet_lines: list[str]
++    expected_result_lines: list[str]
++    actual_result_lines: list[str]
+     detail_lines: list[str]
+     timeout_seconds: float | None
+     reproduce_batch: list[str]
+ 
+ 
++@dataclass(frozen=True)
++class StdoutAssertionFailure:
++    test_name: str | None
++    line_number: int | None
++    snippet_lines: list[str]
++    detail_lines: list[str]
++    score: int
++
++
++@dataclass(frozen=True)
++class StdoutParse:
++    last_started_test: str | None
++    last_unfinished_test: str | None
++    preferred_assertion: StdoutAssertionFailure | None
++    fallback_failure_block: tuple[str | None, list[str]] | None
++    failed_reason_line: str | None
++
++
++@dataclass(frozen=True)
++class StderrParse:
++    test_name: str | None
++    line_number: int | None
++    failing_summary_block: list[str]
++    wrong_result_line: str | None
++    mismatch_context: str | None
++    mismatch_line: str | None
++    expected_result_lines: list[str]
++    actual_result_lines: list[str]
++    query_failure_lines: list[str]
++    first_error_line: str | None
++
++
+ class BatchRunState:
+     def __init__(self):
+         self.failed_count = 0
+@@ -311,7 +349,6 @@ def generate_test_list(
+     if test_list_files:
+         list_file_args = [arg for test_list_file in test_list_files for arg in ("-f", str(test_list_file))]
+     command = [unittest_bin, *shlex.split(test_flags), "--list-tests", *list_file_args, *patterns]
+-    print(f"generated test list using: {shlex.join(command)}")
+     proc = subprocess.run(
+         command,
+         text=True,
+@@ -352,6 +389,14 @@ def format_duration_seconds(value: float):
+     return f"{value:g}"
+ 
+ 
++def format_fail_header(test_name: str):
++    return [FAILURE_MARKER, f"error: {ANSI_RED}FAIL{ANSI_RESET} {test_name}"]
++
++
++def format_dark_gray(text: str):
++    return f"{ANSI_DARK_GRAY}{text}{ANSI_RESET}"
++
++
+ def render_test_snippet(test_name: str | None, line_number: int | None):
+     if not test_name or line_number is None or line_number <= 0:
+         return []
+@@ -366,9 +411,14 @@ def render_test_snippet(test_name: str | None, line_number: int | None):
+     start_idx = line_number - 1
+     while start_idx > 0 and file_lines[start_idx - 1].strip():
+         start_idx -= 1
+-    end_idx = line_number
+-    while end_idx < len(file_lines) and file_lines[end_idx].strip():
+-        end_idx += 1
++    return render_snippet_window(file_lines, line_number, start_idx, None)
++
++
++def render_snippet_window(file_lines: list[str], line_number: int, start_idx: int, end_idx: int | None):
++    if end_idx is None:
++        end_idx = line_number
++        while end_idx < len(file_lines) and file_lines[end_idx].strip():
++            end_idx += 1
+     window = [(idx + 1, file_lines[idx]) for idx in range(start_idx, end_idx)]
+     while window and not window[0][1].strip():
+         window.pop(0)
+@@ -377,14 +427,49 @@ def render_test_snippet(test_name: str | None, line_number: int | None):
+     if not window:
+         return []
+ 
++    common_indent = None
++    for _, text in window:
++        if not text.strip():
++            continue
++        indent_len = len(text) - len(text.lstrip(" \t"))
++        indent = text[:indent_len]
++        if common_indent is None:
++            common_indent = indent
++            continue
++        shared_len = 0
++        max_len = min(len(common_indent), len(indent))
++        while shared_len < max_len and common_indent[shared_len] == indent[shared_len]:
++            shared_len += 1
++        common_indent = common_indent[:shared_len]
++    if common_indent:
++        window = [(lineno, text[len(common_indent) :] if text.strip() else text) for lineno, text in window]
++    window = [(lineno, text.expandtabs(4)) for lineno, text in window]
++
+     width = len(str(window[-1][0]))
+     rendered = []
+     for lineno, text in window:
+-        marker = ">" if lineno == line_number else " "
+-        rendered.append(f"  {marker} {lineno:>{width}}  {text}")
++        marker = f"{ANSI_RED}>{ANSI_RESET}" if lineno == line_number else " "
++        line_number_text = f"{ANSI_DARK_GRAY}{lineno:>{width}}{ANSI_RESET}"
++        rendered.append(f"  {marker} {line_number_text}  {text}")
+     return rendered
+ 
+ 
++def render_context_snippet(test_name: str | None, line_number: int | None, before: int = 3, after: int = 3):
++    if not test_name or line_number is None or line_number <= 0:
++        return []
++    test_path = Path(test_name)
++    if not test_path.exists():
++        return []
++    try:
++        file_lines = test_path.read_text(encoding="utf8").splitlines()
++    except OSError:
++        return []
++
++    start_idx = max(0, line_number - 1 - before)
++    end_idx = min(len(file_lines), line_number + after)
++    return render_snippet_window(file_lines, line_number, start_idx, end_idx)
++
++
+ FAILING_TEST_PATTERN = re.compile(r"^\d+\.\s+(.+?):(\d+)$")
+ ERROR_LINE_LOCATION_PATTERN = re.compile(r"\((.+?):(\d+)\)!?$")
+ WRONG_RESULT_PATTERN = re.compile(r"^(?:Error:\s+)?Wrong result in query!\s*(?:\((.+?):(\d+)\)!)?$")
+@@ -392,6 +477,11 @@ PROGRESS_TEST_START_PATTERN = re.compile(r"^\[\d+/\d+\] \(\d+%\): (.+)$")
+ FATAL_ERROR_PATTERN = re.compile(r"^\s*due to a fatal error condition:\s*$")
+ FAILED_HEADER_PATTERN = re.compile(r"^\s*.+:\s+FAILED:\s*$")
+ EXPLICIT_MESSAGE_PATTERN = re.compile(r"^\s*explicitly with message:\s*$")
++CATCH_ASSERTION_LOCATION_PATTERN = re.compile(r"^(.+?):(\d+): FAILED:$")
++SANITIZER_OR_ASSERT_PATTERN = re.compile(
++    r"(AddressSanitizer|LeakSanitizer|ThreadSanitizer|UndefinedBehaviorSanitizer|runtime error:|assert)",
++    flags=re.IGNORECASE,
++)
+ 
+ 
+ def find_failing_test(stderr_lines: list[str], batch):
+@@ -407,21 +497,7 @@ def find_failing_test(stderr_lines: list[str], batch):
+     return test_name, line_number
+ 
+ 
+-def find_failing_test_from_stdout(stdout_lines: list[str], batch):
+-    test_name = batch[0] if len(batch) == 1 else None
+-    for line in stdout_lines:
+-        stripped = line.strip()
+-        match = FAILING_TEST_PATTERN.match(stripped)
+-        if match:
+-            test_name = match.group(1)
+-            break
+-        progress_match = PROGRESS_TEST_START_PATTERN.match(stripped)
+-        if progress_match and " took " not in progress_match.group(1):
+-            test_name = progress_match.group(1)
+-    return test_name
+-
+-
+-def infer_timed_out_test_from_stdout(stdout_lines: list[str], batch):
++def parse_stdout_progress(stdout_lines: list[str]):
+     started_tests = []
+     completed_tests = set()
+ 
+@@ -436,6 +512,12 @@ def infer_timed_out_test_from_stdout(stdout_lines: list[str], batch):
+         else:
+             started_tests.append(progress_text)
+ 
++    return started_tests, completed_tests
++
++
++def infer_timed_out_test_from_stdout(stdout_lines: list[str], batch):
++    started_tests, completed_tests = parse_stdout_progress(stdout_lines)
++
+     for test_name in started_tests:
+         if test_name not in completed_tests:
+             return test_name
+@@ -477,6 +559,168 @@ def extract_failed_reason_line(stdout_lines: list[str]):
+     return None
+ 
+ 
++def iter_stdout_failure_blocks(stdout_lines: list[str]):
++    for failure_idx, line in enumerate(stdout_lines):
++        if not FAILED_HEADER_PATTERN.match(line):
++            continue
++
++        separator_indices = []
++        for idx in range(failure_idx - 1, -1, -1):
++            stripped = stdout_lines[idx].strip()
++            if stripped and set(stripped) == {"-"}:
++                separator_indices.append(idx)
++                if len(separator_indices) == 2:
++                    break
++        start_idx = separator_indices[-1] if separator_indices else failure_idx
++
++        test_name = None
++        if len(separator_indices) >= 2:
++            name_idx = separator_indices[-1] + 1
++            if name_idx < len(stdout_lines):
++                candidate_name = stdout_lines[name_idx].strip()
++                if candidate_name:
++                    test_name = candidate_name
++
++        end_idx = len(stdout_lines)
++        for idx in range(failure_idx + 1, len(stdout_lines)):
++            stripped = stdout_lines[idx].strip()
++            if PROGRESS_TEST_START_PATTERN.match(stripped):
++                end_idx = idx
++                break
++            if stripped.startswith("test cases:") or stripped.startswith("assertions:"):
++                end_idx = idx
++                break
++            if stripped.startswith("==============================================================================="):
++                end_idx = idx
++                break
++            if stripped.startswith("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"):
++                end_idx = idx
++                break
++
++        block = [entry.rstrip() for entry in stdout_lines[start_idx:end_idx]]
++        while block and not block[0].strip():
++            block.pop(0)
++        while block and not block[-1].strip():
++            block.pop()
++        if any(FATAL_ERROR_PATTERN.match(entry) for entry in block):
++            continue
++        if any(EXPLICIT_MESSAGE_PATTERN.match(entry) for entry in block):
++            continue
++        yield test_name, block
++
++
++def extract_stdout_failure_block(stdout_lines: list[str]):
++    for test_name, block in iter_stdout_failure_blocks(stdout_lines):
++        return test_name, block
++    return None, []
++
++
++def parse_stdout_assertion_failure(test_name: str | None, block: list[str]):
++    for idx, line in enumerate(block):
++        match = CATCH_ASSERTION_LOCATION_PATTERN.match(line.strip())
++        if not match:
++            continue
++
++        source_path = match.group(1)
++        source_line = int(match.group(2))
++        snippet_lines = render_context_snippet(source_path, source_line)
++        detail_lines = []
++
++        expression_line = None
++        for next_line in block[idx + 1 :]:
++            if next_line.strip():
++                expression_line = next_line.strip()
++                break
++        if expression_line is not None:
++            detail_lines.append(f"FAILED: {expression_line}")
++
++        expansion_idx = None
++        for lookahead_idx in range(idx + 1, len(block)):
++            if block[lookahead_idx].strip() == "with expansion:":
++                expansion_idx = lookahead_idx
++                break
++        if expansion_idx is not None:
++            detail_lines.append("  with expansion:")
++            for next_line in block[expansion_idx + 1 :]:
++                if next_line.strip():
++                    detail_lines.append(next_line.strip())
++                    break
++
++        score = 0
++        expression_text = detail_lines[0] if detail_lines else ""
++        if expression_text.startswith("FAILED: REQUIRE("):
++            score += 3
++        elif expression_text.startswith("FAILED:"):
++            score += 2
++        if "{Unknown expression after the reported line}" not in expression_text:
++            score += 1
++        return StdoutAssertionFailure(test_name, source_line, snippet_lines, detail_lines, score)
++    return None
++
++
++def parse_stdout_failure_info(stdout_lines: list[str]):
++    started_tests, completed_tests = parse_stdout_progress(stdout_lines)
++    last_started_test = started_tests[-1] if started_tests else None
++    last_unfinished_test = None
++    for test_name in started_tests:
++        if test_name not in completed_tests:
++            last_unfinished_test = test_name
++            break
++
++    preferred_assertion = None
++    preferred_assertion_key = None
++    fallback_failure_block = None
++    for idx, (test_name, block) in enumerate(iter_stdout_failure_blocks(stdout_lines)):
++        assertion = parse_stdout_assertion_failure(test_name, block)
++        if assertion is not None:
++            assertion_key = (assertion.score, idx)
++            if preferred_assertion_key is None or assertion_key >= preferred_assertion_key:
++                preferred_assertion_key = assertion_key
++                preferred_assertion = assertion
++        if fallback_failure_block is None:
++            fallback_failure_block = (test_name, block)
++
++    return StdoutParse(
++        last_started_test=last_started_test,
++        last_unfinished_test=last_unfinished_test,
++        preferred_assertion=preferred_assertion,
++        fallback_failure_block=fallback_failure_block,
++        failed_reason_line=extract_failed_reason_line(stdout_lines),
++    )
++
++
++def extract_query_failure_diagnostics(stderr_lines: list[str]):
++    for idx, line in enumerate(stderr_lines):
++        if not line.startswith("Query failed with message:"):
++            continue
++
++        block = [line.strip()]
++        seen_stack_trace = False
++        for next_line in stderr_lines[idx + 1 :]:
++            stripped = next_line.strip()
++            if not stripped:
++                if seen_stack_trace:
++                    continue
++                continue
++            if stripped.startswith("This error signals an assertion failure within DuckDB."):
++                break
++            if stripped.startswith("For more information, see "):
++                break
++            if stripped == "Stack Trace:":
++                seen_stack_trace = True
++                block.append(stripped)
++                continue
++            if seen_stack_trace:
++                if re.match(r"^\d+\s+", stripped):
++                    block.append(stripped)
++                    continue
++                break
++            block.append(stripped)
++        return block
++
++    return []
++
++
+ def extract_failing_stderr_block(stderr_lines: list[str]):
+     start_idx = None
+     for idx, line in enumerate(stderr_lines):
+@@ -501,15 +745,111 @@ def extract_failing_stderr_block(stderr_lines: list[str]):
+     return block
+ 
+ 
+-def parse_failure_info(message: str | None, stdout: str, stderr: str, batch):
+-    stderr_lines = strip_ansi(stderr).splitlines()
+-    stdout_lines = strip_ansi(stdout).splitlines()
++def extract_wrong_result_sections(stderr_lines: list[str]):
++    block = extract_failing_stderr_block(stderr_lines)
++    if not block:
++        return [], []
++
++    expected_lines = []
++    actual_lines = []
++    current_section = None
++
++    for line in block:
++        stripped = line.strip()
++        if stripped == "Expected result:":
++            current_section = expected_lines
++            continue
++        if stripped == "Actual result:":
++            current_section = actual_lines
++            continue
++        if current_section is None:
++            continue
++        if stripped and set(stripped) == {"="}:
++            continue
++        current_section.append(line)
++
++    while expected_lines and not expected_lines[0].strip():
++        expected_lines.pop(0)
++    while expected_lines and not expected_lines[-1].strip():
++        expected_lines.pop()
++    while actual_lines and not actual_lines[0].strip():
++        actual_lines.pop(0)
++    while actual_lines and not actual_lines[-1].strip():
++        actual_lines.pop()
++
++    return expected_lines, actual_lines
++
++
++def parse_stderr_failure_info(stderr_lines: list[str], batch):
++    test_name, line_number = find_failing_test(stderr_lines, batch)
++    stderr_non_empty_lines = [line.strip() for line in stderr_lines if line.strip()]
++    wrong_result_line = next((line for line in stderr_non_empty_lines if WRONG_RESULT_PATTERN.match(line)), None)
++    mismatch_context = next((line for line in stderr_non_empty_lines if line.startswith("Mismatch on row ")), None)
++    mismatch_line = next((line for line in stderr_non_empty_lines if "<>" in line), None)
++    expected_result_lines, actual_result_lines = extract_wrong_result_sections(stderr_lines)
++    query_failure_lines = extract_query_failure_diagnostics(stderr_lines)
++    first_error_line = next(
++        (line.removeprefix("Error: ").strip() for line in stderr_non_empty_lines if line.startswith("Error: ")),
++        None,
++    )
++    return StderrParse(
++        test_name=test_name,
++        line_number=line_number,
++        failing_summary_block=extract_failing_stderr_block(stderr_lines),
++        wrong_result_line=wrong_result_line,
++        mismatch_context=mismatch_context,
++        mismatch_line=mismatch_line,
++        expected_result_lines=expected_result_lines,
++        actual_result_lines=actual_result_lines,
++        query_failure_lines=query_failure_lines,
++        first_error_line=first_error_line,
++    )
++
++
++def extract_interesting_failure_block(lines: list[str]):
++    for idx, line in enumerate(lines):
++        if not SANITIZER_OR_ASSERT_PATTERN.search(line):
++            continue
++        block = []
++        for next_line in lines[idx:]:
++            stripped = next_line.strip()
++            if not stripped:
++                if block:
++                    break
++                continue
++            block.append(stripped)
++            if len(block) >= 3:
++                break
++        if block:
++            return block
++    return []
++
++
++def format_signal_summary(returncode: int | None):
++    if returncode is None or returncode >= 0:
++        return None
++    signal_number = -returncode
++    try:
++        signal_name = signal.Signals(signal_number).name
++    except ValueError:
++        signal_name = f"SIG{signal_number}"
++    description = signal.strsignal(signal_number) or "terminated by signal"
++    return f"{signal_name} - {description}"
++
++
++def parse_failure_info(message: str | None, stdout: str, stderr: str, batch, returncode: int | None = None):
++    stderr_lines = strip_skipped_test_summary_lines(strip_ansi(stderr).splitlines())
++    stdout_lines = strip_skipped_test_summary_lines(strip_ansi(stdout).splitlines())
+     stderr_non_empty_lines = [line.strip() for line in stderr_lines if line.strip()]
+     stdout_non_empty_lines = [line.strip() for line in stdout_lines if line.strip()]
+     batch_test_name = batch[0] if len(batch) == 1 else None
++    stdout_info = parse_stdout_failure_info(stdout_lines)
++    stderr_info = parse_stderr_failure_info(stderr_lines, batch)
+ 
+     if message is not None and message.startswith("batch timed out after "):
+-        timeout_test_name = batch_test_name or infer_timed_out_test_from_stdout(stdout_lines, batch)
++        timeout_test_name = (
++            batch_test_name or stdout_info.last_unfinished_test or infer_timed_out_test_from_stdout(stdout_lines, batch)
++        )
+         reproduce_batch = [timeout_test_name] if timeout_test_name else list(batch)
+         return FailureInfo(
+             kind="timeout",
+@@ -519,60 +859,89 @@ def parse_failure_info(message: str | None, stdout: str, stderr: str, batch):
+             expected=None,
+             actual=None,
+             snippet_lines=[],
++            expected_result_lines=[],
++            actual_result_lines=[],
+             detail_lines=[],
+             timeout_seconds=float(re.search(r"after ([0-9]+(?:\.[0-9]+)?) seconds", message).group(1)),
+             reproduce_batch=reproduce_batch,
+         )
+ 
+-    test_name, line_number = find_failing_test(stderr_lines, batch)
++    test_name = stderr_info.test_name
++    line_number = stderr_info.line_number
++    if test_name is None and returncode is not None and returncode < 0:
++        test_name = stdout_info.last_unfinished_test or infer_timed_out_test_from_stdout(stdout_lines, batch)
+     reproduce_batch = [test_name] if test_name else list(batch)
+ 
+-    error_line = next((line for line in stderr_non_empty_lines if WRONG_RESULT_PATTERN.match(line)), None)
+-    if error_line is not None:
++    if stderr_info.wrong_result_line is not None:
+         if line_number is None:
+-            location_match = WRONG_RESULT_PATTERN.match(error_line)
++            location_match = WRONG_RESULT_PATTERN.match(stderr_info.wrong_result_line)
+             if location_match:
+                 if location_match.group(1):
+                     test_name = test_name or location_match.group(1)
+                 if location_match.group(2):
+                     line_number = int(location_match.group(2))
+-        mismatch_context = next((line for line in stderr_non_empty_lines if line.startswith("Mismatch on row ")), None)
+-        mismatch_line = next((line for line in stderr_non_empty_lines if "<>" in line), None)
+         actual = None
+         expected = None
+-        if mismatch_line is not None:
+-            actual, expected = [part.strip() for part in mismatch_line.split("<>", 1)]
++        if stderr_info.mismatch_line is not None:
++            actual, expected = [part.strip() for part in stderr_info.mismatch_line.split("<>", 1)]
+         return FailureInfo(
+             kind="wrong_result",
+             test_name=test_name,
+             line_number=line_number,
+-            mismatch_context=mismatch_context,
++            mismatch_context=stderr_info.mismatch_context,
+             expected=expected,
+             actual=actual,
+             snippet_lines=render_test_snippet(test_name, line_number),
++            expected_result_lines=stderr_info.expected_result_lines,
++            actual_result_lines=stderr_info.actual_result_lines,
+             detail_lines=[],
+             timeout_seconds=None,
+             reproduce_batch=reproduce_batch,
+         )
+ 
+     detail_lines = []
+-    failing_stderr_block = extract_failing_stderr_block(stderr_lines)
+-    if failing_stderr_block:
+-        detail_lines.extend(failing_stderr_block)
++    snippet_lines = []
++    if stderr_info.failing_summary_block:
++        detail_lines.extend(stderr_info.failing_summary_block)
++
++    preferred_assertion = stdout_info.preferred_assertion
++    if preferred_assertion is not None:
++        test_name = preferred_assertion.test_name or stdout_info.last_started_test or test_name
++        reproduce_batch = [test_name] if test_name else list(batch)
++        line_number = preferred_assertion.line_number or line_number
++        snippet_lines = preferred_assertion.snippet_lines
++        if not detail_lines and stderr_info.query_failure_lines:
++            detail_lines.extend(stderr_info.query_failure_lines)
++        if preferred_assertion.detail_lines:
++            if detail_lines:
++                detail_lines.append("")
++            detail_lines.extend(preferred_assertion.detail_lines)
++    if not detail_lines:
++        if stdout_info.fallback_failure_block:
++            stdout_failure_test_name, stdout_failure_block = stdout_info.fallback_failure_block
++            test_name = stdout_failure_test_name or stdout_info.last_started_test or test_name
++            reproduce_batch = [test_name] if test_name else list(batch)
++            detail_lines.extend(stdout_failure_block)
++    if not detail_lines and stderr_info.query_failure_lines:
++        detail_lines.extend(stderr_info.query_failure_lines)
++    if not detail_lines:
++        detail_lines.extend(extract_interesting_failure_block(stderr_lines))
++    if not detail_lines:
++        detail_lines.extend(extract_interesting_failure_block(stdout_lines))
+     if message is not None:
+         if not detail_lines:
+             detail_lines.append(message)
++    if not detail_lines and stderr_info.first_error_line is not None:
++        detail_lines.append(stderr_info.first_error_line)
+     if not detail_lines:
+-        for line in stderr_non_empty_lines:
+-            if line.startswith("Error: "):
+-                detail_lines.append(line.removeprefix("Error: ").strip())
+-                break
+-    if not detail_lines:
+-        failed_reason_line = extract_failed_reason_line(stdout_lines)
+-        if failed_reason_line is not None:
+-            test_name = find_failing_test_from_stdout(stdout_lines, batch) or test_name
++        if stdout_info.failed_reason_line is not None:
++            test_name = stdout_info.last_started_test or test_name
+             reproduce_batch = [test_name] if test_name else list(batch)
+-            detail_lines.append(failed_reason_line)
++            detail_lines.append(stdout_info.failed_reason_line)
++    if not detail_lines:
++        signal_summary = format_signal_summary(returncode)
++        if signal_summary is not None:
++            detail_lines.append(signal_summary)
+     if not detail_lines:
+         first_line = next((line for line in stderr_non_empty_lines if line), None)
+         if first_line is not None:
+@@ -588,7 +957,9 @@ def parse_failure_info(message: str | None, stdout: str, stderr: str, batch):
+         mismatch_context=None,
+         expected=None,
+         actual=None,
+-        snippet_lines=[],
++        snippet_lines=snippet_lines,
++        expected_result_lines=[],
++        actual_result_lines=[],
+         detail_lines=detail_lines,
+         timeout_seconds=None,
+         reproduce_batch=reproduce_batch,
+@@ -602,21 +973,23 @@ def render_failure_lines(failure: FailureInfo):
+ 
+     if failure.kind == "wrong_result":
+         test_name = failure.test_name or "test batch"
+-        lines = [f"error: FAIL {test_name}", ""]
+-        if failure.expected is not None and failure.actual is not None and failure.mismatch_context is not None:
+-            lines.append(f"expected: {failure.expected}, got {failure.actual}; {failure.mismatch_context}")
+-        elif failure.expected is not None and failure.actual is not None:
+-            lines.append(f"expected: {failure.expected}, got {failure.actual}")
+-        elif failure.mismatch_context is not None:
+-            lines.append(failure.mismatch_context)
++        lines = [*format_fail_header(test_name), ""]
+         if failure.snippet_lines:
+             lines.extend(["", *failure.snippet_lines])
++        if failure.mismatch_context is not None:
++            lines.extend(["", f"details: {failure.mismatch_context}"])
++        if failure.expected_result_lines:
++            lines.extend(["", "Expected result:", *failure.expected_result_lines])
++        if failure.actual_result_lines:
++            lines.extend(["", "Actual result:", *failure.actual_result_lines])
+         return lines
+ 
+     if failure.test_name:
+-        lines = [f"error: FAIL {failure.test_name}"]
++        lines = format_fail_header(failure.test_name)
+     else:
+         lines = ["error: test batch failed"]
++    if failure.snippet_lines:
++        lines.extend(["", *failure.snippet_lines])
+     if failure.detail_lines:
+         lines.extend(["", *failure.detail_lines])
+     return lines
+@@ -624,7 +997,7 @@ def render_failure_lines(failure: FailureInfo):
+ 
+ def format_batch_failure(batch, config: TestRunnerConfig, attempt_summaries, recovered: bool, retry_count: int):
+     reproduce_batch = batch
+-    rerun_parts = [shlex.quote(config.unittest_bin)]
++    rerun_parts = [shlex.quote(format_unittest_bin_for_display(config.unittest_bin))]
+     rerun_parts.extend(shlex.split(config.test_flags))
+     parts = []
+     if recovered:
+@@ -638,10 +1011,20 @@ def format_batch_failure(batch, config: TestRunnerConfig, attempt_summaries, rec
+         reproduce_batch = last_attempt.reproduce_batch
+     rerun_parts.append(",".join(reproduce_batch))
+     rerun_cmd = shlex.join(rerun_parts)
+-    parts.extend(["", "reproduce:", rerun_cmd, ""])
++    parts.extend(["", format_dark_gray("reproduce:"), format_dark_gray(rerun_cmd), ""])
+     return "\n".join(parts)
+ 
+ 
++def format_unittest_bin_for_display(unittest_bin: str):
++    try:
++        if os.path.isabs(unittest_bin):
++            return os.path.relpath(unittest_bin, os.getcwd())
++    except ValueError:
++        # On Windows, relpath can fail across drives. Fall back to the original path.
++        return unittest_bin
++    return unittest_bin
++
++
+ def normalize_output(output):
+     if isinstance(output, bytes):
+         return output.decode("utf8", errors="backslashreplace")
+@@ -674,8 +1057,8 @@ def extract_test_runtimes(stdout: str, stderr: str):
+     return parse_test_runtimes(stdout) + parse_test_runtimes(stderr)
+ 
+ 
+-def summarize_failure_output(message: str | None, stdout: str, stderr: str, batch):
+-    failure = parse_failure_info(message, stdout, stderr, batch)
++def summarize_failure_output(message: str | None, stdout: str, stderr: str, batch, returncode: int | None = None):
++    failure = parse_failure_info(message, stdout, stderr, batch, returncode)
+     return render_failure_lines(failure), failure.reproduce_batch
+ 
+ 
+@@ -719,6 +1102,25 @@ def parse_skipped_test_summary(output: str):
+     return skipped_count, reasons
+ 
+ 
++def strip_skipped_test_summary_lines(lines: list[str]):
++    filtered_lines = []
++    in_skip_summary = False
++    for line in lines:
++        stripped = line.strip()
++        if stripped == "Skipped tests for the following reasons:":
++            in_skip_summary = True
++            continue
++        if in_skip_summary:
++            if not stripped:
++                in_skip_summary = False
++                continue
++            if SKIP_REASON_PATTERN.match(stripped):
++                continue
++            in_skip_summary = False
++        filtered_lines.append(line)
++    return filtered_lines
++
++
+ def extract_skipped_test_output(stdout: str, stderr: str):
+     stdout_summary = parse_skipped_test_summary(stdout)
+     if stdout_summary[0] > 0 or stdout_summary[1]:
+@@ -800,6 +1202,7 @@ def run_batch(config: TestRunnerConfig, batch):
+         "stdout": stdout,
+         "stderr": stderr,
+         "message": message,
++        "returncode": proc.returncode if "proc" in locals() else None,
+         "peak_rss_bytes": peak_rss_bytes,
+         "allow_retry": allow_retry,
+     }
+@@ -830,7 +1233,13 @@ def submit_batches(executor, config: TestRunnerConfig, batches, future_to_batch,
+ 
+ 
+ def handle_failed_batch(ctx: RunContext, batch_info, result):
+-    failure = parse_failure_info(result["message"], result["stdout"], result["stderr"], batch_info["batch"])
++    failure = parse_failure_info(
++        result["message"],
++        result["stdout"],
++        result["stderr"],
++        batch_info["batch"],
++        result.get("returncode"),
++    )
+     lines = render_failure_lines(failure)
+     reproduce_batch = failure.reproduce_batch
+     ctx.state.add_failed_attempt(batch_info["batch_idx"], lines, reproduce_batch)
+@@ -913,7 +1322,7 @@ def parse_args(argv: list[str] | None = None):
+         default="",
+         help="additional flags appended to the unittest binary for listing and execution",
+     )
+-    parser.add_argument("unittest_bin")
++    parser.add_argument("unittest_bin", nargs="?", help=argparse.SUPPRESS)
+     parser.add_argument("patterns", nargs="*")
+     parser.add_argument(
+         "--test-command",
+@@ -1137,6 +1546,9 @@ def main_impl(argv: list[str] | None = None):
+     if args.changed_tests is not None and args.test_list is None:
+         print("error: --changed-tests requires --test-list", file=sys.stderr)
+         return 1
++    if not args.unittest_bin:
++        print("error: missing unittest binary", file=sys.stderr)
++        return 1
+ 
+     test_list_files = [path for path in [args.test_list, args.changed_tests] if path is not None]
+     config_invocations = build_config_invocations(args.test_config, args.test_flags)
+@@ -1280,6 +1692,10 @@ def run_tests(config: TestRunnerConfig, batches, total_tests: int):
+                 if result["failed"]:
+                     if handle_failed_batch(ctx, batch_info, result):
+                         continue
++                    skipped_count, skipped_reasons = extract_skipped_test_output(result["stdout"], result["stderr"])
++                    total_skipped_tests += skipped_count
++                    for reason, count in skipped_reasons.items():
++                        skipped_reason_counts[reason] = skipped_reason_counts.get(reason, 0) + count
+                 else:
+                     attempt_summaries = ctx.state.pop_failed_attempts(batch_info["batch_idx"])
+                     if attempt_summaries:
+@@ -1292,10 +1708,10 @@ def run_tests(config: TestRunnerConfig, batches, total_tests: int):
+                                 retry_count=batch_info["attempt"],
+                             )
+                         )
+-                skipped_count, skipped_reasons = extract_skipped_test_output(result["stdout"], result["stderr"])
+-                total_skipped_tests += skipped_count
+-                for reason, count in skipped_reasons.items():
+-                    skipped_reason_counts[reason] = skipped_reason_counts.get(reason, 0) + count
++                    skipped_count, skipped_reasons = extract_skipped_test_output(result["stdout"], result["stderr"])
++                    total_skipped_tests += skipped_count
++                    for reason, count in skipped_reasons.items():
++                        skipped_reason_counts[reason] = skipped_reason_counts.get(reason, 0) + count
+                 progress.advance(next_batch_idx - len(future_to_batch))
+ 
+             if not state.stop_launching and not stop_requested():
+diff --git a/scripts/ci/test_runner_wrapper.bat.in b/scripts/ci/test_runner_wrapper.bat.in
+new file mode 100644
+index 0000000000..7152194aff
+--- /dev/null
++++ b/scripts/ci/test_runner_wrapper.bat.in
+@@ -0,0 +1,2 @@
++@echo off
++python "%~dp0run.py" %*
+diff --git a/scripts/ci/test_runner_wrapper.py.in b/scripts/ci/test_runner_wrapper.py.in
+new file mode 100644
+index 0000000000..77a25464de
+--- /dev/null
++++ b/scripts/ci/test_runner_wrapper.py.in
+@@ -0,0 +1,14 @@
++#!/usr/bin/env python3
++import sys
++
++SOURCE_ROOT = r"@PROJECT_SOURCE_DIR@"
++if SOURCE_ROOT not in sys.path:
++    sys.path.insert(0, SOURCE_ROOT)
++
++from scripts.ci.test_runner_wrapper import main
++
++
++if __name__ == "__main__":
++    raise SystemExit(
++        main(sys.argv[1:], wrapper_path=__file__, source_root=SOURCE_ROOT, unittest_name="@RUN_WRAPPER_UNITTEST_NAME@")
++    )
+diff --git a/scripts/coverage_check.sh b/scripts/coverage_check.sh
+index 907256c8f0..0f2cc7e657 100755
+--- a/scripts/coverage_check.sh
++++ b/scripts/coverage_check.sh
+@@ -11,9 +11,9 @@ mkdir -p build/coverage
+ (cd build/coverage && cmake -E env CXXFLAGS="--coverage" cmake -DBUILD_EXTENSIONS="parquet;json;autocomplete;icu" -DENABLE_SANITIZER=0 -DCMAKE_BUILD_TYPE=Debug ../.. && cmake --build .)
+ 
+ # run tests
+-python3 scripts/ci/run_tests.py build/coverage/test/unittest
+-python3 scripts/ci/run_tests.py build/coverage/test/unittest "[detailed_profiler]"
+-python3 scripts/ci/run_tests.py build/coverage/test/unittest test/sql/tpch/tpch_sf01.test_slow
++build/coverage/test/run
++build/coverage/test/run "[detailed_profiler]"
++build/coverage/test/run test/sql/tpch/tpch_sf01.test_slow
+ python3 -m pytest --shell-binary build/coverage/duckdb tools/shell/tests/
+ 
+ # finalize coverage file
+diff --git a/scripts/prepare_build_artifact.sh b/scripts/prepare_build_artifact.sh
+index f87529ba8c..b7cf0155e8 100644
+--- a/scripts/prepare_build_artifact.sh
++++ b/scripts/prepare_build_artifact.sh
+@@ -25,8 +25,8 @@ mkdir -p "$ARTIFACT_DIR"/test/extension "$ARTIFACT_DIR"/src
+ # Required by CI jobs that run the CLI from build/<type>/duckdb.
+ cp -av "$BUILD_DIR/duckdb" "$ARTIFACT_DIR"/
+ 
+-# Required by CI test jobs that run the prebuilt unittest binary.
+-cp -av "$BUILD_DIR/test/unittest" "$ARTIFACT_DIR"/test/
++# Required by CI test jobs that run the prebuilt unittest binary and runner.
++cp -av "$BUILD_DIR/"test/{run,unittest} "$ARTIFACT_DIR"/test/
+ 
+ # Required by ADBC and other tests that need the shared library.
+ shopt -s nullglob
+diff --git a/scripts/run_extension_medata_tests.sh b/scripts/run_extension_medata_tests.sh
+index bd655782ef..9829c7982a 100755
+--- a/scripts/run_extension_medata_tests.sh
++++ b/scripts/run_extension_medata_tests.sh
+@@ -176,4 +176,4 @@ export REMOTE_EXTENSION_REPO_DIRECT_PATH=http://duckdb-minio.com:9000/test-bucke
+ ################
+ ### Run test
+ ################
+-RUN_EXTENSION_UPDATE_TEST=1 python3 scripts/ci/run_tests.py $DUCKDB_BUILD_DIR/test/unittest test/extension/update_extensions_ci.test
++RUN_EXTENSION_UPDATE_TEST=1 "$DUCKDB_BUILD_DIR/test/run" test/extension/update_extensions_ci.test

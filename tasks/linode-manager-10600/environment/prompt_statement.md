@@ -1,7 +1,0 @@
-I'm working on improving the OAuth callback flow in our app. Currently, when users are redirected back after logging in, the callback page doesn't do enough security validation — it just reads some params from the URL without verifying them or actually exchanging the authorization code for tokens.
-
-I need the callback page to check that a code secret was previously saved in the browser's local storage, verify that the state value in the redirect URL matches the nonce we stored before starting the auth flow, and then make a POST request to the authorization server to exchange the code for real tokens. If anything goes wrong at any of these steps — the secret is missing, the state doesn't match, the code parameter isn't in the URL, or the token exchange fails — the user should be sent to the logout page instead of being granted a broken session.
-
-On the happy path, once we get a successful token response back, we should start the user's session with the returned token details and redirect them to wherever they were trying to go.
-
-Also, the authentication store needs to be updated to include a field for the code secret (similar to how nonce is tracked), and both the nonce and the code secret should NOT be wiped out when the user logs out — they need to persist for future re-authentication. The query params type for the OAuth callback should reflect the actual OAuth fields we care about: the authorization code, the return destination, and the state value.

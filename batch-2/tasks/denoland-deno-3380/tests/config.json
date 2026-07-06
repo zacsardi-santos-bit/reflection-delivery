@@ -1,0 +1,22 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/std && bash -o pipefail -c 'NO_COLOR=1 deno -A ./testing/runner.ts node/require_test.ts 2>&1 | sed \"s/^OK  *\\([a-zA-Z_][a-zA-Z0-9_]*\\).*/PASS [0.001s] \\1/\"'",
+  "test_files": [
+    "std/node/tests/cjs/cjs_a.js",
+    "std/node/tests/cjs/cjs_b.js",
+    "std/node/tests/cjs/cjs_cycle_a.js",
+    "std/node/tests/cjs/cjs_cycle_b.js",
+    "std/node/tests/cjs/subdir/cjs_c.js",
+    "std/node/tests/node_modules/left-pad/README.md",
+    "std/node/tests/node_modules/left-pad/index.js",
+    "std/node/tests/node_modules/left-pad/package.json",
+    "std/node/tests/package.json"
+  ],
+  "num_test_files": 9,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "requireSuccess",
+    "requireCycle"
+  ],
+  "PASS_TO_PASS": []
+}

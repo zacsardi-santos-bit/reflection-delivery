@@ -1,0 +1,400 @@
+patching file crates/rolldown/tests/common/case.rs
+patching file crates/rolldown/tests/common/fixture.rs
+patching file crates/rolldown/tests/fixtures/basic/artifacts.snap
+patching file crates/rolldown/tests/fixtures/basic/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/basic_scoped/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/basic_scoped/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/complex_params_patterns/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/decl_complex_patterns/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/decl_nested_assign_pattern/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/default_function/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/default_function/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/issue_364/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/issue_364/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/reserved_names/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/wrapped_esm_default_function/test.config.json
+patching file crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/artifacts.snap
+patching file crates/rolldown/tests/fixtures/deconflict/wrapped_esm_export_named_function/test.config.json
+patching file crates/rolldown/tests/fixtures/mix-cjs-esm/artifacts.snap
+patching file crates/rolldown/tests/fixtures/mix-cjs-esm/test.config.json
+patching file crates/rolldown/tests/fixtures/object_shorthand_property/artifacts.snap
+patching file crates/rolldown/tests/fixtures/object_shorthand_property/test.config.json
+patching file crates/rolldown/tests/fixtures/require/require_cjs/artifacts.snap
+patching file crates/rolldown/tests/fixtures/require/require_cjs/test.config.json
+patching file crates/rolldown/tests/fixtures/require/require_esm/artifacts.snap
+patching file crates/rolldown/tests/fixtures/require/require_esm/test.config.json
+patching file crates/rolldown/tests/fixtures/wrapped_esm/artifacts.snap
+patching file crates/rolldown/tests/fixtures/wrapped_esm/test.config.json
+   Compiling proc-macro2 v1.0.78
+   Compiling unicode-ident v1.0.12
+   Compiling autocfg v1.1.0
+   Compiling cfg-if v1.0.0
+   Compiling libc v0.2.153
+   Compiling once_cell v1.19.0
+   Compiling serde v1.0.197
+   Compiling smallvec v1.13.1
+   Compiling hashbrown v0.14.3
+   Compiling equivalent v1.0.1
+   Compiling parking_lot_core v0.9.9
+   Compiling ryu v1.0.17
+   Compiling itoa v1.0.10
+   Compiling scopeguard v1.2.0
+   Compiling serde_json v1.0.115
+   Compiling thiserror v1.0.58
+   Compiling memchr v2.7.1
+   Compiling pin-project-lite v0.2.13
+   Compiling rustc-hash v1.1.0
+   Compiling unicode-width v0.1.11
+   Compiling rustversion v1.0.14
+   Compiling siphasher v0.3.11
+   Compiling unicode-linebreak v0.1.5
+   Compiling smawk v0.3.2
+   Compiling rand_core v0.6.4
+   Compiling owo-colors v4.0.0
+   Compiling static_assertions v1.1.0
+   Compiling crossbeam-utils v0.8.19
+   Compiling index_vec v0.1.3
+   Compiling phf_shared v0.11.2
+   Compiling lock_api v0.4.11
+   Compiling num-traits v0.2.18
+   Compiling rand v0.8.5
+   Compiling textwrap v0.16.1
+   Compiling num-bigint v0.4.4
+   Compiling bitflags v2.5.0
+   Compiling oxc_index v0.11.0
+   Compiling unicode-id-start v1.1.2
+   Compiling bumpalo v3.15.4
+   Compiling rayon-core v1.12.1
+   Compiling outref v0.1.0
+   Compiling either v1.10.0
+   Compiling fixedbitset v0.4.2
+   Compiling seq-macro v0.3.5
+   Compiling phf_generator v0.11.2
+   Compiling simd-abstraction v0.7.1
+   Compiling assert-unchecked v0.1.2
+   Compiling bytes v1.5.0
+   Compiling tracing-core v0.1.32
+   Compiling regex-syntax v0.8.2
+   Compiling yansi v0.5.1
+   Compiling napi-sys v2.3.0
+   Compiling base64-simd v0.7.0
+   Compiling sugar_path v0.0.12
+   Compiling json-strip-comments v1.0.2
+   Compiling dunce v1.0.4
+   Compiling ariadne v0.4.0
+   Compiling slab v0.4.9
+   Compiling quote v1.0.35
+   Compiling crossbeam-epoch v0.9.18
+   Compiling vfs v0.11.0
+   Compiling aho-corasick v1.1.2
+   Compiling futures-sink v0.3.30
+   Compiling futures-core v0.3.30
+   Compiling syn v2.0.52
+   Compiling signal-hook-registry v1.4.1
+   Compiling crossbeam-deque v0.8.5
+   Compiling mio v0.8.11
+   Compiling num_cpus v1.16.0
+   Compiling socket2 v0.5.6
+   Compiling futures-channel v0.3.30
+   Compiling dashmap v5.5.3
+   Compiling parking_lot v0.12.1
+   Compiling pin-utils v0.1.0
+   Compiling futures-task v0.3.30
+   Compiling futures-io v0.3.30
+   Compiling async-trait v0.1.77
+   Compiling syn v1.0.109
+   Compiling lazy_static v1.4.0
+   Compiling regex-syntax v0.6.29
+   Compiling castaway v0.2.2
+   Compiling log v0.4.21
+   Compiling overload v0.1.1
+   Compiling compact_str v0.7.1
+   Compiling rayon v1.10.0
+   Compiling nu-ansi-term v0.46.0
+   Compiling sharded-slab v0.1.7
+   Compiling tracing-log v0.2.0
+   Compiling thread_local v1.1.8
+   Compiling anyhow v1.0.81
+   Compiling schemars v0.8.16
+   Compiling dyn-clone v1.0.17
+   Compiling num-integer v0.1.46
+   Compiling wasm-bindgen-shared v0.2.92
+   Compiling linked-hash-map v0.5.6
+   Compiling console v0.15.8
+   Compiling relative-path v1.9.2
+   Compiling regex-automata v0.4.6
+   Compiling yaml-rust v0.4.5
+   Compiling similar v2.4.0
+   Compiling glob v0.3.1
+   Compiling semver v1.0.22
+   Compiling cc v1.0.89
+   Compiling unicode-segmentation v1.11.0
+   Compiling wasm-bindgen v0.2.92
+   Compiling napi-build v2.1.2
+   Compiling insta v1.36.1
+   Compiling regex-automata v0.1.10
+   Compiling convert_case v0.6.0
+   Compiling rolldown_binding v0.0.1 (/workspace/repo/crates/rolldown_binding)
+   Compiling scoped-tls v1.0.1
+   Compiling matchers v0.1.0
+   Compiling serde_derive_internals v0.26.0
+   Compiling libmimalloc-sys v0.1.35
+   Compiling wasm-bindgen-backend v0.2.92
+   Compiling regex v1.10.3
+   Compiling derivative v2.2.0
+   Compiling schemars_derive v0.8.16
+   Compiling serde_derive v1.0.197
+   Compiling thiserror-impl v1.0.58
+   Compiling miette-derive v7.2.0
+   Compiling phf_macros v0.11.2
+   Compiling tokio-macros v2.2.0
+   Compiling tracing-attributes v0.1.27
+   Compiling ctor v0.2.7
+   Compiling futures-macro v0.3.30
+   Compiling pin-project-internal v1.1.4
+   Compiling wasm-bindgen-macro-support v0.2.92
+   Compiling napi-derive-backend v2.0.0-alpha.0
+   Compiling mimalloc v0.1.39
+   Compiling wasm-bindgen-macro v0.2.92
+   Compiling testing_macros v0.2.12
+   Compiling napi-derive v3.0.0-alpha.0
+   Compiling phf v0.11.2
+   Compiling tokio v1.36.0
+   Compiling futures-util v0.3.30
+   Compiling miette v7.2.0
+   Compiling pin-project v1.1.4
+   Compiling tracing v0.1.40
+   Compiling tracing-subscriber v0.3.18
+   Compiling oxc_span v0.11.0
+   Compiling oxc_diagnostics v0.11.0
+   Compiling console_error_panic_hook v0.1.7
+   Compiling futures-executor v0.3.30
+   Compiling futures v0.3.30
+   Compiling indexmap v2.2.6
+   Compiling oxc_allocator v0.11.0
+   Compiling napi v3.0.0-alpha.0
+   Compiling async-scoped v0.9.0
+   Compiling oxc_syntax v0.11.0
+   Compiling petgraph v0.6.4
+   Compiling rolldown_utils v0.1.0 (/workspace/repo/crates/rolldown_utils)
+   Compiling oxc_ast v0.11.0
+   Compiling oxc_sourcemap v0.11.0
+   Compiling oxc_resolver v1.5.4
+   Compiling tracing-chrome v0.7.1
+   Compiling rolldown_tracing v0.0.1 (/workspace/repo/crates/rolldown_tracing)
+   Compiling rolldown_fs v0.1.0 (/workspace/repo/crates/rolldown_fs)
+   Compiling rolldown_testing v0.0.1 (/workspace/repo/crates/rolldown_testing)
+   Compiling oxc_parser v0.11.0
+   Compiling oxc_codegen v0.11.0
+   Compiling oxc_semantic v0.11.0
+   Compiling oxc v0.11.0
+   Compiling rolldown_error v0.0.1 (/workspace/repo/crates/rolldown_error)
+   Compiling rolldown_rstr v0.0.1 (/workspace/repo/crates/rolldown_rstr)
+   Compiling rolldown_oxc_utils v0.1.0 (/workspace/repo/crates/rolldown_oxc_utils)
+   Compiling rolldown_resolver v0.0.1 (/workspace/repo/crates/rolldown_resolver)
+   Compiling rolldown_sourcemap v0.1.0 (/workspace/repo/crates/rolldown_sourcemap)
+   Compiling rolldown_common v0.0.1 (/workspace/repo/crates/rolldown_common)
+   Compiling rolldown_plugin v0.1.0 (/workspace/repo/crates/rolldown_plugin)
+   Compiling rolldown v0.1.0 (/workspace/repo/crates/rolldown)
+   Compiling rolldown_plugin_hello v0.1.0 (/workspace/repo/crates/rolldown_plugin_hello)
+   Compiling rolldown_plugin_vite_scanner v0.1.0 (/workspace/repo/crates/rolldown_plugin_vite_scanner)
+   Compiling rolldown_wasm_binding v0.1.0 (/workspace/repo/crates/rolldown_binding_wasm)
+    Finished test [unoptimized + debuginfo] target(s) in 34.08s
+────────────
+ Nextest run ID 6a572bb9-499f-44b9-863e-c6fe7285c703 with nextest profile: default
+    Starting 188 tests across 16 binaries (98 tests skipped)
+        PASS [   0.114s] (  1/188) rolldown ast_scanner::side_effect_detector::test::test_break_statement
+        PASS [   0.116s] (  2/188) rolldown ast_scanner::side_effect_detector::test::test_empty_statement
+        PASS [   0.119s] (  3/188) rolldown ast_scanner::side_effect_detector::test::test_sequence_expression
+        PASS [   0.119s] (  4/188) rolldown ast_scanner::side_effect_detector::test::test_logical_expression
+        PASS [   0.121s] (  5/188) rolldown ast_scanner::side_effect_detector::test::test_side_effect
+        PASS [   0.122s] (  6/188) rolldown ast_scanner::side_effect_detector::test::test_continue_statement
+        PASS [   0.123s] (  7/188) rolldown ast_scanner::side_effect_detector::test::test_do_while_statement
+        PASS [   0.122s] (  8/188) rolldown ast_scanner::side_effect_detector::test::test_labeled_statement
+        PASS [   0.124s] (  9/188) rolldown ast_scanner::side_effect_detector::test::test_conditional_expression
+        PASS [   0.124s] ( 10/188) rolldown ast_scanner::side_effect_detector::test::test_if_statement
+        PASS [   0.124s] ( 11/188) rolldown ast_scanner::side_effect_detector::test::test_template_literal
+        PASS [   0.126s] ( 12/188) rolldown ast_scanner::side_effect_detector::test::test_block_statement
+        PASS [   0.125s] ( 13/188) rolldown ast_scanner::side_effect_detector::test::test_switch_statement
+        PASS [   0.126s] ( 14/188) rolldown ast_scanner::side_effect_detector::test::test_parenthesized_expression
+        PASS [   0.127s] ( 15/188) rolldown ast_scanner::side_effect_detector::test::test_while_statement
+        PASS [   0.125s] ( 16/188) rolldown ast_scanner::side_effect_detector::test::test_return_statement
+        PASS [   0.126s] ( 17/188) rolldown ast_scanner::side_effect_detector::test::test_try_statement
+        PASS [   0.447s] ( 18/188) rolldown::esbuild test_tests__esbuild__default__auto_external__test_config_json
+        PASS [   0.460s] ( 19/188) rolldown::esbuild test_tests__esbuild__default__arrow_fn_scope__test_config_json
+        PASS [   0.594s] ( 20/188) rolldown::esbuild test_tests__esbuild__default__ambiguous_reexport_msg__test_config_json
+        PASS [   0.472s] ( 21/188) rolldown::esbuild test_tests__esbuild__default__const_with_let__test_config_json
+        PASS [   0.477s] ( 22/188) rolldown::esbuild test_tests__esbuild__default__common_js_from_es6__test_config_json
+        PASS [   0.563s] ( 23/188) rolldown::esbuild test_tests__esbuild__default__import_then_catch__test_config_json
+        PASS [   0.566s] ( 24/188) rolldown::esbuild test_tests__esbuild__default__export_chain__test_config_json
+        PASS [   0.566s] ( 25/188) rolldown::esbuild test_tests__esbuild__default__export_forms_common_js__test_config_json
+        PASS [   0.564s] ( 26/188) rolldown::esbuild test_tests__esbuild__default__keep_names_class_static_name__test_config_json
+        PASS [   0.567s] ( 27/188) rolldown::esbuild test_tests__esbuild__default__export_forms_es6__test_config_json
+        PASS [   0.566s] ( 28/188) rolldown::esbuild test_tests__esbuild__default__import_missing_common_js__test_config_json
+        PASS [   0.567s] ( 29/188) rolldown::esbuild test_tests__esbuild__default__forbid_const_assign_when_bundling__test_config_json
+        PASS [   0.573s] ( 30/188) rolldown::esbuild test_tests__esbuild__default__await_import_inside_try__test_config_json
+        PASS [   0.571s] ( 31/188) rolldown::esbuild test_tests__esbuild__default__duplicate_entry_point__test_config_json
+        PASS [   0.576s] ( 32/188) rolldown::esbuild test_tests__esbuild__default__nested_common_js__test_config_json
+        PASS [   0.581s] ( 33/188) rolldown::esbuild test_tests__esbuild__default__empty_export_clause_bundle_as_common_js_issue910__test_config_json
+        PASS [   0.581s] ( 34/188) rolldown::esbuild test_tests__esbuild__default__es6_from_common_js__test_config_json
+        PASS [   0.593s] ( 35/188) rolldown::esbuild test_tests__esbuild__default__avoid_tdz__test_config_json
+        PASS [   0.411s] ( 36/188) rolldown::esbuild test_tests__esbuild__default__nested_require_without_call__test_config_json
+        PASS [   0.488s] ( 37/188) rolldown::esbuild test_tests__esbuild__default__nested_scope_bug__test_config_json
+        PASS [   0.510s] ( 38/188) rolldown::esbuild test_tests__esbuild__default__new_expression_common_js__test_config_json
+        PASS [   0.546s] ( 39/188) rolldown::esbuild test_tests__esbuild__default__nested_es6_from_common_js__test_config_json
+        PASS [   0.425s] ( 40/188) rolldown::esbuild test_tests__esbuild__default__quoted_property__test_config_json
+        PASS [   0.418s] ( 41/188) rolldown::esbuild test_tests__esbuild__default__require_property_access_common_js__test_config_json
+        PASS [   0.523s] ( 42/188) rolldown::esbuild test_tests__esbuild__default__no_overwrite_input_file_error__test_config_json
+        PASS [   0.421s] ( 43/188) rolldown::esbuild test_tests__esbuild__default__require_resolve__test_config_json
+        PASS [   0.454s] ( 44/188) rolldown::esbuild test_tests__esbuild__default__require_main_cache_common_js__test_config_json
+        PASS [   0.532s] ( 45/188) rolldown::esbuild test_tests__esbuild__default__require_child_dir_common_js__test_config_json
+        PASS [   0.541s] ( 46/188) rolldown::esbuild test_tests__esbuild__default__relative_entry_point_error__test_config_json
+        PASS [   0.543s] ( 47/188) rolldown::esbuild test_tests__esbuild__default__outbase__test_config_json
+        PASS [   0.544s] ( 48/188) rolldown::esbuild test_tests__esbuild__default__re_export_common_js_as_es6__test_config_json
+        PASS [   0.523s] ( 49/188) rolldown::esbuild test_tests__esbuild__default__require_with_call_inside_try__test_config_json
+        PASS [   0.548s] ( 50/188) rolldown::esbuild test_tests__esbuild__default__re_export_default_internal__test_config_json
+        PASS [   0.552s] ( 51/188) rolldown::esbuild test_tests__esbuild__default__require_child_dir_es6__test_config_json
+        PASS [   0.544s] ( 52/188) rolldown::esbuild test_tests__esbuild__default__require_parent_dir_es6__test_config_json
+        PASS [   0.568s] ( 53/188) rolldown::esbuild test_tests__esbuild__default__require_parent_dir_common_js__test_config_json
+        PASS [   0.469s] ( 54/188) rolldown::esbuild test_tests__esbuild__default__require_without_call__test_config_json
+        PASS [   0.410s] ( 55/188) rolldown::esbuild test_tests__esbuild__default__this_inside_function__test_config_json
+        PASS [   0.471s] ( 56/188) rolldown::esbuild test_tests__esbuild__default__require_without_call_inside_try__test_config_json
+        PASS [   0.492s] ( 57/188) rolldown::esbuild test_tests__esbuild__default__reserve_props__test_config_json
+        PASS [   0.494s] ( 58/188) rolldown::esbuild test_tests__esbuild__default__simple_common_js__test_config_json
+        PASS [   0.494s] ( 59/188) rolldown::esbuild test_tests__esbuild__default__use_strict_directive_bundle_esm_issue2264__test_config_json
+        PASS [   0.477s] ( 60/188) rolldown::esbuild test_tests__esbuild__default__use_strict_directive_bundle_issue1837__test_config_json
+        PASS [   0.505s] ( 61/188) rolldown::esbuild test_tests__esbuild__default__strict_mode_nested_fn_decl_keep_names_variable_inlining_issue1552__test_config_json
+        PASS [   0.392s] ( 62/188) rolldown::esbuild test_tests__esbuild__import_star__import_of_export_star_of_import__test_config_json
+        PASS [   0.406s] ( 63/188) rolldown::esbuild test_tests__esbuild__import_star__import_of_export_star__test_config_json
+        PASS [   0.538s] ( 64/188) rolldown::esbuild test_tests__esbuild__default__simple_es6__test_config_json
+        PASS [   0.492s] ( 65/188) rolldown::esbuild test_tests__esbuild__import_star__import_export_self_as_namespace_es6__test_config_json
+        PASS [   0.492s] ( 66/188) rolldown::esbuild test_tests__esbuild__import_star__import_export_star_ambiguous_warning__test_config_json
+        PASS [   0.499s] ( 67/188) rolldown::esbuild test_tests__esbuild__import_star__export_self_es6__test_config_json
+        PASS [   0.500s] ( 68/188) rolldown::esbuild test_tests__esbuild__import_star__export_self_as_namespace_es6__test_config_json
+        PASS [   0.484s] ( 69/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_capture__test_config_json
+        PASS [   0.499s] ( 70/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_and_common_js__test_config_json
+        PASS [   0.542s] ( 71/188) rolldown::esbuild test_tests__esbuild__default__var_relocating_bundle__test_config_json
+        PASS [   0.529s] ( 72/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_common_js_capture__test_config_json
+        PASS [   0.457s] ( 73/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_common_js_unused__test_config_json
+        PASS [   0.480s] ( 74/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_common_js_no_capture__test_config_json
+        PASS [   0.496s] ( 75/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_import_star_capture__test_config_json
+        PASS [   0.493s] ( 76/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_import_star_no_capture__test_config_json
+        PASS [   0.492s] ( 77/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_star_as_capture__test_config_json
+        PASS [   0.497s] ( 78/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_import_star_unused__test_config_json
+        PASS [   0.484s] ( 79/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_star_as_unused__test_config_json
+        PASS [   0.476s] ( 80/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_star_capture__test_config_json
+        PASS [   0.496s] ( 81/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_star_as_no_capture__test_config_json
+        PASS [   0.476s] ( 82/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_star_no_capture__test_config_json
+        PASS [   0.486s] ( 83/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_no_capture__test_config_json
+        PASS [   0.475s] ( 84/188) rolldown::esbuild test_tests__esbuild__import_star__issue176__test_config_json
+        PASS [   0.501s] ( 85/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_star_omit_ambiguous__test_config_json
+        PASS [   0.494s] ( 86/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_of_export_star_as__test_config_json
+        PASS [   0.482s] ( 87/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_unused__test_config_json
+        PASS [   0.502s] ( 88/188) rolldown::esbuild test_tests__esbuild__import_star__import_star_export_star_unused__test_config_json
+        PASS [   0.471s] ( 89/188) rolldown::esbuild test_tests__esbuild__import_star__namespace_import_missing_common_js__test_config_json
+        PASS [   0.473s] ( 90/188) rolldown::esbuild test_tests__esbuild__import_star__namespace_import_missing_es6__test_config_json
+        PASS [   0.463s] ( 91/188) rolldown::esbuild test_tests__esbuild__import_star__namespace_import_re_export_star_unused_missing_es6__test_config_json
+        PASS [   0.485s] ( 92/188) rolldown::esbuild test_tests__esbuild__import_star__namespace_import_re_export_star_missing_es6__test_config_json
+        PASS [   0.458s] ( 93/188) rolldown::esbuild test_tests__esbuild__import_star__namespace_import_unused_missing_common_js__test_config_json
+        PASS [   0.439s] ( 94/188) rolldown::esbuild test_tests__esbuild__import_star__other_file_import_export_self_as_namespace_unused_es6__test_config_json
+        PASS [   0.438s] ( 95/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_other_file_export_self_as_namespace_es6__test_config_json
+        PASS [   0.467s] ( 96/188) rolldown::esbuild test_tests__esbuild__import_star__namespace_import_unused_missing_es6__test_config_json
+        PASS [   0.346s] ( 97/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_star_external_es6__test_config_json
+        PASS [   0.448s] ( 98/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_namespace_import_missing_es6__test_config_json
+        PASS [   0.447s] ( 99/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_namespace_import_unused_missing_es6__test_config_json
+        PASS [   0.457s] (100/188) rolldown::esbuild test_tests__esbuild__import_star__other_file_export_self_as_namespace_unused_es6__test_config_json
+        PASS [   0.339s] (101/188) rolldown::esbuild test_tests__esbuild__splitting__cross_chunk_assignment_dependencies__test_config_json
+        PASS [   0.461s] (102/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_other_file_import_export_self_as_namespace_es6__test_config_json
+        PASS [   0.448s] (103/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_star_name_collision_not_ambiguous_import__test_config_json
+        PASS [   0.454s] (104/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_star_name_shadowing_not_ambiguous__test_config_json
+        PASS [   0.468s] (105/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_star_name_collision_not_ambiguous_export__test_config_json
+        PASS [   0.464s] (106/188) rolldown::esbuild test_tests__esbuild__import_star__re_export_star_name_shadowing_not_ambiguous_re_export__test_config_json
+        PASS [   0.471s] (107/188) rolldown::esbuild test_tests__esbuild__splitting__assign_to_local__test_config_json
+        PASS [   0.478s] (108/188) rolldown::esbuild test_tests__esbuild__splitting__dynamic_and_not_dynamic_es6_into_es6__test_config_json
+        PASS [   0.504s] (109/188) rolldown::esbuild test_tests__esbuild__splitting__duplicate_chunk_collision__test_config_json
+        PASS [   0.496s] (110/188) rolldown::esbuild test_tests__esbuild__splitting__dynamic_commonjs_into_es6__test_config_json
+        PASS [   0.483s] (111/188) rolldown::esbuild test_tests__esbuild__splitting__shared_es6_into_es6__test_config_json
+        PASS [   0.482s] (112/188) rolldown::fixtures fixture_with_config_tests__fixtures__ambiguous_star_export__test_config_json
+        PASS [   0.509s] (113/188) rolldown::esbuild test_tests__esbuild__splitting__dynamic_es6_into_es6__test_config_json
+        PASS [   0.504s] (114/188) rolldown::esbuild test_tests__esbuild__splitting__dynamic_import_issue_272__test_config_json
+        PASS [   0.497s] (115/188) rolldown::esbuild test_tests__esbuild__splitting__re_export_issue273__test_config_json
+        PASS [   0.503s] (116/188) rolldown::esbuild test_tests__esbuild__splitting__hybrid_esm_and_cjs_issue617__test_config_json
+        PASS [   0.382s] (117/188) rolldown::fixtures fixture_with_config_tests__fixtures__code_splitting__ensure_side_effect_executed2__test_config_json
+        PASS [   0.513s] (118/188) rolldown::esbuild test_tests__esbuild__splitting__nested_directories__test_config_json
+        PASS [   0.503s] (119/188) rolldown::esbuild test_tests__esbuild__splitting__side_effects_without_dependencies__test_config_json
+        PASS [   0.510s] (120/188) rolldown::esbuild test_tests__esbuild__splitting__shared_commonjs_into_es6__test_config_json
+        PASS [   0.510s] (121/188) rolldown::fixtures fixture_with_config_tests__fixtures__basic__test_config_json
+        PASS [   0.471s] (122/188) rolldown::fixtures fixture_with_config_tests__fixtures__code_splitting__ensure_side_effect_executed__test_config_json
+        PASS [   0.494s] (123/188) rolldown::fixtures fixture_with_config_tests__fixtures__basic_re_export__test_config_json
+        PASS [   0.487s] (124/188) rolldown::fixtures fixture_with_config_tests__fixtures__code_splitting__basic__test_config_json
+        PASS [   0.502s] (125/188) rolldown::fixtures fixture_with_config_tests__fixtures__basic_commonjs__test_config_json
+        PASS [   0.482s] (126/188) rolldown::fixtures fixture_with_config_tests__fixtures__compat__dynamic_cjs_entry__test_config_json
+        PASS [   0.492s] (127/188) rolldown::fixtures fixture_with_config_tests__fixtures__compat__cjs_entry__test_config_json
+        PASS [   0.472s] (128/188) rolldown::fixtures fixture_with_config_tests__fixtures__compat__empty_file_should_be_treated_as_cjs__import__test_config_json
+        PASS [   0.475s] (129/188) rolldown::fixtures fixture_with_config_tests__fixtures__compat__empty_file_should_be_treated_as_cjs__re_export__test_config_json
+        PASS [   0.487s] (130/188) rolldown::fixtures fixture_with_config_tests__fixtures__compat__esm_require_esm__test_config_json
+        PASS [   0.487s] (131/188) rolldown::fixtures fixture_with_config_tests__fixtures__compat__esm_require_esm_unused__test_config_json
+        PASS [   0.494s] (132/188) rolldown::fixtures fixture_with_config_tests__fixtures__compat__import_the_same_cjs_twice__test_config_json
+        PASS [   0.483s] (133/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__complex_params_patterns__test_config_json
+        PASS [   0.484s] (134/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__conflict_between_global_and_local_binding__test_config_json
+        PASS [   0.491s] (135/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__basic_scoped__test_config_json
+        PASS [   0.489s] (136/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__conflict_between_imported_and_local_binding__test_config_json
+        PASS [   0.513s] (137/188) rolldown::fixtures fixture_with_config_tests__fixtures__compat__esm_require_cjs__test_config_json
+        PASS [   0.508s] (138/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__basic__test_config_json
+        PASS [   0.473s] (139/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__decl_complex_patterns__test_config_json
+        PASS [   0.476s] (140/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__reserved_names__test_config_json
+        PASS [   0.484s] (141/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__issue_364__test_config_json
+        PASS [   0.494s] (142/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__default_function__test_config_json
+        PASS [   0.507s] (143/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__decl_nested_assign_pattern__test_config_json
+        PASS [   0.306s] (144/188) rolldown::fixtures fixture_with_config_tests__fixtures__errors__unresolved_entry__test_config_json
+        PASS [   0.489s] (145/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__wrapped_esm_export_named_function__test_config_json
+        PASS [   0.490s] (146/188) rolldown::fixtures fixture_with_config_tests__fixtures__deconflict__wrapped_esm_default_function__test_config_json
+        PASS [   0.398s] (147/188) rolldown::fixtures fixture_with_config_tests__fixtures__external__keep_import_external_order__test_config_json
+        PASS [   0.410s] (148/188) rolldown::fixtures fixture_with_config_tests__fixtures__external__export_external__test_config_json
+        PASS [   0.408s] (149/188) rolldown::fixtures fixture_with_config_tests__fixtures__external__import_external__test_config_json
+        PASS [   0.484s] (150/188) rolldown::fixtures fixture_with_config_tests__fixtures__exec_order__basic__test_config_json
+        PASS [   0.490s] (151/188) rolldown::fixtures fixture_with_config_tests__fixtures__external__implicit_import_external__test_config_json
+        PASS [   0.484s] (152/188) rolldown::fixtures fixture_with_config_tests__fixtures__import_reexport_between_esm_and_cjs__esm_import_cjs_import_star_as__test_config_json
+        PASS [   0.484s] (153/188) rolldown::fixtures fixture_with_config_tests__fixtures__import_reexport_between_esm_and_cjs__esm_import_esm_which_export_all_from_multiple_cjs_named_import__test_config_json
+        PASS [   0.485s] (154/188) rolldown::fixtures fixture_with_config_tests__fixtures__import_reexport_between_esm_and_cjs__esm_import_esm_which_export_all_from_cjs_named_import__test_config_json
+        PASS [   0.494s] (155/188) rolldown::fixtures fixture_with_config_tests__fixtures__import_reexport_between_esm_and_cjs__esm_import_cjs_named_import__test_config_json
+        PASS [   0.502s] (156/188) rolldown::fixtures fixture_with_config_tests__fixtures__external__splitting_with_external_module__test_config_json
+        PASS [   0.499s] (157/188) rolldown::fixtures fixture_with_config_tests__fixtures__import_reexport_between_esm_and_cjs__esm_reexport_cjs_default__test_config_json
+        PASS [   0.476s] (158/188) rolldown::fixtures fixture_with_config_tests__fixtures__misc__duplicate_entries__test_config_json
+        PASS [   0.506s] (159/188) rolldown::fixtures fixture_with_config_tests__fixtures__import_reexport_between_esm_and_cjs__esm_reexport_cjs_named_reexport__test_config_json
+        PASS [   0.501s] (160/188) rolldown::fixtures fixture_with_config_tests__fixtures__misc__cjs_entry_as_dependency__test_config_json
+        PASS [   0.490s] (161/188) rolldown::fixtures fixture_with_config_tests__fixtures__misc__generate_valid_name_for_kebab_case_files__test_config_json
+        PASS [   0.465s] (162/188) rolldown::fixtures fixture_with_config_tests__fixtures__misc__issue_376__test_config_json
+        PASS [   0.434s] (163/188) rolldown::fixtures fixture_with_config_tests__fixtures__reexport_star_from_local_named_export__test_config_json
+        PASS [   0.474s] (164/188) rolldown::fixtures fixture_with_config_tests__fixtures__object_shorthand_property__test_config_json
+        PASS [   0.460s] (165/188) rolldown::fixtures fixture_with_config_tests__fixtures__reexport_star__test_config_json
+        PASS [   0.461s] (166/188) rolldown::fixtures fixture_with_config_tests__fixtures__reexport_commonjs__test_config_json
+        PASS [   0.487s] (167/188) rolldown::fixtures fixture_with_config_tests__fixtures__mix_cjs_esm__test_config_json
+        PASS [   0.080s] (168/188) rolldown_common types::file_path::test
+        PASS [   0.472s] (169/188) rolldown::fixtures fixture_with_config_tests__fixtures__require__create_require__test_config_json
+        PASS [   0.072s] (170/188) rolldown_fs memory::tests::test_memory_file_system
+        PASS [   0.087s] (171/188) rolldown_common types::file_path::test_ensure_valid_identifier
+        PASS [   0.088s] (172/188) rolldown_oxc_utils compiler::basic_test
+        PASS [   0.482s] (173/188) rolldown::fixtures fixture_with_config_tests__fixtures__require__require_cjs__test_config_json
+        PASS [   0.471s] (174/188) rolldown::fixtures fixture_with_config_tests__fixtures__require__require_esm__test_config_json
+        PASS [   0.478s] (175/188) rolldown::fixtures fixture_with_config_tests__fixtures__resolve__node_modules_as_entries__test_config_json
+        PASS [   0.479s] (176/188) rolldown::fixtures fixture_with_config_tests__fixtures__resolve__browser_filed_false__test_config_json
+        PASS [   0.466s] (177/188) rolldown::fixtures fixture_with_config_tests__fixtures__rollup__catch_scope_shadowing__test_config_json
+        PASS [   0.120s] (178/188) rolldown_plugin_vite_scanner util::test_extract_html_module_scripts
+        PASS [   0.051s] (179/188) rolldown_utils bitset::tests::basic
+        PASS [   0.056s] (180/188) rolldown_resolver types::resolved_path::test
+        PASS [   0.484s] (181/188) rolldown::fixtures fixture_with_config_tests__fixtures__rollup__assignment_patterns__test_config_json
+        PASS [   0.485s] (182/188) rolldown::fixtures fixture_with_config_tests__fixtures__resolve__resolve_node_modules_by_default__test_config_json
+        PASS [   0.082s] (183/188) rolldown_plugin_vite_scanner util::test_extract_import_paths
+        PASS [   0.418s] (184/188) rolldown::fixtures fixture_with_config_tests__fixtures__rollup__preserve_for_of_iterable__test_config_json
+        PASS [   0.408s] (185/188) rolldown::fixtures fixture_with_config_tests__fixtures__warnings__basic__test_config_json
+        PASS [   0.435s] (186/188) rolldown::fixtures fixture_with_config_tests__fixtures__rollup__object_spread_side_effect__test_config_json
+        PASS [   0.425s] (187/188) rolldown::fixtures fixture_with_config_tests__fixtures__rollup__simplify_with_destructuring__test_config_json
+        PASS [   0.386s] (188/188) rolldown::fixtures fixture_with_config_tests__fixtures__wrapped_esm__test_config_json
+────────────
+     Summary [   4.625s] 188 tests run: 188 passed, 98 skipped
+reward=1 graded=188 found=33 failed=0 parsed=188 framework=cargo exit_code=0

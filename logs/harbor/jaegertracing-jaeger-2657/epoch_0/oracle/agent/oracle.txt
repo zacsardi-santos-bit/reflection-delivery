@@ -1,3 +1,0 @@
-patching file cmd/agent/app/reporter/connect_metrics.go
-patching file cmd/agent/app/reporter/grpc/builder.go
-patching file cmd/agent/app/reporter/grpc/collector_proxy.go

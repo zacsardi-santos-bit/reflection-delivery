@@ -1,0 +1,1299 @@
+diff --git a/.github/workflows/infra_tests.yml b/.github/workflows/infra_tests.yml
+index 98a5b91fb..28aa56d33 100644
+--- a/.github/workflows/infra_tests.yml
++++ b/.github/workflows/infra_tests.yml
+@@ -25,6 +25,13 @@ jobs:
+           sudo env "PATH=$PATH" pip install -r infra/ci/requirements.txt
+           sudo env "PATH=$PATH" pip install -r infra/build/functions/requirements.txt
+ 
++      - name: Install python-apt
++        run: |
++          git clone https://salsa.debian.org/apt-team/python-apt.git -b 1.6.5ubuntu0.3 --depth 1 /tmp/python-apt
++          cd /tmp/python-apt
++          sudo env "PATH=$PATH" apt build-dep ./
++          sudo env "PATH=$PATH" python setup.py install
++
+       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+         with:
+           version: '298.0.0'
+diff --git a/.pylintrc b/.pylintrc
+index 02abe5f6c..3b764856a 100644
+--- a/.pylintrc
++++ b/.pylintrc
+@@ -90,7 +90,6 @@ disable=print-statement,
+         reduce-builtin,
+         standarderror-builtin,
+         unicode-builtin,
+-        xrange-builtin,
+         coerce-method,
+         delslice-method,
+         getslice-method,
+diff --git a/infra/base-images/all.sh b/infra/base-images/all.sh
+index 6d012d5aa..f5ac04752 100755
+--- a/infra/base-images/all.sh
++++ b/infra/base-images/all.sh
+@@ -20,3 +20,5 @@ docker build -t gcr.io/oss-fuzz-base/base-clang "$@" infra/base-images/base-clan
+ docker build -t gcr.io/oss-fuzz-base/base-builder -t gcr.io/oss-fuzz/base-libfuzzer "$@" infra/base-images/base-builder
+ docker build -t gcr.io/oss-fuzz-base/base-runner "$@" infra/base-images/base-runner
+ docker build -t gcr.io/oss-fuzz-base/base-runner-debug "$@" infra/base-images/base-runner-debug
++docker build -t gcr.io/oss-fuzz-base/base-sanitizer-libs-builder "$@" infra/base-images/base-sanitizer-libs-builder
++docker build -t gcr.io/oss-fuzz-base/msan-libs-builder "$@" infra/base-images/msan-libs-builder
+diff --git a/infra/base-images/base-sanitizer-libs-builder/compiler_wrapper.py b/infra/base-images/base-sanitizer-libs-builder/compiler_wrapper.py
+index 04aa4207c..6b4327c10 100755
+--- a/infra/base-images/base-sanitizer-libs-builder/compiler_wrapper.py
++++ b/infra/base-images/base-sanitizer-libs-builder/compiler_wrapper.py
+@@ -14,7 +14,7 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Wrapper script to call clang or GCC with modified arguments."""
+ from __future__ import print_function
+ import os
+ import subprocess
+@@ -26,23 +26,23 @@ GCC_ONLY_ARGS = [
+     '-aux-info',
+ ]
+ 
++M32_BIT_ARGS = [
++    '-m32',
++    '-mx32',
++]
++
+ 
+-def InvokedAsGcc():
++def invoked_as_gcc():
+   """Return whether or not we're pretending to be GCC."""
+   return sys.argv[0].endswith('gcc') or sys.argv[0].endswith('g++')
+ 
+ 
+-def Is32Bit(args):
++def is_32_bit(args):
+   """Return whether or not we're 32-bit."""
+-  M32_BIT_ARGS = [
+-      '-m32',
+-      '-mx32',
+-  ]
+-
+   return any(arg in M32_BIT_ARGS for arg in args)
+ 
+ 
+-def FilterWlArg(arg):
++def filter_wl_arg(arg):
+   """Remove -z,defs and equivalents from a single -Wl option."""
+   parts = arg.split(',')[1:]
+ 
+@@ -55,7 +55,7 @@ def FilterWlArg(arg):
+ 
+     if part == '--no-undefined':
+       continue
+-      
++
+     filtered.append(part)
+ 
+   if filtered:
+@@ -65,29 +65,29 @@ def FilterWlArg(arg):
+   return None
+ 
+ 
+-def _RemoveLastMatching(l, find):
+-  for i in xrange(len(l) - 1, -1, -1):
+-    if l[i] == find:
+-      del l[i]
++def _remove_last_matching(args, find):
++  for i in range(len(args) - 1, -1, -1):
++    if args[i] == find:
++      del args[i]
+       return
+ 
+   raise IndexError('Not found')
+ 
+ 
+-def RemoveZDefs(args):
++def remove_z_defs(args):
+   """Remove unsupported -Wl,-z,defs linker option."""
+   filtered = []
+ 
+   for arg in args:
+     if arg == '-Wl,defs':
+-      _RemoveLastMatching(filtered, '-Wl,-z')
++      _remove_last_matching(filtered, '-Wl,-z')
+       continue
+ 
+     if arg == '-Wl,--no-undefined':
+       continue
+ 
+     if arg.startswith('-Wl,'):
+-      arg = FilterWlArg(arg)
++      arg = filter_wl_arg(arg)
+       if not arg:
+         continue
+ 
+@@ -96,11 +96,11 @@ def RemoveZDefs(args):
+   return filtered
+ 
+ 
+-def GetCompilerArgs(args, is_cxx):
++def get_compiler_args(args, is_cxx):
+   """Generate compiler args."""
+   compiler_args = args[1:]
+ 
+-  if Is32Bit(args):
++  if is_32_bit(args):
+     # 32 bit builds not supported.
+     compiler_args.extend([
+         '-fno-sanitize=memory',
+@@ -109,7 +109,7 @@ def GetCompilerArgs(args, is_cxx):
+ 
+     return compiler_args
+ 
+-  compiler_args = RemoveZDefs(compiler_args)
++  compiler_args = remove_z_defs(compiler_args)
+   compiler_args.extend([
+       # FORTIFY_SOURCE is not supported by sanitizers.
+       '-U_FORTIFY_SOURCE',
+@@ -122,15 +122,15 @@ def GetCompilerArgs(args, is_cxx):
+       '-fno-lto',
+   ])
+ 
+-  if InvokedAsGcc():
++  if invoked_as_gcc():
+     compiler_args.extend([
+-      # For better compatibility with flags passed via -Wa,...
+-      '-fno-integrated-as',
++        # For better compatibility with flags passed via -Wa,...
++        '-fno-integrated-as',
+     ])
+ 
+   if '-fsanitize=memory' not in args:
+     # If MSan flags weren't added for some reason, add them here.
+-    compiler_args.extend(msan_build.GetInjectedFlags())
++    compiler_args.extend(msan_build.get_injected_flags())
+ 
+   if is_cxx:
+     compiler_args.append('-stdlib=libc++')
+@@ -138,35 +138,36 @@ def GetCompilerArgs(args, is_cxx):
+   return compiler_args
+ 
+ 
+-def FindRealClang():
++def find_real_clang():
+   """Return path to real clang."""
+   return os.environ['REAL_CLANG_PATH']
+ 
+ 
+-def FallbackToGcc(args):
++def fallback_to_gcc(args):
+   """Check whether if we should fall back to GCC."""
+-  if not InvokedAsGcc():
++  if not invoked_as_gcc():
+     return False
+ 
+   return any(arg in GCC_ONLY_ARGS for arg in args[1:])
+ 
+ 
+ def main(args):
+-  if FallbackToGcc(args):
+-    sys.exit(subprocess.call(['/usr/bin/' + os.path.basename(args[0])] +
+-                             args[1:]))
++  """Modify arguments and call the real compiler."""
++  if fallback_to_gcc(args):
++    sys.exit(
++        subprocess.call(['/usr/bin/' + os.path.basename(args[0])] + args[1:]))
+ 
+   is_cxx = args[0].endswith('++')
+-  real_clang = FindRealClang()
++  real_clang = find_real_clang()
+ 
+   if is_cxx:
+     real_clang += '++'
+ 
+-  args = [real_clang] + GetCompilerArgs(args, is_cxx)
++  args = [real_clang] + get_compiler_args(args, is_cxx)
+   debug_log_path = os.getenv('WRAPPER_DEBUG_LOG_PATH')
+   if debug_log_path:
+-    with open(debug_log_path, 'a') as f:
+-      f.write(str(args) + '\n')
++    with open(debug_log_path, 'a') as log_file:
++      log_file.write(str(args) + '\n')
+ 
+   sys.exit(subprocess.call(args))
+ 
+diff --git a/infra/base-images/base-sanitizer-libs-builder/msan_build.py b/infra/base-images/base-sanitizer-libs-builder/msan_build.py
+index 928b1a596..b73bdfaee 100755
+--- a/infra/base-images/base-sanitizer-libs-builder/msan_build.py
++++ b/infra/base-images/base-sanitizer-libs-builder/msan_build.py
+@@ -14,7 +14,7 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Script to build libraries with MemorySanitizer instrumentation."""
+ from __future__ import print_function
+ import argparse
+ import imp
+@@ -43,12 +43,30 @@ INJECTED_ARGS = [
+     '-fno-omit-frame-pointer',
+ ]
+ 
++C_OR_CXX_DEPS = [
++    'libc++1',
++    'libc6',
++    'libc++abi1',
++    'libgcc1',
++    'libstdc++6',
++]
++
++BLACKLISTED_PACKAGES = [
++    'libcapnp-0.5.3',  # fails to compile on newer clang.
++    'libllvm5.0',
++    'libmircore1',
++    'libmircommon7',
++    'libmirclient9',
++    'libmirprotobuf3',
++    'multiarch-support',
++]
++
+ 
+ class MSanBuildException(Exception):
+   """Base exception."""
+ 
+ 
+-def GetTrackOriginsFlag():
++def get_track_origins_flag():
+   """Get the track origins flag."""
+   if os.getenv('MSAN_NO_TRACK_ORIGINS'):
+     return TRACK_ORIGINS_ARG + '0'
+@@ -56,11 +74,12 @@ def GetTrackOriginsFlag():
+   return TRACK_ORIGINS_ARG + '2'
+ 
+ 
+-def GetInjectedFlags():
+-  return INJECTED_ARGS + [GetTrackOriginsFlag()]
++def get_injected_flags():
++  """Get the additional command line arguments."""
++  return INJECTED_ARGS + [get_track_origins_flag()]
+ 
+ 
+-def SetUpEnvironment(work_dir):
++def set_up_environment(work_dir):
+   """Set up build environment."""
+   env = {}
+   env['REAL_CLANG_PATH'] = subprocess.check_output(['which', 'clang']).strip()
+@@ -71,9 +90,11 @@ def SetUpEnvironment(work_dir):
+   bin_dir = os.path.join(work_dir, 'bin')
+   os.mkdir(bin_dir)
+ 
+-  dpkg_host_architecture = wrapper_utils.DpkgHostArchitecture()
++  dpkg_host_architecture = wrapper_utils.dpkg_host_architecture()
+   wrapper_utils.CreateSymlinks(
+-      compiler_wrapper_path, bin_dir, [
++      compiler_wrapper_path,
++      bin_dir,
++      [
+           'clang',
+           'clang++',
+           # Not all build rules respect $CC/$CXX, so make additional symlinks.
+@@ -88,54 +109,48 @@ def SetUpEnvironment(work_dir):
+   env['CC'] = os.path.join(bin_dir, 'clang')
+   env['CXX'] = os.path.join(bin_dir, 'clang++')
+ 
+-  MSAN_OPTIONS = ' '.join(GetInjectedFlags())
++  msan_options = ' '.join(get_injected_flags())
+ 
+   # We don't use nostrip because some build rules incorrectly break when it is
+   # passed. Instead we install our own no-op strip binaries.
+   env['DEB_BUILD_OPTIONS'] = ('nocheck parallel=%d' %
+                               multiprocessing.cpu_count())
+-  env['DEB_CFLAGS_APPEND'] = MSAN_OPTIONS
+-  env['DEB_CXXFLAGS_APPEND'] = MSAN_OPTIONS + ' -stdlib=libc++'
+-  env['DEB_CPPFLAGS_APPEND'] = MSAN_OPTIONS
+-  env['DEB_LDFLAGS_APPEND'] = MSAN_OPTIONS
++  env['DEB_CFLAGS_APPEND'] = msan_options
++  env['DEB_CXXFLAGS_APPEND'] = msan_options + ' -stdlib=libc++'
++  env['DEB_CPPFLAGS_APPEND'] = msan_options
++  env['DEB_LDFLAGS_APPEND'] = msan_options
+   env['DPKG_GENSYMBOLS_CHECK_LEVEL'] = '0'
+ 
+   # debian/rules can set DPKG_GENSYMBOLS_CHECK_LEVEL explicitly, so override it.
+-  gen_symbols_wrapper = (
+-        '#!/bin/sh\n'
+-        'export DPKG_GENSYMBOLS_CHECK_LEVEL=0\n'
+-        '/usr/bin/dpkg-gensymbols "$@"\n')
++  gen_symbols_wrapper = ('#!/bin/sh\n'
++                         'export DPKG_GENSYMBOLS_CHECK_LEVEL=0\n'
++                         '/usr/bin/dpkg-gensymbols "$@"\n')
+ 
+-  wrapper_utils.InstallWrapper(bin_dir, 'dpkg-gensymbols',
+-                               gen_symbols_wrapper)
++  wrapper_utils.install_wrapper(bin_dir, 'dpkg-gensymbols', gen_symbols_wrapper)
+ 
+   # Install no-op strip binaries.
+-  no_op_strip = ('#!/bin/sh\n'
++  no_op_strip = ('#!/bin/sh\n' \
+                  'exit 0\n')
+-  wrapper_utils.InstallWrapper(
+-      bin_dir, 'strip', no_op_strip,
+-      [dpkg_host_architecture + '-strip'])
++  wrapper_utils.install_wrapper(bin_dir, 'strip', no_op_strip,
++                                [dpkg_host_architecture + '-strip'])
+ 
+   env['PATH'] = bin_dir + ':' + os.environ['PATH']
+ 
+   # nocheck doesn't disable override_dh_auto_test. So we have this hack to try
+   # to disable "make check" or "make test" invocations.
+-  make_wrapper = (
+-      '#!/bin/bash\n'
+-      'if [ "$1" = "test" ] || [ "$1" = "check" ]; then\n'
+-      '  exit 0\n'
+-      'fi\n'
+-      '/usr/bin/make "$@"\n')
+-  wrapper_utils.InstallWrapper(bin_dir, 'make',
+-                               make_wrapper)
++  make_wrapper = ('#!/bin/bash\n'
++                  'if [ "$1" = "test" ] || [ "$1" = "check" ]; then\n'
++                  '  exit 0\n'
++                  'fi\n'
++                  '/usr/bin/make "$@"\n')
++  wrapper_utils.install_wrapper(bin_dir, 'make', make_wrapper)
+ 
+   # Prevent entire build from failing because of bugs/uninstrumented in tools
+   # that are part of the build.
+   msan_log_dir = os.path.join(work_dir, 'msan')
+   os.mkdir(msan_log_dir)
+   msan_log_path = os.path.join(msan_log_dir, 'log')
+-  env['MSAN_OPTIONS'] = (
+-      'halt_on_error=0:exitcode=0:report_umrs=0:log_path=' + msan_log_path)
++  env['MSAN_OPTIONS'] = 'halt_on_error=0:exitcode=0:report_umrs=0:log_path=' + msan_log_path
+ 
+   # Increase maximum stack size to prevent tests from failing.
+   limit = 128 * 1024 * 1024
+@@ -143,7 +158,7 @@ def SetUpEnvironment(work_dir):
+   return env
+ 
+ 
+-def FindPackageDebs(package_name, work_directory):
++def find_package_debs(package_name, work_directory):
+   """Find package debs."""
+   deb_paths = []
+   cache = apt.Cache()
+@@ -176,7 +191,7 @@ def FindPackageDebs(package_name, work_directory):
+   return deb_paths
+ 
+ 
+-def ExtractLibraries(deb_paths, work_directory, output_directory):
++def extract_libraries(deb_paths, work_directory, output_directory):
+   """Extract libraries from .deb packages."""
+   extract_directory = os.path.join(work_directory, 'extracted')
+   if os.path.exists(extract_directory):
+@@ -187,7 +202,6 @@ def ExtractLibraries(deb_paths, work_directory, output_directory):
+   for deb_path in deb_paths:
+     subprocess.check_call(['dpkg-deb', '-x', deb_path, extract_directory])
+ 
+-  extracted = []
+   for root, _, filenames in os.walk(extract_directory):
+     if 'libx32' in root or 'lib32' in root:
+       continue
+@@ -206,8 +220,8 @@ def ExtractLibraries(deb_paths, work_directory, output_directory):
+         os.makedirs(target_dir)
+ 
+       target_file_path = os.path.join(output_directory, rel_file_path)
+-      extracted.append(target_file_path)
+-        
++      yield target_file_path
++
+       if os.path.lexists(target_file_path):
+         os.remove(target_file_path)
+ 
+@@ -215,17 +229,16 @@ def ExtractLibraries(deb_paths, work_directory, output_directory):
+         link_path = os.readlink(file_path)
+         if os.path.isabs(link_path):
+           # Make absolute links relative.
+-          link_path = os.path.relpath(
+-              link_path, os.path.join('/', rel_directory))
++          link_path = os.path.relpath(link_path,
++                                      os.path.join('/', rel_directory))
+ 
+         os.symlink(link_path, target_file_path)
+       else:
+         shutil.copy2(file_path, target_file_path)
+ 
+-  return extracted
+-
+ 
+-def GetPackage(package_name):
++def get_package(package_name):
++  """Factory for Package objects."""
+   apt_cache = apt.Cache()
+   version = apt_cache[package_name].candidate
+   source_name = version.source_name
+@@ -241,11 +254,11 @@ def GetPackage(package_name):
+   return module.Package(version)
+ 
+ 
+-def PatchRpath(path, output_directory):
++def patch_rpath(path, output_directory):
+   """Patch rpath to be relative to $ORIGIN."""
+   try:
+-    rpaths = subprocess.check_output(
+-        ['patchelf', '--print-rpath', path]).strip()
++    rpaths = subprocess.check_output(['patchelf', '--print-rpath',
++                                      path]).strip()
+   except subprocess.CalledProcessError:
+     return
+ 
+@@ -262,37 +275,17 @@ def PatchRpath(path, output_directory):
+       processed_rpath.append(rpath)
+       continue
+ 
+-    processed_rpath.append(os.path.join(
+-        '$ORIGIN',
+-        os.path.relpath(rpath, rel_directory)))
++    processed_rpath.append(
++        os.path.join('$ORIGIN', os.path.relpath(rpath, rel_directory)))
+ 
+   processed_rpath = ':'.join(processed_rpath)
+   print('Patching rpath for', path, 'to', processed_rpath)
+   subprocess.check_call(
+-      ['patchelf', '--force-rpath', '--set-rpath',
+-       processed_rpath, path])
++      ['patchelf', '--force-rpath', '--set-rpath', processed_rpath, path])
+ 
+ 
+-def _CollectDependencies(apt_cache, pkg, cache, dependencies):
++def _collect_dependencies(apt_cache, pkg, cache, dependencies):
+   """Collect dependencies that need to be built."""
+-  C_OR_CXX_DEPS = [
+-      'libc++1',
+-      'libc6',
+-      'libc++abi1',
+-      'libgcc1',
+-      'libstdc++6',
+-  ]
+-
+-  BLACKLISTED_PACKAGES = [
+-      'libcapnp-0.5.3',  # fails to compile on newer clang.
+-      'libllvm5.0',
+-      'libmircore1',
+-      'libmircommon7',
+-      'libmirclient9',
+-      'libmirprotobuf3',
+-      'multiarch-support',
+-  ]
+-
+   if pkg.name in BLACKLISTED_PACKAGES:
+     return False
+ 
+@@ -309,8 +302,9 @@ def _CollectDependencies(apt_cache, pkg, cache, dependencies):
+     if dependency.name in cache:
+       is_c_or_cxx |= cache[dependency.name]
+     else:
+-      is_c_or_cxx |= _CollectDependencies(apt_cache, apt_cache[dependency.name],
+-                                          cache, dependencies)
++      is_c_or_cxx |= _collect_dependencies(apt_cache,
++                                           apt_cache[dependency.name], cache,
++                                           dependencies)
+   if is_c_or_cxx:
+     dependencies.append(pkg.name)
+ 
+@@ -318,20 +312,24 @@ def _CollectDependencies(apt_cache, pkg, cache, dependencies):
+   return is_c_or_cxx
+ 
+ 
+-def GetBuildList(package_name):
++def get_build_list(package_name):
+   """Get list of packages that need to be built including dependencies."""
+   apt_cache = apt.Cache()
+   pkg = apt_cache[package_name]
+ 
+   dependencies = []
+-  _CollectDependencies(apt_cache, pkg, {}, dependencies)
++  _collect_dependencies(apt_cache, pkg, {}, dependencies)
+   return dependencies
+ 
+ 
+-class MSanBuilder(object):
++class MSanBuilder:
+   """MSan builder."""
+ 
+-  def __init__(self, debug=False, log_path=None, work_dir=None, no_track_origins=False):
++  def __init__(self,
++               debug=False,
++               log_path=None,
++               work_dir=None,
++               no_track_origins=False):
+     self.debug = debug
+     self.log_path = log_path
+     self.work_dir = work_dir
+@@ -346,7 +344,7 @@ class MSanBuilder(object):
+       shutil.rmtree(self.work_dir, ignore_errors=True)
+ 
+     os.makedirs(self.work_dir)
+-    self.env = SetUpEnvironment(self.work_dir)
++    self.env = set_up_environment(self.work_dir)
+ 
+     if self.debug and self.log_path:
+       self.env['WRAPPER_DEBUG_LOG_PATH'] = self.log_path
+@@ -360,16 +358,16 @@ class MSanBuilder(object):
+     if not self.debug:
+       shutil.rmtree(self.work_dir, ignore_errors=True)
+ 
+-  def Build(self, package_name, output_directory, create_subdirs=False):
++  def build(self, package_name, output_directory, create_subdirs=False):
+     """Build the package and write results into the output directory."""
+-    deb_paths = FindPackageDebs(package_name, self.work_dir)
++    deb_paths = find_package_debs(package_name, self.work_dir)
+     if deb_paths:
+       print('Source package already built for', package_name)
+     else:
+-      pkg = GetPackage(package_name)
++      pkg = get_package(package_name)
+ 
+-      pkg.InstallBuildDeps()
+-      source_directory = pkg.DownloadSource(self.work_dir)
++      pkg.install_build_deps()
++      source_directory = pkg.download_source(self.work_dir)
+       print('Source downloaded to', source_directory)
+ 
+       # custom bin directory for custom build scripts to write wrappers.
+@@ -378,10 +376,10 @@ class MSanBuilder(object):
+       env = self.env.copy()
+       env['PATH'] = custom_bin_dir + ':' + env['PATH']
+ 
+-      pkg.Build(source_directory, env, custom_bin_dir)
++      pkg.build(source_directory, env, custom_bin_dir)
+       shutil.rmtree(custom_bin_dir, ignore_errors=True)
+ 
+-      deb_paths = FindPackageDebs(package_name, self.work_dir)
++      deb_paths = find_package_debs(package_name, self.work_dir)
+ 
+     if not deb_paths:
+       raise MSanBuildException('Failed to find .deb packages.')
+@@ -393,22 +391,25 @@ class MSanBuilder(object):
+     else:
+       extract_directory = output_directory
+ 
+-    extracted_paths = ExtractLibraries(deb_paths, self.work_dir,
+-                                       extract_directory)
++    extracted_paths = list(
++        extract_libraries(deb_paths, self.work_dir, extract_directory))
+     for extracted_path in extracted_paths:
+       if not os.path.islink(extracted_path):
+-        PatchRpath(extracted_path, extract_directory)
++        patch_rpath(extracted_path, extract_directory)
+ 
+ 
+ def main():
++  """Builds packages with MemorySanitizer instrumentation."""
+   parser = argparse.ArgumentParser('msan_build.py', description='MSan builder.')
+   parser.add_argument('package_names', nargs='+', help='Name of the packages.')
+   parser.add_argument('output_dir', help='Output directory.')
+-  parser.add_argument('--create-subdirs', action='store_true',
++  parser.add_argument('--create-subdirs',
++                      action='store_true',
+                       help=('Create subdirectories in the output '
+                             'directory for each package.'))
+   parser.add_argument('--work-dir', help='Work directory.')
+-  parser.add_argument('--no-build-deps', action='store_true',
++  parser.add_argument('--no-build-deps',
++                      action='store_true',
+                       help='Don\'t build dependencies.')
+   parser.add_argument('--debug', action='store_true', help='Enable debug mode.')
+   parser.add_argument('--log-path', help='Log path for debugging.')
+@@ -431,7 +432,7 @@ def main():
+ 
+     # Get list of packages to build, including all dependencies.
+     for package_name in args.package_names:
+-      for dep in GetBuildList(package_name):
++      for dep in get_build_list(package_name):
+         if dep in all_packages:
+           continue
+ 
+@@ -445,11 +446,12 @@ def main():
+   for package_name in package_names:
+     print('\t', package_name)
+ 
+-  with MSanBuilder(debug=args.debug, log_path=args.log_path,
++  with MSanBuilder(debug=args.debug,
++                   log_path=args.log_path,
+                    work_dir=args.work_dir,
+                    no_track_origins=args.no_track_origins) as builder:
+     for package_name in package_names:
+-      builder.Build(package_name, args.output_dir, args.create_subdirs)
++      builder.build(package_name, args.output_dir, args.create_subdirs)
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/boost1_58.py b/infra/base-images/base-sanitizer-libs-builder/packages/boost1_58.py
+index 8071b7ecd..20d1b9df1 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/boost1_58.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/boost1_58.py
+@@ -14,16 +14,17 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom options for boost1.58."""
+ import package
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """boost1.58 package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('boost1.58', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
++  def pre_build(self, _source_directory, env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Pre-build configuration for boost1.58."""
+     # Otherwise py_nonblocking.cpp fails to build.
+     env['DEB_CXXFLAGS_APPEND'] += ' -std=c++98'
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/gnutls28.py b/infra/base-images/base-sanitizer-libs-builder/packages/gnutls28.py
+index f8407a668..afd8c9cd5 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/gnutls28.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/gnutls28.py
+@@ -14,24 +14,22 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
+-import os
+-import shutil
+-
++"""Custom options for gnutls28."""
+ import package
+ import wrapper_utils
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """gnutls28 package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('gnutls28', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
++  def pre_build(self, _source_directory, _env, custom_bin_dir):  # pylint: disable=no-self-use
++    """Pre-build configuration for gnutls28."""
+     configure_wrapper = (
+         '#!/bin/bash\n'
+         '/usr/bin/dh_auto_configure "$@" --disable-hardware-acceleration')
+ 
+-    wrapper_utils.InstallWrapper(
+-        custom_bin_dir, 'dh_auto_configure', configure_wrapper)
++    wrapper_utils.InstallWrapper(custom_bin_dir, 'dh_auto_configure',
++                                 configure_wrapper)
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/libgcrypt20.py b/infra/base-images/base-sanitizer-libs-builder/packages/libgcrypt20.py
+index 9d200af6f..7a470d336 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/libgcrypt20.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/libgcrypt20.py
+@@ -14,24 +14,21 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
+-import os
+-import shutil
+-
++"""Custom options for libgcrypt20."""
+ import package
+ import wrapper_utils
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """libgcrypt20 package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('libgcrypt20', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
+-    configure_wrapper = (
+-        '#!/bin/bash\n'
+-        '/usr/bin/dh_auto_configure "$@" --disable-asm')
++  def pre_build(self, _source_directory, _env, custom_bin_dir):  # pylint: disable=no-self-use
++    """Pre-build configuration for libgcrypt20."""
++    configure_wrapper = ('#!/bin/bash\n'
++                         '/usr/bin/dh_auto_configure "$@" --disable-asm')
+ 
+-    wrapper_utils.InstallWrapper(
+-        custom_bin_dir, 'dh_auto_configure', configure_wrapper)
++    wrapper_utils.InstallWrapper(custom_bin_dir, 'dh_auto_configure',
++                                 configure_wrapper)
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/mesa.py b/infra/base-images/base-sanitizer-libs-builder/packages/mesa.py
+index ec2e9d217..9b3d6e3a1 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/mesa.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/mesa.py
+@@ -14,15 +14,16 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom options for mesa."""
+ import package
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """mesa package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('mesa', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
++  def pre_build(self, _source_directory, env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Pre-build configuration for mesa."""
+     env['DEB_CXXFLAGS_APPEND'] += ' -std=c++11'
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/nettle.py b/infra/base-images/base-sanitizer-libs-builder/packages/nettle.py
+index e1b0e2f81..26756579b 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/nettle.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/nettle.py
+@@ -14,28 +14,28 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom configure options for nettle."""
+ import os
+ import shutil
+ 
+ import package
+ 
+ 
+-def AddNoAsmArg(config_path):
++def add_no_asm_arg(config_path):
+   """Add --disable-assembler to config scripts."""
+   shutil.move(config_path, config_path + '.real')
+-  with open(config_path, 'w') as f:
+-    f.write(
+-        '#!/bin/sh\n'
+-        '%s.real --disable-assembler "$@"\n' % config_path)
+-  os.chmod(config_path, 0755)
++  with open(config_path, 'w') as config_file:
++    config_file.write('#!/bin/sh\n'
++                      '%s.real --disable-assembler "$@"\n' % config_path)
++  os.chmod(config_path, 0o755)
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """nettle package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('nettle', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
+-    AddNoAsmArg(os.path.join(source_directory, 'configure'))
++  def pre_build(self, source_directory, _env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Hook function to customize nettle's configuration before building."""
++    add_no_asm_arg(os.path.join(source_directory, 'configure'))
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/openssl.py b/infra/base-images/base-sanitizer-libs-builder/packages/openssl.py
+index e24ccc588..0fb311ff8 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/openssl.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/openssl.py
+@@ -14,29 +14,29 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom configure options for openssl."""
+ import os
+ import shutil
+ 
+ import package
+ 
+ 
+-def AddNoAsmArg(config_path):
++def add_no_asm_arg(config_path):
+   """Add --no-asm to config scripts."""
+   shutil.move(config_path, config_path + '.real')
+-  with open(config_path, 'w') as f:
+-    f.write(
+-        '#!/bin/sh\n'
+-        '%s.real no-asm "$@"\n' % config_path)
+-  os.chmod(config_path, 0755)
++  with open(config_path, 'w') as config_file:
++    config_file.write('#!/bin/sh\n' \
++                      '%s.real no-asm "$@"\n' % config_path)
++  os.chmod(config_path, 0o755)
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """openssl package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('openssl', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
+-    AddNoAsmArg(os.path.join(source_directory, 'Configure'))
+-    AddNoAsmArg(os.path.join(source_directory, 'config'))
++  def pre_build(self, source_directory, _env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Hook function to customize openssl's configuration before building."""
++    add_no_asm_arg(os.path.join(source_directory, 'Configure'))
++    add_no_asm_arg(os.path.join(source_directory, 'config'))
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/package.py b/infra/base-images/base-sanitizer-libs-builder/packages/package.py
+index 059c23587..a8d40e17b 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/package.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/package.py
+@@ -14,7 +14,7 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Base class and utility functions for all libraries that require customized build processes."""
+ import os
+ import subprocess
+ 
+@@ -23,60 +23,62 @@ import apt
+ SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
+ 
+ 
+-def ApplyPatch(source_directory, patch_name):
++def apply_patch(source_directory, patch_name):
+   """Apply custom patch."""
+-  subprocess.check_call(['patch', '-p1', '-i',
+-                         os.path.join(SCRIPT_DIR, patch_name)],
+-                        cwd=source_directory)
++  subprocess.check_call(
++      ['patch', '-p1', '-i',
++       os.path.join(SCRIPT_DIR, patch_name)],
++      cwd=source_directory)
+ 
+ 
+ class PackageException(Exception):
+   """Base package exception."""
+ 
+ 
+-class Package(object):
++class Package:
+   """Base package."""
+ 
+   def __init__(self, name, apt_version):
+     self.name = name
+     self.apt_version = apt_version
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
++  def pre_build(self, _source_directory, _env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Default no-op pre-build hook function."""
+     return
+ 
+-  def PostBuild(self, source_directory, env, custom_bin_dir):
++  def post_build(self, _source_directory, _env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Default no-op post-build hook function."""
+     return
+ 
+-  def PreDownload(self, download_directory):
++  def pre_download(self, _download_directory):  # pylint: disable=no-self-use
++    """Default no-op pre-download hook function."""
+     return
+ 
+-  def PostDownload(self, source_directory):
++  def post_download(self, _source_directory):  # pylint: disable=no-self-use
++    """Default no-op post-download hook function."""
+     return
+ 
+-  def InstallBuildDeps(self):
++  def install_build_deps(self):
+     """Install build dependencies for a package."""
+     subprocess.check_call(['apt-get', 'update'])
+     subprocess.check_call(['apt-get', 'build-dep', '-y', self.name])
+ 
+     # Reload package after update.
+-    self.apt_version = (
+-        apt.Cache()[self.apt_version.package.name].candidate)
++    self.apt_version = apt.Cache()[self.apt_version.package.name].candidate
+ 
+-  def DownloadSource(self, download_directory):
++  def download_source(self, download_directory):
+     """Download the source for a package."""
+-    self.PreDownload(download_directory)
++    self.pre_download(download_directory)
+ 
+     source_directory = self.apt_version.fetch_source(download_directory)
+ 
+-    self.PostDownload(source_directory)
++    self.post_download(source_directory)
+     return source_directory
+ 
+-  def Build(self, source_directory, env, custom_bin_dir):
++  def build(self, source_directory, env, custom_bin_dir):
+     """Build .deb packages."""
+-    self.PreBuild(source_directory, env, custom_bin_dir)
+-    subprocess.check_call(
+-        ['dpkg-buildpackage', '-us', '-uc', '-B'],
+-        cwd=source_directory, env=env)
+-    self.PostBuild(source_directory, env, custom_bin_dir)
+-
+-
++    self.pre_build(source_directory, env, custom_bin_dir)
++    subprocess.check_call(['dpkg-buildpackage', '-us', '-uc', '-B'],
++                          cwd=source_directory,
++                          env=env)
++    self.post_build(source_directory, env, custom_bin_dir)
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/pixman.py b/infra/base-images/base-sanitizer-libs-builder/packages/pixman.py
+index d63b1468f..e693298ed 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/pixman.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/pixman.py
+@@ -14,9 +14,8 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom options for pixman."""
+ import os
+-import shutil
+ 
+ import package
+ 
+@@ -27,16 +26,15 @@ class Package(package.Package):
+   def __init__(self, apt_version):
+     super(Package, self).__init__('pixman', apt_version)
+ 
+-  def PostDownload(self, source_directory):
+-    # Incorrect checking of GCC vector extension availability.
+-    os.system(
+-      'sed s/support_for_gcc_vector_extensions=yes/'
+-      'support_for_gcc_vector_extensions=no/ -i %s/configure.ac' %
+-      source_directory)
++  def post_download(self, source_directory):  # pylint: disable=no-self-use
++    """Workaround for incorrect checking of GCC vector extension availability."""
++    os.system('sed s/support_for_gcc_vector_extensions=yes/'
++              'support_for_gcc_vector_extensions=no/ -i %s/configure.ac' %
++              source_directory)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
++  def pre_build(self, _source_directory, env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Pre-build configuration for pixman."""
+     blacklist_flag = ' -fsanitize-blacklist=' + os.path.join(
+-        os.path.dirname(os.path.abspath(__file__)),
+-        'pixman_blacklist.txt')
++        os.path.dirname(os.path.abspath(__file__)), 'pixman_blacklist.txt')
+     env['DEB_CXXFLAGS_APPEND'] += blacklist_flag
+     env['DEB_CFLAGS_APPEND'] += blacklist_flag
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/pulseaudio.py b/infra/base-images/base-sanitizer-libs-builder/packages/pulseaudio.py
+index 853b9e724..c4fd9f4a6 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/pulseaudio.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/pulseaudio.py
+@@ -14,22 +14,20 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom options for PulseAudio."""
+ from __future__ import print_function
+-import glob
+ import os
+-import subprocess
+ 
+ import package
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """PulseAudio package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('pulseaudio', apt_version)
+ 
+-  def PostDownload(self, source_directory):
++  def post_download(self, source_directory):  # pylint: disable=no-self-use
+     """Remove blacklisted patches."""
+     # Fix *droid* patches.
+     bad_patch_path = os.path.join(
+@@ -39,4 +37,4 @@ class Package(package.Package):
+       return
+ 
+     print('Applying custom patches.')
+-    package.ApplyPatch(source_directory, 'pulseaudio_fix_android.patch')
++    package.apply_patch(source_directory, 'pulseaudio_fix_android.patch')
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/sqlite3.py b/infra/base-images/base-sanitizer-libs-builder/packages/sqlite3.py
+index 3e1a1070f..caed9c4d1 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/sqlite3.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/sqlite3.py
+@@ -14,19 +14,19 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom options for sqlite3."""
+ import os
+ 
+ import package
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """sqlite3 package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('sqlite3', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
+-    os.system(
+-        'sed -i "s/package ifneeded sqlite3//" %s/debian/rules' %
+-        source_directory)
++  def pre_build(self, source_directory, _env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Pre-build configuration for sqlite3."""
++    os.system('sed -i "s/package ifneeded sqlite3//" %s/debian/rules' %
++              source_directory)
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/systemd.py b/infra/base-images/base-sanitizer-libs-builder/packages/systemd.py
+index 5cb6d60be..afa95249f 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/systemd.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/systemd.py
+@@ -14,29 +14,27 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom options for systemd."""
+ from __future__ import print_function
+-import glob
+-import os
+-import subprocess
+ 
+ import package
+ import wrapper_utils
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """systemd package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('systemd', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
++  def pre_build(self, _source_directory, _env, custom_bin_dir):  # pylint: disable=no-self-use
++    """Pre-build installation of a wrapper script for systemd."""
+     # Hide msan symbols from nm. the systemd build system uses this to find
+     # undefined symbols and errors out if it does.
+-    nm_wrapper = (
+-        '#!/bin/bash\n'
+-        '/usr/bin/nm "$@" | grep -E -v "U (__msan|memset)"\n'
+-        'exit ${PIPESTATUS[0]}\n')
++    nm_wrapper = ('#!/bin/bash\n'
++                  '/usr/bin/nm "$@" | grep -E -v "U (__msan|memset)"\n'
++                  'exit ${PIPESTATUS[0]}\n')
+ 
+-    wrapper_utils.InstallWrapper(custom_bin_dir, 'nm', nm_wrapper,
+-                                 [wrapper_utils.DpkgHostArchitecture() + '-nm'])
++    wrapper_utils.InstallWrapper(
++        custom_bin_dir, 'nm', nm_wrapper,
++        [wrapper_utils.dpkg_host_architecture() + '-nm'])
+diff --git a/infra/base-images/base-sanitizer-libs-builder/packages/tar.py b/infra/base-images/base-sanitizer-libs-builder/packages/tar.py
+index 74abd5c72..6aab2825e 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/packages/tar.py
++++ b/infra/base-images/base-sanitizer-libs-builder/packages/tar.py
+@@ -14,15 +14,16 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Custom options for tar."""
+ import package
+ 
+ 
+-class Package(package.Package):
++class Package(package.Package):  # pylint: disable=too-few-public-methods
+   """tar package."""
+ 
+   def __init__(self, apt_version):
+     super(Package, self).__init__('tar', apt_version)
+ 
+-  def PreBuild(self, source_directory, env, custom_bin_dir):
++  def pre_build(self, _source_directory, env, _custom_bin_dir):  # pylint: disable=no-self-use
++    """Pre-build configuration for tar."""
+     env['FORCE_UNSAFE_CONFIGURE'] = '1'
+diff --git a/infra/base-images/base-sanitizer-libs-builder/patch_build.py b/infra/base-images/base-sanitizer-libs-builder/patch_build.py
+index cb1f4b1d7..e594ce0c1 100755
+--- a/infra/base-images/base-sanitizer-libs-builder/patch_build.py
++++ b/infra/base-images/base-sanitizer-libs-builder/patch_build.py
+@@ -14,7 +14,7 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Helper script to patch rpath in all binaries to point to instrumented libraries."""
+ from __future__ import print_function
+ import argparse
+ import os
+@@ -25,27 +25,36 @@ import sys
+ 
+ INSTRUMENTED_LIBRARIES_DIRNAME = 'instrumented_libraries'
+ MSAN_LIBS_PATH = os.getenv('MSAN_LIBS_PATH', '/msan')
+-
+-
+-def IsElf(file_path):
++INTERCEPTED_LIBRARIES = {
++    '/lib/x86_64-linux-gnu/libm.so.6',
++    '/lib/x86_64-linux-gnu/libpthread.so.0',
++    '/lib/x86_64-linux-gnu/librt.so.1',
++    '/lib/x86_64-linux-gnu/libdl.so.2',
++    '/lib/x86_64-linux-gnu/libgcc_s.so.1',
++    '/lib/x86_64-linux-gnu/libc.so.6',
++}
++LDD_OUTPUT_PATTERN = re.compile(r'\s*([^\s]+)\s*=>\s*([^\s]+)')
++
++
++def is_elf(file_path):
+   """Whether if the file is an elf file."""
+-  with open(file_path) as f:
+-    return f.read(4) == '\x7fELF'
++  with open(file_path) as elf_file:
++    return elf_file.read(4) == '\x7fELF'
+ 
+ 
+-def Ldd(binary_path):
++def ldd(binary_path):
+   """Run ldd on a file."""
+   try:
+-    output = subprocess.check_output(['ldd', binary_path], stderr=subprocess.STDOUT)
++    output = subprocess.check_output(['ldd', binary_path],
++                                     stderr=subprocess.STDOUT)
+   except subprocess.CalledProcessError:
+     print('Failed to call ldd on', binary_path, file=sys.stderr)
+     return []
+ 
+   libs = []
+ 
+-  OUTPUT_PATTERN = re.compile(r'\s*([^\s]+)\s*=>\s*([^\s]+)')
+   for line in output.splitlines():
+-    match = OUTPUT_PATTERN.match(line)
++    match = LDD_OUTPUT_PATTERN.match(line)
+     if not match:
+       continue
+ 
+@@ -54,12 +63,12 @@ def Ldd(binary_path):
+   return libs
+ 
+ 
+-def FindLib(path):
++def find_lib(path):
+   """Find instrumented version of lib."""
+   candidate_path = os.path.join(MSAN_LIBS_PATH, path[1:])
+   if os.path.exists(candidate_path):
+     return candidate_path
+-  
++
+   for lib_dir in os.listdir(MSAN_LIBS_PATH):
+     candidate_path = os.path.join(MSAN_LIBS_PATH, lib_dir, path[1:])
+     if os.path.exists(candidate_path):
+@@ -68,18 +77,20 @@ def FindLib(path):
+   return None
+ 
+ 
+-def PatchBinary(binary_path, instrumented_dir):
++def patch_binary(binary_path, instrumented_dir):
+   """Patch binary to link to instrumented libs."""
+   extra_rpaths = set()
+ 
+-  for name, path in Ldd(binary_path):
++  for _name, path in ldd(binary_path):
+     if not os.path.isabs(path):
+       continue
+ 
+-    instrumented_path = FindLib(path)
++    instrumented_path = find_lib(path)
+     if not instrumented_path:
+-      print('WARNING: Instrumented library not found for', path,
+-            file=sys.stderr)
++      if path not in INTERCEPTED_LIBRARIES:
++        print('WARNING: Instrumented library not found for',
++              path,
++              file=sys.stderr)
+       continue
+ 
+     target_path = os.path.join(instrumented_dir, path[1:])
+@@ -105,12 +116,12 @@ def PatchBinary(binary_path, instrumented_dir):
+   print('Patching rpath for', binary_path, 'from', existing_rpaths, 'to',
+         processed_rpaths)
+ 
+-  subprocess.check_call(
+-      ['patchelf', '--force-rpath', '--set-rpath',
+-       processed_rpaths, binary_path])
++  subprocess.check_call([
++      'patchelf', '--force-rpath', '--set-rpath', processed_rpaths, binary_path
++  ])
+ 
+ 
+-def PatchBuild(output_directory):
++def patch_build(output_directory):
+   """Patch build to use msan libs."""
+   instrumented_dir = os.path.join(output_directory,
+                                   INSTRUMENTED_LIBRARIES_DIRNAME)
+@@ -124,19 +135,21 @@ def PatchBuild(output_directory):
+       if os.path.islink(file_path):
+         continue
+ 
+-      if not IsElf(file_path):
++      if not is_elf(file_path):
+         continue
+ 
+-      PatchBinary(file_path, instrumented_dir)
++      patch_binary(file_path, instrumented_dir)
+ 
+ 
+ def main():
+-  parser = argparse.ArgumentParser('patch_build.py', description='MSan build patcher.')
++  """Patch binaries to use instrumented libraries for all their dynamic objects."""
++  parser = argparse.ArgumentParser('patch_build.py',
++                                   description='MSan build patcher.')
+   parser.add_argument('output_dir', help='Output directory.')
+ 
+   args = parser.parse_args()
+ 
+-  PatchBuild(os.path.abspath(args.output_dir))
++  patch_build(os.path.abspath(args.output_dir))
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/infra/base-images/base-sanitizer-libs-builder/wrapper_utils.py b/infra/base-images/base-sanitizer-libs-builder/wrapper_utils.py
+index 0cbf1677d..8d790bc76 100644
+--- a/infra/base-images/base-sanitizer-libs-builder/wrapper_utils.py
++++ b/infra/base-images/base-sanitizer-libs-builder/wrapper_utils.py
+@@ -14,33 +14,32 @@
+ # limitations under the License.
+ #
+ ################################################################################
+-
++"""Functions to help with wrapper scripts."""
+ from __future__ import print_function
+ 
+-import contextlib
+ import os
+ import subprocess
+ 
+ 
+-def DpkgHostArchitecture():
++def dpkg_host_architecture():
+   """Return the host architecture."""
+-  return subprocess.check_output(
+-      ['dpkg-architecture', '-qDEB_HOST_GNU_TYPE']).strip()
++  return subprocess.check_output(['dpkg-architecture',
++                                  '-qDEB_HOST_GNU_TYPE']).strip()
+ 
+ 
+-def InstallWrapper(bin_dir, name, contents, extra_names=None):
++def install_wrapper(bin_dir, name, contents, extra_names=None):
+   """Install a custom wrapper script into |bin_dir|."""
+   path = os.path.join(bin_dir, name)
+-  with open(path, 'w') as f:
+-    f.write(contents)
++  with open(path, 'w') as wrapper_file:
++    wrapper_file.write(contents)
+ 
+-  os.chmod(path, 0755)
++  os.chmod(path, 0o755)
+ 
+   if extra_names:
+-    CreateSymlinks(path, bin_dir, extra_names)
++    create_symlinks(path, bin_dir, extra_names)
+ 
+ 
+-def CreateSymlinks(original_path, bin_dir, extra_names):
++def create_symlinks(original_path, bin_dir, extra_names):
+   """Create symlinks."""
+   for extra_name in extra_names:
+     extra_path = os.path.join(bin_dir, extra_name)

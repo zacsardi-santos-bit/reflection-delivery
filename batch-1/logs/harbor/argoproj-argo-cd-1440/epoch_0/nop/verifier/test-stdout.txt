@@ -1,0 +1,10 @@
+patching file pkg/apis/application/v1alpha1/types_test.go
+patching file server/project/project_test.go
+patching file server/project/util_test.go
+# github.com/argoproj/argo-cd/pkg/apis/application/v1alpha1 [github.com/argoproj/argo-cd/pkg/apis/application/v1alpha1.test]
+/go/src/github.com/argoproj/argo-cd/pkg/apis/application/v1alpha1/types_test.go:196:16: d.DestinationClusters undefined (type AppProjectSpec has no field or method DestinationClusters)
+FAIL	github.com/argoproj/argo-cd/pkg/apis/application/v1alpha1 [build failed]
+# github.com/argoproj/argo-cd/server/project [github.com/argoproj/argo-cd/server/project.test]
+/go/src/github.com/argoproj/argo-cd/server/project/util_test.go:42:14: undefined: unique
+FAIL	github.com/argoproj/argo-cd/server/project [build failed]
+reward=0 graded=38 found=38 failed=38 parsed=2 framework=go exit_code=1

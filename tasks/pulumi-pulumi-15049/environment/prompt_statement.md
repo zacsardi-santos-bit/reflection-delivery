@@ -1,7 +1,0 @@
-I'm working with the Pulumi Automation API in Go and I've run into a few related problems. First, the workspace always discovers and invokes the CLI binary from the system PATH — there's no way to inject a custom implementation, which makes unit testing really painful because tests require a real CLI to be installed. I'd like to be able to pass in a test double that satisfies a well-defined interface so my tests can run without a live binary.
-
-Second, the version validation logic that checks whether the CLI is compatible with the SDK is buried inside workspace initialization. I'd like this to be a standalone function I can call and test directly. It should handle at least three distinct error cases: when the CLI version string can't be parsed, when the CLI's major version is ahead of what the SDK expects, and when the CLI is older than the minimum required version (including prerelease versions, which should be treated as lower than their release counterpart). There should also be a way to opt out of the version check entirely — via an environment variable — and that opt-out should also suppress the check for whether the CLI supports remote operations.
-
-Third, when the CLI is installed in a custom directory (not the system PATH), I'd like the SDK to automatically ensure that directory takes priority in the process PATH so that plugins and bundled tools inside that installation are found correctly, rather than picking up whatever happens to be on the system PATH.
-
-Could you help me refactor the automation API to support these use cases?

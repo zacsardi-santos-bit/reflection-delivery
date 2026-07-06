@@ -1,0 +1,25 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/ray/llm/tests/common/test_placement.py -v --noconftest",
+  "test_files": [
+    "python/ray/llm/tests/common/test_placement.py",
+    "python/ray/llm/tests/serve/cpu/deployments/llm/test_llm_server.py",
+    "release/llm_tests/batch/test_batch_vllm.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.ray.llm.tests.common.test_placement::test_bundle_config_defaults_returns_float",
+    "python.ray.llm.tests.common.test_placement::test_bundle_config_fractional_gpu",
+    "python.ray.llm.tests.common.test_placement::test_bundle_config_extra_custom_resource",
+    "python.ray.llm.tests.common.test_placement::test_bundle_config_extra_resource_negative_rejected",
+    "python.ray.llm.tests.common.test_placement::test_bundle_config_extra_resource_non_numeric_rejected",
+    "python.ray.llm.tests.common.test_placement::test_placement_group_config_bundles_only",
+    "python.ray.llm.tests.common.test_placement::test_placement_group_config_bundle_per_worker_only",
+    "python.ray.llm.tests.common.test_placement::test_placement_group_config_rejects_neither_bundles_nor_per_worker",
+    "python.ray.llm.tests.common.test_placement::test_placement_group_config_rejects_both_bundles_and_per_worker",
+    "python.ray.llm.tests.common.test_placement::test_placement_group_config_invalid_strategy_rejected",
+    "python.ray.llm.tests.common.test_placement::test_placement_group_config_from_raw_dict"
+  ],
+  "PASS_TO_PASS": []
+}

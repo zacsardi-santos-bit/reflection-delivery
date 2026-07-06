@@ -1,4 +1,0 @@
-patching file opentelemetry-semantic-conventions/scripts/generate-consts-from-spec.sh
-patching file opentelemetry-semantic-conventions/src/lib.rs
-patching file opentelemetry-semantic-conventions/src/resource.rs
-patching file opentelemetry-semantic-conventions/src/trace.rs

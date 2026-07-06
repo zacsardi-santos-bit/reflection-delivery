@@ -1,0 +1,84 @@
+patching file crates/ruff_linter/resources/test/fixtures/flake8_return/RET505.py
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.51s
+────────────
+ Nextest run ID 85da46a9-870d-4023-b975-a01540d36223 with nextest profile: default
+    Starting 12 tests across 1 binary (2085 tests skipped)
+        FAIL [   0.095s] ( 1/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+  stdout ───
+
+    running 1 test
+    test rules::flake8_return::tests::preview_rules::rule_superfluouselsereturn_path_new_ret505_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::flake8_return::tests::preview_rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2096 filtered out; finished in 0.02s
+
+  stderr ───
+    thread 'rules::flake8_return::tests::preview_rules::rule_superfluouselsereturn_path_new_ret505_py_expects' panicked at crates/ruff_python_trivia/src/textwrap.rs:155:22:
+    attempt to subtract with overflow
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+  Cancelling due to test failure: 11 tests still running
+        PASS [   0.229s] ( 2/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselseraise_path_new_ret506_py_expects
+        PASS [   0.230s] ( 3/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsebreak_path_new_ret508_py_expects
+        PASS [   0.230s] ( 4/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsecontinue_path_new_ret507_py_expects
+        PASS [   0.231s] ( 5/12) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturnvalue_path_new_ret502_py_expects
+        PASS [   0.237s] ( 6/12) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryassign_path_new_ret504_py_expects
+        PASS [   0.239s] ( 7/12) ruff_linter rules::flake8_return::tests::rules::rule_unnecessaryreturnnone_path_new_ret501_py_expects
+        FAIL [   0.240s] ( 8/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+  stdout ───
+
+    running 1 test
+    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Snapshot Summary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    Snapshot file: crates/ruff_linter/src/rules/flake8_return/snapshots/ruff_linter__rules__flake8_return__tests__RET505_RET505.py.snap
+    Snapshot: RET505_RET505.py
+    Source: crates/ruff_linter/src/rules/flake8_return/mod.rs:34
+    ────────────────────────────────────────────────────────────────────────────────
+    -old snapshot
+    +new results
+    ────────────┬───────────────────────────────────────────────────────────────────
+      218   218 │ 245 |     else:
+      219   219 │     |     ^^^^ RET505
+      220   220 │ 246 |      return False
+      221   221 │     |
+            222 │+    = help: Remove unnecessary `else`
+            223 │+
+            224 │+RET505.py:252:5: RET505 Unnecessary `else` after `return` statement
+            225 │+    |
+            226 │+250 |     if b'Untracked files' in result.stdout:
+            227 │+251 |         return True
+            228 │+252 |     else:
+            229 │+    |     ^^^^ RET505
+            230 │+253 | \
+            231 │+254 |         return False
+            232 │+    |
+      222   233 │     = help: Remove unnecessary `else`
+    ────────────┴───────────────────────────────────────────────────────────────────
+    Stopped on the first failure. Run `cargo insta test` to run all snapshots.
+    test rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects ... FAILED
+
+    failures:
+
+    failures:
+        rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2096 filtered out; finished in 0.17s
+
+  stderr ───
+    thread 'rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects' panicked at /usr/local/cargo/registry/src/index.crates.io-6f17d22bba15001f/insta-1.39.0/src/runtime.rs:562:9:
+    snapshot assertion for 'RET505_RET505.py' failed in line 34
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.246s] ( 9/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselsecontinue_path_new_ret507_py_expects
+        PASS [   0.247s] (10/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselseraise_path_new_ret506_py_expects
+        PASS [   0.247s] (11/12) ruff_linter rules::flake8_return::tests::rules::rule_implicitreturn_path_new_ret503_py_expects
+        PASS [   0.251s] (12/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselsebreak_path_new_ret508_py_expects
+────────────
+     Summary [   0.256s] 12 tests run: 10 passed, 2 failed, 2085 skipped
+        FAIL [   0.095s] ( 1/12) ruff_linter rules::flake8_return::tests::preview_rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+        FAIL [   0.240s] ( 8/12) ruff_linter rules::flake8_return::tests::rules::rule_superfluouselsereturn_path_new_ret505_py_expects
+error: test run failed
+reward=0 graded=8 found=0 failed=0 parsed=12 framework=cargo-nextest exit_code=100

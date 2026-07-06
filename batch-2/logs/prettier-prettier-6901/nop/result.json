@@ -1,0 +1,29 @@
+{
+    "id": "e93a5539-49c6-4d07-9228-066ae6d62400",
+    "started_at": "2026-07-04T15:36:31.367700",
+    "finished_at": "2026-07-04T15:37:50.873672",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__prettier-prettier-6901": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "prettier-prettier-6901__vahdhT6"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

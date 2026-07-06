@@ -1,0 +1,16 @@
+patching file pkg/container/bitlpm/cidr_test.go
+patching file pkg/container/bitlpm/unsigned_test.go
+# github.com/cilium/cilium/pkg/container/bitlpm [github.com/cilium/cilium/pkg/container/bitlpm.test]
+pkg/container/bitlpm/cidr_test.go:16:10: undefined: NewCIDRTrie
+pkg/container/bitlpm/cidr_test.go:153:9: undefined: NewCIDRTrie
+pkg/container/bitlpm/cidr_test.go:241:12: undefined: cidrKey
+pkg/container/bitlpm/cidr_test.go:287:12: undefined: cidrKey
+pkg/container/bitlpm/unsigned_test.go:169:10: undefined: NewUintTrie
+pkg/container/bitlpm/unsigned_test.go:232:10: undefined: NewUintTrie
+pkg/container/bitlpm/unsigned_test.go:301:10: undefined: NewUintTrie
+pkg/container/bitlpm/unsigned_test.go:350:8: undefined: NewUintTrie
+pkg/container/bitlpm/unsigned_test.go:385:8: undefined: NewUintTrie
+pkg/container/bitlpm/unsigned_test.go:461:10: undefined: NewUintTrie
+pkg/container/bitlpm/unsigned_test.go:461:10: too many errors
+FAIL	github.com/cilium/cilium/pkg/container/bitlpm [build failed]
+reward=0 graded=110 found=110 failed=110 parsed=1 framework=go exit_code=1

@@ -1,0 +1,30 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest src/ui/button.test.tsx src/ui/select.test.tsx --coverage=false --watchAll=false --verbose",
+  "test_files": [
+    "src/ui/button.test.tsx",
+    "src/ui/select.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should apply correct styles based on size prop"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should render correctly ",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should render correctly if we add explicit child ",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should render the label correctly",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should render the loading indicator correctly",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should call onClick handler when clicked",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should be disabled when loading",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should be disabled when disabled prop is true",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  shouldn't call onClick when disabled",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should apply correct styles for label when variant is secondary",
+    "/workspace/repo/src/ui/button.test.tsx::Button component  should apply correct styles for label when is disabled",
+    "/workspace/repo/src/ui/select.test.tsx::Select component  should render correctly ",
+    "/workspace/repo/src/ui/select.test.tsx::Select component  should render the label correctly ",
+    "/workspace/repo/src/ui/select.test.tsx::Select component  should render the error correctly ",
+    "/workspace/repo/src/ui/select.test.tsx::Select component  should open options modal on press",
+    "/workspace/repo/src/ui/select.test.tsx::Select component  should call onSelect on selecting an option"
+  ]
+}

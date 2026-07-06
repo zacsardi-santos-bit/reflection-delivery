@@ -1,0 +1,24 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && INSTA_UPDATE=no cargo nextest run --package biome_js_analyze -E 'test(~specs::correctness::use_hook_at_top_level)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/correctness/useHookAtTopLevel/invalid.js",
+    "crates/biome_js_analyze/tests/specs/correctness/useHookAtTopLevel/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/correctness/useHookAtTopLevel/valid.js",
+    "crates/biome_js_analyze/tests/specs/correctness/useHookAtTopLevel/valid.js.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(8/8) biome_js_analyze::spec_tests specs::correctness::use_hook_at_top_level::invalid_js",
+    "(2/8) biome_js_analyze::spec_tests specs::correctness::use_hook_at_top_level::custom_hook_js",
+    "(3/8) biome_js_analyze::spec_tests specs::correctness::use_hook_at_top_level::valid_js",
+    "(4/8) biome_js_analyze::spec_tests specs::correctness::use_hook_at_top_level::deprecated_config_js",
+    "(5/8) biome_js_analyze::spec_tests specs::correctness::use_hook_at_top_level::invalid_ts",
+    "(6/8) biome_js_analyze::spec_tests specs::correctness::use_hook_at_top_level::valid_ts",
+    "(7/8) biome_js_analyze::spec_tests specs::correctness::use_hook_at_top_level::invalid_jsx"
+  ],
+  "PASS_TO_PASS": [
+    "(1/8) biome_js_analyze::spec_tests specs::correctness::use_hook_at_top_level::deprecated_config_options_json"
+  ]
+}

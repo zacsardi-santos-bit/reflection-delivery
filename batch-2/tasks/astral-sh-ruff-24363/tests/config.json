@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p ruff_linter -E 'test(/flake8_errmsg::tests/)'",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/flake8_errmsg/EM.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/3) ruff_linter rules::flake8_errmsg::tests::custom",
+    "(2/3) ruff_linter rules::flake8_errmsg::tests::defaults",
+    "(3/3) ruff_linter rules::flake8_errmsg::tests::string_exception"
+  ],
+  "PASS_TO_PASS": []
+}

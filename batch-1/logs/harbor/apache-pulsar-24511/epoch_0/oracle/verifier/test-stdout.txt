@@ -1,0 +1,85 @@
+patching file managed-ledger/src/test/java/org/apache/bookkeeper/mledger/ManagedLedgerReplayTaskTest.java
+patching file pulsar-broker/src/test/java/org/apache/pulsar/broker/BrokerMessageDeduplicationTest.java
+patching file pulsar-broker/src/test/java/org/apache/pulsar/broker/service/persistent/TopicDuplicationTest.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] Detecting the operating system and CPU architecture
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] os.detected.name: linux
+[[1;34mINFO[m] os.detected.arch: x86_64
+[[1;34mINFO[m] os.detected.bitness: 64
+[[1;34mINFO[m] os.detected.version: 4.19
+[[1;34mINFO[m] os.detected.version.major: 4
+[[1;34mINFO[m] os.detected.version.minor: 19
+[[1;34mINFO[m] os.detected.release: ubuntu
+[[1;34mINFO[m] os.detected.release.version: 24.04
+[[1;34mINFO[m] os.detected.release.like.ubuntu: true
+[[1;34mINFO[m] os.detected.release.like.debian: true
+[[1;34mINFO[m] os.detected.classifier: linux-x86_64
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.apache.pulsar:managed-ledger[0;1m >------------------[m
+[[1;34mINFO[m] [1mBuilding Managed Ledger 4.1.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven-version)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-java-version)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.3.0:enforce[m [1m(enforce-maven)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[[1;34mINFO[m] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mdirectory-maven-plugin:1.0:directory-of[m [1m(directories)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Directory of org.apache.pulsar:pulsar set to: /workspace/repo
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mgit-commit-id-plugin:4.9.10:revision[m [1m(git-info)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mproperties-maven-plugin:1.1.0:set-system-properties[m [1m(default)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Set 2 system properties
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.6.1:compile[m [1m(default)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Skipping compilation because target directory newer than sources.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.7.0:process[m [1m(process-resource-bundles)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Preparing remote bundle org.apache:apache-jar-resource-bundle:1.4
+[[1;34mINFO[m] Copying 3 resources from 1 bundle.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:resources[m [1m(default-resources)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/managed-ledger/src/main/resources
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:compile[m [1m(default-compile)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Compiling 3 source files with javac [debug deprecation release 17] to target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.3.0:testResources[m [1m(default-testResources)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/managed-ledger/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.11.0:testCompile[m [1m(default-testCompile)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Compiling 1 source file with javac [debug deprecation release 17] to target/test-classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:3.1.0:test[m [1m(default-test)[m @ [36mmanaged-ledger[0;1m ---[m
+[[1;34mINFO[m] Using configured provider org.apache.maven.surefire.testng.TestNGProvider
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.bookkeeper.mledger.[1mManagedLedgerReplayTaskTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m3[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.635 s - in org.apache.bookkeeper.mledger.[1mManagedLedgerReplayTaskTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 3, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;33mWARNING[m] Corrupted channel by directly writing to native stream in forked JVM 1. See FAQ web page and the dump file /workspace/repo/managed-ledger/target/surefire-reports/2026-06-29T15-31-22_604-jvmRun1.dumpstream
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  14.608 s
+[[1;34mINFO[m] Finished at: 2026-06-29T15:31:28Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] 0 goals, 0 executed
+reward=1 graded=3 found=3 failed=0 parsed=3 framework=maven exit_code=0

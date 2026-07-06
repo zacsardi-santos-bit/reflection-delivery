@@ -1,0 +1,28 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/app/client && yarn jest --watchAll=false --no-cache src/sagas/getNextEntityAfterDelete.test.ts src/utils/CustomWidgetBuilderService.test.ts",
+  "test_files": [
+    "app/client/src/sagas/getNextEntityAfterDelete.test.ts",
+    "app/client/src/utils/CustomWidgetBuilderService.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::CustomWidgetBuilderService -  createBuilder should test that its creating a builder",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::CustomWidgetBuilderService -  isConnected should test that its checking if the builder is connected",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::CustomWidgetBuilderService -  focus should test that its focusing the builder",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::CustomWidgetBuilderService -  closeBuilder should test that its closing the builder",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::Builder -  constructor should test that its creating a builder",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::Builder -  onMessage should test that its adding a message listener",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::Builder -  postMessage should test that its posting a message",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::Builder -  isConnected should test that its checking if the builder is connected",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::Builder -  focus should test that its focusing the builder",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::Builder -  close should test that its closing the builder",
+    "/workspace/repo/app/client/src/utils/CustomWidgetBuilderService.test.ts::Builder -  close should test that its not closing the builder when false is passed to close function",
+    "/workspace/repo/app/client/src/sagas/getNextEntityAfterDelete.test.ts::getNextEntityAfterDelete function 1. Deleted item is not the current item then no redirect",
+    "/workspace/repo/app/client/src/sagas/getNextEntityAfterDelete.test.ts::getNextEntityAfterDelete function 2. Redirect to add, if nothing left after deletion",
+    "/workspace/repo/app/client/src/sagas/getNextEntityAfterDelete.test.ts::getNextEntityAfterDelete function 3. Redirect to the first item, if nothing left in the same group",
+    "/workspace/repo/app/client/src/sagas/getNextEntityAfterDelete.test.ts::getNextEntityAfterDelete function 4. Redirect to the first item in the group"
+  ],
+  "PASS_TO_PASS": []
+}

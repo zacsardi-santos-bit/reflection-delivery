@@ -1,0 +1,45 @@
+patching file tests/datasets/test_dataset.py
+patching file tests/models/test_dag.py
+patching file tests/models/test_taskinstance.py
+patching file tests/test_utils/db.py
+patching file tests/timetables/test_datasets_timetable.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: time-machine-3.2.0, mock-3.15.1, cov-7.1.0, asyncio-1.4.0, requests-mock-1.12.1, anyio-4.14.1, timeouts-1.2.1
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+setup timeout: 0.0s, execution timeout: 0.0s, teardown timeout: 0.0s
+collecting ... collected 592 items / 1 error / 2 deselected / 590 selected
+
+==================================== ERRORS ====================================
+_______________ ERROR collecting tests/datasets/test_dataset.py ________________
+ImportError while importing test module '/workspace/repo/tests/datasets/test_dataset.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/local/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule
+    mod = import_path(
+/usr/local/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path
+    importlib.import_module(module_name)
+/usr/local/lib/python3.11/importlib/__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1204: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1176: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:690: in _load_unlocked
+    ???
+/usr/local/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:188: in exec_module
+    exec(co, module.__dict__)
+tests/datasets/test_dataset.py:28: in <module>
+    from airflow.datasets import (
+E   ImportError: cannot import name '_DatasetAliasCondition' from 'airflow.datasets' (/workspace/repo/airflow/datasets/__init__.py)
+=========================== short test summary info ============================
+ERROR tests/datasets/test_dataset.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+======================== 2 deselected, 1 error in 2.51s ========================
+reward=0 graded=589 found=0 failed=0 parsed=0 framework=pytest exit_code=2

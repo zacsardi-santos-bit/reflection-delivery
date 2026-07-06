@@ -1,1 +1,0 @@
-patching file saleor/checkout/complete_checkout.py

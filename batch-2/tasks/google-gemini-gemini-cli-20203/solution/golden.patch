@@ -1,0 +1,183 @@
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.ts b/packages/cli/src/ui/hooks/useGeminiStream.ts
+index f90dfff69..34380e78a 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.ts
++++ b/packages/cli/src/ui/hooks/useGeminiStream.ts
+@@ -36,6 +36,7 @@ import {
+   CoreToolCallStatus,
+   buildUserSteeringHintPrompt,
+   generateSteeringAckMessage,
++  getPlanModeExitMessage,
+ } from '@google/gemini-cli-core';
+ import type {
+   Config,
+@@ -203,6 +204,9 @@ export const useGeminiStream = (
+   const abortControllerRef = useRef<AbortController | null>(null);
+   const turnCancelledRef = useRef(false);
+   const activeQueryIdRef = useRef<string | null>(null);
++  const previousApprovalModeRef = useRef<ApprovalMode>(
++    config.getApprovalMode(),
++  );
+   const [isResponding, setIsResponding] = useState<boolean>(false);
+   const [thought, thoughtRef, setThought] =
+     useStateAndRef<ThoughtSummary | null>(null);
+@@ -1435,6 +1439,34 @@ export const useGeminiStream = (
+ 
+   const handleApprovalModeChange = useCallback(
+     async (newApprovalMode: ApprovalMode) => {
++      if (
++        previousApprovalModeRef.current === ApprovalMode.PLAN &&
++        newApprovalMode !== ApprovalMode.PLAN &&
++        streamingState === StreamingState.Idle
++      ) {
++        if (geminiClient) {
++          try {
++            await geminiClient.addHistory({
++              role: 'user',
++              parts: [
++                {
++                  text: getPlanModeExitMessage(newApprovalMode, true),
++                },
++              ],
++            });
++          } catch (error) {
++            onDebugMessage(
++              `Failed to notify model of Plan Mode exit: ${getErrorMessage(error)}`,
++            );
++            addItem({
++              type: MessageType.ERROR,
++              text: 'Failed to update the model about exiting Plan Mode. The model might be out of sync. Please consider restarting the session if you see unexpected behavior.',
++            });
++          }
++        }
++      }
++      previousApprovalModeRef.current = newApprovalMode;
++
+       // Auto-approve pending tool calls when switching to auto-approval modes
+       if (
+         newApprovalMode === ApprovalMode.YOLO ||
+@@ -1473,7 +1505,7 @@ export const useGeminiStream = (
+         }
+       }
+     },
+-    [config, toolCalls],
++    [config, toolCalls, geminiClient, streamingState, addItem, onDebugMessage],
+   );
+ 
+   const handleCompletedTools = useCallback(
+diff --git a/packages/core/src/index.ts b/packages/core/src/index.ts
+index 8b8d0bd34..b0f2c1d8c 100644
+--- a/packages/core/src/index.ts
++++ b/packages/core/src/index.ts
+@@ -78,6 +78,7 @@ export * from './utils/authConsent.js';
+ export * from './utils/googleQuotaErrors.js';
+ export * from './utils/fileUtils.js';
+ export * from './utils/planUtils.js';
++export * from './utils/approvalModeUtils.js';
+ export * from './utils/fileDiffUtils.js';
+ export * from './utils/retry.js';
+ export * from './utils/shell-utils.js';
+diff --git a/packages/core/src/tools/exit-plan-mode.ts b/packages/core/src/tools/exit-plan-mode.ts
+index c11eaa119..1facdcbf7 100644
+--- a/packages/core/src/tools/exit-plan-mode.ts
++++ b/packages/core/src/tools/exit-plan-mode.ts
+@@ -20,30 +20,12 @@ import type { Config } from '../config/config.js';
+ import { EXIT_PLAN_MODE_TOOL_NAME } from './tool-names.js';
+ import { validatePlanPath, validatePlanContent } from '../utils/planUtils.js';
+ import { ApprovalMode } from '../policy/types.js';
+-import { checkExhaustive } from '../utils/checks.js';
+ import { resolveToRealPath, isSubpath } from '../utils/paths.js';
+ import { logPlanExecution } from '../telemetry/loggers.js';
+ import { PlanExecutionEvent } from '../telemetry/types.js';
+ import { getExitPlanModeDefinition } from './definitions/coreTools.js';
+ import { resolveToolDeclaration } from './definitions/resolver.js';
+-
+-/**
+- * Returns a human-readable description for an approval mode.
+- */
+-function getApprovalModeDescription(mode: ApprovalMode): string {
+-  switch (mode) {
+-    case ApprovalMode.AUTO_EDIT:
+-      return 'Auto-Edit mode (edits will be applied automatically)';
+-    case ApprovalMode.DEFAULT:
+-      return 'Default mode (edits will require confirmation)';
+-    case ApprovalMode.YOLO:
+-    case ApprovalMode.PLAN:
+-      // YOLO and PLAN are not valid modes to enter when exiting plan mode
+-      throw new Error(`Unexpected approval mode: ${mode}`);
+-    default:
+-      checkExhaustive(mode);
+-  }
+-}
++import { getPlanModeExitMessage } from '../utils/approvalModeUtils.js';
+ 
+ export interface ExitPlanModeParams {
+   plan_path: string;
+@@ -222,15 +204,20 @@ export class ExitPlanModeInvocation extends BaseToolInvocation<
+     const payload = this.approvalPayload;
+     if (payload?.approved) {
+       const newMode = payload.approvalMode ?? ApprovalMode.DEFAULT;
++
++      if (newMode === ApprovalMode.PLAN || newMode === ApprovalMode.YOLO) {
++        throw new Error(`Unexpected approval mode: ${newMode}`);
++      }
++
+       this.config.setApprovalMode(newMode);
+       this.config.setApprovedPlanPath(resolvedPlanPath);
+ 
+       logPlanExecution(this.config, new PlanExecutionEvent(newMode));
+ 
+-      const description = getApprovalModeDescription(newMode);
++      const exitMessage = getPlanModeExitMessage(newMode);
+ 
+       return {
+-        llmContent: `Plan approved. Switching to ${description}.
++        llmContent: `${exitMessage}
+ 
+ The approved implementation plan is stored at: ${resolvedPlanPath}
+ Read and follow the plan strictly during implementation.`,
+diff --git a/packages/core/src/utils/approvalModeUtils.ts b/packages/core/src/utils/approvalModeUtils.ts
+new file mode 100644
+index 000000000..bb855d230
+--- /dev/null
++++ b/packages/core/src/utils/approvalModeUtils.ts
+@@ -0,0 +1,40 @@
++/**
++ * @license
++ * Copyright 2026 Google LLC
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++import { ApprovalMode } from '../policy/types.js';
++import { checkExhaustive } from './checks.js';
++
++/**
++ * Returns a human-readable description for an approval mode.
++ */
++export function getApprovalModeDescription(mode: ApprovalMode): string {
++  switch (mode) {
++    case ApprovalMode.AUTO_EDIT:
++      return 'Auto-Edit mode (edits will be applied automatically)';
++    case ApprovalMode.DEFAULT:
++      return 'Default mode (edits will require confirmation)';
++    case ApprovalMode.PLAN:
++      return 'Plan mode (read-only planning)';
++    case ApprovalMode.YOLO:
++      return 'YOLO mode (all tool calls auto-approved)';
++    default:
++      return checkExhaustive(mode);
++  }
++}
++
++/**
++ * Generates a consistent message for plan mode transitions.
++ */
++export function getPlanModeExitMessage(
++  newMode: ApprovalMode,
++  isManual: boolean = false,
++): string {
++  const description = getApprovalModeDescription(newMode);
++  const prefix = isManual
++    ? 'User has manually exited Plan Mode.'
++    : 'Plan approved.';
++  return `${prefix} Switching to ${description}.`;
++}

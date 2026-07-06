@@ -1,0 +1,21 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/cli-module-actions && CI=true yarn test src/commands/execute.test.ts --coverage=false --watchAll=false --json",
+  "test_files": [
+    "packages/cli-module-actions/src/commands/execute.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli-module-actions/src/commands/execute.test.ts::execute command shows help and throws when no action ID and no --help flag"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli-module-actions/src/commands/execute.test.ts::execute command shows action-specific flags in help when action ID is provided",
+    "/workspace/repo/packages/cli-module-actions/src/commands/execute.test.ts::execute command falls back to generic help with a message when auth fails",
+    "/workspace/repo/packages/cli-module-actions/src/commands/execute.test.ts::execute command falls back to generic help when action is not found",
+    "/workspace/repo/packages/cli-module-actions/src/commands/execute.test.ts::execute command shows generic help when no action ID is provided with --help",
+    "/workspace/repo/packages/cli-module-actions/src/commands/execute.test.ts::execute command extracts --instance flag for auth when showing help",
+    "/workspace/repo/packages/cli-module-actions/src/commands/execute.test.ts::execute command executes action and prints output on success",
+    "/workspace/repo/packages/cli-module-actions/src/commands/execute.test.ts::execute command throws when action is not found during execution"
+  ]
+}

@@ -1,0 +1,842 @@
+patching file Tests/GRPCHTTP2CoreTests/GRPCMessageFramerTests.swift
+patching file Tests/GRPCHTTP2CoreTests/OneOrManyQueueTests.swift
+warning: 'repo': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target
+    /workspace/repo/Sources/GRPCHTTP2Core/README.md
+[0/1] Planning build
+[1/1] Compiling plugin GRPCSwiftPlugin
+[2/2] Compiling plugin GenerateDoccReference
+[3/3] Compiling plugin GenerateManual
+[4/4] Compiling plugin Swift-DocC
+[5/5] Compiling plugin Swift-DocC Preview
+[6/6] Compiling plugin SwiftProtobufPlugin
+Building for debugging...
+[6/251] Compiling CGRPCZlib empty.c
+[7/501] Copying Generated
+[8/501] Compiling CNIOWindows shim.c
+[9/501] Compiling CNIOLinux liburing_shims.c
+[9/501] Compiling CNIOWindows WSAStartup.c
+[11/501] Compiling CNIOWASI CNIOWASI.c
+[11/501] Compiling _AtomicsShims.c
+[13/501] Compiling CNIODarwin shim.c
+[14/501] Compiling CNIOLLHTTP c_nio_http.c
+[15/501] Compiling CNIOBoringSSLShims shims.c
+[16/501] Copying PrivacyInfo.xcprivacy
+[18/501] Compiling fiat_p256_adx_sqr.S
+[19/501] Compiling CNIOLLHTTP c_nio_api.c
+[20/501] Compiling fiat_curve25519_adx_square.S
+[21/501] Compiling fiat_curve25519_adx_mul.S
+[22/501] Compiling fiat_p256_adx_mul.S
+[23/501] Compiling CNIOLinux shim.c
+[24/504] Compiling CNIOLLHTTP c_nio_llhttp.c
+[26/509] Emitting module ServiceContextModule
+[29/511] Emitting module Logging
+[32/514] Emitting module _NIOBase64
+[34/517] Emitting module _NIODataStructures
+[35/518] Wrapping AST for ServiceContextModule for debugging
+[37/518] Emitting module Instrumentation
+[38/519] Emitting module ArgumentParserToolInfo
+[38/520] Wrapping AST for _NIOBase64 for debugging
+[42/522] Wrapping AST for Logging for debugging
+[46/522] Emitting module InternalCollectionsUtilities
+[47/524] Wrapping AST for _NIODataStructures for debugging
+[50/526] Compiling tls_record.cc
+[51/526] Compiling t1_enc.cc
+[52/526] Compiling tls13_server.cc
+[53/526] Wrapping AST for Instrumentation for debugging
+[54/526] Compiling tls13_client.cc
+[55/527] Compiling tls_method.cc
+[56/527] Wrapping AST for InternalCollectionsUtilities for debugging
+[58/527] Emitting module Tracing
+[58/529] Compiling tls13_both.cc
+[59/529] Compiling ssl_versions.cc
+[60/529] Compiling ssl_x509.cc
+[61/529] Compiling tls13_enc.cc
+[64/530] Compiling ssl_stat.cc
+[65/530] Wrapping AST for Tracing for debugging
+[66/530] Compiling ssl_transcript.cc
+[67/530] Compiling ssl_session.cc
+[69/530] Emitting module ArgumentParser
+[69/531] Compiling ssl_privkey.cc
+[71/531] Emitting module DequeModule
+[72/533] Compiling ssl_file.cc
+[75/534] Compiling ssl_buffer.cc
+[77/534] Emitting module GRPCCodeGen
+[77/535] Compiling ssl_key_share.cc
+[79/535] Compiling ssl_cert.cc
+[80/535] Compiling ssl_lib.cc
+[82/536] Compiling ssl_cipher.cc
+[83/536] Wrapping AST for DequeModule for debugging
+[85/536] Compiling ssl_credential.cc
+[86/537] Compiling ssl_asn1.cc
+[87/537] Compiling ssl_aead_ctx.cc
+[89/537] Emitting module Atomics
+[89/537] Wrapping AST for GRPCCodeGen for debugging
+[91/538] Emitting module SwiftProtobuf
+[92/540] Compiling s3_pkt.cc
+[97/541] Emitting module GRPCCodeGenTests
+[97/542] Compiling s3_lib.cc
+[99/543] Compiling s3_both.cc
+[101/543] Compiling md5-x86_64-linux.S
+[102/543] Compiling handshake_server.cc
+[103/543] Wrapping AST for GRPCCodeGenTests for debugging
+[104/543] Compiling handshake.cc
+[105/543] Wrapping AST for SwiftProtobuf for debugging
+[106/543] Compiling dtls_method.cc
+[107/543] Compiling md5-x86_64-apple.S
+[108/543] Compiling d1_srtp.cc
+[109/543] Compiling handoff.cc
+[110/543] Compiling md5-586-linux.S
+[111/544] Compiling dtls_record.cc
+[112/544] Compiling handshake_client.cc
+[113/544] Compiling md5-586-apple.S
+[114/544] Compiling chacha20_poly1305_x86_64-apple.S
+[115/544] Compiling encrypted_client_hello.cc
+[116/545] Compiling chacha20_poly1305_armv8-win.S
+[117/545] Compiling chacha20_poly1305_x86_64-linux.S
+[118/545] Compiling chacha20_poly1305_armv8-linux.S
+[119/545] Compiling chacha20_poly1305_armv8-apple.S
+[120/545] Compiling extensions.cc
+[121/545] Compiling chacha-x86-linux.S
+[121/545] Compiling chacha-x86_64-linux.S
+[123/545] Compiling chacha-x86_64-apple.S
+[124/545] Compiling chacha-x86-apple.S
+[125/545] Compiling chacha-armv8-win.S
+[126/545] Compiling chacha-armv8-linux.S
+[127/545] Compiling err_data.cc
+[128/545] Compiling bio_ssl.cc
+[129/545] Compiling chacha-armv8-apple.S
+[130/545] Compiling chacha-armv4-linux.S
+[130/545] Compiling x86_64-mont5-apple.S
+[132/545] Compiling aes128gcmsiv-x86_64-apple.S
+[133/545] Compiling x86-mont-linux.S
+[134/545] Compiling d1_pkt.cc
+[135/545] Compiling x86_64-mont5-linux.S
+[136/545] Compiling x86_64-mont-linux.S
+[137/545] Compiling aes128gcmsiv-x86_64-linux.S
+[138/545] Compiling x86-mont-apple.S
+[139/545] Compiling x86_64-mont-apple.S
+[140/545] Compiling vpaes-x86_64-linux.S
+[141/545] Compiling vpaes-x86_64-apple.S
+[142/545] Compiling vpaes-armv7-linux.S
+[143/545] Compiling vpaes-x86-apple.S
+[144/545] Compiling d1_lib.cc
+[145/545] Compiling vpaes-x86-linux.S
+[145/545] Compiling vpaes-armv8-win.S
+[147/545] Compiling vpaes-armv8-linux.S
+[148/545] Compiling vpaes-armv8-apple.S
+[149/545] Compiling sha512-x86_64-apple.S
+[150/545] Compiling sha512-armv8-linux.S
+[151/545] Compiling sha512-x86_64-linux.S
+[152/545] Compiling d1_both.cc
+[153/545] Compiling sha512-armv4-linux.S
+[154/545] Compiling sha512-armv8-apple.S
+[155/545] Compiling sha512-586-linux.S
+[156/545] Compiling sha256-armv8-win.S
+[156/545] Compiling sha256-x86_64-apple.S
+[158/545] Compiling sha256-x86_64-linux.S
+[159/545] Compiling sha256-armv8-linux.S
+[160/545] Compiling sha512-armv8-win.S
+[161/545] Compiling sha256-armv8-apple.S
+[162/545] Compiling sha512-586-apple.S
+[163/545] Compiling sha256-armv4-linux.S
+[164/545] Compiling sha1-armv8-win.S
+[165/545] Compiling sha1-x86_64-apple.S
+[165/545] Compiling sha256-586-apple.S
+[167/545] Compiling sha1-x86_64-linux.S
+[168/545] Compiling sha1-armv8-linux.S
+[169/545] Compiling sha1-armv8-apple.S
+[170/545] Compiling sha256-586-linux.S
+[171/545] Compiling sha1-586-linux.S
+[172/545] Compiling sha1-586-apple.S
+[172/545] Compiling sha1-armv4-large-linux.S
+[174/545] Compiling rsaz-avx2-apple.S
+[175/545] Compiling rdrand-x86_64-linux.S
+[176/545] Compiling rsaz-avx2-linux.S
+[177/545] Compiling p256_beeu-x86_64-asm-linux.S
+[178/545] Compiling rdrand-x86_64-apple.S
+[179/545] Compiling p256_beeu-armv8-asm-win.S
+[180/545] Compiling p256_beeu-armv8-asm-linux.S
+[181/545] Compiling p256_beeu-x86_64-asm-apple.S
+[182/545] Compiling p256_beeu-armv8-asm-apple.S
+[183/545] Compiling p256-armv8-asm-win.S
+[184/545] Compiling p256-x86_64-asm-linux.S
+[185/545] Compiling p256-x86_64-asm-apple.S
+[186/545] Compiling ghashv8-armv8-win.S
+[187/545] Compiling p256-armv8-asm-linux.S
+[188/545] Compiling ghashv8-armv8-apple.S
+[189/545] Compiling ghashv8-armv7-linux.S
+[190/545] Compiling ghashv8-armv8-linux.S
+[191/545] Compiling ghash-x86_64-apple.S
+[192/545] Compiling p256-armv8-asm-apple.S
+[193/545] Compiling ghash-x86_64-linux.S
+[194/545] Compiling ghash-ssse3-x86_64-linux.S
+[195/545] Compiling ghash-x86-apple.S
+[196/545] Compiling ghash-ssse3-x86_64-apple.S
+[197/545] Compiling ghash-x86-linux.S
+[198/545] Compiling ghash-ssse3-x86-apple.S
+[199/545] Compiling ghash-ssse3-x86-linux.S
+[200/545] Compiling ghash-neon-armv8-linux.S
+[201/545] Compiling ghash-neon-armv8-win.S
+[202/545] Compiling ghash-neon-armv8-apple.S
+[202/545] Compiling bsaes-armv7-linux.S
+[204/545] Compiling co-586-apple.S
+[204/545] Compiling ghash-armv4-linux.S
+[206/545] Compiling co-586-linux.S
+[207/545] Compiling bn-armv8-win.S
+[208/545] Compiling bn-586-linux.S
+[209/545] Compiling bn-armv8-apple.S
+[210/545] Compiling armv8-mont-linux.S
+[211/545] Compiling bn-586-apple.S
+[212/545] Compiling bn-armv8-linux.S
+[213/545] Compiling armv8-mont-apple.S
+[213/545] Compiling aesv8-gcm-armv8-apple.S
+[215/545] Compiling aesv8-gcm-armv8-win.S
+[216/545] Compiling aesv8-armv7-linux.S
+[216/545] Compiling aesv8-armv8-apple.S
+[216/545] Compiling aesv8-armv8-win.S
+[218/545] Compiling armv4-mont-linux.S
+[220/545] Compiling aesv8-gcm-armv8-linux.S
+[220/545] Compiling armv8-mont-win.S
+[220/545] Compiling aesni-x86_64-linux.S
+[224/545] Emitting module SwiftProtobufPluginLibrary
+[224/545] Compiling aesni-x86_64-apple.S
+[225/546] Compiling aesv8-armv8-linux.S
+[226/546] Compiling aesni-x86-linux.S
+[227/546] Compiling aesni-gcm-x86_64-linux.S
+[228/546] Compiling aesni-x86-apple.S
+[229/546] Compiling aes-gcm-avx2-x86_64-linux.S
+[230/546] Compiling aes-gcm-avx2-x86_64-apple.S
+[231/546] Compiling aesni-gcm-x86_64-apple.S
+[233/546] Compiling aes-gcm-avx10-x86_64-apple.S
+[234/547] Compiling aes-gcm-avx10-x86_64-linux.S
+[236/547] Compiling x_sig.cc
+[237/547] Compiling x_pubkey.cc
+[238/547] Compiling x_val.cc
+[239/547] Compiling x_name.cc
+[240/547] Compiling x_x509a.cc
+[241/547] Compiling x_req.cc
+[241/547] Compiling x_spki.cc
+[243/547] Compiling x_exten.cc
+[243/547] Compiling x509spki.cc
+[243/547] Compiling x_x509.cc
+[246/547] Compiling x_crl.cc
+[247/547] Compiling x_all.cc
+[248/547] Wrapping AST for SwiftProtobufPluginLibrary for debugging
+[249/547] Compiling x_algor.cc
+[250/547] Compiling x_attrib.cc
+[250/547] Compiling x509rset.cc
+[252/548] Compiling x509name.cc
+[254/548] Emitting module protoc_gen_grpc_swift
+[254/549] Compiling x509_trs.cc
+[256/550] Compiling x509_vpm.cc
+[257/550] Compiling x509_txt.cc
+[258/550] Compiling x509_obj.cc
+[259/550] Compiling x509_vfy.cc
+[260/550] Compiling x509_d2.cc
+[261/550] Compiling x509cset.cc
+[262/550] Compiling x509_set.cc
+[264/550] Compiling x509_def.cc
+[265/550] Compiling x509_ext.cc
+[266/550] Compiling x509_lu.cc
+[267/550] Compiling x509_v3.cc
+[268/550] Compiling x509_req.cc
+[269/550] Compiling x509_cmp.cc
+[270/550] Wrapping AST for protoc-gen-grpc-swift for debugging
+[272/550] Emitting module GRPCCore
+[272/551] Compiling x509_att.cc
+[275/552] Compiling x509.cc
+[276/552] Compiling v3_skey.cc
+[277/552] Compiling v3_info.cc
+[278/552] Compiling v3_pmaps.cc
+[279/552] Compiling v3_purp.cc
+[280/552] Compiling v3_lib.cc
+[281/552] Compiling v3_int.cc
+[282/552] Compiling v3_pcons.cc
+[283/552] Compiling v3_ncons.cc
+[284/552] Compiling v3_ocsp.cc
+[285/552] Compiling v3_extku.cc
+[286/552] Wrapping AST for GRPCCore for debugging
+[287/552] Compiling v3_genn.cc
+[288/552] Compiling v3_prn.cc
+[289/552] Compiling v3_utl.cc
+[290/554] Compiling v3_ia5.cc
+[291/555] Linking protoc-gen-grpc-swift
+[293/555] Emitting module GRPCInProcessTransport
+[294/555] Emitting module GRPCInterceptors
+[294/557] Compiling v3_enum.cc
+[298/558] Emitting module GRPCProtobuf
+[298/560] Compiling v3_bitst.cc
+[301/560] Compiling v3_crld.cc
+[302/560] Compiling v3_bcons.cc
+[304/560] Compiling v3_cpols.cc
+[304/560] Compiling t_req.cc
+[306/561] Compiling v3_conf.cc
+[307/561] Compiling v3_akeya.cc
+[308/561] Compiling v3_alt.cc
+[309/561] Compiling t_x509a.cc
+[310/561] Compiling t_x509.cc
+[312/561] Compiling v3_akey.cc
+[313/561] Wrapping AST for GRPCInProcessTransport for debugging
+[314/561] Wrapping AST for GRPCInterceptors for debugging
+[315/561] Compiling t_crl.cc
+[316/561] Compiling rsa_pss.cc
+[317/562] Compiling i2d_pr.cc
+[318/562] Wrapping AST for GRPCProtobuf for debugging
+[319/563] Compiling name_print.cc
+[320/563] Compiling trust_token.cc
+[321/563] Compiling voprf.cc
+[323/563] Emitting module GRPCInProcessTransportTests
+[323/564] Compiling policy.cc
+[324/565] Compiling a_verify.cc
+[325/565] Compiling thread_win.cc
+[327/565] Compiling by_file.cc
+[328/565] Compiling asn1_gen.cc
+[329/566] Compiling pmbtoken.cc
+[330/566] Compiling by_dir.cc
+[331/566] Compiling algorithm.cc
+[332/566] Compiling a_digest.cc
+[333/566] Compiling thread_pthread.cc
+[334/566] Compiling a_sign.cc
+[336/566] Compiling thread.cc
+[337/566] Compiling thread_none.cc
+[338/566] Compiling stack.cc
+[339/566] Wrapping AST for GRPCInProcessTransportTests for debugging
+[341/566] Emitting module GRPCProtobufTests
+[341/567] Compiling sha1.cc
+[342/567] Compiling siphash.cc
+[344/567] Emitting module GRPCCoreTests
+[344/568] Compiling sha256.cc
+[345/568] Compiling sha512.cc
+[346/568] Compiling rsa_extra.cc
+[348/569] Compiling rsa_print.cc
+[349/569] Compiling slhdsa.cc
+[351/569] Compiling rc4.cc
+[352/570] Compiling refcount.cc
+[353/570] Compiling rsa_crypt.cc
+[355/570] Compiling windows.cc
+[356/570] Compiling spake2plus.cc
+[357/570] Compiling trusty.cc
+[359/570] Compiling poly1305_arm_asm.S
+[360/570] Compiling urandom.cc
+[361/570] Compiling rand.cc
+[362/570] Wrapping AST for GRPCProtobufTests for debugging
+[363/570] Compiling rsa_asn1.cc
+[364/570] Compiling ios.cc
+[365/570] Compiling getentropy.cc
+[366/570] Compiling passive.cc
+[367/570] Compiling deterministic.cc
+[368/570] Compiling forkunsafe.cc
+[369/570] Compiling fork_detect.cc
+[370/570] Wrapping AST for GRPCCoreTests for debugging
+[371/570] Compiling poly1305_arm.cc
+[372/570] Compiling poly1305.cc
+[373/570] Compiling poly1305_vec.cc
+[374/570] Compiling pool.cc
+[375/570] Compiling pkcs7.cc
+[376/570] Compiling pkcs8_x509.cc
+[377/570] Compiling mlkem.cc
+[378/570] Compiling pkcs7_x509.cc
+[379/570] Compiling mldsa.cc
+[380/570] Compiling pem_pkey.cc
+[381/570] Compiling p5_pbev2.cc
+[382/570] Compiling pem_oth.cc
+[383/570] Compiling pkcs8.cc
+[384/570] Compiling obj_xref.cc
+[385/570] Compiling pem_x509.cc
+[386/570] Compiling pem_pk8.cc
+[387/570] Compiling pem_xaux.cc
+[388/570] Compiling fips_shared_support.cc
+[389/570] Compiling poly_rq_mul.S
+[390/570] Compiling obj.cc
+[391/570] Compiling pem_info.cc
+[392/570] Compiling pem_lib.cc
+[393/570] Compiling pem_all.cc
+[394/570] Compiling mem.cc
+[395/570] Compiling sign.cc
+[396/570] Compiling md4.cc
+[397/570] Compiling md5.cc
+[398/570] Compiling kyber.cc
+[399/570] Compiling lhash.cc
+[400/570] Compiling scrypt.cc
+[401/570] Compiling ex_data.cc
+[402/570] Compiling hrss.cc
+[403/570] Compiling pbkdf.cc
+[404/570] Compiling print.cc
+[405/570] Compiling hpke.cc
+[405/570] Compiling p_x25519.cc
+[407/570] Compiling p_x25519_asn1.cc
+[408/570] Compiling p_ec.cc
+[409/570] Compiling p_ed25519.cc
+[410/570] Compiling p_hkdf.cc
+[411/570] Compiling p_rsa_asn1.cc
+[412/570] Compiling p_rsa.cc
+[413/570] Compiling p_dh.cc
+[414/570] Compiling p_dh_asn1.cc
+[415/570] Compiling p_ec_asn1.cc
+[416/570] Compiling evp.cc
+[417/570] Compiling p_ed25519_asn1.cc
+[418/570] Compiling evp_ctx.cc
+[419/570] Compiling engine.cc
+[420/570] Compiling err.cc
+[421/570] Compiling ecdh.cc
+[422/570] Compiling p_dsa_asn1.cc
+[423/570] Compiling evp_asn1.cc
+[424/570] Compiling ec_derive.cc
+[425/570] Compiling hash_to_curve.cc
+[426/570] Compiling params.cc
+[427/570] Compiling x25519-asm-arm.S
+[428/570] Compiling ecdsa_asn1.cc
+[429/570] Compiling dsa.cc
+[430/570] Compiling des.cc
+[431/570] Compiling dsa_asn1.cc
+[432/570] Compiling dh_asn1.cc
+[432/570] Compiling ec_asn1.cc
+[434/570] Compiling digest_extra.cc
+[435/570] Compiling spake25519.cc
+[436/570] Compiling crypto.cc
+[437/570] Compiling cpu_aarch64_openbsd.cc
+[438/570] Compiling cpu_arm_linux.cc
+[439/570] Compiling cpu_intel.cc
+[439/570] Compiling cpu_arm_freebsd.cc
+[441/570] Compiling curve25519.cc
+[442/570] Compiling cpu_aarch64_sysreg.cc
+[443/570] Compiling cpu_aarch64_win.cc
+[444/570] Compiling cpu_aarch64_fuchsia.cc
+[445/570] Compiling cpu_aarch64_linux.cc
+[446/570] Compiling cpu_aarch64_apple.cc
+[447/570] Compiling curve25519_64_adx.cc
+[448/570] Compiling conf.cc
+[449/570] Compiling tls_cbc.cc
+[450/570] Compiling get_cipher.cc
+[451/570] Compiling e_rc4.cc
+[452/570] Compiling e_tls.cc
+[452/570] Compiling e_null.cc
+[454/570] Compiling derive_key.cc
+[455/570] Compiling e_chacha20poly1305.cc
+[456/570] Compiling e_rc2.cc
+[457/570] Compiling e_des.cc
+[458/570] Compiling e_aesgcmsiv.cc
+[459/570] Compiling e_aesctrhmac.cc
+[460/570] Compiling chacha.cc
+[461/570] Compiling unicode.cc
+[462/570] Compiling ber.cc
+[463/570] Compiling buf.cc
+[464/570] Compiling blake2.cc
+[465/570] Compiling printf.cc
+[466/570] Compiling cbb.cc
+[467/570] Compiling socket.cc
+[468/570] Compiling cbs.cc
+[469/570] Compiling hexdump.cc
+[470/570] Compiling socket_helper.cc
+[471/570] Compiling asn1_compat.cc
+[472/570] Compiling pair.cc
+[473/570] Compiling file.cc
+[474/570] Compiling bn_asn1.cc
+[474/570] Compiling fd.cc
+[476/570] Compiling convert.cc
+[477/570] Compiling errno.cc
+[478/570] Compiling bcm.cc
+[479/570] Compiling connect.cc
+[480/570] Compiling bio_mem.cc
+[481/570] Compiling base64.cc
+[482/570] Compiling tasn_typ.cc
+[483/570] Compiling bio.cc
+[484/570] Compiling tasn_fre.cc
+[485/570] Compiling posix_time.cc
+[485/570] Compiling f_string.cc
+[487/570] Compiling tasn_utl.cc
+[488/570] Compiling tasn_enc.cc
+[489/570] Compiling asn_pack.cc
+[490/570] Compiling asn1_par.cc
+[491/570] Compiling f_int.cc
+[492/570] Compiling tasn_new.cc
+[493/570] Compiling tasn_dec.cc
+[494/570] Compiling a_utctm.cc
+[495/570] Compiling a_octet.cc
+[496/570] Compiling asn1_lib.cc
+[497/570] Compiling a_type.cc
+[498/570] Compiling a_time.cc
+[499/570] Compiling a_i2d_fp.cc
+[500/570] Wrapping AST for ArgumentParserToolInfo for debugging
+[501/570] Compiling a_dup.cc
+[502/570] Wrapping AST for Atomics for debugging
+[503/570] Compiling a_strnid.cc
+[504/570] Wrapping AST for ArgumentParser for debugging
+[505/570] Compiling a_d2i_fp.cc
+[506/570] Compiling a_strex.cc
+[507/570] Compiling a_gentm.cc
+[508/570] Compiling a_bitstr.cc
+[509/570] Compiling a_mbstr.cc
+[510/570] Compiling a_bool.cc
+[511/570] Compiling a_int.cc
+[512/570] Compiling a_object.cc
+[513/570] Compiling c-nioatomics.c
+[514/570] Compiling c-atomics.c
+[516/571] Emitting module NIOConcurrencyHelpers
+[518/573] Wrapping AST for NIOConcurrencyHelpers for debugging
+[520/574] Emitting module NIOCore
+[522/576] Wrapping AST for NIOCore for debugging
+[524/579] Emitting module GRPCInterceptorsTests
+/workspace/repo/Tests/GRPCInterceptorsTests/TracingTestsUtilities.swift:24:15: warning: stored property 'testSpans' of 'Sendable'-conforming class 'TestTracer' is mutable
+  private var testSpans: NIOLockedValueBox<[String: TestSpan]> = .init([:])
+              ^
+/workspace/repo/Tests/GRPCInterceptorsTests/TracingTestsUtilities.swift:70:7: warning: non-final class 'TestSpan' cannot conform to 'Sendable'; use '@unchecked Sendable'
+class TestSpan: Span {
+      ^
+/workspace/repo/Tests/GRPCInterceptorsTests/TracingTestsUtilities.swift:71:7: warning: stored property 'context' of 'Sendable'-conforming class 'TestSpan' is mutable
+  var context: ServiceContextModule.ServiceContext
+      ^
+[526/581] Wrapping AST for GRPCInterceptorsTests for debugging
+[528/581] Emitting module NIOEmbedded
+[530/583] Wrapping AST for NIOEmbedded for debugging
+[532/583] Emitting module NIOPosix
+[534/585] Wrapping AST for NIOPosix for debugging
+[536/586] Emitting module NIO
+[538/588] Wrapping AST for NIO for debugging
+[540/591] Emitting module NIOTLS
+[543/593] Emitting module NIOFoundationCompat
+[543/594] Wrapping AST for NIOTLS for debugging
+[546/595] Wrapping AST for NIOFoundationCompat for debugging
+[548/595] Emitting module NIOHTTP1
+[550/599] Wrapping AST for NIOHTTP1 for debugging
+[552/599] Emitting module NIOTransportServices
+[554/603] Wrapping AST for NIOTransportServices for debugging
+[556/603] Emitting module NIOHPACK
+[557/604] Emitting module NIOSSL
+[562/607] Emitting module NIOExtras
+[562/608] Wrapping AST for NIOSSL for debugging
+[564/609] Wrapping AST for NIOHPACK for debugging
+[566/609] Wrapping AST for NIOExtras for debugging
+[568/611] Emitting module GRPCSampleData
+[570/613] Wrapping AST for GRPCSampleData for debugging
+[572/613] Emitting module NIOHTTP2
+[574/615] Wrapping AST for NIOHTTP2 for debugging
+[576/618] Emitting module GRPCHTTP2Core
+[577/618] Compiling GRPCHTTP2Core OneOrManyQueue.swift
+[578/618] Compiling GRPCHTTP2Core GRPCMessageFramer.swift
+[580/630] Wrapping AST for GRPCHTTP2Core for debugging
+[582/632] Emitting module GRPCHTTP2TransportNIOPosix
+[583/633] Emitting module GRPCHTTP2TransportNIOTransportServices
+[584/640] Compiling GRPC GRPCAsyncClientStreamingCall.swift
+[588/642] Wrapping AST for GRPCHTTP2TransportNIOTransportServices for debugging
+[589/642] Wrapping AST for GRPCHTTP2TransportNIOPosix for debugging
+[591/644] Compiling GRPC GRPCAsyncServerHandler.swift
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:454:70: warning: 'makeSequence(elementType:failureType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+      let requestSequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                                     ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:454:70: note: use 'makeSequence(elementType:failureType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+      let requestSequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                                     ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:461:43: warning: 'makeWriter(elementType:isWritable:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+      let responseWriter = NIOAsyncWriter.makeWriter(
+                                          ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:461:43: note: use 'makeWriter(elementType:isWritable:finishOnDeinit:delegate:)' instead
+      let responseWriter = NIOAsyncWriter.makeWriter(
+                                          ^
+[592/644] Compiling GRPC GRPCAsyncBidirectionalStreamingCall.swift
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncBidirectionalStreamingCall.swift:107:7: warning: 'makeSequence(elementType:failureType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+    >.makeSequence(
+      ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncBidirectionalStreamingCall.swift:107:7: note: use 'makeSequence(elementType:failureType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+    >.makeSequence(
+      ^
+[593/644] Compiling GRPC GRPCAsyncResponseStream.swift
+[594/644] Compiling GRPC GRPCAsyncRequestStream.swift
+[595/644] Compiling GRPC GRPCClient+AsyncAwaitSupport.swift
+[596/644] Compiling GRPC GRPCAsyncServerStreamingCall.swift
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerStreamingCall.swift:105:61: warning: 'makeSequence(elementType:failureType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+    let sequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                            ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerStreamingCall.swift:105:61: note: use 'makeSequence(elementType:failureType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+    let sequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                            ^
+[597/644] Compiling GRPC GRPCAsyncResponseStreamWriter.swift
+[598/644] Compiling GRPC GRPCChannel+AsyncAwaitSupport.swift
+[599/644] Emitting module GRPCHTTP2TransportNIOTransportServicesTests
+[600/645] Emitting module GRPCHTTP2TransportNIOPosixTests
+[604/648] Wrapping AST for GRPCHTTP2TransportNIOPosixTests for debugging
+[606/648] Emitting module GRPCHTTP2CoreTests
+[607/648] Compiling GRPCHTTP2CoreTests OneOrManyQueueTests.swift
+[608/648] Compiling GRPCHTTP2CoreTests ZlibTests.swift
+[609/648] Compiling GRPCHTTP2CoreTests ServerConnectionManagementHandler+StateMachineTests.swift
+[610/648] Compiling GRPCHTTP2CoreTests ServerConnectionManagementHandlerTests.swift
+/workspace/repo/Tests/GRPCHTTP2CoreTests/Server/Connection/ServerConnectionManagementHandlerTests.swift:164:33: warning: 'fireChannelRead' is deprecated: NIOAny is not Sendable. Avoid wrapping the value in NIOAny to silence this warning.
+    connection.channel.pipeline.fireChannelRead(NIOAny(settings))
+                                ^
+[611/648] Compiling GRPCHTTP2CoreTests GRPCMessageFramerTests.swift
+[611/649] Wrapping AST for GRPCHTTP2TransportNIOTransportServicesTests for debugging
+[613/649] Compiling GRPCHTTP2CoreTests XCTest+FramePayload.swift
+[615/651] Wrapping AST for GRPCHTTP2CoreTests for debugging
+[617/651] Emitting module GRPC
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:454:70: warning: 'makeSequence(elementType:failureType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+      let requestSequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                                     ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:454:70: note: use 'makeSequence(elementType:failureType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+      let requestSequenceProducer = NIOThrowingAsyncSequenceProducer.makeSequence(
+                                                                     ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:461:43: warning: 'makeWriter(elementType:isWritable:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+      let responseWriter = NIOAsyncWriter.makeWriter(
+                                          ^
+/workspace/repo/Sources/GRPC/AsyncAwaitSupport/GRPCAsyncServerHandler.swift:461:43: note: use 'makeWriter(elementType:isWritable:finishOnDeinit:delegate:)' instead
+      let responseWriter = NIOAsyncWriter.makeWriter(
+                                          ^
+/workspace/repo/Sources/GRPC/Serialization.swift:79:16: warning: 'init(serializedData:extensions:partial:options:)' is deprecated: replaced by 'init(serializedBytes:extensions:partial:options:)'
+    return try Message(serializedData: data)
+               ^
+/workspace/repo/Sources/GRPC/Serialization.swift:79:16: note: use 'init(serializedBytes:extensions:partial:options:)' instead
+    return try Message(serializedData: data)
+               ^       ~~~~~~~~~~~~~~
+                       serializedBytes
+[619/653] Wrapping AST for GRPC for debugging
+[621/665] Emitting module HelloWorldModel
+[624/667] Compiling GRPCReflectionService ReflectionServiceV1.swift
+[625/667] Compiling GRPCReflectionService ReflectionServiceV1Alpha.swift
+[625/667] Wrapping AST for HelloWorldModel for debugging
+[627/667] Emitting module GRPCReflectionService
+[629/669] Emitting module RouteGuideModel
+[630/669] Compiling RouteGuideModel route_guide.grpc.swift
+[631/670] Emitting module EchoModel
+[632/670] Compiling EchoModel echo.grpc.swift
+[634/671] Emitting module GRPCPerformanceTests
+[635/671] Compiling GRPCPerformanceTests echo.grpc.swift
+[640/675] Wrapping AST for GRPCReflectionService for debugging
+[642/675] Compiling GRPCInteroperabilityTestModels test.grpc.swift
+[643/675] Emitting module GRPCInteroperabilityTestModels
+[644/676] Wrapping AST for RouteGuideModel for debugging
+[645/676] Wrapping AST for EchoModel for debugging
+[648/679] Wrapping AST for GRPCPerformanceTests for debugging
+[649/679] Wrapping AST for GRPCInteroperabilityTestModels for debugging
+[651/679] Emitting module HelloWorldServer
+[652/679] Emitting module HelloWorldClient
+[656/691] Wrapping AST for HelloWorldServer for debugging
+[656/691] Wrapping AST for HelloWorldClient for debugging
+[659/694] Compiling EchoImplementation EchoAsyncProvider.swift
+[660/694] Emitting module EchoImplementation
+[661/695] Emitting module PacketCapture
+[662/695] Compiling PacketCapture PacketCapture.swift
+[664/697] Emitting module RouteGuideServer
+[665/697] Compiling RouteGuideServer RouteGuideProvider.swift
+[668/699] Emitting module GRPCConnectionBackoffInteropTest
+[669/700] Emitting module RouteGuideClient
+[670/700] Compiling RouteGuideClient RouteGuideClient.swift
+[676/704] Emitting module GRPCInteroperabilityTestsImplementation
+[677/704] Compiling GRPCInteroperabilityTestsImplementation TestServiceAsyncProvider.swift
+[677/705] Wrapping AST for EchoImplementation for debugging
+[681/706] Wrapping AST for PacketCapture for debugging
+[682/706] Wrapping AST for RouteGuideServer for debugging
+[684/706] Wrapping AST for RouteGuideClient for debugging
+[685/706] Wrapping AST for GRPCConnectionBackoffInteropTest for debugging
+[686/706] Wrapping AST for GRPCInteroperabilityTestsImplementation for debugging
+[688/710] Emitting module ReflectionServer
+[691/727] Compiling Echo Echo.swift
+[692/727] Emitting module Echo
+[693/728] Emitting module GRPCInteroperabilityTests
+[693/729] Wrapping AST for ReflectionServer for debugging
+[698/731] Wrapping AST for Echo for debugging
+[699/731] Wrapping AST for GRPCInteroperabilityTests for debugging
+[701/731] Compiling GRPCTests ServerTLSErrorTests.swift
+[702/731] Compiling GRPCTests ReflectionServiceIntegrationTests.swift
+/workspace/repo/Tests/GRPCTests/GRPCReflectionServiceTests/ReflectionServiceIntegrationTests.swift:130:13: warning: 'init(serializedData:extensions:partial:options:)' is deprecated: replaced by 'init(serializedBytes:extensions:partial:options:)'
+        try Google_Protobuf_FileDescriptorProto(
+            ^
+/workspace/repo/Tests/GRPCTests/GRPCReflectionServiceTests/ReflectionServiceIntegrationTests.swift:130:13: note: use 'init(serializedBytes:extensions:partial:options:)' instead
+        try Google_Protobuf_FileDescriptorProto(
+            ^
+/workspace/repo/Tests/GRPCTests/GRPCReflectionServiceTests/ReflectionServiceIntegrationTests.swift:180:15: warning: 'init(serializedData:extensions:partial:options:)' is deprecated: replaced by 'init(serializedBytes:extensions:partial:options:)'
+          try Google_Protobuf_FileDescriptorProto(serializedData: $0)
+              ^
+/workspace/repo/Tests/GRPCTests/GRPCReflectionServiceTests/ReflectionServiceIntegrationTests.swift:180:15: note: use 'init(serializedBytes:extensions:partial:options:)' instead
+          try Google_Protobuf_FileDescriptorProto(serializedData: $0)
+              ^                                   ~~~~~~~~~~~~~~
+                                                  serializedBytes
+/workspace/repo/Tests/GRPCTests/GRPCReflectionServiceTests/ReflectionServiceIntegrationTests.swift:224:15: warning: 'init(serializedData:extensions:partial:options:)' is deprecated: replaced by 'init(serializedBytes:extensions:partial:options:)'
+          try Google_Protobuf_FileDescriptorProto(serializedData: $0)
+              ^
+/workspace/repo/Tests/GRPCTests/GRPCReflectionServiceTests/ReflectionServiceIntegrationTests.swift:224:15: note: use 'init(serializedBytes:extensions:partial:options:)' instead
+          try Google_Protobuf_FileDescriptorProto(serializedData: $0)
+              ^                                   ~~~~~~~~~~~~~~
+                                                  serializedBytes
+[703/731] Compiling GRPCTests reflection-v1alpha.grpc.swift
+[704/731] Compiling GRPCTests reflection-v1.grpc.swift
+[705/731] Compiling GRPCTests GRPCAsyncServerHandlerTests.swift
+/workspace/repo/Tests/GRPCTests/GRPCAsyncServerHandlerTests.swift:546:45: warning: 'makeSequence(elementType:backPressureStrategy:delegate:)' is deprecated: This method has been deprecated since it defaults to deinit based resource teardown
+    let sequence = NIOAsyncSequenceProducer.makeSequence(
+                                            ^
+/workspace/repo/Tests/GRPCTests/GRPCAsyncServerHandlerTests.swift:546:45: note: use 'makeSequence(elementType:backPressureStrategy:finishOnDeinit:delegate:)' instead
+    let sequence = NIOAsyncSequenceProducer.makeSequence(
+                                            ^
+[705/731] Linking GRPCPerformanceTests
+[707/731] Compiling GRPCTests AsyncSequence+Helpers.swift
+[708/731] Compiling GRPCTests AsyncIntegrationTests.swift
+[709/731] Compiling GRPCTests GRPCAsyncRequestStreamTests.swift
+[710/731] Compiling GRPCTests XCTest+AsyncAwait.swift
+[711/731] Compiling GRPCTests InterceptorsAsyncTests.swift
+[712/731] Compiling GRPCTests GRPCAsyncClientCallTests.swift
+[713/731] Compiling GRPCTests GRPCAsyncResponseStreamWriterTests.swift
+[714/731] Compiling GRPCTests normalization.grpc.swift
+[714/731] Linking HelloWorldClient
+[714/731] Linking HelloWorldServer
+[716/731] Linking RouteGuideServer
+[717/731] Linking GRPCConnectionBackoffInteropTest
+[718/731] Linking RouteGuideClient
+[720/731] Emitting module GRPCTests
+/workspace/repo/Tests/GRPCTests/ConnectionManagerTests.swift:1233:44: warning: conformance of 'HTTP2StreamMultiplexer' to 'Sendable' is unavailable
+    XCTAssertNoThrow(try futureMultiplexer.wait())
+                                           ^
+/workspace/repo/.build/checkouts/swift-nio-http2/Sources/NIOHTTP2/HTTP2StreamMultiplexer.swift:426:1: note: conformance of 'HTTP2StreamMultiplexer' to 'Sendable' has been explicitly marked unavailable here
+extension HTTP2StreamMultiplexer: Sendable {}
+^
+[721/731] Compiling GRPCTests AsyncClientTests.swift
+[721/732] Linking PacketCapture
+[724/733] Linking ReflectionServer
+[725/733] Wrapping AST for GRPCTests for debugging
+[726/733] Linking GRPCInteroperabilityTests
+[727/733] /workspace/repo/.build/x86_64-unknown-linux-gnu/debug/grpc-swiftPackageDiscoveredTests.derived/all-discovered-tests.swift
+[728/733] Linking Echo
+[730/744] Compiling grpc_swiftPackageDiscoveredTests GRPCTests.swift
+/workspace/repo/.build/x86_64-unknown-linux-gnu/debug/grpc-swiftPackageDiscoveredTests.derived/GRPCTests.swift:453:23: warning: 'FakeChannelTests' is deprecated
+fileprivate extension FakeChannelTests {
+                      ^
+/workspace/repo/.build/x86_64-unknown-linux-gnu/debug/grpc-swiftPackageDiscoveredTests.derived/GRPCTests.swift:464:23: warning: 'FakeResponseStreamExampleTests' is deprecated
+fileprivate extension FakeResponseStreamExampleTests {
+                      ^
+[731/744] Compiling grpc_swiftPackageDiscoveredTests GRPCCoreTests.swift
+[732/744] Compiling grpc_swiftPackageDiscoveredTests GRPCCodeGenTests.swift
+[733/744] Emitting module grpc_swiftPackageDiscoveredTests
+/workspace/repo/.build/x86_64-unknown-linux-gnu/debug/grpc-swiftPackageDiscoveredTests.derived/GRPCTests.swift:453:23: warning: 'FakeChannelTests' is deprecated
+fileprivate extension FakeChannelTests {
+                      ^
+/workspace/repo/.build/x86_64-unknown-linux-gnu/debug/grpc-swiftPackageDiscoveredTests.derived/GRPCTests.swift:464:23: warning: 'FakeResponseStreamExampleTests' is deprecated
+fileprivate extension FakeResponseStreamExampleTests {
+                      ^
+[734/744] Compiling grpc_swiftPackageDiscoveredTests GRPCInProcessTransportTests.swift
+[735/744] Compiling grpc_swiftPackageDiscoveredTests GRPCInterceptorsTests.swift
+[736/744] Compiling grpc_swiftPackageDiscoveredTests GRPCProtobufTests.swift
+[737/744] Compiling grpc_swiftPackageDiscoveredTests GRPCHTTP2TransportNIOTransportServicesTests.swift
+[738/744] Compiling grpc_swiftPackageDiscoveredTests GRPCHTTP2TransportNIOPosixTests.swift
+[739/744] Compiling grpc_swiftPackageDiscoveredTests GRPCHTTP2CoreTests.swift
+[740/744] Compiling grpc_swiftPackageDiscoveredTests all-discovered-tests.swift
+[742/746] /workspace/repo/.build/x86_64-unknown-linux-gnu/debug/grpc-swiftPackageTests.derived/runner.swift
+[743/746] Wrapping AST for grpc-swiftPackageDiscoveredTests for debugging
+[745/748] Compiling grpc_swiftPackageTests runner.swift
+[746/748] Emitting module grpc_swiftPackageTests
+[748/750] Wrapping AST for grpc-swiftPackageTests for debugging
+[749/750] Linking grpc-swiftPackageTests.xctest
+Build complete! (82.15s)
+Test Suite 'Selected tests' started at 2026-06-29 15:20:46.342
+Test Suite 'GRPCMessageFramerTests' started at 2026-06-29 15:20:46.351
+Test Case 'GRPCMessageFramerTests.testMultipleWrites' started at 2026-06-29 15:20:46.351
+Test Case 'GRPCMessageFramerTests.testMultipleWrites' passed (0.105 seconds)
+Test Case 'GRPCMessageFramerTests.testSingleWrite' started at 2026-06-29 15:20:46.456
+Test Case 'GRPCMessageFramerTests.testSingleWrite' passed (0.0 seconds)
+Test Suite 'GRPCMessageFramerTests' passed at 2026-06-29 15:20:46.456
+Executed 2 tests, with 0 failures (0 unexpected) in 0.105 (0.105) seconds
+Test Suite 'OneOrManyQueueTests' started at 2026-06-29 15:20:46.456
+Test Case 'OneOrManyQueueTests.testAppendAndPop' started at 2026-06-29 15:20:46.456
+Test Case 'OneOrManyQueueTests.testAppendAndPop' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testAppendAndPopManyBacked' started at 2026-06-29 15:20:46.456
+Test Case 'OneOrManyQueueTests.testAppendAndPopManyBacked' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testCount' started at 2026-06-29 15:20:46.457
+Test Case 'OneOrManyQueueTests.testCount' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testCountManyBacked' started at 2026-06-29 15:20:46.457
+Test Case 'OneOrManyQueueTests.testCountManyBacked' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testIndexAfter' started at 2026-06-29 15:20:46.457
+Test Case 'OneOrManyQueueTests.testIndexAfter' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testIndexes' started at 2026-06-29 15:20:46.457
+Test Case 'OneOrManyQueueTests.testIndexes' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testIndexesManyBacked' started at 2026-06-29 15:20:46.457
+Test Case 'OneOrManyQueueTests.testIndexesManyBacked' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testIsEmpty' started at 2026-06-29 15:20:46.457
+Test Case 'OneOrManyQueueTests.testIsEmpty' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testIsEmptyManyBacked' started at 2026-06-29 15:20:46.457
+Test Case 'OneOrManyQueueTests.testIsEmptyManyBacked' passed (0.0 seconds)
+Test Case 'OneOrManyQueueTests.testSubscript' started at 2026-06-29 15:20:46.458
+Test Case 'OneOrManyQueueTests.testSubscript' passed (0.1 seconds)
+Test Case 'OneOrManyQueueTests.testSubscriptManyBacked' started at 2026-06-29 15:20:46.558
+Test Case 'OneOrManyQueueTests.testSubscriptManyBacked' passed (0.0 seconds)
+Test Suite 'OneOrManyQueueTests' passed at 2026-06-29 15:20:46.558
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.102 (0.102) seconds
+Test Suite 'ServerConnectionManagementHandlerStateMachineTests' started at 2026-06-29 15:20:46.558
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testCloseAllStreamsWhenActive' started at 2026-06-29 15:20:46.558
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testCloseAllStreamsWhenActive' passed (0.001 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testCloseSomeStreamsWhenActive' started at 2026-06-29 15:20:46.559
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testCloseSomeStreamsWhenActive' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownFlow' started at 2026-06-29 15:20:46.559
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownFlow' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownWhenClosed' started at 2026-06-29 15:20:46.559
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownWhenClosed' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownWhenClosing' started at 2026-06-29 15:20:46.560
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownWhenClosing' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownWhenNoOpenStreams' started at 2026-06-29 15:20:46.560
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownWhenNoOpenStreams' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownWhenNoOpenStreamsBeforeSecondGoAway' started at 2026-06-29 15:20:46.560
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testGracefulShutdownWhenNoOpenStreamsBeforeSecondGoAway' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testOpenAndCloseStreamWhenClosed' started at 2026-06-29 15:20:46.560
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testOpenAndCloseStreamWhenClosed' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testPingStrikesWhenKeepAliveIsNotPermittedWithoutCalls' started at 2026-06-29 15:20:46.560
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testPingStrikesWhenKeepAliveIsNotPermittedWithoutCalls' passed (0.101 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testPingStrikesWhenKeepAliveIsPermittedWithoutCalls' started at 2026-06-29 15:20:46.662
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testPingStrikesWhenKeepAliveIsPermittedWithoutCalls' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceiveAckForGoAwayPingWhenNoOpenStreams' started at 2026-06-29 15:20:46.662
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceiveAckForGoAwayPingWhenNoOpenStreams' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceiveAckForGoAwayPingWhenStreamsOpenedBeforeAck' started at 2026-06-29 15:20:46.662
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceiveAckForGoAwayPingWhenStreamsOpenedBeforeAck' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceiveAckForGoAwayPingWhenStreamsOpenedBeforeShutdownOnly' started at 2026-06-29 15:20:46.662
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceiveAckForGoAwayPingWhenStreamsOpenedBeforeShutdownOnly' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceiveAckNotForGoAwayPing' started at 2026-06-29 15:20:46.662
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceiveAckNotForGoAwayPing' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceivePingAckWhenActive' started at 2026-06-29 15:20:46.662
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceivePingAckWhenActive' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceivePingAckWhenClosed' started at 2026-06-29 15:20:46.663
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testReceivePingAckWhenClosed' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testResetPingStrikeState' started at 2026-06-29 15:20:46.663
+Test Case 'ServerConnectionManagementHandlerStateMachineTests.testResetPingStrikeState' passed (0.0 seconds)
+Test Suite 'ServerConnectionManagementHandlerStateMachineTests' passed at 2026-06-29 15:20:46.663
+	 Executed 17 tests, with 0 failures (0 unexpected) in 0.104 (0.104) seconds
+Test Suite 'ServerConnectionManagementHandlerTests' started at 2026-06-29 15:20:46.663
+Test Case 'ServerConnectionManagementHandlerTests.testClientKeepAlivePolicing' started at 2026-06-29 15:20:46.663
+Test Case 'ServerConnectionManagementHandlerTests.testClientKeepAlivePolicing' passed (0.003 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testClientKeepAliveResetState' started at 2026-06-29 15:20:46.666
+Test Case 'ServerConnectionManagementHandlerTests.testClientKeepAliveResetState' passed (0.001 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testClientKeepAliveWithPermissibleIntervals' started at 2026-06-29 15:20:46.667
+Test Case 'ServerConnectionManagementHandlerTests.testClientKeepAliveWithPermissibleIntervals' passed (0.004 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testGracefulShutdownGracePeriod' started at 2026-06-29 15:20:46.670
+Test Case 'ServerConnectionManagementHandlerTests.testGracefulShutdownGracePeriod' passed (0.001 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testGracefulShutdownRatchetsDownStreamID' started at 2026-06-29 15:20:46.671
+Test Case 'ServerConnectionManagementHandlerTests.testGracefulShutdownRatchetsDownStreamID' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testIdleTimeoutOnNewConnection' started at 2026-06-29 15:20:46.671
+Test Case 'ServerConnectionManagementHandlerTests.testIdleTimeoutOnNewConnection' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testIdleTimerIsCancelledWhenStreamIsOpened' started at 2026-06-29 15:20:46.672
+Test Case 'ServerConnectionManagementHandlerTests.testIdleTimerIsCancelledWhenStreamIsOpened' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testIdleTimerStartsWhenAllStreamsAreClosed' started at 2026-06-29 15:20:46.672
+Test Case 'ServerConnectionManagementHandlerTests.testIdleTimerStartsWhenAllStreamsAreClosed' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testKeepAliveOnNewConnection' started at 2026-06-29 15:20:46.672
+Test Case 'ServerConnectionManagementHandlerTests.testKeepAliveOnNewConnection' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testKeepAliveOnNewConnectionWithoutResponse' started at 2026-06-29 15:20:46.673
+Test Case 'ServerConnectionManagementHandlerTests.testKeepAliveOnNewConnectionWithoutResponse' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testKeepAliveStartsAfterReadLoop' started at 2026-06-29 15:20:46.673
+Test Case 'ServerConnectionManagementHandlerTests.testKeepAliveStartsAfterReadLoop' passed (0.0 seconds)
+Test Case 'ServerConnectionManagementHandlerTests.testMaxAge' started at 2026-06-29 15:20:46.673
+Test Case 'ServerConnectionManagementHandlerTests.testMaxAge' passed (0.0 seconds)
+Test Suite 'ServerConnectionManagementHandlerTests' passed at 2026-06-29 15:20:46.674
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.011 (0.011) seconds
+Test Suite 'ZlibTests' started at 2026-06-29 15:20:46.674
+Test Case 'ZlibTests.testCompressAppendsToBuffer' started at 2026-06-29 15:20:46.674
+Test Case 'ZlibTests.testCompressAppendsToBuffer' passed (0.002 seconds)
+Test Case 'ZlibTests.testDecompressGrowsOutputBuffer' started at 2026-06-29 15:20:46.675
+Test Case 'ZlibTests.testDecompressGrowsOutputBuffer' passed (0.001 seconds)
+Test Case 'ZlibTests.testDecompressRespectsLimit' started at 2026-06-29 15:20:46.676
+Test Case 'ZlibTests.testDecompressRespectsLimit' passed (0.0 seconds)
+Test Case 'ZlibTests.testRepeatedCompresses' started at 2026-06-29 15:20:46.677
+Test Case 'ZlibTests.testRepeatedCompresses' passed (0.001 seconds)
+Test Case 'ZlibTests.testRepeatedDecompresses' started at 2026-06-29 15:20:46.677
+Test Case 'ZlibTests.testRepeatedDecompresses' passed (0.001 seconds)
+Test Case 'ZlibTests.testRoundTripUsingDeflate' started at 2026-06-29 15:20:46.678
+Test Case 'ZlibTests.testRoundTripUsingDeflate' passed (0.001 seconds)
+Test Case 'ZlibTests.testRoundTripUsingGzip' started at 2026-06-29 15:20:46.680
+Test Case 'ZlibTests.testRoundTripUsingGzip' passed (0.0 seconds)
+Test Suite 'ZlibTests' passed at 2026-06-29 15:20:46.680
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.006 (0.006) seconds
+Test Suite 'Selected tests' passed at 2026-06-29 15:20:46.680
+Executed 49 tests, with 0 failures (0 unexpected) in 0.329 (0.329) seconds
+reward=1 graded=49 found=49 failed=0 parsed=49 framework=xctest exit_code=0

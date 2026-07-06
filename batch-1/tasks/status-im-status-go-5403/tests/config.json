@@ -1,0 +1,30 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json -mod=vendor ./appdatabase ./services/connector -count=1",
+  "test_files": [
+    "appdatabase/node_config_test.go",
+    "services/connector/api_test.go",
+    "services/connector/service_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/status-im/status-go/appdatabase::Test_GetDBFilename",
+    "github.com/status-im/status-go/appdatabase::TestMigrateWalletJsonBlobs",
+    "github.com/status-im/status-go/appdatabase::TestGetNodeConfig",
+    "github.com/status-im/status-go/appdatabase::TestSaveNodeConfig",
+    "github.com/status-im/status-go/appdatabase::TestMigrateNodeConfig",
+    "github.com/status-im/status-go/services/connector::TestCallRPC/{\"method\":_\"eth_blockNumber\",_\"params\":_[]}",
+    "github.com/status-im/status-go/services/connector::TestCallRPC/{\"method\":_\"eth_blockNumbers\",_\"params\":_[]}",
+    "github.com/status-im/status-go/services/connector::TestCallRPC/#00",
+    "github.com/status-im/status-go/services/connector::TestCallRPC",
+    "github.com/status-im/status-go/appdatabase::TestConfigValidate",
+    "github.com/status-im/status-go/services/connector::TestNewService",
+    "github.com/status-im/status-go/services/connector::TestService_Start",
+    "github.com/status-im/status-go/services/connector::TestService_Stop",
+    "github.com/status-im/status-go/appdatabase::TestRepairLoadedTorrentConfig",
+    "github.com/status-im/status-go/services/connector::TestService_APIs",
+    "github.com/status-im/status-go/services/connector::TestService_Protocols"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,27 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/js && npx jest --config jest.config.cts src/utils/find-npm-dependencies.spec.ts --no-coverage",
+  "test_files": [
+    "packages/js/src/utils/find-npm-dependencies.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should resolve importHelpers from project tsconfig (root=false, project=true) for run-commands",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should resolve importHelpers from project tsconfig (root=true, project=false) for run-commands"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should pick up external npm dependencies and their versions",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should pick up helper npm dependencies if required",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should pick up helper npm dependencies when using \"tsc --build tsconfig.lib.json --pretty --verbose\" and run-commands",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should pick up helper npm dependencies when using \"tsgo --build tsconfig.lib.json\" and run-commands",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should handle missing ts/swc helper packages from externalNodes",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should not pick up helper npm dependencies if not required",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should pick up helper npm dependencies from runtimeHelpers",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should not duplicate helper npm dependencies when additionally set in runtimeHelpers",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should support recursive collection of dependencies",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should find workspace dependencies",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should support local path for workspace dependencies",
+    "/workspace/repo/packages/js/src/utils/find-npm-dependencies.spec.ts::findNpmDependencies should support ignoring extra file patterns in addition to task input"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 /workspace/run_cargo.py",
+  "test_files": [
+    "crates/ruff_linter/resources/test/fixtures/flake8_bugbear/B901.py"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "tests/flake8_bugbear/B901.py::rules::flake8_bugbear::tests::rules::rule_returningenerator_path_new_b901_py_expects"
+  ],
+  "PASS_TO_PASS": []
+}

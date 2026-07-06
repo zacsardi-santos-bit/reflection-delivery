@@ -1,0 +1,29 @@
+{
+    "id": "e2a3c5ad-f4f8-45e0-b59e-0c0af6f9ff6a",
+    "started_at": "2026-07-06T12:17:06.467589",
+    "finished_at": "2026-07-06T12:18:25.393983",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__ktorio-ktor-5358": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "ktorio-ktor-5358__qSY8Kgv"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

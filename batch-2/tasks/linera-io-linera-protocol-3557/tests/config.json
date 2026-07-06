@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --bin linera-server -p linera-service",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "linera-service::bin/linera-server test_pyroscope::test_shard_config_requires_pyroscope_host",
+    "linera-service::bin/linera-server test_pyroscope::test_validator_options_requires_pyroscope_fields",
+    "linera-service::bin/linera-server test::test_validator_options"
+  ],
+  "PASS_TO_PASS": [
+    "linera-service::bin/linera-server test::test_generate_shard_configs"
+  ]
+}

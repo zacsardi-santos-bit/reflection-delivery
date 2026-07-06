@@ -1,0 +1,23 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && NODE_OPTIONS=--openssl-legacy-provider npx jest test/GetSocketServerImplementation.test.js test/ServerMode.test.js --coverage=false --verbose --json",
+  "test_files": [
+    "test/GetSocketServerImplementation.test.js",
+    "test/ServerMode.test.js",
+    "test/options.test.js"
+  ],
+  "num_test_files": 3,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/ServerMode.test.js::serverMode supplying 'sockjs' as a string sockjs path responds with a 200",
+    "/workspace/repo/test/ServerMode.test.js::serverMode supplying path to sockjs implementation sockjs path responds with a 200",
+    "/workspace/repo/test/ServerMode.test.js::serverMode supplying sockjs implementation class sockjs path responds with a 200",
+    "/workspace/repo/test/ServerMode.test.js::serverMode custom sockjs implementation uses supplied server implementation",
+    "/workspace/repo/test/ServerMode.test.js::serverMode supplying nonexistent path should throw an error",
+    "/workspace/repo/test/GetSocketServerImplementation.test.js::getSocketServerImplementation should work with serverMode: 'sockjs'",
+    "/workspace/repo/test/GetSocketServerImplementation.test.js::getSocketServerImplementation should work with serverMode: SockJSServer class",
+    "/workspace/repo/test/GetSocketServerImplementation.test.js::getSocketServerImplementation should work with serverMode: SockJSServer full path",
+    "/workspace/repo/test/GetSocketServerImplementation.test.js::getSocketServerImplementation should throw with serverMode: bad path"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,18 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo/spring-5-reactive-2 && mvn test -Dsurefire.failIfNoSpecifiedTests=false",
+  "test_files": [
+    "spring-5-reactive-2/src/test/java/com/baeldung/webclient/filter/FilteredWebClientUnitTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "spring-5-reactive-2::test_1",
+    "spring-5-reactive-2::test_2",
+    "spring-5-reactive-2::test_3",
+    "spring-5-reactive-2::test_4",
+    "spring-5-reactive-2::test_5",
+    "spring-5-reactive-2::test_6"
+  ],
+  "PASS_TO_PASS": []
+}

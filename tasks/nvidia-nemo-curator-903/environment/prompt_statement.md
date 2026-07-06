@@ -1,7 +1,0 @@
-I'm working on a video data curation pipeline that needs to support reading files from remote storage, not just the local filesystem. Right now, if I point the pipeline at a cloud storage bucket, it fails because the video reader only understands local file paths and has no way to download from remote locations.
-
-I need two things added: first, a general-purpose utility that pairs a filesystem object with a path string so it can open files, produce a protocol-aware string representation (like "s3://bucket/key"), and efficiently download large files in parallel byte-range chunks. I also need a utility function that can tell me whether a given path points to remote storage or the local filesystem.
-
-Second, I need a new file partitioning stage that works with any storage backend — it should discover files under a root path, filter by file extension, apply an optional count limit, and optionally load the list of files from a JSON manifest file instead of discovering them dynamically. The stage should partition the discovered files into groups and produce task objects with the filesystem-aware path objects as data, along with metadata like the partition index and total partition count. The stage should raise a clear error if used before it is properly initialized, and should default to filtering for JSON-lines and JSON file extensions.
-
-The existing video reader stage also needs to be updated to accept these filesystem-aware path objects directly, preserving the original input rather than forcing everything through a local-path conversion.

@@ -1,0 +1,29 @@
+{
+    "id": "261b8a6e-f149-453e-bf41-06ae7cc03a02",
+    "started_at": "2026-07-04T15:38:55.460442",
+    "finished_at": "2026-07-04T15:39:27.024779",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__myriad-dreamin-tinymist-1102": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "myriad-dreamin-tinymist-1102__sCkmJA8"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

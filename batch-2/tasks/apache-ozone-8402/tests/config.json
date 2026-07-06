@@ -1,0 +1,31 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl hadoop-hdds/container-service -Dtest=TestContainerMerkleTreeWriter,TestContainerReconciliationWithMockDatanodes,TestKeyValueHandler -DfailIfNoTests=false -Dmaven.javadoc.skip=true -Dcheckstyle.skip=true -Denforcer.skip=true",
+  "test_files": [
+    "hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/ContainerMerkleTreeTestUtils.java",
+    "hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/checksum/TestContainerMerkleTreeWriter.java",
+    "hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestContainerReconciliationWithMockDatanodes.java",
+    "hadoop-hdds/container-service/src/test/java/org/apache/hadoop/ozone/container/keyvalue/TestKeyValueHandler.java",
+    "hadoop-ozone/integration-test/src/test/java/org/apache/hadoop/ozone/dn/checksum/TestContainerCommandReconciliation.java"
+  ],
+  "num_test_files": 5,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Apache::test_1",
+    "Apache::test_2",
+    "Apache::test_3",
+    "Apache::test_4",
+    "Apache::test_5",
+    "Apache::test_6",
+    "Apache::test_7",
+    "Apache::test_8",
+    "Apache::test_9",
+    "Apache::test_10",
+    "Apache::test_11",
+    "Apache::test_12",
+    "Apache::test_13",
+    "Apache::test_14",
+    "Apache::test_15"
+  ],
+  "PASS_TO_PASS": []
+}

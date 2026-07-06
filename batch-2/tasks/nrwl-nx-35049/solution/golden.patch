@@ -1,0 +1,3545 @@
+diff --git a/e2e/angular/src/cypress-component-tests-setup.ts b/e2e/angular/src/cypress-component-tests-setup.ts
+index f7735c3249..7c3cf90f29 100644
+--- a/e2e/angular/src/cypress-component-tests-setup.ts
++++ b/e2e/angular/src/cypress-component-tests-setup.ts
+@@ -1,5 +1,4 @@
+ import {
+-  checkFilesExist,
+   cleanupProject,
+   createFile,
+   newProject,
+@@ -317,25 +316,7 @@ export function updateBuilableLibTestsToAssertAppStyles(
+     `${buildableLibName}/src/lib/input-standalone/input-standalone.cy.ts`,
+     (content) => {
+       // app styles should now apply
+-      return content.replace('rgb(34, 197, 94)', 'rgb(255, 192, 203)');
++      return content.replace('rgb(0, 0, 0)', 'rgb(255, 192, 203)');
+     }
+   );
+ }
+-
+-export function useRootLevelTailwindConfig(existingConfigPath: string) {
+-  createFile(
+-    'tailwind.config.js',
+-    `const { join } = require('path');
+-
+-/** @type {import('tailwindcss').Config} */
+-module.exports = {
+-  content: [join(__dirname, '**/*.{html,js,ts}')],
+-  theme: {
+-    extend: {},
+-  },
+-  plugins: [],
+-};
+-`
+-  );
+-  removeFile(existingConfigPath);
+-}
+diff --git a/graph/client/postcss.config.js b/graph/client/postcss.config.js
+index 2e82a460ba..b8705a0910 100644
+--- a/graph/client/postcss.config.js
++++ b/graph/client/postcss.config.js
+@@ -1,8 +1,6 @@
+ module.exports = {
+-  plugins: {
+-    tailwindcss: {
+-      config: './tailwind.config.js',
+-    },
+-    autoprefixer: {},
+-  },
++  plugins: [
++    require('tailwindcss')({ config: './tailwind.config.js' }),
++    require('autoprefixer'),
++  ],
+ };
+diff --git a/graph/client/tailwind.config.js b/graph/client/tailwind.config.js
+index 29be9d6f35..e917c35012 100644
+--- a/graph/client/tailwind.config.js
++++ b/graph/client/tailwind.config.js
+@@ -5,19 +5,17 @@ const path = require('node:path');
+ // Ignore these nx related dependencies since they are the installed versions not the ones in the workspace
+ // nx-ignore-next-line
+ const { workspaceRoot } = require('@nx/devkit');
+-// nx-ignore-next-line
+-const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
++
++const glob = '**/*.{js,ts,jsx,tsx,html}';
+ 
+ module.exports = {
+   content: [
+-    path.join(__dirname, 'src/**/*.{js,ts,jsx,tsx,html}'),
+-    ...createGlobPatternsForDependencies(__dirname),
++    path.join(__dirname, 'src', glob),
++    path.join(__dirname, '..', 'ui-*/src', glob),
++    path.join(__dirname, '..', 'shared/src', glob),
+     // Resolve the classes used in @nx/graph components
+     // TODO: make a decision on whether this is really the best approach, or if precompiling and deduplicating the classes would be better
+-    path.join(
+-      workspaceRoot,
+-      'node_modules/@nx/graph/**/*.{js,ts,jsx,tsx,html}'
+-    ),
++    path.join(workspaceRoot, 'node_modules/@nx/graph', glob),
+   ],
+   darkMode: 'class', // or 'media' or 'class'
+   theme: {
+diff --git a/graph/migrate/package.json b/graph/migrate/package.json
+index c06d3187d9..7aec382d45 100644
+--- a/graph/migrate/package.json
++++ b/graph/migrate/package.json
+@@ -10,6 +10,7 @@
+   },
+   "dependencies": {
+     "@nx/graph-ui-common": "workspace:",
+-    "@nx/graph-internal-ui-project-details": "workspace:"
++    "@nx/graph-internal-ui-project-details": "workspace:",
++    "tailwind-merge": "^2.4.0"
+   }
+ }
+diff --git a/graph/migrate/tailwind.config.js b/graph/migrate/tailwind.config.js
+index 7764f70858..4e335a0db1 100644
+--- a/graph/migrate/tailwind.config.js
++++ b/graph/migrate/tailwind.config.js
+@@ -1,16 +1,13 @@
+-// nx-ignore-next-line
+-const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
+-
+ const { join } = require('path');
+ 
++const glob = '**/*!(*.stories|*.spec).{ts,tsx,html}';
++
+ /** @type {import('tailwindcss').Config} */
+ module.exports = {
+   content: [
+-    join(
+-      __dirname,
+-      '{src,pages,components,app}/**/*!(*.stories|*.spec).{ts,tsx,html}'
+-    ),
+-    ...createGlobPatternsForDependencies(__dirname),
++    join(__dirname, '{src,pages,components,app}', glob),
++    join(__dirname, '..', 'ui-*/src', glob),
++    join(__dirname, '..', 'shared/src', glob),
+   ],
+   theme: {
+     extend: {},
+diff --git a/graph/ui-code-block/package.json b/graph/ui-code-block/package.json
+index 69f2d48a5d..2aefd2a9d1 100644
+--- a/graph/ui-code-block/package.json
++++ b/graph/ui-code-block/package.json
+@@ -6,7 +6,8 @@
+   "main": "./src/index.ts",
+   "types": "./src/index.ts",
+   "dependencies": {
+-    "@nx/graph-ui-common": "workspace:"
++    "@nx/graph-ui-common": "workspace:",
++    "tailwind-merge": "^2.4.0"
+   },
+   "devDependencies": {
+     "jest": "catalog:jest"
+diff --git a/graph/ui-code-block/tailwind.config.js b/graph/ui-code-block/tailwind.config.js
+index 18a8d985ec..25afb35154 100644
+--- a/graph/ui-code-block/tailwind.config.js
++++ b/graph/ui-code-block/tailwind.config.js
+@@ -1,12 +1,12 @@
+ const path = require('path');
+ 
+-// nx-ignore-next-line
+-const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
++const glob = '**/*.{js,ts,jsx,tsx,html}';
+ 
+ module.exports = {
+   content: [
+-    path.join(__dirname, 'src/**/*.{js,ts,jsx,tsx,html}'),
+-    ...createGlobPatternsForDependencies(__dirname),
++    path.join(__dirname, 'src', glob),
++    path.join(__dirname, '..', 'ui-*/src', glob),
++    path.join(__dirname, '..', 'shared/src', glob),
+   ],
+   darkMode: 'class', // or 'media' or 'class'
+   theme: {
+diff --git a/graph/ui-icons/package.json b/graph/ui-icons/package.json
+index 47a504aa87..c7ffaf4229 100644
+--- a/graph/ui-icons/package.json
++++ b/graph/ui-icons/package.json
+@@ -4,5 +4,8 @@
+   "type": "commonjs",
+   "private": true,
+   "main": "./src/index.ts",
+-  "types": "./src/index.ts"
++  "types": "./src/index.ts",
++  "dependencies": {
++    "tailwind-merge": "^2.4.0"
++  }
+ }
+diff --git a/graph/ui-project-details/package.json b/graph/ui-project-details/package.json
+index 0f59632722..957edb7279 100644
+--- a/graph/ui-project-details/package.json
++++ b/graph/ui-project-details/package.json
+@@ -14,6 +14,7 @@
+     "@nx/graph-ui-common": "workspace:",
+     "@nx/graph-ui-icons": "workspace:",
+     "@nx/graph-shared": "workspace:",
+-    "@nx/nx-dev-ui-fence": "workspace:"
++    "@nx/nx-dev-ui-fence": "workspace:",
++    "tailwind-merge": "^2.4.0"
+   }
+ }
+diff --git a/graph/ui-project-details/tailwind.config.js b/graph/ui-project-details/tailwind.config.js
+index b29e8f5051..ecf891c4ce 100644
+--- a/graph/ui-project-details/tailwind.config.js
++++ b/graph/ui-project-details/tailwind.config.js
+@@ -5,19 +5,17 @@ const path = require('node:path');
+ // Ignore these nx related dependencies since they are the installed versions not the ones in the workspace
+ // nx-ignore-next-line
+ const { workspaceRoot } = require('@nx/devkit');
+-// nx-ignore-next-line
+-const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
++
++const glob = '**/*.{js,ts,jsx,tsx,html}';
+ 
+ module.exports = {
+   content: [
+-    path.join(__dirname, 'src/**/*.{js,ts,jsx,tsx,html}'),
+-    ...createGlobPatternsForDependencies(__dirname),
++    path.join(__dirname, 'src', glob),
++    path.join(__dirname, '..', 'ui-*/src', glob),
++    path.join(__dirname, '..', 'shared/src', glob),
+     // Resolve the classes used in @nx/graph components
+     // TODO: make a decision on whether this is really the best approach, or if precompiling and deduplicating the classes would be better
+-    path.join(
+-      workspaceRoot,
+-      'node_modules/@nx/graph/**/*.{js,ts,jsx,tsx,html}'
+-    ),
++    path.join(workspaceRoot, 'node_modules/@nx/graph', glob),
+   ],
+   darkMode: 'class', // or 'media' or 'class'
+   theme: {
+diff --git a/graph/ui-render-config/tailwind.config.js b/graph/ui-render-config/tailwind.config.js
+index 18a8d985ec..25afb35154 100644
+--- a/graph/ui-render-config/tailwind.config.js
++++ b/graph/ui-render-config/tailwind.config.js
+@@ -1,12 +1,12 @@
+ const path = require('path');
+ 
+-// nx-ignore-next-line
+-const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
++const glob = '**/*.{js,ts,jsx,tsx,html}';
+ 
+ module.exports = {
+   content: [
+-    path.join(__dirname, 'src/**/*.{js,ts,jsx,tsx,html}'),
+-    ...createGlobPatternsForDependencies(__dirname),
++    path.join(__dirname, 'src', glob),
++    path.join(__dirname, '..', 'ui-*/src', glob),
++    path.join(__dirname, '..', 'shared/src', glob),
+   ],
+   darkMode: 'class', // or 'media' or 'class'
+   theme: {
+diff --git a/package.json b/package.json
+index f695c803f4..38cc20be8b 100644
+--- a/package.json
++++ b/package.json
+@@ -360,7 +360,6 @@
+     "@react-spring/three": "^9.7.3",
+     "@react-three/drei": "^9.108.3",
+     "@react-three/fiber": "^8.16.8",
+-    "@tailwindcss/aspect-ratio": "^0.4.2",
+     "@tailwindcss/forms": "^0.5.7",
+     "@tailwindcss/typography": "0.5.13",
+     "@types/license-checker": "^25.0.3",
+diff --git a/packages/angular/docs/setup-tailwind-examples.md b/packages/angular/docs/setup-tailwind-examples.md
+deleted file mode 100644
+index 823391d593..0000000000
+--- a/packages/angular/docs/setup-tailwind-examples.md
++++ /dev/null
+@@ -1,19 +0,0 @@
+-## Examples
+-
+-The `setup-tailwind` generator can be used to add [Tailwind](https://tailwindcss.com) configuration to apps and publishable libraries.
+-
+-##### Standard Setup
+-
+-To generate a standard Tailwind setup, just run the following command.
+-
+-```bash
+-nx g @nx/angular:setup-tailwind myapp
+-```
+-
+-##### Specifying the Styles Entrypoint
+-
+-To specify the styles file that should be used as the entrypoint for Tailwind, simply pass the `--stylesEntryPoint` flag, relative to workspace root.
+-
+-```bash
+-nx g @nx/angular:setup-tailwind myapp --stylesEntryPoint=apps/myapp/src/styles.css
+-```
+diff --git a/packages/angular/generators.json b/packages/angular/generators.json
+index 9521d4faf5..b0b68c7aa9 100644
+--- a/packages/angular/generators.json
++++ b/packages/angular/generators.json
+@@ -158,12 +158,6 @@
+       "schema": "./src/generators/setup-ssr/schema.json",
+       "description": "Generate Angular Universal (SSR) setup for an Angular application."
+     },
+-    "setup-tailwind": {
+-      "factory": "./src/generators/setup-tailwind/setup-tailwind",
+-      "schema": "./src/generators/setup-tailwind/schema.json",
+-      "description": "Configures Tailwind CSS for an application or a buildable/publishable library.",
+-      "x-deprecated": "Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23."
+-    },
+     "stories": {
+       "factory": "./src/generators/stories/stories",
+       "schema": "./src/generators/stories/schema.json",
+diff --git a/packages/angular/generators.ts b/packages/angular/generators.ts
+index 68cca6a080..1a0af9f3e4 100644
+--- a/packages/angular/generators.ts
++++ b/packages/angular/generators.ts
+@@ -20,7 +20,6 @@ export * from './src/generators/scam-to-standalone/scam-to-standalone';
+ export * from './src/generators/scam/scam';
+ export * from './src/generators/setup-mf/setup-mf';
+ export * from './src/generators/setup-ssr/setup-ssr';
+-export * from './src/generators/setup-tailwind/setup-tailwind';
+ export * from './src/generators/stories/stories';
+ export * from './src/generators/storybook-configuration/storybook-configuration';
+ export * from './src/generators/web-worker/web-worker';
+diff --git a/packages/angular/package.json b/packages/angular/package.json
+index e8a4e77f22..7cd9664234 100644
+--- a/packages/angular/package.json
++++ b/packages/angular/package.json
+@@ -2,7 +2,7 @@
+   "name": "@nx/angular",
+   "version": "0.0.1",
+   "private": false,
+-  "description": "The Nx Plugin for Angular contains executors, generators, and utilities for managing Angular applications and libraries within an Nx workspace. It provides: \n\n- Integration with libraries such as Storybook, Jest, ESLint, Tailwind CSS, Playwright and Cypress. \n\n- Generators to help scaffold code quickly (like: Micro Frontends, Libraries, both internal to your codebase and publishable to npm) \n\n- Single Component Application Modules (SCAMs) \n\n- NgRx helpers. \n\n- Utilities for automatic workspace refactoring.",
++  "description": "The Nx Plugin for Angular contains executors, generators, and utilities for managing Angular applications and libraries within an Nx workspace. It provides: \n\n- Integration with libraries such as Storybook, Jest, ESLint, Playwright and Cypress. \n\n- Generators to help scaffold code quickly (like: Micro Frontends, Libraries, both internal to your codebase and publishable to npm) \n\n- Single Component Application Modules (SCAMs) \n\n- NgRx helpers. \n\n- Utilities for automatic workspace refactoring.",
+   "repository": {
+     "type": "git",
+     "url": "https://github.com/nrwl/nx.git",
+diff --git a/packages/angular/src/generators/application/application.ts b/packages/angular/src/generators/application/application.ts
+index e146bf1b14..44e1b01456 100644
+--- a/packages/angular/src/generators/application/application.ts
++++ b/packages/angular/src/generators/application/application.ts
+@@ -15,7 +15,6 @@ import { initGenerator as jsInitGenerator } from '@nx/js';
+ import { convertToRspack } from '../convert-to-rspack/convert-to-rspack';
+ import { angularInitGenerator } from '../init/init';
+ import { setupSsr } from '../setup-ssr/setup-ssr';
+-import { setupTailwindGenerator } from '../setup-tailwind/setup-tailwind';
+ import { ensureAngularDependencies } from '../utils/ensure-angular-dependencies';
+ import { assertNotUsingTsSolutionSetup } from '../utils/validations';
+ import {
+@@ -73,14 +72,6 @@ export async function applicationGenerator(
+ 
+   await createFiles(tree, options, rootOffset);
+ 
+-  if (options.addTailwind) {
+-    await setupTailwindGenerator(tree, {
+-      project: options.name,
+-      skipFormat: true,
+-      skipPackageJson: options.skipPackageJson,
+-    });
+-  }
+-
+   await addLinting(tree, options);
+   await addUnitTestRunner(tree, options);
+   const e2ePort = await addE2e(tree, options);
+diff --git a/packages/angular/src/generators/application/schema.d.ts b/packages/angular/src/generators/application/schema.d.ts
+index ed35f5a212..ddd7bac203 100644
+--- a/packages/angular/src/generators/application/schema.d.ts
++++ b/packages/angular/src/generators/application/schema.d.ts
+@@ -5,7 +5,6 @@ import type { Styles } from '../utils/types';
+ export interface Schema {
+   directory: string;
+   name?: string;
+-  addTailwind?: boolean;
+   skipFormat?: boolean;
+   inlineStyle?: boolean;
+   inlineTemplate?: boolean;
+diff --git a/packages/angular/src/generators/application/schema.json b/packages/angular/src/generators/application/schema.json
+index 550af42ecc..c773a3249d 100644
+--- a/packages/angular/src/generators/application/schema.json
++++ b/packages/angular/src/generators/application/schema.json
+@@ -138,11 +138,6 @@
+       "description": "Whether or not to configure the ESLint `parserOptions.project` option. We do not do this by default for lint performance reasons.",
+       "default": false
+     },
+-    "addTailwind": {
+-      "type": "boolean",
+-      "description": "Whether to configure Tailwind CSS for the application.",
+-      "default": false
+-    },
+     "standalone": {
+       "description": "Generate an application that is setup to use standalone components.",
+       "type": "boolean",
+diff --git a/packages/angular/src/generators/host/schema.d.ts b/packages/angular/src/generators/host/schema.d.ts
+index da2257ff22..489117b41a 100644
+--- a/packages/angular/src/generators/host/schema.d.ts
++++ b/packages/angular/src/generators/host/schema.d.ts
+@@ -11,7 +11,6 @@ export interface Schema {
+   setParserOptionsProject?: boolean;
+   skipPackageJson?: boolean;
+   skipPostInstall?: boolean;
+-  addTailwind?: boolean;
+   prefix?: string;
+   style?: Styles;
+   skipTests?: boolean;
+diff --git a/packages/angular/src/generators/host/schema.json b/packages/angular/src/generators/host/schema.json
+index e14af04d5e..ba31c8ddf9 100644
+--- a/packages/angular/src/generators/host/schema.json
++++ b/packages/angular/src/generators/host/schema.json
+@@ -154,11 +154,6 @@
+       "description": "Whether or not to configure the ESLint `parserOptions.project` option. We do not do this by default for lint performance reasons.",
+       "default": false
+     },
+-    "addTailwind": {
+-      "type": "boolean",
+-      "description": "Whether to configure Tailwind CSS for the application.",
+-      "default": false
+-    },
+     "skipFormat": {
+       "description": "Skip formatting files.",
+       "type": "boolean",
+diff --git a/packages/angular/src/generators/library/lib/normalized-schema.ts b/packages/angular/src/generators/library/lib/normalized-schema.ts
+index 00644cef98..75a1981718 100644
+--- a/packages/angular/src/generators/library/lib/normalized-schema.ts
++++ b/packages/angular/src/generators/library/lib/normalized-schema.ts
+@@ -5,7 +5,6 @@ export interface NormalizedSchema {
+   libraryOptions: {
+     directory: string;
+     name?: string;
+-    addTailwind?: boolean;
+     skipFormat?: boolean;
+     addModuleSpec?: boolean;
+     sourceDir?: string;
+diff --git a/packages/angular/src/generators/library/lib/validate-options.ts b/packages/angular/src/generators/library/lib/validate-options.ts
+index b8273a42ed..ad46566d5d 100644
+--- a/packages/angular/src/generators/library/lib/validate-options.ts
++++ b/packages/angular/src/generators/library/lib/validate-options.ts
+@@ -14,12 +14,6 @@ export function validateOptions(tree: Tree, options: Schema): void {
+     );
+   }
+ 
+-  if (options.addTailwind && !options.buildable && !options.publishable) {
+-    throw new Error(
+-      `To use "--addTailwind" option, you have to set either "--buildable" or "--publishable".`
+-    );
+-  }
+-
+   if (options.unitTestRunner === UnitTestRunner.VitestAngular) {
+     const { major: angularMajorVersion, version: angularVersion } =
+       getInstalledAngularVersionInfo(tree);
+diff --git a/packages/angular/src/generators/library/library.ts b/packages/angular/src/generators/library/library.ts
+index a909e4d14b..b9b7d724f3 100644
+--- a/packages/angular/src/generators/library/library.ts
++++ b/packages/angular/src/generators/library/library.ts
+@@ -13,7 +13,6 @@ import { releaseTasks } from '@nx/js/src/generators/library/utils/add-release-co
+ import init from '../../generators/init/init';
+ import { UnitTestRunner } from '../../utils/test-runners';
+ import addLintingGenerator from '../add-linting/add-linting';
+-import setupTailwindGenerator from '../setup-tailwind/setup-tailwind';
+ import { addJest } from '../utils/add-jest';
+ import { addVitestAnalog, addVitestAngular } from '../utils/add-vitest';
+ import { addBuildableLibrariesPostCssDependencies } from '../utils/dependencies';
+@@ -73,14 +72,6 @@ export async function libraryGenerator(
+ 
+   await addLinting(tree, libraryOptions);
+ 
+-  if (libraryOptions.addTailwind) {
+-    await setupTailwindGenerator(tree, {
+-      project: libraryOptions.name,
+-      skipFormat: true,
+-      skipPackageJson: libraryOptions.skipPackageJson,
+-    });
+-  }
+-
+   if (
+     (libraryOptions.buildable || libraryOptions.publishable) &&
+     !libraryOptions.skipPackageJson
+diff --git a/packages/angular/src/generators/library/schema.d.ts b/packages/angular/src/generators/library/schema.d.ts
+index b0cb8d079f..084ff43ba6 100644
+--- a/packages/angular/src/generators/library/schema.d.ts
++++ b/packages/angular/src/generators/library/schema.d.ts
+@@ -4,7 +4,6 @@ import type { UnitTestRunner } from '../../utils/test-runners';
+ export interface Schema {
+   directory: string;
+   name?: string;
+-  addTailwind?: boolean;
+   skipFormat?: boolean;
+   addModuleSpec?: boolean;
+   sourceDir?: string;
+diff --git a/packages/angular/src/generators/library/schema.json b/packages/angular/src/generators/library/schema.json
+index dc7fc9d6c0..c14f64ef88 100644
+--- a/packages/angular/src/generators/library/schema.json
++++ b/packages/angular/src/generators/library/schema.json
+@@ -112,11 +112,6 @@
+       "description": "Whether or not to configure the ESLint `parserOptions.project` option. We do not do this by default for lint performance reasons.",
+       "default": false
+     },
+-    "addTailwind": {
+-      "type": "boolean",
+-      "description": "Whether to configure Tailwind CSS for the application. It can only be used with buildable and publishable libraries. Non-buildable libraries will use the application's Tailwind configuration.",
+-      "default": false
+-    },
+     "skipModule": {
+       "type": "boolean",
+       "description": "Whether to skip the creation of a default module when generating the library.",
+diff --git a/packages/angular/src/generators/remote/schema.d.ts b/packages/angular/src/generators/remote/schema.d.ts
+index a2ad7cf273..5e78547ab7 100644
+--- a/packages/angular/src/generators/remote/schema.d.ts
++++ b/packages/angular/src/generators/remote/schema.d.ts
+@@ -10,7 +10,6 @@ export interface Schema {
+   port?: number;
+   setParserOptionsProject?: boolean;
+   skipPackageJson?: boolean;
+-  addTailwind?: boolean;
+   prefix?: string;
+   style?: Styles;
+   skipTests?: boolean;
+diff --git a/packages/angular/src/generators/remote/schema.json b/packages/angular/src/generators/remote/schema.json
+index 2c7cc57728..5f4210c8db 100644
+--- a/packages/angular/src/generators/remote/schema.json
++++ b/packages/angular/src/generators/remote/schema.json
+@@ -148,11 +148,6 @@
+       "description": "Whether or not to configure the ESLint `parserOptions.project` option. We do not do this by default for lint performance reasons.",
+       "default": false
+     },
+-    "addTailwind": {
+-      "type": "boolean",
+-      "description": "Whether to configure Tailwind CSS for the application.",
+-      "default": false
+-    },
+     "skipFormat": {
+       "description": "Skip formatting files.",
+       "type": "boolean",
+diff --git a/packages/angular/src/generators/setup-tailwind/__snapshots__/setup-tailwind.application.spec.ts.snap b/packages/angular/src/generators/setup-tailwind/__snapshots__/setup-tailwind.application.spec.ts.snap
+deleted file mode 100644
+index 44fdb4d517..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/__snapshots__/setup-tailwind.application.spec.ts.snap
++++ /dev/null
+@@ -1,33 +0,0 @@
+-// Jest Snapshot v1, https://goo.gl/fbAQLP
+-
+-exports[`setupTailwind generator application should add tailwind styles to "apps/app1/src/styles.css" when not provided 1`] = `
+-"@tailwind base;
+-@tailwind components;
+-@tailwind utilities;
+-
+-p { margin: 0; }"
+-`;
+-
+-exports[`setupTailwind generator application should add tailwind styles to "apps/app1/src/styles.less" when not provided 1`] = `
+-"@tailwind base;
+-@tailwind components;
+-@tailwind utilities;
+-
+-p { margin: 0; }"
+-`;
+-
+-exports[`setupTailwind generator application should add tailwind styles to "apps/app1/src/styles.sass" when not provided 1`] = `
+-"@tailwind base;
+-@tailwind components;
+-@tailwind utilities;
+-
+-p { margin: 0; }"
+-`;
+-
+-exports[`setupTailwind generator application should add tailwind styles to "apps/app1/src/styles.scss" when not provided 1`] = `
+-"@tailwind base;
+-@tailwind components;
+-@tailwind utilities;
+-
+-p { margin: 0; }"
+-`;
+diff --git a/packages/angular/src/generators/setup-tailwind/files/v2/tailwind.config.js__tmpl__ b/packages/angular/src/generators/setup-tailwind/files/v2/tailwind.config.js__tmpl__
+deleted file mode 100644
+index 3feb87b682..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/files/v2/tailwind.config.js__tmpl__
++++ /dev/null
+@@ -1,18 +0,0 @@
+-const { createGlobPatternsForDependencies } = require('@nx/angular/tailwind');
+-const { join } = require('path');
+-
+-module.exports = {
+-  mode: 'jit',
+-  purge: [
+-    join(__dirname, '<%= relativeSourceRoot %>/**/!(*.stories|*.spec).{ts,html}'),
+-    ...createGlobPatternsForDependencies(__dirname),
+-  ],
+-  darkMode: false, // or 'media' or 'class'
+-  theme: {
+-    extend: {},
+-  },
+-  variants: {
+-    extend: {},
+-  },
+-  plugins: [],
+-};
+diff --git a/packages/angular/src/generators/setup-tailwind/files/v3/tailwind.config.js__tmpl__ b/packages/angular/src/generators/setup-tailwind/files/v3/tailwind.config.js__tmpl__
+deleted file mode 100644
+index 0e32e3ee76..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/files/v3/tailwind.config.js__tmpl__
++++ /dev/null
+@@ -1,14 +0,0 @@
+-const { createGlobPatternsForDependencies } = require('@nx/angular/tailwind');
+-const { join } = require('path');
+-
+-/** @type {import('tailwindcss').Config} */
+-module.exports = {
+-  content: [
+-    join(__dirname, '<%= relativeSourceRoot %>/**/!(*.stories|*.spec).{ts,html}'),
+-    ...createGlobPatternsForDependencies(__dirname),
+-  ],
+-  theme: {
+-    extend: {},
+-  },
+-  plugins: [],
+-};
+diff --git a/packages/angular/src/generators/setup-tailwind/lib/add-tailwind-config.ts b/packages/angular/src/generators/setup-tailwind/lib/add-tailwind-config.ts
+deleted file mode 100644
+index 0f35674fbb..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/lib/add-tailwind-config.ts
++++ /dev/null
+@@ -1,39 +0,0 @@
+-import {
+-  generateFiles,
+-  joinPathFragments,
+-  ProjectConfiguration,
+-  stripIndents,
+-  Tree,
+-} from '@nx/devkit';
+-import { getProjectSourceRoot } from '@nx/js/src/utils/typescript/ts-solution-setup';
+-import { relative } from 'path';
+-import { GeneratorOptions } from '../schema';
+-
+-export function addTailwindConfig(
+-  tree: Tree,
+-  options: GeneratorOptions,
+-  project: ProjectConfiguration,
+-  tailwindVersion: '2' | '3'
+-): void {
+-  if (tree.exists(joinPathFragments(project.root, 'tailwind.config.js'))) {
+-    throw new Error(
+-      stripIndents`The "tailwind.config.js" file already exists in the project "${options.project}". Are you sure this is the right project to set up Tailwind?
+-      If you are sure, you can remove the existing file and re-run the generator.`
+-    );
+-  }
+-
+-  const filesDir = tailwindVersion === '3' ? 'files/v3' : 'files/v2';
+-
+-  generateFiles(
+-    tree,
+-    joinPathFragments(__dirname, '..', filesDir),
+-    project.root,
+-    {
+-      relativeSourceRoot: relative(
+-        project.root,
+-        getProjectSourceRoot(project, tree)
+-      ),
+-      tmpl: '',
+-    }
+-  );
+-}
+diff --git a/packages/angular/src/generators/setup-tailwind/lib/add-tailwind-required-packages.ts b/packages/angular/src/generators/setup-tailwind/lib/add-tailwind-required-packages.ts
+deleted file mode 100644
+index 850a4adf19..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/lib/add-tailwind-required-packages.ts
++++ /dev/null
+@@ -1,19 +0,0 @@
+-import {
+-  addDependenciesToPackageJson,
+-  GeneratorCallback,
+-  Tree,
+-} from '@nx/devkit';
+-import { versions } from '../../utils/version-utils';
+-
+-export function addTailwindRequiredPackages(tree: Tree): GeneratorCallback {
+-  const pkgVersions = versions(tree);
+-  return addDependenciesToPackageJson(
+-    tree,
+-    {},
+-    {
+-      autoprefixer: pkgVersions.autoprefixerVersion,
+-      postcss: pkgVersions.postcssVersion,
+-      tailwindcss: pkgVersions.tailwindVersion,
+-    }
+-  );
+-}
+diff --git a/packages/angular/src/generators/setup-tailwind/lib/detect-tailwind-installed-version.ts b/packages/angular/src/generators/setup-tailwind/lib/detect-tailwind-installed-version.ts
+deleted file mode 100644
+index 998203d8a9..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/lib/detect-tailwind-installed-version.ts
++++ /dev/null
+@@ -1,24 +0,0 @@
+-import { readJson, Tree } from '@nx/devkit';
+-import { checkAndCleanWithSemver } from '@nx/devkit/src/utils/semver';
+-import { lt } from 'semver';
+-
+-export function detectTailwindInstalledVersion(
+-  tree: Tree
+-): '2' | '3' | undefined {
+-  const { dependencies, devDependencies } = readJson(tree, 'package.json');
+-  const tailwindVersion =
+-    dependencies?.tailwindcss ?? devDependencies?.tailwindcss;
+-
+-  if (!tailwindVersion) {
+-    return undefined;
+-  }
+-
+-  const version = checkAndCleanWithSemver(tree, 'tailwindcss', tailwindVersion);
+-  if (lt(version, '2.0.0')) {
+-    throw new Error(
+-      `The Tailwind CSS version "${tailwindVersion}" is not supported. Please upgrade to v2.0.0 or higher.`
+-    );
+-  }
+-
+-  return lt(version, '3.0.0') ? '2' : '3';
+-}
+diff --git a/packages/angular/src/generators/setup-tailwind/lib/index.ts b/packages/angular/src/generators/setup-tailwind/lib/index.ts
+deleted file mode 100644
+index 548c2fc723..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/lib/index.ts
++++ /dev/null
+@@ -1,6 +0,0 @@
+-export * from './add-tailwind-config';
+-export * from './add-tailwind-required-packages';
+-export * from './detect-tailwind-installed-version';
+-export * from './normalize-options';
+-export * from './update-application-styles';
+-export * from './validate-build-target';
+diff --git a/packages/angular/src/generators/setup-tailwind/lib/normalize-options.ts b/packages/angular/src/generators/setup-tailwind/lib/normalize-options.ts
+deleted file mode 100644
+index 64b3a44d38..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/lib/normalize-options.ts
++++ /dev/null
+@@ -1,10 +0,0 @@
+-import type { GeneratorOptions, NormalizedGeneratorOptions } from '../schema';
+-
+-export function normalizeOptions(
+-  options: GeneratorOptions
+-): NormalizedGeneratorOptions {
+-  return {
+-    ...options,
+-    buildTarget: options.buildTarget || 'build',
+-  };
+-}
+diff --git a/packages/angular/src/generators/setup-tailwind/lib/update-application-styles.ts b/packages/angular/src/generators/setup-tailwind/lib/update-application-styles.ts
+deleted file mode 100644
+index 27a1d241cd..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/lib/update-application-styles.ts
++++ /dev/null
+@@ -1,86 +0,0 @@
+-import {
+-  joinPathFragments,
+-  ProjectConfiguration,
+-  stripIndents,
+-  Tree,
+-} from '@nx/devkit';
+-import { getProjectSourceRoot } from '@nx/js/src/utils/typescript/ts-solution-setup';
+-import { NormalizedGeneratorOptions } from '../schema';
+-
+-export function updateApplicationStyles(
+-  tree: Tree,
+-  options: NormalizedGeneratorOptions,
+-  project: ProjectConfiguration
+-): void {
+-  let stylesEntryPoint = options.stylesEntryPoint;
+-
+-  if (stylesEntryPoint && !tree.exists(stylesEntryPoint)) {
+-    throw new Error(
+-      `The provided styles entry point "${stylesEntryPoint}" could not be found.`
+-    );
+-  }
+-
+-  if (!stylesEntryPoint) {
+-    stylesEntryPoint = findStylesEntryPoint(tree, options, project);
+-
+-    if (!stylesEntryPoint) {
+-      throw new Error(
+-        stripIndents`Could not find a styles entry point for project "${options.project}".
+-        Please specify a styles entry point using the "--stylesEntryPoint" option.`
+-      );
+-    }
+-  }
+-
+-  const stylesEntryPointContent = tree.read(stylesEntryPoint, 'utf-8');
+-  tree.write(
+-    stylesEntryPoint,
+-    stripIndents`@tailwind base;
+-    @tailwind components;
+-    @tailwind utilities;
+-
+-    ${stylesEntryPointContent}`
+-  );
+-}
+-
+-function findStylesEntryPoint(
+-  tree: Tree,
+-  options: NormalizedGeneratorOptions,
+-  project: ProjectConfiguration
+-): string | undefined {
+-  const sourceRoot = getProjectSourceRoot(project, tree);
+-  // first check for common names
+-  const possibleStylesEntryPoints = [
+-    joinPathFragments(sourceRoot, 'styles.css'),
+-    joinPathFragments(sourceRoot, 'styles.scss'),
+-    joinPathFragments(sourceRoot, 'styles.sass'),
+-    joinPathFragments(sourceRoot, 'styles.less'),
+-  ];
+-
+-  let stylesEntryPoint = possibleStylesEntryPoints.find((s) => tree.exists(s));
+-  if (stylesEntryPoint) {
+-    return stylesEntryPoint;
+-  }
+-
+-  // then check for the specified styles in the build configuration if it exists
+-  const styles: Array<string | { input: string; inject: boolean }> =
+-    project.targets?.[options.buildTarget]?.options?.styles;
+-
+-  if (!styles) {
+-    return undefined;
+-  }
+-
+-  // find the first style that belongs to the project source
+-  const style = styles.find((s) =>
+-    typeof s === 'string'
+-      ? s.startsWith(project.root) && tree.exists(s)
+-      : s.input.startsWith(project.root) &&
+-        s.inject !== false &&
+-        tree.exists(s.input)
+-  );
+-
+-  if (!style) {
+-    return undefined;
+-  }
+-
+-  return typeof style === 'string' ? style : style.input;
+-}
+diff --git a/packages/angular/src/generators/setup-tailwind/lib/validate-build-target.ts b/packages/angular/src/generators/setup-tailwind/lib/validate-build-target.ts
+deleted file mode 100644
+index ca8115a8cf..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/lib/validate-build-target.ts
++++ /dev/null
+@@ -1,38 +0,0 @@
+-import { stripIndents, type ProjectConfiguration } from '@nx/devkit';
+-import type { NormalizedGeneratorOptions } from '../schema';
+-
+-export function validateBuildTarget(
+-  options: NormalizedGeneratorOptions,
+-  project: ProjectConfiguration
+-): void {
+-  const buildTarget = project.targets?.[options.buildTarget];
+-
+-  if (!buildTarget) {
+-    throw new Error(
+-      stripIndents`The target "${options.buildTarget}" was not found for project "${options.project}".
+-      If you are using a different build target, please provide it using the "--buildTarget" option.
+-      If the project is not a buildable or publishable library, you don't need to setup TailwindCSS for it.`
+-    );
+-  }
+-
+-  const supportedLibraryExecutors = [
+-    '@angular-devkit/build-angular:ng-packagr',
+-    '@angular/build:ng-packagr',
+-    '@nx/angular:ng-packagr-lite',
+-    '@nx/angular:package',
+-  ];
+-  if (
+-    !supportedLibraryExecutors.includes(
+-      project.targets[options.buildTarget].executor
+-    )
+-  ) {
+-    throw new Error(
+-      stripIndents`The build target for project "${
+-        options.project
+-      }" is using an unsupported executor "${buildTarget.executor}".
+-      Supported executors are ${supportedLibraryExecutors
+-        .map((e) => `"${e}"`)
+-        .join(', ')}.`
+-    );
+-  }
+-}
+diff --git a/packages/angular/src/generators/setup-tailwind/schema.d.ts b/packages/angular/src/generators/setup-tailwind/schema.d.ts
+deleted file mode 100644
+index 4af6250702..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/schema.d.ts
++++ /dev/null
+@@ -1,11 +0,0 @@
+-export interface GeneratorOptions {
+-  project: string;
+-  buildTarget?: string;
+-  skipFormat?: boolean;
+-  stylesEntryPoint?: string;
+-  skipPackageJson?: boolean;
+-}
+-
+-export interface NormalizedGeneratorOptions extends GeneratorOptions {
+-  buildTarget: string;
+-}
+diff --git a/packages/angular/src/generators/setup-tailwind/schema.json b/packages/angular/src/generators/setup-tailwind/schema.json
+deleted file mode 100644
+index c690921efc..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/schema.json
++++ /dev/null
+@@ -1,42 +0,0 @@
+-{
+-  "$schema": "https://json-schema.org/schema",
+-  "$id": "NxAngularTailwindSetupGenerator",
+-  "cli": "nx",
+-  "title": "Configures Tailwind CSS for an application or a buildable/publishable library.",
+-  "description": "Adds the Tailwind CSS configuration files for a given Angular project and installs, if needed, the packages required for Tailwind CSS to work.",
+-  "type": "object",
+-  "properties": {
+-    "project": {
+-      "type": "string",
+-      "description": "The name of the project to add the Tailwind CSS setup for.",
+-      "$default": {
+-        "$source": "argv",
+-        "index": 0
+-      },
+-      "x-prompt": "What project would you like to add the Tailwind CSS setup?"
+-    },
+-    "buildTarget": {
+-      "type": "string",
+-      "description": "The name of the target used to build the project. This option only applies to buildable/publishable libraries.",
+-      "default": "build"
+-    },
+-    "skipFormat": {
+-      "type": "boolean",
+-      "description": "Skips formatting the workspace after the generator completes.",
+-      "x-priority": "internal"
+-    },
+-    "stylesEntryPoint": {
+-      "type": "string",
+-      "description": "Path to the styles entry point relative to the workspace root. If not provided the generator will do its best to find it and it will error if it can't. This option only applies to applications."
+-    },
+-    "skipPackageJson": {
+-      "type": "boolean",
+-      "default": false,
+-      "description": "Do not add dependencies to `package.json`.",
+-      "x-priority": "internal"
+-    }
+-  },
+-  "additionalProperties": false,
+-  "required": ["project"],
+-  "examplesFile": "../../../docs/setup-tailwind-examples.md"
+-}
+diff --git a/packages/angular/src/generators/setup-tailwind/setup-tailwind.ts b/packages/angular/src/generators/setup-tailwind/setup-tailwind.ts
+deleted file mode 100644
+index e70a8b957b..0000000000
+--- a/packages/angular/src/generators/setup-tailwind/setup-tailwind.ts
++++ /dev/null
+@@ -1,59 +0,0 @@
+-import {
+-  formatFiles,
+-  GeneratorCallback,
+-  logger,
+-  readProjectConfiguration,
+-  Tree,
+-} from '@nx/devkit';
+-import {
+-  addTailwindConfig,
+-  addTailwindRequiredPackages,
+-  detectTailwindInstalledVersion,
+-  normalizeOptions,
+-  updateApplicationStyles,
+-  validateBuildTarget,
+-} from './lib';
+-import { GeneratorOptions } from './schema';
+-
+-export async function setupTailwindGenerator(
+-  tree: Tree,
+-  rawOptions: GeneratorOptions
+-): Promise<GeneratorCallback> {
+-  logger.warn(
+-    `The 'setup-tailwind' generator is deprecated. Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23.`
+-  );
+-
+-  const options = normalizeOptions(rawOptions);
+-  const project = readProjectConfiguration(tree, options.project);
+-
+-  if (rawOptions.buildTarget && !project.targets?.[rawOptions.buildTarget]) {
+-    throw new Error(
+-      `The provided target "${options.buildTarget}" was not found for project "${options.project}". Please provide a valid build target.`
+-    );
+-  }
+-
+-  const tailwindInstalledVersion = detectTailwindInstalledVersion(tree);
+-
+-  let installTask: GeneratorCallback = () => {};
+-  if (!options.skipPackageJson) {
+-    if (tailwindInstalledVersion === undefined) {
+-      installTask = addTailwindRequiredPackages(tree);
+-    }
+-  }
+-
+-  addTailwindConfig(tree, options, project, tailwindInstalledVersion ?? '3');
+-
+-  if (project.projectType === 'application') {
+-    updateApplicationStyles(tree, options, project);
+-  } else if (project.projectType === 'library') {
+-    validateBuildTarget(options, project);
+-  }
+-
+-  if (!options.skipFormat) {
+-    await formatFiles(tree);
+-  }
+-
+-  return installTask;
+-}
+-
+-export default setupTailwindGenerator;
+diff --git a/packages/angular/src/utils/backward-compatible-versions.ts b/packages/angular/src/utils/backward-compatible-versions.ts
+index 13123ee8db..aef7cbf0ae 100644
+--- a/packages/angular/src/utils/backward-compatible-versions.ts
++++ b/packages/angular/src/utils/backward-compatible-versions.ts
+@@ -34,7 +34,6 @@ export const backwardCompatibleVersions: VersionMap = {
+     moduleFederationEnhancedVersion: '^0.21.2',
+     angularEslintVersion: '^20.3.0',
+     typescriptEslintVersion: '^7.16.0',
+-    tailwindVersion: '^3.0.2',
+     postcssVersion: '^8.4.5',
+     postcssUrlVersion: '~10.1.3',
+     autoprefixerVersion: '^10.4.0',
+@@ -67,7 +66,6 @@ export const backwardCompatibleVersions: VersionMap = {
+     moduleFederationEnhancedVersion: '^0.9.0',
+     angularEslintVersion: '^19.2.0',
+     typescriptEslintVersion: '^7.16.0',
+-    tailwindVersion: '^3.0.2',
+     postcssVersion: '^8.4.5',
+     postcssUrlVersion: '~10.1.3',
+     autoprefixerVersion: '^10.4.0',
+diff --git a/packages/angular/src/utils/versions.ts b/packages/angular/src/utils/versions.ts
+index d840eb4e89..fe27ce4e14 100644
+--- a/packages/angular/src/utils/versions.ts
++++ b/packages/angular/src/utils/versions.ts
+@@ -19,7 +19,6 @@ export const webpackMergeVersion = '^5.8.0';
+ 
+ export const angularEslintVersion = '^21.2.0';
+ export const typescriptEslintVersion = '^7.16.0';
+-export const tailwindVersion = '^3.0.2';
+ export const postcssVersion = '^8.4.5';
+ export const postcssUrlVersion = '~10.1.3';
+ export const autoprefixerVersion = '^10.4.0';
+diff --git a/packages/angular/tailwind.ts b/packages/angular/tailwind.ts
+index fc3cea956e..a3d16c42a6 100644
+--- a/packages/angular/tailwind.ts
++++ b/packages/angular/tailwind.ts
+@@ -1,14 +1,23 @@
+ import { createGlobPatternsForDependencies as jsGenerateGlobs } from '@nx/js/src/utils/generate-globs';
+ 
++let hasWarned = false;
++
+ /**
+- * Generates a set of glob patterns based off the source root of the app and its dependencies
+- * @param dirPath workspace relative directory path that will be used to infer the parent project and dependencies
+- * @param fileGlobPattern pass a custom glob pattern to be used
++ * @deprecated `@nx/angular/tailwind` will be removed in Nx 24. Migrate to Tailwind CSS v4 which no longer needs glob patterns.
++ * See: https://nx.dev/docs/technologies/angular/guides/using-tailwind-css-with-angular
+  */
+ export function createGlobPatternsForDependencies(
+   dirPath: string,
+   fileGlobPattern: string = '/**/!(*.stories|*.spec).{ts,html}'
+ ) {
++  if (!hasWarned) {
++    hasWarned = true;
++    console.warn(
++      `\nWARNING: "@nx/angular/tailwind" is deprecated and will be removed in Nx 24.\n` +
++        `Migrate to Tailwind CSS v4 which no longer needs glob patterns for content detection.\n` +
++        `See: https://nx.dev/docs/technologies/angular/guides/using-tailwind-css-with-angular\n`
++    );
++  }
+   try {
+     return jsGenerateGlobs(dirPath, fileGlobPattern);
+   } catch (e) {
+@@ -19,7 +28,7 @@ export function createGlobPatternsForDependencies(
+      * autocomplete features, for example.
+      *
+      * In order to best support that use-case, we therefore do not hard error when the ProjectGraph is
+-     * fundamently unavailable in this tailwind-specific context.
++     * fundamentally unavailable in this tailwind-specific context.
+      */
+     console.warn(
+       '\nWARNING: There was an error creating glob patterns, returning an empty array\n' +
+diff --git a/packages/create-nx-workspace/bin/create-nx-workspace.ts b/packages/create-nx-workspace/bin/create-nx-workspace.ts
+index 43cf0885bb..71d429586f 100644
+--- a/packages/create-nx-workspace/bin/create-nx-workspace.ts
++++ b/packages/create-nx-workspace/bin/create-nx-workspace.ts
+@@ -1312,10 +1312,6 @@ async function determineReactOptions(
+             name: 'less',
+             message: 'LESS              [ https://lesscss.org     ]',
+           },
+-          {
+-            name: 'tailwind',
+-            message: 'tailwind          [ https://tailwindcss.com     ]',
+-          },
+           {
+             name: 'styled-components',
+             message:
+diff --git a/packages/next/index.ts b/packages/next/index.ts
+index c7077e6332..cb952b7844 100644
+--- a/packages/next/index.ts
++++ b/packages/next/index.ts
+@@ -1,6 +1,4 @@
+ export * from './src/utils/types';
+-export { createGlobPatternsOfDependentProjects } from './src/utils/generate-globs';
+-
+ export { applicationGenerator } from './src/generators/application/application';
+ export { componentGenerator } from './src/generators/component/component';
+ export { libraryGenerator } from './src/generators/library/library';
+diff --git a/packages/next/src/generators/application/__snapshots__/application.spec.ts.snap b/packages/next/src/generators/application/__snapshots__/application.spec.ts.snap
+index 80830cc361..2ba4d55275 100644
+--- a/packages/next/src/generators/application/__snapshots__/application.spec.ts.snap
++++ b/packages/next/src/generators/application/__snapshots__/application.spec.ts.snap
+@@ -477,474 +477,3 @@ export default function Index() {
+ }
+ "
+ `;
+-
+-exports[`app --style tailwind should generate tailwind styles 1`] = `
+-"export default function Index() {
+-  /*
+-   * Replace the elements below with your own.
+-   *
+-   * Note: The corresponding styles are in the ./index.tailwind file.
+-   */
+-  return (
+-    <div>
+-      <div className="wrapper">
+-        <div className="container">
+-          <div id="welcome">
+-            <h1>
+-              <span> Hello there, </span>
+-              Welcome myapp 👋
+-            </h1>
+-          </div>
+-
+-          <div id="hero" className="rounded">
+-            <div className="text-container">
+-              <h2>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+-                  />
+-                </svg>
+-                <span>You&apos;re up and running</span>
+-              </h2>
+-              <a href="#commands"> What&apos;s next? </a>
+-            </div>
+-            <div className="logo-container">
+-              <svg
+-                fill="currentColor"
+-                role="img"
+-                viewBox="0 0 24 24"
+-                xmlns="http://www.w3.org/2000/svg"
+-              >
+-                <path d="M11.987 14.138l-3.132 4.923-5.193-8.427-.012 8.822H0V4.544h3.691l5.247 8.833.005-3.998 3.044 4.759zm.601-5.761c.024-.048 0-3.784.008-3.833h-3.65c.002.059-.005 3.776-.003 3.833h3.645zm5.634 4.134a2.061 2.061 0 0 0-1.969 1.336 1.963 1.963 0 0 1 2.343-.739c.396.161.917.422 1.33.283a2.1 2.1 0 0 0-1.704-.88zm3.39 1.061c-.375-.13-.8-.277-1.109-.681-.06-.08-.116-.17-.176-.265a2.143 2.143 0 0 0-.533-.642c-.294-.216-.68-.322-1.18-.322a2.482 2.482 0 0 0-2.294 1.536 2.325 2.325 0 0 1 4.002.388.75.75 0 0 0 .836.334c.493-.105.46.36 1.203.518v-.133c-.003-.446-.246-.55-.75-.733zm2.024 1.266a.723.723 0 0 0 .347-.638c-.01-2.957-2.41-5.487-5.37-5.487a5.364 5.364 0 0 0-4.487 2.418c-.01-.026-1.522-2.39-1.538-2.418H8.943l3.463 5.423-3.379 5.32h3.54l1.54-2.366 1.568 2.366h3.541l-3.21-5.052a.7.7 0 0 1-.084-.32 2.69 2.69 0 0 1 2.69-2.691h.001c1.488 0 1.736.89 2.057 1.308.634.826 1.9.464 1.9 1.541a.707.707 0 0 0 1.066.596zm.35.133c-.173.372-.56.338-.755.639-.176.271.114.412.114.412s.337.156.538-.311c.104-.231.14-.488.103-.74z" />
+-              </svg>
+-            </div>
+-          </div>
+-
+-          <div id="middle-content">
+-            <div id="learning-materials" className="rounded shadow">
+-              <h2>Learning materials</h2>
+-              <a
+-                href="https://nx.dev/getting-started/intro?utm_source=nx-project"
+-                target="_blank"
+-                rel="noreferrer"
+-                className="list-item-link"
+-              >
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+-                  />
+-                </svg>
+-                <span>
+-                  Documentation
+-                  <span> Everything is in there </span>
+-                </span>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M9 5l7 7-7 7"
+-                  />
+-                </svg>
+-              </a>
+-              <a
+-                href="https://nx.dev/blog/?utm_source=nx-project"
+-                target="_blank"
+-                rel="noreferrer"
+-                className="list-item-link"
+-              >
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
+-                  />
+-                </svg>
+-                <span>
+-                  Blog
+-                  <span> Changelog, features & events </span>
+-                </span>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M9 5l7 7-7 7"
+-                  />
+-                </svg>
+-              </a>
+-              <a
+-                href="https://www.youtube.com/@NxDevtools/videos?utm_source=nx-project&sub_confirmation=1"
+-                target="_blank"
+-                rel="noreferrer"
+-                className="list-item-link"
+-              >
+-                <svg
+-                  role="img"
+-                  viewBox="0 0 24 24"
+-                  fill="currentColor"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <title>YouTube</title>
+-                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+-                </svg>
+-                <span>
+-                  YouTube channel
+-                  <span> Nx Show, talks & tutorials </span>
+-                </span>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M9 5l7 7-7 7"
+-                  />
+-                </svg>
+-              </a>
+-              <a
+-                href="https://nx.dev/react-tutorial/1-code-generation?utm_source=nx-project"
+-                target="_blank"
+-                rel="noreferrer"
+-                className="list-item-link"
+-              >
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+-                  />
+-                </svg>
+-                <span>
+-                  Interactive tutorials
+-                  <span> Create an app, step-by-step </span>
+-                </span>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M9 5l7 7-7 7"
+-                  />
+-                </svg>
+-              </a>
+-              <a
+-                href="https://nxplaybook.com/?utm_source=nx-project"
+-                target="_blank"
+-                rel="noreferrer"
+-                className="list-item-link"
+-              >
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
+-                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
+-                  />
+-                </svg>
+-                <span>
+-                  Video courses
+-                  <span> Nx custom courses </span>
+-                </span>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M9 5l7 7-7 7"
+-                  />
+-                </svg>
+-              </a>
+-            </div>
+-            <div id="other-links">
+-              <a
+-                id="nx-console"
+-                className="button-pill rounded shadow"
+-                href="https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console&utm_source=nx-project"
+-                target="_blank"
+-                rel="noreferrer"
+-              >
+-                <svg
+-                  fill="currentColor"
+-                  role="img"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <title>Visual Studio Code</title>
+-                  <path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 20.06V3.939a1.5 1.5 0 0 0-.85-1.352zm-5.146 14.861L10.826 12l7.178-5.448v10.896z" />
+-                </svg>
+-                <span>
+-                  Install Nx Console for VSCode
+-                  <span>The official VSCode extension for Nx.</span>
+-                </span>
+-              </a>
+-              <a
+-                id="nx-console-jetbrains"
+-                className="button-pill rounded shadow"
+-                href="https://plugins.jetbrains.com/plugin/21060-nx-console"
+-                target="_blank"
+-                rel="noreferrer"
+-              >
+-                <svg
+-                  height="48"
+-                  width="48"
+-                  viewBox="20 20 60 60"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path d="m22.5 22.5h60v60h-60z" />
+-                  <g fill="#fff">
+-                    <path d="m29.03 71.25h22.5v3.75h-22.5z" />
+-                    <path d="m28.09 38 1.67-1.58a1.88 1.88 0 0 0 1.47.87c.64 0 1.06-.44 1.06-1.31v-5.98h2.58v6a3.48 3.48 0 0 1 -.87 2.6 3.56 3.56 0 0 1 -2.57.95 3.84 3.84 0 0 1 -3.34-1.55z" />
+-                    <path d="m36 30h7.53v2.19h-5v1.44h4.49v2h-4.42v1.49h5v2.21h-7.6z" />
+-                    <path d="m47.23 32.29h-2.8v-2.29h8.21v2.27h-2.81v7.1h-2.6z" />
+-                    <path d="m29.13 43.08h4.42a3.53 3.53 0 0 1 2.55.83 2.09 2.09 0 0 1 .6 1.53 2.16 2.16 0 0 1 -1.44 2.09 2.27 2.27 0 0 1 1.86 2.29c0 1.61-1.31 2.59-3.55 2.59h-4.44zm5 2.89c0-.52-.42-.8-1.18-.8h-1.29v1.64h1.24c.79 0 1.25-.26 1.25-.81zm-.9 2.66h-1.57v1.73h1.62c.8 0 1.24-.31 1.24-.86 0-.5-.4-.87-1.27-.87z" />
+-                    <path d="m38 43.08h4.1a4.19 4.19 0 0 1 3 1 2.93 2.93 0 0 1 .9 2.19 3 3 0 0 1 -1.93 2.89l2.24 3.27h-3l-1.88-2.84h-.87v2.84h-2.56zm4 4.5c.87 0 1.39-.43 1.39-1.11 0-.75-.54-1.12-1.4-1.12h-1.44v2.26z" />
+-                    <path d="m49.59 43h2.5l4 9.44h-2.79l-.67-1.69h-3.63l-.67 1.69h-2.71zm2.27 5.73-1-2.65-1.06 2.65z" />
+-                    <path d="m56.46 43.05h2.6v9.37h-2.6z" />
+-                    <path d="m60.06 43.05h2.42l3.37 5v-5h2.57v9.37h-2.26l-3.53-5.14v5.14h-2.57z" />
+-                    <path d="m68.86 51 1.45-1.73a4.84 4.84 0 0 0 3 1.13c.71 0 1.08-.24 1.08-.65 0-.4-.31-.6-1.59-.91-2-.46-3.53-1-3.53-2.93 0-1.74 1.37-3 3.62-3a5.89 5.89 0 0 1 3.86 1.25l-1.26 1.84a4.63 4.63 0 0 0 -2.62-.92c-.63 0-.94.25-.94.6 0 .42.32.61 1.63.91 2.14.46 3.44 1.16 3.44 2.91 0 1.91-1.51 3-3.79 3a6.58 6.58 0 0 1 -4.35-1.5z" />
+-                  </g>
+-                </svg>
+-                <span>
+-                  Install Nx Console for JetBrains
+-                  <span>
+-                    Available for WebStorm, Intellij IDEA Ultimate and more!
+-                  </span>
+-                </span>
+-              </a>
+-              <div id="nx-cloud" className="rounded shadow">
+-                <div>
+-                  <svg
+-                    id="nx-cloud-logo"
+-                    role="img"
+-                    xmlns="http://www.w3.org/2000/svg"
+-                    stroke="currentColor"
+-                    fill="transparent"
+-                    viewBox="0 0 24 24"
+-                  >
+-                    <path
+-                      strokeWidth="2"
+-                      d="M23 3.75V6.5c-3.036 0-5.5 2.464-5.5 5.5s-2.464 5.5-5.5 5.5-5.5 2.464-5.5 5.5H3.75C2.232 23 1 21.768 1 20.25V3.75C1 2.232 2.232 1 3.75 1h16.5C21.768 1 23 2.232 23 3.75Z"
+-                    />
+-                    <path
+-                      strokeWidth="2"
+-                      d="M23 6v14.1667C23 21.7307 21.7307 23 20.1667 23H6c0-3.128 2.53867-5.6667 5.6667-5.6667 3.128 0 5.6666-2.5386 5.6666-5.6666C17.3333 8.53867 19.872 6 23 6Z"
+-                    />
+-                  </svg>
+-                  <h2>
+-                    Nx Cloud
+-                    <span>Enable faster CI & better DX</span>
+-                  </h2>
+-                </div>
+-                <p>
+-                  You can activate distributed tasks executions and caching by
+-                  running:
+-                </p>
+-                <pre>nx connect</pre>
+-                <a
+-                  href="https://nx.app/?utm_source=nx-project"
+-                  target="_blank"
+-                  rel="noreferrer"
+-                >
+-                  {' '}
+-                  What is Nx Cloud?{' '}
+-                </a>
+-              </div>
+-              <a
+-                id="nx-repo"
+-                className="button-pill rounded shadow"
+-                href="https://github.com/nrwl/nx?utm_source=nx-project"
+-                target="_blank"
+-                rel="noreferrer"
+-              >
+-                <svg
+-                  fill="currentColor"
+-                  role="img"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+-                </svg>
+-                <span>
+-                  Nx is open source
+-                  <span> Love Nx? Give us a star! </span>
+-                </span>
+-              </a>
+-            </div>
+-          </div>
+-
+-          <div id="commands" className="rounded shadow">
+-            <h2>Next steps</h2>
+-            <p>Here are some things you can do with Nx:</p>
+-            <details>
+-              <summary>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+-                  />
+-                </svg>
+-                Add UI library
+-              </summary>
+-              <pre>
+-                <span># Generate UI lib</span>
+-                nx g @nx/next:library ui
+-                <span># Add a component</span>
+-                nx g @nx/next:component ui/src/lib/button
+-              </pre>
+-            </details>
+-            <details>
+-              <summary>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+-                  />
+-                </svg>
+-                View project details
+-              </summary>
+-              <pre>nx show project myapp --web</pre>
+-            </details>
+-            <details>
+-              <summary>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+-                  />
+-                </svg>
+-                View interactive project graph
+-              </summary>
+-              <pre>nx graph</pre>
+-            </details>
+-            <details>
+-              <summary>
+-                <svg
+-                  fill="none"
+-                  stroke="currentColor"
+-                  viewBox="0 0 24 24"
+-                  xmlns="http://www.w3.org/2000/svg"
+-                >
+-                  <path
+-                    strokeLinecap="round"
+-                    strokeLinejoin="round"
+-                    strokeWidth="2"
+-                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+-                  />
+-                </svg>
+-                Run affected commands
+-              </summary>
+-              <pre>
+-                <span># see what&apos;s been affected by changes</span>
+-                nx affected:graph
+-                <span># run tests for current changes</span>
+-                nx affected:test
+-                <span># run e2e tests for current changes</span>
+-                nx affected:e2e
+-              </pre>
+-            </details>
+-          </div>
+-
+-          <p id="love">
+-            Carefully crafted with
+-            <svg
+-              fill="currentColor"
+-              stroke="none"
+-              viewBox="0 0 24 24"
+-              xmlns="http://www.w3.org/2000/svg"
+-            >
+-              <path
+-                strokeLinecap="round"
+-                strokeLinejoin="round"
+-                strokeWidth="2"
+-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+-              />
+-            </svg>
+-          </p>
+-        </div>
+-      </div>
+-    </div>
+-  );
+-}
+-"
+-`;
+diff --git a/packages/next/src/generators/application/application.ts b/packages/next/src/generators/application/application.ts
+index c500882aa0..a32ed96715 100644
+--- a/packages/next/src/generators/application/application.ts
++++ b/packages/next/src/generators/application/application.ts
+@@ -8,7 +8,6 @@ import {
+   Tree,
+ } from '@nx/devkit';
+ import { initGenerator as jsInitGenerator } from '@nx/js';
+-import { setupTailwindGenerator } from '../setup-tailwind/setup-tailwind';
+ import {
+   testingLibraryDomVersion,
+   testingLibraryReactVersion,
+@@ -94,14 +93,6 @@ export async function applicationGeneratorInternal(host: Tree, schema: Schema) {
+   const jestTask = await addJest(host, options);
+   tasks.push(jestTask);
+ 
+-  if (options.style === 'tailwind') {
+-    const tailwindTask = await setupTailwindGenerator(host, {
+-      project: options.projectName,
+-    });
+-
+-    tasks.push(tailwindTask);
+-  }
+-
+   // LESS is not currrently supported with Turbopack
+   // Turbopack is default in Next 16, set to webpack
+   if (options.style === 'less' && (await isNext16(host))) {
+diff --git a/packages/next/src/generators/application/files/app/page.tsx__tmpl__ b/packages/next/src/generators/application/files/app/page.tsx__tmpl__
+index 6b60f5d843..dc7c164881 100644
+--- a/packages/next/src/generators/application/files/app/page.tsx__tmpl__
++++ b/packages/next/src/generators/application/files/app/page.tsx__tmpl__
+@@ -5,7 +5,7 @@
+   <%_ if (styledModule && styledModule !== 'styled-jsx') { var wrapper = 'StyledPage'; _%>
+ import styled from '<%= styledModule %>';
+ <%_ } else { var wrapper = 'div'; _%>
+-<%- (style !== 'styled-jsx' && style !== 'tailwind') ? `import styles from './page.module.${style}';` : '' %>
++<%- style !== 'styled-jsx' ? `import styles from './page.module.${style}';` : '' %>
+   <%_ } _%>
+ 
+   <%_ if (styledModule && styledModule !== 'styled-jsx') { _%>
+@@ -19,7 +19,7 @@ export default function Index() {
+    * Note: The corresponding styles are in the ./<%= fileName %>.<%= style %> file.
+    */
+   return (
+-    <<%= wrapper %><% if (!styledModule && style !== 'tailwind') {%> className={styles.page}<% } %>>
++    <<%= wrapper %><% if (!styledModule) {%> className={styles.page}<% } %>>
+       <%- styledModule === 'styled-jsx' && style !== 'none' ? `<style jsx>{\`${pageStyleContent}\`}</style>` : `` %>
+       <%- appContent %>
+     </<%= wrapper %>>
+diff --git a/packages/next/src/generators/application/files/pages/__fileName__.tsx__tmpl__ b/packages/next/src/generators/application/files/pages/__fileName__.tsx__tmpl__
+index fa71d0902a..28801e360e 100644
+--- a/packages/next/src/generators/application/files/pages/__fileName__.tsx__tmpl__
++++ b/packages/next/src/generators/application/files/pages/__fileName__.tsx__tmpl__
+@@ -2,7 +2,7 @@
+   <%_ if (styledModule && styledModule !== 'styled-jsx') { var wrapper = 'StyledPage'; _%>
+ import styled from '<%= styledModule %>';
+   <% } else { var wrapper = 'div';%>
+-<%- (style !== 'styled-jsx' && style !== 'tailwind') ? `import styles from './${fileName}.module.${style}';` : '' %>
++<%- style !== 'styled-jsx' ? `import styles from './${fileName}.module.${style}';` : '' %>
+   <%_ } _%>
+ 
+   <%_ if (styledModule && styledModule !== 'styled-jsx') { _%>
+@@ -17,7 +17,7 @@ export function Index() {
+    * Note: The corresponding styles are in the ./<%= fileName %>.<%= style %> file.
+    */
+   return (
+-    <<%= wrapper %><% if (!styledModule && style !== 'tailwind') {%> className={styles.page}<% } %>>
++    <<%= wrapper %><% if (!styledModule) {%> className={styles.page}<% } %>>
+       <%- styledModule === 'styled-jsx' && style !== 'none' ? `<style jsx>{\`${pageStyleContent}\`}</style>` : `` %>
+       <%- appContent %>
+     </<%= wrapper %>>
+diff --git a/packages/next/src/generators/application/lib/create-application-files.ts b/packages/next/src/generators/application/lib/create-application-files.ts
+index 881685ffc7..c1c9a2aa06 100644
+--- a/packages/next/src/generators/application/lib/create-application-files.ts
++++ b/packages/next/src/generators/application/lib/create-application-files.ts
+@@ -172,7 +172,7 @@ export async function createApplicationFiles(
+     host.delete(`${options.appProjectRoot}/.babelrc`);
+   }
+ 
+-  if (options.styledModule || options.style === 'tailwind') {
++  if (options.styledModule) {
+     if (options.appDir) {
+       host.delete(`${generatedAppFilePath}/app/page.module.${options.style}`);
+     } else {
+diff --git a/packages/next/src/generators/application/lib/normalize-options.ts b/packages/next/src/generators/application/lib/normalize-options.ts
+index ea743873c6..493a756881 100644
+--- a/packages/next/src/generators/application/lib/normalize-options.ts
++++ b/packages/next/src/generators/application/lib/normalize-options.ts
+@@ -71,7 +71,7 @@ export async function normalizeOptions(
+   const appDir = options.appDir ?? true;
+   const src = options.src ?? true;
+ 
+-  const styledModule = /^(css|scss|less|tailwind)$/.test(options.style)
++  const styledModule = /^(css|scss|less)$/.test(options.style)
+     ? null
+     : options.style;
+ 
+diff --git a/packages/next/src/generators/application/schema.json b/packages/next/src/generators/application/schema.json
+index c32cc2dc05..b24a2ea05f 100644
+--- a/packages/next/src/generators/application/schema.json
++++ b/packages/next/src/generators/application/schema.json
+@@ -43,10 +43,6 @@
+             "value": "less",
+             "label": "LESS              [ https://lesscss.org            ]"
+           },
+-          {
+-            "value": "tailwind",
+-            "label": "tailwind          [ https://tailwindcss.com/       ]"
+-          },
+           {
+             "value": "styled-components",
+             "label": "styled-components [ https://styled-components.com ]"
+diff --git a/packages/next/src/generators/component/schema.json b/packages/next/src/generators/component/schema.json
+index f4123eea0b..c35a59782b 100644
+--- a/packages/next/src/generators/component/schema.json
++++ b/packages/next/src/generators/component/schema.json
+@@ -41,10 +41,6 @@
+             "value": "less",
+             "label": "LESS              [ https://lesscss.org            ]"
+           },
+-          {
+-            "value": "tailwind",
+-            "label": "tailwind          [ https://tailwindcss.com/       ]"
+-          },
+           {
+             "value": "styled-components",
+             "label": "styled-components [ https://styled-components.com ]"
+diff --git a/packages/next/src/generators/library/schema.json b/packages/next/src/generators/library/schema.json
+index 036be504d5..43ac4bf16d 100644
+--- a/packages/next/src/generators/library/schema.json
++++ b/packages/next/src/generators/library/schema.json
+@@ -43,10 +43,6 @@
+             "value": "less",
+             "label": "LESS              [ https://lesscss.org            ]"
+           },
+-          {
+-            "value": "tailwind",
+-            "label": "tailwind          [ https://tailwindcss.com/       ]"
+-          },
+           {
+             "value": "styled-components",
+             "label": "styled-components [ https://styled-components.com ]"
+diff --git a/packages/next/src/generators/setup-tailwind/files/postcss.config.js__tmpl__ b/packages/next/src/generators/setup-tailwind/files/postcss.config.js__tmpl__
+deleted file mode 100644
+index 5a8ffc4899..0000000000
+--- a/packages/next/src/generators/setup-tailwind/files/postcss.config.js__tmpl__
++++ /dev/null
+@@ -1,15 +0,0 @@
+-const { join } = require('path');
+-
+-// Note: If you use library-specific PostCSS/Tailwind configuration then you should remove the `postcssConfig` build
+-// option from your application's configuration (i.e. project.json).
+-//
+-// See: https://nx.dev/guides/using-tailwind-css-in-react#step-4:-applying-configuration-to-libraries
+-
+-module.exports = {
+-  plugins: {
+-    tailwindcss: {
+-      config: join(__dirname, 'tailwind.config.js'),
+-    },
+-    autoprefixer: {},
+-  },
+-}
+diff --git a/packages/next/src/generators/setup-tailwind/files/tailwind.config.js__tmpl__ b/packages/next/src/generators/setup-tailwind/files/tailwind.config.js__tmpl__
+deleted file mode 100644
+index 690dca5cfc..0000000000
+--- a/packages/next/src/generators/setup-tailwind/files/tailwind.config.js__tmpl__
++++ /dev/null
+@@ -1,23 +0,0 @@
+-// const { createGlobPatternsForDependencies } = require('@nx/next/tailwind');
+-
+-// The above utility import will not work if you are using Next.js' --turbo.
+-// Instead you will have to manually add the dependent paths to be included.
+-// For example
+-// ../libs/buttons/**/*.{ts,tsx,js,jsx,html}',                 <--- Adding a shared lib
+-// !../libs/buttons/**/*.{stories,spec}.{ts,tsx,js,jsx,html}', <--- Skip adding spec/stories files from shared lib
+-
+-// If you are **not** using `--turbo` you can uncomment both lines 1 & 19.
+-// A discussion of the issue can be found: https://github.com/nrwl/nx/issues/26510
+-
+-/** @type {import('tailwindcss').Config} */
+-module.exports = {
+-  content: [
+-    './{src,pages,components,app}/**/*.{ts,tsx,js,jsx,html}',
+-    '!./{src,pages,components,app}/**/*.{stories,spec}.{ts,tsx,js,jsx,html}',
+-//     ...createGlobPatternsForDependencies(__dirname)
+-  ],
+-  theme: {
+-    extend: {},
+-  },
+-  plugins: [],
+-};
+diff --git a/packages/next/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts b/packages/next/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts
+deleted file mode 100644
+index 1c794e7fa4..0000000000
+--- a/packages/next/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts
++++ /dev/null
+@@ -1,50 +0,0 @@
+-import {
+-  joinPathFragments,
+-  logger,
+-  ProjectConfiguration,
+-  stripIndents,
+-  Tree,
+-} from '@nx/devkit';
+-
+-import { SetupTailwindOptions } from '../schema';
+-
+-// base directories and file types to simplify locating the stylesheet
+-const baseDirs = ['src', 'pages', 'src/pages', 'src/app', 'app'];
+-const fileNames = ['styles', 'global'];
+-const extensions = ['.css', '.scss', '.less'];
+-
+-const knownLocations = baseDirs.flatMap((dir) =>
+-  fileNames.flatMap((name) => extensions.map((ext) => `${dir}/${name}${ext}`))
+-);
+-
+-export function addTailwindStyleImports(
+-  tree: Tree,
+-  project: ProjectConfiguration,
+-  _options: SetupTailwindOptions
+-) {
+-  const candidates = knownLocations.map((currentPath) =>
+-    joinPathFragments(project.root, currentPath)
+-  );
+-  const stylesPath = candidates.find((currentStylePath) =>
+-    tree.exists(currentStylePath)
+-  );
+-
+-  if (stylesPath) {
+-    const content = tree.read(stylesPath).toString();
+-    tree.write(
+-      stylesPath,
+-      `@tailwind base;\n@tailwind components;\n@tailwind utilities;\n${content}`
+-    );
+-  } else {
+-    logger.warn(
+-      stripIndents`
+-        Could not find stylesheet to update. Add the following imports to your stylesheet (e.g. styles.css):
+-        
+-          @tailwind base;
+-          @tailwind components;
+-          @tailwind utilities;
+-          
+-        See our guide for more details: https://nx.dev/guides/using-tailwind-css-in-react`
+-    );
+-  }
+-}
+diff --git a/packages/next/src/generators/setup-tailwind/lib/update-project.ts b/packages/next/src/generators/setup-tailwind/lib/update-project.ts
+deleted file mode 100644
+index 2758bd5b67..0000000000
+--- a/packages/next/src/generators/setup-tailwind/lib/update-project.ts
++++ /dev/null
+@@ -1,19 +0,0 @@
+-import type { ProjectConfiguration, Tree } from '@nx/devkit';
+-import { joinPathFragments, updateProjectConfiguration } from '@nx/devkit';
+-
+-import { SetupTailwindOptions } from '../schema';
+-
+-export function updateProject(
+-  tree: Tree,
+-  config: ProjectConfiguration,
+-  options: SetupTailwindOptions
+-) {
+-  if (config?.targets?.build?.executor === '@nx/webpack:webpack') {
+-    config.targets.build.options ??= {};
+-    config.targets.build.options.postcssConfig = joinPathFragments(
+-      config.root,
+-      'postcss.config.js'
+-    );
+-    updateProjectConfiguration(tree, options.project, config);
+-  }
+-}
+diff --git a/packages/next/src/generators/setup-tailwind/schema.json b/packages/next/src/generators/setup-tailwind/schema.json
+deleted file mode 100644
+index 3055e7d80c..0000000000
+--- a/packages/next/src/generators/setup-tailwind/schema.json
++++ /dev/null
+@@ -1,47 +0,0 @@
+-{
+-  "$schema": "https://json-schema.org/schema",
+-  "cli": "nx",
+-  "$id": "NxNextTailwindSetupGenerator",
+-  "title": "Configures Tailwind CSS for an application or a buildable/publishable library.",
+-  "description": "Adds the Tailwind CSS configuration files for a Next.js project and installs, if needed, the packages required for Tailwind CSS to work.",
+-  "type": "object",
+-  "examples": [
+-    {
+-      "command": "nx g setup-tailwind --project=my-app",
+-      "description": "Initialize Tailwind configuration for the `my-app` project."
+-    }
+-  ],
+-  "properties": {
+-    "project": {
+-      "type": "string",
+-      "description": "The name of the project to add the Tailwind CSS setup for.",
+-      "alias": "p",
+-      "$default": {
+-        "$source": "argv",
+-        "index": 0
+-      },
+-      "x-dropdown": "projects",
+-      "x-prompt": "What project would you like to add the Tailwind CSS setup?",
+-      "x-priority": "important"
+-    },
+-    "buildTarget": {
+-      "type": "string",
+-      "description": "The name of the target used to build the project. This option is not needed in most cases.",
+-      "default": "build",
+-      "x-priority": "important"
+-    },
+-    "skipFormat": {
+-      "type": "boolean",
+-      "description": "Skips formatting the workspace after the generator completes.",
+-      "x-priority": "internal"
+-    },
+-    "skipPackageJson": {
+-      "type": "boolean",
+-      "default": false,
+-      "description": "Do not add dependencies to `package.json`.",
+-      "x-priority": "internal"
+-    }
+-  },
+-  "additionalProperties": false,
+-  "required": ["project"]
+-}
+diff --git a/packages/next/src/generators/setup-tailwind/schema.ts b/packages/next/src/generators/setup-tailwind/schema.ts
+deleted file mode 100644
+index 58452c9634..0000000000
+--- a/packages/next/src/generators/setup-tailwind/schema.ts
++++ /dev/null
+@@ -1,6 +0,0 @@
+-export interface SetupTailwindOptions {
+-  project: string;
+-  buildTarget?: string;
+-  skipFormat?: boolean;
+-  skipPackageJson?: boolean;
+-}
+diff --git a/packages/next/src/generators/setup-tailwind/setup-tailwind.ts b/packages/next/src/generators/setup-tailwind/setup-tailwind.ts
+deleted file mode 100644
+index 20f58a9147..0000000000
+--- a/packages/next/src/generators/setup-tailwind/setup-tailwind.ts
++++ /dev/null
+@@ -1,72 +0,0 @@
+-import type { GeneratorCallback, Tree } from '@nx/devkit';
+-import {
+-  addDependenciesToPackageJson,
+-  formatFiles,
+-  generateFiles,
+-  joinPathFragments,
+-  logger,
+-  readProjectConfiguration,
+-  runTasksInSerial,
+-} from '@nx/devkit';
+-
+-import {
+-  autoprefixerVersion,
+-  postcssVersion,
+-  tailwindcssVersion,
+-} from '@nx/react/src/utils/versions';
+-import type { SetupTailwindOptions } from './schema';
+-import { addTailwindStyleImports } from './lib/add-tailwind-style-imports';
+-import { updateProject } from './lib/update-project';
+-import { join } from 'path';
+-
+-export async function setupTailwindGenerator(
+-  tree: Tree,
+-  options: SetupTailwindOptions
+-) {
+-  logger.warn(
+-    `The 'setup-tailwind' generator is deprecated. Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23.`
+-  );
+-
+-  const tasks: GeneratorCallback[] = [];
+-  const project = readProjectConfiguration(tree, options.project);
+-
+-  if (
+-    tree.exists(joinPathFragments(project.root, 'postcss.config.js')) ||
+-    tree.exists(joinPathFragments(project.root, 'tailwind.config.js'))
+-  ) {
+-    logger.info(
+-      `Skipping setup since there are existing PostCSS or Tailwind configuration files. For manual setup instructions, see https://nx.dev/guides/using-tailwind-css-in-react.`
+-    );
+-    return;
+-  }
+-
+-  generateFiles(tree, join(__dirname, './files'), project.root, {
+-    tmpl: '',
+-  });
+-
+-  addTailwindStyleImports(tree, project, options);
+-
+-  updateProject(tree, project, options);
+-
+-  if (!options.skipPackageJson) {
+-    tasks.push(
+-      addDependenciesToPackageJson(
+-        tree,
+-        {},
+-        {
+-          autoprefixer: autoprefixerVersion,
+-          postcss: postcssVersion,
+-          tailwindcss: tailwindcssVersion,
+-        }
+-      )
+-    );
+-  }
+-
+-  if (!options.skipFormat) {
+-    await formatFiles(tree);
+-  }
+-
+-  return runTasksInSerial(...tasks);
+-}
+-
+-export default setupTailwindGenerator;
+diff --git a/packages/next/src/utils/generate-globs.ts b/packages/next/src/utils/generate-globs.ts
+deleted file mode 100644
+index 4aa831ae85..0000000000
+--- a/packages/next/src/utils/generate-globs.ts
++++ /dev/null
+@@ -1,38 +0,0 @@
+-import { joinPathFragments, logger } from '@nx/devkit';
+-import { workspaceRoot } from '@nx/devkit';
+-import { getSourceDirOfDependentProjects } from 'nx/src/utils/project-graph-utils';
+-import { resolve } from 'path';
+-
+-/**
+- * Use createGlobPatterns instead
+- * @deprecated Use createGlobPatternsForDependencies instead
+- */
+-export function createGlobPatternsOfDependentProjects(
+-  projectName: string,
+-  fileGlobPattern: string = '/**/!(*.stories|*.spec).tsx'
+-): string[] {
+-  logger.warn(
+-    `createGlobPatternsOfDependentProjects is deprecated. Use "createGlobPatternsForDependencies(__dirname)" from "@nx/next/tailwind" instead`
+-  );
+-
+-  try {
+-    const [projectDirs, warnings] =
+-      getSourceDirOfDependentProjects(projectName);
+-
+-    if (warnings.length > 0) {
+-      logger.warn(`
+-[createGlobPatternsForDependencies] Failed to generate glob pattern for the following:
+-${warnings.join('\n- ')}\n
+-due to missing "sourceRoot" in the dependencies' project configuration
+-      `);
+-    }
+-
+-    return projectDirs.map((sourceDir) =>
+-      resolve(workspaceRoot, joinPathFragments(sourceDir, fileGlobPattern))
+-    );
+-  } catch (e) {
+-    throw new Error(
+-      `createGlobPatternsOfDependentProjects: Error when generating globs: ${e?.message}`
+-    );
+-  }
+-}
+diff --git a/packages/next/tailwind.ts b/packages/next/tailwind.ts
+index 6bbc7f4846..93bfb50930 100644
+--- a/packages/next/tailwind.ts
++++ b/packages/next/tailwind.ts
+@@ -1,22 +1,26 @@
+ import { createGlobPatternsForDependencies as jsGenerateGlobs } from '@nx/js/src/utils/generate-globs';
+ import { relative } from 'path';
+ 
++let hasWarned = false;
++
+ /**
+- * Generates a set of glob patterns based off the source root of the app and its dependencies
+- * @param dirPath workspace relative directory path that will be used to infer the parent project and dependencies
+- * @param fileGlobPatternToInclude pass a custom glob pattern to be used
+- * @param fileGlobPatternToExclude pass a custom glob pattern for files to be excluded
++ * @deprecated `@nx/next/tailwind` will be removed in Nx 24. Migrate to Tailwind CSS v4 which no longer needs glob patterns.
++ * See: https://nx.dev/docs/technologies/react/guides/using-tailwind-css-in-react
+  */
+ export function createGlobPatternsForDependencies(
+   dirPath: string,
+   fileGlobPatternToInclude: string = '/**/*.{tsx,ts,jsx,js,html}',
+   fileGlobPatternToExclude: string = '/**/*.{stories,spec}.{tsx,ts,jsx,js,html}'
+ ) {
+-  /**
+-   * There is an issue with TailwindCSS v4 and how globs patterns are consumed.
+-   * This is a temporary workaround to support both TailwindCSS v4 and v3.
+-   * Once TailwindCSS v3 is no longer supported, this workaround can be removed.
+-   */
++  if (!hasWarned) {
++    hasWarned = true;
++    console.warn(
++      `\nWARNING: "@nx/next/tailwind" is deprecated and will be removed in Nx 24.\n` +
++        `Migrate to Tailwind CSS v4 which no longer needs glob patterns for content detection.\n` +
++        `See: https://nx.dev/docs/technologies/react/guides/using-tailwind-css-in-react\n`
++    );
++  }
++
+   const tailwindVersion = require(
+     require.resolve('tailwindcss/package.json', {
+       paths: [dirPath],
+@@ -36,16 +40,40 @@ export function createGlobPatternsForDependencies(
+           ),
+         ];
+       } catch (e) {
++        /**
++         * It should not be possible to reach this point when the utility is invoked as part of the normal
++         * lifecycle of Nx executors. However, other tooling, such as the VSCode Tailwind IntelliSense plugin
++         * or JetBrains editors such as WebStorm, may execute the tailwind.config.js file in order to provide
++         * autocomplete features, for example.
++         *
++         * In order to best support that use-case, we therefore do not hard error when the ProjectGraph is
++         * fundamentally unavailable in this tailwind-specific context.
++         */
+         console.warn(
+           '\nWARNING: There was an error creating glob patterns, returning an empty array\n' +
+             `${e.message}\n`
+         );
++        return [];
+       }
+     } else {
+-      const {
+-        createGlobPatternsForDependencies: reactGlobPatternFunction,
+-      } = require('@nx/react/tailwind');
+-      return reactGlobPatternFunction(dirPath, fileGlobPatternToInclude);
++      try {
++        return jsGenerateGlobs(dirPath, fileGlobPatternToInclude);
++      } catch (e) {
++        /**
++         * It should not be possible to reach this point when the utility is invoked as part of the normal
++         * lifecycle of Nx executors. However, other tooling, such as the VSCode Tailwind IntelliSense plugin
++         * or JetBrains editors such as WebStorm, may execute the tailwind.config.js file in order to provide
++         * autocomplete features, for example.
++         *
++         * In order to best support that use-case, we therefore do not hard error when the ProjectGraph is
++         * fundamentally unavailable in this tailwind-specific context.
++         */
++        console.warn(
++          '\nWARNING: There was an error creating glob patterns, returning an empty array\n' +
++            `${e.message}\n`
++        );
++        return [];
++      }
+     }
+   }
+   return [];
+diff --git a/packages/react/generators.json b/packages/react/generators.json
+index 6f142e04ca..fae3341b1d 100644
+--- a/packages/react/generators.json
++++ b/packages/react/generators.json
+@@ -86,13 +86,6 @@
+       "description": "Generate a Cypress component test for a React component",
+       "hidden": false
+     },
+-    "setup-tailwind": {
+-      "factory": "./src/generators/setup-tailwind/setup-tailwind#setupTailwindGenerator",
+-      "schema": "./src/generators/setup-tailwind/schema.json",
+-      "description": "Set up Tailwind configuration for a project.",
+-      "hidden": false,
+-      "x-deprecated": "Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23."
+-    },
+     "setup-ssr": {
+       "factory": "./src/generators/setup-ssr/setup-ssr#setupSsrGenerator",
+       "schema": "./src/generators/setup-ssr/schema.json",
+diff --git a/packages/react/index.ts b/packages/react/index.ts
+index f5e7392097..ddf4b1b924 100644
+--- a/packages/react/index.ts
++++ b/packages/react/index.ts
+@@ -23,6 +23,5 @@ export { hostGenerator } from './src/generators/host/host';
+ export { remoteGenerator } from './src/generators/remote/remote';
+ export { cypressComponentConfigGenerator } from './src/generators/cypress-component-configuration/cypress-component-configuration';
+ export { componentTestGenerator } from './src/generators/component-test/component-test';
+-export { setupTailwindGenerator } from './src/generators/setup-tailwind/setup-tailwind';
+ export type { SupportedStyles } from './typings/style';
+ export * from './plugins/with-react';
+diff --git a/packages/react/package.json b/packages/react/package.json
+index 9892d9b8cb..52a7769431 100644
+--- a/packages/react/package.json
++++ b/packages/react/package.json
+@@ -84,11 +84,7 @@
+       "require": "./babel.js",
+       "types": "./babel.d.ts"
+     },
+-    "./tailwind": {
+-      "import": "./tailwind.js",
+-      "require": "./tailwind.js",
+-      "types": "./tailwind.d.ts"
+-    },
++    "./tailwind": "./tailwind.js",
+     "./module-federation": {
+       "import": "./module-federation.js",
+       "require": "./module-federation.js",
+diff --git a/packages/react/src/generators/application/__snapshots__/application.legacy.spec.ts.snap b/packages/react/src/generators/application/__snapshots__/application.legacy.spec.ts.snap
+index 7420ed6e5c..a0975b869f 100644
+--- a/packages/react/src/generators/application/__snapshots__/application.legacy.spec.ts.snap
++++ b/packages/react/src/generators/application/__snapshots__/application.legacy.spec.ts.snap
+@@ -1,20 +1,5 @@
+ // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+ 
+-exports[`react app generator (legacy) --style tailwind should not generate any styles files 1`] = `
+-"import NxWelcome from './nx-welcome';
+-
+-export function App() {
+-  return (
+-    <div>
+-      <NxWelcome title="my-app" />
+-    </div>
+-  );
+-}
+-
+-export default App;
+-"
+-`;
+-
+ exports[`react app generator (legacy) should setup vite 1`] = `
+ "/// <reference types='vitest' />
+ import { defineConfig } from 'vite';
+diff --git a/packages/react/src/generators/application/__snapshots__/application.spec.ts.snap b/packages/react/src/generators/application/__snapshots__/application.spec.ts.snap
+index 129c2b29ed..231277db36 100644
+--- a/packages/react/src/generators/application/__snapshots__/application.spec.ts.snap
++++ b/packages/react/src/generators/application/__snapshots__/application.spec.ts.snap
+@@ -400,21 +400,6 @@ export default App;
+ "
+ `;
+ 
+-exports[`app --style tailwind should not generate any styles files 1`] = `
+-"import NxWelcome from './nx-welcome';
+-
+-export function App() {
+-  return (
+-    <div>
+-      <NxWelcome title="my-app" />
+-    </div>
+-  );
+-}
+-
+-export default App;
+-"
+-`;
+-
+ exports[`app not nested should add vite types to tsconfigs 1`] = `
+ "/// <reference types='vitest' />
+ import { defineConfig } from 'vite';
+diff --git a/packages/react/src/generators/application/application.ts b/packages/react/src/generators/application/application.ts
+index bf8087d4b2..86324e88ae 100644
+--- a/packages/react/src/generators/application/application.ts
++++ b/packages/react/src/generators/application/application.ts
+@@ -17,7 +17,6 @@ import {
+ } from '@nx/js/src/utils/typescript/ts-solution-setup';
+ import { extractTsConfigBase } from '../../utils/create-ts-config';
+ import { addStyledModuleDependencies } from '../../rules/add-styled-dependencies';
+-import { setupTailwindGenerator } from '../setup-tailwind/setup-tailwind';
+ import reactInitGenerator from '../init/init';
+ import { createApplicationFiles } from './lib/create-application-files';
+ import { updateSpecConfig } from './lib/update-jest-config';
+@@ -154,13 +153,6 @@ export async function applicationGeneratorInternal(
+     await addProjectToTsSolutionWorkspace(tree, options.appProjectRoot);
+   }
+ 
+-  if (options.style === 'tailwind') {
+-    const twTask = await setupTailwindGenerator(tree, {
+-      project: options.projectName,
+-    });
+-    tasks.push(twTask);
+-  }
+-
+   const lintTask = await addLinting(tree, options);
+   tasks.push(lintTask);
+ 
+diff --git a/packages/react/src/generators/application/files/base-vite/index.html__tmpl__ b/packages/react/src/generators/application/files/base-vite/index.html__tmpl__
+index 5e62456103..b0636812be 100644
+--- a/packages/react/src/generators/application/files/base-vite/index.html__tmpl__
++++ b/packages/react/src/generators/application/files/base-vite/index.html__tmpl__
+@@ -7,7 +7,7 @@
+ 
+     <meta name="viewport" content="width=device-width, initial-scale=1" />
+     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+-    <% if (!styledModule && style !== 'none') { %><link rel="stylesheet" href="/src/styles.<%= style === 'tailwind' ? 'css' : style %>" /><% } %>
++    <% if (!styledModule && style !== 'none') { %><link rel="stylesheet" href="/src/styles.<%= style %>" /><% } %>
+   </head>
+   <body>
+     <div id="root"></div>
+diff --git a/packages/react/src/generators/application/files/style-tailwind/src/app/__fileName__.tsx__tmpl__ b/packages/react/src/generators/application/files/style-tailwind/src/app/__fileName__.tsx__tmpl__
+deleted file mode 100644
+index 998633e963..0000000000
+--- a/packages/react/src/generators/application/files/style-tailwind/src/app/__fileName__.tsx__tmpl__
++++ /dev/null
+@@ -1,45 +0,0 @@
+-<%_ if (classComponent) { _%>
+-import { Component } from 'react';
+-<%_ } if (!minimal) { _%>
+-import NxWelcome from "./nx-welcome";
+-<%_ } if (bundler === "rspack" || bundler === 'rsbuild') { _%>
+-import '../styles.css';
+-<%_ } _%>
+-
+-<%_ if (classComponent) { _%>
+-export class App extends Component {
+-  override render() {
+-    return (
+-      <div>
+-        <%_ if (!minimal) { _%>
+-        <NxWelcome title="<%= projectName %>"/>
+-        <%_ } else { _%>
+-        <h1>
+-          <span> Hello there, </span>
+-          Welcome <%= projectName %> 👋
+-        </h1>
+-        <%_ } _%>
+-      </div>
+-    );
+-  }
+-}
+-<%_ } else { _%>
+-export function App() {
+-  return (
+-    <div>
+-      <%_ if (!minimal) { _%>
+-      <NxWelcome title="<%= projectName %>"/>
+-      <%_ } else { _%>
+-      <h1>
+-        <span> Hello there, </span>
+-        Welcome <%= projectName %> 👋
+-      </h1>
+-      <%_ } _%>
+-    </div>
+-  );
+-}
+-<%_ } _%>
+-
+-export default App;
+-
+-<% if (inSourceTests === true) { %> <%- inSourceVitestTests %> <% } %>
+diff --git a/packages/react/src/generators/application/files/style-tailwind/src/styles.css b/packages/react/src/generators/application/files/style-tailwind/src/styles.css
+deleted file mode 100644
+index 90d4ee0072..0000000000
+--- a/packages/react/src/generators/application/files/style-tailwind/src/styles.css
++++ /dev/null
+@@ -1 +0,0 @@
+-/* You can add global styles to this file, and also import other style files */
+diff --git a/packages/react/src/generators/application/lib/add-project.ts b/packages/react/src/generators/application/lib/add-project.ts
+index 7ff2dbf058..5dac9b00bd 100644
+--- a/packages/react/src/generators/application/lib/add-project.ts
++++ b/packages/react/src/generators/application/lib/add-project.ts
+@@ -127,9 +127,7 @@ function createRspackBuildTarget(
+           : [
+               joinPathFragments(
+                 options.appProjectRoot,
+-                `src/styles.${
+-                  options.style === 'tailwind' ? 'css' : options.style
+-                }`
++                `src/styles.${options.style}`
+               ),
+             ],
+       scripts: [],
+@@ -205,9 +203,7 @@ function createBuildTarget(options: NormalizedSchema): TargetConfiguration {
+           : [
+               joinPathFragments(
+                 options.appProjectRoot,
+-                `src/styles.${
+-                  options.style === 'tailwind' ? 'css' : options.style
+-                }`
++                `src/styles.${options.style}`
+               ),
+             ],
+       scripts: [],
+diff --git a/packages/react/src/generators/application/lib/create-application-files.ts b/packages/react/src/generators/application/lib/create-application-files.ts
+index 1822c12ea9..a55e028f9b 100644
+--- a/packages/react/src/generators/application/lib/create-application-files.ts
++++ b/packages/react/src/generators/application/lib/create-application-files.ts
+@@ -54,7 +54,7 @@ export function getDefaultTemplateVariables(
+     offsetFromRoot: offsetFromRoot(options.appProjectRoot),
+     appTests,
+     inSourceVitestTests: getInSourceVitestTestsTemplate(appTests),
+-    style: options.style === 'tailwind' ? 'css' : options.style,
++    style: options.style,
+     hasStyleFile,
+     isUsingTsSolutionSetup: isUsingTsSolutionSetup(host),
+     port: options.port ?? 4200,
+@@ -91,11 +91,7 @@ export function createNxRspackPluginOptions(
+     styles:
+       options.styledModule || !options.hasStyles
+         ? []
+-        : [
+-            `./src/styles.${
+-              options.style !== 'tailwind' ? options.style : 'css'
+-            }`,
+-          ],
++        : [`./src/styles.${options.style}`],
+   };
+ }
+ 
+@@ -108,8 +104,6 @@ export async function createApplicationFiles(
+     styleSolutionSpecificAppFiles = '../files/style-styled-module';
+   } else if (options.style === 'styled-jsx') {
+     styleSolutionSpecificAppFiles = '../files/style-styled-jsx';
+-  } else if (options.style === 'tailwind') {
+-    styleSolutionSpecificAppFiles = '../files/style-tailwind';
+   } else if (options.style === 'none') {
+     styleSolutionSpecificAppFiles = '../files/style-none';
+   } else if (options.globalCss) {
+@@ -317,11 +311,7 @@ function createNxWebpackPluginOptions(
+     styles:
+       options.styledModule || !options.hasStyles
+         ? []
+-        : [
+-            `./src/styles.${
+-              options.style !== 'tailwind' ? options.style : 'css'
+-            }`,
+-          ],
++        : [`./src/styles.${options.style}`],
+   };
+ }
+ 
+diff --git a/packages/react/src/generators/application/lib/normalize-options.ts b/packages/react/src/generators/application/lib/normalize-options.ts
+index cc965b6c53..686f4bd060 100644
+--- a/packages/react/src/generators/application/lib/normalize-options.ts
++++ b/packages/react/src/generators/application/lib/normalize-options.ts
+@@ -50,7 +50,7 @@ export async function normalizeOptions<T extends Schema = Schema>(
+ 
+   const fileName = 'app';
+ 
+-  const styledModule = /^(css|scss|less|tailwind|none)$/.test(options.style)
++  const styledModule = /^(css|scss|less|none)$/.test(options.style)
+     ? null
+     : options.style;
+ 
+diff --git a/packages/react/src/generators/application/schema.json b/packages/react/src/generators/application/schema.json
+index c40a8eac80..da0329b8ae 100644
+--- a/packages/react/src/generators/application/schema.json
++++ b/packages/react/src/generators/application/schema.json
+@@ -61,10 +61,6 @@
+             "value": "less",
+             "label": "LESS              [ https://lesscss.org                      ]"
+           },
+-          {
+-            "value": "tailwind",
+-            "label": "tailwind          [ https://tailwindcss.com/                 ]"
+-          },
+           {
+             "value": "styled-components",
+             "label": "styled-components [ https://styled-components.com            ]"
+diff --git a/packages/react/src/generators/component/__snapshots__/component.spec.ts.snap b/packages/react/src/generators/component/__snapshots__/component.spec.ts.snap
+index 5a2a31c559..c00f99f37d 100644
+--- a/packages/react/src/generators/component/__snapshots__/component.spec.ts.snap
++++ b/packages/react/src/generators/component/__snapshots__/component.spec.ts.snap
+@@ -66,16 +66,3 @@ exports[`component --style styled-jsx should use styled-jsx as the styled API li
+ export default Hello;
+ "
+ `;
+-
+-exports[`component --style tailwind should not generate any style in component 1`] = `
+-"export function Hello() {
+-  return (
+-    <div>
+-      <h1>Welcome to Hello!</h1>
+-    </div>
+-  );
+-}
+-
+-export default Hello;
+-"
+-`;
+diff --git a/packages/react/src/generators/component/files/__fileName__.__ext__ b/packages/react/src/generators/component/files/__fileName__.__ext__
+index eb1e72a19d..36e119543f 100644
+--- a/packages/react/src/generators/component/files/__fileName__.__ext__
++++ b/packages/react/src/generators/component/files/__fileName__.__ext__
+@@ -6,23 +6,23 @@ import { Route, Link } from 'react-router-dom';
+ <%_ } _%>
+ 
+ <%_ if (hasStyles) {
+-   if (styledModule && styledModule !== 'styled-jsx' && styledModule !== 'tailwind') {
++   if (styledModule && styledModule !== 'styled-jsx') {
+     var wrapper = 'Styled' + className;
+     var extras = '';
+   _%>
+ import styled from '<%= styledModule %>';
+   <%_ } else {
+     var wrapper = 'div';
+-    var extras = globalCss || styledModule === 'styled-jsx' || styledModule === 'tailwind' ? '' : " className={styles['container']}";
++    var extras = globalCss || styledModule === 'styled-jsx' ? '' : " className={styles['container']}";
+   _%>
+-<%- style !== 'styled-jsx' && style!== 'tailwind' ? globalCss ? `import './${fileName}.${style}';` : `import styles from './${fileName}.module.${style}';`: '' %>
++<%- style !== 'styled-jsx' ? globalCss ? `import './${fileName}.${style}';` : `import styles from './${fileName}.module.${style}';`: '' %>
+   <%_ }
+ } else {
+     var wrapper = 'div';
+     var extras = '';
+ } _%>
+ 
+-<%_ if (styledModule && styledModule !== 'styled-jsx' && styledModule !== 'tailwind') { _%>
++<%_ if (styledModule && styledModule !== 'styled-jsx') { _%>
+ const Styled<%= className %> = styled.div`
+   color: pink;
+ `;
+diff --git a/packages/react/src/generators/component/schema.json b/packages/react/src/generators/component/schema.json
+index 768f0e6933..ae3a6b9c0d 100644
+--- a/packages/react/src/generators/component/schema.json
++++ b/packages/react/src/generators/component/schema.json
+@@ -41,10 +41,6 @@
+             "value": "less",
+             "label": "LESS              [ https://lesscss.org            ]"
+           },
+-          {
+-            "value": "tailwind",
+-            "label": "tailwind          [ https://tailwindcss.com/       ]"
+-          },
+           {
+             "value": "styled-components",
+             "label": "styled-components [ https://styled-components.com ]"
+diff --git a/packages/react/src/generators/host/schema.json b/packages/react/src/generators/host/schema.json
+index fe9b7f1c74..1b32283615 100644
+--- a/packages/react/src/generators/host/schema.json
++++ b/packages/react/src/generators/host/schema.json
+@@ -43,10 +43,6 @@
+             "value": "less",
+             "label": "LESS              [ https://lesscss.org                       ]"
+           },
+-          {
+-            "value": "tailwind",
+-            "label": "tailwind [ https://tailwindcss.com/            ]"
+-          },
+           {
+             "value": "styled-components",
+             "label": "styled-components [ https://styled-components.com            ]"
+diff --git a/packages/react/src/generators/library/__snapshots__/library.spec.ts.snap b/packages/react/src/generators/library/__snapshots__/library.spec.ts.snap
+index f301b2abbf..9be955487b 100644
+--- a/packages/react/src/generators/library/__snapshots__/library.spec.ts.snap
++++ b/packages/react/src/generators/library/__snapshots__/library.spec.ts.snap
+@@ -63,24 +63,6 @@ export default MyLib;
+ 
+ 
+ 
+-"
+-`;
+-
+-exports[`lib --style tailwind should not generate any styles file when style is tailwind 1`] = `
+-"
+-
+-export function MyLib() {
+-  return (
+-    <div>
+-      <h1>Welcome to MyLib!</h1>
+-    </div>
+-  );
+-}
+-
+-export default MyLib;
+-
+-
+-
+ "
+ `;
+ 
+diff --git a/packages/react/src/generators/library/schema.json b/packages/react/src/generators/library/schema.json
+index f9461abf12..80c0c76125 100644
+--- a/packages/react/src/generators/library/schema.json
++++ b/packages/react/src/generators/library/schema.json
+@@ -52,10 +52,6 @@
+             "value": "less",
+             "label": "LESS              [ https://lesscss.org            ]"
+           },
+-          {
+-            "value": "tailwind",
+-            "label": "tailwind          [ https://tailwindcss.com/       ]"
+-          },
+           {
+             "value": "styled-components",
+             "label": "styled-components [ https://styled-components.com ]"
+diff --git a/packages/react/src/generators/remote/schema.json b/packages/react/src/generators/remote/schema.json
+index bc767a1b09..f960b7103c 100644
+--- a/packages/react/src/generators/remote/schema.json
++++ b/packages/react/src/generators/remote/schema.json
+@@ -49,10 +49,6 @@
+             "value": "less",
+             "label": "LESS              [ https://lesscss.org                       ]"
+           },
+-          {
+-            "value": "tailwind",
+-            "label": "tailwind [ https://tailwindcss.com/            ]"
+-          },
+           {
+             "value": "styled-components",
+             "label": "styled-components [ https://styled-components.com            ]"
+diff --git a/packages/react/src/generators/setup-tailwind/files/postcss.config.js__tmpl__ b/packages/react/src/generators/setup-tailwind/files/postcss.config.js__tmpl__
+deleted file mode 100644
+index 5a8ffc4899..0000000000
+--- a/packages/react/src/generators/setup-tailwind/files/postcss.config.js__tmpl__
++++ /dev/null
+@@ -1,15 +0,0 @@
+-const { join } = require('path');
+-
+-// Note: If you use library-specific PostCSS/Tailwind configuration then you should remove the `postcssConfig` build
+-// option from your application's configuration (i.e. project.json).
+-//
+-// See: https://nx.dev/guides/using-tailwind-css-in-react#step-4:-applying-configuration-to-libraries
+-
+-module.exports = {
+-  plugins: {
+-    tailwindcss: {
+-      config: join(__dirname, 'tailwind.config.js'),
+-    },
+-    autoprefixer: {},
+-  },
+-}
+diff --git a/packages/react/src/generators/setup-tailwind/files/tailwind.config.js__tmpl__ b/packages/react/src/generators/setup-tailwind/files/tailwind.config.js__tmpl__
+deleted file mode 100644
+index 1d79f3d701..0000000000
+--- a/packages/react/src/generators/setup-tailwind/files/tailwind.config.js__tmpl__
++++ /dev/null
+@@ -1,17 +0,0 @@
+-const { createGlobPatternsForDependencies } = require('@nx/react/tailwind');
+-const { join } = require('path');
+-
+-/** @type {import('tailwindcss').Config} */
+-module.exports = {
+-  content: [
+-    join(
+-      __dirname,
+-      '{src,pages,components,app}/**/!(*.stories|*.spec).{ts,tsx,html}'
+-    ),
+-    ...createGlobPatternsForDependencies(__dirname),
+-  ],
+-  theme: {
+-    extend: {},
+-  },
+-  plugins: [],
+-};
+diff --git a/packages/react/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts b/packages/react/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts
+deleted file mode 100644
+index 1c794e7fa4..0000000000
+--- a/packages/react/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts
++++ /dev/null
+@@ -1,50 +0,0 @@
+-import {
+-  joinPathFragments,
+-  logger,
+-  ProjectConfiguration,
+-  stripIndents,
+-  Tree,
+-} from '@nx/devkit';
+-
+-import { SetupTailwindOptions } from '../schema';
+-
+-// base directories and file types to simplify locating the stylesheet
+-const baseDirs = ['src', 'pages', 'src/pages', 'src/app', 'app'];
+-const fileNames = ['styles', 'global'];
+-const extensions = ['.css', '.scss', '.less'];
+-
+-const knownLocations = baseDirs.flatMap((dir) =>
+-  fileNames.flatMap((name) => extensions.map((ext) => `${dir}/${name}${ext}`))
+-);
+-
+-export function addTailwindStyleImports(
+-  tree: Tree,
+-  project: ProjectConfiguration,
+-  _options: SetupTailwindOptions
+-) {
+-  const candidates = knownLocations.map((currentPath) =>
+-    joinPathFragments(project.root, currentPath)
+-  );
+-  const stylesPath = candidates.find((currentStylePath) =>
+-    tree.exists(currentStylePath)
+-  );
+-
+-  if (stylesPath) {
+-    const content = tree.read(stylesPath).toString();
+-    tree.write(
+-      stylesPath,
+-      `@tailwind base;\n@tailwind components;\n@tailwind utilities;\n${content}`
+-    );
+-  } else {
+-    logger.warn(
+-      stripIndents`
+-        Could not find stylesheet to update. Add the following imports to your stylesheet (e.g. styles.css):
+-        
+-          @tailwind base;
+-          @tailwind components;
+-          @tailwind utilities;
+-          
+-        See our guide for more details: https://nx.dev/guides/using-tailwind-css-in-react`
+-    );
+-  }
+-}
+diff --git a/packages/react/src/generators/setup-tailwind/lib/update-project.ts b/packages/react/src/generators/setup-tailwind/lib/update-project.ts
+deleted file mode 100644
+index 2758bd5b67..0000000000
+--- a/packages/react/src/generators/setup-tailwind/lib/update-project.ts
++++ /dev/null
+@@ -1,19 +0,0 @@
+-import type { ProjectConfiguration, Tree } from '@nx/devkit';
+-import { joinPathFragments, updateProjectConfiguration } from '@nx/devkit';
+-
+-import { SetupTailwindOptions } from '../schema';
+-
+-export function updateProject(
+-  tree: Tree,
+-  config: ProjectConfiguration,
+-  options: SetupTailwindOptions
+-) {
+-  if (config?.targets?.build?.executor === '@nx/webpack:webpack') {
+-    config.targets.build.options ??= {};
+-    config.targets.build.options.postcssConfig = joinPathFragments(
+-      config.root,
+-      'postcss.config.js'
+-    );
+-    updateProjectConfiguration(tree, options.project, config);
+-  }
+-}
+diff --git a/packages/react/src/generators/setup-tailwind/schema.json b/packages/react/src/generators/setup-tailwind/schema.json
+deleted file mode 100644
+index d863a8e925..0000000000
+--- a/packages/react/src/generators/setup-tailwind/schema.json
++++ /dev/null
+@@ -1,47 +0,0 @@
+-{
+-  "$schema": "https://json-schema.org/schema",
+-  "cli": "nx",
+-  "$id": "NxReactTailwindSetupGenerator",
+-  "title": "Configures Tailwind CSS for an application or a buildable/publishable library.",
+-  "description": "Adds the Tailwind CSS configuration files for a given React project and installs, if needed, the packages required for Tailwind CSS to work.",
+-  "type": "object",
+-  "examples": [
+-    {
+-      "command": "nx g setup-tailwind --project=my-app",
+-      "description": "Initialize Tailwind configuration for the `my-app` project."
+-    }
+-  ],
+-  "properties": {
+-    "project": {
+-      "type": "string",
+-      "description": "The name of the project to add the Tailwind CSS setup for.",
+-      "alias": "p",
+-      "$default": {
+-        "$source": "argv",
+-        "index": 0
+-      },
+-      "x-dropdown": "projects",
+-      "x-prompt": "What project would you like to add the Tailwind CSS setup?",
+-      "x-priority": "important"
+-    },
+-    "buildTarget": {
+-      "type": "string",
+-      "description": "The name of the target used to build the project. This option is not needed in most cases.",
+-      "default": "build",
+-      "x-priority": "important"
+-    },
+-    "skipFormat": {
+-      "type": "boolean",
+-      "description": "Skips formatting the workspace after the generator completes.",
+-      "x-priority": "internal"
+-    },
+-    "skipPackageJson": {
+-      "type": "boolean",
+-      "default": false,
+-      "description": "Do not add dependencies to `package.json`.",
+-      "x-priority": "internal"
+-    }
+-  },
+-  "additionalProperties": false,
+-  "required": ["project"]
+-}
+diff --git a/packages/react/src/generators/setup-tailwind/schema.ts b/packages/react/src/generators/setup-tailwind/schema.ts
+deleted file mode 100644
+index 58452c9634..0000000000
+--- a/packages/react/src/generators/setup-tailwind/schema.ts
++++ /dev/null
+@@ -1,6 +0,0 @@
+-export interface SetupTailwindOptions {
+-  project: string;
+-  buildTarget?: string;
+-  skipFormat?: boolean;
+-  skipPackageJson?: boolean;
+-}
+diff --git a/packages/react/src/generators/setup-tailwind/setup-tailwind.ts b/packages/react/src/generators/setup-tailwind/setup-tailwind.ts
+deleted file mode 100644
+index 1fa7f94bff..0000000000
+--- a/packages/react/src/generators/setup-tailwind/setup-tailwind.ts
++++ /dev/null
+@@ -1,72 +0,0 @@
+-import type { GeneratorCallback, Tree } from '@nx/devkit';
+-import {
+-  addDependenciesToPackageJson,
+-  formatFiles,
+-  generateFiles,
+-  joinPathFragments,
+-  logger,
+-  readProjectConfiguration,
+-  runTasksInSerial,
+-} from '@nx/devkit';
+-
+-import {
+-  autoprefixerVersion,
+-  postcssVersion,
+-  tailwindcssVersion,
+-} from '../../utils/versions';
+-import type { SetupTailwindOptions } from './schema';
+-import { addTailwindStyleImports } from './lib/add-tailwind-style-imports';
+-import { updateProject } from './lib/update-project';
+-import { join } from 'path';
+-
+-export async function setupTailwindGenerator(
+-  tree: Tree,
+-  options: SetupTailwindOptions
+-) {
+-  logger.warn(
+-    `The 'setup-tailwind' generator is deprecated. Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23.`
+-  );
+-
+-  const tasks: GeneratorCallback[] = [];
+-  const project = readProjectConfiguration(tree, options.project);
+-
+-  if (
+-    tree.exists(joinPathFragments(project.root, 'postcss.config.js')) ||
+-    tree.exists(joinPathFragments(project.root, 'tailwind.config.js'))
+-  ) {
+-    logger.info(
+-      `Skipping setup since there are existing PostCSS or Tailwind configuration files. For manual setup instructions, see https://nx.dev/guides/using-tailwind-css-in-react.`
+-    );
+-    return;
+-  }
+-
+-  generateFiles(tree, join(__dirname, './files'), project.root, {
+-    tmpl: '',
+-  });
+-
+-  addTailwindStyleImports(tree, project, options);
+-
+-  updateProject(tree, project, options);
+-
+-  if (!options.skipPackageJson) {
+-    tasks.push(
+-      addDependenciesToPackageJson(
+-        tree,
+-        {},
+-        {
+-          autoprefixer: autoprefixerVersion,
+-          postcss: postcssVersion,
+-          tailwindcss: tailwindcssVersion,
+-        }
+-      )
+-    );
+-  }
+-
+-  if (!options.skipFormat) {
+-    await formatFiles(tree);
+-  }
+-
+-  return runTasksInSerial(...tasks);
+-}
+-
+-export default setupTailwindGenerator;
+diff --git a/packages/react/src/utils/assertion.ts b/packages/react/src/utils/assertion.ts
+index e0e40fad83..cc4b01a785 100644
+--- a/packages/react/src/utils/assertion.ts
++++ b/packages/react/src/utils/assertion.ts
+@@ -4,7 +4,6 @@ const VALID_STYLES = [
+   'css',
+   'scss',
+   'less',
+-  'tailwind',
+   'styled-components',
+   '@emotion/styled',
+   'styled-jsx',
+diff --git a/packages/react/src/utils/versions.ts b/packages/react/src/utils/versions.ts
+index bb58c3adc6..70cc5f4b90 100755
+--- a/packages/react/src/utils/versions.ts
++++ b/packages/react/src/utils/versions.ts
+@@ -52,7 +52,6 @@ export const babelPluginStyledComponentsVersion = '1.10.7';
+ export const tsLibVersion = '^2.3.0';
+ 
+ export const postcssVersion = '8.4.38';
+-export const tailwindcssVersion = '3.4.3';
+ export const autoprefixerVersion = '10.4.13';
+ 
+ // SSR and Module Federation
+diff --git a/packages/react/tailwind.ts b/packages/react/tailwind.ts
+index 4deca40a22..3aebfbe4ad 100644
+--- a/packages/react/tailwind.ts
++++ b/packages/react/tailwind.ts
+@@ -1,14 +1,23 @@
+ import { createGlobPatternsForDependencies as jsGenerateGlobs } from '@nx/js/src/utils/generate-globs';
+ 
++let hasWarned = false;
++
+ /**
+- * Generates a set of glob patterns based off the source root of the app and its dependencies
+- * @param dirPath workspace relative directory path that will be used to infer the parent project and dependencies
+- * @param fileGlobPattern pass a custom glob pattern to be used
++ * @deprecated `@nx/react/tailwind` will be removed in Nx 24. Migrate to Tailwind CSS v4 which no longer needs glob patterns.
++ * See: https://nx.dev/docs/technologies/react/guides/using-tailwind-css-in-react
+  */
+ export function createGlobPatternsForDependencies(
+   dirPath: string,
+   fileGlobPattern: string = '/**/!(*.stories|*.spec).{tsx,ts,jsx,js,html}'
+ ) {
++  if (!hasWarned) {
++    hasWarned = true;
++    console.warn(
++      `\nWARNING: "@nx/react/tailwind" is deprecated and will be removed in Nx 24.\n` +
++        `Migrate to Tailwind CSS v4 which no longer needs glob patterns for content detection.\n` +
++        `See: https://nx.dev/docs/technologies/react/guides/using-tailwind-css-in-react\n`
++    );
++  }
+   try {
+     return jsGenerateGlobs(dirPath, fileGlobPattern);
+   } catch (e) {
+@@ -19,7 +28,7 @@ export function createGlobPatternsForDependencies(
+      * autocomplete features, for example.
+      *
+      * In order to best support that use-case, we therefore do not hard error when the ProjectGraph is
+-     * fundamently unavailable in this tailwind-specific context.
++     * fundamentally unavailable in this tailwind-specific context.
+      */
+     console.warn(
+       '\nWARNING: There was an error creating glob patterns, returning an empty array\n' +
+diff --git a/packages/react/typings/style.d.ts b/packages/react/typings/style.d.ts
+index 2ee2659578..2197a57542 100644
+--- a/packages/react/typings/style.d.ts
++++ b/packages/react/typings/style.d.ts
+@@ -2,7 +2,6 @@ export type SupportedStyles =
+   | 'css'
+   | 'scss'
+   | 'less'
+-  | 'tailwind'
+   | 'styled-components'
+   | '@emotion/styled'
+   | 'styled-jsx'
+diff --git a/packages/remix/generators.json b/packages/remix/generators.json
+index afb9dcfb00..2e8046028d 100644
+--- a/packages/remix/generators.json
++++ b/packages/remix/generators.json
+@@ -66,12 +66,6 @@
+       "schema": "./src/generators/style/schema.json",
+       "description": "Generates a new stylesheet and adds it to an existing route"
+     },
+-    "setup-tailwind": {
+-      "implementation": "./src/generators/setup-tailwind/setup-tailwind.impl",
+-      "schema": "./src/generators/setup-tailwind/schema.json",
+-      "description": "Generates a TailwindCSS configuration for the Remix application",
+-      "x-deprecated": "Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23."
+-    },
+     "storybook-configuration": {
+       "implementation": "./src/generators/storybook-configuration/storybook-configuration.impl#remixStorybookConfiguration",
+       "schema": "./src/generators/storybook-configuration/schema.json",
+diff --git a/packages/remix/generators.ts b/packages/remix/generators.ts
+index 906c7c830d..b12c149f17 100644
+--- a/packages/remix/generators.ts
++++ b/packages/remix/generators.ts
+@@ -8,7 +8,6 @@ export { default as metaGenerator } from './src/generators/meta/meta.impl';
+ export { default as presetGenerator } from './src/generators/preset/preset.impl';
+ export { default as resourceRouteGenerator } from './src/generators/resource-route/resource-route.impl';
+ export { default as routeGenerator } from './src/generators/route/route.impl';
+-export { default as setupTailwindGenerator } from './src/generators/setup-tailwind/setup-tailwind.impl';
+ export { default as storybookConfigurationGenerator } from './src/generators/storybook-configuration/storybook-configuration.impl';
+ export { default as styleGenerator } from './src/generators/style/style.impl';
+ export { default as initGenerator } from './src/generators/init/init';
+diff --git a/packages/remix/src/generators/setup-tailwind/__snapshots__/setup-tailwind.impl.spec.ts.snap b/packages/remix/src/generators/setup-tailwind/__snapshots__/setup-tailwind.impl.spec.ts.snap
+deleted file mode 100644
+index c6a9a31a7a..0000000000
+--- a/packages/remix/src/generators/setup-tailwind/__snapshots__/setup-tailwind.impl.spec.ts.snap
++++ /dev/null
+@@ -1,89 +0,0 @@
+-// Jest Snapshot v1, https://goo.gl/fbAQLP
+-
+-exports[`setup-tailwind generator should add a tailwind config to an application correctly 1`] = `
+-"import type { Config } from 'tailwindcss';
+-import { createGlobPatternsForDependencies } from '@nx/react/tailwind';
+-
+-export default {
+-  content: [
+-    './app/**/*.{js,jsx,ts,tsx}',
+-    ...createGlobPatternsForDependencies(__dirname),
+-  ],
+-  theme: {
+-    extend: {},
+-  },
+-  plugins: [],
+-} satisfies Config;
+-"
+-`;
+-
+-exports[`setup-tailwind generator should add a tailwind config to an application correctly 2`] = `
+-"export default {
+-  plugins: {
+-    tailwindcss: {},
+-    autoprefixer: {},
+-  },
+-};
+-"
+-`;
+-
+-exports[`setup-tailwind generator should add a tailwind config to an application correctly 3`] = `
+-"@tailwind base;
+-@tailwind components;
+-@tailwind utilities;
+-"
+-`;
+-
+-exports[`setup-tailwind generator should add a tailwind config to an application correctly 4`] = `
+-"import {
+-  Links,
+-  Meta,
+-  Outlet,
+-  Scripts,
+-  ScrollRestoration,
+-} from '@remix-run/react';
+-import type { MetaFunction, LinksFunction } from '@remix-run/node';
+-import './tailwind.css';
+-
+-export const meta: MetaFunction = () => [
+-  {
+-    title: 'New Remix App',
+-  },
+-];
+-
+-export const links: LinksFunction = () => [
+-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+-  {
+-    rel: 'preconnect',
+-    href: 'https://fonts.gstatic.com',
+-    crossOrigin: 'anonymous',
+-  },
+-  {
+-    rel: 'stylesheet',
+-    href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
+-  },
+-];
+-
+-export function Layout({ children }: { children: React.ReactNode }) {
+-  return (
+-    <html lang="en">
+-      <head>
+-        <meta charSet="utf-8" />
+-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+-        <Meta />
+-        <Links />
+-      </head>
+-      <body>
+-        {children}
+-        <ScrollRestoration />
+-        <Scripts />
+-      </body>
+-    </html>
+-  );
+-}
+-
+-export default function App() {
+-  return <Outlet />;
+-}
+-"
+-`;
+diff --git a/packages/remix/src/generators/setup-tailwind/files/app/tailwind.css__tpl__ b/packages/remix/src/generators/setup-tailwind/files/app/tailwind.css__tpl__
+deleted file mode 100644
+index b5c61c9567..0000000000
+--- a/packages/remix/src/generators/setup-tailwind/files/app/tailwind.css__tpl__
++++ /dev/null
+@@ -1,3 +0,0 @@
+-@tailwind base;
+-@tailwind components;
+-@tailwind utilities;
+diff --git a/packages/remix/src/generators/setup-tailwind/files/postcss.config.js__tpl__ b/packages/remix/src/generators/setup-tailwind/files/postcss.config.js__tpl__
+deleted file mode 100644
+index 2aa7205d4b..0000000000
+--- a/packages/remix/src/generators/setup-tailwind/files/postcss.config.js__tpl__
++++ /dev/null
+@@ -1,6 +0,0 @@
+-export default {
+-  plugins: {
+-    tailwindcss: {},
+-    autoprefixer: {},
+-  },
+-};
+diff --git a/packages/remix/src/generators/setup-tailwind/files/tailwind.config.ts__tpl__ b/packages/remix/src/generators/setup-tailwind/files/tailwind.config.ts__tpl__
+deleted file mode 100644
+index 14bac87243..0000000000
+--- a/packages/remix/src/generators/setup-tailwind/files/tailwind.config.ts__tpl__
++++ /dev/null
+@@ -1,13 +0,0 @@
+-import type { Config } from "tailwindcss";
+-import { createGlobPatternsForDependencies } from '@nx/react/tailwind';
+-
+-export default {
+-  content: [
+-    "./app/**/*.{js,jsx,ts,tsx}",
+-    ...createGlobPatternsForDependencies(__dirname)
+-  ],
+-  theme: {
+-    extend: {},
+-  },
+-  plugins: [],
+-} satisfies Config;
+diff --git a/packages/remix/src/generators/setup-tailwind/schema.d.ts b/packages/remix/src/generators/setup-tailwind/schema.d.ts
+deleted file mode 100644
+index a15c80d58d..0000000000
+--- a/packages/remix/src/generators/setup-tailwind/schema.d.ts
++++ /dev/null
+@@ -1,4 +0,0 @@
+-export interface SetupTailwindSchema {
+-  project: string;
+-  skipFormat?: boolean;
+-}
+diff --git a/packages/remix/src/generators/setup-tailwind/schema.json b/packages/remix/src/generators/setup-tailwind/schema.json
+deleted file mode 100644
+index a718e00600..0000000000
+--- a/packages/remix/src/generators/setup-tailwind/schema.json
++++ /dev/null
+@@ -1,30 +0,0 @@
+-{
+-  "$schema": "https://json-schema.org/schema",
+-  "$id": "NxRemixTailwind",
+-  "title": "Add TailwindCSS to a Remix App",
+-  "description": "Setup tailwindcss for a given project.",
+-  "type": "object",
+-  "examples": [
+-    {
+-      "command": "g setup-tailwind --project=myapp",
+-      "description": "Generate a TailwindCSS config for your Remix app"
+-    }
+-  ],
+-  "properties": {
+-    "project": {
+-      "type": "string",
+-      "description": "The name of the project to add tailwind to",
+-      "$default": {
+-        "$source": "projectName"
+-      },
+-      "x-prompt": "What project would you like to add Tailwind to?"
+-    },
+-    "skipFormat": {
+-      "type": "boolean",
+-      "description": "Skip formatting files after generator runs",
+-      "default": false,
+-      "x-priority": "internal"
+-    }
+-  },
+-  "required": ["project"]
+-}
+diff --git a/packages/remix/src/generators/setup-tailwind/setup-tailwind.impl.ts b/packages/remix/src/generators/setup-tailwind/setup-tailwind.impl.ts
+deleted file mode 100644
+index a6301fba63..0000000000
+--- a/packages/remix/src/generators/setup-tailwind/setup-tailwind.impl.ts
++++ /dev/null
+@@ -1,60 +0,0 @@
+-import {
+-  addDependenciesToPackageJson,
+-  formatFiles,
+-  generateFiles,
+-  installPackagesTask,
+-  joinPathFragments,
+-  logger,
+-  readProjectConfiguration,
+-  stripIndents,
+-  type Tree,
+-} from '@nx/devkit';
+-
+-import {
+-  autoprefixerVersion,
+-  postcssVersion,
+-  tailwindVersion,
+-} from '../../utils/versions';
+-import type { SetupTailwindSchema } from './schema';
+-import { insertStatementAfterImports } from '../../utils/insert-statement-after-imports';
+-
+-export default async function setupTailwind(
+-  tree: Tree,
+-  options: SetupTailwindSchema
+-) {
+-  logger.warn(
+-    `The 'setup-tailwind' generator is deprecated. Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23.`
+-  );
+-
+-  const project = readProjectConfiguration(tree, options.project);
+-
+-  generateFiles(tree, joinPathFragments(__dirname, 'files'), project.root, {
+-    tpl: '',
+-  });
+-
+-  const pathToRoot = joinPathFragments(project.root, 'app/root.tsx');
+-
+-  insertStatementAfterImports(
+-    tree,
+-    pathToRoot,
+-    stripIndents`import './tailwind.css';`
+-  );
+-
+-  addDependenciesToPackageJson(
+-    tree,
+-    {
+-      tailwindcss: tailwindVersion,
+-      postcss: postcssVersion,
+-      autoprefixer: autoprefixerVersion,
+-    },
+-    {}
+-  );
+-
+-  if (!options.skipFormat) {
+-    await formatFiles(tree);
+-  }
+-
+-  return () => {
+-    installPackagesTask(tree);
+-  };
+-}
+diff --git a/packages/remix/src/utils/versions.ts b/packages/remix/src/utils/versions.ts
+index eb21965d32..cb01895c52 100644
+--- a/packages/remix/src/utils/versions.ts
++++ b/packages/remix/src/utils/versions.ts
+@@ -10,7 +10,6 @@ export const typesReactVersion = '^18.2.0';
+ export const typesReactDomVersion = '^18.2.0';
+ export const eslintVersion = '^8.56.0';
+ export const typescriptVersion = '~5.9.2';
+-export const tailwindVersion = '^3.3.0';
+ export const postcssVersion = '^8.4.38';
+ export const autoprefixerVersion = '^10.4.19';
+ export const testingLibraryReactVersion = '^14.1.2';
+diff --git a/packages/vue/generators.json b/packages/vue/generators.json
+index e348d9337d..e2ede032dd 100644
+--- a/packages/vue/generators.json
++++ b/packages/vue/generators.json
+@@ -29,12 +29,6 @@
+       "x-type": "component",
+       "description": "Create a Vue component."
+     },
+-    "setup-tailwind": {
+-      "factory": "./src/generators/setup-tailwind/setup-tailwind",
+-      "schema": "./src/generators/setup-tailwind/schema.json",
+-      "description": "Set up Tailwind configuration for a project.",
+-      "x-deprecated": "Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23."
+-    },
+     "storybook-configuration": {
+       "factory": "./src/generators/storybook-configuration/configuration#storybookConfigurationGeneratorInternal",
+       "schema": "./src/generators/storybook-configuration/schema.json",
+diff --git a/packages/vue/index.ts b/packages/vue/index.ts
+index 12078e7832..b5e41552cd 100644
+--- a/packages/vue/index.ts
++++ b/packages/vue/index.ts
+@@ -8,8 +8,6 @@ export {
+   storiesGenerator,
+   StorybookStoriesSchema,
+ } from './src/generators/stories/stories';
+-export { setupTailwindGenerator } from './src/generators/setup-tailwind/setup-tailwind';
+-export { SetupTailwindOptions } from './src/generators/setup-tailwind/schema';
+ export { type InitSchema } from './src/generators/init/schema';
+ export { vueInitGenerator } from './src/generators/init/init';
+ export * from './src/utils/versions';
+diff --git a/packages/vue/src/generators/setup-tailwind/files/postcss.config.js.template b/packages/vue/src/generators/setup-tailwind/files/postcss.config.js.template
+deleted file mode 100644
+index ce46f1ea75..0000000000
+--- a/packages/vue/src/generators/setup-tailwind/files/postcss.config.js.template
++++ /dev/null
+@@ -1,10 +0,0 @@
+-const { join } = require('path');
+-
+-module.exports = {
+-  plugins: {
+-    tailwindcss: {
+-      config: join(__dirname, 'tailwind.config.js'),
+-    },
+-    autoprefixer: {},
+-  },
+-}
+diff --git a/packages/vue/src/generators/setup-tailwind/files/tailwind.config.js.template b/packages/vue/src/generators/setup-tailwind/files/tailwind.config.js.template
+deleted file mode 100644
+index e9f14394ff..0000000000
+--- a/packages/vue/src/generators/setup-tailwind/files/tailwind.config.js.template
++++ /dev/null
+@@ -1,18 +0,0 @@
+-const { createGlobPatternsForDependencies } = require('@nx/vue/tailwind');
+-const { join } = require('path');
+-
+-/** @type {import('tailwindcss').Config} */
+-module.exports = {
+-  content: [
+-    join(__dirname, 'index.html'),
+-    join(
+-      __dirname,
+-      'src/**/!(*.stories|*.spec).{vue,ts,tsx,js,jsx}'
+-    ),
+-    ...createGlobPatternsForDependencies(__dirname),
+-  ],
+-  theme: {
+-    extend: {},
+-  },
+-  plugins: [],
+-};
+diff --git a/packages/vue/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts b/packages/vue/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts
+deleted file mode 100644
+index 92e7e76840..0000000000
+--- a/packages/vue/src/generators/setup-tailwind/lib/add-tailwind-style-imports.ts
++++ /dev/null
+@@ -1,46 +0,0 @@
+-import { joinPathFragments, ProjectConfiguration, Tree } from '@nx/devkit';
+-
+-import { SetupTailwindOptions } from '../schema';
+-
+-const knownStylesheetLocations = [
+-  // What we generate by default
+-  'src/styles.css',
+-  'src/styles.scss',
+-  'src/styles.less',
+-
+-  // What we generate for nuxt by default
+-  'src/assets/css/styles.css',
+-  'src/assets/css/styles.scss',
+-  'src/assets/css/styles.less',
+-
+-  // Other common locations (e.g. what `npm create vue` does)
+-  'src/assets/styles.css',
+-  'src/assets/styles.scss',
+-  'src/assets/styles.less',
+-];
+-
+-export function addTailwindStyleImports(
+-  tree: Tree,
+-  project: ProjectConfiguration,
+-  _options: SetupTailwindOptions
+-) {
+-  if (_options.stylesheet) {
+-    knownStylesheetLocations.push(_options.stylesheet);
+-  }
+-
+-  const stylesPath = knownStylesheetLocations
+-    .map((file) => joinPathFragments(project.root, file))
+-    .find((file) => tree.exists(file));
+-
+-  if (!stylesPath) {
+-    throw new Error(
+-      `Could not find the stylesheet to update. Use --stylesheet to specify this path (relative to the workspace root).`
+-    );
+-  }
+-
+-  const content = tree.read(stylesPath).toString();
+-  tree.write(
+-    stylesPath,
+-    `@tailwind base;\n@tailwind components;\n@tailwind utilities;\n${content}`
+-  );
+-}
+diff --git a/packages/vue/src/generators/setup-tailwind/schema.d.ts b/packages/vue/src/generators/setup-tailwind/schema.d.ts
+deleted file mode 100644
+index 4ba7f47fea..0000000000
+--- a/packages/vue/src/generators/setup-tailwind/schema.d.ts
++++ /dev/null
+@@ -1,6 +0,0 @@
+-export interface SetupTailwindOptions {
+-  project: string;
+-  skipFormat?: boolean;
+-  skipPackageJson?: boolean;
+-  stylesheet?: string;
+-}
+diff --git a/packages/vue/src/generators/setup-tailwind/schema.json b/packages/vue/src/generators/setup-tailwind/schema.json
+deleted file mode 100644
+index 8f4044a6f8..0000000000
+--- a/packages/vue/src/generators/setup-tailwind/schema.json
++++ /dev/null
+@@ -1,45 +0,0 @@
+-{
+-  "$schema": "https://json-schema.org/schema",
+-  "cli": "nx",
+-  "$id": "NxVueTailwindSetupGenerator",
+-  "title": "Configures Tailwind CSS for an application or a library.",
+-  "description": "Adds the Tailwind CSS configuration files for a given Vue project and installs, if needed, the packages required for Tailwind CSS to work.",
+-  "type": "object",
+-  "examples": [
+-    {
+-      "command": "nx g setup-tailwind --project=my-app",
+-      "description": "Initialize Tailwind configuration for the `my-app` project."
+-    }
+-  ],
+-  "properties": {
+-    "project": {
+-      "type": "string",
+-      "description": "The name of the project to add the Tailwind CSS setup for.",
+-      "alias": "p",
+-      "$default": {
+-        "$source": "argv",
+-        "index": 0
+-      },
+-      "x-dropdown": "projects",
+-      "x-prompt": "What project would you like to add the Tailwind CSS setup?",
+-      "x-priority": "important"
+-    },
+-    "skipFormat": {
+-      "type": "boolean",
+-      "description": "Skips formatting the workspace after the generator completes.",
+-      "x-priority": "internal"
+-    },
+-    "skipPackageJson": {
+-      "type": "boolean",
+-      "default": false,
+-      "description": "Do not add dependencies to `package.json`.",
+-      "x-priority": "internal"
+-    },
+-    "stylesheet": {
+-      "type": "string",
+-      "description": "Path to the styles entry point relative to the workspace root. This option is only needed if the stylesheet location cannot be found automatically."
+-    }
+-  },
+-  "additionalProperties": false,
+-  "required": ["project"]
+-}
+diff --git a/packages/vue/src/generators/setup-tailwind/setup-tailwind.ts b/packages/vue/src/generators/setup-tailwind/setup-tailwind.ts
+deleted file mode 100644
+index d8ade79eaf..0000000000
+--- a/packages/vue/src/generators/setup-tailwind/setup-tailwind.ts
++++ /dev/null
+@@ -1,51 +0,0 @@
+-import type { GeneratorCallback, Tree } from '@nx/devkit';
+-import {
+-  addDependenciesToPackageJson,
+-  formatFiles,
+-  generateFiles,
+-  logger,
+-  readProjectConfiguration,
+-} from '@nx/devkit';
+-
+-import {
+-  autoprefixerVersion,
+-  postcssVersion,
+-  tailwindcssVersion,
+-} from '../../utils/versions';
+-import type { SetupTailwindOptions } from './schema';
+-import { addTailwindStyleImports } from './lib/add-tailwind-style-imports';
+-import { join } from 'path';
+-
+-export async function setupTailwindGenerator(
+-  tree: Tree,
+-  options: SetupTailwindOptions
+-): Promise<void | GeneratorCallback> {
+-  logger.warn(
+-    `The 'setup-tailwind' generator is deprecated. Generating Tailwind configuration is no longer maintained. This generator will be removed in Nx 23.`
+-  );
+-
+-  let installTask: GeneratorCallback | undefined = undefined;
+-  const project = readProjectConfiguration(tree, options.project);
+-
+-  generateFiles(tree, join(__dirname, './files'), project.root, {});
+-
+-  addTailwindStyleImports(tree, project, options);
+-
+-  if (!options.skipPackageJson) {
+-    installTask = addDependenciesToPackageJson(
+-      tree,
+-      {},
+-      {
+-        autoprefixer: autoprefixerVersion,
+-        postcss: postcssVersion,
+-        tailwindcss: tailwindcssVersion,
+-      }
+-    );
+-  }
+-
+-  if (!options.skipFormat) await formatFiles(tree);
+-
+-  return installTask;
+-}
+-
+-export default setupTailwindGenerator;
+diff --git a/packages/vue/src/utils/versions.ts b/packages/vue/src/utils/versions.ts
+index fa177593ba..a4801bbc33 100644
+--- a/packages/vue/src/utils/versions.ts
++++ b/packages/vue/src/utils/versions.ts
+@@ -15,9 +15,7 @@ export const vueEslintConfigTypescriptVersion = '^11.0.3';
+ export const eslint9__VueEslintConfigTypescriptVersion = '^14.6.0';
+ export const eslintPluginVueVersion = '^9.16.1';
+ 
+-// tailwindcss
+ export const postcssVersion = '8.4.21';
+-export const tailwindcssVersion = '3.2.7';
+ export const autoprefixerVersion = '10.4.13';
+ 
+ // other deps
+diff --git a/packages/vue/tailwind.ts b/packages/vue/tailwind.ts
+index 18baf5497c..74f7852b2a 100644
+--- a/packages/vue/tailwind.ts
++++ b/packages/vue/tailwind.ts
+@@ -1,14 +1,23 @@
+ import { createGlobPatternsForDependencies as jsGenerateGlobs } from '@nx/js/src/utils/generate-globs';
+ 
++let hasWarned = false;
++
+ /**
+- * Generates a set of glob patterns based off the source root of the app and its dependencies
+- * @param dirPath workspace relative directory path that will be used to infer the parent project and dependencies
+- * @param fileGlobPattern pass a custom glob pattern to be used
++ * @deprecated `@nx/vue/tailwind` will be removed in Nx 24. Migrate to Tailwind CSS v4 which no longer needs glob patterns.
++ * See: https://nx.dev/docs/technologies/vue/guides/using-tailwind-css-in-vue
+  */
+ export function createGlobPatternsForDependencies(
+   dirPath: string,
+   fileGlobPattern: string = '/**/!(*.stories|*.spec).{vue,tsx,ts,jsx,js}'
+ ) {
++  if (!hasWarned) {
++    hasWarned = true;
++    console.warn(
++      `\nWARNING: "@nx/vue/tailwind" is deprecated and will be removed in Nx 24.\n` +
++        `Migrate to Tailwind CSS v4 which no longer needs glob patterns for content detection.\n` +
++        `See: https://nx.dev/docs/technologies/vue/guides/using-tailwind-css-in-vue\n`
++    );
++  }
+   try {
+     return jsGenerateGlobs(dirPath, fileGlobPattern);
+   } catch (e) {
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 4f939d83bf..db3602d625 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -310,9 +310,6 @@ importers:
+       '@react-three/fiber':
+         specifier: ^8.16.8
+         version: 8.18.0(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.166.1)
+-      '@tailwindcss/aspect-ratio':
+-        specifier: ^0.4.2
+-        version: 0.4.2(tailwindcss@3.4.4(ts-node@10.9.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@types/node@20.19.19)(typescript@5.9.2)))
+       '@tailwindcss/forms':
+         specifier: ^0.5.7
+         version: 0.5.10(tailwindcss@3.4.4(ts-node@10.9.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@types/node@20.19.19)(typescript@5.9.2)))
+@@ -1922,6 +1919,9 @@ importers:
+       '@nx/graph-ui-common':
+         specifier: 'workspace:'
+         version: link:../ui-common
++      tailwind-merge:
++        specifier: ^2.4.0
++        version: 2.6.0
+     devDependencies:
+       jest:
+         specifier: catalog:jest
+@@ -1953,6 +1953,9 @@ importers:
+       '@nx/graph-ui-common':
+         specifier: 'workspace:'
+         version: link:../ui-common
++      tailwind-merge:
++        specifier: ^2.4.0
++        version: 2.6.0
+     devDependencies:
+       jest:
+         specifier: catalog:jest
+@@ -1960,7 +1963,11 @@ importers:
+ 
+   graph/ui-common: {}
+ 
+-  graph/ui-icons: {}
++  graph/ui-icons:
++    dependencies:
++      tailwind-merge:
++        specifier: ^2.4.0
++        version: 2.6.0
+ 
+   graph/ui-project-details:
+     dependencies:
+@@ -1979,6 +1986,9 @@ importers:
+       '@nx/nx-dev-ui-fence':
+         specifier: 'workspace:'
+         version: link:../../nx-dev/ui-fence
++      tailwind-merge:
++        specifier: ^2.4.0
++        version: 2.6.0
+     devDependencies:
+       '@nx/devkit':
+         specifier: workspace:*
+@@ -39788,10 +39798,6 @@ snapshots:
+     dependencies:
+       defer-to-connect: 2.0.1
+ 
+-  '@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.4.4(ts-node@10.9.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@types/node@20.19.19)(typescript@5.9.2)))':
+-    dependencies:
+-      tailwindcss: 3.4.4(ts-node@10.9.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@types/node@20.19.19)(typescript@5.9.2))
+-
+   '@tailwindcss/aspect-ratio@0.4.2(tailwindcss@3.4.4(ts-node@10.9.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@types/node@24.2.0)(typescript@5.9.2)))':
+     dependencies:
+       tailwindcss: 3.4.4(ts-node@10.9.1(@swc/core@1.15.10(@swc/helpers@0.5.18))(@types/node@24.2.0)(typescript@5.9.2))
+@@ -42421,8 +42427,8 @@ snapshots:
+ 
+   autoprefixer@10.4.13(postcss@8.4.38):
+     dependencies:
+-      browserslist: 4.28.0
+-      caniuse-lite: 1.0.30001731
++      browserslist: 4.28.1
++      caniuse-lite: 1.0.30001774
+       fraction.js: 4.3.7
+       normalize-range: 0.1.2
+       picocolors: 1.1.1

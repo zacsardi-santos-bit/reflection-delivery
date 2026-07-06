@@ -1,0 +1,1 @@
+cd /workspace/repo && pnpm install --frozen-lockfile && npx vitest run packages/svelte/tests/preprocess/test.ts packages/svelte/tests/runtime-legacy/test.ts

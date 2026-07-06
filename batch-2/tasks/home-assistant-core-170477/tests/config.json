@@ -1,0 +1,31 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/components/androidtv/test_config_flow.py -v",
+  "test_files": [
+    "tests/components/androidtv/test_config_flow.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.androidtv.test_config_flow::test_user[flow_input0-expected_data0-a1:b1:c1:d1:e1:f1-None]",
+    "tests.components.androidtv.test_config_flow::test_user[flow_input1-expected_data1-a1:b1:c1:d1:e1:f1-None]",
+    "tests.components.androidtv.test_config_flow::test_user[flow_input2-expected_data2-None-a2:b2:c2:d2:e2:f2]",
+    "tests.components.androidtv.test_config_flow::test_user[flow_input3-expected_data3-None-a2:b2:c2:d2:e2:f2]",
+    "tests.components.androidtv.test_config_flow::test_user[flow_input4-expected_data4-a1:b1:c1:d1:e1:f1-a2:b2:c2:d2:e2:f2]",
+    "tests.components.androidtv.test_config_flow::test_user[flow_input5-expected_data5-a1:b1:c1:d1:e1:f1-a2:b2:c2:d2:e2:f2]",
+    "tests.components.androidtv.test_config_flow::test_user_adbkey",
+    "tests.components.androidtv.test_config_flow::test_error_both_key_server",
+    "tests.components.androidtv.test_config_flow::test_error_invalid_key",
+    "tests.components.androidtv.test_config_flow::test_invalid_mac[flow_input0-None-None]",
+    "tests.components.androidtv.test_config_flow::test_invalid_mac[flow_input1-None-None]",
+    "tests.components.androidtv.test_config_flow::test_invalid_mac[flow_input2-ff:ff:ff:ff:ff:ff-None]",
+    "tests.components.androidtv.test_config_flow::test_invalid_mac[flow_input3-ff:ff:ff:ff:ff:ff-None]",
+    "tests.components.androidtv.test_config_flow::test_invalid_mac[flow_input4-None-ff:ff:ff:ff:ff:ff]",
+    "tests.components.androidtv.test_config_flow::test_invalid_mac[flow_input5-None-ff:ff:ff:ff:ff:ff]",
+    "tests.components.androidtv.test_config_flow::test_abort_if_host_exist",
+    "tests.components.androidtv.test_config_flow::test_abort_if_unique_exist",
+    "tests.components.androidtv.test_config_flow::test_on_connect_failed",
+    "tests.components.androidtv.test_config_flow::test_options_flow"
+  ],
+  "PASS_TO_PASS": []
+}

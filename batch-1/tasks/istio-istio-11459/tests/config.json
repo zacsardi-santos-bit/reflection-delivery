@@ -1,0 +1,32 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pilot/pkg/networking/plugin/authz -count=1",
+  "test_files": [
+    "pilot/pkg/networking/plugin/authz/rbac_test.go",
+    "pilot/pkg/networking/plugin/authz/util_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestIsRbacEnabled",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestBuildTCPFilter",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestBuildHTTPFilter",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestConvertRbacRulesToFilterConfig",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestConvertRbacRulesToFilterConfigForServiceWithBothHTTPAndTCP",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestConvertRbacRulesToFilterConfigPermissive",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestCreateServiceMetadata",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestServiceMetadataMatch",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestGenerateMetadataStringMatcher",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestCreateDynamicMetadataMatcher",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestStringMatch",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestConvertToCidr",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestConvertToPort",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestConvertToHeaderMatcher",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestIsKeyBinary",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestExtractNameInBrackets",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestExtractActualServiceAccount",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestValidateRule",
+    "istio.io/istio/pilot/pkg/networking/plugin/authz::TestValidateBinding"
+  ],
+  "PASS_TO_PASS": []
+}

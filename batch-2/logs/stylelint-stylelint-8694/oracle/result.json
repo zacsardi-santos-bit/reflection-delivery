@@ -1,0 +1,29 @@
+{
+    "id": "eb10147a-10ca-4550-814f-c50bc840e385",
+    "started_at": "2026-07-06T12:18:35.226924",
+    "finished_at": "2026-07-06T12:19:05.693697",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__stylelint-stylelint-8694": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "stylelint-stylelint-8694__q8cH4gM"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

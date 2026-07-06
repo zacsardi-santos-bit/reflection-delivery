@@ -1,6 +1,0 @@
-patching file bindings/go/libsql_test.go
-# github.com/libsql/go-libsql
-libsql_test.go:19:2: no required module provides package golang.org/x/sync/errgroup; to add it:
-	go get golang.org/x/sync/errgroup
-FAIL	github.com/libsql/go-libsql [setup failed]
-reward=0 graded=20 found=0 failed=0 parsed=0 framework=go exit_code=1

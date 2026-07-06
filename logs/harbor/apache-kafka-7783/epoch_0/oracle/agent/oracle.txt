@@ -1,4 +1,0 @@
-patching file connect/runtime/src/main/java/org/apache/kafka/connect/runtime/distributed/DistributedHerder.java
-patching file connect/runtime/src/main/java/org/apache/kafka/connect/runtime/distributed/IncrementalCooperativeAssignor.java
-patching file connect/runtime/src/main/java/org/apache/kafka/connect/runtime/distributed/WorkerCoordinator.java
-patching file connect/runtime/src/main/java/org/apache/kafka/connect/runtime/distributed/WorkerGroupMember.java

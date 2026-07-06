@@ -1,0 +1,24 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/metadata-ingestion-modules/airflow-plugin && pytest tests/unit/test_airflow.py::test_lineage_backend -v",
+  "test_files": [
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v1_basic_iolets.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v1_simple_dag.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v2_basic_iolets.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v2_basic_iolets_no_dag_listener.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v2_simple_dag.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v2_simple_dag_no_dag_listener.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v2_snowflake_operator.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v2_sqlite_operator.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/goldens/v2_sqlite_operator_no_dag_listener.json",
+    "metadata-ingestion-modules/airflow-plugin/tests/integration/test_plugin.py",
+    "metadata-ingestion-modules/airflow-plugin/tests/unit/test_airflow.py"
+  ],
+  "num_test_files": 11,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit.test_airflow::test_lineage_backend[airflow-lineage-no-executions]",
+    "tests.unit.test_airflow::test_lineage_backend[airflow-lineage-capture-executions]"
+  ],
+  "PASS_TO_PASS": []
+}

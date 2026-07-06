@@ -1,4 +1,0 @@
-patching file rqd/rqd/rqconstants.py
-patching file rqd/rqd/rqcore.py
-patching file rqd/rqd/rqmachine.py
-patching file rqd/rqd/rqnimby.py

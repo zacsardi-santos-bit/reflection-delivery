@@ -1,7 +1,0 @@
-patching file change/@fluentui-react-native-android-theme-f302cef7-42cb-4cef-aeeb-9104b6d37c34.json
-patching file change/@fluentui-react-native-experimental-tabs-6c1d79f9-7581-47bb-8e00-be6f5858d744.json
-patching file change/@fluentui-react-native-tabs-d2fa8307-dae8-4655-8dc9-5533170f9898.json
-patching file change/@fluentui-react-native-theme-types-9ceaa36d-92be-462e-8828-5b05228abc89.json
-patching file change/@fluentui-react-native-theming-utils-49b42a9e-2f98-48d5-9ec7-fddfab20a37d.json
-patching file packages/theming/theme-types/src/Color.types.ts
-patching file packages/theming/theming-utils/src/mapPipelineToTheme.android.ts

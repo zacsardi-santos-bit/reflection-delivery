@@ -1,0 +1,32 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/javascript/bh-shared-ui && TZ=America/Los_Angeles yarn vitest run src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx",
+  "test_files": [
+    "packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard opens confirmation dialog when delete button is clicked",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard closes confirmation dialog when cancel is clicked",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard disables delete button for built-in extensions",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard disables confirm button until extension name is typed correctly",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard clears input when dialog is closed and reopened",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard calls delete mutation when confirm button is clicked with correct input",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard shows success notification after successful deletion",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard shows error notification when deletion fails"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard renders the card with title and search input",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard displays a loading message while fetching extensions",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard displays an error message while fetching fails",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard displays no data message when there are no extensions",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard displays extensions in a table when data is available",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard renders delete buttons for each extension",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard filters extensions based on search input",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard displays no search results message when search yields no matches",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard shows all extensions when search is cleared",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard applies correct dynamic height based on filtered data",
+    "/workspace/repo/packages/javascript/bh-shared-ui/src/views/OpenGraphManagement/ActiveExtensionsCard.test.tsx::ActiveExtensionsCard applies empty state height when no results"
+  ]
+}

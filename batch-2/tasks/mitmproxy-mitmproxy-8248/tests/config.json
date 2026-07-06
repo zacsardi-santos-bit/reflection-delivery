@@ -1,0 +1,23 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/web && npx jest --testPathPattern=\"HttpMessageSpec|LineRendererSpec\" --coverage=false",
+  "test_files": [
+    "web/src/js/__tests__/components/contentviews/__snapshots__/HttpMessageSpec.tsx.snap",
+    "web/src/js/__tests__/components/contentviews/__snapshots__/LineRendererSpec.tsx.snap"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/LineRendererSpec.tsx::ContentRenderer",
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/HttpMessageSpec.tsx::HttpMessage"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/LineRendererSpec.tsx::No content",
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/HttpMessageSpec.tsx::ViewImage",
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/HttpMessageSpec.tsx::ViewImage.matches",
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/HttpMessageSpec.tsx::HttpMessage Copy Button handles successful copy action",
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/HttpMessageSpec.tsx::HttpMessage Copy Button handles failed fetch with non-ok response",
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/HttpMessageSpec.tsx::HttpMessage body edit saving empty body sends empty string, not original content",
+    "/workspace/repo/web/src/js/__tests__/components/contentviews/HttpMessageSpec.tsx::HttpMessage body edit saving unedited body sends original content"
+  ]
+}

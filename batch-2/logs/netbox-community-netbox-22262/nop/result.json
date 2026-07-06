@@ -1,0 +1,29 @@
+{
+    "id": "f93004de-65d0-456b-a0f1-53de52cec058",
+    "started_at": "2026-07-06T12:17:14.496728",
+    "finished_at": "2026-07-06T12:21:19.521766",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__netbox-community-netbox-22262": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "netbox-community-netbox-22262__ma4snEm"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

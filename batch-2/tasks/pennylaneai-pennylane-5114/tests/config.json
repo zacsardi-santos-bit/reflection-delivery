@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/qchem/of_tests/test_convert.py -v -k \"test_sign_chem_to_phys or test_dmrg_state or test_shci_state\"",
+  "test_files": [
+    "tests/qchem/of_tests/test_convert.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "qchem.of_tests.test_convert::test_dmrg_state_energy[molecule0-sto6g-1-0-dmrg_dets_coeffs0--1.0862426034107344-1e-06]",
+    "qchem.of_tests.test_convert::test_dmrg_state_energy[molecule1-sto6g-2-0-dmrg_dets_coeffs1--6.781990152954243-1e-06]",
+    "qchem.of_tests.test_convert::test_dmrg_state_energy[molecule2-sto6g-0-1-dmrg_dets_coeffs2--1.4548612773471408-1e-06]",
+    "qchem.of_tests.test_convert::test_dmrg_state_energy[molecule3-sto6g-0-0-dmrg_dets_coeffs3--7.943195279734395-1e-06]",
+    "qchem.of_tests.test_convert::test_dmrg_state_energy[molecule4-sto6g-1-0-dmrg_dets_coeffs4--14.834787198616041-1e-06]",
+    "qchem.of_tests.test_convert::test_dmrg_state_energy[molecule5-sto6g-0-1-dmrg_dets_coeffs5--15.110018770439684-1e-06]",
+    "qchem.of_tests.test_convert::test_shci_state_energy[molecule0-sto6g-1-0-shci_dets_coeffs0--1.0862426041366735-1e-06]",
+    "qchem.of_tests.test_convert::test_shci_state_energy[molecule1-sto6g-2-0-shci_dets_coeffs1--6.781988968692473-1e-06]",
+    "qchem.of_tests.test_convert::test_shci_state_energy[molecule2-sto6g-0-1-shci_dets_coeffs2--1.454861277373169-1e-06]",
+    "qchem.of_tests.test_convert::test_shci_state_energy[molecule3-sto6g-0-0-shci_dets_coeffs3--7.943187881293274-1e-06]",
+    "qchem.of_tests.test_convert::test_shci_state_energy[molecule4-sto6g-1-0-shci_dets_coeffs4--14.834784634050825-1e-06]",
+    "qchem.of_tests.test_convert::test_shci_state_energy[molecule5-sto6g-0-1-shci_dets_coeffs5--15.11001775498381-1e-06]",
+    "qchem.of_tests.test_convert::test_dmrg_state[wavefunction1-state_ref1]",
+    "qchem.of_tests.test_convert::test_shci_state[wavefunction2-state_ref2]",
+    "qchem.of_tests.test_convert::test_sign_chem_to_phys[wf0-3-wf_ref0]",
+    "qchem.of_tests.test_convert::test_sign_chem_to_phys[wf1-5-wf_ref1]"
+  ],
+  "PASS_TO_PASS": [
+    "qchem.of_tests.test_convert::test_dmrg_state[wavefunction0-state_ref0]",
+    "qchem.of_tests.test_convert::test_shci_state[wavefunction0-state_ref0]",
+    "qchem.of_tests.test_convert::test_shci_state[wavefunction1-state_ref1]"
+  ]
+}

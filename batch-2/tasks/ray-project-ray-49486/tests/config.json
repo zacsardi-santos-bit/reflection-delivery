@@ -1,0 +1,24 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && bash -c 'bazel test //src/ray/common/test:status_or_test --test_output=all --copt=-Wno-maybe-uninitialized --copt=-Wno-uninitialized; BAZEL_EXIT=$?; mkdir -p /workspace/test-results; cp bazel-testlogs/src/ray/common/test/status_or_test/test.xml /workspace/test-results/output.xml 2>/dev/null || true; exit $BAZEL_EXIT'",
+  "test_files": [
+    "src/ray/common/test/BUILD",
+    "src/ray/common/test/status_or_test.cc",
+    "src/ray/common/test/testing.h"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "StatusOrTest::AssignTest",
+    "StatusOrTest::CopyTest",
+    "StatusOrTest::MoveTest",
+    "StatusOrTest::OperatorTest",
+    "StatusOrTest::EqualityTest",
+    "StatusOrTest::ValueOrTest",
+    "StatusOrTest::StatusOrConversion",
+    "StatusOrTest::StatusOrDefaultTest",
+    "StatusOrTest::AndThen",
+    "StatusOrTest::OrElse"
+  ],
+  "PASS_TO_PASS": []
+}

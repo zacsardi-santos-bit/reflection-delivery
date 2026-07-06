@@ -1,0 +1,29 @@
+{
+    "id": "05570486-d541-46c8-b695-db0e60201510",
+    "started_at": "2026-07-06T12:19:32.986368",
+    "finished_at": "2026-07-06T12:19:45.481365",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__prisma-prisma-29352": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "prisma-prisma-29352__dLURhCK"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

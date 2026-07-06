@@ -1,0 +1,17 @@
+patching file frontend/src/components/DetailsTable.test.tsx
+patching file frontend/src/components/MinioArtifactLink.test.tsx
+patching file frontend/src/lib/WorkflowParser.test.ts
+
+> pipelines-frontend@0.1.0 test /workspace/repo/frontend
+> react-scripts-ts test --env=jsdom "--testPathPattern=(DetailsTable|MinioArtifactLink|WorkflowParser)\.test\.(tsx?|ts)$" "--watchAll=false"
+
+PASS src/components/DetailsTable.test.tsx
+PASS src/components/MinioArtifactLink.test.tsx
+PASS src/lib/WorkflowParser.test.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       138 passed, 138 total
+Snapshots:   21 passed, 21 total
+Time:        5.728s
+Ran all test suites matching /(DetailsTable|MinioArtifactLink|WorkflowParser)\.test\.(tsx?|ts)$/i.
+reward=1 graded=136 found=0 failed=0 parsed=0 framework=jest exit_code=0

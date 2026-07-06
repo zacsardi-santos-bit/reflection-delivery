@@ -1,0 +1,15 @@
+patching file comp/core/secrets/secretsimpl/fetch_secret_test.go
+patching file comp/core/secrets/secretsimpl/info_nix_test.go
+patching file comp/core/secrets/secretsimpl/secrets_test.go
+patching file comp/core/secrets/secretsimpl/walker_test.go
+patching file pkg/autodiscovery/secrets_test.go
+patching file pkg/config/setup/config_secret_test.go
+patching file pkg/config/setup/config_test.go
+?   	github.com/DataDog/datadog-agent/comp/core/secrets/secretsimpl/test/argument	[no test files]
+?   	github.com/DataDog/datadog-agent/comp/core/secrets/secretsimpl/test/error	[no test files]
+?   	github.com/DataDog/datadog-agent/comp/core/secrets/secretsimpl/test/input	[no test files]
+?   	github.com/DataDog/datadog-agent/comp/core/secrets/secretsimpl/test/response_too_long	[no test files]
+?   	github.com/DataDog/datadog-agent/comp/core/secrets/secretsimpl/test/simple	[no test files]
+?   	github.com/DataDog/datadog-agent/comp/core/secrets/secretsimpl/test/timeout	[no test files]
+ok  	github.com/DataDog/datadog-agent/comp/core/secrets/secretsimpl	9.900s
+reward=1 graded=43 found=0 failed=0 parsed=0 framework=go exit_code=0

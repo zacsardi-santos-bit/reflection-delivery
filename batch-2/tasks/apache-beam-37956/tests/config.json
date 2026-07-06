@@ -1,0 +1,35 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/sdks/python/apache_beam/ml/inference/anthropic_inference_it_test.py /workspace/repo/sdks/python/apache_beam/ml/inference/anthropic_inference_test.py -v",
+  "test_files": [
+    "sdks/python/apache_beam/ml/inference/anthropic_inference_it_test.py",
+    "sdks/python/apache_beam/ml/inference/anthropic_inference_test.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "apache_beam.ml.inference.anthropic_inference_test.RetryOnErrorTest::test_no_retry_on_400",
+    "apache_beam.ml.inference.anthropic_inference_test.RetryOnErrorTest::test_no_retry_on_401",
+    "apache_beam.ml.inference.anthropic_inference_test.RetryOnErrorTest::test_no_retry_on_non_api_error",
+    "apache_beam.ml.inference.anthropic_inference_test.RetryOnErrorTest::test_retry_on_503",
+    "apache_beam.ml.inference.anthropic_inference_test.RetryOnErrorTest::test_retry_on_rate_limit",
+    "apache_beam.ml.inference.anthropic_inference_test.RetryOnErrorTest::test_retry_on_server_error",
+    "apache_beam.ml.inference.anthropic_inference_test.MessageFromStringTest::test_default_max_tokens",
+    "apache_beam.ml.inference.anthropic_inference_test.MessageFromStringTest::test_passes_inference_args",
+    "apache_beam.ml.inference.anthropic_inference_test.MessageFromStringTest::test_sends_each_prompt",
+    "apache_beam.ml.inference.anthropic_inference_test.MessageFromConversationTest::test_sends_conversation",
+    "apache_beam.ml.inference.anthropic_inference_test.AnthropicModelHandlerTest::test_batch_elements_kwargs",
+    "apache_beam.ml.inference.anthropic_inference_test.AnthropicModelHandlerTest::test_create_client_from_env",
+    "apache_beam.ml.inference.anthropic_inference_test.AnthropicModelHandlerTest::test_create_client_with_api_key",
+    "apache_beam.ml.inference.anthropic_inference_test.AnthropicModelHandlerTest::test_request_returns_prediction_results",
+    "apache_beam.ml.inference.anthropic_inference_test.SystemPromptTest::test_no_system_prompt_when_none",
+    "apache_beam.ml.inference.anthropic_inference_test.SystemPromptTest::test_system_prompt_injected",
+    "apache_beam.ml.inference.anthropic_inference_test.SystemPromptTest::test_system_prompt_not_overridden_by_handler",
+    "apache_beam.ml.inference.anthropic_inference_test.OutputConfigTest::test_no_output_config_when_none",
+    "apache_beam.ml.inference.anthropic_inference_test.OutputConfigTest::test_output_config_injected",
+    "apache_beam.ml.inference.anthropic_inference_test.OutputConfigTest::test_output_config_not_overridden_by_handler",
+    "apache_beam.ml.inference.anthropic_inference_test.AnthropicRunInferencePipelineTest::test_pipeline_e2e",
+    "apache_beam.ml.inference.anthropic_inference_test.AnthropicRunInferencePipelineTest::test_pipeline_with_system_prompt"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,123 @@
+patching file packages/devtools/tests/__mocks__/chrome-launcher.ts (renamed from packages/devtools/tests/__mocks__/chrome-launcher.js)
+patching file packages/devtools/tests/__mocks__/pptrDebug.ts (renamed from packages/devtools/tests/__mocks__/pptrDebug.js)
+patching file packages/devtools/tests/__mocks__/puppeteer-core.ts (renamed from packages/devtools/tests/__mocks__/puppeteer-core.js)
+patching file packages/devtools/tests/__snapshots__/devtools.test.ts.snap (renamed from packages/devtools/tests/__snapshots__/devtools.test.js.snap)
+patching file packages/devtools/tests/__snapshots__/devtoolsdriver.test.ts.snap (renamed from packages/devtools/tests/__snapshots__/devtoolsdriver.test.js.snap)
+patching file packages/devtools/tests/__snapshots__/launcher.test.ts.snap (renamed from packages/devtools/tests/__snapshots__/launcher.test.js.snap)
+patching file packages/devtools/tests/__snapshots__/utils.test.ts.snap (renamed from packages/devtools/tests/__snapshots__/utils.test.js.snap)
+patching file packages/devtools/tests/devtools.test.ts (renamed from packages/devtools/tests/devtools.test.js)
+patching file packages/devtools/tests/devtoolsdriver.test.ts (renamed from packages/devtools/tests/devtoolsdriver.test.js)
+patching file packages/devtools/tests/elementStore.test.ts (renamed from packages/devtools/tests/elementStore.test.js)
+patching file packages/devtools/tests/finder/finder.test.ts (renamed from packages/devtools/tests/finder/finder.test.js)
+patching file packages/devtools/tests/launcher.test.ts (renamed from packages/devtools/tests/launcher.test.js)
+patching file packages/devtools/tests/utils.test.ts (renamed from packages/devtools/tests/utils.test.js)
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+DeprecationWarning: 'createNodeArray' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+DeprecationWarning: 'createNodeArray' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+DeprecationWarning: 'createNodeArray' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+PASS packages/devtools/tests/elementStore.test.ts
+  ✓ should keep a map of elements (1 ms)
+  ✓ should not return element if it is not attached to the DOM (1 ms)
+
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+DeprecationWarning: 'createNodeArray' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+DeprecationWarning: 'createNodeArray' has been deprecated since v4.0.0. Use the appropriate method on 'ts.factory' or the 'factory' supplied by your transformation context instead.
+PASS packages/devtools/tests/finder/finder.test.ts
+  darwinGetAppPaths
+    ✓ Firefox Nightly (2 ms)
+    ✓ Microsoft Edge (1 ms)
+  darwinGetInstallations
+    ✓ darwinGetInstallations
+
+PASS packages/devtools/tests/launcher.test.ts
+  ✓ launch chrome with default values (4 ms)
+  ✓ launch chrome with chrome arguments (2 ms)
+  ✓ launch chrome without default flags and without puppeteer default args (1 ms)
+  ✓ overriding chrome default flags (1 ms)
+  ✓ overriding chrome default flags (backwards compat)
+  ✓ throws an error if an unknown deviceName is picked (1 ms)
+  ✓ launch Firefox with default values
+  ✓ launch Firefox with custom arguments (1 ms)
+  ✓ launch Firefox Nightly with custom arguments
+  ✓ launch Edge with default values (1 ms)
+  ✓ launch Edge with custom arguments (1 ms)
+  ✓ throws if browser is unknown
+  ✓ launch Firefox Nightly without Puppeteer default args (1 ms)
+  ✓ launch Firefox Nightly binary without Puppeteer default args
+  ✓ launch Firefox without Puppeteer default args
+  ✓ launch Firefox without Puppeteer default args (backwards compat) (1 ms)
+  ✓ launch Edge without Puppeteer default args
+  ✓ launch Edge without Puppeteer default args (backwards compat) (1 ms)
+
+PASS packages/devtools/tests/utils.test.ts
+  ✓ getPrototype (2 ms)
+  ✓ transformExecuteArgs (1 ms)
+  ✓ transformExecuteArgs throws stale element if element is not in store
+  ✓ getPages (111 ms)
+  ✓ getStaleElementError
+  ✓ uniq
+  ✓ findByWhich (2 ms)
+  ✓ patchDebug (2 ms)
+  ✓ patchDebug with debug not install in puppeteer (1 ms)
+  validate
+    ✓ should fail if wrong arguments are passed in (15 ms)
+    ✓ should fail if arguments are malformed
+    ✓ should fail if not required param has wrong type (1 ms)
+    ✓ should do a proper request (1 ms)
+    ✓ should do a proper request with non required params (1 ms)
+  findElement utils
+    findElement
+      ✓ tries to find element using css selector (2 ms)
+      ✓ tries to find element using xpath (1 ms)
+      ✓ should fail if not found (1 ms)
+      ✓ should not fail with the same error if Puppeteer can not find the element
+      ✓ sets implicit waits
+      ✓ sets implicit waits with xpath
+    findElements
+      ✓ should find elements (1 ms)
+      ✓ should find elements with xpath (1 ms)
+      ✓ should return immiadiatelly if no elements were found (1 ms)
+      ✓ sets implicit waits
+      ✓ sets implicit waits with xpath
+  sanitizeError
+    ✓ should set stale element error
+    ✓ should not contain puppeteer traces
+  transformExecuteResult
+    ✓ multiple results (1 ms)
+    ✓ single result
+
+PASS packages/devtools/tests/devtools.test.ts
+  ✓ newSession (543 ms)
+  ✓ reloadSession (11 ms)
+
+PASS packages/devtools/tests/devtoolsdriver.test.ts
+  ✓ can be initiated (4 ms)
+  ✓ should throw if command is called that is not implemented (3 ms)
+  ✓ should return proper result (105 ms)
+  ✓ should throw if command throws (103 ms)
+  ✓ should rerun command if it was executed within navigation (253 ms)
+  ✓ throws error if navigation takes too long (251 ms)
+  ✓ should wait for page load to be complete before executing the command (102 ms)
+  ✓ should use page from target if we are currently in a frame (2 ms)
+  ✓ should rerun command if no execution context could be found (102 ms)
+  ✓ should throw if execution context can not be established (304 ms)
+  ✓ dialogHandler
+  ✓ framenavigatedHandler (1 ms)
+  ✓ setTimeouts with not value
+  ✓ setTimeouts with implicit timeout (1 ms)
+  ✓ setTimeouts with implicit and pageLoad timeout
+  ✓ setTimeouts with all timeouts
+  ✓ getPageHandle (2 ms)
+
+Test Suites: 6 passed, 6 total
+Tests:       71 passed, 71 total
+Snapshots:   27 passed, 27 total
+Time:        3.011 s
+Ran all test suites matching /packages\/devtools\/tests\/devtools.test.ts|packages\/devtools\/tests\/devtoolsdriver.test.ts|packages\/devtools\/tests\/elementStore.test.ts|packages\/devtools\/tests\/finder\/finder.test.ts|packages\/devtools\/tests\/launcher.test.ts|packages\/devtools\/tests\/utils.test.ts/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":6,"numPassedTests":71,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTodoTests":0,"numTotalTestSuites":6,"numTotalTests":71,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":27,"total":27,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746686692,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":[],"failureMessages":[],"fullName":"should keep a map of elements","location":null,"status":"passed","title":"should keep a map of elements"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should not return element if it is not attached to the DOM","location":null,"status":"passed","title":"should not return element if it is not attached to the DOM"}],"endTime":1782746688059,"message":"","name":"/workspace/repo/packages/devtools/tests/elementStore.test.ts","startTime":1782746687178,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["darwinGetAppPaths"],"failureMessages":[],"fullName":"darwinGetAppPaths Firefox Nightly","location":null,"status":"passed","title":"Firefox Nightly"},{"ancestorTitles":["darwinGetAppPaths"],"failureMessages":[],"fullName":"darwinGetAppPaths Microsoft Edge","location":null,"status":"passed","title":"Microsoft Edge"},{"ancestorTitles":["darwinGetInstallations"],"failureMessages":[],"fullName":"darwinGetInstallations darwinGetInstallations","location":null,"status":"passed","title":"darwinGetInstallations"}],"endTime":1782746688280,"message":"","name":"/workspace/repo/packages/devtools/tests/finder/finder.test.ts","startTime":1782746687178,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":[],"failureMessages":[],"fullName":"launch chrome with default values","location":null,"status":"passed","title":"launch chrome with default values"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch chrome with chrome arguments","location":null,"status":"passed","title":"launch chrome with chrome arguments"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch chrome without default flags and without puppeteer default args","location":null,"status":"passed","title":"launch chrome without default flags and without puppeteer default args"},{"ancestorTitles":[],"failureMessages":[],"fullName":"overriding chrome default flags","location":null,"status":"passed","title":"overriding chrome default flags"},{"ancestorTitles":[],"failureMessages":[],"fullName":"overriding chrome default flags (backwards compat)","location":null,"status":"passed","title":"overriding chrome default flags (backwards compat)"},{"ancestorTitles":[],"failureMessages":[],"fullName":"throws an error if an unknown deviceName is picked","location":null,"status":"passed","title":"throws an error if an unknown deviceName is picked"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Firefox with default values","location":null,"status":"passed","title":"launch Firefox with default values"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Firefox with custom arguments","location":null,"status":"passed","title":"launch Firefox with custom arguments"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Firefox Nightly with custom arguments","location":null,"status":"passed","title":"launch Firefox Nightly with custom arguments"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Edge with default values","location":null,"status":"passed","title":"launch Edge with default values"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Edge with custom arguments","location":null,"status":"passed","title":"launch Edge with custom arguments"},{"ancestorTitles":[],"failureMessages":[],"fullName":"throws if browser is unknown","location":null,"status":"passed","title":"throws if browser is unknown"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Firefox Nightly without Puppeteer default args","location":null,"status":"passed","title":"launch Firefox Nightly without Puppeteer default args"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Firefox Nightly binary without Puppeteer default args","location":null,"status":"passed","title":"launch Firefox Nightly binary without Puppeteer default args"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Firefox without Puppeteer default args","location":null,"status":"passed","title":"launch Firefox without Puppeteer default args"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Firefox without Puppeteer default args (backwards compat)","location":null,"status":"passed","title":"launch Firefox without Puppeteer default args (backwards compat)"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Edge without Puppeteer default args","location":null,"status":"passed","title":"launch Edge without Puppeteer default args"},{"ancestorTitles":[],"failureMessages":[],"fullName":"launch Edge without Puppeteer default args (backwards compat)","location":null,"status":"passed","title":"launch Edge without Puppeteer default args (backwards compat)"}],"endTime":1782746688415,"message":"","name":"/workspace/repo/packages/devtools/tests/launcher.test.ts","startTime":1782746687178,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["validate"],"failureMessages":[],"fullName":"validate should fail if wrong arguments are passed in","location":null,"status":"passed","title":"should fail if wrong arguments are passed in"},{"ancestorTitles":["validate"],"failureMessages":[],"fullName":"validate should fail if arguments are malformed","location":null,"status":"passed","title":"should fail if arguments are malformed"},{"ancestorTitles":["validate"],"failureMessages":[],"fullName":"validate should fail if not required param has wrong type","location":null,"status":"passed","title":"should fail if not required param has wrong type"},{"ancestorTitles":["validate"],"failureMessages":[],"fullName":"validate should do a proper request","location":null,"status":"passed","title":"should do a proper request"},{"ancestorTitles":["validate"],"failureMessages":[],"fullName":"validate should do a proper request with non required params","location":null,"status":"passed","title":"should do a proper request with non required params"},{"ancestorTitles":[],"failureMessages":[],"fullName":"getPrototype","location":null,"status":"passed","title":"getPrototype"},{"ancestorTitles":["findElement utils","findElement"],"failureMessages":[],"fullName":"findElement utils findElement tries to find element using css selector","location":null,"status":"passed","title":"tries to find element using css selector"},{"ancestorTitles":["findElement utils","findElement"],"failureMessages":[],"fullName":"findElement utils findElement tries to find element using xpath","location":null,"status":"passed","title":"tries to find element using xpath"},{"ancestorTitles":["findElement utils","findElement"],"failureMessages":[],"fullName":"findElement utils findElement should fail if not found","location":null,"status":"passed","title":"should fail if not found"},{"ancestorTitles":["findElement utils","findElement"],"failureMessages":[],"fullName":"findElement utils findElement should not fail with the same error if Puppeteer can not find the element","location":null,"status":"passed","title":"should not fail with the same error if Puppeteer can not find the element"},{"ancestorTitles":["findElement utils","findElement"],"failureMessages":[],"fullName":"findElement utils findElement sets implicit waits","location":null,"status":"passed","title":"sets implicit waits"},{"ancestorTitles":["findElement utils","findElement"],"failureMessages":[],"fullName":"findElement utils findElement sets implicit waits with xpath","location":null,"status":"passed","title":"sets implicit waits with xpath"},{"ancestorTitles":["findElement utils","findElements"],"failureMessages":[],"fullName":"findElement utils findElements should find elements","location":null,"status":"passed","title":"should find elements"},{"ancestorTitles":["findElement utils","findElements"],"failureMessages":[],"fullName":"findElement utils findElements should find elements with xpath","location":null,"status":"passed","title":"should find elements with xpath"},{"ancestorTitles":["findElement utils","findElements"],"failureMessages":[],"fullName":"findElement utils findElements should return immiadiatelly if no elements were found","location":null,"status":"passed","title":"should return immiadiatelly if no elements were found"},{"ancestorTitles":["findElement utils","findElements"],"failureMessages":[],"fullName":"findElement utils findElements sets implicit waits","location":null,"status":"passed","title":"sets implicit waits"},{"ancestorTitles":["findElement utils","findElements"],"failureMessages":[],"fullName":"findElement utils findElements sets implicit waits with xpath","location":null,"status":"passed","title":"sets implicit waits with xpath"},{"ancestorTitles":["sanitizeError"],"failureMessages":[],"fullName":"sanitizeError should set stale element error","location":null,"status":"passed","title":"should set stale element error"},{"ancestorTitles":["sanitizeError"],"failureMessages":[],"fullName":"sanitizeError should not contain puppeteer traces","location":null,"status":"passed","title":"should not contain puppeteer traces"},{"ancestorTitles":[],"failureMessages":[],"fullName":"transformExecuteArgs","location":null,"status":"passed","title":"transformExecuteArgs"},{"ancestorTitles":[],"failureMessages":[],"fullName":"transformExecuteArgs throws stale element if element is not in store","location":null,"status":"passed","title":"transformExecuteArgs throws stale element if element is not in store"},{"ancestorTitles":["transformExecuteResult"],"failureMessages":[],"fullName":"transformExecuteResult multiple results","location":null,"status":"passed","title":"multiple results"},{"ancestorTitles":["transformExecuteResult"],"failureMessages":[],"fullName":"transformExecuteResult single result","location":null,"status":"passed","title":"single result"},{"ancestorTitles":[],"failureMessages":[],"fullName":"getPages","location":null,"status":"passed","title":"getPages"},{"ancestorTitles":[],"failureMessages":[],"fullName":"getStaleElementError","location":null,"status":"passed","title":"getStaleElementError"},{"ancestorTitles":[],"failureMessages":[],"fullName":"uniq","location":null,"status":"passed","title":"uniq"},{"ancestorTitles":[],"failureMessages":[],"fullName":"findByWhich","location":null,"status":"passed","title":"findByWhich"},{"ancestorTitles":[],"failureMessages":[],"fullName":"patchDebug","location":null,"status":"passed","title":"patchDebug"},{"ancestorTitles":[],"failureMessages":[],"fullName":"patchDebug with debug not install in puppeteer","location":null,"status":"passed","title":"patchDebug with debug not install in puppeteer"}],"endTime":1782746688567,"message":"","name":"/workspace/repo/packages/devtools/tests/utils.test.ts","startTime":1782746687178,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":[],"failureMessages":[],"fullName":"newSession","location":null,"status":"passed","title":"newSession"},{"ancestorTitles":[],"failureMessages":[],"fullName":"reloadSession","location":null,"status":"passed","title":"reloadSession"}],"endTime":1782746688959,"message":"","name":"/workspace/repo/packages/devtools/tests/devtools.test.ts","startTime":1782746687178,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":[],"failureMessages":[],"fullName":"can be initiated","location":null,"status":"passed","title":"can be initiated"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should throw if command is called that is not implemented","location":null,"status":"passed","title":"should throw if command is called that is not implemented"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should return proper result","location":null,"status":"passed","title":"should return proper result"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should throw if command throws","location":null,"status":"passed","title":"should throw if command throws"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should rerun command if it was executed within navigation","location":null,"status":"passed","title":"should rerun command if it was executed within navigation"},{"ancestorTitles":[],"failureMessages":[],"fullName":"throws error if navigation takes too long","location":null,"status":"passed","title":"throws error if navigation takes too long"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should wait for page load to be complete before executing the command","location":null,"status":"passed","title":"should wait for page load to be complete before executing the command"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should use page from target if we are currently in a frame","location":null,"status":"passed","title":"should use page from target if we are currently in a frame"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should rerun command if no execution context could be found","location":null,"status":"passed","title":"should rerun command if no execution context could be found"},{"ancestorTitles":[],"failureMessages":[],"fullName":"should throw if execution context can not be established","location":null,"status":"passed","title":"should throw if execution context can not be established"},{"ancestorTitles":[],"failureMessages":[],"fullName":"dialogHandler","location":null,"status":"passed","title":"dialogHandler"},{"ancestorTitles":[],"failureMessages":[],"fullName":"framenavigatedHandler","location":null,"status":"passed","title":"framenavigatedHandler"},{"ancestorTitles":[],"failureMessages":[],"fullName":"setTimeouts with not value","location":null,"status":"passed","title":"setTimeouts with not value"},{"ancestorTitles":[],"failureMessages":[],"fullName":"setTimeouts with implicit timeout","location":null,"status":"passed","title":"setTimeouts with implicit timeout"},{"ancestorTitles":[],"failureMessages":[],"fullName":"setTimeouts with implicit and pageLoad timeout","location":null,"status":"passed","title":"setTimeouts with implicit and pageLoad timeout"},{"ancestorTitles":[],"failureMessages":[],"fullName":"setTimeouts with all timeouts","location":null,"status":"passed","title":"setTimeouts with all timeouts"},{"ancestorTitles":[],"failureMessages":[],"fullName":"getPageHandle","location":null,"status":"passed","title":"getPageHandle"}],"endTime":1782746689634,"message":"","name":"/workspace/repo/packages/devtools/tests/devtoolsdriver.test.ts","startTime":1782746687178,"status":"passed","summary":""}],"wasInterrupted":false}  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

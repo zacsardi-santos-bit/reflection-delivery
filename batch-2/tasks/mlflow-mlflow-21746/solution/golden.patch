@@ -1,0 +1,3277 @@
+diff --git a/.github/workflows/advice.js b/.github/workflows/advice.js
+index b631680fc..f99a4da4a 100644
+--- a/.github/workflows/advice.js
++++ b/.github/workflows/advice.js
+@@ -118,7 +118,7 @@ module.exports = async ({ context, github }) => {
+ 
+ #### Install mlflow from this PR
+ 
+-\`\`\`bash
++\`\`\`
+ # mlflow
+ pip install git+https://github.com/mlflow/mlflow.git@refs/pull/${issue_number}/merge
+ # mlflow-skinny
+@@ -127,7 +127,7 @@ pip install git+https://github.com/mlflow/mlflow.git@refs/pull/${issue_number}/m
+ 
+ For Databricks, use the following command:
+ 
+-\`\`\`bash
++\`\`\`
+ %sh curl -LsSf https://raw.githubusercontent.com/mlflow/mlflow/HEAD/dev/install-skinny.sh | sh -s pull/${issue_number}/merge
+ \`\`\`
+ 
+diff --git a/.github/workflows/tracing.yaml b/.github/workflows/tracing.yaml
+index 650e04576..857b8063e 100644
+--- a/.github/workflows/tracing.yaml
++++ b/.github/workflows/tracing.yaml
+@@ -33,7 +33,6 @@ env:
+   MLFLOW_CONDA_HOME: /usr/share/miniconda
+   PYTHONUTF8: "1"
+   MLFLOW_SERVER_ENABLE_JOB_EXECUTION: "false"
+-  PIP_CONSTRAINT: ${{ github.workspace }}/requirements/constraints.txt
+ 
+ jobs:
+   core:
+diff --git a/SECURITY.md b/SECURITY.md
+index 3d1a4fad9..981f1f60c 100644
+--- a/SECURITY.md
++++ b/SECURITY.md
+@@ -10,12 +10,6 @@ resolve the vulnerabilities they discover.
+ The latest version of MLflow has continued support. If a critical vulnerability is found in the current version
+ of MLflow, we may opt to backport patches to previous versions.
+ 
+-## Bounty Platform Policy
+-
+-Due to an excessive volume of low-quality, AI-generated reports (including duplicates, low-effort submissions, non-reproducible claims, and spam), **we no longer accept vulnerability reports through bounty platforms such as [Huntr](https://huntr.com/)**. All reports submitted through such platforms will be automatically closed without review.
+-
+-Please use the reporting process described below instead.
+-
+ ## Reporting a Vulnerability
+ 
+ When finding a security vulnerability in MLflow, please perform the following actions:
+diff --git a/docs/docs/genai/governance/ai-gateway/endpoints/query-endpoints.mdx b/docs/docs/genai/governance/ai-gateway/endpoints/query-endpoints.mdx
+index 47e8f8970..0e4216548 100644
+--- a/docs/docs/genai/governance/ai-gateway/endpoints/query-endpoints.mdx
++++ b/docs/docs/genai/governance/ai-gateway/endpoints/query-endpoints.mdx
+@@ -9,18 +9,6 @@ import TabItem from "@theme/TabItem";
+ 
+ Once you've created an endpoint, you can call it through several different API styles depending on your needs.
+ 
+-## Supported API Styles
+-
+-The following table summarizes all the ways you can query gateway endpoints:
+-
+-| Category        | API Style                          | URL Pattern                                                                                                                 | Description                                                                                                                        |
+-| --------------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+-| **Unified**     | MLflow Invocations                 | `POST /gateway/{endpoint_name}/mlflow/invocations`                                                                          | Native MLflow interface supporting chat completions and embeddings. Handles routing features like traffic splitting and fallbacks. |
+-| **Unified**     | OpenAI-compatible Chat Completions | `POST /gateway/mlflow/v1/chat/completions`                                                                                  | Drop-in replacement for the OpenAI chat completions API. Use the endpoint name as the `model` parameter.                           |
+-| **Passthrough** | OpenAI                             | `POST /gateway/openai/v1/chat/completions`<br/>`POST /gateway/openai/v1/embeddings`<br/>`POST /gateway/openai/v1/responses` | Full OpenAI API access including Chat Completions, Embeddings, and Responses endpoints.                                            |
+-| **Passthrough** | Anthropic                          | `POST /gateway/anthropic/v1/messages`                                                                                       | Direct access to Anthropic's Messages API.                                                                                         |
+-| **Passthrough** | Google Gemini                      | `POST /gateway/gemini/v1beta/models/{endpoint_name}:generateContent`                                                        | Google Gemini's native generateContent API.                                                                                        |
+-
+ ## Viewing Usage Examples
+ 
+ To see code examples for your endpoint, navigate to the Endpoints list and click either the Use button or the endpoint name itself. This opens a modal with comprehensive usage examples tailored to your specific endpoint.
+diff --git a/mlflow/entities/issue.py b/mlflow/entities/issue.py
+index 94c5251d7..5f8567830 100644
+--- a/mlflow/entities/issue.py
++++ b/mlflow/entities/issue.py
+@@ -99,6 +99,9 @@ class Issue(_MlflowObject):
+     created_by: str | None = None
+     """Identifier for who created this issue."""
+ 
++    trace_count: int | None = None
++    """Number of traces impacted by this issue. Only populated when explicitly requested."""
++
+     def to_dictionary(self) -> dict[str, Any]:
+         """Convert Issue to dictionary representation."""
+         return {
+@@ -114,6 +117,7 @@ class Issue(_MlflowObject):
+             "created_timestamp": self.created_timestamp,
+             "last_updated_timestamp": self.last_updated_timestamp,
+             "created_by": self.created_by,
++            "trace_count": self.trace_count,
+         }
+ 
+     @classmethod
+@@ -134,6 +138,7 @@ class Issue(_MlflowObject):
+             source_run_id=issue_dict.get("source_run_id"),
+             categories=issue_dict.get("categories"),
+             created_by=issue_dict.get("created_by"),
++            trace_count=issue_dict.get("trace_count"),
+         )
+ 
+     def to_proto(self) -> ProtoIssue:
+@@ -157,6 +162,8 @@ class Issue(_MlflowObject):
+             proto_issue.categories.extend(self.categories)
+         if self.created_by:
+             proto_issue.created_by = self.created_by
++        if self.trace_count is not None:
++            proto_issue.trace_count = self.trace_count
+ 
+         return proto_issue
+ 
+@@ -176,4 +183,5 @@ class Issue(_MlflowObject):
+             source_run_id=proto.source_run_id or None,
+             categories=list(proto.categories) or None,
+             created_by=proto.created_by or None,
++            trace_count=proto.trace_count if proto.HasField("trace_count") else None,
+         )
+diff --git a/mlflow/gateway/constants.py b/mlflow/gateway/constants.py
+index 23b4fb087..99f228a8a 100644
+--- a/mlflow/gateway/constants.py
++++ b/mlflow/gateway/constants.py
+@@ -1,14 +1,3 @@
+-from enum import Enum
+-
+-MLFLOW_GATEWAY_CALLER_HEADER = "X-MLflow-Gateway-Caller"
+-
+-
+-class GatewayCaller(str, Enum):
+-    """Known callers of the gateway, sent via the X-MLflow-Gateway-Caller header."""
+-
+-    JUDGE = "judge"
+-
+-
+ MLFLOW_GATEWAY_HEALTH_ENDPOINT = "/health"
+ MLFLOW_GATEWAY_CRUD_ROUTE_BASE = "/api/2.0/gateway/routes/"
+ MLFLOW_GATEWAY_CRUD_ENDPOINT_V3_BASE = "/api/3.0/gateway/endpoint/"
+diff --git a/mlflow/genai/discovery/clustering.py b/mlflow/genai/discovery/clustering.py
+index dc800d4ed..cfe13c1af 100644
+--- a/mlflow/genai/discovery/clustering.py
++++ b/mlflow/genai/discovery/clustering.py
+@@ -8,7 +8,6 @@ from pydantic import BaseModel as _BaseModel
+ from mlflow.entities.issue import IssueSeverity
+ from mlflow.genai.discovery.constants import (
+     CLUSTER_LABELS_PROMPT_TEMPLATE,
+-    _format_cluster_categories,
+     build_cluster_summary_prompt,
+ )
+ from mlflow.genai.discovery.entities import (
+@@ -33,7 +32,6 @@ def cluster_by_llm(
+     labels: list[str],
+     max_issues: int,
+     model: str,
+-    categories: list[str] | None = None,
+     token_counter: _TokenCounter | None = None,
+ ) -> list[list[int]]:
+     """
+@@ -48,7 +46,6 @@ def cluster_by_llm(
+         labels: Failure labels to cluster.
+         max_issues: Maximum number of groups to produce.
+         model: Model URI for the clustering LLM.
+-        categories: Optional issue categories to use as a grouping signal.
+         token_counter: Optional token counter for tracking LLM usage.
+ 
+     Returns:
+@@ -59,7 +56,6 @@ def cluster_by_llm(
+         num_labels=len(labels),
+         max_issues=max_issues,
+         numbered_labels=numbered,
+-        categories_context=_format_cluster_categories(categories),
+     )
+ 
+     response = _call_llm(
+@@ -135,8 +131,6 @@ def summarize_cluster(
+         entry = f"[{i}] {analysis.rationale_summary}"
+         if analysis.execution_path:
+             entry += f"\n  execution_path: {analysis.execution_path}"
+-        if analysis.categories:
+-            entry += f"\n  categories: {', '.join(analysis.categories)}"
+         parts.append(entry)
+     analyses_text = "\n\n".join(parts)
+ 
+diff --git a/mlflow/genai/discovery/constants.py b/mlflow/genai/discovery/constants.py
+index 1fa249ba1..155849ce6 100644
+--- a/mlflow/genai/discovery/constants.py
++++ b/mlflow/genai/discovery/constants.py
+@@ -19,18 +19,7 @@ TRACE_CONTENT_TRUNCATION = 1000
+ 
+ DEFAULT_MODEL = "openai:/gpt-5-mini"
+ DEFAULT_SCORER_NAME = "_issue_discovery_judge"
+-DEFAULT_CATEGORY_DESCRIPTIONS = {
+-    "correctness": "Output is factually accurate and grounded in provided data",
+-    "latency": "Agent responds within acceptable time bounds",
+-    "execution": "Agent successfully completes actions (tool calls, API steps)",
+-    "adherence": "Response follows instructions, constraints, policies, and formatting",
+-    "relevance": (
+-        "Output is useful, directly addresses the user's request, "
+-        "and leaves the user satisfied with the interaction"
+-    ),
+-    "safety": "Response avoids harmful, sensitive, or inappropriate content",
+-}
+-DEFAULT_CATEGORIES = list(DEFAULT_CATEGORY_DESCRIPTIONS)
++DEFAULT_CATEGORIES = ["low_quality", "negative_ux", "safety", "performance"]
+ 
+ 
+ # ---- Satisfaction scorer instructions ----
+@@ -94,6 +83,8 @@ that require specific fulfillment
+ if a system prompt defines what the assistant can/cannot do, evaluate only against that scope\
+ {extra_donts}
+ 
++Return True if the user's goals were achieved efficiently, False otherwise.
++
+ In your rationale, explain:
+ - What the user wanted to achieve (list all goals)
+ - Whether they were achieved efficiently
+@@ -131,10 +122,13 @@ application actually perform that task?
+ limitations, do NOT mark it as failing for things outside its defined scope. \
+ Evaluate only against what the assistant is designed to do.
+ 
+-When in doubt, consider it passed. Only mark as failed for clear, unambiguous \
+-failures — not stylistic preferences, minor omissions, or responses that are \
+-correct but could be improved. The bar is whether the output *fails* the request, \
+-not whether it is *perfect*.
++When in doubt, return True. Only return False for clear, unambiguous failures — \
++not stylistic preferences, minor omissions, or responses that are correct but \
++could be improved. The bar is whether the output *fails* the request, not \
++whether it is *perfect*.
++
++Return True if the output correctly fulfills the input request.
++Return False if there are significant quality problems.
+ 
+ In your rationale, start with a concise label in square brackets (5-15 words), e.g. \
+ [null response] or [incorrect output format] or [no issues found]. \
+@@ -145,31 +139,22 @@ Then cite specific evidence from the APPLICATION OUTPUT above.\
+ CATEGORIES_INSTRUCTIONS = """\
+ 
+ 
+-The following issue categories are the ONLY valid categories for this evaluation:
+-{categories}
+-
+-For the "passed" key in your result, return "true" if the user's goals were achieved \
+-efficiently, "false" otherwise.
+-
+-For the "categories" key, return a comma-separated list of applicable categories from \
+-the list above. If no categories apply, return an empty string. \
+-Example: "correctness, execution"
++The following issue categories are the ONLY valid categories for this evaluation. \
++If the assistant's behavior relates to any of these categories, include the category \
++as a tag in square brackets in your rationale (e.g. [low_quality]). Do NOT include \
++any categories that are not in this list:
++{categories}\
+ """
+ 
+ 
+-def _format_category_list(categories: list[str]) -> str:
+-    parts = []
+-    for cat in categories:
+-        desc = DEFAULT_CATEGORY_DESCRIPTIONS.get(cat)
+-        parts.append(f"{cat} ({desc})" if desc else cat)
+-    return ", ".join(parts)
++def _format_categories(categories: list[str]) -> str:
++    items = "\n".join(f"- {cat}" for cat in categories)
++    return CATEGORIES_INSTRUCTIONS.format(categories=items)
+ 
+ 
+ def build_satisfaction_instructions(*, use_conversation: bool, categories: list[str]) -> str:
+     if not use_conversation:
+-        return TRACE_QUALITY_INSTRUCTIONS + CATEGORIES_INSTRUCTIONS.format(
+-            categories=_format_category_list(categories)
+-        )
++        return TRACE_QUALITY_INSTRUCTIONS + _format_categories(categories)
+ 
+     preamble = SATISFACTION_INSTRUCTIONS_PREAMBLE.format(context_noun="conversation")
+     body = SATISFACTION_INSTRUCTIONS_BODY.format(
+@@ -193,11 +178,7 @@ def build_satisfaction_instructions(*, use_conversation: bool, categories: list[
+             "it is problematic.\n"
+         ),
+     )
+-    return (
+-        preamble
+-        + body
+-        + CATEGORIES_INSTRUCTIONS.format(categories=_format_category_list(categories))
+-    )
++    return preamble + body + _format_categories(categories)
+ 
+ 
+ # ---- Failure label extraction prompt ----
+@@ -245,61 +226,36 @@ CLUSTER_SUMMARY_SYSTEM_PROMPT_BASE = (
+     "Cite observable symptoms (e.g. 'returned empty response', 'ignored the user's "
+     "constraint to avoid implementation'). Avoid vague language like 'inefficient' "
+     "or 'suboptimal' without concrete details.\n"
+-    "- The root cause: why this likely happens AND where to investigate. You MUST name "
+-    "specific tools, functions, sub-agents, or execution paths from the analyses (e.g. "
+-    "'the run_media_playback_assistant tool returns stale state', 'the get_schedule "
+-    "function omits timezone metadata', 'the system prompt for the financial assistant "
+-    "does not enforce best-effort answers'). If the analyses mention execution paths "
+-    "like [tool_a > tool_b > tool_c], reference them. Do NOT write vague root causes "
+-    "like 'the orchestration layer' or 'intent handling' without naming the specific "
+-    "component. A developer reading this must know exactly which tool, prompt, or "
+-    "code path to investigate first.\n"
++    "- The root cause: why this likely happens AND where to investigate. Identify "
++    "the probable component, behavior, or configuration at fault (e.g. 'the retrieval "
++    "tool may be returning stale cached results', 'the system prompt does not instruct "
++    "the agent to respect user constraints'). Be specific but note these are hypotheses "
++    "based on observed symptoms.\n"
+     f"- A severity level from: {', '.join(str(level) for level in IssueSeverity)}. "
+     "Use medium or high only if the analyses clearly share the same failure "
+     "pattern. Use not_an_issue if they do NOT belong together or represent no real issue.\n"
+ )
+ 
+ CLUSTER_SUMMARY_CATEGORIES_INSTRUCTION_WITH_LIST = (
+-    "- **Categories**: Assign one or more categories from: {categories}. "
+-    "Only assign a category you can justify with specific evidence.\n"
+-    "- **category_rationale** (REQUIRED field): For EACH assigned category, write 1-2 sentences "
+-    "explaining WHY this issue belongs to that category. Reference specific symptoms or behaviors. "
+-    "You MUST populate this field with explicit justification for every assigned category. "
+-    "Example: 'execution: The assistant claimed playback resumed when no action occurred. "
+-    "correctness: It provided conflicting timer states in adjacent responses.'"
++    "- Categories: Extract any category tags enclosed in square brackets from the rationales. "
++    "ONLY include categories from this list: {categories}. "
++    "If no matching category tags are found, return an empty list."
+ )
+ 
+ 
+ def build_cluster_summary_prompt(categories: list[str]) -> str:
+-    cat_instruction = CLUSTER_SUMMARY_CATEGORIES_INSTRUCTION_WITH_LIST.format(
+-        categories=_format_category_list(categories)
+-    )
++    """Build the cluster summary system prompt with category filtering."""
++    cat_list = ", ".join(categories)
++    cat_instruction = CLUSTER_SUMMARY_CATEGORIES_INSTRUCTION_WITH_LIST.format(categories=cat_list)
+     return CLUSTER_SUMMARY_SYSTEM_PROMPT_BASE + cat_instruction
+ 
+ 
+-# ---- Category context fragments for downstream phases ----
+-
+-CLUSTER_CATEGORIES_CONTEXT = (
+-    "\n\nThe following issue categories have been identified during triage. "
+-    "Use these as an additional grouping signal — labels tagged with the same "
+-    "category are likely to belong together, even if their execution paths differ:\n"
+-    "{categories}\n"
+-)
+-
+-
+-def _format_cluster_categories(categories: list[str] | None) -> str:
+-    if not categories:
+-        return ""
+-    return CLUSTER_CATEGORIES_CONTEXT.format(categories=_format_category_list(categories))
+-
+-
+ # ---- Label clustering prompt ----
+ 
+ CLUSTER_LABELS_PROMPT_TEMPLATE = (
+     "Below are {num_labels} failure labels from an AI agent.\n"
+     "Each label has the format: [execution_path] symptom\n"
+     "The execution path shows which sub-agents and tools were called.\n\n"
+-    "{categories_context}"
+     "Group these labels into coherent issue categories. Two labels belong "
+     "in the same group when:\n"
+     "  1. They share the same failure pattern (similar symptom)\n"
+@@ -325,7 +281,6 @@ TRACE_ANNOTATION_SYSTEM_PROMPT = (
+     "You are annotating a trace that was identified as exhibiting a known issue.\n\n"
+     "You will be given:\n"
+     "- The issue (name, description, root cause)\n"
+-    "- Known issue categories relevant to this trace (if any)\n"
+     "- The trace's actual input/output and execution path\n"
+     "- The triage judge's rationale for why this trace was flagged\n\n"
+     "Write a CONCISE rationale (2-3 sentences, max 150 words) for why THIS trace "
+diff --git a/mlflow/genai/discovery/entities.py b/mlflow/genai/discovery/entities.py
+index 68b8f4b00..59c328cf9 100644
+--- a/mlflow/genai/discovery/entities.py
++++ b/mlflow/genai/discovery/entities.py
+@@ -1,21 +1,13 @@
+ from __future__ import annotations
+ 
+-from dataclasses import dataclass, field
++from dataclasses import dataclass
+ 
+ import pydantic
+ 
+ from mlflow.entities.issue import Issue, IssueSeverity
+-from mlflow.entities.trace import Trace
+ from mlflow.genai.discovery.constants import RATIONALE_TRUNCATION_LIMIT
+ 
+ 
+-@dataclass
+-class _TriageResult:
+-    failing_traces: list[Trace]
+-    rationale_map: dict[str, str]
+-    categories_map: dict[str, list[str]]
+-
+-
+ @dataclass
+ class DiscoverIssuesResult:
+     issues: list[Issue]
+@@ -34,13 +26,11 @@ class _ConversationAnalysis:
+         affected_trace_ids: Trace IDs of failing traces in this session.
+         execution_path: Compact path of sub-agents/tools called (e.g.
+             ``"ask_sports > get_scores, web_search"``).
+-        categories: Category tags extracted from triage rationales (e.g. ["hallucination"]).
+     """
+ 
+     full_rationale: str
+     affected_trace_ids: list[str]
+     execution_path: str = ""
+-    categories: list[str] = field(default_factory=list)
+ 
+     @property
+     def rationale_summary(self) -> str:
+@@ -67,18 +57,5 @@ class _IdentifiedIssue(pydantic.BaseModel):
+         ),
+     )
+     categories: list[str] = pydantic.Field(
+-        description=(
+-            "Categories of this issue. Each category MUST be substantiated by "
+-            "concrete evidence in the description and root cause."
+-        ),
+-    )
+-    category_rationale: str = pydantic.Field(
+-        default="",
+-        description=(
+-            "For EACH assigned category, explain in 1-2 sentences WHY this issue "
+-            "belongs to that category with specific evidence from the failure. "
+-            "This field is REQUIRED if any categories are assigned. "
+-            "E.g. 'execution: The assistant claimed playback resumed when no action occurred. "
+-            "correctness: It provided conflicting timer states in adjacent responses.'"
+-        ),
++        description="Categories of this issue",
+     )
+diff --git a/mlflow/genai/discovery/extraction.py b/mlflow/genai/discovery/extraction.py
+index 8acd45dee..42ee1c065 100644
+--- a/mlflow/genai/discovery/extraction.py
++++ b/mlflow/genai/discovery/extraction.py
+@@ -11,7 +11,7 @@ from mlflow.environment_variables import MLFLOW_GENAI_EVAL_MAX_WORKERS
+ from mlflow.genai.discovery.constants import (
+     FAILURE_LABEL_SYSTEM_PROMPT,
+ )
+-from mlflow.genai.discovery.entities import _ConversationAnalysis, _TriageResult
++from mlflow.genai.discovery.entities import _ConversationAnalysis
+ from mlflow.genai.discovery.utils import _call_llm, _TokenCounter
+ 
+ _logger = logging.getLogger(__name__)
+@@ -197,8 +197,6 @@ def extract_failure_labels(
+ 
+     def _generate_labels(analysis: _ConversationAnalysis) -> list[str]:
+         rationale = analysis.rationale_summary
+-        if analysis.categories:
+-            rationale += f"\nIdentified categories: {', '.join(analysis.categories)}"
+         response = _call_llm(
+             model,
+             [
+@@ -234,23 +232,10 @@ def extract_failure_labels(
+     return labels, label_to_analysis
+ 
+ 
+-def _parse_assessment_value(value) -> tuple[bool, list[str]]:
+-    """Parse a feedback value into (passed, categories).
+-
+-    Handles both simple bool values and dict[str, str] structured output
+-    with "passed" and "categories" keys.
+-    """
+-    if isinstance(value, dict):
+-        passed = str(value.get("passed", "true")).lower() == "true"
+-        cats = [c.strip() for c in value.get("categories", "").split(",") if c.strip()]
+-        return passed, cats
+-    return bool(value), []
+-
+-
+ def extract_failing_traces(
+     scored_traces: list[Trace],
+     scorer_names: str | list[str],
+-) -> _TriageResult:
++) -> tuple[list[Trace], dict[str, str]]:
+     """
+     Extract failing traces and their rationales from scored trace objects.
+ 
+@@ -265,38 +250,33 @@ def extract_failing_traces(
+     Args:
+         scored_traces: Traces with scorer assessments attached.
+         scorer_names: One or more scorer names to check for failures.
++
++    Returns:
++        A tuple of (failing_traces, rationale_map) where rationale_map
++        maps trace_id to the combined rationale string.
+     """
+     if isinstance(scorer_names, str):
+         scorer_names = [scorer_names]
+ 
+     failing: list[Trace] = []
+-    rationale_map: dict[str, str] = {}
+-    categories_map: dict[str, list[str]] = {}
++    rationales: dict[str, str] = {}
+ 
+     for trace in scored_traces:
+-        row_rationales: list[str] = []
+-        row_categories: list[str] = []
+-        is_failing = False
++        row_failing: list[tuple[str, str]] = []
+         for scorer_name in scorer_names:
+             assessments = trace.search_assessments(scorer_name, type="feedback")
+             assessment = assessments[-1] if assessments else None
+             if assessment is None:
+                 continue
+-            if assessment.value is None:
+-                continue
+-            passed, cats = _parse_assessment_value(assessment.value)
+-            row_categories.extend(cats)
+-            if not passed:
+-                is_failing = True
+-                if assessment.rationale:
+-                    row_rationales.append(assessment.rationale)
+-
+-        if not is_failing:
++            if assessment.value is not None and not bool(assessment.value):
++                row_failing.append((scorer_name, assessment.rationale or ""))
++
++        if not row_failing:
+             continue
+ 
+-        trace_id = trace.info.trace_id
+         failing.append(trace)
+-        rationale_map[trace_id] = "; ".join(row_rationales)
+-        categories_map[trace_id] = list(dict.fromkeys(row_categories))
++        rationales[trace.info.trace_id] = "; ".join(
++            rationale for _, rationale in row_failing if rationale
++        )
+ 
+-    return _TriageResult(failing, rationale_map, categories_map)
++    return failing, rationales
+diff --git a/mlflow/genai/discovery/pipeline.py b/mlflow/genai/discovery/pipeline.py
+index 8482ea679..fe84d46a6 100644
+--- a/mlflow/genai/discovery/pipeline.py
++++ b/mlflow/genai/discovery/pipeline.py
+@@ -123,7 +123,6 @@ def _annotate_issue_traces(
+     rationale_map: dict[str, str],
+     trace_lookup: dict[str, Trace],
+     model: str,
+-    categories: list[str] | None = None,
+     trace_to_session: dict[str, str] | None = None,
+     session_first_trace: dict[str, str] | None = None,
+     token_counter: _TokenCounter | None = None,
+@@ -158,12 +157,7 @@ def _annotate_issue_traces(
+     def _annotate_one(item: _AnnotationWorkItem) -> str | None:
+         trace = trace_lookup.get(item.trace_id)
+         trace_content = format_trace_content(trace) if trace else "(trace not available)"
+-        user_content = format_annotation_prompt(
+-            item.issue,
+-            trace_content,
+-            item.triage_rationale,
+-            categories=categories,
+-        )
++        user_content = format_annotation_prompt(item.issue, trace_content, item.triage_rationale)
+ 
+         try:
+             response = _call_llm(
+@@ -211,9 +205,7 @@ def _annotate_issue_traces(
+ def _build_analyses(
+     triage_traces: list[Trace],
+     rationale_map: dict[str, str],
+-    categories_map: dict[str, list[str]],
+     scorer_name: str,
+-    categories: list[str] = DEFAULT_CATEGORIES,
+ ) -> tuple[list[_ConversationAnalysis], dict[str, list[Trace]]]:
+     """
+     Build per-session analyses from triage results.
+@@ -224,18 +216,15 @@ def _build_analyses(
+     Args:
+         triage_traces: All traces from the triage phase (passing and failing).
+         rationale_map: Mapping of trace_id to triage rationale for failing traces.
+-        categories_map: Mapping of trace_id to category tags from structured output.
+         scorer_name: Name of the triage scorer, used to look up human feedback.
+-        categories: Known valid categories to filter against.
+ 
+     Returns:
+         A tuple of (analyses, session_groups) where session_groups maps
+         session_id to the list of traces in that session.
+     """
+-    known_lower = {c.lower() for c in categories}
+     session_groups = group_traces_by_session(triage_traces)
+     analyses: list[_ConversationAnalysis] = []
+-    for _, session_traces in session_groups.items():
++    for session_id, session_traces in session_groups.items():
+         session_failing = [
+             trace for trace in session_traces if trace.info.trace_id in rationale_map
+         ]
+@@ -245,18 +234,11 @@ def _build_analyses(
+         if not combined_rationale:
+             continue
+         exec_path = extract_execution_paths_for_session(session_failing)
+-        session_cats = [
+-            cat
+-            for trace in session_failing
+-            for cat in categories_map.get(trace.info.trace_id, [])
+-            if cat.lower() in known_lower
+-        ]
+         analyses.append(
+             _ConversationAnalysis(
+                 full_rationale=combined_rationale,
+                 affected_trace_ids=[trace.info.trace_id for trace in session_failing],
+                 execution_path=exec_path,
+-                categories=list(dict.fromkeys(session_cats)),
+             )
+         )
+     _logger.debug("Built %d analyses from triage rationales", len(analyses))
+@@ -360,24 +342,14 @@ def _cluster_and_identify(
+     token_counter: _TokenCounter | None = None,
+ ) -> list[_IdentifiedIssue]:
+     """Cluster analyses into identified issues via LLM-based labeling and grouping."""
+-    labels, label_to_analysis = extract_failure_labels(
+-        analyses,
+-        model,
+-        token_counter=token_counter,
+-    )
++    labels, label_to_analysis = extract_failure_labels(analyses, model, token_counter=token_counter)
+     for i, label in enumerate(labels):
+         _logger.debug("  [%d] %s", i, label)
+ 
+     if len(labels) == 1:
+         cluster_groups = [[0]]
+     else:
+-        cluster_groups = cluster_by_llm(
+-            labels,
+-            max_issues,
+-            model,
+-            categories=categories,
+-            token_counter=token_counter,
+-        )
++        cluster_groups = cluster_by_llm(labels, max_issues, model, token_counter=token_counter)
+     _logger.debug("Clustering produced %d groups", len(cluster_groups))
+ 
+     def summarize_fn(group: list[int]) -> _IdentifiedIssue:
+@@ -471,7 +443,7 @@ def build_issue_discovery_scorer(
+         name=DEFAULT_SCORER_NAME,
+         instructions=instructions,
+         model=model,
+-        feedback_value_type=dict[str, str],
++        feedback_value_type=bool,
+     )
+ 
+ 
+@@ -569,8 +541,8 @@ def discover_issues(
+     if use_conversation:
+         session_groups = group_traces_by_session(triage_traces)
+         test_session = next(
+-            (traces for traces in session_groups.values() if get_session_id(traces[0])),
+-            None,
++            (traces for traces in session_groups.values() if len(traces) > 1),
++            next(iter(session_groups.values())),
+         )
+     verify_scorer(
+         scorers[0], test_session[0] if test_session else triage_traces[0], session=test_session
+@@ -586,17 +558,9 @@ def discover_issues(
+     scored_traces = triage_traces
+     try:
+         fetched = [mlflow.get_trace(t.info.trace_id) for t in triage_traces]
+-        fetched = [f for f in fetched if f is not None]
+-        if len(fetched) == len(triage_traces):
+-            scored_traces = fetched
+-        else:
+-            _logger.debug(
+-                "Could not re-fetch %d/%d traces, using originals",
+-                len(triage_traces) - len(fetched),
+-                len(triage_traces),
+-            )
++        scored_traces = fetched
+         # Aggregate judge costs from Phase 1 evaluation assessments.
+-        for trace in scored_traces:
++        for trace in fetched:
+             for assessment in trace.info.assessments or []:
+                 meta = getattr(assessment, "metadata", None) or {}
+                 if meta.get(AssessmentMetadataKey.SOURCE_RUN_ID) != triage_eval.run_id:
+@@ -611,15 +575,15 @@ def discover_issues(
+         _logger.debug("Failed to fetch scored traces", exc_info=True)
+ 
+     scorer_names = [s.name for s in scorers]
+-    triage = extract_failing_traces(scored_traces, scorer_names)
++    failing_traces, rationale_map = extract_failing_traces(scored_traces, scorer_names)
+ 
+     _logger.info(
+         "Triage complete: %d/%d traces unsatisfactory",
+-        len(triage.failing_traces),
++        len(failing_traces),
+         len(triage_traces),
+     )
+ 
+-    if not triage.failing_traces:
++    if not failing_traces:
+         return DiscoverIssuesResult(
+             issues=[],
+             triage_run_id=triage_eval.run_id,
+@@ -629,13 +593,7 @@ def discover_issues(
+         )
+ 
+     # ---- Phase 2: Build analyses ----
+-    analyses, session_groups = _build_analyses(
+-        triage_traces,
+-        triage.rationale_map,
+-        triage.categories_map,
+-        scorer_name,
+-        categories=categories,
+-    )
++    analyses, session_groups = _build_analyses(triage_traces, rationale_map, scorer_name)
+ 
+     # ---- Phase 3: Cluster & identify ----
+     identified = _cluster_and_identify(
+@@ -669,10 +627,9 @@ def discover_issues(
+     _annotate_issue_traces(
+         issues,
+         issue_trace_ids,
+-        triage.rationale_map,
++        rationale_map,
+         trace_lookup,
+         model,
+-        categories=categories,
+         trace_to_session=trace_to_session if use_conversation else None,
+         session_first_trace=session_first_trace,
+         token_counter=token_counter,
+diff --git a/mlflow/genai/discovery/utils.py b/mlflow/genai/discovery/utils.py
+index fcc675261..0b16daf37 100644
+--- a/mlflow/genai/discovery/utils.py
++++ b/mlflow/genai/discovery/utils.py
+@@ -121,12 +121,10 @@ def build_summary(issues: list[Issue], total_traces: int) -> str:
+     ]
+     for i, issue in enumerate(issues, 1):
+         root_causes = "; ".join(issue.root_causes) if issue.root_causes else "Unknown"
+-        categories = ", ".join(issue.categories) if issue.categories else "None"
+         lines.append(
+             f"### {i}. {issue.name} (severity: {issue.severity})\n\n"
+             f"{issue.description}\n\n"
+-            f"**Root causes:** {root_causes}\n\n"
+-            f"**Categories:** {categories}\n"
++            f"**Root causes:** {root_causes}\n"
+         )
+     return "\n".join(lines)
+ 
+@@ -216,13 +214,8 @@ def format_trace_content(trace: Trace) -> str:
+     return "\n".join(parts) if parts else "(trace content not available)"
+ 
+ 
+-def format_annotation_prompt(
+-    issue: Issue,
+-    trace_content: str,
+-    triage_rationale: str,
+-    categories: list[str] | None = None,
+-) -> str:
+-    prompt = (
++def format_annotation_prompt(issue: Issue, trace_content: str, triage_rationale: str) -> str:
++    return (
+         f"=== ISSUE ===\n"
+         f"Name: {issue.name}\n"
+         f"Description: {issue.description}\n"
+@@ -232,10 +225,3 @@ def format_annotation_prompt(
+         f"=== TRIAGE JUDGE RATIONALE ===\n"
+         f"{triage_rationale or '(not available)'}"
+     )
+-    if categories:
+-        prompt += (
+-            f"\n\n=== RELEVANT CATEGORIES ===\n"
+-            f"{', '.join(categories)}\n"
+-            f"Reference these categories in your rationale where applicable."
+-        )
+-    return prompt
+diff --git a/mlflow/genai/judges/adapters/litellm_adapter.py b/mlflow/genai/judges/adapters/litellm_adapter.py
+index e027ab7f3..d19b65dc9 100644
+--- a/mlflow/genai/judges/adapters/litellm_adapter.py
++++ b/mlflow/genai/judges/adapters/litellm_adapter.py
+@@ -22,7 +22,6 @@ from mlflow.entities.assessment import Feedback
+ from mlflow.entities.assessment_source import AssessmentSource, AssessmentSourceType
+ from mlflow.environment_variables import MLFLOW_JUDGE_MAX_ITERATIONS
+ from mlflow.exceptions import MlflowException
+-from mlflow.gateway.constants import MLFLOW_GATEWAY_CALLER_HEADER, GatewayCaller
+ from mlflow.genai.judges.adapters.base_adapter import (
+     AdapterInvocationInput,
+     AdapterInvocationOutput,
+@@ -265,10 +264,7 @@ def _invoke_litellm_and_handle_tools(
+         config = get_gateway_litellm_config(model_name)
+         api_base = config.api_base
+         api_key = config.api_key
+-        extra_headers = {
+-            **(config.extra_headers or {}),
+-            MLFLOW_GATEWAY_CALLER_HEADER: GatewayCaller.JUDGE.value,
+-        }
++        extra_headers = config.extra_headers
+         model = config.model
+     else:
+         model = f"{provider}/{model_name}"
+diff --git a/mlflow/java/client/src/main/java/org/mlflow/api/proto/Issues.java b/mlflow/java/client/src/main/java/org/mlflow/api/proto/Issues.java
+index 98bbd8f4a..e136e5e2e 100644
+--- a/mlflow/java/client/src/main/java/org/mlflow/api/proto/Issues.java
++++ b/mlflow/java/client/src/main/java/org/mlflow/api/proto/Issues.java
+@@ -369,6 +369,25 @@ public final class Issues {
+      */
+     com.google.protobuf.ByteString
+         getCategoriesBytes(int index);
++
++    /**
++     * <pre>
++     * Number of traces impacted by this issue. Only populated when explicitly requested.
++     * </pre>
++     *
++     * <code>optional int32 trace_count = 13;</code>
++     * @return Whether the traceCount field is set.
++     */
++    boolean hasTraceCount();
++    /**
++     * <pre>
++     * Number of traces impacted by this issue. Only populated when explicitly requested.
++     * </pre>
++     *
++     * <code>optional int32 trace_count = 13;</code>
++     * @return The traceCount.
++     */
++    int getTraceCount();
+   }
+   /**
+    * <pre>
+@@ -506,6 +525,11 @@ public final class Issues {
+               categories_.add(bs);
+               break;
+             }
++            case 104: {
++              bitField0_ |= 0x00000400;
++              traceCount_ = input.readInt32();
++              break;
++            }
+             default: {
+               if (!parseUnknownField(
+                   input, unknownFields, extensionRegistry, tag)) {
+@@ -1181,6 +1205,33 @@ public final class Issues {
+       return categories_.getByteString(index);
+     }
+ 
++    public static final int TRACE_COUNT_FIELD_NUMBER = 13;
++    private int traceCount_;
++    /**
++     * <pre>
++     * Number of traces impacted by this issue. Only populated when explicitly requested.
++     * </pre>
++     *
++     * <code>optional int32 trace_count = 13;</code>
++     * @return Whether the traceCount field is set.
++     */
++    @java.lang.Override
++    public boolean hasTraceCount() {
++      return ((bitField0_ & 0x00000400) != 0);
++    }
++    /**
++     * <pre>
++     * Number of traces impacted by this issue. Only populated when explicitly requested.
++     * </pre>
++     *
++     * <code>optional int32 trace_count = 13;</code>
++     * @return The traceCount.
++     */
++    @java.lang.Override
++    public int getTraceCount() {
++      return traceCount_;
++    }
++
+     private byte memoizedIsInitialized = -1;
+     @java.lang.Override
+     public final boolean isInitialized() {
+@@ -1231,6 +1282,9 @@ public final class Issues {
+       for (int i = 0; i < categories_.size(); i++) {
+         com.google.protobuf.GeneratedMessageV3.writeString(output, 12, categories_.getRaw(i));
+       }
++      if (((bitField0_ & 0x00000400) != 0)) {
++        output.writeInt32(13, traceCount_);
++      }
+       unknownFields.writeTo(output);
+     }
+ 
+@@ -1288,6 +1342,10 @@ public final class Issues {
+         size += dataSize;
+         size += 1 * getCategoriesList().size();
+       }
++      if (((bitField0_ & 0x00000400) != 0)) {
++        size += com.google.protobuf.CodedOutputStream
++          .computeInt32Size(13, traceCount_);
++      }
+       size += unknownFields.getSerializedSize();
+       memoizedSize = size;
+       return size;
+@@ -1357,6 +1415,11 @@ public final class Issues {
+       }
+       if (!getCategoriesList()
+           .equals(other.getCategoriesList())) return false;
++      if (hasTraceCount() != other.hasTraceCount()) return false;
++      if (hasTraceCount()) {
++        if (getTraceCount()
++            != other.getTraceCount()) return false;
++      }
+       if (!unknownFields.equals(other.unknownFields)) return false;
+       return true;
+     }
+@@ -1418,6 +1481,10 @@ public final class Issues {
+         hash = (37 * hash) + CATEGORIES_FIELD_NUMBER;
+         hash = (53 * hash) + getCategoriesList().hashCode();
+       }
++      if (hasTraceCount()) {
++        hash = (37 * hash) + TRACE_COUNT_FIELD_NUMBER;
++        hash = (53 * hash) + getTraceCount();
++      }
+       hash = (29 * hash) + unknownFields.hashCode();
+       memoizedHashCode = hash;
+       return hash;
+@@ -1579,6 +1646,8 @@ public final class Issues {
+         bitField0_ = (bitField0_ & ~0x00000400);
+         categories_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+         bitField0_ = (bitField0_ & ~0x00000800);
++        traceCount_ = 0;
++        bitField0_ = (bitField0_ & ~0x00001000);
+         return this;
+       }
+ 
+@@ -1657,6 +1726,10 @@ public final class Issues {
+           bitField0_ = (bitField0_ & ~0x00000800);
+         }
+         result.categories_ = categories_;
++        if (((from_bitField0_ & 0x00001000) != 0)) {
++          result.traceCount_ = traceCount_;
++          to_bitField0_ |= 0x00000400;
++        }
+         result.bitField0_ = to_bitField0_;
+         onBuilt();
+         return result;
+@@ -1772,6 +1845,9 @@ public final class Issues {
+           }
+           onChanged();
+         }
++        if (other.hasTraceCount()) {
++          setTraceCount(other.getTraceCount());
++        }
+         this.mergeUnknownFields(other.unknownFields);
+         onChanged();
+         return this;
+@@ -3065,6 +3141,61 @@ public final class Issues {
+         onChanged();
+         return this;
+       }
++
++      private int traceCount_ ;
++      /**
++       * <pre>
++       * Number of traces impacted by this issue. Only populated when explicitly requested.
++       * </pre>
++       *
++       * <code>optional int32 trace_count = 13;</code>
++       * @return Whether the traceCount field is set.
++       */
++      @java.lang.Override
++      public boolean hasTraceCount() {
++        return ((bitField0_ & 0x00001000) != 0);
++      }
++      /**
++       * <pre>
++       * Number of traces impacted by this issue. Only populated when explicitly requested.
++       * </pre>
++       *
++       * <code>optional int32 trace_count = 13;</code>
++       * @return The traceCount.
++       */
++      @java.lang.Override
++      public int getTraceCount() {
++        return traceCount_;
++      }
++      /**
++       * <pre>
++       * Number of traces impacted by this issue. Only populated when explicitly requested.
++       * </pre>
++       *
++       * <code>optional int32 trace_count = 13;</code>
++       * @param value The traceCount to set.
++       * @return This builder for chaining.
++       */
++      public Builder setTraceCount(int value) {
++        bitField0_ |= 0x00001000;
++        traceCount_ = value;
++        onChanged();
++        return this;
++      }
++      /**
++       * <pre>
++       * Number of traces impacted by this issue. Only populated when explicitly requested.
++       * </pre>
++       *
++       * <code>optional int32 trace_count = 13;</code>
++       * @return This builder for chaining.
++       */
++      public Builder clearTraceCount() {
++        bitField0_ = (bitField0_ & ~0x00001000);
++        traceCount_ = 0;
++        onChanged();
++        return this;
++      }
+       @java.lang.Override
+       public final Builder setUnknownFields(
+           final com.google.protobuf.UnknownFieldSet unknownFields) {
+@@ -10157,6 +10288,25 @@ public final class Issues {
+      */
+     com.google.protobuf.ByteString
+         getPageTokenBytes();
++
++    /**
++     * <pre>
++     * Whether to include the count of traces impacted by each issue.
++     * </pre>
++     *
++     * <code>optional bool include_trace_count = 5;</code>
++     * @return Whether the includeTraceCount field is set.
++     */
++    boolean hasIncludeTraceCount();
++    /**
++     * <pre>
++     * Whether to include the count of traces impacted by each issue.
++     * </pre>
++     *
++     * <code>optional bool include_trace_count = 5;</code>
++     * @return The includeTraceCount.
++     */
++    boolean getIncludeTraceCount();
+   }
+   /**
+    * <pre>
+@@ -10234,6 +10384,11 @@ public final class Issues {
+               pageToken_ = bs;
+               break;
+             }
++            case 40: {
++              bitField0_ |= 0x00000010;
++              includeTraceCount_ = input.readBool();
++              break;
++            }
+             default: {
+               if (!parseUnknownField(
+                   input, unknownFields, extensionRegistry, tag)) {
+@@ -11612,6 +11767,33 @@ public final class Issues {
+       }
+     }
+ 
++    public static final int INCLUDE_TRACE_COUNT_FIELD_NUMBER = 5;
++    private boolean includeTraceCount_;
++    /**
++     * <pre>
++     * Whether to include the count of traces impacted by each issue.
++     * </pre>
++     *
++     * <code>optional bool include_trace_count = 5;</code>
++     * @return Whether the includeTraceCount field is set.
++     */
++    @java.lang.Override
++    public boolean hasIncludeTraceCount() {
++      return ((bitField0_ & 0x00000010) != 0);
++    }
++    /**
++     * <pre>
++     * Whether to include the count of traces impacted by each issue.
++     * </pre>
++     *
++     * <code>optional bool include_trace_count = 5;</code>
++     * @return The includeTraceCount.
++     */
++    @java.lang.Override
++    public boolean getIncludeTraceCount() {
++      return includeTraceCount_;
++    }
++
+     private byte memoizedIsInitialized = -1;
+     @java.lang.Override
+     public final boolean isInitialized() {
+@@ -11638,6 +11820,9 @@ public final class Issues {
+       if (((bitField0_ & 0x00000008) != 0)) {
+         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, pageToken_);
+       }
++      if (((bitField0_ & 0x00000010) != 0)) {
++        output.writeBool(5, includeTraceCount_);
++      }
+       unknownFields.writeTo(output);
+     }
+ 
+@@ -11660,6 +11845,10 @@ public final class Issues {
+       if (((bitField0_ & 0x00000008) != 0)) {
+         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, pageToken_);
+       }
++      if (((bitField0_ & 0x00000010) != 0)) {
++        size += com.google.protobuf.CodedOutputStream
++          .computeBoolSize(5, includeTraceCount_);
++      }
+       size += unknownFields.getSerializedSize();
+       memoizedSize = size;
+       return size;
+@@ -11695,6 +11884,11 @@ public final class Issues {
+         if (!getPageToken()
+             .equals(other.getPageToken())) return false;
+       }
++      if (hasIncludeTraceCount() != other.hasIncludeTraceCount()) return false;
++      if (hasIncludeTraceCount()) {
++        if (getIncludeTraceCount()
++            != other.getIncludeTraceCount()) return false;
++      }
+       if (!unknownFields.equals(other.unknownFields)) return false;
+       return true;
+     }
+@@ -11722,6 +11916,11 @@ public final class Issues {
+         hash = (37 * hash) + PAGE_TOKEN_FIELD_NUMBER;
+         hash = (53 * hash) + getPageToken().hashCode();
+       }
++      if (hasIncludeTraceCount()) {
++        hash = (37 * hash) + INCLUDE_TRACE_COUNT_FIELD_NUMBER;
++        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
++            getIncludeTraceCount());
++      }
+       hash = (29 * hash) + unknownFields.hashCode();
+       memoizedHashCode = hash;
+       return hash;
+@@ -11867,6 +12066,8 @@ public final class Issues {
+         bitField0_ = (bitField0_ & ~0x00000004);
+         pageToken_ = "";
+         bitField0_ = (bitField0_ & ~0x00000008);
++        includeTraceCount_ = false;
++        bitField0_ = (bitField0_ & ~0x00000010);
+         return this;
+       }
+ 
+@@ -11911,6 +12112,10 @@ public final class Issues {
+           to_bitField0_ |= 0x00000008;
+         }
+         result.pageToken_ = pageToken_;
++        if (((from_bitField0_ & 0x00000010) != 0)) {
++          result.includeTraceCount_ = includeTraceCount_;
++          to_bitField0_ |= 0x00000010;
++        }
+         result.bitField0_ = to_bitField0_;
+         onBuilt();
+         return result;
+@@ -11978,6 +12183,9 @@ public final class Issues {
+           pageToken_ = other.pageToken_;
+           onChanged();
+         }
++        if (other.hasIncludeTraceCount()) {
++          setIncludeTraceCount(other.getIncludeTraceCount());
++        }
+         this.mergeUnknownFields(other.unknownFields);
+         onChanged();
+         return this;
+@@ -12386,6 +12594,61 @@ public final class Issues {
+         onChanged();
+         return this;
+       }
++
++      private boolean includeTraceCount_ ;
++      /**
++       * <pre>
++       * Whether to include the count of traces impacted by each issue.
++       * </pre>
++       *
++       * <code>optional bool include_trace_count = 5;</code>
++       * @return Whether the includeTraceCount field is set.
++       */
++      @java.lang.Override
++      public boolean hasIncludeTraceCount() {
++        return ((bitField0_ & 0x00000010) != 0);
++      }
++      /**
++       * <pre>
++       * Whether to include the count of traces impacted by each issue.
++       * </pre>
++       *
++       * <code>optional bool include_trace_count = 5;</code>
++       * @return The includeTraceCount.
++       */
++      @java.lang.Override
++      public boolean getIncludeTraceCount() {
++        return includeTraceCount_;
++      }
++      /**
++       * <pre>
++       * Whether to include the count of traces impacted by each issue.
++       * </pre>
++       *
++       * <code>optional bool include_trace_count = 5;</code>
++       * @param value The includeTraceCount to set.
++       * @return This builder for chaining.
++       */
++      public Builder setIncludeTraceCount(boolean value) {
++        bitField0_ |= 0x00000010;
++        includeTraceCount_ = value;
++        onChanged();
++        return this;
++      }
++      /**
++       * <pre>
++       * Whether to include the count of traces impacted by each issue.
++       * </pre>
++       *
++       * <code>optional bool include_trace_count = 5;</code>
++       * @return This builder for chaining.
++       */
++      public Builder clearIncludeTraceCount() {
++        bitField0_ = (bitField0_ & ~0x00000010);
++        includeTraceCount_ = false;
++        onChanged();
++        return this;
++      }
+       @java.lang.Override
+       public final Builder setUnknownFields(
+           final com.google.protobuf.UnknownFieldSet unknownFields) {
+@@ -12494,31 +12757,32 @@ public final class Issues {
+   static {
+     java.lang.String[] descriptorData = {
+       "\n\014issues.proto\022\rmlflow.issues\032\020databrick" +
+-      "s.proto\"\204\002\n\005Issue\022\020\n\010issue_id\030\001 \001(\t\022\025\n\re" +
++      "s.proto\"\231\002\n\005Issue\022\020\n\010issue_id\030\001 \001(\t\022\025\n\re" +
+       "xperiment_id\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\022\023\n\013desc" +
+       "ription\030\004 \001(\t\022\016\n\006status\030\005 \001(\t\022\020\n\010severit" +
+       "y\030\006 \001(\t\022\023\n\013root_causes\030\007 \003(\t\022\025\n\rsource_r" +
+       "un_id\030\010 \001(\t\022\031\n\021created_timestamp\030\t \001(\003\022\036" +
+       "\n\026last_updated_timestamp\030\n \001(\003\022\022\n\ncreate" +
+-      "d_by\030\013 \001(\t\022\022\n\ncategories\030\014 \003(\t\"\200\002\n\013Creat" +
+-      "eIssue\022\033\n\rexperiment_id\030\001 \001(\tB\004\370\206\031\001\022\022\n\004n" +
+-      "ame\030\002 \001(\tB\004\370\206\031\001\022\031\n\013description\030\003 \001(\tB\004\370\206" +
+-      "\031\001\022\016\n\006status\030\004 \001(\t\022\020\n\010severity\030\005 \001(\t\022\023\n\013" +
+-      "root_causes\030\006 \003(\t\022\025\n\rsource_run_id\030\007 \001(\t" +
+-      "\022\022\n\ncreated_by\030\010 \001(\t\022\022\n\ncategories\030\t \003(\t" +
+-      "\032/\n\010Response\022#\n\005issue\030\001 \001(\0132\024.mlflow.iss" +
+-      "ues.Issue\"\233\001\n\013UpdateIssue\022\026\n\010issue_id\030\001 " +
+-      "\001(\tB\004\370\206\031\001\022\014\n\004name\030\002 \001(\t\022\023\n\013description\030\003" +
+-      " \001(\t\022\016\n\006status\030\004 \001(\t\022\020\n\010severity\030\005 \001(\t\032/" +
+-      "\n\010Response\022#\n\005issue\030\001 \001(\0132\024.mlflow.issue" +
+-      "s.Issue\"S\n\010GetIssue\022\026\n\010issue_id\030\001 \001(\tB\004\370" +
+-      "\206\031\001\032/\n\010Response\022#\n\005issue\030\001 \001(\0132\024.mlflow." +
+-      "issues.Issue\"\260\001\n\014SearchIssues\022\025\n\rexperim" +
+-      "ent_id\030\001 \001(\t\022\025\n\rfilter_string\030\002 \001(\t\022\023\n\013m" +
+-      "ax_results\030\003 \001(\005\022\022\n\npage_token\030\004 \001(\t\032I\n\010" +
+-      "Response\022$\n\006issues\030\001 \003(\0132\024.mlflow.issues" +
+-      ".Issue\022\027\n\017next_page_token\030\002 \001(\tB\031\n\024org.m" +
+-      "lflow.api.proto\220\001\001"
++      "d_by\030\013 \001(\t\022\022\n\ncategories\030\014 \003(\t\022\023\n\013trace_" +
++      "count\030\r \001(\005\"\200\002\n\013CreateIssue\022\033\n\rexperimen" +
++      "t_id\030\001 \001(\tB\004\370\206\031\001\022\022\n\004name\030\002 \001(\tB\004\370\206\031\001\022\031\n\013" +
++      "description\030\003 \001(\tB\004\370\206\031\001\022\016\n\006status\030\004 \001(\t\022" +
++      "\020\n\010severity\030\005 \001(\t\022\023\n\013root_causes\030\006 \003(\t\022\025" +
++      "\n\rsource_run_id\030\007 \001(\t\022\022\n\ncreated_by\030\010 \001(" +
++      "\t\022\022\n\ncategories\030\t \003(\t\032/\n\010Response\022#\n\005iss" +
++      "ue\030\001 \001(\0132\024.mlflow.issues.Issue\"\233\001\n\013Updat" +
++      "eIssue\022\026\n\010issue_id\030\001 \001(\tB\004\370\206\031\001\022\014\n\004name\030\002" +
++      " \001(\t\022\023\n\013description\030\003 \001(\t\022\016\n\006status\030\004 \001(" +
++      "\t\022\020\n\010severity\030\005 \001(\t\032/\n\010Response\022#\n\005issue" +
++      "\030\001 \001(\0132\024.mlflow.issues.Issue\"S\n\010GetIssue" +
++      "\022\026\n\010issue_id\030\001 \001(\tB\004\370\206\031\001\032/\n\010Response\022#\n\005" +
++      "issue\030\001 \001(\0132\024.mlflow.issues.Issue\"\315\001\n\014Se" +
++      "archIssues\022\025\n\rexperiment_id\030\001 \001(\t\022\025\n\rfil" +
++      "ter_string\030\002 \001(\t\022\023\n\013max_results\030\003 \001(\005\022\022\n" +
++      "\npage_token\030\004 \001(\t\022\033\n\023include_trace_count" +
++      "\030\005 \001(\010\032I\n\010Response\022$\n\006issues\030\001 \003(\0132\024.mlf" +
++      "low.issues.Issue\022\027\n\017next_page_token\030\002 \001(" +
++      "\tB\031\n\024org.mlflow.api.proto\220\001\001"
+     };
+     descriptor = com.google.protobuf.Descriptors.FileDescriptor
+       .internalBuildGeneratedFileFrom(descriptorData,
+@@ -12530,7 +12794,7 @@ public final class Issues {
+     internal_static_mlflow_issues_Issue_fieldAccessorTable = new
+       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+         internal_static_mlflow_issues_Issue_descriptor,
+-        new java.lang.String[] { "IssueId", "ExperimentId", "Name", "Description", "Status", "Severity", "RootCauses", "SourceRunId", "CreatedTimestamp", "LastUpdatedTimestamp", "CreatedBy", "Categories", });
++        new java.lang.String[] { "IssueId", "ExperimentId", "Name", "Description", "Status", "Severity", "RootCauses", "SourceRunId", "CreatedTimestamp", "LastUpdatedTimestamp", "CreatedBy", "Categories", "TraceCount", });
+     internal_static_mlflow_issues_CreateIssue_descriptor =
+       getDescriptor().getMessageTypes().get(1);
+     internal_static_mlflow_issues_CreateIssue_fieldAccessorTable = new
+@@ -12572,7 +12836,7 @@ public final class Issues {
+     internal_static_mlflow_issues_SearchIssues_fieldAccessorTable = new
+       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+         internal_static_mlflow_issues_SearchIssues_descriptor,
+-        new java.lang.String[] { "ExperimentId", "FilterString", "MaxResults", "PageToken", });
++        new java.lang.String[] { "ExperimentId", "FilterString", "MaxResults", "PageToken", "IncludeTraceCount", });
+     internal_static_mlflow_issues_SearchIssues_Response_descriptor =
+       internal_static_mlflow_issues_SearchIssues_descriptor.getNestedTypes().get(0);
+     internal_static_mlflow_issues_SearchIssues_Response_fieldAccessorTable = new
+diff --git a/mlflow/protos/issues.proto b/mlflow/protos/issues.proto
+index ffe899264..92a7fcd63 100644
+--- a/mlflow/protos/issues.proto
++++ b/mlflow/protos/issues.proto
+@@ -46,6 +46,9 @@ message Issue {
+ 
+   // Categories of the issue.
+   repeated string categories = 12;
++
++  // Number of traces impacted by this issue. Only populated when explicitly requested.
++  optional int32 trace_count = 13;
+ }
+ 
+ // Request to create a new issue.
+@@ -131,6 +134,9 @@ message SearchIssues {
+   // Page token for pagination.
+   optional string page_token = 4;
+ 
++  // Whether to include the count of traces impacted by each issue.
++  optional bool include_trace_count = 5;
++
+   message Response {
+     // List of issues.
+     repeated Issue issues = 1;
+diff --git a/mlflow/protos/issues_pb2.py b/mlflow/protos/issues_pb2.py
+index e0310acad..ba4c88865 100644
+--- a/mlflow/protos/issues_pb2.py
++++ b/mlflow/protos/issues_pb2.py
+@@ -19,7 +19,7 @@ if Version(google.protobuf.__version__).major >= 5:
+   from . import databricks_pb2 as databricks__pb2
+ 
+ 
+-  DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cissues.proto\x12\rmlflow.issues\x1a\x10\x64\x61tabricks.proto\"\x84\x02\n\x05Issue\x12\x10\n\x08issue_id\x18\x01 \x01(\t\x12\x15\n\rexperiment_id\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x10\n\x08severity\x18\x06 \x01(\t\x12\x13\n\x0broot_causes\x18\x07 \x03(\t\x12\x15\n\rsource_run_id\x18\x08 \x01(\t\x12\x19\n\x11\x63reated_timestamp\x18\t \x01(\x03\x12\x1e\n\x16last_updated_timestamp\x18\n \x01(\x03\x12\x12\n\ncreated_by\x18\x0b \x01(\t\x12\x12\n\ncategories\x18\x0c \x03(\t\"\x80\x02\n\x0b\x43reateIssue\x12\x1b\n\rexperiment_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x12\x12\n\x04name\x18\x02 \x01(\tB\x04\xf8\x86\x19\x01\x12\x19\n\x0b\x64\x65scription\x18\x03 \x01(\tB\x04\xf8\x86\x19\x01\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x10\n\x08severity\x18\x05 \x01(\t\x12\x13\n\x0broot_causes\x18\x06 \x03(\t\x12\x15\n\rsource_run_id\x18\x07 \x01(\t\x12\x12\n\ncreated_by\x18\x08 \x01(\t\x12\x12\n\ncategories\x18\t \x03(\t\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"\x9b\x01\n\x0bUpdateIssue\x12\x16\n\x08issue_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x10\n\x08severity\x18\x05 \x01(\t\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"S\n\x08GetIssue\x12\x16\n\x08issue_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"\xb0\x01\n\x0cSearchIssues\x12\x15\n\rexperiment_id\x18\x01 \x01(\t\x12\x15\n\rfilter_string\x18\x02 \x01(\t\x12\x13\n\x0bmax_results\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x04 \x01(\t\x1aI\n\x08Response\x12$\n\x06issues\x18\x01 \x03(\x0b\x32\x14.mlflow.issues.Issue\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\tB\x19\n\x14org.mlflow.api.proto\x90\x01\x01')
++  DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cissues.proto\x12\rmlflow.issues\x1a\x10\x64\x61tabricks.proto\"\x99\x02\n\x05Issue\x12\x10\n\x08issue_id\x18\x01 \x01(\t\x12\x15\n\rexperiment_id\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x10\n\x08severity\x18\x06 \x01(\t\x12\x13\n\x0broot_causes\x18\x07 \x03(\t\x12\x15\n\rsource_run_id\x18\x08 \x01(\t\x12\x19\n\x11\x63reated_timestamp\x18\t \x01(\x03\x12\x1e\n\x16last_updated_timestamp\x18\n \x01(\x03\x12\x12\n\ncreated_by\x18\x0b \x01(\t\x12\x12\n\ncategories\x18\x0c \x03(\t\x12\x13\n\x0btrace_count\x18\r \x01(\x05\"\x80\x02\n\x0b\x43reateIssue\x12\x1b\n\rexperiment_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x12\x12\n\x04name\x18\x02 \x01(\tB\x04\xf8\x86\x19\x01\x12\x19\n\x0b\x64\x65scription\x18\x03 \x01(\tB\x04\xf8\x86\x19\x01\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x10\n\x08severity\x18\x05 \x01(\t\x12\x13\n\x0broot_causes\x18\x06 \x03(\t\x12\x15\n\rsource_run_id\x18\x07 \x01(\t\x12\x12\n\ncreated_by\x18\x08 \x01(\t\x12\x12\n\ncategories\x18\t \x03(\t\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"\x9b\x01\n\x0bUpdateIssue\x12\x16\n\x08issue_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x10\n\x08severity\x18\x05 \x01(\t\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"S\n\x08GetIssue\x12\x16\n\x08issue_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"\xcd\x01\n\x0cSearchIssues\x12\x15\n\rexperiment_id\x18\x01 \x01(\t\x12\x15\n\rfilter_string\x18\x02 \x01(\t\x12\x13\n\x0bmax_results\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x04 \x01(\t\x12\x1b\n\x13include_trace_count\x18\x05 \x01(\x08\x1aI\n\x08Response\x12$\n\x06issues\x18\x01 \x03(\x0b\x32\x14.mlflow.issues.Issue\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\tB\x19\n\x14org.mlflow.api.proto\x90\x01\x01')
+ 
+   _globals = globals()
+   _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
+@@ -38,23 +38,23 @@ if Version(google.protobuf.__version__).major >= 5:
+     _globals['_GETISSUE'].fields_by_name['issue_id']._loaded_options = None
+     _globals['_GETISSUE'].fields_by_name['issue_id']._serialized_options = b'\370\206\031\001'
+     _globals['_ISSUE']._serialized_start=50
+-    _globals['_ISSUE']._serialized_end=310
+-    _globals['_CREATEISSUE']._serialized_start=313
+-    _globals['_CREATEISSUE']._serialized_end=569
+-    _globals['_CREATEISSUE_RESPONSE']._serialized_start=522
+-    _globals['_CREATEISSUE_RESPONSE']._serialized_end=569
+-    _globals['_UPDATEISSUE']._serialized_start=572
+-    _globals['_UPDATEISSUE']._serialized_end=727
+-    _globals['_UPDATEISSUE_RESPONSE']._serialized_start=522
+-    _globals['_UPDATEISSUE_RESPONSE']._serialized_end=569
+-    _globals['_GETISSUE']._serialized_start=729
+-    _globals['_GETISSUE']._serialized_end=812
+-    _globals['_GETISSUE_RESPONSE']._serialized_start=522
+-    _globals['_GETISSUE_RESPONSE']._serialized_end=569
+-    _globals['_SEARCHISSUES']._serialized_start=815
+-    _globals['_SEARCHISSUES']._serialized_end=991
+-    _globals['_SEARCHISSUES_RESPONSE']._serialized_start=918
+-    _globals['_SEARCHISSUES_RESPONSE']._serialized_end=991
++    _globals['_ISSUE']._serialized_end=331
++    _globals['_CREATEISSUE']._serialized_start=334
++    _globals['_CREATEISSUE']._serialized_end=590
++    _globals['_CREATEISSUE_RESPONSE']._serialized_start=543
++    _globals['_CREATEISSUE_RESPONSE']._serialized_end=590
++    _globals['_UPDATEISSUE']._serialized_start=593
++    _globals['_UPDATEISSUE']._serialized_end=748
++    _globals['_UPDATEISSUE_RESPONSE']._serialized_start=543
++    _globals['_UPDATEISSUE_RESPONSE']._serialized_end=590
++    _globals['_GETISSUE']._serialized_start=750
++    _globals['_GETISSUE']._serialized_end=833
++    _globals['_GETISSUE_RESPONSE']._serialized_start=543
++    _globals['_GETISSUE_RESPONSE']._serialized_end=590
++    _globals['_SEARCHISSUES']._serialized_start=836
++    _globals['_SEARCHISSUES']._serialized_end=1041
++    _globals['_SEARCHISSUES_RESPONSE']._serialized_start=968
++    _globals['_SEARCHISSUES_RESPONSE']._serialized_end=1041
+   # @@protoc_insertion_point(module_scope)
+ 
+ else:
+@@ -75,7 +75,7 @@ else:
+   from . import databricks_pb2 as databricks__pb2
+ 
+ 
+-  DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cissues.proto\x12\rmlflow.issues\x1a\x10\x64\x61tabricks.proto\"\x84\x02\n\x05Issue\x12\x10\n\x08issue_id\x18\x01 \x01(\t\x12\x15\n\rexperiment_id\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x10\n\x08severity\x18\x06 \x01(\t\x12\x13\n\x0broot_causes\x18\x07 \x03(\t\x12\x15\n\rsource_run_id\x18\x08 \x01(\t\x12\x19\n\x11\x63reated_timestamp\x18\t \x01(\x03\x12\x1e\n\x16last_updated_timestamp\x18\n \x01(\x03\x12\x12\n\ncreated_by\x18\x0b \x01(\t\x12\x12\n\ncategories\x18\x0c \x03(\t\"\x80\x02\n\x0b\x43reateIssue\x12\x1b\n\rexperiment_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x12\x12\n\x04name\x18\x02 \x01(\tB\x04\xf8\x86\x19\x01\x12\x19\n\x0b\x64\x65scription\x18\x03 \x01(\tB\x04\xf8\x86\x19\x01\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x10\n\x08severity\x18\x05 \x01(\t\x12\x13\n\x0broot_causes\x18\x06 \x03(\t\x12\x15\n\rsource_run_id\x18\x07 \x01(\t\x12\x12\n\ncreated_by\x18\x08 \x01(\t\x12\x12\n\ncategories\x18\t \x03(\t\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"\x9b\x01\n\x0bUpdateIssue\x12\x16\n\x08issue_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x10\n\x08severity\x18\x05 \x01(\t\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"S\n\x08GetIssue\x12\x16\n\x08issue_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"\xb0\x01\n\x0cSearchIssues\x12\x15\n\rexperiment_id\x18\x01 \x01(\t\x12\x15\n\rfilter_string\x18\x02 \x01(\t\x12\x13\n\x0bmax_results\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x04 \x01(\t\x1aI\n\x08Response\x12$\n\x06issues\x18\x01 \x03(\x0b\x32\x14.mlflow.issues.Issue\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\tB\x19\n\x14org.mlflow.api.proto\x90\x01\x01')
++  DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0cissues.proto\x12\rmlflow.issues\x1a\x10\x64\x61tabricks.proto\"\x99\x02\n\x05Issue\x12\x10\n\x08issue_id\x18\x01 \x01(\t\x12\x15\n\rexperiment_id\x18\x02 \x01(\t\x12\x0c\n\x04name\x18\x03 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x10\n\x08severity\x18\x06 \x01(\t\x12\x13\n\x0broot_causes\x18\x07 \x03(\t\x12\x15\n\rsource_run_id\x18\x08 \x01(\t\x12\x19\n\x11\x63reated_timestamp\x18\t \x01(\x03\x12\x1e\n\x16last_updated_timestamp\x18\n \x01(\x03\x12\x12\n\ncreated_by\x18\x0b \x01(\t\x12\x12\n\ncategories\x18\x0c \x03(\t\x12\x13\n\x0btrace_count\x18\r \x01(\x05\"\x80\x02\n\x0b\x43reateIssue\x12\x1b\n\rexperiment_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x12\x12\n\x04name\x18\x02 \x01(\tB\x04\xf8\x86\x19\x01\x12\x19\n\x0b\x64\x65scription\x18\x03 \x01(\tB\x04\xf8\x86\x19\x01\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x10\n\x08severity\x18\x05 \x01(\t\x12\x13\n\x0broot_causes\x18\x06 \x03(\t\x12\x15\n\rsource_run_id\x18\x07 \x01(\t\x12\x12\n\ncreated_by\x18\x08 \x01(\t\x12\x12\n\ncategories\x18\t \x03(\t\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"\x9b\x01\n\x0bUpdateIssue\x12\x16\n\x08issue_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x10\n\x08severity\x18\x05 \x01(\t\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"S\n\x08GetIssue\x12\x16\n\x08issue_id\x18\x01 \x01(\tB\x04\xf8\x86\x19\x01\x1a/\n\x08Response\x12#\n\x05issue\x18\x01 \x01(\x0b\x32\x14.mlflow.issues.Issue\"\xcd\x01\n\x0cSearchIssues\x12\x15\n\rexperiment_id\x18\x01 \x01(\t\x12\x15\n\rfilter_string\x18\x02 \x01(\t\x12\x13\n\x0bmax_results\x18\x03 \x01(\x05\x12\x12\n\npage_token\x18\x04 \x01(\t\x12\x1b\n\x13include_trace_count\x18\x05 \x01(\x08\x1aI\n\x08Response\x12$\n\x06issues\x18\x01 \x03(\x0b\x32\x14.mlflow.issues.Issue\x12\x17\n\x0fnext_page_token\x18\x02 \x01(\tB\x19\n\x14org.mlflow.api.proto\x90\x01\x01')
+ 
+ 
+ 
+@@ -170,22 +170,22 @@ else:
+     _GETISSUE.fields_by_name['issue_id']._options = None
+     _GETISSUE.fields_by_name['issue_id']._serialized_options = b'\370\206\031\001'
+     _ISSUE._serialized_start=50
+-    _ISSUE._serialized_end=310
+-    _CREATEISSUE._serialized_start=313
+-    _CREATEISSUE._serialized_end=569
+-    _CREATEISSUE_RESPONSE._serialized_start=522
+-    _CREATEISSUE_RESPONSE._serialized_end=569
+-    _UPDATEISSUE._serialized_start=572
+-    _UPDATEISSUE._serialized_end=727
+-    _UPDATEISSUE_RESPONSE._serialized_start=522
+-    _UPDATEISSUE_RESPONSE._serialized_end=569
+-    _GETISSUE._serialized_start=729
+-    _GETISSUE._serialized_end=812
+-    _GETISSUE_RESPONSE._serialized_start=522
+-    _GETISSUE_RESPONSE._serialized_end=569
+-    _SEARCHISSUES._serialized_start=815
+-    _SEARCHISSUES._serialized_end=991
+-    _SEARCHISSUES_RESPONSE._serialized_start=918
+-    _SEARCHISSUES_RESPONSE._serialized_end=991
++    _ISSUE._serialized_end=331
++    _CREATEISSUE._serialized_start=334
++    _CREATEISSUE._serialized_end=590
++    _CREATEISSUE_RESPONSE._serialized_start=543
++    _CREATEISSUE_RESPONSE._serialized_end=590
++    _UPDATEISSUE._serialized_start=593
++    _UPDATEISSUE._serialized_end=748
++    _UPDATEISSUE_RESPONSE._serialized_start=543
++    _UPDATEISSUE_RESPONSE._serialized_end=590
++    _GETISSUE._serialized_start=750
++    _GETISSUE._serialized_end=833
++    _GETISSUE_RESPONSE._serialized_start=543
++    _GETISSUE_RESPONSE._serialized_end=590
++    _SEARCHISSUES._serialized_start=836
++    _SEARCHISSUES._serialized_end=1041
++    _SEARCHISSUES_RESPONSE._serialized_start=968
++    _SEARCHISSUES_RESPONSE._serialized_end=1041
+   # @@protoc_insertion_point(module_scope)
+ 
+diff --git a/mlflow/protos/issues_pb2.pyi b/mlflow/protos/issues_pb2.pyi
+index 9fd0ea76e..ff461620b 100644
+--- a/mlflow/protos/issues_pb2.pyi
++++ b/mlflow/protos/issues_pb2.pyi
+@@ -7,7 +7,7 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
+ DESCRIPTOR: _descriptor.FileDescriptor
+ 
+ class Issue(_message.Message):
+-    __slots__ = ("issue_id", "experiment_id", "name", "description", "status", "severity", "root_causes", "source_run_id", "created_timestamp", "last_updated_timestamp", "created_by", "categories")
++    __slots__ = ("issue_id", "experiment_id", "name", "description", "status", "severity", "root_causes", "source_run_id", "created_timestamp", "last_updated_timestamp", "created_by", "categories", "trace_count")
+     ISSUE_ID_FIELD_NUMBER: _ClassVar[int]
+     EXPERIMENT_ID_FIELD_NUMBER: _ClassVar[int]
+     NAME_FIELD_NUMBER: _ClassVar[int]
+@@ -20,6 +20,7 @@ class Issue(_message.Message):
+     LAST_UPDATED_TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+     CREATED_BY_FIELD_NUMBER: _ClassVar[int]
+     CATEGORIES_FIELD_NUMBER: _ClassVar[int]
++    TRACE_COUNT_FIELD_NUMBER: _ClassVar[int]
+     issue_id: str
+     experiment_id: str
+     name: str
+@@ -32,7 +33,8 @@ class Issue(_message.Message):
+     last_updated_timestamp: int
+     created_by: str
+     categories: _containers.RepeatedScalarFieldContainer[str]
+-    def __init__(self, issue_id: _Optional[str] = ..., experiment_id: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., status: _Optional[str] = ..., severity: _Optional[str] = ..., root_causes: _Optional[_Iterable[str]] = ..., source_run_id: _Optional[str] = ..., created_timestamp: _Optional[int] = ..., last_updated_timestamp: _Optional[int] = ..., created_by: _Optional[str] = ..., categories: _Optional[_Iterable[str]] = ...) -> None: ...
++    trace_count: int
++    def __init__(self, issue_id: _Optional[str] = ..., experiment_id: _Optional[str] = ..., name: _Optional[str] = ..., description: _Optional[str] = ..., status: _Optional[str] = ..., severity: _Optional[str] = ..., root_causes: _Optional[_Iterable[str]] = ..., source_run_id: _Optional[str] = ..., created_timestamp: _Optional[int] = ..., last_updated_timestamp: _Optional[int] = ..., created_by: _Optional[str] = ..., categories: _Optional[_Iterable[str]] = ..., trace_count: _Optional[int] = ...) -> None: ...
+ 
+ class CreateIssue(_message.Message):
+     __slots__ = ("experiment_id", "name", "description", "status", "severity", "root_causes", "source_run_id", "created_by", "categories")
+@@ -92,7 +94,7 @@ class GetIssue(_message.Message):
+     def __init__(self, issue_id: _Optional[str] = ...) -> None: ...
+ 
+ class SearchIssues(_message.Message):
+-    __slots__ = ("experiment_id", "filter_string", "max_results", "page_token")
++    __slots__ = ("experiment_id", "filter_string", "max_results", "page_token", "include_trace_count")
+     class Response(_message.Message):
+         __slots__ = ("issues", "next_page_token")
+         ISSUES_FIELD_NUMBER: _ClassVar[int]
+@@ -104,8 +106,10 @@ class SearchIssues(_message.Message):
+     FILTER_STRING_FIELD_NUMBER: _ClassVar[int]
+     MAX_RESULTS_FIELD_NUMBER: _ClassVar[int]
+     PAGE_TOKEN_FIELD_NUMBER: _ClassVar[int]
++    INCLUDE_TRACE_COUNT_FIELD_NUMBER: _ClassVar[int]
+     experiment_id: str
+     filter_string: str
+     max_results: int
+     page_token: str
+-    def __init__(self, experiment_id: _Optional[str] = ..., filter_string: _Optional[str] = ..., max_results: _Optional[int] = ..., page_token: _Optional[str] = ...) -> None: ...
++    include_trace_count: bool
++    def __init__(self, experiment_id: _Optional[str] = ..., filter_string: _Optional[str] = ..., max_results: _Optional[int] = ..., page_token: _Optional[str] = ..., include_trace_count: bool = ...) -> None: ...
+diff --git a/mlflow/server/gateway_api.py b/mlflow/server/gateway_api.py
+index f6c176927..a2b521546 100644
+--- a/mlflow/server/gateway_api.py
++++ b/mlflow/server/gateway_api.py
+@@ -30,7 +30,6 @@ from mlflow.gateway.config import (
+     Provider,
+     _AuthConfigKey,
+ )
+-from mlflow.gateway.constants import MLFLOW_GATEWAY_CALLER_HEADER, GatewayCaller
+ from mlflow.gateway.providers import get_provider
+ from mlflow.gateway.providers.base import (
+     PASSTHROUGH_ROUTES,
+@@ -130,15 +129,6 @@ def _record_gateway_invocation(invocation_type: GatewayInvocationType) -> Callab
+             success = True
+             result = None
+ 
+-            # Extract caller header from the Request object if present,
+-            # only accepting known caller values to avoid logging arbitrary input.
+-            caller = None
+-            request = next((a for a in (*args, *kwargs.values()) if isinstance(a, Request)), None)
+-            if request is not None:
+-                raw_caller = request.headers.get(MLFLOW_GATEWAY_CALLER_HEADER)
+-                if raw_caller in {e.value for e in GatewayCaller}:
+-                    caller = raw_caller
+-
+             try:
+                 result = await func(*args, **kwargs)
+                 return result  # noqa: RET504
+@@ -147,15 +137,12 @@ def _record_gateway_invocation(invocation_type: GatewayInvocationType) -> Callab
+                 raise
+             finally:
+                 duration_ms = int((time.time() - start_time) * 1000)
+-                params = {
+-                    "is_streaming": isinstance(result, StreamingResponse),
+-                    "invocation_type": invocation_type,
+-                }
+-                if caller:
+-                    params["caller"] = caller
+                 _record_event(
+                     GatewayInvocationEvent,
+-                    params=params,
++                    params={
++                        "is_streaming": isinstance(result, StreamingResponse),
++                        "invocation_type": invocation_type,
++                    },
+                     success=success,
+                     duration_ms=duration_ms,
+                 )
+diff --git a/mlflow/server/handlers.py b/mlflow/server/handlers.py
+index e1e9c85ba..8ce94747d 100644
+--- a/mlflow/server/handlers.py
++++ b/mlflow/server/handlers.py
+@@ -780,8 +780,8 @@ def _assert_item_type_string(x):
+ 
+ 
+ def _assert_secret_value(x):
+-    """Validate secret_value is present. Does not print values in errors."""
+-    if x is None:
++    """Validate secret_value is a non-empty dict without ever printing the values in errors."""
++    if not x:
+         raise MlflowException(
+             message="Missing value for required parameter 'secret_value'.",
+             error_code=INVALID_PARAMETER_VALUE,
+@@ -4132,6 +4132,9 @@ def _search_issues():
+     if request_message.HasField("max_results"):
+         search_kwargs["max_results"] = request_message.max_results
+ 
++    if request_message.HasField("include_trace_count"):
++        search_kwargs["include_trace_count"] = request_message.include_trace_count
++
+     issues = _get_tracking_store().search_issues(**search_kwargs)
+ 
+     issue_protos = [issue.to_proto() for issue in issues]
+diff --git a/mlflow/server/js/src/experiment-tracking/components/run-page/overview/IssueDetectionProgress.tsx b/mlflow/server/js/src/experiment-tracking/components/run-page/overview/IssueDetectionProgress.tsx
+index 0ce2a9c1a..5241e962f 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/run-page/overview/IssueDetectionProgress.tsx
++++ b/mlflow/server/js/src/experiment-tracking/components/run-page/overview/IssueDetectionProgress.tsx
+@@ -273,35 +273,9 @@ export const IssueDetectionProgress = ({
+ 
+       {isJobSucceeded && result?.summary && (
+         <>
+-          <div
+-            css={{
+-              display: 'flex',
+-              justifyContent: 'space-between',
+-              alignItems: 'center',
+-              marginTop: theme.spacing.lg,
+-              marginBottom: theme.spacing.sm,
+-            }}
+-          >
+-            <Typography.Title level={4} css={{ margin: 0 }}>
+-              <FormattedMessage
+-                defaultMessage="Issue detection summary"
+-                description="Issue detection summary > Title"
+-              />
+-            </Typography.Title>
+-            {identifiedIssues > 0 && (
+-              <Button
+-                componentId="mlflow.traces.issue-detection.view-issues-button"
+-                type="primary"
+-                onClick={handleViewIssues}
+-              >
+-                <FormattedMessage
+-                  defaultMessage="View {count} {count, plural, one {issue} other {issues}}"
+-                  description="Issue detection summary > View issues button"
+-                  values={{ count: identifiedIssues }}
+-                />
+-              </Button>
+-            )}
+-          </div>
++          <Typography.Title level={4} css={{ marginTop: theme.spacing.lg, marginBottom: theme.spacing.sm }}>
++            <FormattedMessage defaultMessage="Issue detection summary" description="Issue detection summary > Title" />
++          </Typography.Title>
+           <div
+             css={{
+               border: `1px solid ${theme.colors.border}`,
+diff --git a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsCharts.common.test.ts b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsCharts.common.test.ts
+index 4500b9774..755adf86a 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsCharts.common.test.ts
++++ b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsCharts.common.test.ts
+@@ -128,58 +128,6 @@ describe('createEmptyChartCardPredicate', () => {
+     expect(predicate(nonEmptyBarChart)).toBe(false);
+   });
+ 
+-  test('should identify non-empty bar chart with selectedMetricKeys', () => {
+-    const predicate = createEmptyChartCardPredicate(mockRunData);
+-    const multiMetricBarChart: RunsChartsBarCardConfig = {
+-      type: RunsChartType.BAR,
+-      metricKey: 'metric_1',
+-      selectedMetricKeys: ['metric_1', 'metric_3'],
+-      deleted: false,
+-      isGenerated: false,
+-    };
+-
+-    expect(predicate(multiMetricBarChart)).toBe(false);
+-  });
+-
+-  test('should identify empty bar chart when all selectedMetricKeys are missing', () => {
+-    const predicate = createEmptyChartCardPredicate(mockRunData);
+-    const emptyMultiMetricBarChart: RunsChartsBarCardConfig = {
+-      type: RunsChartType.BAR,
+-      metricKey: 'nonexistent_a',
+-      selectedMetricKeys: ['nonexistent_a', 'nonexistent_b'],
+-      deleted: false,
+-      isGenerated: false,
+-    };
+-
+-    expect(predicate(emptyMultiMetricBarChart)).toBe(true);
+-  });
+-
+-  test('should identify non-empty bar chart with dataAccessKey', () => {
+-    const predicate = createEmptyChartCardPredicate(mockRunData);
+-    const datasetBarChart: RunsChartsBarCardConfig = {
+-      type: RunsChartType.BAR,
+-      metricKey: 'nonexistent_display_key',
+-      dataAccessKey: 'metric_2',
+-      deleted: false,
+-      isGenerated: false,
+-    };
+-
+-    expect(predicate(datasetBarChart)).toBe(false);
+-  });
+-
+-  test('should identify empty bar chart when dataAccessKey does not match any run metrics', () => {
+-    const predicate = createEmptyChartCardPredicate(mockRunData);
+-    const datasetBarChart: RunsChartsBarCardConfig = {
+-      type: RunsChartType.BAR,
+-      metricKey: 'some_metric',
+-      dataAccessKey: 'nonexistent_access_key',
+-      deleted: false,
+-      isGenerated: false,
+-    };
+-
+-    expect(predicate(datasetBarChart)).toBe(true);
+-  });
+-
+   test('should identify empty contour chart', () => {
+     const predicate = createEmptyChartCardPredicate(mockRunData);
+     const emptyContourChart: RunsChartsContourCardConfig = {
+diff --git a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsCharts.common.ts b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsCharts.common.ts
+index fa229dcef..4613d5bc2 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsCharts.common.ts
++++ b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsCharts.common.ts
+@@ -519,10 +519,7 @@ export const createEmptyChartCardPredicate = (chartRunData: RunsChartsRunData[])
+     }
+ 
+     if (isBarChartCard(chartCardConfig)) {
+-      const barMetricKeys = new Set(
+-        chartCardConfig.selectedMetricKeys ?? [chartCardConfig.dataAccessKey ?? chartCardConfig.metricKey],
+-      );
+-      return !isIntersectingSet(barMetricKeys, metricsInRuns);
++      return !metricsInRuns.has(chartCardConfig.metricKey);
+     }
+ 
+     if (isScatterChartCard(chartCardConfig)) {
+diff --git a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsChartsTooltipBody.tsx b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsChartsTooltipBody.tsx
+index e916b362c..15e3a4ea1 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsChartsTooltipBody.tsx
++++ b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsChartsTooltipBody.tsx
+@@ -46,33 +46,24 @@ interface RunsChartsContextMenuContentDataType {
+ type RunsChartContextMenuHoverDataType = RunsChartsCardConfig;
+ 
+ const createBarChartValuesBox = (cardConfig: RunsChartsBarCardConfig, activeRun: RunsChartsRunData) => {
+-  const { metricKey, dataAccessKey, selectedMetricKeys } = cardConfig;
+-
+-  const metricKeys = selectedMetricKeys ?? [dataAccessKey ?? metricKey];
+-
+-  const entries = metricKeys
+-    .map((key) => {
+-      const metric = activeRun?.metrics[key];
+-      if (!metric) return null;
+-      const customMetricBehaviorDef = customMetricBehaviorDefs[metric.key];
+-      const displayName = customMetricBehaviorDef?.displayName ?? metric.key;
+-      const displayValue = customMetricBehaviorDef?.valueFormatter({ value: metric.value }) ?? metric.value;
+-      return { displayName, displayValue };
+-    })
+-    .filter(Boolean);
+-
+-  if (entries.length === 0) {
++  const { metricKey, dataAccessKey } = cardConfig;
++
++  const dataKey = dataAccessKey ?? metricKey;
++
++  const metric = activeRun?.metrics[dataKey];
++
++  if (!metric) {
+     return null;
+   }
+ 
++  const customMetricBehaviorDef = customMetricBehaviorDefs[metric.key];
++  const displayName = customMetricBehaviorDef?.displayName ?? metric.key;
++  const displayValue = customMetricBehaviorDef?.valueFormatter({ value: metric.value }) ?? metric.value;
++
+   return (
+-    <>
+-      {entries.map((entry) => (
+-        <div key={entry!.displayName} css={styles.value}>
+-          <strong>{entry!.displayName}:</strong> {entry!.displayValue}
+-        </div>
+-      ))}
+-    </>
++    <div css={styles.value}>
++      <strong>{displayName}:</strong> {displayValue}
++    </div>
+   );
+ };
+ 
+diff --git a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsMetricsBarPlot.tsx b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsMetricsBarPlot.tsx
+index 528ff40cf..0366658e1 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsMetricsBarPlot.tsx
++++ b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/RunsMetricsBarPlot.tsx
+@@ -1,5 +1,5 @@
+ import { useDesignSystemTheme } from '@databricks/design-system';
+-import type { Config, Layout, PlotData } from 'plotly.js';
++import type { Config, Data, Layout } from 'plotly.js';
+ import React, { useCallback, useEffect, useMemo, useState } from 'react';
+ import { useIntl } from 'react-intl';
+ import { LazyPlot } from '../../LazyPlot';
+@@ -15,7 +15,6 @@ import {
+   useDynamicPlotSize,
+   getLegendDataFromRuns,
+ } from './RunsCharts.common';
+-import type { LegendLabelData } from './RunsMetricsLegend';
+ import type { MetricEntity } from '../../../types';
+ import RunsMetricsLegendWrapper from './RunsMetricsLegendWrapper';
+ import { createChartImageDownloadHandler } from '../hooks/useChartImageDownloadHandler';
+@@ -25,22 +24,6 @@ import { RunsChartCardLoadingPlaceholder } from './cards/ChartCard.common';
+ // We're not using params in bar plot
+ export type BarPlotRunData = Omit<RunsChartsRunData, 'params' | 'tags' | 'images'>;
+ 
+-/**
+- * Shared trace data shape for bar plots, supporting both single and multi-metric modes.
+- */
+-type BarTraceData = Partial<PlotData> & {
+-  names: string[];
+-  metrics: MetricEntity[];
+-};
+-
+-/**
+- * Helper to build a BarTraceData object. The double cast (`as unknown as`)
+- * is intentional: plotly's type definitions don't fully match what the
+- * runtime API accepts (e.g. `textposition` as an array), so we bypass
+- * strict assignability checks here.
+- */
+-const barTrace = (trace: Record<string, unknown>): BarTraceData => trace as unknown as BarTraceData;
+-
+ export interface RunsMetricsBarPlotHoverData {
+   xValue: string;
+   yValue: number;
+@@ -54,12 +37,6 @@ export interface RunsMetricsBarPlotProps extends RunsPlotsCommonProps {
+    */
+   metricKey: string;
+ 
+-  /**
+-   * Optional array of metric keys to display as grouped bars.
+-   * When provided, renders one trace per metric key instead of one trace for all runs.
+-   */
+-  selectedMetricKeys?: string[];
+-
+   /**
+    * Array of runs data with corresponding values
+    */
+@@ -97,50 +74,6 @@ const Y_AXIS_PARAMS = {
+ 
+ const getFixedPointValue = (val: string | number, places = 2) => (typeof val === 'number' ? val.toFixed(places) : val);
+ 
+-/**
+- * Highlight function for multi-metric grouped bar charts.
+- * In grouped mode, plotly renders one `.trace.bars` group per metric,
+- * each containing `g.point` elements (one per run). We need to highlight
+- * the bar at the same run index across ALL trace groups.
+- */
+-const highlightGroupedBarTraces = (parent: HTMLElement, hoverIndex: number, selectIndex: number) => {
+-  const traceGroups = parent.querySelectorAll('svg .trace.bars');
+-  const deselected = hoverIndex === -1 && selectIndex === -1;
+-
+-  traceGroups.forEach((traceGroup) => {
+-    const points = traceGroup.querySelectorAll('g.point');
+-
+-    points.forEach((point) => point.classList.remove('is-hover-highlight', 'is-selection-highlight'));
+-
+-    if (hoverIndex > -1) {
+-      points[hoverIndex]?.classList.add('is-hover-highlight');
+-    }
+-    if (selectIndex > -1) {
+-      points[selectIndex]?.classList.add('is-selection-highlight');
+-    }
+-
+-    if (deselected) {
+-      traceGroup.classList.remove('is-highlight');
+-    } else {
+-      traceGroup.classList.add('is-highlight');
+-    }
+-  });
+-};
+-
+-// Color palette for multi-metric grouped bars
+-const METRIC_COLORS = [
+-  '#2196F3', // blue
+-  '#FF9800', // orange
+-  '#4CAF50', // green
+-  '#E91E63', // pink
+-  '#9C27B0', // purple
+-  '#00BCD4', // cyan
+-  '#FF5722', // deep orange
+-  '#607D8B', // blue grey
+-  '#8BC34A', // light green
+-  '#FFC107', // amber
+-];
+-
+ /**
+  * Implementation of plotly.js chart displaying
+  * bar plot comparing metrics for a given
+@@ -151,7 +84,6 @@ export const RunsMetricsBarPlot = React.memo(
+   ({
+     runsData,
+     metricKey,
+-    selectedMetricKeys,
+     className,
+     margin = runsChartDefaultMargin,
+     onUpdate,
+@@ -166,78 +98,55 @@ export const RunsMetricsBarPlot = React.memo(
+     selectedRunUuid,
+     onSetDownloadHandler,
+   }: RunsMetricsBarPlotProps) => {
+-    const metricKeys = useMemo(() => selectedMetricKeys ?? [metricKey], [selectedMetricKeys, metricKey]);
+-    const isMultiMetric = metricKeys.length > 1;
+-
+     const plotData = useMemo(() => {
+-      if (!isMultiMetric) {
+-        // Single metric mode: one trace with per-run colors (original behavior)
+-        const ids = runsData.map((d) => d.uuid);
+-        const names = runsData.map(({ displayName }) => displayName);
+-        const values = runsData.map((d) => normalizeChartValue(d.metrics[metricKey]?.value));
+-        const textValues = runsData.map((d) => {
+-          const customMetricBehaviorDef = customMetricBehaviorDefs[metricKey];
+-          if (customMetricBehaviorDef) {
+-            return customMetricBehaviorDef.valueFormatter({ value: d.metrics[metricKey]?.value });
+-          }
+-          return getFixedPointValue(d.metrics[metricKey]?.value);
+-        });
+-        const colors = runsData.map((d) => d.color);
+-
+-        return [
+-          barTrace({
+-            y: ids,
+-            x: values,
+-            names,
+-            text: textValues,
+-            textposition: values.map((value) => (value === 0 ? 'outside' : 'auto')),
+-            textfont: { size: 11 },
+-            metrics: runsData.map((d) => d.metrics[metricKey]),
+-            type: 'bar',
+-            hovertemplate: useDefaultHoverBox ? '%{label}<extra></extra>' : undefined,
+-            hoverinfo: useDefaultHoverBox ? 'y' : 'none',
+-            hoverlabel: useDefaultHoverBox ? runsChartHoverlabel : undefined,
+-            width: barWidth,
+-            orientation: 'h',
+-            marker: { color: colors },
+-          }),
+-        ];
+-      }
+-
+-      // Multi-metric mode: one trace per metric, grouped by run
++      // Run uuids
+       const ids = runsData.map((d) => d.uuid);
++
++      // Trace names
+       const names = runsData.map(({ displayName }) => displayName);
+-      const groupedBarWidth = barWidth / metricKeys.length;
+-
+-      return metricKeys.map((mKey, metricIdx) => {
+-        const values = runsData.map((d) => normalizeChartValue(d.metrics[mKey]?.value));
+-        const textValues = runsData.map((d) => {
+-          const customMetricBehaviorDef = customMetricBehaviorDefs[mKey];
+-          if (customMetricBehaviorDef) {
+-            return customMetricBehaviorDef.valueFormatter({ value: d.metrics[mKey]?.value });
+-          }
+-          return getFixedPointValue(d.metrics[mKey]?.value);
+-        });
+-
+-        return barTrace({
++
++      // Actual metric values
++      const values = runsData.map((d) => normalizeChartValue(d.metrics[metricKey]?.value));
++
++      // Displayed metric values
++      const textValues = runsData.map((d) => {
++        const customMetricBehaviorDef = customMetricBehaviorDefs[metricKey];
++        if (customMetricBehaviorDef) {
++          return customMetricBehaviorDef.valueFormatter({ value: d.metrics[metricKey]?.value });
++        }
++
++        return getFixedPointValue(d.metrics[metricKey]?.value);
++      });
++
++      // Colors corresponding to each run
++      const colors = runsData.map((d) => d.color);
++
++      return [
++        {
+           y: ids,
+           x: values,
+-          name: mKey,
+           names,
+           text: textValues,
+           textposition: values.map((value) => (value === 0 ? 'outside' : 'auto')),
+-          textfont: { size: 11 },
+-          metrics: runsData.map((d) => d.metrics[mKey]),
+-          type: 'bar',
+-          hovertemplate: useDefaultHoverBox ? `${mKey}: %{x}<extra>%{label}</extra>` : undefined,
++          textfont: {
++            size: 11,
++          },
++          metrics: runsData.map((d) => d.metrics[metricKey]),
++          // Display run name on hover. "<extra></extra>" removes plotly's "extra" tooltip that
++          // is unnecessary here.
++          type: 'bar' as any,
++          hovertemplate: useDefaultHoverBox ? '%{label}<extra></extra>' : undefined,
+           hoverinfo: useDefaultHoverBox ? 'y' : 'none',
+           hoverlabel: useDefaultHoverBox ? runsChartHoverlabel : undefined,
+-          width: groupedBarWidth,
++          width: barWidth,
++
+           orientation: 'h',
+-          marker: { color: METRIC_COLORS[metricIdx % METRIC_COLORS.length] },
+-        });
+-      });
+-    }, [runsData, metricKey, metricKeys, isMultiMetric, barWidth, useDefaultHoverBox]);
++          marker: {
++            color: colors,
++          },
++        } as Data & { names: string[] },
++      ];
++    }, [runsData, metricKey, barWidth, useDefaultHoverBox]);
+ 
+     const { layoutHeight, layoutWidth, setContainerDiv, containerDiv, isDynamicSizeSupported } = useDynamicPlotSize();
+ 
+@@ -250,13 +159,10 @@ export const RunsMetricsBarPlot = React.memo(
+       height: height || layoutHeight,
+       hovermode: 'y',
+       margin,
+-      barmode: isMultiMetric ? 'group' : undefined,
+       xaxis: {
+-        title: displayMetricKey ? (isMultiMetric ? undefined : metricKey) : undefined,
++        title: displayMetricKey ? metricKey : undefined,
+         tickfont: { size: 11, color: theme.colors.textSecondary },
+-        tickformat: !isMultiMetric
+-          ? (customMetricBehaviorDefs[metricKey]?.chartAxisTickFormat ?? undefined)
+-          : undefined,
++        tickformat: customMetricBehaviorDefs[metricKey]?.chartAxisTickFormat ?? undefined,
+       },
+       yaxis: {
+         showticklabels: displayRunNames,
+@@ -278,31 +184,23 @@ export const RunsMetricsBarPlot = React.memo(
+         width: width || layoutWidth,
+         height: height || layoutHeight,
+         margin,
+-        barmode: isMultiMetric ? 'group' : undefined,
+         xaxis: {
+           ...current.xaxis,
+-          title: displayMetricKey ? (isMultiMetric ? undefined : metricKey) : undefined,
++          title: displayMetricKey ? metricKey : undefined,
+         },
+       }));
+-    }, [layoutWidth, layoutHeight, margin, metricKey, width, height, displayMetricKey, isMultiMetric]);
+-
+-    const barHighlightFn = useMemo(
+-      () => (isMultiMetric ? highlightGroupedBarTraces : highlightBarTraces),
+-      [isMultiMetric],
+-    );
++    }, [layoutWidth, layoutHeight, margin, metricKey, width, height, displayMetricKey]);
+ 
+     const { setHoveredPointIndex } = useRenderRunsChartTraceHighlight(
+       containerDiv,
+       selectedRunUuid,
+       runsData,
+-      barHighlightFn,
++      highlightBarTraces,
+     );
+ 
+     const hoverCallback = useCallback(
+       ({ points, event }) => {
+-        // In multi-metric mode, omit metricEntity so the tooltip header
+-        // doesn't show a single metric name — all values are shown in the body.
+-        const metricEntity = isMultiMetric ? undefined : points[0].data?.metrics[points[0].pointIndex];
++        const metricEntity = points[0].data?.metrics[points[0].pointIndex];
+         setHoveredPointIndex(points[0]?.pointIndex ?? -1);
+ 
+         const hoverData: RunsMetricsBarPlotHoverData = {
+@@ -318,7 +216,7 @@ export const RunsMetricsBarPlot = React.memo(
+           onHover?.(runUuid, event, hoverData);
+         }
+       },
+-      [onHover, setHoveredPointIndex, isMultiMetric],
++      [onHover, setHoveredPointIndex],
+     );
+ 
+     const unhoverCallback = useCallback(() => {
+@@ -333,16 +231,7 @@ export const RunsMetricsBarPlot = React.memo(
+      */
+     const mutableHoverCallback = useMutableChartHoverCallback(hoverCallback);
+ 
+-    const legendLabelData = useMemo((): LegendLabelData[] => {
+-      if (isMultiMetric) {
+-        return metricKeys.map((mKey, idx) => ({
+-          label: mKey,
+-          color: METRIC_COLORS[idx % METRIC_COLORS.length],
+-          uuid: mKey,
+-        }));
+-      }
+-      return getLegendDataFromRuns(runsData);
+-    }, [runsData, isMultiMetric, metricKeys]);
++    const legendLabelData = useMemo(() => getLegendDataFromRuns(runsData), [runsData]);
+ 
+     useEffect(() => {
+       // Prepare layout and data traces to export
+@@ -358,7 +247,7 @@ export const RunsMetricsBarPlot = React.memo(
+       const dataToExport = plotData.map((trace) => ({
+         ...trace,
+         // In exported image, use names for Y axes
+-        y: (trace as BarTraceData).names,
++        y: trace.names,
+       }));
+       onSetDownloadHandler?.(createChartImageDownloadHandler(dataToExport, layoutToExport));
+     }, [layout, onSetDownloadHandler, plotData]);
+diff --git a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/cards/RunsChartsBarChartCard.tsx b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/cards/RunsChartsBarChartCard.tsx
+index 85f8c93a8..5fd72e530 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/cards/RunsChartsBarChartCard.tsx
++++ b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/cards/RunsChartsBarChartCard.tsx
+@@ -30,18 +30,6 @@ export const barChartCardDefaultMargin = {
+   pad: 0,
+ };
+ 
+-const MAX_TITLE_METRICS = 3;
+-
+-const getBarChartTitle = (config: RunsChartsBarCardConfig): string => {
+-  const metricKeys = config.selectedMetricKeys ?? [config.metricKey];
+-  if (metricKeys.length <= 1) {
+-    return customMetricBehaviorDefs[config.metricKey]?.displayName ?? config.displayName ?? config.metricKey;
+-  }
+-  const displayed = metricKeys.slice(0, MAX_TITLE_METRICS).join(' vs ');
+-  const remaining = metricKeys.length - MAX_TITLE_METRICS;
+-  return remaining > 0 ? `${displayed} + ${remaining} more` : displayed;
+-};
+-
+ export const RunsChartsBarChartCard = ({
+   config,
+   chartRunData,
+@@ -53,35 +41,25 @@ export const RunsChartsBarChartCard = ({
+   isInViewport: isInViewportProp,
+   ...reorderProps
+ }: RunsChartsBarChartCardProps) => {
+-  const selectedMetricKeys = useMemo(
+-    () => config.selectedMetricKeys ?? [config.dataAccessKey ?? config.metricKey],
+-    [config.selectedMetricKeys, config.dataAccessKey, config.metricKey],
+-  );
+-  const isMultiMetric = selectedMetricKeys.length > 1;
+-  const primaryDataKey = config.dataAccessKey ?? config.metricKey;
++  const dataKey = config.dataAccessKey ?? config.metricKey;
+ 
+   const toggleFullScreenChart = () => {
+     setFullScreenChart?.({
+       config,
+-      title: getBarChartTitle(config),
++      title: customMetricBehaviorDefs[config.metricKey]?.displayName ?? config.metricKey,
+       subtitle: null,
+     });
+   };
+ 
+   const slicedRuns = useMemo(
+-    () =>
+-      chartRunData.filter(({ hidden, metrics }) => {
+-        if (hidden) return false;
+-        // Include run if it has ANY of the selected metrics
+-        return selectedMetricKeys.some((key) => metrics[key]);
+-      }),
+-    [chartRunData, selectedMetricKeys],
++    () => chartRunData.filter(({ hidden, metrics }) => !hidden && metrics[dataKey]),
++    [chartRunData, dataKey],
+   );
+ 
+   const isEmptyDataset = useMemo(() => {
+-    const metricsInRuns = new Set(slicedRuns.flatMap(({ metrics }) => Object.keys(metrics)));
+-    return !selectedMetricKeys.some((key) => metricsInRuns.has(key));
+-  }, [selectedMetricKeys, slicedRuns]);
++    const metricsInRuns = slicedRuns.flatMap(({ metrics }) => Object.keys(metrics));
++    return !metricsInRuns.includes(dataKey);
++  }, [dataKey, slicedRuns]);
+ 
+   const { setTooltip, resetTooltip, selectedRunUuid } = useRunsChartsTooltip(config);
+ 
+@@ -103,8 +81,7 @@ export const RunsChartsBarChartCard = ({
+       {isInViewport ? (
+         <RunsMetricsBarPlot
+           runsData={slicedRuns}
+-          metricKey={primaryDataKey}
+-          selectedMetricKeys={isMultiMetric ? selectedMetricKeys : undefined}
++          metricKey={dataKey}
+           displayRunNames={false}
+           displayMetricKey={false}
+           useDefaultHoverBox={false}
+@@ -140,7 +117,7 @@ export const RunsChartsBarChartCard = ({
+         </div>
+       );
+     }
+-    return getBarChartTitle(config);
++    return customMetricBehaviorDefs[config.metricKey]?.displayName ?? config.displayName ?? config.metricKey;
+   })();
+ 
+   return (
+@@ -154,13 +131,12 @@ export const RunsChartsBarChartCard = ({
+       toggleFullScreenChart={isEmptyDataset ? undefined : toggleFullScreenChart}
+       supportedDownloadFormats={['png', 'svg', 'csv']}
+       onClickDownload={(format) => {
+-        const chartTitleForExport = getBarChartTitle(config);
+         if (format === 'csv' || format === 'csv-full') {
+           const runsToExport = [...slicedRuns].reverse();
+-          downloadChartDataCsv(runsToExport, selectedMetricKeys, [], chartTitleForExport);
++          downloadChartDataCsv(runsToExport, [config.metricKey], [], config.metricKey);
+           return;
+         }
+-        imageDownloadHandler?.(format, chartTitleForExport);
++        imageDownloadHandler?.(format, config.metricKey);
+       }}
+       {...reorderProps}
+     >
+diff --git a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/config/RunsChartsConfigureBarChart.preview.tsx b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/config/RunsChartsConfigureBarChart.preview.tsx
+index ae399fb22..4aa3ea9a4 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/config/RunsChartsConfigureBarChart.preview.tsx
++++ b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/config/RunsChartsConfigureBarChart.preview.tsx
+@@ -13,17 +13,14 @@ export const RunsChartsConfigureBarChartPreview = ({
+ }) => {
+   const { resetTooltip, setTooltip } = useRunsChartsTooltip(cardConfig);
+ 
+-  const primaryDataKey = cardConfig.dataAccessKey ?? cardConfig.metricKey;
+-  const selectedMetricKeys = cardConfig.selectedMetricKeys ?? [primaryDataKey];
+-  const isMultiMetric = selectedMetricKeys.length > 1;
++  const dataKey = cardConfig.dataAccessKey ?? cardConfig.metricKey;
+ 
+   return (
+     <RunsMetricsBarPlot
+       useDefaultHoverBox={false}
+       displayRunNames={false}
+       displayMetricKey={false}
+-      metricKey={primaryDataKey}
+-      selectedMetricKeys={isMultiMetric ? selectedMetricKeys : undefined}
++      metricKey={dataKey}
+       runsData={previewData}
+       margin={barChartCardDefaultMargin}
+       onHover={setTooltip}
+diff --git a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/config/RunsChartsConfigureBarChart.tsx b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/config/RunsChartsConfigureBarChart.tsx
+index 7c75b3123..64cdfa59b 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/config/RunsChartsConfigureBarChart.tsx
++++ b/mlflow/server/js/src/experiment-tracking/components/runs-charts/components/config/RunsChartsConfigureBarChart.tsx
+@@ -1,12 +1,12 @@
+ import { LegacySelect } from '@databricks/design-system';
+ import { useCallback, useEffect } from 'react';
+-import { isEmpty, isUndefined } from 'lodash';
+ import type {
+   RunsChartsCardConfig,
+   RunsChartsBarCardConfig,
+   RunsChartsMetricByDatasetEntry,
+ } from '../../runs-charts.types';
+-import { RunsChartsConfigureField } from './RunsChartsConfigure.common';
++import { RunsChartsConfigureField, runsChartsRunCountDefaultOptions } from './RunsChartsConfigure.common';
++import { isEmpty } from 'lodash';
+ import { RunsChartsConfigureMetricWithDatasetSelect } from './RunsChartsConfigureMetricWithDatasetSelect';
+ 
+ /**
+@@ -24,45 +24,28 @@ export const RunsChartsConfigureBarChart = ({
+   onStateChange: (setter: (current: RunsChartsCardConfig) => RunsChartsBarCardConfig) => void;
+ }) => {
+   /**
+-   * Callback for updating metric key (used for dataset-aware metrics which remain single-select)
++   * Callback for updating metric key
+    */
+   const updateMetric = useCallback(
+     (metricKey: string, datasetName?: string, dataAccessKey?: string) => {
+-      onStateChange((current) => ({
+-        ...(current as RunsChartsBarCardConfig),
+-        metricKey,
+-        selectedMetricKeys: [dataAccessKey ?? metricKey],
+-        datasetName,
+-        dataAccessKey,
+-      }));
++      onStateChange((current) => ({ ...(current as RunsChartsBarCardConfig), metricKey, datasetName, dataAccessKey }));
+     },
+     [onStateChange],
+   );
+ 
+   /**
+-   * Callback for updating selected metrics (multi-select)
++   * Callback for updating run count
+    */
+-  const updateSelectedMetrics = useCallback(
+-    (metricKeys: string[]) => {
++  const updateVisibleRunCount = useCallback(
++    (runsCountToCompare: number) => {
+       onStateChange((current) => ({
+         ...(current as RunsChartsBarCardConfig),
+-        metricKey: metricKeys[0] ?? '',
+-        selectedMetricKeys: metricKeys,
++        runsCountToCompare,
+       }));
+     },
+     [onStateChange],
+   );
+ 
+-  /**
+-   * For backwards compatibility, if selectedMetricKeys is not present,
+-   * set it using metricKey
+-   */
+-  useEffect(() => {
+-    if (isUndefined(state.selectedMetricKeys) && !isUndefined(state.metricKey) && state.metricKey !== '') {
+-      updateSelectedMetrics([state.dataAccessKey ?? state.metricKey]);
+-    }
+-  }, [state.selectedMetricKeys, state.metricKey, state.dataAccessKey, updateSelectedMetrics]);
+-
+   /**
+    * If somehow metric key is not predetermined, automatically
+    * select the first one so it's not empty
+@@ -78,9 +61,9 @@ export const RunsChartsConfigureBarChart = ({
+     }
+ 
+     if (!state.metricKey && metricKeyList?.[0]) {
+-      updateSelectedMetrics([metricKeyList[0]]);
++      updateMetric(metricKeyList[0]);
+     }
+-  }, [state.metricKey, updateMetric, updateSelectedMetrics, metricKeyList, metricKeysByDataset]);
++  }, [state.metricKey, updateMetric, metricKeyList, metricKeysByDataset]);
+ 
+   const emptyMetricsList = metricKeyList.length === 0;
+ 
+@@ -98,10 +81,8 @@ export const RunsChartsConfigureBarChart = ({
+         ) : (
+           <LegacySelect
+             css={styles.selectFull}
+-            mode="multiple"
+-            placeholder={emptyMetricsList ? 'No metrics available' : 'Select metrics'}
+-            value={emptyMetricsList ? [] : (state.selectedMetricKeys ?? (state.metricKey ? [state.metricKey] : []))}
+-            onChange={updateSelectedMetrics}
++            value={emptyMetricsList ? 'No metrics available' : state.metricKey}
++            onChange={(metricKey) => updateMetric(metricKey)}
+             disabled={emptyMetricsList}
+             dangerouslySetAntdProps={{ showSearch: true }}
+           >
+diff --git a/mlflow/server/js/src/experiment-tracking/components/runs-charts/runs-charts.types.ts b/mlflow/server/js/src/experiment-tracking/components/runs-charts/runs-charts.types.ts
+index d2317457f..bc5856b0e 100644
+--- a/mlflow/server/js/src/experiment-tracking/components/runs-charts/runs-charts.types.ts
++++ b/mlflow/server/js/src/experiment-tracking/components/runs-charts/runs-charts.types.ts
+@@ -569,12 +569,6 @@ export class RunsChartsBarCardConfig extends RunsChartsCardConfig {
+    */
+   metricKey = '';
+ 
+-  /**
+-   * New key to support multiple metrics in grouped bar charts.
+-   * NOTE: This key will not be present in older charts.
+-   */
+-  selectedMetricKeys?: string[];
+-
+   /**
+    * If the chart is configured to use a particular dataset, this field will contain the dataset identifier.
+    */
+diff --git a/mlflow/server/js/src/experiment-tracking/pages/experiment-evaluation-runs/ExperimentEvaluationRunsTableCellRenderers.tsx b/mlflow/server/js/src/experiment-tracking/pages/experiment-evaluation-runs/ExperimentEvaluationRunsTableCellRenderers.tsx
+index 6c832c9df..3a7fddaf7 100644
+--- a/mlflow/server/js/src/experiment-tracking/pages/experiment-evaluation-runs/ExperimentEvaluationRunsTableCellRenderers.tsx
++++ b/mlflow/server/js/src/experiment-tracking/pages/experiment-evaluation-runs/ExperimentEvaluationRunsTableCellRenderers.tsx
+@@ -349,15 +349,13 @@ export const VisiblityCell: ColumnDef<RunEntityOrGroupData>['cell'] = ({ row, ta
+   const Icon = isRowHidden(runUuid, rowIndex, runStatus) ? VisibleOffIcon : VisibleIcon;
+ 
+   return (
+-    <div css={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+-      <Icon
+-        onClick={(e: React.MouseEvent) => {
+-          e.stopPropagation();
+-          toggleRowVisibility(runUuid);
+-        }}
+-        css={{ cursor: 'pointer' }}
+-      />
+-    </div>
++    <Icon
++      onClick={(e: React.MouseEvent) => {
++        e.stopPropagation();
++        toggleRowVisibility(runUuid);
++      }}
++      css={{ cursor: 'pointer' }}
++    />
+   );
+ };
+ 
+diff --git a/mlflow/server/js/src/gateway/components/secrets/MaskedValueDisplay.tsx b/mlflow/server/js/src/gateway/components/secrets/MaskedValueDisplay.tsx
+index b3abd24e3..9d52afb96 100644
+--- a/mlflow/server/js/src/gateway/components/secrets/MaskedValueDisplay.tsx
++++ b/mlflow/server/js/src/gateway/components/secrets/MaskedValueDisplay.tsx
+@@ -10,7 +10,7 @@ interface MaskedValueDisplayProps {
+ export const MaskedValueDisplay = ({ maskedValue, compact = false }: MaskedValueDisplayProps) => {
+   const { theme } = useDesignSystemTheme();
+ 
+-  const entries = useMemo(() => Object.entries(maskedValue ?? {}), [maskedValue]);
++  const entries = useMemo(() => Object.entries(maskedValue), [maskedValue]);
+ 
+   const isSingleValue = entries.length === 1;
+   const singleValue = isSingleValue ? entries[0][1] : null;
+diff --git a/mlflow/server/js/src/gateway/hooks/useCreateEndpointForm.ts b/mlflow/server/js/src/gateway/hooks/useCreateEndpointForm.ts
+index 60a7afbb5..e5356255a 100644
+--- a/mlflow/server/js/src/gateway/hooks/useCreateEndpointForm.ts
++++ b/mlflow/server/js/src/gateway/hooks/useCreateEndpointForm.ts
+@@ -1,11 +1,10 @@
+ import { useForm } from 'react-hook-form';
+-import { useCallback, useEffect, useMemo, useRef } from 'react';
++import { useCallback, useEffect, useRef } from 'react';
+ import { useCreateEndpointMutation } from './useCreateEndpointMutation';
+ import { useCreateSecret } from './useCreateSecret';
+ import { useCreateModelDefinitionMutation } from './useCreateModelDefinitionMutation';
+ import { useModelsQuery } from './useModelsQuery';
+ import { useEndpointsQuery } from './useEndpointsQuery';
+-import { useProviderConfigQuery } from './useProviderConfigQuery';
+ import type { ProviderModel, Endpoint } from '../types';
+ import type { SecretMode } from '../components/model-configuration/types';
+ import { isValidEndpointName } from '../utils/gatewayUtils';
+@@ -152,7 +151,6 @@ export function useCreateEndpointForm({
+   const secretMode = form.watch('secretMode');
+   const existingSecretId = form.watch('existingSecretId');
+   const newSecretName = form.watch('newSecret.name');
+-  const newSecretAuthMode = form.watch('newSecret.authMode');
+   const newSecretFields = form.watch('newSecret.secretFields');
+ 
+   const prevProviderRef = useRef(provider);
+@@ -202,15 +200,8 @@ export function useCreateEndpointForm({
+     }
+   };
+ 
+-  const { data: providerConfig } = useProviderConfigQuery({ provider: provider || '' });
+-  const selectedAuthMode = useMemo(
+-    () => providerConfig?.auth_modes?.find((m) => m.mode === newSecretAuthMode),
+-    [providerConfig, newSecretAuthMode],
+-  );
+-  const requiresSecretFields = selectedAuthMode?.secret_fields?.some((f) => f.required) ?? true;
+-  const hasSecretFieldValues = !requiresSecretFields || Object.values(newSecretFields || {}).some((v) => !!v);
+-  const isSecretConfigured =
+-    secretMode === 'existing' ? !!existingSecretId : !!newSecretName && !!newSecretAuthMode && hasSecretFieldValues;
++  const hasSecretFieldValues = Object.values(newSecretFields || {}).some((v) => !!v);
++  const isSecretConfigured = secretMode === 'existing' ? !!existingSecretId : !!newSecretName && hasSecretFieldValues;
+   const isFormComplete = !!provider && !!modelName && isSecretConfigured;
+ 
+   return {
+diff --git a/mlflow/server/js/src/lang/default/en.json b/mlflow/server/js/src/lang/default/en.json
+index 7f4ea29c4..c672f4ab3 100644
+--- a/mlflow/server/js/src/lang/default/en.json
++++ b/mlflow/server/js/src/lang/default/en.json
+@@ -579,10 +579,6 @@
+     "defaultMessage": "Detect Issues",
+     "description": "Label for the detect issues button in the traces table toolbar"
+   },
+-  "1uyr/n": {
+-    "defaultMessage": "View {count} {count, plural, one {issue} other {issues}}",
+-    "description": "Issue detection summary > View issues button"
+-  },
+   "1wfVV5": {
+     "defaultMessage": "Currently sorted by",
+     "description": "Label for the custom column group in the logged model column selector"
+diff --git a/mlflow/store/tracking/abstract_store.py b/mlflow/store/tracking/abstract_store.py
+index b986ed98a..2fb8d794b 100644
+--- a/mlflow/store/tracking/abstract_store.py
++++ b/mlflow/store/tracking/abstract_store.py
+@@ -674,6 +674,7 @@ class AbstractStore(GatewayStoreMixin):
+         filter_string: str | None = None,
+         max_results: int | None = None,
+         page_token: str | None = None,
++        include_trace_count: bool = False,
+     ) -> PagedList[Issue]:
+         """
+         Search for issues matching the given filters.
+@@ -683,6 +684,7 @@ class AbstractStore(GatewayStoreMixin):
+             filter_string: Optional filter string for advanced filtering.
+             max_results: Maximum number of results to return.
+             page_token: Token for pagination.
++            include_trace_count: Whether to include the count of traces impacted by each issue.
+ 
+         Returns:
+             A PagedList of Issue entities.
+diff --git a/mlflow/store/tracking/databricks_rest_store.py b/mlflow/store/tracking/databricks_rest_store.py
+index 033de7bc8..33868d67e 100644
+--- a/mlflow/store/tracking/databricks_rest_store.py
++++ b/mlflow/store/tracking/databricks_rest_store.py
+@@ -1162,6 +1162,7 @@ class DatabricksTracingRestStore(RestStore):
+         filter_string: str | None = None,
+         max_results: int | None = None,
+         page_token: str | None = None,
++        include_trace_count: bool = False,
+     ) -> PagedList[Issue]:
+         """
+         Search for issues matching the given filters.
+@@ -1171,6 +1172,7 @@ class DatabricksTracingRestStore(RestStore):
+             filter_string: Optional filter string for advanced filtering.
+             max_results: Maximum number of results to return.
+             page_token: Token for pagination.
++            include_trace_count: Whether to include the count of traces impacted by each issue.
+ 
+         Returns:
+             A PagedList of Issue entities.
+diff --git a/mlflow/store/tracking/dbmodels/models.py b/mlflow/store/tracking/dbmodels/models.py
+index c6d5e07f0..f3750a652 100644
+--- a/mlflow/store/tracking/dbmodels/models.py
++++ b/mlflow/store/tracking/dbmodels/models.py
+@@ -1198,10 +1198,13 @@ class SqlIssue(Base):
+     def __repr__(self):
+         return f"<SqlIssue({self.issue_id}, {self.name}, {self.status})>"
+ 
+-    def to_mlflow_entity(self) -> Issue:
++    def to_mlflow_entity(self, trace_count: int | None = None) -> Issue:
+         """
+         Convert DB model to corresponding MLflow entity.
+ 
++        Args:
++            trace_count: Optional trace count to include in the Issue entity.
++
+         Returns:
+             :py:class:`mlflow.entities.Issue` object.
+         """
+@@ -1218,6 +1221,7 @@ class SqlIssue(Base):
+             created_timestamp=self.created_timestamp,
+             last_updated_timestamp=self.last_updated_timestamp,
+             created_by=self.created_by,
++            trace_count=trace_count,
+         )
+ 
+ 
+diff --git a/mlflow/store/tracking/rest_store.py b/mlflow/store/tracking/rest_store.py
+index cf512dfac..286990f67 100644
+--- a/mlflow/store/tracking/rest_store.py
++++ b/mlflow/store/tracking/rest_store.py
+@@ -940,6 +940,7 @@ class RestStore(WorkspaceRestStoreMixin, RestGatewayStoreMixin, AbstractStore):
+         filter_string: str | None = None,
+         max_results: int | None = None,
+         page_token: str | None = None,
++        include_trace_count: bool = False,
+     ) -> PagedList[Issue]:
+         """
+         Search for issues matching the given filters.
+@@ -949,6 +950,7 @@ class RestStore(WorkspaceRestStoreMixin, RestGatewayStoreMixin, AbstractStore):
+             filter_string: Optional filter string for advanced filtering.
+             max_results: Maximum number of results to return.
+             page_token: Token for pagination.
++            include_trace_count: Whether to include the count of traces impacted by each issue.
+ 
+         Returns:
+             A PagedList of Issue entities.
+@@ -959,6 +961,7 @@ class RestStore(WorkspaceRestStoreMixin, RestGatewayStoreMixin, AbstractStore):
+                 filter_string=filter_string,
+                 max_results=max_results,
+                 page_token=page_token,
++                include_trace_count=include_trace_count,
+             )
+         )
+         response_proto = self._call_endpoint(
+diff --git a/mlflow/store/tracking/sqlalchemy_store.py b/mlflow/store/tracking/sqlalchemy_store.py
+index 6b4c946e2..71a9b82a0 100644
+--- a/mlflow/store/tracking/sqlalchemy_store.py
++++ b/mlflow/store/tracking/sqlalchemy_store.py
+@@ -6080,6 +6080,7 @@ class SqlAlchemyStore(SqlAlchemyGatewayStoreMixin, AbstractStore):
+         filter_string: str | None = None,
+         max_results: int | None = None,
+         page_token: str | None = None,
++        include_trace_count: bool = False,
+     ) -> PagedList[Issue]:
+         """
+         Search for issues matching the given filters.
+@@ -6095,6 +6096,7 @@ class SqlAlchemyStore(SqlAlchemyGatewayStoreMixin, AbstractStore):
+                     - "status = 'pending' AND source_run_id != 'run456'"
+             max_results: Maximum number of results to return.
+             page_token: Token for pagination.
++            include_trace_count: Whether to include the count of traces impacted by each issue.
+ 
+         Returns:
+             A PagedList of Issue entities.
+@@ -6108,6 +6110,23 @@ class SqlAlchemyStore(SqlAlchemyGatewayStoreMixin, AbstractStore):
+ 
+             query = self._get_query(session, SqlIssue)
+ 
++            if include_trace_count:
++                trace_count_label = func.count(func.distinct(SqlAssessments.trace_id)).label(
++                    "trace_count"
++                )
++                query = (
++                    query
++                    .add_columns(trace_count_label)
++                    .outerjoin(
++                        SqlAssessments,
++                        and_(
++                            SqlAssessments.name == SqlIssue.issue_id,
++                            SqlAssessments.assessment_type == "issue",
++                        ),
++                    )
++                    .group_by(SqlIssue.issue_id)
++                )
++
+             if experiment_id:
+                 query = query.filter(SqlIssue.experiment_id == int(experiment_id))
+ 
+@@ -6125,22 +6144,31 @@ class SqlAlchemyStore(SqlAlchemyGatewayStoreMixin, AbstractStore):
+                 value=SqlIssue.severity,
+                 else_=-1,
+             )
+-            query = query.order_by(
+-                severity_order.desc(),
++
++            order_clauses = [severity_order.desc()]
++            if include_trace_count:
++                order_clauses.append(trace_count_label.desc())
++            order_clauses.extend([
+                 SqlIssue.created_timestamp.desc(),
+                 SqlIssue.issue_id.desc(),
+-            )
++            ])
++            query = query.order_by(*order_clauses)
+ 
+             query = query.offset(offset).limit(max_results + 1)
+ 
+-            sql_issues = query.all()
+-
+-            has_next_page = len(sql_issues) > max_results
++            results = query.all()
++            has_next_page = len(results) > max_results
+             next_token = (
+                 SearchTraceUtils.create_page_token(offset + max_results) if has_next_page else None
+             )
+ 
+-            issues = [sql_issue.to_mlflow_entity() for sql_issue in sql_issues[:max_results]]
++            if include_trace_count:
++                issues = [
++                    sql_issue.to_mlflow_entity(trace_count=trace_count)
++                    for sql_issue, trace_count in results[:max_results]
++                ]
++            else:
++                issues = [sql_issue.to_mlflow_entity() for sql_issue in results[:max_results]]
+ 
+             return PagedList(issues, token=next_token)
+ 
+diff --git a/mlflow/telemetry/events.py b/mlflow/telemetry/events.py
+index 5c1179c03..36d69cdaf 100644
+--- a/mlflow/telemetry/events.py
++++ b/mlflow/telemetry/events.py
+@@ -418,7 +418,6 @@ class GatewayCreateEndpointEvent(Event):
+             if arguments.get("routing_strategy")
+             else None,
+             "num_model_configs": len(arguments.get("model_configs") or []),
+-            "usage_tracking": arguments.get("usage_tracking"),
+         }
+ 
+ 
+@@ -435,7 +434,6 @@ class GatewayUpdateEndpointEvent(Event):
+             "num_model_configs": len(arguments.get("model_configs"))
+             if arguments.get("model_configs") is not None
+             else None,
+-            "usage_tracking": arguments.get("usage_tracking"),
+         }
+ 
+ 
+diff --git a/mlflow/utils/autologging_utils/logging_and_warnings.py b/mlflow/utils/autologging_utils/logging_and_warnings.py
+index b3c04429a..87a791930 100644
+--- a/mlflow/utils/autologging_utils/logging_and_warnings.py
++++ b/mlflow/utils/autologging_utils/logging_and_warnings.py
+@@ -7,6 +7,8 @@ from threading import get_ident as get_current_thread_id
+ import mlflow
+ from mlflow.utils import logging_utils
+ 
++ORIGINAL_SHOWWARNING = warnings.showwarning
++
+ 
+ class _WarningsController:
+     """
+@@ -24,7 +26,6 @@ class _WarningsController:
+         self._state_lock = RLock()
+ 
+         self._did_patch_showwarning = False
+-        self._original_showwarning = None
+ 
+         self._disabled_threads = set()
+         self._rerouted_threads = set()
+@@ -69,7 +70,7 @@ class _WarningsController:
+                 message,
+             )
+         else:
+-            self._original_showwarning(message, category, filename, lineno, *args, **kwargs)
++            ORIGINAL_SHOWWARNING(message, category, filename, lineno, *args, **kwargs)
+ 
+     def _should_patch_showwarning(self):
+         return (
+@@ -95,13 +96,12 @@ class _WarningsController:
+             if self._should_patch_showwarning() and not self._did_patch_showwarning:
+                 # NB: guard to prevent patching an instance of a patch
+                 if warnings.showwarning != self._patched_showwarning:
+-                    self._original_showwarning = warnings.showwarning
+                     warnings.showwarning = self._patched_showwarning
+                 self._did_patch_showwarning = True
+             elif not self._should_patch_showwarning() and self._did_patch_showwarning:
+                 # NB: only unpatch iff the patched function is active
+                 if warnings.showwarning == self._patched_showwarning:
+-                    warnings.showwarning = self._original_showwarning
++                    warnings.showwarning = ORIGINAL_SHOWWARNING
+                 self._did_patch_showwarning = False
+ 
+     def set_mlflow_warnings_disablement_state_globally(self, disabled=True):
+diff --git a/mlflow/utils/providers.py b/mlflow/utils/providers.py
+index 111674be0..685c7413c 100644
+--- a/mlflow/utils/providers.py
++++ b/mlflow/utils/providers.py
+@@ -65,8 +65,8 @@ def _get_model_cost():
+ #   - Vertex AI: https://docs.litellm.ai/docs/providers/vertex
+ #   - Databricks: https://docs.litellm.ai/docs/providers/databricks
+ #
+-# Includes both user-provided credential modes and a default credential chain mode
+-# that uses ambient server credentials (instance profile, IRSA, ECS task role, etc.).
++# Only user-provided modes are included (no server-provided modes like
++# managed identity, IRSA, or ADC that require specific hosting environments).
+ _PROVIDER_AUTH_MODES: dict[str, dict[str, AuthModeDict]] = {
+     "bedrock": {
+         "api_key": {
+@@ -142,31 +142,6 @@ _PROVIDER_AUTH_MODES: dict[str, dict[str, AuthModeDict]] = {
+                 },
+             ],
+         },
+-        "default_chain": {
+-            "display_name": "Default Credential Chain",
+-            "description": "Use the server's default AWS credentials "
+-            "(instance profile, IRSA, ECS task role, ~/.aws/credentials, etc.)",
+-            "fields": [
+-                {
+-                    "name": "aws_role_name",
+-                    "description": "IAM Role ARN to assume (optional, for cross-account access)",
+-                    "secret": False,
+-                    "required": False,
+-                },
+-                {
+-                    "name": "aws_session_name",
+-                    "description": "Session name for assumed role",
+-                    "secret": False,
+-                    "required": False,
+-                },
+-                {
+-                    "name": "aws_region_name",
+-                    "description": "AWS Region (e.g., us-east-1)",
+-                    "secret": False,
+-                    "required": False,
+-                },
+-            ],
+-        },
+     },
+     "azure": {
+         "api_key": {
+@@ -369,31 +344,6 @@ _PROVIDER_AUTH_MODES: dict[str, dict[str, AuthModeDict]] = {
+                 },
+             ],
+         },
+-        "default_chain": {
+-            "display_name": "Default Credential Chain",
+-            "description": "Use the server's default AWS credentials "
+-            "(instance profile, IRSA, ECS task role, ~/.aws/credentials, etc.)",
+-            "fields": [
+-                {
+-                    "name": "aws_role_name",
+-                    "description": "IAM Role ARN to assume (optional, for cross-account access)",
+-                    "secret": False,
+-                    "required": False,
+-                },
+-                {
+-                    "name": "aws_session_name",
+-                    "description": "Session name for assumed role",
+-                    "secret": False,
+-                    "required": False,
+-                },
+-                {
+-                    "name": "aws_region_name",
+-                    "description": "AWS Region (e.g., us-east-1)",
+-                    "secret": False,
+-                    "required": False,
+-                },
+-            ],
+-        },
+     },
+ }
+ 
+diff --git a/tests/conftest.py b/tests/conftest.py
+index f181f7319..6bbdcf0c6 100644
+--- a/tests/conftest.py
++++ b/tests/conftest.py
+@@ -1028,18 +1028,6 @@ def enable_mlflow_testing():
+         yield
+ 
+ 
+-@pytest.fixture(scope="session", autouse=True)
+-def _mock_databricks_host_metadata():
+-    """Prevent databricks-sdk from fetching host metadata during the test session.
+-
+-    databricks-sdk 0.101.0+ fetches /.well-known/databricks-config during
+-    WorkspaceClient initialization, which causes timeouts with dummy hosts.
+-    https://github.com/databricks/databricks-sdk-py/pull/1331
+-    """
+-    with mock.patch("databricks.sdk.config.Config._resolve_host_metadata"):
+-        yield
+-
+-
+ @pytest.fixture(scope="session", autouse=True)
+ def disable_uv_auto_detect():
+     with pytest.MonkeyPatch.context() as mp:
+diff --git a/tests/genai/discovery/test_clustering.py b/tests/genai/discovery/test_clustering.py
+index 039532c03..77e813a55 100644
+--- a/tests/genai/discovery/test_clustering.py
++++ b/tests/genai/discovery/test_clustering.py
+@@ -187,4 +187,4 @@ def test_build_cluster_summary_prompt_with_categories():
+     assert "hallucination" in prompt
+     assert "tool_error" in prompt
+     assert "latency" in prompt
+-    assert "Assign one or more categories from" in prompt
++    assert "ONLY include categories from this list" in prompt
+diff --git a/tests/genai/discovery/test_extraction.py b/tests/genai/discovery/test_extraction.py
+index 195a8d6f6..80edd2427 100644
+--- a/tests/genai/discovery/test_extraction.py
++++ b/tests/genai/discovery/test_extraction.py
+@@ -154,13 +154,13 @@ def test_extract_failing_traces(make_trace):
+     _add_feedback(traces[1], "satisfaction", False, "bad response")
+     _add_feedback(traces[2], "satisfaction", False, "incomplete")
+ 
+-    result = extract_failing_traces(_refetch(traces), "satisfaction")
++    failing, rationales = extract_failing_traces(_refetch(traces), "satisfaction")
+ 
+-    assert len(result.failing_traces) == 2
+-    assert result.failing_traces[0].info.trace_id == traces[1].info.trace_id
+-    assert result.failing_traces[1].info.trace_id == traces[2].info.trace_id
+-    assert result.rationale_map[traces[1].info.trace_id] == "bad response"
+-    assert result.rationale_map[traces[2].info.trace_id] == "incomplete"
++    assert len(failing) == 2
++    assert failing[0].info.trace_id == traces[1].info.trace_id
++    assert failing[1].info.trace_id == traces[2].info.trace_id
++    assert rationales[traces[1].info.trace_id] == "bad response"
++    assert rationales[traces[2].info.trace_id] == "incomplete"
+ 
+ 
+ def test_extract_failing_traces_with_list_of_scorer_names(make_trace):
+@@ -172,13 +172,13 @@ def test_extract_failing_traces_with_list_of_scorer_names(make_trace):
+     _add_feedback(traces[2], "satisfaction", True, "good")
+     _add_feedback(traces[2], "quality", False, "poor quality")
+ 
+-    result = extract_failing_traces(_refetch(traces), ["satisfaction", "quality"])
++    failing, rationales = extract_failing_traces(_refetch(traces), ["satisfaction", "quality"])
+ 
+-    assert len(result.failing_traces) == 2
+-    assert result.failing_traces[0].info.trace_id == traces[1].info.trace_id
+-    assert result.failing_traces[1].info.trace_id == traces[2].info.trace_id
+-    assert result.rationale_map[traces[1].info.trace_id] == "bad response"
+-    assert result.rationale_map[traces[2].info.trace_id] == "poor quality"
++    assert len(failing) == 2
++    assert failing[0].info.trace_id == traces[1].info.trace_id
++    assert failing[1].info.trace_id == traces[2].info.trace_id
++    assert rationales[traces[1].info.trace_id] == "bad response"
++    assert rationales[traces[2].info.trace_id] == "poor quality"
+ 
+ 
+ def test_extract_failing_traces_multiple_scorers_fail_same_row(make_trace):
+@@ -188,35 +188,35 @@ def test_extract_failing_traces_multiple_scorers_fail_same_row(make_trace):
+     _add_feedback(traces[1], "scorer_a", True, "ok")
+     _add_feedback(traces[1], "scorer_b", True, "ok")
+ 
+-    result = extract_failing_traces(_refetch(traces), ["scorer_a", "scorer_b"])
++    failing, rationales = extract_failing_traces(_refetch(traces), ["scorer_a", "scorer_b"])
+ 
+-    assert len(result.failing_traces) == 1
+-    assert result.failing_traces[0].info.trace_id == traces[0].info.trace_id
+-    assert "reason a" in result.rationale_map[traces[0].info.trace_id]
+-    assert "reason b" in result.rationale_map[traces[0].info.trace_id]
++    assert len(failing) == 1
++    assert failing[0].info.trace_id == traces[0].info.trace_id
++    assert "reason a" in rationales[traces[0].info.trace_id]
++    assert "reason b" in rationales[traces[0].info.trace_id]
+ 
+ 
+ def test_extract_failing_traces_empty_list():
+-    result = extract_failing_traces([], "satisfaction")
+-    assert result.failing_traces == []
+-    assert result.rationale_map == {}
++    failing, rationales = extract_failing_traces([], "satisfaction")
++    assert failing == []
++    assert rationales == {}
+ 
+ 
+ def test_extract_failing_traces_no_matching_scorer(make_trace):
+     traces = [make_trace()]
+     _add_feedback(traces[0], "other_scorer", False, "bad")
+ 
+-    result = extract_failing_traces(_refetch(traces), "satisfaction")
+-    assert result.failing_traces == []
++    failing, rationales = extract_failing_traces(_refetch(traces), "satisfaction")
++    assert failing == []
+ 
+ 
+ def test_extract_failing_traces_no_failures(make_trace):
+     traces = [make_trace()]
+     _add_feedback(traces[0], "satisfaction", True, "good")
+ 
+-    result = extract_failing_traces(_refetch(traces), "satisfaction")
+-    assert result.failing_traces == []
+-    assert result.rationale_map == {}
++    failing, rationales = extract_failing_traces(_refetch(traces), "satisfaction")
++    assert failing == []
++    assert rationales == {}
+ 
+ 
+ # ---- extract_assessment_rationale ----
+diff --git a/tests/genai/discovery/test_pipeline.py b/tests/genai/discovery/test_pipeline.py
+index 1d2b1e5c6..0ae8d50c3 100644
+--- a/tests/genai/discovery/test_pipeline.py
++++ b/tests/genai/discovery/test_pipeline.py
+@@ -11,19 +11,14 @@ from mlflow.genai.discovery.constants import (
+     DEFAULT_SCORER_NAME,
+     build_satisfaction_instructions,
+ )
+-from mlflow.genai.discovery.entities import (
+-    Issue,
+-    _ConversationAnalysis,
+-    _IdentifiedIssue,
+-    _TriageResult,
+-)
++from mlflow.genai.discovery.entities import Issue, _ConversationAnalysis, _IdentifiedIssue
+ from mlflow.genai.discovery.pipeline import (
+     _annotate_issue_traces,
+     _is_non_issue,
+     build_issue_discovery_scorer,
+     discover_issues,
+ )
+-from mlflow.genai.discovery.utils import get_session_id, verify_scorer
++from mlflow.genai.discovery.utils import verify_scorer
+ from mlflow.genai.evaluation.context import NoneContext, _set_context
+ from mlflow.genai.evaluation.entities import EvaluationResult
+ from mlflow.utils.mlflow_tags import MLFLOW_RUN_TYPE, MLFLOW_RUN_TYPE_ISSUE_DETECTION
+@@ -83,7 +78,7 @@ def test_discover_issues_all_traces_pass(make_trace):
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult([], {}, {}),
++            return_value=([], {}),
+         ) as mock_extract,
+         patch("mlflow.genai.discovery.pipeline.mlflow.MlflowClient"),
+         patch(
+@@ -127,7 +122,7 @@ def test_discover_issues_full_pipeline(make_trace):
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult(failing, rationale_map, {}),
++            return_value=(failing, rationale_map),
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failure_labels",
+@@ -184,7 +179,7 @@ def test_discover_issues_low_severity_issues_filtered(make_trace):
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult(failing, rationale_map, {}),
++            return_value=(failing, rationale_map),
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failure_labels",
+@@ -250,7 +245,7 @@ def test_discover_issues_custom_satisfaction_scorer(make_trace):
+         ) as mock_eval,
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult([], {}, {}),
++            return_value=([], {}),
+         ),
+         patch("mlflow.genai.discovery.pipeline.mlflow.MlflowClient"),
+         patch(
+@@ -280,7 +275,7 @@ def test_discover_issues_additional_scorers(make_trace):
+         ) as mock_eval,
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult([], {}, {}),
++            return_value=([], {}),
+         ),
+         patch("mlflow.genai.discovery.pipeline.mlflow.MlflowClient"),
+         patch(
+@@ -356,7 +351,7 @@ def test_discover_issues_filters_non_issues(make_trace, issue_name):
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult(failing, rationale_map, {}),
++            return_value=(failing, rationale_map),
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failure_labels",
+@@ -859,7 +854,7 @@ def test_discover_issues_with_custom_run_id(make_trace):
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult([], {}, {}),
++            return_value=([], {}),
+         ),
+     ):
+         result = discover_issues(traces=traces, run_id=custom_run_id)
+@@ -875,7 +870,7 @@ def test_discover_issues_tags_run_with_issue_detection_marker(make_trace):
+         patch("mlflow.genai.discovery.pipeline.verify_scorer"),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult([], {}, {}),
++            return_value=([], {}),
+         ),
+     ):
+         result = discover_issues(traces=traces, scorers=[scorer])
+@@ -940,7 +935,7 @@ def test_discover_issues_returns_total_cost_usd_field(make_trace):
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult(failing, rationale_map, {}),
++            return_value=(failing, rationale_map),
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failure_labels",
+@@ -1014,7 +1009,7 @@ def test_discover_issues_returns_cost_when_all_pass(make_trace):
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult([], {}, {}),
++            return_value=([], {}),
+         ),
+     ):
+         result = discover_issues(traces=traces)
+@@ -1054,7 +1049,7 @@ def test_discover_issues_filters_invalid_categories(make_trace):
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult(failing, rationale_map, {}),
++            return_value=(failing, rationale_map),
+         ),
+         patch(
+             "mlflow.genai.discovery.pipeline.extract_failure_labels",
+@@ -1080,37 +1075,3 @@ def test_discover_issues_filters_invalid_categories(make_trace):
+     mock_summarize.assert_called_once()
+     call_kwargs = mock_summarize.call_args.kwargs
+     assert call_kwargs["categories"] == ["hallucination", "tool_error"]
+-
+-
+-def test_discover_issues_with_mixed_session_traces(make_trace):
+-
+-    traces = [
+-        make_trace(session_id="session-1"),
+-        make_trace(session_id="session-1"),
+-        make_trace(session_id=None),
+-        make_trace(session_id=None),
+-    ]
+-
+-    with (
+-        patch("mlflow.genai.discovery.pipeline.verify_scorer") as mock_verify,
+-        patch(
+-            "mlflow.genai.discovery.pipeline.mlflow.genai.evaluate",
+-            return_value=_triage_eval(),
+-        ),
+-        patch(
+-            "mlflow.genai.discovery.pipeline.extract_failing_traces",
+-            return_value=_TriageResult([], {}, {}),
+-        ),
+-    ):
+-        result = discover_issues(
+-            traces=traces,
+-        )
+-
+-    assert result is not None
+-    assert result.total_traces_analyzed == 4
+-
+-    mock_verify.assert_called_once()
+-    call_kwargs = mock_verify.call_args.kwargs
+-    assert call_kwargs["session"] is not None
+-
+-    assert all(get_session_id(t) is not None for t in call_kwargs["session"])
+diff --git a/tests/genai/judges/adapters/test_litellm_adapter.py b/tests/genai/judges/adapters/test_litellm_adapter.py
+index f37991830..24bcea572 100644
+--- a/tests/genai/judges/adapters/test_litellm_adapter.py
++++ b/tests/genai/judges/adapters/test_litellm_adapter.py
+@@ -11,7 +11,6 @@ from mlflow.entities.trace_info import TraceInfo
+ from mlflow.entities.trace_location import TraceLocation
+ from mlflow.entities.trace_state import TraceState
+ from mlflow.exceptions import MlflowException
+-from mlflow.gateway.constants import MLFLOW_GATEWAY_CALLER_HEADER
+ from mlflow.genai.judges.adapters.base_adapter import AdapterInvocationInput
+ from mlflow.genai.judges.adapters.litellm_adapter import (
+     _MODEL_RESPONSE_FORMAT_CAPABILITIES,
+@@ -366,7 +365,6 @@ def test_gateway_provider_integration():
+     assert call_kwargs["model"] == "openai/my-endpoint"
+     assert call_kwargs["api_base"] == "http://localhost:5000/gateway/mlflow/v1/"
+     assert call_kwargs["api_key"] == "mlflow-gateway-auth"
+-    assert call_kwargs["extra_headers"][MLFLOW_GATEWAY_CALLER_HEADER] == "judge"
+ 
+ 
+ def test_gateway_provider_requires_http_tracking_uri():
+diff --git a/tests/telemetry/test_events.py b/tests/telemetry/test_events.py
+index c8681791f..11a340d35 100644
+--- a/tests/telemetry/test_events.py
++++ b/tests/telemetry/test_events.py
+@@ -339,13 +339,11 @@ def test_simulate_conversation_parse_result(result, expected_params):
+                 "fallback_config": {"strategy": "FAILOVER"},
+                 "routing_strategy": "REQUEST_BASED_TRAFFIC_SPLIT",
+                 "model_configs": [{"model_definition_id": "md-1"}, {"model_definition_id": "md-2"}],
+-                "usage_tracking": True,
+             },
+             {
+                 "has_fallback_config": True,
+                 "routing_strategy": "REQUEST_BASED_TRAFFIC_SPLIT",
+                 "num_model_configs": 2,
+-                "usage_tracking": True,
+             },
+         ),
+         (
+@@ -353,32 +351,20 @@ def test_simulate_conversation_parse_result(result, expected_params):
+                 "fallback_config": None,
+                 "routing_strategy": None,
+                 "model_configs": [{"model_definition_id": "md-1"}],
+-                "usage_tracking": False,
+             },
+             {
+                 "has_fallback_config": False,
+                 "routing_strategy": None,
+                 "num_model_configs": 1,
+-                "usage_tracking": False,
+             },
+         ),
+         (
+             {"fallback_config": None, "routing_strategy": None, "model_configs": []},
+-            {
+-                "has_fallback_config": False,
+-                "routing_strategy": None,
+-                "num_model_configs": 0,
+-                "usage_tracking": None,
+-            },
++            {"has_fallback_config": False, "routing_strategy": None, "num_model_configs": 0},
+         ),
+         (
+             {},
+-            {
+-                "has_fallback_config": False,
+-                "routing_strategy": None,
+-                "num_model_configs": 0,
+-                "usage_tracking": None,
+-            },
++            {"has_fallback_config": False, "routing_strategy": None, "num_model_configs": 0},
+         ),
+     ],
+ )
+@@ -394,37 +380,20 @@ def test_gateway_create_endpoint_parse_params(arguments, expected_params):
+                 "fallback_config": {"strategy": "FAILOVER"},
+                 "routing_strategy": "ROUND_ROBIN",
+                 "model_configs": [{"model_definition_id": "md-1"}],
+-                "usage_tracking": True,
+             },
+             {
+                 "has_fallback_config": True,
+                 "routing_strategy": "ROUND_ROBIN",
+                 "num_model_configs": 1,
+-                "usage_tracking": True,
+             },
+         ),
+         (
+-            {
+-                "fallback_config": None,
+-                "routing_strategy": None,
+-                "model_configs": None,
+-                "usage_tracking": None,
+-            },
+-            {
+-                "has_fallback_config": False,
+-                "routing_strategy": None,
+-                "num_model_configs": None,
+-                "usage_tracking": None,
+-            },
++            {"fallback_config": None, "routing_strategy": None, "model_configs": None},
++            {"has_fallback_config": False, "routing_strategy": None, "num_model_configs": None},
+         ),
+         (
+             {},
+-            {
+-                "has_fallback_config": False,
+-                "routing_strategy": None,
+-                "num_model_configs": None,
+-                "usage_tracking": None,
+-            },
++            {"has_fallback_config": False, "routing_strategy": None, "num_model_configs": None},
+         ),
+     ],
+ )
+diff --git a/tests/telemetry/test_tracked_events.py b/tests/telemetry/test_tracked_events.py
+index f92340366..2359e302e 100644
+--- a/tests/telemetry/test_tracked_events.py
++++ b/tests/telemetry/test_tracked_events.py
+@@ -7,7 +7,6 @@ import pandas as pd
+ import pytest
+ import sklearn.neighbors as knn
+ from click.testing import CliRunner
+-from fastapi import Request
+ 
+ import mlflow
+ from mlflow import MlflowClient
+@@ -32,7 +31,6 @@ from mlflow.entities.gateway_endpoint import GatewayModelLinkageType
+ from mlflow.entities.trace import Trace
+ from mlflow.entities.webhook import WebhookAction, WebhookEntity, WebhookEvent
+ from mlflow.gateway.cli import start
+-from mlflow.gateway.constants import MLFLOW_GATEWAY_CALLER_HEADER
+ from mlflow.gateway.schemas import chat
+ from mlflow.genai.datasets import create_dataset
+ from mlflow.genai.judges import make_judge
+@@ -1816,7 +1814,6 @@ def test_gateway_crud_telemetry(mock_requests, mock_telemetry_client: TelemetryC
+             "has_fallback_config": False,
+             "routing_strategy": None,
+             "num_model_configs": 1,
+-            "usage_tracking": True,
+         },
+     )
+ 
+@@ -1855,7 +1852,6 @@ def test_gateway_crud_telemetry(mock_requests, mock_telemetry_client: TelemetryC
+             "has_fallback_config": False,
+             "routing_strategy": None,
+             "num_model_configs": None,
+-            "usage_tracking": None,
+         },
+     )
+ 
+@@ -2150,39 +2146,6 @@ async def test_gateway_invocation_telemetry(
+         {"is_streaming": True, "invocation_type": "mlflow_chat_completions"},
+     )
+ 
+-    # Test that caller header is included in telemetry when present
+-    mock_request = MagicMock(spec=Request)
+-    mock_request.json = AsyncMock(
+-        return_value={
+-            "model": endpoint.name,
+-            "messages": [{"role": "user", "content": "Hi"}],
+-            "stream": False,
+-        }
+-    )
+-    mock_request.headers = {MLFLOW_GATEWAY_CALLER_HEADER: "judge"}
+-
+-    with (
+-        patch("mlflow.server.gateway_api._get_store", return_value=store),
+-        patch(
+-            "mlflow.server.gateway_api._create_provider_from_endpoint_name"
+-        ) as mock_create_provider,
+-    ):
+-        mock_provider = MagicMock()
+-        mock_provider.chat = AsyncMock(return_value=mock_response)
+-        mock_endpoint_config = GatewayEndpointConfig(
+-            endpoint_id=endpoint.endpoint_id, endpoint_name=endpoint.name, models=[]
+-        )
+-        mock_create_provider.return_value = (mock_provider, mock_endpoint_config)
+-
+-        await chat_completions(mock_request)
+-
+-    validate_telemetry_record(
+-        mock_telemetry_client,
+-        mock_requests,
+-        GatewayInvocationEvent.name,
+-        {"is_streaming": False, "invocation_type": "mlflow_chat_completions", "caller": "judge"},
+-    )
+-
+ 
+ def test_tracing_context_propagation_get_and_set_success(
+     mock_requests, mock_telemetry_client: TelemetryClient
+diff --git a/tests/utils/test_autologging_utils.py b/tests/utils/test_autologging_utils.py
+index 91f148915..1900783b8 100644
+--- a/tests/utils/test_autologging_utils.py
++++ b/tests/utils/test_autologging_utils.py
+@@ -4,6 +4,7 @@ from threading import Thread
+ from mlflow import MlflowClient
+ from mlflow.entities import Metric
+ from mlflow.utils.autologging_utils.logging_and_warnings import (
++    ORIGINAL_SHOWWARNING,
+     _WarningsController,
+ )
+ from mlflow.utils.autologging_utils.metrics_queue import (
+@@ -45,12 +46,11 @@ def test_flush_metrics_queue_is_thread_safe():
+ 
+ 
+ def test_double_patch_does_not_overwrite(monkeypatch):
+-    original_showwarning = warnings.showwarning
+-    monkeypatch.setattr(warnings, "showwarning", original_showwarning)
++    monkeypatch.setattr(warnings, "showwarning", ORIGINAL_SHOWWARNING)
+ 
+     controller = _WarningsController()
+ 
+-    assert warnings.showwarning == original_showwarning
++    assert warnings.showwarning == ORIGINAL_SHOWWARNING
+     assert not controller._did_patch_showwarning
+ 
+     controller.set_non_mlflow_warnings_disablement_state_for_current_thread(True)
+@@ -66,30 +66,4 @@ def test_double_patch_does_not_overwrite(monkeypatch):
+ 
+     controller.set_non_mlflow_warnings_disablement_state_for_current_thread(False)
+ 
+-    assert warnings.showwarning == original_showwarning
+-
+-
+-def test_showwarning_captures_user_handler():
+-    """Verify that a user-set warnings.showwarning handler survives the patch/unpatch cycle.
+-
+-    Regression test for https://github.com/mlflow/mlflow/issues/21689
+-    """
+-    original_showwarning = warnings.showwarning
+-
+-    # Simulate a user setting a custom handler after import (e.g. logging.captureWarnings)
+-    custom_handler = lambda *args, **kwargs: None  # noqa: E731
+-    warnings.showwarning = custom_handler
+-
+-    try:
+-        controller = _WarningsController()
+-
+-        # Patch: controller should capture the user's custom handler
+-        controller.set_non_mlflow_warnings_disablement_state_for_current_thread(True)
+-        assert warnings.showwarning == controller._patched_showwarning
+-        assert controller._original_showwarning is custom_handler
+-
+-        # Unpatch: controller should restore the user's custom handler, not the default
+-        controller.set_non_mlflow_warnings_disablement_state_for_current_thread(False)
+-        assert warnings.showwarning is custom_handler
+-    finally:
+-        warnings.showwarning = original_showwarning
++    assert warnings.showwarning == ORIGINAL_SHOWWARNING
+diff --git a/tests/utils/test_providers.py b/tests/utils/test_providers.py
+index 13d78b1ec..4d182bc17 100644
+--- a/tests/utils/test_providers.py
++++ b/tests/utils/test_providers.py
+@@ -4,7 +4,6 @@ from mlflow.utils.providers import (
+     _normalize_provider,
+     get_all_providers,
+     get_models,
+-    get_provider_config_response,
+ )
+ 
+ 
+@@ -154,20 +153,3 @@ def test_get_models_dedupes_models_after_normalization():
+         model_names = [m["model"] for m in models]
+         assert model_names.count("gemini-3-flash-preview") == 1
+         assert len(models) == 1
+-
+-
+-def test_get_provider_config_bedrock_has_default_chain():
+-    config = get_provider_config_response("bedrock")
+-    modes = {m["mode"] for m in config["auth_modes"]}
+-    assert "default_chain" in modes
+-
+-    default_chain = next(m for m in config["auth_modes"] if m["mode"] == "default_chain")
+-    assert default_chain["display_name"] == "Default Credential Chain"
+-    assert default_chain["secret_fields"] == []
+-    assert all(not f["required"] for f in default_chain["config_fields"])
+-
+-
+-def test_get_provider_config_sagemaker_has_default_chain():
+-    config = get_provider_config_response("sagemaker")
+-    modes = {m["mode"] for m in config["auth_modes"]}
+-    assert "default_chain" in modes
+diff --git a/uv.lock b/uv.lock
+index e2fa7b77a..2cfc57853 100644
+--- a/uv.lock
++++ b/uv.lock
+@@ -1615,16 +1615,16 @@ wheels = [
+ 
+ [[package]]
+ name = "databricks-sdk"
+-version = "0.101.0"
++version = "0.99.0"
+ source = { registry = "https://pypi.org/simple" }
+ dependencies = [
+     { name = "google-auth" },
+     { name = "protobuf" },
+     { name = "requests" },
+ ]
+-sdist = { url = "https://files.pythonhosted.org/packages/7c/32/62b8891eef926ca2138e9952f6523ed923648df254b436994b028c4607df/databricks_sdk-0.101.0.tar.gz", hash = "sha256:e643f416892edcfd255e1072f7c96a563f2e44730663b624b2129c3f9636188e", size = 886447, upload-time = "2026-03-18T08:17:33.457Z" }
++sdist = { url = "https://files.pythonhosted.org/packages/56/28/d53ce4c21ab197cacdeb65bcdcba3f8098a1b6b88052b72b60348f6b8091/databricks_sdk-0.99.0.tar.gz", hash = "sha256:13ae35b064277074a79fcd5265260e92b352b5eb4e950438dcee895951bd86fd", size = 878669, upload-time = "2026-03-12T08:16:12.597Z" }
+ wheels = [
+-    { url = "https://files.pythonhosted.org/packages/95/19/7ca1294bd770c7079d8600b802352a0e9c9aae31d74f515856004a71d66a/databricks_sdk-0.101.0-py3-none-any.whl", hash = "sha256:30b6ecb261aad34c3f9c3dbc84197f1daebe0857c5c89aa1581b96a012b05e36", size = 837674, upload-time = "2026-03-18T08:17:31.354Z" },
++    { url = "https://files.pythonhosted.org/packages/ce/3a/8593cae357aac76142da1940ad7a965ea50f2767bb958820839be675811b/databricks_sdk-0.99.0-py3-none-any.whl", hash = "sha256:c0a6740bf21d430daa85461e193197ce1d0ac12209ce20e3cb9b67b32fe2bcfd", size = 829540, upload-time = "2026-03-12T08:16:11.155Z" },
+ ]
+ 
+ [package.optional-dependencies]

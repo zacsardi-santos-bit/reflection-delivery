@@ -1,0 +1,155 @@
+patching file args_test.go
+patching file command_test.go
+{"Time":"2026-06-29T15:26:32.131235427Z","Action":"start","Package":"github.com/urfave/cli/v3"}
+{"Time":"2026-06-29T15:26:32.151753895Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsIntTypes"}
+{"Time":"2026-06-29T15:26:32.151857177Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsIntTypes","Output":"=== RUN   TestArgsIntTypes\n"}
+{"Time":"2026-06-29T15:26:32.153868657Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsIntTypes","Output":"--- PASS: TestArgsIntTypes (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.153929359Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsIntTypes","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.154044801Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsIntSliceTypes"}
+{"Time":"2026-06-29T15:26:32.154098472Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsIntSliceTypes","Output":"=== RUN   TestArgsIntSliceTypes\n"}
+{"Time":"2026-06-29T15:26:32.154904668Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsIntSliceTypes","Output":"--- PASS: TestArgsIntSliceTypes (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.154988Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsIntSliceTypes","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.155098782Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUintTypes"}
+{"Time":"2026-06-29T15:26:32.155146183Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUintTypes","Output":"=== RUN   TestArgsUintTypes\n"}
+{"Time":"2026-06-29T15:26:32.155597512Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUintTypes","Output":"--- PASS: TestArgsUintTypes (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.155630792Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUintTypes","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.155696944Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUintSliceTypes"}
+{"Time":"2026-06-29T15:26:32.155718264Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUintSliceTypes","Output":"=== RUN   TestArgsUintSliceTypes\n"}
+{"Time":"2026-06-29T15:26:32.156177883Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUintSliceTypes","Output":"--- PASS: TestArgsUintSliceTypes (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.156203454Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUintSliceTypes","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.156224114Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand"}
+{"Time":"2026-06-29T15:26:32.156250345Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand","Output":"=== RUN   TestArgumentsRootCommand\n"}
+{"Time":"2026-06-29T15:26:32.156337317Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival"}
+{"Time":"2026-06-29T15:26:32.156374187Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival","Output":"=== RUN   TestArgumentsRootCommand/set_ival\n"}
+{"Time":"2026-06-29T15:26:32.156428728Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival","Output":"--- PASS: TestArgumentsRootCommand/set_ival (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.156467999Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.156576671Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_invalid_ival"}
+{"Time":"2026-06-29T15:26:32.156609642Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_invalid_ival","Output":"=== RUN   TestArgumentsRootCommand/set_invalid_ival\n"}
+{"Time":"2026-06-29T15:26:32.156648233Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_invalid_ival","Output":"--- PASS: TestArgumentsRootCommand/set_invalid_ival (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.156700284Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_invalid_ival","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.157076201Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival"}
+{"Time":"2026-06-29T15:26:32.157105172Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival","Output":"=== RUN   TestArgumentsRootCommand/set_ival_uival\n"}
+{"Time":"2026-06-29T15:26:32.157493349Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival","Output":"--- PASS: TestArgumentsRootCommand/set_ival_uival (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.157568911Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.157616072Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival_fval"}
+{"Time":"2026-06-29T15:26:32.157635822Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival_fval","Output":"=== RUN   TestArgumentsRootCommand/set_ival_uival_fval\n"}
+{"Time":"2026-06-29T15:26:32.15801354Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival_fval","Output":"--- PASS: TestArgumentsRootCommand/set_ival_uival_fval (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.158048231Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival_fval","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.158087531Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival_multu_fvals"}
+{"Time":"2026-06-29T15:26:32.158104162Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival_multu_fvals","Output":"=== RUN   TestArgumentsRootCommand/set_ival_uival_multu_fvals\n"}
+{"Time":"2026-06-29T15:26:32.158492519Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival_multu_fvals","Output":"--- PASS: TestArgumentsRootCommand/set_ival_uival_multu_fvals (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.1585272Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_ival_uival_multu_fvals","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.158557661Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_fvals_beyond_max"}
+{"Time":"2026-06-29T15:26:32.158568911Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_fvals_beyond_max","Output":"=== RUN   TestArgumentsRootCommand/set_fvals_beyond_max\n"}
+{"Time":"2026-06-29T15:26:32.158589221Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_fvals_beyond_max","Output":"--- PASS: TestArgumentsRootCommand/set_fvals_beyond_max (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.158620262Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand/set_fvals_beyond_max","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.158632062Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand","Output":"--- PASS: TestArgumentsRootCommand (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.158642352Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsRootCommand","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.158712664Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsInvalidType"}
+{"Time":"2026-06-29T15:26:32.158731354Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsInvalidType","Output":"=== RUN   TestArgumentsInvalidType\n"}
+{"Time":"2026-06-29T15:26:32.158916528Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsInvalidType","Output":"--- PASS: TestArgumentsInvalidType (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.158950109Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsInvalidType","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.159115182Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand"}
+{"Time":"2026-06-29T15:26:32.159151722Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand","Output":"=== RUN   TestArgumentsSubcommand\n"}
+{"Time":"2026-06-29T15:26:32.159271535Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/insuff_args"}
+{"Time":"2026-06-29T15:26:32.159291665Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/insuff_args","Output":"=== RUN   TestArgumentsSubcommand/insuff_args\n"}
+{"Time":"2026-06-29T15:26:32.15954963Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/insuff_args","Output":"--- PASS: TestArgumentsSubcommand/insuff_args (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.159582721Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/insuff_args","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.159611462Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/set_sval_and_tval"}
+{"Time":"2026-06-29T15:26:32.159631192Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/set_sval_and_tval","Output":"=== RUN   TestArgumentsSubcommand/set_sval_and_tval\n"}
+{"Time":"2026-06-29T15:26:32.160205914Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/set_sval_and_tval","Output":"--- PASS: TestArgumentsSubcommand/set_sval_and_tval (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.160231414Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/set_sval_and_tval","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.160339486Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/set_sval,_tval_and_ival"}
+{"Time":"2026-06-29T15:26:32.160360877Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/set_sval,_tval_and_ival","Output":"=== RUN   TestArgumentsSubcommand/set_sval,_tval_and_ival\n"}
+{"Time":"2026-06-29T15:26:32.160928598Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/set_sval,_tval_and_ival","Output":"--- PASS: TestArgumentsSubcommand/set_sval,_tval_and_ival (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.160959978Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand/set_sval,_tval_and_ival","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.160986119Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand","Output":"--- PASS: TestArgumentsSubcommand (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.161009279Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgumentsSubcommand","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.16104882Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage"}
+{"Time":"2026-06-29T15:26:32.161076141Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage","Output":"=== RUN   TestArgUsage\n"}
+{"Time":"2026-06-29T15:26:32.161161142Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage/default"}
+{"Time":"2026-06-29T15:26:32.161187923Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage/default","Output":"=== RUN   TestArgUsage/default\n"}
+{"Time":"2026-06-29T15:26:32.161464879Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage/default","Output":"--- PASS: TestArgUsage/default (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.161489789Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage/default","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.161625122Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage/usage"}
+{"Time":"2026-06-29T15:26:32.161648832Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage/usage","Output":"=== RUN   TestArgUsage/usage\n"}
+{"Time":"2026-06-29T15:26:32.161701923Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage/usage","Output":"--- PASS: TestArgUsage/usage (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.161754714Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage/usage","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.161778085Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage","Output":"--- PASS: TestArgUsage (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.161802705Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgUsage","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.161838056Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage"}
+{"Time":"2026-06-29T15:26:32.161855676Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage","Output":"=== RUN   TestArgsUsage\n"}
+{"Time":"2026-06-29T15:26:32.161888637Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/optional"}
+{"Time":"2026-06-29T15:26:32.161902117Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/optional","Output":"=== RUN   TestArgsUsage/optional\n"}
+{"Time":"2026-06-29T15:26:32.161921828Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/optional","Output":"--- PASS: TestArgsUsage/optional (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.161933208Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/optional","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.162000919Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/optional#01"}
+{"Time":"2026-06-29T15:26:32.162016559Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/optional#01","Output":"=== RUN   TestArgsUsage/optional#01\n"}
+{"Time":"2026-06-29T15:26:32.16203502Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/optional#01","Output":"--- PASS: TestArgsUsage/optional#01 (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.16204601Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/optional#01","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.162174553Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/zero_or_more"}
+{"Time":"2026-06-29T15:26:32.162193183Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/zero_or_more","Output":"=== RUN   TestArgsUsage/zero_or_more\n"}
+{"Time":"2026-06-29T15:26:32.162205983Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/zero_or_more","Output":"--- PASS: TestArgsUsage/zero_or_more (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.162224363Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/zero_or_more","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.162243694Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/one"}
+{"Time":"2026-06-29T15:26:32.162253824Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/one","Output":"=== RUN   TestArgsUsage/one\n"}
+{"Time":"2026-06-29T15:26:32.162273624Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/one","Output":"--- PASS: TestArgsUsage/one (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.162283765Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/one","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.162340766Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/many"}
+{"Time":"2026-06-29T15:26:32.162351266Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/many","Output":"=== RUN   TestArgsUsage/many\n"}
+{"Time":"2026-06-29T15:26:32.162371317Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/many","Output":"--- PASS: TestArgsUsage/many (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.162393807Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/many","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.162583771Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/many2"}
+{"Time":"2026-06-29T15:26:32.162603681Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/many2","Output":"=== RUN   TestArgsUsage/many2\n"}
+{"Time":"2026-06-29T15:26:32.162644782Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/many2","Output":"--- PASS: TestArgsUsage/many2 (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.162684533Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/many2","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.162759394Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/unlimited"}
+{"Time":"2026-06-29T15:26:32.162780925Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/unlimited","Output":"=== RUN   TestArgsUsage/unlimited\n"}
+{"Time":"2026-06-29T15:26:32.162809555Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/unlimited","Output":"--- PASS: TestArgsUsage/unlimited (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.162824406Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage/unlimited","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.162835836Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage","Output":"--- PASS: TestArgsUsage (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.162852366Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestArgsUsage","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.162891267Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg"}
+{"Time":"2026-06-29T15:26:32.162904767Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg","Output":"=== RUN   TestSingleOptionalArg\n"}
+{"Time":"2026-06-29T15:26:32.163001789Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/no_args"}
+{"Time":"2026-06-29T15:26:32.163024639Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/no_args","Output":"=== RUN   TestSingleOptionalArg/no_args\n"}
+{"Time":"2026-06-29T15:26:32.163392807Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/no_args","Output":"--- PASS: TestSingleOptionalArg/no_args (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.163427127Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/no_args","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.16356189Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/no_arg_with_def_value"}
+{"Time":"2026-06-29T15:26:32.163576341Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/no_arg_with_def_value","Output":"=== RUN   TestSingleOptionalArg/no_arg_with_def_value\n"}
+{"Time":"2026-06-29T15:26:32.163908797Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/no_arg_with_def_value","Output":"--- PASS: TestSingleOptionalArg/no_arg_with_def_value (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.163948508Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/no_arg_with_def_value","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.163965428Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/one_arg"}
+{"Time":"2026-06-29T15:26:32.163984618Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/one_arg","Output":"=== RUN   TestSingleOptionalArg/one_arg\n"}
+{"Time":"2026-06-29T15:26:32.164351186Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/one_arg","Output":"--- PASS: TestSingleOptionalArg/one_arg (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.164371546Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg/one_arg","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.164382726Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg","Output":"--- PASS: TestSingleOptionalArg (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.164423967Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestSingleOptionalArg","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.164444448Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs"}
+{"Time":"2026-06-29T15:26:32.164466708Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs","Output":"=== RUN   TestUnboundedArgs\n"}
+{"Time":"2026-06-29T15:26:32.164602611Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_accepts_no_args"}
+{"Time":"2026-06-29T15:26:32.164625971Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_accepts_no_args","Output":"=== RUN   TestUnboundedArgs/cmd_accepts_no_args\n"}
+{"Time":"2026-06-29T15:26:32.164996089Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_accepts_no_args","Output":"--- PASS: TestUnboundedArgs/cmd_accepts_no_args (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.165019529Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_accepts_no_args","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.16506153Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_uses_given_args"}
+{"Time":"2026-06-29T15:26:32.165087091Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_uses_given_args","Output":"=== RUN   TestUnboundedArgs/cmd_uses_given_args\n"}
+{"Time":"2026-06-29T15:26:32.165436807Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_uses_given_args","Output":"--- PASS: TestUnboundedArgs/cmd_uses_given_args (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.165459798Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_uses_given_args","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.16553822Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_uses_default_values"}
+{"Time":"2026-06-29T15:26:32.16556049Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_uses_default_values","Output":"=== RUN   TestUnboundedArgs/cmd_uses_default_values\n"}
+{"Time":"2026-06-29T15:26:32.165880986Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_uses_default_values","Output":"--- PASS: TestUnboundedArgs/cmd_uses_default_values (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.165902137Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/cmd_uses_default_values","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.166124421Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/given_args_override_default_values"}
+{"Time":"2026-06-29T15:26:32.166145721Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/given_args_override_default_values","Output":"=== RUN   TestUnboundedArgs/given_args_override_default_values\n"}
+{"Time":"2026-06-29T15:26:32.16655761Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/given_args_override_default_values","Output":"--- PASS: TestUnboundedArgs/given_args_override_default_values (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.16658395Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs/given_args_override_default_values","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.16659767Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs","Output":"--- PASS: TestUnboundedArgs (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.166621411Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestUnboundedArgs","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.17610303Z","Action":"run","Package":"github.com/urfave/cli/v3","Test":"TestJSONExportCommand"}
+{"Time":"2026-06-29T15:26:32.17613639Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestJSONExportCommand","Output":"=== RUN   TestJSONExportCommand\n"}
+{"Time":"2026-06-29T15:26:32.177631Z","Action":"output","Package":"github.com/urfave/cli/v3","Test":"TestJSONExportCommand","Output":"--- PASS: TestJSONExportCommand (0.00s)\n"}
+{"Time":"2026-06-29T15:26:32.177710071Z","Action":"pass","Package":"github.com/urfave/cli/v3","Test":"TestJSONExportCommand","Elapsed":0}
+{"Time":"2026-06-29T15:26:32.191940594Z","Action":"output","Package":"github.com/urfave/cli/v3","Output":"PASS\n"}
+{"Time":"2026-06-29T15:26:32.193428494Z","Action":"output","Package":"github.com/urfave/cli/v3","Output":"ok  \tgithub.com/urfave/cli/v3\t0.062s\n"}
+{"Time":"2026-06-29T15:26:32.193523876Z","Action":"pass","Package":"github.com/urfave/cli/v3","Elapsed":0.062}
+reward=1 graded=37 found=37 failed=0 parsed=37 framework=go exit_code=0

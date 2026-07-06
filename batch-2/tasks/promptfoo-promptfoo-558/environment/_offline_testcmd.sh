@@ -1,0 +1,1 @@
+cd /workspace/repo && npm install --no-audit --no-fund 2>&1 | tail -3 && npx jest test/assertions.test.ts test/evaluator.test.ts test/providers.test.ts test/testCases.test.ts test/util.test.ts --coverage=false --verbose --json

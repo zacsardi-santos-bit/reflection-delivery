@@ -1,5 +1,0 @@
-patching file CHANGELOG.md
-patching file sentry-tracing/Cargo.toml
-patching file sentry-tracing/src/converters.rs
-patching file sentry-tracing/src/layer.rs
-patching file sentry-tracing/src/lib.rs

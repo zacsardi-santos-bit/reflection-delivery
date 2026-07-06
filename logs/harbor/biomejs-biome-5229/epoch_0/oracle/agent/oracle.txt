@@ -1,8 +1,0 @@
-patching file crates/biome_configuration/src/analyzer/linter/rules.rs
-patching file crates/biome_diagnostics_categories/src/categories.rs
-patching file crates/biome_js_analyze/src/lint/nursery.rs
-patching file crates/biome_js_analyze/src/lint/nursery/no_useless_escape_in_regex.rs
-patching file crates/biome_js_analyze/src/lint/nursery/no_useless_escape_in_string.rs
-patching file crates/biome_js_analyze/src/options.rs
-patching file packages/@biomejs/backend-jsonrpc/src/workspace.ts
-patching file packages/@biomejs/biome/configuration_schema.json

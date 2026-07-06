@@ -1,0 +1,2654 @@
+diff --git a/.changeset/minimum-release-age-modified-shortcut-inclusive.md b/.changeset/minimum-release-age-modified-shortcut-inclusive.md
+new file mode 100644
+index 0000000000..40439d78f2
+--- /dev/null
++++ b/.changeset/minimum-release-age-modified-shortcut-inclusive.md
+@@ -0,0 +1,6 @@
++---
++"@pnpm/resolving.npm-resolver": patch
++"pnpm": patch
++---
++
++Fix the `minimumReleaseAge` (publishedBy) maturity shortcut to be inclusive at the cutoff. Previously, abbreviated metadata whose `modified` field equalled the cutoff fell off the fast path and triggered a full-metadata re-fetch (or a `MISSING_TIME` error when full metadata wasn't permitted). Since `modified` is an upper bound on every version's publish time, `modified == publishedBy` already implies every version passes the per-version `<=` filter in `filterPkgMetadataByPublishDate`, so the shortcut now accepts the boundary case directly. Strictly `>` (was `>=`) at the rejection branch.
+diff --git a/Cargo.lock b/Cargo.lock
+index 129612f084..326b3edc72 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -2395,12 +2395,26 @@ dependencies = [
+  "serde_json",
+ ]
+ 
++[[package]]
++name = "pacquet-resolving-default-resolver"
++version = "0.0.1"
++dependencies = [
++ "derive_more",
++ "miette 7.6.0",
++ "pacquet-lockfile",
++ "pacquet-resolving-resolver-base",
++ "ssri",
++ "tokio",
++]
++
+ [[package]]
+ name = "pacquet-resolving-npm-resolver"
+ version = "0.0.1"
+ dependencies = [
+  "chrono",
++ "dashmap",
+  "derive_more",
++ "indexmap",
+  "miette 7.6.0",
+  "mockito",
+  "node-semver",
+@@ -2421,11 +2435,16 @@ dependencies = [
+  "tracing",
+ ]
+ 
++[[package]]
++name = "pacquet-resolving-parse-wanted-dependency"
++version = "0.0.1"
++
+ [[package]]
+ name = "pacquet-resolving-resolver-base"
+ version = "0.0.1"
+ dependencies = [
+  "pacquet-lockfile",
++ "serde",
+  "serde_json",
+  "ssri",
+  "tokio",
+diff --git a/Cargo.toml b/Cargo.toml
+index 3f5aaa6533..016b193916 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -13,33 +13,35 @@ repository  = "https://github.com/pnpm/pacquet"
+ 
+ [workspace.dependencies]
+ # Crates
+-pacquet-cli                     = { path = "pacquet/crates/cli" }
+-pacquet-cmd-shim                = { path = "pacquet/crates/cmd-shim" }
+-pacquet-fs                      = { path = "pacquet/crates/fs" }
+-pacquet-registry                = { path = "pacquet/crates/registry" }
+-pacquet-tarball                 = { path = "pacquet/crates/tarball" }
+-pacquet-testing-utils           = { path = "pacquet/crates/testing-utils" }
+-pacquet-package-manifest        = { path = "pacquet/crates/package-manifest" }
+-pacquet-package-manager         = { path = "pacquet/crates/package-manager" }
+-pacquet-package-is-installable  = { path = "pacquet/crates/package-is-installable" }
+-pacquet-lockfile                = { path = "pacquet/crates/lockfile" }
+-pacquet-lockfile-verification   = { path = "pacquet/crates/lockfile-verification" }
+-pacquet-modules-yaml            = { path = "pacquet/crates/modules-yaml" }
+-pacquet-network                 = { path = "pacquet/crates/network" }
+-pacquet-config                  = { path = "pacquet/crates/config" }
+-pacquet-executor                = { path = "pacquet/crates/executor" }
+-pacquet-directory-fetcher       = { path = "pacquet/crates/directory-fetcher" }
+-pacquet-git-fetcher             = { path = "pacquet/crates/git-fetcher" }
+-pacquet-diagnostics             = { path = "pacquet/crates/diagnostics" }
+-pacquet-graph-hasher            = { path = "pacquet/crates/graph-hasher" }
+-pacquet-store-dir               = { path = "pacquet/crates/store-dir" }
+-pacquet-reporter                = { path = "pacquet/crates/reporter" }
+-pacquet-patching                = { path = "pacquet/crates/patching" }
+-pacquet-real-hoist              = { path = "pacquet/crates/real-hoist" }
+-pacquet-resolving-npm-resolver  = { path = "pacquet/crates/resolving-npm-resolver" }
+-pacquet-resolving-resolver-base = { path = "pacquet/crates/resolving-resolver-base" }
+-pacquet-workspace               = { path = "pacquet/crates/workspace" }
+-pacquet-workspace-state         = { path = "pacquet/crates/workspace-state" }
++pacquet-cli                               = { path = "pacquet/crates/cli" }
++pacquet-cmd-shim                          = { path = "pacquet/crates/cmd-shim" }
++pacquet-fs                                = { path = "pacquet/crates/fs" }
++pacquet-registry                          = { path = "pacquet/crates/registry" }
++pacquet-tarball                           = { path = "pacquet/crates/tarball" }
++pacquet-testing-utils                     = { path = "pacquet/crates/testing-utils" }
++pacquet-package-manifest                  = { path = "pacquet/crates/package-manifest" }
++pacquet-package-manager                   = { path = "pacquet/crates/package-manager" }
++pacquet-package-is-installable            = { path = "pacquet/crates/package-is-installable" }
++pacquet-lockfile                          = { path = "pacquet/crates/lockfile" }
++pacquet-lockfile-verification             = { path = "pacquet/crates/lockfile-verification" }
++pacquet-modules-yaml                      = { path = "pacquet/crates/modules-yaml" }
++pacquet-network                           = { path = "pacquet/crates/network" }
++pacquet-config                            = { path = "pacquet/crates/config" }
++pacquet-executor                          = { path = "pacquet/crates/executor" }
++pacquet-directory-fetcher                 = { path = "pacquet/crates/directory-fetcher" }
++pacquet-git-fetcher                       = { path = "pacquet/crates/git-fetcher" }
++pacquet-diagnostics                       = { path = "pacquet/crates/diagnostics" }
++pacquet-graph-hasher                      = { path = "pacquet/crates/graph-hasher" }
++pacquet-store-dir                         = { path = "pacquet/crates/store-dir" }
++pacquet-reporter                          = { path = "pacquet/crates/reporter" }
++pacquet-patching                          = { path = "pacquet/crates/patching" }
++pacquet-real-hoist                        = { path = "pacquet/crates/real-hoist" }
++pacquet-resolving-default-resolver        = { path = "pacquet/crates/resolving-default-resolver" }
++pacquet-resolving-npm-resolver            = { path = "pacquet/crates/resolving-npm-resolver" }
++pacquet-resolving-parse-wanted-dependency = { path = "pacquet/crates/resolving-parse-wanted-dependency" }
++pacquet-resolving-resolver-base           = { path = "pacquet/crates/resolving-resolver-base" }
++pacquet-workspace                         = { path = "pacquet/crates/workspace" }
++pacquet-workspace-state                   = { path = "pacquet/crates/workspace-state" }
+ 
+ # Tasks
+ pacquet-registry-mock = { path = "pacquet/tasks/registry-mock" }
+diff --git a/pacquet/crates/registry/src/package.rs b/pacquet/crates/registry/src/package.rs
+index 812310ea77..d5046045b6 100644
+--- a/pacquet/crates/registry/src/package.rs
++++ b/pacquet/crates/registry/src/package.rs
+@@ -13,7 +13,7 @@ use crate::{NetworkError, RegistryError, package_version::PackageVersion};
+ pub struct Package {
+     pub name: String,
+     #[serde(rename = "dist-tags")]
+-    dist_tags: HashMap<String, String>,
++    pub dist_tags: HashMap<String, String>,
+     pub versions: HashMap<String, PackageVersion>,
+ 
+     /// Per-version publish timestamps as the npm registry reports
+@@ -67,6 +67,25 @@ impl Package {
+     pub fn published_at(&self, version: &str) -> Option<&str> {
+         self.time.as_ref()?.get(version)?.as_str()
+     }
++
++    /// Version under `dist-tags.<tag>`, or `None` when the tag is
++    /// absent. The picker reads `latest` (for the version-range fast
++    /// path) and any user-supplied tag (e.g. `next`, `beta`) through
++    /// this accessor.
++    pub fn dist_tag(&self, tag: &str) -> Option<&str> {
++        self.dist_tags.get(tag).map(String::as_str)
++    }
++
++    /// Iterator over all `dist-tags` entries. Used by the picker's
++    /// publishedBy filter which rewrites tags after dropping versions
++    /// past the cutoff. Iteration order is undefined (HashMap), as it
++    /// is in upstream's JS where `Object.entries(distTags)` walks
++    /// insertion order — neither stack guarantees a particular order
++    /// to callers, so callers that need a stable rewrite are expected
++    /// to sort.
++    pub fn dist_tags(&self) -> impl Iterator<Item = (&str, &str)> {
++        self.dist_tags.iter().map(|(tag, version)| (tag.as_str(), version.as_str()))
++    }
+ }
+ 
+ impl PartialEq for Package {
+diff --git a/pacquet/crates/registry/src/package_version.rs b/pacquet/crates/registry/src/package_version.rs
+index bfa000a0a1..b54ab4a20b 100644
+--- a/pacquet/crates/registry/src/package_version.rs
++++ b/pacquet/crates/registry/src/package_version.rs
+@@ -34,6 +34,75 @@ pub struct PackageVersion {
+         alias = "_npm_user"
+     )]
+     pub npm_user: Option<NpmUser>,
++
++    /// `deprecated` field on a per-version manifest. When present the
++    /// version has been marked deprecated on the registry and carries
++    /// the maintainer-supplied reason. The resolver uses this for the
++    /// deprecated-fallback in `pickVersionByVersionRange`: if the
++    /// highest version satisfying the range is deprecated, retry the
++    /// pick against the non-deprecated subset.
++    ///
++    /// **Wire format:** the field is declared as a string upstream
++    /// (`PackageInRegistry.deprecated?: string`) but the real npm
++    /// registry occasionally serves `"deprecated": false` for
++    /// never-deprecated versions — JavaScript stores the boolean and
++    /// the upstream `if (info.deprecated)` truthiness check happens
++    /// to handle both shapes silently. Rust serde is strict, so we
++    /// route through a custom deserializer that normalizes the field
++    /// to `Option<String>`: a string stays a string, `false` becomes
++    /// `None`, `true` becomes `Some("")` (deprecated without a
++    /// recorded reason). Mirrors pnpm's
++    /// [`PackageInRegistry.deprecated`](https://github.com/pnpm/pnpm/blob/2a9bd897bf/packages/types/src/package.ts).
++    #[serde(
++        default,
++        deserialize_with = "deserialize_deprecated_field",
++        skip_serializing_if = "Option::is_none"
++    )]
++    pub deprecated: Option<String>,
++}
++
++/// Accept either a string or a boolean for the `deprecated` field.
++/// A bool `true` becomes `Some("")`, a bool `false` becomes `None`;
++/// a string stays as `Some(s)`. Missing field defaults to `None` via
++/// the `#[serde(default)]` on the field itself.
++fn deserialize_deprecated_field<'de, Deser>(
++    deserializer: Deser,
++) -> Result<Option<String>, Deser::Error>
++where
++    Deser: serde::Deserializer<'de>,
++{
++    use serde::de::{self, Visitor};
++    use std::fmt;
++
++    struct DeprecatedVisitor;
++    impl<'de> Visitor<'de> for DeprecatedVisitor {
++        type Value = Option<String>;
++        fn expecting(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
++            f.write_str("a deprecation reason (string), a boolean, or null")
++        }
++        fn visit_str<Err: de::Error>(self, value: &str) -> Result<Self::Value, Err> {
++            Ok(Some(value.to_string()))
++        }
++        fn visit_string<Err: de::Error>(self, value: String) -> Result<Self::Value, Err> {
++            Ok(Some(value))
++        }
++        fn visit_bool<Err: de::Error>(self, value: bool) -> Result<Self::Value, Err> {
++            Ok(if value { Some(String::new()) } else { None })
++        }
++        fn visit_none<Err: de::Error>(self) -> Result<Self::Value, Err> {
++            Ok(None)
++        }
++        fn visit_unit<Err: de::Error>(self) -> Result<Self::Value, Err> {
++            Ok(None)
++        }
++        fn visit_some<Nested: serde::Deserializer<'de>>(
++            self,
++            deserializer: Nested,
++        ) -> Result<Self::Value, Nested::Error> {
++            deserializer.deserialize_any(DeprecatedVisitor)
++        }
++    }
++    deserializer.deserialize_any(DeprecatedVisitor)
+ }
+ 
+ /// `_npmUser` field on a per-version manifest. The verifier reads
+diff --git a/pacquet/crates/resolving-default-resolver/Cargo.toml b/pacquet/crates/resolving-default-resolver/Cargo.toml
+new file mode 100644
+index 0000000000..9870b3324c
+--- /dev/null
++++ b/pacquet/crates/resolving-default-resolver/Cargo.toml
+@@ -0,0 +1,26 @@
++[package]
++name                  = "pacquet-resolving-default-resolver"
++version               = "0.0.1"
++publish               = false
++authors.workspace     = true
++description.workspace = true
++edition.workspace     = true
++homepage.workspace    = true
++keywords.workspace    = true
++license.workspace     = true
++repository.workspace  = true
++
++[dependencies]
++pacquet-resolving-resolver-base = { workspace = true }
++
++derive_more = { workspace = true }
++miette      = { workspace = true }
++
++[dev-dependencies]
++pacquet-lockfile = { workspace = true }
++
++ssri  = { workspace = true }
++tokio = { workspace = true, features = ["macros", "rt"] }
++
++[lints]
++workspace = true
+diff --git a/pacquet/crates/resolving-default-resolver/src/lib.rs b/pacquet/crates/resolving-default-resolver/src/lib.rs
+new file mode 100644
+index 0000000000..08462894ad
+--- /dev/null
++++ b/pacquet/crates/resolving-default-resolver/src/lib.rs
+@@ -0,0 +1,140 @@
++//! Pacquet port of pnpm's
++//! [`@pnpm/resolving.default-resolver`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts).
++//!
++//! The dispatcher: composes a heterogeneous list of [`Resolver`]s into
++//! a single chain that the deps-resolver calls per wanted dependency.
++//! Each resolver in the chain returns `Ok(None)` to defer to the next
++//! one and `Ok(Some(_))` to claim the wanted dependency.
++//!
++//! Today the chain is empty until the per-protocol resolvers
++//! (npm/jsr/git/tarball/local/runtimes/named-registry/workspace) land
++//! in subsequent PRs. A [`DefaultResolver`] built without any
++//! resolvers always returns [`SpecNotSupportedByAnyResolverError`],
++//! mirroring pnpm's
++//! [`SPEC_NOT_SUPPORTED_BY_ANY_RESOLVER`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts#L152-L156)
++//! error code.
++
++use derive_more::{Display, Error};
++use miette::Diagnostic;
++use pacquet_resolving_resolver_base::{
++    LatestInfo, LatestQuery, ResolveError, ResolveOptions, ResolveResult, Resolver,
++    WantedDependency,
++};
++
++/// Composed-chain analog of pnpm's
++/// [`createResolver`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts#L97-L173)
++/// return value. Wraps an ordered list of per-protocol resolvers.
++///
++/// Order matters: each resolver in the chain gets the chance to claim
++/// the wanted dependency in declaration order, mirroring the `??`
++/// chain upstream uses inside `createResolver`. Wiring of the actual
++/// resolvers (npm, jsr, git, tarball, local, runtimes, named-registry,
++/// workspace) lands in subsequent PRs as each per-protocol crate is
++/// ported.
++pub struct DefaultResolver {
++    chain: Vec<Box<dyn Resolver>>,
++}
++
++impl DefaultResolver {
++    /// Build a dispatcher from a chain of resolvers. Order is preserved
++    /// — earlier entries get the first shot at every wanted dependency.
++    pub fn new(chain: Vec<Box<dyn Resolver>>) -> Self {
++        Self { chain }
++    }
++
++    /// Walk the chain and return the first resolver's claim. Returns
++    /// [`SpecNotSupportedByAnyResolverError`] when no resolver claims
++    /// the wanted dependency, matching pnpm's
++    /// [`SPEC_NOT_SUPPORTED_BY_ANY_RESOLVER`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts#L152-L156).
++    pub async fn resolve(
++        &self,
++        wanted_dependency: &WantedDependency,
++        opts: &ResolveOptions,
++    ) -> Result<ResolveResult, ResolveError> {
++        for resolver in &self.chain {
++            if let Some(result) = resolver.resolve(wanted_dependency, opts).await? {
++                return Ok(result);
++            }
++        }
++        Err(Box::new(SpecNotSupportedByAnyResolverError::new(wanted_dependency)))
++    }
++
++    /// Latest-version companion to [`Self::resolve`]. Upstream's
++    /// [`resolveLatest`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts#L159-L170)
++    /// returns `undefined` (no resolver had an opinion) rather than
++    /// erroring — pacquet mirrors that by returning `Ok(None)` once
++    /// the chain is exhausted.
++    pub async fn resolve_latest(
++        &self,
++        query: &LatestQuery,
++        opts: &ResolveOptions,
++    ) -> Result<Option<LatestInfo>, ResolveError> {
++        for resolver in &self.chain {
++            if let Some(info) = resolver.resolve_latest(query, opts).await? {
++                return Ok(Some(info));
++            }
++        }
++        Ok(None)
++    }
++}
++
++/// The `SPEC_NOT_SUPPORTED_BY_ANY_RESOLVER` error code raised when
++/// every resolver in the chain returned `Ok(None)` for a wanted
++/// dependency.
++///
++/// Message format matches upstream's
++/// [`createResolver` error path](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts#L148-L156):
++/// the offending specifier is rendered as `<alias>@<bareSpecifier>`
++/// (either half omitted when absent) and quoted when non-empty.
++#[derive(Debug, Display, Error, Diagnostic)]
++#[display("{quoted} isn't supported by any available resolver.")]
++#[diagnostic(code(SPEC_NOT_SUPPORTED_BY_ANY_RESOLVER))]
++pub struct SpecNotSupportedByAnyResolverError {
++    /// Quoted offending specifier, formatted upstream-style at
++    /// construction so the `Display` impl stays allocation-free.
++    /// Empty string when both halves of the wanted dependency are
++    /// absent (matches the upstream branch that drops the quotes for
++    /// the empty case).
++    pub quoted: String,
++    /// Unquoted form of the same specifier — `<alias>@<bareSpecifier>`
++    /// with either half omitted when absent. Kept separately so
++    /// callers and tests can read the bare value without re-parsing
++    /// the formatted message.
++    pub specifier: String,
++}
++
++impl SpecNotSupportedByAnyResolverError {
++    pub fn new(wanted_dependency: &WantedDependency) -> Self {
++        let specifier = render_specifier(wanted_dependency);
++        let quoted = quote_specifier(&specifier);
++        Self { quoted, specifier }
++    }
++}
++
++/// Format the offending specifier the way upstream does:
++/// `<alias>@<bareSpecifier>` with either half omitted when absent.
++/// Used at error-construction time so the message is computed once.
++fn render_specifier(wanted_dependency: &WantedDependency) -> String {
++    let alias = wanted_dependency.alias.as_deref().unwrap_or("");
++    let bare = wanted_dependency.bare_specifier.as_deref().unwrap_or("");
++    if alias.is_empty() && bare.is_empty() {
++        return String::new();
++    }
++    if alias.is_empty() {
++        return bare.to_string();
++    }
++    if bare.is_empty() {
++        return alias.to_string();
++    }
++    format!("{alias}@{bare}")
++}
++
++/// Wrap a non-empty specifier in double quotes and leave the empty
++/// case bare. Mirrors upstream's
++/// `if (specifier !== '') specifier = \`"${specifier}"\`` step.
++fn quote_specifier(specifier: &str) -> String {
++    if specifier.is_empty() { String::new() } else { format!("\"{specifier}\"") }
++}
++
++#[cfg(test)]
++mod tests;
+diff --git a/pacquet/crates/resolving-npm-resolver/Cargo.toml b/pacquet/crates/resolving-npm-resolver/Cargo.toml
+index dc6717b459..778b781ae1 100644
+--- a/pacquet/crates/resolving-npm-resolver/Cargo.toml
++++ b/pacquet/crates/resolving-npm-resolver/Cargo.toml
+@@ -18,7 +18,9 @@ pacquet-registry                = { workspace = true }
+ pacquet-resolving-resolver-base = { workspace = true }
+ 
+ chrono      = { workspace = true }
++dashmap     = { workspace = true }
+ derive_more = { workspace = true }
++indexmap    = { workspace = true }
+ miette      = { workspace = true }
+ node-semver = { workspace = true }
+ pipe-trait  = { workspace = true }
+diff --git a/pacquet/crates/resolving-npm-resolver/src/lib.rs b/pacquet/crates/resolving-npm-resolver/src/lib.rs
+index fc3208e6e8..bc003c8b18 100644
+--- a/pacquet/crates/resolving-npm-resolver/src/lib.rs
++++ b/pacquet/crates/resolving-npm-resolver/src/lib.rs
+@@ -19,6 +19,8 @@ mod fetch_full_metadata_cached;
+ mod lookup_context;
+ mod mirror;
+ mod named_registry;
++mod pick_package;
++mod pick_package_from_meta;
+ mod registry_url;
+ mod trust_checks;
+ mod violation_codes;
+@@ -35,6 +37,16 @@ pub use named_registry::{
+     BUILTIN_NAMED_REGISTRIES, build_named_registry_prefixes, pick_registry_for_package,
+     pick_registry_for_version,
+ };
++pub use pick_package::{
++    InMemoryPackageMetaCache, MirrorPersistError, PackageMetaCache, PickPackageContext,
++    PickPackageError, PickPackageOptions, PickPackageResult, persist_meta_to_mirror, pick_package,
++    shared_in_memory_cache,
++};
++pub use pick_package_from_meta::{
++    PickPackageFromMetaError, PickPackageFromMetaOptions, PickVersionByVersionRangeOptions,
++    RegistryPackageSpec, RegistryPackageSpecType, filter_pkg_metadata_by_publish_date,
++    pick_lowest_version_by_version_range, pick_package_from_meta, pick_version_by_version_range,
++};
+ pub use trust_checks::{
+     TrustCheckOptions, TrustEvidence, TrustViolation, fail_if_trust_downgraded, get_trust_evidence,
+ };
+diff --git a/pacquet/crates/resolving-npm-resolver/src/pick_package.rs b/pacquet/crates/resolving-npm-resolver/src/pick_package.rs
+new file mode 100644
+index 0000000000..9f0fb34760
+--- /dev/null
++++ b/pacquet/crates/resolving-npm-resolver/src/pick_package.rs
+@@ -0,0 +1,684 @@
++//! Cache+fetch orchestration around [`pick_package_from_meta`].
++//!
++//! Ports pnpm's
++//! [`pickPackage.ts`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts).
++//!
++//! Resolves a [`RegistryPackageSpec`] to a single
++//! [`PackageVersion`] by:
++//!
++//! 1. Consulting an in-memory [`PackageMetaCache`].
++//! 2. Falling back to the on-disk JSONL mirror managed by
++//!    [`crate::mirror`].
++//! 3. Issuing a conditional GET against the registry when neither
++//!    cache satisfies the request, using
++//!    [`fetch_full_metadata_cached()`] which threads `If-None-Match`
++//!    and `If-Modified-Since` off the mirror's header line.
++//! 4. Handing the resolved packument to [`pick_package_from_meta`]
++//!    for the actual version pick.
++//!
++//! Compared to upstream this port simplifies one axis: pacquet's
++//! metadata fetcher always returns *full* metadata (the verifier
++//! needs it for `time` and trust evidence). The upstream code paths
++//! that upgrade an abbreviated cache entry to full mid-pick are
++//! therefore dead in pacquet today — the picker still goes through
++//! the same shape so adding an abbreviated fetcher later is a
++//! drop-in. Notes on the abbreviated paths are inline at the
++//! sites they would activate.
++//!
++//! Concurrency: upstream uses `p-limit(1)` keyed on the mirror path
++//! to serialize disk operations. Pacquet relies on the atomic
++//! rename in [`crate::mirror::save_meta`] for write safety, and on
++//! [`std::sync::Mutex`]-guarded in-memory caches for reader
++//! coordination. The per-mirror limiter is omitted; if a future
++//! issue forces serialization (Windows file-lock contention, e.g.)
++//! it would land here as a map of `tokio::sync::Mutex` values.
++
++use std::{
++    collections::HashMap,
++    path::{Path, PathBuf},
++    sync::{Arc, Mutex},
++};
++
++use chrono::{DateTime, Utc};
++use derive_more::{Display, Error};
++use miette::Diagnostic;
++use pacquet_config::version_policy::PackageVersionPolicy;
++use pacquet_network::{AuthHeaders, ThrottledClient};
++use pacquet_registry::{Package, PackageVersion};
++use pacquet_resolving_resolver_base::VersionSelectors;
++
++use crate::{
++    FetchFullMetadataCachedOptions, FetchMetadataError, fetch_full_metadata_cached,
++    mirror::{FULL_META_DIR, get_pkg_mirror_path, load_meta, prepare_json_for_disk, save_meta},
++    pick_package_from_meta::{
++        PickPackageFromMetaError, PickPackageFromMetaOptions, RegistryPackageSpec,
++        RegistryPackageSpecType, pick_lowest_version_by_version_range, pick_package_from_meta,
++        pick_version_by_version_range,
++    },
++};
++
++/// In-memory packument cache the orchestrator consults before any
++/// disk read. Mirrors upstream's
++/// [`PackageMetaCache`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L27-L31)
++/// interface — a thin map abstraction so a long-lived install can
++/// share one cache across many [`pick_package`] calls.
++///
++/// Implementations must be safe to call concurrently from multiple
++/// resolve tasks. The default [`InMemoryPackageMetaCache`] uses a
++/// std `Mutex`; a tokio-aware variant can land later if the
++/// contention shows up in benchmarks.
++pub trait PackageMetaCache: Send + Sync {
++    /// Cloned snapshot of the cached packument for `key`, or `None`
++    /// when the cache hasn't seen it.
++    fn get(&self, key: &str) -> Option<Package>;
++    /// Insert/overwrite `meta` under `key`. The orchestrator only
++    /// inserts after a fresh fetch — never replays a stale on-disk
++    /// load.
++    fn set(&self, key: String, meta: Package);
++}
++
++/// Default thread-safe [`PackageMetaCache`] backed by a [`Mutex`]
++/// guarding a [`HashMap`]. A consumer that already has its own
++/// shared map can implement the trait directly instead of using
++/// this.
++#[derive(Debug, Default)]
++pub struct InMemoryPackageMetaCache {
++    inner: Mutex<HashMap<String, Package>>,
++}
++
++impl PackageMetaCache for InMemoryPackageMetaCache {
++    fn get(&self, key: &str) -> Option<Package> {
++        // Mirror the rest of the codebase (e.g. `build_modules.rs`):
++        // recover from poisoning instead of escalating an unrelated
++        // panic into a hard install-wide failure. The cache is a
++        // plain HashMap of cloneable values — no broken invariants
++        // can survive across a poisoned lock.
++        self.inner.lock().unwrap_or_else(|err| err.into_inner()).get(key).cloned()
++    }
++
++    fn set(&self, key: String, meta: Package) {
++        self.inner.lock().unwrap_or_else(|err| err.into_inner()).insert(key, meta);
++    }
++}
++
++/// Process-shared context every [`pick_package`] call reads from.
++/// One per install. Mirrors the upstream
++/// [`ctx`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L172-L182)
++/// parameter.
++pub struct PickPackageContext<'a, Cache: PackageMetaCache> {
++    pub http_client: &'a ThrottledClient,
++    pub auth_headers: &'a AuthHeaders,
++    pub meta_cache: &'a Cache,
++    /// Root of the on-disk metadata mirror. `None` disables every
++    /// disk path — the orchestrator goes straight to the network.
++    pub cache_dir: Option<&'a Path>,
++    /// `offline=true` forbids any network access; the picker
++    /// surfaces [`PickPackageError::NoOfflineMeta`] when the disk
++    /// mirror is also empty. Mirrors upstream's `ctx.offline`.
++    pub offline: bool,
++    /// `prefer_offline=true` reads disk before the network *and*
++    /// returns immediately if disk has a satisfying pick. Mirrors
++    /// upstream's `ctx.preferOffline`.
++    pub prefer_offline: bool,
++    /// When [`true`], a `minimumReleaseAge` check that hits an
++    /// abbreviated packument (no per-version `time`) warns once and
++    /// falls back to picking without the maturity filter. Mirrors
++    /// upstream's `ctx.ignoreMissingTimeField`.
++    ///
++    /// Pacquet's full-metadata fetcher always returns `time` when
++    /// the registry exposes it, so the missing-time path here is
++    /// only reachable when the registry itself stripped the field —
++    /// rare, but the opt-in stays for parity with the resolver
++    /// option flag.
++    pub ignore_missing_time_field: bool,
++}
++
++/// Per-call options the orchestrator threads to the picker. Mirrors
++/// upstream's
++/// [`PickPackageOptions`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L66-L73).
++pub struct PickPackageOptions<'a> {
++    /// Default registry URL for the package (or the per-scope URL
++    /// when the package is scoped). The orchestrator stitches this
++    /// into the mirror path and the conditional GET URL.
++    pub registry: &'a str,
++    /// Per-importer version-selector bias.
++    pub preferred_version_selectors: Option<&'a VersionSelectors>,
++    /// `minimumReleaseAge` cutoff. `None` disables the maturity
++    /// filter for this call.
++    pub published_by: Option<DateTime<Utc>>,
++    /// `minimumReleaseAgeExclude` policy. `None` skips exclusion.
++    pub published_by_exclude: Option<&'a PackageVersionPolicy>,
++    /// Pick the lowest satisfying version instead of the highest.
++    /// Mirrors `pickLowestVersion` on the upstream call site, and
++    /// is forced to `false` when `published_by` is active (the
++    /// maturity filter always picks highest then falls back to
++    /// lowest).
++    pub pick_lowest_version: bool,
++    /// Compare the spec-pick against a `latest`-tag pick and keep
++    /// the higher of the two. Used by `pnpm add` to make sure a
++    /// freshly-added range picks the same version as the
++    /// implicit `@latest` would.
++    pub include_latest_tag: bool,
++    /// `true` skips the cache write-back on a 200 response.
++    /// Matches the upstream flag — used when the install is a
++    /// pure dry-run (`--lockfile-only`, frozen lockfile, etc.).
++    pub dry_run: bool,
++}
++
++/// Outcome of a successful [`pick_package`] call. Mirrors
++/// upstream's `{ meta, pickedPackage }`.
++#[derive(Debug)]
++pub struct PickPackageResult {
++    pub meta: Package,
++    pub picked_package: Option<PackageVersion>,
++}
++
++/// Failure modes for [`pick_package`]. Distinguishes the pure-pick
++/// errors ([`PickPackageError::Pick`]) from the fetch / IO errors so
++/// the install layer can route them through different reporters
++/// (a missing time gets a warning; a network failure gets a retry
++/// prompt).
++#[derive(Debug, Display, Error, Diagnostic)]
++#[non_exhaustive]
++pub enum PickPackageError {
++    /// Mirrors upstream's `ERR_PNPM_INVALID_PACKAGE_NAME`. Triggers
++    /// when a package name contains a `/` but doesn't begin with a
++    /// `@scope/` prefix.
++    #[display("Package name {pkg_name} is invalid, it should have a @scope")]
++    #[diagnostic(code(ERR_PNPM_INVALID_PACKAGE_NAME))]
++    InvalidPackageName {
++        #[error(not(source))]
++        pkg_name: String,
++    },
++    /// Mirrors upstream's
++    /// [`ERR_PNPM_NO_OFFLINE_META`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L242).
++    /// Offline mode is active and the on-disk mirror doesn't have
++    /// the package.
++    #[display("Failed to resolve {spec_name}@{spec_fetch_spec} in package mirror {pkg_mirror:?}")]
++    #[diagnostic(code(ERR_PNPM_NO_OFFLINE_META))]
++    NoOfflineMeta {
++        #[error(not(source))]
++        spec_name: String,
++        spec_fetch_spec: String,
++        pkg_mirror: PathBuf,
++    },
++    /// Underlying picker error (no versions, unpublished, missing
++    /// time, etc.). The picker errors are described on
++    /// [`PickPackageFromMetaError`].
++    #[diagnostic(transparent)]
++    Pick(PickPackageFromMetaError),
++    /// Underlying metadata-fetch error (network, decode, 304 with
++    /// no cache, etc.). Bubbles up from
++    /// [`fetch_full_metadata_cached()`].
++    #[diagnostic(transparent)]
++    Fetch(FetchMetadataError),
++}
++
++impl From<PickPackageFromMetaError> for PickPackageError {
++    fn from(error: PickPackageFromMetaError) -> Self {
++        PickPackageError::Pick(error)
++    }
++}
++
++impl From<FetchMetadataError> for PickPackageError {
++    fn from(error: FetchMetadataError) -> Self {
++        PickPackageError::Fetch(error)
++    }
++}
++
++/// Resolve `spec` to a [`PackageVersion`] backed by the registry
++/// metadata at `opts.registry`. Mirrors upstream's
++/// [`pickPackage`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L172-L432).
++///
++/// The orchestrator walks four layers before the network:
++///
++/// 1. **In-memory cache** ([`PackageMetaCache`]).
++/// 2. **Offline / pickLowestVersion / preferOffline disk read**.
++/// 3. **Version-spec fast path**: if the spec is a pinned version
++///    and `include_latest_tag` is off, an on-disk cache that
++///    contains that exact version satisfies the call without
++///    refetching.
++/// 4. **publishedBy mtime shortcut**: if the mirror file was written
++///    after the maturity cutoff, reuse it before attempting another
++///    conditional fetch. This mirrors pnpm's cache freshness shortcut.
++///
++/// Cache-miss / forced-fetch goes through
++/// [`fetch_full_metadata_cached()`], which sends the conditional
++/// `If-None-Match` / `If-Modified-Since` headers built from the
++/// mirror's first line. A 304 reuses the on-disk body.
++pub async fn pick_package<Cache: PackageMetaCache>(
++    ctx: &PickPackageContext<'_, Cache>,
++    spec: &RegistryPackageSpec,
++    opts: &PickPackageOptions<'_>,
++) -> Result<PickPackageResult, PickPackageError> {
++    validate_package_name(&spec.name)?;
++
++    let picker_opts = PickerOpts {
++        preferred_version_selectors: opts.preferred_version_selectors,
++        published_by: opts.published_by,
++        published_by_exclude: opts.published_by_exclude,
++        pick_lowest_version: opts.pick_lowest_version,
++        include_latest_tag: opts.include_latest_tag,
++        ignore_missing_time_field: ctx.ignore_missing_time_field,
++    };
++
++    let pkg_mirror = ctx
++        .cache_dir
++        .and_then(|dir| get_pkg_mirror_path(dir, FULL_META_DIR, opts.registry, &spec.name).ok());
++
++    // Scope the in-memory cache key by registry so the same package
++    // name in two different registries (private + public, scoped
++    // override, etc.) never short-circuits to the wrong packument.
++    // Upstream pnpm gets the same scoping by holding one
++    // `PackageMetaCache` per resolver instance per registry; pacquet
++    // shares one cache across all `pick_package` calls, so the key
++    // has to do the scoping itself.
++    let cache_key = format!("{}\x00{}", opts.registry, spec.name);
++
++    // 1. In-memory cache.
++    if let Some(cached) = ctx.meta_cache.get(&cache_key) {
++        let picked = pick_matching_version_final(&picker_opts, spec, &cached)?;
++        return Ok(PickPackageResult { meta: cached, picked_package: picked });
++    }
++
++    let mut meta_cached_in_store: Option<Package> = None;
++
++    // 2. Offline / pickLowestVersion / preferOffline disk read.
++    if ctx.offline || ctx.prefer_offline || opts.pick_lowest_version {
++        meta_cached_in_store = pkg_mirror.as_deref().and_then(load_meta);
++
++        if ctx.offline {
++            if let Some(meta) = meta_cached_in_store {
++                let picked = pick_matching_version_final(&picker_opts, spec, &meta)?;
++                return Ok(PickPackageResult { meta, picked_package: picked });
++            }
++            return Err(PickPackageError::NoOfflineMeta {
++                spec_name: spec.name.clone(),
++                spec_fetch_spec: spec.fetch_spec.clone(),
++                pkg_mirror: pkg_mirror.unwrap_or_default(),
++            });
++        }
++
++        if let Some(ref meta) = meta_cached_in_store {
++            let picked = pick_matching_version_final(&picker_opts, spec, meta)?;
++            if picked.is_some() {
++                return Ok(PickPackageResult { meta: meta.clone(), picked_package: picked });
++            }
++            // Fall through to fetch when disk had the meta but no
++            // version satisfied the spec — the disk copy may be
++            // stale.
++        }
++    }
++
++    // 3. Version-spec fast path.
++    if !opts.include_latest_tag && matches!(spec.spec_type, RegistryPackageSpecType::Version) {
++        if meta_cached_in_store.is_none() {
++            meta_cached_in_store = pkg_mirror.as_deref().and_then(load_meta);
++        }
++        if let Some(ref meta) = meta_cached_in_store
++            && meta.versions.contains_key(&spec.fetch_spec)
++        {
++            // The disk cache already has the exact pinned
++            // version. The fast picker can throw MissingTime
++            // when publishedBy is active and the cache is
++            // abbreviated — swallow that and fall through to a
++            // network fetch, which (in upstream pnpm) would
++            // upgrade abbreviated→full. Pacquet's fetcher is
++            // always full so this branch shouldn't fire today,
++            // but the swallow-and-fall-through matches upstream.
++            if let Ok(Some(picked)) = pick_matching_version_fast(&picker_opts, spec, meta) {
++                return Ok(PickPackageResult { meta: meta.clone(), picked_package: Some(picked) });
++            }
++        }
++    }
++
++    // 4. publishedBy mtime shortcut.
++    if let Some(published_by) = opts.published_by
++        && let Some(mtime) = pkg_mirror.as_deref().and_then(get_file_mtime)
++        && mtime >= published_by
++    {
++        if meta_cached_in_store.is_none() {
++            meta_cached_in_store = pkg_mirror.as_deref().and_then(load_meta);
++        }
++        if let Some(ref meta) = meta_cached_in_store
++            && let Ok(Some(picked)) = pick_matching_version_fast(&picker_opts, spec, meta)
++        {
++            return Ok(PickPackageResult { meta: meta.clone(), picked_package: Some(picked) });
++        }
++    }
++
++    // 5. Network fetch via the cached fetcher. The cached fetcher
++    //    handles conditional headers + 200 cache write internally;
++    //    on a 304 it re-reads the mirror body. The error path here
++    //    mirrors upstream: if a fetch failure has a disk fallback
++    //    we use it; otherwise the error propagates.
++    let fetch_opts = FetchFullMetadataCachedOptions {
++        registry: opts.registry,
++        http_client: ctx.http_client,
++        auth_headers: ctx.auth_headers,
++        cache_dir: ctx.cache_dir,
++    };
++
++    let fetch_result = fetch_full_metadata_cached(&spec.name, &fetch_opts).await;
++    let meta = match fetch_result {
++        Ok(meta) => meta,
++        Err(error) => {
++            // The fetcher already saved a 200 to disk before it
++            // returned (when it returned Ok). If it returned Err,
++            // try the disk fallback: an existing mirror is good
++            // enough to pick from, even if the latest sync failed.
++            if let Some(disk) =
++                meta_cached_in_store.or_else(|| pkg_mirror.as_deref().and_then(load_meta))
++            {
++                tracing::debug!(
++                    target: "pacquet_resolving_npm_resolver::pick_package",
++                    ?error,
++                    pkg_name = %spec.name,
++                    "metadata fetch failed; falling back to on-disk mirror",
++                );
++                let picked = pick_matching_version_final(&picker_opts, spec, &disk)?;
++                return Ok(PickPackageResult { meta: disk, picked_package: picked });
++            }
++            return Err(error.into());
++        }
++    };
++
++    // Divergence from upstream worth flagging: pnpm's pickPackage
++    // gates the on-disk save behind `!opts.dryRun`. Pacquet's
++    // `fetch_full_metadata_cached` already wrote the response body
++    // to the mirror by the time it returned, so `opts.dry_run` only
++    // suppresses the in-memory cache write. A future
++    // refactor that threads `dry_run` into the fetcher can restore
++    // upstream's no-disk-side-effect dry-run.
++    if !opts.dry_run {
++        ctx.meta_cache.set(cache_key, meta.clone());
++    }
++    let picked = pick_matching_version_final(&picker_opts, spec, &meta)?;
++    Ok(PickPackageResult { meta, picked_package: picked })
++}
++
++/// Internal mirror of upstream's
++/// [`PickerOptions`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L75-L79).
++/// Same fields as [`PickPackageOptions`] minus the dispatcher-only
++/// ones (registry, dry_run); plus the `ignore_missing_time_field`
++/// pull-up from the context.
++struct PickerOpts<'a> {
++    preferred_version_selectors: Option<&'a VersionSelectors>,
++    published_by: Option<DateTime<Utc>>,
++    published_by_exclude: Option<&'a PackageVersionPolicy>,
++    pick_lowest_version: bool,
++    include_latest_tag: bool,
++    ignore_missing_time_field: bool,
++}
++
++/// Picker that may throw a recoverable
++/// [`PickPackageFromMetaError::MissingTime`] — orchestrator callers
++/// swallow that on the fast paths so the network fetch can replace
++/// abbreviated metadata with full.
++///
++/// Mirrors upstream's
++/// [`pickMatchingVersionFast`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L138-L146).
++fn pick_matching_version_fast(
++    picker_opts: &PickerOpts<'_>,
++    spec: &RegistryPackageSpec,
++    meta: &Package,
++) -> Result<Option<PackageVersion>, PickPackageFromMetaError> {
++    if picker_opts.published_by.is_some() {
++        pick_respecting_min_release_age(picker_opts, spec, meta)
++    } else {
++        pick_ignoring_release_age(picker_opts, spec, meta)
++    }
++}
++
++/// Picker used at terminal return sites where there's no further
++/// fall-through. When `ignore_missing_time_field` is on, a
++/// [`PickPackageFromMetaError::MissingTime`] surfaces as a one-shot
++/// warning and the picker retries without `publishedBy`. Mirrors
++/// upstream's
++/// [`pickMatchingVersionFinal`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L152-L170).
++fn pick_matching_version_final(
++    picker_opts: &PickerOpts<'_>,
++    spec: &RegistryPackageSpec,
++    meta: &Package,
++) -> Result<Option<PackageVersion>, PickPackageFromMetaError> {
++    match pick_matching_version_fast(picker_opts, spec, meta) {
++        Ok(picked) => Ok(picked),
++        Err(PickPackageFromMetaError::MissingTime { pkg_name })
++            if picker_opts.ignore_missing_time_field =>
++        {
++            warn_missing_time_once(&pkg_name);
++            let fallback = PickerOpts {
++                preferred_version_selectors: picker_opts.preferred_version_selectors,
++                published_by: None,
++                published_by_exclude: None,
++                pick_lowest_version: picker_opts.pick_lowest_version,
++                include_latest_tag: picker_opts.include_latest_tag,
++                ignore_missing_time_field: picker_opts.ignore_missing_time_field,
++            };
++            pick_matching_version_fast(&fallback, spec, meta)
++        }
++        Err(other) => Err(other),
++    }
++}
++
++/// `publishedBy` is active: try highest mature; if no mature
++/// version satisfies, fall back to lowest (regardless of maturity)
++/// so the orchestrator can report the violation inline and let the
++/// install layer decide what to do. Mirrors upstream's
++/// [`pickRespectingMinReleaseAge`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L111-L123).
++fn pick_respecting_min_release_age(
++    picker_opts: &PickerOpts<'_>,
++    spec: &RegistryPackageSpec,
++    meta: &Package,
++) -> Result<Option<PackageVersion>, PickPackageFromMetaError> {
++    run_picker(picker_opts, spec, |target_spec| {
++        let highest = pick_package_from_meta(
++            pick_version_by_version_range,
++            &meta_opts(picker_opts),
++            meta,
++            target_spec,
++        )?;
++        if highest.is_some() {
++            return Ok(highest);
++        }
++        // Fall-back lowest pick drops `publishedBy` so the picker
++        // can return *something* even if every version is past the
++        // cutoff. The install layer reads the resulting pick's
++        // publish timestamp and surfaces the violation through the
++        // verifier.
++        let fallback_opts = PickPackageFromMetaOptions {
++            preferred_version_selectors: picker_opts.preferred_version_selectors,
++            published_by: None,
++            published_by_exclude: None,
++        };
++        pick_package_from_meta(
++            pick_lowest_version_by_version_range,
++            &fallback_opts,
++            meta,
++            target_spec,
++        )
++    })
++}
++
++/// `publishedBy` is off: respect `pickLowestVersion`. Mirrors
++/// upstream's
++/// [`pickIgnoringReleaseAge`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L126-L133).
++fn pick_ignoring_release_age(
++    picker_opts: &PickerOpts<'_>,
++    spec: &RegistryPackageSpec,
++    meta: &Package,
++) -> Result<Option<PackageVersion>, PickPackageFromMetaError> {
++    run_picker(picker_opts, spec, |target_spec| {
++        if picker_opts.pick_lowest_version {
++            pick_package_from_meta(
++                pick_lowest_version_by_version_range,
++                &meta_opts(picker_opts),
++                meta,
++                target_spec,
++            )
++        } else {
++            pick_package_from_meta(
++                pick_version_by_version_range,
++                &meta_opts(picker_opts),
++                meta,
++                target_spec,
++            )
++        }
++    })
++}
++
++/// `include_latest_tag` runner. When the flag is off, just delegate
++/// to the inner picker. When on, additionally pick against the
++/// `latest` tag and return the higher of the two. Matches upstream's
++/// [`runPicker`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L83-L92).
++fn run_picker<PickOne>(
++    picker_opts: &PickerOpts<'_>,
++    spec: &RegistryPackageSpec,
++    pick_one: PickOne,
++) -> Result<Option<PackageVersion>, PickPackageFromMetaError>
++where
++    PickOne: Fn(&RegistryPackageSpec) -> Result<Option<PackageVersion>, PickPackageFromMetaError>,
++{
++    let current = pick_one(spec)?;
++    if !picker_opts.include_latest_tag {
++        return Ok(current);
++    }
++    let latest_spec = RegistryPackageSpec {
++        name: spec.name.clone(),
++        fetch_spec: "latest".to_string(),
++        spec_type: RegistryPackageSpecType::Tag,
++        normalized_bare_specifier: spec.normalized_bare_specifier.clone(),
++    };
++    let latest = pick_one(&latest_spec)?;
++    Ok(pick_max(current, latest))
++}
++
++/// Higher-version-wins between two optional picks. Treats `None`
++/// as "no pick" so a single satisfying option wins by default.
++/// Mirrors upstream's
++/// [`pickMax`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L95-L102).
++fn pick_max(lhs: Option<PackageVersion>, rhs: Option<PackageVersion>) -> Option<PackageVersion> {
++    match (lhs, rhs) {
++        (None, rhs) => rhs,
++        (lhs, None) => lhs,
++        (Some(lhs), Some(rhs)) => {
++            if lhs.version < rhs.version {
++                Some(rhs)
++            } else {
++                Some(lhs)
++            }
++        }
++    }
++}
++
++fn meta_opts<'a>(picker_opts: &'a PickerOpts<'_>) -> PickPackageFromMetaOptions<'a> {
++    PickPackageFromMetaOptions {
++        preferred_version_selectors: picker_opts.preferred_version_selectors,
++        published_by: picker_opts.published_by,
++        published_by_exclude: picker_opts.published_by_exclude,
++    }
++}
++
++fn validate_package_name(pkg_name: &str) -> Result<(), PickPackageError> {
++    // Mirrors upstream's
++    // [`validatePackageName`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L678-L682):
++    // a slash without a `@scope/` prefix is structurally invalid.
++    if pkg_name.contains('/') && !pkg_name.starts_with('@') {
++        return Err(PickPackageError::InvalidPackageName { pkg_name: pkg_name.to_string() });
++    }
++    Ok(())
++}
++
++fn get_file_mtime(path: &Path) -> Option<DateTime<Utc>> {
++    let metadata = std::fs::metadata(path).ok()?;
++    let mtime: chrono::DateTime<Utc> = metadata.modified().ok()?.into();
++    Some(mtime)
++}
++
++/// Bounded set of package names we've already warned about for the
++/// missing-`time` field. Matches upstream's
++/// [`warnedMissingTimeFor`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L593-L605)
++/// — a Set capped at 1024 entries to keep long-lived processes
++/// (daemons, store servers) from leaking memory through it.
++///
++/// `IndexSet` (not `Vec`) gives O(1) `contains` + cheap insertion-
++/// ordered eviction via `shift_remove_index(0)`, matching upstream's
++/// JS `Set` which iterates in insertion order.
++const MAX_WARNED_MISSING_TIME: usize = 1024;
++static WARNED_MISSING_TIME: std::sync::OnceLock<Mutex<indexmap::IndexSet<String>>> =
++    std::sync::OnceLock::new();
++
++fn warn_missing_time_once(pkg_name: &str) {
++    let lock = WARNED_MISSING_TIME.get_or_init(|| Mutex::new(indexmap::IndexSet::new()));
++    let mut warned = lock.lock().unwrap_or_else(|err| err.into_inner());
++    if warned.contains(pkg_name) {
++        return;
++    }
++    if warned.len() >= MAX_WARNED_MISSING_TIME {
++        // IndexSet preserves insertion order; drop the oldest entry
++        // (index 0) so the bound stays at MAX_WARNED_MISSING_TIME.
++        warned.shift_remove_index(0);
++    }
++    warned.insert(pkg_name.to_string());
++    tracing::warn!(
++        target: "pacquet_resolving_npm_resolver::pick_package",
++        pkg_name,
++        r#"The metadata of {pkg_name} is missing the "time" field; skipping the minimumReleaseAge check for this package."#,
++    );
++}
++
++/// Convenience writer: persist `meta` to the on-disk mirror under
++/// `<cache_dir>/<FULL_META_DIR>/<registry>/<encoded-pkg>.jsonl`.
++/// Errors are logged at debug — a cache-write failure should never
++/// fail an install. Kept public so the rare caller that
++/// constructs a `Package` outside the fetcher (test fixtures, the
++/// integrated benchmark's pre-warmer) can seed the mirror without
++/// reaching into `crate::mirror`.
++pub fn persist_meta_to_mirror(
++    cache_dir: &Path,
++    registry: &str,
++    meta: &Package,
++) -> Result<(), MirrorPersistError> {
++    let path = get_pkg_mirror_path(cache_dir, FULL_META_DIR, registry, &meta.name)
++        .map_err(|error| MirrorPersistError::EncodePath { error: error.to_string() })?;
++    let json = prepare_json_for_disk(meta, meta.etag.as_deref(), None)
++        .map_err(|error| MirrorPersistError::Serialize { error: error.to_string() })?;
++    save_meta(&path, &json).map_err(|error| MirrorPersistError::Write { error: error.to_string() })
++}
++
++/// Failure modes for [`persist_meta_to_mirror`]. Each variant
++/// carries the underlying error as a string because the underlying
++/// sources are heterogeneous (`io::Error`, `serde_json::Error`,
++/// `EncodeRegistryError`) and the caller only logs.
++#[derive(Debug, Display, Error, Diagnostic)]
++#[non_exhaustive]
++pub enum MirrorPersistError {
++    #[display("Failed to encode mirror path: {error}")]
++    #[diagnostic(code(pacquet_resolving_npm_resolver::pick_package::encode_path))]
++    EncodePath {
++        #[error(not(source))]
++        error: String,
++    },
++    #[display("Failed to serialize mirror entry: {error}")]
++    #[diagnostic(code(pacquet_resolving_npm_resolver::pick_package::serialize))]
++    Serialize {
++        #[error(not(source))]
++        error: String,
++    },
++    #[display("Failed to write mirror entry: {error}")]
++    #[diagnostic(code(pacquet_resolving_npm_resolver::pick_package::write))]
++    Write {
++        #[error(not(source))]
++        error: String,
++    },
++}
++
++/// Shared-state helper that lets a long-running install build one
++/// [`PackageMetaCache`] and pass it (by [`Arc`]) to every
++/// `pick_package` call.
++pub fn shared_in_memory_cache() -> Arc<InMemoryPackageMetaCache> {
++    Arc::new(InMemoryPackageMetaCache::default())
++}
++
++#[cfg(test)]
++mod tests;
+diff --git a/pacquet/crates/resolving-npm-resolver/src/pick_package_from_meta.rs b/pacquet/crates/resolving-npm-resolver/src/pick_package_from_meta.rs
+new file mode 100644
+index 0000000000..8f9e5537d1
+--- /dev/null
++++ b/pacquet/crates/resolving-npm-resolver/src/pick_package_from_meta.rs
+@@ -0,0 +1,623 @@
++//! Pure version-picking logic over an already-fetched packument.
++//!
++//! Ports pnpm's
++//! [`pickPackageFromMeta.ts`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts).
++//!
++//! Three call sites converge on this module:
++//!
++//! - [`pick_package_from_meta`] — given a parsed
++//!   [`RegistryPackageSpec`] and a [`Package`] packument, pick the
++//!   single [`PackageVersion`] that wins (or `Ok(None)` when no
++//!   version satisfies). Applies the `minimumReleaseAge` filter
++//!   (`publishedBy`) ahead of the per-spec branch.
++//! - [`pick_version_by_version_range`] /
++//!   [`pick_lowest_version_by_version_range`] — choose the
++//!   highest/lowest version in `meta.versions` satisfying a range
++//!   string, biased by an optional [`VersionSelectors`] preference
++//!   table. The high-side variant also runs the deprecated-version
++//!   fallback (if the max pick is deprecated and other versions
++//!   exist, retry against the non-deprecated subset).
++//! - [`filter_pkg_metadata_by_publish_date`] — derive a packument
++//!   that contains only versions published at or before a cutoff,
++//!   plus rewritten `dist-tags` pointing to the highest within-cutoff
++//!   version per tag. Implements the `minimumReleaseAge` policy.
++//!
++//! The "pure picker" piece sits below the cache+fetch orchestration
++//! in [`crate::pick_package()`]; both depend on this module but this
++//! module pulls in no I/O.
++
++use std::{
++    collections::BTreeMap,
++    sync::{Arc, LazyLock},
++};
++
++use dashmap::DashMap;
++use derive_more::{Display, Error};
++use miette::Diagnostic;
++use node_semver::{Range, Version};
++use pacquet_config::version_policy::{PackageVersionPolicy, PolicyMatch};
++use pacquet_registry::{Package, PackageVersion};
++use pacquet_resolving_resolver_base::{
++    VersionSelectorEntry, VersionSelectorType, VersionSelectors,
++};
++
++/// Discriminator for [`RegistryPackageSpec::spec_type`]. Mirrors
++/// upstream's
++/// [`'tag' | 'version' | 'range'`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/parseBareSpecifier.ts#L7-L11)
++/// triple.
++#[derive(Debug, Clone, Copy, PartialEq, Eq)]
++pub enum RegistryPackageSpecType {
++    /// Exact version pin, e.g. `1.2.3`.
++    Version,
++    /// Dist-tag, e.g. `latest`, `next`.
++    Tag,
++    /// Semver range, e.g. `^1.0.0`.
++    Range,
++}
++
++/// Parsed registry spec produced by upstream's
++/// [`parseBareSpecifier`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/parseBareSpecifier.ts#L7-L12).
++/// The picker (and the cache+fetch wrapper above it) consume this
++/// shape; the parser that produces it is its own port and is not part
++/// of this module.
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub struct RegistryPackageSpec {
++    pub name: String,
++    pub fetch_spec: String,
++    pub spec_type: RegistryPackageSpecType,
++    /// Echo of the original bare specifier when the spec came from a
++    /// tarball-URL parse. The resolver writes this back into
++    /// `ResolveResult.normalized_bare_specifier`; the picker itself
++    /// doesn't read it.
++    pub normalized_bare_specifier: Option<String>,
++}
++
++/// Options bundle for [`pick_package_from_meta`]. Mirrors upstream's
++/// [`PickPackageFromMetaOptions`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L21-L25).
++#[derive(Debug, Default)]
++pub struct PickPackageFromMetaOptions<'a> {
++    /// Per-importer hints biasing the range picker toward previously-
++    /// seen versions. `None` skips the preference walk entirely.
++    pub preferred_version_selectors: Option<&'a VersionSelectors>,
++    /// `minimumReleaseAge` cutoff. When present, the picker filters
++    /// out any version published after this point (or fails closed
++    /// with [`PickPackageFromMetaError::MissingTime`] if the
++    /// packument can't be checked).
++    pub published_by: Option<chrono::DateTime<chrono::Utc>>,
++    /// Per-package exclude policy. A match against the package name
++    /// either skips the maturity filter entirely (`AnyVersion`) or
++    /// restricts it to a trusted-versions allowlist
++    /// (`ExactVersions`).
++    pub published_by_exclude: Option<&'a PackageVersionPolicy>,
++}
++
++/// Error from [`pick_package_from_meta`] and friends. The codes match
++/// upstream's `PnpmError` shape so the install layer's error handler
++/// can switch on them by string.
++#[derive(Debug, Display, Error, Diagnostic)]
++#[non_exhaustive]
++pub enum PickPackageFromMetaError {
++    /// Mirrors upstream's
++    /// [`ERR_PNPM_UNPUBLISHED_PKG`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L61):
++    /// the packument has no live versions AND lists unpublished
++    /// versions under `time.unpublished`.
++    #[display("No versions available for {pkg_name} because it was unpublished")]
++    #[diagnostic(code(ERR_PNPM_UNPUBLISHED_PKG))]
++    Unpublished {
++        #[error(not(source))]
++        pkg_name: String,
++    },
++    /// Mirrors upstream's
++    /// [`ERR_PNPM_NO_VERSIONS`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L63):
++    /// the packument has no versions at all (and no unpublished
++    /// marker to disambiguate).
++    #[display("No versions available for {pkg_name}. The package may be unpublished.")]
++    #[diagnostic(code(ERR_PNPM_NO_VERSIONS))]
++    NoVersions {
++        #[error(not(source))]
++        pkg_name: String,
++    },
++    /// Mirrors upstream's
++    /// [`ERR_PNPM_MISSING_TIME`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L112):
++    /// `minimumReleaseAge` is active, the packument has no per-version
++    /// `time`, and `modified` is missing/invalid or past the cutoff —
++    /// the picker can't decide which versions are mature.
++    #[display(r#"The metadata of {pkg_name} is missing the "time" field"#)]
++    #[diagnostic(code(ERR_PNPM_MISSING_TIME))]
++    MissingTime {
++        #[error(not(source))]
++        pkg_name: String,
++    },
++}
++
++/// Pure picker entry point. Mirrors upstream's
++/// [`pickPackageFromMeta`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L27-L108).
++///
++/// `pick_version_by_range` is dependency-injected so the caller can
++/// pick the high-side ([`pick_version_by_version_range`]) or low-side
++/// ([`pick_lowest_version_by_version_range`]) variant.
++///
++/// Returns:
++///
++/// - `Ok(Some(version))` — the picked version's cloned manifest.
++/// - `Ok(None)` — no version satisfies the spec. The orchestrator
++///   layer above propagates this as "resolver returned nothing,"
++///   not as an error.
++/// - `Err(_)` — one of the four `PnpmError` variants above.
++pub fn pick_package_from_meta<PickFn>(
++    pick_version_by_range: PickFn,
++    opts: &PickPackageFromMetaOptions<'_>,
++    meta: &Package,
++    spec: &RegistryPackageSpec,
++) -> Result<Option<PackageVersion>, PickPackageFromMetaError>
++where
++    PickFn: Fn(&PickVersionByVersionRangeOptions<'_>) -> Option<String>,
++{
++    // Match upstream's "owned-after-filter" shape: when publishedBy
++    // is active and a maturity filter applies, swap `meta` for a
++    // filtered clone — otherwise borrow the input through.
++    let filtered;
++    let meta_ref: &Package = match opts.published_by {
++        Some(cutoff) => {
++            let exclude_result = opts
++                .published_by_exclude
++                .map(|policy| policy.matches(&meta.name))
++                .unwrap_or(PolicyMatch::No);
++            if matches!(exclude_result, PolicyMatch::AnyVersion) {
++                // Bare-name match — every version of this package is
++                // covered by the exclude, so the maturity filter is
++                // a no-op. Borrow the input through.
++                meta
++            } else if meta.time.is_some() {
++                // Full metadata — filter by per-version `time`.
++                let trusted = match &exclude_result {
++                    PolicyMatch::ExactVersions(versions) => Some(versions.as_slice()),
++                    _ => None,
++                };
++                filtered = filter_pkg_metadata_by_publish_date(meta, cutoff, trusted);
++                &filtered
++            } else {
++                // Abbreviated metadata — no per-version `time`. Fall
++                // back to the package-level `modified` shortcut: if
++                // the registry says the whole package hasn't been
++                // touched since the cutoff, every version is old
++                // enough. Otherwise we can't decide and have to
++                // signal a missing-time error to the orchestrator,
++                // which then upgrades the fetch to full metadata.
++                //
++                // Cutoff is inclusive (`<=`) to match the per-version
++                // filter in `filter_pkg_metadata_by_publish_date`: a
++                // version published exactly at the cutoff is mature,
++                // so `modified == cutoff` (which means no version is
++                // newer than the cutoff) is also safe to shortcut.
++                let modified_date = meta.modified.as_deref().and_then(parse_iso_8601);
++                match modified_date {
++                    Some(date) if date <= cutoff => meta,
++                    _ => {
++                        return Err(PickPackageFromMetaError::MissingTime {
++                            pkg_name: meta.name.clone(),
++                        });
++                    }
++                }
++            }
++        }
++        None => meta,
++    };
++
++    if meta_ref.versions.is_empty() && opts.published_by.is_none() {
++        // Mirrors upstream: with publishedBy off, an empty versions
++        // map is either "unpublished" (when the `time.unpublished`
++        // marker is present) or "no versions at all."
++        if has_unpublished_versions(meta_ref) {
++            return Err(PickPackageFromMetaError::Unpublished { pkg_name: spec.name.clone() });
++        }
++        return Err(PickPackageFromMetaError::NoVersions { pkg_name: spec.name.clone() });
++    }
++
++    let picked_version: Option<String> = match spec.spec_type {
++        RegistryPackageSpecType::Version => Some(spec.fetch_spec.clone()),
++        RegistryPackageSpecType::Tag => meta_ref.dist_tag(&spec.fetch_spec).map(str::to_string),
++        RegistryPackageSpecType::Range => {
++            pick_version_by_range(&PickVersionByVersionRangeOptions {
++                meta: meta_ref,
++                version_range: &spec.fetch_spec,
++                preferred_version_selectors: opts.preferred_version_selectors,
++                published_by: opts.published_by,
++            })
++        }
++    };
++
++    let Some(version) = picked_version else { return Ok(None) };
++    let Some(manifest) = meta_ref.versions.get(&version).cloned() else { return Ok(None) };
++    let mut manifest = manifest;
++    if !meta_ref.name.is_empty() {
++        // GitHub registry quirk: a scoped package can be published as
++        // `@owner/foo` while the per-version `name` is just `foo`.
++        // Match upstream's shim that pins the manifest name to the
++        // packument-level name.
++        manifest.name = meta_ref.name.clone();
++    }
++    Ok(Some(manifest))
++}
++
++/// Per-call inputs to the range-picker pluggable. Mirrors upstream's
++/// [`PickVersionByVersionRangeOptions`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L12-L17).
++pub struct PickVersionByVersionRangeOptions<'a> {
++    pub meta: &'a Package,
++    pub version_range: &'a str,
++    pub preferred_version_selectors: Option<&'a VersionSelectors>,
++    /// Threaded through for parity with upstream. Neither
++    /// [`pick_version_by_version_range`] nor
++    /// [`pick_lowest_version_by_version_range`] reads it — the
++    /// filtering already happened in [`pick_package_from_meta`] —
++    /// but the field stays on the options so a custom picker (e.g.
++    /// the one upstream's
++    /// [`pickRespectingMinReleaseAge`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackage.ts#L111-L123)
++    /// uses) can branch on it.
++    pub published_by: Option<chrono::DateTime<chrono::Utc>>,
++}
++
++/// Pick the **highest** version in `meta.versions` satisfying
++/// `version_range`. Honors the `preferred_version_selectors` bias
++/// when supplied, and falls back to a non-deprecated retry when the
++/// top pick is deprecated and other versions are available. Mirrors
++/// upstream's
++/// [`pickVersionByVersionRange`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L168-L203).
++pub fn pick_version_by_version_range(
++    opts: &PickVersionByVersionRangeOptions<'_>,
++) -> Option<String> {
++    let latest = opts.meta.dist_tag("latest");
++
++    if let Some(selectors) = opts.preferred_version_selectors
++        && !selectors.is_empty()
++    {
++        let groups = prioritize_preferred_versions(opts.meta, opts.version_range, Some(selectors));
++        for group in groups {
++            if let Some(latest) = latest
++                && group.iter().any(|version| version == latest)
++                && semver_satisfies_loose(latest, opts.version_range)
++            {
++                return Some(latest.to_string());
++            }
++            if let Some(pick) = max_satisfying(&group, opts.version_range) {
++                return Some(pick);
++            }
++        }
++    }
++
++    if let Some(latest) = latest {
++        // The `*` short-circuit matches upstream — `semver.satisfies`
++        // rejects prereleases for `*`, so a package whose only
++        // version is `1.0.0-beta.1` would have `*` return nothing
++        // without this branch. See pnpm/pnpm#865.
++        if opts.version_range == "*" || semver_satisfies_loose(latest, opts.version_range) {
++            return Some(latest.to_string());
++        }
++    }
++
++    let all_versions: Vec<&str> = opts.meta.versions.keys().map(String::as_str).collect();
++    let max_pick = max_satisfying(&all_versions, opts.version_range);
++
++    // Deprecated-fallback: if the picked max is deprecated AND the
++    // packument has another version, try again with only the
++    // non-deprecated subset. Matches upstream's loop at
++    // pickPackageFromMeta.ts#L194-L201.
++    if let Some(ref picked) = max_pick {
++        let picked_meta = opts.meta.versions.get(picked);
++        let picked_is_deprecated =
++            picked_meta.and_then(|version| version.deprecated.as_ref()).is_some();
++        if picked_is_deprecated && all_versions.len() > 1 {
++            let non_deprecated: Vec<&str> = opts
++                .meta
++                .versions
++                .iter()
++                .filter(|(_, manifest)| manifest.deprecated.is_none())
++                .map(|(name, _)| name.as_str())
++                .collect();
++            if let Some(non_deprecated_max) = max_satisfying(&non_deprecated, opts.version_range) {
++                return Some(non_deprecated_max);
++            }
++        }
++    }
++
++    max_pick
++}
++
++/// Pick the **lowest** version in `meta.versions` satisfying
++/// `version_range`. Honors the `preferred_version_selectors` bias
++/// when supplied. Mirrors upstream's
++/// [`pickLowestVersionByVersionRange`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L150-L166).
++pub fn pick_lowest_version_by_version_range(
++    opts: &PickVersionByVersionRangeOptions<'_>,
++) -> Option<String> {
++    if let Some(selectors) = opts.preferred_version_selectors
++        && !selectors.is_empty()
++    {
++        let groups = prioritize_preferred_versions(opts.meta, opts.version_range, Some(selectors));
++        for group in groups {
++            if let Some(pick) = min_satisfying(&group, opts.version_range) {
++                return Some(pick);
++            }
++        }
++    }
++
++    let all_versions: Vec<&str> = opts.meta.versions.keys().map(String::as_str).collect();
++    if opts.version_range == "*" {
++        let mut parsed: Vec<(Version, &str)> = all_versions
++            .iter()
++            .filter_map(|raw| Version::parse(raw).ok().map(|version| (version, *raw)))
++            .collect();
++        parsed.sort_by(|left, right| left.0.cmp(&right.0));
++        return parsed.first().map(|(_, raw)| (*raw).to_string());
++    }
++    min_satisfying(&all_versions, opts.version_range)
++}
++
++/// Filter a packument to versions published at or before `cutoff`,
++/// then rewrite each `dist-tag` to the highest within-cutoff version
++/// that still belongs to the tag's original "family" (same major
++/// for non-`latest` tags, same prerelease/release status, and
++/// preferring non-deprecated versions when both are present).
++/// Mirrors upstream's
++/// [`filterPkgMetadataByPublishDate`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/registry/pkg-metadata-filter/src/index.ts#L5-L82).
++///
++/// Panics if `meta.time` is `None` — the caller (the publishedBy
++/// branch in [`pick_package_from_meta`]) only invokes this with full
++/// metadata. The abbreviated-metadata path takes the `meta.modified`
++/// shortcut above and never reaches this function.
++pub fn filter_pkg_metadata_by_publish_date(
++    meta: &Package,
++    cutoff: chrono::DateTime<chrono::Utc>,
++    trusted_versions: Option<&[String]>,
++) -> Package {
++    let time = meta.time.as_ref().expect(
++        "filter_pkg_metadata_by_publish_date called without `time`; \
++         caller must check before invoking",
++    );
++
++    let mut versions_within_date = std::collections::HashMap::new();
++    for (version, manifest) in &meta.versions {
++        let mature = time
++            .get(version)
++            .and_then(serde_json::Value::as_str)
++            .and_then(parse_iso_8601)
++            .map(|date| date <= cutoff)
++            .unwrap_or(false);
++        let trusted = trusted_versions
++            .map(|allow| allow.iter().any(|allowed| allowed == version))
++            .unwrap_or(false);
++        if mature || trusted {
++            versions_within_date.insert(version.clone(), manifest.clone());
++        }
++    }
++
++    let mut dist_tags_within_date = std::collections::HashMap::new();
++    for (tag, version) in &meta.dist_tags {
++        if versions_within_date.contains_key(version) {
++            dist_tags_within_date.insert(tag.clone(), version.clone());
++            continue;
++        }
++        let Ok(original) = Version::parse(version) else { continue };
++        let original_is_prerelease = !original.pre_release.is_empty();
++        let mut best_version: Option<(Version, &String)> = None;
++        for candidate_raw in versions_within_date.keys() {
++            let Ok(candidate) = Version::parse(candidate_raw) else { continue };
++            if tag != "latest" && candidate.major != original.major {
++                continue;
++            }
++            if candidate.pre_release.is_empty() == original_is_prerelease {
++                continue;
++            }
++            match best_version {
++                None => best_version = Some((candidate, candidate_raw)),
++                Some((ref best, best_raw)) => {
++                    let best_deprecated = versions_within_date
++                        .get(best_raw)
++                        .and_then(|manifest| manifest.deprecated.as_ref())
++                        .is_some();
++                    let candidate_deprecated = versions_within_date
++                        .get(candidate_raw)
++                        .and_then(|manifest| manifest.deprecated.as_ref())
++                        .is_some();
++                    let candidate_wins = (candidate > *best
++                        && best_deprecated == candidate_deprecated)
++                        || (best_deprecated && !candidate_deprecated);
++                    if candidate_wins {
++                        best_version = Some((candidate, candidate_raw));
++                    }
++                }
++            }
++        }
++        if let Some((_, best_raw)) = best_version {
++            dist_tags_within_date.insert(tag.clone(), best_raw.clone());
++        }
++    }
++
++    Package {
++        name: meta.name.clone(),
++        dist_tags: dist_tags_within_date,
++        versions: versions_within_date,
++        time: meta.time.clone(),
++        modified: meta.modified.clone(),
++        etag: meta.etag.clone(),
++        mutex: std::sync::Arc::clone(&meta.mutex),
++    }
++}
++
++/// Group versions by weight (highest weight first); each group is
++/// the input to a single max/min-satisfying call. Mirrors
++/// upstream's
++/// [`prioritizePreferredVersions`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L205-L249).
++fn prioritize_preferred_versions(
++    meta: &Package,
++    version_range: &str,
++    preferred_version_selectors: Option<&VersionSelectors>,
++) -> Vec<Vec<String>> {
++    let mut prioritizer = PreferredVersionsPrioritizer::default();
++
++    // Seed every range-satisfying version at weight 0. JS treats 0
++    // as falsy, so a later positive-weight `add` overwrites this
++    // sentinel rather than summing with it — preserved below in
++    // [`PreferredVersionsPrioritizer::add`].
++    for version in meta.versions.keys() {
++        if semver_satisfies_loose(version, version_range) {
++            prioritizer.add(version.clone(), 0);
++        }
++    }
++
++    if let Some(selectors) = preferred_version_selectors {
++        for (preferred_selector, entry) in selectors {
++            if preferred_selector == version_range {
++                continue;
++            }
++            let (selector_type, weight) = match entry {
++                VersionSelectorEntry::Plain(selector_type) => (*selector_type, 1),
++                VersionSelectorEntry::Weighted(weighted) => {
++                    (weighted.selector_type, weighted.weight)
++                }
++            };
++            match selector_type {
++                VersionSelectorType::Tag => {
++                    if let Some(version) = meta.dist_tag(preferred_selector) {
++                        prioritizer.add(version.to_string(), weight);
++                    }
++                }
++                VersionSelectorType::Range => {
++                    for version in meta.versions.keys() {
++                        if semver_satisfies_loose(version, preferred_selector) {
++                            prioritizer.add(version.clone(), weight);
++                        }
++                    }
++                }
++                VersionSelectorType::Version => {
++                    if meta.versions.contains_key(preferred_selector) {
++                        prioritizer.add(preferred_selector.clone(), weight);
++                    }
++                }
++            }
++        }
++    }
++
++    prioritizer.versions_by_priority()
++}
++
++/// Group-by-weight accumulator. Matches upstream's JS class
++/// [`PreferredVersionsPrioritizer`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L251-L273)
++/// — including the quirk that weight `0` acts as a sentinel a later
++/// non-zero `add` overwrites rather than sums with.
++#[derive(Default)]
++struct PreferredVersionsPrioritizer {
++    preferred_versions: BTreeMap<String, u32>,
++}
++
++impl PreferredVersionsPrioritizer {
++    fn add(&mut self, version: String, weight: u32) {
++        let entry = self.preferred_versions.entry(version).or_insert(0);
++        if *entry == 0 {
++            // JS truthiness: `0` is falsy, so a later positive
++            // weight replaces the seed. Once non-zero, further
++            // adds sum normally.
++            *entry = weight;
++        } else {
++            *entry += weight;
++        }
++    }
++
++    fn versions_by_priority(&self) -> Vec<Vec<String>> {
++        let mut by_weight: BTreeMap<u32, Vec<String>> = BTreeMap::new();
++        for (version, weight) in &self.preferred_versions {
++            by_weight.entry(*weight).or_default().push(version.clone());
++        }
++        // Highest weight first. BTreeMap iterates lowest→highest, so
++        // reverse explicitly.
++        by_weight.into_iter().rev().map(|(_, group)| group).collect()
++    }
++}
++
++/// Process-global cache of parsed [`Range`]s keyed by their source
++/// string. Mirrors upstream's
++/// [`semverRangeCache`](https://github.com/pnpm/pnpm/blob/f657b5cb44/resolving/npm-resolver/src/pickPackageFromMeta.ts#L123-L148):
++/// most installs hit the same handful of ranges thousands of times
++/// (the `*` from a CLI add, the `^X` from manifest entries, the few
++/// dist-tag fall-backs in `preferred_version_selectors`), and reparsing
++/// each is the picker's hottest cost. The cache stores `Option<Arc<Range>>`
++/// so the parse error case ("range is unparsable") is memoized too —
++/// pickers fall through to the next candidate without retrying the
++/// parse.
++///
++/// `DashMap` (not `Mutex<HashMap>`) keeps lookups lock-free under the
++/// fan-out the deps-resolver runs concurrently.
++static RANGE_CACHE: LazyLock<DashMap<String, Option<Arc<Range>>>> = LazyLock::new(DashMap::new);
++
++fn cached_range(range: &str) -> Option<Arc<Range>> {
++    if let Some(entry) = RANGE_CACHE.get(range) {
++        // `entry` is a `dashmap::Ref` guard around the stored
++        // `Option<Arc<Range>>`. `value()` projects out the `&Option<...>`
++        // so the clone runs on the inner value (Arc bump + Option clone),
++        // not on the guard.
++        return entry.value().clone();
++    }
++    let parsed = Range::parse(range).ok().map(Arc::new);
++    RANGE_CACHE.insert(range.to_string(), parsed.clone());
++    parsed
++}
++
++/// Check whether `version` satisfies `range` under node-semver's
++/// loose grammar, reusing a cached [`Range`] parse when possible.
++/// A parse failure on either input is treated as "doesn't satisfy"
++/// so the picker can fall through to the next candidate instead of
++/// crashing.
++fn semver_satisfies_loose(version: &str, range: &str) -> bool {
++    let Ok(parsed_version) = Version::parse(version) else { return false };
++    let Some(parsed_range) = cached_range(range) else { return false };
++    parsed_version.satisfies(&parsed_range)
++}
++
++fn max_satisfying<Raw: AsRef<str>>(versions: &[Raw], range: &str) -> Option<String> {
++    let parsed_range = cached_range(range)?;
++    let mut best: Option<(Version, String)> = None;
++    for version in versions {
++        let Ok(parsed) = Version::parse(version.as_ref()) else { continue };
++        if !parsed.satisfies(&parsed_range) {
++            continue;
++        }
++        match &best {
++            Some((current, _)) if current >= &parsed => {}
++            _ => best = Some((parsed, version.as_ref().to_string())),
++        }
++    }
++    best.map(|(_, raw)| raw)
++}
++
++fn min_satisfying<Raw: AsRef<str>>(versions: &[Raw], range: &str) -> Option<String> {
++    let parsed_range = cached_range(range)?;
++    let mut best: Option<(Version, String)> = None;
++    for version in versions {
++        let Ok(parsed) = Version::parse(version.as_ref()) else { continue };
++        if !parsed.satisfies(&parsed_range) {
++            continue;
++        }
++        match &best {
++            Some((current, _)) if current <= &parsed => {}
++            _ => best = Some((parsed, version.as_ref().to_string())),
++        }
++    }
++    best.map(|(_, raw)| raw)
++}
++
++fn parse_iso_8601(input: &str) -> Option<chrono::DateTime<chrono::Utc>> {
++    chrono::DateTime::parse_from_rfc3339(input).ok().map(|date| date.with_timezone(&chrono::Utc))
++}
++
++fn has_unpublished_versions(meta: &Package) -> bool {
++    let Some(time) = meta.time.as_ref() else { return false };
++    let Some(unpublished) = time.get("unpublished") else { return false };
++    unpublished
++        .get("versions")
++        .and_then(serde_json::Value::as_array)
++        .map(|versions| !versions.is_empty())
++        .unwrap_or(false)
++}
++
++#[cfg(test)]
++mod tests;
+diff --git a/pacquet/crates/resolving-parse-wanted-dependency/Cargo.toml b/pacquet/crates/resolving-parse-wanted-dependency/Cargo.toml
+new file mode 100644
+index 0000000000..c117c4423b
+--- /dev/null
++++ b/pacquet/crates/resolving-parse-wanted-dependency/Cargo.toml
+@@ -0,0 +1,16 @@
++[package]
++name                  = "pacquet-resolving-parse-wanted-dependency"
++version               = "0.0.1"
++publish               = false
++authors.workspace     = true
++description.workspace = true
++edition.workspace     = true
++homepage.workspace    = true
++keywords.workspace    = true
++license.workspace     = true
++repository.workspace  = true
++
++[dependencies]
++
++[lints]
++workspace = true
+diff --git a/pacquet/crates/resolving-parse-wanted-dependency/src/lib.rs b/pacquet/crates/resolving-parse-wanted-dependency/src/lib.rs
+new file mode 100644
+index 0000000000..0b36f61039
+--- /dev/null
++++ b/pacquet/crates/resolving-parse-wanted-dependency/src/lib.rs
+@@ -0,0 +1,84 @@
++//! Pacquet port of pnpm's
++//! [`@pnpm/resolving.parse-wanted-dependency`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/parse-wanted-dependency/src/index.ts).
++//!
++//! Splits a raw dependency string from the manifest (or the CLI's `add`
++//! argument) into its `(alias, bareSpecifier)` halves so the downstream
++//! resolvers can decide which protocol is at play.
++//!
++//! Examples (mirrors upstream's behavior):
++//!
++//! - `foo@1.2.3` → `alias = "foo"`, `bare_specifier = "1.2.3"`.
++//! - `@scope/foo@1.2.3` → `alias = "@scope/foo"`, `bare_specifier = "1.2.3"`.
++//! - `foo@npm:lodash@^4` (npm-alias form) → `alias = "foo"`,
++//!   `bare_specifier = "npm:lodash@^4"`.
++//! - `git+ssh://git@github.com/owner/repo` → no alias, the whole string
++//!   stays in `bare_specifier` (the `@` after `git` doesn't split the
++//!   prefix as a valid package name).
++//! - `foo` → `alias = "foo"`, no `bare_specifier`.
++//! - `^1.2.3` → no alias, the whole string stays in `bare_specifier`.
++
++pub mod validate_npm_package_name;
++
++pub use validate_npm_package_name::is_valid_old_npm_package_name;
++
++/// The `(alias, bareSpecifier)` split for a raw dependency string. At
++/// least one of the two fields is always populated; mirrors upstream's
++/// `ParseWantedDependencyResult`
++/// ([source](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/parse-wanted-dependency/src/index.ts#L8-L13)),
++/// which is a union over the three populated shapes.
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub struct ParsedWantedDependency {
++    /// The local alias the dep should be installed as in `node_modules`,
++    /// when present. For `foo@1.2.3` this is `"foo"`; for the npm-alias
++    /// form `foo@npm:lodash@^4` it is also `"foo"`.
++    pub alias: Option<String>,
++    /// The version spec / protocol-prefixed selector the resolver chain
++    /// will dispatch on, when present. For `foo@1.2.3` this is
++    /// `"1.2.3"`; for `git+ssh://…` it is the whole input.
++    pub bare_specifier: Option<String>,
++}
++
++/// Port of pnpm's
++/// [`parseWantedDependency`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/parse-wanted-dependency/src/index.ts#L15-L37).
++///
++/// Searches for the first `@` from index 1 onwards (so the scope-marker
++/// `@` of `@scope/foo` is not treated as a version separator). When the
++/// substring before that `@` parses as a valid (old-style) npm package
++/// name, the split is taken; otherwise the input passes through as a
++/// bare specifier.
++pub fn parse_wanted_dependency(raw_wanted_dependency: &str) -> ParsedWantedDependency {
++    let version_delimiter = find_version_delimiter(raw_wanted_dependency);
++    if let Some(idx) = version_delimiter {
++        let alias = &raw_wanted_dependency[..idx];
++        if is_valid_old_npm_package_name(alias) {
++            return ParsedWantedDependency {
++                alias: Some(alias.to_string()),
++                bare_specifier: Some(raw_wanted_dependency[idx + 1..].to_string()),
++            };
++        }
++        return ParsedWantedDependency {
++            alias: None,
++            bare_specifier: Some(raw_wanted_dependency.to_string()),
++        };
++    }
++    if is_valid_old_npm_package_name(raw_wanted_dependency) {
++        return ParsedWantedDependency {
++            alias: Some(raw_wanted_dependency.to_string()),
++            bare_specifier: None,
++        };
++    }
++    ParsedWantedDependency { alias: None, bare_specifier: Some(raw_wanted_dependency.to_string()) }
++}
++
++/// Find the first `@` byte index strictly after index 0, mirroring
++/// upstream's
++/// [`indexOf('@', 1)`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/parse-wanted-dependency/src/index.ts#L16).
++///
++/// Index 0 is skipped so the scope-prefix `@` of `@scope/foo` does not
++/// split the input.
++fn find_version_delimiter(input: &str) -> Option<usize> {
++    input.bytes().enumerate().skip(1).find_map(|(i, b)| (b == b'@').then_some(i))
++}
++
++#[cfg(test)]
++mod tests;
+diff --git a/pacquet/crates/resolving-parse-wanted-dependency/src/validate_npm_package_name.rs b/pacquet/crates/resolving-parse-wanted-dependency/src/validate_npm_package_name.rs
+new file mode 100644
+index 0000000000..3cf9202665
+--- /dev/null
++++ b/pacquet/crates/resolving-parse-wanted-dependency/src/validate_npm_package_name.rs
+@@ -0,0 +1,96 @@
++//! Inline port of the `validForOldPackages` branch of npm's
++//! [`validate-npm-package-name`](https://www.npmjs.com/package/validate-npm-package-name)
++//! (v7.0.2, the version pnpm pins in its workspace catalog). Pacquet only
++//! needs the boolean "is this still a usable package name?" answer at
++//! the call site in [`crate::parse_wanted_dependency`], so the
++//! warnings-vs-errors distinction and the per-rule error message strings
++//! that the upstream JS library returns are intentionally not modeled.
++//!
++//! Mirrors the JS implementation at
++//! `validate-npm-package-name/lib/index.js` (v7.0.2). The function
++//! returns `true` exactly when upstream's `validForOldPackages` would.
++
++/// `true` when `name` would have an empty `errors` array under
++/// `validate-npm-package-name@7`, i.e. upstream's
++/// `validForOldPackages === true`.
++///
++/// The rules that flip this to `false` are, in order:
++///
++/// 1. empty string
++/// 2. starts with `.`
++/// 3. starts with `-`
++/// 4. starts with `_`
++/// 5. has leading or trailing ASCII whitespace
++/// 6. equals (case-insensitive) `node_modules` or `favicon.ico`
++/// 7. contains characters that aren't URL-safe in the `encodeURIComponent`
++///    sense, **except** the scoped-name shape `@user/pkg` where both
++///    halves are individually URL-safe and `pkg` does not start with `.`
++///
++/// The URL-safe character set matches JS's `encodeURIComponent`: ASCII
++/// letters and digits plus `- _ . ! ~ * ' ( )`.
++pub fn is_valid_old_npm_package_name(name: &str) -> bool {
++    if name.is_empty() {
++        return false;
++    }
++    if name.starts_with('.') || name.starts_with('-') || name.starts_with('_') {
++        return false;
++    }
++    if name.trim() != name {
++        return false;
++    }
++    if is_excluded(name) {
++        return false;
++    }
++    if is_url_friendly(name) {
++        return true;
++    }
++    if let Some((user, pkg)) = match_scoped(name) {
++        // v7 added the explicit leading-`.` reject on the pkg half
++        // inside the scoped branch; without it `@scope/.foo` would
++        // sneak through as URL-safe. Mirrors the new lines around
++        // `validate-npm-package-name/lib/index.js@7.0.2` L83-L85.
++        if pkg.starts_with('.') {
++            return false;
++        }
++        return is_url_friendly(user) && is_url_friendly(pkg);
++    }
++    false
++}
++
++/// Names upstream rejects outright. The check is case-insensitive in
++/// JS (`name.toLowerCase()`); we mirror that with an ASCII-only
++/// lowercase since both candidates are ASCII.
++fn is_excluded(name: &str) -> bool {
++    // Allocation-free comparison: the candidates are short ASCII and we
++    // only need a single per-byte case-folded equality check.
++    matches_ignore_ascii_case(name, "node_modules")
++        || matches_ignore_ascii_case(name, "favicon.ico")
++}
++
++fn matches_ignore_ascii_case(input: &str, target: &str) -> bool {
++    input.len() == target.len()
++        && input.bytes().zip(target.bytes()).all(|(a, b)| a.eq_ignore_ascii_case(&b))
++}
++
++/// `true` when `s` round-trips through `encodeURIComponent`. The set of
++/// characters JS leaves unescaped is ASCII alphanumerics plus
++/// `- _ . ! ~ * ' ( )`.
++fn is_url_friendly(string: &str) -> bool {
++    string.chars().all(|ch| {
++        ch.is_ascii_alphanumeric()
++            || matches!(ch, '-' | '_' | '.' | '!' | '~' | '*' | '\'' | '(' | ')')
++    })
++}
++
++/// Match upstream's
++/// `scopedPackagePattern = /^(?:@([^/]+?)[/])?([^/]+?)$/` for the
++/// scoped-name path only. Returns `(user, pkg)` when the input has the
++/// shape `@user/pkg` with non-empty halves and no further `/`.
++fn match_scoped(name: &str) -> Option<(&str, &str)> {
++    let rest = name.strip_prefix('@')?;
++    let (user, pkg) = rest.split_once('/')?;
++    if user.is_empty() || pkg.is_empty() || pkg.contains('/') {
++        return None;
++    }
++    Some((user, pkg))
++}
+diff --git a/pacquet/crates/resolving-resolver-base/Cargo.toml b/pacquet/crates/resolving-resolver-base/Cargo.toml
+index e352ba1daf..7ef830e290 100644
+--- a/pacquet/crates/resolving-resolver-base/Cargo.toml
++++ b/pacquet/crates/resolving-resolver-base/Cargo.toml
+@@ -13,6 +13,7 @@ repository.workspace  = true
+ [dependencies]
+ pacquet-lockfile = { workspace = true }
+ 
++serde      = { workspace = true }
+ serde_json = { workspace = true }
+ 
+ [dev-dependencies]
+diff --git a/pacquet/crates/resolving-resolver-base/src/lib.rs b/pacquet/crates/resolving-resolver-base/src/lib.rs
+index cb378afeb5..4393a7969f 100644
+--- a/pacquet/crates/resolving-resolver-base/src/lib.rs
++++ b/pacquet/crates/resolving-resolver-base/src/lib.rs
+@@ -1,130 +1,40 @@
+-//! Pacquet port of the verifier-side bits of pnpm's
+-//! [`@pnpm/resolving.resolver-base`](https://github.com/pnpm/pnpm/blob/2a9bd897bf/resolving/resolver-base/src/index.ts).
++//! Pacquet port of pnpm's
++//! [`@pnpm/resolving.resolver-base`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts).
+ //!
+-//! The trait + violation type live here (not in the lockfile-verification
+-//! runner) because every resolver-side verifier — today the npm one,
+-//! tomorrow custom ones — needs to depend on the trait without pulling in
+-//! the runner. Mirrors upstream's package boundary: `npm-resolver` depends
+-//! on `resolver-base`, the runner imports the trait from `resolver-base`,
+-//! and the runner crate is otherwise decoupled from any specific resolver.
++//! Two seams live here:
+ //!
+-//! Scope is intentionally minimal: only the symbols pacquet's verifier
+-//! and runner actually consume today. The full upstream `resolver-base`
+-//! surface (resolve options, branded `PkgResolutionId`, `WorkspacePackages`,
+-//! etc.) is not in pacquet's scope until a real resolver lands.
+-
+-use std::{future::Future, pin::Pin};
+-
+-use pacquet_lockfile::{LockfileResolution, PkgName};
+-
+-/// One verifier's decision about a single `(name, version, resolution)`
+-/// entry. Mirrors pnpm's
+-/// [`ResolutionVerification`](https://github.com/pnpm/pnpm/blob/2a9bd897bf/resolving/resolver-base/src/index.ts#L91-L93)
+-/// discriminated union (`{ ok: true } | { ok: false, code, reason }`).
+-///
+-/// Verifiers short-circuit on resolutions outside their protocol by
+-/// returning [`ResolutionVerification::Ok`]; the runner fans out across
+-/// every active verifier per candidate and stops at the first
+-/// [`ResolutionVerification::Err`].
+-#[derive(Debug, Clone, PartialEq, Eq)]
+-pub enum ResolutionVerification {
+-    Ok,
+-    Err {
+-        /// Verifier-defined error code (e.g.
+-        /// `MINIMUM_RELEASE_AGE_VIOLATION`, `TRUST_DOWNGRADE`). The
+-        /// install command filters violations by code to decide
+-        /// downstream UX, so the value is part of the public contract
+-        /// — verifier crates pin theirs as `&'static str` consts.
+-        code: &'static str,
+-        /// Human-readable explanation rendered in the install error
+-        /// breakdown. Allowed to allocate.
+-        reason: String,
+-    },
+-}
+-
+-/// A [`ResolutionVerifier`]'s rejection materialized for one
+-/// `(name, version, resolution)` entry. Mirrors pnpm's
+-/// [`ResolutionPolicyViolation`](https://github.com/pnpm/pnpm/blob/2a9bd897bf/resolving/resolver-base/src/index.ts#L144-L150).
+-///
+-/// The runner aggregates violations across every active verifier on the
+-/// loaded lockfile, sorts them by `name@version` for stable output, and
+-/// caps the rendered breakdown.
+-///
+-/// `Eq` is not derived because [`LockfileResolution`] contains
+-/// `ssri::Integrity`, which is only `PartialEq`.
+-#[derive(Debug, Clone, PartialEq)]
+-pub struct ResolutionPolicyViolation {
+-    pub name: PkgName,
+-    pub version: String,
+-    pub resolution: LockfileResolution,
+-    pub code: &'static str,
+-    pub reason: String,
+-}
+-
+-/// `ctx` argument bundle for [`ResolutionVerifier::verify`]. Mirrors
+-/// upstream's inline `{ name, version }` object on the verify call.
+-#[derive(Debug, Clone, Copy)]
+-pub struct VerifyCtx<'a> {
+-    pub name: &'a PkgName,
+-    pub version: &'a str,
+-}
+-
+-/// Boxed-future return type for [`ResolutionVerifier::verify`].
+-///
+-/// Async-fn-in-trait is stable since Rust 1.75, but `dyn Trait` over a
+-/// trait that returns `impl Future` is not yet ergonomic without
+-/// `#[async_trait]` or a manual boxed-future. The runner stores
+-/// verifiers as `&dyn ResolutionVerifier` so it can fan out across a
+-/// heterogeneous list (the npm verifier today, future custom
+-/// verifiers tomorrow); the boxed-future return is the minimal cost
+-/// for keeping that flexibility while staying off `async-trait`.
+-pub type VerifyFuture<'a> = Pin<Box<dyn Future<Output = ResolutionVerification> + Send + 'a>>;
+-
+-/// Optional companion to a resolver factory.
+-///
+-/// `verify` inspects the `resolution` shape to decide whether the entry
+-/// is within its protocol; for entries outside its protocol it should
+-/// return [`ResolutionVerification::Ok`]. The install side fans out
+-/// across the verifier list rather than asking a combinator to dispatch.
+-///
+-/// `policy` and `can_trust_past_check` describe the verifier's cache
+-/// contract. Policies from every active verifier are merged into a
+-/// single shared bag stored alongside the lockfile hash; the
+-/// install-side verification cache reads them to decide whether a
+-/// previous run on the same lockfile is still trustworthy under
+-/// today's policy without re-issuing the registry round-trips that
+-/// `verify` would. Verifiers that check the same logical policy (e.g.
+-/// `minimumReleaseAge` across registries) name it the same and share
+-/// the cache slot.
+-///
+-/// Mirrors pnpm's
+-/// [`ResolutionVerifier`](https://github.com/pnpm/pnpm/blob/2a9bd897bf/resolving/resolver-base/src/index.ts#L112-L130).
+-pub trait ResolutionVerifier: Send + Sync {
+-    fn verify<'a>(
+-        &'a self,
+-        resolution: &'a LockfileResolution,
+-        ctx: VerifyCtx<'a>,
+-    ) -> VerifyFuture<'a>;
+-
+-    /// Snapshot of the policy fields this verifier enforces. Merged
+-    /// with every other active verifier's `policy` into the cache
+-    /// record. A field shared across verifiers (same key) should
+-    /// carry the same value; if it doesn't, the last verifier in the
+-    /// list wins.
+-    fn policy(&self) -> &serde_json::Map<String, serde_json::Value>;
+-
+-    /// Returns `true` when the previously cached policy (the merged
+-    /// snapshot from the last successful run) can be trusted to still
+-    /// satisfy what this verifier currently demands. Reads whichever
+-    /// fields the verifier owns; missing or non-conforming values
+-    /// (e.g. an older record shape) should return `false`. A loosened
+-    /// policy can trust a stricter cached run; a tightened policy
+-    /// cannot.
+-    fn can_trust_past_check(
+-        &self,
+-        cached_policy: &serde_json::Map<String, serde_json::Value>,
+-    ) -> bool;
+-}
++//! 1. **Verifier seam** — [`ResolutionVerifier`] and friends, used by
++//!    every resolver-side policy check (today: the npm
++//!    `minimumReleaseAge` / `trustPolicy` runner). Pacquet's
++//!    lockfile-verification runner depends on the trait without pulling
++//!    in any specific resolver; mirrors upstream's package boundary.
++//!
++//! 2. **Dispatcher seam** — [`WantedDependency`], [`ResolveOptions`],
++//!    [`ResolveResult`], the [`Resolver`] trait, and the latest-version
++//!    companion. Future per-protocol resolvers (npm, git, tarball,
++//!    local, jsr, runtimes, named-registry, workspace) implement
++//!    [`Resolver`]; the default-resolver dispatcher composes them into
++//!    the chain at
++//!    [`createResolver`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts#L97-L173).
++//!
++//! Both seams sit in the same crate because pnpm bundles them in the
++//! same TS package and several types cross over (a verifier needs
++//! [`pacquet_lockfile::LockfileResolution`]; a resolver result *also*
++//! carries one).
++
++mod resolve;
++mod verifier;
++
++pub use resolve::{
++    DIRECT_DEP_SELECTOR_WEIGHT, DependencyManifest, EXISTING_VERSION_SELECTOR_WEIGHT, LatestInfo,
++    LatestQuery, PreferredVersions, ResolveError, ResolveFuture, ResolveLatestFuture,
++    ResolveOptions, ResolveResult, Resolver, UpdateBehavior, VersionSelectorEntry,
++    VersionSelectorType, VersionSelectorWithWeight, VersionSelectors, WantedDependency,
++    WorkspacePackage, WorkspacePackages, WorkspacePackagesByVersion,
++};
++pub use verifier::{
++    ResolutionPolicyViolation, ResolutionVerification, ResolutionVerifier, VerifyCtx, VerifyFuture,
++};
+ 
+ #[cfg(test)]
+ mod tests;
+diff --git a/pacquet/crates/resolving-resolver-base/src/resolve.rs b/pacquet/crates/resolving-resolver-base/src/resolve.rs
+new file mode 100644
+index 0000000000..bbc4cf07a9
+--- /dev/null
++++ b/pacquet/crates/resolving-resolver-base/src/resolve.rs
+@@ -0,0 +1,285 @@
++//! Dispatcher-side surface of `@pnpm/resolving.resolver-base`. Defines
++//! the `WantedDependency` → `ResolveResult` contract and the
++//! [`Resolver`] trait every per-protocol resolver implements.
++//!
++//! Future per-protocol resolvers (npm, git, tarball, local, jsr,
++//! runtimes, named-registry, workspace) implement [`Resolver`]; the
++//! default-resolver dispatcher composes them into a chain mirroring
++//! pnpm's
++//! [`createResolver`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts#L97-L173).
++
++use std::{collections::BTreeMap, future::Future, path::PathBuf, pin::Pin};
++
++use pacquet_lockfile::{LockfileResolution, PkgNameVer};
++use serde::{Deserialize, Serialize};
++
++use crate::verifier::ResolutionPolicyViolation;
++
++/// An entry from a project's manifest that the resolver chain will
++/// route to a concrete protocol. Mirrors pnpm's
++/// [`WantedDependency`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L304-L313).
++///
++/// At least one of `alias` and `bare_specifier` is *expected* to be
++/// populated. Upstream models this with a discriminated union;
++/// pacquet keeps both fields as `Option<String>` for ergonomic field
++/// access and uses `#[derive(Default)]` only so call sites can write
++/// `..WantedDependency::default()` in struct literals — a bare
++/// `WantedDependency::default()` with both halves `None` is a
++/// programming error the type system doesn't catch. The invariant is
++/// upheld by construction sites (the parse-wanted-dependency port
++/// and the deps-resolver's manifest reader); resolvers that walk a
++/// `WantedDependency` with both halves empty should return
++/// `Ok(None)` so the chain falls through to the
++/// "spec not supported" terminal.
++#[derive(Debug, Default, Clone, PartialEq, Eq)]
++pub struct WantedDependency {
++    /// Local install name in `node_modules/`. For `foo@1.2.3` this is
++    /// `Some("foo")`; for the npm-alias form `foo@npm:lodash@^4` it
++    /// is also `Some("foo")`.
++    pub alias: Option<String>,
++    /// Protocol-prefixed selector the resolver chain dispatches on.
++    /// For `foo@1.2.3` this is `Some("1.2.3")`; for `git+ssh://…` it
++    /// is the whole input.
++    pub bare_specifier: Option<String>,
++    /// Whether the dep is being installed as injected (workspace
++    /// package copied into the importer's `node_modules/` rather than
++    /// linked).
++    pub injected: Option<bool>,
++    /// Pre-existing specifier from the lockfile, supplied so resolvers
++    /// can prefer the previously-pinned version when no update is
++    /// requested.
++    pub prev_specifier: Option<String>,
++    /// `true` when the entry came from `optionalDependencies`.
++    /// Resolvers may downgrade failures to warnings for optional deps.
++    pub optional: Option<bool>,
++}
++
++/// Allocation-friendly map type for [`PreferredVersions`].
++///
++/// `BTreeMap` (not `HashMap`) keeps iteration order stable across
++/// runs, which matters because the deps-resolver consults these to
++/// break version ties — a flapping order would let identical inputs
++/// produce different lockfile picks.
++pub type PreferredVersions = BTreeMap<String, VersionSelectors>;
++
++/// Per-package set of selectors and their weights. Mirrors pnpm's
++/// [`VersionSelectors`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L264-L266).
++pub type VersionSelectors = BTreeMap<String, VersionSelectorEntry>;
++
++/// Discriminator for how a selector should be interpreted. Mirrors
++/// pnpm's
++/// [`VersionSelectorType`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L262).
++#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
++#[serde(rename_all = "lowercase")]
++pub enum VersionSelectorType {
++    Version,
++    Range,
++    Tag,
++}
++
++/// One selector with a tie-break weight. Mirrors pnpm's
++/// [`VersionSelectorWithWeight`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L268-L271).
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub struct VersionSelectorWithWeight {
++    pub selector_type: VersionSelectorType,
++    pub weight: u32,
++}
++
++/// A [`VersionSelectors`] map value: upstream stores either a plain
++/// [`VersionSelectorType`] or a [`VersionSelectorWithWeight`]. Mirrors
++/// pnpm's
++/// [`VersionSelectorWithWeight | VersionSelectorType`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L265)
++/// union.
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub enum VersionSelectorEntry {
++    Plain(VersionSelectorType),
++    Weighted(VersionSelectorWithWeight),
++}
++
++/// Selector weight applied to direct dependencies. Mirrors pnpm's
++/// [`DIRECT_DEP_SELECTOR_WEIGHT`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L250).
++pub const DIRECT_DEP_SELECTOR_WEIGHT: u32 = 1_000;
++
++/// Selector weight applied to versions already pinned in the wanted
++/// lockfile. Must outrank [`DIRECT_DEP_SELECTOR_WEIGHT`] so that
++/// existing pins stick across an add of a fresh range. Mirrors pnpm's
++/// [`EXISTING_VERSION_SELECTOR_WEIGHT`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L260).
++pub const EXISTING_VERSION_SELECTOR_WEIGHT: u32 = 1_000_000;
++
++/// One project in the current workspace that resolution can satisfy
++/// `workspace:`-protocol entries from. Mirrors pnpm's
++/// [`WorkspacePackage`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L239-L242).
++///
++/// `manifest` is held as an opaque [`DependencyManifest`] alias today
++/// (a thin wrapper around `serde_json::Value`); once `package-manifest`
++/// gains a typed in-memory manifest, swap the alias.
++#[derive(Debug, Clone)]
++pub struct WorkspacePackage {
++    pub root_dir: PathBuf,
++    pub manifest: DependencyManifest,
++}
++
++/// Workspace packages indexed by version string. Mirrors pnpm's
++/// [`WorkspacePackagesByVersion`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L244).
++pub type WorkspacePackagesByVersion = BTreeMap<String, WorkspacePackage>;
++
++/// Workspace packages indexed by name, then by version. Mirrors pnpm's
++/// [`WorkspacePackages`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L246).
++pub type WorkspacePackages = BTreeMap<String, WorkspacePackagesByVersion>;
++
++/// Reload behavior the dispatcher passes per-resolve. Mirrors pnpm's
++/// [`ResolveOptions.update`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L291)
++/// tri-state (`false | 'compatible' | 'latest'`).
++#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]
++pub enum UpdateBehavior {
++    /// Keep the lockfile-pinned version. Equivalent to upstream's `false`.
++    #[default]
++    Off,
++    /// Bump within the current range, mirroring upstream's `'compatible'`.
++    Compatible,
++    /// Bump to the latest, mirroring upstream's `'latest'`.
++    Latest,
++}
++
++/// Options the dispatcher hands a resolver per-resolve. Mirrors pnpm's
++/// [`ResolveOptions`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L277-L302).
++///
++/// Trust / published-at fields are not modeled yet — they belong to
++/// the npm resolver's verifier surface, which already lives at
++/// `resolving-npm-resolver`. They'll be added here when the
++/// dispatcher's npm leg actually needs to pass them through.
++#[derive(Debug, Default, Clone)]
++pub struct ResolveOptions {
++    pub project_dir: PathBuf,
++    pub lockfile_dir: PathBuf,
++    pub preferred_versions: PreferredVersions,
++    pub workspace_packages: Option<WorkspacePackages>,
++    pub default_tag: Option<String>,
++    pub pick_lowest_version: bool,
++    pub prefer_workspace_packages: bool,
++    pub always_try_workspace_packages: bool,
++    pub update: UpdateBehavior,
++    pub inject_workspace_packages: bool,
++    pub calc_specifier: bool,
++}
++
++/// In-memory manifest shape a resolver may attach to its
++/// [`ResolveResult`]. Mirrors pnpm's
++/// [`DependencyManifest`](https://github.com/pnpm/pnpm/blob/3687b0e180/packages/types/src/index.ts)
++/// (sourced from `@pnpm/types` upstream).
++///
++/// Today this aliases [`serde_json::Value`] so the seam compiles
++/// without a typed manifest port. The `package-manifest` crate's
++/// `PackageManifest` is a file-handle wrapper, not the value type
++/// upstream's [`DependencyManifest`] denotes; once the typed
++/// in-memory manifest lands, swap this alias for it.
++pub type DependencyManifest = serde_json::Value;
++
++/// Outcome of one [`Resolver::resolve`] call when the resolver claims
++/// the wanted dependency. Mirrors pnpm's
++/// [`ResolveResult`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L212-L237).
++#[derive(Debug, Clone, PartialEq)]
++pub struct ResolveResult {
++    /// Branded `{name}@{version}` identifier upstream calls
++    /// `PkgResolutionId`. Pacquet reuses
++    /// [`pacquet_lockfile::PkgNameVer`], which already pins the same
++    /// shape used elsewhere in the codebase.
++    pub id: PkgNameVer,
++    /// `latest` tag at the moment of resolution. Filled by the npm
++    /// resolver; absent for protocols that have no notion of latest
++    /// (git, file, link, …).
++    pub latest: Option<String>,
++    /// ISO-8601 publish timestamp. Filled by the npm resolver when
++    /// available; consulted by the `minimumReleaseAge` verifier.
++    pub published_at: Option<String>,
++    /// The manifest fragment the resolver fetched. Optional because
++    /// some protocols defer manifest reading to the fetch step.
++    pub manifest: Option<DependencyManifest>,
++    /// Where the artifact lives. Pacquet reuses
++    /// [`LockfileResolution`] for this — same shape as upstream's
++    /// `Resolution`, which is the discriminated union over
++    /// tarball/registry/directory/git/binary/variations.
++    pub resolution: LockfileResolution,
++    /// Provenance tag (`"npm-registry"`, `"git-repository"`,
++    /// `"local-tarball"`, …). Used by deps-installer logs and by
++    /// `@pnpm/cli.default-reporter`.
++    pub resolved_via: String,
++    /// Resolver's normalized echo of the bare specifier (e.g. `"^4"`
++    /// for an npm range). Used to update the manifest's recorded
++    /// spec when `add` or `update` runs.
++    pub normalized_bare_specifier: Option<String>,
++    /// Alias from the wanted dependency. Threaded through so the
++    /// install layer can address the resolved package by its local
++    /// name. See upstream's
++    /// [`alias` field](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L220).
++    pub alias: Option<String>,
++    /// Set when the resolver picked this version despite a policy
++    /// violation (e.g. immature relative to `publishedBy`, trust
++    /// downgrade detected by `failIfTrustDowngraded`). Mirrors
++    /// upstream's
++    /// [`policyViolation`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L221-L236)
++    /// field; the deps-resolver aggregates these across every resolve
++    /// call into a single set the install command can react to.
++    pub policy_violation: Option<ResolutionPolicyViolation>,
++}
++
++/// Input to [`Resolver::resolve_latest`]. The resolver decides whether
++/// it owns this dep purely from `wanted_dependency` — the lockfile-
++/// resolved ref is the caller's concern, not the resolver's. Mirrors
++/// pnpm's
++/// [`LatestQuery`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L323-L326).
++#[derive(Debug, Clone)]
++pub struct LatestQuery {
++    pub wanted_dependency: WantedDependency,
++    pub compatible: bool,
++}
++
++/// Result of [`Resolver::resolve_latest`]. Mirrors pnpm's
++/// [`LatestInfo`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L339-L341).
++///
++/// The dispatcher distinguishes "this resolver does not handle this dep"
++/// (`Ok(None)`) from "I claim it but can't say what's latest"
++/// (`Ok(Some(LatestInfo { latest_manifest: None }))`).
++#[derive(Debug, Default, Clone)]
++pub struct LatestInfo {
++    pub latest_manifest: Option<DependencyManifest>,
++}
++
++/// Error type the resolver seam uses. Boxed-trait-object today so each
++/// resolver crate can keep its own typed error enum without forcing a
++/// shared enum prematurely. Once enough resolvers are ported to make
++/// the common error shape clear, tighten this to a concrete enum.
++pub type ResolveError = Box<dyn std::error::Error + Send + Sync + 'static>;
++
++/// Boxed-future return type for [`Resolver::resolve`]. Same
++/// `dyn Trait` ergonomics rationale as [`crate::VerifyFuture`].
++pub type ResolveFuture<'a> =
++    Pin<Box<dyn Future<Output = Result<Option<ResolveResult>, ResolveError>> + Send + 'a>>;
++
++/// Boxed-future return type for [`Resolver::resolve_latest`].
++pub type ResolveLatestFuture<'a> =
++    Pin<Box<dyn Future<Output = Result<Option<LatestInfo>, ResolveError>> + Send + 'a>>;
++
++/// One per-protocol resolver. Mirrors the per-resolver shape upstream
++/// composes into the chain at
++/// [`createResolver`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/default-resolver/src/index.ts#L97-L173):
++/// each returns `Ok(None)` to defer to the next resolver in the chain
++/// and `Ok(Some(_))` to claim the wanted dependency.
++///
++/// `resolve_latest` is the companion `pnpm outdated` / `pnpm update --latest`
++/// path uses; resolvers that have no notion of "latest" (file, link,
++/// workspace) return `Ok(Some(LatestInfo { latest_manifest: None }))`
++/// when they claim the wanted dep and `Ok(None)` otherwise.
++pub trait Resolver: Send + Sync {
++    fn resolve<'a>(
++        &'a self,
++        wanted_dependency: &'a WantedDependency,
++        opts: &'a ResolveOptions,
++    ) -> ResolveFuture<'a>;
++
++    fn resolve_latest<'a>(
++        &'a self,
++        query: &'a LatestQuery,
++        opts: &'a ResolveOptions,
++    ) -> ResolveLatestFuture<'a>;
++}
+diff --git a/pacquet/crates/resolving-resolver-base/src/verifier.rs b/pacquet/crates/resolving-resolver-base/src/verifier.rs
+new file mode 100644
+index 0000000000..cdf3df9efe
+--- /dev/null
++++ b/pacquet/crates/resolving-resolver-base/src/verifier.rs
+@@ -0,0 +1,116 @@
++//! Verifier-side surface of `@pnpm/resolving.resolver-base`. Defines
++//! the trait every resolver-side policy check implements, plus the
++//! shape used to materialize one rejection.
++
++use std::{future::Future, pin::Pin};
++
++use pacquet_lockfile::{LockfileResolution, PkgName};
++
++/// One verifier's decision about a single `(name, version, resolution)`
++/// entry. Mirrors pnpm's
++/// [`ResolutionVerification`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L92-L94)
++/// discriminated union (`{ ok: true } | { ok: false, code, reason }`).
++///
++/// Verifiers short-circuit on resolutions outside their protocol by
++/// returning [`ResolutionVerification::Ok`]; the runner fans out across
++/// every active verifier per candidate and stops at the first
++/// [`ResolutionVerification::Err`].
++#[derive(Debug, Clone, PartialEq, Eq)]
++pub enum ResolutionVerification {
++    Ok,
++    Err {
++        /// Verifier-defined error code (e.g.
++        /// `MINIMUM_RELEASE_AGE_VIOLATION`, `TRUST_DOWNGRADE`). The
++        /// install command filters violations by code to decide
++        /// downstream UX, so the value is part of the public contract
++        /// — verifier crates pin theirs as `&'static str` consts.
++        code: &'static str,
++        /// Human-readable explanation rendered in the install error
++        /// breakdown. Allowed to allocate.
++        reason: String,
++    },
++}
++
++/// A [`ResolutionVerifier`]'s rejection materialized for one
++/// `(name, version, resolution)` entry. Mirrors pnpm's
++/// [`ResolutionPolicyViolation`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L145-L151).
++///
++/// The runner aggregates violations across every active verifier on the
++/// loaded lockfile, sorts them by `name@version` for stable output, and
++/// caps the rendered breakdown.
++///
++/// `Eq` is not derived because [`LockfileResolution`] contains
++/// `ssri::Integrity`, which is only `PartialEq`.
++#[derive(Debug, Clone, PartialEq)]
++pub struct ResolutionPolicyViolation {
++    pub name: PkgName,
++    pub version: String,
++    pub resolution: LockfileResolution,
++    pub code: &'static str,
++    pub reason: String,
++}
++
++/// `ctx` argument bundle for [`ResolutionVerifier::verify`]. Mirrors
++/// upstream's inline `{ name, version }` object on the verify call.
++#[derive(Debug, Clone, Copy)]
++pub struct VerifyCtx<'a> {
++    pub name: &'a PkgName,
++    pub version: &'a str,
++}
++
++/// Boxed-future return type for [`ResolutionVerifier::verify`].
++///
++/// Async-fn-in-trait is stable since Rust 1.75, but `dyn Trait` over a
++/// trait that returns `impl Future` is not yet ergonomic without
++/// `#[async_trait]` or a manual boxed-future. The runner stores
++/// verifiers as `&dyn ResolutionVerifier` so it can fan out across a
++/// heterogeneous list (the npm verifier today, future custom
++/// verifiers tomorrow); the boxed-future return is the minimal cost
++/// for keeping that flexibility while staying off `async-trait`.
++pub type VerifyFuture<'a> = Pin<Box<dyn Future<Output = ResolutionVerification> + Send + 'a>>;
++
++/// Optional companion to a resolver factory.
++///
++/// `verify` inspects the `resolution` shape to decide whether the entry
++/// is within its protocol; for entries outside its protocol it should
++/// return [`ResolutionVerification::Ok`]. The install side fans out
++/// across the verifier list rather than asking a combinator to dispatch.
++///
++/// `policy` and `can_trust_past_check` describe the verifier's cache
++/// contract. Policies from every active verifier are merged into a
++/// single shared bag stored alongside the lockfile hash; the
++/// install-side verification cache reads them to decide whether a
++/// previous run on the same lockfile is still trustworthy under
++/// today's policy without re-issuing the registry round-trips that
++/// `verify` would. Verifiers that check the same logical policy (e.g.
++/// `minimumReleaseAge` across registries) name it the same and share
++/// the cache slot.
++///
++/// Mirrors pnpm's
++/// [`ResolutionVerifier`](https://github.com/pnpm/pnpm/blob/3687b0e180/resolving/resolver-base/src/index.ts#L113-L131).
++pub trait ResolutionVerifier: Send + Sync {
++    fn verify<'a>(
++        &'a self,
++        resolution: &'a LockfileResolution,
++        ctx: VerifyCtx<'a>,
++    ) -> VerifyFuture<'a>;
++
++    /// Snapshot of the policy fields this verifier enforces. Merged
++    /// with every other active verifier's `policy` into the cache
++    /// record. A field shared across verifiers (same key) should
++    /// carry the same value; if it doesn't, the last verifier in the
++    /// list wins.
++    fn policy(&self) -> &serde_json::Map<String, serde_json::Value>;
++
++    /// Returns `true` when the previously cached policy (the merged
++    /// snapshot from the last successful run) can be trusted to still
++    /// satisfy what this verifier currently demands. Reads whichever
++    /// fields the verifier owns; missing or non-conforming values
++    /// (e.g. an older record shape) should return `false`. A loosened
++    /// policy can trust a stricter cached run; a tightened policy
++    /// cannot.
++    fn can_trust_past_check(
++        &self,
++        cached_policy: &serde_json::Map<String, serde_json::Value>,
++    ) -> bool;
++}
+diff --git a/resolving/npm-resolver/src/pickPackage.ts b/resolving/npm-resolver/src/pickPackage.ts
+index 4b8cfbfb7c..a922bd47e0 100644
+--- a/resolving/npm-resolver/src/pickPackage.ts
++++ b/resolving/npm-resolver/src/pickPackage.ts
+@@ -369,7 +369,12 @@ export async function pickPackage (
+       ) {
+         const modifiedDate = meta.modified ? new Date(meta.modified) : null
+         const isModifiedValid = modifiedDate != null && !Number.isNaN(modifiedDate.getTime())
+-        if (!isModifiedValid || modifiedDate >= opts.publishedBy) {
++        // Strict `>` (not `>=`) so the boundary case `modified == publishedBy`
++        // takes the abbreviated fast path: `modified` is an upper bound on
++        // every version's publish time, so when it equals the cutoff every
++        // version passes the per-version `<=` filter in
++        // `filterPkgMetadataByPublishDate` and a full re-fetch isn't needed.
++        if (!isModifiedValid || modifiedDate > opts.publishedBy) {
+           // Save the abbreviated metadata to the abbreviated cache before re-fetching full.
+           if (!opts.dryRun) {
+             const abbreviatedJson = prepareJsonForDisk(fetchResult.meta, fetchResult.etag, fetchResult.jsonText)
+@@ -466,9 +471,12 @@ async function maybeUpgradeAbbreviatedMetaForReleaseAge (
+   }
+   const modifiedDate = meta.modified ? new Date(meta.modified) : null
+   const isModifiedValid = modifiedDate != null && !Number.isNaN(modifiedDate.getTime())
+-  if (isModifiedValid && modifiedDate < opts.publishedBy) {
+-    // The package was last modified before the maturity cutoff. No individual
+-    // version can be newer than the cutoff, so the abbreviated form is fine.
++  if (isModifiedValid && modifiedDate <= opts.publishedBy) {
++    // The package was last modified at or before the maturity cutoff. Since
++    // `modified` is an upper bound on every version's publish time, no version
++    // can be newer than the cutoff, so the abbreviated form is fine.
++    // Inclusive at the boundary on purpose: matches the per-version `<=` filter
++    // in `filterPkgMetadataByPublishDate`.
+     return { meta }
+   }
+   // When `modified` is missing or malformed we fall through to the upgrade
+diff --git a/resolving/npm-resolver/src/pickPackageFromMeta.ts b/resolving/npm-resolver/src/pickPackageFromMeta.ts
+index a75c48c424..5bdaa3aace 100644
+--- a/resolving/npm-resolver/src/pickPackageFromMeta.ts
++++ b/resolving/npm-resolver/src/pickPackageFromMeta.ts
+@@ -44,13 +44,17 @@ export function pickPackageFromMeta (
+         meta = filterPkgMetadataByPublishDate(meta, publishedBy, trustedVersions)
+       } else {
+         const modifiedDate = parseModifiedDate(meta.modified)
+-        if (modifiedDate == null || modifiedDate >= publishedBy) {
++        if (modifiedDate == null || modifiedDate > publishedBy) {
+           // Abbreviated metadata without per-version timestamps, and the package
+           // was recently modified (or has no/invalid modified field). We cannot determine
+           // which individual versions are mature enough — need full metadata.
+           assertMetaHasTime(meta)
+         }
+-        // else: meta.modified < publishedBy — all versions are old enough, no filtering needed
++        // else: meta.modified <= publishedBy — every version was published at or
++        // before the cutoff (modified is an upper bound on per-version time), so
++        // they all pass the per-version `<=` maturity filter and no filtering is
++        // needed. Inclusive at the boundary on purpose so this branch matches the
++        // per-version filter in `filterPkgMetadataByPublishDate`.
+       }
+     }
+   }

@@ -1,0 +1,29 @@
+{
+    "id": "e4cbaf7f-182b-44dc-b444-75e60d6ca4de",
+    "started_at": "2026-07-06T12:18:14.993348",
+    "finished_at": "2026-07-06T12:18:44.656783",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__open-metadata-openmetadata-27883": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "open-metadata-openmetadata-27883__M27G5rh"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

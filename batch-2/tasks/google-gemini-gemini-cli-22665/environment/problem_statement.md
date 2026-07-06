@@ -1,0 +1,7 @@
+I'm cleaning up the model selection experience for folks who don't have Pro-tier access, because right now they still see Pro models they can't actually use in the selection dialog, and if they've got automatic selection turned on the system just quietly tries to use a Pro model instead of falling back to something they can reach, which is confusing and leads to failed requests.
+
+What I want: when a user has no Pro model access, the model selection dialog should skip the initial "main" screen and go straight to the model list view, and it should only show the non-Pro options (the flash and flash-lite models). Pro models need to be filtered out of that displayed list entirely for these users, and the "Auto" option shouldn't show up for them either. Oh and when one of these no-Pro-access users is looking at the model list and hits Escape, it should close the dialog completely rather than navigating over to a Pro model selection view they shouldn't land on.
+
+Also I'm adding a new lightweight flash preview model to the system. This one should only be visible to free-tier users, not to anyone with full Pro access, and when it does show it needs to appear right after the standard flash preview model and before the non-preview flash options in the list.
+
+Last thing, if a user without Pro access has been running with automatic model selection configured, the system should automatically switch them over to the flash preview model instead of leaving them on a Pro model they can't touch.

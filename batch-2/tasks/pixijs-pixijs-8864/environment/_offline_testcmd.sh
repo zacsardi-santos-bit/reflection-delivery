@@ -1,0 +1,1 @@
+cd /workspace/repo && npm install 2>&1 | tail -5 && GITHUB_ACTIONS=true npx jest packages/constants/test/constants.tests.ts --testEnvironment=node --runner=jest-runner --coverage=false

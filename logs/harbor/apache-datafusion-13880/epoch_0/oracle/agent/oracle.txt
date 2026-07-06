@@ -1,5 +1,0 @@
-patching file datafusion-examples/examples/plan_to_sql.rs
-patching file datafusion/sql/src/unparser/ast.rs
-patching file datafusion/sql/src/unparser/extension_unparser.rs
-patching file datafusion/sql/src/unparser/mod.rs
-patching file datafusion/sql/src/unparser/plan.rs

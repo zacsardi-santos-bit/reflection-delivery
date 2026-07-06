@@ -1,0 +1,183 @@
+patching file test/integration/good/code-gen/cl.expected
+patching file test/integration/good/code-gen/cpp.expected
+patching file test/integration/good/code-gen/optimize_glm.stan
+{"Action":"run","Test":"TestCodeGen"}
+File "test/integration/good/code-gen/cl.expected", line 1, characters 0-0:
+         git (internal) (exit 1)
+(cd _build/default && /usr/bin/git diff --no-index --color=always -u test/integration/good/code-gen/cl.expected test/integration/good/code-gen/cl.output)
+diff --git a/test/integration/good/code-gen/cl.expected b/test/integration/good/code-gen/cl.output
+index 0bd1327..ac574d9 100644
+--- a/test/integration/good/code-gen/cl.expected
++++ b/test/integration/good/code-gen/cl.output
+@@ -230,15 +230,10 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+   int y_s_d_td;
+   double y_r_d_td;
+   matrix_cl<double> X_d_opencl__;
+-  matrix_cl<double> X_d_td_opencl__;
+   matrix_cl<double> y_r_d_opencl__;
+-  matrix_cl<double> y_r_d_td_opencl__;
+   matrix_cl<int> y_s_d_opencl__;
+-  matrix_cl<double> y_s_d_td_opencl__;
+   matrix_cl<double> y_v_d_opencl__;
+-  matrix_cl<double> y_v_d_td_opencl__;
+   matrix_cl<int> y_vi_d_opencl__;
+-  matrix_cl<double> y_vi_d_td_opencl__;
+  
+  public:
+   ~optimize_glm_model() { }
+@@ -435,23 +430,13 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+       
+       X_d_opencl__ = to_matrix_cl(X_d);
+       
+-      X_d_td_opencl__ = to_matrix_cl(X_d_td);
+-      
+       y_r_d_opencl__ = to_matrix_cl(y_r_d);
+       
+-      y_r_d_td_opencl__ = to_matrix_cl(y_r_d_td);
+-      
+       y_s_d_opencl__ = to_matrix_cl(y_s_d);
+       
+-      y_s_d_td_opencl__ = to_matrix_cl(y_s_d_td);
+-      
+       y_v_d_opencl__ = to_matrix_cl(y_v_d);
+       
+-      y_v_d_td_opencl__ = to_matrix_cl(y_v_d_td);
+-      
+       y_vi_d_opencl__ = to_matrix_cl(y_vi_d);
+-      
+-      y_vi_d_td_opencl__ = to_matrix_cl(y_vi_d_td);
+     } catch (const std::exception& e) {
+       stan::lang::rethrow_located(e, locations_array__[current_statement__]);
+       // Next line prevents compiler griping about no return
+@@ -592,15 +577,13 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           normal_id_glm_lpdf<false>(y_v_d, X_rv_p, alpha, beta, beta));
+         current_statement__ = 16;
+         lp_accum__.add(
+-          normal_id_glm_lpdf<false>(y_v_d_td_opencl__, X_d_td_opencl__,
+-            alpha, beta, sigma));
++          normal_id_glm_lpdf<false>(y_v_d_td, X_d_td, alpha, beta, sigma));
+         current_statement__ = 17;
+         lp_accum__.add(
+           normal_id_glm_lpdf<false>(y_v_d_td, X_p, alpha, beta, sigma));
+         current_statement__ = 18;
+         lp_accum__.add(
+-          normal_id_glm_lpdf<false>(y_r_d_td_opencl__, X_d_td_opencl__,
+-            alpha, beta, beta));
++          normal_id_glm_lpdf<false>(y_r_d_td, X_d_td, alpha, beta, beta));
+         current_statement__ = 19;
+         lp_accum__.add(
+           normal_id_glm_lpdf<false>(y_r_d_td, X_p, alpha, beta, beta));
+@@ -632,8 +615,7 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           bernoulli_logit_glm_lpmf<false>(y_s_d, X_p, alpha, beta));
+         current_statement__ = 28;
+         lp_accum__.add(
+-          bernoulli_logit_glm_lpmf<false>(y_vi_d_td_opencl__,
+-            X_d_td_opencl__, alpha, beta));
++          bernoulli_logit_glm_lpmf<false>(y_vi_d_td, X_d_td, alpha, beta));
+         current_statement__ = 29;
+         lp_accum__.add(
+           bernoulli_logit_glm_lpmf<false>(y_vi_d_td, X_p, alpha, beta));
+@@ -645,8 +627,7 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           bernoulli_logit_glm_lpmf<false>(y_vi_d_td, X_rv_p, alpha, beta));
+         current_statement__ = 32;
+         lp_accum__.add(
+-          bernoulli_logit_glm_lpmf<false>(y_s_d_td_opencl__, X_d_td_opencl__,
+-            alpha, beta));
++          bernoulli_logit_glm_lpmf<false>(y_s_d_td, X_d_td, alpha, beta));
+         current_statement__ = 33;
+         lp_accum__.add(
+           bernoulli_logit_glm_lpmf<false>(y_s_d_td, X_p, alpha, beta));
+@@ -690,15 +671,13 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           poisson_log_glm_lpmf<false>(y_vi_d, X_rv_p, alpha, beta));
+         current_statement__ = 46;
+         lp_accum__.add(
+-          poisson_log_glm_lpmf<false>(y_vi_d_td_opencl__, X_d_td_opencl__,
+-            alpha, beta));
++          poisson_log_glm_lpmf<false>(y_vi_d_td, X_d_td, alpha, beta));
+         current_statement__ = 47;
+         lp_accum__.add(
+           poisson_log_glm_lpmf<false>(y_vi_d_td, X_p, alpha, beta));
+         current_statement__ = 48;
+         lp_accum__.add(
+-          poisson_log_glm_lpmf<false>(y_s_d_td_opencl__, X_d_td_opencl__,
+-            alpha, beta));
++          poisson_log_glm_lpmf<false>(y_s_d_td, X_d_td, alpha, beta));
+         current_statement__ = 49;
+         lp_accum__.add(
+           poisson_log_glm_lpmf<false>(y_s_d_td, X_p, alpha, beta));
+@@ -732,16 +711,16 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+             phi));
+         current_statement__ = 58;
+         lp_accum__.add(
+-          neg_binomial_2_log_glm_lpmf<false>(y_vi_d_td_opencl__,
+-            X_d_td_opencl__, alpha, beta, phi));
++          neg_binomial_2_log_glm_lpmf<false>(y_vi_d_td, X_d_td, alpha, beta,
++            phi));
+         current_statement__ = 59;
+         lp_accum__.add(
+           neg_binomial_2_log_glm_lpmf<false>(y_vi_d_td, X_p, alpha, beta,
+             phi));
+         current_statement__ = 60;
+         lp_accum__.add(
+-          neg_binomial_2_log_glm_lpmf<false>(y_s_d_td_opencl__,
+-            X_d_td_opencl__, alpha, beta, phi));
++          neg_binomial_2_log_glm_lpmf<false>(y_s_d_td, X_d_td, alpha, beta,
++            phi));
+         current_statement__ = 61;
+         lp_accum__.add(
+           neg_binomial_2_log_glm_lpmf<false>(y_s_d_td, X_p, alpha, beta, phi));
+@@ -762,8 +741,7 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           ordered_logistic_glm_lpmf<false>(y_s_d, X_p, beta, cuts));
+         current_statement__ = 66;
+         lp_accum__.add(
+-          ordered_logistic_glm_lpmf<false>(y_s_d_td_opencl__,
+-            X_d_td_opencl__, beta, cuts));
++          ordered_logistic_glm_lpmf<false>(y_s_d_td, X_d_td, beta, cuts));
+         current_statement__ = 67;
+         lp_accum__.add(
+           ordered_logistic_glm_lpmf<false>(y_s_d_td, X_p, beta, cuts));
+@@ -776,8 +754,7 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           ordered_logistic_glm_lpmf<false>(y_s_d, X_p, beta, cuts));
+         current_statement__ = 70;
+         lp_accum__.add(
+-          ordered_logistic_glm_lpmf<false>(y_s_d_td_opencl__,
+-            X_d_td_opencl__, beta, cuts));
++          ordered_logistic_glm_lpmf<false>(y_s_d_td, X_d_td, beta, cuts));
+         current_statement__ = 71;
+         lp_accum__.add(
+           ordered_logistic_glm_lpmf<false>(y_s_d_td, X_p, beta, cuts));
+@@ -796,8 +773,7 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           ordered_logistic_glm_lpmf<false>(y_vi_d, X_p, beta, cuts));
+         current_statement__ = 76;
+         lp_accum__.add(
+-          ordered_logistic_glm_lpmf<false>(y_vi_d_td_opencl__,
+-            X_d_td_opencl__, beta, cuts));
++          ordered_logistic_glm_lpmf<false>(y_vi_d_td, X_d_td, beta, cuts));
+         current_statement__ = 77;
+         lp_accum__.add(
+           ordered_logistic_glm_lpmf<false>(y_vi_d_td, X_p, beta, cuts));
+@@ -816,8 +792,8 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           categorical_logit_glm_lpmf<false>(y_s_d, X_p, alpha_v, beta_m));
+         current_statement__ = 82;
+         lp_accum__.add(
+-          categorical_logit_glm_lpmf<false>(y_s_d_td_opencl__,
+-            X_d_td_opencl__, alpha_v, beta_m));
++          categorical_logit_glm_lpmf<false>(y_s_d_td, X_d_td, alpha_v,
++            beta_m));
+         current_statement__ = 83;
+         lp_accum__.add(
+           categorical_logit_glm_lpmf<false>(y_s_d_td, X_p, alpha_v, beta_m));
+@@ -844,8 +820,8 @@ class optimize_glm_model : public model_base_crtp<optimize_glm_model> {
+           categorical_logit_glm_lpmf<false>(y_vi_d, X_p, alpha_v, beta_m));
+         current_statement__ = 90;
+         lp_accum__.add(
+-          categorical_logit_glm_lpmf<false>(y_vi_d_td_opencl__,
+-            X_d_td_opencl__, alpha_v, beta_m));
++          categorical_logit_glm_lpmf<false>(y_vi_d_td, X_d_td, alpha_v,
++            beta_m));
+         current_statement__ = 91;
+         lp_accum__.add(
+           categorical_logit_glm_lpmf<false>(y_vi_d_td, X_p, alpha_v, beta_m));
+{"Action":"fail","Test":"TestCodeGen","Elapsed":0.001}
+{"Action":"fail","Elapsed":0.001}
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

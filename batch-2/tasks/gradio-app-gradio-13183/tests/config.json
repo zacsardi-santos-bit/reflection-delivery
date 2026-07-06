@@ -1,0 +1,39 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && CI=true pnpm exec vitest run --config .config/vitest.config.ts js/accordion/Accordion.test.ts",
+  "test_files": [
+    "js/accordion/Accordion.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion renders with content visible when open=true",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion renders with content hidden when open=false",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion clicking the button toggles content visibility",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion clicking the button twice returns to original state",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data set_data({ open: true }) opens the accordion",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data set_data({ open: false }) closes the accordion",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data set_data({ open: true }) dispatches expand and gradio_expand",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data set_data({ open: false }) dispatches collapse",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data set_data({ open: true }) with already-open does not dispatch events",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data set_data({ open: false }) with already-closed does not dispatch events",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data set_data with label updates the button text",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data round-trip: set_data then get_data preserves open state",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Edge cases set_data with same open value does not change DOM state",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion: shared props visible: false hides the component but keeps it in the DOM"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion: shared props elem_id is applied to the wrapper",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion: shared props elem_classes are applied to the wrapper",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion: shared props visible: true renders the component",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion: shared props visible: 'hidden' hides the component but keeps it in the DOM",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Accordion renders the label text in the toggle button",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Events expand event fires when clicking to open",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Events collapse event fires when clicking to close",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Events gradio_expand event fires when clicking to open",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Events no expand/collapse events fire on mount",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Events expand and collapse fire alternately on repeated toggles",
+    "/workspace/repo/js/accordion/Accordion.test.ts::get_data / set_data get_data returns current open state",
+    "/workspace/repo/js/accordion/Accordion.test.ts::Edge cases empty label renders the button with no label text"
+  ]
+}

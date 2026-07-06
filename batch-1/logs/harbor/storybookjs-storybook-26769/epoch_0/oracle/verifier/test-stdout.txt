@@ -1,0 +1,27 @@
+patching file code/lib/core-server/src/server-channel/create-new-story-channel.test.ts
+patching file code/lib/core-server/src/utils/get-component-variable-name.test.ts
+patching file code/lib/core-server/src/utils/get-new-story-file.test.ts
+patching file code/lib/core-server/src/utils/get-story-id.test.ts
+patching file code/lib/core-server/src/utils/new-story-templates/javascript.test.ts
+patching file code/lib/core-server/src/utils/new-story-templates/typescript.test.ts
+patching file code/lib/core-server/src/utils/posix.test.ts
+[33mThe CJS build of Vite's Node API is deprecated. See https://vitejs.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+3:16:55 PM [vite-plugin-svelte] Your are using Svelte 5.0.0-next.65. Svelte 5 support is experimental, breaking changes can occur in any release until this notice is removed.
+work in progress:
+ - svelte-inspector is disabled until dev mode implements node to code mapping
+ - hmr for .svelte files is disabled until hmr api is implemented
+
+
+ RUN  v1.2.2 /workspace/repo/code
+
+ ✓ |core-server| src/utils/get-component-variable-name.test.ts  (1 test) 9ms
+ ✓ |core-server| src/utils/new-story-templates/typescript.test.ts  (2 tests) 6ms
+ ✓ |core-server| src/utils/new-story-templates/javascript.test.ts  (2 tests) 7ms
+ ✓ |core-server| src/utils/posix.test.ts  (1 test) 3ms
+
+ Test Files  4 passed (4)
+      Tests  6 passed (6)
+   Start at  15:16:54
+   Duration  3.11s (transform 311ms, setup 2.11s, collect 336ms, tests 25ms, environment 1ms, prepare 1.22s)
+
+reward=1 graded=6 found=0 failed=0 parsed=0 framework=vitest exit_code=0

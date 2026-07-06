@@ -1,0 +1,29 @@
+{
+    "id": "3e0a9af7-4422-4e7c-9b47-4d51ce9f492c",
+    "started_at": "2026-07-04T15:41:27.306859",
+    "finished_at": "2026-07-04T15:41:43.990932",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__electron-electron-12397": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "electron-electron-12397__qYTCn68"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

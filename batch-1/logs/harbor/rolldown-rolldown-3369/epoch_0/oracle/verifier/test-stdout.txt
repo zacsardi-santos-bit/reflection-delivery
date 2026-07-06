@@ -1,0 +1,419 @@
+patching file crates/rolldown/tests/rolldown/cjs_compat/issue-3364/_config.json
+patching file crates/rolldown/tests/rolldown/cjs_compat/issue-3364/a.js
+patching file crates/rolldown/tests/rolldown/cjs_compat/issue-3364/artifacts.snap
+patching file crates/rolldown/tests/rolldown/cjs_compat/issue-3364/b.js
+patching file crates/rolldown/tests/rolldown/cjs_compat/issue-3364/commonjs.js
+patching file crates/rolldown/tests/rolldown/cjs_compat/issue-3364/main.js
+patching file crates/rolldown/tests/rolldown/topics/bundler_esm_cjs_tests/26/artifacts.snap
+patching file crates/rolldown/tests/snapshots/integration_rolldown__filename_with_hash.snap
+   Compiling rolldown_common v0.1.0 (/workspace/repo/crates/rolldown_common)
+   Compiling rolldown_testing_config v0.1.0 (/workspace/repo/crates/rolldown_testing_config)
+   Compiling rolldown_resolver v0.1.0 (/workspace/repo/crates/rolldown_resolver)
+   Compiling rolldown_ecmascript_utils v0.1.0 (/workspace/repo/crates/rolldown_ecmascript_utils)
+   Compiling rolldown_loader_utils v0.1.0 (/workspace/repo/crates/rolldown_loader_utils)
+   Compiling rolldown_plugin v0.1.0 (/workspace/repo/crates/rolldown_plugin)
+   Compiling rolldown_testing v0.1.0 (/workspace/repo/crates/rolldown_testing)
+   Compiling rolldown_plugin_data_url v0.1.0 (/workspace/repo/crates/rolldown_plugin_data_url)
+   Compiling rolldown v0.1.0 (/workspace/repo/crates/rolldown)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 34.69s
+────────────
+ Nextest run ID 160adbdd-d711-4fa2-8d4d-9fab8302fc5c with nextest profile: default
+    Starting 395 tests across 1 binary (8 tests skipped)
+        PASS [   0.582s] (  1/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__import_reexport_between_esm_and_cjs__esm_reexport_cjs_named_reexport__config_json
+        PASS [   0.586s] (  2/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__esm_require_cjs__config_json
+        PASS [   0.612s] (  3/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__basic_commonjs__config_json
+        PASS [   0.614s] (  4/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__node_module_commonjs__config_json
+        PASS [   0.620s] (  5/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__import_reexport_between_esm_and_cjs__esm_import_esm_which_export_all_from_cjs_named_import__config_json
+        PASS [   0.624s] (  6/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__import_the_same_cjs_twice__config_json
+        PASS [   0.648s] (  7/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__dynamic_cjs_entry__config_json
+        PASS [   0.649s] (  8/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__import_reexport_between_esm_and_cjs__esm_reexport_cjs_default__config_json
+        PASS [   0.653s] (  9/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__mix_cjs_esm__config_json
+        PASS [   0.663s] ( 10/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__exoprt_star_of_cjs__config_json
+        PASS [   0.669s] ( 11/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__issue_3364__config_json
+        PASS [   0.671s] ( 12/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__cjs_entry__config_json
+        PASS [   0.672s] ( 13/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__multiple_circle_cjs_entries__config_json
+        PASS [   0.676s] ( 14/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__import_reexport_between_esm_and_cjs__esm_import_esm_which_export_all_from_multiple_cjs_named_import__config_json
+        PASS [   0.682s] ( 15/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__esm_require_esm__config_json
+        PASS [   0.690s] ( 16/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__import_reexport_between_esm_and_cjs__esm_import_cjs_named_import__config_json
+        PASS [   0.723s] ( 17/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__esm_require_esm_unused__config_json
+        PASS [   0.769s] ( 18/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__import_reexport_between_esm_and_cjs__esm_import_cjs_import_star_as__config_json
+        PASS [   0.689s] ( 19/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__require_call_expr_unused__config_json
+        PASS [   0.751s] ( 20/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__require__require_esm__config_json
+        PASS [   0.806s] ( 21/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__react_like__config_json
+        PASS [   0.767s] ( 22/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__unnecessary_compat_default_property_access__config_json
+        PASS [   0.750s] ( 23/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__ensure_side_effect_executed__config_json
+        PASS [   0.785s] ( 24/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__basic__config_json
+        PASS [   0.826s] ( 25/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__reexports_from_cjs__config_json
+        PASS [   0.797s] ( 26/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__ensure_safe_identifier__config_json
+        PASS [   0.810s] ( 27/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__ensure_side_effect_executed2__config_json
+        PASS [   0.903s] ( 28/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__reexport_commonjs__config_json
+        PASS [   0.875s] ( 29/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__require__create_require__config_json
+        PASS [   0.881s] ( 30/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__cjs_compat__require__require_cjs__config_json
+        PASS [   0.843s] ( 31/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__format_cjs_with_esm_require_esm__config_json
+        PASS [   0.834s] ( 32/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__import_export_unicode__config_json
+        PASS [   0.807s] ( 33/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__issue_2786__config_json
+        PASS [   0.867s] ( 34/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__dynamic_import_and_static_import_one_file__config_json
+        PASS [   0.768s] ( 35/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__dce__conditional_exports__config_json
+        PASS [   0.939s] ( 36/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__code_splitting__format_cjs_with_module_cjs__config_json
+        PASS [   0.565s] ( 37/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__export_undefined_variable__config_json
+        PASS [   0.603s] ( 38/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__forbid_const_assign__config_json
+        PASS [   0.506s] ( 39/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__json_parse_error__normal__config_json
+        PASS [   0.604s] ( 40/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__invalid_define_config__key__config_json
+        PASS [   0.654s] ( 41/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__assign_to_import__config_json
+        PASS [   0.605s] ( 42/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__invalid_define_config__value__config_json
+        PASS [   0.544s] ( 43/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__json_parse_error__issue_3102__config_json
+        PASS [   0.690s] ( 44/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__ambiguous_external_namespace__config_json
+        PASS [   0.535s] ( 45/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__parse_error__normal__config_json
+        PASS [   0.614s] ( 46/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__invalid_export_mode__should_not_be_default__config_json
+        PASS [   0.585s] ( 47/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__invalid_option__invalid_output_file__config_json
+        PASS [   0.558s] ( 48/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__parse_error__jsx__config_json
+        PASS [   0.565s] ( 49/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__missing_export__config_json
+        PASS [   0.616s] ( 50/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__invalid_export_option__none__config_json
+        PASS [   0.623s] ( 51/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__invalid_export_option__default__config_json
+        PASS [   0.827s] ( 52/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__dce__defined_expr_in_paren_expr__config_json
+        PASS [   0.546s] ( 53/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__resolve_unexport_path_of_package__config_json
+        PASS [   0.689s] ( 54/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__invalid_export_mode__should_not_be_none__config_json
+        PASS [   0.505s] ( 55/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__errors__unresolved_entry__config_json
+        PASS [   0.488s] ( 56/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__comments__none__config_json
+        PASS [   0.520s] ( 57/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__comments__preserve__config_json
+        PASS [   0.553s] ( 58/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__comments__preserve_legal__config_json
+        PASS [   0.674s] ( 59/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__min_module_size__config_json
+        PASS [   0.576s] ( 60/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__define__patterns__config_json
+        PASS [   0.676s] ( 61/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__min_size_fallback__config_json
+        PASS [   0.688s] ( 62/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__split_node_modules__config_json
+        PASS [   0.736s] ( 63/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__max_module_size_fallback__config_json
+        PASS [   0.717s] ( 64/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__min_module_size_fallback__config_json
+        PASS [   0.738s] ( 65/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__max_module_size__config_json
+        PASS [   0.703s] ( 66/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__min_size__config_json
+        PASS [   0.614s] ( 67/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__dir__should_generate_correct_relative_import_path__config_json
+        PASS [   0.749s] ( 68/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__min_share_count__config_json
+        PASS [   0.791s] ( 69/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__basic__config_json
+        PASS [   0.743s] ( 70/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__min_share_count_fallback__config_json
+        PASS [   0.793s] ( 71/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__advanced_chunks__issue_2617__config_json
+        PASS [   0.713s] ( 72/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__define__node_env__config_json
+        PASS [   0.669s] ( 73/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__entry_filenames__should_generate_correct_relative_import_path__config_json
+        PASS [   0.506s] ( 74/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__experimental__strict_execution_order__esbuild_issue_2598__non_strict__config_json
+        PASS [   0.670s] ( 75/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__es_module__if_default_prop_cjs_false__config_json
+        PASS [   0.524s] ( 76/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__experimental__strict_execution_order__esbuild_issue_399__strict__config_json
+        PASS [   0.608s] ( 77/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__experimental__strict_execution_order__esbuild_issue_2598__strict__config_json
+        PASS [   0.649s] ( 78/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__es_module__if_default_prop_iife_true__config_json
+        PASS [   0.613s] ( 79/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__experimental__strict_execution_order__esbuild_issue_399__non_strict__config_json
+        PASS [   0.659s] ( 80/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__cjs__auto__named__config_json
+        PASS [   0.670s] ( 81/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__cjs__auto__default__config_json
+        PASS [   0.734s] ( 82/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__experimental__disable_live_bindings__config_json
+        PASS [   0.706s] ( 83/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__cjs__auto__none__config_json
+        PASS [   0.706s] ( 84/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__cjs__default__config_json
+        PASS [   0.761s] ( 85/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__es_target__config_json
+        PASS [   0.956s] ( 86/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__es_module__always__config_json
+        PASS [   0.781s] ( 87/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__es_module__never__config_json
+        PASS [   0.829s] ( 88/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__es_module__if_default_prop_iife_false__config_json
+        PASS [   0.919s] ( 89/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__es_module__if_default_prop_cjs_true__config_json
+        PASS [   0.745s] ( 90/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__cjs__named__config_json
+        PASS [   0.786s] ( 91/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__iife__auto__none__config_json
+        PASS [   0.655s] ( 92/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__umd__auto__none__config_json
+        PASS [   0.692s] ( 93/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__iife__default__config_json
+        PASS [   0.603s] ( 94/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__iife__no_name_default__config_json
+        PASS [   0.626s] ( 95/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__iife__no_name_named__config_json
+        PASS [   0.685s] ( 96/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__entry_wrapped_cjs_default__config_json
+        PASS [   0.779s] ( 97/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__umd__default__config_json
+        PASS [   0.656s] ( 98/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__iife__namespace_default__config_json
+        PASS [   0.794s] ( 99/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__umd__complex_name_default__config_json
+        PASS [   0.675s] (100/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__entry_wrapped_cjs_named__config_json
+        PASS [   0.650s] (101/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__iife__non_namespace_named__config_json
+        PASS [   0.804s] (102/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__umd__complex_name_named__config_json
+        PASS [   0.588s] (103/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__umd__complex_name_named__config_json
+        PASS [   0.976s] (104/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__iife__named__config_json
+        PASS [   0.777s] (105/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__iife__namespace_named__config_json
+        PASS [   0.838s] (106/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__export_mode__umd__named__config_json
+        PASS [   0.754s] (107/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__umd__complex_name_default__config_json
+        PASS [   0.832s] (108/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__iife__non_namespace_default__config_json
+        PASS [   0.655s] (109/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__external__commonjs_reexport_external__config_json
+        PASS [   0.514s] (110/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__external__keep_import_external_order__config_json
+        PASS [   0.559s] (111/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__external__double_namespace_reexport__config_json
+        PASS [   0.610s] (112/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__external__export_external__config_json
+        PASS [   0.603s] (113/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__file__css__config_json
+        PASS [   0.661s] (114/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__file__js__config_json
+        PASS [   0.683s] (115/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__external__import_external__config_json
+        PASS [   0.674s] (116/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__file__js_css__config_json
+        PASS [   0.700s] (117/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__external_live_bindings__config_json
+        PASS [   0.618s] (118/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__export_all__config_json
+        PASS [   0.755s] (119/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__external__splitting_with_external_module__config_json
+        PASS [   0.628s] (120/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__export_default_expr__config_json
+        PASS [   0.611s] (121/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__export_default_fn__config_json
+        PASS [   0.600s] (122/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__export_named__config_json
+        PASS [   0.674s] (123/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__export_default_class__config_json
+        PASS [   1.031s] (124/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__umd__named__config_json
+        PASS [   1.057s] (125/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__extend__umd__default__config_json
+        PASS [   0.844s] (126/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__external__implicit_import_external__config_json
+        PASS [   0.635s] (127/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__export_named_from__config_json
+        PASS [   0.610s] (128/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__multiple_entry_modules__config_json
+        PASS [   0.661s] (129/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__import__config_json
+        PASS [   0.596s] (130/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__app__require__config_json
+        PASS [   0.574s] (131/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__cjs__plain_import_should_not_introduce_to_esm__config_json
+        PASS [   0.604s] (132/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__cjs__shared_entry_modules__config_json
+        PASS [   0.544s] (133/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__iife__external_modules__config_json
+        PASS [   0.624s] (134/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__cjs__share_chunk_without_symbol__config_json
+        PASS [   0.558s] (135/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__iife__external_modules_with_globals__config_json
+        PASS [   0.612s] (136/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__iife__conflict_exports_key_loop__config_json
+        PASS [   0.618s] (137/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__iife__conflict_exports_key__config_json
+        PASS [   0.706s] (138/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__cjs__import_export_unicode__config_json
+        PASS [   0.591s] (139/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__umd__conflict_exports_key__config_json
+        PASS [   0.810s] (140/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__cjs__conflict_exports_key__config_json
+        PASS [   0.622s] (141/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__iife__namespaced_name_reserved__config_json
+        PASS [   0.650s] (142/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__iife__namespaced_name__config_json
+        PASS [   0.776s] (143/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__esm__import_export_unicode__config_json
+        PASS [   0.688s] (144/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__iife__iife_with_name__config_json
+        PASS [   0.642s] (145/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__umd__external_modules__config_json
+        PASS [   0.627s] (146/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__umd__external_modules_with_complex_globals__config_json
+        PASS [   0.617s] (147/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__umd__external_modules_with_globals__config_json
+        PASS [   0.561s] (148/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__umd__missing_name_option__config_json
+        PASS [   0.820s] (149/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__umd__conflict_exports_key_loop__config_json
+        PASS [   0.631s] (150/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__inject__config_json
+        PASS [   0.660s] (151/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__inline_dynamic_imports__cjs__config_json
+        PASS [   0.651s] (152/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__inline_dynamic_imports__esm__config_json
+        PASS [   0.665s] (153/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__inline_dynamic_imports__iife__config_json
+        PASS [   0.604s] (154/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__asset__config_json
+        PASS [   0.688s] (155/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__intro__esm__config_json
+        PASS [   0.763s] (156/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__format__umd__namespaced_name_reserved__config_json
+        PASS [   0.648s] (157/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__minify__basic__config_json
+        PASS [   0.685s] (158/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__intro__iife__config_json
+        PASS [   0.752s] (159/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__intro__cjs__config_json
+        PASS [   0.657s] (160/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__base64__empty__config_json
+        PASS [   0.711s] (161/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__minify__inject_node_env__config_json
+        PASS [   0.695s] (162/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__base64__binary__config_json
+        PASS [   0.648s] (163/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__binary__empty__config_json
+        PASS [   0.662s] (164/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__binary__binary__config_json
+        PASS [   0.487s] (165/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__dataurl__empty__config_json
+        PASS [   0.512s] (166/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__jsx__config_json
+        PASS [   0.529s] (167/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__ts__basic__config_json
+        PASS [   0.594s] (168/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__json__object_with_reserved_key__config_json
+        PASS [   0.688s] (169/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__json__array__config_json
+        PASS [   0.955s] (170/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__binary__node__config_json
+        PASS [   1.001s] (171/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__base64__text__config_json
+        PASS [   0.866s] (172/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__binary__text__config_json
+        PASS [   0.778s] (173/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__dataurl__text__config_json
+        PASS [   0.851s] (174/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__dataurl__binary__config_json
+        PASS [   0.724s] (175/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__json__object__config_json
+        PASS [   0.728s] (176/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__json__customize__config_json
+        PASS [   0.643s] (177/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__ts__enum_reference_id_not_exist_after_transform__config_json
+        PASS [   0.756s] (178/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__json__correct_semantic_of_import_and_require__config_json
+        PASS [   0.748s] (179/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__json__object_with_invalid_key__config_json
+        PASS [   0.848s] (180/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__empty__config_json
+        PASS [   0.749s] (181/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__tsx__config_json
+        PASS [   0.543s] (182/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__resolve__alias_to_node_builtin_module__config_json
+        PASS [   0.560s] (183/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__platform__node__should_not_throw_warnings_for_import_builtin_modules__basic__config_json
+        PASS [   0.634s] (184/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__resolve__browser_filed_false__config_json
+        PASS [   0.594s] (185/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__shim_missing_exports__basic_wrapped_esm__config_json
+        PASS [   0.658s] (186/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__resolve__resolve_node_modules_by_default__config_json
+        PASS [   0.694s] (187/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__shim_missing_exports__shake_unused_shimmed_exports__config_json
+        PASS [   0.753s] (188/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__resolve__should_resolve_to_different_target_for_import_and_require__config_json
+        PASS [   0.908s] (189/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__outro__esm__config_json
+        PASS [   1.172s] (190/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__txt__empty__config_json
+        PASS [   0.985s] (191/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__outro__cjs__config_json
+        PASS [   0.886s] (192/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__resolve__node_modules_as_entries__config_json
+        PASS [   0.959s] (193/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__outro__iife__config_json
+        PASS [   1.227s] (194/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__module_types__txt__escape_quote__config_json
+        PASS [   0.934s] (195/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__resolve__extension_alias__config_json
+        PASS [   0.831s] (196/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__122__a__config_json
+        PASS [   0.947s] (197/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__function__shim_missing_exports__basic__config_json
+        PASS [   0.925s] (198/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__hash__content_include_placeholder__config_json
+        PASS [   0.481s] (199/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2833__config_json
+        PASS [   0.572s] (200/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2300__config_json
+        PASS [   0.753s] (201/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__1722__2__config_json
+        PASS [   0.554s] (202/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2669__config_json
+        PASS [   0.695s] (203/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2903_3__config_json
+        PASS [   1.105s] (204/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__1443__config_json
+        PASS [   0.874s] (205/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2085__config_json
+        PASS [   1.253s] (206/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__122__b__config_json
+        PASS [   1.046s] (207/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__1769__config_json
+        PASS [   1.014s] (208/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2038__a__config_json
+        PASS [   0.717s] (209/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2903_4__config_json
+        PASS [   0.828s] (210/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2685__config_json
+        PASS [   0.951s] (211/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2038__b__config_json
+        PASS [   1.167s] (212/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__1722__1__config_json
+        PASS [   0.813s] (213/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2903_2__config_json
+        PASS [   0.782s] (214/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2903__config_json
+        PASS [   0.888s] (215/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2859__1__config_json
+        PASS [   0.869s] (216/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__2859__2__config_json
+        PASS [   0.737s] (217/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__issues__376__config_json
+        PASS [   0.787s] (218/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__ambiguous_star_export__config_json
+        PASS [   0.830s] (219/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__banner__cjs__config_json
+        PASS [   0.869s] (220/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__assign_chunk_name_order__config_json
+        PASS [   0.581s] (221/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__common_js_min__config_json
+        PASS [   0.578s] (222/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__merge_external_import__config_json
+        PASS [   0.699s] (223/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__invalid_ident_repr__config_json
+        PASS [   0.619s] (224/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__polyfill_require_disabled__config_json
+        PASS [   0.804s] (225/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__basic_re_export__config_json
+        PASS [   0.767s] (226/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__footer__iife__config_json
+        PASS [   0.766s] (227/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__generate_valid_name_for_kebab_case_files__config_json
+        PASS [   0.687s] (228/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__reexport_star__config_json
+        PASS [   0.797s] (229/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__duplicate_entries__config_json
+        PASS [   0.818s] (230/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__footer__cjs__config_json
+        PASS [   0.874s] (231/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__banner__iife__config_json
+        PASS [   0.914s] (232/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__basic__config_json
+        PASS [   0.903s] (233/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__cjs_entry_as_dependency__config_json
+        PASS [   0.804s] (234/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__object_shorthand_property__config_json
+        PASS [   0.640s] (235/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__use_strict__allow_parse_non_strict_code_in_cjs_format__config_json
+        PASS [   0.659s] (236/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__use_strict__emit_use_strict_with_strict_cjs_in_cjs_format__config_json
+        PASS [   0.602s] (237/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__use_strict__no_use_strict_with_non_strict_cjs_in_cjs_format__config_json
+        PASS [   0.701s] (238/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__use_strict__ignore_treeshaked_modules__config_json
+        PASS [   0.568s] (239/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__sourcemap__inline_url_relative_to_file__config_json
+        PASS [   0.953s] (240/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__require_deconflict__config_json
+        PASS [   1.023s] (241/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__reexport_star_from_local_named_export__config_json
+        PASS [   0.642s] (242/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__sourcemap__debug_ids__config_json
+        PASS [   0.902s] (243/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__use_strict__empty_file__config_json
+        PASS [   0.727s] (244/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__semantic__export_star_from_external_as_shared_entries_cjs__config_json
+        PASS [   0.732s] (245/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__semantic__export_star_from_external_as_shared_entries__config_json
+        PASS [   0.743s] (246/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__resolve__hash_tag_as_dir_name__config_json
+        PASS [   0.723s] (247/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__semantic__export_star_from_external_as_wrapped_entry__config_json
+        PASS [   0.812s] (248/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__misc__wrapped_esm__config_json
+        PASS [   0.841s] (249/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__semantic__export_star_from_external_as_wrapped_entry_cjs__config_json
+        PASS [   0.774s] (250/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__sourcemap__live_binding__config_json
+        PASS [   1.331s] (251/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__10__config_json
+        PASS [   1.417s] (252/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__0__config_json
+        PASS [   0.863s] (253/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__20__config_json
+        PASS [   0.931s] (254/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__17__config_json
+        PASS [   0.908s] (255/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__21__config_json
+        PASS [   0.938s] (256/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__22__config_json
+        PASS [   0.920s] (257/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__25__config_json
+        PASS [   1.228s] (258/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__14__config_json
+        PASS [   1.084s] (259/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__19__config_json
+        PASS [   1.263s] (260/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__13__config_json
+        PASS [   1.091s] (261/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__1__config_json
+        PASS [   1.380s] (262/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__12__config_json
+        PASS [   1.232s] (263/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__15__config_json
+        PASS [   1.440s] (264/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__11__config_json
+        PASS [   1.176s] (265/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__18__config_json
+        PASS [   1.213s] (266/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__16__config_json
+        PASS [   1.032s] (267/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__24__config_json
+        PASS [   1.176s] (268/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__23__config_json
+        PASS [   0.736s] (269/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__33__config_json
+        PASS [   0.952s] (270/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__29__config_json
+        PASS [   0.970s] (271/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__30__config_json
+        PASS [   0.861s] (272/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__35__config_json
+        PASS [   0.912s] (273/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__34__config_json
+        PASS [   1.157s] (274/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__28__config_json
+        PASS [   1.125s] (275/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__2__config_json
+        PASS [   1.310s] (276/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__26__config_json
+        PASS [   0.918s] (277/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__38__config_json
+        PASS [   0.996s] (278/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__32__config_json
+        PASS [   0.966s] (279/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__36__config_json
+        PASS [   0.907s] (280/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__40__config_json
+        PASS [   0.869s] (281/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__41__config_json
+        PASS [   1.018s] (282/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__31__config_json
+        PASS [   1.270s] (283/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__27__config_json
+        PASS [   0.938s] (284/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__3__config_json
+        PASS [   0.992s] (285/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__37__config_json
+        PASS [   0.998s] (286/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__39__config_json
+        PASS [   0.998s] (287/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__45__config_json
+        PASS [   0.894s] (288/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__50__config_json
+        PASS [   1.160s] (289/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__43__config_json
+        PASS [   0.926s] (290/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__51__config_json
+        PASS [   0.918s] (291/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__53__config_json
+        PASS [   0.956s] (292/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__48__config_json
+        PASS [   1.008s] (293/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__46__config_json
+        PASS [   1.082s] (294/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__44__config_json
+        PASS [   1.001s] (295/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__47__config_json
+        PASS [   0.944s] (296/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__56__config_json
+        PASS [   0.987s] (297/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__52__config_json
+        PASS [   0.936s] (298/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__58__config_json
+        PASS [   1.273s] (299/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__42__config_json
+        PASS [   1.003s] (300/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__54__config_json
+        PASS [   1.000s] (301/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__57__config_json
+        PASS [   1.062s] (302/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__4__config_json
+        PASS [   1.084s] (303/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__49__config_json
+        PASS [   1.079s] (304/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__55__config_json
+        PASS [   0.589s] (305/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__basic__config_json
+        PASS [   0.610s] (306/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__css__align_vite__config_json
+        PASS [   0.549s] (307/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__conflict_between_global_and_local_binding__config_json
+        PASS [   0.613s] (308/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__css__css_entries__config_json
+        PASS [   0.575s] (309/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__complex_params_patterns__config_json
+        PASS [   0.535s] (310/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__conflict_between_imported_and_local_binding__config_json
+        PASS [   0.628s] (311/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__css__basic__config_json
+        PASS [   0.592s] (312/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__basic_scoped__config_json
+        PASS [   0.923s] (313/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__61__config_json
+        PASS [   0.974s] (314/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__59__config_json
+        PASS [   0.949s] (315/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__63__config_json
+        PASS [   0.956s] (316/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__6__config_json
+        PASS [   1.012s] (317/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__5__config_json
+        PASS [   0.983s] (318/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__62__config_json
+        PASS [   0.962s] (319/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__8__config_json
+        PASS [   1.013s] (320/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__7__config_json
+        PASS [   1.045s] (321/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__60__config_json
+        PASS [   1.004s] (322/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__bundler_esm_cjs_tests__9__config_json
+        PASS [   0.672s] (323/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__import_meta_url_dirname_filename_polyfill__node_cjs__config_json
+        PASS [   0.720s] (324/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__decl_complex_patterns__config_json
+        PASS [   0.706s] (325/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__wrapped_esm_default_function__config_json
+        PASS [   0.730s] (326/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__default_function__config_json
+        PASS [   0.737s] (327/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__wrapped_esm_export_named_function__config_json
+        PASS [   0.740s] (328/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__keep_names__declaration__config_json
+        PASS [   0.813s] (329/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__decl_nested_assign_pattern__config_json
+        PASS [   0.826s] (330/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__deconflict__issue_364__config_json
+        PASS [   0.587s] (331/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_binding_in_common_chunks__config_json
+        PASS [   0.653s] (332/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__keep_names__expression__config_json
+        PASS [   0.597s] (333/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_decl__config_json
+        PASS [   0.646s] (334/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_binding_cjs__config_json
+        PASS [   0.668s] (335/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_binding__config_json
+        PASS [   0.587s] (336/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_expr_in_common_chunks__config_json
+        PASS [   0.587s] (337/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_expr_in_common_chunks_cjs__config_json
+        PASS [   0.643s] (338/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_expr__config_json
+        PASS [   0.655s] (339/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_expr_cjs__config_json
+        PASS [   0.759s] (340/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__default_export_binding_in_common_chunks_cjs__config_json
+        PASS [   0.591s] (341/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__new_url__dataurl__config_json
+        PASS [   0.594s] (342/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__new_url__opt_out__config_json
+        PASS [   0.704s] (343/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__on_demand_shorthand_pattern_cjs__config_json
+        PASS [   0.766s] (344/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__named_exports_in_common_chunks_cjs__config_json
+        PASS [   0.632s] (345/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__new_url__opt_out_vite_mode__config_json
+        PASS [   0.796s] (346/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__named_exports_cjs__config_json
+        PASS [   0.736s] (347/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__new_url__nested_dirs__config_json
+        PASS [   0.632s] (348/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__preserve_semantic_of_entries_exports__named_export_cjs__config_json
+        PASS [   0.659s] (349/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__new_url__should_prefer_relative__config_json
+        PASS [   0.864s] (350/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__named_exports_in_common_chunks__config_json
+        PASS [   0.909s] (351/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__live_bindings__named_exports__config_json
+        PASS [   0.661s] (352/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__preserve_semantic_of_entries_exports__named_export_in_shared_entries_cjs__config_json
+        PASS [   0.582s] (353/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__preserve_semantic_of_entries_exports__named_export_in_wrapped_cjs__config_json
+        PASS [   0.677s] (354/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__preserve_semantic_of_entries_exports__named_export_in_wrapped__config_json
+        PASS [   0.733s] (355/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__new_url__template_literal_with_expression__config_json
+        PASS [   0.704s] (356/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__preserve_semantic_of_entries_exports__named_export_in_shared_entries__config_json
+        PASS [   0.748s] (357/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__preserve_semantic_of_entries_exports__named_export__config_json
+        PASS [   0.700s] (358/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__topics__preserve_semantic_of_entries_exports__named_export_in_wrapped_and_shared_entries__config_json
+        PASS [   0.463s] (359/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__dynamic_import_then_destructur_unused__config_json
+        PASS [   0.681s] (360/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__advanced_barrel_exports__config_json
+        PASS [   0.841s] (361/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__advanced_barrel_exports2__config_json
+        PASS [   0.633s] (362/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__dynamic_import_then_destructur__config_json
+        PASS [   0.688s] (363/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__dynamic_import_bailout__config_json
+        PASS [   0.739s] (364/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__dynamic_import_await__config_json
+        PASS [   0.782s] (365/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__advanced_barrel_exports_bailout_dynamic_key__config_json
+        PASS [   0.736s] (366/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__dynamic_import_await_destruct__config_json
+        PASS [   0.771s] (367/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__derived_side_effects_should_have_high_priority__config_json
+        PASS [   0.741s] (368/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__dynamic_import_eval__config_json
+        PASS [   0.606s] (369/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__json_module_def_format__config_json
+        PASS [   0.677s] (370/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__export_star2__config_json
+        PASS [   0.705s] (371/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__export_default__config_json
+        PASS [   0.712s] (372/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__export_star__config_json
+        PASS [   0.791s] (373/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__dynamic_import_then__config_json
+        PASS [   0.768s] (374/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__dynamic_require_unused_by_function__config_json
+        PASS [   0.747s] (375/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__external_export_star1__config_json
+        PASS [   0.736s] (376/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__indirect_module_side_effect__config_json
+        PASS [   0.160s] (377/395) rolldown::integration_rolldown rolldown::errors::entry_cannot_be_external::test
+        PASS [   0.178s] (378/395) rolldown::integration_rolldown rolldown::issues::_1733::should_rewrite_dynamic_imports_that_import_external_modules
+        PASS [   0.440s] (379/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__commonjs_variable_in_esm__2__config_json
+        PASS [   0.454s] (380/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__commonjs_variable_in_esm__1__config_json
+        PASS [   0.626s] (381/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__multi_declarator__config_json
+        PASS [   0.251s] (382/395) rolldown::integration_rolldown rolldown::plugin::plugin_context::custom_arg_in_resolve::allow_pass_custom_arg
+        PASS [   0.564s] (383/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__missing_global_name__config_json
+        PASS [   0.605s] (384/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__eval__config_json
+        PASS [   0.591s] (385/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__invalid_option__invalid_output_dir_option__config_json
+        PASS [   0.821s] (386/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__json_object__config_json
+        PASS [   0.526s] (387/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__unresolved_import_treated_as_external__config_json
+        PASS [   0.555s] (388/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__none_ascii_content__config_json
+        PASS [   0.685s] (389/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__unused_import_cjs__config_json
+        PASS [   0.659s] (390/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__unused_import_named__config_json
+        PASS [   0.559s] (391/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__mixed_export__config_json
+        PASS [   0.708s] (392/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__pure_annotation__config_json
+        PASS [   0.606s] (393/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__invalid_option__unsupported_code_splitting_format__config_json
+        PASS [   0.677s] (394/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__tree_shaking__unused_import_external__config_json
+        PASS [   0.580s] (395/395) rolldown::integration_rolldown fixture_with_config_tests__rolldown__warnings__missing_name_option_for_iife_export__config_json
+────────────
+     Summary [  16.741s] 395 tests run: 395 passed, 8 skipped
+reward=1 graded=395 found=26 failed=0 parsed=395 framework=cargo exit_code=0

@@ -1,0 +1,22 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo/activejob && AJ_ADAPTER=test bundle exec ruby -I lib -I test test/cases/attributes_test.rb --verbose > /tmp/mt_out.txt 2>&1; RUBY_EC=$?; cat /tmp/mt_out.txt; perl -lne 'if(/^([A-Za-z:]+)#(\\S+) = [\\d.]+ s = ([.FESI])/){my($c,$n,$r)=($1,$2,$3);print($r eq \".\" ? qq{<testcase classname=\"$c\" name=\"$n\"/>} : qq{<testcase classname=\"$c\" name=\"$n\"><failure/></testcase>})}' /tmp/mt_out.txt | (echo '<testsuite>'; cat; echo '</testsuite>'); exit $RUBY_EC",
+  "test_files": [
+    "activejob/test/cases/attributes_test.rb"
+  ],
+  "num_test_files": 1,
+  "language": "ruby",
+  "FAIL_TO_PASS": [
+    "ActiveJob::AttributesTest::test_attributes_are_type_cast",
+    "ActiveJob::AttributesTest::test_default_values_are_preserved_through_serialization",
+    "ActiveJob::AttributesTest::test_attributes_have_default_values",
+    "ActiveJob::AttributesTest::test_deserialize_ignores_unknown_attributes",
+    "ActiveJob::AttributesTest::test_attributes_preserve_keyword_arguments",
+    "ActiveJob::AttributesTest::test_attributes_can_be_set",
+    "ActiveJob::AttributesTest::test_attributes_persist_across_retries",
+    "ActiveJob::AttributesTest::test_attributes_round-trip_through_serialize_and_deserialize",
+    "ActiveJob::AttributesTest::test_deserialize_without_attributes_key_uses_defaults",
+    "ActiveJob::AttributesTest::test_attributes_persist_when_interrupted_and_resumed_multiple_times"
+  ],
+  "PASS_TO_PASS": []
+}

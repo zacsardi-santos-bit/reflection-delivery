@@ -1,0 +1,39 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_provider_tool_search.py -v",
+  "test_files": [
+    "libs/langchain_v1/tests/unit_tests/agents/middleware/implementations/test_provider_tool_search.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_passes_through_when_no_tools_are_deferred",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_defers_tools_named_in_searchable_tools",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_accepts_tool_instances_in_searchable_tools",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_honors_tools_pre_marked_with_defer_loading",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_preserves_existing_extras_when_deferring",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_passes_dict_tools_through_untouched",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_raises_when_searchable_tool_is_not_bound",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_unbound_tool_error_is_sorted",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_unbound_tool_check_precedes_provider_check",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_passes_through_unsupported_provider_when_nothing_deferred",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_passes_through_unsupported_provider_with_empty_tools",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_raises_for_unsupported_provider_when_tool_deferred",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_raises_when_provider_cannot_be_determined",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_detects_provider_from_class_name[ChatAnthropic-expected_tool0]",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_detects_provider_from_class_name[ChatOpenAI-expected_tool1]",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_normalizes_provider_casing_and_hyphens",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_detects_provider_from_bare_model_name[claude-sonnet-4-5-expected_tool0]",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_detects_provider_from_bare_model_name[gpt-5.4-expected_tool1]",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_detects_provider_from_bare_model_name[o3-mini-expected_tool2]",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_detects_provider_from_bare_model_name[chatgpt-4o-latest-expected_tool3]",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_raises_for_unrecognized_bare_model_name",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_detects_provider_from_configurable_model",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_detects_provider_from_runtime_configurable_model",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_runtime_model_override_uses_default_configurable_model_provider",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_runtime_provider_override_uses_runtime_configurable_model_provider",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_ignores_non_mapping_runtime_config",
+    "tests.unit_tests.agents.middleware.implementations.test_provider_tool_search::test_async_wrap_model_call_defers_tools"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "b4b9ba41-3ac3-46da-87df-9f77500fb0fe",
+    "started_at": "2026-07-04T15:37:44.128296",
+    "finished_at": "2026-07-04T15:42:47.095468",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__foundationdb-fdb-record-layer-2278": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "foundationdb-fdb-record-layer-22__KvGWFez"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

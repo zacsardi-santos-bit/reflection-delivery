@@ -1,5 +1,0 @@
-I'm working with a pipeline framework where stages are reusable units of processing. I'd like to be able to create a modified copy of an existing stage — for example, one with different resource requirements or a different name — without altering the original stage or having to write a whole new subclass. Ideally, the original stage stays completely unchanged, and I can optionally chain these customization calls together.
-
-For composite stages (which are made up of multiple named sub-stages), I'd like a way to configure individual sub-stages by name before the pipeline runs. This should accumulate configurations fluently, and when the composite stage expands into its sub-stages, the configurations should be applied in order. If I call this customization in separate steps, each step should see the updated state from the previous one. If I try to configure a sub-stage that doesn't exist, or if there are duplicate sub-stage names, I'd expect a clear error rather than silent failure.
-
-The composite stage should also correctly report its inputs and outputs based on its first and last sub-stages respectively.

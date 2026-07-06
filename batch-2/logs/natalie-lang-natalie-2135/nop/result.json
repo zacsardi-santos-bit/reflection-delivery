@@ -1,0 +1,29 @@
+{
+    "id": "11030415-8dab-4e7d-9031-4b0fc3123d54",
+    "started_at": "2026-07-04T15:37:37.443899",
+    "finished_at": "2026-07-04T15:41:53.732598",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__natalie-lang-natalie-2135": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "natalie-lang-natalie-2135__ZRFGk9J"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

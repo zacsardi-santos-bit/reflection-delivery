@@ -1,0 +1,29 @@
+{
+    "id": "6f185f7d-6e35-476a-a6a9-385e761118fe",
+    "started_at": "2026-07-04T15:38:40.618075",
+    "finished_at": "2026-07-04T15:39:38.856244",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__github-gh-gei-1417": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "github-gh-gei-1417__ZutEpuC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

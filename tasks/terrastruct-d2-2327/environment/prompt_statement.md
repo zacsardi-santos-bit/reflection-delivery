@@ -1,5 +1,0 @@
-I'm creating a D2 diagram that has a title positioned at the top center of the diagram. The diagram includes nested containers with child nodes and some connections that loop back (circular references), which get routed outside the container boundaries. When I render this with the ELK layout engine, the title overlaps with the connection lines instead of appearing cleanly above the diagram.
-
-It looks like the code that figures out where to place the title only considers the positions of the shapes, but not the actual paths that the connection lines take. Since some connections are routed outside the shapes, the calculated "top" of the diagram doesn't account for those route points, and the title ends up colliding with the connection lines.
-
-I'd expect the title to be placed above everything in the diagram — both shapes and any connection routes — regardless of which layout engine is used. Can you fix the title positioning logic so it correctly accounts for edge routes when determining where to place a top-center title?

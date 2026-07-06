@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p tests --test integrations -E 'test(test_raft_engine_compression_thd)' --profile ci --no-fail-fast",
+  "test_files": [
+    "tests/integrations/config/mod.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) tests::integrations config::test_raft_engine_compression_thd"
+  ],
+  "PASS_TO_PASS": []
+}

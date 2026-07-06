@@ -1,0 +1,9 @@
+I'm cleaning up the model fallback system and it needs some upgrades. Right now when a model fails and we swap to an alternative, we just record the new active model but we don't track which model originally failed, and there's no queryable mapping from failed models to their replacements. I want to fix that so when fallback mode gets activated I can optionally pass in the model that failed, and we store a mapping from that failed model to its replacement, and I can later look up a failed model name and get back whatever's currently substituting for it.
+
+The tricky part is chain flattening. Say model A got replaced by B, then B also dies and gets replaced by C. In that case every prior mapping that pointed at B should get rewritten to point at C instead (so A now points to C too), and the underlying model routing config needs to reflect that same collapse, otherwise the routing table goes stale and we can't re-route requests correctly.
+
+Also I need a way to wipe all the runtime model overrides at once in the model config service, a dedicated clear-everything method.
+
+On lifecycle: these fallback override mappings should get cleared automatically when auth is refreshed or when the session changes, since those are genuinely fresh starts. But don't clear them when someone just switches their preferred model, an active fallback is still relevant there so keep it. Oh and one more, if fallback mode is activated but the replacement model I'm passing is the same one that's already active, don't go resetting the model availability state, that's wasteful and pointless.
+
+The why here is that without tracking what failed and what replaced it, we can't route accurately at the routing layer, and multi-step failure chains leave things inconsistent. Making fallback predictable across the whole session lifecycle is the goal.

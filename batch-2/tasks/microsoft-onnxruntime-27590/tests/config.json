@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/onnxruntime/test/python/transformers && pytest test_attention_fusion.py -v -k qwen3",
+  "test_files": [
+    "onnxruntime/test/python/transformers/qwen3_model_generator.py",
+    "onnxruntime/test/python/transformers/test_attention_fusion.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "onnxruntime.test.python.transformers.test_attention_fusion.TestFusion::test_qwen3_rotary_embedding_fusion",
+    "onnxruntime.test.python.transformers.test_attention_fusion.TestFusion::test_qwen3_rotary_embedding_fusion_cache_numerical_validation",
+    "onnxruntime.test.python.transformers.test_attention_fusion.TestFusion::test_qwen3_rotary_embedding_fusion_with_expand"
+  ],
+  "PASS_TO_PASS": [
+    "onnxruntime.test.python.transformers.test_attention_fusion.TestFusion::test_qwen3_normalization_fusion",
+    "onnxruntime.test.python.transformers.test_attention_fusion.TestFusion::test_qwen3_rotary_embedding_fusion_negative_dynamic_inv_freq"
+  ]
+}

@@ -1,0 +1,2745 @@
+patching file tests/ffi/lib.rs
+   Compiling unicode-ident v1.0.24
+   Compiling find-msvc-tools v0.1.9
+   Compiling proc-macro2 v1.0.106
+   Compiling shlex v2.0.1
+   Compiling quote v1.0.46
+   Compiling termcolor v1.4.1
+   Compiling serde_core v1.0.228
+   Compiling unicode-width v0.1.14
+   Compiling scratch v1.0.9
+   Compiling cxx-build v1.0.129 (/workspace/repo/gen/build)
+   Compiling cxxbridge-flags v1.0.129 (/workspace/repo/flags)
+   Compiling cxxbridge-macro v1.0.129 (/workspace/repo/macro)
+   Compiling zmij v1.0.21
+   Compiling serde v1.0.228
+   Compiling serde_json v1.0.150
+   Compiling target-triple v1.0.0
+   Compiling winnow v1.0.3
+   Compiling itoa v1.0.18
+   Compiling cc v1.2.65
+   Compiling memchr v2.8.2
+   Compiling codespan-reporting v0.11.1
+   Compiling cxx-gen v0.7.129 (/workspace/repo/gen/lib)
+   Compiling toml_parser v1.1.2+spec-1.1.0
+   Compiling rustversion v1.0.22
+   Compiling toml_writer v1.1.1+spec-1.1.0
+   Compiling dissimilar v1.0.11
+   Compiling glob v0.3.3
+   Compiling syn v2.0.118
+   Compiling link-cplusplus v1.0.12
+   Compiling cxx v1.0.129 (/workspace/repo)
+   Compiling toml_datetime v1.1.1+spec-1.1.0
+   Compiling serde_spanned v1.1.1
+   Compiling toml v1.1.2+spec-1.1.0
+   Compiling serde_derive v1.0.228
+   Compiling trybuild v1.0.117
+   Compiling cxx-test-suite v0.0.0 (/workspace/repo/tests/ffi)
+error: unsafe attribute used without unsafe
+  --> tests/ffi/module.rs:15:19
+   |
+15 |     impl Vec<Job> {}
+   |                   ^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+   = note: `-D unsafe-attr-outside-unsafe` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(unsafe_attr_outside_unsafe)]`
+help: wrap the attribute in `unsafe(...)`
+   |
+15 |     impl Vec<Job> {unsafe(})
+   |                    +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:171:58
+    |
+171 |         fn c_take_callback(callback: fn(String) -> usize);
+    |                                                          ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+171 |         fn c_take_callback(callback: fn(String) -> usize)unsafe(;)
+    |                                                          +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:172:54
+    |
+172 |         fn c_take_callback_ref(callback: fn(&String));
+    |                                                      ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+172 |         fn c_take_callback_ref(callback: fn(&String))unsafe(;)
+    |                                                      +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:174:70
+    |
+174 |         fn c_take_callback_ref_lifetime<'a>(callback: fn(&'a String));
+    |                                                                      ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+174 |         fn c_take_callback_ref_lifetime<'a>(callback: fn(&'a String))unsafe(;)
+    |                                                                      +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:175:58
+    |
+175 |         fn c_take_callback_mut(callback: fn(&mut String));
+    |                                                          ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+175 |         fn c_take_callback_mut(callback: fn(&mut String))unsafe(;)
+    |                                                          +++++++ +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:31:28
+   |
+31 |     #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+   |                            ^^^^^^^^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+31 |     #[derive(Clone, Debug, Paunsafe(rtialE)q, Eq, PartialOrd, Ord)]
+   |                              +++++++      +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:31:43
+   |
+31 |     #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+   |                                           ^^^^^^^^^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+31 |     #[derive(Clone, Debug, PartialEq, Eq, Paunsafe(rtialOr)d, Ord)]
+   |                                             +++++++       +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:36:14
+   |
+36 |     #[derive(PartialEq, PartialOrd)]
+   |              ^^^^^^^^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+36 |     #[derive(Paunsafe(rtialE)q, PartialOrd)]
+   |                +++++++      +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:36:25
+   |
+36 |     #[derive(PartialEq, PartialOrd)]
+   |                         ^^^^^^^^^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+36 |     #[derive(PartialEq, Paunsafe(rtialOr)d)]
+   |                           +++++++       +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:82:14
+   |
+82 |     #[derive(Hash)]
+   |              ^^^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+82 |     #[derive(Haunsafe(s)h)]
+   |                +++++++ +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:93:47
+   |
+93 |     #[derive(Copy, Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+   |                                               ^^^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+93 |     #[derive(Copy, Clone, Debug, Default, Eq, Haunsafe(s)h, Ord, PartialEq, PartialOrd)]
+   |                                                 +++++++ +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:93:58
+   |
+93 |     #[derive(Copy, Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+   |                                                          ^^^^^^^^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+93 |     #[derive(Copy, Clone, Debug, Default, Eq, Hash, Ord, Paunsafe(rtialE)q, PartialOrd)]
+   |                                                            +++++++      +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:93:69
+   |
+93 |     #[derive(Copy, Clone, Debug, Default, Eq, Hash, Ord, PartialEq, PartialOrd)]
+   |                                                                     ^^^^^^^^^^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+93 |     #[derive(Copy, Clone, Debug, Default, Eq, Hash, Ord, PartialEq, Paunsafe(rtialOr)d)]
+   |                                                                       +++++++       +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:236:14
+    |
+236 |         type Reference<'a>;
+    |              ^^^^^^^^^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+236 |         type Reunsafe(ferenc)e<'a>;
+    |                +++++++      +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:265:14
+    |
+265 |         type R;
+    |              ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+265 |         type unsafe(R);
+    |              +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:267:41
+    |
+267 |         fn r_return_primitive() -> usize;
+    |                                         ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+267 |         fn r_return_primitive() -> usizeunsafe(;)
+    |                                         +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:268:39
+    |
+268 |         fn r_return_shared() -> Shared;
+    |                                       ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+268 |         fn r_return_shared() -> Sharedunsafe(;)
+    |                                       +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:269:36
+    |
+269 |         fn r_return_box() -> Box<R>;
+    |                                    ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+269 |         fn r_return_box() -> Box<R>unsafe(;)
+    |                                    +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:270:49
+    |
+270 |         fn r_return_unique_ptr() -> UniquePtr<C>;
+    |                                                 ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+270 |         fn r_return_unique_ptr() -> UniquePtr<C>unsafe(;)
+    |                                                 +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:271:49
+    |
+271 |         fn r_return_shared_ptr() -> SharedPtr<C>;
+    |                                                 ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+271 |         fn r_return_shared_ptr() -> SharedPtr<C>unsafe(;)
+    |                                                 +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:272:51
+    |
+272 |         fn r_return_ref(shared: &Shared) -> &usize;
+    |                                                   ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+272 |         fn r_return_ref(shared: &Shared) -> &usizeunsafe(;)
+    |                                                   +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:273:59
+    |
+273 |         fn r_return_mut(shared: &mut Shared) -> &mut usize;
+    |                                                           ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+273 |         fn r_return_mut(shared: &mut Shared) -> &mut usizeunsafe(;)
+    |                                                           +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:274:49
+    |
+274 |         fn r_return_str(shared: &Shared) -> &str;
+    |                                                 ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+274 |         fn r_return_str(shared: &Shared) -> &strunsafe(;)
+    |                                                 +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:275:54
+    |
+275 |         fn r_return_sliceu8(shared: &Shared) -> &[u8];
+    |                                                      ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+275 |         fn r_return_sliceu8(shared: &Shared) -> &[u8]unsafe(;)
+    |                                                      +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:276:62
+    |
+276 |         fn r_return_mutsliceu8(slice: &mut [u8]) -> &mut [u8];
+    |                                                              ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+276 |         fn r_return_mutsliceu8(slice: &mut [u8]) -> &mut [u8]unsafe(;)
+    |                                                              +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:277:44
+    |
+277 |         fn r_return_rust_string() -> String;
+    |                                            ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+277 |         fn r_return_rust_string() -> Stringunsafe(;)
+    |                                            +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:278:64
+    |
+278 |         fn r_return_unique_ptr_string() -> UniquePtr<CxxString>;
+    |                                                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+278 |         fn r_return_unique_ptr_string() -> UniquePtr<CxxString>unsafe(;)
+    |                                                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:279:42
+    |
+279 |         fn r_return_rust_vec() -> Vec<u8>;
+    |                                          ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+279 |         fn r_return_rust_vec() -> Vec<u8>unsafe(;)
+    |                                          +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:280:53
+    |
+280 |         fn r_return_rust_vec_string() -> Vec<String>;
+    |                                                     ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+280 |         fn r_return_rust_vec_string() -> Vec<String>unsafe(;)
+    |                                                     +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:281:57
+    |
+281 |         fn r_return_rust_vec_extern_struct() -> Vec<Job>;
+    |                                                         ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+281 |         fn r_return_rust_vec_extern_struct() -> Vec<Job>unsafe(;)
+    |                                                         +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:282:62
+    |
+282 |         fn r_return_ref_rust_vec(shared: &Shared) -> &Vec<u8>;
+    |                                                              ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+282 |         fn r_return_ref_rust_vec(shared: &Shared) -> &Vec<u8>unsafe(;)
+    |                                                              +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:283:70
+    |
+283 |         fn r_return_mut_rust_vec(shared: &mut Shared) -> &mut Vec<u8>;
+    |                                                                      ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+283 |         fn r_return_mut_rust_vec(shared: &mut Shared) -> &mut Vec<u8>unsafe(;)
+    |                                                                      +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:284:48
+    |
+284 |         fn r_return_identity(_: usize) -> usize;
+    |                                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+284 |         fn r_return_identity(_: usize) -> usizeunsafe(;)
+    |                                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:285:53
+    |
+285 |         fn r_return_sum(_: usize, _: usize) -> usize;
+    |                                                     ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+285 |         fn r_return_sum(_: usize, _: usize) -> usizeunsafe(;)
+    |                                                     +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:286:41
+    |
+286 |         fn r_return_enum(n: u32) -> Enum;
+    |                                         ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+286 |         fn r_return_enum(n: u32) -> Enumunsafe(;)
+    |                                         +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:288:38
+    |
+288 |         fn r_take_primitive(n: usize);
+    |                                      ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+288 |         fn r_take_primitive(n: usize)unsafe(;)
+    |                                      +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:289:41
+    |
+289 |         fn r_take_shared(shared: Shared);
+    |                                         ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+289 |         fn r_take_shared(shared: Shared)unsafe(;)
+    |                                         +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:290:33
+    |
+290 |         fn r_take_box(r: Box<R>);
+    |                                 ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+290 |         fn r_take_box(r: Box<R>)unsafe(;)
+    |                                 +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:291:46
+    |
+291 |         fn r_take_unique_ptr(c: UniquePtr<C>);
+    |                                              ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+291 |         fn r_take_unique_ptr(c: UniquePtr<C>)unsafe(;)
+    |                                              +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:292:46
+    |
+292 |         fn r_take_shared_ptr(c: SharedPtr<C>);
+    |                                              ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+292 |         fn r_take_shared_ptr(c: SharedPtr<C>)unsafe(;)
+    |                                              +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:293:31
+    |
+293 |         fn r_take_ref_r(r: &R);
+    |                               ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+293 |         fn r_take_ref_r(r: &R)unsafe(;)
+    |                               +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:294:31
+    |
+294 |         fn r_take_ref_c(c: &C);
+    |                               ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+294 |         fn r_take_ref_c(c: &C)unsafe(;)
+    |                               +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:295:31
+    |
+295 |         fn r_take_str(s: &str);
+    |                               ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+295 |         fn r_take_str(s: &str)unsafe(;)
+    |                               +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:296:43
+    |
+296 |         fn r_take_slice_char(s: &[c_char]);
+    |                                           ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+296 |         fn r_take_slice_char(s: &[c_char])unsafe(;)
+    |                                           +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:297:41
+    |
+297 |         fn r_take_rust_string(s: String);
+    |                                         ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+297 |         fn r_take_rust_string(s: String)unsafe(;)
+    |                                         +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:298:61
+    |
+298 |         fn r_take_unique_ptr_string(s: UniquePtr<CxxString>);
+    |                                                             ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+298 |         fn r_take_unique_ptr_string(s: UniquePtr<CxxString>)unsafe(;)
+    |                                                             +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:299:48
+    |
+299 |         fn r_take_ref_vector(v: &CxxVector<u8>);
+    |                                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+299 |         fn r_take_ref_vector(v: &CxxVector<u8>)unsafe(;)
+    |                                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:300:55
+    |
+300 |         fn r_take_ref_empty_vector(v: &CxxVector<u64>);
+    |                                                       ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+300 |         fn r_take_ref_empty_vector(v: &CxxVector<u64>)unsafe(;)
+    |                                                       +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:301:39
+    |
+301 |         fn r_take_rust_vec(v: Vec<u8>);
+    |                                       ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+301 |         fn r_take_rust_vec(v: Vec<u8>)unsafe(;)
+    |                                       +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:302:50
+    |
+302 |         fn r_take_rust_vec_string(v: Vec<String>);
+    |                                                  ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+302 |         fn r_take_rust_vec_string(v: Vec<String>)unsafe(;)
+    |                                                  +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:303:44
+    |
+303 |         fn r_take_ref_rust_vec(v: &Vec<u8>);
+    |                                            ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+303 |         fn r_take_ref_rust_vec(v: &Vec<u8>)unsafe(;)
+    |                                            +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:304:55
+    |
+304 |         fn r_take_ref_rust_vec_string(v: &Vec<String>);
+    |                                                       ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+304 |         fn r_take_ref_rust_vec_string(v: &Vec<String>)unsafe(;)
+    |                                                       +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:305:32
+    |
+305 |         fn r_take_enum(e: Enum);
+    |                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+305 |         fn r_take_enum(e: Enum)unsafe(;)
+    |                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:307:45
+    |
+307 |         fn r_try_return_void() -> Result<()>;
+    |                                             ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+307 |         fn r_try_return_void() -> Result<()>unsafe(;)
+    |                                             +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:308:53
+    |
+308 |         fn r_try_return_primitive() -> Result<usize>;
+    |                                                     ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+308 |         fn r_try_return_primitive() -> Result<usize>unsafe(;)
+    |                                                     +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:309:48
+    |
+309 |         fn r_try_return_box() -> Result<Box<R>>;
+    |                                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+309 |         fn r_try_return_box() -> Result<Box<R>>unsafe(;)
+    |                                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:310:54
+    |
+310 |         fn r_fail_return_primitive() -> Result<usize>;
+    |                                                      ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+310 |         fn r_fail_return_primitive() -> Result<usize>unsafe(;)
+    |                                                      +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:311:59
+    |
+311 |         fn r_try_return_sliceu8(s: &[u8]) -> Result<&[u8]>;
+    |                                                           ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+311 |         fn r_try_return_sliceu8(s: &[u8]) -> Result<&[u8]>unsafe(;)
+    |                                                           +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:312:70
+    |
+312 |         fn r_try_return_mutsliceu8(s: &mut [u8]) -> Result<&mut [u8]>;
+    |                                                                      ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+312 |         fn r_try_return_mutsliceu8(s: &mut [u8]) -> Result<&mut [u8]>unsafe(;)
+    |                                                                      +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:314:34
+    |
+314 |         fn get(self: &R) -> usize;
+    |                                  ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+314 |         fn get(self: &R) -> usizeunsafe(;)
+    |                                  +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:315:48
+    |
+315 |         fn set(self: &mut R, n: usize) -> usize;
+    |                                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+315 |         fn set(self: &mut R, n: usize) -> usizeunsafe(;)
+    |                                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:316:55
+    |
+316 |         fn r_method_on_shared(self: &Shared) -> String;
+    |                                                       ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+316 |         fn r_method_on_shared(self: &Shared) -> Stringunsafe(;)
+    |                                                       +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:317:48
+    |
+317 |         fn r_get_array_sum(self: &Array) -> i32;
+    |                                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+317 |         fn r_get_array_sum(self: &Array) -> i32unsafe(;)
+    |                                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:320:48
+    |
+320 |         fn r_aliased_function(x: i32) -> String;
+    |                                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+320 |         fn r_aliased_function(x: i32) -> Stringunsafe(;)
+    |                                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:344:22
+    |
+344 |     impl Box<Shared> {}
+    |                      ^^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+344 |     impl Box<Shared> {unsafe(})
+    |                       +++++++ +
+
+error: unsafe attribute used without unsafe
+  --> tests/ffi/lib.rs:78:27
+   |
+78 |         second: Box<Second>,
+   |                           ^ usage of unsafe attribute
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+   |
+78 |         second: Box<Secondunsafe(>),
+   |                           +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:105:35
+    |
+105 |         fn c_return_box() -> Box<R>;
+    |                                   ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+105 |         fn c_return_box() -> Box<Runsafe(>);
+    |                                   +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:157:48
+    |
+157 |         fn c_take_rust_vec_shared(v: Vec<Shared>);
+    |                                                ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+157 |         fn c_take_rust_vec_shared(v: Vec<Sharedunsafe(>));
+    |                                                +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:181:52
+    |
+181 |         fn c_take_rust_vec_ns_shared(v: Vec<AShared>);
+    |                                                    ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+181 |         fn c_take_rust_vec_ns_shared(v: Vec<ASharedunsafe(>));
+    |                                                    +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:182:60
+    |
+182 |         fn c_take_rust_vec_nested_ns_shared(v: Vec<ABShared>);
+    |                                                            ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+182 |         fn c_take_rust_vec_nested_ns_shared(v: Vec<ABSharedunsafe(>));
+    |                                                            +++++++ +
+
+error: unsafe attribute used without unsafe
+   --> tests/ffi/lib.rs:329:22
+    |
+329 |         vec: Vec<Dag3>,
+    |                      ^ usage of unsafe attribute
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-attributes.html>
+help: wrap the attribute in `unsafe(...)`
+    |
+329 |         vec: Vec<Dag3unsafe(>),
+    |                      +++++++ +
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:12:46
+   |
+12 |         fn c_take_unique_ptr(c: UniquePtr<C>);
+   |                                              ^
+   |                                              |
+   |                                              help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+   = note: `-D missing-unsafe-on-extern` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(missing_unsafe_on_extern)]`
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:33:47
+   |
+33 |         fn c_take_trivial_ptr(d: UniquePtr<D>);
+   |                                               ^
+   |                                               |
+   |                                               help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:34:37
+   |
+34 |         fn c_take_trivial_ref(d: &D);
+   |                                     ^
+   |                                     |
+   |                                     help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:35:45
+   |
+35 |         fn c_take_trivial_mut_ref(d: &mut D);
+   |                                             ^
+   |                                             |
+   |                                             help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:36:46
+   |
+36 |         fn c_take_trivial_pin_ref(d: Pin<&D>);
+   |                                              ^
+   |                                              |
+   |                                              help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:37:54
+   |
+37 |         fn c_take_trivial_pin_mut_ref(d: Pin<&mut D>);
+   |                                                      ^
+   |                                                      |
+   |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:38:47
+   |
+38 |         fn c_take_trivial_ref_method(self: &D);
+   |                                               ^
+   |                                               |
+   |                                               help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:39:55
+   |
+39 |         fn c_take_trivial_mut_ref_method(self: &mut D);
+   |                                                       ^
+   |                                                       |
+   |                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:40:32
+   |
+40 |         fn c_take_trivial(d: D);
+   |                                ^
+   |                                |
+   |                                help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:41:50
+   |
+41 |         fn c_take_trivial_ns_ptr(g: UniquePtr<G>);
+   |                                                  ^
+   |                                                  |
+   |                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:42:40
+   |
+42 |         fn c_take_trivial_ns_ref(g: &G);
+   |                                        ^
+   |                                        |
+   |                                        help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:43:35
+   |
+43 |         fn c_take_trivial_ns(g: G);
+   |                                   ^
+   |                                   |
+   |                                   help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:44:46
+   |
+44 |         fn c_take_opaque_ptr(e: UniquePtr<E>);
+   |                                              ^
+   |                                              |
+   |                                              help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:45:36
+   |
+45 |         fn c_take_opaque_ref(e: &E);
+   |                                    ^
+   |                                    |
+   |                                    help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:46:46
+   |
+46 |         fn c_take_opaque_ref_method(self: &E);
+   |                                              ^
+   |                                              |
+   |                                              help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:47:59
+   |
+47 |         fn c_take_opaque_mut_ref_method(self: Pin<&mut E>);
+   |                                                           ^
+   |                                                           |
+   |                                                           help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:48:49
+   |
+48 |         fn c_take_opaque_ns_ptr(e: UniquePtr<F>);
+   |                                                 ^
+   |                                                 |
+   |                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:49:39
+   |
+49 |         fn c_take_opaque_ns_ref(e: &F);
+   |                                       ^
+   |                                       |
+   |                                       help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:50:50
+   |
+50 |         fn c_return_trivial_ptr() -> UniquePtr<D>;
+   |                                                  ^
+   |                                                  |
+   |                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:51:35
+   |
+51 |         fn c_return_trivial() -> D;
+   |                                   ^
+   |                                   |
+   |                                   help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:52:53
+   |
+52 |         fn c_return_trivial_ns_ptr() -> UniquePtr<G>;
+   |                                                     ^
+   |                                                     |
+   |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:53:38
+   |
+53 |         fn c_return_trivial_ns() -> G;
+   |                                      ^
+   |                                      |
+   |                                      help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:54:49
+   |
+54 |         fn c_return_opaque_ptr() -> UniquePtr<E>;
+   |                                                 ^
+   |                                                 |
+   |                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:55:66
+   |
+55 |         fn c_return_opaque_mut_pin(e: Pin<&mut E>) -> Pin<&mut E>;
+   |                                                                  ^
+   |                                                                  |
+   |                                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:56:52
+   |
+56 |         fn c_return_ns_opaque_ptr() -> UniquePtr<F>;
+   |                                                    ^
+   |                                                    |
+   |                                                    help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:57:52
+   |
+57 |         fn c_return_ns_unique_ptr() -> UniquePtr<H>;
+   |                                                    ^
+   |                                                    |
+   |                                                    help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:58:34
+   |
+58 |         fn c_take_ref_ns_c(h: &H);
+   |                                  ^
+   |                                  |
+   |                                  help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:61:35
+   |
+61 |         fn ns_c_take_trivial(d: D);
+   |                                   ^
+   |                                   |
+   |                                   help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:63:38
+   |
+63 |         fn ns_c_return_trivial() -> D;
+   |                                      ^
+   |                                      |
+   |                                      help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:68:32
+   |
+68 |         fn get(self: &I) -> u32;
+   |                                ^
+   |                                |
+   |                                help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:71:55
+   |
+71 |         fn ns_c_return_unique_ptr_ns() -> UniquePtr<I>;
+   |                                                       ^
+   |                                                       |
+   |                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:74:23
+   |
+74 |     impl UniquePtr<D> {}
+   |                       -^
+   |                       |
+   |                       help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:75:23
+   |
+75 |     impl UniquePtr<E> {}
+   |                       -^
+   |                       |
+   |                       help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:76:23
+   |
+76 |     impl UniquePtr<F> {}
+   |                       -^
+   |                       |
+   |                       help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:77:23
+   |
+77 |     impl UniquePtr<G> {}
+   |                       -^
+   |                       |
+   |                       help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:57:51
+   |
+57 |         fn c_return_ns_unique_ptr() -> UniquePtr<H>;
+   |                                                   ^
+   |                                                   |
+   |                                                   help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+  --> tests/ffi/module.rs:71:54
+   |
+71 |         fn ns_c_return_unique_ptr_ns() -> UniquePtr<I>;
+   |                                                      ^
+   |                                                      |
+   |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+   |
+   = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:103:41
+    |
+103 |         fn c_return_primitive() -> usize;
+    |                                         ^
+    |                                         |
+    |                                         help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:104:39
+    |
+104 |         fn c_return_shared() -> Shared;
+    |                                       ^
+    |                                       |
+    |                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:105:36
+    |
+105 |         fn c_return_box() -> Box<R>;
+    |                                    ^
+    |                                    |
+    |                                    help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:106:49
+    |
+106 |         fn c_return_unique_ptr() -> UniquePtr<C>;
+    |                                                 ^
+    |                                                 |
+    |                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:107:49
+    |
+107 |         fn c_return_shared_ptr() -> SharedPtr<C>;
+    |                                                 ^
+    |                                                 |
+    |                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:108:51
+    |
+108 |         fn c_return_ref(shared: &Shared) -> &usize;
+    |                                                   ^
+    |                                                   |
+    |                                                   help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:109:59
+    |
+109 |         fn c_return_mut(shared: &mut Shared) -> &mut usize;
+    |                                                           ^
+    |                                                           |
+    |                                                           help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:110:49
+    |
+110 |         fn c_return_str(shared: &Shared) -> &str;
+    |                                                 ^
+    |                                                 |
+    |                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:111:61
+    |
+111 |         fn c_return_slice_char(shared: &Shared) -> &[c_char];
+    |                                                             ^
+    |                                                             |
+    |                                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:112:62
+    |
+112 |         fn c_return_mutsliceu8(slice: &mut [u8]) -> &mut [u8];
+    |                                                              ^
+    |                                                              |
+    |                                                              help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:113:44
+    |
+113 |         fn c_return_rust_string() -> String;
+    |                                            ^
+    |                                            |
+    |                                            help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:114:50
+    |
+114 |         fn c_return_rust_string_lossy() -> String;
+    |                                                  ^
+    |                                                  |
+    |                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:115:64
+    |
+115 |         fn c_return_unique_ptr_string() -> UniquePtr<CxxString>;
+    |                                                                ^
+    |                                                                |
+    |                                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:116:71
+    |
+116 |         fn c_return_unique_ptr_vector_u8() -> UniquePtr<CxxVector<u8>>;
+    |                                                                       ^
+    |                                                                       |
+    |                                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:117:73
+    |
+117 |         fn c_return_unique_ptr_vector_f64() -> UniquePtr<CxxVector<f64>>;
+    |                                                                         ^
+    |                                                                         |
+    |                                                                         help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:118:82
+    |
+118 |         fn c_return_unique_ptr_vector_string() -> UniquePtr<CxxVector<CxxString>>;
+    |                                                                                  ^
+    |                                                                                  |
+    |                                                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:119:79
+    |
+119 |         fn c_return_unique_ptr_vector_shared() -> UniquePtr<CxxVector<Shared>>;
+    |                                                                               ^
+    |                                                                               |
+    |                                                                               help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:120:74
+    |
+120 |         fn c_return_unique_ptr_vector_opaque() -> UniquePtr<CxxVector<C>>;
+    |                                                                          ^
+    |                                                                          |
+    |                                                                          help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:121:56
+    |
+121 |         fn c_return_ref_vector(c: &C) -> &CxxVector<u8>;
+    |                                                        ^
+    |                                                        |
+    |                                                        help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:122:74
+    |
+122 |         fn c_return_mut_vector(c: Pin<&mut C>) -> Pin<&mut CxxVector<u8>>;
+    |                                                                          ^
+    |                                                                          |
+    |                                                                          help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:123:45
+    |
+123 |         fn c_return_rust_vec_u8() -> Vec<u8>;
+    |                                             ^
+    |                                             |
+    |                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:124:52
+    |
+124 |         fn c_return_ref_rust_vec(c: &C) -> &Vec<u8>;
+    |                                                    ^
+    |                                                    |
+    |                                                    help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:125:65
+    |
+125 |         fn c_return_mut_rust_vec(c: Pin<&mut C>) -> &mut Vec<u8>;
+    |                                                                 ^
+    |                                                                 |
+    |                                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:126:53
+    |
+126 |         fn c_return_rust_vec_string() -> Vec<String>;
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:127:49
+    |
+127 |         fn c_return_rust_vec_bool() -> Vec<bool>;
+    |                                                 ^
+    |                                                 |
+    |                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:128:48
+    |
+128 |         fn c_return_identity(_: usize) -> usize;
+    |                                                ^
+    |                                                |
+    |                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:129:53
+    |
+129 |         fn c_return_sum(_: usize, _: usize) -> usize;
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:130:41
+    |
+130 |         fn c_return_enum(n: u16) -> Enum;
+    |                                         ^
+    |                                         |
+    |                                         help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:131:55
+    |
+131 |         fn c_return_ns_ref(shared: &AShared) -> &usize;
+    |                                                       ^
+    |                                                       |
+    |                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:132:63
+    |
+132 |         fn c_return_nested_ns_ref(shared: &ABShared) -> &usize;
+    |                                                               ^
+    |                                                               |
+    |                                                               help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:133:45
+    |
+133 |         fn c_return_ns_enum(n: u16) -> AEnum;
+    |                                             ^
+    |                                             |
+    |                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:134:53
+    |
+134 |         fn c_return_nested_ns_enum(n: u16) -> ABEnum;
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:135:52
+    |
+135 |         fn c_return_const_ptr(n: usize) -> *const C;
+    |                                                    ^
+    |                                                    |
+    |                                                    help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:136:48
+    |
+136 |         fn c_return_mut_ptr(n: usize) -> *mut C;
+    |                                                ^
+    |                                                |
+    |                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:138:38
+    |
+138 |         fn c_take_primitive(n: usize);
+    |                                      ^
+    |                                      |
+    |                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:139:41
+    |
+139 |         fn c_take_shared(shared: Shared);
+    |                                         ^
+    |                                         |
+    |                                         help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:140:33
+    |
+140 |         fn c_take_box(r: Box<R>);
+    |                                 ^
+    |                                 |
+    |                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:141:31
+    |
+141 |         fn c_take_ref_r(r: &R);
+    |                               ^
+    |                               |
+    |                               help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:142:31
+    |
+142 |         fn c_take_ref_c(c: &C);
+    |                               ^
+    |                               |
+    |                               help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:143:31
+    |
+143 |         fn c_take_str(s: &str);
+    |                               ^
+    |                               |
+    |                               help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:144:43
+    |
+144 |         fn c_take_slice_char(s: &[c_char]);
+    |                                           ^
+    |                                           |
+    |                                           help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:145:45
+    |
+145 |         fn c_take_slice_shared(s: &[Shared]);
+    |                                             ^
+    |                                             |
+    |                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:146:54
+    |
+146 |         fn c_take_slice_shared_sort(s: &mut [Shared]);
+    |                                                      ^
+    |                                                      |
+    |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:147:35
+    |
+147 |         fn c_take_slice_r(s: &[R]);
+    |                                   ^
+    |                                   |
+    |                                   help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:148:44
+    |
+148 |         fn c_take_slice_r_sort(s: &mut [R]);
+    |                                            ^
+    |                                            |
+    |                                            help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:149:41
+    |
+149 |         fn c_take_rust_string(s: String);
+    |                                         ^
+    |                                         |
+    |                                         help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:150:61
+    |
+150 |         fn c_take_unique_ptr_string(s: UniquePtr<CxxString>);
+    |                                                             ^
+    |                                                             |
+    |                                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:151:68
+    |
+151 |         fn c_take_unique_ptr_vector_u8(v: UniquePtr<CxxVector<u8>>);
+    |                                                                    ^
+    |                                                                    |
+    |                                                                    help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:152:70
+    |
+152 |         fn c_take_unique_ptr_vector_f64(v: UniquePtr<CxxVector<f64>>);
+    |                                                                      ^
+    |                                                                      |
+    |                                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:153:79
+    |
+153 |         fn c_take_unique_ptr_vector_string(v: UniquePtr<CxxVector<CxxString>>);
+    |                                                                               ^
+    |                                                                               |
+    |                                                                               help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:154:76
+    |
+154 |         fn c_take_unique_ptr_vector_shared(v: UniquePtr<CxxVector<Shared>>);
+    |                                                                            ^
+    |                                                                            |
+    |                                                                            help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:155:48
+    |
+155 |         fn c_take_ref_vector(v: &CxxVector<u8>);
+    |                                                ^
+    |                                                |
+    |                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:156:39
+    |
+156 |         fn c_take_rust_vec(v: Vec<u8>);
+    |                                       ^
+    |                                       |
+    |                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:157:50
+    |
+157 |         fn c_take_rust_vec_shared(v: Vec<Shared>);
+    |                                                  ^
+    |                                                  |
+    |                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:158:50
+    |
+158 |         fn c_take_rust_vec_string(v: Vec<String>);
+    |                                                  ^
+    |                                                  |
+    |                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:159:45
+    |
+159 |         fn c_take_rust_vec_index(v: Vec<u8>);
+    |                                             ^
+    |                                             |
+    |                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:160:56
+    |
+160 |         fn c_take_rust_vec_shared_index(v: Vec<Shared>);
+    |                                                        ^
+    |                                                        |
+    |                                                        help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:161:55
+    |
+161 |         fn c_take_rust_vec_shared_push(v: Vec<Shared>);
+    |                                                       ^
+    |                                                       |
+    |                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:162:59
+    |
+162 |         fn c_take_rust_vec_shared_truncate(v: Vec<Shared>);
+    |                                                           ^
+    |                                                           |
+    |                                                           help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:163:56
+    |
+163 |         fn c_take_rust_vec_shared_clear(v: Vec<Shared>);
+    |                                                        ^
+    |                                                        |
+    |                                                        help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:164:67
+    |
+164 |         fn c_take_rust_vec_shared_forward_iterator(v: Vec<Shared>);
+    |                                                                   ^
+    |                                                                   |
+    |                                                                   help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:165:55
+    |
+165 |         fn c_take_rust_vec_shared_sort(v: Vec<Shared>);
+    |                                                       ^
+    |                                                       |
+    |                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:166:44
+    |
+166 |         fn c_take_ref_rust_vec(v: &Vec<u8>);
+    |                                            ^
+    |                                            |
+    |                                            help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:167:55
+    |
+167 |         fn c_take_ref_rust_vec_string(v: &Vec<String>);
+    |                                                       ^
+    |                                                       |
+    |                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:168:50
+    |
+168 |         fn c_take_ref_rust_vec_index(v: &Vec<u8>);
+    |                                                  ^
+    |                                                  |
+    |                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:169:49
+    |
+169 |         fn c_take_ref_rust_vec_copy(v: &Vec<u8>);
+    |                                                 ^
+    |                                                 |
+    |                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:170:71
+    |
+170 |         fn c_take_ref_shared_string(s: &SharedString) -> &SharedString;
+    |                                                                       ^
+    |                                                                       |
+    |                                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:171:58
+    |
+171 |         fn c_take_callback(callback: fn(String) -> usize);
+    |                                                          ^
+    |                                                          |
+    |                                                          help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:172:54
+    |
+172 |         fn c_take_callback_ref(callback: fn(&String));
+    |                                                      ^
+    |                                                      |
+    |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:174:70
+    |
+174 |         fn c_take_callback_ref_lifetime<'a>(callback: fn(&'a String));
+    |                                                                      ^
+    |                                                                      |
+    |                                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:175:58
+    |
+175 |         fn c_take_callback_mut(callback: fn(&mut String));
+    |                                                          ^
+    |                                                          |
+    |                                                          help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:176:32
+    |
+176 |         fn c_take_enum(e: Enum);
+    |                                ^
+    |                                |
+    |                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:177:36
+    |
+177 |         fn c_take_ns_enum(e: AEnum);
+    |                                    ^
+    |                                    |
+    |                                    help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:178:44
+    |
+178 |         fn c_take_nested_ns_enum(e: ABEnum);
+    |                                            ^
+    |                                            |
+    |                                            help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:179:45
+    |
+179 |         fn c_take_ns_shared(shared: AShared);
+    |                                             ^
+    |                                             |
+    |                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:180:53
+    |
+180 |         fn c_take_nested_ns_shared(shared: ABShared);
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:181:54
+    |
+181 |         fn c_take_rust_vec_ns_shared(v: Vec<AShared>);
+    |                                                      ^
+    |                                                      |
+    |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:182:62
+    |
+182 |         fn c_take_rust_vec_nested_ns_shared(v: Vec<ABShared>);
+    |                                                              ^
+    |                                                              |
+    |                                                              help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:183:57
+    |
+183 |         unsafe fn c_take_const_ptr(c: *const C) -> usize;
+    |                                                         ^
+    |                                                         |
+    |                                                         help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:184:53
+    |
+184 |         unsafe fn c_take_mut_ptr(c: *mut C) -> usize;
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:186:45
+    |
+186 |         fn c_try_return_void() -> Result<()>;
+    |                                             ^
+    |                                             |
+    |                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:187:53
+    |
+187 |         fn c_try_return_primitive() -> Result<usize>;
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:188:54
+    |
+188 |         fn c_fail_return_primitive() -> Result<usize>;
+    |                                                      ^
+    |                                                      |
+    |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:189:48
+    |
+189 |         fn c_try_return_box() -> Result<Box<R>>;
+    |                                                ^
+    |                                                |
+    |                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:190:59
+    |
+190 |         fn c_try_return_ref(s: &String) -> Result<&String>;
+    |                                                           ^
+    |                                                           |
+    |                                                           help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:191:53
+    |
+191 |         fn c_try_return_str(s: &str) -> Result<&str>;
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:192:59
+    |
+192 |         fn c_try_return_sliceu8(s: &[u8]) -> Result<&[u8]>;
+    |                                                           ^
+    |                                                           |
+    |                                                           help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:193:70
+    |
+193 |         fn c_try_return_mutsliceu8(s: &mut [u8]) -> Result<&mut [u8]>;
+    |                                                                      ^
+    |                                                                      |
+    |                                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:194:56
+    |
+194 |         fn c_try_return_rust_string() -> Result<String>;
+    |                                                        ^
+    |                                                        |
+    |                                                        help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:195:76
+    |
+195 |         fn c_try_return_unique_ptr_string() -> Result<UniquePtr<CxxString>>;
+    |                                                                            ^
+    |                                                                            |
+    |                                                                            help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:196:54
+    |
+196 |         fn c_try_return_rust_vec() -> Result<Vec<u8>>;
+    |                                                      ^
+    |                                                      |
+    |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:197:65
+    |
+197 |         fn c_try_return_rust_vec_string() -> Result<Vec<String>>;
+    |                                                                 ^
+    |                                                                 |
+    |                                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:198:64
+    |
+198 |         fn c_try_return_ref_rust_vec(c: &C) -> Result<&Vec<u8>>;
+    |                                                                ^
+    |                                                                |
+    |                                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:200:34
+    |
+200 |         fn get(self: &C) -> usize;
+    |                                  ^
+    |                                  |
+    |                                  help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:201:53
+    |
+201 |         fn set(self: Pin<&mut C>, n: usize) -> usize;
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:202:32
+    |
+202 |         fn get2(&self) -> usize;
+    |                                ^
+    |                                |
+    |                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:203:38
+    |
+203 |         fn getRef(self: &C) -> &usize;
+    |                                      ^
+    |                                      |
+    |                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:204:51
+    |
+204 |         fn getMut(self: Pin<&mut C>) -> &mut usize;
+    |                                                   ^
+    |                                                   |
+    |                                                   help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:205:69
+    |
+205 |         fn set_succeed(self: Pin<&mut C>, n: usize) -> Result<usize>;
+    |                                                                     ^
+    |                                                                     |
+    |                                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:206:56
+    |
+206 |         fn get_fail(self: Pin<&mut C>) -> Result<usize>;
+    |                                                        ^
+    |                                                        |
+    |                                                        help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:207:54
+    |
+207 |         fn c_method_on_shared(self: &Shared) -> usize;
+    |                                                      ^
+    |                                                      |
+    |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:208:59
+    |
+208 |         fn c_method_ref_on_shared(self: &Shared) -> &usize;
+    |                                                           ^
+    |                                                           |
+    |                                                           help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:209:67
+    |
+209 |         fn c_method_mut_on_shared(self: &mut Shared) -> &mut usize;
+    |                                                                   ^
+    |                                                                   |
+    |                                                                   help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:210:53
+    |
+210 |         fn c_set_array(self: &mut Array, value: i32);
+    |                                                     ^
+    |                                                     |
+    |                                                     help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:212:55
+    |
+212 |         fn c_get_use_count(weak: &WeakPtr<C>) -> usize;
+    |                                                       ^
+    |                                                       |
+    |                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:215:54
+    |
+215 |         fn cOverloadedMethod(&self, x: i32) -> String;
+    |                                                      ^
+    |                                                      |
+    |                                                      help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:217:55
+    |
+217 |         fn cOverloadedMethod(&self, x: &str) -> String;
+    |                                                       ^
+    |                                                       |
+    |                                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:219:49
+    |
+219 |         fn cOverloadedFunction(x: i32) -> String;
+    |                                                 ^
+    |                                                 |
+    |                                                 help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:221:50
+    |
+221 |         fn cOverloadedFunction(x: &str) -> String;
+    |                                                  ^
+    |                                                  |
+    |                                                  help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:224:48
+    |
+224 |         fn ns_c_take_ns_shared(shared: AShared);
+    |                                                ^
+    |                                                |
+    |                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:242:74
+    |
+242 |         fn c_return_borrow<'a>(s: &'a CxxString) -> UniquePtr<Borrow<'a>>;
+    |                                                                          ^
+    |                                                                          |
+    |                                                                          help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:245:63
+    |
+245 |         fn c_return_borrow(s: &CxxString) -> UniquePtr<Borrow>;
+    |                                                               ^
+    |                                                               |
+    |                                                               help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:247:39
+    |
+247 |         fn const_member(self: &Borrow);
+    |                                       ^
+    |                                       |
+    |                                       help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:248:51
+    |
+248 |         fn nonconst_member(self: Pin<&mut Borrow>);
+    |                                                   ^
+    |                                                   |
+    |                                                   help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:345:34
+    |
+345 |     impl CxxVector<SharedString> {}
+    |                                  -^
+    |                                  |
+    |                                  help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:106:48
+    |
+106 |         fn c_return_unique_ptr() -> UniquePtr<C>;
+    |                                                ^
+    |                                                |
+    |                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:107:48
+    |
+107 |         fn c_return_shared_ptr() -> SharedPtr<C>;
+    |                                                ^
+    |                                                |
+    |                                                help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:119:77
+    |
+119 |         fn c_return_unique_ptr_vector_shared() -> UniquePtr<CxxVector<Shared>>;
+    |                                                                             ^
+    |                                                                             |
+    |                                                                             help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:120:72
+    |
+120 |         fn c_return_unique_ptr_vector_opaque() -> UniquePtr<CxxVector<C>>;
+    |                                                                        ^
+    |                                                                        |
+    |                                                                        help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:212:44
+    |
+212 |         fn c_get_use_count(weak: &WeakPtr<C>) -> usize;
+    |                                            ^
+    |                                            |
+    |                                            help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: extern blocks should be unsafe
+   --> tests/ffi/lib.rs:242:73
+    |
+242 |         fn c_return_borrow<'a>(s: &'a CxxString) -> UniquePtr<Borrow<'a>>;
+    |                                                                         ^
+    |                                                                         |
+    |                                                                         help: needs `unsafe` before the extern keyword: `unsafe`
+    |
+    = warning: this is accepted in the current edition (Rust 2021) but is a hard error in Rust 2024!
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/unsafe-extern.html>
+
+error: `impl std::fmt::Display` will capture more lifetimes than possibly intended in edition 2024
+   --> tests/ffi/lib.rs:311:46
+    |
+311 |         fn r_try_return_sliceu8(s: &[u8]) -> Result<&[u8]>;
+    |                                              ^^^^^^^^^^^^^
+    |
+    = warning: this changes meaning in Rust 2024
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/rpit-lifetime-capture.html>
+note: specifically, this lifetime is in scope but not mentioned in the type's bounds
+   --> tests/ffi/lib.rs:311:36
+    |
+311 |         fn r_try_return_sliceu8(s: &[u8]) -> Result<&[u8]>;
+    |                                    ^
+    = note: all lifetimes in scope will be captured by `impl Trait`s in edition 2024
+    = note: `-D impl-trait-overcaptures` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(impl_trait_overcaptures)]`
+help: use the precise capturing `use<...>` syntax to make the captures explicit
+    |
+311 |         fn r_try_return_sliceu8(s: &[u8]) -> Result<&[u8]> + use<>;
+    |                                                            +++++++
+
+error: `impl std::fmt::Display` will capture more lifetimes than possibly intended in edition 2024
+   --> tests/ffi/lib.rs:312:53
+    |
+312 |         fn r_try_return_mutsliceu8(s: &mut [u8]) -> Result<&mut [u8]>;
+    |                                                     ^^^^^^^^^^^^^^^^^
+    |
+    = warning: this changes meaning in Rust 2024
+    = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/rpit-lifetime-capture.html>
+note: specifically, this lifetime is in scope but not mentioned in the type's bounds
+   --> tests/ffi/lib.rs:312:39
+    |
+312 |         fn r_try_return_mutsliceu8(s: &mut [u8]) -> Result<&mut [u8]>;
+    |                                       ^
+    = note: all lifetimes in scope will be captured by `impl Trait`s in edition 2024
+help: use the precise capturing `use<...>` syntax to make the captures explicit
+    |
+312 |         fn r_try_return_mutsliceu8(s: &mut [u8]) -> Result<&mut [u8]> + use<>;
+    |                                                                       +++++++
+
+error: could not compile `cxx-test-suite` (lib) due to 231 previous errors
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics` exited with code 101
+reward=0 graded=24 found=0 failed=0 parsed=0 framework=cargo exit_code=101

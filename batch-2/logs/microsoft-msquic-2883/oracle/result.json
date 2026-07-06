@@ -1,0 +1,29 @@
+{
+    "id": "097ae00a-0549-4fab-8dd8-fa9aed630922",
+    "started_at": "2026-07-04T15:38:25.222743",
+    "finished_at": "2026-07-04T15:39:30.708045",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__microsoft-msquic-2883": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "microsoft-msquic-2883__4g8J4AM"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

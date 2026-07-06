@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/deepchem/models/tests/test_kerasmodel.py -v",
+  "test_files": [
+    "deepchem/models/tensorgraph/tests/test_estimators.py",
+    "deepchem/models/tensorgraph/tests/test_graph_models.py",
+    "deepchem/models/tensorgraph/tests/test_layers.py",
+    "deepchem/models/tests/test_kerasmodel.py"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_overfit_graph_model",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_overfit_graph_model_eager",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_uncertainty",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_uncertainty_eager"
+  ],
+  "PASS_TO_PASS": [
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_checkpointing",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_checkpointing_eager",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_overfit_sequential_model",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_overfit_sequential_model_eager",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_saliency_mapping",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_saliency_mapping_eager",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_saliency_shapes",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_saliency_shapes_eager",
+    "deepchem.models.tests.test_kerasmodel.TestKerasModel::test_tensorboard"
+  ]
+}

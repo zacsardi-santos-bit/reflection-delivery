@@ -1,0 +1,29 @@
+{
+    "id": "eaa3f16f-c5e1-4af2-a40e-2663255c49c8",
+    "started_at": "2026-07-04T15:36:24.772518",
+    "finished_at": "2026-07-04T15:37:26.095878",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__flutter-flutter-70735": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "flutter-flutter-70735__HyXtsna"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

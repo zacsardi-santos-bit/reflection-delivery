@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/pyxform/tests/xls2xform_tests.py /workspace/repo/pyxform/tests/test_validator_util.py -v",
+  "test_files": [
+    "pyxform/tests/enketo_validate_tests.py",
+    "pyxform/tests/fixtures/strings.ini",
+    "pyxform/tests/odk_validate_tests.py",
+    "pyxform/tests/test_validator_util.py",
+    "pyxform/tests/xls2xform_tests.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_create_parser_json_default_false",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_create_parser_no_enketo_default_false",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_create_parser_no_pretty_print_default_true",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_create_parser_skip_validate_default_true",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_create_parser_with_args",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_create_parser_without_args",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_validator_args_logic_enketo_only",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_validator_args_logic_odk_and_enketo",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_validator_args_logic_odk_default",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_validator_args_logic_odk_only",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_validator_args_logic_skip_validate_alone",
+    "pyxform.tests.xls2xform_tests.XLS2XFormTests::test_validator_args_logic_skip_validate_override",
+    "pyxform.tests.test_validator_util.TestValidatorUtil::test_cleanup_error_message",
+    "pyxform.tests.test_validator_util.TestValidatorUtil::test_do_not_over_trim_javarosa_errors",
+    "pyxform.tests.test_validator_util.TestValidatorUtil::test_jarfile_error_returned_asis",
+    "pyxform.tests.test_validator_util.TestValidatorUtil::test_single_line_error_still_output"
+  ],
+  "PASS_TO_PASS": []
+}

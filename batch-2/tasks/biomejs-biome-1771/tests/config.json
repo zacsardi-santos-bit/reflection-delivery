@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && touch crates/biome_js_analyze/tests/spec_tests.rs && cargo nextest run -p biome_js_analyze --test spec_tests -E 'test(~no_console)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noConsole/invalid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noConsole/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noConsole/valid.js",
+    "crates/biome_js_analyze/tests/specs/nursery/noConsole/valid.js.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(2/4) biome_js_analyze::spec_tests specs::nursery::no_console::valid_js",
+    "(1/4) biome_js_analyze::spec_tests specs::suspicious::no_console_log::valid_js",
+    "(4/4) biome_js_analyze::spec_tests specs::nursery::no_console::invalid_js"
+  ],
+  "PASS_TO_PASS": [
+    "(3/4) biome_js_analyze::spec_tests specs::suspicious::no_console_log::invalid_js"
+  ]
+}

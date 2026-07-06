@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "INSTA_UPDATE=no cargo nextest run -p biome_js_analyze -E 'test(no_nodejs_modules)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/noNodejsModules/invalid-cjs.cjs.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/noNodejsModules/invalid-esm.js.snap"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) biome_js_analyze::spec_tests specs::nursery::no_nodejs_modules::invalid_cjs_cjs",
+    "(2/2) biome_js_analyze::spec_tests specs::nursery::no_nodejs_modules::invalid_esm_js"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,15 @@
+{
+  "test_framework": "cargo",
+  "test_command": "service postgresql start && sleep 2 && cd /workspace/repo && cargo nextest run -p query-engine-tests -E 'test(nested_one2m_count) | test(nested_m2m_count)' --test-threads=1 --retries 0",
+  "test_files": [
+    "query-engine/connector-test-kit-rs/query-engine-tests/tests/queries/order_and_pagination/order_by_aggregation.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) query-engine-tests::query_engine_tests queries::order_and_pagination::order_by_aggregation::order_by_aggr::nested_m2m_count"
+  ],
+  "PASS_TO_PASS": [
+    "(2/2) query-engine-tests::query_engine_tests queries::order_and_pagination::order_by_aggregation::order_by_aggr::nested_one2m_count"
+  ]
+}

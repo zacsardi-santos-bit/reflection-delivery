@@ -1,0 +1,4 @@
+patching file dev-docs/CHANGELOG.md
+patching file src/abi/global.ts
+patching file src/types/__snapshots__/resolveDescriptors.spec.ts.snap
+patching file src/types/test-failed/dump.tact

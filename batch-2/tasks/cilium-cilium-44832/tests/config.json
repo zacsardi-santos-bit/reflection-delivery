@@ -1,0 +1,23 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/ipam/allocator/podcidr -count=1",
+  "test_files": [
+    "pkg/ipam/allocator/podcidr/podcidr_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::TestNodesPodCIDRManager_allocateIPNets",
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::TestNodesPodCIDRManager_allocateNext",
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::TestNodesPodCIDRManager_releaseIPNets",
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::Test_parsePodCIDRs",
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::Test_syncToK8s",
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::TestNewNodesPodCIDRManager",
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::TestNodesPodCIDRManager_DuplicateIPv6CausesIPv4Duplication"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::TestNodesPodCIDRManager_Delete",
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::TestNodesPodCIDRManager_Resync",
+    "github.com/cilium/cilium/pkg/ipam/allocator/podcidr::TestNodesPodCIDRManager_Upsert"
+  ]
+}

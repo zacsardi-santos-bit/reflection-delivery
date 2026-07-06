@@ -1,0 +1,34 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/collector/processors/odigossamplingprocessor && go test -json . ./internal/sampling -count=1",
+  "test_files": [
+    "collector/processors/odigossamplingprocessor/internal/sampling/error_test.go",
+    "collector/processors/odigossamplingprocessor/internal/sampling/latency_test.go",
+    "collector/processors/odigossamplingprocessor/rule_engine_test.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestErrorRule_Evaluate",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestErrorRule_Evaluate_MultipleSpans_OneError",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestErrorRule_Evaluate_NoErrorSpans",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestHttpRouteLatencyRule_Evaluate",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestHttpRouteLatencyRule_Evaluate_LatencyBelowThreshold",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestHttpRouteLatencyRule_Evaluate_ServiceMismatch",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestHttpRouteLatencyRule_Evaluate_EndpointMismatch",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestHttpRouteLatencyRule_Evaluate_OnlyOneMatchingServiceAndEndpoint",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor/internal/sampling::TestHttpRouteLatencyRule_Evaluate_NoMatchingServiceOrEndpoint",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestComponentFactoryType",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestComponentConfigStruct",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestComponentLifecycle/traces-shutdown",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestComponentLifecycle/traces-lifecycle",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestComponentLifecycle",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestRuleEngine_ShouldSample",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestRuleEngine_GlobalFallbackOnly",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestRuleEngine_EndpointWinsOverGlobal",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestRuleEngine_NoMatchingRules",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestRuleEngine_FallbackSamplingApplied",
+    "github.com/open-telemetry/opentelemetry-collector-contrib/odigos/processor/odigossamplingprocessor::TestRuleEngine_MultipleEndpointRules_OneSatisfied"
+  ],
+  "PASS_TO_PASS": []
+}

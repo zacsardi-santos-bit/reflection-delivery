@@ -1,0 +1,29 @@
+{
+    "id": "52897376-c78b-4c9a-9414-9cb2b0ac6f11",
+    "started_at": "2026-07-06T12:18:33.939595",
+    "finished_at": "2026-07-06T12:19:01.451299",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__datahub-project-datahub-16715": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "datahub-project-datahub-16715__PCcK8cU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

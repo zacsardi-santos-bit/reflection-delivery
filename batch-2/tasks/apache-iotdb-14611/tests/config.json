@@ -1,0 +1,15 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn install -DskipTests -pl iotdb-core/datanode -q && mvn verify -P with-integration-tests -Dit.test=\"IoTDBLoadTsFileIT#testLoadWithConvertOnTypeMismatchForTableModel\" -DfailIfNoTests=false -pl integration-test",
+  "test_files": [
+    "integration-test/src/main/java/org/apache/iotdb/it/utils/TsFileTableGenerator.java",
+    "integration-test/src/test/java/org/apache/iotdb/db/it/IoTDBLoadTsFileIT.java",
+    "integration-test/src/test/java/org/apache/iotdb/pipe/it/tablemodel/IoTDBPipeWithLoadIT.java"
+  ],
+  "num_test_files": 3,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jar:::test_1"
+  ],
+  "PASS_TO_PASS": []
+}

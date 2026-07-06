@@ -1,0 +1,40 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest --noconftest /workspace/repo/providers/common/ai/tests/unit/common/ai/hooks/test_mcp.py /workspace/repo/providers/common/ai/tests/unit/common/ai/toolsets/test_mcp.py -v",
+  "test_files": [
+    "providers/common/ai/tests/unit/common/ai/hooks/test_mcp.py",
+    "providers/common/ai/tests/unit/common/ai/toolsets/test_mcp.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookInit::test_default_conn_id",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookInit::test_custom_conn_id",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookInit::test_tool_prefix",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_http_transport",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_http_is_default_transport",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_http_with_auth_token",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_passes_tool_prefix",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_sse_transport",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_stdio_transport",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_stdio_custom_timeout",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_args_string_converted_to_list",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_http_without_host_raises",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_sse_without_host_raises",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_stdio_without_command_raises",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_unknown_transport_raises",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookGetConn::test_caches_server",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookTestConnection::test_successful_config",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookTestConnection::test_failed_config",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookUIFieldBehaviour::test_hidden_fields",
+    "providers.common.ai.tests.unit.common.ai.hooks.test_mcp.TestMCPHookUIFieldBehaviour::test_relabeling",
+    "providers.common.ai.tests.unit.common.ai.toolsets.test_mcp.TestMCPToolsetInit::test_id_includes_conn_id",
+    "providers.common.ai.tests.unit.common.ai.toolsets.test_mcp.TestMCPToolsetInit::test_stores_tool_prefix",
+    "providers.common.ai.tests.unit.common.ai.toolsets.test_mcp.TestMCPToolsetGetServer::test_delegates_to_hook",
+    "providers.common.ai.tests.unit.common.ai.toolsets.test_mcp.TestMCPToolsetGetServer::test_passes_tool_prefix_to_hook",
+    "providers.common.ai.tests.unit.common.ai.toolsets.test_mcp.TestMCPToolsetGetServer::test_caches_server",
+    "providers.common.ai.tests.unit.common.ai.toolsets.test_mcp.TestMCPToolsetDelegation::test_get_tools_delegates",
+    "providers.common.ai.tests.unit.common.ai.toolsets.test_mcp.TestMCPToolsetDelegation::test_call_tool_delegates"
+  ],
+  "PASS_TO_PASS": []
+}

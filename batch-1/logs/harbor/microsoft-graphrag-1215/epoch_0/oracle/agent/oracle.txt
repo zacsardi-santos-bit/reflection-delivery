@@ -1,0 +1,11 @@
+patching file .semversioner/next-release/patch-20240925202720765326.json
+patching file graphrag/index/graph/extractors/claims/claim_extractor.py
+patching file graphrag/index/verbs/covariates/extract_covariates/extract_covariates.py
+patching file graphrag/index/verbs/covariates/extract_covariates/strategies/graph_intelligence/defaults.py
+patching file graphrag/index/verbs/covariates/extract_covariates/strategies/graph_intelligence/run_gi_extract_claims.py
+patching file graphrag/index/verbs/covariates/typing.py
+patching file graphrag/index/workflows/v1/create_final_covariates.py
+patching file graphrag/index/workflows/v1/subflows/__init__.py
+patching file graphrag/index/workflows/v1/subflows/create_final_covariates.py
+patching file graphrag/model/covariate.py
+patching file graphrag/query/input/loaders/dfs.py

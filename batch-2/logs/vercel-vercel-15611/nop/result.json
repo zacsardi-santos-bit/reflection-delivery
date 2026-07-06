@@ -1,0 +1,29 @@
+{
+    "id": "f538bbe1-9157-4769-a5c0-1e51047e4c99",
+    "started_at": "2026-07-06T12:17:32.072320",
+    "finished_at": "2026-07-06T12:17:56.219567",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__vercel-vercel-15611": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "vercel-vercel-15611__UkEH2T6"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+patching file pkg/common/telemetry/names.go
+patching file pkg/common/telemetry/server/datastore/ca_journal.go
+patching file pkg/common/telemetry/server/datastore/wrapper.go
+patching file pkg/server/api/localauthority/v1/service.go
+patching file pkg/server/ca/manager/journal.go
+patching file pkg/server/ca/manager/manager.go
+patching file pkg/server/ca/manager/slot.go
+patching file pkg/server/ca/rotator/rotator.go
+patching file pkg/server/datastore/datastore.go
+patching file pkg/server/datastore/sqlstore/sqlstore.go
+patching file proto/private/server/journal/journal.pb.go
+patching file proto/private/server/journal/journal.proto

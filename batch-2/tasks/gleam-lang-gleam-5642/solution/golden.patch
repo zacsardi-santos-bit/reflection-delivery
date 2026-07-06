@@ -1,0 +1,255 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 1eb983791..6a412691e 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -81,3 +81,7 @@
+ - Fixed a bug where the language server would suggest the "wrap in anonymous"
+   code action when hovering over a record update.
+   ([Giacomo Cavalieri](https://github.com/giacomocavalieri))
++
++- Fixed a bug where the compiler would generate invalid code for guards using
++  lists with a tail.
++  ([Giacomo Cavalieri](https://github.com/giacomocavalieri))
+diff --git a/compiler-core/src/ast/constant.rs b/compiler-core/src/ast/constant.rs
+index 35abcc7c7..604139952 100644
+--- a/compiler-core/src/ast/constant.rs
++++ b/compiler-core/src/ast/constant.rs
+@@ -226,11 +226,17 @@ impl TypedConstant {
+                 .map(|message| message.referenced_variables())
+                 .unwrap_or(im::hashset![]),
+ 
+-            Constant::List { elements, .. } | Constant::Tuple { elements, .. } => elements
++            Constant::Tuple { elements, .. } => elements
+                 .iter()
+                 .map(|element| element.referenced_variables())
+                 .fold(im::hashset![], im::HashSet::union),
+ 
++            Constant::List { elements, tail, .. } => elements
++                .iter()
++                .map(|element| element.referenced_variables())
++                .chain(tail.iter().map(|tail| tail.referenced_variables()))
++                .fold(im::hashset![], im::HashSet::union),
++
+             Constant::Record { arguments, .. } => arguments
+                 .iter()
+                 .map(|argument| argument.value.referenced_variables())
+@@ -305,14 +311,23 @@ impl TypedConstant {
+             (Constant::Tuple { .. }, _) => false,
+ 
+             (
+-                Constant::List { elements, .. },
++                Constant::List { elements, tail, .. },
+                 Constant::List {
+                     elements: other_elements,
++                    tail: other_tail,
+                     ..
+                 },
+-            ) => pairwise_all(elements, other_elements, |(one, other)| {
+-                one.syntactically_eq(other)
+-            }),
++            ) => {
++                let tails_are_equal = match (tail, other_tail) {
++                    (None, None) => true,
++                    (None, Some(_)) | (Some(_), None) => false,
++                    (Some(tail), Some(other_tail)) => tail.syntactically_eq(other_tail),
++                };
++                tails_are_equal
++                    && pairwise_all(elements, other_elements, |(one, other)| {
++                        one.syntactically_eq(other)
++                    })
++            }
+             (Constant::List { .. }, _) => false,
+ 
+             (
+@@ -417,18 +432,27 @@ impl TypedConstant {
+         }
+     }
+ 
++    /// If the constant is a list whose elements are known at compile time, this
++    /// returns a vec of all its elements.
++    /// This can happen with:
++    /// - literal lists: `[1, 2]`
++    /// - literal lists whose tail is also known at compile time:
++    ///     - `[1, 2, ..[3, 4]]`
++    ///     - `[1, 2, ..a_known_module_constant]`
++    ///
+     pub fn list_elements(&self) -> Option<Vec<&Self>> {
+         match self {
+-            Constant::List { elements, tail, .. } => Some(
+-                elements
+-                    .iter()
+-                    .chain(
+-                        tail.as_deref()
+-                            .and_then(|tail| tail.list_elements())
+-                            .unwrap_or_default(),
+-                    )
+-                    .collect(),
+-            ),
++            Constant::List { elements, tail, .. } => {
++                if let Some(tail) = tail {
++                    // There's a tail, if it cannot be known at compile time,
++                    // then this entire list cannot be known at compile time!
++                    let tail_elements = tail.list_elements()?;
++                    Some(elements.iter().chain(tail_elements).collect())
++                } else {
++                    // There's no tail, we just return the elements
++                    Some(elements.iter().collect())
++                }
++            }
+             Constant::Var {
+                 constructor: Some(constructor),
+                 ..
+diff --git a/compiler-core/src/erlang.rs b/compiler-core/src/erlang.rs
+index 2adbbfe88..a0874a520 100644
+--- a/compiler-core/src/erlang.rs
++++ b/compiler-core/src/erlang.rs
+@@ -1755,18 +1755,36 @@ fn const_inline<'a>(literal: &'a TypedConstant, env: &mut Env<'a>) -> Document<'
+         }
+ 
+         Constant::List { elements, tail, .. } => {
+-            let tail_elements = tail
+-                .as_deref()
+-                .and_then(|tail| tail.list_elements())
+-                .unwrap_or_default();
+-
+-            join(
+-                elements
+-                    .iter()
+-                    .chain(tail_elements)
+-                    .map(|element| const_inline(element, env)),
+-                break_(",", ", "),
+-            )
++            match tail {
++                // There's no tail in the list, we join all the elements and
++                // call it a day.
++                None => join(
++                    elements.iter().map(|element| const_inline(element, env)),
++                    break_(",", ", "),
++                ),
++                Some(tail) => match tail.list_elements() {
++                    // There's a tail in the list whose elements are all known at
++                    // compile time. In this case we replace the tail with those
++                    // elements and create a single flat list.
++                    Some(tail_elements) => join(
++                        elements
++                            .iter()
++                            .chain(tail_elements)
++                            .map(|element| const_inline(element, env)),
++                        break_(",", ", "),
++                    ),
++                    // There's a tail in the list but we can't really tell what its
++                    // elements are at compile time. This means we have to use
++                    // erlang's syntax to append to a list.
++                    None => {
++                        let elements = join(
++                            elements.iter().map(|element| const_inline(element, env)),
++                            break_(",", ", "),
++                        );
++                        docvec![elements, " | ", const_inline(tail, env)]
++                    }
++                },
++            }
+             .nest(INDENT)
+             .surround("[", "]")
+             .group()
+@@ -3606,8 +3624,18 @@ fn find_referenced_private_functions(
+             find_referenced_private_functions(right, already_found);
+         }
+ 
+-        Constant::Tuple { elements, .. } | Constant::List { elements, .. } => elements
++        Constant::Tuple { elements, .. } => elements
+             .iter()
+             .for_each(|element| find_referenced_private_functions(element, already_found)),
++
++        Constant::List { elements, tail, .. } => {
++            elements
++                .iter()
++                .for_each(|element| find_referenced_private_functions(element, already_found));
++
++            if let Some(tail) = tail {
++                find_referenced_private_functions(tail, already_found);
++            }
++        }
+     }
+ }
+diff --git a/compiler-core/src/javascript/expression.rs b/compiler-core/src/javascript/expression.rs
+index 730078f00..9eccd555b 100644
+--- a/compiler-core/src/javascript/expression.rs
++++ b/compiler-core/src/javascript/expression.rs
+@@ -2039,19 +2039,41 @@ impl<'module, 'a> Generator<'module, 'a> {
+ 
+             Constant::List { elements, tail, .. } => {
+                 self.tracker.list_used = true;
++                let list = match tail {
++                    // There's no tail in the list, we join all the elements and
++                    // call it a day.
++                    None => list(
++                        elements
++                            .iter()
++                            .map(|element| self.constant_expression(context, element)),
++                    ),
+ 
+-                let tail_elements = tail
+-                    .as_deref()
+-                    .and_then(|tail| tail.list_elements())
+-                    .unwrap_or_default();
+-
+-                let list = list(
+-                    elements
+-                        .iter()
+-                        .chain(tail_elements)
+-                        .map(|element| self.constant_expression(context, element)),
+-                );
+-
++                    Some(tail) => match tail.list_elements() {
++                        // There's a tail in the list whose elements are all
++                        // known at compile time. In this case we replace the
++                        // tail with those elements and create a single flat
++                        // list.
++                        Some(tail_elements) => list(
++                            elements
++                                .iter()
++                                .chain(tail_elements)
++                                .map(|element| self.constant_expression(context, element)),
++                        ),
++                        // There's a tail in the list but we can't really tell
++                        // what its elements are at compile time. This means we
++                        // have to prepend to this list.
++                        None => {
++                            self.tracker.prepend_used = true;
++                            let tail = self.constant_expression(context, tail);
++                            prepend(
++                                elements
++                                    .iter()
++                                    .map(|element| self.constant_expression(context, element)),
++                                tail,
++                            )
++                        }
++                    },
++                };
+                 match context {
+                     Context::Constant => docvec!["/* @__PURE__ */ ", list],
+                     Context::Guard => list,
+@@ -2425,14 +2447,6 @@ impl<'module, 'a> Generator<'module, 'a> {
+                     .map(|element| self.guard_constant_expression(element)),
+             ),
+ 
+-            Constant::List { elements, .. } => {
+-                self.tracker.list_used = true;
+-                list(
+-                    elements
+-                        .iter()
+-                        .map(|element| self.guard_constant_expression(element)),
+-                )
+-            }
+             Constant::Record { type_, name, .. } if type_.is_bool() && name == "True" => {
+                 "true".to_doc()
+             }
+@@ -2490,6 +2504,7 @@ impl<'module, 'a> Generator<'module, 'a> {
+             Constant::Int { .. }
+             | Constant::Float { .. }
+             | Constant::String { .. }
++            | Constant::List { .. }
+             | Constant::RecordUpdate { .. }
+             | Constant::StringConcatenation { .. }
+             | Constant::Todo { .. }

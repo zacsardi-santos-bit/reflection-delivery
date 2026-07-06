@@ -1,0 +1,6 @@
+patching file bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go
+# github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent [github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent.test]
+bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go:247:18: undefined: getPodsForNode
+bpfman-operator/controllers/bpfman-agent/uprobe-program_test.go:260:17: undefined: getPodsForNode
+FAIL	github.com/bpfman/bpfman/bpfman-operator/controllers/bpfman-agent [build failed]
+reward=0 graded=11 found=11 failed=11 parsed=1 framework=go exit_code=1

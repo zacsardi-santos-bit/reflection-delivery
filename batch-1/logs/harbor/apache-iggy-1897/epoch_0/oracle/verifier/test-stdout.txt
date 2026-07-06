@@ -1,0 +1,48 @@
+patching file foreign/go/benchmarks/send_messages_benchmark_test.go
+patching file foreign/go/binary_serialization/fetch_messages_request_serializer_test.go
+patching file foreign/go/binary_serialization/send_messages_request_serializer_test.go
+patching file foreign/go/e2e/tcp_test/messages_feature_send.go
+patching file foreign/go/e2e/tcp_test/messages_steps.go
+patching file foreign/go/e2e/tcp_test/tcp_suite_test.go
+patching file foreign/go/e2e/tcp_test/test_helpers.go
+{"Time":"2026-06-29T15:32:21.629410562Z","Action":"start","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization"}
+{"Time":"2026-06-29T15:32:21.639737702Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_TcpCreateStreamRequest"}
+{"Time":"2026-06-29T15:32:21.639814478Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_TcpCreateStreamRequest","Output":"=== RUN   TestSerialize_TcpCreateStreamRequest\n"}
+{"Time":"2026-06-29T15:32:21.63985295Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_TcpCreateStreamRequest","Output":"--- PASS: TestSerialize_TcpCreateStreamRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.639876524Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_TcpCreateStreamRequest","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.639893931Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_TcpFetchMessagesRequest"}
+{"Time":"2026-06-29T15:32:21.639902774Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_TcpFetchMessagesRequest","Output":"=== RUN   TestSerialize_TcpFetchMessagesRequest\n"}
+{"Time":"2026-06-29T15:32:21.639944675Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_TcpFetchMessagesRequest","Output":"--- PASS: TestSerialize_TcpFetchMessagesRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.639968601Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_TcpFetchMessagesRequest","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.639979259Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_StringId"}
+{"Time":"2026-06-29T15:32:21.639990137Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_StringId","Output":"=== RUN   TestSerializeIdentifier_StringId\n"}
+{"Time":"2026-06-29T15:32:21.640008053Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_StringId","Output":"--- PASS: TestSerializeIdentifier_StringId (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.640016537Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_StringId","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.640035138Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_NumericId"}
+{"Time":"2026-06-29T15:32:21.640066164Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_NumericId","Output":"=== RUN   TestSerializeIdentifier_NumericId\n"}
+{"Time":"2026-06-29T15:32:21.64008329Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_NumericId","Output":"--- PASS: TestSerializeIdentifier_NumericId (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.640100332Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_NumericId","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.640108517Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_EmptyStringId"}
+{"Time":"2026-06-29T15:32:21.640117227Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_EmptyStringId","Output":"=== RUN   TestSerializeIdentifier_EmptyStringId\n"}
+{"Time":"2026-06-29T15:32:21.640125526Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_EmptyStringId","Output":"--- PASS: TestSerializeIdentifier_EmptyStringId (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.640152602Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerializeIdentifier_EmptyStringId","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.640166412Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_SendMessagesRequest"}
+{"Time":"2026-06-29T15:32:21.640177922Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_SendMessagesRequest","Output":"=== RUN   TestSerialize_SendMessagesRequest\n"}
+{"Time":"2026-06-29T15:32:21.640190591Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_SendMessagesRequest","Output":"--- PASS: TestSerialize_SendMessagesRequest (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.640198717Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_SendMessagesRequest","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.64021148Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestDeserialize"}
+{"Time":"2026-06-29T15:32:21.640220107Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestDeserialize","Output":"=== RUN   TestDeserialize\n"}
+{"Time":"2026-06-29T15:32:21.640228638Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestDeserialize","Output":"--- PASS: TestDeserialize (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.640258284Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestDeserialize","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.640287383Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_UpdateStream"}
+{"Time":"2026-06-29T15:32:21.640298395Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_UpdateStream","Output":"=== RUN   TestSerialize_UpdateStream\n"}
+{"Time":"2026-06-29T15:32:21.640309394Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_UpdateStream","Output":"--- PASS: TestSerialize_UpdateStream (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.640318134Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_UpdateStream","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.640402438Z","Action":"run","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_UpdateTopic"}
+{"Time":"2026-06-29T15:32:21.640431432Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_UpdateTopic","Output":"=== RUN   TestSerialize_UpdateTopic\n"}
+{"Time":"2026-06-29T15:32:21.640444019Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_UpdateTopic","Output":"--- PASS: TestSerialize_UpdateTopic (0.00s)\n"}
+{"Time":"2026-06-29T15:32:21.640453393Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Test":"TestSerialize_UpdateTopic","Elapsed":0}
+{"Time":"2026-06-29T15:32:21.640461916Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Output":"PASS\n"}
+{"Time":"2026-06-29T15:32:21.640847945Z","Action":"output","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Output":"ok  \tgithub.com/iggy-rs/iggy-go-client/binary_serialization\t0.011s\n"}
+{"Time":"2026-06-29T15:32:21.640892511Z","Action":"pass","Package":"github.com/iggy-rs/iggy-go-client/binary_serialization","Elapsed":0.011}
+reward=1 graded=9 found=9 failed=0 parsed=9 framework=go exit_code=0

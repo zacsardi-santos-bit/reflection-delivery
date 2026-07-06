@@ -1,0 +1,3 @@
+patching file wagtail/admin/migrations/0005_editingsession_is_editing.py
+patching file wagtail/admin/models.py
+patching file wagtail/admin/views/editing_sessions.py

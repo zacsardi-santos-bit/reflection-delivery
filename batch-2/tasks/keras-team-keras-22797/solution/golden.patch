@@ -1,0 +1,708 @@
+diff --git a/keras/src/backend/openvino/numpy.py b/keras/src/backend/openvino/numpy.py
+index 520fef7c3..314c06e3e 100644
+--- a/keras/src/backend/openvino/numpy.py
++++ b/keras/src/backend/openvino/numpy.py
+@@ -845,28 +845,17 @@ def bartlett(x):
+     two_const_f64 = ov_opset.constant(2.0, Type.f64)
+     if x.get_element_type() != Type.i64:
+         x = ov_opset.convert(x, Type.i64)
+-    denom_i64 = ov_opset.subtract(x, one_const)
+-    is_one = ov_opset.equal(denom_i64, zero_const)
+-    one_f64 = ov_opset.constant(1.0, Type.f64)
+-
+-    half = ov_opset.convert(ov_opset.divide(denom_i64, two_const), Type.f64)
++    half = ov_opset.convert(
++        ov_opset.divide(ov_opset.subtract(x, one_const), two_const), Type.f64
++    )
+     n = ov_opset.range(zero_const, x, one_const, Type.f64)
+     condition = ov_opset.less_equal(n, half)
+-
+-    safe_denom = ov_opset.select(
+-        is_one, one_f64, ov_opset.convert(denom_i64, Type.f64)
+-    )
+-
+     first_half = ov_opset.divide(
+         ov_opset.multiply(two_const_f64, n),
+-        safe_denom,
++        ov_opset.convert(ov_opset.subtract(x, one_const), Type.f64),
+     )
+     second_half = ov_opset.subtract(two_const_f64, first_half)
+     window = ov_opset.select(condition, first_half, second_half)
+-
+-    ones = ov_opset.broadcast(one_f64, ov_opset.shape_of(window))
+-    window = ov_opset.select(is_one, ones, window)
+-
+     window = ov_opset.convert(window, OPENVINO_DTYPES[config.floatx()]).output(
+         0
+     )
+@@ -886,15 +875,10 @@ def hamming(x):
+ 
+     one_i64 = ov_opset.constant(1, Type.i64)
+     denom_i64 = ov_opset.subtract(m_i64, one_i64)
+-    is_one = ov_opset.equal(denom_i64, ov_opset.constant(0, Type.i64))
+-    one_f64 = ov_opset.constant(1.0, Type.f64)
+-
+-    safe_denom = ov_opset.select(
+-        is_one, one_f64, ov_opset.convert(denom_i64, Type.f64)
+-    )
++    denom = ov_opset.convert(denom_i64, Type.f64)
+ 
+     two_pi = ov_opset.constant(2.0 * np.pi, Type.f64)
+-    two_pi_over_m_minus_1 = ov_opset.divide(two_pi, safe_denom)
++    two_pi_over_m_minus_1 = ov_opset.divide(two_pi, denom)
+ 
+     x = ov_opset.multiply(two_pi_over_m_minus_1, n)
+     c = ov_opset.cos(x)
+@@ -903,11 +887,6 @@ def hamming(x):
+     a = ov_opset.constant(0.54, Type.f64)
+     b = ov_opset.constant(0.46, Type.f64)
+     hamming_window = ov_opset.subtract(a, ov_opset.multiply(b, c))
+-
+-    # Fix for x=1: return [1.] instead of [0.08]
+-    ones = ov_opset.broadcast(one_f64, ov_opset.shape_of(hamming_window))
+-    hamming_window = ov_opset.select(is_one, ones, hamming_window)
+-
+     hamming_window = ov_opset.convert(
+         hamming_window, OPENVINO_DTYPES[config.floatx()]
+     )
+diff --git a/keras/src/backend/torch/core.py b/keras/src/backend/torch/core.py
+index 1818204f0..2e81dc812 100644
+--- a/keras/src/backend/torch/core.py
++++ b/keras/src/backend/torch/core.py
+@@ -617,32 +617,77 @@ def scatter_update(inputs, indices, updates, reduction=None):
+ 
+ 
+ def slice(inputs, start_indices, shape):
+-    shape_dtype = to_torch_dtype("int64")
+     inputs = convert_to_tensor(inputs)
++
++    # Fast path: when both start_indices and shape are Python int sequences,
++    # build the slice objects directly. This avoids creating tensors from
++    # the indices, which would introduce data-dependent expressions that
++    # torch.export cannot trace.
++    if isinstance(start_indices, (list, tuple)) and isinstance(
++        shape, (list, tuple)
++    ):
++        if all(isinstance(s, int) for s in start_indices) and all(
++            isinstance(s, int) for s in shape
++        ):
++            slices = [
++                builtins.slice(start_index, start_index + length)
++                for start_index, length in zip(start_indices, shape)
++            ]
++            return inputs[tuple(slices)]
++
++    # Slow path: tensor-based slicing via torch.narrow for truly dynamic
++    # indices. torch.narrow is a proper ATen op that torch.export can
++    # trace, unlike Python-level iteration over tensor elements.
++    shape_dtype = to_torch_dtype("int64")
+     start_indices = convert_to_tensor(start_indices).to(shape_dtype)
+     shape = convert_to_tensor(shape).to(shape_dtype)
+-
+-    python_slice = __builtins__["slice"]
+-    slices = [
+-        python_slice(start_index, start_index + length)
+-        for start_index, length in zip(start_indices, shape)
+-    ]
+-    return inputs[slices]
++    result = inputs
++    for dim in range(start_indices.shape[0]):
++        result = torch.narrow(result, dim, start_indices[dim], shape[dim])
++    return result
+ 
+ 
+ def slice_update(inputs, start_indices, updates):
+-    shape_dtype = to_torch_dtype("int64")
+     inputs = convert_to_tensor(inputs)
+-    start_indices = convert_to_tensor(start_indices).to(shape_dtype)
+     updates = convert_to_tensor(updates)
+ 
+-    python_slice = __builtins__["slice"]
+-    slices = [
+-        python_slice(start_index, start_index + update_length)
+-        for start_index, update_length in zip(start_indices, updates.shape)
+-    ]
+-    outputs = torch.clone(inputs)
+-    outputs[slices] = updates
++    # Fast path: when start_indices is a Python int sequence, use it
++    # directly. This avoids creating tensors from the indices, which would
++    # introduce data-dependent expressions that torch.export cannot trace.
++    if isinstance(start_indices, (list, tuple)) and all(
++        isinstance(s, int) for s in start_indices
++    ):
++        slices = [
++            builtins.slice(start_index, start_index + update_length)
++            for start_index, update_length in zip(start_indices, updates.shape)
++        ]
++        outputs = torch.clone(inputs)
++        outputs[tuple(slices)] = updates
++        return outputs
++
++    # Slow path: tensor-based start_indices.
++    # We cannot use Python slice objects because they require scalar int
++    # bounds, and extracting scalars from traced tensors creates unbacked
++    # symbols that torch.export cannot resolve.
++    # Instead, we build a flat index list via meshgrid and use
++    # index_put_, which is fully traceable.
++    start_indices = convert_to_tensor(start_indices, dtype="int64")
++    outputs = inputs.clone()
++    update_shape = list(updates.shape)
++    dims = len(update_shape)
++    indices_list = []
++    for dim in range(dims):
++        dim_indices = torch.arange(
++            update_shape[dim],
++            dtype=start_indices.dtype,
++            device=start_indices.device,
++        )
++        dim_indices = dim_indices + start_indices[dim]
++        indices_list.append(dim_indices)
++
++    grids = torch.meshgrid(*indices_list, indexing="ij")
++    flat_indices = [g.flatten() for g in grids]
++    outputs.index_put_(tuple(flat_indices), updates.flatten())
+     return outputs
+ 
+ 
+diff --git a/keras/src/backend/torch/nn.py b/keras/src/backend/torch/nn.py
+index 58fe49762..b56bc2040 100644
+--- a/keras/src/backend/torch/nn.py
++++ b/keras/src/backend/torch/nn.py
+@@ -286,13 +286,17 @@ def _transpose_spatial_inputs(inputs):
+     """Transpose inputs from channels_last to channels_first format."""
+     # Torch pooling does not support `channels_last` format, so
+     # we need to transpose to `channels_first` format.
++    # After permute, the tensor may be non-contiguous which causes
++    # failures in view-based ops (e.g., conv2d, torch.export) that
++    # require contiguous memory. Adding .contiguous() ensures
++    # compatible memory layout.
+     ndim = inputs.ndim - 2
+     if ndim == 1:  # 1D case
+-        return torch.permute(inputs, (0, 2, 1))
++        return torch.permute(inputs, (0, 2, 1)).contiguous()
+     elif ndim == 2:  # 2D case
+-        return torch.permute(inputs, (0, 3, 1, 2))
++        return torch.permute(inputs, (0, 3, 1, 2)).contiguous()
+     elif ndim == 3:  # 3D case
+-        return torch.permute(inputs, (0, 4, 1, 2, 3))
++        return torch.permute(inputs, (0, 4, 1, 2, 3)).contiguous()
+     raise ValueError(
+         "Inputs must have ndim=3, 4 or 5, "
+         "corresponding to 1D, 2D and 3D inputs. "
+diff --git a/keras/src/backend/torch/numpy.py b/keras/src/backend/torch/numpy.py
+index 05b26f0a3..27e6213a0 100644
+--- a/keras/src/backend/torch/numpy.py
++++ b/keras/src/backend/torch/numpy.py
+@@ -1778,6 +1778,23 @@ def repeat(x, repeats, axis=None):
+             device=get_device(),
+         )
+ 
++    # When repeats is a scalar int and axis is specified, use
++    # unsqueeze + expand + reshape instead of repeat_interleave.
++    # repeat_interleave introduces unbacked symbolic integers during
++    # torch.export tracing, preventing static shape inference. This
++    # alternative preserves static output shapes.
++    if isinstance(repeats, int) and axis is not None:
++        if axis < 0:
++            axis = x.ndim + axis
++        shape = list(x.shape)
++        x = x.unsqueeze(axis + 1)
++        expand_shape = [-1] * x.ndim
++        expand_shape[axis + 1] = repeats
++        x = x.expand(expand_shape)
++        new_shape = list(shape)
++        new_shape[axis] = shape[axis] * repeats
++        return x.reshape(new_shape)
++
+     repeats = convert_to_tensor(repeats, dtype=int)
+ 
+     return torch.repeat_interleave(x, repeats, dim=axis)
+diff --git a/keras/src/export/__init__.py b/keras/src/export/__init__.py
+index 4f4c9ed39..5e04a2772 100644
+--- a/keras/src/export/__init__.py
++++ b/keras/src/export/__init__.py
+@@ -5,3 +5,4 @@ from keras.src.export.openvino import export_openvino
+ from keras.src.export.saved_model import ExportArchive
+ from keras.src.export.saved_model import export_saved_model
+ from keras.src.export.tfsm_layer import TFSMLayer
++from keras.src.export.torch import export_torch
+diff --git a/keras/src/export/torch.py b/keras/src/export/torch.py
+new file mode 100644
+index 000000000..82b426b09
+--- /dev/null
++++ b/keras/src/export/torch.py
+@@ -0,0 +1,171 @@
++"""PyTorch ExportedProgram export utilities."""
++
++import inspect
++import warnings
++
++from keras.src import tree
++from keras.src.export.export_utils import convert_spec_to_tensor
++from keras.src.export.export_utils import get_input_signature
++from keras.src.utils import io_utils
++
++
++def export_torch(
++    model,
++    filepath,
++    input_signature=None,
++    verbose=None,
++    **kwargs,
++):
++    """Export the model as a PyTorch ExportedProgram (`.pt2`) artifact.
++
++    Uses `torch.export.export` to capture the model's computation graph
++    in an Ahead-of-Time (AOT) fashion. The resulting artifact contains
++    only ATen-level operations and can be loaded via `torch.export.load`,
++    run with `ExportedProgram.module()`, or compiled further with
++    `torch.compile`.
++
++    Args:
++        model: The Keras model to export.
++        filepath: `str` or `pathlib.Path` object. Path to save the
++            exported artifact. Must end with `.pt2`.
++        input_signature: Optional input signature. If `None`, inferred
++            from the model's built input spec.
++        verbose: `bool`. Whether to print a message after export.
++            Defaults to `True`.
++        **kwargs: Additional keyword arguments forwarded to
++            `torch.export.export`, including `strict`, `dynamic_shapes`,
++            `prefer_deferred_runtime_asserts_over_guards`, and
++            `preserve_module_call_signature`. For a single-input model,
++            `dynamic_shapes` can be a dict such as
++            `{0: torch.export.Dim("batch", min=1, max=128)}`.
++            Note: when `dynamic_shapes` is provided, the sample input used
++            for tracing uses a batch size of 2 instead of 1. This avoids a
++            PyTorch limitation where dimensions of size 1 are specialized
++            to constants during export.
++
++    Example:
++
++    ```python
++    model.export("path/to/model.pt2", format="torch")
++
++    import torch
++    loaded_program = torch.export.load("path/to/model.pt2")
++    output = loaded_program.module()(torch.randn(1, 10))
++    ```
++    """
++    import torch
++
++    filepath = str(filepath)
++    if not filepath.endswith(".pt2"):
++        raise ValueError(
++            "The PyTorch export requires the filepath to end with "
++            f"'.pt2'. Got: {filepath}"
++        )
++
++    export_kwargs = _get_export_kwargs(kwargs)
++    dynamic_shapes = export_kwargs.get("dynamic_shapes")
++
++    if input_signature is None:
++        input_signature = get_input_signature(model)
++
++    # PyTorch limitation: torch.export specializes dimensions of size 1 to
++    # constants during tracing. If a dynamic dim (e.g., batch) has a concrete
++    # sample value of 1, export fails with "specialized it to be a constant".
++    # Using a sample value of 2 (the smallest integer > 1) avoids this.
++    # See: https://github.com/pytorch/pytorch/issues/176349
++    replace_none_number = 2 if dynamic_shapes is not None else 1
++    sample_inputs = tree.map_structure(
++        lambda x: convert_spec_to_tensor(
++            x, replace_none_number=replace_none_number
++        ),
++        input_signature,
++    )
++    sample_inputs = tuple(sample_inputs)
++    if dynamic_shapes is not None:
++        export_kwargs["dynamic_shapes"] = _normalize_dynamic_shapes(
++            dynamic_shapes, sample_inputs
++        )
++
++    with warnings.catch_warnings():
++        warnings.filterwarnings(
++            "ignore",
++            message=r".*not properly registered as a submodule.*",
++        )
++        try:
++            exported_program = torch.export.export(
++                model,
++                sample_inputs,
++                **export_kwargs,
++            )
++        except Exception as e:
++            raise RuntimeError(
++                "Failed to export model to PyTorch format. "
++                "Common causes: unsupported operations, data-dependent "
++                "control flow, or shape constraints not satisfied. "
++                f"Original error: {e}"
++            ) from e
++
++    torch.export.save(exported_program, filepath)
++
++    actual_verbose = verbose if verbose is not None else True
++    if actual_verbose:
++        io_utils.print_msg(f"Saved PyTorch ExportedProgram at '{filepath}'.")
++    return filepath
++
++
++def _get_export_kwargs(user_kwargs):
++    import torch
++
++    supported_arg_names = {
++        name
++        for name in inspect.signature(torch.export.export).parameters
++        if name not in {"mod", "args", "kwargs"}
++    }
++    unknown_arg_names = sorted(set(user_kwargs).difference(supported_arg_names))
++    if unknown_arg_names:
++        supported_args = ", ".join(sorted(supported_arg_names))
++        unknown_args = ", ".join(unknown_arg_names)
++        raise ValueError(
++            'Unsupported arguments for `format="torch"`: '
++            f"{unknown_args}. Supported arguments are: {supported_args}."
++        )
++
++    export_kwargs = {
++        name: value
++        for name, value in user_kwargs.items()
++        if name in supported_arg_names
++    }
++    # Default to non-strict mode for broader Keras model compatibility.
++    # Strict mode requires all operations to be fully ATen-traceable, which
++    # is too restrictive for Keras models that use Python-level structure.
++    export_kwargs.setdefault("strict", False)
++    return export_kwargs
++
++
++def _normalize_dynamic_shapes(dynamic_shapes, sample_inputs):
++    if isinstance(dynamic_shapes, dict):
++        if "args" in dynamic_shapes or "kwargs" in dynamic_shapes:
++            return dynamic_shapes
++        # Keras models use `forward(*args, **kwargs)`. torch.export treats
++        # the entire `args` tuple as a single positional argument when the
++        # forward signature is `*args`. Therefore dynamic_shapes must be a
++        # list/tuple of length 1, where the single element is the spec for
++        # the args tuple. For a single-input model, args = (tensor,), so
++        # the spec is (dynamic_shapes,).
++        if len(sample_inputs) == 1:
++            return [(dynamic_shapes,)]
++        return dynamic_shapes
++
++    if isinstance(dynamic_shapes, (list, tuple)):
++        # Already wrapped, e.g. [({0: Dim},)] or [([spec1, spec2],)].
++        if len(dynamic_shapes) == 1 and isinstance(
++            dynamic_shapes[0], (list, tuple)
++        ):
++            return dynamic_shapes
++        # Bare list/tuple matching sample_inputs length (always 1 for
++        # Keras). Wrap it in the list required by torch.export's *args
++        # handling.
++        if len(dynamic_shapes) == len(sample_inputs):
++            return [tuple(dynamic_shapes)]
++
++    return dynamic_shapes
+diff --git a/keras/src/models/model.py b/keras/src/models/model.py
+index 3b31ccfa5..44189e0a2 100644
+--- a/keras/src/models/model.py
++++ b/keras/src/models/model.py
+@@ -665,8 +665,8 @@ class Model(Trainer, base_trainer.Trainer, Layer):
+             filepath: `str` or `pathlib.Path` object. The path to save the
+                 artifact.
+             format: `str`. The export format. Supported values:
+-                `"tf_saved_model"`, `"onnx"`, `"openvino"`, and `"litert"`.
+-                Defaults to `"tf_saved_model"`.
++                `"tf_saved_model"`, `"onnx"`, `"openvino"`, `"litert"`,
++                and `"torch"`. Defaults to `"tf_saved_model"`.
+             verbose: `bool`. Whether to print a message during export. Defaults
+                 to `None`, which uses the default value set by different
+                 backends and formats.
+@@ -696,6 +696,12 @@ class Model(Trainer, base_trainer.Trainer, Layer):
+                     `experimental_new_quantizer`, `allow_custom_ops`,
+                     `enable_select_tf_ops`, etc. See TensorFlow Lite
+                     documentation for all available options.
++                - PyTorch export options: Optional keyword arguments specific
++                    to `format="torch"`. These are passed directly to
++                    `torch.export.export` and include `strict`,
++                    `dynamic_shapes`,
++                    `prefer_deferred_runtime_asserts_over_guards`, and
++                    `preserve_module_call_signature`.
+ 
+         **Note:** This feature is currently supported only with TensorFlow, JAX
+         and Torch backends.
+@@ -748,13 +754,32 @@ class Model(Trainer, base_trainer.Trainer, Layer):
+             interpreter.get_output_details()[0]['index']
+         )
+         ```
++
++        Here's how to export a PyTorch ExportedProgram for inference.
++
++        ```python
++        # Export the model as a PyTorch ExportedProgram artifact
++        model.export("path/to/model.pt2", format="torch")
++
++        # Load the artifact in a different process/environment
++        import torch
++        loaded_program = torch.export.load("path/to/model.pt2")
++        predictions = loaded_program.module()(input_tensor)
++        ```
+         """
+         from keras.src.export import export_litert
+         from keras.src.export import export_onnx
+         from keras.src.export import export_openvino
+         from keras.src.export import export_saved_model
+-
+-        available_formats = ("tf_saved_model", "onnx", "openvino", "litert")
++        from keras.src.export import export_torch
++
++        available_formats = (
++            "tf_saved_model",
++            "onnx",
++            "openvino",
++            "litert",
++            "torch",
++        )
+         if format not in available_formats:
+             raise ValueError(
+                 f"Unrecognized format={format}. Supported formats are: "
+@@ -765,6 +790,10 @@ class Model(Trainer, base_trainer.Trainer, Layer):
+         if format == "litert" and backend.backend() != "tensorflow":
+             raise ImportError("LiteRT export requires TensorFlow backend.")
+ 
++        # Check if Torch export is available (requires PyTorch backend)
++        if format == "torch" and backend.backend() != "torch":
++            raise ValueError("Torch export requires PyTorch backend.")
++
+         if format == "tf_saved_model":
+             export_saved_model(
+                 self,
+@@ -796,6 +825,14 @@ class Model(Trainer, base_trainer.Trainer, Layer):
+                 input_signature=input_signature,
+                 **kwargs,
+             )
++        elif format == "torch":
++            export_torch(
++                self,
++                filepath,
++                verbose=verbose,
++                input_signature=input_signature,
++                **kwargs,
++            )
+ 
+     @classmethod
+     def from_config(cls, config, custom_objects=None):
+diff --git a/keras/src/ops/numpy.py b/keras/src/ops/numpy.py
+index e9b94f4f7..4cac25695 100644
+--- a/keras/src/ops/numpy.py
++++ b/keras/src/ops/numpy.py
+@@ -1341,6 +1341,14 @@ def average(x, axis=None, weights=None):
+     return backend.numpy.average(x, axis=axis, weights=weights)
+ 
+ 
++class Bartlett(Operation):
++    def call(self, x):
++        return backend.numpy.bartlett(x)
++
++    def compute_output_spec(self, x):
++        return KerasTensor(x.shape, dtype=backend.floatx())
++
++
+ @keras_export(["keras.ops.bartlett", "keras.ops.numpy.bartlett"])
+ def bartlett(x):
+     """Bartlett window function.
+@@ -1358,13 +1366,18 @@ def bartlett(x):
+     array([0. , 0.5, 1. , 0.5, 0. ], dtype=float32)
+     """
+     if any_symbolic_tensors((x,)):
+-        raise TypeError(
+-            f"Bartlett operation does not support symbolic tensors. "
+-            f"Received input x = {x} of type {type(x)}"
+-        )
++        return Bartlett().symbolic_call(x)
+     return backend.numpy.bartlett(x)
+ 
+ 
++class Hamming(Operation):
++    def call(self, x):
++        return backend.numpy.hamming(x)
++
++    def compute_output_spec(self, x):
++        return KerasTensor(x.shape, dtype=backend.floatx())
++
++
+ @keras_export(["keras.ops.hamming", "keras.ops.numpy.hamming"])
+ def hamming(x):
+     """Hamming window function.
+@@ -1384,13 +1397,18 @@ def hamming(x):
+     array([0.08, 0.54, 1.  , 0.54, 0.08], dtype=float32)
+     """
+     if any_symbolic_tensors((x,)):
+-        raise TypeError(
+-            f"Hamming operation does not support symbolic tensors. "
+-            f"Received input x = {x} of type {type(x)}"
+-        )
++        return Hamming().symbolic_call(x)
+     return backend.numpy.hamming(x)
+ 
+ 
++class Hanning(Operation):
++    def call(self, x):
++        return backend.numpy.hanning(x)
++
++    def compute_output_spec(self, x):
++        return KerasTensor(x.shape, dtype=backend.floatx())
++
++
+ @keras_export(["keras.ops.hanning", "keras.ops.numpy.hanning"])
+ def hanning(x):
+     """Hanning window function.
+@@ -1410,10 +1428,7 @@ def hanning(x):
+     array([0. , 0.5, 1. , 0.5, 0. ], dtype=float32)
+     """
+     if any_symbolic_tensors((x,)):
+-        raise TypeError(
+-            f"Hanning operation does not support symbolic tensors. "
+-            f"Received input x = {x} of type {type(x)}"
+-        )
++        return Hanning().symbolic_call(x)
+     return backend.numpy.hanning(x)
+ 
+ 
+@@ -1455,6 +1470,18 @@ def heaviside(x1, x2):
+     return backend.numpy.heaviside(x1, x2)
+ 
+ 
++class Kaiser(Operation):
++    def __init__(self, beta, *, name=None):
++        super().__init__(name=name)
++        self.beta = beta
++
++    def call(self, x):
++        return backend.numpy.kaiser(x, self.beta)
++
++    def compute_output_spec(self, x):
++        return KerasTensor(x.shape, dtype=backend.floatx())
++
++
+ @keras_export(["keras.ops.kaiser", "keras.ops.numpy.kaiser"])
+ def kaiser(x, beta):
+     """Kaiser window function.
+@@ -1477,10 +1504,7 @@ def kaiser(x, beta):
+        7.7268669e-06], dtype=float32)
+     """
+     if any_symbolic_tensors((x,)):
+-        raise TypeError(
+-            f"Kaiser operation does not support symbolic tensors. "
+-            f"Received input x = {x} of type {type(x)}"
+-        )
++        return Kaiser(beta).symbolic_call(x)
+     return backend.numpy.kaiser(x, beta)
+ 
+ 
+diff --git a/keras/src/ops/numpy_test.py b/keras/src/ops/numpy_test.py
+index 179c1dcf1..b27340972 100644
+--- a/keras/src/ops/numpy_test.py
++++ b/keras/src/ops/numpy_test.py
+@@ -5113,13 +5113,7 @@ class NumpyOneInputOpsCorrectnessTest(testing.TestCase):
+         x = np.random.randint(1, 100 + 1)
+         self.assertAllClose(knp.bartlett(x), np.bartlett(x))
+ 
+-    def test_bartlett_length_1(self):
+-        x = 1
+-        x_tensor = keras.ops.convert_to_tensor(x)
+-        expected = np.bartlett(x)
+-        out = knp.bartlett(x_tensor)
+-        self.assertEqual(out.shape[0], x)
+-        self.assertAllClose(out, expected)
++        self.assertAllClose(knp.Bartlett()(x), np.bartlett(x))
+ 
+     def test_blackman(self):
+         x = np.random.randint(1, 100 + 1)
+@@ -5137,39 +5131,20 @@ class NumpyOneInputOpsCorrectnessTest(testing.TestCase):
+         x = np.random.randint(1, 100 + 1)
+         self.assertAllClose(knp.hamming(x), np.hamming(x))
+ 
+-    def test_hamming_length_1(self):
+-        x = 1
+-        x_tensor = keras.ops.convert_to_tensor(x)
+-        expected = np.hamming(x)
+-        out = knp.hamming(x_tensor)
+-        self.assertEqual(out.shape[0], x)
+-        self.assertAllClose(out, expected)
++        self.assertAllClose(knp.Hamming()(x), np.hamming(x))
+ 
+     def test_hanning(self):
+         x = np.random.randint(1, 100 + 1)
+         self.assertAllClose(knp.hanning(x), np.hanning(x))
+ 
+-    def test_hanning_length_1(self):
+-        x = 1
+-        x_tensor = keras.ops.convert_to_tensor(x)
+-        expected = np.hanning(x)
+-        out = knp.hanning(x_tensor)
+-        self.assertEqual(out.shape[0], x)
+-        self.assertAllClose(out, expected)
++        self.assertAllClose(knp.Hanning()(x), np.hanning(x))
+ 
+     def test_kaiser(self):
+         x = np.random.randint(1, 100 + 1)
+         beta = float(np.random.randint(10, 20 + 1))
+         self.assertAllClose(knp.kaiser(x, beta), np.kaiser(x, beta))
+ 
+-    def test_kaiser_length_1(self):
+-        x = 1
+-        x_tensor = keras.ops.convert_to_tensor(x)
+-        beta = float(np.random.randint(10, 20 + 1))
+-        expected = np.kaiser(x, beta)
+-        out = knp.kaiser(x_tensor, beta)
+-        self.assertEqual(out.shape[0], x)
+-        self.assertAllClose(out, expected)
++        self.assertAllClose(knp.Kaiser(beta)(x), np.kaiser(x, beta))
+ 
+     @parameterized.named_parameters(
+         named_product(sparse_input=(False, True), sparse_arg=(False, True))
+@@ -8007,6 +7982,10 @@ class NumpyDtypeTest(testing.TestCase):
+         self.assertEqual(
+             standardize_dtype(knp.bartlett(x).dtype), expected_dtype
+         )
++        self.assertEqual(
++            standardize_dtype(knp.Bartlett().symbolic_call(x).dtype),
++            expected_dtype,
++        )
+ 
+     @parameterized.named_parameters(named_product(dtype=ALL_DTYPES))
+     def test_blackman(self, dtype):
+@@ -8025,6 +8004,10 @@ class NumpyDtypeTest(testing.TestCase):
+         self.assertEqual(
+             standardize_dtype(knp.hamming(x).dtype), expected_dtype
+         )
++        self.assertEqual(
++            standardize_dtype(knp.Hamming().symbolic_call(x).dtype),
++            expected_dtype,
++        )
+ 
+     @parameterized.named_parameters(named_product(dtype=ALL_DTYPES))
+     def test_hanning(self, dtype):
+@@ -8034,6 +8017,10 @@ class NumpyDtypeTest(testing.TestCase):
+         self.assertEqual(
+             standardize_dtype(knp.hanning(x).dtype), expected_dtype
+         )
++        self.assertEqual(
++            standardize_dtype(knp.Hanning().symbolic_call(x).dtype),
++            expected_dtype,
++        )
+ 
+     @parameterized.named_parameters(named_product(dtype=ALL_DTYPES))
+     def test_kaiser(self, dtype):
+@@ -8044,6 +8031,10 @@ class NumpyDtypeTest(testing.TestCase):
+         self.assertEqual(
+             standardize_dtype(knp.kaiser(x, beta).dtype), expected_dtype
+         )
++        self.assertEqual(
++            standardize_dtype(knp.Kaiser(beta).symbolic_call(x).dtype),
++            expected_dtype,
++        )
+ 
+     @parameterized.named_parameters(named_product(dtype=INT_DTYPES))
+     def test_bincount(self, dtype):

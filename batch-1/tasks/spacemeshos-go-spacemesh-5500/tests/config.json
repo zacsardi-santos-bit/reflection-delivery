@@ -1,0 +1,26 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./p2p/dhtdiscovery ./p2p/server -count=1",
+  "test_files": [
+    "fetch/fetch_test.go",
+    "node/node_test.go",
+    "p2p/dhtdiscovery/discovery_test.go",
+    "p2p/server/deadline_adjuster_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/spacemeshos/go-spacemesh/p2p/server::TestDeadlineAdjuster",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::TestServer/ReceiveMessage",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::TestServer/ReceiveError",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::TestServer/DialError",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::TestServer/NotConnected",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::TestServer/limit_overflow",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::TestServer",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::TestQueued",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::FuzzResponseConsistency",
+    "github.com/spacemeshos/go-spacemesh/p2p/server::FuzzResponseSafety",
+    "github.com/spacemeshos/go-spacemesh/p2p/dhtdiscovery::TestSanity"
+  ],
+  "PASS_TO_PASS": []
+}

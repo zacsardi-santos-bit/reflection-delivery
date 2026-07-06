@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/pandas/tests/indexing/test_loc.py::TestLocSetitemWithExpansion::test_loc_setitem_with_expansion_str_list_partial /workspace/repo/pandas/tests/indexing/test_loc.py::TestLocSetitemWithExpansion::test_loc_setitem_with_expansion_bool_list_partial -v",
+  "test_files": [
+    "pandas/tests/indexing/test_loc.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "pandas.tests.indexing.test_loc.TestLocSetitemWithExpansion::test_loc_setitem_with_expansion_str_list_partial",
+    "pandas.tests.indexing.test_loc.TestLocSetitemWithExpansion::test_loc_setitem_with_expansion_bool_list_partial"
+  ],
+  "PASS_TO_PASS": []
+}

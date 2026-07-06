@@ -1,0 +1,23 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl hudi-client/hudi-client-common -am test -Dtest=\"TestEightToSevenDowngradeHandler,TestSevenToEightUpgradeHandler\" -DfailIfNoTests=false",
+  "test_files": [
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/table/upgrade/TestEightToSevenDowngradeHandler.java",
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/table/upgrade/TestSevenToEightUpgradeHandler.java",
+    "hudi-client/hudi-java-client/src/test/java/org/apache/hudi/client/TestJavaHoodieBackedMetadata.java",
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/client/functional/TestHoodieBackedMetadata.java",
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/io/TestHoodieTimelineArchiver.java",
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/table/upgrade/TestUpgradeDowngrade.java",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/TestMultipleTableVersionWriting.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/spark/sql/execution/benchmark/LSMTimelineReadBenchmark.scala"
+  ],
+  "num_test_files": 8,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jar:::test_1",
+    "jar:::test_2",
+    "jar:::test_3",
+    "jar:::test_4"
+  ],
+  "PASS_TO_PASS": []
+}

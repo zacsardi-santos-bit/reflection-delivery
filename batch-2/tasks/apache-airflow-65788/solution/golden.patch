@@ -1,0 +1,1035 @@
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/api/__init__.py b/providers/openlineage/src/airflow/providers/openlineage/api/__init__.py
+new file mode 100644
+index 0000000000..e722481cce
+--- /dev/null
++++ b/providers/openlineage/src/airflow/providers/openlineage/api/__init__.py
+@@ -0,0 +1,39 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++"""
++Public API module - stable interface.
++
++This module is part of the **public interface** of the `airflow.providers.openlineage` provider.
++
++Functions, classes, and objects defined here are **intended for external use**, especially for dag authors
++and other providers that want to emit custom OpenLineage events tied to the currently running Airflow task.
++
++External code should depend **only on modules within** `airflow.providers.openlineage.api.*`.
++"""
++
++from __future__ import annotations
++
++from airflow.providers.openlineage.api.core import emit, is_openlineage_active
++from airflow.providers.openlineage.api.datasets import emit_dataset_lineage
++from airflow.providers.openlineage.api.sql import emit_query_lineage
++
++__all__ = [
++    "emit",
++    "emit_dataset_lineage",
++    "emit_query_lineage",
++    "is_openlineage_active",
++]
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/api/core.py b/providers/openlineage/src/airflow/providers/openlineage/api/core.py
+new file mode 100644
+index 0000000000..d0e4928e27
+--- /dev/null
++++ b/providers/openlineage/src/airflow/providers/openlineage/api/core.py
+@@ -0,0 +1,57 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++"""Core OpenLineage primitives: runtime-state probe and raw-event emission."""
++
++from __future__ import annotations
++
++import logging
++from typing import TYPE_CHECKING
++
++from airflow.providers.openlineage import conf
++from airflow.providers.openlineage.plugins.listener import get_openlineage_listener
++
++if TYPE_CHECKING:
++    from openlineage.client.event_v2 import RunEvent
++
++log = logging.getLogger(__name__)
++
++__all__ = ["emit", "is_openlineage_active"]
++
++
++def is_openlineage_active() -> bool:
++    """
++    Return ``True`` when OpenLineage is enabled and its listener is available.
++
++    Useful to short-circuit work that only makes sense when OpenLineage is going to
++    actually emit events (for example, fetching extra metadata from a warehouse solely
++    to attach it to lineage facets).
++    """
++    if conf.is_disabled():
++        log.debug("OpenLineage is disabled.")
++        return False
++    if get_openlineage_listener() is None:
++        log.debug("OpenLineage listener is not available.")
++        return False
++    return True
++
++
++def emit(event: RunEvent) -> None:
++    """Emit a pre-built OpenLineage event through the provider's listener."""
++    if not is_openlineage_active():
++        log.info("OpenLineage is not active - emit will have no effect.")
++        return
++    get_openlineage_listener().adapter.emit(event)
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/api/datasets.py b/providers/openlineage/src/airflow/providers/openlineage/api/datasets.py
+new file mode 100644
+index 0000000000..81b119f40c
+--- /dev/null
++++ b/providers/openlineage/src/airflow/providers/openlineage/api/datasets.py
+@@ -0,0 +1,173 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++"""Public helpers for emitting OpenLineage events carrying dataset lineage."""
++
++from __future__ import annotations
++
++import logging
++from datetime import datetime, timezone
++from typing import TYPE_CHECKING
++
++from openlineage.client.event_v2 import Dataset, Job, Run, RunEvent, RunState
++
++from airflow.providers.openlineage.api.core import emit, is_openlineage_active
++from airflow.providers.openlineage.plugins.adapter import _PRODUCER, OpenLineageAdapter
++from airflow.providers.openlineage.plugins.macros import (
++    _get_dag_run_clear_number,
++    _get_dag_run_conf,
++    _get_logical_date,
++    lineage_job_name,
++    lineage_job_namespace,
++    lineage_run_id,
++)
++from airflow.providers.openlineage.utils.utils import (
++    build_task_event_job_facets,
++    build_task_event_run_facets,
++    get_dag_run_dag_and_task_from_ti,
++    get_task_instance_from_context,
++)
++from airflow.utils.state import TaskInstanceState
++
++if TYPE_CHECKING:
++    from openlineage.client.event_v2 import InputDataset, OutputDataset
++    from openlineage.client.facet_v2 import JobFacet, RunFacet
++
++    from airflow.models.taskinstance import TaskInstance
++    from airflow.sdk.execution_time.task_runner import RuntimeTaskInstance
++
++log = logging.getLogger(__name__)
++
++__all__ = ["emit_dataset_lineage"]
++
++
++def emit_dataset_lineage(
++    *,
++    inputs: list[InputDataset] | None = None,
++    outputs: list[OutputDataset] | None = None,
++    task_instance: RuntimeTaskInstance | TaskInstance | None = None,
++    additional_run_facets: dict[str, RunFacet] | None = None,
++    additional_job_facets: dict[str, JobFacet] | None = None,
++    raise_on_error: bool = False,
++) -> None:
++    """
++    Emit an OpenLineage RUNNING event attributing datasets to the current task run.
++
++    This helper lets DAG authors supplement automatic extractor-based lineage with their own datasets.
++    It constructs and emits a RUNNING ``RunEvent`` whose run/job identifiers match the currently
++    executing Airflow task, attaches the same facets the provider adds to a task's START/COMPLETE events.
++
++    At least one of ``inputs`` or ``outputs`` must be non-empty.
++
++    Helpful References:
++
++    - Dataset naming convention: https://openlineage.io/docs/spec/naming
++    - Dataset naming helpers: https://openlineage.io/docs/client/python/best-practices#dataset-naming-helpers
++    - Available facets: https://openlineage.io/docs/spec/facets
++
++    :param inputs: Input datasets consumed by the task.
++    :param outputs: Output datasets produced by the task.
++    :param task_instance: The Airflow task instance to attribute lineage to. Defaults to the currently
++        executing task instance obtained from the execution context.
++    :param additional_run_facets: Extra run facets to attach.
++    :param additional_job_facets: Extra job facets to attach.
++    :param raise_on_error: When ``False`` (default), any exception raised while building or emitting
++        the event is logged at WARNING level and the function returns silently — so a broken lineage
++        helper never breaks a user's task. Set to ``True`` to opt into normal exception propagation.
++
++    :raises ValueError: When ``raise_on_error=True``, if both ``inputs`` and ``outputs`` are empty or
++        ``None``.
++    :raises TypeError: When ``raise_on_error=True``, if any item in ``inputs`` or ``outputs`` is not
++        an OpenLineage ``Dataset``.
++    :raises RuntimeError: When ``raise_on_error=True``, if ``task_instance`` is not provided and
++        cannot be resolved from the current execution context.
++
++    Example:
++
++    .. code-block:: python
++
++        from openlineage.client.event_v2 import Dataset
++        from airflow.providers.openlineage.api import emit_dataset_lineage
++
++
++        @task
++        def my_task():
++            emit_dataset_lineage(
++                inputs=[Dataset(namespace="s3://bucket", name="raw/2024/01/01/data.csv")],
++                outputs=[Dataset(namespace="snowflake://account", name="analytics.public.users")],
++            )
++    """
++    if not is_openlineage_active():
++        log.info("OpenLineage is not active - emit_dataset_lineage will have no effect.")
++        return
++
++    try:
++        if not inputs and not outputs:
++            raise ValueError("At least one of `inputs` or `outputs` must be provided.")
++
++        inputs = inputs or []
++        outputs = outputs or []
++        if not all(isinstance(d, Dataset) for d in (*inputs, *outputs)):
++            raise TypeError("`inputs` and `outputs` must contain only OpenLineage Dataset objects.")
++
++        if task_instance is None:
++            log.debug("TaskInstance not provided, retrieving it from context.")
++            task_instance = get_task_instance_from_context()
++
++        dag_run, dag, task = get_dag_run_dag_and_task_from_ti(task_instance)
++        task_uuid = lineage_run_id(task_instance)
++
++        run_facets = build_task_event_run_facets(
++            task_instance=task_instance,
++            dag_run=dag_run,
++            dag=dag,
++            task=task,
++            task_uuid=task_uuid,
++            ti_state=TaskInstanceState.RUNNING,
++            parent_run_id=OpenLineageAdapter.build_dag_run_id(
++                dag_id=dag.dag_id,
++                logical_date=_get_logical_date(task_instance),
++                clear_number=_get_dag_run_clear_number(task_instance),
++            ),
++            parent_job_name=dag.dag_id,
++            dr_conf=_get_dag_run_conf(task_instance),
++            additional_run_facets=additional_run_facets,
++        )
++        job_facets = build_task_event_job_facets(
++            task=task, dag=dag, additional_job_facets=additional_job_facets
++        )
++
++        event = RunEvent(
++            eventType=RunState.RUNNING,
++            eventTime=datetime.now(tz=timezone.utc).isoformat(),
++            run=Run(runId=task_uuid, facets=run_facets),
++            job=Job(
++                namespace=lineage_job_namespace(),
++                name=lineage_job_name(task_instance),
++                facets=job_facets,
++            ),
++            inputs=inputs,
++            outputs=outputs,
++            producer=_PRODUCER,
++        )
++
++        log.info("emit_dataset_lineage will emit a RUNNING OpenLineage event.")
++        emit(event)
++    except Exception as err:
++        if raise_on_error:
++            raise
++        log.warning("emit_dataset_lineage raised an error `%s`", err)
++        log.debug("Exception details:", exc_info=True)
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/api/sql.py b/providers/openlineage/src/airflow/providers/openlineage/api/sql.py
+new file mode 100644
+index 0000000000..ea009f9201
+--- /dev/null
++++ b/providers/openlineage/src/airflow/providers/openlineage/api/sql.py
+@@ -0,0 +1,183 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++"""Public helpers for emitting OpenLineage events describing SQL query executions."""
++
++from __future__ import annotations
++
++import logging
++from typing import TYPE_CHECKING
++
++from openlineage.client.facet_v2 import error_message_run, external_query_run, sql_job
++
++from airflow.providers.openlineage.api.core import emit, is_openlineage_active
++from airflow.providers.openlineage.plugins.adapter import _PRODUCER
++from airflow.providers.openlineage.plugins.macros import lineage_job_name
++from airflow.providers.openlineage.utils.sql_hook_lineage import (
++    _create_ol_event_pair,
++    _parse_query_into_datasets,
++)
++from airflow.providers.openlineage.utils.utils import (
++    get_task_instance_from_context,
++    next_query_counter_from_context,
++)
++
++if TYPE_CHECKING:
++    from datetime import datetime
++
++    from openlineage.client.event_v2 import Dataset
++    from openlineage.client.facet_v2 import JobFacet, RunFacet
++
++    from airflow.models.taskinstance import TaskInstance
++    from airflow.sdk.execution_time.task_runner import RuntimeTaskInstance
++
++log = logging.getLogger(__name__)
++
++__all__ = ["emit_query_lineage"]
++
++
++def emit_query_lineage(
++    *,
++    query_id: str | None = None,
++    query_source_namespace: str | None = None,
++    query_text: str | None = None,
++    inputs: list[Dataset] | None = None,
++    outputs: list[Dataset] | None = None,
++    start_time: datetime | None = None,
++    end_time: datetime | None = None,
++    is_successful: bool = True,
++    error_message: str | None = None,
++    default_database: str | None = None,
++    default_schema: str | None = None,
++    job_name: str | None = None,
++    task_instance: TaskInstance | RuntimeTaskInstance | None = None,
++    additional_run_facets: dict[str, RunFacet] | None = None,
++    additional_job_facets: dict[str, JobFacet] | None = None,
++    raise_on_error: bool = False,
++) -> None:
++    """
++    Emit a START + COMPLETE/FAIL OpenLineage event pair describing a single SQL query execution.
++
++    The emitted events carry a ``parent`` run facet pointing at the currently executing Airflow task
++    run. Any OpenLineage root information present on the task instance is propagated to the
++    emitted events so the entire run hierarchy stays connected. This helper can be called multiple
++    times within a single task; each call produces a distinct query event pair identified by a
++    sequential job name suffix (``<dag_id>.<task_id>.query.<n>``).
++
++    :param query_id: Unique identifier of the query in the given ``query_source_namespace``. When both
++        ``query_id`` and ``query_source_namespace`` are provided, an ``externalQuery`` run facet is
++        attached to the emitted events.
++    :param query_source_namespace: OpenLineage namespace of the system that ran the query, e.g.
++        ``"snowflake://org-acct"``, ``"databricks://adb-<id>.azuredatabricks.net"``, ``"bigquery"``.
++    :param query_text: Raw SQL query text. When provided, it is attached via a ``sql`` JobFacet and
++        ``inputs``/``outputs`` explicitly supplied are enriched with datasets retrieved from query parsing.
++    :param inputs: Additional input datasets.
++    :param outputs: Additional output datasets.
++    :param start_time: Event time of the START event. Defaults to the current UTC time.
++    :param end_time: Event time of the COMPLETE/FAIL event. Defaults to the current UTC time.
++    :param is_successful: Whether the query completed successfully (COMPLETE) or failed (FAIL).
++    :param error_message: Optional error message attached as an ``errorMessage`` run facet.
++    :param default_database: Default database for resolving unqualified tables in ``query_text``.
++    :param default_schema: Default schema for resolving unqualified tables in ``query_text``.
++    :param job_name: Job name to use in both events. Defaults to <ti_job_name>.manual_query.<counter>.
++    :param task_instance: The Airflow task instance to attribute the query to. Defaults to the
++        currently executing task instance obtained from the execution context.
++    :param additional_run_facets: Extra run facets to merge into the emitted events.
++    :param additional_job_facets: Extra job facets to merge into the emitted events.
++    :param raise_on_error: When ``False`` (default), any exception raised while building or emitting
++        the events is logged at WARNING level and the function returns silently — so a broken lineage
++        helper never breaks a user's task. Set to ``True`` to opt into normal exception propagation.
++
++    :raises RuntimeError: When ``raise_on_error=True``, if ``task_instance`` is not provided and
++        cannot be resolved from the current execution context.
++
++    Example:
++
++    .. code-block:: python
++
++        from airflow.providers.openlineage.api import emit_query_lineage
++
++
++        @task
++        def my_task():
++            emit_query_lineage(
++                query_id="acde070d-8c4c-4f0d-9d8a-162843c10333",
++                query_source_namespace="databricks://adb-498971240325220.10.azuredatabricks.net",
++                query_text="SELECT * FROM analytics.public.users",
++            )
++    """
++    if not is_openlineage_active():
++        log.info("OpenLineage is not active - emit_query_lineage will have no effect.")
++        return
++
++    try:
++        if task_instance is None:
++            log.debug("TaskInstance not provided, retrieving it from context.")
++            task_instance = get_task_instance_from_context()
++
++        # Copy caller-supplied lists so we never mutate user inputs.
++        all_inputs = list(inputs) if inputs else []
++        all_outputs = list(outputs) if outputs else []
++        # Parse SQL into datasets and enrich inputs/outputs.
++        if query_text and query_source_namespace:
++            query_inputs, query_outputs = _parse_query_into_datasets(
++                query_text=query_text,
++                query_source_namespace=query_source_namespace,
++                default_database=default_database,
++                default_schema=default_schema,
++            )
++            all_inputs.extend(query_inputs)
++            all_outputs.extend(query_outputs)
++
++        # Run facets: user-provided first, internal facets overlaid so internals always win.
++        run_facets: dict[str, RunFacet] = {**(additional_run_facets or {})}
++        if query_id and query_source_namespace:
++            run_facets["externalQuery"] = external_query_run.ExternalQueryRunFacet(
++                externalQueryId=query_id, source=query_source_namespace, producer=_PRODUCER
++            )
++        if error_message:
++            run_facets["errorMessage"] = error_message_run.ErrorMessageRunFacet(
++                message=error_message, programmingLanguage="SQL", producer=_PRODUCER
++            )
++
++        # Job facets: user-provided first, internal facets overlaid so internals always win.
++        job_facets: dict[str, JobFacet] = {**(additional_job_facets or {})}
++        if query_text:
++            job_facets["sql"] = sql_job.SQLJobFacet(query=query_text, producer=_PRODUCER)
++
++        if job_name is None:
++            job_name = f"{lineage_job_name(task_instance)}.manual_query.{next_query_counter_from_context()}"
++
++        start_event, end_event = _create_ol_event_pair(
++            task_instance=task_instance,
++            job_name=job_name,
++            is_successful=is_successful,
++            inputs=all_inputs,
++            outputs=all_outputs,
++            run_facets=run_facets,
++            job_facets=job_facets,
++            start_event_time=start_time,
++            end_event_time=end_time,
++        )
++
++        log.info("emit_query_lineage will emit 2 OpenLineage events for job `%s`.", start_event.job.name)
++        emit(start_event)
++        emit(end_event)
++    except Exception as err:
++        if raise_on_error:
++            raise
++        log.warning("emit_query_lineage raised an error `%s`", err)
++        log.debug("Exception details:", exc_info=True)
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/plugins/adapter.py b/providers/openlineage/src/airflow/providers/openlineage/plugins/adapter.py
+index 076730e9bf..3030b60eb1 100644
+--- a/providers/openlineage/src/airflow/providers/openlineage/plugins/adapter.py
++++ b/providers/openlineage/src/airflow/providers/openlineage/plugins/adapter.py
+@@ -41,8 +41,9 @@ try:
+     from airflow.sdk.observability.stats import DualStatsManager
+ except ImportError:
+     DualStatsManager = None  # type: ignore[assignment,misc]  # Airflow < 3.2 compat
+-from airflow.providers.openlineage import __version__ as OPENLINEAGE_PROVIDER_VERSION, conf
++from airflow.providers.openlineage import conf
+ from airflow.providers.openlineage.utils.utils import (
++    _PRODUCER,
+     OpenLineageRedactor,
+     build_dag_run_ol_run_id,
+     build_task_instance_ol_run_id,
+@@ -68,7 +69,6 @@ else:
+         except ImportError:
+             from airflow.utils.log.secrets_masker import SecretsMasker, _secrets_masker
+ 
+-_PRODUCER = f"https://github.com/apache/airflow/tree/providers-openlineage/{OPENLINEAGE_PROVIDER_VERSION}"
+ 
+ set_producer(_PRODUCER)
+ 
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/plugins/listener.py b/providers/openlineage/src/airflow/providers/openlineage/plugins/listener.py
+index 69c9f779d3..40ceb075e1 100644
+--- a/providers/openlineage/src/airflow/providers/openlineage/plugins/listener.py
++++ b/providers/openlineage/src/airflow/providers/openlineage/plugins/listener.py
+@@ -42,6 +42,7 @@ from airflow.providers.openlineage.utils.utils import (
+     get_airflow_run_facet,
+     get_dag_documentation,
+     get_dag_parent_run_facet,
++    get_dag_run_dag_and_task_from_ti,
+     get_job_name,
+     get_task_documentation,
+     get_task_parent_run_facet,
+@@ -125,13 +126,9 @@ class OpenLineageListener:
+             task_instance: RuntimeTaskInstance,
+         ):
+             self.log.debug("OpenLineage listener got notification about task instance start")
+-            context = task_instance.get_template_context()
+-
+-            task = context["task"]
++            dagrun, dag, task = get_dag_run_dag_and_task_from_ti(task_instance)
+             if TYPE_CHECKING:
+                 assert task
+-            dagrun = context["dag_run"]
+-            dag = context["dag"]
+             start_date = task_instance.start_date
+             self._on_task_instance_running(task_instance, dag, dagrun, task, start_date)
+     else:
+@@ -155,7 +152,7 @@ class OpenLineageListener:
+                 return
+ 
+             self.log.debug("OpenLineage listener got notification about task instance start")
+-            task = task_instance.task
++            dagrun, dag, task = get_dag_run_dag_and_task_from_ti(task_instance)
+             if TYPE_CHECKING:
+                 assert task
+             start_date = task_instance.start_date if task_instance.start_date else timezone.utcnow()
+@@ -163,7 +160,7 @@ class OpenLineageListener:
+             if is_ti_rescheduled_already(task_instance):
+                 self.log.debug("Skipping this instance of rescheduled task - START event was emitted already")
+                 return
+-            self._on_task_instance_running(task_instance, task.dag, task_instance.dag_run, task, start_date)
++            self._on_task_instance_running(task_instance, dag, dagrun, task, start_date)
+ 
+     def _on_task_instance_running(
+         self, task_instance: RuntimeTaskInstance | TaskInstance, dag, dagrun, task, start_date: datetime
+@@ -287,12 +284,9 @@ class OpenLineageListener:
+                 )
+                 return
+ 
+-            context = task_instance.get_template_context()
+-            task = context["task"]
++            dagrun, dag, task = get_dag_run_dag_and_task_from_ti(task_instance)
+             if TYPE_CHECKING:
+                 assert task
+-            dagrun = context["dag_run"]
+-            dag = context["dag"]
+             self._on_task_instance_success(task_instance, dag, dagrun, task)
+ 
+     else:
+@@ -305,10 +299,10 @@ class OpenLineageListener:
+             session: Session,
+         ) -> None:
+             self.log.debug("OpenLineage listener got notification about task instance success")
+-            task = task_instance.task
++            dagrun, dag, task = get_dag_run_dag_and_task_from_ti(task_instance)
+             if TYPE_CHECKING:
+                 assert task
+-            self._on_task_instance_success(task_instance, task.dag, task_instance.dag_run, task)
++            self._on_task_instance_success(task_instance, dag, dagrun, task)
+ 
+     def _on_task_instance_success(self, task_instance: RuntimeTaskInstance, dag, dagrun, task):
+         end_date = timezone.utcnow()
+@@ -427,12 +421,9 @@ class OpenLineageListener:
+                 )
+                 return
+ 
+-            context = task_instance.get_template_context()
+-            task = context["task"]
++            dagrun, dag, task = get_dag_run_dag_and_task_from_ti(task_instance)
+             if TYPE_CHECKING:
+                 assert task
+-            dagrun = context["dag_run"]
+-            dag = context["dag"]
+             self._on_task_instance_failed(task_instance, dag, dagrun, task, error)
+     else:
+ 
+@@ -445,10 +436,10 @@ class OpenLineageListener:
+             session: Session,
+         ) -> None:
+             self.log.debug("OpenLineage listener got notification about task instance failure")
+-            task = task_instance.task
++            dagrun, dag, task = get_dag_run_dag_and_task_from_ti(task_instance)
+             if TYPE_CHECKING:
+                 assert task
+-            self._on_task_instance_failed(task_instance, task.dag, task_instance.dag_run, task, error)
++            self._on_task_instance_failed(task_instance, dag, dagrun, task, error)
+ 
+     def _on_task_instance_failed(
+         self,
+@@ -567,12 +558,9 @@ class OpenLineageListener:
+                 )
+                 return
+ 
+-            context = task_instance.get_template_context()
+-            task = context["task"]
++            dagrun, dag, task = get_dag_run_dag_and_task_from_ti(task_instance)
+             if TYPE_CHECKING:
+                 assert task
+-            dagrun = context["dag_run"]
+-            dag = context["dag"]
+             self._on_task_instance_skipped(task_instance, dag, dagrun, task)
+ 
+     def _on_task_instance_skipped(
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/utils/sql_hook_lineage.py b/providers/openlineage/src/airflow/providers/openlineage/utils/sql_hook_lineage.py
+index af4bb6c3b6..ce8331c9a5 100644
+--- a/providers/openlineage/src/airflow/providers/openlineage/utils/sql_hook_lineage.py
++++ b/providers/openlineage/src/airflow/providers/openlineage/utils/sql_hook_lineage.py
+@@ -14,20 +14,22 @@
+ # KIND, either express or implied.  See the License for the
+ # specific language governing permissions and limitations
+ # under the License.
+-"""Utilities for processing hook-level lineage into OpenLineage events."""
++"""Utilities for processing hook-level lineage and building per-query OpenLineage events."""
+ 
+ from __future__ import annotations
+ 
+-import datetime as dt
+ import logging
++from typing import TYPE_CHECKING
++from urllib.parse import urlparse
+ 
+-from openlineage.client.event_v2 import Job, Run, RunEvent, RunState
++from openlineage.client.event_v2 import Dataset, Job, Run, RunEvent, RunState
+ from openlineage.client.facet_v2 import external_query_run, job_type_job, sql_job
+ from openlineage.client.uuid import generate_new_uuid
+ 
+ from airflow.providers.common.compat.sdk import timezone
+ from airflow.providers.common.sql.hooks.lineage import SqlJobHookLineageExtra
+ from airflow.providers.openlineage.extractors.base import OperatorLineage
++from airflow.providers.openlineage.plugins.adapter import _PRODUCER
+ from airflow.providers.openlineage.plugins.listener import get_openlineage_listener
+ from airflow.providers.openlineage.plugins.macros import (
+     _get_logical_date,
+@@ -38,12 +40,60 @@ from airflow.providers.openlineage.plugins.macros import (
+     lineage_root_run_id,
+     lineage_run_id,
+ )
+-from airflow.providers.openlineage.sqlparser import SQLParser, get_openlineage_facets_with_sql
++from airflow.providers.openlineage.sqlparser import (
++    SQLParser,
++    from_table_meta,
++    get_openlineage_facets_with_sql,
++)
+ from airflow.providers.openlineage.utils.utils import _get_parent_run_facet
+ 
++if TYPE_CHECKING:
++    from datetime import datetime
++
+ log = logging.getLogger(__name__)
+ 
+ 
++def _dialect_from_namespace(query_source_namespace: str) -> str:
++    """Derive a SQL dialect hint from an OpenLineage namespace (e.g. ``snowflake://acct``)."""
++    supported_sql_dialects = frozenset(
++        {
++            "ansi",
++            "bigquery",
++            "databricks",
++            "generic",
++            "hive",
++            "mssql",
++            "mysql",
++            "postgres",
++            "postgresql",
++            "redshift",
++            "snowflake",
++            "sqlite",
++        }
++    )
++    scheme = urlparse(query_source_namespace).scheme or query_source_namespace
++    scheme = scheme.lower()
++    return scheme if scheme in supported_sql_dialects else "generic"
++
++
++def _parse_query_into_datasets(
++    query_text: str,
++    query_source_namespace: str,
++    *,
++    default_database: str | None = None,
++    default_schema: str | None = None,
++) -> tuple[list[Dataset], list[Dataset]]:
++    """Parse SQL text into OpenLineage input/output ``Dataset`` objects."""
++    dialect = _dialect_from_namespace(query_source_namespace)
++    parser = SQLParser(dialect=dialect, default_schema=default_schema)
++    result = parser.parse(parser.split_sql_string(query_text))
++    if not result:
++        return [], []
++    inputs = [from_table_meta(t, default_database, query_source_namespace, False) for t in result.in_tables]
++    outputs = [from_table_meta(t, default_database, query_source_namespace, False) for t in result.out_tables]
++    return inputs, outputs
++
++
+ def emit_lineage_from_sql_extras(task_instance, sql_extras: list, is_successful: bool = True) -> None:
+     """
+     Process ``sql_job`` extras and emit per-query OpenLineage events.
+@@ -59,14 +109,6 @@ def emit_lineage_from_sql_extras(task_instance, sql_extras: list, is_successful:
+ 
+     log.info("OpenLineage will process %s SQL hook lineage extra(s).", len(sql_extras))
+ 
+-    common_job_facets: dict = {
+-        "jobType": job_type_job.JobTypeJobFacet(
+-            jobType="QUERY",
+-            integration="AIRFLOW",
+-            processingType="BATCH",
+-        )
+-    }
+-
+     events: list[RunEvent] = []
+     query_count = 0
+ 
+@@ -124,7 +166,7 @@ def emit_lineage_from_sql_extras(task_instance, sql_extras: list, is_successful:
+                 inputs=query_lineage.inputs,
+                 outputs=query_lineage.outputs,
+                 run_facets=query_lineage.run_facets,
+-                job_facets={**common_job_facets, **query_lineage.job_facets},
++                job_facets=query_lineage.job_facets,
+             )
+         )
+ 
+@@ -185,7 +227,8 @@ def _create_ol_event_pair(
+     outputs: list | None = None,
+     run_facets: dict | None = None,
+     job_facets: dict | None = None,
+-    event_time: dt.datetime | None = None,
++    start_event_time: datetime | None = None,
++    end_event_time: datetime | None = None,
+ ) -> tuple[RunEvent, RunEvent]:
+     """
+     Create a START + COMPLETE/FAIL child event pair linked to a task instance.
+@@ -193,7 +236,7 @@ def _create_ol_event_pair(
+     Handles parent-run facet generation, run-ID creation and event timestamps
+     so callers only need to supply the query-specific facets and datasets.
+     """
+-    parent_facets = _get_parent_run_facet(
++    parent_facet = _get_parent_run_facet(
+         parent_run_id=lineage_run_id(task_instance),
+         parent_job_name=lineage_job_name(task_instance),
+         parent_job_namespace=lineage_job_namespace(),
+@@ -201,16 +244,24 @@ def _create_ol_event_pair(
+         root_parent_job_name=lineage_root_job_name(task_instance),
+         root_parent_job_namespace=lineage_root_job_namespace(task_instance),
+     )
++    job_type_facet: dict = {
++        "jobType": job_type_job.JobTypeJobFacet(
++            jobType="QUERY", integration="AIRFLOW", processingType="BATCH", producer=_PRODUCER
++        )
++    }
+ 
+     run = Run(
+         runId=str(generate_new_uuid(instant=_get_logical_date(task_instance))),
+-        facets={**parent_facets, **(run_facets or {})},
++        facets={**(run_facets or {}), **parent_facet},
++    )
++    job = Job(
++        namespace=lineage_job_namespace(), name=job_name, facets={**(job_facets or {}), **job_type_facet}
+     )
+-    job = Job(namespace=lineage_job_namespace(), name=job_name, facets=job_facets or {})
+-    event_time = event_time or timezone.utcnow()
++    now = timezone.utcnow()
++
+     start = RunEvent(
+         eventType=RunState.START,
+-        eventTime=event_time.isoformat(),
++        eventTime=(start_event_time or now).isoformat(),
+         run=run,
+         job=job,
+         inputs=inputs or [],
+@@ -218,7 +269,7 @@ def _create_ol_event_pair(
+     )
+     end = RunEvent(
+         eventType=RunState.COMPLETE if is_successful else RunState.FAIL,
+-        eventTime=event_time.isoformat(),
++        eventTime=(end_event_time or now).isoformat(),
+         run=run,
+         job=job,
+         inputs=inputs or [],
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/utils/utils.py b/providers/openlineage/src/airflow/providers/openlineage/utils/utils.py
+index 616f1ad4a0..de661f51f0 100644
+--- a/providers/openlineage/src/airflow/providers/openlineage/utils/utils.py
++++ b/providers/openlineage/src/airflow/providers/openlineage/utils/utils.py
+@@ -27,7 +27,15 @@ from importlib import metadata
+ from typing import TYPE_CHECKING, Any
+ 
+ import attrs
+-from openlineage.client.facet_v2 import job_dependencies_run, parent_run
++from openlineage.client.facet_v2 import (
++    documentation_job,
++    job_dependencies_run,
++    job_type_job,
++    nominal_time_run,
++    ownership_job,
++    parent_run,
++    tags_job,
++)
+ from openlineage.client.utils import RedactMixin
+ from openlineage.client.uuid import generate_static_uuid
+ from sqlalchemy.orm.exc import DetachedInstanceError
+@@ -82,7 +90,7 @@ if TYPE_CHECKING:
+     from typing import TypeAlias
+ 
+     from openlineage.client.event_v2 import Dataset as OpenLineageDataset
+-    from openlineage.client.facet_v2 import RunFacet, processing_engine_run
++    from openlineage.client.facet_v2 import JobFacet, RunFacet, processing_engine_run
+ 
+     from airflow.models.asset import AssetEvent
+     from airflow.sdk.execution_time.secrets_masker import (
+@@ -121,6 +129,7 @@ else:
+ log = logging.getLogger(__name__)
+ _NOMINAL_TIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
+ _MAX_DOC_BYTES = 64 * 1024  # 64 kilobytes
++_PRODUCER = f"https://github.com/apache/airflow/tree/providers-openlineage/{OPENLINEAGE_PROVIDER_VERSION}"
+ 
+ 
+ def try_import_from_string(string: str) -> Any:
+@@ -164,6 +173,185 @@ def get_job_name(task: TaskInstance | RuntimeTaskInstance) -> str:
+     return f"{task.dag_id}.{task.task_id}"
+ 
+ 
++def get_task_instance_from_context():
++    """Return the task instance from the currently executing Airflow task context."""
++    try:
++        from airflow.sdk import get_current_context
++    except (ImportError, AttributeError):
++        from airflow.operators.python import get_current_context  # type: ignore[no-redef]
++
++    task_instance = get_current_context().get("task_instance")
++    if task_instance is None:
++        raise RuntimeError(
++            "No Airflow task instance found in the current context. "
++            "Call this function from within a running Airflow task, "
++            "or pass `task_instance=` explicitly."
++        )
++    return task_instance
++
++
++def next_query_counter_from_context() -> str:
++    """
++    Return the next sequential per-task query counter, suitable for use as a job-name suffix.
++
++    The counter is stored under a private key in the Airflow execution context dict. Airflow
++    creates a fresh context per task and discards it when the task ends, so the counter resets
++    automatically per task and per retry — there is no module-level state to leak.
++
++    When no Airflow execution context is available (for example, the helper was called from a
++    script with an explicit ``task_instance=`` outside a running task), a random suffix
++    is returned instead and a warning is logged.
++    """
++    try:
++        from airflow.sdk import get_current_context
++    except (ImportError, AttributeError, ModuleNotFoundError):
++        from airflow.operators.python import get_current_context  # type: ignore[no-redef]
++
++    try:
++        context = get_current_context()
++
++        query_counter_context_key = "_openlineage_manual_query_counter"
++        # `Context` is a TypedDict, so mypy refuses non-literal keys and types `.get()` of an
++        # unknown key as `object`. At runtime `Context` is a regular `dict`, so
++        # both operations below are safe — the type-ignores silence pure type-checker noise.
++        counter = int(context.get(query_counter_context_key, 0)) + 1  # type: ignore[call-overload]
++        context[query_counter_context_key] = counter  # type: ignore[literal-required]
++        return str(counter)
++    except Exception as err:
++        from airflow.utils.strings import get_random_string
++
++        random_suffix = get_random_string()
++        log.info(
++            "OpenLineage encountered an error when retrieving query counter from context: `%s`. "
++            "Returning random suffix `%s`",
++            err,
++            random_suffix,
++        )
++
++        return random_suffix
++
++
++def get_dag_run_dag_and_task_from_ti(task_instance):
++    """
++    Return a ``(dag_run, dag, task)`` tuple for the given task instance.
++
++    On Airflow 3+, ``task_instance.get_template_context()`` exposes all three objects.
++    On Airflow 2, we fall back to the Ti attributes.
++    """
++    if AIRFLOW_V_3_0_PLUS:
++        context = task_instance.get_template_context()
++        return context["dag_run"], context["dag"], context["task"]
++    task = task_instance.task
++    return task_instance.dag_run, task.dag, task
++
++
++def build_task_event_run_facets(
++    *,
++    task_instance,
++    dag_run,
++    dag,
++    task,
++    task_uuid: str,
++    ti_state: TaskInstanceState,
++    parent_run_id: str,
++    parent_job_name: str | None = None,
++    dr_conf: dict | None = None,
++    additional_run_facets: dict[str, RunFacet] | None = None,
++) -> dict[str, RunFacet]:
++    """Build the task-event run-facet dict."""
++    if dr_conf is None:
++        dr_conf = getattr(dag_run, "conf", {}) or {}
++
++    nominal_start = getattr(dag_run, "data_interval_start", None)
++    nominal_end = getattr(dag_run, "data_interval_end", None)
++    if isinstance(nominal_start, datetime.datetime):
++        nominal_start = nominal_start.isoformat()
++    if isinstance(nominal_end, datetime.datetime):
++        nominal_end = nominal_end.isoformat()
++    nominal_time_facet: dict[str, RunFacet] = (
++        {
++            "nominalTime": nominal_time_run.NominalTimeRunFacet(
++                nominalStartTime=nominal_start, nominalEndTime=nominal_end, producer=_PRODUCER
++            )
++        }
++        if nominal_start
++        else {}
++    )
++
++    return {
++        **(additional_run_facets or {}),
++        **get_user_provided_run_facets(task_instance, ti_state),
++        **get_task_parent_run_facet(
++            parent_run_id=parent_run_id,
++            parent_job_name=parent_job_name or dag.dag_id,
++            dr_conf=dr_conf,
++        ),
++        **get_airflow_run_facet(
++            dag_run=dag_run, dag=dag, task_instance=task_instance, task=task, task_uuid=task_uuid
++        ),
++        **get_airflow_debug_facet(),
++        **get_processing_engine_facet(),
++        **nominal_time_facet,
++    }
++
++
++def build_task_event_job_facets(
++    *,
++    task,
++    dag,
++    additional_job_facets: dict[str, JobFacet] | None = None,
++) -> dict[str, JobFacet]:
++    """Build the task-event job-facet dict."""
++    doc, doc_type = get_task_documentation(task)
++    if not doc:
++        doc, doc_type = get_dag_documentation(dag)
++    documentation_facet: dict[str, JobFacet] = (
++        {
++            "documentation": documentation_job.DocumentationJobFacet(
++                description=doc, contentType=doc_type, producer=_PRODUCER
++            )
++        }
++        if doc
++        else {}
++    )
++
++    owner_source = task if getattr(task, "owner", "airflow") != "airflow" else dag
++    owners = [o.strip() for o in getattr(owner_source, "owner", "").split(",") if o.strip()]
++    ownership_facet: dict[str, JobFacet] = (
++        {
++            "ownership": ownership_job.OwnershipJobFacet(
++                owners=[ownership_job.Owner(name=o) for o in sorted(owners)], producer=_PRODUCER
++            )
++        }
++        if owners
++        else {}
++    )
++
++    dag_tags = getattr(dag, "tags", None) or []
++    tags_facet: dict[str, JobFacet] = (
++        {
++            "tags": tags_job.TagsJobFacet(
++                tags=[
++                    tags_job.TagsJobFacetFields(key=t, value=t, source="AIRFLOW") for t in sorted(dag_tags)
++                ],
++                producer=_PRODUCER,
++            )
++        }
++        if dag_tags
++        else {}
++    )
++
++    return {
++        **(additional_job_facets or {}),
++        "jobType": job_type_job.JobTypeJobFacet(
++            jobType="TASK", integration="AIRFLOW", processingType="BATCH", producer=_PRODUCER
++        ),
++        **documentation_facet,
++        **ownership_facet,
++        **tags_facet,
++    }
++
++
+ def _get_parent_run_facet(
+     parent_run_id: str,
+     parent_job_name: str,
+@@ -1849,8 +2037,7 @@ def _get_providers_manager_instance():
+     Return the ProvidersManager instance to use for OpenLineage converter lookup.
+ 
+     Picks the task-runtime-safe entry point on Airflow 3.2+ and falls back to the legacy
+-    ``airflow.providers_manager.ProvidersManager`` on 3.0 / 3.1 and 2.x. Returns ``None``
+-    if neither import is available (very old Airflow).
++    ``airflow.providers_manager.ProvidersManager``.
+ 
+     Kept as a module-level function so tests can patch this single seam with a plain
+     ``mock.patch(..., return_value=fake_pm)`` instead of juggling ``sys.modules`` or
+@@ -1861,14 +2048,10 @@ def _get_providers_manager_instance():
+         from airflow.sdk.plugins_manager import ProvidersManagerTaskRuntime
+ 
+         return ProvidersManagerTaskRuntime()
+-    except ImportError:
+-        pass
+-    try:
++    except (ImportError, ModuleNotFoundError, AttributeError):
+         from airflow.providers_manager import ProvidersManager
+ 
+         return ProvidersManager()
+-    except ImportError:
+-        return None
+ 
+ 
+ def translate_airflow_asset(asset: Asset, lineage_context) -> OpenLineageDataset | None:

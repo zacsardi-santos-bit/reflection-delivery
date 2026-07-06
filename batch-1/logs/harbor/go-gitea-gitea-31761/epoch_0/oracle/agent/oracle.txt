@@ -1,0 +1,13 @@
+patching file assets/go-licenses.json
+patching file custom/conf/app.example.ini
+patching file go.mod
+patching file go.sum
+Hunk #1 succeeded at 80 with fuzz 3.
+Hunk #2 succeeded at 539 (offset 142 lines).
+patching file models/actions/task.go
+patching file modules/actions/log.go
+patching file modules/packages/conda/metadata.go
+patching file modules/packages/debian/metadata.go
+patching file modules/setting/actions.go
+patching file modules/zstd/option.go
+patching file modules/zstd/zstd.go

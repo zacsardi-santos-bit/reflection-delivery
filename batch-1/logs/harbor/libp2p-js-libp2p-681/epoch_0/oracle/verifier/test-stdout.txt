@@ -1,0 +1,33 @@
+patching file test/connection-manager/index.node.js
+patching file test/peer-store/address-book.spec.js
+patching file test/record/envelope.spec.js
+patching file test/record/peer-record.spec.js
+patching file test/upgrading/upgrader.spec.js
+
+
+  Envelope
+    ✓ creates an envelope with a random key
+    ✓ can seal a record
+    ✓ can open and verify a sealed record
+
+  interface-record compliance
+    record
+      ✓ has domain and codec
+      ✓ is able to marshal
+      ✓ is able to compare two records
+
+  PeerRecord
+    ✓ creates a peer record with peerId
+    ✓ creates a peer record with provided data
+    ✓ marshals and unmarshals a peer record
+    ✓ equals returns false if the peer record has a different peerId (746ms)
+    ✓ equals returns false if the peer record has a different seqNumber
+    ✓ equals returns false if the peer record has a different multiaddrs
+
+  PeerRecord inside Envelope
+    ✓ creates an envelope with the PeerRecord and can unmarshal it
+
+
+  13 passing (830ms)
+
+reward=1 graded=13 found=13 failed=0 parsed=13 framework=mocha exit_code=0

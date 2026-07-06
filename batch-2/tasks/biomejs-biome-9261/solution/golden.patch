@@ -1,0 +1,242 @@
+diff --git a/.changeset/fix-css-comment-placement.md b/.changeset/fix-css-comment-placement.md
+new file mode 100644
+index 0000000000..d1cb94cc48
+--- /dev/null
++++ b/.changeset/fix-css-comment-placement.md
+@@ -0,0 +1,16 @@
++---
++"@biomejs/biome": patch
++---
++
++Fixed [#8409](https://github.com/biomejs/biome/issues/8409): CSS formatter now correctly places comments after the colon in property declarations.
++
++Previously, comments that appeared after the colon in CSS property values were incorrectly moved before the property name:
++
++```diff
++[lang]:lang(ja) {
++-  /* system-ui,*/ font-family:
+++  font-family: /* system-ui,*/
++    Hiragino Sans,
++    sans-serif;
++}
++```
+diff --git a/crates/biome_css_formatter/src/comments.rs b/crates/biome_css_formatter/src/comments.rs
+index cd9cfadf1c..3ef2aa58ea 100644
+--- a/crates/biome_css_formatter/src/comments.rs
++++ b/crates/biome_css_formatter/src/comments.rs
+@@ -1,7 +1,7 @@
+ use crate::prelude::*;
+ use biome_css_syntax::{
+-    AnyCssDeclarationName, AnyCssRoot, CssComplexSelector, CssFunction, CssIdentifier, CssLanguage,
+-    CssSyntaxKind, TextLen, TextSize,
++    AnyCssDeclarationName, AnyCssRoot, CssComplexSelector, CssFunction, CssGenericProperty,
++    CssIdentifier, CssLanguage, CssSyntaxKind, TextLen, TextSize,
+ };
+ use biome_diagnostics::category;
+ use biome_formatter::comments::{
+@@ -99,14 +99,17 @@ impl CommentStyle for CssCommentStyle {
+     ) -> CommentPlacement<Self::Language> {
+         match comment.text_position() {
+             CommentTextPosition::EndOfLine => handle_function_comment(comment)
++                .or_else(handle_generic_property_comment)
+                 .or_else(handle_declaration_name_comment)
+                 .or_else(handle_complex_selector_comment)
+                 .or_else(handle_global_suppression),
+             CommentTextPosition::OwnLine => handle_function_comment(comment)
++                .or_else(handle_generic_property_comment)
+                 .or_else(handle_declaration_name_comment)
+                 .or_else(handle_complex_selector_comment)
+                 .or_else(handle_global_suppression),
+             CommentTextPosition::SameLine => handle_function_comment(comment)
++                .or_else(handle_generic_property_comment)
+                 .or_else(handle_declaration_name_comment)
+                 .or_else(handle_complex_selector_comment)
+                 .or_else(handle_global_suppression),
+@@ -114,6 +117,52 @@ impl CommentStyle for CssCommentStyle {
+     }
+ }
+ 
++fn handle_generic_property_comment(
++    comment: DecoratedComment<CssLanguage>,
++) -> CommentPlacement<CssLanguage> {
++    // Check if the comment is inside a CSS generic property (e.g., color: value)
++    let Some(generic_property) = comment
++        .enclosing_node()
++        .ancestors()
++        .find_map(CssGenericProperty::cast)
++    else {
++        return CommentPlacement::Default(comment);
++    };
++
++    let Ok(name) = generic_property.name() else {
++        return CommentPlacement::Default(comment);
++    };
++
++    let comment_piece = comment.piece();
++
++    // Check if the comment is in the name's trailing trivia (before colon)
++    // Example: `color /* comment */: value`
++    if let Some(name_token) = name.syntax().last_token() {
++        for piece in name_token.trailing_trivia().pieces() {
++            if piece.is_comments() && piece.text() == comment_piece.text() {
++                // Our placement is slightly better than Prettier because it adds some spacing
++                return CommentPlacement::trailing(name.into_syntax(), comment);
++            }
++        }
++    }
++
++    if let (Some(preceding), Some(following)) = (comment.preceding_node(), comment.following_node())
++    {
++        // If preceding is the property name and following is in the value list
++        if preceding == name.syntax()
++            && following
++                .parent()
++                .is_some_and(|p| p.kind() == CssSyntaxKind::CSS_GENERIC_COMPONENT_VALUE_LIST)
++        {
++            // Place comment as dangling on the property so it can be formatted inline
++            // between the colon and values
++            return CommentPlacement::trailing(generic_property.into_syntax(), comment);
++        }
++    }
++
++    CommentPlacement::Default(comment)
++}
++
+ fn handle_declaration_name_comment(
+     comment: DecoratedComment<CssLanguage>,
+ ) -> CommentPlacement<CssLanguage> {
+diff --git a/crates/biome_css_formatter/src/css/properties/generic_property.rs b/crates/biome_css_formatter/src/css/properties/generic_property.rs
+index 480885566e..15816039e4 100644
+--- a/crates/biome_css_formatter/src/css/properties/generic_property.rs
++++ b/crates/biome_css_formatter/src/css/properties/generic_property.rs
+@@ -1,6 +1,7 @@
++use crate::comments::FormatCssLeadingComment;
+ use crate::prelude::*;
+ use biome_css_syntax::{CssGenericProperty, CssGenericPropertyFields};
+-use biome_formatter::write;
++use biome_formatter::{CstFormatContext, FormatRefWithRule, format_args, write};
+ 
+ #[derive(Debug, Clone, Default)]
+ pub(crate) struct FormatCssGenericProperty;
+@@ -12,9 +13,34 @@ impl FormatNodeRule<CssGenericProperty> for FormatCssGenericProperty {
+             value,
+         } = node.as_fields();
+ 
+-        write!(
+-            f,
+-            [name.format(), colon_token.format(), space(), value.format()]
+-        )
++        write!(f, [name.format(), colon_token.format()])?;
++
++        // Format trailing comments inline after the colon
++        let comments = f.context().comments().clone();
++        let trailing_comments = comments.trailing_comments(node.syntax());
++
++        if !trailing_comments.is_empty() {
++            for comment in trailing_comments {
++                write!(f, [space()])?;
++                let format_comment = FormatRefWithRule::new(comment, FormatCssLeadingComment);
++                write!(f, [format_comment])?;
++                comment.mark_formatted();
++            }
++            write!(
++                f,
++                [indent(&format_args![hard_line_break(), &value.format()])]
++            )
++        } else {
++            write!(f, [space(), value.format()])
++        }
++    }
++
++    fn fmt_trailing_comments(
++        &self,
++        _node: &CssGenericProperty,
++        _f: &mut CssFormatter,
++    ) -> FormatResult<()> {
++        // Trailing comments are formatted inline in fmt_fields
++        Ok(())
+     }
+ }
+diff --git a/crates/biome_css_formatter/src/utils/component_value_list.rs b/crates/biome_css_formatter/src/utils/component_value_list.rs
+index 9051414d7a..3f77df6e7c 100644
+--- a/crates/biome_css_formatter/src/utils/component_value_list.rs
++++ b/crates/biome_css_formatter/src/utils/component_value_list.rs
+@@ -227,8 +227,12 @@ where
+                         // This is also why `at_group_boundary` is initialized to `false` even when
+                         // the layout is OneGroupPerLine: because the line break would be ignored
+                         // if `at_group_boundary` were set to `true` initially.
+-                        at_group_boundary =
+-                            is_comma && matches!(layout, ValueListLayout::OneGroupPerLine);
++                        at_group_boundary = is_comma
++                            && matches!(
++                                layout,
++                                ValueListLayout::OneGroupPerLine
++                                    | ValueListLayout::OneGroupPerLineWithDanglingComments
++                            );
+ 
+                         Ok(())
+                     }),
+@@ -272,6 +276,9 @@ where
+ 
+             write!(f, [group(&indent(&content))])
+         }
++        ValueListLayout::OneGroupPerLineWithDanglingComments => {
++            write!(f, [group(&values)])
++        }
+     }
+ }
+ 
+@@ -354,6 +361,15 @@ pub(crate) enum ValueListLayout {
+     /// These conditions are inherited from Prettier,
+     /// see https://github.com/biomejs/biome/pull/5334 for a detailed explanation
+     OneGroupPerLine,
++
++    /// Similar to OneGroupPerLine, but formats dangling comments on the property inline
++    /// before the line break. Used when comments appear between the colon and values.
++    /// ```css
++    /// font-family: /* comment */
++    ///     Hiragino Sans,
++    ///     sans-serif;
++    /// ```
++    OneGroupPerLineWithDanglingComments,
+ }
+ 
+ fn should_preceded_by_softline<N, I>(node: &N) -> bool
+@@ -371,7 +387,7 @@ where
+ /// printed compactly.
+ pub(crate) fn get_value_list_layout<N, I>(
+     list: &N,
+-    _: &CssComments,
++    comments: &CssComments,
+     f: &CssFormatter,
+ ) -> ValueListLayout
+ where
+@@ -402,13 +418,27 @@ where
+         .iter()
+         .any(|x| CssGenericDelimiter::cast_ref(x.syntax()).is_some());
+ 
++    // Check if the property name has trailing comments (comments between name and values)
++    // If so, we don't need to change the layout since the comments will be formatted
++    // inline with the property name, outside the value indent block
++
++    // Check if the parent property has trailing comments (comments between colon and values)
++    let parent_property = list.parent::<CssGenericProperty>();
++    let has_trailing_comments = parent_property
++        .as_ref()
++        .is_some_and(|prop| !comments.trailing_comments(prop.syntax()).is_empty());
++
+     // TODO: Check for comments, check for the types of elements in the list, etc.
+     if is_grid_property {
+         ValueListLayout::PreserveInline
+     } else if list.len() == 1 {
+         ValueListLayout::SingleValue
+     } else if use_one_group_per_line(css_property.as_deref(), list) {
+-        ValueListLayout::OneGroupPerLine
++        if has_trailing_comments {
++            ValueListLayout::OneGroupPerLineWithDanglingComments
++        } else {
++            ValueListLayout::OneGroupPerLine
++        }
+     } else if is_comma_separated
+         && value_count > 12
+         && text_size >= TextSize::from(f.options().line_width().value() as u32)

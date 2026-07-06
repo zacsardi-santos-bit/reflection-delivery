@@ -1,0 +1,23 @@
+patching file docs/docs/guides/ecosystem/imgs/openai-model.png
+Not deleting file docs/docs/guides/ecosystem/imgs/openai-model.png as content differs from patch
+patching file docs/docs/guides/ecosystem/imgs/openai-pokedex.png
+Not deleting file docs/docs/guides/ecosystem/imgs/openai-pokedex.png as content differs from patch
+patching file docs/docs/guides/ecosystem/imgs/openai.png
+Not deleting file docs/docs/guides/ecosystem/imgs/openai.png as content differs from patch
+patching file docs/docs/guides/ecosystem/mistral.md
+patching file docs/docs/guides/ecosystem/openai.md
+patching file requirements.test.txt
+patching file weave/api.py
+patching file weave/autopatch.py
+patching file weave/monitoring/openai/openai.py
+patching file weave/tests/test_weave_api.py
+patching file weave/trace_server/clickhouse_trace_server_batched.py
+patching file weave/trace_server/emoji_util.py
+patching file weave/trace_server/errors.py
+patching file weave/trace_server/feedback.py
+patching file weave/trace_server/orm.py
+patching file weave/trace_server/remote_http_trace_server.py
+patching file weave/trace_server/sqlite_trace_server.py
+patching file weave/trace_server/trace_server_interface.py
+patching file weave/weave_init.py
+error: options '--reject' and '--3way' cannot be used together

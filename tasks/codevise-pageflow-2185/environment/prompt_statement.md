@@ -1,9 +1,0 @@
-I'm working on a rich text editor plugin for a two-column table component, where each row has a label cell and a value cell. There are several editing behaviors that currently don't work correctly that I need to fix.
-
-First, when I press Enter inside a cell that contains both bold and regular text, the row splits but the formatting of the text is lost. The split should preserve the inline formatting (like bold) on both halves of the text, so the new row's cell contains the correctly styled text nodes.
-
-Second, when pressing Backspace at the very beginning of a row's first column, or Delete at the very end of a row's last column, the editor should merge adjacent rows. This merge currently fails when one of the relevant cells in the neighboring row is empty — the rows should still be joined correctly, with the matching column content concatenated.
-
-Third, when I select content that spans across multiple cells or rows and delete it, the editor often ends up with a broken structure — cells go missing or content lands in the wrong place. The delete operation should always collapse the selection while keeping the two-column structure intact: the text before the selection start and the text after the selection end should each end up in their correct respective columns. This should work regardless of which cell the selection starts in and which it ends in (label-to-value, value-to-value, label-to-label, or value-to-label), and regardless of whether the selection is made forward or backward.
-
-Finally, there's no support for inserting multiple rows at once (e.g., from a paste operation). When multiple rows are inserted as a fragment, they should be placed after the current row. If any of the inserted rows are missing one of the two columns, a blank cell should be added automatically to maintain the two-column structure.

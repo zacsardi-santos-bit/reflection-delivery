@@ -1,6 +1,0 @@
-patching file plugins/source/alicloud/client/spec/gen/main.go
-patching file plugins/source/alicloud/client/spec_test.go
-# github.com/cloudquery/codegen/jsonschema
-/go/pkg/mod/github.com/cloudquery/codegen@v0.3.12/jsonschema/generate.go:17:3: unknown field NullableFromType in struct literal of type "github.com/invopop/jsonschema".Reflector
-FAIL	github.com/cloudquery/cloudquery/plugins/source/alicloud/client [build failed]
-reward=0 graded=19 found=19 failed=19 parsed=1 framework=go exit_code=1

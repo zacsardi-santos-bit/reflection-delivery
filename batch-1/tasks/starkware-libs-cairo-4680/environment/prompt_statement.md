@@ -1,0 +1,5 @@
+I'm working on a Cairo compiler and while loops are currently stuck at the semantic analysis stage — they're parsed and type-checked correctly, but the lowering pass that converts them to intermediate representation bails out with an unsupported error instead of producing output. I'd like to implement the actual lowering so while loops compile end-to-end like regular loops do.
+
+There's also a related issue in the variable usage tracking: the analysis that computes which variables are read or written inside block-like constructs doesn't properly handle while loops yet. It needs to aggregate variable usage from both the condition expression and the body, and store the result under the while expression itself (not just the body block). Similarly, loop expressions should have their own usage entry that mirrors the body's usage.
+
+Finally, the usage reporting output needs to correctly label each entry with the actual kind of construct — whether it's a plain block, an infinite loop, or a while loop — rather than always printing the same generic label.

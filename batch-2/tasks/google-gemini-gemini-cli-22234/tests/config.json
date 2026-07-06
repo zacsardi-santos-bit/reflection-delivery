@@ -1,0 +1,22 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run src/utils/environmentContext.test.ts --coverage.enabled=false",
+  "test_files": [
+    "packages/core/src/utils/environmentContext.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getEnvironmentContext should exclude environment memory when JIT context is enabled"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getDirectoryContextString should return context string for a single directory",
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getDirectoryContextString should return context string for multiple directories",
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getEnvironmentContext should return basic environment context for a single directory",
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getEnvironmentContext should return basic environment context for multiple directories",
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getEnvironmentContext should omit directory structure when getIncludeDirectoryTree is false",
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getEnvironmentContext should include environment memory when JIT context is disabled",
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getEnvironmentContext should handle read_many_files returning no content",
+    "/workspace/repo/packages/core/src/utils/environmentContext.test.ts::getEnvironmentContext should handle read_many_files tool not being found"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && INSTA_UPDATE=no cargo nextest run -p biome_js_analyze -E 'test(bare_grouping)' 2>&1",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-only.js",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-only.js.snap",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-only.options.json",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-with-predefined.js",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-with-predefined.js.snap",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-with-predefined.options.json",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-with-source.js",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-with-source.js.snap",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping-with-source.options.json",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping.js",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping.js.snap",
+    "crates/biome_js_analyze/tests/specs/source/organizeImports/bare-grouping.options.json"
+  ],
+  "num_test_files": 12,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(6/8) biome_js_analyze::spec_tests specs::source::organize_imports::bare_grouping_js",
+    "(7/8) biome_js_analyze::spec_tests specs::source::organize_imports::bare_grouping_with_predefined_js",
+    "(8/8) biome_js_analyze::spec_tests specs::source::organize_imports::bare_grouping_with_source_js",
+    "(1/8) biome_js_analyze::spec_tests specs::source::organize_imports::bare_grouping_options_json",
+    "(2/8) biome_js_analyze::spec_tests specs::source::organize_imports::bare_grouping_only_options_json",
+    "(3/8) biome_js_analyze::spec_tests specs::source::organize_imports::bare_grouping_with_source_options_json",
+    "(4/8) biome_js_analyze::spec_tests specs::source::organize_imports::bare_grouping_with_predefined_options_json"
+  ],
+  "PASS_TO_PASS": [
+    "(5/8) biome_js_analyze::spec_tests specs::source::organize_imports::bare_grouping_only_js"
+  ]
+}

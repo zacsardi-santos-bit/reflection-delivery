@@ -1,0 +1,34 @@
+patching file pkg/gofr/datasource/surrealdb/surrealdb_test.go
+patching file pkg/gofr/migration/migration_test.go
+patching file pkg/gofr/migration/surreal_db_test.go
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"# gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:639:17: client.executeQuery undefined (type *Client has no field or method executeQuery)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:649:17: client.executeQuery undefined (type *Client has no field or method executeQuery)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:663:17: client.executeQuery undefined (type *Client has no field or method executeQuery)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:697:17: client.CreateNamespace undefined (type *Client has no field or method CreateNamespace)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:714:17: client.DropNamespace undefined (type *Client has no field or method DropNamespace)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:748:17: client.CreateDatabase undefined (type *Client has no field or method CreateDatabase)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:765:17: client.DropDatabase undefined (type *Client has no field or method DropDatabase)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:775:17: client.CreateDatabase undefined (type *Client has no field or method CreateDatabase)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-output","Output":"./surrealdb_test.go:778:16: client.DropDatabase undefined (type *Client has no field or method DropDatabase)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]","Action":"build-fail"}
+{"Time":"2026-06-29T15:23:43.598490803Z","Action":"start","Package":"gofr.dev/pkg/gofr/datasource/surrealdb"}
+{"Time":"2026-06-29T15:23:43.598602549Z","Action":"output","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Output":"FAIL\tgofr.dev/pkg/gofr/datasource/surrealdb [build failed]\n"}
+{"Time":"2026-06-29T15:23:43.598622337Z","Action":"fail","Package":"gofr.dev/pkg/gofr/datasource/surrealdb","Elapsed":0,"FailedBuild":"gofr.dev/pkg/gofr/datasource/surrealdb [gofr.dev/pkg/gofr/datasource/surrealdb.test]"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"# gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:21:23: mocks.SurrealDB undefined (type *container.Mocks has no field or method SurrealDB)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:23:19: unknown field SurrealDB in struct literal of type Datasource\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:25:15: undefined: surrealDS\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:66:52: undefined: getLastSurrealDBGoFrMigration\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:102:52: undefined: insertSurrealDBGoFrMigrationRow\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:127:13: undefined: surrealDS\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:138:23: mockSurreal.EXPECT().CreateNamespace undefined (type *container.MockSurrealDBMockRecorder has no field or method CreateNamespace)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:140:13: undefined: surrealDS\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:150:23: mockSurreal.EXPECT().CreateDatabase undefined (type *container.MockSurrealDBMockRecorder has no field or method CreateDatabase)\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:152:13: undefined: surrealDS\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-output","Output":"pkg/gofr/migration/surreal_db_test.go:152:13: too many errors\n"}
+{"ImportPath":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]","Action":"build-fail"}
+{"Time":"2026-06-29T15:24:07.037348058Z","Action":"start","Package":"gofr.dev/pkg/gofr/migration"}
+{"Time":"2026-06-29T15:24:07.037467429Z","Action":"output","Package":"gofr.dev/pkg/gofr/migration","Output":"FAIL\tgofr.dev/pkg/gofr/migration [build failed]\n"}
+{"Time":"2026-06-29T15:24:07.037485854Z","Action":"fail","Package":"gofr.dev/pkg/gofr/migration","Elapsed":0,"FailedBuild":"gofr.dev/pkg/gofr/migration [gofr.dev/pkg/gofr/migration.test]"}
+reward=0 graded=111 found=0 failed=0 parsed=2 framework=go exit_code=1

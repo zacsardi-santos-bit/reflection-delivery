@@ -1,0 +1,29 @@
+{
+    "id": "0367f440-4dba-49db-9c81-cddb7be07d91",
+    "started_at": "2026-07-04T15:37:30.983412",
+    "finished_at": "2026-07-04T15:37:54.517898",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__nrwl-nx-29078": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "nrwl-nx-29078__sA29PKc"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

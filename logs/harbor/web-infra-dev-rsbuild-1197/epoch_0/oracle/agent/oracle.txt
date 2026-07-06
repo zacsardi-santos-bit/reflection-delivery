@@ -1,8 +1,0 @@
-patching file e2e/cases/image-compress/rsbuild.config.ts
-patching file e2e/cases/svg/svgo-minify-id-prefix/rsbuild.config.ts
-patching file e2e/cases/svg/svgo-minify-id-prefix/src/idPrefix.svg
-patching file e2e/cases/svg/svgo-minify-view-box/rsbuild.config.ts
-patching file e2e/package.json
-patching file packages/create-rsbuild/template-react-ts/package.json
-patching file packages/plugin-image-compress/package.json
-patching file pnpm-lock.yaml

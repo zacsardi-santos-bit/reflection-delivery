@@ -1,0 +1,25 @@
+patching file test/fixtures.yml
+patching file test/remote/gateways/remote_datatrans_test.rb
+patching file test/unit/gateways/datatrans_test.rb
+<testsuite>
+<testcase classname="DatatransTest" name="test_authorize_with_credit_card"/>
+<testcase classname="DatatransTest" name="test_authorize_with_credit_card_and_billing_address"/>
+<testcase classname="DatatransTest" name="test_capture"/>
+<testcase classname="DatatransTest" name="test_detecting_successfull_response_from_authorize"/>
+<testcase classname="DatatransTest" name="test_detecting_successfull_response_from_capture"/>
+<testcase classname="DatatransTest" name="test_detecting_successfull_response_from_purchase"/>
+<testcase classname="DatatransTest" name="test_detecting_successfull_response_from_refund"/>
+<testcase classname="DatatransTest" name="test_detecting_successfull_response_from_void"/>
+<testcase classname="DatatransTest" name="test_get_response_message_from_message_user"/>
+<testcase classname="DatatransTest" name="test_get_response_message_from_messages_key"/>
+<testcase classname="DatatransTest" name="test_purchase_with_credit_card"/>
+<testcase classname="DatatransTest" name="test_refund"/>
+<testcase classname="DatatransTest" name="test_required_merchant_id_and_password"/>
+<testcase classname="DatatransTest" name="test_scrub"/>
+<testcase classname="DatatransTest" name="test_support_scrubbing_flag_enabled"/>
+<testcase classname="DatatransTest" name="test_supported_card_types"/>
+<testcase classname="DatatransTest" name="test_supported_countries"/>
+<testcase classname="DatatransTest" name="test_url_generation_from_action"/>
+<testcase classname="DatatransTest" name="test_void"/>
+</testsuite>
+reward=1 graded=19 found=19 failed=0 parsed=19 framework=junit exit_code=0

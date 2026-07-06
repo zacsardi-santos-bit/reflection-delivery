@@ -1,0 +1,29 @@
+{
+    "id": "491e2b95-85c3-46a5-9528-5c4cbdf24088",
+    "started_at": "2026-07-06T12:18:00.996754",
+    "finished_at": "2026-07-06T12:18:36.924076",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__concourse-concourse-9484": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "concourse-concourse-9484__cZuU5DA"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

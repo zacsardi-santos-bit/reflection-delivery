@@ -1,0 +1,30 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run src/tools/at-reference-resolution.test.ts --coverage=false --reporter=verbose",
+  "test_files": [
+    "packages/core/src/tools/at-reference-resolution.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) ReadFileTool successfully reads a file when the path is prefixed with @",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) ReadFileTool successfully reads a file when the path is prefixed with @/",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) WriteFileTool successfully writes to/updates a file when the path is prefixed with @",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) WriteFileTool successfully creates a new file when the path is prefixed with @ and the parent directory exists",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) WriteFileTool successfully creates a new file in a nested subdirectory when the path is prefixed with @ and the first segment exists",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) WriteFileTool successfully creates a new file in a nested subdirectory when the path is prefixed with @/ and the first segment does NOT exist",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) WriteFileTool successfully creates a new file in a nested subdirectory when the path is prefixed with @\\ and the first segment does NOT exist",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) getCorrectedFileContent blocks path traversal outside the workspace",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) EditTool.getModifyContext blocks path traversal outside the workspace",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) getCorrectedFileContent handles symlink loops gracefully",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) EditTool.getModifyContext handles symlink loops gracefully by throwing a descriptive error",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) getCorrectedFileContent successfully resolves paths in Plan Mode",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) EditTool successfully edits an existing file when the path is prefixed with @",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) EditTool successfully creates a new file when the path is prefixed with @ and the parent directory exists",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) correctPath successfully resolves a path prefixed with @ to its clean counterpart"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) WriteFileTool successfully creates a new file in a nested subdirectory when the path is prefixed with @ and the first segment does NOT exist",
+    "/workspace/repo/packages/core/src/tools/at-reference-resolution.test.ts::Consolidated At-Reference Path Resolution Tests (b-495551283) EditTool successfully creates a new file in a nested subdirectory when the path is prefixed with @ and the first segment does NOT exist"
+  ]
+}

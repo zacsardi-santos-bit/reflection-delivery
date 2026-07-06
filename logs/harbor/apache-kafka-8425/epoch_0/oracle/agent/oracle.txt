@@ -1,6 +1,0 @@
-patching file streams/src/main/java/org/apache/kafka/streams/processor/internals/StreamsPartitionAssignor.java
-patching file streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/DefaultStateConstrainedBalancedAssignor.java
-patching file streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/HighAvailabilityTaskAssignor.java
-patching file streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/RankedClient.java
-patching file streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/StateConstrainedBalancedAssignor.java
-patching file streams/src/main/java/org/apache/kafka/streams/processor/internals/assignment/TaskMovement.java

@@ -1,0 +1,25 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./providers/dns/webnames ./providers/dns/webnames/internal -count=1",
+  "test_files": [
+    "providers/dns/webnames/internal/client_test.go",
+    "providers/dns/webnames/webnames_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/go-acme/lego/v4/providers/dns/webnames::TestNewDNSProvider/success",
+    "github.com/go-acme/lego/v4/providers/dns/webnames::TestNewDNSProvider/missing_api_key",
+    "github.com/go-acme/lego/v4/providers/dns/webnames::TestNewDNSProvider",
+    "github.com/go-acme/lego/v4/providers/dns/webnames::TestNewDNSProviderConfig/success",
+    "github.com/go-acme/lego/v4/providers/dns/webnames::TestNewDNSProviderConfig/missing_credentials",
+    "github.com/go-acme/lego/v4/providers/dns/webnames::TestNewDNSProviderConfig",
+    "github.com/go-acme/lego/v4/providers/dns/webnames/internal::TestClient_AddTXTRecord/ok",
+    "github.com/go-acme/lego/v4/providers/dns/webnames/internal::TestClient_AddTXTRecord/error",
+    "github.com/go-acme/lego/v4/providers/dns/webnames/internal::TestClient_AddTXTRecord",
+    "github.com/go-acme/lego/v4/providers/dns/webnames/internal::TestClient_RemoveTxtRecord/ok",
+    "github.com/go-acme/lego/v4/providers/dns/webnames/internal::TestClient_RemoveTxtRecord/error",
+    "github.com/go-acme/lego/v4/providers/dns/webnames/internal::TestClient_RemoveTxtRecord"
+  ],
+  "PASS_TO_PASS": []
+}

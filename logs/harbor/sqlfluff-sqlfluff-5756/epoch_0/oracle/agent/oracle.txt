@@ -1,3 +1,0 @@
-patching file src/sqlfluff/dialects/dialect_ansi.py
-patching file src/sqlfluff/dialects/dialect_snowflake.py
-patching file src/sqlfluff/dialects/dialect_snowflake_keywords.py

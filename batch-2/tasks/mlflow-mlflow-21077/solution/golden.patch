@@ -1,0 +1,1209 @@
+diff --git a/docs/docs/genai/governance/ai-gateway/endpoints/query-endpoints.mdx b/docs/docs/genai/governance/ai-gateway/endpoints/query-endpoints.mdx
+index cf5cef4b5..d42e5429b 100644
+--- a/docs/docs/genai/governance/ai-gateway/endpoints/query-endpoints.mdx
++++ b/docs/docs/genai/governance/ai-gateway/endpoints/query-endpoints.mdx
+@@ -15,7 +15,7 @@ To see code examples for your endpoint, navigate to the Endpoints list and click
+ 
+ ![Usage Modal](/images/genai/governance/ai-gateway/usage-modal.png)
+ 
+-The usage modal organizes examples into two categories: unified APIs that work across any provider, and passthrough APIs that expose provider-specific features.
++The usage modal organizes examples into two categories: unified APIs that work across any provider, and passthrough APIs that expose provider-specific features. Within each category, the **Try it** tab lets you send a test request directly from the UI.
+ 
+ ## Unified APIs
+ 
+diff --git a/docs/static/images/genai/governance/ai-gateway/usage-modal.png b/docs/static/images/genai/governance/ai-gateway/usage-modal.png
+index 1ceb63bf7..f5370b09d 100644
+Binary files a/docs/static/images/genai/governance/ai-gateway/usage-modal.png and b/docs/static/images/genai/governance/ai-gateway/usage-modal.png differ
+diff --git a/mlflow/gateway/providers/utils.py b/mlflow/gateway/providers/utils.py
+index f3950888f..b263a5587 100644
+--- a/mlflow/gateway/providers/utils.py
++++ b/mlflow/gateway/providers/utils.py
+@@ -6,13 +6,21 @@ from mlflow.gateway.constants import (
+ )
+ from mlflow.utils.uri import append_to_uri_path
+ 
++# Request gzip/deflate only so upstream never sends Brotli; aiohttp fails to decode
++# Content-Encoding: br without the optional brotli package.
++SUPPORTED_ACCEPT_ENCODING = "gzip, deflate, identity"
++
+ 
+ @asynccontextmanager
+ async def _aiohttp_post(headers: dict[str, str], base_url: str, path: str, payload: dict[str, Any]):
+     import aiohttp
+ 
+-    async with aiohttp.ClientSession(headers=headers) as session:
+-        url = append_to_uri_path(base_url, path)
++    # Drop any client Accept-Encoding (any casing) so we send only one value; otherwise
++    # aiohttp may send both and upstream can respond with Brotli, which is not supported.
++    request_headers = {k: v for k, v in headers.items() if k.lower() != "accept-encoding"}
++    request_headers["Accept-Encoding"] = SUPPORTED_ACCEPT_ENCODING
++    url = append_to_uri_path(base_url, path)
++    async with aiohttp.ClientSession(headers=request_headers) as session:
+         timeout = aiohttp.ClientTimeout(total=MLFLOW_GATEWAY_ROUTE_TIMEOUT_SECONDS)
+         async with session.post(url, json=payload, timeout=timeout) as response:
+             yield response
+diff --git a/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.tsx b/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.tsx
+index b883a2210..01ef5e529 100644
+--- a/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.tsx
++++ b/mlflow/server/js/src/gateway/components/endpoints/EndpointUsageModal.tsx
+@@ -1,15 +1,20 @@
+ import {
++  Button,
+   Modal,
++  Tooltip,
++  Tabs,
+   Typography,
+   useDesignSystemTheme,
+   CopyIcon,
++  Input,
+   SegmentedControlGroup,
+   SegmentedControlButton,
+ } from '@databricks/design-system';
+ import { FormattedMessage } from 'react-intl';
+-import { useState } from 'react';
++import { useState, useCallback, useMemo, useEffect } from 'react';
+ import { CopyButton } from '@mlflow/mlflow/src/shared/building_blocks/CopyButton';
+ import { CodeSnippet } from '@databricks/web-shared/snippet';
++import { TryItPanel } from './TryItPanel';
+ 
+ type Provider = 'openai' | 'anthropic' | 'gemini';
+ type Language = 'curl' | 'python';
+@@ -29,22 +34,51 @@ const getBaseUrl = (baseUrl?: string): string => {
+   return 'http://localhost:5000';
+ };
+ 
+-export const EndpointUsageModal = ({ open, onClose, endpointName, baseUrl }: EndpointUsageModalProps) => {
+-  const { theme } = useDesignSystemTheme();
+-  const [activeTab, setActiveTab] = useState<'unified' | 'passthrough'>('unified');
+-  const [selectedProvider, setSelectedProvider] = useState<Provider>('openai');
+-  const [selectedLanguage, setSelectedLanguage] = useState<Language>('curl');
+-  const [unifiedLanguage, setUnifiedLanguage] = useState<Language>('curl');
+-  const base = getBaseUrl(baseUrl);
+-  const mlflowInvocationsCurlExample = `curl -X POST ${base}/gateway/${endpointName}/mlflow/invocations \\
++type TryItUnifiedVariant = 'mlflow-invocations' | 'chat-completions';
++
++const getTryItRequestUrl = (
++  base: string,
++  endpointName: string,
++  apiType: 'unified' | 'passthrough',
++  unifiedVariant: TryItUnifiedVariant,
++  provider: Provider,
++): string => {
++  if (apiType === 'unified') {
++    if (unifiedVariant === 'chat-completions') {
++      return `${base}/gateway/mlflow/v1/chat/completions`;
++    }
++    return `${base}/gateway/${endpointName}/mlflow/invocations`;
++  }
++  switch (provider) {
++    case 'openai':
++      return `${base}/gateway/openai/v1/responses`;
++    case 'anthropic':
++      return `${base}/gateway/anthropic/v1/messages`;
++    case 'gemini':
++      return `${base}/gateway/gemini/v1beta/models/${endpointName}:generateContent`;
++    default:
++      return `${base}/gateway/${endpointName}/mlflow/invocations`;
++  }
++};
++
++type CodeExampleVariant = TryItUnifiedVariant | Provider;
++
++const getCodeExamples = (
++  base: string,
++  endpointName: string,
++  variant: CodeExampleVariant,
++): { curl: string; python: string; defaultBody: string } => {
++  switch (variant) {
++    case 'mlflow-invocations':
++      return {
++        curl: `curl -X POST ${base}/gateway/${endpointName}/mlflow/invocations \\
+   -H "Content-Type: application/json" \\
+   -d '{
+   "messages": [
+     {"role": "user", "content": "Hello, how are you?"}
+   ]
+-}'`;
+-
+-  const mlflowInvocationsPythonExample = `import requests
++}'`,
++        python: `import requests
+ 
+ response = requests.post(
+     "${base}/gateway/${endpointName}/mlflow/invocations",
+@@ -54,18 +88,26 @@ response = requests.post(
+         ]
+     }
+ )
+-print(response.json())`;
+-
+-  const openaiChatCurlExample = `curl -X POST ${base}/gateway/mlflow/v1/chat/completions \\
++print(response.json())`,
++        defaultBody: JSON.stringify(
++          {
++            messages: [{ role: 'user', content: 'Hello, how are you?' }],
++          },
++          null,
++          2,
++        ),
++      };
++    case 'chat-completions':
++      return {
++        curl: `curl -X POST ${base}/gateway/mlflow/v1/chat/completions \\
+   -H "Content-Type: application/json" \\
+   -d '{
+   "model": "${endpointName}",
+   "messages": [
+     {"role": "user", "content": "How are you?"}
+   ]
+-}'`;
+-
+-  const openaiChatPythonExample = `from openai import OpenAI
++}'`,
++        python: `from openai import OpenAI
+ 
+ client = OpenAI(
+     base_url="${base}/gateway/mlflow/v1",
+@@ -78,16 +120,25 @@ response = client.chat.completions.create(
+     model="${endpointName}",  # Endpoint name as model
+     messages=messages,
+ )
+-print(response.choices[0].message)`;
+-
+-  const openaiPassthroughCurlExample = `curl -X POST ${base}/gateway/openai/v1/responses \\
++print(response.choices[0].message)`,
++        defaultBody: JSON.stringify(
++          {
++            model: endpointName,
++            messages: [{ role: 'user', content: 'How are you?' }],
++          },
++          null,
++          2,
++        ),
++      };
++    case 'openai':
++      return {
++        curl: `curl -X POST ${base}/gateway/openai/v1/responses \\
+   -H "Content-Type: application/json" \\
+   -d '{
+   "model": "${endpointName}",
+   "input": "How are you?"
+-}'`;
+-
+-  const openaiPassthroughPythonExample = `from openai import OpenAI
++}'`,
++        python: `from openai import OpenAI
+ 
+ client = OpenAI(
+     base_url="${base}/gateway/openai/v1",
+@@ -98,9 +149,12 @@ response = client.responses.create(
+     model="${endpointName}",
+     input="How are you?",
+ )
+-print(response.output_text)`;
+-
+-  const anthropicPassthroughCurlExample = `curl -X POST ${base}/gateway/anthropic/v1/messages \\
++print(response.output_text)`,
++        defaultBody: JSON.stringify({ model: endpointName, input: 'How are you?' }, null, 2),
++      };
++    case 'anthropic':
++      return {
++        curl: `curl -X POST ${base}/gateway/anthropic/v1/messages \\
+   -H "Content-Type: application/json" \\
+   -d '{
+   "model": "${endpointName}",
+@@ -108,9 +162,8 @@ print(response.output_text)`;
+   "messages": [
+     {"role": "user", "content": "How are you?"}
+   ]
+-}'`;
+-
+-  const anthropicPassthroughPythonExample = `import anthropic
++}'`,
++        python: `import anthropic
+ 
+ client = anthropic.Anthropic(
+     base_url="${base}/gateway/anthropic",
+@@ -122,17 +175,27 @@ response = client.messages.create(
+     max_tokens=1024,
+     messages=[{"role": "user", "content": "How are you?"}],
+ )
+-print(response.content[0].text)`;
+-
+-  const geminiPassthroughCurlExample = `curl -X POST ${base}/gateway/gemini/v1beta/models/${endpointName}:generateContent \\
++print(response.content[0].text)`,
++        defaultBody: JSON.stringify(
++          {
++            model: endpointName,
++            max_tokens: 1024,
++            messages: [{ role: 'user', content: 'How are you?' }],
++          },
++          null,
++          2,
++        ),
++      };
++    case 'gemini':
++      return {
++        curl: `curl -X POST ${base}/gateway/gemini/v1beta/models/${endpointName}:generateContent \\
+   -H "Content-Type: application/json" \\
+   -d '{
+   "contents": [{
+     "parts": [{"text": "How are you?"}]
+   }]
+-}'`;
+-
+-  const geminiPassthroughPythonExample = `from google import genai
++}'`,
++        python: `from google import genai
+ 
+ # Configure with custom endpoint
+ client = genai.Client(
+@@ -146,14 +209,60 @@ response = client.models.generate_content(
+     contents={'text': 'How are you?'},
+ )
+ client.close()
+-print(response.candidates[0].content.parts[0].text)`;
++print(response.candidates[0].content.parts[0].text)`,
++        defaultBody: JSON.stringify(
++          {
++            contents: [{ parts: [{ text: 'How are you?' }] }],
++          },
++          null,
++          2,
++        ),
++      };
++    default:
++      return getCodeExamples(base, endpointName, 'mlflow-invocations');
++  }
++};
++
++const getDefaultRequestBody = (endpointName: string, variant: CodeExampleVariant): string =>
++  getCodeExamples('', endpointName, variant).defaultBody;
++
++type ViewMode = 'try-it' | 'curl' | 'python';
++
++export const EndpointUsageModal = ({ open, onClose, endpointName, baseUrl }: EndpointUsageModalProps) => {
++  const { theme } = useDesignSystemTheme();
++  const [activeTab, setActiveTab] = useState<'unified' | 'passthrough'>('unified');
++  const [viewMode, setViewMode] = useState<ViewMode>('try-it');
++  const [selectedProvider, setSelectedProvider] = useState<Provider>('openai');
++  const [tryItUnifiedVariant, setTryItUnifiedVariant] = useState<'mlflow-invocations' | 'chat-completions'>(
++    'mlflow-invocations',
++  );
++  const [tryItResetKey, setTryItResetKey] = useState(0);
++  const base = getBaseUrl(baseUrl);
++
++  // Reset modal state when opened so users get a fresh Try-it experience each time
++  useEffect(() => {
++    if (open) {
++      setActiveTab('unified');
++      setViewMode('try-it');
++      setTryItUnifiedVariant('mlflow-invocations');
++      setSelectedProvider('openai');
++      setTryItResetKey((k) => k + 1);
++    }
++  }, [open]);
++
++  const tryItRequestUrl = useMemo(
++    () => getTryItRequestUrl(base, endpointName, activeTab, tryItUnifiedVariant, selectedProvider),
++    [base, endpointName, activeTab, tryItUnifiedVariant, selectedProvider],
++  );
++
++  const tryItDefaultBody = useMemo(
++    () => getDefaultRequestBody(endpointName, activeTab === 'unified' ? tryItUnifiedVariant : selectedProvider),
++    [activeTab, tryItUnifiedVariant, selectedProvider, endpointName],
++  );
+ 
+   const renderCodeExample = (label: string, code: string, language: 'text' | 'python' = 'text') => (
+     <div css={{ marginBottom: theme.spacing.md }}>
+-      <div
+-        css={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: theme.spacing.xs }}
+-      >
+-        <Typography.Text bold>{label}</Typography.Text>
++      <div css={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: theme.spacing.xs }}>
+         <CopyButton
+           componentId="codegen_mlflow_app_src_oss_gateway_components_endpoints_EndpointUsageModal.tsx_147"
+           copyText={code}
+@@ -195,109 +304,173 @@ print(response.candidates[0].content.parts[0].text)`;
+           />
+         </Typography.Text>
+ 
+-        <div css={{ display: 'flex', gap: theme.spacing.sm, borderBottom: `1px solid ${theme.colors.border}` }}>
+-          <div
+-            css={{
+-              padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+-              cursor: 'pointer',
+-              borderBottom:
+-                activeTab === 'unified'
+-                  ? `2px solid ${theme.colors.actionPrimaryBackgroundDefault}`
+-                  : '2px solid transparent',
+-              color: activeTab === 'unified' ? theme.colors.actionPrimaryBackgroundDefault : theme.colors.textSecondary,
+-              fontWeight: activeTab === 'unified' ? 'bold' : 'normal',
+-            }}
+-            onClick={() => setActiveTab('unified')}
+-          >
+-            <FormattedMessage defaultMessage="Unified APIs" description="Unified APIs tab title" />
+-          </div>
+-          <div
++        <Tabs.Root
++          componentId="mlflow.gateway.usage-modal.tabs"
++          value={activeTab}
++          onValueChange={(value) => setActiveTab(value as 'unified' | 'passthrough')}
++          css={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}
++        >
++          <Tabs.List
+             css={{
+-              padding: `${theme.spacing.sm}px ${theme.spacing.md}px`,
+-              cursor: 'pointer',
+-              borderBottom:
+-                activeTab === 'passthrough'
+-                  ? `2px solid ${theme.colors.actionPrimaryBackgroundDefault}`
+-                  : '2px solid transparent',
+-              color:
+-                activeTab === 'passthrough' ? theme.colors.actionPrimaryBackgroundDefault : theme.colors.textSecondary,
+-              fontWeight: activeTab === 'passthrough' ? 'bold' : 'normal',
++              display: 'flex',
++              gap: theme.spacing.sm,
++              borderBottom: `1px solid ${theme.colors.border}`,
++              padding: 0,
+             }}
+-            onClick={() => setActiveTab('passthrough')}
+           >
+-            <FormattedMessage defaultMessage="Passthrough APIs" description="Passthrough APIs tab title" />
+-          </div>
+-        </div>
+-
+-        {activeTab === 'unified' && (
+-          <div css={{ display: 'flex', flexDirection: 'column', gap: theme.spacing.lg }}>
+-            <SegmentedControlGroup
+-              name="unified-language-selector"
+-              componentId="mlflow.gateway.usage-modal.unified-language-selector"
+-              value={unifiedLanguage}
+-              onChange={({ target: { value } }) => setUnifiedLanguage(value as Language)}
+-            >
+-              <SegmentedControlButton value="curl">cURL</SegmentedControlButton>
+-              <SegmentedControlButton value="python">Python</SegmentedControlButton>
+-            </SegmentedControlGroup>
+-
+-            <div>
+-              <Typography.Title level={4} css={{ marginTop: 0 }}>
+-                <FormattedMessage
+-                  defaultMessage="MLflow Invocations API"
+-                  description="MLflow invocations API section title"
+-                />
+-              </Typography.Title>
+-              <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.md }}>
+-                <FormattedMessage
+-                  defaultMessage="Native MLflow API for model invocations. Supports seamless model switching and advanced routing."
+-                  description="MLflow invocations API description"
+-                />
+-              </Typography.Text>
+-              {unifiedLanguage === 'curl' && renderCodeExample('cURL', mlflowInvocationsCurlExample, 'text')}
+-              {unifiedLanguage === 'python' && renderCodeExample('Python', mlflowInvocationsPythonExample, 'python')}
+-            </div>
++            <Tabs.Trigger value="unified">
++              <FormattedMessage defaultMessage="Unified APIs" description="Unified APIs tab title" />
++            </Tabs.Trigger>
++            <Tabs.Trigger value="passthrough">
++              <FormattedMessage defaultMessage="Passthrough APIs" description="Passthrough APIs tab title" />
++            </Tabs.Trigger>
++          </Tabs.List>
++
++          <Tabs.Content value="unified" css={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
++            <div css={{ display: 'flex', flexDirection: 'column', gap: theme.spacing.lg }}>
++              <div>
++                <Typography.Text bold css={{ display: 'block', marginBottom: theme.spacing.xs }}>
++                  <FormattedMessage defaultMessage="Unified API" description="Unified API variant label" />
++                </Typography.Text>
++                <SegmentedControlGroup
++                  name="try-it-unified-variant"
++                  componentId="mlflow.gateway.usage-modal.try-it.unified-variant"
++                  value={tryItUnifiedVariant}
++                  onChange={({ target: { value } }) =>
++                    setTryItUnifiedVariant(value as 'mlflow-invocations' | 'chat-completions')
++                  }
++                  css={{ marginBottom: theme.spacing.sm }}
++                >
++                  <SegmentedControlButton value="mlflow-invocations">
++                    <FormattedMessage
++                      defaultMessage="MLflow Invocations"
++                      description="Unified API variant: MLflow Invocations"
++                    />
++                  </SegmentedControlButton>
++                  <SegmentedControlButton value="chat-completions">
++                    <FormattedMessage
++                      defaultMessage="OpenAI Chat Completions"
++                      description="Unified API variant: OpenAI Chat Completions"
++                    />
++                  </SegmentedControlButton>
++                </SegmentedControlGroup>
++              </div>
++
++              {tryItUnifiedVariant === 'mlflow-invocations' && (
++                <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.sm }}>
++                  <FormattedMessage
++                    defaultMessage="Native MLflow API for model invocations. Supports seamless model switching and advanced routing."
++                    description="MLflow invocations API description"
++                  />
++                </Typography.Text>
++              )}
++              {tryItUnifiedVariant === 'chat-completions' && (
++                <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.sm }}>
++                  <FormattedMessage
++                    defaultMessage="Unified OpenAI compatible API for model invocations. Set the endpoint name as the model parameter."
++                    description="OpenAI compatible API description"
++                  />
++                </Typography.Text>
++              )}
+ 
+-            <div>
+-              <Typography.Title level={4}>
+-                <FormattedMessage
+-                  defaultMessage="OpenAI-Compatible Chat Completions API"
+-                  description="OpenAI compatible API section title"
+-                />
+-              </Typography.Title>
+-              <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.md }}>
+-                <FormattedMessage
+-                  defaultMessage="Unified OpenAI compatible API for model invocations. Set the endpoint name as the model parameter."
+-                  description="OpenAI compatible API description"
+-                />
+-              </Typography.Text>
+-              {unifiedLanguage === 'curl' && renderCodeExample('cURL', openaiChatCurlExample, 'text')}
+-              {unifiedLanguage === 'python' && renderCodeExample('Python', openaiChatPythonExample, 'python')}
+-            </div>
+-          </div>
+-        )}
+-
+-        {activeTab === 'passthrough' && (
+-          <div css={{ display: 'flex', flexDirection: 'column', gap: theme.spacing.lg }}>
+-            <div>
+-              <Typography.Text bold css={{ display: 'block', marginBottom: theme.spacing.sm }}>
+-                <FormattedMessage defaultMessage="Provider" description="Provider selection label" />
+-              </Typography.Text>
+               <SegmentedControlGroup
+-                name="provider-selector"
+-                componentId="mlflow.gateway.usage-modal.provider-selector"
+-                value={selectedProvider}
+-                onChange={({ target: { value } }) => setSelectedProvider(value as Provider)}
++                name="unified-view-mode"
++                componentId="mlflow.gateway.usage-modal.unified-view-mode"
++                value={viewMode}
++                onChange={({ target: { value } }) => setViewMode(value as ViewMode)}
++                css={{ marginBottom: theme.spacing.sm }}
+               >
+-                <SegmentedControlButton value="openai">OpenAI</SegmentedControlButton>
+-                <SegmentedControlButton value="anthropic">Anthropic</SegmentedControlButton>
+-                <SegmentedControlButton value="gemini">Google Gemini</SegmentedControlButton>
++                <SegmentedControlButton value="try-it">
++                  <FormattedMessage defaultMessage="Try it" description="Try it - interactive request/response" />
++                </SegmentedControlButton>
++                <SegmentedControlButton value="curl">cURL</SegmentedControlButton>
++                <SegmentedControlButton value="python">Python</SegmentedControlButton>
+               </SegmentedControlGroup>
++
++              {viewMode === 'try-it' && (
++                <TryItPanel
++                  key={`try-it-unified-${tryItResetKey}`}
++                  description={
++                    <FormattedMessage
++                      defaultMessage="Edit the request body below and click Send request to call the endpoint."
++                      description="Try it description for unified"
++                    />
++                  }
++                  requestTooltipContent={
++                    tryItUnifiedVariant === 'chat-completions' ? (
++                      <FormattedMessage
++                        defaultMessage='JSON body for the OpenAI-compatible Chat Completions API. Include "model" (endpoint name) and "messages".'
++                        description="Request body tooltip for unified Chat Completions API"
++                      />
++                    ) : (
++                      <FormattedMessage
++                        defaultMessage='JSON body for the MLflow Invocations API. Use "messages" for chat or "input" for embeddings.'
++                        description="Request body tooltip for unified MLflow Invocations API"
++                      />
++                    )
++                  }
++                  requestTooltipComponentId="mlflow.gateway.usage-modal.try-it.request-tooltip"
++                  tryItRequestUrl={tryItRequestUrl}
++                  tryItDefaultBody={tryItDefaultBody}
++                />
++              )}
++
++              {(viewMode === 'curl' || viewMode === 'python') && (
++                <div>
++                  {tryItUnifiedVariant === 'mlflow-invocations' && (
++                    <>
++                      {viewMode === 'curl' &&
++                        renderCodeExample(
++                          'cURL',
++                          getCodeExamples(base, endpointName, 'mlflow-invocations').curl,
++                          'text',
++                        )}
++                      {viewMode === 'python' &&
++                        renderCodeExample(
++                          'Python',
++                          getCodeExamples(base, endpointName, 'mlflow-invocations').python,
++                          'python',
++                        )}
++                    </>
++                  )}
++                  {tryItUnifiedVariant === 'chat-completions' && (
++                    <>
++                      {viewMode === 'curl' &&
++                        renderCodeExample('cURL', getCodeExamples(base, endpointName, 'chat-completions').curl, 'text')}
++                      {viewMode === 'python' &&
++                        renderCodeExample(
++                          'Python',
++                          getCodeExamples(base, endpointName, 'chat-completions').python,
++                          'python',
++                        )}
++                    </>
++                  )}
++                </div>
++              )}
+             </div>
++          </Tabs.Content>
++
++          <Tabs.Content value="passthrough" css={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}>
++            <div css={{ display: 'flex', flexDirection: 'column', gap: theme.spacing.lg }}>
++              <div>
++                <Typography.Text bold css={{ display: 'block', marginBottom: theme.spacing.xs }}>
++                  <FormattedMessage defaultMessage="Provider" description="Provider selector label" />
++                </Typography.Text>
++                <SegmentedControlGroup
++                  name="try-it-provider"
++                  componentId="mlflow.gateway.usage-modal.try-it.provider"
++                  value={selectedProvider}
++                  onChange={({ target: { value } }) => setSelectedProvider(value as Provider)}
++                  css={{ marginBottom: theme.spacing.sm }}
++                >
++                  <SegmentedControlButton value="openai">OpenAI</SegmentedControlButton>
++                  <SegmentedControlButton value="anthropic">Anthropic</SegmentedControlButton>
++                  <SegmentedControlButton value="gemini">Google Gemini</SegmentedControlButton>
++                </SegmentedControlGroup>
++              </div>
+ 
+-            <div>
+               {selectedProvider === 'openai' && (
+-                <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.md }}>
++                <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.sm }}>
+                   <FormattedMessage
+                     defaultMessage="Direct access to OpenAI's Responses API for multi-turn conversations with vision and audio capabilities."
+                     description="OpenAI passthrough description"
+@@ -305,7 +478,7 @@ print(response.candidates[0].content.parts[0].text)`;
+                 </Typography.Text>
+               )}
+               {selectedProvider === 'anthropic' && (
+-                <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.md }}>
++                <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.sm }}>
+                   <FormattedMessage
+                     defaultMessage="Direct access to Anthropic's Messages API with Claude-specific features."
+                     description="Anthropic passthrough description"
+@@ -313,7 +486,7 @@ print(response.candidates[0].content.parts[0].text)`;
+                 </Typography.Text>
+               )}
+               {selectedProvider === 'gemini' && (
+-                <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.md }}>
++                <Typography.Text color="secondary" css={{ display: 'block', marginBottom: theme.spacing.sm }}>
+                   <FormattedMessage
+                     defaultMessage="Direct access to Google's Gemini API. Note: endpoint name is part of the URL path."
+                     description="Gemini passthrough description"
+@@ -322,37 +495,77 @@ print(response.candidates[0].content.parts[0].text)`;
+               )}
+ 
+               <SegmentedControlGroup
+-                name="language-selector"
+-                componentId="mlflow.gateway.usage-modal.language-selector"
+-                value={selectedLanguage}
+-                onChange={({ target: { value } }) => setSelectedLanguage(value as Language)}
+-                css={{ marginBottom: theme.spacing.md }}
++                name="passthrough-view-mode"
++                componentId="mlflow.gateway.usage-modal.passthrough-view-mode"
++                value={viewMode}
++                onChange={({ target: { value } }) => setViewMode(value as ViewMode)}
++                css={{ marginBottom: theme.spacing.sm }}
+               >
++                <SegmentedControlButton value="try-it">
++                  <FormattedMessage defaultMessage="Try it" description="Try it - interactive request/response" />
++                </SegmentedControlButton>
+                 <SegmentedControlButton value="curl">cURL</SegmentedControlButton>
+                 <SegmentedControlButton value="python">Python</SegmentedControlButton>
+               </SegmentedControlGroup>
+ 
+-              {selectedProvider === 'openai' &&
+-                selectedLanguage === 'curl' &&
+-                renderCodeExample('cURL', openaiPassthroughCurlExample, 'text')}
+-              {selectedProvider === 'openai' &&
+-                selectedLanguage === 'python' &&
+-                renderCodeExample('Python', openaiPassthroughPythonExample, 'python')}
+-              {selectedProvider === 'anthropic' &&
+-                selectedLanguage === 'curl' &&
+-                renderCodeExample('cURL', anthropicPassthroughCurlExample, 'text')}
+-              {selectedProvider === 'anthropic' &&
+-                selectedLanguage === 'python' &&
+-                renderCodeExample('Python', anthropicPassthroughPythonExample, 'python')}
+-              {selectedProvider === 'gemini' &&
+-                selectedLanguage === 'curl' &&
+-                renderCodeExample('cURL', geminiPassthroughCurlExample, 'text')}
+-              {selectedProvider === 'gemini' &&
+-                selectedLanguage === 'python' &&
+-                renderCodeExample('Python', geminiPassthroughPythonExample, 'python')}
++              {viewMode === 'try-it' && (
++                <TryItPanel
++                  key={`try-it-passthrough-${tryItResetKey}`}
++                  description={
++                    <FormattedMessage
++                      defaultMessage="Edit the request body below and click Send request to call the provider API."
++                      description="Try it description for passthrough"
++                    />
++                  }
++                  requestTooltipContent={
++                    <FormattedMessage
++                      defaultMessage="JSON body for the {providerName} API. This payload is sent directly to the provider in its native format."
++                      description="Request body tooltip for passthrough provider"
++                      values={{
++                        providerName: {
++                          openai: 'OpenAI',
++                          anthropic: 'Anthropic',
++                          gemini: 'Google Gemini',
++                        }[selectedProvider],
++                      }}
++                    />
++                  }
++                  requestTooltipComponentId="mlflow.gateway.usage-modal.try-it.request-tooltip-passthrough"
++                  tryItRequestUrl={tryItRequestUrl}
++                  tryItDefaultBody={tryItDefaultBody}
++                  tryItOptions={
++                    selectedProvider === 'anthropic'
++                      ? { headers: { 'anthropic-dangerous-direct-browser-access': 'true' } }
++                      : undefined
++                  }
++                />
++              )}
++
++              {(viewMode === 'curl' || viewMode === 'python') && (
++                <div>
++                  {selectedProvider === 'openai' &&
++                    viewMode === 'curl' &&
++                    renderCodeExample('cURL', getCodeExamples(base, endpointName, 'openai').curl, 'text')}
++                  {selectedProvider === 'openai' &&
++                    viewMode === 'python' &&
++                    renderCodeExample('Python', getCodeExamples(base, endpointName, 'openai').python, 'python')}
++                  {selectedProvider === 'anthropic' &&
++                    viewMode === 'curl' &&
++                    renderCodeExample('cURL', getCodeExamples(base, endpointName, 'anthropic').curl, 'text')}
++                  {selectedProvider === 'anthropic' &&
++                    viewMode === 'python' &&
++                    renderCodeExample('Python', getCodeExamples(base, endpointName, 'anthropic').python, 'python')}
++                  {selectedProvider === 'gemini' &&
++                    viewMode === 'curl' &&
++                    renderCodeExample('cURL', getCodeExamples(base, endpointName, 'gemini').curl, 'text')}
++                  {selectedProvider === 'gemini' &&
++                    viewMode === 'python' &&
++                    renderCodeExample('Python', getCodeExamples(base, endpointName, 'gemini').python, 'python')}
++                </div>
++              )}
+             </div>
+-          </div>
+-        )}
++          </Tabs.Content>
++        </Tabs.Root>
+       </div>
+     </Modal>
+   );
+diff --git a/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.tsx b/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.tsx
+new file mode 100644
+index 000000000..2303806a6
+--- /dev/null
++++ b/mlflow/server/js/src/gateway/components/endpoints/TryItPanel.tsx
+@@ -0,0 +1,175 @@
++import { Button, Tooltip, Typography, useDesignSystemTheme, Input } from '@databricks/design-system';
++import { FormattedMessage } from 'react-intl';
++import { useState, useEffect, useCallback } from 'react';
++import type { ReactNode } from 'react';
++import { useTryIt, type TryItFetchOptions } from '../../hooks/useTryIt';
++
++const TEXTAREA_ROWS = 14;
++const TEXTAREA_MIN_HEIGHT_PX = 220;
++const ERROR_LINE_MIN_HEIGHT = '1.5em';
++
++export interface TryItPanelProps {
++  description: ReactNode;
++  requestTooltipContent: ReactNode;
++  requestTooltipComponentId: string;
++  tryItRequestUrl: string;
++  tryItDefaultBody: string;
++  /** Optional fetch options (headers, signal) passed through to Try-it requests. */
++  tryItOptions?: TryItFetchOptions;
++}
++
++export const TryItPanel = ({
++  description,
++  requestTooltipContent,
++  requestTooltipComponentId,
++  tryItRequestUrl,
++  tryItDefaultBody,
++  tryItOptions,
++}: TryItPanelProps) => {
++  const { theme } = useDesignSystemTheme();
++  const [requestBody, setRequestBody] = useState(tryItDefaultBody);
++
++  const {
++    data,
++    isLoading,
++    error,
++    sendRequest,
++    reset: resetTryIt,
++  } = useTryIt({
++    tryItRequestUrl,
++    options: tryItOptions,
++  });
++
++  const responseBody = error ? (error.responseBody ?? '') : (data ?? '');
++  const sendError = error?.message ?? null;
++
++  const handleSendRequest = useCallback(() => {
++    sendRequest(requestBody);
++  }, [sendRequest, requestBody]);
++
++  const handleResetExample = useCallback(() => {
++    resetTryIt();
++    setRequestBody(tryItDefaultBody);
++  }, [resetTryIt, tryItDefaultBody]);
++
++  // When default body changes (e.g. variant or provider changed), reset to the new default
++  useEffect(() => {
++    handleResetExample();
++  }, [handleResetExample]);
++
++  return (
++    <div css={{ display: 'flex', flexDirection: 'column', gap: theme.spacing.md }}>
++      <Typography.Text color="secondary">{description}</Typography.Text>
++      <div
++        css={{
++          display: 'flex',
++          gap: theme.spacing.md,
++          minHeight: 0,
++          flex: 1,
++        }}
++      >
++        <div css={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
++          <div
++            css={{
++              display: 'flex',
++              alignItems: 'center',
++              gap: theme.spacing.xs,
++              marginBottom: theme.spacing.xs,
++            }}
++          >
++            <Typography.Text bold>
++              <FormattedMessage defaultMessage="Request" description="Request body label" />
++            </Typography.Text>
++            <Tooltip componentId={requestTooltipComponentId} content={requestTooltipContent}>
++              <span css={{ cursor: 'help', color: theme.colors.textSecondary }} aria-label="Request help">
++                ?
++              </span>
++            </Tooltip>
++          </div>
++          <Input.TextArea
++            componentId="mlflow.gateway.usage-modal.try-it.request"
++            value={requestBody}
++            onChange={(e) => setRequestBody(e.target.value)}
++            disabled={isLoading}
++            rows={TEXTAREA_ROWS}
++            css={{
++              fontFamily: 'monospace',
++              fontSize: theme.typography.fontSizeSm,
++              minHeight: TEXTAREA_MIN_HEIGHT_PX,
++            }}
++          />
++        </div>
++        <div css={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
++          <div
++            css={{
++              display: 'flex',
++              alignItems: 'center',
++              gap: theme.spacing.xs,
++              marginBottom: theme.spacing.xs,
++            }}
++          >
++            <Typography.Text bold>
++              <FormattedMessage defaultMessage="Response" description="Response body label" />
++            </Typography.Text>
++            <Tooltip
++              componentId="mlflow.gateway.usage-modal.try-it.response-tooltip"
++              content={
++                <FormattedMessage
++                  defaultMessage="Response from the endpoint after clicking Send request."
++                  description="Response body tooltip"
++                />
++              }
++            >
++              <span css={{ cursor: 'help', color: theme.colors.textSecondary }} aria-label="Response help">
++                ?
++              </span>
++            </Tooltip>
++          </div>
++          <div aria-live="polite" aria-atomic="true" role="status">
++            <Input.TextArea
++              componentId="mlflow.gateway.usage-modal.try-it.response"
++              value={responseBody}
++              readOnly
++              rows={TEXTAREA_ROWS}
++              placeholder={
++                sendError ? undefined : isLoading ? undefined : 'Click "Send request" to see the response here.'
++              }
++              css={{
++                fontFamily: 'monospace',
++                fontSize: theme.typography.fontSizeSm,
++                backgroundColor: theme.colors.backgroundSecondary,
++                minHeight: TEXTAREA_MIN_HEIGHT_PX,
++              }}
++            />
++          </div>
++          <div
++            css={{ minHeight: ERROR_LINE_MIN_HEIGHT, marginTop: theme.spacing.xs }}
++            aria-live="polite"
++            aria-atomic="true"
++            role="status"
++          >
++            {sendError && <Typography.Text color="error">{sendError}</Typography.Text>}
++          </div>
++        </div>
++      </div>
++      <div css={{ display: 'flex', gap: theme.spacing.sm }}>
++        <Button
++          componentId="mlflow.gateway.usage-modal.try-it.send"
++          type="primary"
++          onClick={handleSendRequest}
++          disabled={isLoading}
++          loading={isLoading}
++        >
++          {isLoading ? (
++            <FormattedMessage defaultMessage="Sending..." description="Send request button loading state" />
++          ) : (
++            <FormattedMessage defaultMessage="Send request" description="Send request button" />
++          )}
++        </Button>
++        <Button componentId="mlflow.gateway.usage-modal.try-it.reset" onClick={handleResetExample} disabled={isLoading}>
++          <FormattedMessage defaultMessage="Reset example" description="Reset example button" />
++        </Button>
++      </div>
++    </div>
++  );
++};
+diff --git a/mlflow/server/js/src/gateway/hooks/useTryIt.ts b/mlflow/server/js/src/gateway/hooks/useTryIt.ts
+new file mode 100644
+index 000000000..e1b61fb5b
+--- /dev/null
++++ b/mlflow/server/js/src/gateway/hooks/useTryIt.ts
+@@ -0,0 +1,82 @@
++import { useMutation } from '@mlflow/mlflow/src/common/utils/reactQueryHooks';
++import { fetchOrFail } from '../../common/utils/FetchUtils';
++import { NetworkRequestError } from '../../shared/web-shared/errors/PredefinedErrors';
++
++function formatResponseText(text: string): string {
++  try {
++    return JSON.stringify(JSON.parse(text), null, 2);
++  } catch {
++    return text;
++  }
++}
++
++interface TryItError extends Error {
++  responseBody?: string;
++}
++
++/** Creates a TryItError with an optional response body for the UI to display. */
++function createTryItError(message: string, responseBody?: string): TryItError {
++  const err = new Error(message) as TryItError;
++  err.responseBody = responseBody;
++  return err;
++}
++
++/** Try-it fetch options. Only headers and signal are allowed; method and body are set by the hook. */
++export type TryItFetchOptions = Pick<RequestInit, 'headers' | 'signal'>;
++
++export interface UseTryItParams {
++  tryItRequestUrl: string;
++  /** Optional fetch options (headers, signal) passed through to fetchOrFail. Method and body are set by the hook. */
++  options?: TryItFetchOptions;
++}
++
++/**
++ * Hook to send a "Try it" request to the gateway.
++ *
++ * @example
++ * const { data, isLoading, error, sendRequest, reset } = useTryIt({ tryItRequestUrl });
++ * // data = last successful response (formatted); error = last error (with error.responseBody if present)
++ */
++export function useTryIt({ tryItRequestUrl, options }: UseTryItParams) {
++  const mutation = useMutation<string, TryItError, string>({
++    mutationFn: async (requestBody: string) => {
++      let parsed: Record<string, unknown>;
++      try {
++        parsed = JSON.parse(requestBody);
++      } catch {
++        throw createTryItError('Invalid JSON in request body');
++      }
++
++      try {
++        const requestHeaders =
++          options?.headers && typeof options.headers === 'object' && !(options.headers instanceof Headers)
++            ? (options.headers as Record<string, string>)
++            : {};
++        const response = await fetchOrFail(tryItRequestUrl, {
++          ...options,
++          method: 'POST',
++          headers: {
++            'Content-Type': 'application/json',
++            ...requestHeaders,
++          },
++          body: JSON.stringify(parsed),
++        });
++        const text = await response.text();
++        return formatResponseText(text);
++      } catch (err) {
++        const message = err instanceof Error ? err.message : String(err);
++        const rawText = err instanceof NetworkRequestError ? (await err.response?.text()) || '' : undefined;
++        const responseBody = rawText !== undefined ? formatResponseText(rawText) : undefined;
++        throw createTryItError(message, responseBody);
++      }
++    },
++  });
++
++  return {
++    data: mutation.data,
++    isLoading: mutation.isLoading,
++    error: mutation.error ?? undefined,
++    sendRequest: mutation.mutate,
++    reset: mutation.reset,
++  };
++}
+diff --git a/mlflow/server/js/src/lang/default/en.json b/mlflow/server/js/src/lang/default/en.json
+index 8d1c9a00b..c4047d775 100644
+--- a/mlflow/server/js/src/lang/default/en.json
++++ b/mlflow/server/js/src/lang/default/en.json
+@@ -119,10 +119,6 @@
+     "defaultMessage": "None",
+     "description": "A short label for experiments with no experiment kind"
+   },
+-  "+li9YN": {
+-    "defaultMessage": "Provider",
+-    "description": "Provider selection label"
+-  },
+   "+mAXPc": {
+     "defaultMessage": "No traces found. Try clearing your active filters to see more traces.",
+     "description": "Text displayed when no traces are found in the trace review page"
+@@ -619,6 +615,10 @@
+     "defaultMessage": "10",
+     "description": "Label for 10 first runs visible in run count selector within runs compare configuration modal"
+   },
++  "2N2M5a": {
++    "defaultMessage": "Response",
++    "description": "Response body label"
++  },
+   "2NJ8E5": {
+     "defaultMessage": "Please select parameters and/or metrics to display the comparison.",
+     "description": "Explanation displayed in the metrics and params compare plot when no values are selected"
+@@ -754,6 +754,10 @@
+     "defaultMessage": "<link>Learn more</link>",
+     "description": "Learn more tooltip link to learn more on how to search models"
+   },
++  "3cn8ue": {
++    "defaultMessage": "Sending...",
++    "description": "Send request button loading state"
++  },
+   "3geT+I": {
+     "defaultMessage": "Use the log artifact APIs to store file outputs from MLflow runs.",
+     "description": "Information in the empty state explaining how one could log artifacts output files for the experiment runs"
+@@ -1790,6 +1794,10 @@
+     "defaultMessage": "Edit Endpoint Name",
+     "description": "Title for edit endpoint name modal"
+   },
++  "AbCFL2": {
++    "defaultMessage": "Response from the endpoint after clicking Send request.",
++    "description": "Response body tooltip"
++  },
+   "AdlJNW": {
+     "defaultMessage": "Assessment Name",
+     "description": "Field label for assessment name in a creation form"
+@@ -2058,6 +2066,10 @@
+     "defaultMessage": "Next",
+     "description": "Evaluation review > assessments > next button"
+   },
++  "CDBd4J": {
++    "defaultMessage": "Unified API",
++    "description": "Unified API variant label"
++  },
+   "CDOfWP": {
+     "defaultMessage": "System Metrics",
+     "description": "Experiment tracking > runs charts > cards > RunsChartsDifferenceChartCard > system metrics heading"
+@@ -2290,6 +2302,10 @@
+     "defaultMessage": "Delete",
+     "description": "Delete evaluation runs modal button text"
+   },
++  "ECjBf5": {
++    "defaultMessage": "Edit the request body below and click Send request to call the endpoint.",
++    "description": "Try it description for unified"
++  },
+   "ED1+Xu": {
+     "defaultMessage": "Prompts & versions",
+     "description": "Label for the versions section in the MLflow experiment navbar"
+@@ -4971,10 +4987,6 @@
+     "defaultMessage": "Endpoint name is required",
+     "description": "Error message when endpoint name is empty"
+   },
+-  "Y7AIKR": {
+-    "defaultMessage": "MLflow Invocations API",
+-    "description": "MLflow invocations API section title"
+-  },
+   "Y7DzTT": {
+     "defaultMessage": "Input",
+     "description": "Label for the input tokens in the tooltip for the tokens cell."
+@@ -5135,6 +5147,10 @@
+     "defaultMessage": "Perform inference via model.transform()",
+     "description": "Code comment which states how we can perform SparkML inference"
+   },
++  "ZKtBkW": {
++    "defaultMessage": "Edit the request body below and click Send request to call the provider API.",
++    "description": "Try it description for passthrough"
++  },
+   "ZNYFUr": {
+     "defaultMessage": "Adheres to guidelines",
+     "description": "Evaluation results > guideline adherence assessment > positive value label. Displayed if evaluation result adheres to the guidelines."
+@@ -5835,10 +5851,6 @@
+     "defaultMessage": "You cannot select rows when comparing runs",
+     "description": "Tooltip message for the select button when comparing runs"
+   },
+-  "dsPsxG": {
+-    "defaultMessage": "OpenAI-Compatible Chat Completions API",
+-    "description": "OpenAI compatible API section title"
+-  },
+   "dt3hj5": {
+     "defaultMessage": "Add tags",
+     "description": "Run page > Overview > Tags cell > 'Add' button label"
+@@ -5907,6 +5919,10 @@
+     "defaultMessage": "Discard",
+     "description": "Evaluation review > assessments > discard pending assessments button label"
+   },
++  "eIdMWq": {
++    "defaultMessage": "Reset example",
++    "description": "Reset example button"
++  },
+   "eLgTRT": {
+     "defaultMessage": "Key",
+     "description": "Tag key label in unified trace tag assignment modal"
+@@ -6247,6 +6263,10 @@
+     "defaultMessage": "Rationale",
+     "description": "Label for the rationale of an expectation assessment"
+   },
++  "gYlgfM": {
++    "defaultMessage": "MLflow Invocations",
++    "description": "Unified API variant: MLflow Invocations"
++  },
+   "gZSJbg": {
+     "defaultMessage": "All charts are filtered. Clear the search filter to see hidden metric charts.",
+     "description": "Experiment page > compare runs > no metric charts > description"
+@@ -6315,6 +6335,10 @@
+     "defaultMessage": "Aliases:",
+     "description": "A label for the aliases list in the prompt details page"
+   },
++  "h48hnl": {
++    "defaultMessage": "Send request",
++    "description": "Send request button"
++  },
+   "hBAhI8": {
+     "defaultMessage": "Copy",
+     "description": "Tooltip message displayed on copy action"
+@@ -6743,6 +6767,10 @@
+     "defaultMessage": "Optimize",
+     "description": "A label for a button to display the modal with instructions to optimize the prompt"
+   },
++  "k0CEIu": {
++    "defaultMessage": "OpenAI Chat Completions",
++    "description": "Unified API variant: OpenAI Chat Completions"
++  },
+   "k0l8lF": {
+     "defaultMessage": "Boolean",
+     "description": "Boolean select menu option for assessment data type"
+@@ -6787,6 +6815,10 @@
+     "defaultMessage": "Edited {timeSince} by {source}. Original value: {value}",
+     "description": "Evaluation review > assessments > tooltip > edited by human"
+   },
++  "kICSro": {
++    "defaultMessage": "JSON body for the {providerName} API. This payload is sent directly to the provider in its native format.",
++    "description": "Request body tooltip for passthrough provider"
++  },
+   "kIESP/": {
+     "defaultMessage": "Filter applies to the first trace in each session. Only run on sessions where the first trace matches this filter; leave blank to run on all. Uses MLflow {link}.",
+     "description": "Hint text for filter string input for session-level scorers"
+@@ -6823,6 +6855,10 @@
+     "defaultMessage": "trace.status = 'OK'",
+     "description": "Placeholder example for filter string input"
+   },
++  "ka9hO4": {
++    "defaultMessage": "Try it",
++    "description": "Try it - interactive request/response"
++  },
+   "kbOsmf": {
+     "defaultMessage": "The AI Gateway is using the default encryption passphrase. This is acceptable for development or single-user deployments, but for multi-user production environments, you should rotate the passphrase using the CLI command: mlflow crypto rotate-kek",
+     "description": "Gateway > Default passphrase warning banner description"
+@@ -7147,6 +7183,10 @@
+     "defaultMessage": "Delete {numRuns, plural, =1 {1 run} other {# runs}}",
+     "description": "Delete evaluation runs modal title"
+   },
++  "mo1su3": {
++    "defaultMessage": "Provider",
++    "description": "Provider selector label"
++  },
+   "mpHsCg": {
+     "defaultMessage": "Size:",
+     "description": "Label to display the size of the artifact of the experiment"
+@@ -7807,6 +7847,10 @@
+     "defaultMessage": "Run judge on trace",
+     "description": "Title for run judge modal in traces view"
+   },
++  "rJWzb6": {
++    "defaultMessage": "Request",
++    "description": "Request body label"
++  },
+   "rJitqj": {
+     "defaultMessage": "Permission denied for {modelName}. Error: \"{errorMsg}\"",
+     "description": "Permission denied error message on registered model detail page"
+@@ -8007,6 +8051,10 @@
+     "defaultMessage": "Model Configuration",
+     "description": "Section header for model configuration in prompt creation"
+   },
++  "sYkXR1": {
++    "defaultMessage": "JSON body for the MLflow Invocations API. Use \"messages\" for chat or \"input\" for embeddings.",
++    "description": "Request body tooltip for unified MLflow Invocations API"
++  },
+   "sbHChH": {
+     "defaultMessage": "Dataset name is required",
+     "description": "Input field error when dataset name is empty"
+@@ -8667,6 +8715,10 @@
+     "defaultMessage": "Search prompts",
+     "description": "Placeholder text for the search input in the prompts table on the logged model details page"
+   },
++  "xbfKJS": {
++    "defaultMessage": "JSON body for the OpenAI-compatible Chat Completions API. Include \"model\" (endpoint name) and \"messages\".",
++    "description": "Request body tooltip for unified Chat Completions API"
++  },
+   "xcmW/z": {
+     "defaultMessage": "Enable Usage Tracking in the Configuration tab to view logs",
+     "description": "Tooltip shown on disabled Logs tab explaining that usage tracking must be enabled first"
+diff --git a/mlflow/server/js/src/shared/web-shared/errors/PredefinedErrors.tsx b/mlflow/server/js/src/shared/web-shared/errors/PredefinedErrors.tsx
+index 4199e6975..0fc4e36c7 100644
+--- a/mlflow/server/js/src/shared/web-shared/errors/PredefinedErrors.tsx
++++ b/mlflow/server/js/src/shared/web-shared/errors/PredefinedErrors.tsx
+@@ -53,7 +53,7 @@ const matchPredefinedApolloError = (error: Error) => {
+ const getNetworkRequestErrorDetailsFromResponse = (response: Response): NetworkRequestErrorDetails => {
+   const status = response.status;
+ 
+-  return { status };
++  return { status, response };
+ };
+ 
+ export const matchPredefinedErrorFromResponse = (response: Response, originalError?: CausableError) => {

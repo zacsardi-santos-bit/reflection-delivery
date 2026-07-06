@@ -1,0 +1,29 @@
+{
+    "id": "cd4b1d6c-7a8c-4ae8-a11e-6188e11d8fb2",
+    "started_at": "2026-07-04T15:37:44.701003",
+    "finished_at": "2026-07-04T15:39:07.346219",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__mitsuhiko-minijinja-538": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "mitsuhiko-minijinja-538__MQCCfXU"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

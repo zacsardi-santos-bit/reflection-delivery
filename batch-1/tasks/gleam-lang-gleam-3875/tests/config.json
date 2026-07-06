@@ -1,0 +1,37 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p gleam-core --no-fail-fast -E 'test(~inexhaustive_let) | test(~no_code_action_for_exhaustive)'",
+  "test_files": [
+    "compiler-core/src/language_server/tests/action.rs",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_alias_to_case.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_bit_array_to_case.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_result_to_case.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_string_prefix_pattern_alias_to_case.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_string_prefix_to_case.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_to_case_discard.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_to_case_indented.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_to_case_multi_variables.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_to_case_no_variables.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inexhaustive_let_tuple_to_case.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__inner_inexhaustive_let_to_case.snap",
+    "compiler-core/src/language_server/tests/snapshots/gleam_core__language_server__tests__action__outer_inexhaustive_let_to_case.snap"
+  ],
+  "num_test_files": 13,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 1/13) gleam-core language_server::tests::action::no_code_action_for_exhaustive_let_to_case",
+    "( 2/13) gleam-core language_server::tests::action::inexhaustive_let_to_case_no_variables",
+    "( 3/13) gleam-core language_server::tests::action::inner_inexhaustive_let_to_case",
+    "( 4/13) gleam-core language_server::tests::action::inexhaustive_let_string_prefix_to_case",
+    "( 5/13) gleam-core language_server::tests::action::inexhaustive_let_alias_to_case",
+    "( 6/13) gleam-core language_server::tests::action::inexhaustive_let_to_case_discard",
+    "( 7/13) gleam-core language_server::tests::action::inexhaustive_let_string_prefix_pattern_alias_to_case",
+    "( 8/13) gleam-core language_server::tests::action::outer_inexhaustive_let_to_case",
+    "( 9/13) gleam-core language_server::tests::action::inexhaustive_let_tuple_to_case",
+    "(10/13) gleam-core language_server::tests::action::inexhaustive_let_result_to_case",
+    "(11/13) gleam-core language_server::tests::action::inexhaustive_let_to_case_indented",
+    "(12/13) gleam-core language_server::tests::action::inexhaustive_let_bit_array_to_case",
+    "(13/13) gleam-core language_server::tests::action::inexhaustive_let_to_case_multi_variables"
+  ],
+  "PASS_TO_PASS": []
+}

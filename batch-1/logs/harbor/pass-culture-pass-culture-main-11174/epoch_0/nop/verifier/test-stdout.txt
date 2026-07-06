@@ -1,0 +1,522 @@
+patching file api/tests/routes/backoffice/offer_price_limitation_rules_test.py
+Starting PostgreSQL 15 database server: main.
+Starting redis-server: redis-server.
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.1.1, pluggy-1.4.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/api
+configfile: pyproject.toml
+plugins: mock-3.12.0, time-machine-2.14.0, Faker-19.10.0, anyio-4.0.0, flask-sqlalchemy-1.1.0, flask-1.3.0, dotenv-0.5.2, requests-mock-1.11.0, socket-0.7.0
+collecting ... collected 35 items
+
+tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_missing_permission <- tests/routes/backoffice/helpers/get.py FAILED [  2%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_no_backoffice_profile <- tests/routes/backoffice/helpers/get.py FAILED [  5%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_not_logged_in <- tests/routes/backoffice/helpers/get.py FAILED [  8%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_list_rules ERROR [ 11%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_search_rule_by_category ERROR [ 14%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_search_rule_by_subcategory ERROR [ 17%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetCreateOfferPriceLimitationRuleFormTest::test_missing_permission <- tests/routes/backoffice/helpers/get.py FAILED [ 20%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetCreateOfferPriceLimitationRuleFormTest::test_no_backoffice_profile <- tests/routes/backoffice/helpers/get.py FAILED [ 22%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetCreateOfferPriceLimitationRuleFormTest::test_not_logged_in <- tests/routes/backoffice/helpers/get.py FAILED [ 25%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetCreateOfferPriceLimitationRuleFormTest::test_get_create_form_test FAILED [ 28%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_not_logged_in <- tests/routes/backoffice/helpers/post.py FAILED [ 31%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_missing_csrf_token <- tests/routes/backoffice/helpers/post.py FAILED [ 34%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_missing_permission <- tests/routes/backoffice/helpers/post.py FAILED [ 37%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_no_backoffice_profile <- tests/routes/backoffice/helpers/post.py FAILED [ 40%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_create_offer_price_limitation_rule FAILED [ 42%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_create_already_existing_offer_price_limitation_rule ERROR [ 45%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetDeleteOfferPriceLimitationRuleFormTest::test_missing_permission <- tests/routes/backoffice/helpers/get.py FAILED [ 48%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetDeleteOfferPriceLimitationRuleFormTest::test_no_backoffice_profile <- tests/routes/backoffice/helpers/get.py FAILED [ 51%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetDeleteOfferPriceLimitationRuleFormTest::test_not_logged_in <- tests/routes/backoffice/helpers/get.py FAILED [ 54%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetDeleteOfferPriceLimitationRuleFormTest::test_get_delete_form_test ERROR [ 57%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_not_logged_in <- tests/routes/backoffice/helpers/post.py FAILED [ 60%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_missing_csrf_token <- tests/routes/backoffice/helpers/post.py FAILED [ 62%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_missing_permission <- tests/routes/backoffice/helpers/post.py FAILED [ 65%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_no_backoffice_profile <- tests/routes/backoffice/helpers/post.py FAILED [ 68%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_delete_offer_price_limitation_rule ERROR [ 71%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetEditOfferPriceLimitationRuleFormTest::test_missing_permission <- tests/routes/backoffice/helpers/get.py FAILED [ 74%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetEditOfferPriceLimitationRuleFormTest::test_no_backoffice_profile <- tests/routes/backoffice/helpers/get.py FAILED [ 77%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetEditOfferPriceLimitationRuleFormTest::test_not_logged_in <- tests/routes/backoffice/helpers/get.py FAILED [ 80%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::GetEditOfferPriceLimitationRuleFormTest::test_get_edit_form_test ERROR [ 82%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_not_logged_in <- tests/routes/backoffice/helpers/post.py FAILED [ 85%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_missing_csrf_token <- tests/routes/backoffice/helpers/post.py FAILED [ 88%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_missing_permission <- tests/routes/backoffice/helpers/post.py FAILED [ 91%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_no_backoffice_profile <- tests/routes/backoffice/helpers/post.py FAILED [ 94%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_edit_offer_price_limitation_rule ERROR [ 97%]
+tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_edit_offer_price_limitation_rule_with_big_rate ERROR [100%]
+
+==================================== ERRORS ====================================
+_______________ ERROR at setup of ListRulesTest.test_list_rules ________________
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+_________ ERROR at setup of ListRulesTest.test_search_rule_by_category _________
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+_______ ERROR at setup of ListRulesTest.test_search_rule_by_subcategory ________
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+_ ERROR at setup of CreateOfferPriceLimitationRuleTest.test_create_already_existing_offer_price_limitation_rule _
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+_ ERROR at setup of GetDeleteOfferPriceLimitationRuleFormTest.test_get_delete_form_test _
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+_ ERROR at setup of DeleteOfferPriceLimitationRuleTest.test_delete_offer_price_limitation_rule _
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+_ ERROR at setup of GetEditOfferPriceLimitationRuleFormTest.test_get_edit_form_test _
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+_ ERROR at setup of EditOfferPriceLimitationRuleTest.test_edit_offer_price_limitation_rule _
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+_ ERROR at setup of EditOfferPriceLimitationRuleTest.test_edit_offer_price_limitation_rule_with_big_rate _
+tests/routes/backoffice/offer_price_limitation_rules_test.py:25: in offer_price_limitation_rules_fixture
+    rule1 = offers_factories.OfferPriceLimitationRuleFactory(
+E   AttributeError: module 'pcapi.core.offers.factories' has no attribute 'OfferPriceLimitationRuleFactory'
+=================================== FAILURES ===================================
+____________________ ListRulesTest.test_missing_permission _____________________
+tests/routes/backoffice/helpers/get.py:13: in test_missing_permission
+    response = authenticated_client.get(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.list_rules'. Did you mean 'backoffice_web.offer_validation_rules.list_rules' instead?
+---------------------------- Captured stderr setup -----------------------------
+WARNI [pcapi.alembic.run_migrations] Alembic will use a DB connection with these settings: lock_timeout = 5000 ms, statement_timeout = 60000 ms
+WARNI [pcapi.alembic.run_migrations] Running migrations: attempt 1/30
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> f460dc2c9f93, initialize database schema with anterior migrations squashed in a dump
+INFO  [alembic.runtime.migration] Running upgrade f460dc2c9f93 -> 025c622f64f8, Squashing migrations - PRE
+INFO  [alembic.runtime.migration] Running upgrade 025c622f64f8 -> b5ae2a2f7d59, Add venue to CustomReimbursementRule
+INFO  [alembic.runtime.migration] Running upgrade b5ae2a2f7d59 -> 945ba5efc72f, Add "bankAccountId" fkey to "cashflow" table.
+INFO  [alembic.runtime.migration] Running upgrade 945ba5efc72f -> 232786daf672, add rurality_level to EductionInstitution
+INFO  [alembic.runtime.migration] Running upgrade 232786daf672 -> fc7dd42a29ac, Add index on cancellationReason column of Booking table
+INFO  [alembic.runtime.migration] Running upgrade fc7dd42a29ac -> 7894be402ca7, Add "AllocineProducts" in table "provider"
+INFO  [alembic.runtime.migration] Running upgrade 7894be402ca7 -> b429bc5435d6, Create `collective_playlist` table
+INFO  [alembic.runtime.migration] Running upgrade b429bc5435d6 -> ca50ad3c3fd6, add AccessibilityProvider table in offerers models
+INFO  [alembic.runtime.migration] Running upgrade ca50ad3c3fd6 -> d3bd3af52558, Restart bank_account_id_seq at 200_000
+INFO  [alembic.runtime.migration] Running upgrade d3bd3af52558 -> 381fef70eb7a, add adage venue address model
+INFO  [alembic.runtime.migration] Running upgrade 381fef70eb7a -> d787e69663b1, Add OpeningHours table
+INFO  [alembic.runtime.migration] Running upgrade d787e69663b1 -> 4f6debc0238a, Create new tag: non-diffusible (applied from the code)
+INFO  [alembic.runtime.migration] Running upgrade 4f6debc0238a -> 23e2d3b322ab, create debit note reference scheme
+INFO  [alembic.runtime.migration] Running upgrade 23e2d3b322ab -> d02672d59311, Add venue_provider.dateCreated
+INFO  [alembic.runtime.migration] Running upgrade d02672d59311 -> d118574a7888, Add isVisibleInApp to Venue
+INFO  [alembic.runtime.migration] Running upgrade d118574a7888 -> ba414c8b1ee4, add domain to national program intermediate table
+INFO  [alembic.runtime.migration] Running upgrade ba414c8b1ee4 -> 9a4a8ab82816, reset adage venue address id sequence
+INFO  [alembic.runtime.migration] Running upgrade 9a4a8ab82816 -> f54ee3618926, reset adage venue address FK constraint: add on delete cascade
+INFO  [alembic.runtime.migration] Running upgrade f54ee3618926 -> 3bc3200ec909, Make user email history new email nullable.
+INFO  [alembic.runtime.migration] Running upgrade 3bc3200ec909 -> e9ed5b8f1267, add updateDate to google_places_info
+INFO  [alembic.runtime.migration] Running upgrade e9ed5b8f1267 -> ed4a0376eefe, Make placeId nullable in google_places_info
+INFO  [alembic.runtime.migration] Running upgrade ed4a0376eefe -> 7c155945e8fd, Remove unique constraint for placeId from google_places_info
+INFO  [alembic.runtime.migration] Running upgrade 7c155945e8fd -> df028bd09c15, add contact request fields to collective offer
+INFO  [alembic.runtime.migration] Running upgrade df028bd09c15 -> 8ed029bd05a6, add allowedOnAdage to Offerer
+INFO  [alembic.runtime.migration] Running upgrade 8ed029bd05a6 -> 8d4e8ebb573c, eac update student levels rename and add
+INFO  [alembic.runtime.migration] Running upgrade 8d4e8ebb573c -> fa4755bb92f0, update collective offer template's contact's constraints
+INFO  [alembic.runtime.migration] Running upgrade fa4755bb92f0 -> 17bbd580c848, Add lastValidationPrice column to Offer
+INFO  [alembic.runtime.migration] Running upgrade 17bbd580c848 -> ccd86b897e7a, Create user_pro_new_nav_state table for the new pro navbar ab testing and beta testing
+INFO  [alembic.runtime.migration] Running upgrade ccd86b897e7a -> 1ac22a2f313e, eac collective offer teamplte contactform default form null
+WARNI [pcapi.alembic.run_migrations] SUCCESS: Migrations were run in 1 attempt(s).
+WARNI [pcapi.alembic.run_migrations] Alembic will use a DB connection with these settings: lock_timeout = 5000 ms, statement_timeout = 60000 ms
+WARNI [pcapi.alembic.run_migrations] Running migrations: attempt 1/30
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade f460dc2c9f93 -> f0fbdcf9961d, Squashing migrations - POST
+INFO  [alembic.runtime.migration] Running upgrade f0fbdcf9961d -> 3467ee234047, Removes WIP_HOME_STATS and WIP_HOME_STATS_V2 Feature Flag
+INFO  [alembic.runtime.migration] Running upgrade 3467ee234047 -> 36cf4c5380ad, Add partial index for musicType in Offer.extraData
+INFO  [alembic.runtime.migration] Running upgrade 36cf4c5380ad -> c95cbcd8d765, Add partial index for musicSubType in Offer.extraData
+INFO  [alembic.runtime.migration] Running upgrade c95cbcd8d765 -> cb8859f6ac97, Add partial index for showType in Offer.extraData
+INFO  [alembic.runtime.migration] Running upgrade cb8859f6ac97 -> fadf7f6f4c60, Add partial index for showSubType in Offer.extraData
+INFO  [alembic.runtime.migration] Running upgrade fadf7f6f4c60 -> 2cc0a6822cf8, Make "reimbursementPointId" nullable in "cashflow" and "invoice" tables
+INFO  [alembic.runtime.migration] Running upgrade 2cc0a6822cf8 -> 4cc9e281e291, Delete INCLUDE_LEGACY_PAYMENTS_FOR_REIMBURSEMENTS feature flag
+INFO  [alembic.runtime.migration] Running upgrade 4cc9e281e291 -> 5da6795c25fa, Add unicity constraint to AccessibilityProvider.venueId and externalAccessibilityProviderId
+INFO  [alembic.runtime.migration] Running upgrade 5da6795c25fa -> 6993f48deb4b, Add index on offer.authorId column
+INFO  [alembic.runtime.migration] Running upgrade 6993f48deb4b -> ec9e39ae7940, Add NOT NULL constraint on "pricing.eventId" (step 1 of 4)
+INFO  [alembic.runtime.migration] Running upgrade ec9e39ae7940 -> c1a24da729e5, Add NOT NULL constraint on "pricing.eventId" (step 2 of 4)
+INFO  [alembic.runtime.migration] Running upgrade c1a24da729e5 -> c2bc7c46f7a5, Add NOT NULL constraint on "pricing.eventId" (step 3 of 4)
+INFO  [alembic.runtime.migration] Running upgrade c2bc7c46f7a5 -> 4f738fc2e54a, Add NOT NULL constraint on "pricing.eventId" (step 4 of 4)
+INFO  [alembic.runtime.migration] Running upgrade 4f738fc2e54a -> 9607ada7a6b6, Remove FF WIP_ENABLE_SEARCH_HISTORY_ADAGE
+INFO  [alembic.runtime.migration] Running upgrade 9607ada7a6b6 -> 6be778edb2f4, Drop "isNational", "url", "owningOffererId" & "isSynchronizationCompatible" column to "product" table.
+INFO  [alembic.runtime.migration] Running upgrade 6be778edb2f4 -> 04caadcaa652, Add index on EducationalInstitution (type name city) concat
+INFO  [alembic.runtime.migration] Running upgrade 04caadcaa652 -> ce97cf13d894, Drop "Token" table
+INFO  [alembic.runtime.migration] Running upgrade ce97cf13d894 -> 88d300a290b1, Remove FF WIP_ENABLE_DISCOVERY
+INFO  [alembic.runtime.migration] Running upgrade 88d300a290b1 -> 6d2971ccc616, Remove favorite.mediationId column
+INFO  [alembic.runtime.migration] Running upgrade 6d2971ccc616 -> 04c2660a8169, remove ff WIP_PARTNER_PAGE
+INFO  [alembic.runtime.migration] Running upgrade 04c2660a8169 -> 00738a9d13b0, remove ff WIP_CATEGORY_SELECTION
+INFO  [alembic.runtime.migration] Running upgrade 00738a9d13b0 -> 1e3979b7adb0, validate collective offer template contact form constraint
+INFO  [alembic.runtime.migration] Running upgrade 1e3979b7adb0 -> 48b6b7074b64, Remove `WIP_ENABLE_RATE_LIMITING` feature flag
+INFO  [alembic.runtime.migration] Running upgrade 48b6b7074b64 -> 6f80f864d7ed, remove_feature_flag_enable_format
+INFO  [alembic.runtime.migration] Running upgrade 6f80f864d7ed -> 975f6274e3ce, Drop UNIQUE constraint on externalProviderId
+INFO  [alembic.runtime.migration] Running upgrade 975f6274e3ce -> c8e741468d2a, Remove WIP_BEHIND_L7_LOAD_BALANCER feature flag
+INFO  [alembic.runtime.migration] Running upgrade c8e741468d2a -> e82695d3ec03, add price index on collective_stock
+INFO  [alembic.runtime.migration] Running upgrade e82695d3ec03 -> 2eee70a08b61, add price index on stock
+INFO  [alembic.runtime.migration] Running upgrade 2eee70a08b61 -> 1be3db2bd7b9, Create index on venue.departementCode
+INFO  [alembic.runtime.migration] Running upgrade 1be3db2bd7b9 -> c7a4d9de4c48, Create unaccented index on user.firstName + user.lastName
+INFO  [alembic.runtime.migration] Running upgrade c7a4d9de4c48 -> 3a8d3a5b86b2, Create unaccented index on offerer.name
+INFO  [alembic.runtime.migration] Running upgrade 3a8d3a5b86b2 -> 640cb4c5d424, Create unaccented index on offerer.city
+INFO  [alembic.runtime.migration] Running upgrade 640cb4c5d424 -> 73468507305b, Create unaccented index on venue.name
+INFO  [alembic.runtime.migration] Running upgrade 73468507305b -> 23fa7b1b692e, Create unaccented index on venue.publicName
+INFO  [alembic.runtime.migration] Running upgrade 23fa7b1b692e -> 3784f1bb8d9e, Unique program for an educational institution
+INFO  [alembic.runtime.migration] Running upgrade 3784f1bb8d9e -> 8d5148b6b128, Remove FF WIP_ENABLE_SATISFACTION_SURVEY
+INFO  [alembic.runtime.migration] Running upgrade 8d5148b6b128 -> 4df45e259f14, Remove FF WIP_ENABLE_DIFFUSE_HELP
+WARNI [pcapi.alembic.run_migrations] SUCCESS: Migrations were run in 1 attempt(s).
+WARNI [pcapi.alembic.run_migrations] Alembic will use a DB connection with these settings: lock_timeout = 5000 ms, statement_timeout = 60000 ms
+WARNI [pcapi.alembic.run_migrations] Running migrations: attempt 1/30
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+WARNI [pcapi.alembic.run_migrations] SUCCESS: Migrations were run in 1 attempt(s).
+WARNI [pcapi.alembic.run_migrations] Alembic will use a DB connection with these settings: lock_timeout = 5000 ms, statement_timeout = 60000 ms
+WARNI [pcapi.alembic.run_migrations] Running migrations: attempt 1/30
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+WARNI [pcapi.alembic.run_migrations] SUCCESS: Migrations were run in 1 attempt(s).
+___________________ ListRulesTest.test_no_backoffice_profile ___________________
+tests/routes/backoffice/helpers/get.py:21: in test_no_backoffice_profile
+    response = authenticated_client.get(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.list_rules'. Did you mean 'backoffice_web.offer_validation_rules.list_rules' instead?
+_______________________ ListRulesTest.test_not_logged_in _______________________
+tests/routes/backoffice/helpers/get.py:26: in test_not_logged_in
+    response = getattr(client, self.http_method)(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.list_rules'. Did you mean 'backoffice_web.offer_validation_rules.list_rules' instead?
+______ GetCreateOfferPriceLimitationRuleFormTest.test_missing_permission _______
+tests/routes/backoffice/helpers/get.py:13: in test_missing_permission
+    response = authenticated_client.get(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+_____ GetCreateOfferPriceLimitationRuleFormTest.test_no_backoffice_profile _____
+tests/routes/backoffice/helpers/get.py:21: in test_no_backoffice_profile
+    response = authenticated_client.get(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+_________ GetCreateOfferPriceLimitationRuleFormTest.test_not_logged_in _________
+tests/routes/backoffice/helpers/get.py:26: in test_not_logged_in
+    response = getattr(client, self.http_method)(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+_____ GetCreateOfferPriceLimitationRuleFormTest.test_get_create_form_test ______
+tests/routes/backoffice/offer_price_limitation_rules_test.py:96: in test_get_create_form_test
+    form_url = url_for(self.endpoint)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+____________ CreateOfferPriceLimitationRuleTest.test_not_logged_in _____________
+tests/routes/backoffice/helpers/post.py:60: in test_not_logged_in
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+__________ CreateOfferPriceLimitationRuleTest.test_missing_csrf_token __________
+tests/routes/backoffice/helpers/post.py:71: in test_missing_csrf_token
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+__________ CreateOfferPriceLimitationRuleTest.test_missing_permission __________
+tests/routes/backoffice/helpers/post.py:88: in test_missing_permission
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+________ CreateOfferPriceLimitationRuleTest.test_no_backoffice_profile _________
+tests/routes/backoffice/helpers/post.py:99: in test_no_backoffice_profile
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+__ CreateOfferPriceLimitationRuleTest.test_create_offer_price_limitation_rule __
+tests/routes/backoffice/offer_price_limitation_rules_test.py:108: in test_create_offer_price_limitation_rule
+    response = self.post_to_endpoint(
+tests/routes/backoffice/helpers/post.py:43: in post_to_endpoint
+    url = url_for(self.endpoint, **url_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.create_rule'. Did you mean 'backoffice_web.offer_validation_rules.create_rule' instead?
+______ GetDeleteOfferPriceLimitationRuleFormTest.test_missing_permission _______
+tests/routes/backoffice/helpers/get.py:13: in test_missing_permission
+    response = authenticated_client.get(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.get_delete_offer_price_limitation_rule_form' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.get_delete_offer_validation_rule_form' instead?
+_____ GetDeleteOfferPriceLimitationRuleFormTest.test_no_backoffice_profile _____
+tests/routes/backoffice/helpers/get.py:21: in test_no_backoffice_profile
+    response = authenticated_client.get(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.get_delete_offer_price_limitation_rule_form' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.get_delete_offer_validation_rule_form' instead?
+_________ GetDeleteOfferPriceLimitationRuleFormTest.test_not_logged_in _________
+tests/routes/backoffice/helpers/get.py:26: in test_not_logged_in
+    response = getattr(client, self.http_method)(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.get_delete_offer_price_limitation_rule_form' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.get_delete_offer_validation_rule_form' instead?
+____________ DeleteOfferPriceLimitationRuleTest.test_not_logged_in _____________
+tests/routes/backoffice/helpers/post.py:60: in test_not_logged_in
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.delete_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.delete_rule' instead?
+__________ DeleteOfferPriceLimitationRuleTest.test_missing_csrf_token __________
+tests/routes/backoffice/helpers/post.py:71: in test_missing_csrf_token
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.delete_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.delete_rule' instead?
+__________ DeleteOfferPriceLimitationRuleTest.test_missing_permission __________
+tests/routes/backoffice/helpers/post.py:88: in test_missing_permission
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.delete_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.delete_rule' instead?
+________ DeleteOfferPriceLimitationRuleTest.test_no_backoffice_profile _________
+tests/routes/backoffice/helpers/post.py:99: in test_no_backoffice_profile
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.delete_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.delete_rule' instead?
+_______ GetEditOfferPriceLimitationRuleFormTest.test_missing_permission ________
+tests/routes/backoffice/helpers/get.py:13: in test_missing_permission
+    response = authenticated_client.get(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.edit_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.edit_rule' instead?
+______ GetEditOfferPriceLimitationRuleFormTest.test_no_backoffice_profile ______
+tests/routes/backoffice/helpers/get.py:21: in test_no_backoffice_profile
+    response = authenticated_client.get(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.edit_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.edit_rule' instead?
+__________ GetEditOfferPriceLimitationRuleFormTest.test_not_logged_in __________
+tests/routes/backoffice/helpers/get.py:26: in test_not_logged_in
+    response = getattr(client, self.http_method)(self.path)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.edit_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.edit_rule' instead?
+_____________ EditOfferPriceLimitationRuleTest.test_not_logged_in ______________
+tests/routes/backoffice/helpers/post.py:60: in test_not_logged_in
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.edit_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.edit_rule' instead?
+___________ EditOfferPriceLimitationRuleTest.test_missing_csrf_token ___________
+tests/routes/backoffice/helpers/post.py:71: in test_missing_csrf_token
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.edit_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.edit_rule' instead?
+___________ EditOfferPriceLimitationRuleTest.test_missing_permission ___________
+tests/routes/backoffice/helpers/post.py:88: in test_missing_permission
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.edit_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.edit_rule' instead?
+_________ EditOfferPriceLimitationRuleTest.test_no_backoffice_profile __________
+tests/routes/backoffice/helpers/post.py:99: in test_no_backoffice_profile
+    response = client_method(self.path, form=self.form)
+tests/routes/backoffice/helpers/base.py:18: in path
+    return url_for(self.endpoint, **self.endpoint_kwargs)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:338: in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+/usr/local/lib/python3.11/site-packages/flask/helpers.py:325: in url_for
+    rv = url_adapter.build(
+/usr/local/lib/python3.11/site-packages/werkzeug/routing.py:2315: in build
+    raise BuildError(endpoint, values, method, self)
+E   werkzeug.routing.BuildError: Could not build url for endpoint 'backoffice_web.offer_price_limitation_rules.edit_rule' with values ['rule_id']. Did you mean 'backoffice_web.offer_validation_rules.edit_rule' instead?
+=========================== short test summary info ============================
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_missing_permission
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_no_backoffice_profile
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_not_logged_in
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetCreateOfferPriceLimitationRuleFormTest::test_missing_permission
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetCreateOfferPriceLimitationRuleFormTest::test_no_backoffice_profile
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetCreateOfferPriceLimitationRuleFormTest::test_not_logged_in
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetCreateOfferPriceLimitationRuleFormTest::test_get_create_form_test
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_not_logged_in
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_missing_csrf_token
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_missing_permission
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_no_backoffice_profile
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_create_offer_price_limitation_rule
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetDeleteOfferPriceLimitationRuleFormTest::test_missing_permission
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetDeleteOfferPriceLimitationRuleFormTest::test_no_backoffice_profile
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetDeleteOfferPriceLimitationRuleFormTest::test_not_logged_in
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_not_logged_in
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_missing_csrf_token
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_missing_permission
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_no_backoffice_profile
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetEditOfferPriceLimitationRuleFormTest::test_missing_permission
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetEditOfferPriceLimitationRuleFormTest::test_no_backoffice_profile
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::GetEditOfferPriceLimitationRuleFormTest::test_not_logged_in
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_not_logged_in
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_missing_csrf_token
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_missing_permission
+FAILED tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_no_backoffice_profile
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_list_rules
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_search_rule_by_category
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::ListRulesTest::test_search_rule_by_subcategory
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::CreateOfferPriceLimitationRuleTest::test_create_already_existing_offer_price_limitation_rule
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::GetDeleteOfferPriceLimitationRuleFormTest::test_get_delete_form_test
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::DeleteOfferPriceLimitationRuleTest::test_delete_offer_price_limitation_rule
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::GetEditOfferPriceLimitationRuleFormTest::test_get_edit_form_test
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_edit_offer_price_limitation_rule
+ERROR tests/routes/backoffice/offer_price_limitation_rules_test.py::EditOfferPriceLimitationRuleTest::test_edit_offer_price_limitation_rule_with_big_rate
+========================= 26 failed, 9 errors in 7.88s =========================
+reward=0 graded=35 found=0 failed=0 parsed=11 framework=pytest exit_code=1

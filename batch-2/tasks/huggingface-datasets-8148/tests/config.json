@@ -1,0 +1,24 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/packaged_modules/test_iceberg.py /workspace/repo/tests/utils.py -v",
+  "test_files": [
+    "tests/packaged_modules/test_iceberg.py",
+    "tests/utils.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_basic",
+    "tests.packaged_modules.test_iceberg::test_load_vectors",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_columns",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_filters",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_multi_split",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_streaming[False]",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_streaming[True]",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_snapshot",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_num_proc",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_missing_catalog_raises",
+    "tests.packaged_modules.test_iceberg::test_load_iceberg_missing_table_raises"
+  ],
+  "PASS_TO_PASS": []
+}

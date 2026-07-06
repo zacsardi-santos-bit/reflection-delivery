@@ -1,0 +1,29 @@
+{
+    "id": "176c3406-1102-4eb5-8a7c-b515731ff56b",
+    "started_at": "2026-07-06T12:17:17.358274",
+    "finished_at": "2026-07-06T12:18:18.636481",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__kubernetes-kubernetes-138645": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "kubernetes-kubernetes-138645__tbSGXtn"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

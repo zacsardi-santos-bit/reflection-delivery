@@ -1,4 +1,0 @@
-patching file src/components/Avatars/Avatar/Avatar.styled.ts
-patching file src/components/Avatars/Avatar/Avatar.tsx
-patching file src/components/Avatars/Avatar/Avatar.types.ts
-patching file src/components/Avatars/Avatar/__snapshots__/Avatar.test.tsx.snap

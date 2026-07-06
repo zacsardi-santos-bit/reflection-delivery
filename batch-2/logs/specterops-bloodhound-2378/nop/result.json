@@ -1,0 +1,29 @@
+{
+    "id": "3797bcf3-7803-4193-8beb-ddfb9bc0e513",
+    "started_at": "2026-07-06T12:17:02.137737",
+    "finished_at": "2026-07-06T12:17:41.595760",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__specterops-bloodhound-2378": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "specterops-bloodhound-2378__4yj28F9"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

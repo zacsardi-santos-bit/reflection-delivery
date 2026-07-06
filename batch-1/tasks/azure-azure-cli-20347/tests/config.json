@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py::AKSUpdateDecoratorTestCase::test_update_identity -v",
+  "test_files": [
+    "src/azure-cli/azure/cli/command_modules/acs/tests/latest/test_decorator.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "azure.cli.command_modules.acs.tests.latest.test_decorator.AKSUpdateDecoratorTestCase::test_update_identity"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,5 +1,0 @@
-I'm working with a Go CLI framework and I'd like to be able to export my entire command definition — including all subcommands, flags, and arguments — as JSON. Right now there's no way to serialize a command tree to JSON, which makes it hard to auto-generate documentation or integrate the CLI schema with other tooling.
-
-I need the command structure to be JSON-serializable so that when I marshal a command, I get a complete representation of it: its name, aliases, usage text, description, version, categories, nested subcommands, all flags with their metadata (name, aliases, usage, default values, whether they're hidden or required, and their type-specific configuration), and any argument definitions (with name, value, usage, limits, and configuration). Authors should also be included and should support both plain string form and structured form with name and address. Empty collections should serialize as null rather than empty arrays.
-
-Essentially, I want to be able to call the standard JSON marshaling function on any command and get a faithful, complete snapshot of that command's definition.

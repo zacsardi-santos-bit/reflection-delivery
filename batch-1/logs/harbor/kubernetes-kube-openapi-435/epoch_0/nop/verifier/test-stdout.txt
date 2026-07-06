@@ -1,0 +1,16 @@
+patching file pkg/generators/markers_test.go
+patching file pkg/generators/openapi_test.go
+patching file test/integration/go.mod
+patching file test/integration/go.sum
+patching file test/integration/integration_suite_test.go
+patching file test/integration/pkg/generated/openapi_generated.go
+patching file test/integration/testdata/golden.v2.json
+patching file test/integration/testdata/golden.v2.report
+patching file test/integration/testdata/golden.v3.json
+patching file test/integration/testdata/valuevalidation/alpha.go
+patching file test/integration/testutil/testutil.go
+# k8s.io/kube-openapi/pkg/generators
+pkg/generators/markers_test.go:26:2: no required module provides package k8s.io/utils/ptr; to add it:
+	go get k8s.io/utils/ptr
+FAIL	k8s.io/kube-openapi/pkg/generators [setup failed]
+reward=0 graded=84 found=0 failed=0 parsed=0 framework=go exit_code=1

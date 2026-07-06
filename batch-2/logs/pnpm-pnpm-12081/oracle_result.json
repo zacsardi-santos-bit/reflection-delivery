@@ -1,0 +1,29 @@
+{
+    "id": "aa2ef21c-98a9-4754-8341-d99b645eac54",
+    "started_at": "2026-07-02T19:15:33.206718",
+    "finished_at": "2026-07-02T19:18:00.507780",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pnpm-pnpm-12081__6FfKQrJ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

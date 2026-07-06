@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/sglang/srt/mem_cache/storage/nixl/test_hicache_nixl_storage.py -v",
+  "test_files": [
+    "python/sglang/srt/mem_cache/storage/nixl/test_hicache_nixl_storage.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_batch_set_get",
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_mixed_operations",
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_single_set_get"
+  ],
+  "PASS_TO_PASS": [
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_basic_file_operations",
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_create_nixl_tuples",
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_data_integrity",
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_error_handling",
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_register_buffers",
+    "sglang.srt.mem_cache.storage.nixl.test_hicache_nixl_storage.TestNixlUnified::test_register_files"
+  ]
+}

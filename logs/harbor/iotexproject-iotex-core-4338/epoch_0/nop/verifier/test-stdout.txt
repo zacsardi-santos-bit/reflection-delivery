@@ -1,7 +1,0 @@
-patching file db/db_pebble_test.go
-# github.com/iotexproject/iotex-core/db [github.com/iotexproject/iotex-core/db.test]
-db/db_pebble_test.go:35:8: undefined: NewPebbleDB
-db/db_pebble_test.go:142:8: undefined: NewPebbleDB
-db/db_pebble_test.go:200:8: undefined: NewPebbleDB
-FAIL	github.com/iotexproject/iotex-core/db [build failed]
-reward=0 graded=50 found=50 failed=50 parsed=1 framework=go exit_code=1

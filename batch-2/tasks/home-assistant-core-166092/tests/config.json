@@ -1,0 +1,27 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 -m script.translations develop --all && pytest tests/components/smlight/test_light.py -v",
+  "test_files": [
+    "tests/components/smlight/conftest.py",
+    "tests/components/smlight/fixtures/sensors.json",
+    "tests/components/smlight/snapshots/test_light.ambr",
+    "tests/components/smlight/snapshots/test_sensor.ambr",
+    "tests/components/smlight/test_light.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.smlight.test_light::test_light_setup_ultima",
+    "tests.components.smlight.test_light::test_light_turn_on_off",
+    "tests.components.smlight.test_light::test_light_brightness",
+    "tests.components.smlight.test_light::test_light_rgb_color",
+    "tests.components.smlight.test_light::test_light_effect",
+    "tests.components.smlight.test_light::test_light_invalid_effect",
+    "tests.components.smlight.test_light::test_light_turn_on_when_on_is_noop",
+    "tests.components.smlight.test_light::test_light_state_handles_invalid_attributes_from_sse",
+    "tests.components.smlight.test_light::test_ambilight_connection_error"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.smlight.test_light::test_light_not_created_non_ultima"
+  ]
+}

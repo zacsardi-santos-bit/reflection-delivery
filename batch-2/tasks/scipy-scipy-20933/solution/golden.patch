@@ -1,0 +1,3516 @@
+diff --git a/.github/ISSUE_TEMPLATE/config.yml b/.github/ISSUE_TEMPLATE/config.yml
+index 1e9e39ab3a..f1f1e694bc 100644
+--- a/.github/ISSUE_TEMPLATE/config.yml
++++ b/.github/ISSUE_TEMPLATE/config.yml
+@@ -3,9 +3,9 @@ contact_links:
+   - name: Stack Overflow
+     url: https://stackoverflow.com/questions/tagged/scipy
+     about: Please ask and answer usage questions on Stack Overflow
+-  - name: Developer Mailing list
+-    url: https://mail.python.org/mailman3/lists/scipy-dev.python.org/
+-    about: Development discussions and announcements on the mailing list
++  - name: Developer Forum
++    url: https://discuss.scientific-python.org/c/contributor/scipy
++    about: Development discussions and announcements on the forum
+   - name: Blank issue
+     url: https://github.com/scipy/scipy/issues/new
+     about: Please note that other templates should be used in most cases
+diff --git a/.github/workflows/wheels.yml b/.github/workflows/wheels.yml
+index 5c0b253042..691c0a3963 100644
+--- a/.github/workflows/wheels.yml
++++ b/.github/workflows/wheels.yml
+@@ -152,17 +152,19 @@ jobs:
+           echo "CIBW_ENVIRONMENT_MACOS=$CIBW" >> "$GITHUB_ENV"
+ 
+           echo "REPAIR_PATH=$LIB_PATH" >> "$GITHUB_ENV"
+-          if [[ ${{ matrix.buildplat[3] }} == 'accelerate' ]]; then
+-            PREFIX=DYLD_LIBRARY_PATH=$(dirname $(gfortran --print-file-name libgfortran.dylib))
+-          else
+-            # Use libgfortran and friends from the scipy-openblas wheel,
+-            # which should be exactly the same as the ones from gfortran
+-            # This will exclude the duplicates from gfortran in /opt/gfortran*
+-            EXCLUDE="-e /gfortran"
+-          fi
+-          CIBW="$PREFIX delocate-listdeps {wheel} &&\
+-            $PREFIX delocate-wheel $EXCLUDE --require-archs \
+-            {delocate_archs} -w {dest_dir} {wheel}"
++          
++          PREFIX=DYLD_LIBRARY_PATH="\$(dirname \$(gfortran --print-file-name libgfortran.dylib))"
++          # remove libgfortran from location used for linking (if any), to
++          # check wheel has bundled things correctly and all tests pass without
++          # needing installed gfortran
++          POSTFIX=" sudo rm -rf /opt/gfortran-darwin-x86_64-native &&\
++                    sudo rm -rf /usr/local/gfortran/lib"
++          CIBW="$PREFIX delocate-listdeps -d {wheel} && echo "-----------" &&\
++            $PREFIX delocate-wheel -v $EXCLUDE --require-archs \
++            {delocate_archs} -w {dest_dir} {wheel} && echo "-----------" &&\
++            delocate-listdeps -d {dest_dir}/*.whl && echo "-----------" &&\
++            $POSTFIX"
++          
+           # Rename x86 Accelerate wheel to test on macOS 13 runner
+           if [[ ${{ matrix.buildplat[0] }} == 'macos-13' && ${{ matrix.buildplat[4] }} == '14.0' ]]; then
+             CIBW+=" && mv {dest_dir}/\$(basename {wheel}) \
+diff --git a/README.rst b/README.rst
+index 7d5cc292de..01ec8a053f 100644
+--- a/README.rst
++++ b/README.rst
+@@ -66,8 +66,9 @@ Writing code isn’t the only way to contribute to SciPy. You can also:
+ - write grant proposals and help with other fundraising efforts
+ 
+ If you’re unsure where to start or how your skills fit in, reach out! You can
+-ask on the mailing list or here, on GitHub, by leaving a
+-comment on a relevant issue that is already open.
++ask on the `forum <https://discuss.scientific-python.org/c/contributor/scipy>`__
++or here, on GitHub, by leaving a comment on a relevant issue that is already
++open.
+ 
+ If you are new to contributing to open source, `this
+ guide <https://opensource.guide/how-to-contribute/>`__ helps explain why, what,
+diff --git a/ci/cirrus_wheels.yml b/ci/cirrus_wheels.yml
+index 24afe6d4d6..cc4da6724a 100644
+--- a/ci/cirrus_wheels.yml
++++ b/ci/cirrus_wheels.yml
+@@ -29,6 +29,8 @@ cirrus_wheels_linux_aarch64_task:
+         CIBW_BUILD: cp311-manylinux* cp312-manylinux*
+   env:
+     CIBW_PRERELEASE_PYTHONS: False
++    CIBW_ENVIRONMENT: >
++      PKG_CONFIG_PATH=/project
+ 
+   build_script: |
+     apt install -y python3-venv python-is-python3
+diff --git a/doc/source/_static/scipy.css b/doc/source/_static/scipy.css
+index a597689b29..b924c7cc0a 100644
+--- a/doc/source/_static/scipy.css
++++ b/doc/source/_static/scipy.css
+@@ -78,3 +78,22 @@ div.admonition>.admonition-title {
+     gap: 10px;
+     margin-bottom: 20px;
+ }
++
++/* Wrap long titles in pages */
++h1 {
++  word-wrap: break-word;
++}
++
++/* Monospace titles for API docs */
++div.empty + section>h1 {
++  font-family: var(--pst-font-family-monospace);
++}
++
++.prename {
++  font-family: var(--pst-font-family-monospace);
++  font-size: var(--pst-font-size-h4);
++}
++
++.sig-prename {
++  display: none;
++}
+diff --git a/doc/source/_templates/autosummary/attribute.rst b/doc/source/_templates/autosummary/attribute.rst
+index a176e99aff..6c334f9d95 100644
+--- a/doc/source/_templates/autosummary/attribute.rst
++++ b/doc/source/_templates/autosummary/attribute.rst
+@@ -1,8 +1,13 @@
+ :orphan:
+ 
++.. raw:: html
++
++   <div class="prename">{{ module }}.{{ class }}.</div>
++   <div class="empty"></div>
++
+ {{ fullname }}
+ {{ underline }}
+ 
+ .. currentmodule:: {{ module }}
+ 
+-.. autoattribute:: {{ objname }}
+\ No newline at end of file
++.. autoattribute:: {{ objname }}
+diff --git a/doc/source/_templates/autosummary/class.rst b/doc/source/_templates/autosummary/class.rst
+index de8a20bb07..e7637016a6 100644
+--- a/doc/source/_templates/autosummary/class.rst
++++ b/doc/source/_templates/autosummary/class.rst
+@@ -1,4 +1,9 @@
+-{{ fullname }}
++.. raw:: html
++
++   <div class="prename">{{ module }}.</div>
++   <div class="empty"></div>
++
++{{ name }}
+ {{ underline }}
+ 
+ .. currentmodule:: {{ module }}
+diff --git a/doc/source/_templates/autosummary/function.rst b/doc/source/_templates/autosummary/function.rst
+new file mode 100644
+index 0000000000..a0965e8bf1
+--- /dev/null
++++ b/doc/source/_templates/autosummary/function.rst
+@@ -0,0 +1,11 @@
++.. raw:: html
++
++   <div class="prename">{{ module }}.</div>
++   <div class="empty"></div>
++
++{{ name }}
++{{ underline }}
++
++.. currentmodule:: {{ module }}
++
++.. autofunction:: {{ objname }}
+\ No newline at end of file
+diff --git a/doc/source/_templates/autosummary/method.rst b/doc/source/_templates/autosummary/method.rst
+index 6dce2229ed..1e7e0c286c 100644
+--- a/doc/source/_templates/autosummary/method.rst
++++ b/doc/source/_templates/autosummary/method.rst
+@@ -1,8 +1,13 @@
+ :orphan:
+ 
+-{{ fullname }}
++.. raw:: html
++
++   <div class="prename">{{ module }}.{{ class }}.</div>
++   <div class="empty"></div>
++
++{{ name }}
+ {{ underline }}
+ 
+ .. currentmodule:: {{ module }}
+ 
+-.. automethod:: {{ objname }}
+\ No newline at end of file
++.. automethod:: {{ objname }}
+diff --git a/doc/source/_templates/autosummary/ndarray_subclass.rst b/doc/source/_templates/autosummary/ndarray_subclass.rst
+index 1403e7ecee..90bbcc2c10 100644
+--- a/doc/source/_templates/autosummary/ndarray_subclass.rst
++++ b/doc/source/_templates/autosummary/ndarray_subclass.rst
+@@ -1,4 +1,9 @@
+-{{ fullname }}
++.. raw:: html
++
++   <div class="prename">{{ module }}.</div>
++   <div class="empty"></div>
++
++{{ name }}
+ {{ underline }}
+ 
+ .. currentmodule:: {{ module }}
+diff --git a/doc/source/_templates/autosummary/property.rst b/doc/source/_templates/autosummary/property.rst
+index 8c3d07350b..d08c9de3d7 100644
+--- a/doc/source/_templates/autosummary/property.rst
++++ b/doc/source/_templates/autosummary/property.rst
+@@ -1,8 +1,13 @@
+ :orphan:
+ 
++.. raw:: html
++
++   <div class="prename">{{ module }}.{{ class }}.</div>
++   <div class="empty"></div>
++
+ {{ fullname }}
+ {{ underline }}
+ 
+ .. currentmodule:: {{ module }}
+ 
+-.. autoproperty:: {{ objname }}
+\ No newline at end of file
++.. autoproperty:: {{ objname }}
+diff --git a/doc/source/dev/api-dev/array_api.rst b/doc/source/dev/api-dev/array_api.rst
+index f46cf3e925..7d5086b9c2 100644
+--- a/doc/source/dev/api-dev/array_api.rst
++++ b/doc/source/dev/api-dev/array_api.rst
+@@ -103,10 +103,19 @@ Support is provided in `scipy.special` for the following functions:
+ `scipy.special.erf`, `scipy.special.erfc`, `scipy.special.i0`,
+ `scipy.special.i0e`, `scipy.special.i1`, `scipy.special.i1e`,
+ `scipy.special.gammaln`, `scipy.special.gammainc`, `scipy.special.gammaincc`,
+-`scipy.special.logit`, and `scipy.special.expit`.
++`scipy.special.logit`, `scipy.special.expit`, `scipy.special.entr`,
++`scipy.special.rel_entr`, `scipy.special.rel_entr`, `scipy.special.xlogy`,
++and `scipy.special.chdtrc`.
+ 
+ Support is provided in `scipy.stats` for the following functions:
+-`scipy.stats.pearsonr` and `scipy.stats.moment`.
++`scipy.stats.describe`, `scipy.stats.moment`, `scipy.stats.skew`,
++`scipy.stats.kurtosis`, `scipy.stats.kstat`, `scipy.stats.kstatvar`,
++`scipy.stats.circmean`, `scipy.stats.circvar`, `scipy.stats.circstd`,
++`scipy.stats.entropy`, `scipy.stats.variation` , `scipy.stats.sem`,
++`scipy.stats.ttest_1samp`, `scipy.stats.pearsonr`, `scipy.stats.chisquare`,
++`scipy.stats.skewtest`, `scipy.stats.kurtosistest`, `scipy.stats.normaltest`,
++`scipy.stats.jarque_bera`, `scipy.stats.bartlett`, `scipy.stats.power_divergence`,
++and `scipy.stats.monte_carlo_test`.
+ 
+ 
+ Implementation notes
+diff --git a/doc/source/dev/contributor/development_workflow.rst b/doc/source/dev/contributor/development_workflow.rst
+index 3f84bf4b26..4e7da34212 100644
+--- a/doc/source/dev/contributor/development_workflow.rst
++++ b/doc/source/dev/contributor/development_workflow.rst
+@@ -259,7 +259,7 @@ has a nice help page that outlines the process for `filing pull requests`_.
+ 
+ If your changes involve modifications to the API or addition/modification of a
+ function, you should initiate a code review. This involves sending an email to
+-the `SciPy mailing list`_ with a link to your PR along with a description of
++the `SciPy forum`_ with a link to your PR along with a description of
+ and a motivation for your changes.
+ 
+ .. _pr-checklist:
+diff --git a/doc/source/dev/core-dev/decisions.rst.inc b/doc/source/dev/core-dev/decisions.rst.inc
+index 78fd941cdf..7a7c457245 100644
+--- a/doc/source/dev/core-dev/decisions.rst.inc
++++ b/doc/source/dev/core-dev/decisions.rst.inc
+@@ -11,14 +11,14 @@ Code
+ 
+ Any significant decisions on adding (or not adding) new features, breaking
+ backwards compatibility or making other significant changes to the codebase
+-should be made on the scipy-dev mailing list after a discussion (preferably
++should be made on the scipy-dev forum after a discussion (preferably
+ with full consensus).
+ 
+ Any non-trivial change (where trivial means a typo, or a one-liner maintenance
+ commit) has to go in through a pull request (PR).  It has to be reviewed by
+ another developer.  In case review doesn't happen quickly enough and it is
+ important that the PR is merged quickly, the submitter of the PR should send a
+-message to mailing list saying they intend to merge that PR without review
++message to the forum saying they intend to merge that PR without review
+ at time X for reason Y unless someone reviews it before then.
+ 
+ Changes and new additions should be tested. Untested code is broken code.
+@@ -27,4 +27,4 @@ Commit rights
+ -------------
+ 
+ Who gets commit rights is decided by the SciPy Steering Council; changes in
+-commit rights will then be announced on the scipy-dev mailing list.
++commit rights will then be announced on the scipy-dev forum.
+diff --git a/doc/source/dev/core-dev/deprecations.rst.inc b/doc/source/dev/core-dev/deprecations.rst.inc
+index 07dbe6b503..de146d7933 100644
+--- a/doc/source/dev/core-dev/deprecations.rst.inc
++++ b/doc/source/dev/core-dev/deprecations.rst.inc
+@@ -11,7 +11,7 @@ In general, it's not a good idea to remove something without warning users about
+ that removal first.  Therefore, this is what should be done before removing
+ something from the public API:
+ 
+-#. Propose to deprecate the functionality on the scipy-dev mailing list and get
++#. Propose to deprecate the functionality on the scipy-dev forum and get
+    agreement that that's OK.
+ #. Add a ``DeprecationWarning`` for it, which states that the functionality was
+    deprecated, and in which release. For Cython APIs, see
+@@ -27,4 +27,4 @@ when running the test suite so they don't pollute the output.
+ 
+ It's possible that there is reason to want to ignore this deprecation policy
+ for a particular deprecation; this can always be discussed on the scipy-dev
+-mailing list.
++forum.
+diff --git a/doc/source/dev/core-dev/distributing.rst.inc b/doc/source/dev/core-dev/distributing.rst.inc
+index ba717d3210..be31b009b5 100644
+--- a/doc/source/dev/core-dev/distributing.rst.inc
++++ b/doc/source/dev/core-dev/distributing.rst.inc
+@@ -77,7 +77,7 @@ classifiers in ``setup.py``, and mentioned in the release notes for each
+ release.  All newly released Python versions will be supported as soon as
+ possible.  For the general policy on dropping support for a Python or NumPy
+ version, see :ref:`NEP 29 <NEP29>`.  The final decision on dropping support is
+-always taken on the scipy-dev mailing list.
++always taken on the scipy-dev forum.
+ 
+ The lowest supported Numpy_ version for a SciPy version is mentioned in the
+ release notes and is encoded in ``pyproject.toml``, ``scipy/__init__.py`` and the
+@@ -90,7 +90,7 @@ Supported versions of optional dependencies and compilers is documented in
+ :ref:`toolchain-roadmap`. Note that not all versions of optional dependencies
+ that are supported are tested well or at all by SciPy's Continuous
+ Integration setup.  Issues regarding this are dealt with as they come up in the
+-issue tracker or mailing list.
++issue tracker or forum.
+ 
+ 
+ Building binary installers
+diff --git a/doc/source/dev/core-dev/github.rst.inc b/doc/source/dev/core-dev/github.rst.inc
+index 9e4f7a81bd..6152131d4f 100644
+--- a/doc/source/dev/core-dev/github.rst.inc
++++ b/doc/source/dev/core-dev/github.rst.inc
+@@ -43,7 +43,7 @@ Dealing with pull requests
+ - When merging contributions, a committer is responsible for ensuring that
+   those meet the requirements outlined in :ref:`Contributing to SciPy <hacking>`.
+   Also check that new features and backwards compatibility breaks were discussed
+-  on the scipy-dev mailing list.
++  on the scipy-dev forum.
+ - New code goes in via a pull request (PR).
+ - Merge new code with the green button.  In case of merge conflicts, ask the PR
+   submitter to rebase (this may require providing some ``git`` instructions).
+diff --git a/doc/source/dev/core-dev/licensing.rst.inc b/doc/source/dev/core-dev/licensing.rst.inc
+index 5d251cc74e..b44a805a60 100644
+--- a/doc/source/dev/core-dev/licensing.rst.inc
++++ b/doc/source/dev/core-dev/licensing.rst.inc
+@@ -21,7 +21,7 @@ These contributions cannot be accepted for inclusion in SciPy unless the
+ original code author is willing to (re)license their code under the
+ modified BSD (or compatible) license.  If the original author agrees,
+ add a comment saying so to the source files and forward the relevant
+-communication to the scipy-dev mailing list.
++communication to the scipy-dev forum.
+ 
+ Another common occurrence is for code to be translated or derived from code in
+ R, Octave (both GPL-licensed) or a commercial application.  Such code also
+diff --git a/doc/source/dev/gitwash/git_links.inc b/doc/source/dev/gitwash/git_links.inc
+index eafb3011e2..a4fb28f5a0 100755
+--- a/doc/source/dev/gitwash/git_links.inc
++++ b/doc/source/dev/gitwash/git_links.inc
+@@ -64,5 +64,5 @@
+ .. _`NumPy mailing list`: https://numpy.org/community/
+ .. _SciPy: https://www.scipy.org
+ .. _`SciPy github`: https://github.com/scipy/scipy
+-.. _`SciPy mailing list`: https://mail.python.org/mailman3/lists/scipy-dev.python.org/
++.. _`SciPy forum`: https://discuss.scientific-python.org/c/contributor/scipy
+ .. _`SciPy repository`: https://github.com/scipy/scipy
+diff --git a/doc/source/dev/governance.rst b/doc/source/dev/governance.rst
+index ebd93c9505..a2d7556abc 100644
+--- a/doc/source/dev/governance.rst
++++ b/doc/source/dev/governance.rst
+@@ -28,7 +28,7 @@ documentation, designs, or other work to the Project. Anyone can be a
+ Contributor. Contributors can be affiliated with any legal entity or
+ none. Contributors participate in the project by submitting, reviewing,
+ and discussing GitHub Pull Requests and Issues and participating in open
+-and public Project discussions on GitHub, mailing lists, and other
++and public Project discussions on GitHub, forums, and other
+ channels. The foundation of Project participation is openness and
+ transparency.
+ 
+@@ -146,7 +146,7 @@ active over the last two years.
+ 
+ When considering potential Members, the Council will look at candidates with a
+ comprehensive view of their contributions. This will include, but is not limited
+-to, code, code review, infrastructure work, mailing list and chat participation,
++to, code, code review, infrastructure work, forum and chat participation,
+ community help/building, education and outreach, design work, etc. We are
+ deliberately not setting arbitrary quantitative metrics (like “100 commits in
+ this repo”) to avoid encouraging behavior that plays to the metrics rather than
+@@ -186,10 +186,10 @@ responsible for:
+   the :ref:`scipy-roadmap`) bi-yearly, around mid-April and mid-October.
+ - At the same times of the year, summarizing any relevant
+   organizational updates and issues in the preceding period, and asking for
+-  feedback/suggestions on the mailing list.
++  feedback/suggestions on the forum.
+ - Ensuring the composition of the Steering Council stays current.
+ - Ensuring matters discussed in private by the Steering Council get
+-  summarized on the mailing list to keep the Community informed.
++  summarized on the forum to keep the Community informed.
+ - Ensuring other important organizational documents (e.g., Code of Conduct,
+   Fiscal Sponsorship Agreement) stay current after they are added.
+ 
+diff --git a/doc/source/dev/hacking.rst b/doc/source/dev/hacking.rst
+index 6b23342022..60075ce5d4 100644
+--- a/doc/source/dev/hacking.rst
++++ b/doc/source/dev/hacking.rst
+@@ -17,8 +17,7 @@ There are a lot of ways you can contribute:
+ - Reviewing open pull requests
+ - Triaging issues
+ - Working on the `scipy.org`_ website
+-- Answering questions and participating on the scipy-dev and scipy-user
+-  `mailing lists`_.
++- Answering questions and participating on the `forum`_.
+ 
+ Contributing new code
+ =====================
+@@ -41,14 +40,14 @@ more domain-specific code than SciPy.
+ Now if you have code that you would like to see included in SciPy, how do you
+ go about it?  After checking that your code can be distributed in SciPy under a
+ compatible license (see :ref:`license-considerations`), the first step is to
+-discuss it on the scipy-dev mailing list.  All new features, as well as changes to
++discuss it on the scipy-dev `forum`_.  All new features, as well as changes to
+ existing code, are discussed and decided on there. You can, and probably
+ should already start this discussion before your code is finished. Remember
+ that in order to be added to SciPy your code will need to be reviewed by
+ someone else, so try to find someone willing to review your work while you're
+ at it.
+ 
+-Assuming the outcome of the discussion on the mailing list is positive and you
++Assuming the outcome of the discussion on the `forum`_ is positive and you
+ have a function or piece of code that does what you need it to do, what next?
+ Before code is added to SciPy, it at least has to have good documentation, unit
+ tests, benchmarks, and correct code style.
+@@ -120,13 +119,13 @@ Once you think your code is ready for inclusion in SciPy, you can send a pull
+ request (PR) on Github.  We won't go into the details of how to work with git
+ here, this is described well in :ref:`git-development`
+ and on the `Github help pages`_.  When you send the PR for a new
+-feature, be sure to also mention this on the scipy-dev mailing list.  This can
++feature, be sure to also mention this on the scipy-dev `forum`_.  This can
+ prompt interested people to help review your PR.  Assuming that you already got
+ positive feedback before on the general idea of your code/feature, the purpose
+ of the code review is to ensure that the code is correct, efficient and meets
+ the requirements outlined above.  In many cases, the code review happens
+ relatively quickly, but it's possible that it stalls.  If you have addressed
+-all feedback already given, it's perfectly fine to ask on the mailing list
++all feedback already given, it's perfectly fine to ask on the `forum`_
+ again for review (after a reasonable amount of time, say a couple of weeks, has
+ passed).  Once the review is completed, the PR is merged into the "main"
+ branch of SciPy.
+@@ -134,7 +133,7 @@ branch of SciPy.
+ The above describes the requirements and process for adding code to SciPy.  It
+ doesn't yet answer the question though how decisions are made exactly.  The
+ basic answer is: decisions are made by consensus, by everyone who chooses to
+-participate in the discussion on the mailing list.  This includes developers,
++participate in the discussion on the `forum`_.  This includes developers,
+ other users and yourself.  Aiming for consensus in the discussion is important
+ -- SciPy is a project by and for the scientific Python community.  In those
+ rare cases that agreement cannot be reached, the maintainers of the module
+@@ -153,7 +152,7 @@ MIT, PSF) then it's OK.  Code which is GPL or Apache licensed, has no
+ clear license, requires citation or is free for academic use only can't be
+ included in SciPy.  Therefore if you copied existing code with such a license
+ or made a direct translation to Python of it, your code can't be included.
+-If you're unsure, please ask on the scipy-dev `mailing list <mailing lists>`_.
++If you're unsure, please ask on the scipy-dev `forum`_.
+ 
+ *Why is SciPy under the BSD license and not, say, the GPL?*
+ 
+@@ -183,7 +182,7 @@ The discussion on code style and unit testing above applies equally to bug
+ fixes.  It is usually best to start by writing a unit test that shows the
+ problem, i.e. it should pass but doesn't.  Once you have that, you can fix the
+ code so that the test does pass.  That should be enough to send a PR for this
+-issue.  Unlike when adding new code, discussing this on the mailing list may
++issue.  Unlike when adding new code, discussing this on the `forum`_ may
+ not be necessary - if the old behavior of the code is clearly incorrect, no one
+ will object to having it fixed.  It may be necessary to add some warning or
+ deprecation message for the changed behavior.  This should be part of the
+@@ -236,7 +235,7 @@ thoughts in a comment) allows prioritizing maintenance work and finding related
+ issues easily when working on an existing function or subpackage. To read more
+ about issue triage, see :ref:`triaging`.
+ 
+-Participating in discussions on the scipy-user and scipy-dev `mailing lists`_ is
++Participating in discussions on the scipy-user and scipy-dev `forum`_ is
+ a contribution in itself.  Everyone who writes to those lists with a problem or
+ an idea would like to get responses, and writing such responses makes the
+ project and community function better and appear more welcoming.
+@@ -296,7 +295,7 @@ improvements, and submit your first PR!
+ 
+ .. _Pytest: https://pytest.org/
+ 
+-.. _mailing lists: https://scipy.org/community/#scipy-mailing-list
++.. _forum: https://discuss.scientific-python.org/c/contributor/scipy
+ 
+ .. _Spyder: https://www.spyder-ide.org/
+ 
+diff --git a/doc/source/dev/missing-bits.rst b/doc/source/dev/missing-bits.rst
+index 903311066b..a8d5b24834 100644
+--- a/doc/source/dev/missing-bits.rst
++++ b/doc/source/dev/missing-bits.rst
+@@ -82,7 +82,7 @@ is simple enough to fully document all attributes immediately below its name.
+ Some return classes are sufficiently complex to deserve their own rendered
+ documentation. This is fairly standard if the return class is public, but
+ return classes should only be public if 1) they are intended to be imported by
+-end-users and 2) if they have been approved by the mailing list. For complex,
++end-users and 2) if they have been approved by the forum. For complex,
+ private return classes, please see  how `~scipy.stats.binomtest` summarizes
+ `~scipy.stats._result_classes.BinomTestResult` and links to its documentation,
+ and note that ``BinomTestResult`` cannot be imported from `~scipy.stats`.
+diff --git a/doc/source/dev/roadmap-detailed.rst b/doc/source/dev/roadmap-detailed.rst
+index f528872497..8dbea5e525 100644
+--- a/doc/source/dev/roadmap-detailed.rst
++++ b/doc/source/dev/roadmap-detailed.rst
+@@ -18,9 +18,9 @@ going and where help is needed most.
+ 
+ General
+ -------
+-This roadmap will be evolving together with SciPy.  Updates can be submitted as
+-pull requests.  For large or disruptive changes you may want to discuss
+-those first on the scipy-dev mailing list.
++This roadmap will be evolving together with SciPy. Updates can be submitted as
++pull requests. For large or disruptive changes you may want to discuss
++those first on the scipy-dev forum.
+ 
+ 
+ API changes
+diff --git a/doc/source/index.rst b/doc/source/index.rst
+index fda5aa05c7..3dde480d9d 100644
+--- a/doc/source/index.rst
++++ b/doc/source/index.rst
+@@ -17,7 +17,7 @@ SciPy documentation
+ `Source Repository <https://github.com/scipy/scipy>`__ |
+ `Issues & Ideas <https://github.com/scipy/scipy/issues>`__ |
+ `Q&A Support <https://stackoverflow.com/questions/tagged/scipy>`__ |
+-`Mailing List <https://mail.python.org/mailman3/lists/scipy-dev.python.org/>`__
++`Forum <https://discuss.scientific-python.org/c/contributor/scipy>`__
+ 
+ **SciPy** (pronounced "Sigh Pie") is an open-source software for mathematics,
+ science, and engineering.
+diff --git a/doc/source/release/1.14.0-notes.rst b/doc/source/release/1.14.0-notes.rst
+index 9e7eb1ffdc..2892991cbf 100644
+--- a/doc/source/release/1.14.0-notes.rst
++++ b/doc/source/release/1.14.0-notes.rst
+@@ -167,6 +167,7 @@ As of 1.14.0, there is support for
+ 
+ - `scipy.stats`: (select functions)
+ 
++  - `scipy.stats.describe`
+   - `scipy.stats.moment`
+   - `scipy.stats.skew`
+   - `scipy.stats.kurtosis`
+@@ -283,18 +284,19 @@ Other changes
+ Authors
+ *******
+ * Name (commits)
+-* h-vetinari (30)
++* h-vetinari (33)
+ * Steven Adams (1) +
+ * Max Aehle (1) +
+ * Ataf Fazledin Ahamed (2) +
++* Luiz Eduardo Amaral (1) +
+ * Trinh Quoc Anh (1) +
+ * Miguel A. Batalla (7) +
+ * Tim Beyer (1) +
+ * Andrea Blengino (1) +
+ * boatwrong (1)
+-* Jake Bowhay (47)
++* Jake Bowhay (50)
+ * Dietrich Brunn (2)
+-* Evgeni Burovski (174)
++* Evgeni Burovski (177)
+ * Tim Butters (7) +
+ * CJ Carey (5)
+ * Sean Cheah (46)
+@@ -307,11 +309,11 @@ Authors
+ * fancidev (2)
+ * Anthony Frazier (1) +
+ * Ilan Gold (1) +
+-* Ralf Gommers (122)
++* Ralf Gommers (124)
+ * Rohit Goswami (28)
+ * Ben Greiner (1) +
+ * Lorenzo Gualniera (1) +
+-* Matt Haberland (250)
++* Matt Haberland (256)
+ * Shawn Hsu (1) +
+ * Budjen Jovan (3) +
+ * Jozsef Kutas (1)
+@@ -323,37 +325,39 @@ Authors
+ * marinelay (2) +
+ * Nikolay Mayorov (1)
+ * Nicholas McKibben (2)
+-* Melissa Weber Mendonça (6)
++* Melissa Weber Mendonça (7)
+ * João Mendes (1) +
++* Samuel Le Meur-Diebolt (1) +
+ * Tomiță Militaru (2) +
+-* Andrew Nelson (32)
++* Andrew Nelson (35)
+ * Lysandros Nikolaou (1)
+ * Nick ODell (5) +
+ * Jacob Ogle (1) +
+ * Pearu Peterson (1)
+-* Matti Picus (4)
++* Matti Picus (5)
+ * Ilhan Polat (8)
+ * pwcnorthrop (3) +
+ * Bharat Raghunathan (1)
+ * Tom M. Ragonneau (2) +
+-* Tyler Reddy (47)
+-* Pamphile Roy (17)
++* Tyler Reddy (84)
++* Pamphile Roy (18)
+ * Atsushi Sakai (9)
+ * Daniel Schmitz (5)
+ * Julien Schueller (2) +
+-* Dan Schult (12)
++* Dan Schult (13)
+ * Tomer Sery (7)
+ * Scott Shambaugh (4)
+ * Tuhin Sharma (1) +
+ * Sheila-nk (4)
+ * Skylake (1) +
+-* Albert Steppi (214)
++* Albert Steppi (215)
+ * Kai Striega (6)
+ * Zhibing Sun (2) +
+ * Nimish Telang (1) +
+ * toofooboo (1) +
+ * tpl2go (1) +
+ * Edgar Andrés Margffoy Tuay (44)
++* Andrew Valentine (1)
+ * Valerix (1) +
+ * Christian Veenhuis (1)
+ * void (2) +
+@@ -363,9 +367,10 @@ Authors
+ * Xiao Yuan (1)
+ * Irwin Zaid (35)
+ * Elmar Zander (1) +
+-* ਗਗਨਦੀਪ ਸਿੰਘ (Gagandeep Singh) (2) +
++* Zaikun ZHANG (1)
++* ਗਗਨਦੀਪ ਸਿੰਘ (Gagandeep Singh) (4) +
+ 
+-A total of 81 people contributed to this release.
++A total of 85 people contributed to this release.
+ People with a "+" by their names contributed a patch for the first time.
+ This list of names is automatically generated, and may not be fully complete.
+ 
+@@ -380,7 +385,9 @@ Issues closed for 1.14.0
+ * `#8056 <https://github.com/scipy/scipy/issues/8056>`__: cho_factor and cho_solve don't support (0,0)-shape matrices
+ * `#8083 <https://github.com/scipy/scipy/issues/8083>`__: special.hyp2f1 returns the wrong values when c-a-b is an integer...
+ * `#8510 <https://github.com/scipy/scipy/issues/8510>`__: ValueError: failed to create intent(cache|hide)|optional array--...
++* `#8848 <https://github.com/scipy/scipy/issues/8848>`__: \`integrate.solve_ivp\` try to evaluate the function with much...
+ * `#8856 <https://github.com/scipy/scipy/issues/8856>`__: LinearNDInterpolator not thread safe
++* `#9198 <https://github.com/scipy/scipy/issues/9198>`__: \`solve_ivp\` RK45 can evaluate the function at times later than...
+ * `#9307 <https://github.com/scipy/scipy/issues/9307>`__: feature request: make \`scipy.stats.pearsonr\` accept 2-D arrays
+ * `#9459 <https://github.com/scipy/scipy/issues/9459>`__: BUG: linalg: lu and decompositions don't support (0, 1) or (0,...
+ * `#12515 <https://github.com/scipy/scipy/issues/12515>`__: scipy.linalg.pinvh gives incorrect results
+@@ -393,6 +400,7 @@ Issues closed for 1.14.0
+ * `#16748 <https://github.com/scipy/scipy/issues/16748>`__: None of the \`cython_\*\` APIs have any tests using Cython
+ * `#16926 <https://github.com/scipy/scipy/issues/16926>`__: TEST/BUG: Tolerance violation in test_solvers::test_solve_discrete_are
+ * `#17084 <https://github.com/scipy/scipy/issues/17084>`__: ENH: Exporting the removed component of detrend()
++* `#17341 <https://github.com/scipy/scipy/issues/17341>`__: BUG: \`solve_ivp\` evaluates outside the requested interval for...
+ * `#17559 <https://github.com/scipy/scipy/issues/17559>`__: ENH: _mannwhitneyu.py computation of exact MWU statistics may...
+ * `#17658 <https://github.com/scipy/scipy/issues/17658>`__: Inconsistent support for empty matrices in linalg
+ * `#19322 <https://github.com/scipy/scipy/issues/19322>`__: BUG: \`rv_discrete.expect\` fails when duplicate positions
+@@ -410,10 +418,12 @@ Issues closed for 1.14.0
+ * `#20128 <https://github.com/scipy/scipy/issues/20128>`__: BUG: \`csr_array(int())\` errors
+ * `#20208 <https://github.com/scipy/scipy/issues/20208>`__: BUG: Test failures due to \`invalid value encountered in _beta_ppf\`...
+ * `#20247 <https://github.com/scipy/scipy/issues/20247>`__: ENH: Akima1DInterpolator Extrapolation
++* `#20256 <https://github.com/scipy/scipy/issues/20256>`__: MAINT, BLD: symbol visibility warnings on MacOS ARM static lib...
+ * `#20277 <https://github.com/scipy/scipy/issues/20277>`__: Very noisy doc builds after jupyterlite-sphinx integration
+ * `#20296 <https://github.com/scipy/scipy/issues/20296>`__: CI: jupyterlite-shpinx pin breaks recent doc builds
+ * `#20324 <https://github.com/scipy/scipy/issues/20324>`__: MAINT, BUG (?): pearsonr statistic return type change
+ * `#20357 <https://github.com/scipy/scipy/issues/20357>`__: BUG: Memory usage in griddata function in version 1.12
++* `#20358 <https://github.com/scipy/scipy/issues/20358>`__: TST, MAINT: failure in TestGroupDelay::test_singular against...
+ * `#20377 <https://github.com/scipy/scipy/issues/20377>`__: ENH: sparse: Update str dunder to handle 1D (and 2D better)
+ * `#20378 <https://github.com/scipy/scipy/issues/20378>`__: ENH: sparse: Update repr dunder to handle 1D (and maybe 2D better)
+ * `#20385 <https://github.com/scipy/scipy/issues/20385>`__: MAINT: special version hex cleanup
+@@ -427,6 +437,7 @@ Issues closed for 1.14.0
+ * `#20458 <https://github.com/scipy/scipy/issues/20458>`__: MAINT: more potential cleanups related to version bumps
+ * `#20461 <https://github.com/scipy/scipy/issues/20461>`__: DOC: some likely changes to release process docs
+ * `#20466 <https://github.com/scipy/scipy/issues/20466>`__: BUG: scipy.linalg.bandwidth returns incorrect upper bandwidth
++* `#20486 <https://github.com/scipy/scipy/issues/20486>`__: DEP: deprecate and remove remaining usages of slur-adjacent "trapz"
+ * `#20488 <https://github.com/scipy/scipy/issues/20488>`__: BUG: When given invalid bounds, \`_minimize_neldermead\` raises...
+ * `#20492 <https://github.com/scipy/scipy/issues/20492>`__: DOC: linalg.solve_discrete_lyapunov: dead reference link
+ * `#20502 <https://github.com/scipy/scipy/issues/20502>`__: BUG: special.hyp2f1: local test failure
+@@ -438,7 +449,9 @@ Issues closed for 1.14.0
+ * `#20562 <https://github.com/scipy/scipy/issues/20562>`__: BUG: Invalid default bracket selection in _bracket_minimum.
+ * `#20564 <https://github.com/scipy/scipy/issues/20564>`__: TST: stats array API failure for test_skew_constant_value[torch]...
+ * `#20584 <https://github.com/scipy/scipy/issues/20584>`__: BUG: \`optimize.linprog\` fails with \`list\` type \`integrality\`...
++* `#20587 <https://github.com/scipy/scipy/issues/20587>`__: BLD: warning from \`scipy/special/special/gamma.h\`
+ * `#20598 <https://github.com/scipy/scipy/issues/20598>`__: ENH: special: add log of wright_bessel
++* `#20603 <https://github.com/scipy/scipy/issues/20603>`__: DOC: document switch from mailing list to discourse
+ * `#20614 <https://github.com/scipy/scipy/issues/20614>`__: DOC: dual_annealing optimizer does not pass bounds to minimizer...
+ * `#20618 <https://github.com/scipy/scipy/issues/20618>`__: BUG: scipy 'minimize' with method='trust-constr' with equality...
+ * `#20620 <https://github.com/scipy/scipy/issues/20620>`__: DOC: Suggested improvement to interp2d transition guide
+@@ -449,12 +462,19 @@ Issues closed for 1.14.0
+ * `#20683 <https://github.com/scipy/scipy/issues/20683>`__: DOC: A typo in ValueError raised by signal.iirdesign
+ * `#20691 <https://github.com/scipy/scipy/issues/20691>`__: ENH: Reintroduce Apple Accelerate support
+ * `#20697 <https://github.com/scipy/scipy/issues/20697>`__: BUG: special: algorithmic Error in \`ratevl\` in \`cephes/polevl.h\`
+-* `#20740 <https://github.com/scipy/scipy/issues/20740>`__: BLD/DEV: special: build warnings
+ * `#20755 <https://github.com/scipy/scipy/issues/20755>`__: BUG: stats: Two new test failures
+ * `#20768 <https://github.com/scipy/scipy/issues/20768>`__: BUG: optimize.minimize: garbage collection in \`lbfgs\`
+ * `#20783 <https://github.com/scipy/scipy/issues/20783>`__: BUG: Build failure on PyPy3.10 7.3.16: \`error: ‘Py_Initialize’...
+ * `#20797 <https://github.com/scipy/scipy/issues/20797>`__: BUG: special.hyp1f1: broken for complex argument
+ * `#20802 <https://github.com/scipy/scipy/issues/20802>`__: MAINT, TST: pytest-fail-slow and local concurrent runs/variability
++* `#20840 <https://github.com/scipy/scipy/issues/20840>`__: BUG: first shared library in scipy fails to be consumed by MSVC
++* `#20850 <https://github.com/scipy/scipy/issues/20850>`__: DOC: stats.bootstrap: improve documentation multidimensional...
++* `#20852 <https://github.com/scipy/scipy/issues/20852>`__: BUG: Library not loaded: @rpath/libgfortran.5.dylib for scipy...
++* `#20860 <https://github.com/scipy/scipy/issues/20860>`__: BUG/BLD: scipy-1.13.1 fails to build with msvc
++* `#20901 <https://github.com/scipy/scipy/issues/20901>`__: BUG: \`zsh: abort python\` after \`scipy.linalg.sqrtm\` on empty...
++* `#20911 <https://github.com/scipy/scipy/issues/20911>`__: TST: TestEig.test_singular failing tolerance with generic BLAS...
++* `#20921 <https://github.com/scipy/scipy/issues/20921>`__: DOC: stats: wrong docstrings of \`\*Result\` classes
++* `#20938 <https://github.com/scipy/scipy/issues/20938>`__: TST: tolerance violations with SciPy 1.14.0rc1 on linux-{aarch64,ppc64le}
+ 
+ ************************
+ Pull requests for 1.14.0
+@@ -462,6 +482,7 @@ Pull requests for 1.14.0
+ 
+ * `#13534 <https://github.com/scipy/scipy/pull/13534>`__: ENH: Add more initialization methods for HessianUpdateStrategy
+ * `#15321 <https://github.com/scipy/scipy/pull/15321>`__: ENH: fft: Add \`prev_fast_len\` to complement \`next_fast_len\`
++* `#17348 <https://github.com/scipy/scipy/pull/17348>`__: BUG: integrate: make \`select_initial_step\` aware of integration...
+ * `#17924 <https://github.com/scipy/scipy/pull/17924>`__: ENH: sparse.linalg: speed up \`spsolve_triangular\`
+ * `#18926 <https://github.com/scipy/scipy/pull/18926>`__: ENH: Move symiirorder1/2, cspline2d, qspline2d and spline_filter...
+ * `#19561 <https://github.com/scipy/scipy/pull/19561>`__: ENH: stats.power: add function to simulate hypothesis test power
+@@ -605,7 +626,7 @@ Pull requests for 1.14.0
+ * `#20588 <https://github.com/scipy/scipy/pull/20588>`__: DEP: special: remove legacy kwarg from special.comb and switch...
+ * `#20590 <https://github.com/scipy/scipy/pull/20590>`__: Revert "ENH: Use \`highspy\` in \`linprog\`"
+ * `#20593 <https://github.com/scipy/scipy/pull/20593>`__: ENH: constants: add array api support
+-* `#20595 <https://github.com/scipy/scipy/pull/20595>`__: ENH: stats.circ___: add array-API support
++* `#20595 <https://github.com/scipy/scipy/pull/20595>`__: ENH: \`stats.circ___\`: add array-API support
+ * `#20597 <https://github.com/scipy/scipy/pull/20597>`__: ENH: stats.skewtest: add array-API support
+ * `#20600 <https://github.com/scipy/scipy/pull/20600>`__: TYP: update supported Mypy version from 1.0.0 to 1.10.0
+ * `#20604 <https://github.com/scipy/scipy/pull/20604>`__: ENH: stats.monte_carlo_test: add array API support
+@@ -656,6 +677,7 @@ Pull requests for 1.14.0
+ * `#20726 <https://github.com/scipy/scipy/pull/20726>`__: DOC: stats.{circmean, circvar, circstd}: improve accuracy/clarity
+ * `#20730 <https://github.com/scipy/scipy/pull/20730>`__: BUG: special: fix algorithmic error in \`ratevl\` in \`cephes/polevl.h\`
+ * `#20732 <https://github.com/scipy/scipy/pull/20732>`__: BUG: interpolate: do not segfault on bad boundary conditions
++* `#20734 <https://github.com/scipy/scipy/pull/20734>`__: BUG: stats.ttest_1samp: fix use of \`keepdims\`
+ * `#20736 <https://github.com/scipy/scipy/pull/20736>`__: ENH: stats.normaltest/jarque_bera: add array-API support
+ * `#20737 <https://github.com/scipy/scipy/pull/20737>`__: TST, MAINT: run optimize array API tests and fix \`chandrupatla\`
+ * `#20738 <https://github.com/scipy/scipy/pull/20738>`__: DOC: sparse.csgraph.dijkstra: add warning for \`directed=False\`...
+@@ -678,6 +700,7 @@ Pull requests for 1.14.0
+ * `#20780 <https://github.com/scipy/scipy/pull/20780>`__: DEP: special.comb: deprecate \`exact=True\` for non-integer intputs
+ * `#20781 <https://github.com/scipy/scipy/pull/20781>`__: TST: stats: remove overhead of array_namespace in calls to _get_pvalue
+ * `#20782 <https://github.com/scipy/scipy/pull/20782>`__: ENH: stats: end-to-end array-API support for NHSTs with chi-squared...
++* `#20784 <https://github.com/scipy/scipy/pull/20784>`__: DOC: SciPy 1.14.0 relnotes
+ * `#20787 <https://github.com/scipy/scipy/pull/20787>`__: DOC: interpolate: mention default kinds in interp2d transition...
+ * `#20788 <https://github.com/scipy/scipy/pull/20788>`__: ENH: optimize: improve \`cobyqa\` performance by reducing overhead...
+ * `#20789 <https://github.com/scipy/scipy/pull/20789>`__: DEP: stats.linregress: deprecate one-arg use
+@@ -694,3 +717,24 @@ Pull requests for 1.14.0
+ * `#20812 <https://github.com/scipy/scipy/pull/20812>`__: DOC: extend "building reproducible binaries" page
+ * `#20815 <https://github.com/scipy/scipy/pull/20815>`__: DOC: integrate: odeint user functions must not modify y.
+ * `#20819 <https://github.com/scipy/scipy/pull/20819>`__: REV: revert accidental \`cobyqa\` update in gh-17924
++* `#20820 <https://github.com/scipy/scipy/pull/20820>`__: BLD: Warning fix from \`\`scipy/special/special/gamma.h\`\`
++* `#20828 <https://github.com/scipy/scipy/pull/20828>`__: DEP: deprecate trapz alias of \`stats.trapezoid\` distribution
++* `#20831 <https://github.com/scipy/scipy/pull/20831>`__: MAINT: version pins/prep for 1.14.0rc1
++* `#20838 <https://github.com/scipy/scipy/pull/20838>`__: DOC: sparse: 1.14.0 release notes additions
++* `#20839 <https://github.com/scipy/scipy/pull/20839>`__: REL: set 1.14.0rc2 unreleased
++* `#20841 <https://github.com/scipy/scipy/pull/20841>`__: DOC: add cobyqa website reference
++* `#20851 <https://github.com/scipy/scipy/pull/20851>`__: DOC: add cobyqa website reference (#20841)
++* `#20858 <https://github.com/scipy/scipy/pull/20858>`__: MAINT: \`stats.bootstrap\`: emit \`FutureWarning\` about broadcasting
++* `#20870 <https://github.com/scipy/scipy/pull/20870>`__: BLD: test delocate works by removing original lib [wheel build]
++* `#20881 <https://github.com/scipy/scipy/pull/20881>`__: DOC: mailing list to forum
++* `#20890 <https://github.com/scipy/scipy/pull/20890>`__: DOC: Write API reference titles in monospace font
++* `#20914 <https://github.com/scipy/scipy/pull/20914>`__: TST: linalg: bump tolerance in \`TestEig::test_singular\`
++* `#20919 <https://github.com/scipy/scipy/pull/20919>`__: BLD: optimize: use hidden visibility for static HiGHS libraries
++* `#20920 <https://github.com/scipy/scipy/pull/20920>`__: MAINT: special: fix msvc build by using \`new\` and \`delete\`...
++* `#20923 <https://github.com/scipy/scipy/pull/20923>`__: DOC: update doctests to satisfy scipy-doctests==1.2.0
++* `#20927 <https://github.com/scipy/scipy/pull/20927>`__: MAINT: adapt to a scipy-doctests change
++* `#20936 <https://github.com/scipy/scipy/pull/20936>`__: DOC: \`array_api.rst\`: update 1.14 functions with array API...
++* `#20937 <https://github.com/scipy/scipy/pull/20937>`__: BUG/BLD: special: Ensure symbols in \`sf_error_state\` shared...
++* `#20945 <https://github.com/scipy/scipy/pull/20945>`__: TST: address tolerance violations with SciPy 1.14.0rc1 on linux-{aarch64,ppc64le}
++* `#20952 <https://github.com/scipy/scipy/pull/20952>`__: TST: loosen tolerance in test_x0_working to pass with alternate...
++* `#20953 <https://github.com/scipy/scipy/pull/20953>`__: TST: loosen tolerance in test_krandinit slightly to pass with...
+diff --git a/doc/source/tutorial/interpolate/smoothing_splines.rst b/doc/source/tutorial/interpolate/smoothing_splines.rst
+index 4e5d6e4a42..7bd2f5dad8 100644
+--- a/doc/source/tutorial/interpolate/smoothing_splines.rst
++++ b/doc/source/tutorial/interpolate/smoothing_splines.rst
+@@ -231,9 +231,9 @@ example that follows.
+ 
+    Notice that `sproot` may fail to find an obvious solution at the edge of the
+    approximation interval, :math:`x = 0`. If we define the spline on a slightly
+-   larger interval, we recover both roots :math:`x = 0` and :math:`x = 2\pi`:
++   larger interval, we recover both roots :math:`x = 0` and :math:`x = \pi`:
+ 
+-   >>> x = np.linspace(-np.pi/4, 2.*np.pi + np.pi/4, 21)
++   >>> x = np.linspace(-np.pi/4, np.pi + np.pi/4, 51)
+    >>> y = np.sin(x)
+    >>> tck = interpolate.splrep(x, y, s=0)
+    >>> interpolate.sproot(tck)
+diff --git a/scipy/_build_utils/src/scipy_dll.h b/scipy/_build_utils/src/scipy_dll.h
+new file mode 100644
+index 0000000000..5abeee874d
+--- /dev/null
++++ b/scipy/_build_utils/src/scipy_dll.h
+@@ -0,0 +1,18 @@
++#pragma once
++
++// SCIPY_DLL
++// inspired by https://github.com/abseil/abseil-cpp/blob/20240116.2/absl/base/config.h#L736-L753
++//
++// When building sf_error_state as a DLL, this macro expands to `__declspec(dllexport)`
++// so we can annotate symbols appropriately as being exported. When used in
++// headers consuming a DLL, this macro expands to `__declspec(dllimport)` so
++// that consumers know the symbol is defined inside the DLL. In all other cases,
++// the macro expands to nothing.
++// Note: SCIPY_DLL_{EX,IM}PORTS are set in scipy/special/meson.build
++#if defined(SCIPY_DLL_EXPORTS)
++    #define SCIPY_DLL __declspec(dllexport)
++#elif defined(SCIPY_DLL_IMPORTS)
++    #define SCIPY_DLL __declspec(dllimport)
++#else
++    #define SCIPY_DLL
++#endif
+diff --git a/scipy/conftest.py b/scipy/conftest.py
+index 1f17618ec5..c9bd9bf99a 100644
+--- a/scipy/conftest.py
++++ b/scipy/conftest.py
+@@ -267,7 +267,7 @@ if HAVE_SCPDT:
+ 
+     # FIXME: populate the dict once
+     @contextmanager
+-    def warnings_errors_and_rng(test):
++    def warnings_errors_and_rng(test=None):
+         """Temporarily turn (almost) all warnings to errors.
+ 
+         Filter out known warnings which we allow.
+@@ -337,11 +337,11 @@ if HAVE_SCPDT:
+         with _fixed_default_rng():
+             np.random.seed(None)
+             with warnings.catch_warnings():
+-                if test.name in known_warnings:
++                if test and test.name in known_warnings:
+                     warnings.filterwarnings('ignore',
+                                             **known_warnings[test.name])
+                     yield
+-                elif test.name in legit:
++                elif test and test.name in legit:
+                     yield
+                 else:
+                     warnings.simplefilter('error', Warning)
+diff --git a/scipy/integrate/_ivp/bdf.py b/scipy/integrate/_ivp/bdf.py
+index 5b78060cc3..29bd946151 100644
+--- a/scipy/integrate/_ivp/bdf.py
++++ b/scipy/integrate/_ivp/bdf.py
+@@ -204,7 +204,8 @@ class BDF(OdeSolver):
+         self.rtol, self.atol = validate_tol(rtol, atol, self.n)
+         f = self.fun(self.t, self.y)
+         if first_step is None:
+-            self.h_abs = select_initial_step(self.fun, self.t, self.y, f,
++            self.h_abs = select_initial_step(self.fun, self.t, self.y, 
++                                             t_bound, max_step, f,
+                                              self.direction, 1,
+                                              self.rtol, self.atol)
+         else:
+diff --git a/scipy/integrate/_ivp/common.py b/scipy/integrate/_ivp/common.py
+index eccf91f9d5..4ff0b7056a 100644
+--- a/scipy/integrate/_ivp/common.py
++++ b/scipy/integrate/_ivp/common.py
+@@ -65,7 +65,8 @@ def norm(x):
+     return np.linalg.norm(x) / x.size ** 0.5
+ 
+ 
+-def select_initial_step(fun, t0, y0, f0, direction, order, rtol, atol):
++def select_initial_step(fun, t0, y0, t_bound, 
++                        max_step, f0, direction, order, rtol, atol):
+     """Empirically select a good initial step.
+ 
+     The algorithm is described in [1]_.
+@@ -78,6 +79,11 @@ def select_initial_step(fun, t0, y0, f0, direction, order, rtol, atol):
+         Initial value of the independent variable.
+     y0 : ndarray, shape (n,)
+         Initial value of the dependent variable.
++    t_bound : float
++        End-point of integration interval; used to ensure that t0+step<=tbound 
++        and that fun is only evaluated in the interval [t0,tbound]
++    max_step : float
++        Maximum allowable step size.
+     f0 : ndarray, shape (n,)
+         Initial value of the derivative, i.e., ``fun(t0, y0)``.
+     direction : float
+@@ -103,6 +109,10 @@ def select_initial_step(fun, t0, y0, f0, direction, order, rtol, atol):
+     if y0.size == 0:
+         return np.inf
+ 
++    interval_length = abs(t_bound - t0)
++    if interval_length == 0.0:
++        return 0.0
++    
+     scale = atol + np.abs(y0) * rtol
+     d0 = norm(y0 / scale)
+     d1 = norm(f0 / scale)
+@@ -110,7 +120,8 @@ def select_initial_step(fun, t0, y0, f0, direction, order, rtol, atol):
+         h0 = 1e-6
+     else:
+         h0 = 0.01 * d0 / d1
+-
++    # Check t0+h0*direction doesn't take us beyond t_bound
++    h0 = min(h0, interval_length)
+     y1 = y0 + h0 * direction * f0
+     f1 = fun(t0 + h0 * direction, y1)
+     d2 = norm((f1 - f0) / scale) / h0
+@@ -120,7 +131,7 @@ def select_initial_step(fun, t0, y0, f0, direction, order, rtol, atol):
+     else:
+         h1 = (0.01 / max(d1, d2)) ** (1 / (order + 1))
+ 
+-    return min(100 * h0, h1)
++    return min(100 * h0, h1, interval_length, max_step)
+ 
+ 
+ class OdeSolution:
+diff --git a/scipy/integrate/_ivp/radau.py b/scipy/integrate/_ivp/radau.py
+index 0d9109e356..e13cb0f14c 100644
+--- a/scipy/integrate/_ivp/radau.py
++++ b/scipy/integrate/_ivp/radau.py
+@@ -305,7 +305,7 @@ class Radau(OdeSolver):
+         # the error.
+         if first_step is None:
+             self.h_abs = select_initial_step(
+-                self.fun, self.t, self.y, self.f, self.direction,
++                self.fun, self.t, self.y, t_bound, max_step, self.f, self.direction,
+                 3, self.rtol, self.atol)
+         else:
+             self.h_abs = validate_first_step(first_step, t0, t_bound)
+diff --git a/scipy/integrate/_ivp/rk.py b/scipy/integrate/_ivp/rk.py
+index b6076f9501..62a5347ffe 100644
+--- a/scipy/integrate/_ivp/rk.py
++++ b/scipy/integrate/_ivp/rk.py
+@@ -94,7 +94,7 @@ class RungeKutta(OdeSolver):
+         self.f = self.fun(self.t, self.y)
+         if first_step is None:
+             self.h_abs = select_initial_step(
+-                self.fun, self.t, self.y, self.f, self.direction,
++                self.fun, self.t, self.y, t_bound, max_step, self.f, self.direction,
+                 self.error_estimator_order, self.rtol, self.atol)
+         else:
+             self.h_abs = validate_first_step(first_step, t0, t_bound)
+diff --git a/scipy/meson.build b/scipy/meson.build
+index 79a16cd5b8..a0857848a2 100644
+--- a/scipy/meson.build
++++ b/scipy/meson.build
+@@ -422,7 +422,7 @@ fortran_ignore_warnings = ff.get_supported_arguments(
+ # Intel Fortran (ifort) does not run the preprocessor by default, if Fortran
+ # code uses preprocessor statements, add this compile flag to it.
+ _fflag_fpp = []
+-if ff.get_id() == 'intel-cl'
++if ff.get_id() in ['intel-cl', 'intel-llvm-cl']
+   if is_windows
+     _fflag_fpp = ff.get_supported_arguments('/fpp')
+   else
+diff --git a/scipy/optimize/_highs/meson.build b/scipy/optimize/_highs/meson.build
+index 7ef1cefc65..5dbd8b72fd 100644
+--- a/scipy/optimize/_highs/meson.build
++++ b/scipy/optimize/_highs/meson.build
+@@ -51,7 +51,8 @@ basiclu_lib = static_library('basiclu',
+     '../../_lib/highs/src',
+     '../../_lib/highs/src/ipm/basiclu/include'
+   ],
+-  c_args: [Wno_unused_variable, highs_define_macros]
++  c_args: [Wno_unused_variable, highs_define_macros],
++  gnu_symbol_visibility: 'inlineshidden',
+ )
+ 
+ highs_flags = [
+@@ -109,7 +110,8 @@ ipx_lib = static_library('ipx',
+     'cython/src/'
+   ],
+   dependencies: thread_dep,
+-  cpp_args: [highs_flags, highs_define_macros]
++  cpp_args: [highs_flags, highs_define_macros],
++  gnu_symbol_visibility: 'inlineshidden',
+ )
+ 
+ highs_lib = static_library('highs',
+@@ -226,7 +228,8 @@ highs_lib = static_library('highs',
+     '../../_lib/highs/src/util/',
+   ],
+   dependencies: thread_dep,
+-  cpp_args: [highs_flags, highs_define_macros]
++  cpp_args: [highs_flags, highs_define_macros],
++  gnu_symbol_visibility: 'inlineshidden',
+ )
+ 
+ _highs_wrapper = py3.extension_module('_highs_wrapper',
+diff --git a/scipy/signal/__init__.py b/scipy/signal/__init__.py
+index f56cf4ef1f..d924d05265 100644
+--- a/scipy/signal/__init__.py
++++ b/scipy/signal/__init__.py
+@@ -310,10 +310,13 @@ from ._max_len_seq import max_len_seq
+ from ._upfirdn import upfirdn
+ 
+ from ._spline import (
+-    sepfir2d
++    cspline2d,
++    qspline2d,
++    sepfir2d,
++    symiirorder1,
++    symiirorder2,
+ )
+ 
+-from ._splines import *
+ from ._bsplines import *
+ from ._filter_design import *
+ from ._fir_filter_design import *
+diff --git a/scipy/signal/_bspline_util.c.in b/scipy/signal/_bspline_util.c.in
+index 26bb6fb29e..fd0d2d74b3 100644
+--- a/scipy/signal/_bspline_util.c.in
++++ b/scipy/signal/_bspline_util.c.in
+@@ -22,6 +22,20 @@
+ #define ABSQ(a) ( (a*CONJ(a)))
+ #endif
+ 
++void
++compute_root_from_lambda(double lambda, double *r, double *omega)
++{
++    double xi;
++    double tmp, tmp2;
++
++    tmp = sqrt(3 + 144*lambda);
++    xi = 1 - 96*lambda + 24*lambda * tmp;
++    *omega = atan(sqrt((144*lambda - 1.0)/xi));
++    tmp2 = sqrt(xi);
++    *r = (24*lambda - 1 - tmp2)/(24*lambda)	* sqrt((48*lambda + 24*lambda*tmp))/tmp2;
++    return;
++}
++
+ 
+ {{py:
+ 
+@@ -37,195 +51,180 @@ RTYPES = RTYPE + RTYPE
+ 
+ }}
+ 
+-{{for SUB, TYP in zip(RNAME, RTYPE)}}
+-// Approximate steady state conditions for the system cs / (1 - a2 * z^-1 - a3 * z^-2)
+-static {{TYP}} {{SUB}}_hc(int, {{TYP}}, double, double);
+-// Approximate steady state conditions for the system cs / (1 - a2 * z - a3 * z^2)
+-static {{TYP}} {{SUB}}_hs(int, {{TYP}}, double, double);
+-{{endfor}}
+ 
++/* Implement the following difference equation */
++/* y[n] = a1 * x[n] + a2 * y[n-1]  */
++/* with a given starting value loaded into the array */
+ 
+-{{for SUB, TYP, RTYP in zip(NAMES, TYPES, RTYPES)}}
++{{for SUB, TYP in zip(NAMES, TYPES)}}
+ {{if SUB in CNAME}}
+ #ifdef __GNUC__
+ {{endif}}
+-int {{SUB}}_SYM_IIR1_initial({{TYP}} z1, {{TYP}} *x, {{TYP}} *yp0,
+-                             int M, int N, {{RTYP}} precision)
++void {{SUB}}_IIR_order1({{TYP}} a1, {{TYP}} a2, {{TYP}} *x, {{TYP}} *y,
++             int N, int stridex, int stridey)
+ {
+-    {{TYP}} powz1, diff;
+-    {{RTYP}} err;
+-    int k;
+-
+-    if (ABSQ(z1) >= 1.0) return -2; /* z1 not less than 1 */
+-
+-   /* Fix starting value assuming mirror-symmetric boundary conditions. */
+-    for(int i = 0; i < M; i++) {
+-        yp0[i] = x[N * i];
++    {{TYP}} *yvec = y + stridey;
++    {{TYP}} *xvec = x + stridex;
++    int n;
++
++    for (n = 1; n < N; n++) {
++	*yvec = *xvec * a1 + *(yvec - stridey) * a2;
++	yvec += stridey;
++	xvec += stridex;
+     }
++}
++{{if SUB in CNAME}}
++#endif
++{{endif}}
++{{endfor}}
+ 
+-    powz1 = 1.0;
+-    k = 0;
+-    precision *= precision;
+-    do {
+-    	powz1 *= z1;
+-        for(int i = 0; i < M; i++) {
+-            yp0[i] += powz1 * x[N * i + k];
+-        }
+-    	diff = powz1;
+-    	err = ABSQ(diff);
+-    	k++;
+-    } while((err > precision) && (k < N));
+ 
+-    if (k >= N){
+-        /* sum did not converge */
+-        return -3;
+-    }
++/* Implement the following difference equation */
++/* y[n] = a1 * x[n] + a2 * y[n-1]  + a3 * y[n-2] */
++/* with two starting values loaded into the array */
+ 
+-    return 0;
++{{for SUB, TYP in zip(NAMES, TYPES)}}
++{{if SUB in CNAME}}
++#ifdef __GNUC__
++{{endif}}
++void {{SUB}}_IIR_order2({{TYP}} a1, {{TYP}} a2, {{TYP}} a3,
++             {{TYP}} *x, {{TYP}} *y, int N, int stridex, int stridey)
++{
++    {{TYP}} *yvec = y + 2*stridey;
++    {{TYP}} *xvec = x + 2*stridex;
++    int n;
++
++    for (n = 2; n < N; n++) {
++	*yvec = *xvec * a1 + *(yvec - stridey) * a2 + *(yvec - 2*stridey) * a3;
++	yvec += stridey;
++	xvec += stridex;
++    }
+ }
+ {{if SUB in CNAME}}
+ #endif
+ {{endif}}
+ {{endfor}}
+ 
+-/**
+-Compute the starting initial conditions for the system
+-cs / (1 - a2 * z^-1 - a3 * z^-2) against signals x, where:
+-
+-a2 = 2 * r * cos(omega)
+-a3 = - r ** 2
+-cs = 1 - 2 * r * cos(omega) + r ** 2
+-
+-Arguments
+----------
+-x: double* or float*
+-    2D strided pointer signal of size (M, N). When M > 1, multiple signals
+-    will be processed independently.
+-yp: double* or float*
+-    Strided output state condition pointer of size (M, 2).
+-    yp[:, 0] will contain the initial conditions y[n - 1],
+-    whereas yp[:, 1] will contain the initial conditions y[n - 2].
+-M: int
+-    Number of signals to compute initial conditions for.
+-N: int
+-    Length of the signals.
+-precision: double* or float*
+-    Precision up to which the initial conditions will be computed.
+-**/
+-{{for SUB, TYP in zip(RNAME, RTYPE)}}
+-int {{SUB}}_SYM_IIR2_initial_fwd(double r, double omega,
+-        {{TYP}} *x, {{TYP}} *yp, int M, int N, {{TYP}} precision) {
+-    /* Fix starting values assuming mirror-symmetric boundary conditions. */
+-    {{TYP}} cs = 1 - 2 * r * cos(omega) + r * r;
+-
+-    for(int i = 0; i < M; i++) {
+-        // Compute starting condition y[n - 1]
+-        yp[2 * i] = {{SUB}}_hc(0, cs, r, omega) * x[N * i];
+-    }
+ 
+-    int k = 0;
+-    precision *= precision;
++/* Implement a second order IIR difference equation using a cascade
++   of first order sections.  Suppose the transfer function is
++                  cs
++   H(z) =   -------------------
++            (1-z1/z) ( 1-z2/z)
+ 
+-    {{TYP}} err;
+-    {{TYP}} diff;
++   then the following pair is implemented with one starting value loaded in
++   the output array and the starting value for the intermediate array
++   passed in as yp0.
+ 
+-    do {
+-        diff = {{SUB}}_hc(k+1, cs, r, omega);
+-        for(int i = 0; i < M; i++) {
+-            // Keep computing starting condition y[n - 1]
+-            yp[2 * i] += diff * x[N * i + k];
+-        }
+-        err = diff * diff;
+-        k++;
+-    } while((err > precision) && (k < N));
++   y1[n] = x[n] + z1 y1[n-1]
++   yp[n] = cs y1[n] + z2 yp[n-1]
+ 
+-    if (k >= N) {return -3;}     /* sum did not converge */
++*/
+ 
+-    for(int i = 0; i < M; i++) {
+-        // Compute starting condition y[n - 2]
+-        yp[2 * i + 1] = {{SUB}}_hc(0, cs, r, omega) * x[N * i + 1];
+-        yp[2 * i + 1] += {{SUB}}_hc(1, cs, r, omega) * x[N * i];
+-    }
+ 
+-    k = 0;
+-    do {
+-        diff = {{SUB}}_hc(k+2, cs, r, omega);
+-        for(int i = 0; i < M; i++) {
+-            // Keep computing starting condition y[n - 2]
+-            yp[2 * i + 1] += diff * x[N * i + k];
+-        }
+-        err = diff * diff;
+-        k++;
+-    } while((err > precision) && (k < N));
+-
+-    if (k >= N) {return -3;}     /* sum did not converge */
+-    return 0;
++{{for SUB, TYP in zip(NAMES, TYPES)}}
++{{if SUB in CNAME}}
++#ifdef __GNUC__
++{{endif}}
++void {{SUB}}_IIR_order2_cascade({{TYP}} cs, {{TYP}} z1, {{TYP}} z2,
++                     {{TYP}} y1_0, {{TYP}} *x, {{TYP}} *yp,
++                     int N, int stridex, int stridey)
++{
++    {{TYP}} *yvec = yp + stridey;
++    {{TYP}} *xvec = x + stridex;
++    int n;
++
++    for (n = 1; n < N; n++) {
++	y1_0 = *xvec + y1_0 * z1;
++	*yvec = cs * y1_0 + *(yvec - stridey) * z2;
++	yvec += stridey;
++	xvec += stridex;
++    }
+ }
++{{if SUB in CNAME}}
++#endif
++{{endif}}
+ {{endfor}}
+ 
+-/**
+-Compute the starting initial conditions for the system (ran in backwards)
+-cs / (1 - a2 * z - a3 * z^2) against signal x, where:
+-
+-a2 = 2 * r * cos(omega)
+-a3 = - r ** 2
+-cs = 1 - 2 * r * cos(omega) + r ** 2
+-
+-Arguments
+----------
+-x: double* or float*
+-    2D strided pointer signal of size (M, N). When M > 1, multiple signals
+-    will be processed independently.
+-yp: double* or float*
+-    Output state condition pointer of size (M, 2), yp[:, 0] will contain the
+-    initial conditions y[n + 1], whereas yp[:, 1] will contain the initial
+-    condition y[n + 2].
+-M: int
+-    Number of signals to compute initial conditions for.
+-N: int
+-    Length of the signals.
+-precision: double* or float*
+-    Precision up to which the initial conditions will be computed.
+-**/
+-{{for SUB, TYP in zip(RNAME, RTYPE)}}
+-int {{SUB}}_SYM_IIR2_initial_bwd(double r, double omega,
+-        {{TYP}} *x, {{TYP}} *yp, int M, int N, {{TYP}} precision) {
+-    double rsq = r * r;
+-    {{TYP}} cs = 1 - 2 * r * cos(omega) + rsq;
++/* Implement a smoothing IIR filter with mirror-symmetric boundary conditions
++   using a cascade of first-order sections.  The second section uses a
++   reversed sequence.  This implements the following transfer function:
++                    c0
++   H(z) = ---------------------------
++           (1-z1/z) (1 - z1 z)
+ 
+-    /* Fix starting values assuming mirror-symmetric boundary conditions. */
+-    int k = 0;
++   with the following difference equations:
+ 
+-    {{TYP}} err;
+-    {{TYP}} diff;
++   yp[n] = x[n] + z1 yp[n-1]
++     with starting condition:
++   yp[0] = x[0] + Sum(z1^(k+1) x[k],k=0..Infinity)
+ 
+-    do {
+-	    diff = ({{SUB}}_hs(k, cs, rsq, omega) + {{SUB}}_hs(k+1, cs, rsq, omega));
+-	    for(int i = 0; i < M; i++) {
+-            // Compute initial condition y[n + 1]
+-            yp[2 * i] += diff * x[N * i + N - 1 - k];
+-        }
+-	    err = diff * diff;
+-	    k++;
+-    } while((err > precision) && (k < N));
++   and
++
++   y[n] = z1 y[n+1] + c0 yp[n]
++     with starting condition:
++   y[N-1] = z1 / (z1-1) yp[N-1]
++
++   The resulting signal will have mirror symmetric boundary conditions as well.
+ 
+-    if (k >= N) {return -3;}     /* sum did not converge */
++   If memory could not be allocated for the temporary vector yp, the
++   function returns -1 otherwise it returns 0.
+ 
++   z1 should be less than 1;
++
++*/
++
++{{for SUB, TYP, RTYP in zip(NAMES, TYPES, RTYPES)}}
++{{if SUB in CNAME}}
++#ifdef __GNUC__
++{{endif}}
++int {{SUB}}_IIR_forback1({{TYP}} c0, {{TYP}} z1, {{TYP}} *x, {{TYP}} *y,
++                   int N, int stridex, int stridey, {{RTYP}} precision)
++{
++    {{TYP}} *yp = NULL;
++    {{TYP}} *xptr = x;
++    {{TYP}} yp0, powz1, diff;
++    {{RTYP}} err;
++    int k;
++
++    if (ABSQ(z1) >= 1.0) return -2; /* z1 not less than 1 */
++
++    /* Initialize memory for loop */
++    if ((yp = malloc(N*sizeof({{TYP}})))==NULL) return -1;
++
++   /* Fix starting value assuming mirror-symmetric boundary conditions. */
++    yp0 = x[0];
++    powz1 = 1.0;
+     k = 0;
++    precision *= precision;
+     do {
+-        diff = ({{SUB}}_hs(k-1, cs, rsq, omega) + {{SUB}}_hs(k+2, cs, rsq, omega));
+-        for(int i = 0; i < M; i++) {
+-            // Compute initial condition y[n + 2]
+-            yp[2 * i + 1] += diff * x[N * i + N - 1 - k];
+-        }
+-        err = diff * diff;
+-        k++;
++    	yp[0] = yp0;
++    	powz1 *= z1;
++    	yp0 += powz1 * (*xptr);
++    	diff = powz1;
++    	err = ABSQ(diff);
++    	xptr += stridex;
++    	k++;
+     } while((err > precision) && (k < N));
++    if (k >= N){
++        /* sum did not converge */
++        free(yp);
++        return -3;
++    }
++    yp[0] = yp0;
++
++    {{SUB}}_IIR_order1(1.0, z1, x, yp, N, stridex, 1);
++
++    *(y + (N - 1)*stridey) = -c0 / (z1 - 1.0) * yp[N-1];
+ 
+-    if (k >= N) {return -3;}     /* sum did not converge */
++    {{SUB}}_IIR_order1(c0, z1, yp + N - 1, y + (N - 1)*stridey, N, -1, -stridey);
+ 
++    free(yp);
+     return 0;
+ }
++{{if SUB in CNAME}}
++#endif
++{{endif}}
+ {{endfor}}
+ 
+ /* h must be odd length */
+@@ -349,10 +348,12 @@ int {{SUB}}_separable_2Dconvolve_mirror({{TYP}} *in, {{TYP}} *out,
+ {{endif}}
+ {{endfor}}
+ 
+-/**
+-Approximate the steady state of a two-pole filter in polar form for a
+-step input.
+-**/
++
++{{for SUB, TYP in zip(RNAME, RTYPE)}}
++static {{TYP}} {{SUB}}_hc(int, {{TYP}}, double, double);
++static {{TYP}} {{SUB}}_hs(int, {{TYP}}, double, double);
++{{endfor}}
++
+ {{for SUB, TYP in zip(RNAME, RTYPE)}}
+ {{TYP}} {{SUB}}_hc(int k, {{TYP}} cs, double r, double omega)
+ {
+@@ -365,11 +366,6 @@ step input.
+ }
+ {{endfor}}
+ 
+-
+-/**
+-Approximate the steady state of a two-pole filer in polar form ran in backwards
+-for a step input.
+-**/
+ {{for SUB, TYP in zip(RNAME, RTYPE)}}
+ {{TYP}} {{SUB}}_hs(int k, {{TYP}} cs, double rsq, double omega)
+ {
+@@ -396,3 +392,284 @@ for a step input.
+ }
+ 
+ {{endfor}}
++
++/* Implement a smoothing IIR filter with mirror-symmetric boundary conditions
++   using a cascade of second-order sections.  The second section uses a
++   reversed sequence.  This implements the following transfer function:
++
++                          cs^2
++   H(z) = --------------------------------------
++          (1 - a2/z - a3/z^2) (1 - a2 z -a3 z^2 )
++
++   where a2 = (2 r cos omega)
++         a3 = - r^2
++	 cs = 1 - 2 r cos omega + r^2
++
++   with the following difference equations:
++
++   yp[n] = cs*x[n] - b1 yp[n-1] - b2 yp[n-2]
++     with starting conditions:
++   yp[0] = hc[0] x[0] + Sum(hc[k+1]*x[k],k=0..Infinity)
++   yp[1] = hc[0] x[1] + hc[1] x[0] + Sum(hc[k+2] x[k], k=0..Infinity)
++
++   and
++
++   y[n] = cs*yp[n] - b1 y[n+1] -b2 y[n+2]
++     with starting conditions:
++   y[N-1] = Sum((hs[k] + hs[k+1])x[N-1-k],k=0..Infinity)
++   y[N-2] = Sum((hs[k-1] + hs[k+2])x[N-1-k],k=0..Infinity)
++
++   The resulting signal will have mirror symmetric boundary conditions as well.
++
++   If memory could not be allocated for the temporary vector yp, the
++   function returns -1 otherwise it returns 0.
++
++   z1 should be less than 1;
++
++*/
++
++{{for SUB, TYP in zip(RNAME, RTYPE)}}
++int {{SUB}}_IIR_forback2 (double r, double omega, {{TYP}} *x, {{TYP}} *y,
++		int N, int stridex, int stridey, {{TYP}} precision) {
++    {{TYP}} cs;
++    {{TYP}} *yp = NULL;
++    {{TYP}} *yptr;
++    {{TYP}} *xptr;
++    {{TYP}} yp0;
++    {{TYP}} yp1;
++    double rsq;
++    {{TYP}} diff;
++    {{TYP}} err;
++    {{TYP}} a2, a3;
++    int k;
++
++    if (r >= 1.0) return -2; /* z1 not less than 1 */
++
++    /* Initialize memory for loop */
++    if ((yp = malloc(N*sizeof({{TYP}})))==NULL) return -1;
++
++    rsq = r * r;
++    a2 = 2 * r * cos(omega);
++    a3 = -rsq;
++    cs = 1 - 2 * r * cos(omega) + rsq;
++
++   /* Fix starting values assuming mirror-symmetric boundary conditions. */
++    yp0 = {{SUB}}_hc(0, cs, r, omega) * x[0];
++    k = 0;
++    precision *= precision;
++    xptr = x;
++    do {
++	yp[0] = yp0;
++	diff = {{SUB}}_hc(k+1, cs, r, omega);
++  	yp0 += diff * (*xptr);
++	err = diff * diff;
++	xptr += stridex;
++	k++;
++    } while((err > precision) && (k < N));
++    if (k >= N) {free(yp); return -3;}     /* sum did not converge */
++    yp[0] = yp0;
++
++    yp1 = {{SUB}}_hc(0, cs, r, omega) * (*(x+stridex));
++    yp1 += {{SUB}}_hc(1, cs, r, omega) * x[0];
++    k = 0;
++    xptr = x;
++    do {
++	yp[1] = yp1;
++	diff = {{SUB}}_hc(k+2, cs, r, omega);
++	yp1 += diff * (*xptr);
++	err = diff * diff;
++	xptr += stridex;
++	k++;
++    } while((err > precision) && (k < N));
++    if (k >= N) {free(yp); return -3;}     /* sum did not converge */
++    yp[1] = yp1;
++
++    {{SUB}}_IIR_order2(cs, a2, a3, x, yp, N, stridex, 1);
++
++   /* Fix starting values assuming mirror-symmetric boundary conditions. */
++    yp0 = 0.0;
++    k = 0;
++    yptr = y + (N-1)*stridey;
++    xptr = x + (N-1)*stridex;
++    do {
++	*yptr = yp0;
++	diff = ({{SUB}}_hs(k, cs, rsq, omega) + {{SUB}}_hs(k+1, cs, rsq, omega));
++	yp0 += diff * (*xptr);
++	err = diff * diff;
++	xptr -= stridex;
++	k++;
++    } while((err > precision) && (k < N));
++    if (k >= N) {free(yp); return -3;}     /* sum did not converge */
++    *yptr = yp0;
++
++    yp1 = 0.0;
++    k = 0;
++    yptr -= stridey;        /* Initialize in next-to-last slot in output array */
++    xptr = x + (N-1)*stridex;
++    do {
++	*yptr = yp1;
++	diff = ({{SUB}}_hs(k-1, cs, rsq, omega) + {{SUB}}_hs(k+2, cs, rsq, omega));
++	yp1 += diff * (*xptr);
++	err = diff * diff;
++	xptr -= stridex;
++	k++;
++    } while((err > precision) && (k < N));
++    if (k >= N) {free(yp); return -3;}     /* sum did not converge */
++    *yptr = yp1;
++
++    {{SUB}}_IIR_order2(cs, a2, a3, yp+N-1, yptr+stridey, N, -1, -stridey);
++
++    free(yp);
++    return 0;
++}
++
++{{endfor}}
++
++
++/* Find the cubic spline coefficients of an image
++   image is M rows by N columns stored rowise in memory (vary column number
++          first). It will be replaced with the spline coefficients.
++   lambda is a smoothing parameter (lambda = 100 approximately corresponds
++          to a cutoff frequency of 0.1*(sample freq))
++   strides is an integer array [rowstride, colstride]
++          telling how much memory in units of sizeof(DATA TYPE) bytes to skip
++	  to get to the next element.
++*/
++
++/* to get the (smoothed) image back mirror-symmetric convolve with a length
++   three separable FIR filter [1.0, 4.0, 1.0]/ 6.0
++*/
++
++{{for SUB, TYP in zip(RNAME, RTYPE)}}
++int {{SUB}}_cubic_spline2D({{TYP}} *image, {{TYP}} *coeffs, int M, int N, double lambda,
++		 npy_intp *strides, npy_intp *cstrides, {{TYP}} precision) {
++    double r, omega;
++    {{TYP}} *inptr;
++    {{TYP}} *coptr;
++    {{TYP}} *tmpmem;
++    {{TYP}} *tptr;
++    int m, n, retval=0;
++
++    tmpmem = malloc(N*M*sizeof({{TYP}}));
++    if (tmpmem == NULL) return -1;
++
++    if (lambda <= 1.0 / 144.0) {
++	/* normal cubic spline */
++	r = -2 + sqrt(3.0);
++
++	/* Loop over rows */
++	inptr = image;
++	tptr = tmpmem;
++	for (m = 0; m < M; m++) {
++	    retval = {{SUB}}_IIR_forback1 (-r*6.0, r, inptr, tptr, N, strides[1], 1, precision);
++	    if (retval < 0) break;
++	    inptr += strides[0];
++	    tptr += N;
++	}
++
++	if (retval >=0) {
++	    /* Loop over columns */
++	    tptr = tmpmem;
++	    coptr = coeffs;
++	    for (n = 0; n < N; n++) {
++		retval = {{SUB}}_IIR_forback1 (-r*6.0, r, tptr, coptr, M, N, cstrides[0], precision);
++		if (retval < 0) break;
++		coptr += cstrides[1];
++		tptr += 1;
++	    }
++	}
++	free(tmpmem);
++	return retval;
++    }
++
++    /* Smoothing spline */
++
++    /* Compute r and omega from lambda */
++    compute_root_from_lambda(lambda, &r, &omega);
++
++    /* Loop over rows */
++    inptr = image;
++    tptr = tmpmem;
++    for (m = 0; m < M; m++) {
++	retval = {{SUB}}_IIR_forback2 (r, omega, inptr, tptr, N, strides[1],
++				       1, precision);
++	if (retval < 0) break;
++	inptr += strides[0];
++	tptr += N;
++    }
++    /* Loop over columns */
++    tptr = tmpmem;
++    coptr = coeffs;
++    for (n = 0; n < N; n++) {
++	retval = {{SUB}}_IIR_forback2 (r, omega, tptr, coptr, M, N,
++				       cstrides[0], precision);
++	if (retval < 0) break;
++	coptr += cstrides[1];
++	tptr += 1;
++    }
++
++    free(tmpmem);
++    return retval;
++}
++
++{{endfor}}
++
++/* Find the quadratic spline coefficients of an image
++   image is M rows by N columns stored rowise in memory (vary column number
++          first). It will be replaced with the spline coefficients.
++   lambda is a smoothing parameter (lambda = 100 approximately corresponds
++          to a cutoff frequency of 0.1*(sample freq))
++	  must be zero for now.
++   strides is an integer array [rowstride, colstride]
++          telling how much memory in units of sizeof(DATA TYPE) bytes to skip
++	  to get to the next element.
++*/
++
++/* to get the (smoothed) image back mirror-symmetric convolve with a length
++   three separable FIR filter [1.0, 6.0, 1.0]/ 8.0
++*/
++
++{{for SUB, TYP in zip(RNAME, RTYPE)}}
++int {{SUB}}_quadratic_spline2D({{TYP}} *image, {{TYP}} *coeffs, int M, int N, double lambda,
++		     npy_intp *strides, npy_intp *cstrides, {{TYP}} precision) {
++    double r;
++    {{TYP}} *inptr;
++    {{TYP}} *coptr;
++    {{TYP}} *tmpmem;
++    {{TYP}} *tptr;
++    int m,n, retval=0;
++
++    if (lambda > 0) return -2;
++
++    tmpmem = malloc(N*M*sizeof({{TYP}}));
++    if (tmpmem == NULL) return -1;
++
++    /* normal quadratic spline */
++    r = -3 + 2*sqrt(2.0);
++
++    /* Loop over rows */
++    inptr = image;
++    tptr = tmpmem;
++    for (m = 0; m < M; m++) {
++      retval = {{SUB}}_IIR_forback1 (-r*8.0, r, inptr, tptr, N, strides[1], 1, precision);
++      if (retval < 0) break;
++      inptr += strides[0];
++      tptr += N;
++    }
++
++    if (retval >=0) {
++    /* Loop over columns */
++      tptr = tmpmem;
++      coptr = coeffs;
++      for (n = 0; n < N; n++) {
++	retval = {{SUB}}_IIR_forback1 (-r*8.0, r, tptr, coptr, M, N, cstrides[0], precision);
++	if (retval < 0) break;
++	coptr += cstrides[1];
++	tptr += 1;
++      }
++    }
++    free(tmpmem);
++    return retval;
++}
++
++{{endfor}}
+diff --git a/scipy/signal/_bsplines.py b/scipy/signal/_bsplines.py
+index 58fd5d3620..c9b136da7c 100644
+--- a/scipy/signal/_bsplines.py
++++ b/scipy/signal/_bsplines.py
+@@ -1,20 +1,15 @@
+ from numpy import (asarray, pi, zeros_like,
+                    array, arctan2, tan, ones, arange, floor,
+-                   r_, atleast_1d, sqrt, exp, greater, cos, add, sin,
+-                   moveaxis, abs, arctan, complex64, float32)
+-
+-from scipy._lib._util import normalize_axis_index
++                   r_, atleast_1d, sqrt, exp, greater, cos, add, sin)
+ 
+ # From splinemodule.c
+-from ._spline import sepfir2d
+-from ._splines import symiirorder1, symiirorder2
++from ._spline import cspline2d, sepfir2d
+ from ._signaltools import lfilter, sosfilt, lfiltic
+ 
+ from scipy.interpolate import BSpline
+ 
+ __all__ = ['spline_filter', 'gauss_spline',
+-           'cspline1d', 'qspline1d', 'qspline2d', 'cspline2d',
+-           'cspline1d_eval', 'qspline1d_eval']
++           'cspline1d', 'qspline1d', 'cspline1d_eval', 'qspline1d_eval']
+ 
+ 
+ def spline_filter(Iin, lmbda=5.0):
+@@ -273,16 +268,6 @@ def _quadratic_coeff(signal):
+     return output * 8.0
+ 
+ 
+-def compute_root_from_lambda(lamb):
+-    tmp = sqrt(3 + 144 * lamb)
+-    xi = 1 - 96 * lamb + 24 * lamb * tmp
+-    omega = arctan(sqrt((144 * lamb - 1.0) / xi))
+-    tmp2 = sqrt(xi)
+-    r = ((24 * lamb - 1 - tmp2) / (24 * lamb) *
+-         sqrt(48*lamb + 24 * lamb * tmp) / tmp2)
+-    return r, omega
+-
+-
+ def cspline1d(signal, lamb=0.0):
+     """
+     Compute cubic spline coefficients for rank-1 array.
+@@ -384,118 +369,6 @@ def qspline1d(signal, lamb=0.0):
+         return _quadratic_coeff(signal)
+ 
+ 
+-def collapse_2d(x, axis):
+-    x = moveaxis(x, axis, -1)
+-    x_shape = x.shape
+-    x = x.reshape(-1, x.shape[-1])
+-    if not x.flags.c_contiguous:
+-        x = x.copy()
+-    return x, x_shape
+-
+-
+-def symiirorder_nd(func, input, *args, axis=-1, **kwargs):
+-    axis = normalize_axis_index(axis, input.ndim)
+-    input_shape = input.shape
+-    input_ndim = input.ndim
+-    if input.ndim > 1:
+-        input, input_shape = collapse_2d(input, axis)
+-
+-    out = func(input, *args, **kwargs)
+-
+-    if input_ndim > 1:
+-        out = out.reshape(input_shape)
+-        out = moveaxis(out, -1, axis)
+-        if not out.flags.c_contiguous:
+-            out = out.copy()
+-    return out
+-
+-
+-def qspline2d(signal, lamb=0.0, precision=-1.0):
+-    """
+-    Coefficients for 2-D quadratic (2nd order) B-spline.
+-
+-    Return the second-order B-spline coefficients over a regularly spaced
+-    input grid for the two-dimensional input image.
+-
+-    Parameters
+-    ----------
+-    input : ndarray
+-        The input signal.
+-    lamb : float
+-        Specifies the amount of smoothing in the transfer function.
+-    precision : float
+-        Specifies the precision for computing the infinite sum needed to apply
+-        mirror-symmetric boundary conditions.
+-
+-    Returns
+-    -------
+-    output : ndarray
+-        The filtered signal.
+-    """
+-    if precision < 0.0 or precision >= 1.0:
+-        if signal.dtype in [float32, complex64]:
+-            precision = 1e-3
+-        else:
+-            precision = 1e-6
+-
+-    if lamb > 0:
+-        raise ValueError('lambda must be negative or zero')
+-
+-    # normal quadratic spline
+-    r = -3 + 2 * sqrt(2.0)
+-    c0 = -r * 8.0
+-    z1 = r
+-
+-    out = symiirorder_nd(symiirorder1, signal, c0, z1, precision, axis=-1)
+-    out = symiirorder_nd(symiirorder1, out, c0, z1, precision, axis=0)
+-    return out
+-
+-
+-def cspline2d(signal, lamb=0.0, precision=-1.0):
+-    """
+-    Coefficients for 2-D cubic (3rd order) B-spline.
+-
+-    Return the third-order B-spline coefficients over a regularly spaced
+-    input grid for the two-dimensional input image.
+-
+-    Parameters
+-    ----------
+-    input : ndarray
+-        The input signal.
+-    lamb : float
+-        Specifies the amount of smoothing in the transfer function.
+-    precision : float
+-        Specifies the precision for computing the infinite sum needed to apply
+-        mirror-symmetric boundary conditions.
+-
+-    Returns
+-    -------
+-    output : ndarray
+-        The filtered signal.
+-    """
+-    if precision < 0.0 or precision >= 1.0:
+-        if signal.dtype in [float32, complex64]:
+-            precision = 1e-3
+-        else:
+-            precision = 1e-6
+-
+-    if lamb <= 1 / 144.0:
+-        # Normal cubic spline
+-        r = -2 + sqrt(3.0)
+-        out = symiirorder_nd(
+-            symiirorder1, signal, -r * 6.0, r, precision=precision, axis=-1)
+-        out = symiirorder_nd(
+-            symiirorder1, out, -r * 6.0, r, precision=precision, axis=0)
+-        return out
+-
+-    r, omega = compute_root_from_lambda(lamb)
+-    out = symiirorder_nd(symiirorder2, signal, r, omega,
+-                         precision=precision, axis=-1)
+-    out = symiirorder_nd(symiirorder2, out, r, omega,
+-                         precision=precision, axis=0)
+-    return out
+-
+-
+ def cspline1d_eval(cj, newx, dx=1.0, x0=0):
+     """Evaluate a cubic spline at the new set of points.
+ 
+diff --git a/scipy/signal/_spline.pyi b/scipy/signal/_spline.pyi
+deleted file mode 100644
+index c4225577db..0000000000
+--- a/scipy/signal/_spline.pyi
++++ /dev/null
+@@ -1,34 +0,0 @@
+-
+-import numpy as np
+-from numpy.typing import NDArray
+-
+-FloatingArray = NDArray[np.float32] | NDArray[np.float64]
+-ComplexArray = NDArray[np.complex64] | NDArray[np.complex128]
+-FloatingComplexArray = FloatingArray | ComplexArray
+-
+-
+-def symiirorder1_ic(signal: FloatingComplexArray,
+-                    c0: float,
+-                    z1: float,
+-                    precision: float) -> FloatingComplexArray:
+-    ...
+-
+-
+-def symiirorder2_ic_fwd(signal: FloatingArray,
+-                        r: float,
+-                        omega: float,
+-                        precision: float) -> FloatingArray:
+-    ...
+-
+-
+-def symiirorder2_ic_bwd(signal: FloatingArray,
+-                        r: float,
+-                        omega: float,
+-                        precision: float) -> FloatingArray:
+-    ...
+-
+-
+-def sepfir2d(input: FloatingComplexArray,
+-             hrow: FloatingComplexArray,
+-             hcol: FloatingComplexArray) -> FloatingComplexArray:
+-    ...
+diff --git a/scipy/signal/_splinemodule.c b/scipy/signal/_splinemodule.c
+index 6d901a708b..b2978be1b4 100644
+--- a/scipy/signal/_splinemodule.c
++++ b/scipy/signal/_splinemodule.c
+@@ -18,6 +18,166 @@ convert_strides(npy_intp* instrides,npy_intp* convstrides,int size,int N)
+   }
+ }
+ 
++
++static char doc_cspline2d[] = "out = cspline2d(input, lambda=0.0, precision=-1.0)\n"
++"\n"
++"    Coefficients for 2-D cubic (3rd order) B-spline.\n"
++"\n"
++"    Return the third-order B-spline coefficients over a regularly spaced\n"
++"    input grid for the two-dimensional input image.\n"
++"\n"
++"    Parameters\n"
++"    ----------\n"
++"    input : ndarray\n"
++"        The input signal.\n"
++"    lambda : float\n"
++"        Specifies the amount of smoothing in the transfer function.\n"
++"    precision : float\n"
++"        Specifies the precision for computing the infinite sum needed to apply mirror-\n"
++"        symmetric boundary conditions.\n"
++"\n"
++"    Returns\n"
++"    -------\n"
++"    output : ndarray\n"
++"        The filtered signal.\n"
++"\n"
++"    Examples\n"
++"    --------\n"
++"    Examples are given :ref:`in the tutorial <tutorial-signal-bsplines>`.\n"
++"\n";
++
++
++static PyObject *cspline2d(PyObject *NPY_UNUSED(dummy), PyObject *args)
++{
++  PyObject *image=NULL;
++  PyArrayObject *a_image=NULL, *ck=NULL;
++  double lambda = 0.0;
++  double precision = -1.0;
++  int thetype, M, N, retval=0;
++  npy_intp outstrides[2], instrides[2];
++
++  if (!PyArg_ParseTuple(args, "O|dd", &image, &lambda, &precision)) return NULL;
++
++  thetype = PyArray_ObjectType(image, NPY_FLOAT);
++  thetype = PyArray_MIN(thetype, NPY_DOUBLE);
++  a_image = (PyArrayObject *)PyArray_FromObject(image, thetype, 2, 2);
++  if (a_image == NULL) goto fail;
++
++  ck = (PyArrayObject *)PyArray_SimpleNew(2, PyArray_DIMS(a_image), thetype);
++  if (ck == NULL) goto fail;
++  M = PyArray_DIMS(a_image)[0];
++  N = PyArray_DIMS(a_image)[1];
++
++  convert_strides(PyArray_STRIDES(a_image), instrides, PyArray_ITEMSIZE(a_image), 2);
++  outstrides[0] = N;
++  outstrides[1] = 1;
++
++  if (thetype == NPY_FLOAT) {
++    if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-3;
++    retval = S_cubic_spline2D((float *)PyArray_DATA(a_image),
++                              (float *)PyArray_DATA(ck),
++                              M, N, lambda, instrides, outstrides, precision);
++  }
++  else if (thetype == NPY_DOUBLE) {
++    if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-6;
++    retval = D_cubic_spline2D((double *)PyArray_DATA(a_image),
++                              (double *)PyArray_DATA(ck),
++                              M, N, lambda, instrides, outstrides, precision);
++  }
++
++  if (retval == -3) PYERR("Precision too high.  Error did not converge.");
++  if (retval < 0) PYERR("Problem occurred inside routine");
++
++  Py_DECREF(a_image);
++  return PyArray_Return(ck);
++
++ fail:
++  Py_XDECREF(a_image);
++  Py_XDECREF(ck);
++  return NULL;
++
++}
++
++static char doc_qspline2d[] = "out = qspline2d(input, lambda=0.0, precision=-1.0)\n"
++"\n"
++"    Coefficients for 2-D quadratic (2nd order) B-spline:\n"
++"\n"
++"    Return the second-order B-spline coefficients over a regularly spaced\n"
++"    input grid for the two-dimensional input image.\n"
++"\n"
++"    Parameters\n"
++"    ----------\n"
++"    input : ndarray\n"
++"        The input signal.\n"
++"    lambda : float\n"
++"        Specifies the amount of smoothing in the transfer function.\n"
++"    precision : float\n"
++"        Specifies the precision for computing the infinite sum needed to apply mirror-\n"
++"        symmetric boundary conditions.\n"
++"\n"
++"    Returns\n"
++"    -------\n"
++"    output : ndarray\n"
++"        The filtered signal.\n"
++"\n"
++"    Examples\n"
++"    --------\n"
++"    Examples are given :ref:`in the tutorial <tutorial-signal-bsplines>`.\n"
++"\n";
++
++static PyObject *qspline2d(PyObject *NPY_UNUSED(dummy), PyObject *args)
++{
++  PyObject *image=NULL;
++  PyArrayObject *a_image=NULL, *ck=NULL;
++  double lambda = 0.0;
++  double precision = -1.0;
++  int thetype, M, N, retval=0;
++  npy_intp outstrides[2], instrides[2];
++
++  if (!PyArg_ParseTuple(args, "O|dd", &image, &lambda, &precision)) return NULL;
++
++  if (lambda != 0.0) PYERR("Smoothing spline not yet implemented.");
++
++  thetype = PyArray_ObjectType(image, NPY_FLOAT);
++  thetype = PyArray_MIN(thetype, NPY_DOUBLE);
++  a_image = (PyArrayObject *)PyArray_FromObject(image, thetype, 2, 2);
++  if (a_image == NULL) goto fail;
++
++  ck = (PyArrayObject *)PyArray_SimpleNew(2, PyArray_DIMS(a_image), thetype);
++  if (ck == NULL) goto fail;
++  M = PyArray_DIMS(a_image)[0];
++  N = PyArray_DIMS(a_image)[1];
++
++  convert_strides(PyArray_STRIDES(a_image), instrides, PyArray_ITEMSIZE(a_image), 2);
++  outstrides[0] = N;
++  outstrides[1] = 1;
++
++  if (thetype == NPY_FLOAT) {
++    if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-3;
++    retval = S_quadratic_spline2D((float *)PyArray_DATA(a_image),
++                                  (float *)PyArray_DATA(ck),
++                                  M, N, lambda, instrides, outstrides, precision);
++  }
++  else if (thetype == NPY_DOUBLE) {
++    if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-6;
++    retval = D_quadratic_spline2D((double *)PyArray_DATA(a_image),
++                                  (double *)PyArray_DATA(ck),
++                                  M, N, lambda, instrides, outstrides, precision);
++  }
++
++  if (retval == -3) PYERR("Precision too high.  Error did not converge.");
++  if (retval < 0) PYERR("Problem occurred inside routine");
++
++  Py_DECREF(a_image);
++  return PyArray_Return(ck);
++
++ fail:
++  Py_XDECREF(a_image);
++  Py_XDECREF(ck);
++  return NULL;
++
++}
++
+ static char doc_FIRsepsym2d[] = "out = sepfir2d(input, hrow, hcol)\n"
+ "\n"
+ "    Convolve with a 2-D separable FIR filter.\n"
+@@ -138,109 +298,101 @@ static PyObject *FIRsepsym2d(PyObject *NPY_UNUSED(dummy), PyObject *args)
+ 
+ }
+ 
+-
+-static char doc_IIRsymorder1_ic[] = "out = symiirorder1_ic(input, z1, precision=-1.0)\n"
+-"\n"
+-"    Compute the (forward) mirror-symmetric boundary conditions for a smoothing\n"
+-"    IIR filter that is composed of cascaded first-order sections.\n"
++static char doc_IIRsymorder1[] = "out = symiirorder1(input, c0, z1, precision=-1.0)\n"
+ "\n"
+-"    The starting condition returned by this function is computed based on\n"
+-"    the following transfer function::\n"
++"    Implement a smoothing IIR filter with mirror-symmetric boundary conditions\n"
++"    using a cascade of first-order sections.  The second section uses a\n"
++"    reversed sequence.  This implements a system with the following\n"
++"    transfer function and mirror-symmetric boundary conditions::\n"
+ "\n"
+-"                       1         \n"
+-"           H(z) = ------------   \n"
+-"                   (1 - z1/z)    \n"
++"                           c0              \n"
++"           H(z) = ---------------------    \n"
++"                   (1-z1/z) (1 - z1 z)     \n"
+ "\n"
++"    The resulting signal will have mirror symmetric boundary conditions as well.\n"
+ "\n"
+ "    Parameters\n"
+ "    ----------\n"
+ "    input : ndarray\n"
+-"        The input signal. If 2D, then it will find the initial conditions \n"
+-"        for each of the elements on the last axis.\n"
+-"    z1 : scalar\n"
+-"        Parameter in the transfer function.\n"
++"        The input signal.\n"
++"    c0, z1 : scalar\n"
++"        Parameters in the transfer function.\n"
+ "    precision :\n"
+ "        Specifies the precision for calculating initial conditions\n"
+ "        of the recursive filter based on mirror-symmetric input.\n"
+ "\n"
+ "    Returns\n"
+ "    -------\n"
+-"    z_0 : ndarray\n"
+-"        The mirror-symmetric initial condition for the forward IIR filter.";
++"    output : ndarray\n"
++"        The filtered signal.";
+ 
+-static PyObject *IIRsymorder1_ic(PyObject *NPY_UNUSED(dummy), PyObject *args)
++static PyObject *IIRsymorder1(PyObject *NPY_UNUSED(dummy), PyObject *args)
+ {
+   PyObject *sig=NULL;
+   PyArrayObject *a_sig=NULL, *out=NULL;
+-  npy_intp* in_size;
+-
+-  Py_complex z1;
++  Py_complex c0, z1;
+   double precision = -1.0;
+-  int thetype, ret;
+-  npy_intp M, N;
+-  PyArray_Descr* dtype;
++  int thetype, N, ret;
++  npy_intp outstrides, instrides;
+ 
+-  if (!PyArg_ParseTuple(args, "OD|d", &sig, &z1, &precision))
++  if (!PyArg_ParseTuple(args, "ODD|d", &sig, &c0, &z1, &precision))
+     return NULL;
+ 
+   thetype = PyArray_ObjectType(sig, NPY_FLOAT);
+   thetype = PyArray_MIN(thetype, NPY_CDOUBLE);
+-  a_sig = (PyArrayObject *)PyArray_FromObject(sig, thetype, 1, 2);
++  a_sig = (PyArrayObject *)PyArray_FromObject(sig, thetype, 1, 1);
+ 
+   if (a_sig == NULL) goto fail;
+ 
+-  in_size = PyArray_DIMS(a_sig);
+-  M = 1;
+-  N = in_size[0];
+-
+-  if(PyArray_NDIM(a_sig) > 1) {
+-    M = in_size[0];
+-    N = in_size[1];
+-  }
+-
+-  const npy_intp sz[2] = {M, 1};
+-  dtype = PyArray_DescrFromType(thetype);
+-  out = (PyArrayObject *)PyArray_Empty(2, sz, dtype, 0);
++  out = (PyArrayObject *)PyArray_SimpleNew(1, PyArray_DIMS(a_sig), thetype);
+   if (out == NULL) goto fail;
++  N = PyArray_DIMS(a_sig)[0];
++
++  convert_strides(PyArray_STRIDES(a_sig), &instrides, PyArray_ITEMSIZE(a_sig), 1);
++  outstrides = 1;
+ 
+   switch (thetype) {
+   case NPY_FLOAT:
+     {
++      float rc0 = c0.real;
+       float rz1 = z1.real;
+ 
+       if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-6;
+-      ret = S_SYM_IIR1_initial(rz1, (float *)PyArray_DATA(a_sig),
+-                               (float *)PyArray_DATA(out), M, N,
+-                               (float )precision);
++      ret = S_IIR_forback1 (rc0, rz1, (float *)PyArray_DATA(a_sig),
++			    (float *)PyArray_DATA(out), N,
++			    instrides, outstrides, (float )precision);
+     }
+     break;
+   case NPY_DOUBLE:
+     {
++      double rc0 = c0.real;
+       double rz1 = z1.real;
+ 
+       if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-11;
+-      ret = D_SYM_IIR1_initial(rz1, (double *)PyArray_DATA(a_sig),
+-                               (double *)PyArray_DATA(out), M, N,
+-                               precision);
++      ret = D_IIR_forback1 (rc0, rz1, (double *)PyArray_DATA(a_sig),
++			    (double *)PyArray_DATA(out), N,
++			    instrides, outstrides, precision);
+     }
+     break;
+ #ifdef __GNUC__
+   case NPY_CFLOAT:
+     {
++      __complex__ float zc0 = c0.real + 1.0i*c0.imag;
+       __complex__ float zz1 = z1.real + 1.0i*z1.imag;
+       if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-6;
+-      ret = C_SYM_IIR1_initial (zz1, (__complex__ float *)PyArray_DATA(a_sig),
+-			    (__complex__ float *)PyArray_DATA(out), M, N,
+-			    (float )precision);
++      ret = C_IIR_forback1 (zc0, zz1, (__complex__ float *)PyArray_DATA(a_sig),
++			    (__complex__ float *)PyArray_DATA(out), N,
++			    instrides, outstrides, (float )precision);
+     }
+     break;
+   case NPY_CDOUBLE:
+     {
++      __complex__ double zc0 = c0.real + 1.0i*c0.imag;
+       __complex__ double zz1 = z1.real + 1.0i*z1.imag;
+       if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-11;
+-      ret = Z_SYM_IIR1_initial (zz1, (__complex__ double *)PyArray_DATA(a_sig),
+-			    (__complex__ double *)PyArray_DATA(out), M, N,
+-			    precision);
++      ret = Z_IIR_forback1 (zc0, zz1, (__complex__ double *)PyArray_DATA(a_sig),
++			    (__complex__ double *)PyArray_DATA(out), N,
++			    instrides, outstrides, precision);
+     }
+     break;
+ #endif
+@@ -267,17 +419,15 @@ static PyObject *IIRsymorder1_ic(PyObject *NPY_UNUSED(dummy), PyObject *args)
+ 
+ }
+ 
+-static char doc_IIRsymorder2_ic_fwd[] = "out = symiirorder2_ic_fwd(input, r, omega, precision=-1.0)\n"
+-"\n"
+-"    Compute the (forward) mirror-symmetric boundary conditions for a smoothing\n"
+-"    IIR filter that is composed of cascaded second-order sections.\n"
++static char doc_IIRsymorder2[] = "out = symiirorder2(input, r, omega, precision=-1.0)\n"
+ "\n"
+-"    The starting condition returned by this function is computed based on\n"
+-"    the following transfer function::\n"
++"    Implement a smoothing IIR filter with mirror-symmetric boundary conditions\n"
++"    using a cascade of second-order sections.  The second section uses a\n"
++"    reversed sequence.  This implements the following transfer function::\n"
+ "\n"
+-"                         cs\n"
+-"         H(z) = -------------------\n"
+-"                (1 - a2/z - a3/z^2)\n"
++"                                  cs^2\n"
++"         H(z) = ---------------------------------------\n"
++"                (1 - a2/z - a3/z^2) (1 - a2 z - a3 z^2 )\n"
+ "\n"
+ "    where::\n"
+ "\n"
+@@ -297,182 +447,55 @@ static char doc_IIRsymorder2_ic_fwd[] = "out = symiirorder2_ic_fwd(input, r, ome
+ "\n"
+ "    Returns\n"
+ "    -------\n"
+-"    zi : ndarray\n"
+-"        The mirror-symmetric initial condition for the forward IIR filter.";
++"    output : ndarray\n"
++"        The filtered signal.";
+ 
+-static PyObject *IIRsymorder2_ic_fwd(PyObject *NPY_UNUSED(dummy), PyObject *args)
++static PyObject *IIRsymorder2(PyObject *NPY_UNUSED(dummy), PyObject *args)
+ {
+   PyObject *sig=NULL;
+   PyArrayObject *a_sig=NULL, *out=NULL;
+-  npy_intp* in_size;
+   double r, omega;
+   double precision = -1.0;
+-  int thetype, ret;
+-  npy_intp N, M;
+-  PyArray_Descr* dtype;
++  int thetype, N, ret;
++  npy_intp outstrides, instrides;
+ 
+   if (!PyArg_ParseTuple(args, "Odd|d", &sig, &r, &omega, &precision))
+     return NULL;
+ 
+   thetype = PyArray_ObjectType(sig, NPY_FLOAT);
+   thetype = PyArray_MIN(thetype, NPY_DOUBLE);
+-  a_sig = (PyArrayObject *)PyArray_FromObject(sig, thetype, 1, 2);
++  a_sig = (PyArrayObject *)PyArray_FromObject(sig, thetype, 1, 1);
+ 
+   if (a_sig == NULL) goto fail;
+ 
+-  in_size = PyArray_DIMS(a_sig);
+-  M = 1;
+-  N = in_size[0];
+-
+-  if(PyArray_NDIM(a_sig) > 1) {
+-    M = in_size[0];
+-    N = in_size[1];
+-  }
+-
+-  dtype = PyArray_DescrFromType(thetype);
+-  const npy_intp sz[2] = {M, 2};
+-  out = (PyArrayObject *)PyArray_Empty(2, sz, dtype, 0);
++  out = (PyArrayObject *)PyArray_SimpleNew(1, PyArray_DIMS(a_sig), thetype);
+   if (out == NULL) goto fail;
++  N = PyArray_DIMS(a_sig)[0];
+ 
+-  switch (thetype) {
+-  case NPY_FLOAT:
+-    {
+-      if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-6;
+-      ret = S_SYM_IIR2_initial_fwd(r, omega, (float *)PyArray_DATA(a_sig),
+-                                  (float *)PyArray_DATA(out), M, N,
+-                                  (float )precision);
+-    }
+-    break;
+-  case NPY_DOUBLE:
+-    {
+-      if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-11;
+-      ret = D_SYM_IIR2_initial_fwd(r, omega, (double *)PyArray_DATA(a_sig),
+-                                  (double *)PyArray_DATA(out), M, N,
+-                                  precision);
+-    }
+-    break;
+-  default:
+-    PYERR("Incorrect type.");
+-  }
+-
+-  if (ret == 0) {
+-    Py_DECREF(a_sig);
+-    return PyArray_Return(out);
+-  }
+-
+-  if (ret == -1) PYERR("Could not allocate enough memory.");
+-  if (ret == -2) PYERR("|z1| must be less than 1.0");
+-  if (ret == -3) PYERR("Sum to find symmetric boundary conditions did not converge.");
+-
+-  PYERR("Unknown error.");
+-
+-
+- fail:
+-  Py_XDECREF(a_sig);
+-  Py_XDECREF(out);
+-  return NULL;
+-
+-}
+-
+-static char doc_IIRsymorder2_ic_bwd[] = "out = symiirorder2_ic_bwd(input, r, omega, precision=-1.0)\n"
+-"\n"
+-"    Compute the (backward) mirror-symmetric boundary conditions for a smoothing\n"
+-"    IIR filter that is composed of cascaded second-order sections.\n"
+-"\n"
+-"    The starting condition returned by this function is computed based on\n"
+-"    the following transfer function::\n"
+-"\n"
+-"                         cs\n"
+-"         H(z) = -------------------\n"
+-"                (1 - a2 z - a3 z^2)\n"
+-"\n"
+-"    where::\n"
+-"\n"
+-"          a2 = (2 r cos omega)\n"
+-"          a3 = - r^2\n"
+-"          cs = 1 - 2 r cos omega + r^2\n"
+-"\n"
+-"    Parameters\n"
+-"    ----------\n"
+-"    input : ndarray\n"
+-"        The input signal.\n"
+-"    r, omega : float\n"
+-"        Parameters in the transfer function.\n"
+-"    precision : float\n"
+-"        Specifies the precision for calculating initial conditions\n"
+-"        of the recursive filter based on mirror-symmetric input.\n"
+-"\n"
+-"    Returns\n"
+-"    -------\n"
+-"    zi : ndarray\n"
+-"        The mirror-symmetric initial condition for the forward IIR filter.";
+-
+-static PyObject *IIRsymorder2_ic_bwd(PyObject *NPY_UNUSED(dummy), PyObject *args)
+-{
+-  PyObject *sig=NULL;
+-  PyArrayObject *a_sig=NULL, *out=NULL;
+-  npy_intp* in_size;
+-  double r, omega;
+-  double precision = -1.0;
+-  int thetype, ret;
+-  npy_intp M, N;
+-  PyArray_Descr* dtype;
+-
+-  if (!PyArg_ParseTuple(args, "Odd|d", &sig, &r, &omega, &precision))
+-    return NULL;
+-
+-  thetype = PyArray_ObjectType(sig, NPY_FLOAT);
+-  thetype = PyArray_MIN(thetype, NPY_DOUBLE);
+-  a_sig = (PyArrayObject *)PyArray_FromObject(sig, thetype, 1, 2);
+-
+-  if (a_sig == NULL) goto fail;
+-
+-  in_size = PyArray_DIMS(a_sig);
+-  M = 1;
+-  N = in_size[0];
+-
+-  if(PyArray_NDIM(a_sig) > 1) {
+-    M = in_size[0];
+-    N = in_size[1];
+-  }
+-
+-  dtype = PyArray_DescrFromType(thetype);
+-  const npy_intp sz[2] = {M, 2};
+-  out = (PyArrayObject *)PyArray_Zeros(2, sz, dtype, 0);
+-  if (out == NULL) goto fail;
++  convert_strides(PyArray_STRIDES(a_sig), &instrides, PyArray_ITEMSIZE(a_sig), 1);
++  outstrides = 1;
+ 
+   switch (thetype) {
+   case NPY_FLOAT:
+-    {
+-      if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-6;
+-      ret = S_SYM_IIR2_initial_bwd(r, omega, (float *)PyArray_DATA(a_sig),
+-                                  (float *)PyArray_DATA(out), M, N,
+-                                  (float )precision);
+-    }
++    if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-6;
++    ret = S_IIR_forback2 (r, omega, (float *)PyArray_DATA(a_sig),
++			  (float *)PyArray_DATA(out), N,
++			  instrides, outstrides, precision);
+     break;
+   case NPY_DOUBLE:
+-    {
+-      if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-11;
+-      ret = D_SYM_IIR2_initial_bwd(r, omega, (double *)PyArray_DATA(a_sig),
+-                                   (double *)PyArray_DATA(out), M, N,
+-                                   precision);
+-    }
++    if ((precision <= 0.0) || (precision > 1.0)) precision = 1e-11;
++    ret = D_IIR_forback2 (r, omega, (double *)PyArray_DATA(a_sig),
++			  (double *)PyArray_DATA(out), N,
++			  instrides, outstrides, precision);
+     break;
+   default:
+     PYERR("Incorrect type.");
+   }
+ 
+-  if (ret == 0) {
+-    Py_DECREF(a_sig);
+-    return PyArray_Return(out);
+-  }
+-
+-  if (ret == -1) PYERR("Could not allocate enough memory.");
+-  if (ret == -2) PYERR("|z1| must be less than 1.0");
+-  if (ret == -3) PYERR("Sum to find symmetric boundary conditions did not converge.");
+-
+-  PYERR("Unknown error.");
++  if (ret < 0) PYERR("Problem occurred inside routine.");
+ 
++  Py_DECREF(a_sig);
++  return PyArray_Return(out);
+ 
+  fail:
+   Py_XDECREF(a_sig);
+@@ -483,10 +506,11 @@ static PyObject *IIRsymorder2_ic_bwd(PyObject *NPY_UNUSED(dummy), PyObject *args
+ 
+ 
+ static struct PyMethodDef toolbox_module_methods[] = {
++    {"cspline2d", cspline2d, METH_VARARGS, doc_cspline2d},
++    {"qspline2d", qspline2d, METH_VARARGS, doc_qspline2d},
+     {"sepfir2d", FIRsepsym2d, METH_VARARGS, doc_FIRsepsym2d},
+-    {"symiirorder1_ic", IIRsymorder1_ic, METH_VARARGS, doc_IIRsymorder1_ic},
+-    {"symiirorder2_ic_fwd", IIRsymorder2_ic_fwd, METH_VARARGS, doc_IIRsymorder2_ic_fwd},
+-    {"symiirorder2_ic_bwd", IIRsymorder2_ic_bwd, METH_VARARGS,doc_IIRsymorder2_ic_bwd },
++    {"symiirorder1", IIRsymorder1, METH_VARARGS, doc_IIRsymorder1},
++    {"symiirorder2", IIRsymorder2, METH_VARARGS, doc_IIRsymorder2},
+     {NULL, NULL, 0, NULL}		/* sentinel */
+ };
+ 
+diff --git a/scipy/signal/_splinemodule.h b/scipy/signal/_splinemodule.h
+index d4919be5ed..08e284b363 100644
+--- a/scipy/signal/_splinemodule.h
++++ b/scipy/signal/_splinemodule.h
+@@ -7,19 +7,21 @@
+ 
+ static void convert_strides(npy_intp*,npy_intp*,int,int);
+ 
+-extern int S_SYM_IIR1_initial(float, float*, float*, int, int, float);
+-extern int S_SYM_IIR2_initial_fwd(double, double, float*, float*, int, int, float);
+-extern int S_SYM_IIR2_initial_bwd(double, double, float*, float*, int, int, float);
++extern int S_cubic_spline2D(float*,float*,int,int,double,npy_intp*,npy_intp*,float);
++extern int S_quadratic_spline2D(float*,float*,int,int,double,npy_intp*,npy_intp*,float);
++extern int S_IIR_forback1(float,float,float*,float*,int,int,int,float);
++extern int S_IIR_forback2(double,double,float*,float*,int,int,int,float);
+ extern int S_separable_2Dconvolve_mirror(float*,float*,int,int,float*,float*,int,int,npy_intp*,npy_intp*);
+ 
+-extern int D_SYM_IIR1_initial(double, double*, double*, int, int, double);
+-extern int D_SYM_IIR2_initial_fwd(double, double, double*, double*, int, int, double);
+-extern int D_SYM_IIR2_initial_bwd(double, double, double*, double*, int, int, double);
++extern int D_cubic_spline2D(double*,double*,int,int,double,npy_intp*,npy_intp*,double);
++extern int D_quadratic_spline2D(double*,double*,int,int,double,npy_intp*,npy_intp*,double);
++extern int D_IIR_forback1(double,double,double*,double*,int,int,int,double);
++extern int D_IIR_forback2(double,double,double*,double*,int,int,int,double);
+ extern int D_separable_2Dconvolve_mirror(double*,double*,int,int,double*,double*,int,int,npy_intp*,npy_intp*);
+ 
+ #ifdef __GNUC__
+-extern int C_SYM_IIR1_initial(__complex__ float, __complex__ float*, __complex__ float*, int, int, float);
++extern int C_IIR_forback1(__complex__ float,__complex__ float,__complex__ float*,__complex__ float*,int,int,int,float);
+ extern int C_separable_2Dconvolve_mirror(__complex__ float*,__complex__ float*,int,int,__complex__ float*,__complex__ float*,int,int,npy_intp*,npy_intp*);
+-extern int Z_SYM_IIR1_initial(__complex__ double, __complex__ double*, __complex__ double*, int, int, double);
++extern int Z_IIR_forback1(__complex__ double,__complex__ double,__complex__ double*,__complex__ double*,int,int,int,double);
+ extern int Z_separable_2Dconvolve_mirror(__complex__ double*,__complex__ double*,int,int,__complex__ double*,__complex__ double*,int,int,npy_intp*,npy_intp*);
+ #endif
+diff --git a/scipy/signal/_splines.py b/scipy/signal/_splines.py
+deleted file mode 100644
+index 90f6c56bef..0000000000
+--- a/scipy/signal/_splines.py
++++ /dev/null
+@@ -1,162 +0,0 @@
+-
+-import numpy as np
+-
+-from ._arraytools import axis_slice, axis_reverse
+-from ._signaltools import lfilter, sosfilt
+-from ._spline import symiirorder1_ic, symiirorder2_ic_fwd, symiirorder2_ic_bwd
+-
+-__all__ = ['symiirorder1', 'symiirorder2']
+-
+-
+-def symiirorder1(signal, c0, z1, precision=-1.0):
+-    """
+-    Implement a smoothing IIR filter with mirror-symmetric boundary conditions
+-    using a cascade of first-order sections.  The second section uses a
+-    reversed sequence.  This implements a system with the following
+-    transfer function and mirror-symmetric boundary conditions::
+-
+-                           c0
+-           H(z) = ---------------------
+-                   (1-z1/z) (1 - z1 z)
+-
+-    The resulting signal will have mirror symmetric boundary conditions
+-    as well.
+-
+-    Parameters
+-    ----------
+-    input : ndarray
+-        The input signal. If 2D, then the filter will be applied in a batched
+-        fashion across the last axis.
+-    c0, z1 : scalar
+-        Parameters in the transfer function.
+-    precision :
+-        Specifies the precision for calculating initial conditions
+-        of the recursive filter based on mirror-symmetric input.
+-
+-    Returns
+-    -------
+-    output : ndarray
+-        The filtered signal.
+-    """
+-    if np.abs(z1) >= 1:
+-        raise ValueError('|z1| must be less than 1.0')
+-
+-    if signal.ndim > 2:
+-        raise ValueError('Input must be 1D or 2D')
+-
+-    squeeze_dim = False
+-    if signal.ndim == 1:
+-        signal = signal[None, :]
+-        squeeze_dim = True
+-
+-    if np.issubdtype(signal.dtype, np.integer):
+-        signal = signal.astype(np.float64)
+-
+-    y0 = symiirorder1_ic(signal, z1, precision)
+-
+-    # Apply first the system 1 / (1 - z1 * z^-1)
+-    b = np.ones(1, dtype=signal.dtype)
+-    a = np.r_[1, -z1]
+-    a = a.astype(signal.dtype)
+-
+-    # Compute the initial state for lfilter.
+-    zii = y0 * z1
+-
+-    y1, _ = lfilter(b, a, axis_slice(signal, 1), zi=zii)
+-    y1 = np.c_[y0, y1]
+-
+-    # Compute backward symmetric condition and apply the system
+-    # c0 / (1 - z1 * z)
+-    b = np.asarray([c0], dtype=signal.dtype)
+-    out_last = -c0 / (z1 - 1.0) * axis_slice(y1, -1)
+-
+-    # Compute the initial state for lfilter.
+-    zii = out_last * z1
+-
+-    out, _ = lfilter(b, a, axis_slice(y1, -2, step=-1), zi=zii)
+-    out = np.c_[axis_reverse(out), out_last]
+-
+-    if squeeze_dim:
+-        out = out[0]
+-
+-    return out
+-
+-
+-def symiirorder2(input, r, omega, precision=-1.0):
+-    """
+-    Implement a smoothing IIR filter with mirror-symmetric boundary conditions
+-    using a cascade of second-order sections.  The second section uses a
+-    reversed sequence.  This implements the following transfer function::
+-
+-                                  cs^2
+-         H(z) = ---------------------------------------
+-                (1 - a2/z - a3/z^2) (1 - a2 z - a3 z^2 )
+-
+-    where::
+-          a2 = 2 * r * cos(omega)
+-          a3 = - r ** 2
+-          cs = 1 - 2 * r * cos(omega) + r ** 2
+-
+-    Parameters
+-    ----------
+-    input : ndarray
+-        The input signal.
+-    r, omega : float
+-        Parameters in the transfer function.
+-    precision : float
+-        Specifies the precision for calculating initial conditions
+-        of the recursive filter based on mirror-symmetric input.
+-
+-    Returns
+-    -------
+-    output : ndarray
+-        The filtered signal.
+-    """
+-    if r >= 1.0:
+-        raise ValueError('r must be less than 1.0')
+-
+-    if input.ndim > 2:
+-        raise ValueError('Input must be 1D or 2D')
+-
+-    if not input.flags.c_contiguous:
+-        input = input.copy()
+-
+-    squeeze_dim = False
+-    if input.ndim == 1:
+-        input = input[None, :]
+-        squeeze_dim = True
+-
+-    if np.issubdtype(input.dtype, np.integer):
+-        input = input.astype(np.float64)
+-
+-    rsq = r * r
+-    a2 = 2 * r * np.cos(omega)
+-    a3 = -rsq
+-    cs = np.atleast_1d(1 - 2 * r * np.cos(omega) + rsq)
+-    sos = np.atleast_2d(np.r_[cs, 0, 0, 1, -a2, -a3]).astype(input.dtype)
+-
+-    # Find the starting (forward) conditions.
+-    ic_fwd = symiirorder2_ic_fwd(input, r, omega, precision)
+-
+-    # Apply first the system cs / (1 - a2 * z^-1 - a3 * z^-2)
+-    # Compute the initial conditions in the form expected by sosfilt
+-    # coef = np.asarray([[a3, a2], [0, a3]], dtype=input.dtype)
+-    coef = np.r_[a3, a2, 0, a3].reshape(2, 2).astype(input.dtype)
+-    zi = np.matmul(coef, ic_fwd[:, :, None])[:, :, 0]
+-
+-    y_fwd, _ = sosfilt(sos, axis_slice(input, 2), zi=zi[None])
+-    y_fwd = np.c_[ic_fwd, y_fwd]
+-
+-    # Then compute the symmetric backward starting conditions
+-    ic_bwd = symiirorder2_ic_bwd(input, r, omega, precision)
+-
+-    # Apply the system cs / (1 - a2 * z^1 - a3 * z^2)
+-    # Compute the initial conditions in the form expected by sosfilt
+-    zi = np.matmul(coef, ic_bwd[:, :, None])[:, :, 0]
+-    y, _ = sosfilt(sos, axis_slice(y_fwd, -3, step=-1), zi=zi[None])
+-    out = np.c_[axis_reverse(y), axis_reverse(ic_bwd)]
+-
+-    if squeeze_dim:
+-        out = out[0]
+-
+-    return out
+diff --git a/scipy/signal/meson.build b/scipy/signal/meson.build
+index 580b2664fe..6bacc340da 100644
+--- a/scipy/signal/meson.build
++++ b/scipy/signal/meson.build
+@@ -94,8 +94,6 @@ py3.install_sources([
+     '_short_time_fft.py',
+     '_signaltools.py',
+     '_spectral_py.py',
+-    '_spline.pyi',
+-    '_splines.py',
+     '_upfirdn.py',
+     '_waveforms.py',
+     '_wavelets.py',
+diff --git a/scipy/signal/spline.py b/scipy/signal/spline.py
+index 7afd0d0a14..cc15b2e521 100644
+--- a/scipy/signal/spline.py
++++ b/scipy/signal/spline.py
+@@ -6,7 +6,8 @@ import warnings
+ 
+ from . import _spline
+ 
+-__all__ = ['sepfir2d']  # noqa: F822
++__all__ = [  # noqa: F822
++    'cspline2d', 'qspline2d', 'sepfir2d', 'symiirorder1', 'symiirorder2']
+ 
+ 
+ def __dir__():
+diff --git a/scipy/special/_gufuncs.cpp b/scipy/special/_gufuncs.cpp
+index 90ee4d69ba..216adf5bb1 100644
+--- a/scipy/special/_gufuncs.cpp
++++ b/scipy/special/_gufuncs.cpp
+@@ -54,8 +54,14 @@ extern "C" int wrap_PyUFunc_getfperr() { return PyUFunc_getfperr(); }
+ 
+ static PyModuleDef _gufuncs_def = {
+     PyModuleDef_HEAD_INIT,
+-    .m_name = "_gufuncs",
+-    .m_size = -1,
++    "_gufuncs",
++    NULL,
++    -1,
++    NULL,
++    NULL,
++    NULL,
++    NULL,
++    NULL
+ };
+ 
+ PyMODINIT_FUNC PyInit__gufuncs() {
+diff --git a/scipy/special/_special_ufuncs.cpp b/scipy/special/_special_ufuncs.cpp
+index b9c2dfc067..7e9aa01aca 100644
+--- a/scipy/special/_special_ufuncs.cpp
++++ b/scipy/special/_special_ufuncs.cpp
+@@ -207,8 +207,14 @@ extern "C" int wrap_PyUFunc_getfperr() { return PyUFunc_getfperr(); }
+ 
+ static PyModuleDef _special_ufuncs_def = {
+     PyModuleDef_HEAD_INIT,
+-    .m_name = "_special_ufuncs",
+-    .m_size = -1,
++    "_special_ufuncs",
++    NULL,
++    -1,
++    NULL,
++    NULL,
++    NULL,
++    NULL,
++    NULL
+ };
+ 
+ PyMODINIT_FUNC PyInit__special_ufuncs() {
+diff --git a/scipy/special/meson.build b/scipy/special/meson.build
+index a52ec928f6..82b813ea85 100644
+--- a/scipy/special/meson.build
++++ b/scipy/special/meson.build
+@@ -25,14 +25,27 @@ _ufuncs_pxi_pxd_sources = [
+   fs.copyfile('_ufuncs_extra_code_common.pxi'),
+ ]
+ 
++if meson.get_compiler('cpp').get_id() in ['msvc', 'clang-cl', 'intel-cl']
++  scipy_export_dll_args = ['-DSCIPY_DLL_EXPORTS']
++  scipy_import_dll_args = ['-DSCIPY_DLL_IMPORTS']
++else
++  scipy_export_dll_args = []
++  scipy_import_dll_args = []
++endif
++
+ sf_error_state_lib = shared_library('sf_error_state',
+   ['sf_error_state.c'],
+   include_directories: ['../_lib', '../_build_utils/src'],
+-  cpp_args: ['-DSP_SPECFUN_ERROR'],
++  c_args: scipy_export_dll_args,
+   install: true,
+   install_dir: py3.get_install_dir() / 'scipy/special',
+ )
+ 
++sf_error_state_dep = declare_dependency(
++  compile_args: ['-DSP_SPECFUN_ERROR'] + scipy_import_dll_args,
++  link_with: sf_error_state_lib,
++)
++
+ ufuncs_sources = [
+   '_cosine.c',
+   'special_wrappers.cpp',
+@@ -58,9 +71,7 @@ cdflib_lib = static_library('cdflib',
+ py3.extension_module('_special_ufuncs',
+   ['_special_ufuncs.cpp', '_special_ufuncs_docs.cpp', 'sf_error.cc'],
+   include_directories: ['../_lib', '../_build_utils/src'],
+-  cpp_args: ['-DSP_SPECFUN_ERROR'],
+-  dependencies: [np_dep],
+-  link_with: [sf_error_state_lib],
++  dependencies: [np_dep, sf_error_state_dep],
+   link_args: version_link_args,
+   install: true,
+   subdir: 'scipy/special',
+@@ -70,9 +81,7 @@ py3.extension_module('_special_ufuncs',
+ py3.extension_module('_gufuncs',
+   ['_gufuncs.cpp', '_gufuncs_docs.cpp', 'sf_error.cc'],
+   include_directories: ['../_lib', '../_build_utils/src'],
+-  cpp_args: ['-DSP_SPECFUN_ERROR'],
+-  dependencies: [np_dep],
+-  link_with: [sf_error_state_lib],
++  dependencies: [np_dep, sf_error_state_dep],
+   link_args: version_link_args,
+   install: true,
+   subdir: 'scipy/special',
+@@ -126,19 +135,16 @@ py3.extension_module('_ufuncs',
+     ufuncs_sources,
+     uf_cython_gen.process(cython_special[0]),  # _ufuncs.pyx
+   ],
+-  c_args: [cython_c_args, Wno_maybe_uninitialized],
+-  cpp_args: ['-DSP_SPECFUN_ERROR'],
++  c_args: [cython_c_args, Wno_maybe_uninitialized] + scipy_import_dll_args,
+   include_directories: ['../_lib', '../_build_utils/src'],
+   dependencies: [
+     lapack_dep,
+     npymath_lib,
+     np_dep,
++    sf_error_state_dep,
+   ],
+   link_args: version_link_args,
+-  link_with: [
+-    sf_error_state_lib,
+-    cdflib_lib
+-  ],
++  link_with: cdflib_lib,
+   install: true,
+   subdir: 'scipy/special',
+   install_rpath: '$ORIGIN',
+@@ -165,7 +171,6 @@ ufuncs_cxx_cpp_args = [
+   cython_cpp_args,
+   '-DBOOST_MATH_STANDALONE=1',
+   '-DCYTHON_EXTERN_C=extern "C"',
+-  '-DSP_SPECFUN_ERROR', # For error handling in special functions.
+ ]
+ 
+ py3.extension_module('_ufuncs_cxx',
+@@ -176,8 +181,7 @@ py3.extension_module('_ufuncs_cxx',
+   include_directories: ['../_lib/boost_math/include', '../_lib',
+                         '../_build_utils/src'],
+   link_args: version_link_args,
+-    link_with: [sf_error_state_lib],
+-  dependencies: [np_dep, ellint_dep],
++  dependencies: [np_dep, ellint_dep, sf_error_state_dep],
+   install: true,
+   subdir: 'scipy/special',
+   install_rpath: '$ORIGIN',
+@@ -186,11 +190,9 @@ py3.extension_module('_ufuncs_cxx',
+ py3.extension_module('_ellip_harm_2',
+   [uf_cython_gen.process('_ellip_harm_2.pyx'), 'sf_error.cc'],
+   c_args: cython_c_args,
+-  cpp_args: ['-DSP_SPECFUN_ERROR'],
+   include_directories: ['../_lib', '../_build_utils/src'],
+-  link_with: [sf_error_state_lib],
+   link_args: version_link_args,
+-  dependencies: [lapack_dep, np_dep],
++  dependencies: [lapack_dep, np_dep, sf_error_state_dep],
+   install: true,
+   subdir: 'scipy/special',
+   install_rpath: '$ORIGIN',
+@@ -205,14 +207,10 @@ py3.extension_module('cython_special',
+     'dd_real_wrappers.cpp'
+   ],
+   c_args: [cython_c_args, Wno_maybe_uninitialized],
+-  cpp_args: ['-DSP_SPECFUN_ERROR'],
+   include_directories: ['../_lib', '../_build_utils/src'],
+   link_args: version_link_args,
+-  dependencies: [np_dep, npymath_lib],
+-  link_with: [
+-    sf_error_state_lib,
+-    cdflib_lib
+-  ],
++  dependencies: [np_dep, npymath_lib, sf_error_state_dep],
++  link_with: cdflib_lib,
+   install: true,
+   subdir: 'scipy/special',
+   install_rpath: '$ORIGIN',
+diff --git a/scipy/special/sf_error_state.c b/scipy/special/sf_error_state.c
+index 1a664170d2..d2c465a213 100644
+--- a/scipy/special/sf_error_state.c
++++ b/scipy/special/sf_error_state.c
+@@ -19,13 +19,13 @@ static volatile sf_action_t sf_error_actions[] = {
+ };
+ 
+ 
+-void scipy_sf_error_set_action(sf_error_t code, sf_action_t action)
++SCIPY_DLL void scipy_sf_error_set_action(sf_error_t code, sf_action_t action)
+ {
+     sf_error_actions[(int)code] = action;
+ }
+ 
+ 
+-sf_action_t scipy_sf_error_get_action(sf_error_t code)
++SCIPY_DLL sf_action_t scipy_sf_error_get_action(sf_error_t code)
+ {
+     return sf_error_actions[(int)code];
+ }
+diff --git a/scipy/special/sf_error_state.h b/scipy/special/sf_error_state.h
+index a4cb563bb2..dbedddcd20 100644
+--- a/scipy/special/sf_error_state.h
++++ b/scipy/special/sf_error_state.h
+@@ -1,6 +1,6 @@
+ #pragma once
+ 
+-
++#include "scipy_dll.h"
+ #include "special/error.h"
+ 
+ 
+@@ -14,9 +14,9 @@ extern "C" {
+         SF_ERROR_RAISE        /* Raise on errors */
+     } sf_action_t;
+     
+-    void scipy_sf_error_set_action(sf_error_t code, sf_action_t action);
++    SCIPY_DLL void scipy_sf_error_set_action(sf_error_t code, sf_action_t action);
+ 
+-    sf_action_t scipy_sf_error_get_action(sf_error_t code);
++    SCIPY_DLL sf_action_t scipy_sf_error_get_action(sf_error_t code);
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/scipy/special/special/amos/amos.h b/scipy/special/special/amos/amos.h
+index b5fcfe2445..fdf891517f 100644
+--- a/scipy/special/special/amos/amos.h
++++ b/scipy/special/special/amos/amos.h
+@@ -152,10 +152,10 @@ constexpr double i1mach[16] = {
+ };
+ 
+ constexpr double zunhj_ar[14] = {
+-    1.00000000000000000e+00, 1.04166666666666667e-01, 8.35503472222222222e-02, 1.28226574556327160e-01,      //  0 
++    1.00000000000000000e+00, 1.04166666666666667e-01, 8.35503472222222222e-02, 1.28226574556327160e-01,      //  0
+     2.91849026464140464e-01, 8.81627267443757652e-01, 3.32140828186276754e+00, 1.49957629868625547e+01,      //  4
+     7.89230130115865181e+01, 4.74451538868264323e+02, 3.20749009089066193e+03, 2.40865496408740049e+04,      //  8
+-    1.98923119169509794e+05, 1.79190200777534383e+06                                                         // 12 
++    1.98923119169509794e+05, 1.79190200777534383e+06                                                         // 12
+ };
+ 
+ constexpr double zunhj_br[14] = {
+@@ -166,7 +166,7 @@ constexpr double zunhj_br[14] = {
+ };
+ 
+ constexpr double  zunhj_c[105] = {
+-     1.00000000000000000e+00, -2.08333333333333333e-01,  1.25000000000000000e-01,  3.34201388888888889e-01,  //   0  
++     1.00000000000000000e+00, -2.08333333333333333e-01,  1.25000000000000000e-01,  3.34201388888888889e-01,  //   0
+     -4.01041666666666667e-01,  7.03125000000000000e-02, -1.02581259645061728e+00,  1.84646267361111111e+00,  //   4
+     -8.91210937500000000e-01,  7.32421875000000000e-02,  4.66958442342624743e+00, -1.12070026162229938e+01,  //   8
+      8.78912353515625000e+00, -2.36408691406250000e+00,  1.12152099609375000e-01, -2.82120725582002449e+01,  //  12
+@@ -191,7 +191,7 @@ constexpr double  zunhj_c[105] = {
+      1.73951075539781645e+07, -5.49842327572288687e+05,  3.03809051092238427e+03, -1.46792612476956167e+10,  //  88
+      1.14498237732025810e+11, -3.99096175224466498e+11,  8.19218669548577329e+11, -1.09837515608122331e+12,  //  92
+      1.00815810686538209e+12, -6.45364869245376503e+11,  2.87900649906150589e+11, -8.78670721780232657e+10,  //  96
+-     1.76347306068349694e+10, -2.16716498322379509e+09,  1.43157876718888981e+08, -3.87183344257261262e+06,  // 100 
++     1.76347306068349694e+10, -2.16716498322379509e+09,  1.43157876718888981e+08, -3.87183344257261262e+06,  // 100
+      1.82577554742931747e+04                                                                                 // 104
+ };
+ 
+@@ -200,49 +200,49 @@ constexpr double zunhj_alfa[180] = {
+      2.46691372741792910e-04,  2.65995589346254780e-04,  2.61824297061500945e-04,  2.48730437344655609e-04,  //   4
+      2.32721040083232098e-04,  2.16362485712365082e-04,  2.00738858762752355e-04,  1.86267636637545172e-04,  //   8
+      1.73060775917876493e-04,  1.61091705929015752e-04,  1.50274774160908134e-04,  1.40503497391269794e-04,  //  12
+-     1.31668816545922806e-04,  1.23667445598253261e-04,  1.16405271474737902e-04,  1.09798298372713369e-04,  //  16  
+-     1.03772410422992823e-04,  9.82626078369363448e-05,  9.32120517249503256e-05,  8.85710852478711718e-05,  //  20  
+-     8.42963105715700223e-05,  8.03497548407791151e-05,  7.66981345359207388e-05,  7.33122157481777809e-05,  //  24  
+-     7.01662625163141333e-05,  6.72375633790160292e-05,  6.93735541354588974e-04,  2.32241745182921654e-04,  //  28  
+-    -1.41986273556691197e-05, -1.16444931672048640e-04, -1.50803558053048762e-04, -1.55121924918096223e-04,  //  32  
+-    -1.46809756646465549e-04, -1.33815503867491367e-04, -1.19744975684254051e-04, -1.06184319207974020e-04,  //  36  
+-    -9.37699549891194492e-05, -8.26923045588193274e-05, -7.29374348155221211e-05, -6.44042357721016283e-05,  //  40  
+-    -5.69611566009369048e-05, -5.04731044303561628e-05, -4.48134868008882786e-05, -3.98688727717598864e-05,  //  44  
+-    -3.55400532972042498e-05, -3.17414256609022480e-05, -2.83996793904174811e-05, -2.54522720634870566e-05,  //  48  
+-    -2.28459297164724555e-05, -2.05352753106480604e-05, -1.84816217627666085e-05, -1.66519330021393806e-05,  //  52  
+-    -1.50179412980119482e-05, -1.35554031379040526e-05, -1.22434746473858131e-05, -1.10641884811308169e-05,  //  56  
+-    -3.54211971457743841e-04, -1.56161263945159416e-04,  3.04465503594936410e-05,  1.30198655773242693e-04,  //  60  
+-     1.67471106699712269e-04,  1.70222587683592569e-04,  1.56501427608594704e-04,  1.36339170977445120e-04,  //  64  
+-     1.14886692029825128e-04,  9.45869093034688111e-05,  7.64498419250898258e-05,  6.07570334965197354e-05,  //  68  
+-     4.74394299290508799e-05,  3.62757512005344297e-05,  2.69939714979224901e-05,  1.93210938247939253e-05,  //  72  
+-     1.30056674793963203e-05,  7.82620866744496661e-06,  3.59257485819351583e-06,  1.44040049814251817e-07,  //  76  
+-    -2.65396769697939116e-06, -4.91346867098485910e-06, -6.72739296091248287e-06, -8.17269379678657923e-06,  //  80  
+-    -9.31304715093561232e-06, -1.02011418798016441e-05, -1.08805962510592880e-05, -1.13875481509603555e-05,  //  84  
+-    -1.17519675674556414e-05, -1.19987364870944141e-05,  3.78194199201772914e-04,  2.02471952761816167e-04,  //  88  
+-    -6.37938506318862408e-05, -2.38598230603005903e-04, -3.10916256027361568e-04, -3.13680115247576316e-04,  //  92  
+-    -2.78950273791323387e-04, -2.28564082619141374e-04, -1.75245280340846749e-04, -1.25544063060690348e-04,  //  96  
+-    -8.22982872820208365e-05, -4.62860730588116458e-05, -1.72334302366962267e-05,  5.60690482304602267e-06,  // 100  
+-     2.31395443148286800e-05,  3.62642745856793957e-05,  4.58006124490188752e-05,  5.24595294959114050e-05,  // 104  
+-     5.68396208545815266e-05,  5.94349820393104052e-05,  6.06478527578421742e-05,  6.08023907788436497e-05,  // 108  
+-     6.01577894539460388e-05,  5.89199657344698500e-05,  5.72515823777593053e-05,  5.52804375585852577e-05,  // 112  
+-     5.31063773802880170e-05,  5.08069302012325706e-05,  4.84418647620094842e-05,  4.60568581607475370e-05,  // 116  
+-    -6.91141397288294174e-04, -4.29976633058871912e-04,  1.83067735980039018e-04,  6.60088147542014144e-04,  // 120  
+-     8.75964969951185931e-04,  8.77335235958235514e-04,  7.49369585378990637e-04,  5.63832329756980918e-04,  // 124  
+-     3.68059319971443156e-04,  1.88464535514455599e-04,  3.70663057664904149e-05, -8.28520220232137023e-05,  // 128  
+-    -1.72751952869172998e-04, -2.36314873605872983e-04, -2.77966150694906658e-04, -3.02079514155456919e-04,  // 132  
+-    -3.12594712643820127e-04, -3.12872558758067163e-04, -3.05678038466324377e-04, -2.93226470614557331e-04,  // 136  
+-    -2.77255655582934777e-04, -2.59103928467031709e-04, -2.39784014396480342e-04, -2.20048260045422848e-04,  // 140  
+-    -2.00443911094971498e-04, -1.81358692210970687e-04, -1.63057674478657464e-04, -1.45712672175205844e-04,  // 144  
+-    -1.29425421983924587e-04, -1.14245691942445952e-04,  1.92821964248775885e-03,  1.35592576302022234e-03,  // 148  
+-    -7.17858090421302995e-04, -2.58084802575270346e-03, -3.49271130826168475e-03, -3.46986299340960628e-03,  // 152  
+-    -2.82285233351310182e-03, -1.88103076404891354e-03, -8.89531718383947600e-04,  3.87912102631035228e-06,  // 156  
+-     7.28688540119691412e-04,  1.26566373053457758e-03,  1.62518158372674427e-03,  1.83203153216373172e-03,  // 160  
+-     1.91588388990527909e-03,  1.90588846755546138e-03,  1.82798982421825727e-03,  1.70389506421121530e-03,  // 164  
+-     1.55097127171097686e-03,  1.38261421852276159e-03,  1.20881424230064774e-03,  1.03676532638344962e-03,  // 168  
+-     8.71437918068619115e-04,  7.16080155297701002e-04,  5.72637002558129372e-04,  4.42089819465802277e-04,  // 172  
+-     3.24724948503090564e-04,  2.20342042730246599e-04,  1.28412898401353882e-04,  4.82005924552095464e-05   // 176  
+-};                                                                                                             
+-  
++     1.31668816545922806e-04,  1.23667445598253261e-04,  1.16405271474737902e-04,  1.09798298372713369e-04,  //  16
++     1.03772410422992823e-04,  9.82626078369363448e-05,  9.32120517249503256e-05,  8.85710852478711718e-05,  //  20
++     8.42963105715700223e-05,  8.03497548407791151e-05,  7.66981345359207388e-05,  7.33122157481777809e-05,  //  24
++     7.01662625163141333e-05,  6.72375633790160292e-05,  6.93735541354588974e-04,  2.32241745182921654e-04,  //  28
++    -1.41986273556691197e-05, -1.16444931672048640e-04, -1.50803558053048762e-04, -1.55121924918096223e-04,  //  32
++    -1.46809756646465549e-04, -1.33815503867491367e-04, -1.19744975684254051e-04, -1.06184319207974020e-04,  //  36
++    -9.37699549891194492e-05, -8.26923045588193274e-05, -7.29374348155221211e-05, -6.44042357721016283e-05,  //  40
++    -5.69611566009369048e-05, -5.04731044303561628e-05, -4.48134868008882786e-05, -3.98688727717598864e-05,  //  44
++    -3.55400532972042498e-05, -3.17414256609022480e-05, -2.83996793904174811e-05, -2.54522720634870566e-05,  //  48
++    -2.28459297164724555e-05, -2.05352753106480604e-05, -1.84816217627666085e-05, -1.66519330021393806e-05,  //  52
++    -1.50179412980119482e-05, -1.35554031379040526e-05, -1.22434746473858131e-05, -1.10641884811308169e-05,  //  56
++    -3.54211971457743841e-04, -1.56161263945159416e-04,  3.04465503594936410e-05,  1.30198655773242693e-04,  //  60
++     1.67471106699712269e-04,  1.70222587683592569e-04,  1.56501427608594704e-04,  1.36339170977445120e-04,  //  64
++     1.14886692029825128e-04,  9.45869093034688111e-05,  7.64498419250898258e-05,  6.07570334965197354e-05,  //  68
++     4.74394299290508799e-05,  3.62757512005344297e-05,  2.69939714979224901e-05,  1.93210938247939253e-05,  //  72
++     1.30056674793963203e-05,  7.82620866744496661e-06,  3.59257485819351583e-06,  1.44040049814251817e-07,  //  76
++    -2.65396769697939116e-06, -4.91346867098485910e-06, -6.72739296091248287e-06, -8.17269379678657923e-06,  //  80
++    -9.31304715093561232e-06, -1.02011418798016441e-05, -1.08805962510592880e-05, -1.13875481509603555e-05,  //  84
++    -1.17519675674556414e-05, -1.19987364870944141e-05,  3.78194199201772914e-04,  2.02471952761816167e-04,  //  88
++    -6.37938506318862408e-05, -2.38598230603005903e-04, -3.10916256027361568e-04, -3.13680115247576316e-04,  //  92
++    -2.78950273791323387e-04, -2.28564082619141374e-04, -1.75245280340846749e-04, -1.25544063060690348e-04,  //  96
++    -8.22982872820208365e-05, -4.62860730588116458e-05, -1.72334302366962267e-05,  5.60690482304602267e-06,  // 100
++     2.31395443148286800e-05,  3.62642745856793957e-05,  4.58006124490188752e-05,  5.24595294959114050e-05,  // 104
++     5.68396208545815266e-05,  5.94349820393104052e-05,  6.06478527578421742e-05,  6.08023907788436497e-05,  // 108
++     6.01577894539460388e-05,  5.89199657344698500e-05,  5.72515823777593053e-05,  5.52804375585852577e-05,  // 112
++     5.31063773802880170e-05,  5.08069302012325706e-05,  4.84418647620094842e-05,  4.60568581607475370e-05,  // 116
++    -6.91141397288294174e-04, -4.29976633058871912e-04,  1.83067735980039018e-04,  6.60088147542014144e-04,  // 120
++     8.75964969951185931e-04,  8.77335235958235514e-04,  7.49369585378990637e-04,  5.63832329756980918e-04,  // 124
++     3.68059319971443156e-04,  1.88464535514455599e-04,  3.70663057664904149e-05, -8.28520220232137023e-05,  // 128
++    -1.72751952869172998e-04, -2.36314873605872983e-04, -2.77966150694906658e-04, -3.02079514155456919e-04,  // 132
++    -3.12594712643820127e-04, -3.12872558758067163e-04, -3.05678038466324377e-04, -2.93226470614557331e-04,  // 136
++    -2.77255655582934777e-04, -2.59103928467031709e-04, -2.39784014396480342e-04, -2.20048260045422848e-04,  // 140
++    -2.00443911094971498e-04, -1.81358692210970687e-04, -1.63057674478657464e-04, -1.45712672175205844e-04,  // 144
++    -1.29425421983924587e-04, -1.14245691942445952e-04,  1.92821964248775885e-03,  1.35592576302022234e-03,  // 148
++    -7.17858090421302995e-04, -2.58084802575270346e-03, -3.49271130826168475e-03, -3.46986299340960628e-03,  // 152
++    -2.82285233351310182e-03, -1.88103076404891354e-03, -8.89531718383947600e-04,  3.87912102631035228e-06,  // 156
++     7.28688540119691412e-04,  1.26566373053457758e-03,  1.62518158372674427e-03,  1.83203153216373172e-03,  // 160
++     1.91588388990527909e-03,  1.90588846755546138e-03,  1.82798982421825727e-03,  1.70389506421121530e-03,  // 164
++     1.55097127171097686e-03,  1.38261421852276159e-03,  1.20881424230064774e-03,  1.03676532638344962e-03,  // 168
++     8.71437918068619115e-04,  7.16080155297701002e-04,  5.72637002558129372e-04,  4.42089819465802277e-04,  // 172
++     3.24724948503090564e-04,  2.20342042730246599e-04,  1.28412898401353882e-04,  4.82005924552095464e-05   // 176
++};
++
+ constexpr double zunhj_beta[210] = {
+      1.79988721413553309e-02,  5.59964911064388073e-03,  2.88501402231132779e-03,  1.80096606761053941e-03,  //   0
+      1.24753110589199202e-03,  9.22878876572938311e-04,  7.14430421727287357e-04,  5.71787281789704872e-04,  //   4
+@@ -372,7 +372,7 @@ constexpr double dgamln_gln[100] = {
+ };
+ 
+ constexpr double dgamln_cf[22] = {
+-    8.33333333333333333e-02, -2.77777777777777778e-03, 7.93650793650793651e-04, -5.95238095238095238e-04,    //  0 
++    8.33333333333333333e-02, -2.77777777777777778e-03, 7.93650793650793651e-04, -5.95238095238095238e-04,    //  0
+     8.41750841750841751e-04, -1.91752691752691753e-03, 6.41025641025641026e-03, -2.95506535947712418e-02,    //  4
+     1.79644372368830573e-01, -1.39243221690590112e+00, 1.34028640441683920e+01, -1.56848284626002017e+02,    //  8
+     2.19310333333333333e+03, -3.61087712537249894e+04, 6.91472268851313067e+05, -1.52382215394074162e+07,    // 12
+@@ -2450,7 +2450,7 @@ inline int besy(
+     std::complex<double> c1, c2, hci, st;
+     double elim, exr, exi, ey, tay, xx, yy, ascle, rtol, atol, tol, aa, bb, r1m5;
+     int i, k, k1, k2, nz, nz1, nz2;
+-    std::complex<double> cwrk[n];
++    std::complex<double>* cwrk = new std::complex<double>[n];
+ 
+     xx = std::real(z);
+     yy = std::imag(z);
+@@ -2530,6 +2530,8 @@ inline int besy(
+         cy[i-1] = st*hci;
+         if ((st == 0.0) && (ey == 0.0)) { nz += 1; }
+     }
++
++    delete [] cwrk;
+     return nz;
+ }
+ 
+diff --git a/scipy/special/special/gamma.h b/scipy/special/special/gamma.h
+index f0cb1ec416..970706ff51 100644
+--- a/scipy/special/special/gamma.h
++++ b/scipy/special/special/gamma.h
+@@ -15,9 +15,18 @@ SPECFUN_HOST_DEVICE T gammaln(T x) {
+     return cephes::lgam(x);
+ }
+ 
+-template <typename T>
+-SPECFUN_HOST_DEVICE inline std::complex<T> gamma(std::complex<T> z) {
+-    return gamma(z);
++SPECFUN_HOST_DEVICE inline std::complex<double> gamma(std::complex<double> z) {
++    // Compute Gamma(z) using loggamma.
++    if (z.real() <= 0 && z == std::floor(z.real())) {
++        // Poles
++        set_error("gamma", SF_ERROR_SINGULAR, NULL);
++        return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
++    }
++    return std::exp(loggamma(z));
++}
++
++SPECFUN_HOST_DEVICE inline std::complex<float> gamma(std::complex<float> z) {
++    return static_cast<std::complex<float>>(gamma(static_cast<std::complex<double>>(z)));
+ }
+ 
+ } // namespace special
+diff --git a/scipy/special/special/loggamma.h b/scipy/special/special/loggamma.h
+index 1002d1d833..a74770fb8c 100644
+--- a/scipy/special/special/loggamma.h
++++ b/scipy/special/special/loggamma.h
+@@ -143,16 +143,6 @@ SPECFUN_HOST_DEVICE inline std::complex<float> loggamma(std::complex<float> z) {
+     return static_cast<std::complex<float>>(loggamma(static_cast<std::complex<double>>(z)));
+ }
+ 
+-SPECFUN_HOST_DEVICE inline std::complex<double> gamma(std::complex<double> z) {
+-    // Compute Gamma(z) using loggamma.
+-    if (z.real() <= 0 && z == std::floor(z.real())) {
+-        // Poles
+-        set_error("gamma", SF_ERROR_SINGULAR, NULL);
+-        return {std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN()};
+-    }
+-    return std::exp(loggamma(z));
+-}
+-
+ SPECFUN_HOST_DEVICE inline double rgamma(double z) { return cephes::rgamma(z); }
+ 
+ SPECFUN_HOST_DEVICE inline float rgamma(float z) { return rgamma(static_cast<double>(z)); }
+diff --git a/scipy/stats/_axis_nan_policy.py b/scipy/stats/_axis_nan_policy.py
+index ab7c3da69a..f6427c38eb 100644
+--- a/scipy/stats/_axis_nan_policy.py
++++ b/scipy/stats/_axis_nan_policy.py
+@@ -268,7 +268,8 @@ def _add_reduced_axes(res, reduced_axes, keepdims):
+     Add reduced axes back to all the arrays in the result object
+     if keepdims = True.
+     """
+-    return ([np.expand_dims(output, reduced_axes) for output in res]
++    return ([np.expand_dims(output, reduced_axes) 
++             if not isinstance(output, int) else output for output in res]
+             if keepdims else res)
+ 
+ 
+diff --git a/scipy/stats/_continuous_distns.py b/scipy/stats/_continuous_distns.py
+index b06abfa7f9..a4e1dcd27a 100644
+--- a/scipy/stats/_continuous_distns.py
++++ b/scipy/stats/_continuous_distns.py
+@@ -9683,12 +9683,51 @@ class trapezoid_gen(rv_continuous):
+         return 0.5 * (1.0-d+c) / (1.0+d-c) + np.log(0.5 * (1.0+d-c))
+ 
+ 
++# deprecation of trapz, see #20486
++deprmsg = ("`trapz` is deprecated in favour of `trapezoid` "
++           "and will be removed in SciPy 1.16.0.")
++
++
++class trapz_gen(trapezoid_gen):
++    # override __call__ protocol from rv_generic to also
++    # deprecate instantiation of frozen distributions
++    """
++
++    .. deprecated:: 1.14.0
++        `trapz` is deprecated and will be removed in SciPy 1.16.
++        Plese use `trapezoid` instead!
++    """
++    def __call__(self, *args, **kwds):
++        warnings.warn(deprmsg, DeprecationWarning, stacklevel=2)
++        return self.freeze(*args, **kwds)
++
++
+ trapezoid = trapezoid_gen(a=0.0, b=1.0, name="trapezoid")
+-# Note: alias kept for backwards compatibility. Rename was done
+-# because trapz is a slur in colloquial English (see gh-12924).
+-trapz = trapezoid_gen(a=0.0, b=1.0, name="trapz")
+-if trapz.__doc__:
+-    trapz.__doc__ = "trapz is an alias for `trapezoid`"
++trapz = trapz_gen(a=0.0, b=1.0, name="trapz")
++
++# since the deprecated class gets intantiated upon import (and we only want to
++# warn upon use), add the deprecation to each class method
++_method_names = [
++    "cdf", "entropy", "expect", "fit", "interval", "isf", "logcdf", "logpdf",
++    "logsf", "mean", "median", "moment", "pdf", "ppf", "rvs", "sf", "stats",
++    "std", "var"
++]
++
++
++class _DeprecationWrapper:
++    def __init__(self, method):
++        self.msg = (f"`trapz.{method}` is deprecated in favour of trapezoid.{method}. "
++                     "Please replace all uses of the distribution class "
++                     "`trapz` with `trapezoid`. `trapz` will be removed in SciPy 1.16.")
++        self.method = getattr(trapezoid, method)
++    
++    def __call__(self, *args, **kwargs):
++        warnings.warn(self.msg, DeprecationWarning, stacklevel=2)
++        return self.method(*args, **kwargs)
++
++
++for m in _method_names:
++    setattr(trapz, m, _DeprecationWrapper(m))
+ 
+ 
+ class triang_gen(rv_continuous):
+diff --git a/scipy/stats/_fit.py b/scipy/stats/_fit.py
+index b23e33d74a..9b3b17b757 100644
+--- a/scipy/stats/_fit.py
++++ b/scipy/stats/_fit.py
+@@ -983,7 +983,10 @@ def goodness_of_fit(dist, data, *, known_params=None, fit_params=None,
+     >>> loc, scale = np.mean(x), np.std(x, ddof=1)
+     >>> cdf = stats.norm(loc, scale).cdf
+     >>> stats.ks_1samp(x, cdf)
+-    KstestResult(statistic=0.1119257570456813, pvalue=0.2827756409939257)
++    KstestResult(statistic=0.1119257570456813,
++                 pvalue=0.2827756409939257,
++                 statistic_location=0.7751845155861765,
++                 statistic_sign=-1)
+ 
+     An advantage of the KS-test is that the p-value - the probability of
+     obtaining a value of the test statistic under the null hypothesis as
+diff --git a/scipy/stats/_mannwhitneyu.py b/scipy/stats/_mannwhitneyu.py
+index bfc291560f..19b7ce3883 100644
+--- a/scipy/stats/_mannwhitneyu.py
++++ b/scipy/stats/_mannwhitneyu.py
+@@ -436,7 +436,9 @@ def mannwhitneyu(x, y, use_continuity=True, alternative="two-sided",
+     >>> from scipy.stats import ttest_ind
+     >>> res = ttest_ind(females, males, alternative="less")
+     >>> print(res)
+-    Ttest_indResult(statistic=-2.239334696520584, pvalue=0.030068441095757924)
++    TtestResult(statistic=-2.239334696520584,
++                pvalue=0.030068441095757924,
++                df=7.0)
+ 
+     Under this assumption, the *p*-value would be low enough to reject the
+     null hypothesis in favor of the alternative.
+diff --git a/scipy/stats/_resampling.py b/scipy/stats/_resampling.py
+index d89a0b9930..d7d4d50a7b 100644
+--- a/scipy/stats/_resampling.py
++++ b/scipy/stats/_resampling.py
+@@ -185,9 +185,23 @@ def _bootstrap_iv(data, statistic, vectorized, paired, axis, confidence_level,
+     if n_samples == 0:
+         raise ValueError("`data` must contain at least one sample.")
+ 
++    message = ("Ignoring the dimension specified by `axis`, arrays in `data` do not "
++               "have the same shape. Beginning in SciPy 1.16.0, `bootstrap` will "
++               "explicitly broadcast elements of `data` to the same shape (ignoring "
++               "`axis`) before performing the calculation. To avoid this warning in "
++               "the meantime, ensure that all samples have the same shape (except "
++               "potentially along `axis`).")
++    data = [np.atleast_1d(sample) for sample in data]
++    reduced_shapes = set()
++    for sample in data:
++        reduced_shape = list(sample.shape)
++        reduced_shape.pop(axis)
++        reduced_shapes.add(tuple(reduced_shape))
++    if len(reduced_shapes) != 1:
++        warnings.warn(message, FutureWarning, stacklevel=3)
++
+     data_iv = []
+     for sample in data:
+-        sample = np.atleast_1d(sample)
+         if sample.shape[axis_int] <= 1:
+             raise ValueError("each sample in `data` must contain two or more "
+                              "observations along `axis`.")
+@@ -315,7 +329,18 @@ def bootstrap(data, statistic, *, n_resamples=9999, batch=None,
+     Parameters
+     ----------
+     data : sequence of array-like
+-         Each element of data is a sample from an underlying distribution.
++         Each element of `data` is a sample containing scalar observations from an
++         underlying distribution. Elements of `data` must be broadcastable to the
++         same shape (with the possible exception of the dimension specified by `axis`).
++
++         .. versionchanged:: 1.14.0
++             `bootstrap` will now emit a ``FutureWarning`` if the shapes of the
++             elements of `data` are not the same (with the exception of the dimension
++             specified by `axis`).
++             Beginning in SciPy 1.16.0, `bootstrap` will explicitly broadcast the
++             elements to the same shape (except along `axis`) before performing
++             the calculation.
++
+     statistic : callable
+         Statistic for which the confidence interval is to be calculated.
+         `statistic` must be a callable that accepts ``len(data)`` samples
+diff --git a/scipy/stats/_stats_py.py b/scipy/stats/_stats_py.py
+index 6623431729..099f2286f7 100644
+--- a/scipy/stats/_stats_py.py
++++ b/scipy/stats/_stats_py.py
+@@ -6280,8 +6280,7 @@ def unpack_TtestResult(res):
+                           result_to_tuple=unpack_TtestResult, n_outputs=6)
+ # nan_policy handled by `_axis_nan_policy`, but needs to be left
+ # in signature to preserve use as a positional argument
+-def ttest_1samp(a, popmean, axis=0, nan_policy='propagate',
+-                alternative="two-sided"):
++def ttest_1samp(a, popmean, axis=0, nan_policy="propagate", alternative="two-sided"):
+     """Calculate the T-test for the mean of ONE group of scores.
+ 
+     This is a test for the null hypothesis that the expected value
+@@ -6648,7 +6647,9 @@ def ttest_ind_from_stats(mean1, std1, nobs1, mean2, std2, nobs2,
+     >>> b = np.array([2, 4, 6, 9, 11, 13, 14, 15, 18, 19, 21])
+     >>> from scipy.stats import ttest_ind
+     >>> ttest_ind(a, b)
+-    Ttest_indResult(statistic=0.905135809331027, pvalue=0.3751996797581486)
++    TtestResult(statistic=0.905135809331027,
++                pvalue=0.3751996797581486,
++                df=22.0)
+ 
+     Suppose we instead have binary data and would like to apply a t-test to
+     compare the proportion of 1s in two independent groups::
+@@ -6672,7 +6673,9 @@ def ttest_ind_from_stats(mean1, std1, nobs1, mean2, std2, nobs2,
+     >>> group1 = np.array([1]*30 + [0]*(150-30))
+     >>> group2 = np.array([1]*45 + [0]*(200-45))
+     >>> ttest_ind(group1, group2)
+-    Ttest_indResult(statistic=-0.5627179589855622, pvalue=0.573989277115258)
++    TtestResult(statistic=-0.5627179589855622,
++                pvalue=0.573989277115258,
++                df=348.0)
+ 
+     """
+     mean1 = np.asarray(mean1)
+@@ -6887,34 +6890,50 @@ def ttest_ind(a, b, axis=0, equal_var=True, nan_policy='propagate',
+     >>> rvs1 = stats.norm.rvs(loc=5, scale=10, size=500, random_state=rng)
+     >>> rvs2 = stats.norm.rvs(loc=5, scale=10, size=500, random_state=rng)
+     >>> stats.ttest_ind(rvs1, rvs2)
+-    Ttest_indResult(statistic=-0.4390847099199348, pvalue=0.6606952038870015)
++    TtestResult(statistic=-0.4390847099199348,
++                pvalue=0.6606952038870015,
++                df=998.0)
+     >>> stats.ttest_ind(rvs1, rvs2, equal_var=False)
+-    Ttest_indResult(statistic=-0.4390847099199348, pvalue=0.6606952553131064)
++    TtestResult(statistic=-0.4390847099199348,
++                pvalue=0.6606952553131064,
++                df=997.4602304121448)
+ 
+     `ttest_ind` underestimates p for unequal variances:
+ 
+     >>> rvs3 = stats.norm.rvs(loc=5, scale=20, size=500, random_state=rng)
+     >>> stats.ttest_ind(rvs1, rvs3)
+-    Ttest_indResult(statistic=-1.6370984482905417, pvalue=0.1019251574705033)
++    TtestResult(statistic=-1.6370984482905417,
++                pvalue=0.1019251574705033,
++                df=998.0)
+     >>> stats.ttest_ind(rvs1, rvs3, equal_var=False)
+-    Ttest_indResult(statistic=-1.637098448290542, pvalue=0.10202110497954867)
++    TtestResult(statistic=-1.637098448290542,
++                pvalue=0.10202110497954867,
++                df=765.1098655246868)
+ 
+     When ``n1 != n2``, the equal variance t-statistic is no longer equal to the
+     unequal variance t-statistic:
+ 
+     >>> rvs4 = stats.norm.rvs(loc=5, scale=20, size=100, random_state=rng)
+     >>> stats.ttest_ind(rvs1, rvs4)
+-    Ttest_indResult(statistic=-1.9481646859513422, pvalue=0.05186270935842703)
++    TtestResult(statistic=-1.9481646859513422,
++                pvalue=0.05186270935842703,
++                df=598.0)
+     >>> stats.ttest_ind(rvs1, rvs4, equal_var=False)
+-    Ttest_indResult(statistic=-1.3146566100751664, pvalue=0.1913495266513811)
++    TtestResult(statistic=-1.3146566100751664,
++                pvalue=0.1913495266513811,
++                df=110.41349083985212)
+ 
+     T-test with different means, variance, and n:
+ 
+     >>> rvs5 = stats.norm.rvs(loc=8, scale=20, size=100, random_state=rng)
+     >>> stats.ttest_ind(rvs1, rvs5)
+-    Ttest_indResult(statistic=-2.8415950600298774, pvalue=0.0046418707568707885)
++    TtestResult(statistic=-2.8415950600298774,
++                pvalue=0.0046418707568707885,
++                df=598.0)
+     >>> stats.ttest_ind(rvs1, rvs5, equal_var=False)
+-    Ttest_indResult(statistic=-1.8686598649188084, pvalue=0.06434714193919686)
++    TtestResult(statistic=-1.8686598649188084,
++                pvalue=0.06434714193919686,
++                df=109.32167496550137)
+ 
+     When performing a permutation test, more permutations typically yields
+     more accurate results. Use a ``np.random.Generator`` to ensure
+@@ -6922,7 +6941,9 @@ def ttest_ind(a, b, axis=0, equal_var=True, nan_policy='propagate',
+ 
+     >>> stats.ttest_ind(rvs1, rvs5, permutations=10000,
+     ...                 random_state=rng)
+-    Ttest_indResult(statistic=-2.8415950600298774, pvalue=0.0052994700529947)
++    TtestResult(statistic=-2.8415950600298774,
++                pvalue=0.0052994700529947,
++                df=nan)
+ 
+     Take these two samples, one of which has an extreme tail.
+ 
+@@ -6935,8 +6956,9 @@ def ttest_ind(a, b, axis=0, equal_var=True, nan_policy='propagate',
+     have no effect on sample `b` because ``np.floor(trim*len(b))`` is 0.
+ 
+     >>> stats.ttest_ind(a, b, trim=.2)
+-    Ttest_indResult(statistic=3.4463884028073513,
+-                    pvalue=0.01369338726499547)
++    TtestResult(statistic=3.4463884028073513,
++                pvalue=0.01369338726499547,
++                df=6.0)
+     """
+     if not (0 <= trim < .5):
+         raise ValueError("Trimming percentage should be 0 <= `trim` < .5.")
+@@ -7972,7 +7994,10 @@ def ks_1samp(x, cdf, args=(), alternative='two-sided', method='auto'):
+     >>> rng = np.random.default_rng()
+     >>> stats.ks_1samp(stats.uniform.rvs(size=100, random_state=rng),
+     ...                stats.norm.cdf)
+-    KstestResult(statistic=0.5001899973268688, pvalue=1.1616392184763533e-23)
++    KstestResult(statistic=0.5001899973268688,
++                 pvalue=1.1616392184763533e-23,
++                 statistic_location=0.00047625268963724654,
++                 statistic_sign=-1)
+ 
+     Indeed, the p-value is lower than our threshold of 0.05, so we reject the
+     null hypothesis in favor of the default "two-sided" alternative: the data
+@@ -7983,7 +8008,10 @@ def ks_1samp(x, cdf, args=(), alternative='two-sided', method='auto'):
+ 
+     >>> x = stats.norm.rvs(size=100, random_state=rng)
+     >>> stats.ks_1samp(x, stats.norm.cdf)
+-    KstestResult(statistic=0.05345882212970396, pvalue=0.9227159037744717)
++    KstestResult(statistic=0.05345882212970396,
++                 pvalue=0.9227159037744717,
++                 statistic_location=-1.2451343873745018,
++                 statistic_sign=1)
+ 
+     As expected, the p-value of 0.92 is not below our threshold of 0.05, so
+     we cannot reject the null hypothesis.
+@@ -7996,7 +8024,10 @@ def ks_1samp(x, cdf, args=(), alternative='two-sided', method='auto'):
+ 
+     >>> x = stats.norm.rvs(size=100, loc=0.5, random_state=rng)
+     >>> stats.ks_1samp(x, stats.norm.cdf, alternative='less')
+-    KstestResult(statistic=0.17482387821055168, pvalue=0.001913921057766743)
++    KstestResult(statistic=0.17482387821055168,
++                 pvalue=0.001913921057766743,
++                 statistic_location=0.3713830565352756,
++                 statistic_sign=-1)
+ 
+     and indeed, with p-value smaller than our threshold, we reject the null
+     hypothesis in favor of the alternative.
+@@ -8334,7 +8365,11 @@ def ks_2samp(data1, data2, alternative='two-sided', method='auto'):
+     >>> sample1 = stats.uniform.rvs(size=100, random_state=rng)
+     >>> sample2 = stats.norm.rvs(size=110, random_state=rng)
+     >>> stats.ks_2samp(sample1, sample2)
+-    KstestResult(statistic=0.5454545454545454, pvalue=7.37417839555191e-15)
++    KstestResult(statistic=0.5454545454545454,
++                 pvalue=7.37417839555191e-15,
++                 statistic_location=-0.014071496412861274,
++                 statistic_sign=-1)
++
+ 
+     Indeed, the p-value is lower than our threshold of 0.05, so we reject the
+     null hypothesis in favor of the default "two-sided" alternative: the data
+@@ -8346,7 +8381,10 @@ def ks_2samp(data1, data2, alternative='two-sided', method='auto'):
+     >>> sample1 = stats.norm.rvs(size=105, random_state=rng)
+     >>> sample2 = stats.norm.rvs(size=95, random_state=rng)
+     >>> stats.ks_2samp(sample1, sample2)
+-    KstestResult(statistic=0.10927318295739348, pvalue=0.5438289009927495)
++    KstestResult(statistic=0.10927318295739348,
++                 pvalue=0.5438289009927495,
++                 statistic_location=-0.1670157701848795,
++                 statistic_sign=-1)
+ 
+     As expected, the p-value of 0.54 is not below our threshold of 0.05, so
+     we cannot reject the null hypothesis.
+@@ -8359,7 +8397,10 @@ def ks_2samp(data1, data2, alternative='two-sided', method='auto'):
+ 
+     >>> sample1 = stats.norm.rvs(size=105, loc=0.5, random_state=rng)
+     >>> stats.ks_2samp(sample1, sample2, alternative='less')
+-    KstestResult(statistic=0.4055137844611529, pvalue=3.5474563068855554e-08)
++    KstestResult(statistic=0.4055137844611529,
++                 pvalue=3.5474563068855554e-08,
++                 statistic_location=-0.13249370614972575,
++                 statistic_sign=-1)
+ 
+     and indeed, with p-value smaller than our threshold, we reject the null
+     hypothesis in favor of the alternative.
+@@ -8606,7 +8647,10 @@ def kstest(rvs, cdf, args=(), N=20, alternative='two-sided', method='auto'):
+     >>> rng = np.random.default_rng()
+     >>> stats.kstest(stats.uniform.rvs(size=100, random_state=rng),
+     ...              stats.norm.cdf)
+-    KstestResult(statistic=0.5001899973268688, pvalue=1.1616392184763533e-23)
++    KstestResult(statistic=0.5001899973268688,
++                 pvalue=1.1616392184763533e-23,
++                 statistic_location=0.00047625268963724654,
++                 statistic_sign=-1)
+ 
+     Indeed, the p-value is lower than our threshold of 0.05, so we reject the
+     null hypothesis in favor of the default "two-sided" alternative: the data
+@@ -8617,7 +8661,11 @@ def kstest(rvs, cdf, args=(), N=20, alternative='two-sided', method='auto'):
+ 
+     >>> x = stats.norm.rvs(size=100, random_state=rng)
+     >>> stats.kstest(x, stats.norm.cdf)
+-    KstestResult(statistic=0.05345882212970396, pvalue=0.9227159037744717)
++    KstestResult(statistic=0.05345882212970396,
++                 pvalue=0.9227159037744717,
++                 statistic_location=-1.2451343873745018,
++                 statistic_sign=1)
++
+ 
+     As expected, the p-value of 0.92 is not below our threshold of 0.05, so
+     we cannot reject the null hypothesis.
+@@ -8630,7 +8678,10 @@ def kstest(rvs, cdf, args=(), N=20, alternative='two-sided', method='auto'):
+ 
+     >>> x = stats.norm.rvs(size=100, loc=0.5, random_state=rng)
+     >>> stats.kstest(x, stats.norm.cdf, alternative='less')
+-    KstestResult(statistic=0.17482387821055168, pvalue=0.001913921057766743)
++    KstestResult(statistic=0.17482387821055168,
++                 pvalue=0.001913921057766743,
++                 statistic_location=0.3713830565352756,
++                 statistic_sign=-1)
+ 
+     and indeed, with p-value smaller than our threshold, we reject the null
+     hypothesis in favor of the alternative.
+@@ -8639,7 +8690,10 @@ def kstest(rvs, cdf, args=(), N=20, alternative='two-sided', method='auto'):
+     distribution as the second argument.
+ 
+     >>> stats.kstest(x, "norm", alternative='less')
+-    KstestResult(statistic=0.17482387821055168, pvalue=0.001913921057766743)
++    KstestResult(statistic=0.17482387821055168,
++                 pvalue=0.001913921057766743,
++                 statistic_location=0.3713830565352756,
++                 statistic_sign=-1)
+ 
+     The examples above have all been one-sample tests identical to those
+     performed by `ks_1samp`. Note that `kstest` can also perform two-sample
+@@ -8650,7 +8704,10 @@ def kstest(rvs, cdf, args=(), N=20, alternative='two-sided', method='auto'):
+     >>> sample1 = stats.laplace.rvs(size=105, random_state=rng)
+     >>> sample2 = stats.laplace.rvs(size=95, random_state=rng)
+     >>> stats.kstest(sample1, sample2)
+-    KstestResult(statistic=0.11779448621553884, pvalue=0.4494256912629795)
++    KstestResult(statistic=0.11779448621553884,
++                 pvalue=0.4494256912629795,
++                 statistic_location=0.6138814275424155,
++                 statistic_sign=1)
+ 
+     As expected, the p-value of 0.45 is not below our threshold of 0.05, so
+     we cannot reject the null hypothesis.
+diff --git a/tools/wheels/cibw_before_build_macos.sh b/tools/wheels/cibw_before_build_macos.sh
+index ec8df95cb5..945ff19ba9 100644
+--- a/tools/wheels/cibw_before_build_macos.sh
++++ b/tools/wheels/cibw_before_build_macos.sh
+@@ -43,6 +43,7 @@ if [[ $PLATFORM == "x86_64" ]]; then
+   export SDKROOT=${SDKROOT:-$(xcrun --show-sdk-path)}
+ fi
+ 
++
+ if [[ $PLATFORM == "arm64" ]]; then
+   curl -L https://github.com/fxcoudert/gfortran-for-macOS/releases/download/12.1-monterey/gfortran-ARM-12.1-Monterey.dmg -o gfortran.dmg
+   GFORTRAN_SHA256=$(shasum -a 256 gfortran.dmg)
+@@ -62,3 +63,13 @@ fi
+ # Install Openblas
+ python -m pip install -r requirements/openblas.txt
+ python -c "import scipy_openblas32; print(scipy_openblas32.get_pkg_config())" > $PROJECT_DIR/scipy-openblas.pc
++
++lib_loc=$(python -c"import scipy_openblas32; print(scipy_openblas32.get_lib_dir())")
++# Use the libgfortran from gfortran rather than the one in the wheel
++# since delocate gets confused if there is more than one
++# https://github.com/scipy/scipy/issues/20852
++install_name_tool -change @loader_path/../.dylibs/libgfortran.5.dylib @rpath/libgfortran.5.dylib $lib_loc/libsci*
++install_name_tool -change @loader_path/../.dylibs/libgcc_s.1.1.dylib @rpath/libgcc_s.1.1.dylib $lib_loc/libsci*
++install_name_tool -change @loader_path/../.dylibs/libquadmath.0.dylib @rpath/libquadmath.0.dylib $lib_loc/libsci*
++
++codesign -s - -f $lib_loc/libsci*

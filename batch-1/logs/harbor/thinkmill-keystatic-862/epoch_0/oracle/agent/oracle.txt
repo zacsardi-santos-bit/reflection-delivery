@@ -1,0 +1,262 @@
+patching file dev-projects/astro/package.json
+patching file dev-projects/next-app/keystatic.config.tsx
+patching file package.json
+patching file packages/keystatic/package.json
+Hunk #2 FAILED at 154.
+1 out of 2 hunks FAILED -- saving rejects to file packages/keystatic/package.json.rej
+patching file packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts
+patching file packages/keystatic/src/form/fields/markdoc/editor/mdx/parse.ts
+patching file packages/keystatic/src/form/fields/markdoc/editor/mdx/serialize.ts
+patching file packages/keystatic/src/form/fields/markdoc/index.tsx
+patching file packages/keystatic/src/form/fields/markdoc/ui.tsx
+patching file pnpm-lock.yaml
+Hunk #4 FAILED at 813.
+Hunk #5 succeeded at 872 (offset 5 lines).
+Hunk #6 FAILED at 888.
+Hunk #7 succeeded at 9813 (offset 10 lines).
+Hunk #8 succeeded at 9938 with fuzz 2 (offset -2 lines).
+Hunk #9 succeeded at 10099 (offset 9 lines).
+Hunk #10 succeeded at 10831 with fuzz 3 (offset 12 lines).
+Hunk #11 succeeded at 11997 (offset 2 lines).
+Hunk #12 FAILED at 12079.
+Hunk #13 succeeded at 14393 with fuzz 2 (offset 5 lines).
+Hunk #14 succeeded at 14426 with fuzz 2 (offset 12 lines).
+Hunk #15 FAILED at 15986.
+Hunk #16 FAILED at 16079.
+Hunk #17 FAILED at 16164.
+Hunk #18 succeeded at 17472 (offset 8 lines).
+Hunk #19 succeeded at 17641 (offset 8 lines).
+Hunk #20 succeeded at 17649 (offset 8 lines).
+Hunk #21 succeeded at 17694 (offset 8 lines).
+Hunk #22 succeeded at 17714 (offset 8 lines).
+Hunk #23 succeeded at 17782 with fuzz 2 (offset 21 lines).
+Hunk #24 succeeded at 17833 with fuzz 2 (offset 40 lines).
+Hunk #25 succeeded at 17877 with fuzz 2 (offset 52 lines).
+Hunk #26 succeeded at 17914 with fuzz 2 (offset 65 lines).
+Hunk #27 succeeded at 17965 (offset 65 lines).
+Hunk #28 succeeded at 17990 (offset 65 lines).
+Hunk #29 succeeded at 18131 (offset 65 lines).
+Hunk #30 succeeded at 18151 (offset 65 lines).
+Hunk #31 succeeded at 18222 with fuzz 2 (offset 78 lines).
+Hunk #32 succeeded at 18265 with fuzz 3 (offset 93 lines).
+Hunk #33 succeeded at 18326 with fuzz 2 (offset 113 lines).
+Hunk #34 succeeded at 18366 with fuzz 2 (offset 126 lines).
+Hunk #35 succeeded at 18438 with fuzz 2 (offset 140 lines).
+Hunk #36 succeeded at 18610 with fuzz 2 (offset 152 lines).
+Hunk #37 succeeded at 18698 (offset 152 lines).
+Hunk #38 succeeded at 19707 (offset 152 lines).
+Hunk #39 succeeded at 19726 with fuzz 3 (offset 160 lines).
+Hunk #40 succeeded at 21439 (offset 151 lines).
+Hunk #41 succeeded at 23406 (offset 151 lines).
+Hunk #42 succeeded at 23434 with fuzz 2 (offset 157 lines).
+Hunk #43 succeeded at 23458 (offset 157 lines).
+Hunk #44 succeeded at 23480 (offset 157 lines).
+Hunk #45 succeeded at 24476 (offset 157 lines).
+6 out of 45 hunks FAILED -- saving rejects to file pnpm-lock.yaml.rej
+patching file dev-projects/astro/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file dev-projects/astro/package.json.rej
+patching file dev-projects/next-app/keystatic.config.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file dev-projects/next-app/keystatic.config.tsx.rej
+patching file package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file package.json.rej
+patching file packages/keystatic/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/keystatic/package.json.rej
+patching file packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts.rej
+The next patch would create the file packages/keystatic/src/form/fields/markdoc/editor/mdx/parse.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/keystatic/src/form/fields/markdoc/editor/mdx/serialize.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/keystatic/src/form/fields/markdoc/index.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/keystatic/src/form/fields/markdoc/index.tsx.rej
+patching file packages/keystatic/src/form/fields/markdoc/ui.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/keystatic/src/form/fields/markdoc/ui.tsx.rej
+patching file pnpm-lock.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+45 out of 45 hunks ignored -- saving rejects to file pnpm-lock.yaml.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/dev-projects/astro/package.json b/dev-projects/astro/package.json
+|index 5b977969..ca9b927d 100644
+|--- a/dev-projects/astro/package.json
+|+++ b/dev-projects/astro/package.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 26
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/dev-projects/next-app/keystatic.config.tsx b/dev-projects/next-app/keystatic.config.tsx
+|index f70891e8..5ed23949 100644
+|--- a/dev-projects/next-app/keystatic.config.tsx
+|+++ b/dev-projects/next-app/keystatic.config.tsx
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 68
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/package.json b/package.json
+|index 8cd33a5c..de39e523 100644
+|--- a/package.json
+|+++ b/package.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 81
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/keystatic/package.json b/packages/keystatic/package.json
+|index 7b000bb3..33288d4f 100644
+|--- a/packages/keystatic/package.json
+|+++ b/packages/keystatic/package.json
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 115
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts b/packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts
+|index c8c67bdc..6e1de5e2 100644
+|--- a/packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts
+|+++ b/packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+3 out of 3 hunks ignored
+patching file b/packages/keystatic/src/form/fields/markdoc/editor/mdx/parse.ts
+patching file b/packages/keystatic/src/form/fields/markdoc/editor/mdx/serialize.ts
+can't find file to patch at input line 854
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/keystatic/src/form/fields/markdoc/index.tsx b/packages/keystatic/src/form/fields/markdoc/index.tsx
+|index 69223dc6..7dad966f 100644
+|--- a/packages/keystatic/src/form/fields/markdoc/index.tsx
+|+++ b/packages/keystatic/src/form/fields/markdoc/index.tsx
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1032
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/packages/keystatic/src/form/fields/markdoc/ui.tsx b/packages/keystatic/src/form/fields/markdoc/ui.tsx
+|index 9e7be473..52d6f19c 100644
+|--- a/packages/keystatic/src/form/fields/markdoc/ui.tsx
+|+++ b/packages/keystatic/src/form/fields/markdoc/ui.tsx
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 1141
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+|index 1746699d..2216053d 100644
+|--- a/pnpm-lock.yaml
+|+++ b/pnpm-lock.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+45 out of 45 hunks ignored
+patching file dev-projects/astro/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file dev-projects/astro/package.json.rej
+patching file dev-projects/next-app/keystatic.config.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file dev-projects/next-app/keystatic.config.tsx.rej
+patching file package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file package.json.rej
+patching file packages/keystatic/package.json
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/keystatic/package.json.rej
+patching file packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+3 out of 3 hunks ignored -- saving rejects to file packages/keystatic/src/form/fields/document/DocumentEditor/pasting/markdown.ts.rej
+The next patch would create the file packages/keystatic/src/form/fields/markdoc/editor/mdx/parse.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+The next patch would create the file packages/keystatic/src/form/fields/markdoc/editor/mdx/serialize.ts,
+which already exists!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file packages/keystatic/src/form/fields/markdoc/index.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/keystatic/src/form/fields/markdoc/index.tsx.rej
+patching file packages/keystatic/src/form/fields/markdoc/ui.tsx
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file packages/keystatic/src/form/fields/markdoc/ui.tsx.rej
+patching file pnpm-lock.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+45 out of 45 hunks ignored -- saving rejects to file pnpm-lock.yaml.rej
+ERROR: golden patch failed to apply by all strategies

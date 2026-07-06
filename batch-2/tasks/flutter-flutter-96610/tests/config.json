@@ -1,0 +1,26 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo/packages/flutter_tools && /workspace/run_dart_test.sh test/general.shard/dart_plugin_test.dart test/general.shard/plugin_parsing_test.dart",
+  "test_files": [
+    "packages/flutter_tools/test/general.shard/dart_plugin_test.dart",
+    "packages/flutter_tools/test/general.shard/plugin_parsing_test.dart"
+  ],
+  "num_test_files": 2,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "Plugin creation from the legacy format",
+    "Plugin creation from the multi-platform format",
+    "Plugin parsing of unknown fields are allowed (allows some future compatibility)",
+    "Plugin parsing allows for Dart-only plugins without a pluginClass",
+    "Plugin parsing of legacy format and multi-platform format together is not allowed and fatal error message contains plugin name",
+    "Plugin parsing allows a default_package field",
+    "Desktop plugin parsing allows a dartPluginClass field",
+    "Windows allows supported mode lists",
+    "Windows assumes win32 when no variants are given",
+    "Windows ignores unknown variants",
+    "Plugin parsing throws a fatal error on an empty plugin",
+    "Plugin parsing throws a fatal error on empty platforms",
+    "Plugin parsing throws a fatal error on an empty platform key"
+  ],
+  "PASS_TO_PASS": []
+}

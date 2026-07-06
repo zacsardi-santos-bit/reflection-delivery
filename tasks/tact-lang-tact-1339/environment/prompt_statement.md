@@ -1,5 +1,0 @@
-I'm working on the Tact compiler codebase and want to reorganize how the standard library is accessed. Right now, the bundled stdlib content (a map of file paths to their encoded contents) lives in an imports folder, and any code that needs to read stdlib files from disk computes the path inline using hardcoded relative navigation. This makes it hard to maintain because there's no single source of truth for where the stdlib lives.
-
-I'd like to move the stdlib bundle into a new dedicated module directory, and also create a separate small module in that same directory that just exports the canonical base path to the stdlib files on disk. That way, any part of the compiler that needs stdlib content can import it from one consistent place, and any code that needs to read stdlib files from the filesystem can import the path rather than hardcoding it.
-
-The compiler needs to continue working correctly after this change — specifically, contract compilation and memory allocation resolution should both work using stdlib data from the new location.

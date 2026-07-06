@@ -1,0 +1,724 @@
+diff --git a/docs/cli/telemetry.md b/docs/cli/telemetry.md
+index b04d2e017..28eaed8bd 100644
+--- a/docs/cli/telemetry.md
++++ b/docs/cli/telemetry.md
+@@ -176,11 +176,12 @@ Sends telemetry directly to Google Cloud services. No collector needed.
+    }
+    ```
+ 2. Run Gemini CLI and send prompts.
+-3. View logs and metrics:
++3. View logs, metrics, and traces:
+    - Open the Google Cloud Console in your browser after sending prompts:
+-     - Logs: https://console.cloud.google.com/logs/
+-     - Metrics: https://console.cloud.google.com/monitoring/metrics-explorer
+-     - Traces: https://console.cloud.google.com/traces/list
++     - Logs (Logs Explorer): https://console.cloud.google.com/logs/
++     - Metrics (Metrics Explorer):
++       https://console.cloud.google.com/monitoring/metrics-explorer
++     - Traces (Trace Explorer): https://console.cloud.google.com/traces/list
+ 
+ ### Collector-based export (advanced)
+ 
+@@ -208,11 +209,12 @@ forward data to Google Cloud.
+    - Save collector logs to `~/.gemini/tmp/<projectHash>/otel/collector-gcp.log`
+    - Stop collector on exit (e.g. `Ctrl+C`)
+ 3. Run Gemini CLI and send prompts.
+-4. View logs and metrics:
++4. View logs, metrics, and traces:
+    - Open the Google Cloud Console in your browser after sending prompts:
+-     - Logs: https://console.cloud.google.com/logs/
+-     - Metrics: https://console.cloud.google.com/monitoring/metrics-explorer
+-     - Traces: https://console.cloud.google.com/traces/list
++     - Logs (Logs Explorer): https://console.cloud.google.com/logs/
++     - Metrics (Metrics Explorer):
++       https://console.cloud.google.com/monitoring/metrics-explorer
++     - Traces (Trace Explorer): https://console.cloud.google.com/traces/list
+    - Open `~/.gemini/tmp/<projectHash>/otel/collector-gcp.log` to view local
+      collector logs.
+ 
+@@ -270,10 +272,10 @@ For local development and debugging, you can capture telemetry data locally:
+ 3. View traces at http://localhost:16686 and logs/metrics in the collector log
+    file.
+ 
+-## Logs and metrics
++## Logs, metrics, and traces
+ 
+-The following section describes the structure of logs and metrics generated for
+-Gemini CLI.
++The following section describes the structure of logs, metrics, and traces
++generated for Gemini CLI.
+ 
+ The `session.id`, `installation.id`, `active_approval_mode`, and `user.email`
+ (available only when authenticated with a Google account) are included as common
+@@ -824,6 +826,32 @@ Optional performance monitoring for startup, CPU/memory, and phase timing.
+     - `current_value` (number)
+     - `baseline_value` (number)
+ 
++### Traces
++
++Traces offer a granular, "under-the-hood" view of every agent and backend
++operation. By providing a high-fidelity execution map, they enable precise
++debugging of complex tool interactions and deep performance optimization. Each
++trace captures rich, consistent metadata via custom span attributes:
++
++- `gen_ai.operation.name` (string): The high-level operation kind (e.g.
++  "tool_call", "llm_call").
++- `gen_ai.agent.name` (string): The service agent identifier ("gemini-cli").
++- `gen_ai.agent.description` (string): The service agent description.
++- `gen_ai.input.messages` (string): Input messages or metadata specific to the
++  operation.
++- `gen_ai.output.messages` (string): Output messages or metadata generated from
++  the operation.
++- `gen_ai.request.model` (string): The request model name.
++- `gen_ai.response.model` (string): The response model name.
++- `gen_ai.system_instructions` (json string): The system instructions.
++- `gen_ai.prompt.name` (string): The prompt name.
++- `gen_ai.tool.name` (string): The executed tool's name.
++- `gen_ai.tool.call_id` (string): The generated specific ID of the tool call.
++- `gen_ai.tool.description` (string): The executed tool's description.
++- `gen_ai.tool.definitions` (json string): The executed tool's description.
++- `gen_ai.conversation.id` (string): The current CLI session ID.
++- Additional user-defined Custom Attributes passed via the span's configuration.
++
+ #### GenAI semantic convention
+ 
+ The following metrics comply with [OpenTelemetry GenAI semantic conventions] for
+diff --git a/docs/local-development.md b/docs/local-development.md
+index e194307ea..f710e3b00 100644
+--- a/docs/local-development.md
++++ b/docs/local-development.md
+@@ -1,23 +1,21 @@
+ # Local development guide
+ 
+ This guide provides instructions for setting up and using local development
+-features, such as development tracing.
++features, such as tracing.
+ 
+-## Development tracing
++## Tracing
+ 
+-Development traces (dev traces) are OpenTelemetry (OTel) traces that help you
+-debug your code by instrumenting interesting events like model calls, tool
+-scheduler, tool calls, etc.
++Traces are OpenTelemetry (OTel) records that help you debug your code by
++instrumenting key events like model calls, tool scheduler operations, and tool
++calls.
+ 
+-Dev traces are verbose and are specifically meant for understanding agent
+-behavior and debugging issues. They are disabled by default.
++Traces provide deep visibility into agent behavior and are invaluable for
++debugging complex issues. They are captured automatically when telemetry is
++enabled.
+ 
+-To enable dev traces, set the `GEMINI_DEV_TRACING=true` environment variable
+-when running Gemini CLI.
++### Viewing traces
+ 
+-### Viewing dev traces
+-
+-You can view dev traces using either Jaeger or the Genkit Developer UI.
++You can view traces using either Jaeger or the Genkit Developer UI.
+ 
+ #### Using Genkit
+ 
+@@ -37,13 +35,12 @@ Genkit provides a web-based UI for viewing traces and other telemetry data.
+     Genkit Developer UI: http://localhost:4000
+     ```
+ 
+-2.  **Run Gemini CLI with dev tracing:**
++2.  **Run Gemini CLI:**
+ 
+-    In a separate terminal, run your Gemini CLI command with the
+-    `GEMINI_DEV_TRACING` environment variable:
++    In a separate terminal, run your Gemini CLI command:
+ 
+     ```bash
+-    GEMINI_DEV_TRACING=true gemini
++    gemini
+     ```
+ 
+ 3.  **View the traces:**
+@@ -53,7 +50,7 @@ Genkit provides a web-based UI for viewing traces and other telemetry data.
+ 
+ #### Using Jaeger
+ 
+-You can view dev traces in the Jaeger UI. To get started, follow these steps:
++You can view traces in the Jaeger UI. To get started, follow these steps:
+ 
+ 1.  **Start the telemetry collector:**
+ 
+@@ -67,13 +64,12 @@ You can view dev traces in the Jaeger UI. To get started, follow these steps:
+     This command also configures your workspace for local telemetry and provides
+     a link to the Jaeger UI (usually `http://localhost:16686`).
+ 
+-2.  **Run Gemini CLI with dev tracing:**
++2.  **Run Gemini CLI:**
+ 
+-    In a separate terminal, run your Gemini CLI command with the
+-    `GEMINI_DEV_TRACING` environment variable:
++    In a separate terminal, run your Gemini CLI command:
+ 
+     ```bash
+-    GEMINI_DEV_TRACING=true gemini
++    gemini
+     ```
+ 
+ 3.  **View the traces:**
+@@ -84,10 +80,10 @@ You can view dev traces in the Jaeger UI. To get started, follow these steps:
+ For more detailed information on telemetry, see the
+ [telemetry documentation](./cli/telemetry.md).
+ 
+-### Instrumenting code with dev traces
++### Instrumenting code with traces
+ 
+-You can add dev traces to your own code for more detailed instrumentation. This
+-is useful for debugging and understanding the flow of execution.
++You can add traces to your own code for more detailed instrumentation. This is
++useful for debugging and understanding the flow of execution.
+ 
+ Use the `runInDevTraceSpan` function to wrap any section of code in a trace
+ span.
+@@ -96,29 +92,39 @@ Here is a basic example:
+ 
+ ```typescript
+ import { runInDevTraceSpan } from '@google/gemini-cli-core';
+-
+-await runInDevTraceSpan({ name: 'my-custom-span' }, async ({ metadata }) => {
+-  // The `metadata` object allows you to record the input and output of the
+-  // operation as well as other attributes.
+-  metadata.input = { key: 'value' };
+-  // Set custom attributes.
+-  metadata.attributes['gen_ai.request.model'] = 'gemini-4.0-mega';
+-
+-  // Your code to be traced goes here
+-  try {
+-    const output = await somethingRisky();
+-    metadata.output = output;
+-    return output;
+-  } catch (e) {
+-    metadata.error = e;
+-    throw e;
+-  }
+-});
++import { GeminiCliOperation } from '@google/gemini-cli-core/lib/telemetry/constants.js';
++
++await runInDevTraceSpan(
++  {
++    operation: GeminiCliOperation.ToolCall,
++    attributes: {
++      [GEN_AI_AGENT_NAME]: 'gemini-cli',
++    },
++  },
++  async ({ metadata }) => {
++    // The `metadata` object allows you to record the input and output of the
++    // operation as well as other attributes.
++    metadata.input = { key: 'value' };
++    // Set custom attributes.
++    metadata.attributes['custom.attribute'] = 'custom.value';
++
++    // Your code to be traced goes here
++    try {
++      const output = await somethingRisky();
++      metadata.output = output;
++      return output;
++    } catch (e) {
++      metadata.error = e;
++      throw e;
++    }
++  },
++);
+ ```
+ 
+ In this example:
+ 
+-- `name`: The name of the span, which will be displayed in the trace.
++- `operation`: The operation type of the span, represented by the
++  `GeminiCliOperation` enum.
+ - `metadata.input`: (Optional) An object containing the input data for the
+   traced operation.
+ - `metadata.output`: (Optional) An object containing the output data from the
+diff --git a/packages/cli/src/ui/hooks/useGeminiStream.ts b/packages/cli/src/ui/hooks/useGeminiStream.ts
+index 34380e78a..2a63d618e 100644
+--- a/packages/cli/src/ui/hooks/useGeminiStream.ts
++++ b/packages/cli/src/ui/hooks/useGeminiStream.ts
+@@ -36,6 +36,7 @@ import {
+   CoreToolCallStatus,
+   buildUserSteeringHintPrompt,
+   generateSteeringAckMessage,
++  GeminiCliOperation,
+   getPlanModeExitMessage,
+ } from '@google/gemini-cli-core';
+ import type {
+@@ -1262,7 +1263,11 @@ export const useGeminiStream = (
+       prompt_id?: string,
+     ) =>
+       runInDevTraceSpan(
+-        { name: 'submitQuery' },
++        {
++          operation: options?.isContinuation
++            ? GeminiCliOperation.SystemPrompt
++            : GeminiCliOperation.UserPrompt,
++        },
+         async ({ metadata: spanMetadata }) => {
+           spanMetadata.input = query;
+ 
+diff --git a/packages/core/src/agents/subagent-tool.ts b/packages/core/src/agents/subagent-tool.ts
+index 8584ae97f..3ecff4e96 100644
+--- a/packages/core/src/agents/subagent-tool.ts
++++ b/packages/core/src/agents/subagent-tool.ts
+@@ -20,6 +20,12 @@ import type { AgentDefinition, AgentInputs } from './types.js';
+ import { SubagentToolWrapper } from './subagent-tool-wrapper.js';
+ import { SchemaValidator } from '../utils/schemaValidator.js';
+ import { formatUserHintsForModel } from '../utils/fastAckHelper.js';
++import { runInDevTraceSpan } from '../telemetry/trace.js';
++import {
++  GeminiCliOperation,
++  GEN_AI_AGENT_DESCRIPTION,
++  GEN_AI_AGENT_NAME,
++} from '../telemetry/constants.js';
+ 
+ export class SubagentTool extends BaseDeclarativeTool<AgentInputs, ToolResult> {
+   constructor(
+@@ -167,7 +173,21 @@ class SubAgentInvocation extends BaseToolInvocation<AgentInputs, ToolResult> {
+       this.withUserHints(this.params),
+     );
+ 
+-    return invocation.execute(signal, updateOutput);
++    return runInDevTraceSpan(
++      {
++        operation: GeminiCliOperation.AgentCall,
++        attributes: {
++          [GEN_AI_AGENT_NAME]: this.definition.name,
++          [GEN_AI_AGENT_DESCRIPTION]: this.definition.description,
++        },
++      },
++      async ({ metadata }) => {
++        metadata.input = this.params;
++        const result = await invocation.execute(signal, updateOutput);
++        metadata.output = result;
++        return result;
++      },
++    );
+   }
+ 
+   private withUserHints(agentArgs: AgentInputs): AgentInputs {
+diff --git a/packages/core/src/core/coreToolScheduler.ts b/packages/core/src/core/coreToolScheduler.ts
+index c2381e4b4..f8d1b260f 100644
+--- a/packages/core/src/core/coreToolScheduler.ts
++++ b/packages/core/src/core/coreToolScheduler.ts
+@@ -46,6 +46,7 @@ import { CoreToolCallStatus } from '../scheduler/types.js';
+ import { ToolExecutor } from '../scheduler/tool-executor.js';
+ import { DiscoveredMCPTool } from '../tools/mcp-tool.js';
+ import { getPolicyDenialError } from '../scheduler/policy.js';
++import { GeminiCliOperation } from '../telemetry/constants.js';
+ 
+ export type {
+   ToolCall,
+@@ -424,7 +425,7 @@ export class CoreToolScheduler {
+     signal: AbortSignal,
+   ): Promise<void> {
+     return runInDevTraceSpan(
+-      { name: 'schedule' },
++      { operation: GeminiCliOperation.ScheduleToolCalls },
+       async ({ metadata: spanMetadata }) => {
+         spanMetadata.input = request;
+         if (this.isRunning() || this.isScheduling) {
+diff --git a/packages/core/src/core/loggingContentGenerator.ts b/packages/core/src/core/loggingContentGenerator.ts
+index 013600a0b..c1ec554d6 100644
+--- a/packages/core/src/core/loggingContentGenerator.ts
++++ b/packages/core/src/core/loggingContentGenerator.ts
+@@ -37,6 +37,16 @@ import { isStructuredError } from '../utils/quotaErrorDetection.js';
+ import { runInDevTraceSpan, type SpanMetadata } from '../telemetry/trace.js';
+ import { debugLogger } from '../utils/debugLogger.js';
+ import { getErrorType } from '../utils/errors.js';
++import {
++  GeminiCliOperation,
++  GEN_AI_PROMPT_NAME,
++  GEN_AI_REQUEST_MODEL,
++  GEN_AI_SYSTEM_INSTRUCTIONS,
++  GEN_AI_TOOL_DEFINITIONS,
++  GEN_AI_USAGE_INPUT_TOKENS,
++  GEN_AI_USAGE_OUTPUT_TOKENS,
++} from '../telemetry/constants.js';
++import { safeJsonStringify } from '../utils/safeJsonStringify.js';
+ import { isMcpToolName } from '../tools/mcp-tool.js';
+ import { estimateTokenCountSync } from '../utils/tokenCalculation.js';
+ 
+@@ -303,10 +313,18 @@ export class LoggingContentGenerator implements ContentGenerator {
+   ): Promise<GenerateContentResponse> {
+     return runInDevTraceSpan(
+       {
+-        name: 'generateContent',
++        operation: GeminiCliOperation.LLMCall,
++        attributes: {
++          [GEN_AI_REQUEST_MODEL]: req.model,
++          [GEN_AI_PROMPT_NAME]: userPromptId,
++          [GEN_AI_SYSTEM_INSTRUCTIONS]: safeJsonStringify(
++            req.config?.systemInstruction ?? [],
++          ),
++          [GEN_AI_TOOL_DEFINITIONS]: safeJsonStringify(req.config?.tools ?? []),
++        },
+       },
+       async ({ metadata: spanMetadata }) => {
+-        spanMetadata.input = { request: req, userPromptId, model: req.model };
++        spanMetadata.input = req.contents;
+ 
+         const startTime = Date.now();
+         const contents: Content[] = toContents(req.contents);
+@@ -326,10 +344,11 @@ export class LoggingContentGenerator implements ContentGenerator {
+             userPromptId,
+             role,
+           );
+-          spanMetadata.output = {
+-            response,
+-            usageMetadata: response.usageMetadata,
+-          };
++          spanMetadata.output = response.candidates?.[0]?.content ?? null;
++          spanMetadata.attributes[GEN_AI_USAGE_INPUT_TOKENS] =
++            response.usageMetadata?.promptTokenCount ?? 0;
++          spanMetadata.attributes[GEN_AI_USAGE_OUTPUT_TOKENS] =
++            response.usageMetadata?.candidatesTokenCount ?? 0;
+           const durationMs = Date.now() - startTime;
+           this._logApiResponse(
+             contents,
+@@ -355,6 +374,7 @@ export class LoggingContentGenerator implements ContentGenerator {
+             .catch((e) => debugLogger.debug('quota refresh failed', e));
+           return response;
+         } catch (error) {
++          spanMetadata.error = error;
+           const durationMs = Date.now() - startTime;
+           this._logApiError(
+             durationMs,
+@@ -379,11 +399,20 @@ export class LoggingContentGenerator implements ContentGenerator {
+   ): Promise<AsyncGenerator<GenerateContentResponse>> {
+     return runInDevTraceSpan(
+       {
+-        name: 'generateContentStream',
++        operation: GeminiCliOperation.LLMCall,
+         noAutoEnd: true,
++        attributes: {
++          [GEN_AI_REQUEST_MODEL]: req.model,
++          [GEN_AI_PROMPT_NAME]: userPromptId,
++          [GEN_AI_SYSTEM_INSTRUCTIONS]: safeJsonStringify(
++            req.config?.systemInstruction ?? [],
++          ),
++          [GEN_AI_TOOL_DEFINITIONS]: safeJsonStringify(req.config?.tools ?? []),
++        },
+       },
+       async ({ metadata: spanMetadata, endSpan }) => {
+-        spanMetadata.input = { request: req, userPromptId, model: req.model };
++        spanMetadata.input = req.contents;
++
+         const startTime = Date.now();
+         const serverDetails = this._getEndpointUrl(
+           req,
+@@ -488,13 +517,15 @@ export class LoggingContentGenerator implements ContentGenerator {
+       this.config
+         .refreshUserQuotaIfStale()
+         .catch((e) => debugLogger.debug('quota refresh failed', e));
+-      spanMetadata.output = {
+-        streamChunks: responses.map((r) => ({
+-          content: r.candidates?.[0]?.content ?? null,
+-        })),
+-        usageMetadata: lastUsageMetadata,
+-        durationMs,
+-      };
++      spanMetadata.output = responses.map(
++        (response) => response.candidates?.[0]?.content ?? null,
++      );
++      if (lastUsageMetadata) {
++        spanMetadata.attributes[GEN_AI_USAGE_INPUT_TOKENS] =
++          lastUsageMetadata.promptTokenCount ?? 0;
++        spanMetadata.attributes[GEN_AI_USAGE_OUTPUT_TOKENS] =
++          lastUsageMetadata.candidatesTokenCount ?? 0;
++      }
+     } catch (error) {
+       spanMetadata.error = error;
+       const durationMs = Date.now() - startTime;
+@@ -523,10 +554,13 @@ export class LoggingContentGenerator implements ContentGenerator {
+   ): Promise<EmbedContentResponse> {
+     return runInDevTraceSpan(
+       {
+-        name: 'embedContent',
++        operation: GeminiCliOperation.LLMCall,
++        attributes: {
++          [GEN_AI_REQUEST_MODEL]: req.model,
++        },
+       },
+       async ({ metadata: spanMetadata }) => {
+-        spanMetadata.input = { request: req };
++        spanMetadata.input = req.contents;
+         const output = await this.wrapped.embedContent(req);
+         spanMetadata.output = output;
+         return output;
+diff --git a/packages/core/src/scheduler/scheduler.ts b/packages/core/src/scheduler/scheduler.ts
+index 44a16b798..fa3b4526a 100644
+--- a/packages/core/src/scheduler/scheduler.ts
++++ b/packages/core/src/scheduler/scheduler.ts
+@@ -46,6 +46,7 @@ import {
+   CoreEvent,
+   type McpProgressPayload,
+ } from '../utils/events.js';
++import { GeminiCliOperation } from '../telemetry/constants.js';
+ 
+ interface SchedulerQueueItem {
+   requests: ToolCallRequestInfo[];
+@@ -186,16 +187,22 @@ export class Scheduler {
+     signal: AbortSignal,
+   ): Promise<CompletedToolCall[]> {
+     return runInDevTraceSpan(
+-      { name: 'schedule' },
++      { operation: GeminiCliOperation.ScheduleToolCalls },
+       async ({ metadata: spanMetadata }) => {
+         const requests = Array.isArray(request) ? request : [request];
++
+         spanMetadata.input = requests;
+ 
++        let toolCallResponse: CompletedToolCall[] = [];
++
+         if (this.isProcessing || this.state.isActive) {
+-          return this._enqueueRequest(requests, signal);
++          toolCallResponse = await this._enqueueRequest(requests, signal);
++        } else {
++          toolCallResponse = await this._startBatch(requests, signal);
+         }
+ 
+-        return this._startBatch(requests, signal);
++        spanMetadata.output = toolCallResponse;
++        return toolCallResponse;
+       },
+     );
+   }
+diff --git a/packages/core/src/scheduler/tool-executor.ts b/packages/core/src/scheduler/tool-executor.ts
+index 9ae00b24a..7903266fe 100644
+--- a/packages/core/src/scheduler/tool-executor.ts
++++ b/packages/core/src/scheduler/tool-executor.ts
+@@ -34,6 +34,12 @@ import type {
+   CancelledToolCall,
+ } from './types.js';
+ import { CoreToolCallStatus } from './types.js';
++import {
++  GeminiCliOperation,
++  GEN_AI_TOOL_CALL_ID,
++  GEN_AI_TOOL_DESCRIPTION,
++  GEN_AI_TOOL_NAME,
++} from '../telemetry/constants.js';
+ 
+ export interface ToolExecutionContext {
+   call: ToolCall;
+@@ -70,11 +76,17 @@ export class ToolExecutor {
+ 
+     return runInDevTraceSpan(
+       {
+-        name: tool.name,
+-        attributes: { type: 'tool-call' },
++        operation: GeminiCliOperation.ToolCall,
++        attributes: {
++          [GEN_AI_TOOL_NAME]: toolName,
++          [GEN_AI_TOOL_CALL_ID]: callId,
++          [GEN_AI_TOOL_DESCRIPTION]: tool.description,
++        },
+       },
+       async ({ metadata: spanMetadata }) => {
+-        spanMetadata.input = { request };
++        spanMetadata.input = request;
++
++        let completedToolCall: CompletedToolCall;
+ 
+         try {
+           let promise: Promise<ToolResult>;
+@@ -116,21 +128,23 @@ export class ToolExecutor {
+           }
+ 
+           const toolResult: ToolResult = await promise;
+-          spanMetadata.output = toolResult;
+ 
+           if (signal.aborted) {
+-            return this.createCancelledResult(
++            completedToolCall = this.createCancelledResult(
+               call,
+               'User cancelled tool execution.',
+             );
+           } else if (toolResult.error === undefined) {
+-            return await this.createSuccessResult(call, toolResult);
++            completedToolCall = await this.createSuccessResult(
++              call,
++              toolResult,
++            );
+           } else {
+             const displayText =
+               typeof toolResult.returnDisplay === 'string'
+                 ? toolResult.returnDisplay
+                 : undefined;
+-            return this.createErrorResult(
++            completedToolCall = this.createErrorResult(
+               call,
+               new Error(toolResult.error.message),
+               toolResult.error.type,
+@@ -141,21 +155,25 @@ export class ToolExecutor {
+         } catch (executionError: unknown) {
+           spanMetadata.error = executionError;
+           if (signal.aborted) {
+-            return this.createCancelledResult(
++            completedToolCall = this.createCancelledResult(
+               call,
+               'User cancelled tool execution.',
+             );
++          } else {
++            const error =
++              executionError instanceof Error
++                ? executionError
++                : new Error(String(executionError));
++            completedToolCall = this.createErrorResult(
++              call,
++              error,
++              ToolErrorType.UNHANDLED_EXCEPTION,
++            );
+           }
+-          const error =
+-            executionError instanceof Error
+-              ? executionError
+-              : new Error(String(executionError));
+-          return this.createErrorResult(
+-            call,
+-            error,
+-            ToolErrorType.UNHANDLED_EXCEPTION,
+-          );
+         }
++
++        spanMetadata.output = completedToolCall;
++        return completedToolCall;
+       },
+     );
+   }
+diff --git a/packages/core/src/telemetry/constants.ts b/packages/core/src/telemetry/constants.ts
+index 1d2b7751a..40eb8d1a4 100644
+--- a/packages/core/src/telemetry/constants.ts
++++ b/packages/core/src/telemetry/constants.ts
+@@ -5,3 +5,34 @@
+  */
+ 
+ export const SERVICE_NAME = 'gemini-cli';
++export const SERVICE_DESCRIPTION =
++  'Gemini CLI is an open-source AI agent that brings the power of Gemini directly into your terminal. It is designed to be a terminal-first, extensible, and powerful tool for developers, engineers, SREs, and beyond.';
++
++// Gemini CLI specific semantic conventions
++// https://opentelemetry.io/docs/specs/semconv/registry/attributes/gen-ai/#genai-attributes
++export const GEN_AI_OPERATION_NAME = 'gen_ai.operation.name';
++export const GEN_AI_AGENT_NAME = 'gen_ai.agent.name';
++export const GEN_AI_AGENT_DESCRIPTION = 'gen_ai.agent.description';
++export const GEN_AI_INPUT_MESSAGES = 'gen_ai.input.messages';
++export const GEN_AI_OUTPUT_MESSAGES = 'gen_ai.output.messages';
++export const GEN_AI_REQUEST_MODEL = 'gen_ai.request.model';
++export const GEN_AI_RESPONSE_MODEL = 'gen_ai.response.model';
++export const GEN_AI_PROMPT_NAME = 'gen_ai.prompt.name';
++export const GEN_AI_TOOL_NAME = 'gen_ai.tool.name';
++export const GEN_AI_TOOL_CALL_ID = 'gen_ai.tool.call_id';
++export const GEN_AI_TOOL_DESCRIPTION = 'gen_ai.tool.description';
++export const GEN_AI_USAGE_INPUT_TOKENS = 'gen_ai.usage.input_tokens';
++export const GEN_AI_USAGE_OUTPUT_TOKENS = 'gen_ai.usage.output_tokens';
++export const GEN_AI_SYSTEM_INSTRUCTIONS = 'gen_ai.system_instructions';
++export const GEN_AI_TOOL_DEFINITIONS = 'gen_ai.tool.definitions';
++export const GEN_AI_CONVERSATION_ID = 'gen_ai.conversation.id';
++
++// Gemini CLI specific operations
++export enum GeminiCliOperation {
++  ToolCall = 'tool_call',
++  LLMCall = 'llm_call',
++  UserPrompt = 'user_prompt',
++  SystemPrompt = 'system_prompt',
++  AgentCall = 'agent_call',
++  ScheduleToolCalls = 'schedule_tool_calls',
++}
+diff --git a/packages/core/src/telemetry/index.ts b/packages/core/src/telemetry/index.ts
+index 0523ae709..84064ee7e 100644
+--- a/packages/core/src/telemetry/index.ts
++++ b/packages/core/src/telemetry/index.ts
+@@ -148,3 +148,4 @@ export {
+ } from './metrics.js';
+ export { runInDevTraceSpan, type SpanMetadata } from './trace.js';
+ export { startupProfiler, StartupProfiler } from './startupProfiler.js';
++export * from './constants.js';
+diff --git a/packages/core/src/telemetry/trace.ts b/packages/core/src/telemetry/trace.ts
+index d44625bf9..1f4676343 100644
+--- a/packages/core/src/telemetry/trace.ts
++++ b/packages/core/src/telemetry/trace.ts
+@@ -12,6 +12,18 @@ import {
+   type SpanOptions,
+ } from '@opentelemetry/api';
+ import { safeJsonStringify } from '../utils/safeJsonStringify.js';
++import {
++  type GeminiCliOperation,
++  GEN_AI_AGENT_DESCRIPTION,
++  GEN_AI_AGENT_NAME,
++  GEN_AI_CONVERSATION_ID,
++  GEN_AI_INPUT_MESSAGES,
++  GEN_AI_OPERATION_NAME,
++  GEN_AI_OUTPUT_MESSAGES,
++  SERVICE_DESCRIPTION,
++  SERVICE_NAME,
++} from './constants.js';
++import { sessionId } from '../utils/session.js';
+ 
+ const TRACER_NAME = 'gemini-cli';
+ const TRACER_VERSION = 'v1';
+@@ -51,7 +63,7 @@ export interface SpanMetadata {
+  * @returns The result of the function.
+  */
+ export async function runInDevTraceSpan<R>(
+-  opts: SpanOptions & { name: string; noAutoEnd?: boolean },
++  opts: SpanOptions & { operation: GeminiCliOperation; noAutoEnd?: boolean },
+   fn: ({
+     metadata,
+   }: {
+@@ -59,33 +71,32 @@ export async function runInDevTraceSpan<R>(
+     endSpan: () => void;
+   }) => Promise<R>,
+ ): Promise<R> {
+-  const { name: spanName, noAutoEnd, ...restOfSpanOpts } = opts;
+-  if (process.env['GEMINI_DEV_TRACING'] !== 'true') {
+-    // If GEMINI_DEV_TRACING env var not set, we do not trace.
+-    return fn({
+-      metadata: {
+-        name: spanName,
+-        attributes: {},
+-      },
+-      endSpan: () => {
+-        // noop
+-      },
+-    });
+-  }
++  const { operation, noAutoEnd, ...restOfSpanOpts } = opts;
+ 
+   const tracer = trace.getTracer(TRACER_NAME, TRACER_VERSION);
+-  return tracer.startActiveSpan(opts.name, restOfSpanOpts, async (span) => {
++  return tracer.startActiveSpan(operation, restOfSpanOpts, async (span) => {
+     const meta: SpanMetadata = {
+-      name: spanName,
+-      attributes: {},
++      name: operation,
++      attributes: {
++        [GEN_AI_OPERATION_NAME]: operation,
++        [GEN_AI_AGENT_NAME]: SERVICE_NAME,
++        [GEN_AI_AGENT_DESCRIPTION]: SERVICE_DESCRIPTION,
++        [GEN_AI_CONVERSATION_ID]: sessionId,
++      },
+     };
+     const endSpan = () => {
+       try {
+         if (meta.input !== undefined) {
+-          span.setAttribute('input-json', safeJsonStringify(meta.input));
++          span.setAttribute(
++            GEN_AI_INPUT_MESSAGES,
++            safeJsonStringify(meta.input),
++          );
+         }
+         if (meta.output !== undefined) {
+-          span.setAttribute('output-json', safeJsonStringify(meta.output));
++          span.setAttribute(
++            GEN_AI_OUTPUT_MESSAGES,
++            safeJsonStringify(meta.output),
++          );
+         }
+         for (const [key, value] of Object.entries(meta.attributes)) {
+           span.setAttribute(key, value);

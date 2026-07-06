@@ -1,0 +1,202 @@
+diff --git a/.changeset/feat-ping-command.md b/.changeset/feat-ping-command.md
+new file mode 100644
+index 0000000000..31c8323d43
+--- /dev/null
++++ b/.changeset/feat-ping-command.md
+@@ -0,0 +1,7 @@
++---
++"@pnpm/registry-access.commands": minor
++"pnpm": minor
++---
++
++Add native `pnpm ping` command to test registry connectivity.
++Provides a simple way to verify connectivity to the configured registry without requiring external tools.
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index dd9a952703..b560a774d1 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -7626,6 +7626,9 @@ importers:
+       '@pnpm/testing.command-defaults':
+         specifier: workspace:*
+         version: link:../../testing/command-defaults
++      '@pnpm/testing.mock-agent':
++        specifier: workspace:*
++        version: link:../../testing/mock-agent
+       '@types/ramda':
+         specifier: 'catalog:'
+         version: 0.31.1
+diff --git a/pnpm/src/cmd/index.ts b/pnpm/src/cmd/index.ts
+index 383543907e..a210166bfb 100644
+--- a/pnpm/src/cmd/index.ts
++++ b/pnpm/src/cmd/index.ts
+@@ -18,7 +18,7 @@ import {
+ } from '@pnpm/exec.commands'
+ import { add, dedupe, fetch, importCommand, install, link, prune, remove, unlink, update } from '@pnpm/installing.commands'
+ import { patch, patchCommit, patchRemove } from '@pnpm/patching.commands'
+-import { deprecate, distTag, search, undeprecate, unpublish } from '@pnpm/registry-access.commands'
++import { deprecate, distTag, ping, search, undeprecate, unpublish } from '@pnpm/registry-access.commands'
+ import { deploy, pack, publish, version } from '@pnpm/releasing.commands'
+ import { catFile, catIndex, findHash, store } from '@pnpm/store.commands'
+ import { init } from '@pnpm/workspace.commands'
+@@ -160,6 +160,7 @@ const commands: CommandDefinition[] = [
+   patchCommit,
+   patchRemove,
+   peers,
++  ping,
+   prune,
+   publish,
+   unpublish,
+diff --git a/pnpm/src/cmd/notImplemented.ts b/pnpm/src/cmd/notImplemented.ts
+index f99cbd57cb..b6009612be 100644
+--- a/pnpm/src/cmd/notImplemented.ts
++++ b/pnpm/src/cmd/notImplemented.ts
+@@ -8,7 +8,6 @@ const NOT_IMPLEMENTED_COMMANDS = [
+   'edit',
+   'issues',
+   'owner',
+-  'ping',
+   'prefix',
+   'profile',
+   'pkg',
+diff --git a/registry-access/commands/package.json b/registry-access/commands/package.json
+index a9ddbd50d9..5c05549270 100644
+--- a/registry-access/commands/package.json
++++ b/registry-access/commands/package.json
+@@ -53,6 +53,7 @@
+     "@pnpm/registry-mock": "catalog:",
+     "@pnpm/releasing.commands": "workspace:*",
+     "@pnpm/testing.command-defaults": "workspace:*",
++    "@pnpm/testing.mock-agent": "workspace:*",
+     "@types/ramda": "catalog:",
+     "@types/semver": "catalog:",
+     "execa": "catalog:"
+diff --git a/registry-access/commands/src/index.ts b/registry-access/commands/src/index.ts
+index 04f7b461cc..f716550327 100644
+--- a/registry-access/commands/src/index.ts
++++ b/registry-access/commands/src/index.ts
+@@ -1,6 +1,7 @@
+ import * as deprecate from './deprecation/deprecate.js'
+ import * as undeprecate from './deprecation/undeprecate.js'
+ import * as distTag from './distTag.js'
++import * as ping from './ping.js'
+ import * as search from './search.js'
+ import * as unpublish from './unpublish.js'
+-export { deprecate, distTag, search, undeprecate, unpublish }
++export { deprecate, distTag, ping, search, undeprecate, unpublish }
+diff --git a/registry-access/commands/src/ping.ts b/registry-access/commands/src/ping.ts
+new file mode 100644
+index 0000000000..c6c50ffcd8
+--- /dev/null
++++ b/registry-access/commands/src/ping.ts
+@@ -0,0 +1,97 @@
++import util from 'node:util'
++
++import { docsUrl } from '@pnpm/cli.utils'
++import { PnpmError } from '@pnpm/error'
++import { createGetAuthHeaderByURI } from '@pnpm/network.auth-header'
++import { createFetchFromRegistry, type CreateFetchFromRegistryOptions } from '@pnpm/network.fetch'
++import type { Registries, RegistryConfig } from '@pnpm/types'
++import { renderHelp } from 'render-help'
++
++import { rcOptionsTypes as commonRcOptionsTypes } from './common.js'
++
++export function cliOptionsTypes (): Record<string, unknown> {
++  return {
++    ...commonRcOptionsTypes(),
++  }
++}
++
++export function rcOptionsTypes (): Record<string, unknown> {
++  return commonRcOptionsTypes()
++}
++
++export interface PingOptions extends CreateFetchFromRegistryOptions {
++  registry?: string
++  registries?: Registries
++  configByUri?: Record<string, RegistryConfig>
++}
++
++export const commandNames = ['ping']
++
++export function help (): string {
++  return renderHelp({
++    description: 'Test connectivity to the configured registry.',
++    descriptionLists: [
++      {
++        title: 'Options',
++        list: [
++          {
++            description: 'Test a specific registry URL',
++            name: '--registry <url>',
++          },
++        ],
++      },
++    ],
++    url: docsUrl('ping'),
++    usages: ['pnpm ping [--registry <url>]'],
++  })
++}
++
++export async function handler (opts: PingOptions): Promise<string> {
++  const registryUrl = opts.registry ?? opts.registries?.default ?? 'https://registry.npmjs.org/'
++  const normalizedRegistryUrl = registryUrl.endsWith('/') ? registryUrl : `${registryUrl}/`
++  const pingUrlObject = new URL('./-/ping', normalizedRegistryUrl)
++  pingUrlObject.searchParams.set('write', 'true')
++  const pingUrl = pingUrlObject.toString()
++
++  const getAuthHeader = createGetAuthHeaderByURI(opts.configByUri ?? {}, normalizedRegistryUrl)
++  const authHeaderValue = getAuthHeader(normalizedRegistryUrl)
++  const fetchFromRegistry = createFetchFromRegistry(opts)
++
++  const start = Date.now()
++  let response
++  try {
++    response = await fetchFromRegistry(pingUrl, {
++      retry: { retries: 0 },
++      authHeaderValue,
++    })
++  } catch (err: unknown) {
++    const errorMessage = util.types.isNativeError(err) ? err.message : String(err)
++    throw new PnpmError('PING_ERROR', `Failed to reach registry: ${errorMessage}`)
++  }
++
++  if (!response.ok) {
++    throw new PnpmError(
++      'PING_ERROR',
++      `Failed to reach registry: ${response.status} ${response.statusText}`.trimEnd()
++    )
++  }
++
++  const body = await response.text()
++  const time = Date.now() - start
++
++  let details = ''
++  if (body) {
++    try {
++      const parsed = JSON.parse(body)
++      if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) {
++        details = JSON.stringify(parsed, null, 2)
++      }
++    } catch {
++      // non-JSON body — ignore
++    }
++  }
++
++  const lines = [`PING ${registryUrl}`, `PONG ${time}ms`]
++  if (details) lines.push(`PONG ${details}`)
++  return lines.join('\n')
++}
+diff --git a/registry-access/commands/tsconfig.json b/registry-access/commands/tsconfig.json
+index 95d0c10b79..5309a688bd 100644
+--- a/registry-access/commands/tsconfig.json
++++ b/registry-access/commands/tsconfig.json
+@@ -41,6 +41,9 @@
+     },
+     {
+       "path": "../../testing/command-defaults"
++    },
++    {
++      "path": "../../testing/mock-agent"
+     }
+   ]
+ }

@@ -1,0 +1,17 @@
+{
+  "test_framework": "vitest",
+  "test_command": "test -f /workspace/repo/apps/admin-x-settings/src/components/settings/membership/member-emails/welcome-email-customize-modal.tsx && cd /workspace/repo/apps/portal && yarn test test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js",
+  "test_files": [
+    "e2e/tests/admin/settings/member-welcome-emails.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js::TransistorPodcastsAction renders nothing when hasPodcasts is false",
+    "/workspace/repo/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js::TransistorPodcastsAction renders nothing when memberUuid is missing",
+    "/workspace/repo/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js::TransistorPodcastsAction renders Podcasts section with View link when hasPodcasts is true",
+    "/workspace/repo/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js::TransistorPodcastsAction View link points to correct Transistor URL",
+    "/workspace/repo/apps/portal/test/unit/components/pages/AccountHomePage/transistor-podcasts-action.test.js::TransistorPodcastsAction View link opens in new tab"
+  ],
+  "PASS_TO_PASS": []
+}

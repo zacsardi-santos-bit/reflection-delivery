@@ -1,0 +1,5 @@
+I'm working on improving error diagnostics when downloading application updates from a remote vendor server. When the server returns an invalid or corrupted compressed response, the error message we produce isn't very helpful. Specifically, if the response body can't even be opened as compressed data at all, we need to report that clearly — right now there's no distinct error for that case, so it can be confused with a mid-stream interruption.
+
+I also want to extract any human-readable text that might be embedded in a binary response body. Sometimes a vendor server returns an error message mixed in with binary data, and we want to surface that readable content in our error output to help diagnose what went wrong.
+
+To support these improvements, I need two new utility components: one that wraps a data stream and efficiently retains the most recently seen bytes (so they can be inspected after a failure), and another that scans a byte array and pulls out contiguous runs of readable text — ignoring very short fragments (under 5 characters) — and joins multiple found segments with a clear separator like " ... " between them.

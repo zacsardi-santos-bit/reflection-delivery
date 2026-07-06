@@ -1,0 +1,20 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework -Dtest=\"JsAuthenticationContextTest,GraphBasedSequenceHandlerClaimMappingsTest\" -am -DfailIfNoTests=false",
+  "test_files": [
+    "components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/test/java/org/wso2/carbon/identity/application/authentication/framework/config/model/graph/js/JsAuthenticationContextTest.java",
+    "components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/test/java/org/wso2/carbon/identity/application/authentication/framework/handler/sequence/impl/GraphBasedSequenceHandlerAbstractTest.java",
+    "components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/test/java/org/wso2/carbon/identity/application/authentication/framework/handler/sequence/impl/GraphBasedSequenceHandlerClaimMappingsTest.java",
+    "components/authentication-framework/org.wso2.carbon.identity.application.authentication.framework/src/test/resources/org/wso2/carbon/identity/application/authentication/framework/handler/sequence/impl/js-sp-4-claim.xml"
+  ],
+  "num_test_files": 4,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "WSO2::test_1",
+    "WSO2::test_2",
+    "WSO2::test_3",
+    "WSO2::test_4",
+    "WSO2::test_5"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "5cb12382-243e-4abf-a1cf-bd8417f4709d",
+    "started_at": "2026-07-04T15:37:23.113563",
+    "finished_at": "2026-07-04T15:41:09.370887",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__helidon-io-helidon-8244": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "helidon-io-helidon-8244__9GC4bef"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

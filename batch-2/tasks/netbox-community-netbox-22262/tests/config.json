@@ -1,0 +1,41 @@
+{
+  "test_framework": "pytest",
+  "test_command": "service postgresql start && service redis-server start && sleep 2 && cd /workspace/repo/netbox && NETBOX_CONFIGURATION=netbox.configuration_testing DJANGO_SETTINGS_MODULE=netbox.settings pytest dcim/tests/test_filtersets.py::CableTestCase -v",
+  "test_files": [
+    "netbox/dcim/tests/test_filtersets.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_location",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_site"
+  ],
+  "PASS_TO_PASS": [
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_circuittermination",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_color",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_consoleport",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_consoleserverport",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_created",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_description",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_device",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_frontport",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_id",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_label",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_last_updated",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_length",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_length_unit",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_missing_filters",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_powerfeed",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_poweroutlet",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_powerport",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_q",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_rack",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_rearport",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_status",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_tenant",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_termination_ids",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_termination_types",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_type",
+    "netbox.dcim.tests.test_filtersets.CableTestCase::test_unterminated"
+  ]
+}

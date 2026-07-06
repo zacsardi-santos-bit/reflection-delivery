@@ -1,5 +1,0 @@
-patching file CHANGELOG.md
-patching file converter/internal/prometheusconvert/component/http.go
-patching file converter/internal/prometheusconvert/component/service_discovery.go
-patching file converter/internal/prometheusconvert/testdata/http.river
-patching file converter/internal/prometheusconvert/testdata/http.yaml

@@ -1,0 +1,35 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/test/registered/unit/eplb/test_balanced_packing.py /workspace/repo/test/registered/unit/eplb/test_compute_logical_to_rank_dispatch_physical_map.py -v",
+  "test_files": [
+    "test/registered/unit/eplb/test_balanced_packing.py",
+    "test/registered/unit/eplb/test_compute_logical_to_rank_dispatch_physical_map.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_balance_property",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_deterministic",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_each_pack_receives_equal_items",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_groups_per_pack_one_special_case",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_many_layers",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_output_shapes",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_pack_index_range",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_rank_in_pack_range",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_single_layer",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_uniform_weights_all_invariants",
+    "registered.unit.eplb.test_balanced_packing.TestBalancedPacking::test_unique_pack_rank_slots",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_all_experts_replicated_to_all_gpus",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_all_values_are_valid_physical_expert_ids",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_deterministic_same_seed",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_different_seeds_may_differ",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_each_rank_gets_different_assignment",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_gpu0_prefers_local_experts",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_no_minus_one_in_output",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_output_shape",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_same_node_fallback",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_single_layer",
+    "registered.unit.eplb.test_compute_logical_to_rank_dispatch_physical_map.TestComputeLogicalToRankDispatchPhysicalMap::test_single_node"
+  ],
+  "PASS_TO_PASS": []
+}

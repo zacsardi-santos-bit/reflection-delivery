@@ -1,0 +1,346 @@
+diff --git a/packages/cli/src/ui/components/AskUserDialog.test.tsx b/packages/cli/src/ui/components/AskUserDialog.test.tsx
+index bb76fd3ae..521745535 100644
+--- a/packages/cli/src/ui/components/AskUserDialog.test.tsx
++++ b/packages/cli/src/ui/components/AskUserDialog.test.tsx
+@@ -1581,71 +1581,4 @@ describe('AskUserDialog', () => {
+       expect(frame).toContain('1.  Option 1');
+     });
+   });
+-
+-  it('indents multi-line descriptions correctly', async () => {
+-    const questions: Question[] = [
+-      {
+-        question: 'Single choice?',
+-        header: 'Indent Test',
+-        type: QuestionType.CHOICE,
+-        options: [
+-          {
+-            label: 'Option 1',
+-            description:
+-              'This is a very long description that is expected to wrap onto multiple lines in a narrow terminal. We want to ensure that all lines are correctly indented.',
+-          },
+-        ],
+-        multiSelect: false,
+-      },
+-    ];
+-
+-    const { lastFrame, waitUntilReady } = await renderWithProviders(
+-      <AskUserDialog
+-        questions={questions}
+-        onSubmit={vi.fn()}
+-        onCancel={vi.fn()}
+-        width={40} // Narrow width to force wrapping
+-      />,
+-      { width: 40 },
+-    );
+-
+-    await waitFor(async () => {
+-      await waitUntilReady();
+-      // Snapshot will capture the visual alignment
+-      expect(lastFrame()).toMatchSnapshot();
+-    });
+-  });
+-
+-  it('indents multi-line descriptions correctly in multi-select mode', async () => {
+-    const questions: Question[] = [
+-      {
+-        question: 'Multi-select?',
+-        header: 'Indent Test',
+-        type: QuestionType.CHOICE,
+-        options: [
+-          {
+-            label: 'Option 1',
+-            description:
+-              'This is a very long description that is expected to wrap onto multiple lines in a narrow terminal. We want to ensure that all lines are correctly indented even with checkboxes.',
+-          },
+-        ],
+-        multiSelect: true,
+-      },
+-    ];
+-
+-    const { lastFrame, waitUntilReady } = await renderWithProviders(
+-      <AskUserDialog
+-        questions={questions}
+-        onSubmit={vi.fn()}
+-        onCancel={vi.fn()}
+-        width={40} // Narrow width to force wrapping
+-      />,
+-      { width: 40 },
+-    );
+-
+-    await waitFor(async () => {
+-      await waitUntilReady();
+-      expect(lastFrame()).toMatchSnapshot();
+-    });
+-  });
+ });
+diff --git a/packages/cli/src/ui/components/AskUserDialog.tsx b/packages/cli/src/ui/components/AskUserDialog.tsx
+index 61caf558a..7e1dbf9c0 100644
+--- a/packages/cli/src/ui/components/AskUserDialog.tsx
++++ b/packages/cli/src/ui/components/AskUserDialog.tsx
+@@ -1004,15 +1004,13 @@ const ChoiceQuestionView: React.FC<ChoiceQuestionViewProps> = ({
+                 )}
+               </Box>
+               {optionItem.description && (
+-                // Padding aligns with option label: 4 for multi-select (checkbox + space), 1 for single-select
+-                <Box paddingLeft={showCheck ? 4 : 1}>
+-                  <Text color={theme.text.secondary} wrap="wrap">
+-                    <RenderInline
+-                      text={optionItem.description}
+-                      defaultColor={theme.text.secondary}
+-                    />
+-                  </Text>
+-                </Box>
++                <Text color={theme.text.secondary} wrap="wrap">
++                  {' '}
++                  <RenderInline
++                    text={optionItem.description}
++                    defaultColor={theme.text.secondary}
++                  />
++                </Text>
+               )}
+             </Box>
+           );
+diff --git a/packages/cli/src/ui/components/__snapshots__/AskUserDialog.test.tsx.snap b/packages/cli/src/ui/components/__snapshots__/AskUserDialog.test.tsx.snap
+index 3dcc3815a..cdc060d9d 100644
+--- a/packages/cli/src/ui/components/__snapshots__/AskUserDialog.test.tsx.snap
++++ b/packages/cli/src/ui/components/__snapshots__/AskUserDialog.test.tsx.snap
+@@ -111,42 +111,6 @@ Enter to select · ↑/↓ to navigate · Esc to cancel
+ "
+ `;
+ 
+-exports[`AskUserDialog > indents multi-line descriptions correctly 1`] = `
+-"Single choice?
+-
+-● 1.  Option 1                          
+-      This is a very long description   
+-      that is expected to wrap onto     
+-      multiple lines in a narrow        
+-      terminal. We want to ensure that  
+-      all lines are correctly indented. 
+-  2.  Enter a custom value
+-
+-Enter to select · ↑/↓ to navigate · Esc
+-to cancel
+-"
+-`;
+-
+-exports[`AskUserDialog > indents multi-line descriptions correctly in multi-select mode 1`] = `
+-"Multi-select?
+-(Select all that apply)
+-
+-● 1. [ ] Option 1                       
+-         This is a very long description
+-         that is expected to wrap onto  
+-         multiple lines in a narrow     
+-         terminal. We want to ensure    
+-         that all lines are correctly   
+-         indented even with checkboxes. 
+-  2. [ ] Enter a custom value
+-   Done
+-   Finish selection
+-
+-Enter to select · ↑/↓ to navigate · Esc
+-to cancel
+-"
+-`;
+-
+ exports[`AskUserDialog > renders question and options 1`] = `
+ "Which authentication method should we use?
+ 
+@@ -224,7 +188,7 @@ exports[`AskUserDialog > verifies "All of the above" visual state with snapshot
+   1. [x] TypeScript
+   2. [x] ESLint
+ ● 3. [x] All of the above                                                                                               
+-         Select all options                                                                                             
++      Select all options                                                                                                
+   4. [ ] Enter a custom value
+    Done
+    Finish selection
+diff --git a/packages/core/src/tools/shell.ts b/packages/core/src/tools/shell.ts
+index 4c695ab5e..13965d94f 100644
+--- a/packages/core/src/tools/shell.ts
++++ b/packages/core/src/tools/shell.ts
+@@ -58,10 +58,29 @@ import {
+ } from '../sandbox/utils/proactivePermissions.js';
+ 
+ export const OUTPUT_UPDATE_INTERVAL_MS = 1000;
++export const LIVE_OUTPUT_MAX_BUFFER_CHARS = 100_000;
+ 
+ // Delay so user does not see the output of the process before the process is moved to the background.
+ const BACKGROUND_DELAY_MS = 200;
+ const SHOW_NL_DESCRIPTION_THRESHOLD = 150;
++const LOW_SURROGATE_START = 0xdc00;
++const LOW_SURROGATE_END = 0xdfff;
++
++function trimLiveOutputBuffer(output: string): string {
++  if (output.length <= LIVE_OUTPUT_MAX_BUFFER_CHARS) {
++    return output;
++  }
++
++  let startIndex = output.length - LIVE_OUTPUT_MAX_BUFFER_CHARS;
++  const firstCodeUnit = output.charCodeAt(startIndex);
++  if (
++    firstCodeUnit >= LOW_SURROGATE_START &&
++    firstCodeUnit <= LOW_SURROGATE_END
++  ) {
++    startIndex += 1;
++  }
++  return output.slice(startIndex);
++}
+ 
+ export interface ShellToolParams {
+   command: string;
+@@ -470,6 +489,7 @@ export class ShellToolInvocation extends BaseToolInvocation<
+     const timeoutMs = this.context.config.getShellToolInactivityTimeout();
+     const timeoutController = new AbortController();
+     let timeoutTimer: NodeJS.Timeout | undefined;
++    let trailingFlushTimer: ReturnType<typeof setTimeout> | null = null;
+ 
+     // Handle signal combination manually to avoid TS issues or runtime missing features
+     const combinedController = new AbortController();
+@@ -502,9 +522,61 @@ export class ShellToolInvocation extends BaseToolInvocation<
+         };
+       }
+       let cumulativeOutput: string | AnsiOutput = '';
+-      let lastUpdateTime = Date.now();
++      let lastUpdateTime = 0;
++      let hasFlushedOutput = false;
++      let hasPendingOutput = false;
+       let isBinaryStream = false;
+ 
++      const appendToLiveOutputBuffer = (chunk: string) => {
++        const currentOutput =
++          typeof cumulativeOutput === 'string' ? cumulativeOutput : '';
++        if (chunk.length >= LIVE_OUTPUT_MAX_BUFFER_CHARS) {
++          cumulativeOutput = trimLiveOutputBuffer(chunk);
++          return;
++        }
++
++        const nextOutput = currentOutput + chunk;
++        cumulativeOutput = trimLiveOutputBuffer(nextOutput);
++      };
++
++      const cancelTrailingFlush = () => {
++        if (trailingFlushTimer !== null) {
++          clearTimeout(trailingFlushTimer);
++          trailingFlushTimer = null;
++        }
++      };
++
++      const flushOutput = () => {
++        cancelTrailingFlush();
++        if (!hasPendingOutput || !updateOutput || this.params.is_background) {
++          return;
++        }
++
++        updateOutput(cumulativeOutput);
++        hasPendingOutput = false;
++        hasFlushedOutput = true;
++        lastUpdateTime = Date.now();
++      };
++
++      const scheduleTrailingFlush = () => {
++        if (
++          trailingFlushTimer !== null ||
++          !updateOutput ||
++          this.params.is_background
++        ) {
++          return;
++        }
++        const elapsedSinceLastUpdate = Date.now() - lastUpdateTime;
++        const trailingDelayMs = Math.max(
++          OUTPUT_UPDATE_INTERVAL_MS - elapsedSinceLastUpdate,
++          0,
++        );
++        trailingFlushTimer = setTimeout(() => {
++          trailingFlushTimer = null;
++          flushOutput();
++        }, trailingDelayMs);
++      };
++
+       const resetTimeout = () => {
+         if (timeoutMs <= 0) {
+           return;
+@@ -529,22 +601,31 @@ export class ShellToolInvocation extends BaseToolInvocation<
+           cwd,
+           (event: ShellOutputEvent) => {
+             resetTimeout(); // Reset timeout on any event
+-            if (!updateOutput) {
+-              return;
+-            }
+ 
+             let shouldUpdate = false;
+ 
+             switch (event.type) {
+               case 'data':
+                 if (isBinaryStream) break;
+-                cumulativeOutput = event.chunk;
+-                shouldUpdate = true;
++                if (typeof event.chunk === 'string') {
++                  appendToLiveOutputBuffer(event.chunk);
++                  shouldUpdate =
++                    !hasFlushedOutput ||
++                    Date.now() - lastUpdateTime > OUTPUT_UPDATE_INTERVAL_MS;
++                  if (!shouldUpdate) {
++                    scheduleTrailingFlush();
++                  }
++                } else {
++                  cumulativeOutput = event.chunk;
++                  shouldUpdate = true;
++                }
++                hasPendingOutput = true;
+                 break;
+               case 'binary_detected':
+                 isBinaryStream = true;
+                 cumulativeOutput =
+                   '[Binary output detected. Halting stream...]';
++                hasPendingOutput = true;
+                 shouldUpdate = true;
+                 break;
+               case 'binary_progress':
+@@ -552,11 +633,13 @@ export class ShellToolInvocation extends BaseToolInvocation<
+                 cumulativeOutput = `[Receiving binary output... ${formatBytes(
+                   event.bytesReceived,
+                 )} received]`;
++                hasPendingOutput = true;
+                 if (Date.now() - lastUpdateTime > OUTPUT_UPDATE_INTERVAL_MS) {
+                   shouldUpdate = true;
+                 }
+                 break;
+               case 'exit':
++                flushOutput();
+                 break;
+               default: {
+                 throw new Error('An unhandled ShellOutputEvent was found.');
+@@ -564,8 +647,7 @@ export class ShellToolInvocation extends BaseToolInvocation<
+             }
+ 
+             if (shouldUpdate && !this.params.is_background) {
+-              updateOutput(cumulativeOutput);
+-              lastUpdateTime = Date.now();
++              flushOutput();
+             }
+           },
+           combinedController.signal,
+@@ -639,6 +721,9 @@ export class ShellToolInvocation extends BaseToolInvocation<
+       }
+ 
+       const result = await resultPromise;
++      if (!result.backgrounded) {
++        flushOutput();
++      }
+ 
+       const backgroundPIDs: number[] = [];
+       if (os.platform() !== 'win32') {
+@@ -966,6 +1051,10 @@ export class ShellToolInvocation extends BaseToolInvocation<
+       };
+     } finally {
+       if (timeoutTimer) clearTimeout(timeoutTimer);
++      if (trailingFlushTimer) {
++        clearTimeout(trailingFlushTimer);
++        trailingFlushTimer = null;
++      }
+       signal.removeEventListener('abort', onAbort);
+       timeoutController.signal.removeEventListener('abort', onAbort);
+       if (tempFilePath) {

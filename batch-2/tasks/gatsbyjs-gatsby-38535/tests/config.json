@@ -1,0 +1,14 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && yarn install --frozen-lockfile --silent && cd packages/gatsby && npx jest cache-dir/__tests__/runtime-errors.js --coverage=false --watchAll=false --verbose --json",
+  "test_files": [
+    "packages/gatsby/cache-dir/__tests__/runtime-errors.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/gatsby/cache-dir/__tests__/runtime-errors.js::renders native Error info",
+    "/workspace/repo/packages/gatsby/cache-dir/__tests__/runtime-errors.js::renders Error info without stack"
+  ],
+  "PASS_TO_PASS": []
+}

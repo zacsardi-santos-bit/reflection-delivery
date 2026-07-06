@@ -1,0 +1,29 @@
+{
+    "id": "a9150910-5eaa-4b5f-8786-6be9e9eb119f",
+    "started_at": "2026-07-06T12:18:52.399365",
+    "finished_at": "2026-07-06T12:19:23.546080",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__gradio-app-gradio-13533": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "gradio-app-gradio-13533__vQR8gEZ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

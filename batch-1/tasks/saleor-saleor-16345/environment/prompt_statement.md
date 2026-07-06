@@ -1,0 +1,7 @@
+I'm seeing incorrect discount amounts recorded on orders when a customer uses both a voucher and a gift card during checkout. The voucher discount amount saved on the order seems to include the gift card's contribution, when it should only reflect what the voucher actually discounted.
+
+The problem is especially noticeable with free-shipping vouchers combined with gift cards: the order's undiscounted total ends up being wrong because the system uses the post-discount shipping price (zero, after the free-shipping voucher) instead of the original shipping price when calculating what the order would have cost without discounts. This makes the voucher discount amount look larger than it should be.
+
+I'd expect that when an order is completed with both a voucher and a gift card, the voucher's recorded discount is exactly the amount the voucher contributed — not inflated by the gift card. Similarly, the undiscounted total should reflect what the order would have cost without any discounts, using the original shipping price regardless of whether a free-shipping voucher was applied.
+
+Can you fix the checkout completion logic so that the voucher discount amount and the undiscounted order total are calculated correctly when both a voucher and a gift card are present? This needs to work for all voucher types — percentage discounts on the whole order, free-shipping vouchers, apply-once-per-order vouchers, and product-specific vouchers — and must apply to both the standard checkout completion flow and the order-from-checkout creation flow.

@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/test_dart.py -v -s",
+  "test_files": [
+    "packages/flutter_tools/test/general.shard/ios/core_devices_test.dart",
+    "packages/flutter_tools/test/general.shard/ios/lldb_test.dart"
+  ],
+  "num_test_files": 2,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "test_dart::test_dart_ios_tests"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,324 @@
+patching file engine/baml-lib/jsonish/src/tests/test_streaming.rs
+warning[E0602]: unknown lint: `elided_named_lifetimes`
+  |
+  = note: requested on the command line with `-D elided_named_lifetimes`
+  = note: `#[warn(unknown_lints)]` on by default
+
+For more information about this error, try `rustc --explain E0602`.
+warning: `baml-types` (lib) generated 1 warning
+warning: `internal-baml-diagnostics` (lib) generated 1 warning (1 duplicate)
+warning: `bstd` (lib) generated 1 warning (1 duplicate)
+warning: `internal-baml-schema-ast` (lib) generated 1 warning (1 duplicate)
+warning: `internal-baml-parser-database` (build script) generated 1 warning (1 duplicate)
+warning: `internal-baml-prompt-parser` (lib) generated 1 warning (1 duplicate)
+warning: `internal-baml-jinja-types` (lib) generated 1 warning (1 duplicate)
+warning: `internal-llm-client` (lib) generated 1 warning (1 duplicate)
+warning: `internal-baml-parser-database` (lib) generated 1 warning (1 duplicate)
+warning: `internal-baml-core` (lib) generated 1 warning (1 duplicate)
+warning: `internal-baml-jinja` (lib) generated 1 warning (1 duplicate)
+   Compiling jsonish v0.73.5 (/workspace/repo/engine/baml-lib/jsonish)
+warning: `jsonish` (lib) generated 1 warning (1 duplicate)
+warning: `jsonish` (lib test) generated 1 warning (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 10.25s
+────────────
+ Nextest run ID 12adb58b-14ad-49fc-9fb2-794118fa6514 with nextest profile: default
+    Starting 296 tests across 1 binary
+        PASS [   0.130s] (  1/296) jsonish jsonish::parser::entry::tests::test_partial_int
+        PASS [   0.138s] (  2/296) jsonish jsonish::parser::entry::tests::test_complete_list
+        PASS [   0.140s] (  3/296) jsonish jsonish::parser::fixing_parser::tests::test_partial_array
+        PASS [   0.144s] (  4/296) jsonish jsonish::parser::fixing_parser::tests::test_partial_object
+        PASS [   0.148s] (  5/296) jsonish jsonish::parser::fixing_parser::tests::test_partial_object_newlines
+        PASS [   0.150s] (  6/296) jsonish jsonish::parser::multi_json_parser::test::test_parse
+        PASS [   0.162s] (  7/296) jsonish jsonish::parser::markdown_parser::test::utf8_between_blocks
+        PASS [   0.165s] (  8/296) jsonish jsonish::parser::markdown_parser::test::basic_parse
+        PASS [   0.166s] (  9/296) jsonish jsonish::parser::entry::tests::test_incomplete_list
+        PASS [   0.172s] ( 10/296) jsonish jsonish::parser::entry::tests::test_incomplete_nested_list
+        PASS [   0.223s] ( 11/296) jsonish deserializer::semantic_streaming::tests::recursive_type_alias
+        PASS [   0.229s] ( 12/296) jsonish deserializer::semantic_streaming::tests::stable_keys
+        PASS [   0.267s] ( 13/296) jsonish tests::test_aliases::test_json_with_nested_list
+        PASS [   0.284s] ( 14/296) jsonish tests::test_aliases::test_json_defined_with_cycles
+        PASS [   0.197s] ( 15/296) jsonish tests::test_basics::test_array
+        PASS [   0.370s] ( 16/296) jsonish deserializer::coercer::coerce_primitive::tests::test_float_from_comma_separated
+        PASS [   0.370s] ( 17/296) jsonish tests::test_aliases::test_full_json_with_nested_objects
+        PASS [   0.222s] ( 18/296) jsonish tests::test_aliases::test_simple_recursive_alias_list
+        PASS [   0.228s] ( 19/296) jsonish tests::test_aliases::test_nested_list
+        PASS [   0.226s] ( 20/296) jsonish tests::test_aliases::test_recursive_alias_cycle
+        PASS [   0.215s] ( 21/296) jsonish tests::test_aliases::test_simple_recursive_alias_map
+        PASS [   0.207s] ( 22/296) jsonish tests::test_basics::test_array_1
+        PASS [   0.213s] ( 23/296) jsonish tests::test_basics::test_ambiguous_bool
+        PASS [   0.388s] ( 24/296) jsonish tests::animation::make_test_data1
+        PASS [   0.252s] ( 25/296) jsonish tests::test_aliases::test_json_without_nested_objects
+        PASS [   0.272s] ( 26/296) jsonish tests::test_aliases::test_json_with_nested_object
+        PASS [   0.272s] ( 27/296) jsonish tests::test_aliases::test_list_of_json_objects
+        PASS [   0.209s] ( 28/296) jsonish tests::test_basics::test_array_3
+        PASS [   0.201s] ( 29/296) jsonish tests::test_basics::test_bool
+        PASS [   0.196s] ( 30/296) jsonish tests::test_basics::test_bool_3
+        PASS [   0.217s] ( 31/296) jsonish tests::test_basics::test_bool_2
+        PASS [   0.204s] ( 32/296) jsonish tests::test_basics::test_float
+        PASS [   0.203s] ( 33/296) jsonish tests::test_basics::test_incomplete_string
+        PASS [   0.233s] ( 34/296) jsonish tests::test_basics::test_bool_4
+        PASS [   0.228s] ( 35/296) jsonish tests::test_basics::test_bool_wrapped_mismatched_case_preceded_by_text
+        PASS [   0.232s] ( 36/296) jsonish tests::test_basics::test_bool_mismatched_case_followed_by_text
+        PASS [   0.228s] ( 37/296) jsonish tests::test_basics::test_elaborate_ambiguous_bool
+        PASS [   0.235s] ( 38/296) jsonish tests::test_basics::test_bool_wrapped
+        PASS [   0.227s] ( 39/296) jsonish tests::test_basics::test_float_1
+        PASS [   0.236s] ( 40/296) jsonish tests::test_basics::test_bool_wrapped_mismatched_case
+        PASS [   0.239s] ( 41/296) jsonish tests::test_basics::test_float_comma_german2
+        PASS [   0.237s] ( 42/296) jsonish tests::test_basics::test_float_comma_us
+        PASS [   0.649s] ( 43/296) jsonish tests::test_aliases::test_ambiguous_int_string_json_type
+        PASS [   0.251s] ( 44/296) jsonish tests::test_basics::test_incomplete_string_in_object
+        PASS [   0.233s] ( 45/296) jsonish tests::test_basics::test_invalid_array
+        PASS [   0.254s] ( 46/296) jsonish tests::test_basics::test_injected_triple_quoted_string
+        PASS [   0.251s] ( 47/296) jsonish tests::test_basics::test_invalid_array_in_object
+        PASS [   0.257s] ( 48/296) jsonish tests::test_basics::test_json_md_example_1
+        PASS [   0.255s] ( 49/296) jsonish tests::test_basics::test_json_md_example_1_bad_inner_json
+        PASS [   0.236s] ( 50/296) jsonish tests::test_basics::test_large_object
+        PASS [   0.248s] ( 51/296) jsonish tests::test_basics::test_json_md_example_3
+        PASS [   0.269s] ( 52/296) jsonish tests::test_basics::test_json_md_example_1_bad_inner_json_2
+        PASS [   0.255s] ( 53/296) jsonish tests::test_basics::test_json_md_example_2
+        PASS [   0.259s] ( 54/296) jsonish tests::test_basics::test_json_md_example_1_bad_inner_json_3
+        PASS [   0.256s] ( 55/296) jsonish tests::test_basics::test_json_with_markdown_without_quotes
+        PASS [   0.259s] ( 56/296) jsonish tests::test_basics::test_json_with_unquoted_values_with_spaces_and_new_lines
+        PASS [   0.260s] ( 57/296) jsonish tests::test_basics::test_json_with_unquoted_values_with_spaces
+        PASS [   0.263s] ( 58/296) jsonish tests::test_basics::test_localization
+        PASS [   0.270s] ( 59/296) jsonish tests::test_basics::test_localization2
+        PASS [   0.251s] ( 60/296) jsonish tests::test_basics::test_multiple_top_level_1
+        PASS [   0.257s] ( 61/296) jsonish tests::test_basics::test_multiple_top_level_2
+        PASS [   0.252s] ( 62/296) jsonish tests::test_basics::test_multiple_top_level_prefix_suffix_2
+        PASS [   0.257s] ( 63/296) jsonish tests::test_basics::test_multiple_top_level_prefix_suffix_1
+        PASS [   0.240s] ( 64/296) jsonish tests::test_basics::test_nested
+        PASS [   0.313s] ( 65/296) jsonish tests::test_basics::test_mal_formed_json_sequence
+        PASS [   0.242s] ( 66/296) jsonish tests::test_basics::test_nested_whitespace
+        PASS [   0.255s] ( 67/296) jsonish tests::test_basics::test_nested_whitespace_prefix_suffix
+        PASS [   0.211s] ( 68/296) jsonish tests::test_basics::test_null
+        PASS [   0.209s] ( 69/296) jsonish tests::test_basics::test_null_1
+        PASS [   0.209s] ( 70/296) jsonish tests::test_basics::test_number
+        PASS [   0.201s] ( 71/296) jsonish tests::test_basics::test_prefixed_incompleted_string
+        PASS [   0.234s] ( 72/296) jsonish tests::test_basics::test_null_2
+        PASS [   0.237s] ( 73/296) jsonish tests::test_basics::test_null_3
+        PASS [   0.206s] ( 74/296) jsonish tests::test_basics::test_string
+        PASS [   0.234s] ( 75/296) jsonish tests::test_basics::test_object
+        PASS [   0.245s] ( 76/296) jsonish tests::test_basics::test_number_2
+        PASS [   0.243s] ( 77/296) jsonish tests::test_basics::test_string_to_float_from_comma_separated
+        PASS [   0.235s] ( 78/296) jsonish tests::test_basics::test_trailing_comma_array_2
+        PASS [   0.229s] ( 79/296) jsonish tests::test_basics::test_trailing_comma_array_3
+        PASS [   0.233s] ( 80/296) jsonish tests::test_class::str_with_nested_json
+        PASS [   0.250s] ( 81/296) jsonish tests::test_basics::test_trailing_comma_object
+        PASS [   0.258s] ( 82/296) jsonish tests::test_basics::test_unquoted_keys
+        PASS [   0.235s] ( 83/296) jsonish tests::test_class::str_with_quotes
+        PASS [   0.236s] ( 84/296) jsonish tests::test_class::test_aliases
+        PASS [   0.392s] ( 85/296) jsonish tests::test_basics::test_sidd
+        PASS [   0.237s] ( 86/296) jsonish tests::test_class::test_class_with_nested_list
+        PASS [   0.240s] ( 87/296) jsonish tests::test_class::test_class_with_nestedd_list_just_list
+        PASS [   0.234s] ( 88/296) jsonish tests::test_class::test_empty_string_value
+        PASS [   0.244s] ( 89/296) jsonish tests::test_class::test_empty_string_value_1
+        PASS [   0.243s] ( 90/296) jsonish tests::test_class::test_empty_string_value_2
+        PASS [   0.235s] ( 91/296) jsonish tests::test_class::test_foo
+        PASS [   0.294s] ( 92/296) jsonish tests::test_class::test_ekinsdrow
+        PASS [   0.264s] ( 93/296) jsonish tests::test_class::test_escaped_quotes
+        PASS [   0.231s] ( 94/296) jsonish tests::test_class::test_multi_fielded_foo
+        PASS [   0.230s] ( 95/296) jsonish tests::test_class::test_multi_fielded_foo_with_list
+        PASS [   0.229s] ( 96/296) jsonish tests::test_class::test_multi_fielded_foo_with_optional
+        PASS [   0.232s] ( 97/296) jsonish tests::test_class::test_nested_class
+        PASS [   0.248s] ( 98/296) jsonish tests::test_class::test_multi_fielded_foo_with_optional_and_extra_text
+        PASS [   0.261s] ( 99/296) jsonish tests::test_class::test_mutually_recursive_with_union
+        PASS [   0.263s] (100/296) jsonish tests::test_class::test_nested_class_with_prefix
+        PASS [   0.298s] (101/296) jsonish tests::test_class::test_nested_class_with_extra_text
+        PASS [   0.228s] (102/296) jsonish tests::test_class::test_nested_obj_from_bool
+        PASS [   0.229s] (103/296) jsonish tests::test_class::test_nested_obj_from_int
+        PASS [   0.233s] (104/296) jsonish tests::test_class::test_nested_obj_from_float
+        PASS [   0.280s] (105/296) jsonish tests::test_class::test_nested_classes_with_aliases
+        PASS [   0.232s] (106/296) jsonish tests::test_class::test_nested_obj_from_string_fails_0
+        PASS [   0.233s] (107/296) jsonish tests::test_class::test_nested_obj_from_string_fails_1
+        PASS [   0.235s] (108/296) jsonish tests::test_class::test_nested_obj_from_string_fails_2
+        PASS [   0.231s] (109/296) jsonish tests::test_class::test_obj_from_str_with_string_foo
+        PASS [   0.227s] (110/296) jsonish tests::test_class::test_optional_foo
+        PASS [   0.229s] (111/296) jsonish tests::test_class::test_optional_foo_with_value
+        PASS [   0.253s] (112/296) jsonish tests::test_class::test_obj_created_when_not_present
+        PASS [   0.236s] (113/296) jsonish tests::test_class::test_object_finished_ints
+        PASS [   0.247s] (114/296) jsonish tests::test_class::test_recursive_single_line
+        PASS [   0.246s] (115/296) jsonish tests::test_class::test_recursive_type
+        PASS [   0.636s] (116/296) jsonish tests::test_class::test_integ_test_failure
+        PASS [   0.252s] (117/296) jsonish tests::test_class::test_recursive_type_missing_brackets_and_quotes
+        PASS [   0.249s] (118/296) jsonish tests::test_class::test_recursive_type_with_union_missing_brackets_and_quotes
+        PASS [   0.258s] (119/296) jsonish tests::test_class::test_recursive_type_with_union
+        PASS [   0.264s] (120/296) jsonish tests::test_class::test_recursive_union_on_multiple_fields_single_line
+        PASS [   0.233s] (121/296) jsonish tests::test_class::test_resume
+        PASS [   0.271s] (122/296) jsonish tests::test_class::test_recursive_union_on_multiple_fields_single_line_without_quotes
+        PASS [   0.240s] (123/296) jsonish tests::test_class::test_resume_partial_2
+        PASS [   0.244s] (124/296) jsonish tests::test_class::test_resume_partial
+        PASS [   0.246s] (125/296) jsonish tests::test_class::test_string_field_with_spaces
+        PASS [   0.301s] (126/296) jsonish tests::test_class::test_recursive_union_on_multiple_fields_single_line_without_quotes_complex
+        PASS [   0.244s] (127/296) jsonish tests::test_class::test_string_from_obj_and_string_with_invalid_extra_text
+        PASS [   0.251s] (128/296) jsonish tests::test_class::test_string_from_obj_and_string
+        PASS [   0.247s] (129/296) jsonish tests::test_class::test_string_from_obj_and_string_with_extra_text
+        PASS [   0.249s] (130/296) jsonish tests::test_class::test_trailing_comma_with_space_last_field
+        PASS [   0.228s] (131/296) jsonish tests::test_class::test_wrapped_objects
+        PASS [   0.254s] (132/296) jsonish tests::test_class::test_trailing_comma_with_space_last_field_and_extra_text
+        PASS [   0.255s] (133/296) jsonish tests::test_class_2::test_class_2_single
+        PASS [   0.269s] (134/296) jsonish tests::test_class_2::test_class_2_four
+        PASS [   0.224s] (135/296) jsonish tests::test_code::double_quotes
+        PASS [   0.264s] (136/296) jsonish tests::test_class_2::test_class_2_two
+        PASS [   0.249s] (137/296) jsonish tests::test_class_2::test_single_page_task
+        PASS [   0.276s] (138/296) jsonish tests::test_class_2::test_class_2_three
+        PASS [   0.244s] (139/296) jsonish tests::test_code::backticks
+        PASS [   0.242s] (140/296) jsonish tests::test_code::large_backticks
+        PASS [   0.661s] (141/296) jsonish tests::test_class::test_optional_list
+        PASS [   0.244s] (142/296) jsonish tests::test_code::single_quotes
+        PASS [   0.246s] (143/296) jsonish tests::test_code::string_preserves_triple_backticks
+        PASS [   0.239s] (144/296) jsonish tests::test_code::triple_backticks
+        PASS [   0.244s] (145/296) jsonish tests::test_code::triple_backticks_in_json_fenced_codeblock
+        PASS [   0.246s] (146/296) jsonish tests::test_code::triple_backticks_contains_json_terminators
+        PASS [   0.243s] (147/296) jsonish tests::test_code::triple_backticks_returns_dedented_code_and_discards_info
+        PASS [   0.249s] (148/296) jsonish tests::test_code::triple_quotes
+        PASS [   0.240s] (149/296) jsonish tests::test_code::triple_quotes_contains_only_backtick_string
+        PASS [   0.426s] (150/296) jsonish tests::test_class_2::test_full
+        PASS [   0.253s] (151/296) jsonish tests::test_code::triple_quotes_contains_only_quoted_string
+        PASS [   0.250s] (152/296) jsonish tests::test_code::unescaped_backticks_in_backticks
+        PASS [   0.249s] (153/296) jsonish tests::test_code::unescaped_double_quotes_in_double_quotes
+        PASS [   0.251s] (154/296) jsonish tests::test_code::unescaped_double_quotes_in_backticks
+        PASS [   0.244s] (155/296) jsonish tests::test_code::unescaped_double_quotes_in_triple_quotes
+        PASS [   0.243s] (156/296) jsonish tests::test_code::unescaped_newline_double_quotes
+        PASS [   0.247s] (157/296) jsonish tests::test_code::unescaped_newline_backticks
+        PASS [   0.248s] (158/296) jsonish tests::test_code::unescaped_newline_single_quotes
+        PASS [   0.248s] (159/296) jsonish tests::test_code::unescaped_newline_triple_quotes
+        PASS [   0.234s] (160/296) jsonish tests::test_code::unquoted_string
+        PASS [   0.250s] (161/296) jsonish tests::test_code::unescaped_single_quotes_in_single_quotes
+        PASS [   0.249s] (162/296) jsonish tests::test_code::unescaped_single_quotes_in_triple_quotes
+        PASS [   0.252s] (163/296) jsonish tests::test_constraints::test_block_level_assert_failure
+        PASS [   0.251s] (164/296) jsonish tests::test_constraints::test_block_level_check_failure
+        PASS [   0.258s] (165/296) jsonish tests::test_constraints::test_block_level_enum_assert_failure
+        PASS [   0.254s] (166/296) jsonish tests::test_constraints::test_class_failing_assert
+        PASS [   0.292s] (167/296) jsonish tests::test_constraints::test_class_failing_one_check
+        PASS [   0.255s] (168/296) jsonish tests::test_constraints::test_class_multiple_failing_asserts
+        PASS [   0.301s] (169/296) jsonish tests::test_constraints::test_class_failing_two_checks
+        PASS [   0.242s] (170/296) jsonish tests::test_enum::alias_with_text
+        PASS [   0.258s] (171/296) jsonish tests::test_constraints::test_union_decision_in_list
+        PASS [   0.234s] (172/296) jsonish tests::test_enum::aliases_1
+        PASS [   0.234s] (173/296) jsonish tests::test_enum::aliases_2
+        PASS [   0.278s] (174/296) jsonish tests::test_constraints::test_nested_class_constraints
+        PASS [   0.238s] (175/296) jsonish tests::test_enum::aliases_3
+        PASS [   0.238s] (176/296) jsonish tests::test_enum::case_insensitive
+        PASS [   0.232s] (177/296) jsonish tests::test_enum::case_insensitive_ambiguous_match
+        PASS [   0.234s] (178/296) jsonish tests::test_enum::case_sensitive_non_ambiguous_match
+        PASS [   0.335s] (179/296) jsonish tests::test_constraints::test_map_with_check
+        PASS [   0.239s] (180/296) jsonish tests::test_enum::descriptions
+        PASS [   0.325s] (181/296) jsonish tests::test_constraints::test_map_with_check_fails
+        PASS [   0.359s] (182/296) jsonish tests::test_constraints::test_union_decision_from_check
+        PASS [   0.359s] (183/296) jsonish tests::test_constraints::test_union_decision_from_check_no_good_answer
+        PASS [   0.249s] (184/296) jsonish tests::test_enum::descriptions_period
+        PASS [   0.246s] (185/296) jsonish tests::test_enum::descriptions_whitespace
+        PASS [   0.235s] (186/296) jsonish tests::test_enum::from_enum_list_multi
+        PASS [   0.232s] (187/296) jsonish tests::test_enum::from_enum_list_single
+        PASS [   0.244s] (188/296) jsonish tests::test_enum::from_string_and_case_mismatch
+        PASS [   0.228s] (189/296) jsonish tests::test_enum::from_string_with_extra_text_after_1
+        PASS [   0.241s] (190/296) jsonish tests::test_enum::from_string_and_case_mismatch_upper
+        PASS [   0.231s] (191/296) jsonish tests::test_enum::from_string_with_extra_text_after_2
+        PASS [   0.231s] (192/296) jsonish tests::test_enum::from_string_with_extra_text_after_3
+        PASS [   0.242s] (193/296) jsonish tests::test_enum::from_string_and_case_mismatch_wrapped
+        PASS [   0.225s] (194/296) jsonish tests::test_enum::from_string_with_extra_text_after_4
+        PASS [   0.232s] (195/296) jsonish tests::test_enum::from_string_with_extra_text_after_5
+        PASS [   0.236s] (196/296) jsonish tests::test_enum::list_of_enums
+        PASS [   0.251s] (197/296) jsonish tests::test_enum::list_of_enums_2
+        PASS [   0.248s] (198/296) jsonish tests::test_enum::multi_aliases
+        PASS [   0.246s] (199/296) jsonish tests::test_enum::multi_aliases_1
+        PASS [   0.247s] (200/296) jsonish tests::test_enum::multi_aliases_2
+        PASS [   0.251s] (201/296) jsonish tests::test_enum::no_punctuation
+        PASS [   0.251s] (202/296) jsonish tests::test_enum::no_punctuation_2
+        PASS [   0.258s] (203/296) jsonish tests::test_enum::test_ambiguous_substring_enum
+        PASS [   0.244s] (204/296) jsonish tests::test_enum::test_enum
+        PASS [   0.212s] (205/296) jsonish tests::test_lists::test_list
+        PASS [   0.258s] (206/296) jsonish tests::test_enum::test_numerical_enum
+        PASS [   0.228s] (207/296) jsonish tests::test_enum::with_quotes
+        PASS [   0.228s] (208/296) jsonish tests::test_lists::test_list_streaming_2
+        PASS [   0.235s] (209/296) jsonish tests::test_lists::test_list_streaming
+        PASS [   0.238s] (210/296) jsonish tests::test_lists::test_list_object_from_string
+        PASS [   0.256s] (211/296) jsonish tests::test_leading_close_braces
+        PASS [   0.207s] (212/296) jsonish tests::test_literals::test_literal_boolean_false
+        PASS [   0.239s] (213/296) jsonish tests::test_lists::test_list_with_extra_text
+        PASS [   0.218s] (214/296) jsonish tests::test_lists::test_list_with_quotes
+        PASS [   0.238s] (215/296) jsonish tests::test_lists::test_list_with_invalid_extra_text
+        PASS [   0.213s] (216/296) jsonish tests::test_literals::test_literal_boolean_true
+        PASS [   0.285s] (217/296) jsonish tests::test_lists::test_class_list
+        PASS [   0.209s] (218/296) jsonish tests::test_literals::test_literal_integer_negative
+        PASS [   0.209s] (219/296) jsonish tests::test_literals::test_literal_integer_positive
+        PASS [   0.219s] (220/296) jsonish tests::test_literals::test_literal_integer_zero
+        PASS [   0.244s] (221/296) jsonish tests::test_literals::test_literal_string_case_mismatch_upper
+        PASS [   0.236s] (222/296) jsonish tests::test_literals::test_literal_string_followed_by_extra_text
+        PASS [   0.228s] (223/296) jsonish tests::test_literals::test_literal_string_followed_by_extra_text_case_mismatch
+        PASS [   0.228s] (224/296) jsonish tests::test_literals::test_literal_string_lowercase
+        PASS [   0.229s] (225/296) jsonish tests::test_literals::test_literal_string_mismatched_case
+        PASS [   0.212s] (226/296) jsonish tests::test_literals::test_literal_string_uppercase_with_double_quotes
+        PASS [   0.229s] (227/296) jsonish tests::test_literals::test_literal_string_preceded_by_extra_text
+        PASS [   0.231s] (228/296) jsonish tests::test_literals::test_literal_string_preceded_by_extra_text_case_mismatch
+        PASS [   0.224s] (229/296) jsonish tests::test_literals::test_literal_string_uppercase_without_quotes
+        PASS [   0.225s] (230/296) jsonish tests::test_literals::test_literal_string_with_quotes_followed_by_extra_text
+        PASS [   0.226s] (231/296) jsonish tests::test_literals::test_literal_string_with_quotes_followed_by_extra_text_case_mismatch
+        PASS [   0.217s] (232/296) jsonish tests::test_literals::test_literal_string_with_special_characters
+        PASS [   0.228s] (233/296) jsonish tests::test_literals::test_literal_string_with_quotes_preceded_by_extra_text_case_mismatch
+        PASS [   0.216s] (234/296) jsonish tests::test_literals::test_literal_string_with_whitespace
+        PASS [   0.233s] (235/296) jsonish tests::test_literals::test_literal_string_with_quotes_preceded_by_extra_text
+        PASS [   0.235s] (236/296) jsonish tests::test_literals::test_partial_class_with_null_literal
+        PASS [   0.220s] (237/296) jsonish tests::test_literals::test_union_literal_integer_positive
+        PASS [   0.254s] (238/296) jsonish tests::test_literals::test_union_literal_bool_with_both
+        PASS [   0.218s] (239/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_multi_key_object
+        PASS [   0.215s] (240/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_nested_object
+        PASS [   0.252s] (241/296) jsonish tests::test_literals::test_union_literal_integer_positive_with_both
+        PASS [   0.218s] (242/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_object
+        PASS [   0.219s] (243/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_object_array
+        PASS [   0.242s] (244/296) jsonish tests::test_literals::test_union_literal_string_with_both
+        PASS [   0.215s] (245/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_object_bool
+        PASS [   0.216s] (246/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_object_int
+        PASS [   0.216s] (247/296) jsonish tests::test_maps::test_map
+        PASS [   0.237s] (248/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_object_quoted_string
+        PASS [   0.223s] (249/296) jsonish tests::test_maps::test_map_with_enum_keys
+        PASS [   0.236s] (250/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_object_string
+        PASS [   0.229s] (251/296) jsonish tests::test_maps::test_map_key_coercion
+        PASS [   0.236s] (252/296) jsonish tests::test_literals::test_union_literal_with_multiple_types_from_object_string_extra
+        PASS [   0.232s] (253/296) jsonish tests::test_maps::test_map_with_extra_text
+        PASS [   0.235s] (254/296) jsonish tests::test_maps::test_map_with_invalid_extra_text
+        PASS [   0.217s] (255/296) jsonish tests::test_maps::test_map_with_quotes
+        PASS [   0.394s] (256/296) jsonish tests::test_maps::test_map_with_enum_keys_streaming
+        PASS [   0.232s] (257/296) jsonish tests::test_maps::test_union_of_class_and_map
+        PASS [   0.241s] (258/296) jsonish tests::test_maps::test_map_with_newlines_in_keys
+        PASS [   0.238s] (259/296) jsonish tests::test_maps::test_unterminated_map
+        PASS [   0.254s] (260/296) jsonish tests::test_maps::test_map_with_object_values
+        PASS [   0.234s] (261/296) jsonish tests::test_maps::test_unterminated_nested_map
+        PASS [   0.242s] (262/296) jsonish tests::test_maps::test_union_of_map_and_class
+        PASS [   0.240s] (263/296) jsonish tests::test_object_from_string_ordered_class
+        PASS [   0.398s] (264/296) jsonish tests::test_maps::test_map_with_literal_keys_streaming
+        PASS [   0.271s] (265/296) jsonish tests::test_partials::test_partial_analysis_2
+        PASS [   0.263s] (266/296) jsonish tests::test_partials::test_partial_choppy
+        PASS [   0.287s] (267/296) jsonish tests::test_partials::test_partial_analysis_1
+        PASS [   0.284s] (268/296) jsonish tests::test_partials::test_partial_choppy_union_2
+        PASS [   0.295s] (269/296) jsonish tests::test_partials::test_partial_choppy_union
+        PASS [   0.192s] (270/296) jsonish tests::test_string_from_list
+        PASS [   0.196s] (271/296) jsonish tests::test_string_from_int
+        PASS [   0.194s] (272/296) jsonish tests::test_string_from_obj_and_string
+        PASS [   0.190s] (273/296) jsonish tests::test_string_from_object
+        PASS [   0.194s] (274/296) jsonish tests::test_string_from_string
+        PASS [   0.191s] (275/296) jsonish tests::test_string_from_string22
+        PASS [   0.197s] (276/296) jsonish tests::test_string_from_string21
+        PASS [   0.460s] (277/296) jsonish tests::test_streaming::test_done_field
+        PASS [   0.271s] (278/296) jsonish tests::test_streaming::test_toplevel_done
+        PASS [   0.240s] (279/296) jsonish tests::test_string_from_string23
+        PASS [   0.244s] (280/296) jsonish tests::test_string_from_string24
+        PASS [   0.239s] (281/296) jsonish tests::test_string_from_string25
+        PASS [   0.186s] (282/296) jsonish tests::test_string_from_string_with_quotes
+        PASS [   0.229s] (283/296) jsonish tests::test_string_from_string26
+        PASS [   0.232s] (284/296) jsonish tests::test_unions::test_ignore_float_in_string_if_string_in_union
+        PASS [   0.559s] (285/296) jsonish tests::test_streaming::test_needed_field
+        PASS [   0.259s] (286/296) jsonish tests::test_unions::test_email_regex
+        PASS [   0.222s] (287/296) jsonish tests::test_unions::test_ignore_int_if_string_in_union
+        PASS [   0.210s] (288/296) jsonish tests::test_unions::test_union
+        PASS [   0.505s] (289/296) jsonish tests::test_streaming::test_number_list
+        PASS [   0.518s] (290/296) jsonish tests::test_streaming::test_number_list_state_incomplete
+        PASS [   0.243s] (291/296) jsonish tests::test_unions::test_phone_number_regex
+        PASS [   0.236s] (292/296) jsonish tests::test_unions::test_union3
+        PASS [   0.240s] (293/296) jsonish tests::test_unions::test_union2
+        PASS [   0.628s] (294/296) jsonish tests::test_streaming::test_nested_done
+        PASS [   0.620s] (295/296) jsonish tests::test_streaming::test_nested_done_with_toplevel_done
+        PASS [   1.114s] (296/296) jsonish tests::test_streaming::test_memory
+────────────
+     Summary [   4.696s] 296 tests run: 296 passed, 0 skipped
+reward=1 graded=296 found=48 failed=0 parsed=296 framework=cargo exit_code=0

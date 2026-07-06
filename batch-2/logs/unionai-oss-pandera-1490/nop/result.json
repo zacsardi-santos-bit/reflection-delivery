@@ -1,0 +1,29 @@
+{
+    "id": "9eb99b3e-f81b-44f0-823c-932fcaa53080",
+    "started_at": "2026-07-06T12:17:33.287930",
+    "finished_at": "2026-07-06T12:19:19.972825",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__unionai-oss-pandera-1490": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "unionai-oss-pandera-1490__BEfuzFD"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

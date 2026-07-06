@@ -1,0 +1,26 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && bundle exec ruby /workspace/test_runner.rb",
+  "test_files": [
+    "actionview/test/template/cache_expiry_test.rb",
+    "railties/test/application/reloaders_collection_test.rb"
+  ],
+  "num_test_files": 2,
+  "language": "ruby",
+  "FAIL_TO_PASS": [
+    "Minitest::Result::test_create_registers_the_hook_on_PathRegistry",
+    "Minitest::Result::test_#hook_returns_the_bound_method_used_for_PathRegistry_registration",
+    "Minitest::Result::test_#deactivate_removes_the_hook_from_PathRegistry",
+    "Minitest::Result::test_#deactivate_is_idempotent",
+    "Minitest::Result::test_supports_enumerable",
+    "Minitest::Result::test_clear_skips_reloaders_without_deactivate",
+    "Minitest::Result::test_delete_deactivates_the_removed_reloader",
+    "Minitest::Result::test_clear_deactivates_each_reloader"
+  ],
+  "PASS_TO_PASS": [
+    "Minitest::Result::test_updated?_builds_a_watcher_once_view_paths_are_registered",
+    "Minitest::Result::test_#rebuild_watcher_rebuilds_the_watcher_after_the_first_build",
+    "Minitest::Result::test_#updated?_does_not_build_a_watcher_when_there_are_no_view_paths_to_watch",
+    "Minitest::Result::test_#rebuild_watcher_is_a_no-op_while_@watcher_has_not_been_built"
+  ]
+}

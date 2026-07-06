@@ -1,0 +1,16 @@
+patching file sdk/go/common/resource/plugin/converter_plugin_test.go
+patching file sdk/go/common/resource/plugin/converter_server_test.go
+# github.com/pulumi/pulumi/sdk/v3/go/common/resource/plugin [github.com/pulumi/pulumi/sdk/v3/go/common/resource/plugin.test]
+go/common/resource/plugin/converter_plugin_test.go:54:5: unknown field LogicalName in struct literal of type pulumirpc.ResourceImport
+go/common/resource/plugin/converter_plugin_test.go:55:5: unknown field IsRemote in struct literal of type pulumirpc.ResourceImport
+go/common/resource/plugin/converter_plugin_test.go:56:5: unknown field IsComponent in struct literal of type pulumirpc.ResourceImport
+go/common/resource/plugin/converter_plugin_test.go:113:42: res.LogicalName undefined (type ResourceImport has no field or method LogicalName)
+go/common/resource/plugin/converter_plugin_test.go:114:21: res.IsRemote undefined (type ResourceImport has no field or method IsRemote)
+go/common/resource/plugin/converter_plugin_test.go:115:21: res.IsComponent undefined (type ResourceImport has no field or method IsComponent)
+go/common/resource/plugin/converter_server_test.go:62:5: unknown field LogicalName in struct literal of type struct{Type string; Name string; ID string; Version string; PluginDownloadURL string}
+go/common/resource/plugin/converter_server_test.go:63:5: unknown field IsRemote in struct literal of type struct{Type string; Name string; ID string; Version string; PluginDownloadURL string}
+go/common/resource/plugin/converter_server_test.go:64:5: unknown field IsComponent in struct literal of type struct{Type string; Name string; ID string; Version string; PluginDownloadURL string}
+go/common/resource/plugin/converter_server_test.go:116:42: res.LogicalName undefined (type *pulumirpc.ResourceImport has no field or method LogicalName)
+go/common/resource/plugin/converter_server_test.go:116:42: too many errors
+FAIL	github.com/pulumi/pulumi/sdk/v3/go/common/resource/plugin [build failed]
+reward=0 graded=131 found=131 failed=131 parsed=1 framework=go exit_code=1

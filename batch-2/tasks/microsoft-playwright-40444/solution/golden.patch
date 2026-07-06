@@ -1,0 +1,264 @@
+diff --git a/docs/src/test-reporter-api/class-reporter.md b/docs/src/test-reporter-api/class-reporter.md
+index cd6cf1e64..8cc8e4867 100644
+--- a/docs/src/test-reporter-api/class-reporter.md
++++ b/docs/src/test-reporter-api/class-reporter.md
+@@ -150,6 +150,12 @@ Called on some global error, for example unhandled exception in the worker proce
+ 
+ The error.
+ 
++### param: Reporter.onError.workerInfo
++* since: v1.60
++- `workerInfo` ?<[WorkerInfo]>
++
++Contains information about the worker that produced this error. `undefined` for errors that are not associated with a specific worker.
++
+ ## optional async method: Reporter.onExit
+ * since: v1.33
+ 
+diff --git a/packages/playwright/src/isomorphic/teleReceiver.ts b/packages/playwright/src/isomorphic/teleReceiver.ts
+index a86cf2579..9e78368b8 100644
+--- a/packages/playwright/src/isomorphic/teleReceiver.ts
++++ b/packages/playwright/src/isomorphic/teleReceiver.ts
+@@ -212,6 +212,7 @@ export type JsonOnErrorEvent = {
+   method: 'onError';
+   params: {
+     error: reporterTypes.TestError;
++    workerInfo?: { workerIndex: number, parallelIndex: number, projectName: string };
+   };
+ };
+ 
+@@ -313,7 +314,7 @@ export class TeleReporterReceiver {
+       return;
+     }
+     if (method === 'onError') {
+-      this._onError(params.error);
++      this._onError(params.error, params.workerInfo);
+       return;
+     }
+     if (method === 'onStdIO') {
+@@ -438,8 +439,20 @@ export class TeleReporterReceiver {
+     })));
+   }
+ 
+-  private _onError(error: reporterTypes.TestError) {
+-    this._reporter.onError?.(error);
++  private _onError(error: reporterTypes.TestError, workerInfo?: { workerIndex: number, parallelIndex: number, projectName: string }) {
++    let fullWorkerInfo: reporterTypes.WorkerInfo | undefined;
++    if (workerInfo) {
++      const project = this._config.projects.find(p => p.name === workerInfo.projectName);
++      if (project) {
++        fullWorkerInfo = {
++          workerIndex: workerInfo.workerIndex,
++          parallelIndex: workerInfo.parallelIndex,
++          config: this._config,
++          project,
++        };
++      }
++    }
++    this._reporter.onError?.(error, fullWorkerInfo);
+   }
+ 
+   private _onStdIO(type: JsonStdIOType, testId: string | undefined, resultId: string | undefined, data: string, isBase64: boolean) {
+diff --git a/packages/playwright/src/reporters/internalReporter.ts b/packages/playwright/src/reporters/internalReporter.ts
+index 6a2379a27..23429ffbe 100644
+--- a/packages/playwright/src/reporters/internalReporter.ts
++++ b/packages/playwright/src/reporters/internalReporter.ts
+@@ -25,7 +25,7 @@ import * as babel from '../transform/babelBundle';
+ import { wrapReporterAsV2 } from './reporterV2';
+ 
+ import type { AnyReporter, ReporterV2 } from './reporterV2';
+-import type { FullConfig, FullResult, TestCase, TestError, TestResult, TestStep } from '../../types/testReporter';
++import type { FullConfig, FullResult, TestCase, TestError, TestResult, TestStep, WorkerInfo } from '../../types/testReporter';
+ 
+ 
+ export class InternalReporter implements ReporterV2 {
+@@ -93,9 +93,9 @@ export class InternalReporter implements ReporterV2 {
+     await this._reporter.onExit?.();
+   }
+ 
+-  onError(error: TestError) {
++  onError(error: TestError, workerInfo?: WorkerInfo) {
+     addLocationAndSnippetToError(this._config, error);
+-    this._reporter.onError?.(error);
++    this._reporter.onError?.(error, workerInfo);
+   }
+ 
+   onStepBegin(test: TestCase, result: TestResult, step: TestStep) {
+diff --git a/packages/playwright/src/reporters/multiplexer.ts b/packages/playwright/src/reporters/multiplexer.ts
+index 07180a7d0..6596a2bd6 100644
+--- a/packages/playwright/src/reporters/multiplexer.ts
++++ b/packages/playwright/src/reporters/multiplexer.ts
+@@ -15,7 +15,7 @@
+  */
+ 
+ import type { ReportConfigureParams, ReportEndParams, ReporterV2 } from './reporterV2';
+-import type { FullConfig, FullResult, TestCase, TestError, TestResult, TestStep } from '../../types/testReporter';
++import type { FullConfig, FullResult, TestCase, TestError, TestResult, TestStep, WorkerInfo } from '../../types/testReporter';
+ import type { test } from '../common';
+ 
+ export class Multiplexer implements ReporterV2 {
+@@ -88,9 +88,9 @@ export class Multiplexer implements ReporterV2 {
+       await wrapAsync(() => reporter.onExit?.());
+   }
+ 
+-  onError(error: TestError) {
++  onError(error: TestError, workerInfo?: WorkerInfo) {
+     for (const reporter of this._reporters)
+-      wrap(() => reporter.onError?.(error));
++      wrap(() => reporter.onError?.(error, workerInfo));
+   }
+ 
+   onStepBegin(test: TestCase, result: TestResult, step: TestStep) {
+diff --git a/packages/playwright/src/reporters/reporterV2.ts b/packages/playwright/src/reporters/reporterV2.ts
+index 77405cd9e..23cffcb4b 100644
+--- a/packages/playwright/src/reporters/reporterV2.ts
++++ b/packages/playwright/src/reporters/reporterV2.ts
+@@ -14,7 +14,7 @@
+  * limitations under the License.
+  */
+ 
+-import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestError, TestResult, TestStep } from '../../types/testReporter';
++import type { FullConfig, FullResult, Reporter, Suite, TestCase, TestError, TestResult, TestStep, WorkerInfo } from '../../types/testReporter';
+ 
+ export interface ReportConfigureParams {
+   config: FullConfig;
+@@ -38,7 +38,7 @@ export interface ReporterV2 {
+   onReportEnd?(params: ReportEndParams): void;
+   onEnd?(result: FullResult): Promise<{ status?: FullResult['status'] } | undefined | void> | void;
+   onExit?(): void | Promise<void>;
+-  onError?(error: TestError): void;
++  onError?(error: TestError, workerInfo?: WorkerInfo): void;
+   onStepBegin?(test: TestCase, result: TestResult, step: TestStep): void;
+   onStepEnd?(test: TestCase, result: TestResult, step: TestStep): void;
+   printsToStdio?(): boolean;
+@@ -64,7 +64,7 @@ export function wrapReporterAsV2(reporter: Reporter | ReporterV2): ReporterV2 {
+ 
+ class ReporterV2Wrapper implements ReporterV2 {
+   private _reporter: Reporter;
+-  private _deferred: { error?: TestError, stdout?: StdIOChunk, stderr?: StdIOChunk }[] | null = [];
++  private _deferred: { error?: { error: TestError, workerInfo?: WorkerInfo }, stdout?: StdIOChunk, stderr?: StdIOChunk }[] | null = [];
+   private _config!: FullConfig;
+ 
+   constructor(reporter: Reporter) {
+@@ -86,7 +86,7 @@ class ReporterV2Wrapper implements ReporterV2 {
+     this._deferred = null;
+     for (const item of deferred) {
+       if (item.error)
+-        this.onError(item.error);
++        this.onError(item.error.error, item.error.workerInfo);
+       if (item.stdout)
+         this.onStdOut(item.stdout.chunk, item.stdout.test, item.stdout.result);
+       if (item.stderr)
+@@ -126,12 +126,12 @@ class ReporterV2Wrapper implements ReporterV2 {
+     await this._reporter.onExit?.();
+   }
+ 
+-  onError(error: TestError) {
++  onError(error: TestError, workerInfo?: WorkerInfo) {
+     if (this._deferred) {
+-      this._deferred.push({ error });
++      this._deferred.push({ error: { error, workerInfo } });
+       return;
+     }
+-    this._reporter.onError?.(error);
++    this._reporter.onError?.(error, workerInfo);
+   }
+ 
+   onStepBegin(test: TestCase, result: TestResult, step: TestStep) {
+diff --git a/packages/playwright/src/reporters/teleEmitter.ts b/packages/playwright/src/reporters/teleEmitter.ts
+index 9bd1b414e..fddfc7b07 100644
+--- a/packages/playwright/src/reporters/teleEmitter.ts
++++ b/packages/playwright/src/reporters/teleEmitter.ts
+@@ -135,10 +135,17 @@ export class TeleReporterEmitter implements ReporterV2 {
+     });
+   }
+ 
+-  onError(error: reporterTypes.TestError): void {
++  onError(error: reporterTypes.TestError, workerInfo?: reporterTypes.WorkerInfo): void {
+     this._messageSink({
+       method: 'onError',
+-      params: { error }
++      params: {
++        error,
++        workerInfo: workerInfo ? {
++          workerIndex: workerInfo.workerIndex,
++          parallelIndex: workerInfo.parallelIndex,
++          projectName: workerInfo.project.name,
++        } : undefined,
++      },
+     });
+   }
+ 
+diff --git a/packages/playwright/src/runner/dispatcher.ts b/packages/playwright/src/runner/dispatcher.ts
+index c48c009f5..a303ef543 100644
+--- a/packages/playwright/src/runner/dispatcher.ts
++++ b/packages/playwright/src/runner/dispatcher.ts
+@@ -243,8 +243,14 @@ export class Dispatcher {
+     });
+     worker.on('teardownErrors', (params: ipc.TeardownErrorsPayload) => {
+       this._testRun.hasWorkerErrors = true;
++      const workerInfo = {
++        config: this._testRun.config.config,
++        project: project.project,
++        workerIndex: worker.workerIndex,
++        parallelIndex: worker.parallelIndex,
++      };
+       for (const error of params.fatalErrors)
+-        this._testRun.reporter.onError?.(error);
++        this._testRun.reporter.onError?.(error, workerInfo);
+     });
+     worker.on('exit', () => {
+       const producedEnv = this._producedEnvByProjectId.get(testGroup.projectId) || {};
+diff --git a/packages/playwright/types/testReporter.d.ts b/packages/playwright/types/testReporter.d.ts
+index 14154e776..e5bd52c42 100644
+--- a/packages/playwright/types/testReporter.d.ts
++++ b/packages/playwright/types/testReporter.d.ts
+@@ -15,8 +15,8 @@
+  * limitations under the License.
+  */
+ 
+-import type { TestStatus, Metadata, PlaywrightTestOptions, PlaywrightWorkerOptions, ReporterDescription, FullConfig, FullProject, Location } from './test';
+-export type { FullConfig, FullProject, TestStatus, Location } from './test';
++import type { TestStatus, Metadata, PlaywrightTestOptions, PlaywrightWorkerOptions, ReporterDescription, FullConfig, FullProject, Location, WorkerInfo } from './test';
++export type { FullConfig, FullProject, TestStatus, Location, WorkerInfo } from './test';
+ 
+ /**
+  * Result of the full test run.
+@@ -119,8 +119,8 @@ export interface FullResult {
+  * [reporter.onStdOut(chunk, test, result)](https://playwright.dev/docs/api/class-reporter#reporter-on-std-out) and
+  * [reporter.onStdErr(chunk, test, result)](https://playwright.dev/docs/api/class-reporter#reporter-on-std-err) are
+  * called when standard output is produced in the worker process, possibly during a test execution, and
+- * [reporter.onError(error)](https://playwright.dev/docs/api/class-reporter#reporter-on-error) is called when
+- * something went wrong outside of the test execution.
++ * [reporter.onError(error[, workerInfo])](https://playwright.dev/docs/api/class-reporter#reporter-on-error) is called
++ * when something went wrong outside of the test execution.
+  *
+  * If your custom reporter does not print anything to the terminal, implement
+  * [reporter.printsToStdio()](https://playwright.dev/docs/api/class-reporter#reporter-prints-to-stdio) and return
+@@ -169,8 +169,10 @@ export interface Reporter {
+   /**
+    * Called on some global error, for example unhandled exception in the worker process.
+    * @param error The error.
++   * @param workerInfo Contains information about the worker that produced this error. `undefined` for errors that are not associated with
++   * a specific worker.
+    */
+-  onError?(error: TestError): void;
++  onError?(error: TestError, workerInfo?: WorkerInfo): void;
+ 
+   /**
+    * Called immediately before test runner exists. At this point all the reporters have received the
+diff --git a/utils/generate_types/overrides-testReporter.d.ts b/utils/generate_types/overrides-testReporter.d.ts
+index 5a32326fb..b67b85060 100644
+--- a/utils/generate_types/overrides-testReporter.d.ts
++++ b/utils/generate_types/overrides-testReporter.d.ts
+@@ -14,8 +14,8 @@
+  * limitations under the License.
+  */
+ 
+-import type { TestStatus, Metadata, PlaywrightTestOptions, PlaywrightWorkerOptions, ReporterDescription, FullConfig, FullProject, Location } from './test';
+-export type { FullConfig, FullProject, TestStatus, Location } from './test';
++import type { TestStatus, Metadata, PlaywrightTestOptions, PlaywrightWorkerOptions, ReporterDescription, FullConfig, FullProject, Location, WorkerInfo } from './test';
++export type { FullConfig, FullProject, TestStatus, Location, WorkerInfo } from './test';
+ 
+ /**
+  * Result of the full test run.

@@ -1,0 +1,96 @@
+patching file pkg/common/structurev2/govalue_test.go
+patching file pkg/common/structurev2/standard_test.go
+patching file pkg/common/structurev2/yaml_test.go
+{"Time":"2026-06-29T15:16:04.469122128Z","Action":"start","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2"}
+{"Time":"2026-06-29T15:16:04.471943044Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue"}
+{"Time":"2026-06-29T15:16:04.472002014Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue","Output":"=== RUN   TestFromGoValue\n"}
+{"Time":"2026-06-29T15:16:04.472069434Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/ScalarValue"}
+{"Time":"2026-06-29T15:16:04.472091194Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/ScalarValue","Output":"=== RUN   TestFromGoValue/ScalarValue\n"}
+{"Time":"2026-06-29T15:16:04.472123363Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/ScalarValue","Output":"--- PASS: TestFromGoValue/ScalarValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.472149143Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/ScalarValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.472185743Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/SliceValue"}
+{"Time":"2026-06-29T15:16:04.472207883Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/SliceValue","Output":"=== RUN   TestFromGoValue/SliceValue\n"}
+{"Time":"2026-06-29T15:16:04.472232053Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/SliceValue","Output":"--- PASS: TestFromGoValue/SliceValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.472256493Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/SliceValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.472279453Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/MapValue"}
+{"Time":"2026-06-29T15:16:04.472311472Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/MapValue","Output":"=== RUN   TestFromGoValue/MapValue\n"}
+{"Time":"2026-06-29T15:16:04.472336102Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/MapValue","Output":"--- PASS: TestFromGoValue/MapValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.472360322Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/MapValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.472384392Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/ComplexValue"}
+{"Time":"2026-06-29T15:16:04.472407642Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/ComplexValue","Output":"=== RUN   TestFromGoValue/ComplexValue\n"}
+{"Time":"2026-06-29T15:16:04.472431532Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/ComplexValue","Output":"--- PASS: TestFromGoValue/ComplexValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.472455422Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue/ComplexValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.472480512Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue","Output":"--- PASS: TestFromGoValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.472504712Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromGoValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.472528321Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestAlphabeticalGoMapKeyOrderProvider"}
+{"Time":"2026-06-29T15:16:04.472562201Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestAlphabeticalGoMapKeyOrderProvider","Output":"=== RUN   TestAlphabeticalGoMapKeyOrderProvider\n"}
+{"Time":"2026-06-29T15:16:04.472586441Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestAlphabeticalGoMapKeyOrderProvider","Output":"--- PASS: TestAlphabeticalGoMapKeyOrderProvider (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.472610301Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestAlphabeticalGoMapKeyOrderProvider","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.472633461Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestAppendPath"}
+{"Time":"2026-06-29T15:16:04.472655441Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestAppendPath","Output":"=== RUN   TestAppendPath\n"}
+{"Time":"2026-06-29T15:16:04.472685711Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestAppendPath","Output":"--- PASS: TestAppendPath (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.472708231Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestAppendPath","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.47287273Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestStandardSequenceNodeChildren"}
+{"Time":"2026-06-29T15:16:04.472924479Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestStandardSequenceNodeChildren","Output":"=== RUN   TestStandardSequenceNodeChildren\n"}
+{"Time":"2026-06-29T15:16:04.472963409Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestStandardSequenceNodeChildren","Output":"--- PASS: TestStandardSequenceNodeChildren (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.472998199Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestStandardSequenceNodeChildren","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473024349Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestStandardMappingNodeChildren"}
+{"Time":"2026-06-29T15:16:04.473046799Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestStandardMappingNodeChildren","Output":"=== RUN   TestStandardMappingNodeChildren\n"}
+{"Time":"2026-06-29T15:16:04.473074469Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestStandardMappingNodeChildren","Output":"--- PASS: TestStandardMappingNodeChildren (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473099399Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestStandardMappingNodeChildren","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473122598Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML"}
+{"Time":"2026-06-29T15:16:04.473144388Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML","Output":"=== RUN   TestFromYAML\n"}
+{"Time":"2026-06-29T15:16:04.473167268Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue"}
+{"Time":"2026-06-29T15:16:04.473189278Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue","Output":"=== RUN   TestFromYAML/ScalarValue\n"}
+{"Time":"2026-06-29T15:16:04.473212288Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Null"}
+{"Time":"2026-06-29T15:16:04.473233828Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Null","Output":"=== RUN   TestFromYAML/ScalarValue/Null\n"}
+{"Time":"2026-06-29T15:16:04.473265908Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Null","Output":"--- PASS: TestFromYAML/ScalarValue/Null (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473288768Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Null","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473324967Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Boolean"}
+{"Time":"2026-06-29T15:16:04.473349057Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Boolean","Output":"=== RUN   TestFromYAML/ScalarValue/Boolean\n"}
+{"Time":"2026-06-29T15:16:04.473372777Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Boolean","Output":"--- PASS: TestFromYAML/ScalarValue/Boolean (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473395647Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Boolean","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473418567Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/String"}
+{"Time":"2026-06-29T15:16:04.473440137Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/String","Output":"=== RUN   TestFromYAML/ScalarValue/String\n"}
+{"Time":"2026-06-29T15:16:04.473496207Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/String","Output":"--- PASS: TestFromYAML/ScalarValue/String (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473521147Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/String","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473544096Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Integer"}
+{"Time":"2026-06-29T15:16:04.473565676Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Integer","Output":"=== RUN   TestFromYAML/ScalarValue/Integer\n"}
+{"Time":"2026-06-29T15:16:04.473589336Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Integer","Output":"--- PASS: TestFromYAML/ScalarValue/Integer (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473612326Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Integer","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473635046Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Float"}
+{"Time":"2026-06-29T15:16:04.473656596Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Float","Output":"=== RUN   TestFromYAML/ScalarValue/Float\n"}
+{"Time":"2026-06-29T15:16:04.473680156Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Float","Output":"--- PASS: TestFromYAML/ScalarValue/Float (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473702896Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Float","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473725586Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Timestamp"}
+{"Time":"2026-06-29T15:16:04.473747275Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Timestamp","Output":"=== RUN   TestFromYAML/ScalarValue/Timestamp\n"}
+{"Time":"2026-06-29T15:16:04.473776815Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Timestamp","Output":"--- PASS: TestFromYAML/ScalarValue/Timestamp (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473799545Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue/Timestamp","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473823055Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue","Output":"--- PASS: TestFromYAML/ScalarValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473845795Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ScalarValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473868625Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/SequenceValue"}
+{"Time":"2026-06-29T15:16:04.473890215Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/SequenceValue","Output":"=== RUN   TestFromYAML/SequenceValue\n"}
+{"Time":"2026-06-29T15:16:04.473913825Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/SequenceValue","Output":"--- PASS: TestFromYAML/SequenceValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.473936644Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/SequenceValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.473959544Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/MappingValue"}
+{"Time":"2026-06-29T15:16:04.473981174Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/MappingValue","Output":"=== RUN   TestFromYAML/MappingValue\n"}
+{"Time":"2026-06-29T15:16:04.474004774Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/MappingValue","Output":"--- PASS: TestFromYAML/MappingValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.474027514Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/MappingValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.474050564Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue"}
+{"Time":"2026-06-29T15:16:04.474072044Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue","Output":"=== RUN   TestFromYAML/ComplexValue\n"}
+{"Time":"2026-06-29T15:16:04.474094874Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue/Complex_yaml"}
+{"Time":"2026-06-29T15:16:04.474116574Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue/Complex_yaml","Output":"=== RUN   TestFromYAML/ComplexValue/Complex_yaml\n"}
+{"Time":"2026-06-29T15:16:04.474141413Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue/Complex_yaml","Output":"--- PASS: TestFromYAML/ComplexValue/Complex_yaml (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.474165113Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue/Complex_yaml","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.474187983Z","Action":"run","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue/Complex_json"}
+{"Time":"2026-06-29T15:16:04.474209533Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue/Complex_json","Output":"=== RUN   TestFromYAML/ComplexValue/Complex_json\n"}
+{"Time":"2026-06-29T15:16:04.474233303Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue/Complex_json","Output":"--- PASS: TestFromYAML/ComplexValue/Complex_json (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.474261683Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue/Complex_json","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.474285063Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue","Output":"--- PASS: TestFromYAML/ComplexValue (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.474319563Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML/ComplexValue","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.474343732Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML","Output":"--- PASS: TestFromYAML (0.00s)\n"}
+{"Time":"2026-06-29T15:16:04.474366522Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Test":"TestFromYAML","Elapsed":0}
+{"Time":"2026-06-29T15:16:04.474388682Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Output":"PASS\n"}
+{"Time":"2026-06-29T15:16:04.474463372Z","Action":"output","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Output":"ok  \tgithub.com/GoogleCloudPlatform/khi/pkg/common/structurev2\t0.005s\n"}
+{"Time":"2026-06-29T15:16:04.474499992Z","Action":"pass","Package":"github.com/GoogleCloudPlatform/khi/pkg/common/structurev2","Elapsed":0.005}
+reward=1 graded=22 found=22 failed=0 parsed=22 framework=go exit_code=0

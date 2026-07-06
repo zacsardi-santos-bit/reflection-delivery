@@ -1,0 +1,525 @@
+patching file rust/tw_encoding/tests/base32_ffi_tests.rs
+patching file rust/tw_encoding/tests/base64_ffi_tests.rs
+patching file rust/tw_encoding/tests/hex_ffi_tests.rs
+patching file rust/tw_tests/tests/utils/bit_reader.rs
+patching file rust/tw_tests/tests/utils/uuid.rs
+   Compiling tw_encoding v0.1.0 (/workspace/repo/rust/tw_encoding)
+   Compiling wallet-core-rs v0.1.0 (/workspace/repo/rust/wallet_core_rs)
+   Compiling tw_tests v0.1.0 (/workspace/repo/rust/tw_tests)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.25s
+────────────
+ Nextest run ID 21289f5e-2562-4130-b01b-3af66823eb1d with nextest profile: default
+    Starting 510 tests across 10 binaries
+        PASS [   0.022s] (  1/510) tw_encoding base58::tests::test_base58_decode
+        PASS [   0.023s] (  2/510) tw_encoding base58::tests::test_base58_encode
+        PASS [   0.023s] (  3/510) tw_encoding hex::tests::test_vec_decode_prefixed
+        PASS [   0.025s] (  4/510) tw_encoding cbor::test::test_serialize_deserialize
+        PASS [   0.026s] (  5/510) tw_encoding base32::tests::test_base32_encode
+        PASS [   0.027s] (  6/510) tw_encoding cbor::test::test_serialize
+        PASS [   0.028s] (  7/510) tw_encoding base32::tests::test_decode_invalid
+        PASS [   0.029s] (  8/510) tw_encoding hex::tests::test_vec_encode_prefixed
+        PASS [   0.029s] (  9/510) tw_encoding::base32_ffi_tests test_base32_decode
+        PASS [   0.030s] ( 10/510) tw_encoding::base58_ffi_tests test_base58_decode
+        PASS [   0.030s] ( 11/510) tw_encoding base32::tests::test_base32_decode
+        PASS [   0.029s] ( 12/510) tw_encoding cbor::test::test_deserialize
+        PASS [   0.030s] ( 13/510) tw_encoding base32::tests::test_base32_decode_padding
+        PASS [   0.029s] ( 14/510) tw_encoding::base32_ffi_tests test_base32_encode
+        PASS [   0.031s] ( 15/510) tw_encoding base32::tests::test_base32_encode_padding
+        PASS [   0.031s] ( 16/510) tw_encoding::base58_ffi_tests test_base58_encode
+        PASS [   0.032s] ( 17/510) tw_encoding base32::tests::test_base32_decode_filecoin
+        PASS [   0.033s] ( 18/510) tw_encoding base32::tests::test_base32_encode_filecoin
+        PASS [   0.025s] ( 19/510) tw_encoding::base64_ffi_tests test_decode_base64_url
+        PASS [   0.027s] ( 20/510) tw_encoding::base64_ffi_tests test_decode_base64_invalid
+        PASS [   0.028s] ( 21/510) tw_encoding::base64_ffi_tests test_decode_base64
+        PASS [   0.026s] ( 22/510) tw_encoding::base64_ffi_tests test_encode_base64
+        PASS [   0.024s] ( 23/510) tw_encoding::hex_ffi_tests test_decode_hex
+        PASS [   0.024s] ( 24/510) tw_encoding::hex_ffi_tests test_decode_hex_with_prefix
+        PASS [   0.025s] ( 25/510) tw_encoding::hex_ffi_tests test_encode_hex_without_prefix
+        PASS [   0.030s] ( 26/510) tw_encoding::base64_ffi_tests test_encode_base64_url
+        PASS [   0.029s] ( 27/510) tw_encoding::hex_ffi_tests test_encode_hex_with_prefix
+        PASS [   0.035s] ( 28/510) tw_tests::chain_tests chains::aptos::aptos_address::test_aptos_address_is_valid
+        PASS [   0.035s] ( 29/510) tw_tests::chain_tests chains::aptos::aptos_transaction_util::test_aptos_transaction_util_calc_tx_hash
+        PASS [   0.038s] ( 30/510) tw_tests::chain_tests chains::aptos::aptos_compile::test_any_signer_compile_aptos
+        PASS [   0.038s] ( 31/510) tw_tests::chain_tests chains::aptos::aptos_sign::test_any_signer_sign_aptos
+        PASS [   0.039s] ( 32/510) tw_tests::chain_tests chains::aptos::aptos_address::test_aptos_address_invalid
+        PASS [   0.039s] ( 33/510) tw_tests::chain_tests chains::aptos::aptos_address::test_aptos_address_normalization
+        PASS [   0.041s] ( 34/510) tw_tests::chain_tests chains::aptos::aptos_address::test_aptos_address_get_data
+        PASS [   0.038s] ( 35/510) tw_tests::chain_tests chains::binance::binance_address::test_binance_address_invalid
+        PASS [   0.041s] ( 36/510) tw_tests::chain_tests chains::binance::binance_address::test_binance_address_get_data
+        PASS [   0.034s] ( 37/510) tw_tests::chain_tests chains::binance::binance_address::test_binance_address_normalization
+        PASS [   0.039s] ( 38/510) tw_tests::chain_tests chains::binance::binance_address::test_binance_address_is_valid
+        PASS [   0.038s] ( 39/510) tw_tests::chain_tests chains::binance::binance_address::test_binance_address_is_valid_bech32
+        PASS [   0.041s] ( 40/510) tw_tests::chain_tests chains::binance::binance_compile::test_binance_compile
+        PASS [   0.039s] ( 41/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_deposit_htlt_order
+        PASS [   0.042s] ( 42/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_claim_htlt_order
+        PASS [   0.045s] ( 43/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_cancel_trade_order
+        PASS [   0.039s] ( 44/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_refund_htlt_order
+        PASS [   0.043s] ( 45/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_htlt_order
+        PASS [   0.035s] ( 46/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_side_chain_undelegate_order
+        PASS [   0.038s] ( 47/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_side_chain_stake_migration_order
+        PASS [   0.040s] ( 48/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_time_relock_order
+        PASS [   0.041s] ( 49/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_time_lock_order
+        PASS [   0.045s] ( 50/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_side_chain_redelegate_order
+        PASS [   0.042s] ( 51/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_time_unlock_order
+        PASS [   0.048s] ( 52/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_side_chain_delegate_order
+        PASS [   0.051s] ( 53/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_send_order
+        PASS [   0.042s] ( 54/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_token_burn_order
+        PASS [   0.033s] ( 55/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_token_freeze_order
+        PASS [   0.033s] ( 56/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_token_mint_order
+        PASS [   0.033s] ( 57/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_token_unfreeze_order
+        PASS [   0.039s] ( 58/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_token_issue_order
+        PASS [   0.035s] ( 59/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_create_bech32_with_public_key
+        PASS [   0.037s] ( 60/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_create_base58_with_public_key
+        PASS [   0.044s] ( 61/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_trade_order
+        PASS [   0.045s] ( 62/510) tw_tests::chain_tests chains::binance::binance_sign::test_binance_sign_transfer_out_order
+        PASS [   0.044s] ( 63/510) tw_tests::chain_tests chains::binance::binance_wallet_connect::test_binance_sign_wallet_connect_case_1
+        PASS [   0.038s] ( 64/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_derive
+        PASS [   0.036s] ( 65/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_invalid
+        PASS [   0.033s] ( 66/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_is_valid
+        PASS [   0.033s] ( 67/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_legacy_get_data
+        PASS [   0.035s] ( 68/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_is_valid_bech32
+        PASS [   0.038s] ( 69/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_is_valid_base58
+        PASS [   0.035s] ( 70/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_normalization
+        PASS [   0.035s] ( 71/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_taproot_get_data
+        PASS [   0.038s] ( 72/510) tw_tests::chain_tests chains::bitcoin::bitcoin_address::test_bitcoin_address_segwit_get_data
+        PASS [   0.041s] ( 73/510) tw_tests::chain_tests chains::bitcoin::bitcoin_compile::brc20::test_bitcoin_compile_brc20_transfer_commit
+        PASS [   0.040s] ( 74/510) tw_tests::chain_tests chains::bitcoin::bitcoin_compile::brc20::test_bitcoin_compile_brc20_transfer_reveal
+        PASS [   0.043s] ( 75/510) tw_tests::chain_tests chains::bitcoin::bitcoin_compile::compile_error::test_bitcoin_compile_p2pkh_error
+        PASS [   0.043s] ( 76/510) tw_tests::chain_tests chains::bitcoin::bitcoin_compile::p2pkh::test_bitcoin_compile_p2pkh
+        PASS [   0.037s] ( 77/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_filter_utxo_dust_with_change
+        PASS [   0.038s] ( 78/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_filter_utxo_dust_without_change
+        PASS [   0.036s] ( 79/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_with_and_without_change
+        PASS [   0.038s] ( 80/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_with_change_2
+        PASS [   0.042s] ( 81/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_with_change_1
+        PASS [   0.040s] ( 82/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_with_change_3
+        PASS [   0.041s] ( 83/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_with_change_3_desc
+        PASS [   0.038s] ( 84/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_dust_amount_requested
+        PASS [   0.037s] ( 85/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_negative_utxo_error
+        PASS [   0.042s] ( 86/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_insufficient
+        PASS [   0.045s] ( 87/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_without_change_1
+        PASS [   0.043s] ( 88/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_negative_output_error
+        PASS [   0.044s] ( 89/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_insufficient_due_dust
+        PASS [   0.039s] ( 90/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_no_outputs_error
+        PASS [   0.035s] ( 91/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_no_utxos_error
+        PASS [   0.037s] ( 92/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_max::test_max_selector_1
+        PASS [   0.033s] ( 93/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_max::test_max_selector_filter_dust
+        PASS [   0.039s] ( 94/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_max::test_max_selector_2
+        PASS [   0.042s] ( 95/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_max::test_max_selector_3
+        PASS [   0.034s] ( 96/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_max_error::test_max_selector_insufficient_to_cover_fee_and_dust
+        PASS [   0.036s] ( 97/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_psbt::test_bitcoin_plan_psbt_thorchain_swap_witness
+        PASS [   0.042s] ( 98/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_max_error::test_max_selector_insufficient_to_cover_fee
+        PASS [   0.039s] ( 99/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::babylon_staking::test_bitcoin_babylon_withdraw_staking_tx
+        PASS [   0.041s] (100/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::babylon_staking::test_bitcoin_babylon_unbond
+        PASS [   0.040s] (101/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::babylon_staking::test_bitcoin_babylon_withdraw_unbonding_tx
+        PASS [   0.048s] (102/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::babylon_staking::test_bitcoin_babylon_stake
+        PASS [   0.045s] (103/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::brc20::test_bitcoin_sign_brc20_commit
+        PASS [   0.043s] (104/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::brc20::test_bitcoin_sign_brc20_reveal
+        PASS [   0.044s] (105/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::brc20::test_bitcoin_sign_brc20_reveal_with_extra_p2tr_input
+        PASS [   0.037s] (106/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::brc20::test_bitcoin_sign_brc20_transfer
+        PASS [   0.035s] (107/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2pkh::test_bitcoin_sign_input_p2pkh_address
+        PASS [   0.038s] (108/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::op_return::test_bitcoin_deposit_to_zetachain
+        PASS [   0.037s] (109/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2pkh::test_bitcoin_sign_input_p2pkh_public_key
+        PASS [   0.036s] (110/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2pkh::test_bitcoin_sign_input_p2pkh_public_key_hash
+        PASS [   0.040s] (111/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2sh::test_bitcoin_sign_output_p2sh_with_address
+        PASS [   0.040s] (112/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2sh::test_bitcoin_sign_output_p2sh_with_redeem_script
+        PASS [   0.039s] (113/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_input_p2tr_address
+        PASS [   0.046s] (114/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2sh::test_bitcoin_sign_output_p2sh_with_redeem_script_hash
+        PASS [   0.045s] (115/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_input_p2tr_and_p2wpkh
+        PASS [   0.135s] (116/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact::test_exact_selector_with_change_many_utxos_900
+        PASS [   0.040s] (117/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_input_p2tr_key_path_with_change_output_a9c63d
+        PASS [   0.042s] (118/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_input_p2tr_custom_script
+        PASS [   0.041s] (119/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_input_p2tr_key_path_with_max_amount_89c5d1
+        PASS [   0.042s] (120/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_input_p2tr_key_path
+        PASS [   0.038s] (121/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_output_p2tr_assume_tweaked
+        PASS [   0.042s] (122/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_output_p2tr_address
+        PASS [   0.039s] (123/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_key_path::test_bitcoin_sign_output_p2tr_key_path
+        PASS [   0.038s] (124/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2tr_script_path::test_bitcoin_sign_output_p2tr_custom_script_path
+        PASS [   0.034s] (125/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2wsh::test_bitcoin_sign_output_p2wsh_address
+        PASS [   0.042s] (126/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2wpkh::test_bitcoin_sign_p2wpkh_input_different_builders
+        PASS [   0.040s] (127/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2wsh::test_bitcoin_sign_output_p2wsh_redeem_script
+        PASS [   0.037s] (128/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::p2wsh::test_bitcoin_sign_output_p2wsh_redeem_script_hash
+        PASS [   0.034s] (129/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::psbt::test_bitcoin_sign_psbt_thorchain_swap_non_witness
+        PASS [   0.038s] (130/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::psbt::test_bitcoin_sign_psbt_thorchain_swap_witness
+        PASS [   0.030s] (131/510) tw_tests::chain_tests chains::bitcoin::bitcoin_transaction_util::test_bitcoin_transaction_util_calc_tx_hash
+        PASS [   0.039s] (132/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::send_to_address::test_bitcoin_send_to_p2pkh_address
+        PASS [   0.039s] (133/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::send_to_address::test_bitcoin_send_to_p2tr_key_path_address
+        PASS [   0.040s] (134/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::send_to_address::test_bitcoin_send_to_p2sh_address
+        PASS [   0.032s] (135/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_address::test_bitcoincash_address_create_base58_with_public_key
+        PASS [   0.041s] (136/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::send_to_address::test_bitcoin_send_to_p2wpkh_address
+        PASS [   0.033s] (137/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_address::test_bitcoincash_address_derive
+        PASS [   0.028s] (138/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_address::test_bitcoincash_address_get_data
+        PASS [   0.045s] (139/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::send_to_address::test_bitcoin_send_to_p2wsh_address
+        PASS [   0.031s] (140/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_address::test_bitcoincash_address_invalid
+        PASS [   0.044s] (141/510) tw_tests::chain_tests chains::bitcoin::bitcoin_sign::sighash_single::test_bitcoin_sign_sighash_single
+        PASS [   0.026s] (142/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_address::test_bitcoincash_address_is_valid
+        PASS [   0.026s] (143/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_address::test_bitcoincash_address_is_valid_base58
+        PASS [   0.027s] (144/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_address::test_bitcoincash_address_normalization
+        PASS [   0.029s] (145/510) tw_tests::chain_tests chains::cosmos::cosmos_address::test_any_address_is_valid_bech32
+        PASS [   0.033s] (146/510) tw_tests::chain_tests chains::cosmos::cosmos_address::test_cosmos_address_get_data
+        PASS [   0.035s] (147/510) tw_tests::chain_tests chains::cosmos::cosmos_address::test_any_address_create_bech32_with_public_key
+        PASS [   0.034s] (148/510) tw_tests::chain_tests chains::cosmos::cosmos_address::test_cosmos_address_invalid
+        PASS [   0.032s] (149/510) tw_tests::chain_tests chains::cosmos::cosmos_address::test_cosmos_address_normalization
+        PASS [   0.033s] (150/510) tw_tests::chain_tests chains::cosmos::cosmos_address::test_cosmos_address_is_valid
+        PASS [   0.040s] (151/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_compile::test_bitcoincash_compile
+        PASS [   0.031s] (152/510) tw_tests::chain_tests chains::cosmos::cosmos_transaction_util::test_cosmos_transaction_util_calc_tx_hash
+        PASS [   0.042s] (153/510) tw_tests::chain_tests chains::bitcoincash::bitcoincash_sign::test_bitcoincash_sign_input_p2pkh_from_to_address
+        PASS [   0.036s] (154/510) tw_tests::chain_tests chains::cosmos::cosmos_sign::test_any_signer_sign_cosmos
+        PASS [   0.032s] (155/510) tw_tests::chain_tests chains::decred::decred_address::test_decred_address_derive
+        PASS [   0.035s] (156/510) tw_tests::chain_tests chains::cosmos::cosmos_sign::test_any_signer_sign_custom_chain
+        PASS [   0.028s] (157/510) tw_tests::chain_tests chains::decred::decred_address::test_decred_address_invalid
+        PASS [   0.035s] (158/510) tw_tests::chain_tests chains::decred::decred_address::test_decred_address_get_data
+        PASS [   0.029s] (159/510) tw_tests::chain_tests chains::decred::decred_address::test_decred_address_is_valid
+        PASS [   0.186s] (160/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_max::test_max_selector_many_utxos_900
+        PASS [   0.030s] (161/510) tw_tests::chain_tests chains::decred::decred_address::test_decred_address_normalization
+        PASS [   0.033s] (162/510) tw_tests::chain_tests chains::dydx::dydx_address::test_dydx_address_get_data
+        PASS [   0.033s] (163/510) tw_tests::chain_tests chains::dydx::dydx_address::test_dydx_address_is_valid
+        PASS [   0.037s] (164/510) tw_tests::chain_tests chains::dydx::dydx_address::test_any_address_create_bech32_with_public_key
+        PASS [   0.031s] (165/510) tw_tests::chain_tests chains::ecash::ecash_address::test_bitcoincash_address_is_valid
+        PASS [   0.036s] (166/510) tw_tests::chain_tests chains::dydx::dydx_address::test_dydx_address_invalid
+        PASS [   0.034s] (167/510) tw_tests::chain_tests chains::dydx::dydx_address::test_dydx_is_valid_bech32
+        PASS [   0.036s] (168/510) tw_tests::chain_tests chains::dydx::dydx_address::test_dydx_address_normalization
+        PASS [   0.034s] (169/510) tw_tests::chain_tests chains::ecash::ecash_address::test_bitcoincash_address_invalid
+        PASS [   0.229s] (170/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_tx_too_big_when_use_all
+        PASS [   0.033s] (171/510) tw_tests::chain_tests chains::ecash::ecash_address::test_bitcoincash_address_normalization
+        PASS [   0.045s] (172/510) tw_tests::chain_tests chains::decred::decred_compile::test_decred_compile
+        PASS [   0.045s] (173/510) tw_tests::chain_tests chains::decred::decred_sign::test_decred_sign_p2pkh_fake
+        PASS [   0.044s] (174/510) tw_tests::chain_tests chains::decred::decred_sign::test_decred_sign_p2pkh_max
+        PASS [   0.049s] (175/510) tw_tests::chain_tests chains::decred::decred_sign::test_decred_sign_p2pkh
+        PASS [   0.025s] (176/510) tw_tests::chain_tests chains::ethereum::ethereum_abi::test_ethereum_abi_decode_contract_call
+        PASS [   0.039s] (177/510) tw_tests::chain_tests chains::ecash::ecash_sign::test_ecash_sign_input_p2pkh_from_to_address
+        PASS [   0.054s] (178/510) tw_tests::chain_tests chains::decred::decred_sign::test_decred_sign_p2pkh_different_sighashes
+        PASS [   0.029s] (179/510) tw_tests::chain_tests chains::ethereum::ethereum_abi::test_ethereum_abi_decode_params
+        PASS [   0.035s] (180/510) tw_tests::chain_tests chains::ethereum::ethereum_abi::test_ethereum_abi_decode_value
+        PASS [   0.034s] (181/510) tw_tests::chain_tests chains::ethereum::ethereum_abi::test_ethereum_abi_encode_function
+        PASS [   0.034s] (182/510) tw_tests::chain_tests chains::ethereum::ethereum_abi::test_ethereum_abi_function_get_type
+        PASS [   0.032s] (183/510) tw_tests::chain_tests chains::ethereum::ethereum_address::test_ethereum_address_invalid
+        PASS [   0.035s] (184/510) tw_tests::chain_tests chains::ethereum::ethereum_abi::test_ethereum_abi_get_function_signature
+        PASS [   0.037s] (185/510) tw_tests::chain_tests chains::ethereum::ethereum_abi::test_ethereum_get_function_signature_complex
+        PASS [   0.038s] (186/510) tw_tests::chain_tests chains::ethereum::ethereum_compile::test_transaction_compiler_plan_not_supported
+        PASS [   0.041s] (187/510) tw_tests::chain_tests chains::ethereum::ethereum_address::test_ethereum_address_is_valid
+        PASS [   0.043s] (188/510) tw_tests::chain_tests chains::ethereum::ethereum_address::test_ethereum_address_get_data
+        PASS [   0.035s] (189/510) tw_tests::chain_tests chains::ethereum::ethereum_message_sign::test_tw_message_signer_pre_image_hashes
+        PASS [   0.041s] (190/510) tw_tests::chain_tests chains::ethereum::ethereum_compile::test_transaction_compiler_eip7702
+        PASS [   0.041s] (191/510) tw_tests::chain_tests chains::ethereum::ethereum_compile::test_transaction_compiler_eth
+        PASS [   0.043s] (192/510) tw_tests::chain_tests chains::ethereum::ethereum_address::test_ethereum_address_normalization
+        PASS [   0.040s] (193/510) tw_tests::chain_tests chains::ethereum::ethereum_compile::test_transaction_compiler_user_op_v0_7_with_eip7702
+        PASS [   0.036s] (194/510) tw_tests::chain_tests chains::ethereum::ethereum_message_sign::test_tw_message_signer_sign
+        PASS [   0.038s] (195/510) tw_tests::chain_tests chains::ethereum::ethereum_message_sign::test_tw_message_signer_verify
+        PASS [   0.026s] (196/510) tw_tests::chain_tests chains::ethereum::ethereum_rlp::test_ethereum_rlp
+        PASS [   0.035s] (197/510) tw_tests::chain_tests chains::ethereum::ethereum_message_sign::test_tw_message_signer_verify_invalid
+        PASS [   0.027s] (198/510) tw_tests::chain_tests chains::ethereum::ethereum_transaction_util::test_ethereum_transaction_util_calc_tx_hash
+        PASS [   0.029s] (199/510) tw_tests::chain_tests chains::greenfield::greenfield_address::test_greenfield_address_get_data
+        PASS [   0.033s] (200/510) tw_tests::chain_tests chains::greenfield::greenfield_address::test_greenfield_address_invalid
+        PASS [   0.032s] (201/510) tw_tests::chain_tests chains::greenfield::greenfield_address::test_greenfield_address_is_valid
+        PASS [   0.038s] (202/510) tw_tests::chain_tests chains::ethereum::ethereum_sign::test_any_signer_sign_eth
+        PASS [   0.037s] (203/510) tw_tests::chain_tests chains::greenfield::greenfield_address::test_greenfield_address_normalization
+        PASS [   0.036s] (204/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_address::test_groestlcoin_address_create_base58_with_public_key
+        PASS [   0.040s] (205/510) tw_tests::chain_tests chains::greenfield::greenfield_sign::test_greenfield_sign_no_messages
+        PASS [   0.044s] (206/510) tw_tests::chain_tests chains::greenfield::greenfield_sign::test_greenfield_sign_multiple_messages_e3539e
+        PASS [   0.041s] (207/510) tw_tests::chain_tests chains::greenfield::greenfield_sign::test_greenfield_sign_transfer_out
+        PASS [   0.046s] (208/510) tw_tests::chain_tests chains::greenfield::greenfield_sign::test_greenfield_sign_send_order_9f895c
+        PASS [   0.048s] (209/510) tw_tests::chain_tests chains::greenfield::greenfield_compile::test_greenfield_compile
+        PASS [   0.041s] (210/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_address::test_groestlcoin_address_derive
+        PASS [   0.047s] (211/510) tw_tests::chain_tests chains::greenfield::greenfield_sign::test_greenfield_sign_send_order_b798ab
+        PASS [   0.050s] (212/510) tw_tests::chain_tests chains::greenfield::greenfield_sign::test_greenfield_sign_multiple_messages_82e967
+        PASS [   0.037s] (213/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_address::test_groestlcoin_address_is_valid
+        PASS [   0.044s] (214/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_address::test_groestlcoin_address_get_data
+        PASS [   0.041s] (215/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_address::test_groestlcoin_address_normalization
+        PASS [   0.026s] (216/510) tw_tests::chain_tests chains::internet_computer::internet_computer_address::test_thorchain_address_get_data
+        PASS [   0.047s] (217/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_address::test_groestlcoin_address_invalid
+        PASS [   0.028s] (218/510) tw_tests::chain_tests chains::internet_computer::internet_computer_address::test_thorchain_address_invalid
+        PASS [   0.029s] (219/510) tw_tests::chain_tests chains::internet_computer::internet_computer_address::test_thorchain_address_is_valid
+        PASS [   0.029s] (220/510) tw_tests::chain_tests chains::internet_computer::internet_computer_address::test_thorchain_address_normalization
+        PASS [   0.029s] (221/510) tw_tests::chain_tests chains::komodo::komodo_address::test_komodo_address_derive
+        PASS [   0.050s] (222/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_compile::test_groestlcoin_compile
+        PASS [   0.030s] (223/510) tw_tests::chain_tests chains::komodo::komodo_address::test_komodo_address_get_data
+        PASS [   0.030s] (224/510) tw_tests::chain_tests chains::komodo::komodo_address::test_komodo_address_normalization
+        PASS [   0.032s] (225/510) tw_tests::chain_tests chains::komodo::komodo_address::test_komodo_address_invalid
+        PASS [   0.056s] (226/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_sign::test_groestlcoin_sign_p2pkh
+        PASS [   0.035s] (227/510) tw_tests::chain_tests chains::komodo::komodo_address::test_komodo_address_is_valid
+        PASS [   0.030s] (228/510) tw_tests::chain_tests chains::kusama::kusama_address::test_kusama_address_invalid
+        PASS [   0.045s] (229/510) tw_tests::chain_tests chains::komodo::komodo_compile::test_komodo_compile
+        PASS [   0.036s] (230/510) tw_tests::chain_tests chains::kusama::kusama_address::test_kusama_address_is_valid
+        PASS [   0.070s] (231/510) tw_tests::chain_tests chains::groestlcoin::groestlcoin_sign::test_groestlcoin_sign_p2wpkh
+        PASS [   0.034s] (232/510) tw_tests::chain_tests chains::native_evmos::native_evmos_address::test_any_address_is_valid_bech32
+        PASS [   0.046s] (233/510) tw_tests::chain_tests chains::komodo::komodo_sign::test_komodo_sign_sapling_era
+        PASS [   0.032s] (234/510) tw_tests::chain_tests chains::native_evmos::native_evmos_address::test_native_evmos_address_get_data
+        PASS [   0.039s] (235/510) tw_tests::chain_tests chains::native_evmos::native_evmos_address::test_any_address_create_bech32_with_public_key
+        PASS [   0.031s] (236/510) tw_tests::chain_tests chains::native_evmos::native_evmos_address::test_native_evmos_address_is_valid
+        PASS [   0.040s] (237/510) tw_tests::chain_tests chains::native_evmos::native_evmos_address::test_native_evmos_address_invalid
+        PASS [   0.042s] (238/510) tw_tests::chain_tests chains::native_evmos::native_evmos_address::test_native_evmos_address_normalization
+        PASS [   0.034s] (239/510) tw_tests::chain_tests chains::native_injective::native_injective_address::test_native_injective_address_get_data
+        PASS [   0.036s] (240/510) tw_tests::chain_tests chains::native_injective::native_injective_address::test_any_address_is_valid_bech32
+        PASS [   0.042s] (241/510) tw_tests::chain_tests chains::native_evmos::native_evmos_sign::test_sign_native_evmos_tx_json
+        PASS [   0.029s] (242/510) tw_tests::chain_tests chains::native_injective::native_injective_address::test_native_injective_address_is_valid
+        PASS [   0.034s] (243/510) tw_tests::chain_tests chains::native_injective::native_injective_address::test_native_injective_address_invalid
+        PASS [   0.039s] (244/510) tw_tests::chain_tests chains::native_injective::native_injective_address::test_any_address_create_bech32_with_public_key
+        PASS [   0.030s] (245/510) tw_tests::chain_tests chains::native_injective::native_injective_address::test_native_injective_address_normalization
+        PASS [   0.047s] (246/510) tw_tests::chain_tests chains::native_evmos::native_evmos_sign::test_sign_native_evmos_tx_protobuf
+        PASS [   0.031s] (247/510) tw_tests::chain_tests chains::native_injective::native_injective_sign::test_sign_native_injective_tx_json
+        PASS [   0.037s] (248/510) tw_tests::chain_tests chains::native_injective::native_injective_compile::test_compile_native_injective_tx_protobuf
+        PASS [   0.033s] (249/510) tw_tests::chain_tests chains::pactus::pactus_address::test_pactus_address_derive
+        PASS [   0.032s] (250/510) tw_tests::chain_tests chains::pactus::pactus_address::test_pactus_address_invalid
+        PASS [   0.035s] (251/510) tw_tests::chain_tests chains::pactus::pactus_address::test_pactus_address_get_data
+        PASS [   0.031s] (252/510) tw_tests::chain_tests chains::pactus::pactus_address::test_pactus_address_is_valid
+        PASS [   0.042s] (253/510) tw_tests::chain_tests chains::native_injective::native_injective_sign::test_sign_native_injective_tx_protobuf
+        PASS [   0.030s] (254/510) tw_tests::chain_tests chains::pactus::pactus_address::test_pactus_address_normalization
+        PASS [   0.030s] (255/510) tw_tests::chain_tests chains::polkadot::polkadot_address::test_polkadot_address_is_valid
+        PASS [   0.034s] (256/510) tw_tests::chain_tests chains::pactus::pactus_compile::test_pactus_transaction_compile
+        PASS [   0.034s] (257/510) tw_tests::chain_tests chains::pactus::pactus_sign::test_pactus_sign_transactions
+        PASS [   0.037s] (258/510) tw_tests::chain_tests chains::polkadot::polkadot_address::test_polkadot_address_create_ss58_with_public_key
+        PASS [   0.038s] (259/510) tw_tests::chain_tests chains::polkadot::polkadot_address::test_polkadot_address_invalid
+        PASS [   0.038s] (260/510) tw_tests::chain_tests chains::polkadot::polkadot_address::test_polkadot_address_get_data
+        PASS [   0.042s] (261/510) tw_tests::chain_tests chains::pactus::pactus_transaction_util::test_pactus_transaction_util_calc_tx_hash
+        PASS [   0.035s] (262/510) tw_tests::chain_tests chains::polkadot::polkadot_address::test_polkadot_address_normalization
+        PASS [   0.431s] (263/510) tw_tests::chain_tests chains::bitcoin::bitcoin_plan::plan_exact_error::test_exact_selector_tx_too_big_to_send_requested_amount
+        PASS [   0.036s] (264/510) tw_tests::chain_tests chains::polkadot::polkadot_compile::test_polkadot_compile_transfer
+        PASS [   0.035s] (265/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_encode_payload_with_new_spec
+        PASS [   0.036s] (266/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_kusama_sign_bond_no_controller
+        PASS [   0.039s] (267/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_bond
+        PASS [   0.040s] (268/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_bond_and_nominate
+        PASS [   0.037s] (269/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_nominate_2
+        PASS [   0.036s] (270/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_nominate_452522
+        PASS [   0.042s] (271/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_chill_and_unbond
+        PASS [   0.043s] (272/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_chill
+        PASS [   0.034s] (273/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_transfer_ios
+        PASS [   0.032s] (274/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_unbond
+        PASS [   0.039s] (275/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_transfer
+        PASS [   0.039s] (276/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_transfer_dot
+        PASS [   0.035s] (277/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_sign_transfer_kusama_new_spec
+        PASS [   0.036s] (278/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_statemint_encode_transaction_batch_transfer_keep_alive
+        PASS [   0.033s] (279/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_statemint_encode_transaction_usdt_transfer_keep_alive
+        PASS [   0.036s] (280/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_statemint_encode_transaction_transfer_keep_alive
+        PASS [   0.040s] (281/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_statemint_encode_transaction_dot_transfer_keep_alive
+        PASS [   0.039s] (282/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_statemint_encode_transaction_transfer
+        PASS [   0.044s] (283/510) tw_tests::chain_tests chains::polkadot::polkadot_sign::test_polkadot_sign_withdraw
+        PASS [   0.032s] (284/510) tw_tests::chain_tests chains::polkadot::polkadot_transaction_util::test_polkadot_transaction_util_calc_tx_hash
+        PASS [   0.030s] (285/510) tw_tests::chain_tests chains::polymesh::polymesh_address::test_polymesh_address_derive
+        PASS [   0.038s] (286/510) tw_tests::chain_tests chains::polymesh::polymesh_address::test_polymesh_address_get_data
+        PASS [   0.038s] (287/510) tw_tests::chain_tests chains::polymesh::polymesh_address::test_polymesh_address_invalid
+        PASS [   0.037s] (288/510) tw_tests::chain_tests chains::polymesh::polymesh_address::test_polymesh_address_is_valid
+        PASS [   0.037s] (289/510) tw_tests::chain_tests chains::polymesh::polymesh_address::test_polymesh_address_normalization
+        PASS [   0.029s] (290/510) tw_tests::chain_tests chains::polymesh::polymesh_compile::test_polymesh_compile_add_authorization
+        PASS [   0.039s] (291/510) tw_tests::chain_tests chains::polymesh::polymesh_compile::test_invalid_signing_input
+        PASS [   0.047s] (292/510) tw_tests::chain_tests chains::polymesh::polymesh_compile::test_immortal_era_polyx_transfer
+        PASS [   0.032s] (293/510) tw_tests::chain_tests chains::polymesh::polymesh_sign::test_encode_transaction_add_authorization
+        PASS [   0.029s] (294/510) tw_tests::chain_tests chains::polymesh::polymesh_sign::test_polymesh_encode_bond_and_nominate
+        PASS [   0.044s] (295/510) tw_tests::chain_tests chains::polymesh::polymesh_compile::test_polymesh_compile_join_identity
+        PASS [   0.033s] (296/510) tw_tests::chain_tests chains::polymesh::polymesh_sign::test_polymesh_encode_chill_and_unbond
+        PASS [   0.033s] (297/510) tw_tests::chain_tests chains::polymesh::polymesh_sign::test_polymesh_sign_invalid_input
+        PASS [   0.041s] (298/510) tw_tests::chain_tests chains::polymesh::polymesh_sign::test_encode_transaction_join_identity_as_key
+        PASS [   0.039s] (299/510) tw_tests::chain_tests chains::polymesh::polymesh_sign::test_polymesh_encode_and_sign
+        PASS [   0.045s] (300/510) tw_tests::chain_tests chains::polymesh::polymesh_compile::test_polymesh_compile_transfer
+        PASS [   0.037s] (301/510) tw_tests::chain_tests chains::polymesh::polymesh_sign::test_polymesh_sign_join_identity
+        PASS [   0.048s] (302/510) tw_tests::chain_tests chains::polymesh::polymesh_compile::test_polymesh_compile_staking_rebond
+        PASS [   0.053s] (303/510) tw_tests::chain_tests chains::polymesh::polymesh_compile::test_polymesh_compile_leave_identity
+        PASS [   0.031s] (304/510) tw_tests::chain_tests chains::ripple::ripple_address::test_ripple_address_derive
+        PASS [   0.032s] (305/510) tw_tests::chain_tests chains::ripple::ripple_address::test_ripple_address_get_data
+        PASS [   0.038s] (306/510) tw_tests::chain_tests chains::polymesh::polymesh_sign::test_polymesh_sign_transfer
+        PASS [   0.038s] (307/510) tw_tests::chain_tests chains::ripple::ripple_address::test_ripple_address_invalid
+        PASS [   0.031s] (308/510) tw_tests::chain_tests chains::ripple::ripple_address::test_ripple_address_normalization
+        PASS [   0.040s] (309/510) tw_tests::chain_tests chains::ripple::ripple_address::test_ripple_address_is_valid
+        PASS [   0.038s] (310/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_cancel_1
+        PASS [   0.045s] (311/510) tw_tests::chain_tests chains::ripple::ripple_compile::test_ripple_compile
+        PASS [   0.044s] (312/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_cancel_0
+        PASS [   0.042s] (313/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_create_0
+        PASS [   0.041s] (314/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_create_2
+        PASS [   0.045s] (315/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_create_1
+        PASS [   0.040s] (316/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_finish_with_condition_1
+        PASS [   0.041s] (317/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_create_with_condition_2
+        PASS [   0.042s] (318/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_finish_with_condition_0
+        PASS [   0.043s] (319/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_create_with_condition_0
+        PASS [   0.044s] (320/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_nftoken_accept_offer
+        PASS [   0.041s] (321/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_nftoken_burn
+        PASS [   0.047s] (322/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_escrow_create_with_condition_1
+        PASS [   0.041s] (323/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_nftoken_cancel_offer
+        PASS [   0.037s] (324/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_nftoken_create_offer
+        PASS [   0.037s] (325/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_raw_json
+        PASS [   0.036s] (326/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_token_payment_1
+        PASS [   0.038s] (327/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_token_payment_0
+        PASS [   0.035s] (328/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_trust_set
+        PASS [   0.039s] (329/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_token_payment_with_currency_amount
+        PASS [   0.032s] (330/510) tw_tests::chain_tests chains::solana::solana_address::test_solana_address_get_data
+        PASS [   0.039s] (331/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_trust_set_with_currency_amount
+        PASS [   0.031s] (332/510) tw_tests::chain_tests chains::solana::solana_address::test_solana_address_is_valid
+        PASS [   0.030s] (333/510) tw_tests::chain_tests chains::solana::solana_address_ffi::test_solana_address_token_2022_address
+        PASS [   0.042s] (334/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_xrp_payment_0
+        PASS [   0.037s] (335/510) tw_tests::chain_tests chains::solana::solana_address::test_solana_address_invalid
+        PASS [   0.036s] (336/510) tw_tests::chain_tests chains::solana::solana_address::test_solana_address_normalization
+        PASS [   0.042s] (337/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_xrp_payment_1
+        PASS [   0.034s] (338/510) tw_tests::chain_tests chains::solana::solana_address_ffi::test_solana_address_default_token_address
+        PASS [   0.042s] (339/510) tw_tests::chain_tests chains::ripple::ripple_sign::test_ripple_sign_xrp_payment_with_source_tag
+        PASS [   0.049s] (340/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_advance_nonce_account
+        PASS [   0.028s] (341/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_transfer_with_zero_signature
+        PASS [   0.048s] (342/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_transfer
+        PASS [   0.053s] (343/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_create_and_transfer_token
+        PASS [   0.028s] (344/510) tw_tests::chain_tests chains::solana::solana_message_sign::test_solana_message_signer_pre_image_hashes
+        PASS [   0.038s] (345/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_transfer_with_fake_signature
+        PASS [   0.058s] (346/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_create_nonce_account
+        PASS [   0.032s] (347/510) tw_tests::chain_tests chains::solana::solana_message_sign::test_solana_message_signer_sign
+        PASS [   0.032s] (348/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_advance_nonce_account
+        PASS [   0.063s] (349/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_create_and_transfer_token_with_external_fee_payer
+        PASS [   0.063s] (350/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_token_transfer_with_external_fee_payer
+        PASS [   0.037s] (351/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_and_transfer_token
+        PASS [   0.035s] (352/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_and_transfer_token_2022
+        PASS [   0.038s] (353/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_and_transfer_token_2
+        PASS [   0.039s] (354/510) tw_tests::chain_tests chains::solana::solana_message_sign::test_solana_message_signer_verify
+        PASS [   0.048s] (355/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_withdraw_nonce_account
+        PASS [   0.051s] (356/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_with_external_signature
+        PASS [   0.052s] (357/510) tw_tests::chain_tests chains::solana::solana_compile::test_solana_compile_with_partial_signature
+        PASS [   0.033s] (358/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_and_transfer_token_with_external_fee_payer
+        PASS [   0.035s] (359/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_and_transfer_token_with_durable_nonce
+        PASS [   0.032s] (360/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_and_transfer_token_with_memo_and_references
+        PASS [   0.035s] (361/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_nonce_account
+        PASS [   0.036s] (362/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_nonce_account_with_durable_nonce
+        PASS [   0.037s] (363/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_token_account
+        PASS [   0.033s] (364/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_token_account_for_other_3e6ufv
+        PASS [   0.036s] (365/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_deactivate_all_stake
+        PASS [   0.043s] (366/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_token_account_5ktpn1
+        PASS [   0.041s] (367/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_create_token_account_with_priority_fee_price
+        PASS [   0.039s] (368/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_deactivate_stake
+        PASS [   0.044s] (369/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_delegate_stake_with_account
+        PASS [   0.038s] (370/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_raw_message_v0
+        PASS [   0.040s] (371/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_raw_message_legacy
+        PASS [   0.046s] (372/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_delegate_stake_no_stake_account
+        PASS [   0.046s] (373/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_delegate_stake_with_priority_fee
+        PASS [   0.039s] (374/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_token_transfer
+        PASS [   0.048s] (375/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_delegate_stake_no_stake_account_5zrqgk1
+        PASS [   0.037s] (376/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_token_transfer_2pmvzp
+        PASS [   0.034s] (377/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_transfer
+        PASS [   0.040s] (378/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_token_transfer_with_external_fee_payer
+        PASS [   0.033s] (379/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_transfer_to_self
+        PASS [   0.032s] (380/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_transfer_v0
+        PASS [   0.036s] (381/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_transfer_with_durable_nonce
+        PASS [   0.040s] (382/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_transfer_token_2022
+        PASS [   0.035s] (383/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_transfer_with_memo_and_references
+        PASS [   0.032s] (384/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_transfer_with_priority_fee
+        PASS [   0.033s] (385/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_withdraw_all_stake
+        PASS [   0.039s] (386/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_transfer_with_priority_fee_limit
+        PASS [   0.032s] (387/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_withdraw_nonce_account
+        PASS [   0.038s] (388/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_withdraw_nonce_account_to_self_with_durable_nonce
+        PASS [   0.030s] (389/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_set_fee_payer_already_exists
+        PASS [   0.040s] (390/510) tw_tests::chain_tests chains::solana::solana_transaction::test_solana_decode_transaction_update_blockhash_and_sign_with_external_fee_payer
+        PASS [   0.043s] (391/510) tw_tests::chain_tests chains::solana::solana_transaction::test_solana_decode_transaction_update_blockhash_and_sign_no_matching_pubkey
+        PASS [   0.044s] (392/510) tw_tests::chain_tests chains::solana::solana_transaction::test_solana_decode_transaction
+        PASS [   0.044s] (393/510) tw_tests::chain_tests chains::solana::solana_transaction::test_solana_decode_transaction_update_blockhash_and_sign_with_external_fee_payer_signature
+        PASS [   0.047s] (394/510) tw_tests::chain_tests chains::solana::solana_sign::test_solana_sign_withdraw_stake
+        PASS [   0.034s] (395/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_set_priority_fee_transfer
+        PASS [   0.029s] (396/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_update_blockhash_and_sign_empty_private_keys
+        PASS [   0.029s] (397/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_update_blockhash_and_sign_no_matching_pubkey
+        PASS [   0.026s] (398/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_update_blockhash_and_sign_token_transfer_with_external_fee_payer
+        PASS [   0.039s] (399/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_set_priority_fee_transfer_override
+        PASS [   0.028s] (400/510) tw_tests::chain_tests chains::solana::solana_transaction_util::test_solana_transaction_util_calc_tx_hash
+        PASS [   0.039s] (401/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_set_priority_fee_transfer_with_address_lookup
+        PASS [   0.053s] (402/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_add_instruction_accounts_already_exist
+        PASS [   0.030s] (403/510) tw_tests::chain_tests chains::solana::solana_wallet_connect::test_solana_sign_wallet_connect_case_1
+        PASS [   0.066s] (404/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_add_instruction
+        PASS [   0.067s] (405/510) tw_tests::chain_tests chains::solana::solana_transaction::test_solana_decode_transaction_update_blockhash_preimage_hash_and_compile
+        PASS [   0.066s] (406/510) tw_tests::chain_tests chains::solana::solana_transaction_ffi::test_solana_transaction_set_fee_payer
+        PASS [   0.029s] (407/510) tw_tests::chain_tests chains::sui::sui_address::test_sui_address_is_valid
+        PASS [   0.031s] (408/510) tw_tests::chain_tests chains::sui::sui_address::test_sui_address_invalid
+        PASS [   0.033s] (409/510) tw_tests::chain_tests chains::sui::sui_address::test_sui_address_get_data
+        PASS [   0.034s] (410/510) tw_tests::chain_tests chains::solana::solana_wallet_connect::test_solana_sign_wallet_connect_with_external_fee_payer
+        PASS [   0.029s] (411/510) tw_tests::chain_tests chains::sui::sui_address::test_sui_address_normalization
+        PASS [   0.036s] (412/510) tw_tests::chain_tests chains::sui::sui_compile::test_sui_compile_direct_transfer
+        PASS [   0.035s] (413/510) tw_tests::chain_tests chains::sui::sui_compile::test_sui_compile_transfer
+        PASS [   0.035s] (414/510) tw_tests::chain_tests chains::sui::sui_compile::test_sui_compile_raw_json
+        PASS [   0.032s] (415/510) tw_tests::chain_tests chains::sui::sui_message_sign::test_sui_message_signer_pre_image_hashes
+        PASS [   0.031s] (416/510) tw_tests::chain_tests chains::sui::sui_message_sign::test_sui_message_signer_sign
+        PASS [   0.030s] (417/510) tw_tests::chain_tests chains::sui::sui_message_sign::test_sui_message_signer_verify_different_public_key
+        PASS [   0.032s] (418/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_direct_add_delegation
+        PASS [   0.036s] (419/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_delegate_sui
+        PASS [   0.032s] (420/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_direct_move_call
+        PASS [   0.046s] (421/510) tw_tests::chain_tests chains::sui::sui_message_sign::test_sui_message_signer_verify
+        PASS [   0.032s] (422/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_direct_transfer_nft
+        PASS [   0.032s] (423/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_merge_sui
+        PASS [   0.040s] (424/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_direct_transfer
+        PASS [   0.036s] (425/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_merge_tokens
+        PASS [   0.039s] (426/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_split_tokens
+        PASS [   0.040s] (427/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_transfer_nft
+        PASS [   0.041s] (428/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_split_sui
+        PASS [   0.041s] (429/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_transfer_all_sui
+        PASS [   0.035s] (430/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_transfer_sui
+        PASS [   0.035s] (431/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_transfer_token
+        PASS [   0.038s] (432/510) tw_tests::chain_tests chains::sui::sui_sign::test_sui_sign_undelegate_sui
+        PASS [   0.032s] (433/510) tw_tests::chain_tests chains::tbinance::tbinance_address::test_tbinance_address_is_valid
+        PASS [   0.040s] (434/510) tw_tests::chain_tests chains::sui::sui_transaction_util::test_sui_transaction_util_calc_tx_hash
+        PASS [   0.038s] (435/510) tw_tests::chain_tests chains::tbinance::tbinance_address::test_tbinance_address_invalid
+        PASS [   0.041s] (436/510) tw_tests::chain_tests chains::tbinance::tbinance_address::test_tbinance_address_get_data
+        PASS [   0.035s] (437/510) tw_tests::chain_tests chains::tbinance::tbinance_address::test_tbinance_address_normalization
+        PASS [   0.033s] (438/510) tw_tests::chain_tests chains::thorchain::thorchain_address::test_any_address_create_bech32_with_public_key
+        PASS [   0.032s] (439/510) tw_tests::chain_tests chains::thorchain::thorchain_address::test_any_address_is_valid_bech32
+        PASS [   0.033s] (440/510) tw_tests::chain_tests chains::thorchain::thorchain_address::test_thorchain_address_invalid
+        PASS [   0.038s] (441/510) tw_tests::chain_tests chains::thorchain::thorchain_address::test_thorchain_address_get_data
+        PASS [   0.030s] (442/510) tw_tests::chain_tests chains::thorchain::thorchain_address::test_thorchain_address_normalization
+        PASS [   0.037s] (443/510) tw_tests::chain_tests chains::thorchain::thorchain_address::test_thorchain_address_is_valid
+        PASS [   0.034s] (444/510) tw_tests::chain_tests chains::ton::ton_address::test_ton_address_invalid
+        PASS [   0.039s] (445/510) tw_tests::chain_tests chains::thorchain::thorchain_compile::test_any_signer_compile_thorchain
+        PASS [   0.038s] (446/510) tw_tests::chain_tests chains::ton::ton_address::test_ton_address_get_data
+        PASS [   0.033s] (447/510) tw_tests::chain_tests chains::ton::ton_address::test_ton_address_normalization
+        PASS [   0.041s] (448/510) tw_tests::chain_tests chains::ton::ton_address::test_ton_address_derive
+        PASS [   0.038s] (449/510) tw_tests::chain_tests chains::ton::ton_address::test_ton_address_is_valid
+        PASS [   0.034s] (450/510) tw_tests::chain_tests chains::ton::ton_address_converter::test_address_converter_from_boc_null_address
+        PASS [   0.036s] (451/510) tw_tests::chain_tests chains::ton::ton_address_converter::test_address_converter_from_boc_error
+        PASS [   0.031s] (452/510) tw_tests::chain_tests chains::ton::ton_address_converter::test_address_converter_get_jetton_usdt_address
+        PASS [   0.034s] (453/510) tw_tests::chain_tests chains::ton::ton_address_converter::test_address_converter_get_jetton_ston_address
+        PASS [   0.034s] (454/510) tw_tests::chain_tests chains::ton::ton_address_converter::test_address_converter_get_jetton_notcoin_address
+        PASS [   0.031s] (455/510) tw_tests::chain_tests chains::ton::ton_address_converter::test_address_converter_to_user_friendly
+        PASS [   0.048s] (456/510) tw_tests::chain_tests chains::thorchain::thorchain_sign::test_any_signer_sign_thorchain
+        PASS [   0.032s] (457/510) tw_tests::chain_tests chains::ton::ton_compile::test_ton_compile_wallet_v5r1_transfer_and_deploy
+        PASS [   0.037s] (458/510) tw_tests::chain_tests chains::ton::ton_address_converter::test_address_converter_to_user_friendly_error
+        PASS [   0.032s] (459/510) tw_tests::chain_tests chains::ton::ton_message_signer::test_ton_wallet_create_state_init
+        PASS [   0.040s] (460/510) tw_tests::chain_tests chains::ton::ton_compile::test_ton_compile_wallet_v4r2_transfer_and_deploy
+        PASS [   0.036s] (461/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_all_balance
+        PASS [   0.031s] (462/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_invalid_wallet_version
+        PASS [   0.040s] (463/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_all_balance_non_bounceable
+        PASS [   0.041s] (464/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_and_deploy
+        PASS [   0.039s] (465/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_custom_payload
+        PASS [   0.043s] (466/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_and_deploy_4b1d9f
+        PASS [   0.040s] (467/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_jettons
+        PASS [   0.045s] (468/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_custom_payload_with_state_init
+        PASS [   0.041s] (469/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_missing_required_send_mode
+        PASS [   0.044s] (470/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_jettons_with_comment
+        PASS [   0.044s] (471/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_with_ascii_comment
+        PASS [   0.045s] (472/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_ordinary
+        PASS [   0.046s] (473/510) tw_tests::chain_tests chains::ton::ton_sign::test_ton_sign_transfer_with_utf8_comment
+        PASS [   0.038s] (474/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_all_balance
+        PASS [   0.036s] (475/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_and_deploy
+        PASS [   0.039s] (476/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_all_balance_non_bounceable
+        PASS [   0.032s] (477/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_custom_payload
+        PASS [   0.048s] (478/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_mintless_jetton
+        PASS [   0.040s] (479/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_custom_payload_with_state_init
+        PASS [   0.027s] (480/510) tw_tests::chain_tests chains::ton::ton_wallet::test_ton_wallet_v4_r2_create_state_init
+        PASS [   0.038s] (481/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_jettons_with_comment
+        PASS [   0.036s] (482/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_ordinary
+        PASS [   0.036s] (483/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_with_ascii_comment
+        PASS [   0.032s] (484/510) tw_tests::chain_tests chains::ton::ton_transaction_util::test_ton_transaction_util_calc_tx_hash
+        PASS [   0.044s] (485/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_jettons
+        PASS [   0.037s] (486/510) tw_tests::chain_tests chains::ton::ton_sign_wallet_v5r1::test_ton_sign_wallet_v5r1_transfer_with_utf8_comment
+        PASS [   0.033s] (487/510) tw_tests::chain_tests chains::ton::ton_wallet::test_ton_wallet_v5_r1_create_state_init
+        PASS [   0.033s] (488/510) tw_tests::chain_tests chains::zcash::zcash_address::test_zcash_address_derive
+        PASS [   0.033s] (489/510) tw_tests::chain_tests chains::zcash::zcash_address::test_zcash_address_invalid
+        PASS [   0.032s] (490/510) tw_tests::chain_tests chains::zcash::zcash_address::test_zcash_address_is_valid
+        PASS [   0.035s] (491/510) tw_tests::chain_tests chains::zcash::zcash_address::test_zcash_address_get_data
+        PASS [   0.037s] (492/510) tw_tests::chain_tests chains::zcash::zcash_address::test_zcash_address_normalization
+        PASS [   0.037s] (493/510) tw_tests::chain_tests chains::zcash::zcash_sign::test_zcash_sign_psbt_not_supported
+        PASS [   0.040s] (494/510) tw_tests::chain_tests chains::zcash::zcash_compile::test_zcash_pre_hash_different_sighash_types
+        PASS [   0.045s] (495/510) tw_tests::chain_tests chains::zcash::zcash_plan::test_zcash_plan_eip_0317_many_utxo
+        PASS [   0.048s] (496/510) tw_tests::chain_tests chains::zcash::zcash_compile::test_zcash_compile_with_signatures
+        PASS [   0.021s] (497/510) tw_tests::utils_tests utils::bit_reader::test_tw_bit_reader_success
+        PASS [   0.031s] (498/510) tw_tests::chain_tests chains::zetachain::zetachain_address::test_zetachain_address_invalid
+        PASS [   0.022s] (499/510) tw_tests::utils_tests utils::bit_reader::test_tw_bit_reader_error
+        PASS [   0.032s] (500/510) tw_tests::chain_tests chains::zetachain::zetachain_address::test_zetachain_address_is_valid
+        PASS [   0.017s] (501/510) tw_tests::utils_tests utils::uuid::test_tw_uuid_random_is_valid
+        PASS [   0.025s] (502/510) tw_tests::tw_any_signer_ffi_tests test_any_signer_sign_unknown_coin
+        PASS [   0.035s] (503/510) tw_tests::chain_tests chains::zetachain::zetachain_address::test_zetachain_address_get_data
+        PASS [   0.043s] (504/510) tw_tests::chain_tests chains::zcash::zcash_sign::test_zcash_sign_sapling_era
+        PASS [   0.032s] (505/510) tw_tests::chain_tests chains::zetachain::zetachain_address::test_zetachain_address_normalization
+        PASS [   0.033s] (506/510) tw_tests::chain_tests chains::zetachain::zetachain_address::test_zetachain_is_valid_bech32
+        PASS [   0.037s] (507/510) tw_tests::chain_tests chains::zetachain::zetachain_address::test_any_address_create_bech32_with_public_key
+        PASS [   0.039s] (508/510) tw_tests::chain_tests chains::zetachain::zetachain_sign::test_zetachain_sign_msg_send_testnet
+        PASS [   0.046s] (509/510) tw_tests::utils_tests utils::uuid::test_tw_uuid_random_do_not_repeat
+        PASS [   0.134s] (510/510) tw_tests::coin_address_derivation_test test_coin_address_derivation
+────────────
+     Summary [   1.214s] 510 tests run: 510 passed, 0 skipped
+reward=1 graded=510 found=87 failed=0 parsed=510 framework=cargo exit_code=0

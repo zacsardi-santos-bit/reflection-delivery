@@ -1,0 +1,11 @@
+patching file op-e2e/actions/l2_sequencer.go
+patching file op-e2e/actions/l2_verifier.go
+patching file op-node/rollup/derive/pipeline.go
+patching file op-node/rollup/driver/driver.go
+patching file op-node/rollup/driver/state.go
+patching file op-node/rollup/driver/steps.go
+patching file op-node/rollup/driver/synchronous.go
+patching file op-node/rollup/engine/events.go
+patching file op-node/rollup/events.go
+patching file op-service/safego/nocopy.go
+patching file op-service/testutils/metrics.go

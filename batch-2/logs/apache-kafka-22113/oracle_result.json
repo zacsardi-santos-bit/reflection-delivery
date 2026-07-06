@@ -1,0 +1,29 @@
+{
+    "id": "c08d46f8-a3a0-453e-9337-2dae9cd51844",
+    "started_at": "2026-07-02T17:34:16.282280",
+    "finished_at": "2026-07-02T17:50:28.255023",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__src": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-kafka-22113__gGJtheD"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

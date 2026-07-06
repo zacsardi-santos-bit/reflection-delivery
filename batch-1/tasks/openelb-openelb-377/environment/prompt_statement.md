@@ -1,0 +1,7 @@
+I'm working on the IP address management system in OpenELB and need to add namespace-scoping support for IP pools. Right now, every IP pool is available to any namespace in the cluster, which means I can't give different teams their own dedicated IP ranges. I'd like to be able to configure an IP pool so it only serves services in certain namespaces — either by listing the namespace names explicitly, or by specifying label selectors that match namespace labels. When multiple pools match the same namespace, I want the system to pick the one with the lowest priority value.
+
+I also need a way to mark a pool as a cluster-wide default so it's used as a fallback when a service doesn't match any namespace-restricted pool.
+
+On top of that, I noticed that IP allocation records currently carry a protocol field, but the protocol is already tracked on the pool itself. Storing it on the allocation record creates artificial mismatches that can block valid IP assignments, so I'd like to remove that field from the allocation record and stop using it for matching.
+
+Finally, there's a bug where a service that already has an IP allocation being deleted doesn't trigger the IP release properly — the system returns nothing instead of a release record for the existing allocation. That needs to be fixed as well. Also, when checking if an IP falls within a pool's address range, passing an empty or invalid IP address should return false rather than causing unexpected behavior.

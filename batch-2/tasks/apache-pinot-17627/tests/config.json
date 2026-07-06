@@ -1,0 +1,33 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl pinot-spi,pinot-common,pinot-controller test -Dtest=\"SegmentReloadMessageTest,PinotHelixResourceManagerReloadJobTest,PinotTableReloadServiceTest,PinotTableReloadStatusReporterTest\" -Dsurefire.failIfNoSpecifiedTests=false",
+  "test_files": [
+    "pinot-common/src/test/java/org/apache/pinot/common/messages/SegmentReloadMessageTest.java",
+    "pinot-controller/src/test/java/org/apache/pinot/controller/helix/core/PinotHelixResourceManagerReloadJobTest.java",
+    "pinot-controller/src/test/java/org/apache/pinot/controller/services/PinotTableReloadServiceTest.java",
+    "pinot-controller/src/test/java/org/apache/pinot/controller/services/PinotTableReloadStatusReporterTest.java"
+  ],
+  "num_test_files": 4,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Pinot::test_1",
+    "Pinot::test_2",
+    "Pinot::test_3",
+    "Pinot::test_4",
+    "Pinot::test_5",
+    "Pinot::test_6",
+    "Pinot::test_7",
+    "Pinot::test_8",
+    "Pinot::test_9",
+    "Pinot::test_10",
+    "Pinot::test_11",
+    "Pinot::test_12",
+    "Pinot::test_13",
+    "Pinot::test_14",
+    "Pinot::test_15",
+    "Pinot::test_16",
+    "Pinot::test_17",
+    "Pinot::test_18"
+  ],
+  "PASS_TO_PASS": []
+}

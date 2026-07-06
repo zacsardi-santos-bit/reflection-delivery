@@ -1,0 +1,302 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index d687d042..a6785a7f 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -1,32 +1,3 @@
+-# 0.14.16 / 2018-01-16
+-
+-### messenger
+-
+-* [new] Better handle Messenger getUserProfile failure [#155](https://github.com/Yoctol/bottender/pull/155)
+-
+-If `getUserProfile` throw error, `session.user` will fallback to have only `id` and `_updatedAt` keys.
+-
+-### telegram
+-
+-* [new] Added more event parser and getter to telegram event [#150](https://github.com/Yoctol/bottender/pull/150)
+-
+-```
+-event.isEditedMessage
+-event.editedMessage
+-event.isChannelPost
+-event.channelPost
+-event.isEditedChannelPost
+-event.editedChannelPost
+-event.isInlineQuery
+-event.inlineQuery
+-event.isChosenInlineResult
+-event.chosenInlineResult
+-event.isShippingQuery
+-event.shippingQuery
+-event.isPreCheckoutQuery
+-event.preCheckoutQuery
+-```
+-
+ # 0.14.15 / 2018-01-12
+ 
+ ### slack
+diff --git a/examples/messenger-multi-pages/index.js b/examples/messenger-multi-pages/index.js
+index 62eed709..0090aa33 100644
+--- a/examples/messenger-multi-pages/index.js
++++ b/examples/messenger-multi-pages/index.js
+@@ -9,11 +9,6 @@ const PAGE_1_ACCESS_TOKEN = process.env.PAGE_1_ACCESS_TOKEN;
+ const PAGE_2_PAGE_ID = process.env.PAGE_2_PAGE_ID;
+ const PAGE_2_ACCESS_TOKEN = process.env.PAGE_2_ACCESS_TOKEN;
+ 
+-/**
+- * The example show how to map pages to tokens from (id, token) set,
+- * but you can dynamically load tokens from SQL database, mongodb, redis, REST API ...
+- * or whatever you want.
+- */
+ const mapPageToAccessToken = pageId => {
+   switch (pageId) {
+     case PAGE_1_PAGE_ID:
+diff --git a/package.json b/package.json
+index 865ad553..a5d4107b 100644
+--- a/package.json
++++ b/package.json
+@@ -7,7 +7,7 @@
+     "type": "git",
+     "url": "https://github.com/Yoctol/bottender.git"
+   },
+-  "version": "0.14.16",
++  "version": "0.14.15",
+   "main": "lib/index.js",
+   "bin": {
+     "bottender": "bin/cli.js",
+diff --git a/src/bot/MessengerConnector.js b/src/bot/MessengerConnector.js
+index 54905509..e212a316 100644
+--- a/src/bot/MessengerConnector.js
++++ b/src/bot/MessengerConnector.js
+@@ -206,18 +206,9 @@ export default class MessengerConnector
+       }
+ 
+       // FIXME: refine user
+-      let user = {};
+-      try {
+-        user = await this._client.getUserProfile(senderId, {
+-          access_token: customAccessToken,
+-        });
+-      } catch (e) {
+-        warning(
+-          false,
+-          'getUserProfile() failed, `session.user` will only have `id`'
+-        );
+-        console.error(e);
+-      }
++      const user = await this._client.getUserProfile(senderId, {
++        access_token: customAccessToken,
++      });
+ 
+       session.user = {
+         _updatedAt: new Date().toISOString(),
+diff --git a/src/bot/TelegramConnector.js b/src/bot/TelegramConnector.js
+index 0a308b8c..8c22688a 100644
+--- a/src/bot/TelegramConnector.js
++++ b/src/bot/TelegramConnector.js
+@@ -44,10 +44,27 @@ export default class TelegramConnector
+   }
+ 
+   getUniqueSessionKey(body: TelegramRequestBody): string {
+-    if (body.message !== undefined) {
+-      return `${body.message.from.id}`;
+-    } else if (body.callback_query !== undefined) {
++    if (body.message) {
++      return `${body.message.chat.id}`;
++    } else if (body.edited_message) {
++      return `${body.edited_message.chat.id}`;
++    } else if (body.channel_post) {
++      return `${body.channel_post.chat.id}`;
++    } else if (body.edited_channel_post) {
++      return `${body.edited_channel_post.chat.id}`;
++    } else if (body.inline_query) {
++      return `${body.inline_query.from.id}`;
++    } else if (body.chosen_inline_result) {
++      return `${body.chosen_inline_result.from.id}`;
++    } else if (body.callback_query) {
++      if (body.callback_query.message) {
++        return `${body.callback_query.message.chat.id}`;
++      }
+       return `${body.callback_query.from.id}`;
++    } else if (body.shipping_query) {
++      return `${body.shipping_query.from.id}`;
++    } else if (body.pre_checkout_query) {
++      return `${body.pre_checkout_query.from.id}`;
+     }
+     return '';
+   }
+@@ -56,25 +73,67 @@ export default class TelegramConnector
+     session: Session,
+     body: TelegramRequestBody
+   ): Promise<void> {
+-    if (!session.user) {
+-      // FIXME: refine user
+-      let user;
+-
+-      if (body.message !== undefined) {
+-        user = body.message.from;
+-      } else if (body.callback_query !== undefined) {
+-        user = body.callback_query.from;
+-      }
+-      session.user = user;
+-      session.user._updatedAt = new Date().toISOString();
++    if (body.channel_post) {
++      session.channel = body.channel_post.chat;
++    } else if (body.edited_channel_post) {
++      session.channel = body.edited_channel_post.chat;
+     }
++    if (session.channel) {
++      session.channel._updatedAt = new Date().toISOString();
++      Object.freeze(session.channel);
++    }
++    Object.defineProperty(session, 'channel', {
++      configurable: false,
++      enumerable: true,
++      writable: false,
++      value: session.channel,
++    });
+ 
+-    // TODO: remove later
+-    if (!session.user._updatedAt) {
+-      session.user._updatedAt = new Date().toISOString();
++    if (body.message && body.message.chat.type === 'group') {
++      session.group = body.message.chat;
++    } else if (
++      body.edited_message &&
++      body.edited_message.chat.type === 'group'
++    ) {
++      session.group = body.edited_message.chat;
++    } else if (
++      body.callback_query &&
++      body.callback_query.message &&
++      body.callback_query.message.chat.type === 'group'
++    ) {
++      session.group = body.callback_query.message.chat;
+     }
++    if (session.group) {
++      session.group._updatedAt = new Date().toISOString();
++      Object.freeze(session.group);
++    }
++    Object.defineProperty(session, 'group', {
++      configurable: false,
++      enumerable: true,
++      writable: false,
++      value: session.group,
++    });
+ 
+-    Object.freeze(session.user);
++    if (body.message) {
++      session.user = body.message.from;
++    } else if (body.edited_message) {
++      session.user = body.edited_message.from;
++    } else if (body.inline_query) {
++      session.user = body.inline_query.from;
++    } else if (body.chosen_inline_result) {
++      session.user = body.chosen_inline_result.from;
++    } else if (body.callback_query) {
++      session.user = body.callback_query.from;
++    } else if (body.shipping_query) {
++      session.user = body.shipping_query.from;
++    } else if (body.pre_checkout_query) {
++      session.user = body.pre_checkout_query.from;
++    }
++
++    if (session.user) {
++      session.user._updatedAt = new Date().toISOString();
++      Object.freeze(session.user);
++    }
+     Object.defineProperty(session, 'user', {
+       configurable: false,
+       enumerable: true,
+diff --git a/src/bot/__tests__/MessengerConnector.spec.js b/src/bot/__tests__/MessengerConnector.spec.js
+index af6cde70..e9757946 100644
+--- a/src/bot/__tests__/MessengerConnector.spec.js
++++ b/src/bot/__tests__/MessengerConnector.spec.js
+@@ -185,16 +185,6 @@ function setup(
+   };
+ }
+ 
+-const _consoleError = console.error;
+-
+-beforeEach(() => {
+-  console.error = jest.fn();
+-});
+-
+-afterEach(() => {
+-  console.error = _consoleError;
+-});
+-
+ describe('#platform', () => {
+   it('should be messenger', () => {
+     const { connector } = setup();
+@@ -371,32 +361,6 @@ describe('#updateSession', () => {
+       },
+     });
+   });
+-
+-  it('update session when getUserProfile() failed', async () => {
+-    const { connector, mockGraphAPIClient } = setup();
+-    const error = new Error('fail');
+-
+-    mockGraphAPIClient.getUserProfile.mockReturnValue(Promise.reject(error));
+-
+-    const session = {};
+-    await connector.updateSession(session, request.body);
+-
+-    expect(mockGraphAPIClient.getUserProfile).toBeCalledWith(
+-      '1412611362105802',
+-      { access_token: undefined }
+-    );
+-    expect(session).toEqual({
+-      user: {
+-        _updatedAt: expect.any(String),
+-        id: '1412611362105802',
+-      },
+-    });
+-    expect(warning).toBeCalledWith(
+-      false,
+-      'getUserProfile() failed, `session.user` will only have `id`'
+-    );
+-    expect(console.error).toBeCalledWith(error);
+-  });
+ });
+ 
+ describe('#mapRequestToEvents', () => {
+diff --git a/src/context/TelegramContext.js b/src/context/TelegramContext.js
+index e047fcf5..5e07b10d 100644
+--- a/src/context/TelegramContext.js
++++ b/src/context/TelegramContext.js
+@@ -68,12 +68,33 @@ class TelegramContext extends Context implements PlatformContext {
+     if (this._event.isMessage) {
+       return (this._event.message: any).chat.id;
+     }
++    if (this._event.isEditedMessage) {
++      return (this._event.editedMessage: any).chat.id;
++    }
++    if (this._event.isChannelPost) {
++      return (this._event.channelPost: any).chat.id;
++    }
++    if (this._event.isEditedChannelPost) {
++      return (this._event.editedChannelPost: any).chat.id;
++    }
++    if (this._event.isInlineQuery) {
++      return (this._event.inlineQuery: any).from.id;
++    }
++    if (this._event.isChosenInlineResult) {
++      return (this._event.chosenInlineResult: any).from.id;
++    }
+     if (
+       this._event.isCallbackQuery &&
+       (this._event.callbackQuery: any).message
+     ) {
+       return (this._event.callbackQuery: any).message.chat.id;
+     }
++    if (this._event.isShippingQuery) {
++      return (this._event.shippingQuery: any).from.id;
++    }
++    if (this._event.isPreCheckoutQuery) {
++      return (this._event.preCheckoutQuery: any).from.id;
++    }
+     if (this._session) {
+       return this._session.user.id;
+     }

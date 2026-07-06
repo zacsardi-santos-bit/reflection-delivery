@@ -1,0 +1,22 @@
+patching file crates/cubecl-core/tests/frontend/struct.rs
+   Compiling cubecl-core v0.2.0 (/workspace/repo/crates/cubecl-core)
+error[E0599]: no method named `__expand_runtime_method` found for struct `cubecl_core::frontend::Array` in the current scope
+  --> crates/cubecl-core/tests/frontend/struct.rs:13:10
+   |
+13 | #[derive(CubeLaunch)]
+   |          ^^^^^^^^^^ method not found in `Array<f32>`
+   |
+   = note: this error originates in the derive macro `CubeLaunch` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no method named `__expand_runtime_method` found for struct `cubecl_core::frontend::Array` in the current scope
+  --> crates/cubecl-core/tests/frontend/struct.rs:19:10
+   |
+19 | #[derive(CubeLaunch)]
+   |          ^^^^^^^^^^ method not found in `Array<F>`
+   |
+   = note: this error originates in the derive macro `CubeLaunch` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `cubecl-core` (test "mod") due to 2 previous errors
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package cubecl-core --test mod` exited with code 101
+reward=0 graded=198 found=0 failed=0 parsed=0 framework=cargo exit_code=101

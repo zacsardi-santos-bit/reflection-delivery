@@ -1,0 +1,3 @@
+patching file pkg/apps/controller/deployer/deployer_controller.go
+patching file pkg/apps/controller/deploymentconfig/deploymentconfig_controller.go
+patching file pkg/image/trigger/deploymentconfigs/deploymentconfigs.go

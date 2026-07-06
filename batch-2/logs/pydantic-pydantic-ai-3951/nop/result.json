@@ -1,0 +1,29 @@
+{
+    "id": "ba14591a-c9ab-4f03-85c4-a4ac2d898cc3",
+    "started_at": "2026-07-06T12:17:35.384535",
+    "finished_at": "2026-07-06T12:18:12.524370",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__pydantic-pydantic-ai-3951": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "pydantic-pydantic-ai-3951__pJ3CpWp"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

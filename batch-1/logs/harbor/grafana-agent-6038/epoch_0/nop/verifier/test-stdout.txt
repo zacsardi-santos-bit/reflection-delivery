@@ -1,0 +1,545 @@
+patching file converter/internal/prometheusconvert/component/http_test.go
+# github.com/grafana/agent/converter/internal/prometheusconvert/component [github.com/grafana/agent/converter/internal/prometheusconvert/component.test]
+converter/internal/prometheusconvert/component/http_test.go:15:11: undefined: ValidateDiscoveryHttp
+?   	github.com/grafana/agent/converter/internal/prometheusconvert/build	[no test files]
+=== RUN   TestConvert
+=== RUN   TestConvert/azure.yaml
+ts=2026-06-29T15:27:22.132413622Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7
+ts=2026-06-29T15:27:22.1327043Z level=error msg="failed to evaluate config" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node=discovery.azure.prometheus1 err="decoding River: exactly one of oauth or managed_identity must be specified"
+ts=2026-06-29T15:27:22.132792633Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=discovery.azure.prometheus1 duration=291.538µs
+ts=2026-06-29T15:27:22.132839884Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=tracing duration=10.931µs
+ts=2026-06-29T15:27:22.132864745Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=logging duration=2.78µs
+ts=2026-06-29T15:27:22.132902086Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=http duration=12.301µs
+ts=2026-06-29T15:27:22.132936187Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=cluster duration=2.051µs
+ts=2026-06-29T15:27:22.138823726Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertazure.yaml3963499116/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.14001153Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.141844122Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.141906384Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.141931545Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=prometheus.remote_write.default duration=8.906406ms
+ts=2026-06-29T15:27:22.142706677Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.146243328Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=prometheus.scrape.prometheus1 duration=4.209531ms
+ts=2026-06-29T15:27:22.146419434Z level=error msg="failed to evaluate config" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node=discovery.azure.prometheus2 err="decoding River: exactly one of oauth or managed_identity must be specified"
+ts=2026-06-29T15:27:22.146463085Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=discovery.azure.prometheus2 duration=95.713µs
+ts=2026-06-29T15:27:22.147984189Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=prometheus.scrape.prometheus2 duration=1.495283ms
+ts=2026-06-29T15:27:22.148142043Z level=info msg="finished node evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 node_id=labelstore duration=15.131µs
+ts=2026-06-29T15:27:22.148171704Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=401e3e50bb795729b04ce78e6917bda7 duration=15.867976ms
+    testing.go:206: ignoring error: TestConvert/azure.yaml:1:1: Failed to build component: decoding River: exactly one of oauth or managed_identity must be specified (and 1 more diagnostics)
+=== RUN   TestConvert/bad_config.yaml
+=== RUN   TestConvert/broken_yaml.yaml
+=== RUN   TestConvert/consul.yaml
+ts=2026-06-29T15:27:22.155845174Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4
+ts=2026-06-29T15:27:22.156313428Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=discovery.consul.prometheus2 duration=422.483µs
+ts=2026-06-29T15:27:22.156374279Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=tracing duration=6.71µs
+ts=2026-06-29T15:27:22.15640841Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=http duration=6.39µs
+ts=2026-06-29T15:27:22.156433351Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=cluster duration=1.77µs
+ts=2026-06-29T15:27:22.161779405Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertconsul.yaml2152566607/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.162405852Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.163448492Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.163545615Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.163652238Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=prometheus.remote_write.default duration=7.196147ms
+ts=2026-06-29T15:27:22.163780142Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.165584184Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=prometheus.scrape.prometheus2 duration=1.874593ms
+ts=2026-06-29T15:27:22.165699827Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=discovery.consul.prometheus1 duration=65.562µs
+ts=2026-06-29T15:27:22.167874319Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=prometheus.scrape.prometheus1 duration=2.132831ms
+ts=2026-06-29T15:27:22.167962852Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=logging duration=13.851µs
+ts=2026-06-29T15:27:22.168122787Z level=info msg="finished node evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 node_id=labelstore duration=13.57µs
+ts=2026-06-29T15:27:22.168171658Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=2ad134801916533fe63b331dcc6a43a4 duration=12.411606ms
+=== RUN   TestConvert/digitalocean.yaml
+ts=2026-06-29T15:27:22.172476301Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771
+ts=2026-06-29T15:27:22.175715474Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertdigitalocean.yaml4216060886/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.176573579Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.178212706Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.178281578Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.178309449Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=prometheus.remote_write.default duration=5.722165ms
+ts=2026-06-29T15:27:22.178393471Z level=error msg="failed to evaluate config" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node=discovery.digitalocean.prometheus2 err="decoding River: exactly one of bearer_token or bearer_token_file must be specified"
+ts=2026-06-29T15:27:22.178415452Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=discovery.digitalocean.prometheus2 duration=80.303µs
+ts=2026-06-29T15:27:22.178434542Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.180654686Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=prometheus.scrape.prometheus2 duration=2.225204ms
+ts=2026-06-29T15:27:22.180724938Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=tracing duration=13µs
+ts=2026-06-29T15:27:22.180866752Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=logging duration=11.98µs
+ts=2026-06-29T15:27:22.180929024Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=labelstore duration=11.431µs
+ts=2026-06-29T15:27:22.180955905Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=http duration=6.74µs
+ts=2026-06-29T15:27:22.180989646Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=cluster duration=3.231µs
+ts=2026-06-29T15:27:22.181043837Z level=error msg="failed to evaluate config" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node=discovery.digitalocean.prometheus1 err="decoding River: exactly one of bearer_token or bearer_token_file must be specified"
+ts=2026-06-29T15:27:22.181069158Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=discovery.digitalocean.prometheus1 duration=44.301µs
+ts=2026-06-29T15:27:22.182671084Z level=info msg="finished node evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 node_id=prometheus.scrape.prometheus1 duration=1.588226ms
+ts=2026-06-29T15:27:22.182701425Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=4dac9d26ad42e1af65bef09c24b3f771 duration=10.327827ms
+    testing.go:206: ignoring error: TestConvert/digitalocean.yaml:6:1: Failed to build component: decoding River: exactly one of bearer_token or bearer_token_file must be specified (and 1 more diagnostics)
+=== RUN   TestConvert/discovery.yaml
+ts=2026-06-29T15:27:22.187310407Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f
+ts=2026-06-29T15:27:22.187363219Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=labelstore duration=3.151µs
+ts=2026-06-29T15:27:22.18740624Z level=error msg="failed to evaluate config" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node=discovery.azure.prometheus1_2 err="decoding River: exactly one of oauth or managed_identity must be specified"
+ts=2026-06-29T15:27:22.187438551Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=discovery.azure.prometheus1_2 duration=58.292µs
+ts=2026-06-29T15:27:22.187456391Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=tracing duration=3.75µs
+ts=2026-06-29T15:27:22.187470042Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=logging duration=2.301µs
+ts=2026-06-29T15:27:22.187495323Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=http duration=4.48µs
+ts=2026-06-29T15:27:22.187517613Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=cluster duration=2.52µs
+ts=2026-06-29T15:27:22.194084872Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertdiscovery.yaml4164183991/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.194688659Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.19541789Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.195474181Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.195522593Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=prometheus.remote_write.default duration=7.99402ms
+ts=2026-06-29T15:27:22.196068749Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.196102699Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=prometheus.relabel.prometheus1 duration=539.215µs
+ts=2026-06-29T15:27:22.196219083Z level=error msg="failed to evaluate config" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node=discovery.azure.prometheus1 err="decoding River: exactly one of oauth or managed_identity must be specified"
+ts=2026-06-29T15:27:22.196259574Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=discovery.azure.prometheus1 duration=91.253µs
+ts=2026-06-29T15:27:22.196426329Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=discovery.relabel.prometheus1 duration=147.805µs
+ts=2026-06-29T15:27:22.198178249Z level=info msg="finished node evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f node_id=prometheus.scrape.prometheus1 duration=1.715329ms
+ts=2026-06-29T15:27:22.19821803Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=3c03289f1a0d03d499d2add51b5fbe7f duration=10.984335ms
+    testing.go:206: ignoring error: TestConvert/discovery.yaml:17:1: Failed to build component: decoding River: exactly one of oauth or managed_identity must be specified (and 1 more diagnostics)
+=== RUN   TestConvert/discovery_relabel.yaml
+ts=2026-06-29T15:27:22.202420321Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c
+ts=2026-06-29T15:27:22.202486473Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=labelstore duration=5.94µs
+ts=2026-06-29T15:27:22.202514634Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=http duration=3.72µs
+ts=2026-06-29T15:27:22.202539064Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=cluster duration=580ns
+ts=2026-06-29T15:27:22.202579455Z level=error msg="failed to evaluate config" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node=discovery.azure.prometheus2 err="decoding River: exactly one of oauth or managed_identity must be specified"
+ts=2026-06-29T15:27:22.202606736Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=discovery.azure.prometheus2 duration=56.062µs
+ts=2026-06-29T15:27:22.20274134Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=discovery.relabel.prometheus2 duration=112.763µs
+ts=2026-06-29T15:27:22.202865693Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=logging duration=4.981µs
+ts=2026-06-29T15:27:22.202914215Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=tracing duration=5.98µs
+ts=2026-06-29T15:27:22.20588268Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertdiscovery_relabel.yaml3831954309/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.206561139Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.20762224Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.207658011Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.207713443Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=prometheus.remote_write.default duration=4.779087ms
+ts=2026-06-29T15:27:22.207809285Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.209862764Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=prometheus.scrape.prometheus2 duration=2.11024ms
+ts=2026-06-29T15:27:22.210239895Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=discovery.relabel.prometheus1 duration=314.719µs
+ts=2026-06-29T15:27:22.211832411Z level=info msg="finished node evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c node_id=prometheus.scrape.prometheus1 duration=1.543875ms
+ts=2026-06-29T15:27:22.211888183Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=fc50d6e262124547997db4b81e4f551c duration=9.581845ms
+    testing.go:206: ignoring error: TestConvert/discovery_relabel.yaml:1:1: Failed to build component: decoding River: exactly one of oauth or managed_identity must be specified
+=== RUN   TestConvert/dns.yaml
+ts=2026-06-29T15:27:22.215907578Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985
+ts=2026-06-29T15:27:22.216041192Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=discovery.dns.prometheus2 duration=57.821µs
+ts=2026-06-29T15:27:22.216161865Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=discovery.dns.prometheus1 duration=13.62µs
+ts=2026-06-29T15:27:22.216289779Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=logging duration=9.441µs
+ts=2026-06-29T15:27:22.216422942Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=tracing duration=11.55µs
+ts=2026-06-29T15:27:22.217597916Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=labelstore duration=10.1µs
+ts=2026-06-29T15:27:22.217628817Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=http duration=6.65µs
+ts=2026-06-29T15:27:22.217664718Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=cluster duration=2.75µs
+ts=2026-06-29T15:27:22.22052347Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertdns.yaml780602311/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.221120217Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.221804427Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.221871129Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.22191024Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=prometheus.remote_write.default duration=4.221581ms
+ts=2026-06-29T15:27:22.222051424Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.22610402Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=prometheus.scrape.prometheus2 duration=4.144999ms
+ts=2026-06-29T15:27:22.228506309Z level=info msg="finished node evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 node_id=prometheus.scrape.prometheus1 duration=2.319646ms
+ts=2026-06-29T15:27:22.228549861Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=cd10a5c531b57832a719a4f74107c985 duration=12.709674ms
+=== RUN   TestConvert/docker.yaml
+ts=2026-06-29T15:27:22.232661649Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a
+ts=2026-06-29T15:27:22.2327219Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=logging duration=2.17µs
+ts=2026-06-29T15:27:22.232755751Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=http duration=6.27µs
+ts=2026-06-29T15:27:22.232769532Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=cluster duration=471ns
+ts=2026-06-29T15:27:22.235447499Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertdocker.yaml2964305778/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.235985644Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.236658723Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.236743916Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.236913231Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=prometheus.remote_write.default duration=4.122759ms
+ts=2026-06-29T15:27:22.237215639Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=discovery.docker.prometheus1 duration=194.195µs
+ts=2026-06-29T15:27:22.237298222Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.239401632Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=prometheus.scrape.prometheus1 duration=2.107671ms
+ts=2026-06-29T15:27:22.239447193Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=tracing duration=10.35µs
+ts=2026-06-29T15:27:22.239466904Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=labelstore duration=6.63µs
+ts=2026-06-29T15:27:22.239544686Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=discovery.docker.prometheus2 duration=28.021µs
+ts=2026-06-29T15:27:22.242677916Z level=info msg="finished node evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a node_id=prometheus.scrape.prometheus2 duration=3.105029ms
+ts=2026-06-29T15:27:22.242733948Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=3e0a9a9c8a57b4ad7b30359add25501a duration=10.243943ms
+=== RUN   TestConvert/dockerswarm.yaml
+ts=2026-06-29T15:27:22.244638472Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertazure.yaml3963499116/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.246912517Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425
+ts=2026-06-29T15:27:22.250891532Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertdockerswarm.yaml1685265168/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.251273773Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.252466807Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.25258147Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.252684593Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=prometheus.remote_write.default duration=5.611981ms
+ts=2026-06-29T15:27:22.252801377Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=discovery.dockerswarm.prometheus2 duration=85.162µs
+ts=2026-06-29T15:27:22.252889269Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.255561066Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=prometheus.scrape.prometheus2 duration=2.694538ms
+ts=2026-06-29T15:27:22.25569587Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=discovery.dockerswarm.prometheus1 duration=88.082µs
+ts=2026-06-29T15:27:22.258241153Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=prometheus.scrape.prometheus1 duration=2.506512ms
+ts=2026-06-29T15:27:22.258323585Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=tracing duration=16.471µs
+ts=2026-06-29T15:27:22.258359326Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=logging duration=5.05µs
+ts=2026-06-29T15:27:22.258385687Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=labelstore duration=9.481µs
+ts=2026-06-29T15:27:22.258418038Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=http duration=8.661µs
+ts=2026-06-29T15:27:22.258432248Z level=info msg="finished node evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 node_id=cluster duration=3.96µs
+ts=2026-06-29T15:27:22.258443108Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=4adbe0a7739c16c38c296ad2a9567425 duration=11.608133ms
+=== RUN   TestConvert/ec2.yaml
+ts=2026-06-29T15:27:22.263264837Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d
+ts=2026-06-29T15:27:22.265357287Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertconsul.yaml2152566607/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.268808026Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertec2.yaml975133598/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.269453904Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.270223217Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.270426252Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.270467484Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=prometheus.remote_write.default duration=7.123954ms
+ts=2026-06-29T15:27:22.270587157Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.270626398Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=discovery.ec2.prometheus2 duration=88.443µs
+ts=2026-06-29T15:27:22.272991646Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=prometheus.scrape.prometheus2 duration=2.326417ms
+ts=2026-06-29T15:27:22.273201572Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=discovery.ec2.prometheus1 duration=58.822µs
+ts=2026-06-29T15:27:22.275447507Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=prometheus.scrape.prometheus1 duration=2.199673ms
+ts=2026-06-29T15:27:22.275506008Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=tracing duration=12.53µs
+ts=2026-06-29T15:27:22.275540699Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=logging duration=4.99µs
+ts=2026-06-29T15:27:22.27556335Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=labelstore duration=7.22µs
+ts=2026-06-29T15:27:22.275587971Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=http duration=9.27µs
+ts=2026-06-29T15:27:22.275604741Z level=info msg="finished node evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d node_id=cluster duration=3.89µs
+ts=2026-06-29T15:27:22.275621092Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=4feb3ef32976b66529546df16a03091d duration=12.422636ms
+=== RUN   TestConvert/empty.yaml
+=== RUN   TestConvert/file.yaml
+ts=2026-06-29T15:27:22.279301187Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertdigitalocean.yaml4216060886/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.279812622Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e
+ts=2026-06-29T15:27:22.279865163Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=logging duration=2.33µs
+ts=2026-06-29T15:27:22.282654073Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertfile.yaml2646268615/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.283165798Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.284215268Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.284322851Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.284359332Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=prometheus.remote_write.default duration=4.480629ms
+ts=2026-06-29T15:27:22.284430784Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=discovery.file.prometheus2 duration=49.621µs
+ts=2026-06-29T15:27:22.284567138Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.286142993Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=prometheus.scrape.prometheus2 duration=1.692468ms
+ts=2026-06-29T15:27:22.286222896Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=discovery.file.prometheus1 duration=26.421µs
+ts=2026-06-29T15:27:22.287498272Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=prometheus.scrape.prometheus1 duration=1.248166ms
+ts=2026-06-29T15:27:22.287710138Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=tracing duration=102.143µs
+ts=2026-06-29T15:27:22.28776122Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=labelstore duration=12.671µs
+ts=2026-06-29T15:27:22.287798181Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=http duration=8.641µs
+ts=2026-06-29T15:27:22.287832542Z level=info msg="finished node evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e node_id=cluster duration=3.51µs
+ts=2026-06-29T15:27:22.287894594Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=0c2e1f11d814f74a9ce8c29e4998eb4e duration=8.152234ms
+=== RUN   TestConvert/gce.yaml
+ts=2026-06-29T15:27:22.290940511Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71
+ts=2026-06-29T15:27:22.291071005Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=http duration=8.921µs
+ts=2026-06-29T15:27:22.291187398Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=cluster duration=1.4µs
+ts=2026-06-29T15:27:22.293742012Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertgce.yaml999902139/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.294278687Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.295171602Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.295331267Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.295380268Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=prometheus.remote_write.default duration=4.161059ms
+ts=2026-06-29T15:27:22.295651066Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.297414177Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertdiscovery.yaml4164183991/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.297563701Z level=error msg="failed to evaluate config" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node=discovery.gce.prometheus2 err="building component: error setting up communication with GCE service: google: could not find default credentials. See https://cloud.google.com/docs/authentication/external/set-up-adc for more information"
+ts=2026-06-29T15:27:22.297674804Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=discovery.gce.prometheus2 duration=2.236534ms
+ts=2026-06-29T15:27:22.300235978Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=prometheus.scrape.prometheus2 duration=2.534933ms
+ts=2026-06-29T15:27:22.300556997Z level=error msg="failed to evaluate config" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node=discovery.gce.prometheus1 err="building component: error setting up communication with GCE service: google: could not find default credentials. See https://cloud.google.com/docs/authentication/external/set-up-adc for more information"
+ts=2026-06-29T15:27:22.300590618Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=discovery.gce.prometheus1 duration=109.883µs
+ts=2026-06-29T15:27:22.302499323Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=prometheus.scrape.prometheus1 duration=1.888275ms
+ts=2026-06-29T15:27:22.302577005Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=tracing duration=14.011µs
+ts=2026-06-29T15:27:22.302615416Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=logging duration=5.11µs
+ts=2026-06-29T15:27:22.302633137Z level=info msg="finished node evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 node_id=labelstore duration=7.96µs
+ts=2026-06-29T15:27:22.302644317Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=fb2db2f557fb2100f7bf0b3c4906fa71 duration=11.794249ms
+    testing.go:206: ignoring error: TestConvert/gce.yaml:7:1: Failed to build component: building component: error setting up communication with GCE service: google: could not find default credentials. See https://cloud.google.com/docs/authentication/external/set-up-adc for more information (and 1 more diagnostics)
+=== RUN   TestConvert/ionos.yaml
+ts=2026-06-29T15:27:22.306682553Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8
+ts=2026-06-29T15:27:22.306892479Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=discovery.ionos.prometheus1 duration=94.813µs
+ts=2026-06-29T15:27:22.306961131Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=tracing duration=6.1µs
+ts=2026-06-29T15:27:22.307031753Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=labelstore duration=6.05µs
+ts=2026-06-29T15:27:22.307080384Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=discovery.ionos.prometheus2 duration=34.641µs
+ts=2026-06-29T15:27:22.307108105Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=logging duration=3.79µs
+ts=2026-06-29T15:27:22.307124596Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=http duration=5.56µs
+ts=2026-06-29T15:27:22.307165617Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=cluster duration=1.79µs
+ts=2026-06-29T15:27:22.309586556Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertdiscovery_relabel.yaml3831954309/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.313306763Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertionos.yaml1391503089/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.314136687Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.315333431Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.315380953Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.315439354Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=prometheus.remote_write.default duration=8.253987ms
+ts=2026-06-29T15:27:22.315718412Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.318955115Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=prometheus.scrape.prometheus1 duration=3.320395ms
+ts=2026-06-29T15:27:22.321754835Z level=info msg="finished node evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 node_id=prometheus.scrape.prometheus2 duration=2.643756ms
+ts=2026-06-29T15:27:22.322020923Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=70388aec3b1530a5fda98e0258323fe8 duration=15.393432ms
+=== RUN   TestConvert/kubernetes.yaml
+ts=2026-06-29T15:27:22.323491715Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertdns.yaml780602311/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.325184164Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58
+ts=2026-06-29T15:27:22.325456792Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=tracing duration=4.821µs
+ts=2026-06-29T15:27:22.325539424Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=logging duration=2.29µs
+ts=2026-06-29T15:27:22.325677888Z level=error msg="failed to evaluate config" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node=discovery.kubernetes.prometheus2 err="building component: unable to load in-cluster configuration, KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT must be defined"
+ts=2026-06-29T15:27:22.32575164Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=discovery.kubernetes.prometheus2 duration=119.083µs
+ts=2026-06-29T15:27:22.326024498Z level=error msg="failed to evaluate config" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node=discovery.kubernetes.prometheus1 err="building component: unable to load in-cluster configuration, KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT must be defined"
+ts=2026-06-29T15:27:22.326052809Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=discovery.kubernetes.prometheus1 duration=41.062µs
+ts=2026-06-29T15:27:22.326278735Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=labelstore duration=15.841µs
+ts=2026-06-29T15:27:22.326342407Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=http duration=8.4µs
+ts=2026-06-29T15:27:22.326363578Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=cluster duration=2.049µs
+ts=2026-06-29T15:27:22.328947492Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertkubernetes.yaml1744890918/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.329549869Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.330712953Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.331084893Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.331238608Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=prometheus.remote_write.default duration=4.841749ms
+ts=2026-06-29T15:27:22.331353231Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.333519163Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=prometheus.scrape.prometheus1 duration=2.229324ms
+ts=2026-06-29T15:27:22.335308534Z level=info msg="finished node evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 node_id=prometheus.scrape.prometheus2 duration=1.718839ms
+ts=2026-06-29T15:27:22.335370806Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=6ef194da0c92b4600fbe841fc28a9b58 duration=10.261924ms
+    testing.go:206: ignoring error: TestConvert/kubernetes.yaml:5:1: Failed to build component: building component: unable to load in-cluster configuration, KUBERNETES_SERVICE_HOST and KUBERNETES_SERVICE_PORT must be defined (and 1 more diagnostics)
+=== RUN   TestConvert/kuma.yaml
+ts=2026-06-29T15:27:22.33827315Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertdocker.yaml2964305778/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.338576618Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb
+ts=2026-06-29T15:27:22.341737519Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertkuma.yaml4011182335/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.342288595Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.343309964Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.343441408Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.343550061Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=prometheus.remote_write.default duration=4.828049ms
+ts=2026-06-29T15:27:22.343603402Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=logging duration=5.87µs
+ts=2026-06-29T15:27:22.343673874Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=labelstore duration=7.09µs
+ts=2026-06-29T15:27:22.343704825Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.343729606Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=http duration=18.201µs
+ts=2026-06-29T15:27:22.343774057Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=cluster duration=2.22µs
+ts=2026-06-29T15:27:22.345416935Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=discovery.kuma.prometheus2 duration=1.628817ms
+ts=2026-06-29T15:27:22.347951377Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=prometheus.scrape.prometheus2 duration=2.44843ms
+ts=2026-06-29T15:27:22.349040448Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=discovery.kuma.prometheus1 duration=1.025769ms
+ts=2026-06-29T15:27:22.352279291Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=prometheus.scrape.prometheus1 duration=3.194032ms
+ts=2026-06-29T15:27:22.352340513Z level=info msg="finished node evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb node_id=tracing duration=15.2µs
+ts=2026-06-29T15:27:22.352419325Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=35f83a969a41b776fedc065ae0a5dfdb duration=13.95424ms
+=== RUN   TestConvert/lightsail.yaml
+ts=2026-06-29T15:27:22.353947809Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertdockerswarm.yaml1685265168/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.357276365Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b
+ts=2026-06-29T15:27:22.361081214Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertlightsail.yaml1745382038/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.361623289Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.362404852Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.362451383Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.362474724Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=prometheus.remote_write.default duration=5.141358ms
+ts=2026-06-29T15:27:22.362572707Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=discovery.lightsail.prometheus2 duration=73.313µs
+ts=2026-06-29T15:27:22.362811104Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.36442937Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=prometheus.scrape.prometheus2 duration=1.816212ms
+ts=2026-06-29T15:27:22.364479942Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=logging duration=7.53µs
+ts=2026-06-29T15:27:22.364507252Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=labelstore duration=6.38µs
+ts=2026-06-29T15:27:22.364527513Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=http duration=6.921µs
+ts=2026-06-29T15:27:22.364547304Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=cluster duration=4.8µs
+ts=2026-06-29T15:27:22.364579794Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=discovery.lightsail.prometheus1 duration=21.261µs
+ts=2026-06-29T15:27:22.366539921Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=prometheus.scrape.prometheus1 duration=1.948105ms
+ts=2026-06-29T15:27:22.366598482Z level=info msg="finished node evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b node_id=tracing duration=11.81µs
+ts=2026-06-29T15:27:22.366612123Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=1f8afa24a8be680f3939895687e9dc7b duration=9.40462ms
+=== RUN   TestConvert/linode.yaml
+ts=2026-06-29T15:27:22.370593777Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321
+ts=2026-06-29T15:27:22.372279585Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertec2.yaml975133598/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.377270209Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertlinode.yaml2403415786/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.378044611Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.378913246Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.379148883Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.379215984Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=prometheus.remote_write.default duration=8.420701ms
+ts=2026-06-29T15:27:22.379291796Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.379375649Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=discovery.linode.prometheus2 duration=120.904µs
+ts=2026-06-29T15:27:22.383052504Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=prometheus.scrape.prometheus2 duration=3.638234ms
+ts=2026-06-29T15:27:22.383126187Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=logging duration=7.84µs
+ts=2026-06-29T15:27:22.383149537Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=http duration=9.21µs
+ts=2026-06-29T15:27:22.383179008Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=cluster duration=3.97µs
+ts=2026-06-29T15:27:22.38323586Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=discovery.linode.prometheus1 duration=45.982µs
+ts=2026-06-29T15:27:22.386114482Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertfile.yaml2646268615/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.389689415Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=prometheus.scrape.prometheus1 duration=6.408714ms
+ts=2026-06-29T15:27:22.38986752Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=tracing duration=14.77µs
+ts=2026-06-29T15:27:22.390118857Z level=info msg="finished node evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 node_id=labelstore duration=17.781µs
+ts=2026-06-29T15:27:22.390154228Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=5256fd5041d0fba7cf041ec1b6674321 duration=19.658224ms
+=== RUN   TestConvert/marathon.yaml
+ts=2026-06-29T15:27:22.397440257Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertgce.yaml999902139/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.399357472Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7
+ts=2026-06-29T15:27:22.402425371Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertmarathon.yaml432635803/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.403330657Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.404213592Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.404255833Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.404284544Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=prometheus.remote_write.default duration=4.876559ms
+ts=2026-06-29T15:27:22.404412028Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=discovery.marathon.prometheus1 duration=94.052µs
+ts=2026-06-29T15:27:22.404436698Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.40692314Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=prometheus.scrape.prometheus1 duration=2.310306ms
+ts=2026-06-29T15:27:22.407013862Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=tracing duration=10.42µs
+ts=2026-06-29T15:27:22.407087724Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=logging duration=8.33µs
+ts=2026-06-29T15:27:22.407148666Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=discovery.marathon.prometheus2 duration=37.531µs
+ts=2026-06-29T15:27:22.408582407Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=prometheus.scrape.prometheus2 duration=1.41039ms
+ts=2026-06-29T15:27:22.408639269Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=labelstore duration=9.83µs
+ts=2026-06-29T15:27:22.408699671Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=http duration=12.53µs
+ts=2026-06-29T15:27:22.408730231Z level=info msg="finished node evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 node_id=cluster duration=4.7µs
+ts=2026-06-29T15:27:22.408765352Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=b41779880811dea10406d0844a8f46b7 duration=9.482542ms
+=== RUN   TestConvert/metric_relabel.yaml
+ts=2026-06-29T15:27:22.412327145Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742
+ts=2026-06-29T15:27:22.412376556Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=labelstore duration=3.75µs
+ts=2026-06-29T15:27:22.412416087Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=http duration=2.52µs
+ts=2026-06-29T15:27:22.412430018Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=cluster duration=490ns
+ts=2026-06-29T15:27:22.414824336Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertmetric_relabel.yaml305740839/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.415399113Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.416103743Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.416127334Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.416308819Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote2 url=http://remote-write-url2 queue=remote2
+ts=2026-06-29T15:27:22.416392011Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote2 url=http://remote-write-url2
+ts=2026-06-29T15:27:22.416511905Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=prometheus.remote_write.default duration=4.069307ms
+ts=2026-06-29T15:27:22.416570056Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.41671383Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote2 url=http://remote-write-url2 queue=remote2
+ts=2026-06-29T15:27:22.416811923Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertionos.yaml1391503089/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.416932647Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=prometheus.relabel.prometheus2 duration=373.611µs
+ts=2026-06-29T15:27:22.419039877Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=prometheus.scrape.prometheus2 duration=2.08571ms
+ts=2026-06-29T15:27:22.421252131Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=prometheus.scrape.prometheus1 duration=2.188472ms
+ts=2026-06-29T15:27:22.421294232Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=logging duration=8.571µs
+ts=2026-06-29T15:27:22.421427886Z level=info msg="finished node evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 node_id=tracing duration=9.43µs
+ts=2026-06-29T15:27:22.421459197Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=69ca970465f92de48f98522d2afc7742 duration=9.206764ms
+=== RUN   TestConvert/nerve.yaml
+ts=2026-06-29T15:27:22.425148272Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854
+ts=2026-06-29T15:27:22.425256116Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=http duration=6.45µs
+ts=2026-06-29T15:27:22.425301527Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=cluster duration=740ns
+ts=2026-06-29T15:27:22.427677385Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertnerve.yaml2199079240/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.428416476Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.42925529Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.429376694Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.429408405Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=prometheus.remote_write.default duration=4.093868ms
+ts=2026-06-29T15:27:22.42957536Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.431034692Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=discovery.nerve.prometheus2 duration=923.326µs
+ts=2026-06-29T15:27:22.433031159Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertkubernetes.yaml1744890918/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.433894654Z level=info msg="failed to connect to 127.0.0.1:2181: dial tcp 127.0.0.1:2181: connect: connection refused" component=discovery.nerve.prometheus2
+ts=2026-06-29T15:27:22.434088669Z level=error msg="Error during initial read of Zookeeper" component=discovery.nerve.prometheus2 err="zk: could not connect to a server"
+ts=2026-06-29T15:27:22.436262391Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=prometheus.scrape.prometheus2 duration=4.329714ms
+ts=2026-06-29T15:27:22.436396925Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=tracing duration=18.16µs
+ts=2026-06-29T15:27:22.436428596Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=logging duration=4.67µs
+ts=2026-06-29T15:27:22.436692354Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=labelstore duration=7.87µs
+ts=2026-06-29T15:27:22.437005093Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=discovery.nerve.prometheus1 duration=232.396µs
+ts=2026-06-29T15:27:22.437171538Z level=info msg="failed to connect to 1.2.3.4:2181: dial tcp 1.2.3.4:2181: connect: network is unreachable" component=discovery.nerve.prometheus1
+ts=2026-06-29T15:27:22.437209559Z level=error msg="Error during initial read of Zookeeper" component=discovery.nerve.prometheus1 err="zk: could not connect to a server"
+ts=2026-06-29T15:27:22.43724765Z level=error msg="Error during initial read of Zookeeper" component=discovery.nerve.prometheus1 err="zk: could not connect to a server"
+ts=2026-06-29T15:27:22.43864078Z level=info msg="finished node evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 node_id=prometheus.scrape.prometheus1 duration=1.587526ms
+ts=2026-06-29T15:27:22.43866246Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=47d5bfd3734cbcd5c8d15813d9117854 duration=13.57809ms
+=== RUN   TestConvert/openstack.yaml
+ts=2026-06-29T15:27:22.442270084Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f
+ts=2026-06-29T15:27:22.442320935Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=labelstore duration=4.53µs
+ts=2026-06-29T15:27:22.445349842Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertkuma.yaml4011182335/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.445662371Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertopenstack.yaml2261504616/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.446168146Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.447086192Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.447135094Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.447184955Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=prometheus.remote_write.default duration=4.8477ms
+ts=2026-06-29T15:27:22.447228596Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=http duration=15.82µs
+ts=2026-06-29T15:27:22.447254477Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=cluster duration=3.41µs
+ts=2026-06-29T15:27:22.447299108Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.447457313Z level=error msg="failed to evaluate config" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node=discovery.openstack.prometheus2 err="building component: Missing environment variable [OS_AUTH_URL]"
+ts=2026-06-29T15:27:22.447503264Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=discovery.openstack.prometheus2 duration=236.027µs
+ts=2026-06-29T15:27:22.449676687Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=prometheus.scrape.prometheus2 duration=2.144281ms
+ts=2026-06-29T15:27:22.450058758Z level=error msg="failed to evaluate config" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node=discovery.openstack.prometheus1 err="building component: unable to use inline CA cert"
+ts=2026-06-29T15:27:22.450169511Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=discovery.openstack.prometheus1 duration=333.489µs
+ts=2026-06-29T15:27:22.452461546Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=prometheus.scrape.prometheus1 duration=1.990957ms
+ts=2026-06-29T15:27:22.452493427Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=tracing duration=9.88µs
+ts=2026-06-29T15:27:22.452518628Z level=info msg="finished node evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f node_id=logging duration=4.47µs
+ts=2026-06-29T15:27:22.452532069Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=8178712ab0ea1b96d2fb5c9ba3f2975f duration=10.328756ms
+    testing.go:206: ignoring error: TestConvert/openstack.yaml:29:1: Failed to build component: building component: Missing environment variable [OS_AUTH_URL] (and 1 more diagnostics)
+=== RUN   TestConvert/scaleway.yaml
+ts=2026-06-29T15:27:22.456643036Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483
+ts=2026-06-29T15:27:22.459870649Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertscaleway.yaml2353802979/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.46060383Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.461680051Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.461789434Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:22.461919978Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=prometheus.remote_write.default duration=5.142628ms
+ts=2026-06-29T15:27:22.462130454Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:22.462147924Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=discovery.scaleway.prometheus2 duration=134.714µs
+ts=2026-06-29T15:27:22.463525634Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertlightsail.yaml1745382038/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.464926174Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=prometheus.scrape.prometheus2 duration=2.631576ms
+ts=2026-06-29T15:27:22.465077589Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=tracing duration=12.99µs
+ts=2026-06-29T15:27:22.46511818Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=labelstore duration=8.21µs
+ts=2026-06-29T15:27:22.465157061Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=http duration=13.92µs
+ts=2026-06-29T15:27:22.465193022Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=cluster duration=4.54µs
+ts=2026-06-29T15:27:22.465271054Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=discovery.scaleway.prometheus1 duration=60.352µs
+ts=2026-06-29T15:27:22.466590692Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=prometheus.scrape.prometheus1 duration=1.272597ms
+ts=2026-06-29T15:27:22.466638233Z level=info msg="finished node evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 node_id=logging duration=9.4µs
+ts=2026-06-29T15:27:22.466703605Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=827ade8fa418e7f4179be1c17ba3b483 duration=10.131061ms
+=== RUN   TestConvert/scrape.yaml
+ts=2026-06-29T15:27:22.47246057Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd
+ts=2026-06-29T15:27:22.472551203Z level=info msg="finished node evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node_id=tracing duration=7.231µs
+ts=2026-06-29T15:27:22.472585504Z level=info msg="finished node evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node_id=logging duration=1.46µs
+ts=2026-06-29T15:27:22.472609274Z level=info msg="finished node evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node_id=labelstore duration=4.13µs
+ts=2026-06-29T15:27:22.472624895Z level=info msg="finished node evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node_id=http duration=4.21µs
+ts=2026-06-29T15:27:22.472636245Z level=info msg="finished node evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node_id=cluster duration=410ns
+ts=2026-06-29T15:27:22.475102316Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertscrape.yaml3290490870/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:22.475477867Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:22.480054008Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertlinode.yaml2403415786/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.505670303Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertmarathon.yaml432635803/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.518262395Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote2 url=http://remote-write-url2 err="open /tmp/TestConvertmetric_relabel.yaml305740839/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.518247684Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertmetric_relabel.yaml305740839/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.53481458Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertnerve.yaml2199079240/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.549748918Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertopenstack.yaml2261504616/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:22.564242354Z level=error msg="error tailing WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 err="open /tmp/TestConvertscaleway.yaml2353802979/001/prometheus.remote_write.default/wal: no such file or directory\nsegments\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).watch\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:452\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).Run\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:301\ngithub.com/prometheus/prometheus/tsdb/wlog.(*Watcher).loop\n\t/go/pkg/mod/github.com/grafana/prometheus@v1.8.2-0.20231016083943-46550094220d/tsdb/wlog/watcher.go:250\nruntime.goexit\n\t/usr/local/go/src/runtime/asm_amd64.s:1650"
+ts=2026-06-29T15:27:23.031174404Z level=error msg="failed to evaluate config" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node=prometheus.remote_write.default err="building component: could not get SigV4 credentials: NoCredentialProviders: no valid providers in chain. Deprecated.\n\tFor verbose messaging see aws.Config.CredentialsChainVerboseErrors"
+ts=2026-06-29T15:27:23.031243196Z level=info msg="finished node evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node_id=prometheus.remote_write.default duration=558.596041ms
+ts=2026-06-29T15:27:23.033282125Z level=info msg="finished node evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node_id=prometheus.scrape.prometheus2 duration=2.015128ms
+ts=2026-06-29T15:27:23.034701525Z level=info msg="finished node evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd node_id=prometheus.scrape.prometheus_1 duration=1.326368ms
+ts=2026-06-29T15:27:23.034745267Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=38b9ba248719fd59810e4fd61bc850cd duration=562.352418ms
+    testing.go:206: ignoring error: TestConvert/scrape.yaml:40:1: Failed to build component: building component: could not get SigV4 credentials: NoCredentialProviders: no valid providers in chain. Deprecated.
+        	For verbose messaging see aws.Config.CredentialsChainVerboseErrors
+=== RUN   TestConvert/serverset.yaml
+ts=2026-06-29T15:27:23.039863143Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8
+ts=2026-06-29T15:27:23.041895581Z level=error msg="failed to evaluate config" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node=discovery.serverset.prometheus2 err="building component: lookup zk1 on 8.8.8.8:53: dial udp 8.8.8.8:53: connect: network is unreachable"
+ts=2026-06-29T15:27:23.042029795Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=discovery.serverset.prometheus2 duration=1.878714ms
+ts=2026-06-29T15:27:23.044573728Z level=error msg="failed to evaluate config" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node=discovery.serverset.prometheus1 err="building component: lookup zk2 on 8.8.8.8:53: dial udp 8.8.8.8:53: connect: network is unreachable"
+ts=2026-06-29T15:27:23.04464152Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=discovery.serverset.prometheus1 duration=2.534233ms
+ts=2026-06-29T15:27:23.044689501Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=http duration=10.48µs
+ts=2026-06-29T15:27:23.044724082Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=cluster duration=2.72µs
+ts=2026-06-29T15:27:23.048166601Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertserverset.yaml1092524290/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:23.048862611Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:23.049595102Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:23.049650664Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:23.049680035Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=prometheus.remote_write.default duration=4.938702ms
+ts=2026-06-29T15:27:23.05022614Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:23.054543104Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=prometheus.scrape.prometheus2 duration=4.798898ms
+ts=2026-06-29T15:27:23.056428468Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=prometheus.scrape.prometheus1 duration=1.823372ms
+ts=2026-06-29T15:27:23.056466339Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=tracing duration=11.13µs
+ts=2026-06-29T15:27:23.05649279Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=logging duration=9.05µs
+ts=2026-06-29T15:27:23.056545292Z level=info msg="finished node evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 node_id=labelstore duration=7.38µs
+ts=2026-06-29T15:27:23.056559222Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=0eeb4d961831aaa3d39055ae2c0b66e8 duration=16.792182ms
+    testing.go:206: ignoring error: TestConvert/serverset.yaml:7:1: Failed to build component: building component: lookup zk1 on 8.8.8.8:53: dial udp 8.8.8.8:53: connect: network is unreachable (and 1 more diagnostics)
+=== RUN   TestConvert/triton.yaml
+ts=2026-06-29T15:27:23.061146164Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6
+ts=2026-06-29T15:27:23.061202015Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=tracing duration=3.25µs
+ts=2026-06-29T15:27:23.061279087Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=logging duration=1.821µs
+ts=2026-06-29T15:27:23.06137361Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=discovery.triton.prometheus2 duration=73.462µs
+ts=2026-06-29T15:27:23.061474153Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=discovery.triton.prometheus1 duration=18.77µs
+ts=2026-06-29T15:27:23.061519774Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=labelstore duration=4.46µs
+ts=2026-06-29T15:27:23.061557326Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=http duration=15.65µs
+ts=2026-06-29T15:27:23.061588586Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=cluster duration=2.59µs
+ts=2026-06-29T15:27:23.070945485Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConverttriton.yaml1715780653/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:23.071653795Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:23.072442018Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:23.072554671Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:23.072622113Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=prometheus.remote_write.default duration=11.019916ms
+ts=2026-06-29T15:27:23.073039585Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:23.075379402Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=prometheus.scrape.prometheus1 duration=2.713198ms
+ts=2026-06-29T15:27:23.079086149Z level=info msg="finished node evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 node_id=prometheus.scrape.prometheus2 duration=3.663076ms
+ts=2026-06-29T15:27:23.07913463Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=38b66e6595c5b221746a778153b42fe6 duration=18.11257ms
+=== RUN   TestConvert/unsupported.yaml
+ts=2026-06-29T15:27:23.084421052Z level=info msg="starting complete graph evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9
+ts=2026-06-29T15:27:23.084492644Z level=info msg="finished node evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 node_id=labelstore duration=4.891µs
+ts=2026-06-29T15:27:23.084525915Z level=info msg="finished node evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 node_id=http duration=2.94µs
+ts=2026-06-29T15:27:23.084537205Z level=info msg="finished node evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 node_id=cluster duration=630ns
+ts=2026-06-29T15:27:23.087518391Z level=info msg="replaying WAL, this may take a while" component=prometheus.remote_write.default subcomponent=wal dir=/tmp/TestConvertunsupported.yaml3527626849/001/prometheus.remote_write.default/wal
+ts=2026-06-29T15:27:23.088083147Z level=info msg="WAL segment loaded" component=prometheus.remote_write.default subcomponent=wal segment=0 maxSegment=0
+ts=2026-06-29T15:27:23.089212909Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:23.089260511Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1
+ts=2026-06-29T15:27:23.089555899Z level=info msg="Starting WAL watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote2 url=http://remote-write-url2 queue=remote2
+ts=2026-06-29T15:27:23.08959136Z level=info msg="Starting scraped metadata watcher" component=prometheus.remote_write.default subcomponent=rw remote_name=remote2 url=http://remote-write-url2
+ts=2026-06-29T15:27:23.089613391Z level=info msg="finished node evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 node_id=prometheus.remote_write.default duration=5.064606ms
+ts=2026-06-29T15:27:23.089721014Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote1 url=http://remote-write-url1 queue=remote1
+ts=2026-06-29T15:27:23.090160687Z level=info msg="Replaying WAL" component=prometheus.remote_write.default subcomponent=rw remote_name=remote2 url=http://remote-write-url2 queue=remote2
+ts=2026-06-29T15:27:23.091991209Z level=info msg="finished node evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 node_id=prometheus.scrape.prometheus2 duration=2.347357ms
+ts=2026-06-29T15:27:23.093529433Z level=info msg="finished node evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 node_id=prometheus.scrape.prometheus1 duration=1.442032ms
+ts=2026-06-29T15:27:23.093563764Z level=info msg="finished node evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 node_id=tracing duration=9.67µs
+ts=2026-06-29T15:27:23.093596755Z level=info msg="finished node evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 node_id=logging duration=4.15µs
+ts=2026-06-29T15:27:23.093608275Z level=info msg="finished complete graph evaluation" controller_id="" trace_id=ae0a150c4a47a1c248d588e15eb846a9 duration=9.241875ms
+--- PASS: TestConvert (0.97s)
+    --- PASS: TestConvert/azure.yaml (0.02s)
+    --- PASS: TestConvert/bad_config.yaml (0.00s)
+    --- PASS: TestConvert/broken_yaml.yaml (0.00s)
+    --- PASS: TestConvert/consul.yaml (0.02s)
+    --- PASS: TestConvert/digitalocean.yaml (0.01s)
+    --- PASS: TestConvert/discovery.yaml (0.02s)
+    --- PASS: TestConvert/discovery_relabel.yaml (0.01s)
+    --- PASS: TestConvert/dns.yaml (0.02s)
+    --- PASS: TestConvert/docker.yaml (0.01s)
+    --- PASS: TestConvert/dockerswarm.yaml (0.02s)
+    --- PASS: TestConvert/ec2.yaml (0.02s)
+    --- PASS: TestConvert/empty.yaml (0.00s)
+    --- PASS: TestConvert/file.yaml (0.01s)
+    --- PASS: TestConvert/gce.yaml (0.01s)
+    --- PASS: TestConvert/ionos.yaml (0.02s)
+    --- PASS: TestConvert/kubernetes.yaml (0.01s)
+    --- PASS: TestConvert/kuma.yaml (0.02s)
+    --- PASS: TestConvert/lightsail.yaml (0.01s)
+    --- PASS: TestConvert/linode.yaml (0.03s)
+    --- PASS: TestConvert/marathon.yaml (0.02s)
+    --- PASS: TestConvert/metric_relabel.yaml (0.01s)
+    --- PASS: TestConvert/nerve.yaml (0.02s)
+    --- PASS: TestConvert/openstack.yaml (0.01s)
+    --- PASS: TestConvert/scaleway.yaml (0.01s)
+    --- PASS: TestConvert/scrape.yaml (0.57s)
+    --- PASS: TestConvert/serverset.yaml (0.02s)
+    --- PASS: TestConvert/triton.yaml (0.02s)
+    --- PASS: TestConvert/unsupported.yaml (0.01s)
+PASS
+ok  	github.com/grafana/agent/converter/internal/prometheusconvert	1.119s
+FAIL	github.com/grafana/agent/converter/internal/prometheusconvert/component [build failed]
+FAIL
+reward=0 graded=31 found=1 failed=1 parsed=1 framework=go exit_code=1

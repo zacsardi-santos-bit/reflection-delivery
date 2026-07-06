@@ -1,0 +1,1049 @@
+diff --git a/.github/workflows/dependabot-auto-merge.yml b/.github/workflows/dependabot-auto-merge.yml
+deleted file mode 100644
+index b7a88dcf..00000000
+--- a/.github/workflows/dependabot-auto-merge.yml
++++ /dev/null
+@@ -1,18 +0,0 @@
+-on:
+-  - pull_request
+-permissions:
+-  contents: write
+-  pull-requests: write
+-name: dependabot-auto-merge
+-jobs:
+-  auto-merge:
+-    if: github.actor == 'dependabot[bot]'
+-    runs-on: ubuntu-latest
+-    steps:
+-      - id: metadata
+-        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+-      - if: steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch'
+-        run: gh pr merge --auto --squash "$PR_URL"
+-        env:
+-          PR_URL: ${{ github.event.pull_request.html_url }}
+-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+diff --git a/WORKSPACE b/WORKSPACE
+index 4a782c4b..04f5b8a2 100644
+--- a/WORKSPACE
++++ b/WORKSPACE
+@@ -42,10 +42,10 @@ http_archive(
+ 
+ http_archive(
+     name = "googleapis",
+-    sha256 = "d9e938261fdf244446de46efd97d889b2d6572119599e0ea839433ca8cbbf9c8",
+-    strip_prefix = "googleapis-a787482b8b9653f5307f959ddb57c51870dda07f",
++    sha256 = "417ae5749f19adc46ede62c4cda75603cff76b538712d01e3a0cbba9a9006098",
++    strip_prefix = "googleapis-a78b5838b801428bfe5b85758727a46d830b7f39",
+     urls = [
+-        "https://github.com/googleapis/googleapis/archive/a787482b8b9653f5307f959ddb57c51870dda07f.zip",
++        "https://github.com/googleapis/googleapis/archive/a78b5838b801428bfe5b85758727a46d830b7f39.zip",
+     ],
+ )
+ 
+diff --git a/docs/Gemfile.lock b/docs/Gemfile.lock
+index 4237c17e..4d8356c1 100644
+--- a/docs/Gemfile.lock
++++ b/docs/Gemfile.lock
+@@ -1,23 +1,21 @@
+ GEM
+   remote: https://rubygems.org/
+   specs:
+-    activesupport (7.2.3.1)
++    activesupport (7.2.1)
+       base64
+-      benchmark (>= 0.3)
+       bigdecimal
+       concurrent-ruby (~> 1.0, >= 1.3.1)
+       connection_pool (>= 2.2.5)
+       drb
+       i18n (>= 1.6, < 2)
+       logger (>= 1.4.2)
+-      minitest (>= 5.1, < 6)
++      minitest (>= 5.1)
+       securerandom (>= 0.3)
+       tzinfo (~> 2.0, >= 2.0.5)
+     addressable (2.8.8)
+       public_suffix (>= 2.0.2, < 8.0)
+-    base64 (0.3.0)
+-    benchmark (0.5.0)
+-    bigdecimal (4.1.2)
++    base64 (0.2.0)
++    bigdecimal (3.1.8)
+     coffee-script (2.4.1)
+       coffee-script-source
+       execjs
+@@ -25,10 +23,10 @@ GEM
+     colorator (1.1.0)
+     commonmarker (0.23.10)
+     concurrent-ruby (1.3.6)
+-    connection_pool (3.0.2)
++    connection_pool (2.4.1)
+     dnsruby (1.72.2)
+       simpleidn (~> 0.2.1)
+-    drb (2.2.3)
++    drb (2.2.1)
+     em-websocket (0.5.3)
+       eventmachine (>= 0.12.9)
+       http_parser.rb (~> 0)
+@@ -232,10 +230,10 @@ GEM
+       jekyll (>= 3.5, < 5.0)
+       jekyll-feed (~> 0.9)
+       jekyll-seo-tag (~> 2.1)
+-    minitest (5.27.0)
++    minitest (5.25.1)
+     net-http (0.9.1)
+       uri (>= 0.11.1)
+-    nokogiri (1.19.1)
++    nokogiri (1.18.9)
+       mini_portile2 (~> 2.8.2)
+       racc (~> 1.4)
+     octokit (4.25.1)
+@@ -261,7 +259,7 @@ GEM
+     sawyer (0.9.2)
+       addressable (>= 2.3.5)
+       faraday (>= 0.17.3, < 3)
+-    securerandom (0.4.1)
++    securerandom (0.3.1)
+     simpleidn (0.2.3)
+     terminal-table (1.8.0)
+       unicode-display_width (~> 1.1, >= 1.1.1)
+diff --git a/docs/docs/mapping/openapi_v3.md b/docs/docs/mapping/openapi_v3.md
+index 439c78ac..3f07b2bf 100644
+--- a/docs/docs/mapping/openapi_v3.md
++++ b/docs/docs/mapping/openapi_v3.md
+@@ -37,8 +37,9 @@ response codes are emitted default-first then sorted.
+ 
+ ## What it does not do
+ 
+-The generator is deliberately opinionated and has no configuration flags. The
+-following are **not** supported today:
++The generator is deliberately opinionated. Its only configuration flag is
++[`visibility_restriction_selectors`](#hiding-fields-methods-services-and-enum-values).
++The following are **not** supported today:
+ 
+ - The `grpc.gateway.protoc_gen_openapiv2.options` annotation set.
+ - OpenAPI 2.0 / Swagger output (use `protoc-gen-openapiv2` for that).
+@@ -81,6 +82,62 @@ protoc -I. \
+   path/to/your/service.proto
+ ```
+ 
++## Hiding fields, methods, services and enum values
++
++If you require internal or unreleased fields and APIs to be hidden from
++your API documentation,
++[`google.api.VisibilityRule`](https://github.com/googleapis/googleapis/blob/9916192ab15e3507e41ba2c5165182fec06120d0/google/api/visibility.proto#L89)
++annotations can be added to services, methods, fields and enum values.
++The generator drops any annotated element whose restriction labels do
++not overlap with the configured `visibility_restriction_selectors`.
++Elements without a `VisibilityRule` annotation are always emitted.
++
++`visibility_restriction_selectors` can be declared multiple times to
++include multiple visibility restrictions in the output. For example,
++with `buf`:
++
++```yaml
++version: v2
++plugins:
++  - local: protoc-gen-openapiv3
++    out: .
++    opt:
++      - visibility_restriction_selectors=PREVIEW
++      - visibility_restriction_selectors=INTERNAL
++```
++
++or with `protoc`:
++
++```sh
++protoc --openapiv3_out=. \
++  --openapiv3_opt=visibility_restriction_selectors=PREVIEW \
++  --openapiv3_opt=visibility_restriction_selectors=INTERNAL \
++  ./path/to/file.proto
++```
++
++The restriction labels are arbitrary. `INTERNAL` and `PREVIEW` are the
++conventional pair, but any label scheme works (`ALPHA`, `BETA`,
++`RELEASED`, ...) as long as the annotations and the selector flag use
++the same vocabulary.
++
++When a service is hidden, all of its methods are hidden along with it
++and the service's tag is omitted from `tags[]`. When every field in a
++`oneof` group is hidden, the group's "at most one set" constraint is
++also dropped.
++
++Visibility annotations on fields used as HTTP path parameters (via
++`google.api.http` path templates) are ignored — the path template
++itself always exposes the parameter's name. To hide an operation that
++takes a restricted input, apply `google.api.method_visibility` to the
++method (or `google.api.api_visibility` to the whole service) instead
++of annotating the path field.
++
++If every value of an enum ends up hidden, the enum's component schema
++is still emitted (a visible field may reference it) but falls back to
++an unconstrained `type: string`. A log line is written when this
++happens; broaden the selectors or hide the referring fields to silence
++it.
++
+ ## Mapping rules
+ 
+ The mapping from proto constructs to OpenAPI is fixed and summarised below.
+diff --git a/examples/internal/browser/package-lock.json b/examples/internal/browser/package-lock.json
+index 5e68d4f6..14ae0099 100644
+--- a/examples/internal/browser/package-lock.json
++++ b/examples/internal/browser/package-lock.json
+@@ -2475,9 +2475,9 @@
+       "license": "ISC"
+     },
+     "node_modules/picomatch": {
+-      "version": "2.3.2",
+-      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-2.3.2.tgz",
+-      "integrity": "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==",
++      "version": "2.3.1",
++      "resolved": "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz",
++      "integrity": "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==",
+       "license": "MIT",
+       "engines": {
+         "node": ">=8.6"
+@@ -2566,9 +2566,9 @@
+       }
+     },
+     "node_modules/qs": {
+-      "version": "6.15.1",
+-      "resolved": "https://registry.npmjs.org/qs/-/qs-6.15.1.tgz",
+-      "integrity": "sha512-6YHEFRL9mfgcAvql/XhwTvf5jKcOiiupt2FiJxHkiX1z4j7WL8J/jRHYLluORvc1XxB5rV20KoeK00gVJamspg==",
++      "version": "6.14.1",
++      "resolved": "https://registry.npmjs.org/qs/-/qs-6.14.1.tgz",
++      "integrity": "sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==",
+       "dev": true,
+       "license": "BSD-3-Clause",
+       "dependencies": {
+@@ -2581,6 +2581,16 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
++    "node_modules/randombytes": {
++      "version": "2.1.0",
++      "resolved": "https://registry.npmjs.org/randombytes/-/randombytes-2.1.0.tgz",
++      "integrity": "sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==",
++      "dev": true,
++      "license": "MIT",
++      "dependencies": {
++        "safe-buffer": "^5.1.0"
++      }
++    },
+     "node_modules/readable-stream": {
+       "version": "2.3.8",
+       "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.8.tgz",
+@@ -2803,6 +2813,16 @@
+         "node": ">= 10.13.0"
+       }
+     },
++    "node_modules/serialize-javascript": {
++      "version": "6.0.2",
++      "resolved": "https://registry.npmjs.org/serialize-javascript/-/serialize-javascript-6.0.2.tgz",
++      "integrity": "sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==",
++      "dev": true,
++      "license": "BSD-3-Clause",
++      "dependencies": {
++        "randombytes": "^2.1.0"
++      }
++    },
+     "node_modules/shallow-clone": {
+       "version": "3.0.1",
+       "resolved": "https://registry.npmjs.org/shallow-clone/-/shallow-clone-3.0.1.tgz",
+@@ -3136,15 +3156,16 @@
+       }
+     },
+     "node_modules/terser-webpack-plugin": {
+-      "version": "5.4.0",
+-      "resolved": "https://registry.npmjs.org/terser-webpack-plugin/-/terser-webpack-plugin-5.4.0.tgz",
+-      "integrity": "sha512-Bn5vxm48flOIfkdl5CaD2+1CiUVbonWQ3KQPyP7/EuIl9Gbzq/gQFOzaMFUEgVjB1396tcK0SG8XcNJ/2kDH8g==",
++      "version": "5.3.16",
++      "resolved": "https://registry.npmjs.org/terser-webpack-plugin/-/terser-webpack-plugin-5.3.16.tgz",
++      "integrity": "sha512-h9oBFCWrq78NyWWVcSwZarJkZ01c2AyGrzs1crmHZO3QUg9D61Wu4NPjBy69n7JqylFF5y+CsUZYmYEIZ3mR+Q==",
+       "dev": true,
+       "license": "MIT",
+       "dependencies": {
+         "@jridgewell/trace-mapping": "^0.3.25",
+         "jest-worker": "^27.4.5",
+         "schema-utils": "^4.3.0",
++        "serialize-javascript": "^6.0.2",
+         "terser": "^5.31.1"
+       },
+       "engines": {
+diff --git a/go.mod b/go.mod
+index fa202aab..37445796 100644
+--- a/go.mod
++++ b/go.mod
+@@ -5,7 +5,7 @@ go 1.25.0
+ require (
+ 	github.com/antihax/optional v1.0.0
+ 	github.com/google/go-cmp v0.7.0
+-	github.com/oapi-codegen/runtime v1.4.1-0.20260411171516-6fd6c25e4f6d
++	github.com/oapi-codegen/runtime v1.4.1-0.20260411144317-19040cc57320
+ 	github.com/rogpeppe/fastuuid v1.2.0
+ 	go.yaml.in/yaml/v3 v3.0.4
+ 	golang.org/x/oauth2 v0.36.0
+diff --git a/go.sum b/go.sum
+index b351cabc..445b0975 100644
+--- a/go.sum
++++ b/go.sum
+@@ -28,8 +28,8 @@ github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
+ github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
+ github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
+ github.com/kr/text v0.2.0/go.mod h1:eLer722TekiGuMkidMxC/pM04lWEeraHUUmBw8l2grE=
+-github.com/oapi-codegen/runtime v1.4.1-0.20260411171516-6fd6c25e4f6d h1:Sjw53cZUDnvXokmg4y20QSClChywOGNLjvXTNQivDjg=
+-github.com/oapi-codegen/runtime v1.4.1-0.20260411171516-6fd6c25e4f6d/go.mod h1:NFf7rBHTqhbf+QZU7caj+BFX5IEx8+7MdZFNJaZX8Mg=
++github.com/oapi-codegen/runtime v1.4.1-0.20260411144317-19040cc57320 h1:a72zTkSc1Jb7GLceTLXqFT/36qhBZMhwirO+xoQ/CMg=
++github.com/oapi-codegen/runtime v1.4.1-0.20260411144317-19040cc57320/go.mod h1:NFf7rBHTqhbf+QZU7caj+BFX5IEx8+7MdZFNJaZX8Mg=
+ github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e/go.mod h1:pJLUxLENpZxwdsKMEsNbx1VGcRFpLqf3715MtcvvzbA=
+ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+diff --git a/protoc-gen-openapiv3/internal/genopenapi/generator.go b/protoc-gen-openapiv3/internal/genopenapi/generator.go
+index 6c1ba5a9..2ba5f985 100644
+--- a/protoc-gen-openapiv3/internal/genopenapi/generator.go
++++ b/protoc-gen-openapiv3/internal/genopenapi/generator.go
+@@ -45,16 +45,21 @@ func generateFile(reg *descriptor.Registry, file *descriptor.File) (*Document, b
+ 	seenTags := make(map[string]bool)
+ 
+ 	for _, svc := range file.Services {
+-		tag := svc.GetName()
+-		if !seenTags[tag] {
+-			seenTags[tag] = true
+-			doc.Tags = append(doc.Tags, &Tag{
+-				Name:        tag,
+-				Description: serviceComments(svc),
+-			})
++		if !isVisible(serviceVisibility(svc), reg) {
++			// Service is hidden by visibility rules, skip.
++			continue
+ 		}
+ 
++		tag := svc.GetName()
++		// Track whether any methods of this service are visible,
++		// to avoid emitting a tag for a service with only hidden methods.
++		hasVisibleMethod := false
++
+ 		for _, method := range svc.Methods {
++			if !isVisible(methodVisibility(method), reg) {
++				// Method is hidden by visibility rules, skip.
++				continue
++			}
+ 			for i, binding := range method.Bindings {
+ 				urlPath, pathParams := convertPathTemplate(binding.PathTmpl.Template)
+ 				op := buildOperation(b, svc, method, binding, i, pathParams)
+@@ -66,6 +71,19 @@ func generateFile(reg *descriptor.Registry, file *descriptor.File) (*Document, b
+ 				}
+ 				item.SetOperation(binding.HTTPMethod, op)
+ 			}
++			// At least one method is visible, so the service's tag
++			// should be emitted.
++			hasVisibleMethod = true
++		}
++
++		// Emit the service's tag if it has any visible
++		// methods and the tag hasn't already been emitted.
++		if hasVisibleMethod && !seenTags[tag] {
++			seenTags[tag] = true
++			doc.Tags = append(doc.Tags, &Tag{
++				Name:        tag,
++				Description: serviceComments(svc),
++			})
+ 		}
+ 	}
+ 
+diff --git a/protoc-gen-openapiv3/internal/genopenapi/operation.go b/protoc-gen-openapiv3/internal/genopenapi/operation.go
+index 868db3c9..5877ff54 100644
+--- a/protoc-gen-openapiv3/internal/genopenapi/operation.go
++++ b/protoc-gen-openapiv3/internal/genopenapi/operation.go
+@@ -92,6 +92,10 @@ func buildParameters(b *schemaBuilder, m *descriptor.Method, binding *descriptor
+ 	}
+ 	cycle := newQueryCycleChecker(b.reg.GetRecursiveDepth())
+ 	for _, field := range m.RequestType.Fields {
++		if !isVisible(fieldVisibility(field), b.reg) {
++			// Field is hidden by visibility rules, skip.
++			continue
++		}
+ 		if isPathParam(field, binding.PathParams) {
+ 			// Already handled as a path parameter, skip.
+ 			continue
+@@ -160,6 +164,10 @@ func (b *schemaBuilder) queryParameters(field *descriptor.Field, prefix string,
+ 			defer cycle.leave(msg.FQMN())
+ 			var out []*ParameterRef
+ 			for _, nested := range msg.Fields {
++				if !isVisible(fieldVisibility(nested), b.reg) {
++					// Field is hidden by visibility rules, skip.
++					continue
++				}
+ 				out = append(out, b.queryParameters(nested, name+".", deprecated, cycle)...)
+ 			}
+ 			return out
+@@ -293,6 +301,10 @@ func buildRequestBody(b *schemaBuilder, m *descriptor.Method, binding *descripto
+ 		// body="*": synthesize a body-only inline schema.
+ 		bodySchema := &Schema{Type: SchemaType{"object"}}
+ 		for _, field := range m.RequestType.Fields {
++			if !isVisible(fieldVisibility(field), b.reg) {
++				// Field is hidden by visibility rules, skip.
++				continue
++			}
+ 			if isPathParam(field, binding.PathParams) {
+ 				continue
+ 			}
+diff --git a/protoc-gen-openapiv3/internal/genopenapi/schema.go b/protoc-gen-openapiv3/internal/genopenapi/schema.go
+index 44e93407..23d4fd9f 100644
+--- a/protoc-gen-openapiv3/internal/genopenapi/schema.go
++++ b/protoc-gen-openapiv3/internal/genopenapi/schema.go
+@@ -202,10 +202,18 @@ func (b *schemaBuilder) ensureMessageSchema(msg *descriptor.Message) {
+ 		schema.Properties = make(map[string]*SchemaOrRef, total)
+ 	}
+ 	for _, field := range regular {
++		if !isVisible(fieldVisibility(field), b.reg) {
++			// Field is hidden by visibility rules, skip.
++			continue
++		}
+ 		b.addProperty(schema, field)
+ 	}
+ 	for _, g := range oneofs {
+ 		for _, field := range g.fields {
++			if !isVisible(fieldVisibility(field), b.reg) {
++				// Field is hidden by visibility rules, skip.
++				continue
++			}
+ 			b.addProperty(schema, field)
+ 		}
+ 	}
+@@ -244,13 +252,20 @@ func (b *schemaBuilder) ensureMessageSchema(msg *descriptor.Message) {
+ 	// directly onto the schema's `oneOf` for less verbose output.
+ 	groupConstraints := make([]*SchemaOrRef, 0, len(oneofs))
+ 	for _, g := range oneofs {
+-		if len(g.fields) < 2 {
+-			// Single-field oneof groups are a no-op constraint, so skip them.
++		// Collect only visible fields for the constraint.
++		var visibleFields []*descriptor.Field
++		for _, field := range g.fields {
++			if isVisible(fieldVisibility(field), b.reg) {
++				visibleFields = append(visibleFields, field)
++			}
++		}
++		if len(visibleFields) < 2 {
++			// Single-field (or empty) oneof groups are a no-op constraint, so skip them.
+ 			continue
+ 		}
+-		anyRequired := make([]*SchemaOrRef, 0, len(g.fields))
+-		options := make([]*SchemaOrRef, 0, len(g.fields)+1)
+-		for _, field := range g.fields {
++		anyRequired := make([]*SchemaOrRef, 0, len(visibleFields))
++		options := make([]*SchemaOrRef, 0, len(visibleFields)+1)
++		for _, field := range visibleFields {
+ 			anyRequired = append(anyRequired, &SchemaOrRef{Value: &Schema{
+ 				Required: []string{jsonName(field)},
+ 			}})
+@@ -259,7 +274,7 @@ func (b *schemaBuilder) ensureMessageSchema(msg *descriptor.Message) {
+ 			Type: SchemaType{"object"},
+ 			Not:  &SchemaOrRef{Value: &Schema{AnyOf: anyRequired}},
+ 		}})
+-		for _, field := range g.fields {
++		for _, field := range visibleFields {
+ 			fname := jsonName(field)
+ 			options = append(options, &SchemaOrRef{Value: &Schema{
+ 				Type: SchemaType{"object"},
+@@ -423,13 +438,26 @@ func (b *schemaBuilder) ensureEnumSchema(enum *descriptor.Enum) {
+ 	}
+ 	values := make([]any, 0, len(enum.Value))
+ 	for _, v := range enum.Value {
++		if !isVisible(enumValueVisibility(v), b.reg) {
++			// Enum value is hidden by visibility rules, skip.
++			continue
++		}
+ 		values = append(values, v.GetName())
+ 	}
+ 	schema := &Schema{
+ 		Type:       SchemaType{"string"},
+-		Enum:       values,
+ 		Deprecated: enumDeprecated(enum),
+ 	}
++	if len(values) == 0 {
++		// Every value is hidden by visibility rules. We can't drop the
++		// component schema — a visible field may still reference it — so
++		// fall back to an unconstrained string and warn. The user almost
++		// certainly wants to either broaden their selectors or hide the
++		// referring fields as well.
++		grpclog.Infof("protoc-gen-openapiv3: enum %q has no visible values under current visibility_restriction_selectors; emitting as unconstrained string", enum.FQEN())
++	} else {
++		schema.Enum = values
++	}
+ 	if desc := enumComments(b.reg, enum); desc != "" {
+ 		schema.Description = desc
+ 	}
+diff --git a/protoc-gen-openapiv3/internal/genopenapi/testdata/visibility.prototext b/protoc-gen-openapiv3/internal/genopenapi/testdata/visibility.prototext
+new file mode 100644
+index 00000000..55b56c9e
+--- /dev/null
++++ b/protoc-gen-openapiv3/internal/genopenapi/testdata/visibility.prototext
+@@ -0,0 +1,379 @@
++file_to_generate: "vis/v1/visibility.proto"
++proto_file: {
++  name: "vis/v1/visibility.proto"
++  package: "vis.v1"
++  message_type: {
++    name: "PublicRequest"
++    field: {
++      name: "public_field"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "publicField"
++    }
++    field: {
++      name: "internal_field"
++      number: 2
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "internalField"
++      options: {
++        [google.api.field_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++    field: {
++      name: "preview_field"
++      number: 3
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "previewField"
++      options: {
++        [google.api.field_visibility]: { restriction: "PREVIEW" }
++      }
++    }
++    field: {
++      name: "multi_field"
++      number: 4
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "multiField"
++      options: {
++        [google.api.field_visibility]: { restriction: "INTERNAL,PREVIEW" }
++      }
++    }
++  }
++  message_type: {
++    name: "PublicResponse"
++    field: {
++      name: "value"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "value"
++    }
++    field: {
++      name: "status"
++      number: 2
++      label: LABEL_OPTIONAL
++      type: TYPE_ENUM
++      type_name: ".vis.v1.Status"
++      json_name: "status"
++    }
++  }
++  message_type: {
++    name: "InternalRequest"
++    field: {
++      name: "secret"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "secret"
++    }
++  }
++  message_type: {
++    name: "InternalResponse"
++    field: {
++      name: "data"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "data"
++    }
++  }
++  message_type: {
++    name: "OneofRequest"
++    field: {
++      name: "visible_choice"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "visibleChoice"
++      oneof_index: 0
++    }
++    field: {
++      name: "internal_choice"
++      number: 2
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "internalChoice"
++      oneof_index: 0
++      options: {
++        [google.api.field_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++    field: {
++      name: "preview_choice"
++      number: 3
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "previewChoice"
++      oneof_index: 0
++      options: {
++        [google.api.field_visibility]: { restriction: "PREVIEW" }
++      }
++    }
++    oneof_decl: { name: "choice" }
++  }
++  message_type: {
++    name: "OneofCollapseRequest"
++    field: {
++      name: "lonely_visible"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "lonelyVisible"
++      oneof_index: 0
++    }
++    field: {
++      name: "lonely_internal"
++      number: 2
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "lonelyInternal"
++      oneof_index: 0
++      options: {
++        [google.api.field_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++    oneof_decl: { name: "lonely" }
++  }
++  message_type: {
++    name: "NestedFilter"
++    field: {
++      name: "label"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "label"
++    }
++    field: {
++      name: "secret_label"
++      number: 2
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "secretLabel"
++      options: {
++        [google.api.field_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++  }
++  message_type: {
++    name: "QueryRequest"
++    field: {
++      name: "visible_q"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "visibleQ"
++    }
++    field: {
++      name: "internal_q"
++      number: 2
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "internalQ"
++      options: {
++        [google.api.field_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++    field: {
++      name: "filter"
++      number: 3
++      label: LABEL_OPTIONAL
++      type: TYPE_MESSAGE
++      type_name: ".vis.v1.NestedFilter"
++      json_name: "filter"
++    }
++  }
++  message_type: {
++    name: "BodyPayload"
++    field: {
++      name: "title"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "title"
++    }
++    field: {
++      name: "hidden_title"
++      number: 2
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "hiddenTitle"
++      options: {
++        [google.api.field_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++  }
++  message_type: {
++    name: "BodyFieldRequest"
++    field: {
++      name: "id"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_STRING
++      json_name: "id"
++    }
++    field: {
++      name: "payload"
++      number: 2
++      label: LABEL_OPTIONAL
++      type: TYPE_MESSAGE
++      type_name: ".vis.v1.BodyPayload"
++      json_name: "payload"
++    }
++  }
++  message_type: {
++    name: "AllHiddenHolder"
++    field: {
++      name: "hidden_state"
++      number: 1
++      label: LABEL_OPTIONAL
++      type: TYPE_ENUM
++      type_name: ".vis.v1.AllHiddenEnum"
++      json_name: "hiddenState"
++    }
++  }
++  enum_type: {
++    name: "Status"
++    value: { name: "STATUS_UNSPECIFIED" number: 0 }
++    value: {
++      name: "STATUS_ACTIVE"
++      number: 1
++    }
++    value: {
++      name: "STATUS_INTERNAL_ONLY"
++      number: 2
++      options: {
++        [google.api.value_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++  }
++  enum_type: {
++    name: "AllHiddenEnum"
++    value: {
++      name: "ALL_HIDDEN_UNSPECIFIED"
++      number: 0
++      options: {
++        [google.api.value_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++    value: {
++      name: "ALL_HIDDEN_A"
++      number: 1
++      options: {
++        [google.api.value_visibility]: { restriction: "INTERNAL" }
++      }
++    }
++  }
++  service: {
++    name: "PublicService"
++    method: {
++      name: "PublicMethod"
++      input_type: ".vis.v1.PublicRequest"
++      output_type: ".vis.v1.PublicResponse"
++      options: {
++        [google.api.http]: {
++          post: "/v1/public"
++          body: "*"
++        }
++      }
++    }
++    method: {
++      name: "InternalMethod"
++      input_type: ".vis.v1.InternalRequest"
++      output_type: ".vis.v1.InternalResponse"
++      options: {
++        [google.api.method_visibility]: { restriction: "INTERNAL" }
++        [google.api.http]: {
++          get: "/v1/internal"
++        }
++      }
++    }
++    method: {
++      name: "PreviewMethod"
++      input_type: ".vis.v1.PublicRequest"
++      output_type: ".vis.v1.PublicResponse"
++      options: {
++        [google.api.method_visibility]: { restriction: "PREVIEW" }
++        [google.api.http]: {
++          get: "/v1/preview"
++        }
++      }
++    }
++    method: {
++      name: "OneofMethod"
++      input_type: ".vis.v1.OneofRequest"
++      output_type: ".vis.v1.OneofRequest"
++      options: {
++        [google.api.http]: {
++          post: "/v1/oneof"
++          body: "*"
++        }
++      }
++    }
++    method: {
++      name: "OneofCollapseMethod"
++      input_type: ".vis.v1.OneofCollapseRequest"
++      output_type: ".vis.v1.OneofCollapseRequest"
++      options: {
++        [google.api.http]: {
++          post: "/v1/oneof_collapse"
++          body: "*"
++        }
++      }
++    }
++    method: {
++      name: "QueryMethod"
++      input_type: ".vis.v1.QueryRequest"
++      output_type: ".vis.v1.PublicResponse"
++      options: {
++        [google.api.http]: {
++          get: "/v1/query"
++        }
++      }
++    }
++    method: {
++      name: "BodyFieldMethod"
++      input_type: ".vis.v1.BodyFieldRequest"
++      output_type: ".vis.v1.PublicResponse"
++      options: {
++        [google.api.http]: {
++          post: "/v1/body_field/{id}"
++          body: "payload"
++        }
++      }
++    }
++    method: {
++      name: "AllHiddenEnumMethod"
++      input_type: ".vis.v1.AllHiddenHolder"
++      output_type: ".vis.v1.PublicResponse"
++      options: {
++        [google.api.http]: {
++          post: "/v1/all_hidden_enum"
++          body: "*"
++        }
++      }
++    }
++  }
++  service: {
++    name: "InternalService"
++    method: {
++      name: "SecretMethod"
++      input_type: ".vis.v1.InternalRequest"
++      output_type: ".vis.v1.InternalResponse"
++      options: {
++        [google.api.http]: {
++          get: "/v1/secret"
++        }
++      }
++    }
++    options: {
++      [google.api.api_visibility]: { restriction: "INTERNAL" }
++    }
++  }
++  options: {
++    go_package: "github.com/example/vis/v1;visv1"
++  }
++  syntax: "proto3"
++}
+diff --git a/protoc-gen-openapiv3/internal/genopenapi/visibility.go b/protoc-gen-openapiv3/internal/genopenapi/visibility.go
+new file mode 100644
+index 00000000..ab8b8ebf
+--- /dev/null
++++ b/protoc-gen-openapiv3/internal/genopenapi/visibility.go
+@@ -0,0 +1,91 @@
++package genopenapi
++
++import (
++	"strings"
++
++	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/descriptor"
++	"google.golang.org/genproto/googleapis/api/visibility"
++	"google.golang.org/protobuf/proto"
++	"google.golang.org/protobuf/types/descriptorpb"
++)
++
++// isVisible checks whether an element with the given VisibilityRule should be
++// included in the generated output. Elements without an annotation are always
++// visible. When an annotation is present, at least one of its comma-separated
++// restriction labels must appear in the registry's configured selectors.
++func isVisible(r *visibility.VisibilityRule, reg *descriptor.Registry) bool {
++	if r == nil {
++		return true
++	}
++
++	selectors := reg.GetVisibilityRestrictionSelectors()
++
++	restrictions := strings.Split(strings.TrimSpace(r.Restriction), ",")
++	if len(restrictions) == 0 {
++		return true
++	}
++
++	for _, restriction := range restrictions {
++		if selectors[strings.TrimSpace(restriction)] {
++			return true
++		}
++	}
++
++	return false
++}
++
++func fieldVisibility(fd *descriptor.Field) *visibility.VisibilityRule {
++	if fd.Options == nil {
++		return nil
++	}
++	if !proto.HasExtension(fd.Options, visibility.E_FieldVisibility) {
++		return nil
++	}
++	opts, ok := proto.GetExtension(fd.Options, visibility.E_FieldVisibility).(*visibility.VisibilityRule)
++	if !ok {
++		return nil
++	}
++	return opts
++}
++
++func serviceVisibility(svc *descriptor.Service) *visibility.VisibilityRule {
++	if svc.Options == nil {
++		return nil
++	}
++	if !proto.HasExtension(svc.Options, visibility.E_ApiVisibility) {
++		return nil
++	}
++	opts, ok := proto.GetExtension(svc.Options, visibility.E_ApiVisibility).(*visibility.VisibilityRule)
++	if !ok {
++		return nil
++	}
++	return opts
++}
++
++func methodVisibility(m *descriptor.Method) *visibility.VisibilityRule {
++	if m.Options == nil {
++		return nil
++	}
++	if !proto.HasExtension(m.Options, visibility.E_MethodVisibility) {
++		return nil
++	}
++	opts, ok := proto.GetExtension(m.Options, visibility.E_MethodVisibility).(*visibility.VisibilityRule)
++	if !ok {
++		return nil
++	}
++	return opts
++}
++
++func enumValueVisibility(v *descriptorpb.EnumValueDescriptorProto) *visibility.VisibilityRule {
++	if v.Options == nil {
++		return nil
++	}
++	if !proto.HasExtension(v.Options, visibility.E_ValueVisibility) {
++		return nil
++	}
++	opts, ok := proto.GetExtension(v.Options, visibility.E_ValueVisibility).(*visibility.VisibilityRule)
++	if !ok {
++		return nil
++	}
++	return opts
++}
+diff --git a/protoc-gen-openapiv3/main.go b/protoc-gen-openapiv3/main.go
+index 56e94105..04db3997 100644
+--- a/protoc-gen-openapiv3/main.go
++++ b/protoc-gen-openapiv3/main.go
+@@ -9,27 +9,25 @@
+ package main
+ 
+ import (
++	"flag"
+ 	"fmt"
+-	"log"
+ 	"os"
++	"strings"
+ 
+ 	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/codegenerator"
+ 	"github.com/grpc-ecosystem/grpc-gateway/v2/internal/descriptor"
+ 	"github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv3/internal/genopenapi"
++	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+ 	"google.golang.org/grpc/grpclog"
+ 	"google.golang.org/protobuf/proto"
+ 	"google.golang.org/protobuf/types/pluginpb"
+ )
+ 
+-func main() {
+-	// Write log output to standard error to prevent clobbering standard out.
+-	// Drop the date/time prefix the standard logger adds by default — buf
+-	// surfaces these messages interactively, so a timestamp adds noise
+-	// without context.
+-	log.SetOutput(os.Stderr)
+-	log.SetPrefix("protoc-gen-openapiv3: ")
+-	log.SetFlags(0)
++var (
++	visibilityRestrictionSelectors = utilities.StringArrayFlag(flag.CommandLine, "visibility_restriction_selectors", "list of `google.api.VisibilityRule` visibility labels to include in the generated output when a visibility annotation is defined. Repeat this option to supply multiple values. Elements without visibility annotations are unaffected by this setting.")
++)
+ 
++func main() {
+ 	if err := run(); err != nil {
+ 		emitError(err)
+ 		os.Exit(1)
+@@ -42,7 +40,14 @@ func run() error {
+ 		return err
+ 	}
+ 
++	if param := req.GetParameter(); param != "" {
++		if err := parseReqParam(param, flag.CommandLine); err != nil {
++			return err
++		}
++	}
++
+ 	reg := descriptor.NewRegistry()
++	reg.SetVisibilityRestrictionSelectors(*visibilityRestrictionSelectors)
+ 	if err := reg.Load(req); err != nil {
+ 		return err
+ 	}
+@@ -88,3 +93,21 @@ func emitResp(resp *pluginpb.CodeGeneratorResponse) {
+ 		os.Exit(1)
+ 	}
+ }
++
++// parseReqParam parses the protoc plugin parameter string (comma-separated
++// key=value pairs) and sets the corresponding flags.
++func parseReqParam(param string, f *flag.FlagSet) error {
++	for p := range strings.SplitSeq(param, ",") {
++		flagName, val, ok := strings.Cut(p, "=")
++		if !ok {
++			if err := f.Set(flagName, ""); err != nil {
++				return fmt.Errorf("cannot set flag %s: %w", p, err)
++			}
++			continue
++		}
++		if err := f.Set(flagName, val); err != nil {
++			return fmt.Errorf("cannot set flag %s: %w", p, err)
++		}
++	}
++	return nil
++}
+diff --git a/repositories.bzl b/repositories.bzl
+index 981d8ef0..1ffe11a0 100644
+--- a/repositories.bzl
++++ b/repositories.bzl
+@@ -989,8 +989,8 @@ def go_repositories():
+     go_repository(
+         name = "com_github_oapi_codegen_runtime",
+         importpath = "github.com/oapi-codegen/runtime",
+-        sum = "h1:Sjw53cZUDnvXokmg4y20QSClChywOGNLjvXTNQivDjg=",
+-        version = "v1.4.1-0.20260411171516-6fd6c25e4f6d",
++        sum = "h1:a72zTkSc1Jb7GLceTLXqFT/36qhBZMhwirO+xoQ/CMg=",
++        version = "v1.4.1-0.20260411144317-19040cc57320",
+     )
+ 
+     go_repository(

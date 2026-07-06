@@ -1,0 +1,7 @@
+I'm adding Node.js compat to Deno's std library and I need to get CommonJS modules loading from inside Deno, right now there's just no way to pull in a CJS module and that's the format basically every existing Node package ships in, so anyone porting a Node app or reusing packages is stuck.
+
+What I want is a factory function that takes a file path as its anchor point (where the requiring module lives) and hands back a require-like loader function. When I call that loader with a module path it should resolve, load, and actually execute the CommonJS module and return its `module.exports`. Put this as the named export of a new file in the Node compatibility module directory under the std tree, something like `@std/node/require.js` fits the shape of what's already there.
+
+The loader's gotta handle the real-world cases: relative requires so I can pull in a sibling `.js` file relative to the requiring module, subdirectory resolution for stuff like `./subdir/module`, and node_modules resolution so third-party packages sitting in a `node_modules` directory get found. Transitive deps (including ones coming out of node_modules) need to resolve right too.
+
+Oh and circular deps, module A requires B which requires A back, that can't crash the runtime or spin forever, it should just gracefully return whatever partial exports exist so far the way Node does it. This is a foundational piece toward making Deno a near drop-in replacement for Node environments so I'd like it solid on those four scenarios.

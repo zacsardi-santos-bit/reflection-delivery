@@ -1,0 +1,20 @@
+patching file netbox/dcim/tests/test_models.py
+Starting PostgreSQL 15 database server: main.
+Starting redis-server: redis-server.
+============================= test session starts ==============================
+platform linux -- Python 3.8.20, pytest-8.3.5, pluggy-1.5.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+django: version: 2.2.28, settings: netbox.settings (from env)
+rootdir: /workspace/repo/netbox
+plugins: django-4.11.1
+collecting ... collected 6 items
+
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_circuit PASSED [ 16%]
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_multiple_patches PASSED [ 33%]
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_patch PASSED [ 50%]
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_patched_circuit PASSED [ 66%]
+dcim/tests/test_models.py::CablePathTestCase::test_connection_via_stacked_rear_ports PASSED [ 83%]
+dcim/tests/test_models.py::CablePathTestCase::test_direct_connection PASSED [100%]
+
+============================== 6 passed in 19.34s ==============================
+reward=1 graded=6 found=0 failed=0 parsed=6 framework=pytest exit_code=0

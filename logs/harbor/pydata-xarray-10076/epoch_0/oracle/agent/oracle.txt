@@ -1,9 +1,0 @@
-patching file doc/api-hidden.rst
-patching file doc/api.rst
-patching file doc/whats-new.rst
-patching file xarray/core/formatting.py
-patching file xarray/core/indexes.py
-patching file xarray/core/indexing.py
-patching file xarray/indexes/__init__.py
-patching file xarray/indexes/range_index.py
-patching file xarray/testing/assertions.py

@@ -1,0 +1,29 @@
+{
+    "id": "3ac8886e-6563-42f4-a5a7-6ad5320cc8c5",
+    "started_at": "2026-07-04T15:38:04.271967",
+    "finished_at": "2026-07-04T15:38:41.819406",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__pixijs-pixijs-8864": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "pixijs-pixijs-8864__Xmd7LMY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,43 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo/web/elm && /workspace/repo/node_modules/.bin/elm-test tests/ApplicationTests.elm --compiler /workspace/repo/node_modules/.bin/elm --report junit",
+  "test_files": [
+    "web/elm/tests/ApplicationTests.elm"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "ApplicationTests top-level application wall editor::appears when set wall button is clicked",
+    "ApplicationTests top-level application::should subscribe to clicks from the not-automatically-linked boxes in the pipeline",
+    "ApplicationTests top-level application wall editor::closes when set wall button is clicked again",
+    "ApplicationTests top-level application::subscribes to local storage",
+    "ApplicationTests top-level application wall editor::closes when close button is clicked",
+    "ApplicationTests top-level application::subscribes to browser cache",
+    "ApplicationTests top-level application wall editor::closes when navigating away from the dashboard",
+    "ApplicationTests top-level application::loads favorited pipelines/instance groups on init",
+    "ApplicationTests top-level application wall editor::closes when user logs out",
+    "ApplicationTests top-level application::clicking a not-automatically-linked box in the pipeline redirects",
+    "ApplicationTests top-level application wall editor::clicking the set button sets the wall",
+    "ApplicationTests top-level application::received token is passed to all subsequent requests",
+    "ApplicationTests top-level application wall editor::clicking the clear button clears the wall",
+    "ApplicationTests top-level application::subscribes to mouse events when dragging the side bar handle",
+    "ApplicationTests top-level application wall editor::clicking the clear button closes the editor",
+    "ApplicationTests top-level application::cannot select text when dragging sidebar",
+    "ApplicationTests top-level application wall editor::WallSet success closes the editor",
+    "ApplicationTests top-level application::can select text when not dragging sidebar",
+    "ApplicationTests top-level application wall editor::WallSet success fetches the wall",
+    "ApplicationTests top-level application pipeline groups propagation::navigating to no groups pipeline page does not propagate the groups",
+    "ApplicationTests top-level application::changing route clears hovered element",
+    "ApplicationTests top-level application wall editor::WallCleared success clears the wall message",
+    "ApplicationTests top-level application::page-wrapper fills height",
+    "ApplicationTests top-level application wall editor::WallSet error keeps the editor open",
+    "ApplicationTests top-level application pipeline groups propagation::navigating through sub routes of a pipeline persists the groups",
+    "ApplicationTests top-level application wall banner::wall banner is not displayed when there's no message",
+    "ApplicationTests top-level application set wall button::is not visible when user is not logged in",
+    "ApplicationTests top-level application wall banner::wall banner is not displayed on WallFetched error",
+    "ApplicationTests top-level application wall banner::wall banner is displayed when there is a message",
+    "ApplicationTests top-level application set wall button::is not visible for a non-admin user",
+    "ApplicationTests top-level application wall editor::is not visible by default"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,13 @@
+patching file tests/integration/ha_test.go
+patching file tests/integration/standby_test.go
+# github.com/sorintlab/stolon/tests/integration [github.com/sorintlab/stolon/tests/integration.test]
+gopath/src/github.com/sorintlab/stolon/tests/integration/ha_test.go:159:4: unknown field 'StandbyConfig' in struct literal of type cluster.ClusterSpec
+gopath/src/github.com/sorintlab/stolon/tests/integration/ha_test.go:159:28: undefined: cluster.StandbyConfig
+gopath/src/github.com/sorintlab/stolon/tests/integration/standby_test.go:118:3: unknown field 'StandbyConfig' in struct literal of type cluster.ClusterSpec
+gopath/src/github.com/sorintlab/stolon/tests/integration/standby_test.go:118:27: undefined: cluster.StandbyConfig
+gopath/src/github.com/sorintlab/stolon/tests/integration/standby_test.go:249:3: unknown field 'StandbyConfig' in struct literal of type cluster.ClusterSpec
+gopath/src/github.com/sorintlab/stolon/tests/integration/standby_test.go:249:27: undefined: cluster.StandbyConfig
+gopath/src/github.com/sorintlab/stolon/tests/integration/standby_test.go:403:3: unknown field 'StandbyConfig' in struct literal of type cluster.ClusterSpec
+gopath/src/github.com/sorintlab/stolon/tests/integration/standby_test.go:403:27: undefined: cluster.StandbyConfig
+FAIL	github.com/sorintlab/stolon/tests/integration [build failed]
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

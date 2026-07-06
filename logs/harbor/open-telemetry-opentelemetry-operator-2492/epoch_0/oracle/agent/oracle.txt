@@ -1,7 +1,0 @@
-patching file .chloggen/fix-ta-security-context.yaml
-patching file apis/v1alpha1/opentelemetrycollector_types.go
-patching file apis/v1alpha1/zz_generated.deepcopy.go
-patching file bundle/manifests/opentelemetry.io_opentelemetrycollectors.yaml
-patching file config/crd/bases/opentelemetry.io_opentelemetrycollectors.yaml
-patching file internal/manifests/targetallocator/container.go
-patching file internal/manifests/targetallocator/deployment.go

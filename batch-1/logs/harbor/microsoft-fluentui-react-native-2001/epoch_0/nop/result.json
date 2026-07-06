@@ -1,0 +1,98 @@
+{
+    "id": "588b7a49-4c75-474d-ba6c-49f13b333f4c",
+    "task_name": "offline/microsoft-fluentui-react-native-2001",
+    "trial_name": "microsoft-fluentui-react-native__yQPAZqA",
+    "trial_uri": "file:///home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04/microsoft-fluentui-react-native__yQPAZqA",
+    "task_id": {
+        "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/microsoft-fluentui-react-native-2001"
+    },
+    "source": "harbor",
+    "task_checksum": "c6eea60daec825f1d7be8d2709bfc4fcacaca6b754932ed5df84f1bad5608dd9",
+    "config": {
+        "task": {
+            "path": "/home/ubuntu/reflection_offline_harbor_delivery/harbor/microsoft-fluentui-react-native-2001",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "harbor"
+        },
+        "trial_name": "microsoft-fluentui-react-native__yQPAZqA",
+        "trials_dir": "/home/ubuntu/reflection_offline_harbor_delivery/nop_jobs_all/2026-06-29__15-12-04",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "nop",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "modal",
+            "import_path": null,
+            "force_build": false,
+            "delete": false,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "b069d7ef-a502-4a46-91d5-798d81044649"
+    },
+    "agent_info": {
+        "name": "nop",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 0.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-06-29T15:26:53.676353Z",
+    "finished_at": "2026-06-29T15:30:14.233614Z",
+    "environment_setup": {
+        "started_at": "2026-06-29T15:26:53.681869Z",
+        "finished_at": "2026-06-29T15:30:00.934691Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-06-29T15:30:00.934705Z",
+        "finished_at": "2026-06-29T15:30:00.934732Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-06-29T15:30:00.934766Z",
+        "finished_at": "2026-06-29T15:30:00.934784Z"
+    },
+    "verifier": {
+        "started_at": "2026-06-29T15:30:01.609187Z",
+        "finished_at": "2026-06-29T15:30:13.143742Z"
+    }
+}

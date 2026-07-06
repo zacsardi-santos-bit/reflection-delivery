@@ -1,0 +1,32 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn install -pl hudi-common -DskipTests -q && mvn test -pl hudi-hadoop-common -Dtest=TestArchivedTimelineV1 -DfailIfNoTests=false",
+  "test_files": [
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/common/table/timeline/TestArchivedTimelineV2.java",
+    "hudi-hadoop-common/src/test/java/org/apache/hudi/common/table/timeline/TestArchivedTimelineV1.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jar:::test_1",
+    "jar:::test_2",
+    "jar:::test_3",
+    "jar:::test_4",
+    "jar:::test_5",
+    "jar:::test_6",
+    "jar:::test_7",
+    "jar:::test_8",
+    "jar:::test_9",
+    "jar:::test_10",
+    "jar:::test_11",
+    "jar:::test_12",
+    "jar:::test_13",
+    "jar:::test_14",
+    "jar:::test_15",
+    "jar:::test_16",
+    "jar:::test_17",
+    "jar:::test_18",
+    "jar:::test_19"
+  ],
+  "PASS_TO_PASS": []
+}

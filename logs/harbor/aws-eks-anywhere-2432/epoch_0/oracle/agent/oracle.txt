@@ -1,2 +1,0 @@
-patching file designs/cloudstack-multiple-endpoints.md
-patching file pkg/executables/kubectl.go

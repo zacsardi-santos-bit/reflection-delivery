@@ -1,5 +1,0 @@
-I'm working on SSL connection buffer management and noticed that the logic for deciding whether buffers can be freed doesn't correctly handle pipelined connections. When pipelining is enabled and two records arrive together, if the first record is fully read but the second is only partially received, the code incorrectly allows the buffers to be freed — even though there's still pending data in them.
-
-I need the buffer-freeing function to properly detect all the cases where buffers are still in use, including: when the application has only done a partial read, when only a record header was received, when a full header arrived but no body, when a partial record body is buffered, and most importantly — when pipelining is active and a second pipelined record is only partially available after the first one was successfully read.
-
-I also need a shared helper for loading and initializing the pipeline-capable engine so it can be used consistently across multiple test files instead of duplicating the setup logic everywhere.

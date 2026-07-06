@@ -1,0 +1,13 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p burn-no-std-tests --no-default-features",
+  "test_files": [
+    "crates/burn-no-std-tests/Cargo.toml"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) burn-no-std-tests::integration_test test_mnist_model_with_random_input"
+  ],
+  "PASS_TO_PASS": []
+}

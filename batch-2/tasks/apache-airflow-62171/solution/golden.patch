@@ -1,0 +1,936 @@
+diff --git a/devel-common/src/sphinx_exts/providers_extensions.py b/devel-common/src/sphinx_exts/providers_extensions.py
+index 5652fae138..ddd2bbafeb 100644
+--- a/devel-common/src/sphinx_exts/providers_extensions.py
++++ b/devel-common/src/sphinx_exts/providers_extensions.py
+@@ -21,7 +21,6 @@ from __future__ import annotations
+ import ast
+ import os
+ from collections.abc import Callable, Iterable
+-from functools import partial
+ from pathlib import Path
+ from typing import Any
+ 
+@@ -72,13 +71,16 @@ def find_class_methods_with_specific_calls(
+ 
+         ...     def method4(self):
+         ...         self.some_other_method()
++
++        ...     def method5(self):
++        ...         direct_call()
+         ... '''
+         > find_methods_with_specific_calls(
+             ast.parse(source_code),
+-            {"airflow.my_method.not_ok", "airflow.my_method.ok"},
+-            {"my_method": "airflow.my_method"}
++            {"airflow.my_method.not_ok", "airflow.my_method.ok", "airflow.direct_call"},
++            {"my_method": "airflow.my_method", "direct_call": "airflow.direct_call"}
+         )
+-        {'method1', 'method2', 'method3'}
++        {'method1', 'method2', 'method3', 'method5'}
+     """
+     method_call_map: dict[str, set[str]] = {}
+     methods_with_calls: set[str] = set()
+@@ -92,6 +94,12 @@ def find_class_methods_with_specific_calls(
+             if not isinstance(sub_node, ast.Call):
+                 continue
+             called_function = sub_node.func
++            # Direct function calls: e.g. send_sql_hook_lineage(...)
++            if isinstance(called_function, ast.Name):
++                full_call = import_mappings.get(called_function.id)
++                if full_call in target_calls:
++                    methods_with_calls.add(node.name)
++                continue
+             if not isinstance(called_function, ast.Attribute):
+                 continue
+             if isinstance(called_function.value, ast.Call) and isinstance(
+@@ -149,18 +157,24 @@ def get_import_mappings(tree) -> dict[str, str]:
+ 
+ def _get_module_class_registry(
+     module_filepath: Path, module_name: str, class_extras: dict[str, Callable]
+-) -> dict[str, dict[str, Any]]:
++) -> tuple[dict[str, dict[str, Any]], dict[str, set[str]]]:
+     """
+-    Extracts classes and its information from a Python module file.
++    Extracts classes and module-level functions from a Python module file.
+ 
+     The function parses the specified module file and registers all classes.
+-    The registry for each class includes the module filename, methods, base classes
+-    and any additional class extras provided.
++    The registry for each class includes the module filename, methods, base classes,
++    any additional class extras provided, and temporary ``_class_node`` /
++    ``_import_mappings`` entries for deferred analysis.
++
++    It also collects fully-qualified call targets for every module-level function
++    so that transitive helper discovery can be done without re-reading the file.
+ 
+     :param module_filepath: The file path of the module.
++    :param module_name: Fully-qualified module name.
+     :param class_extras: Additional information to include in each class's registry.
+ 
+-    :return: A dictionary with class names as keys and their corresponding information.
++    :return: A tuple of (class_registry, function_calls) where *function_calls*
++        maps each ``module.function_name`` to the set of fully-qualified calls it makes.
+     """
+     with open(module_filepath) as file:
+         ast_obj = ast.parse(file.read())
+@@ -174,6 +188,8 @@ def _get_module_class_registry(
+                 for b in node.bases
+                 if isinstance(b, ast.Name)
+             ],
++            "_class_node": node,
++            "_import_mappings": import_mappings,
+             **{
+                 key: callable_(class_node=node, import_mappings=import_mappings)
+                 for key, callable_ in class_extras.items()
+@@ -182,7 +198,46 @@ def _get_module_class_registry(
+         for node in ast_obj.body
+         if isinstance(node, ast.ClassDef)
+     }
+-    return module_class_registry
++    module_function_calls = {
++        f"{module_name}.{node.name}": _find_calls_in_function(node, import_mappings)
++        for node in ast_obj.body
++        if isinstance(node, ast.FunctionDef)
++    }
++    return module_class_registry, module_function_calls
++
++
++def _get_methods_with_hook_level_lineage(
++    class_path: str,
++    class_registry: dict[str, dict[str, Any]],
++    target_calls: set[str],
++) -> set[str]:
++    """
++    Return method names that have hook-level lineage calls on this class or any base class.
++
++    Walks the inheritance tree so that child classes are considered to have HLL when a
++    base class implements it (e.g. DbApiHook._run_command → PostgresHook, MySqlHook, etc.).
++    HLL is computed lazily on first access using the stored AST data.
++    """
++    if class_path not in class_registry:
++        return set()
++    info = class_registry[class_path]
++    if "methods_with_hook_level_lineage" not in info:
++        class_node = info.pop("_class_node", None)
++        import_mappings = info.pop("_import_mappings", None)
++        info["methods_with_hook_level_lineage"] = (
++            find_class_methods_with_specific_calls(
++                class_node=class_node,
++                target_calls=target_calls,
++                import_mappings=import_mappings,
++            )
++            if class_node is not None
++            else set()
++        )
++    methods: set[str] = set(info["methods_with_hook_level_lineage"])
++    for base_name in info.get("base_classes") or []:
++        if base_name in class_registry:
++            methods |= _get_methods_with_hook_level_lineage(base_name, class_registry, target_calls)
++    return methods
+ 
+ 
+ def _has_method(
+@@ -228,19 +283,81 @@ def _has_method(
+     return False
+ 
+ 
++def _inherits_from(
++    class_path: str,
++    ancestor_path: str,
++    class_registry: dict[str, dict[str, Any]],
++) -> bool:
++    """Check whether *class_path* inherits from *ancestor_path* (walking the registry)."""
++    if class_path == ancestor_path:
++        return True
++    if class_path not in class_registry:
++        return False
++    return any(
++        _inherits_from(base, ancestor_path, class_registry)
++        for base in class_registry[class_path]["base_classes"]
++    )
++
++
++def _find_calls_in_function(func_node: ast.FunctionDef, import_mappings: dict[str, str]) -> set[str]:
++    """Return fully-qualified call targets found in a single function node."""
++    calls: set[str] = set()
++    for sub_node in ast.walk(func_node):
++        if not isinstance(sub_node, ast.Call):
++            continue
++        func = sub_node.func
++        # Direct call: some_function(...)
++        if isinstance(func, ast.Name):
++            fq = import_mappings.get(func.id)
++            if fq:
++                calls.add(fq)
++        # Chained call: some_function().method(...)
++        elif (
++            isinstance(func, ast.Attribute)
++            and isinstance(func.value, ast.Call)
++            and isinstance(func.value.func, ast.Name)
++        ):
++            fq = import_mappings.get(func.value.func.id)
++            if fq:
++                calls.add(f"{fq}.{func.attr}")
++    return calls
++
++
++def _compute_transitive_closure(function_calls: dict[str, set[str]], root_targets: set[str]) -> set[str]:
++    """
++    Expand *root_targets* with module-level functions that transitively call them.
++
++    :param function_calls: Mapping of fully-qualified function names to the set of fully-qualified calls
++     each function makes (as collected during module scanning).
++    :param root_targets: The seed set of call targets (e.g. ``get_hook_lineage_collector().add_extra``).
++    :return: Expanded set that includes *root_targets* plus any discovered wrapper functions.
++    """
++    targets = set(root_targets)
++    changed = True
++    while changed:
++        changed = False
++        for fq_name, calls in function_calls.items():
++            if fq_name not in targets and calls & targets:
++                targets.add(fq_name)
++                changed = True
++    return targets
++
++
+ def _get_providers_class_registry(
+     class_extras: dict[str, Callable] | None = None,
+-) -> dict[str, dict[str, Any]]:
++) -> tuple[dict[str, dict[str, Any]], dict[str, set[str]]]:
+     """
+-    Builds a registry of classes from YAML configuration files.
++    Builds a registry of classes and module-level function call graph from YAML configuration files.
+ 
+     This function scans through YAML configuration files to build a registry of classes.
+     It parses each YAML file to get the provider's name and registers classes from Python
+     module files within the provider's directory, excluding '__init__.py'.
+ 
+-    :return: A dictionary with provider names as keys and a dictionary of classes as values.
++    :return: A tuple of (class_registry, function_calls) where *function_calls* maps
++        each fully-qualified module-level function to the set of calls it makes.
+     """
+-    class_registry = {}
++    class_registry: dict[str, dict[str, Any]] = {}
++    function_calls: dict[str, set[str]] = {}
+     for provider_yaml_content in load_package_data():
+         provider_pkg_root = Path(provider_yaml_content["package-dir"])
+         for root, _, file_names in os.walk(provider_pkg_root):
+@@ -251,7 +368,7 @@ def _get_providers_class_registry(
+ 
+                 module_filepath = folder.joinpath(file_name)
+ 
+-                module_registry = _get_module_class_registry(
++                module_registry, module_func_calls = _get_module_class_registry(
+                     module_filepath=module_filepath,
+                     module_name=(
+                         provider_yaml_content["python-module"]
+@@ -268,8 +385,9 @@ def _get_providers_class_registry(
+                     },
+                 )
+                 class_registry.update(module_registry)
++                function_calls.update(module_func_calls)
+ 
+-    return class_registry
++    return class_registry, function_calls
+ 
+ 
+ def _render_openlineage_supported_classes_content():
+@@ -279,7 +397,7 @@ def _render_openlineage_supported_classes_content():
+         "get_openlineage_database_specific_lineage",
+     )
+     hook_lineage_collector_path = "airflow.providers.common.compat.lineage.hook.get_hook_lineage_collector"
+-    hook_level_lineage_collector_calls = {
++    hook_level_lineage_root_calls = {
+         f"{hook_lineage_collector_path}.add_input_asset",  # Airflow 3
+         f"{hook_lineage_collector_path}.add_output_asset",  # Airflow 3
+         f"{hook_lineage_collector_path}.add_input_dataset",  # Airflow 2
+@@ -287,17 +405,15 @@ def _render_openlineage_supported_classes_content():
+         f"{hook_lineage_collector_path}.add_extra",
+     }
+ 
+-    class_registry = _get_providers_class_registry(
+-        class_extras={
+-            "methods_with_hook_level_lineage": partial(
+-                find_class_methods_with_specific_calls, target_calls=hook_level_lineage_collector_calls
+-            )
+-        }
++    class_registry, function_calls = _get_providers_class_registry()
++
++    # Auto-discover module-level wrapper functions (e.g. send_sql_hook_lineage) that
++    # transitively call the root targets, so they don't need to be listed manually.
++    hook_level_lineage_collector_calls = _compute_transitive_closure(
++        function_calls, hook_level_lineage_root_calls
+     )
+ 
+-    # Excluding these classes from auto-detection, and any subclasses, to prevent detection of methods
+-    # from abstract base classes (which need explicit OL support). Will be included in docs manually
+-    class_registry.pop("airflow.providers.common.sql.hooks.sql.DbApiHook")
++    base_sql_hook_class_path = "airflow.providers.common.sql.hooks.sql.DbApiHook"
+     base_sql_op_class_path = "airflow.providers.common.sql.operators.sql.BaseSQLOperator"
+ 
+     providers: dict[str, dict[str, Any]] = {}
+@@ -341,7 +457,8 @@ def _render_openlineage_supported_classes_content():
+                 class_path=class_path,
+                 method_names=openlineage_db_hook_methods,
+                 class_registry=class_registry,
+-            ):
++                ignored_classes=[base_sql_hook_class_path],
++            ) and _inherits_from(class_path, base_sql_hook_class_path, class_registry):
+                 db_type = (  # Extract db type from hook name
+                     class_name.replace("RedshiftSQL", "Redshift")  # for RedshiftSQLHook
+                     .replace("DatabricksSql", "Databricks")  # for DatabricksSqlHook
+@@ -350,11 +467,12 @@ def _render_openlineage_supported_classes_content():
+                 )
+                 db_hooks.append((db_type, class_path))
+ 
+-            elif info["methods_with_hook_level_lineage"]:
++            hll_methods = _get_methods_with_hook_level_lineage(
++                class_path, class_registry, hook_level_lineage_collector_calls
++            )
++            if hll_methods:
+                 provider_entry["hooks"][class_path] = [
+-                    f"{class_path}.{method}"
+-                    for method in info["methods_with_hook_level_lineage"]
+-                    if not method.startswith("_")
++                    f"{class_path}.{method}" for method in hll_methods if not method.startswith("_")
+                 ]
+ 
+     providers = {
+diff --git a/devel-common/src/sphinx_exts/templates/openlineage.rst.jinja2 b/devel-common/src/sphinx_exts/templates/openlineage.rst.jinja2
+index aedae7f6e3..52c6a6df8c 100644
+--- a/devel-common/src/sphinx_exts/templates/openlineage.rst.jinja2
++++ b/devel-common/src/sphinx_exts/templates/openlineage.rst.jinja2
+@@ -16,15 +16,62 @@
+  specific language governing permissions and limitations
+  under the License.
+ #}
+-Core operators
+-==============
+-At the moment, two core operators support OpenLineage. These operators function as a 'black box,'
+-capable of running any code, which might limit the extent of lineage extraction (e.g. lineage will usually not contain
+-input/output datasets). To enhance the extraction of lineage information, operators can utilize the hooks listed
+-below that support OpenLineage.
+ 
+-- :class:`~airflow.providers.standard.operators.python.PythonOperator` (via :class:`airflow.providers.openlineage.extractors.python.PythonExtractor`)
+-- :class:`~airflow.providers.standard.operators.bash.BashOperator` (via :class:`airflow.providers.openlineage.extractors.bash.BashExtractor`)
++Supported classes
++*****************
++
++Below is a list of Operators and Hooks that support OpenLineage extraction, along with specific DB types that are compatible with the supported SQL operators.
++
++.. important::
++
++    While we strive to keep the list of supported classes current,
++    please be aware that our updating process is automated and may not always capture everything accurately.
++    Detecting hook level lineage is challenging so make sure to double check the information provided below.
++
++What does "supported operator" mean?
++====================================
++
++**All Airflow operators will automatically emit OpenLineage events**, (unless explicitly disabled or skipped during
++scheduling, like EmptyOperator) regardless of whether they appear on the "supported" list.
++Every OpenLineage event will contain basic information such as:
++
++- Task and DAG run metadata (execution time, state, tags, parameters, owners, description, etc.)
++- Job relationship (DAG job that the task belongs to, upstream/downstream relationship between tasks in a DAG etc.)
++- Error message (in case of task failure)
++- Airflow and OpenLineage provider versions
++
++**"Supported" operators provide additional metadata** that enhances the lineage information:
++
++- **Input and output datasets** (sometimes with Column Level Lineage)
++- **Operator-specific details** that may include SQL query text and query IDs, source code, job IDs from external systems (e.g., Snowflake or BigQuery job ID), data quality metrics and other information.
++
++For example, a supported SQL operator will include the executed SQL query, query ID, and input/output table information
++in its OpenLineage events. An unsupported operator will still appear in the lineage graph, but without these details.
++
++.. tip::
++
++  You can easily implement OpenLineage support for any operator. See :ref:`guides/developer:openlineage`.
++
++
++.. _hook-lineage:
++
++Hook Level Lineage
++==================
++Some operators (like :class:`~airflow.providers.standard.operators.python.PythonOperator`) function as a "black box"
++capable of running arbitrary code, which usually prevents the extraction of input/output datasets. To address this,
++Airflow tracks hook-level lineage: when a supported hook method is invoked (even from within a Python callable)
++the OpenLineage integration can automatically capture lineage from that execution. For example, reading a file
++through a storage hook can report the file as an input dataset, while writing to an object store can report an
++output dataset.
++
++For hooks that execute SQL (mostly subclasses of :class:`~airflow.providers.common.sql.hooks.sql.DbApiHook`),
++the integration can go further. Besides recording which assets were read or written (by using SQL parsing),
++it may also extract the executed SQL text, external query/job IDs. For each query a separate pair of child OpenLineage
++events is emitted.
++
++.. important::
++  The level of detail captured varies between hooks and methods. Some may only report dataset information, while others
++  expose SQL text, query IDs and more. Review the hook implementation to confirm what lineage data is available.
+ 
+ Spark operators
+ ===============
+@@ -61,7 +108,7 @@ The operators and hooks listed below from each provider are natively equipped wi
+ 
+ {%for provider_name, provider_dict in providers.items() %}
+ {{ provider_name }} ({{ provider_dict['version'] }})
+-{{ '"' * 2 * (provider_name|length) }}
++{{ '-' * 2 * (provider_name|length) }}
+ 
+ {% if provider_dict['operators'] %}
+ Operators
+@@ -80,8 +127,8 @@ Operators
+ {% endif %}
+ 
+ {% if provider_dict['hooks'] %}
+-Hooks
+-^^^^^
++:ref:`Hooks* <hook-lineage>`
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ {% for hook, methods in provider_dict['hooks'].items() %}
+ - :class:`~{{ hook }}`
+   {% for method in methods %}
+diff --git a/providers/openlineage/docs/supported_classes.rst b/providers/openlineage/docs/supported_classes.rst
+index ba37a2a3c3..69911ca179 100644
+--- a/providers/openlineage/docs/supported_classes.rst
++++ b/providers/openlineage/docs/supported_classes.rst
+@@ -18,39 +18,4 @@
+ 
+ .. _supported_classes:openlineage:
+ 
+-Supported classes
+-===================
+-
+-Below is a list of Operators and Hooks that support OpenLineage extraction, along with specific DB types that are compatible with the supported SQL operators.
+-
+-.. important::
+-
+-    While we strive to keep the list of supported classes current,
+-    please be aware that our updating process is automated and may not always capture everything accurately.
+-    Detecting hook level lineage is challenging so make sure to double check the information provided below.
+-
+-What does "supported operator" mean?
+--------------------------------------
+-
+-**All Airflow operators will automatically emit OpenLineage events**, (unless explicitly disabled or skipped during
+-scheduling, like EmptyOperator) regardless of whether they appear on the "supported" list.
+-Every OpenLineage event will contain basic information such as:
+-
+-- Task and DAG run metadata (execution time, state, tags, parameters, owners, description, etc.)
+-- Job relationship (DAG job that the task belongs to, upstream/downstream relationship between tasks in a DAG etc.)
+-- Error message (in case of task failure)
+-- Airflow and OpenLineage provider versions
+-
+-**"Supported" operators provide additional metadata** that enhances the lineage information:
+-
+-- **Input and output datasets** (sometimes with Column Level Lineage)
+-- **Operator-specific details** that may include SQL query text and query IDs, source code, job IDs from external systems (e.g., Snowflake or BigQuery job ID), data quality metrics and other information.
+-
+-For example, a supported SQL operator will include the executed SQL query, query ID, and input/output table information
+-in its OpenLineage events. An unsupported operator will still appear in the lineage graph, but without these details.
+-
+-.. tip::
+-
+-  You can easily implement OpenLineage support for any operator. See :ref:`guides/developer:openlineage`.
+-
+ .. airflow-providers-openlineage-supported-classes::
+diff --git a/providers/openlineage/pyproject.toml b/providers/openlineage/pyproject.toml
+index 99fef5f1d3..003cb110c8 100644
+--- a/providers/openlineage/pyproject.toml
++++ b/providers/openlineage/pyproject.toml
+@@ -59,7 +59,7 @@ requires-python = ">=3.10"
+ # After you modify the dependencies, and rebuild your Breeze CI image with ``breeze ci-image build``
+ dependencies = [
+     "apache-airflow>=2.11.0",
+-    "apache-airflow-providers-common-sql>=1.20.0",
++    "apache-airflow-providers-common-sql>=1.20.0",  # use next version
+     "apache-airflow-providers-common-compat>=1.13.1",  # use next version
+     "attrs>=22.2",
+     "openlineage-integration-common>=1.41.0",
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/extractors/base.py b/providers/openlineage/src/airflow/providers/openlineage/extractors/base.py
+index 278672ca49..f8d4eac2b4 100644
+--- a/providers/openlineage/src/airflow/providers/openlineage/extractors/base.py
++++ b/providers/openlineage/src/airflow/providers/openlineage/extractors/base.py
+@@ -49,6 +49,14 @@ class OperatorLineage(Generic[DatasetSubclass, BaseFacetSubclass]):
+     run_facets: dict[str, BaseFacetSubclass] = Factory(dict)
+     job_facets: dict[str, BaseFacetSubclass] = Factory(dict)
+ 
++    def merge(self, other: OperatorLineage) -> OperatorLineage:
++        return OperatorLineage(
++            inputs=self.inputs + (other.inputs or []),
++            outputs=self.outputs + (other.outputs or []),
++            run_facets={**(other.run_facets or {}), **self.run_facets},
++            job_facets={**(other.job_facets or {}), **self.job_facets},
++        )
++
+ 
+ class BaseExtractor(ABC, LoggingMixin):
+     """
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/extractors/manager.py b/providers/openlineage/src/airflow/providers/openlineage/extractors/manager.py
+index 75a32d48bc..8676cd9f37 100644
+--- a/providers/openlineage/src/airflow/providers/openlineage/extractors/manager.py
++++ b/providers/openlineage/src/airflow/providers/openlineage/extractors/manager.py
+@@ -19,9 +19,7 @@ from __future__ import annotations
+ from collections.abc import Iterator
+ from typing import TYPE_CHECKING
+ 
+-from airflow.providers.common.compat.openlineage.utils.utils import (
+-    translate_airflow_asset,
+-)
++from airflow.providers.common.compat.openlineage.utils.utils import translate_airflow_asset
+ from airflow.providers.openlineage import conf
+ from airflow.providers.openlineage.extractors import BaseExtractor, OperatorLineage
+ from airflow.providers.openlineage.extractors.base import (
+@@ -93,7 +91,7 @@ class ExtractorManager(LoggingMixin):
+         self.extractors[operator_class] = extractor
+ 
+     def extract_metadata(
+-        self, dagrun, task, task_instance_state: TaskInstanceState, task_instance=None
++        self, dagrun, task, task_instance_state: TaskInstanceState, task_instance
+     ) -> OperatorLineage:
+         extractor = self._get_extractor(task)
+         task_info = (
+@@ -126,16 +124,15 @@ class ExtractorManager(LoggingMixin):
+                     task.task_id,
+                     str(task_metadata),
+                 )
+-                task_metadata = self.validate_task_metadata(task_metadata)
+-                if task_metadata:
+-                    if (not task_metadata.inputs) and (not task_metadata.outputs):
+-                        if (hook_lineage := self.get_hook_lineage()) is not None:
+-                            inputs, outputs = hook_lineage
+-                            task_metadata.inputs = inputs
+-                            task_metadata.outputs = outputs
+-                        else:
+-                            self.extract_inlets_and_outlets(task_metadata, task)
+-                    return task_metadata
++                task_metadata = self.validate_task_metadata(task_metadata) or OperatorLineage()
++                # If no inputs and outputs are present - check Hook Lineage
++                if (not task_metadata.inputs) and (not task_metadata.outputs):
++                    hook_lineage = self.get_hook_lineage(task_instance, task_instance_state)
++                    if hook_lineage is not None:
++                        task_metadata = task_metadata.merge(hook_lineage)
++                    else:  # Last resort - check manual annotations
++                        self.extract_inlets_and_outlets(task_metadata, task)
++                return task_metadata
+ 
+             except Exception as e:
+                 self.log.warning(
+@@ -145,14 +142,12 @@ class ExtractorManager(LoggingMixin):
+                     task_info,
+                 )
+                 self.log.debug("OpenLineage extraction failure details:", exc_info=True)
+-        elif (hook_lineage := self.get_hook_lineage()) is not None:
+-            inputs, outputs = hook_lineage
+-            task_metadata = OperatorLineage(inputs=inputs, outputs=outputs)
+-            return task_metadata
++        elif (hook_lineage := self.get_hook_lineage(task_instance, task_instance_state)) is not None:
++            return hook_lineage
+         else:
+             self.log.debug("Unable to find an extractor %s", task_info)
+ 
+-            # Only include the unkonwnSourceAttribute facet if there is no extractor
++            # Only include the unknownSourceAttribute facet if there is no extractor
+             task_metadata = OperatorLineage(
+                 run_facets=get_unknown_source_attribute_run_facet(task=task),
+             )
+@@ -173,8 +168,6 @@ class ExtractorManager(LoggingMixin):
+         return None
+ 
+     def _get_extractor(self, task: BaseOperator) -> BaseExtractor | None:
+-        # TODO: Re-enable in Extractor PR
+-        # self.instantiate_abstract_extractors(task)
+         extractor = self.get_extractor_class(task)
+         self.log.debug("extractor for %s is %s", task.task_type, extractor)
+         if extractor:
+@@ -193,30 +186,76 @@ class ExtractorManager(LoggingMixin):
+             if d:
+                 task_metadata.outputs.append(d)
+ 
+-    def get_hook_lineage(self) -> tuple[list[Dataset], list[Dataset]] | None:
++    def get_hook_lineage(
++        self,
++        task_instance=None,
++        task_instance_state: TaskInstanceState | None = None,
++    ) -> OperatorLineage | None:
++        """
++        Extract lineage from the Hook Lineage Collector.
++
++        Combines two sources into a single :class:`OperatorLineage`:
++
++        * **Asset-based** inputs/outputs reported via ``add_input_asset`` / ``add_output_asset``.
++        * **SQL-based** lineage from ``sql_job`` extras reported via
++          :func:`~airflow.providers.common.sql.hooks.lineage.send_sql_hook_lineage`.
++          When ``task_instance`` is provided, each extra is parsed and separate per-query
++          OpenLineage events are emitted.
++
++        Returns ``None`` when nothing was collected.
++        """
+         try:
+             from airflow.providers.common.compat.lineage.hook import get_hook_lineage_collector
++            from airflow.providers.common.sql.hooks.lineage import SqlJobHookLineageExtra
+         except ImportError:
+             return None
+ 
+-        if not hasattr(get_hook_lineage_collector(), "has_collected"):
++        collector = get_hook_lineage_collector()
++        if not hasattr(collector, "has_collected"):
+             return None
+-        if not get_hook_lineage_collector().has_collected:
++        if not collector.has_collected:
+             return None
+ 
+         self.log.debug("OpenLineage will extract lineage from Hook Lineage Collector.")
+-        return (
+-            [
+-                asset
+-                for asset_info in get_hook_lineage_collector().collected_assets.inputs
+-                if (asset := translate_airflow_asset(asset_info.asset, asset_info.context)) is not None
+-            ],
+-            [
+-                asset
+-                for asset_info in get_hook_lineage_collector().collected_assets.outputs
+-                if (asset := translate_airflow_asset(asset_info.asset, asset_info.context)) is not None
+-            ],
+-        )
++        collected = collector.collected_assets
++
++        # Asset-based inputs/outputs - keep only assets that can be translated to OL datasets
++        inputs = [
++            asset
++            for asset_info in collected.inputs
++            if (asset := translate_airflow_asset(asset_info.asset, asset_info.context)) is not None
++        ]
++        outputs = [
++            asset
++            for asset_info in collected.outputs
++            if (asset := translate_airflow_asset(asset_info.asset, asset_info.context)) is not None
++        ]
++
++        # SQL-based lineage - keep only SQL extra with query_text or job_id.
++        sql_extras = [
++            info
++            for info in collected.extra
++            if info.key == SqlJobHookLineageExtra.KEY.value
++            and (
++                info.value.get(SqlJobHookLineageExtra.VALUE__SQL_STATEMENT.value)
++                or info.value.get(SqlJobHookLineageExtra.VALUE__JOB_ID.value)
++            )
++        ]
++
++        if sql_extras:
++            from airflow.providers.openlineage.utils.sql_hook_lineage import emit_lineage_from_sql_extras
++
++            self.log.debug("Found %s sql_job extra(s) in Hook Lineage Collector.", len(sql_extras))
++            emit_lineage_from_sql_extras(
++                task_instance=task_instance,
++                sql_extras=sql_extras,
++                is_successful=task_instance_state != TaskInstanceState.FAILED,
++            )
++
++        if not inputs and not outputs:
++            return None
++
++        return OperatorLineage(inputs=inputs, outputs=outputs)
+ 
+     @staticmethod
+     def convert_to_ol_dataset_from_object_storage_uri(uri: str) -> Dataset | None:
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/plugins/listener.py b/providers/openlineage/src/airflow/providers/openlineage/plugins/listener.py
+index 9ac07b372b..ee1007fba6 100644
+--- a/providers/openlineage/src/airflow/providers/openlineage/plugins/listener.py
++++ b/providers/openlineage/src/airflow/providers/openlineage/plugins/listener.py
+@@ -206,7 +206,10 @@ class OpenLineageListener:
+ 
+             with Stats.timer(f"ol.extract.{event_type}.{operator_name}"):
+                 task_metadata = self.extractor_manager.extract_metadata(
+-                    dagrun=dagrun, task=task, task_instance_state=TaskInstanceState.RUNNING
++                    dagrun=dagrun,
++                    task=task,
++                    task_instance_state=TaskInstanceState.RUNNING,
++                    task_instance=task_instance,
+                 )
+ 
+             redacted_event = self.adapter.start_task(
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/sqlparser.py b/providers/openlineage/src/airflow/providers/openlineage/sqlparser.py
+index 0ac80fc9d7..3b82300207 100644
+--- a/providers/openlineage/src/airflow/providers/openlineage/sqlparser.py
++++ b/providers/openlineage/src/airflow/providers/openlineage/sqlparser.py
+@@ -32,7 +32,6 @@ from airflow.providers.openlineage.utils.sql import (
+     create_information_schema_query,
+     get_table_schemas,
+ )
+-from airflow.providers.openlineage.utils.utils import should_use_external_connection
+ from airflow.utils.log.logging_mixin import LoggingMixin
+ 
+ if TYPE_CHECKING:
+@@ -474,7 +473,7 @@ class SQLParser(LoggingMixin):
+ 
+ 
+ def get_openlineage_facets_with_sql(
+-    hook: DbApiHook, sql: str | list[str], conn_id: str, database: str | None
++    hook: DbApiHook, sql: str | list[str], conn_id: str, database: str | None, use_connection: bool = True
+ ) -> OperatorLineage | None:
+     connection = hook.get_connection(conn_id)
+     try:
+@@ -495,11 +494,12 @@ def get_openlineage_facets_with_sql(
+         log.debug("%s failed to get database dialect", hook)
+         return None
+ 
+-    try:
+-        sqlalchemy_engine = hook.get_sqlalchemy_engine()
+-    except Exception as e:
+-        log.debug("Failed to get sql alchemy engine: %s", e)
+-        sqlalchemy_engine = None
++    sqlalchemy_engine = None
++    if use_connection:
++        try:
++            sqlalchemy_engine = hook.get_sqlalchemy_engine()
++        except Exception as e:
++            log.debug("Failed to get sql alchemy engine: %s", e)
+ 
+     operator_lineage = sql_parser.generate_openlineage_metadata_from_sql(
+         sql=sql,
+@@ -507,7 +507,7 @@ def get_openlineage_facets_with_sql(
+         database_info=database_info,
+         database=database,
+         sqlalchemy_engine=sqlalchemy_engine,
+-        use_connection=should_use_external_connection(hook),
++        use_connection=use_connection,
+     )
+ 
+     return operator_lineage
+diff --git a/providers/openlineage/src/airflow/providers/openlineage/utils/sql_hook_lineage.py b/providers/openlineage/src/airflow/providers/openlineage/utils/sql_hook_lineage.py
+new file mode 100644
+index 0000000000..af4bb6c3b6
+--- /dev/null
++++ b/providers/openlineage/src/airflow/providers/openlineage/utils/sql_hook_lineage.py
+@@ -0,0 +1,227 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++"""Utilities for processing hook-level lineage into OpenLineage events."""
++
++from __future__ import annotations
++
++import datetime as dt
++import logging
++
++from openlineage.client.event_v2 import Job, Run, RunEvent, RunState
++from openlineage.client.facet_v2 import external_query_run, job_type_job, sql_job
++from openlineage.client.uuid import generate_new_uuid
++
++from airflow.providers.common.compat.sdk import timezone
++from airflow.providers.common.sql.hooks.lineage import SqlJobHookLineageExtra
++from airflow.providers.openlineage.extractors.base import OperatorLineage
++from airflow.providers.openlineage.plugins.listener import get_openlineage_listener
++from airflow.providers.openlineage.plugins.macros import (
++    _get_logical_date,
++    lineage_job_name,
++    lineage_job_namespace,
++    lineage_root_job_name,
++    lineage_root_job_namespace,
++    lineage_root_run_id,
++    lineage_run_id,
++)
++from airflow.providers.openlineage.sqlparser import SQLParser, get_openlineage_facets_with_sql
++from airflow.providers.openlineage.utils.utils import _get_parent_run_facet
++
++log = logging.getLogger(__name__)
++
++
++def emit_lineage_from_sql_extras(task_instance, sql_extras: list, is_successful: bool = True) -> None:
++    """
++    Process ``sql_job`` extras and emit per-query OpenLineage events.
++
++    For each extra that contains sql text or job id:
++
++    * Parse SQL via :func:`get_openlineage_facets_with_sql` to obtain inputs,
++      outputs and facets (schema enrichment, column lineage, etc.).
++    * Emit a separate START + COMPLETE/FAIL event pair (child job of the task).
++    """
++    if not sql_extras:
++        return None
++
++    log.info("OpenLineage will process %s SQL hook lineage extra(s).", len(sql_extras))
++
++    common_job_facets: dict = {
++        "jobType": job_type_job.JobTypeJobFacet(
++            jobType="QUERY",
++            integration="AIRFLOW",
++            processingType="BATCH",
++        )
++    }
++
++    events: list[RunEvent] = []
++    query_count = 0
++
++    for extra_info in sql_extras:
++        value = extra_info.value
++
++        sql_text = value.get(SqlJobHookLineageExtra.VALUE__SQL_STATEMENT.value, "")
++        job_id = value.get(SqlJobHookLineageExtra.VALUE__JOB_ID.value)
++
++        if not sql_text and not job_id:
++            log.debug("SQL extra has no SQL text and no job ID, skipping.")
++            continue
++        query_count += 1
++
++        hook = extra_info.context
++        conn_id = _get_hook_conn_id(hook)
++        namespace = _resolve_namespace(hook, conn_id)
++
++        # Parse SQL to obtain lineage (inputs, outputs, facets)
++        query_lineage: OperatorLineage | None = None
++        if sql_text and conn_id:
++            try:
++                query_lineage = get_openlineage_facets_with_sql(
++                    hook=hook,
++                    sql=sql_text,
++                    conn_id=conn_id,
++                    database=value.get(SqlJobHookLineageExtra.VALUE__DEFAULT_DB.value),
++                    use_connection=False,  # Temporary solution before we figure out timeouts for queries
++                )
++            except Exception as e:
++                log.debug("Failed to parse SQL for query %s: %s", query_count, e)
++
++        # If parsing SQL failed, just attach SQL text as a facet
++        if query_lineage is None:
++            job_facets: dict = {}
++            if sql_text:
++                job_facets["sql"] = sql_job.SQLJobFacet(query=SQLParser.normalize_sql(sql_text))
++            query_lineage = OperatorLineage(job_facets=job_facets)
++
++        # Enrich run facets with external query info when available.
++        if job_id and namespace:
++            query_lineage.run_facets.setdefault(
++                "externalQuery",
++                external_query_run.ExternalQueryRunFacet(
++                    externalQueryId=str(job_id),
++                    source=namespace,
++                ),
++            )
++
++        events.extend(
++            _create_ol_event_pair(
++                task_instance=task_instance,
++                job_name=f"{task_instance.dag_id}.{task_instance.task_id}.query.{query_count}",
++                is_successful=is_successful,
++                inputs=query_lineage.inputs,
++                outputs=query_lineage.outputs,
++                run_facets=query_lineage.run_facets,
++                job_facets={**common_job_facets, **query_lineage.job_facets},
++            )
++        )
++
++    if events:
++        log.debug("Emitting %s OpenLineage event(s) for SQL hook lineage.", len(events))
++        try:
++            adapter = get_openlineage_listener().adapter
++            for event in events:
++                adapter.emit(event)
++        except Exception as e:
++            log.warning("Failed to emit OpenLineage events for SQL hook lineage: %s", e)
++            log.debug("Emission failure details:", exc_info=True)
++
++    return None
++
++
++def _resolve_namespace(hook, conn_id: str | None) -> str | None:
++    """
++    Resolve the OpenLineage namespace from a hook.
++
++    Tries ``hook.get_openlineage_database_info`` to build the namespace.
++    Returns ``None`` when the hook does not expose this method.
++    """
++    if conn_id:
++        try:
++            connection = hook.get_connection(conn_id)
++            database_info = hook.get_openlineage_database_info(connection)
++        except Exception as e:
++            log.debug("Failed to get OpenLineage database info: %s", e)
++            database_info = None
++
++        if database_info is not None:
++            return SQLParser.create_namespace(database_info)
++
++    return None
++
++
++def _get_hook_conn_id(hook) -> str | None:
++    """
++    Try to extract the connection ID from a hook instance.
++
++    Checks for ``get_conn_id()`` first, then falls back to the attribute
++    named by ``hook.conn_name_attr``.
++    """
++    if callable(getattr(hook, "get_conn_id", None)):
++        return hook.get_conn_id()
++    conn_name_attr = getattr(hook, "conn_name_attr", None)
++    if conn_name_attr:
++        return getattr(hook, conn_name_attr, None)
++    return None
++
++
++def _create_ol_event_pair(
++    task_instance,
++    job_name: str,
++    is_successful: bool,
++    inputs: list | None = None,
++    outputs: list | None = None,
++    run_facets: dict | None = None,
++    job_facets: dict | None = None,
++    event_time: dt.datetime | None = None,
++) -> tuple[RunEvent, RunEvent]:
++    """
++    Create a START + COMPLETE/FAIL child event pair linked to a task instance.
++
++    Handles parent-run facet generation, run-ID creation and event timestamps
++    so callers only need to supply the query-specific facets and datasets.
++    """
++    parent_facets = _get_parent_run_facet(
++        parent_run_id=lineage_run_id(task_instance),
++        parent_job_name=lineage_job_name(task_instance),
++        parent_job_namespace=lineage_job_namespace(),
++        root_parent_run_id=lineage_root_run_id(task_instance),
++        root_parent_job_name=lineage_root_job_name(task_instance),
++        root_parent_job_namespace=lineage_root_job_namespace(task_instance),
++    )
++
++    run = Run(
++        runId=str(generate_new_uuid(instant=_get_logical_date(task_instance))),
++        facets={**parent_facets, **(run_facets or {})},
++    )
++    job = Job(namespace=lineage_job_namespace(), name=job_name, facets=job_facets or {})
++    event_time = event_time or timezone.utcnow()
++    start = RunEvent(
++        eventType=RunState.START,
++        eventTime=event_time.isoformat(),
++        run=run,
++        job=job,
++        inputs=inputs or [],
++        outputs=outputs or [],
++    )
++    end = RunEvent(
++        eventType=RunState.COMPLETE if is_successful else RunState.FAIL,
++        eventTime=event_time.isoformat(),
++        run=run,
++        job=job,
++        inputs=inputs or [],
++        outputs=outputs or [],
++    )
++    return start, end

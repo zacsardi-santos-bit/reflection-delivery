@@ -1,0 +1,32 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && npm run build --workspace @google/gemini-cli-core 2>&1 | tail -5 && cd /workspace/repo/packages/cli && npx vitest run --coverage.enabled=false src/ui/components/messages/SubagentGroupDisplay.test.tsx src/ui/components/messages/SubagentHistoryMessage.test.tsx src/ui/hooks/useToolScheduler.test.ts && cd /workspace/repo/packages/core && npx vitest run --coverage.enabled=false src/agents/local-invocation.test.ts",
+  "test_files": [
+    "packages/cli/src/ui/components/messages/SubagentGroupDisplay.test.tsx",
+    "packages/cli/src/ui/components/messages/SubagentHistoryMessage.test.tsx",
+    "packages/cli/src/ui/hooks/useToolScheduler.test.ts",
+    "packages/core/src/agents/local-invocation.test.ts"
+  ],
+  "num_test_files": 4,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation should pass the messageBus to the parent constructor",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation getDescription should format the description with inputs",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation getDescription should truncate long input values",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation getDescription should truncate the overall description if it exceeds the limit",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should initialize and run the executor successfully",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should show detailed UI for non-goal terminations (e.g., TIMEOUT)",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should stream THOUGHT_CHUNK activities from the executor, replacing the last running thought",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should overwrite the thought content with new THOUGHT_CHUNK activity",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should stream other activities (e.g., TOOL_CALL_START, ERROR)",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should mark tool call as error when TOOL_CALL_END contains isError: true",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should reflect tool rejections in the activity stream as cancelled but not abort the agent",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should run successfully without an updateOutput callback",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should handle executor run failure",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should handle executor creation failure",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should handle abortion signal during execution",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should throw an error and bubble cancellation when execution returns ABORTED",
+    "/workspace/repo/packages/core/src/agents/local-invocation.test.ts::LocalSubagentInvocation execute should publish SUBAGENT_ACTIVITY events to the MessageBus"
+  ],
+  "PASS_TO_PASS": []
+}

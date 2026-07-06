@@ -1,4 +1,0 @@
-patching file crates/ruff_linter/src/checkers/ast/analyze/bindings.rs
-patching file crates/ruff_linter/src/checkers/ast/analyze/statement.rs
-patching file crates/ruff_linter/src/rules/refurb/rules/for_loop_writes.rs
-patching file crates/ruff_linter/src/rules/refurb/snapshots/ruff_linter__rules__refurb__tests__FURB122_FURB122.py.snap

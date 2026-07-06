@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/mlflow/mlflow/pull/21424"
+source_type = "pr"
+
+[task]
+name = "mlflow/mlflow"
+description = "I'm reworking the tracing destination management in MLflow and there's a cluster of related things I need to fix in one go. The main piece is the destination registry that tracks where traces get e..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["python", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:mlflow-mlflow-21424"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/13"
+category = "Machine Learning and AI"
+subcategory = "ML serving and deployment"
+objective_labels = ["Implement", "Fix", "Configure"]
+artifact_type_labels = ["Codebase", "Configuration file"]
+expert_time_estimate = 7200
+junior_time_estimate = 21600

@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo && (make -j$(nproc) || make -j$(nproc)) && OPENSSL_CONF=/workspace/repo/apps/openssl.cnf OPENSSL_CONF_INCLUDE=/workspace/repo/test OPENSSL_MODULES=/workspace/repo/providers OPENSSL_ENGINES=/workspace/repo/engines LD_LIBRARY_PATH=/workspace/repo ./test/sslbuffertest ./apps/server.pem ./apps/server.pem | sed 's/^ok [0-9]* - \\(.*\\)/PASS [   0.000s] \\1/; s/^not ok [0-9]* - \\(.*\\)/FAIL [   0.000s] \\1/'",
+  "test_files": [
+    "test/helpers/ssltestlib.c",
+    "test/helpers/ssltestlib.h",
+    "test/sslapitest.c",
+    "test/sslbuffertest.c"
+  ],
+  "num_test_files": 4,
+  "language": "c",
+  "FAIL_TO_PASS": [
+    "test_free_buffers"
+  ],
+  "PASS_TO_PASS": [
+    "test_func"
+  ]
+}

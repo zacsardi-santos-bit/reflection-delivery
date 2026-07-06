@@ -1,5 +1,0 @@
-I'm working on the parachain relayer and I want to improve the function that computes which side each sibling hash belongs on at every level of a Merkle tree proof. Right now it takes a whole proof object as its argument, but it only actually needs two pieces of information from that object: the position of the leaf within the tree and the total number of leaves. I'd like to refactor it so it takes those two values as separate integer parameters instead.
-
-Along with the signature change, I also need it to properly handle the case where the leaf position is out of bounds — specifically, when the given position is equal to or greater than the total leaf count. In that case it should return a descriptive error explaining which position was invalid and how many leaves the tree has, rather than silently producing garbage output or panicking.
-
-Once the signature is updated, the function should still return correct sibling-side directions for all valid inputs: for example, a single-leaf tree should return an empty result, and multi-leaf trees should return the right boolean sequence corresponding to the proof path for that leaf's position.

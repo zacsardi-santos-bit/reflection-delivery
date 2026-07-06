@@ -1,0 +1,5 @@
+patching file README.md
+patching file strum_macros/src/helpers/mod.rs
+patching file strum_macros/src/lib.rs
+patching file strum_macros/src/macros/enum_table.rs
+patching file strum_macros/src/macros/mod.rs

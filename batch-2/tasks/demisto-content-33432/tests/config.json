@@ -1,0 +1,16 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/Packs/Code42/Integrations/Code42EventCollector/Code42EventCollector_test.py -v -k 'not (test_fetch_events_no_last_run and not yes_audit_logs and not no_events)'",
+  "test_files": [
+    "Packs/Code42/Integrations/Code42EventCollector/Code42EventCollector_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.Code42.Integrations.Code42EventCollector.Code42EventCollector_test::test_the_test_module",
+    "Packs.Code42.Integrations.Code42EventCollector.Code42EventCollector_test::test_fetch_events_no_last_run_yes_audit_logs_no_file_events",
+    "Packs.Code42.Integrations.Code42EventCollector.Code42EventCollector_test::test_fetch_events_no_last_run_no_events",
+    "Packs.Code42.Integrations.Code42EventCollector.Code42EventCollector_test::test_get_events_command"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,16 @@
+patching file pkg/controllers/ipam/ipam_test.go
+patching file pkg/controllers/lb/suite_test.go
+# github.com/openelb/openelb/pkg/controllers/ipam [github.com/openelb/openelb/pkg/controllers/ipam.test]
+pkg/controllers/ipam/ipam_test.go:36:17: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:37:17: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:144:18: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:230:19: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:278:19: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:323:19: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:412:19: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:458:19: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:493:19: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:531:18: undefined: svcRecord
+pkg/controllers/ipam/ipam_test.go:531:18: too many errors
+FAIL	github.com/openelb/openelb/pkg/controllers/ipam [build failed]
+reward=0 graded=34 found=34 failed=34 parsed=1 framework=go exit_code=1

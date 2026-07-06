@@ -1,4 +1,0 @@
-patching file doc/releases/changelog-dev.md
-patching file pennylane/transforms/__init__.py
-patching file pennylane/transforms/split_non_commuting.py
-patching file pennylane/transforms/split_to_single_terms.py

@@ -1,2 +1,0 @@
-patching file crates/ruff_linter/src/rules/flake8_pie/rules/unnecessary_spread.rs
-patching file crates/ruff_linter/src/rules/flake8_pie/snapshots/ruff_linter__rules__flake8_pie__tests__PIE800_PIE800.py.snap

@@ -1,0 +1,52 @@
+patching file crates/matrix-sdk-ui/src/timeline/tests/mod.rs
+   Compiling matrix-sdk-ui v0.12.0 (/workspace/repo/crates/matrix-sdk-ui)
+error[E0433]: failed to resolve: could not find `paginators` in `matrix_sdk`
+  --> crates/matrix-sdk-ui/src/timeline/tests/mod.rs:33:5
+   |
+33 |     paginators::{thread::PaginableThread, PaginableRoom, PaginatorError},
+   |     ^^^^^^^^^^ could not find `paginators` in `matrix_sdk`
+
+error[E0432]: unresolved import `matrix_sdk::paginators`
+  --> crates/matrix-sdk-ui/src/timeline/tests/mod.rs:33:5
+   |
+33 |     paginators::{thread::PaginableThread, PaginableRoom, PaginatorError},
+   |     ^^^^^^^^^^ could not find `paginators` in `matrix_sdk`
+
+error[E0053]: method `load_event_with_relations` has an incompatible type for trait
+   --> crates/matrix-sdk-ui/src/timeline/tests/mod.rs:329:10
+    |
+329 |     ) -> BoxFuture<'a, Result<(TimelineEvent, Vec<TimelineEvent>), matrix_sdk::Error>> {
+    |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `PaginatorError`, found `matrix_sdk::Error`
+    |
+note: type in trait
+   --> crates/matrix-sdk-ui/src/timeline/pinned_events_loader.rs:157:10
+    |
+157 |     ) -> BoxFuture<'a, Result<(TimelineEvent, Vec<TimelineEvent>), PaginatorError>>;
+    |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    = note: expected signature `fn(&'a TestRoomDataProvider, &'a EventId, std::option::Option<_>, std::option::Option<_>) -> std::pin::Pin<Box<(dyn futures_core::Future<Output = Result<(TimelineEvent, Vec<TimelineEvent>), PaginatorError>> + std::marker::Send + 'a)>>`
+               found signature `fn(&TestRoomDataProvider, &EventId, std::option::Option<_>, std::option::Option<_>) -> std::pin::Pin<Box<dyn futures_core::Future<Output = Result<(TimelineEvent, Vec<TimelineEvent>), matrix_sdk::Error>> + std::marker::Send>>`
+help: change the output type to match the trait
+    |
+329 |     ) -> std::pin::Pin<Box<(dyn futures_core::Future<Output = Result<(TimelineEvent, Vec<TimelineEvent>), PaginatorError>> + std::marker::Send + 'a)>> {
+    |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+error[E0277]: the trait bound `TestRoomDataProvider: PaginableRoom` is not satisfied
+   --> crates/matrix-sdk-ui/src/timeline/tests/mod.rs:342:27
+    |
+342 | impl RoomDataProvider for TestRoomDataProvider {
+    |                           ^^^^^^^^^^^^^^^^^^^^ the trait `PaginableRoom` is not implemented for `TestRoomDataProvider`
+    |
+    = help: the trait `PaginableRoom` is implemented for `matrix_sdk::Room`
+note: required by a bound in `RoomDataProvider`
+   --> crates/matrix-sdk-ui/src/timeline/traits.rs:90:13
+    |
+89  | pub(super) trait RoomDataProvider:
+    |                  ---------------- required by a bound in this trait
+90  |     Clone + PaginableRoom + PinnedEventsRoom + 'static
+    |             ^^^^^^^^^^^^^ required by this bound in `RoomDataProvider`
+
+Some errors have detailed explanations: E0053, E0277, E0432, E0433.
+For more information about an error, try `rustc --explain E0053`.
+error: could not compile `matrix-sdk-ui` (lib test) due to 4 previous errors
+error: command `/usr/local/rustup/toolchains/1.85.1-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package matrix-sdk-ui` exited with code 101
+reward=0 graded=372 found=0 failed=0 parsed=0 framework=cargo exit_code=101

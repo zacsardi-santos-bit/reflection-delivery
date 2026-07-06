@@ -1,0 +1,5 @@
+I'm working on the raft mesh controller for a multi-controller cluster, and I've noticed that the method responsible for registering a newly connected peer doesn't return any error value. This means that if something goes wrong during peer registration — for example, a connection for that peer's address already exists — the caller has no way to detect the problem. The operation just silently proceeds.
+
+I need to update this method so it returns an error. When a peer is successfully registered (no conflict), it should signal success to the caller. This is important because in a multi-controller setup, two controllers may try to connect to each other at the same time, and without error propagation the duplicate connection goes undetected, potentially corrupting cluster state.
+
+The mesh's readonly mode logic (which is based on peer version matching) should continue to work correctly after this change. That is, if a peer with a non-matching version is connected, the mesh should enter readonly mode as before — the error return should reflect whether the connection was accepted, not whether the versions matched.

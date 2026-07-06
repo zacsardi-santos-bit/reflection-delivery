@@ -1,0 +1,29 @@
+{
+    "id": "b75eda5a-df31-42da-be2a-99127cdd9507",
+    "started_at": "2026-07-04T15:38:09.185120",
+    "finished_at": "2026-07-04T15:39:06.820904",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tryghost-activitypub-626": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tryghost-activitypub-626__zDshrKf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

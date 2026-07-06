@@ -1,0 +1,72 @@
+patching file tests/dataframe/test_wildcard.py
+🍹 Building a mixed python/rust project
+🐍 Found CPython 3.11 at /opt/venv/bin/python
+🔗 Found pyo3 bindings with abi3-py3.8 support
+📡 Using build options features from pyproject.toml
+Ignoring typing-extensions: markers 'python_full_version < "3.10"' don't match your environment
+Ignoring getdaft: markers 'extra == "all"' don't match your environment
+Ignoring boto3: markers 'extra == "aws"' don't match your environment
+Ignoring deltalake: markers 'extra == "deltalake"' don't match your environment
+Ignoring pyarrow: markers 'extra == "hudi"' don't match your environment
+Ignoring pyiceberg: markers 'extra == "iceberg"' don't match your environment
+Ignoring packaging: markers 'extra == "iceberg"' don't match your environment
+Ignoring lancedb: markers 'extra == "lance"' don't match your environment
+Ignoring numpy: markers 'extra == "numpy"' don't match your environment
+Ignoring pandas: markers 'extra == "pandas"' don't match your environment
+Ignoring ray: markers 'platform_system != "Windows" and extra == "ray"' don't match your environment
+Ignoring ray: markers 'platform_system == "Windows" and extra == "ray"' don't match your environment
+Ignoring packaging: markers 'extra == "ray"' don't match your environment
+Ignoring connectorx: markers 'extra == "sql"' don't match your environment
+Ignoring sqlalchemy: markers 'extra == "sql"' don't match your environment
+Ignoring sqlglot: markers 'extra == "sql"' don't match your environment
+Ignoring unitycatalog: markers 'extra == "unity"' don't match your environment
+Requirement already satisfied: pyarrow>=7.0.0 in /opt/venv/lib/python3.11/site-packages (24.0.0)
+Requirement already satisfied: fsspec in /opt/venv/lib/python3.11/site-packages (2026.6.0)
+Requirement already satisfied: tqdm in /opt/venv/lib/python3.11/site-packages (4.68.3)
+   Compiling daft-dsl v0.2.0-dev0 (/workspace/repo/src/daft-dsl)
+   Compiling daft-table v0.2.0-dev0 (/workspace/repo/src/daft-table)
+   Compiling daft-functions v0.2.0-dev0 (/workspace/repo/src/daft-functions)
+   Compiling daft-stats v0.2.0-dev0 (/workspace/repo/src/daft-stats)
+   Compiling daft-json v0.2.0-dev0 (/workspace/repo/src/daft-json)
+   Compiling daft-csv v0.2.0-dev0 (/workspace/repo/src/daft-csv)
+   Compiling daft-parquet v0.2.0-dev0 (/workspace/repo/src/daft-parquet)
+   Compiling daft-scan v0.2.0-dev0 (/workspace/repo/src/daft-scan)
+   Compiling daft-plan v0.2.0-dev0 (/workspace/repo/src/daft-plan)
+   Compiling daft-micropartition v0.2.0-dev0 (/workspace/repo/src/daft-micropartition)
+   Compiling daft-physical-plan v0.2.0-dev0 (/workspace/repo/src/daft-physical-plan)
+   Compiling daft-sql v0.2.0-dev0 (/workspace/repo/src/daft-sql)
+   Compiling daft-scheduler v0.2.0-dev0 (/workspace/repo/src/daft-scheduler)
+   Compiling daft-local-execution v0.2.0-dev0 (/workspace/repo/src/daft-local-execution)
+   Compiling daft v0.2.0-dev0 (/workspace/repo)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 44s
+📦 Built wheel for abi3 Python ≥ 3.8 to /tmp/.tmpUmk50z/getdaft-0.2.0.dev0-cp38-abi3-linux_x86_64.whl
+✏️ Setting installed package as editable
+🛠 Installed getdaft-0.2.0.dev0
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/venv/bin/python
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: benchmark-5.2.3
+collecting ... collected 16 items
+
+tests/dataframe/test_wildcard.py::test_wildcard_select PASSED            [  6%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_expr PASSED       [ 12%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_with_structs PASSED [ 18%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_struct_flatten PASSED [ 25%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_multiple_wildcards_different_expr PASSED [ 31%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_prevent_multiple_wildcards PASSED [ 37%]
+tests/dataframe/test_wildcard.py::test_wildcard_unsupported_pattern PASSED [ 43%]
+tests/dataframe/test_wildcard.py::test_wildcard_nonexistent_struct PASSED [ 50%]
+tests/dataframe/test_wildcard.py::test_wildcard_not_a_struct PASSED      [ 56%]
+tests/dataframe/test_wildcard.py::test_wildcard_star_in_name PASSED      [ 62%]
+tests/dataframe/test_wildcard.py::test_wildcard_left_associative PASSED  [ 68%]
+tests/dataframe/test_wildcard.py::test_wildcard_multiple_matches_one_struct PASSED [ 75%]
+tests/dataframe/test_wildcard.py::test_wildcard_sort SKIPPED (Sortin...) [ 81%]
+tests/dataframe/test_wildcard.py::test_wildcard_explode PASSED           [ 87%]
+tests/dataframe/test_wildcard.py::test_wildcard_agg PASSED               [ 93%]
+tests/dataframe/test_wildcard.py::test_wildcard_struct_agg PASSED        [100%]
+
+======================== 15 passed, 1 skipped in 1.04s =========================
+reward=1 graded=15 found=0 failed=0 parsed=16 framework=pytest exit_code=0

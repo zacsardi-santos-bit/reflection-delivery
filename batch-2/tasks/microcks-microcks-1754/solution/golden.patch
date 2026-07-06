@@ -1,0 +1,420 @@
+diff --git a/webapp/src/main/java/io/github/microcks/event/TraceEvent.java b/webapp/src/main/java/io/github/microcks/event/TraceEvent.java
+new file mode 100644
+index 00000000..15c6e9de
+--- /dev/null
++++ b/webapp/src/main/java/io/github/microcks/event/TraceEvent.java
+@@ -0,0 +1,4 @@
++package io.github.microcks.event;
++
++public record TraceEvent(String traceId, String service, String operation, String clientAddress) {
++}
+diff --git a/webapp/src/main/java/io/github/microcks/service/SpanStorageService.java b/webapp/src/main/java/io/github/microcks/service/SpanStorageService.java
+index a1c0f931..a12e532b 100644
+--- a/webapp/src/main/java/io/github/microcks/service/SpanStorageService.java
++++ b/webapp/src/main/java/io/github/microcks/service/SpanStorageService.java
+@@ -15,10 +15,13 @@
+  */
+ package io.github.microcks.service;
+ 
++import io.github.microcks.event.TraceEvent;
++import io.github.microcks.util.tracing.SpanFilterUtil;
+ import io.opentelemetry.api.common.AttributeKey;
+ import io.opentelemetry.sdk.trace.ReadableSpan;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
++import org.springframework.context.ApplicationEventPublisher;
+ import org.springframework.stereotype.Service;
+ 
+ import java.util.ArrayList;
+@@ -53,6 +56,15 @@ public class SpanStorageService {
+     */
+    private static final int MAX_SPANS_PER_TRACE = 100;
+ 
++   /**
++    * Publisher for notifying listeners about new root spans (new traces).
++    */
++   private final ApplicationEventPublisher publisher;
++
++   public SpanStorageService(ApplicationEventPublisher publisher) {
++      this.publisher = publisher;
++   }
++
+ 
+    /**
+     * Stores a span in the service, grouped by trace ID.
+@@ -78,6 +90,11 @@ public class SpanStorageService {
+          String oldestTraceId = spansByTraceId.keySet().iterator().next();
+          spansByTraceId.remove(oldestTraceId);
+       }
++
++      // Publish a notification if this is a root span (no parent)
++      if (!span.getParentSpanContext().isValid()) {
++         publisher.publishEvent(SpanFilterUtil.extractTraceEvent(traceId, spans));
++      }
+    }
+ 
+    /**
+@@ -116,17 +133,26 @@ public class SpanStorageService {
+                               reqAttr.getValue()))))
+             .map(Map.Entry::getKey)
+             // Sort by recency - most recent first
+-            .sorted((id1, id2) -> {
+-               List<ReadableSpan> spans1 = spansByTraceId.get(id1);
+-               List<ReadableSpan> spans2 = spansByTraceId.get(id2);
+-               if (spans1.isEmpty() || spans2.isEmpty())
+-                  return 0;
+-               long endTime1 = spans1.stream().mapToLong(s -> s.toSpanData().getEndEpochNanos()).max().orElse(0);
+-               long endTime2 = spans2.stream().mapToLong(s -> s.toSpanData().getEndEpochNanos()).max().orElse(0);
+-               return Long.compare(endTime2, endTime1); // Descending order
+-            }).toList();
++            .sorted(this::compareSpansByEndTime).toList();
+    }
+ 
++   /**
++    * Query trace IDs by span attributes with support for regex patterns.
++    *
++    * @param serviceName   Service name pattern (can be null, "*", or regex)
++    * @param operationName Operation name pattern (can be null, "*", or regex)
++    * @param clientAddress Client address pattern (can be null, "*", or regex)
++    * @return A List of trace IDs that have spans matching all the provided patterns sorted by recency (most recent
++    *         first)
++    */
++   public List<String> queryTraceIdsByPatterns(String serviceName, String operationName, String clientAddress) {
++      return spansByTraceId.entrySet().stream()
++            .map(entry -> SpanFilterUtil.extractTraceEvent(entry.getKey(), entry.getValue()))
++            .filter(event -> SpanFilterUtil.matchesTraceEvent(event, serviceName, operationName, clientAddress))
++            .map(TraceEvent::traceId)
++            // Sort by recency - most recent first
++            .sorted(this::compareSpansByEndTime).toList();
++   }
+ 
+    public static boolean valuesEqualAttr(Object actual, Object expected) {
+       if (actual == null && expected == null)
+@@ -149,4 +175,14 @@ public class SpanStorageService {
+    public Set<String> getAllTraceIds() {
+       return spansByTraceId.keySet();
+    }
++
++   private int compareSpansByEndTime(String id1, String id2) {
++      List<ReadableSpan> spans1 = spansByTraceId.get(id1);
++      List<ReadableSpan> spans2 = spansByTraceId.get(id2);
++      if (spans1.isEmpty() || spans2.isEmpty())
++         return 0;
++      long endTime1 = spans1.stream().mapToLong(s -> s.toSpanData().getEndEpochNanos()).max().orElse(0);
++      long endTime2 = spans2.stream().mapToLong(s -> s.toSpanData().getEndEpochNanos()).max().orElse(0);
++      return Long.compare(endTime2, endTime1); // Descending order
++   }
+ }
+diff --git a/webapp/src/main/java/io/github/microcks/util/tracing/SpanFilterUtil.java b/webapp/src/main/java/io/github/microcks/util/tracing/SpanFilterUtil.java
+new file mode 100644
+index 00000000..88095b02
+--- /dev/null
++++ b/webapp/src/main/java/io/github/microcks/util/tracing/SpanFilterUtil.java
+@@ -0,0 +1,119 @@
++/*
++ * Copyright The Microcks Authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *  http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package io.github.microcks.util.tracing;
++
++import io.github.microcks.event.TraceEvent;
++import io.opentelemetry.api.common.AttributeKey;
++import io.opentelemetry.sdk.trace.ReadableSpan;
++
++import java.util.List;
++import java.util.Map;
++import java.util.regex.PatternSyntaxException;
++
++/**
++ * Utility class for filtering spans based on service attributes.
++ */
++public class SpanFilterUtil {
++
++   private SpanFilterUtil() {
++      // Utility class - prevent instantiation
++   }
++
++   /**
++    * Check if a value matches a pattern with optional regex support.
++    *
++    * @param pattern The pattern to match against (can be null, "*", or regex pattern).
++    * @param value   The value to check (can be null).
++    * @return True if the value matches the pattern, false otherwise.
++    */
++   public static boolean matchesWildcard(String pattern, String value) {
++      if (pattern == null || value == null) {
++         return pattern == null && value == null;
++      }
++
++      // If pattern is "*", match everything
++      if ("*".equals(pattern)) {
++         return true;
++      }
++
++      // Try exact match first
++      if (pattern.equals(value)) {
++         return true;
++      }
++
++      // Try regex match
++      try {
++         return value.matches(pattern);
++      } catch (PatternSyntaxException e) {
++         // Invalid regex pattern, fallback to false
++         return false;
++      }
++   }
++
++   /**
++    * Check if a TraceEvent matches the provided filters.
++    *
++    * @param traceEvent    TraceEvent to check
++    * @param serviceName   Service name pattern (can be null, "*", or regex)
++    * @param operationName Operation name pattern (can be null, "*", or regex)
++    * @param clientAddress Client address pattern (can be null, "*", or regex)
++    * @return True if the span matches all filters, false otherwise
++    */
++   public static boolean matchesTraceEvent(TraceEvent traceEvent, String serviceName, String operationName,
++         String clientAddress) {
++      if (traceEvent == null) {
++         return false;
++      }
++      return matchesWildcard(serviceName, traceEvent.service())
++            && matchesWildcard(operationName, traceEvent.operation())
++            && (clientAddress == null || matchesWildcard(clientAddress, traceEvent.clientAddress()));
++   }
++
++   /**
++    * Extract TraceEvent from spans
++    *
++    * @param traceId the trace ID
++    * @param spans   the list of spans
++    * @return the TraceEvent
++    */
++   public static TraceEvent extractTraceEvent(String traceId, List<ReadableSpan> spans) {
++      if (spans == null || spans.isEmpty()) {
++         return null;
++      }
++      String service = null;
++      String operation = null;
++      String clientAddress = null;
++      for (ReadableSpan s : spans) {
++         if (s == null || s.toSpanData() == null) {
++            continue;
++         }
++         Map<AttributeKey<?>, Object> attributes = s.toSpanData().getAttributes().asMap();
++         String serviceAttribute = (String) attributes.get(AttributeKey.stringKey("service.name"));
++         String operationAttribute = (String) attributes.get(AttributeKey.stringKey("operation.name"));
++         String clientAddressAttribute = (String) attributes.get(AttributeKey.stringKey("client.address"));
++         if (serviceAttribute != null)
++            service = serviceAttribute;
++         if (operationAttribute != null)
++            operation = operationAttribute;
++         if (clientAddressAttribute != null)
++            clientAddress = clientAddressAttribute;
++         if (service != null && operation != null && clientAddress != null) {
++            break;
++         }
++      }
++      return new TraceEvent(traceId, service, operation, clientAddress);
++   }
++}
+diff --git a/webapp/src/main/java/io/github/microcks/web/TraceSubscriptionManager.java b/webapp/src/main/java/io/github/microcks/web/TraceSubscriptionManager.java
+new file mode 100644
+index 00000000..3c78f544
+--- /dev/null
++++ b/webapp/src/main/java/io/github/microcks/web/TraceSubscriptionManager.java
+@@ -0,0 +1,104 @@
++package io.github.microcks.web;
++
++import io.github.microcks.event.TraceEvent;
++import io.github.microcks.service.SpanStorageService;
++import io.github.microcks.util.tracing.SpanFilterUtil;
++
++import io.opentelemetry.sdk.trace.ReadableSpan;
++import io.opentelemetry.sdk.trace.data.SpanData;
++import org.springframework.context.event.EventListener;
++import org.springframework.scheduling.annotation.Scheduled;
++import org.springframework.stereotype.Component;
++import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
++
++import java.io.IOException;
++import java.time.Instant;
++import java.util.Collections;
++import java.util.List;
++import java.util.concurrent.CopyOnWriteArrayList;
++
++/**
++ * Service for managing subscriptions to trace updates via Server-Sent Events (SSE). Clients can subscribe with filters
++ * on service name and operation name, and will receive updates when matching traces are updated.
++ */
++@Component
++public class TraceSubscriptionManager {
++
++   private final SpanStorageService spanStorageService;
++   private final List<Subscription> subscriptions = new CopyOnWriteArrayList<>();
++
++   public TraceSubscriptionManager(SpanStorageService spanStorageService) {
++      this.spanStorageService = spanStorageService;
++   }
++
++   /**
++    * Register a new subscription with filters.
++    */
++   public SseEmitter subscribe(String serviceName, String operationName, String clientAddress) {
++      SseEmitter emitter = new SseEmitter(0L); // No timeout
++      subscribe(emitter, serviceName, operationName, clientAddress);
++      return emitter;
++   }
++
++   /**
++    * Subscribe to Custom Emitter
++    */
++   public void subscribe(SseEmitter emitter, String serviceName, String operationName, String clientAddress) {
++      Subscription sub = new Subscription(emitter, serviceName, operationName, clientAddress);
++
++      subscriptions.add(sub);
++
++      emitter.onCompletion(() -> subscriptions.remove(sub));
++      emitter.onTimeout(() -> subscriptions.remove(sub));
++      emitter.onError(e -> subscriptions.remove(sub));
++
++      // send initial heartbeat
++      try {
++         emitter.send(SseEmitter.event().name("heartbeat").data(Collections.emptyList()));
++      } catch (IOException ignored) {
++      }
++   }
++
++   /**
++    * Handle trace updates and push data to matching subscribers.
++    */
++   @EventListener
++   public void onTraceUpdated(TraceEvent event) {
++      List<ReadableSpan> spans = spanStorageService.getSpansForTrace(event.traceId());
++      if (spans.isEmpty())
++         return;
++
++      for (Subscription sub : subscriptions) {
++         if (SpanFilterUtil.matchesTraceEvent(event, sub.serviceName(), sub.operationName(), sub.clientAddress())) {
++            List<SpanData> spanDataList = spans.stream().map(ReadableSpan::toSpanData).toList();
++
++            try {
++               sub.emitter().send(SseEmitter.event().name("trace").data(spanDataList));
++            } catch (IOException e) {
++               sub.emitter().complete();
++               subscriptions.remove(sub);
++            }
++         }
++      }
++   }
++
++   /**
++    * Periodic heartbeat to keep connections alive.
++    */
++   @Scheduled(fixedRate = 15000)
++   public void sendHeartbeats() {
++      for (Subscription sub : subscriptions) {
++         try {
++            sub.emitter().send(SseEmitter.event().name("heartbeat").data(Collections.emptyList())
++                  .id(String.valueOf(Instant.now().toEpochMilli())));
++         } catch (IOException e) {
++            sub.emitter().complete();
++            subscriptions.remove(sub);
++         }
++      }
++   }
++
++
++   private record Subscription(SseEmitter emitter, String serviceName, String operationName, String clientAddress) {
++   }
++}
+diff --git a/webapp/src/main/java/io/github/microcks/web/TracingController.java b/webapp/src/main/java/io/github/microcks/web/TracingController.java
+index 50cab802..7b3ffc95 100644
+--- a/webapp/src/main/java/io/github/microcks/web/TracingController.java
++++ b/webapp/src/main/java/io/github/microcks/web/TracingController.java
+@@ -18,6 +18,7 @@ package io.github.microcks.web;
+ import io.github.microcks.service.SpanStorageService;
+ import io.opentelemetry.sdk.trace.ReadableSpan;
+ import io.opentelemetry.sdk.trace.data.SpanData;
++import org.springframework.http.MediaType;
+ import org.springframework.http.ResponseEntity;
+ import org.springframework.web.bind.annotation.DeleteMapping;
+ import org.springframework.web.bind.annotation.GetMapping;
+@@ -25,25 +26,26 @@ import org.springframework.web.bind.annotation.PathVariable;
+ import org.springframework.web.bind.annotation.RequestMapping;
+ import org.springframework.web.bind.annotation.RequestParam;
+ import org.springframework.web.bind.annotation.RestController;
++import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+ 
+ import java.util.List;
+-import java.util.Map;
+ import java.util.Set;
+ 
+ /**
+  * REST controller for accessing trace and span information stored by the SpanStorageService. Provides endpoints to
+  * retrieve traces, spans
+- *
+  */
+ @RestController
+ @RequestMapping("/api/traces")
+ public class TracingController {
+ 
+    private final SpanStorageService spanStorageService;
++   private final TraceSubscriptionManager traceSubscriptionManager;
+ 
+ 
+-   public TracingController(SpanStorageService spanStorageService) {
++   public TracingController(SpanStorageService spanStorageService, TraceSubscriptionManager traceSubscriptionManager) {
+       this.spanStorageService = spanStorageService;
++      this.traceSubscriptionManager = traceSubscriptionManager;
+    }
+ 
+    /**
+@@ -71,19 +73,17 @@ public class TracingController {
+       return ResponseEntity.ok(spans.stream().map(ReadableSpan::toSpanData).toList());
+    }
+ 
+-   @GetMapping("/operations/spans")
+-   public ResponseEntity<List<List<ReadableSpan>>> getSpansForOperation(@RequestParam("serviceName") String serviceName,
+-         @RequestParam("operationName") String operationName) {
+-      List<String> traceIds = spanStorageService
+-            .queryTraceIdsBySpanAttributes(Map.of(io.opentelemetry.api.common.AttributeKey.stringKey("service.name"),
+-                  serviceName, io.opentelemetry.api.common.AttributeKey.stringKey("operation.name"), operationName));
++   @GetMapping("/operations")
++   public ResponseEntity<List<List<ReadableSpan>>> getTracesForOperation(
++         @RequestParam("serviceName") String serviceName, @RequestParam("operationName") String operationName,
++         @RequestParam(value = "clientAddress", defaultValue = ".*") String clientAddress) {
++      List<String> traceIds = spanStorageService.queryTraceIdsByPatterns(serviceName, operationName, clientAddress);
+       if (traceIds.isEmpty()) {
+          return ResponseEntity.notFound().build();
+       }
+ 
+       List<List<ReadableSpan>> spansByTraceId = traceIds.stream().map(spanStorageService::getSpansForTrace).toList();
+ 
+-
+       return ResponseEntity.ok(spansByTraceId);
+    }
+ 
+@@ -98,4 +98,10 @@ public class TracingController {
+       return ResponseEntity.ok("All traces and spans have been cleared");
+    }
+ 
++
++   @GetMapping(value = "/operations/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
++   public SseEmitter streamTraces(@RequestParam("serviceName") String serviceName,
++         @RequestParam("operationName") String operationName, @RequestParam("clientAddress") String clientAddress) {
++      return traceSubscriptionManager.subscribe(serviceName, operationName, clientAddress);
++   }
+ }

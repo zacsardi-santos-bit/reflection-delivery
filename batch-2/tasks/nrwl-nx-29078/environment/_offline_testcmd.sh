@@ -1,0 +1,1 @@
+cd /workspace/repo && pnpm install --no-frozen-lockfile 2>&1 | tail -5 ; npx jest tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts --config tools/workspace-plugin/jest.config.ts --coverage=false --verbose --json

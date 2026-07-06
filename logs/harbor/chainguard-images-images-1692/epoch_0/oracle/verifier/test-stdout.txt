@@ -1,6 +1,0 @@
-patching file images/caddy/tests/Caddyfile
-patching file images/caddy/tests/index.html
-patching file images/caddy/tests/main.tf
-patching file images/caddy/tests/run_test.sh
-ok  	github.com/chainguard-images/images/monopod/pkg/lint	0.006s
-reward=1 graded=3 found=0 failed=0 parsed=0 framework=go exit_code=0

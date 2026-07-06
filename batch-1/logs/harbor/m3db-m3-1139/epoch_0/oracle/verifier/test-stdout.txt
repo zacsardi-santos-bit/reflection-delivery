@@ -1,0 +1,68 @@
+patching file src/dbnode/persist/fs/commitlog/commit_log_conc_test.go
+patching file src/dbnode/persist/fs/commitlog/commit_log_test.go
+patching file src/dbnode/persist/fs/commitlog/read_write_prop_test.go
+{"Time":"2026-06-29T15:19:19.369505348Z","Action":"start","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog"}
+{"Time":"2026-06-29T15:19:19.383201423Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWrite"}
+{"Time":"2026-06-29T15:19:19.383243624Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWrite","Output":"=== RUN   TestCommitLogWrite\n"}
+{"Time":"2026-06-29T15:19:19.566227991Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWrite","Output":"--- PASS: TestCommitLogWrite (0.18s)\n"}
+{"Time":"2026-06-29T15:19:19.566267906Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWrite","Elapsed":0.18}
+{"Time":"2026-06-29T15:19:19.566332084Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestReadCommitLogMissingMetadata"}
+{"Time":"2026-06-29T15:19:19.566341068Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestReadCommitLogMissingMetadata","Output":"=== RUN   TestReadCommitLogMissingMetadata\n"}
+{"Time":"2026-06-29T15:19:20.244456203Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestReadCommitLogMissingMetadata","Output":"15:19:20.243955[E] commit log reader returned error, iterator moving to next file: commit log reader encountered a datapoint without corresponding metadata\n"}
+{"Time":"2026-06-29T15:19:20.347198554Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestReadCommitLogMissingMetadata","Output":"--- PASS: TestReadCommitLogMissingMetadata (0.78s)\n"}
+{"Time":"2026-06-29T15:19:20.347269297Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestReadCommitLogMissingMetadata","Elapsed":0.78}
+{"Time":"2026-06-29T15:19:20.347364848Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogReaderIsNotReusable"}
+{"Time":"2026-06-29T15:19:20.347394196Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogReaderIsNotReusable","Output":"=== RUN   TestCommitLogReaderIsNotReusable\n"}
+{"Time":"2026-06-29T15:19:20.464718367Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogReaderIsNotReusable","Output":"--- PASS: TestCommitLogReaderIsNotReusable (0.12s)\n"}
+{"Time":"2026-06-29T15:19:20.464755942Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogReaderIsNotReusable","Elapsed":0.12}
+{"Time":"2026-06-29T15:19:20.464766688Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogIteratorUsesPredicateFilter"}
+{"Time":"2026-06-29T15:19:20.464774841Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogIteratorUsesPredicateFilter","Output":"=== RUN   TestCommitLogIteratorUsesPredicateFilter\n"}
+{"Time":"2026-06-29T15:19:20.515688854Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogIteratorUsesPredicateFilter","Output":"--- PASS: TestCommitLogIteratorUsesPredicateFilter (0.05s)\n"}
+{"Time":"2026-06-29T15:19:20.515747323Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogIteratorUsesPredicateFilter","Elapsed":0.05}
+{"Time":"2026-06-29T15:19:20.515764949Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteBehind"}
+{"Time":"2026-06-29T15:19:20.515774855Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteBehind","Output":"=== RUN   TestCommitLogWriteBehind\n"}
+{"Time":"2026-06-29T15:19:20.573855732Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteBehind","Output":"--- PASS: TestCommitLogWriteBehind (0.06s)\n"}
+{"Time":"2026-06-29T15:19:20.573908835Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteBehind","Elapsed":0.06}
+{"Time":"2026-06-29T15:19:20.573940663Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteErrorOnClosed"}
+{"Time":"2026-06-29T15:19:20.573953364Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteErrorOnClosed","Output":"=== RUN   TestCommitLogWriteErrorOnClosed\n"}
+{"Time":"2026-06-29T15:19:20.634674097Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteErrorOnClosed","Output":"--- PASS: TestCommitLogWriteErrorOnClosed (0.06s)\n"}
+{"Time":"2026-06-29T15:19:20.634706398Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteErrorOnClosed","Elapsed":0.06}
+{"Time":"2026-06-29T15:19:20.634733059Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteErrorOnFull"}
+{"Time":"2026-06-29T15:19:20.634741456Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteErrorOnFull","Output":"=== RUN   TestCommitLogWriteErrorOnFull\n"}
+{"Time":"2026-06-29T15:19:20.693340771Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteErrorOnFull","Output":"--- PASS: TestCommitLogWriteErrorOnFull (0.06s)\n"}
+{"Time":"2026-06-29T15:19:20.693383154Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogWriteErrorOnFull","Elapsed":0.06}
+{"Time":"2026-06-29T15:19:20.693394409Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogExpiresWriter"}
+{"Time":"2026-06-29T15:19:20.693405537Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogExpiresWriter","Output":"=== RUN   TestCommitLogExpiresWriter\n"}
+{"Time":"2026-06-29T15:19:20.751429459Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogExpiresWriter","Output":"--- PASS: TestCommitLogExpiresWriter (0.06s)\n"}
+{"Time":"2026-06-29T15:19:20.75152152Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogExpiresWriter","Elapsed":0.06}
+{"Time":"2026-06-29T15:19:20.751573013Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnWriteError"}
+{"Time":"2026-06-29T15:19:20.751584267Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnWriteError","Output":"=== RUN   TestCommitLogFailOnWriteError\n"}
+{"Time":"2026-06-29T15:19:20.807433206Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnWriteError","Output":"15:19:20.807207[E] failed to write to commit log: an error\n"}
+{"Time":"2026-06-29T15:19:20.809551258Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnWriteError","Output":"--- PASS: TestCommitLogFailOnWriteError (0.06s)\n"}
+{"Time":"2026-06-29T15:19:20.809620986Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnWriteError","Elapsed":0.06}
+{"Time":"2026-06-29T15:19:20.809634569Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnOpenError"}
+{"Time":"2026-06-29T15:19:20.809643096Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnOpenError","Output":"=== RUN   TestCommitLogFailOnOpenError\n"}
+{"Time":"2026-06-29T15:19:20.862018062Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnOpenError","Output":"15:19:20.861947[E] failed to open commit log: an error\n"}
+{"Time":"2026-06-29T15:19:20.862175416Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnOpenError","Output":"--- PASS: TestCommitLogFailOnOpenError (0.05s)\n"}
+{"Time":"2026-06-29T15:19:20.862208844Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnOpenError","Elapsed":0.05}
+{"Time":"2026-06-29T15:19:20.86222615Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnFlushError"}
+{"Time":"2026-06-29T15:19:20.862302847Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnFlushError","Output":"=== RUN   TestCommitLogFailOnFlushError\n"}
+{"Time":"2026-06-29T15:19:21.037804766Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnFlushError","Output":"15:19:21.037735[E] failed to flush commit log: an error\n"}
+{"Time":"2026-06-29T15:19:21.037947822Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnFlushError","Output":"--- PASS: TestCommitLogFailOnFlushError (0.18s)\n"}
+{"Time":"2026-06-29T15:19:21.037958942Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogFailOnFlushError","Elapsed":0.18}
+{"Time":"2026-06-29T15:19:21.037990013Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogActiveLogs"}
+{"Time":"2026-06-29T15:19:21.037999335Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogActiveLogs","Output":"=== RUN   TestCommitLogActiveLogs\n"}
+{"Time":"2026-06-29T15:19:21.081172711Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogActiveLogs","Output":"--- PASS: TestCommitLogActiveLogs (0.04s)\n"}
+{"Time":"2026-06-29T15:19:21.081205544Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogActiveLogs","Elapsed":0.04}
+{"Time":"2026-06-29T15:19:21.081222334Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogRotateLogs"}
+{"Time":"2026-06-29T15:19:21.081229943Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogRotateLogs","Output":"=== RUN   TestCommitLogRotateLogs\n"}
+{"Time":"2026-06-29T15:19:21.161255345Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogRotateLogs","Output":"--- PASS: TestCommitLogRotateLogs (0.08s)\n"}
+{"Time":"2026-06-29T15:19:21.161314009Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestCommitLogRotateLogs","Elapsed":0.08}
+{"Time":"2026-06-29T15:19:21.161327024Z","Action":"run","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestFiles"}
+{"Time":"2026-06-29T15:19:21.161337157Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestFiles","Output":"=== RUN   TestFiles\n"}
+{"Time":"2026-06-29T15:19:21.249838619Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestFiles","Output":"--- PASS: TestFiles (0.09s)\n"}
+{"Time":"2026-06-29T15:19:21.249886444Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Test":"TestFiles","Elapsed":0.09}
+{"Time":"2026-06-29T15:19:21.249897151Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Output":"PASS\n"}
+{"Time":"2026-06-29T15:19:21.257962449Z","Action":"output","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Output":"ok  \tgithub.com/m3db/m3/src/dbnode/persist/fs/commitlog\t1.888s\n"}
+{"Time":"2026-06-29T15:19:21.257999697Z","Action":"pass","Package":"github.com/m3db/m3/src/dbnode/persist/fs/commitlog","Elapsed":1.889}
+reward=1 graded=14 found=14 failed=0 parsed=14 framework=go exit_code=0

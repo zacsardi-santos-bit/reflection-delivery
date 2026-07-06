@@ -1,0 +1,29 @@
+{
+    "id": "407bc6ef-9a67-4126-bf2e-27999cecad58",
+    "started_at": "2026-07-06T12:19:09.138369",
+    "finished_at": "2026-07-06T12:21:01.552772",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__kestra-io-kestra-15286": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "kestra-io-kestra-15286__7N4gQEX"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

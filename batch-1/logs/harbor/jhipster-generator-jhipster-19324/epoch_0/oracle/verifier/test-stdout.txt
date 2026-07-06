@@ -1,0 +1,27 @@
+patching file test/__snapshots__/app-client-custom-path.spec.js.snap
+patching file test/__snapshots__/app.spec.js.snap
+patching file test/__snapshots__/server.spec.js.snap
+patching file test/blueprint/__snapshots__/app-blueprint.spec.js.snap
+patching file test/blueprint/__snapshots__/scoped-blueprint.spec.js.snap
+
+
+  JHipster server generator
+    generate server with ehcache
+/bin/sh: 1: keytool: not found
+      ✔ creates expected files for default configuration for server generator (6ms)
+    generate server with caffeine
+/bin/sh: 1: keytool: not found
+      ✔ creates expected files for caffeine cache configuration for server generator (4ms)
+    microfrontend
+/bin/sh: 1: keytool: not found
+      ✔ should match generated files snapshot (4ms)
+    gateway application type
+      with non reactive option
+yeoman-test: question languages was asked but answer was not provided
+/bin/sh: 1: keytool: not found
+        ✔ should convert to reactive
+
+
+  4 passing (12s)
+
+reward=1 graded=4 found=4 failed=0 parsed=4 framework=mocha exit_code=0

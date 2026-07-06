@@ -1,0 +1,6 @@
+patching file crates/github-actions-expressions/src/lib.rs
+patching file crates/zizmor/src/audit/obfuscation.rs
+patching file crates/zizmor/src/audit/template_injection.rs
+patching file crates/zizmor/src/audit/unsound_contains.rs
+patching file crates/zizmor/src/finding/location.rs
+patching file docs/release-notes.md

@@ -1,0 +1,58 @@
+patching file packages/svelte/tests/snapshot/samples/await-block-scope/_expected/client-functional/index.svelte.js
+patching file packages/svelte/tests/snapshot/samples/bind-component-snippet/_expected/client-functional/index.svelte.js
+patching file packages/svelte/tests/snapshot/samples/dynamic-attributes-casing/_expected/client-functional/main.svelte.js
+patching file packages/svelte/tests/snapshot/samples/hello-world/_expected/client-functional/index.svelte.js
+patching file packages/svelte/tests/snapshot/samples/hmr/_expected/client-functional/index.svelte.js
+patching file packages/svelte/tests/snapshot/samples/nullish-coallescence-omittance/_expected/client-functional/index.svelte.js
+patching file packages/svelte/tests/snapshot/samples/purity/_expected/client-functional/index.svelte.js
+patching file packages/svelte/tests/snapshot/samples/skip-static-subtree/_expected/client-functional/index.svelte.js
+patching file packages/svelte/tests/snapshot/samples/state-proxy-literal/_expected/client-functional/index.svelte.js
+patching file packages/svelte/tests/snapshot/samples/text-nodes-deriveds/_expected/client-functional/index.svelte.js
+
+ RUN  v2.1.9 /workspace/repo
+
+ ✓ packages/svelte/tests/snapshot/test.ts > await-block-scope (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > bind-component-snippet (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > bind-this (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > class-state-field-constructor-assignment (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > destructured-assignments (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > dynamic-attributes-casing (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > each-string-template (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > export-state (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > function-prop-no-getter (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > hello-world (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > hmr (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > imports-in-modules (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > nullish-coallescence-omittance (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > props-identifier (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > purity (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > skip-static-subtree (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > state-proxy-literal (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > svelte-element (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > text-nodes-deriveds (string)
+ ✓ packages/svelte/tests/snapshot/test.ts > await-block-scope (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > bind-component-snippet (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > bind-this (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > class-state-field-constructor-assignment (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > destructured-assignments (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > dynamic-attributes-casing (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > each-string-template (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > export-state (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > function-prop-no-getter (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > hello-world (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > hmr (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > imports-in-modules (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > nullish-coallescence-omittance (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > props-identifier (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > purity (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > skip-static-subtree (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > state-proxy-literal (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > svelte-element (functional)
+ ✓ packages/svelte/tests/snapshot/test.ts > text-nodes-deriveds (functional)
+
+ Test Files  1 passed (1)
+      Tests  38 passed (38)
+   Start at  15:26:47
+   Duration  2.40s (transform 693ms, setup 0ms, collect 1.35s, tests 576ms, environment 0ms, prepare 161ms)
+
+reward=1 graded=38 found=0 failed=0 parsed=0 framework=vitest exit_code=0

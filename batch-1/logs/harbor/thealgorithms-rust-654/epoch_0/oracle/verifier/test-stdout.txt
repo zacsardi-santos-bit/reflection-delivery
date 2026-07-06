@@ -1,0 +1,1229 @@
+patching file tests/test_factorial.rs
+   Compiling autocfg v1.5.1
+   Compiling libc v0.2.186
+   Compiling cfg-if v1.0.4
+   Compiling proc-macro2 v1.0.106
+   Compiling unicode-ident v1.0.24
+   Compiling quote v1.0.46
+   Compiling memchr v2.8.2
+   Compiling zerocopy v0.8.52
+   Compiling bytemuck v1.25.0
+   Compiling regex-syntax v0.8.11
+   Compiling paste v1.0.15
+   Compiling getrandom v0.4.3
+   Compiling log v0.4.33
+   Compiling rawpointer v0.2.1
+   Compiling rand_core v0.10.1
+   Compiling typenum v1.20.1
+   Compiling lazy_static v1.5.0
+   Compiling safe_arch v0.7.4
+   Compiling num-traits v0.2.19
+   Compiling matrixmultiply v0.3.10
+   Compiling aho-corasick v1.1.4
+   Compiling wide v0.7.33
+   Compiling regex-automata v0.4.14
+   Compiling syn v2.0.118
+   Compiling getrandom v0.2.17
+   Compiling num-integer v0.1.46
+   Compiling num-complex v0.4.6
+   Compiling approx v0.5.1
+   Compiling rand v0.10.1
+   Compiling rand_core v0.6.4
+   Compiling num-rational v0.4.2
+   Compiling num-bigint v0.4.6
+   Compiling simba v0.8.1
+   Compiling regex v1.12.4
+   Compiling env_filter v2.0.0
+   Compiling env_logger v0.11.11
+   Compiling quickcheck v1.1.0
+   Compiling nalgebra-macros v0.2.2
+   Compiling quickcheck_macros v1.2.0
+   Compiling ppv-lite86 v0.2.21
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.6
+   Compiling nalgebra v0.32.6
+   Compiling the_algorithms_rust v0.1.0 (/workspace/repo)
+warning: elided lifetime has a name
+   --> src/data_structures/veb_tree.rs:218:38
+    |
+217 | impl<'a> VebTreeIter<'a> {
+    |      -- lifetime `'a` declared here
+218 |     pub fn new(tree: &'a VebTree) -> VebTreeIter {
+    |                                      ^^^^^^^^^^^ this elided lifetime gets resolved as `'a`
+    |
+    = note: `#[warn(elided_named_lifetimes)]` on by default
+
+warning: associated items `new`, `add_edge`, `neighbours`, `contains`, `nodes`, and `edges` are never used
+   --> src/data_structures/graph.rs:65:8
+    |
+64  | pub trait Graph {
+    |           ----- associated items in this trait
+65  |     fn new() -> Self;
+    |        ^^^
+...
+80  |     fn add_edge(&mut self, edge: (&str, &str, i32)) {
+    |        ^^^^^^^^
+...
+91  |     fn neighbours(&self, node: &str) -> Result<&Vec<(String, i32)>, NodeNotInGraph> {
+    |        ^^^^^^^^^^
+...
+98  |     fn contains(&self, node: &str) -> bool {
+    |        ^^^^^^^^
+...
+102 |     fn nodes(&self) -> HashSet<&String> {
+    |        ^^^^^
+...
+106 |     fn edges(&self) -> Vec<(&String, &String, i32)> {
+    |        ^^^^^
+    |
+    = note: `#[warn(dead_code)]` on by default
+
+warning: trait `BloomFilter` is never used
+ --> src/data_structures/probabilistic/bloom_filter.rs:6:7
+  |
+6 | trait BloomFilter<Item: Hash> {
+  |       ^^^^^^^^^^^
+
+warning: field `vec` is never read
+  --> src/data_structures/probabilistic/bloom_filter.rs:26:5
+   |
+25 | struct BasicBloomFilter<const CAPACITY: usize> {
+   |        ---------------- field in this struct
+26 |     vec: [bool; CAPACITY],
+   |     ^^^
+   |
+   = note: `BasicBloomFilter` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: struct `SingleBinaryBloomFilter` is never constructed
+  --> src/data_structures/probabilistic/bloom_filter.rs:63:8
+   |
+63 | struct SingleBinaryBloomFilter {
+   |        ^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `SingleBinaryBloomFilter` has a derived impl for the trait `Default`, but this is intentionally ignored during dead code analysis
+
+warning: function `mask_128` is never used
+  --> src/data_structures/probabilistic/bloom_filter.rs:68:4
+   |
+68 | fn mask_128<T: Hash>(hasher: &mut DefaultHasher, item: T) -> u128 {
+   |    ^^^^^^^^
+
+warning: fields `filter_size`, `bytes`, and `hash_builders` are never read
+   --> src/data_structures/probabilistic/bloom_filter.rs:103:5
+    |
+102 | pub struct MultiBinaryBloomFilter {
+    |            ---------------------- fields in this struct
+103 |     filter_size: usize,
+    |     ^^^^^^^^^^^
+104 |     bytes: Vec<u8>,
+    |     ^^^^^
+105 |     hash_builders: Vec<RandomState>,
+    |     ^^^^^^^^^^^^^
+
+warning: `the_algorithms_rust` (lib) generated 7 warnings
+warning: field `1` is never read
+   --> src/data_structures/heap.rs:159:39
+    |
+159 |     struct Point(/* x */ i32, /* y */ i32);
+    |            ----- field in this struct ^^^
+    |
+    = help: consider removing this field
+    = note: `#[warn(dead_code)]` on by default
+
+warning: trait `Verify` is never used
+   --> src/math/trig_functions.rs:157:11
+    |
+157 |     trait Verify {
+    |           ^^^^^^
+
+warning: `the_algorithms_rust` (lib test) generated 3 warnings (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.12s
+────────────
+ Nextest run ID ff60bf59-79ee-4a74-adab-22034b79fa59 with nextest profile: default
+    Starting 1083 tests across 2 binaries (10 tests skipped)
+        PASS [   0.109s] the_algorithms_rust bit_manipulation::sum_of_two_integers::tests::test_add_two_integers_positive
+        PASS [   0.107s] the_algorithms_rust bit_manipulation::highest_set_bit::tests::test_positive_number
+        PASS [   0.108s] the_algorithms_rust bit_manipulation::counting_bits::tests::test_count_set_bits_all_set_bits
+        PASS [   0.110s] the_algorithms_rust backtracking::sudoku::tests::test_sudoku_correct
+        PASS [   0.110s] the_algorithms_rust backtracking::sudoku::tests::test_sudoku_incorrect
+        PASS [   0.111s] the_algorithms_rust bit_manipulation::counting_bits::tests::test_count_set_bits_one
+        PASS [   0.110s] the_algorithms_rust bit_manipulation::counting_bits::tests::test_count_set_bits_power_of_two
+        PASS [   0.110s] the_algorithms_rust bit_manipulation::sum_of_two_integers::tests::test_add_two_integers_negative
+        PASS [   0.113s] the_algorithms_rust bit_manipulation::counting_bits::tests::test_count_set_bits_zero
+        PASS [   0.113s] the_algorithms_rust bit_manipulation::highest_set_bit::tests::test_zero
+        PASS [   0.115s] the_algorithms_rust backtracking::all_combination_of_size_k::tests::test_output
+        PASS [   0.114s] the_algorithms_rust bit_manipulation::sum_of_two_integers::tests::test_add_two_integers_zero
+        PASS [   0.115s] the_algorithms_rust bit_manipulation::highest_set_bit::tests::test_negative_number
+        PASS [   0.119s] the_algorithms_rust backtracking::permutations::tests::test_permute
+        PASS [   0.119s] the_algorithms_rust backtracking::all_combination_of_size_k::tests::test_empty
+        PASS [   0.121s] the_algorithms_rust big_integer::poly1305::tests::basic_tv1
+        PASS [   0.127s] the_algorithms_rust backtracking::n_queens::tests::test_n_queens_solver
+        PASS [   0.167s] the_algorithms_rust big_integer::fast_factorial::tests::fact
+        PASS [   0.111s] the_algorithms_rust ciphers::base64::tests::decode_encode
+        PASS [   0.116s] the_algorithms_rust ciphers::another_rot13::tests::test_every_alphabet_with_space
+        PASS [   0.117s] the_algorithms_rust ciphers::another_rot13::tests::test_simple
+        PASS [   0.112s] the_algorithms_rust ciphers::base64::tests::pregenerated_random_bytes_decode
+        PASS [   0.111s] the_algorithms_rust ciphers::base64::tests::pregenerated_random_bytes_encode
+        PASS [   0.116s] the_algorithms_rust ciphers::baconian_cipher::tests::test_baconian_encoding
+        PASS [   0.120s] the_algorithms_rust ciphers::another_rot13::tests::test_non_alphabet
+        PASS [   0.118s] the_algorithms_rust ciphers::baconian_cipher::tests::test_baconian_decoding
+        PASS [   0.118s] the_algorithms_rust ciphers::base64::tests::encode_decode
+        PASS [   0.123s] the_algorithms_rust ciphers::aes::tests::test_str
+        PASS [   0.125s] the_algorithms_rust ciphers::aes::tests::test_aes_256
+        PASS [   0.126s] the_algorithms_rust ciphers::aes::tests::test_aes_128
+        PASS [   0.127s] the_algorithms_rust ciphers::aes::tests::test_aes_192
+        PASS [   0.121s] the_algorithms_rust ciphers::blake2b::test::blake2b_empty
+        PASS [   0.123s] the_algorithms_rust ciphers::blake2b::test::blake2b_from_rfc
+        PASS [   0.127s] the_algorithms_rust ciphers::blake2b::test::blake2b_empty_with_key
+        PASS [   0.127s] the_algorithms_rust ciphers::blake2b::test::blake2b_key_shortin
+        PASS [   0.140s] the_algorithms_rust ciphers::blake2b::test::blake2b_keyed_filled
+        PASS [   0.104s] the_algorithms_rust ciphers::kerninghan::tests::count_set_bits
+        PASS [   0.110s] the_algorithms_rust ciphers::caesar::tests::empty
+        PASS [   0.114s] the_algorithms_rust ciphers::caesar::tests::caesar_rot_13
+        PASS [   0.114s] the_algorithms_rust ciphers::chacha::tests::basic_tv1
+        PASS [   0.110s] the_algorithms_rust ciphers::morse_code::tests::decrypt_invalid_morsecode_with_spaces
+        PASS [   0.119s] the_algorithms_rust ciphers::caesar::tests::caesar_unicode
+        PASS [   0.115s] the_algorithms_rust ciphers::hashing_traits::tests::sha256_basic
+        PASS [   0.118s] the_algorithms_rust ciphers::diffie_hellman::tests::verify_invalid_pub_key_same_as_prime
+        PASS [   0.119s] the_algorithms_rust ciphers::diffie_hellman::tests::verify_invalid_pub_key
+        PASS [   0.122s] the_algorithms_rust ciphers::morse_code::tests::encrypt_letters_and_special_characters
+        PASS [   0.130s] the_algorithms_rust ciphers::morse_code::tests::decrypt_valid_character_set_invalid_morsecode
+        PASS [   0.122s] the_algorithms_rust ciphers::morse_code::tests::encrypt_message_with_unsupported_character
+        PASS [   0.115s] the_algorithms_rust ciphers::polybius::tests::decode_emoji
+        PASS [   0.134s] the_algorithms_rust ciphers::morse_code::tests::decrypt_valid_morsecode_with_spaces
+        PASS [   0.124s] the_algorithms_rust ciphers::morse_code::tests::encrypt_only_letters
+        PASS [   0.127s] the_algorithms_rust ciphers::polybius::tests::decode_empty
+        PASS [   0.220s] the_algorithms_rust ciphers::diffie_hellman::tests::verify_valid_pub_key
+        PASS [   0.121s] the_algorithms_rust ciphers::polybius::tests::decode_odd_length
+        PASS [   0.113s] the_algorithms_rust ciphers::polybius::tests::encode_valid_string
+        PASS [   0.118s] the_algorithms_rust ciphers::polybius::tests::encode_emoji
+        PASS [   0.127s] the_algorithms_rust ciphers::polybius::tests::decode_unknown_string
+        PASS [   0.120s] the_algorithms_rust ciphers::polybius::tests::encode_empty
+        PASS [   0.123s] the_algorithms_rust ciphers::polybius::tests::encode_and_decode
+        PASS [   0.123s] the_algorithms_rust ciphers::polybius::tests::decode_valid_string
+        PASS [   0.128s] the_algorithms_rust ciphers::polybius::tests::decode_string_with_whitespace
+        PASS [   0.109s] the_algorithms_rust ciphers::rot13::test::test_bunch_of_letters
+        PASS [   0.122s] the_algorithms_rust ciphers::rail_fence::test::rails_basic
+        PASS [   0.110s] the_algorithms_rust ciphers::rot13::test::test_single_letter
+        PASS [   0.115s] the_algorithms_rust ciphers::rot13::test::test_non_ascii
+        PASS [   0.114s] the_algorithms_rust ciphers::rot13::test::test_twice
+        PASS [   0.112s] the_algorithms_rust ciphers::sha256::tests::ascii
+        PASS [   0.114s] the_algorithms_rust ciphers::salsa::tests::basic_tv1
+        PASS [   0.125s] the_algorithms_rust ciphers::sha256::tests::ascii_avalanche
+        PASS [   0.117s] the_algorithms_rust ciphers::sha256::tests::empty
+        PASS [   0.109s] the_algorithms_rust ciphers::sha256::tests::test_constants
+        PASS [   0.114s] the_algorithms_rust ciphers::sha256::tests::short_ascii
+        PASS [   0.121s] the_algorithms_rust ciphers::sha256::tests::long_ascii
+        PASS [   0.120s] the_algorithms_rust ciphers::sha3::tests::sha3_224_8
+        PASS [   0.122s] the_algorithms_rust ciphers::sha3::tests::sha3_224_0
+        PASS [   0.125s] the_algorithms_rust ciphers::sha3::tests::sha3_256_0
+        PASS [   0.120s] the_algorithms_rust ciphers::sha3::tests::sha3_384_0
+        PASS [   0.127s] the_algorithms_rust ciphers::sha3::tests::sha3_224_2312
+        PASS [   0.125s] the_algorithms_rust ciphers::sha3::tests::sha3_256_8
+        PASS [   0.132s] the_algorithms_rust ciphers::sha3::tests::sha3_256_2184
+        PASS [   0.122s] the_algorithms_rust ciphers::sha3::tests::sha3_384_8
+        PASS [   0.118s] the_algorithms_rust ciphers::sha3::tests::sha3_512_8
+        PASS [   0.122s] the_algorithms_rust ciphers::sha3::tests::sha3_512_0
+        PASS [   0.135s] the_algorithms_rust ciphers::sha3::tests::sha3_384_2512
+        PASS [   0.147s] the_algorithms_rust ciphers::sha3::tests::sha3_512_4080
+        PASS [   0.113s] the_algorithms_rust ciphers::tea::test::test_block_convert
+        PASS [   0.106s] the_algorithms_rust ciphers::tea::test::test_tea_encrypt
+        PASS [   0.112s] the_algorithms_rust ciphers::tea::test::test_tea_encdec
+        PASS [   0.110s] the_algorithms_rust ciphers::theoretical_rot13::tests::test_bunch_of_letters
+        PASS [   0.111s] the_algorithms_rust ciphers::theoretical_rot13::tests::test_non_ascii
+        PASS [   0.109s] the_algorithms_rust ciphers::theoretical_rot13::tests::test_twice
+        PASS [   0.111s] the_algorithms_rust ciphers::theoretical_rot13::tests::test_single_letter
+        PASS [   0.108s] the_algorithms_rust ciphers::vigenere::tests::empty
+        PASS [   0.109s] the_algorithms_rust ciphers::vigenere::tests::vigenere_base
+        PASS [   0.107s] the_algorithms_rust ciphers::vigenere::tests::vigenere_empty_key
+        PASS [   0.120s] the_algorithms_rust ciphers::transposition::tests::double_decryption
+        PASS [   0.121s] the_algorithms_rust ciphers::transposition::tests::decryption
+        PASS [   0.119s] the_algorithms_rust ciphers::transposition::tests::encryption
+        PASS [   0.123s] the_algorithms_rust ciphers::transposition::tests::double_encryption
+        PASS [   0.113s] the_algorithms_rust ciphers::vigenere::tests::vigenere_unicode_and_numbers
+        PASS [   0.115s] the_algorithms_rust ciphers::vigenere::tests::vigenere_unicode_key
+        PASS [   0.122s] the_algorithms_rust ciphers::vigenere::tests::vigenere_with_spaces
+        PASS [   0.119s] the_algorithms_rust ciphers::xor::tests::test_every_alphabet_with_space
+        PASS [   0.118s] the_algorithms_rust ciphers::xor::tests::test_invalid_byte
+        PASS [   0.116s] the_algorithms_rust ciphers::xor::tests::test_simple
+        PASS [   0.122s] the_algorithms_rust ciphers::xor::tests::test_multi_byte
+        PASS [   0.119s] the_algorithms_rust ciphers::xor::tests::test_zero_byte
+        PASS [   0.116s] the_algorithms_rust compression::run_length_encoding::test::test_run_length_decode
+        PASS [   0.115s] the_algorithms_rust compression::run_length_encoding::test::test_run_length_encode
+        PASS [   0.107s] the_algorithms_rust conversions::binary_to_decimal::tests::basic_binary_to_decimal
+        PASS [   0.105s] the_algorithms_rust conversions::binary_to_decimal::tests::big_binary_to_decimal
+        PASS [   0.108s] the_algorithms_rust conversions::binary_to_decimal::tests::very_big_binary_to_decimal
+        PASS [   0.108s] the_algorithms_rust conversions::binary_to_hexadecimal::tests::test_empty_string
+        PASS [   0.113s] the_algorithms_rust conversions::binary_to_hexadecimal::tests::test_invalid_binary
+        PASS [   0.115s] the_algorithms_rust conversions::binary_to_hexadecimal::tests::test_binary
+        PASS [   0.112s] the_algorithms_rust conversions::decimal_to_binary::tests::converting_decimal_to_binary
+        PASS [   0.117s] the_algorithms_rust conversions::binary_to_hexadecimal::tests::test_padded_binary
+        PASS [   0.117s] the_algorithms_rust conversions::decimal_to_hexadecimal::tests::test_big
+        PASS [   0.120s] the_algorithms_rust conversions::decimal_to_hexadecimal::tests::test_multiple_digit_hexadecimal
+        PASS [   0.118s] the_algorithms_rust conversions::decimal_to_hexadecimal::tests::test_random
+        PASS [   0.111s] the_algorithms_rust conversions::decimal_to_hexadecimal::tests::test_zero
+        PASS [   0.117s] the_algorithms_rust conversions::decimal_to_hexadecimal::tests::test_single_digit_decimal
+        PASS [   0.112s] the_algorithms_rust conversions::decimal_to_hexadecimal::tests::test_single_digit_hexadecimal
+        PASS [   0.110s] the_algorithms_rust conversions::hexadecimal_to_binary::tests::test_invalid_hexadecimal
+        PASS [   0.116s] the_algorithms_rust conversions::hexadecimal_to_binary::tests::test_empty_string
+        PASS [   0.112s] the_algorithms_rust conversions::hexadecimal_to_binary::tests::test_hexadecimal2
+        PASS [   0.114s] the_algorithms_rust conversions::hexadecimal_to_binary::tests::test_hexadecimal
+        PASS [   0.113s] the_algorithms_rust conversions::octal_to_binary::tests::test_empty_string
+        PASS [   0.112s] the_algorithms_rust conversions::octal_to_binary::tests::test_invalid_octal
+        PASS [   0.113s] the_algorithms_rust conversions::octal_to_binary::tests::test_valid_octal
+        PASS [   0.111s] the_algorithms_rust conversions::octal_to_decimal::tests::test_invalid_octal
+        PASS [   0.114s] the_algorithms_rust conversions::octal_to_decimal::tests::test_empty_string
+        PASS [   0.113s] the_algorithms_rust conversions::octal_to_decimal::tests::test_valid_octal
+        PASS [   0.110s] the_algorithms_rust conversions::octal_to_decimal::tests::test_valid_octal2
+        PASS [   0.114s] the_algorithms_rust conversions::octal_to_decimal::tests::test_valid_octal3
+        PASS [   0.128s] the_algorithms_rust data_structures::avl_tree::tests::balanced
+        PASS [   0.109s] the_algorithms_rust data_structures::avl_tree::tests::insert
+        PASS [   0.115s] the_algorithms_rust data_structures::avl_tree::tests::contains
+        PASS [   0.116s] the_algorithms_rust data_structures::avl_tree::tests::remove
+        PASS [   0.117s] the_algorithms_rust data_structures::avl_tree::tests::len
+        PASS [   0.106s] the_algorithms_rust data_structures::binary_search_tree::test::test_floor_and_ceil
+        PASS [   0.110s] the_algorithms_rust data_structures::avl_tree::tests::sorted
+        PASS [   0.111s] the_algorithms_rust data_structures::b_tree::test::test_search
+        PASS [   0.109s] the_algorithms_rust data_structures::binary_search_tree::test::test_search
+        PASS [   0.115s] the_algorithms_rust data_structures::binary_search_tree::test::test_iterator
+        PASS [   0.113s] the_algorithms_rust data_structures::binary_search_tree::test::test_maximum_and_minimum
+        PASS [   0.109s] the_algorithms_rust data_structures::fenwick_tree::tests::it_works
+        PASS [   0.114s] the_algorithms_rust data_structures::floyds_algorithm::tests::test_detect_cycle_no_cycle
+        PASS [   0.115s] the_algorithms_rust data_structures::floyds_algorithm::tests::test_detect_cycle_with_cycle
+        PASS [   0.121s] the_algorithms_rust data_structures::graph::test_directed_graph::test_add_node
+        PASS [   0.123s] the_algorithms_rust data_structures::graph::test_directed_graph::test_add_edge
+        PASS [   0.123s] the_algorithms_rust data_structures::graph::test_directed_graph::test_contains
+        PASS [   0.135s] the_algorithms_rust data_structures::graph::test_directed_graph::test_neighbours
+        PASS [   0.111s] the_algorithms_rust data_structures::hash_table::tests::test_empty_search
+        PASS [   0.111s] the_algorithms_rust data_structures::hash_table::tests::test_not_overwrite_existing_key
+        PASS [   0.116s] the_algorithms_rust data_structures::hash_table::tests::test_multiple_inserts_and_searches
+        PASS [   0.124s] the_algorithms_rust data_structures::graph::test_undirected_graph::test_neighbours
+        PASS [   0.127s] the_algorithms_rust data_structures::graph::test_undirected_graph::test_add_edge
+        PASS [   0.119s] the_algorithms_rust data_structures::hash_table::tests::test_insert_and_search
+        PASS [   0.109s] the_algorithms_rust data_structures::heap::tests::test_empty_heap
+        PASS [   0.108s] the_algorithms_rust data_structures::heap::tests::test_key_heap
+        PASS [   0.113s] the_algorithms_rust data_structures::heap::tests::test_iter_heap
+        PASS [   0.120s] the_algorithms_rust data_structures::hash_table::tests::test_resize
+        PASS [   0.116s] the_algorithms_rust data_structures::hash_table::tests::test_search_nonexistent
+        PASS [   0.113s] the_algorithms_rust data_structures::heap::tests::test_max_heap
+        PASS [   0.114s] the_algorithms_rust data_structures::heap::tests::test_min_heap
+        PASS [   0.111s] the_algorithms_rust data_structures::infix_to_postfix::tests::test_infix_to_postfix
+        PASS [   0.123s] the_algorithms_rust data_structures::lazy_segment_tree::tests::check_overall_interval_max
+        PASS [   0.122s] the_algorithms_rust data_structures::lazy_segment_tree::tests::check_overall_interval_min
+        PASS [   0.106s] the_algorithms_rust data_structures::lazy_segment_tree::tests::test_sum_segments
+        PASS [   0.108s] the_algorithms_rust data_structures::lazy_segment_tree::tests::test_min_segments
+        PASS [   0.110s] the_algorithms_rust data_structures::lazy_segment_tree::tests::test_max_segments
+        PASS [   0.109s] the_algorithms_rust data_structures::lazy_segment_tree::tests::test_update_segments_tiny
+        PASS [   0.107s] the_algorithms_rust data_structures::linked_list::tests::delete_head_works
+        PASS [   0.127s] the_algorithms_rust data_structures::lazy_segment_tree::tests::check_overall_interval_sum
+        PASS [   0.115s] the_algorithms_rust data_structures::lazy_segment_tree::tests::test_update_segments
+        PASS [   0.123s] the_algorithms_rust data_structures::lazy_segment_tree::tests::check_single_interval_min
+        PASS [   0.113s] the_algorithms_rust data_structures::linked_list::tests::create_numeric_list
+        PASS [   0.125s] the_algorithms_rust data_structures::lazy_segment_tree::tests::check_single_interval_max
+        PASS [   0.112s] the_algorithms_rust data_structures::linked_list::tests::create_string_list
+        PASS [   0.123s] the_algorithms_rust data_structures::lazy_segment_tree::tests::check_single_interval_sum
+        PASS [   0.110s] the_algorithms_rust data_structures::linked_list::tests::delete_ith_can_delete_at_head
+        PASS [   0.109s] the_algorithms_rust data_structures::linked_list::tests::delete_ith_can_delete_at_tail
+        PASS [   0.105s] the_algorithms_rust data_structures::linked_list::tests::delete_ith_can_delete_in_middle
+        PASS [   0.113s] the_algorithms_rust data_structures::linked_list::tests::delete_tail_works
+        PASS [   0.121s] the_algorithms_rust data_structures::linked_list::tests::get_by_index_in_numeric_list
+        PASS [   0.112s] the_algorithms_rust data_structures::linked_list::tests::insert_at_ith_and_delete_at_ith_in_the_middle
+        PASS [   0.117s] the_algorithms_rust data_structures::linked_list::tests::get_by_index_in_string_list
+        PASS [   0.116s] the_algorithms_rust data_structures::linked_list::tests::insert_at_head_works
+        PASS [   0.113s] the_algorithms_rust data_structures::linked_list::tests::insert_at_ith_can_add_to_head
+        PASS [   0.114s] the_algorithms_rust data_structures::linked_list::tests::insert_at_ith_can_add_to_middle
+        PASS [   0.113s] the_algorithms_rust data_structures::postfix_evaluation::tests::test_valid_postfix_expression
+        PASS [   0.114s] the_algorithms_rust data_structures::postfix_evaluation::tests::test_insufficient_operands
+        PASS [   0.117s] the_algorithms_rust data_structures::linked_list::tests::insert_at_ith_can_add_to_tail
+        PASS [   0.116s] the_algorithms_rust data_structures::postfix_evaluation::tests::test_division_by_zero
+        PASS [   0.124s] the_algorithms_rust data_structures::linked_list::tests::insert_at_ith_and_delete_ith_work_over_many_iterations
+        PASS [   0.118s] the_algorithms_rust data_structures::linked_list::tests::insert_at_tail_works
+        PASS [   0.125s] the_algorithms_rust data_structures::probabilistic::count_min_sketch::tests::hash_functions_should_hash_differently
+        PASS [   0.120s] the_algorithms_rust data_structures::probabilistic::count_min_sketch::tests::inspect_counts
+        PASS [   0.100s] the_algorithms_rust data_structures::queue::tests::test_enqueue
+        PASS [   0.102s] the_algorithms_rust data_structures::queue::tests::test_dequeue
+        PASS [   0.100s] the_algorithms_rust data_structures::queue::tests::test_size
+        PASS [   0.101s] the_algorithms_rust data_structures::queue::tests::test_peek_front
+        PASS [   0.099s] the_algorithms_rust data_structures::rb_tree::tests::find
+        PASS [   0.101s] the_algorithms_rust data_structures::rb_tree::tests::delete
+        PASS [   0.101s] the_algorithms_rust data_structures::rb_tree::tests::insert
+        PASS [   0.108s] the_algorithms_rust data_structures::segment_tree::tests::check_overall_interval_min
+        PASS [   0.110s] the_algorithms_rust data_structures::segment_tree::tests::check_overall_interval_max
+        PASS [   0.114s] the_algorithms_rust data_structures::segment_tree::tests::check_overall_interval_sum
+        PASS [   0.170s] the_algorithms_rust data_structures::probabilistic::count_min_sketch::tests::must_not_understimate_count
+        PASS [   0.126s] the_algorithms_rust data_structures::segment_tree::tests::check_single_interval_max
+        PASS [   0.118s] the_algorithms_rust data_structures::segment_tree::tests::check_single_interval_min
+        PASS [   0.291s] the_algorithms_rust data_structures::probabilistic::bloom_filter::tests::binary_filter_must_not_return_false_negative
+        PASS [   0.101s] the_algorithms_rust data_structures::segment_tree::tests::test_max_segments
+        PASS [   0.103s] the_algorithms_rust data_structures::segment_tree::tests::test_min_segments
+        PASS [   0.105s] the_algorithms_rust data_structures::segment_tree::tests::test_sum_segments
+        PASS [   0.307s] the_algorithms_rust data_structures::probabilistic::bloom_filter::tests::basic_filter_must_not_return_false_negative
+        PASS [   0.112s] the_algorithms_rust data_structures::segment_tree_recursive::tests::check_overall_interval_sum
+        PASS [   0.120s] the_algorithms_rust data_structures::segment_tree::tests::check_single_interval_sum
+        PASS [   0.115s] the_algorithms_rust data_structures::segment_tree_recursive::tests::check_overall_interval_min
+        PASS [   0.117s] the_algorithms_rust data_structures::segment_tree_recursive::tests::check_overall_interval_max
+        PASS [   0.334s] the_algorithms_rust data_structures::probabilistic::bloom_filter::tests::a_basic_filter_of_capacity_128_is_the_same_as_a_binary_filter
+        PASS [   0.114s] the_algorithms_rust data_structures::segment_tree_recursive::tests::check_single_interval_max
+        PASS [   0.116s] the_algorithms_rust data_structures::segment_tree_recursive::tests::check_single_interval_min
+        PASS [   0.120s] the_algorithms_rust data_structures::segment_tree_recursive::tests::check_single_interval_sum
+        PASS [   0.121s] the_algorithms_rust data_structures::segment_tree_recursive::tests::test_max_segments
+        PASS [   0.117s] the_algorithms_rust data_structures::segment_tree_recursive::tests::test_min_segments
+        PASS [   0.118s] the_algorithms_rust data_structures::segment_tree_recursive::tests::test_sum_segments
+        PASS [   0.108s] the_algorithms_rust data_structures::stack_using_singly_linked_list::test_stack::into_iter
+        PASS [   0.117s] the_algorithms_rust data_structures::stack_using_singly_linked_list::test_stack::basics
+        PASS [   0.110s] the_algorithms_rust data_structures::stack_using_singly_linked_list::test_stack::iter
+        PASS [   0.109s] the_algorithms_rust data_structures::stack_using_singly_linked_list::test_stack::iter_mut
+        PASS [   0.110s] the_algorithms_rust data_structures::stack_using_singly_linked_list::test_stack::peek
+        PASS [   0.103s] the_algorithms_rust data_structures::treap::tests::len
+        PASS [   0.107s] the_algorithms_rust data_structures::treap::tests::insert
+        PASS [   0.109s] the_algorithms_rust data_structures::treap::tests::contains
+        PASS [   0.110s] the_algorithms_rust data_structures::treap::tests::remove
+        PASS [   0.112s] the_algorithms_rust data_structures::treap::tests::sorted
+        PASS [   0.113s] the_algorithms_rust data_structures::treap::tests::valid
+        PASS [   0.121s] the_algorithms_rust data_structures::trie::tests::test_get
+        PASS [   0.123s] the_algorithms_rust data_structures::trie::tests::test_insertion
+        PASS [   0.119s] the_algorithms_rust data_structures::union_find::tests::test_spanning_tree
+        PASS [   0.124s] the_algorithms_rust data_structures::union_find::tests::test_union_find
+        PASS [   0.112s] the_algorithms_rust data_structures::veb_tree::test::test_empty
+        PASS [   0.113s] the_algorithms_rust data_structures::veb_tree::test::test_full_small
+        PASS [   0.107s] the_algorithms_rust data_structures::veb_tree::test::test_repeat_insert
+        PASS [   0.113s] the_algorithms_rust data_structures::veb_tree::test::test_linear
+        PASS [   0.108s] the_algorithms_rust data_structures::veb_tree::test::test_two
+        PASS [   0.113s] the_algorithms_rust data_structures::veb_tree::test::test_single
+        PASS [   0.546s] the_algorithms_rust data_structures::probabilistic::bloom_filter::tests::a_multi_binary_bloom_filter_must_not_return_false_negatives
+        PASS [   0.111s] the_algorithms_rust dynamic_programming::coin_change::tests::amount_zero
+        PASS [   0.110s] the_algorithms_rust dynamic_programming::coin_change::tests::basic
+        PASS [   0.112s] the_algorithms_rust dynamic_programming::coin_change::tests::coins_empty
+        PASS [   1.627s] the_algorithms_rust ciphers::diffie_hellman::tests::verify_key_exchange
+        PASS [   0.109s] the_algorithms_rust dynamic_programming::coin_change::tests::fail_change
+        PASS [   0.215s] the_algorithms_rust data_structures::veb_tree::test::test_100_256
+        PASS [   0.205s] the_algorithms_rust data_structures::veb_tree::test::test_full_256
+        PASS [   0.211s] the_algorithms_rust data_structures::veb_tree::test::test_10_256
+        PASS [   0.117s] the_algorithms_rust dynamic_programming::egg_dropping::tests::eggs2_floors10
+        PASS [   0.118s] the_algorithms_rust dynamic_programming::egg_dropping::tests::eggs2_floors2
+        PASS [   0.100s] the_algorithms_rust dynamic_programming::egg_dropping::tests::one_egg
+        PASS [   0.111s] the_algorithms_rust dynamic_programming::egg_dropping::tests::eggs3_floors5
+        PASS [   0.117s] the_algorithms_rust dynamic_programming::egg_dropping::tests::eggs2_floors36
+        PASS [   0.112s] the_algorithms_rust dynamic_programming::egg_dropping::tests::large_floors
+        PASS [   0.104s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_classical_and_combinatorial_are_off_by_one
+        PASS [   0.107s] the_algorithms_rust dynamic_programming::egg_dropping::tests::zero_floors
+        PASS [   0.105s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_classical_fibonacci
+        PASS [   0.107s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_fibonacci
+        PASS [   0.110s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_iterative_and_recursive_equivalence
+        PASS [   0.118s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_last_digit_of_the_sum_of_nth_fibonacci_number
+        PASS [   0.113s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_logarithmic_fibonacci
+        PASS [   0.118s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_matrix_fibonacci
+        PASS [   0.113s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_recursive_fibonacci
+        PASS [   0.119s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_memoized_fibonacci
+        PASS [   0.103s] the_algorithms_rust dynamic_programming::is_subsequence::tests::test
+        PASS [   0.127s] the_algorithms_rust dynamic_programming::fractional_knapsack::tests::test
+        PASS [   0.123s] the_algorithms_rust dynamic_programming::fractional_knapsack::tests::test3
+        PASS [   0.117s] the_algorithms_rust dynamic_programming::fractional_knapsack::tests::test5
+        PASS [   0.114s] the_algorithms_rust dynamic_programming::knapsack::tests::test_p01
+        PASS [   0.116s] the_algorithms_rust dynamic_programming::fractional_knapsack::tests::test_nan
+        PASS [   0.127s] the_algorithms_rust dynamic_programming::fractional_knapsack::tests::test2
+        PASS [   0.122s] the_algorithms_rust dynamic_programming::fractional_knapsack::tests::test4
+        PASS [   0.120s] the_algorithms_rust dynamic_programming::fractional_knapsack::tests::test6
+        PASS [   0.111s] the_algorithms_rust dynamic_programming::knapsack::tests::test_p02
+        PASS [   0.108s] the_algorithms_rust dynamic_programming::knapsack::tests::test_p04
+        PASS [   0.163s] the_algorithms_rust dynamic_programming::fibonacci::tests::test_nth_fibonacci_number_modulo_m
+        PASS [   0.121s] the_algorithms_rust dynamic_programming::knapsack::tests::test_p06
+        PASS [   0.120s] the_algorithms_rust dynamic_programming::knapsack::tests::test_p07
+        PASS [   0.123s] the_algorithms_rust dynamic_programming::longest_common_subsequence::tests::test_longest_common_subsequence
+        PASS [   0.114s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::empty_inputs
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::one_empty_input
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::regular_input_0
+        PASS [   0.117s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::regular_input_1
+        PASS [   0.110s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::regular_input_2
+        PASS [   0.108s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::single_same_char_input
+        PASS [   0.111s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::single_different_char_input
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::regular_input_3
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::regular_input_4
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::regular_input_5
+        PASS [   0.105s] the_algorithms_rust dynamic_programming::longest_increasing_subsequence::tests::test_empty_vec
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::longest_common_substring::tests::regular_input_6
+        PASS [   0.114s] the_algorithms_rust dynamic_programming::longest_continuous_increasing_subsequence::tests::test_longest_increasing_subsequence
+        PASS [   0.122s] the_algorithms_rust dynamic_programming::longest_increasing_subsequence::tests::test_example_1
+        PASS [   0.124s] the_algorithms_rust dynamic_programming::longest_increasing_subsequence::tests::test_example_2
+        PASS [   0.126s] the_algorithms_rust dynamic_programming::longest_increasing_subsequence::tests::test_example_3
+        PASS [   0.133s] the_algorithms_rust dynamic_programming::longest_increasing_subsequence::tests::test_negative_elements
+        PASS [   0.112s] the_algorithms_rust dynamic_programming::maximal_square::tests::test
+        PASS [   0.112s] the_algorithms_rust dynamic_programming::maximum_subarray::tests::negative
+        PASS [   0.117s] the_algorithms_rust dynamic_programming::matrix_chain_multiply::tests::zero
+        PASS [   0.129s] the_algorithms_rust dynamic_programming::matrix_chain_multiply::tests::basic
+        PASS [   0.116s] the_algorithms_rust dynamic_programming::maximum_subarray::tests::non_negative
+        PASS [   0.112s] the_algorithms_rust dynamic_programming::minimum_cost_path::tests::one_column
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::maximum_subarray::tests::normal
+        PASS [   0.113s] the_algorithms_rust dynamic_programming::minimum_cost_path::tests::one_row
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::minimum_cost_path::tests::one_element_matrix
+        PASS [   0.118s] the_algorithms_rust dynamic_programming::maximum_subarray::tests::single_element
+        PASS [   0.119s] the_algorithms_rust dynamic_programming::minimum_cost_path::tests::basic
+        PASS [   0.124s] the_algorithms_rust dynamic_programming::rod_cutting::tests::test_rod_cut
+        PASS [   0.158s] the_algorithms_rust dynamic_programming::longest_increasing_subsequence::tests::test_tle
+        PASS [   0.121s] the_algorithms_rust dynamic_programming::snail::test::test_char
+        PASS [   0.118s] the_algorithms_rust dynamic_programming::snail::test::test_empty
+        PASS [   0.122s] the_algorithms_rust dynamic_programming::snail::test::test_int
+        PASS [   0.125s] the_algorithms_rust dynamic_programming::snail::test::test_rect
+        PASS [   0.113s] the_algorithms_rust dynamic_programming::subset_generation::tests::test_print_incorrect_subset
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::subset_generation::tests::test_print_subset4
+        PASS [   0.116s] the_algorithms_rust dynamic_programming::subset_generation::tests::test_print_subset3
+        PASS [   0.115s] the_algorithms_rust dynamic_programming::subset_generation::tests::test_print_subset5
+        PASS [   0.114s] the_algorithms_rust general::convex_hull::tests::empty
+        PASS [   0.116s] the_algorithms_rust general::hanoi::tests::hanoi_simple
+        PASS [   0.119s] the_algorithms_rust general::convex_hull::tests::not_enough_points
+        PASS [   0.125s] the_algorithms_rust general::convex_hull::tests::lots_of_points
+        PASS [   0.125s] the_algorithms_rust general::convex_hull::tests::not_enough_points1
+        PASS [   0.125s] the_algorithms_rust general::convex_hull::tests::not_enough_points2
+        PASS [   0.129s] the_algorithms_rust general::convex_hull::tests::lots_of_points2
+        PASS [   0.126s] the_algorithms_rust general::huffman_encoding::tests::lorem_ipsum
+        PASS [   0.125s] the_algorithms_rust general::huffman_encoding::tests::small_text
+        PASS [   0.123s] the_algorithms_rust general::kadane_algorithm::tests::test_kadanes_algorithm_empty
+        PASS [   0.115s] the_algorithms_rust general::kadane_algorithm::tests::test_kadanes_algorithm_mixed
+        PASS [   0.121s] the_algorithms_rust general::kadane_algorithm::tests::test_kadanes_algorithm_negative
+        PASS [   0.125s] the_algorithms_rust general::kadane_algorithm::tests::test_kadanes_algorithm_positive
+        PASS [   0.110s] the_algorithms_rust general::kadane_algorithm::tests::test_kadanes_algorithm_single_positive
+        PASS [   0.117s] the_algorithms_rust general::kmeans::test::easy_univariate_clustering
+        PASS [   0.116s] the_algorithms_rust general::kmeans::test::easy_univariate_clustering_odd_number_of_data
+        PASS [   0.119s] the_algorithms_rust general::kmeans::test::easy_bivariate_clustering
+        PASS [   0.121s] the_algorithms_rust general::kmeans::test::high_dims
+        PASS [   0.119s] the_algorithms_rust general::mex::tests::test_mex_using_sort
+        PASS [   0.123s] the_algorithms_rust general::mex::tests::test_mex_using_set
+        PASS [   0.119s] the_algorithms_rust general::permutations::heap::tests::test_3_times_the_same_value
+        PASS [   0.125s] the_algorithms_rust general::permutations::heap::tests::test_3_different_values
+        PASS [   0.122s] the_algorithms_rust general::permutations::naive::tests::test_3_different_values
+        PASS [   0.119s] the_algorithms_rust general::permutations::naive::tests::test_3_times_the_same_value
+        PASS [   0.126s] the_algorithms_rust general::permutations::naive::tests::test_unique_values
+        PASS [   0.129s] the_algorithms_rust general::permutations::steinhaus_johnson_trotter::tests::test_3_different_values
+        PASS [   0.125s] the_algorithms_rust general::permutations::steinhaus_johnson_trotter::tests::test_3_times_the_same_value
+        PASS [   0.124s] the_algorithms_rust general::permutations::tests::test_invalid_permutation_1
+        PASS [   0.121s] the_algorithms_rust general::permutations::tests::test_invalid_permutation_3
+        PASS [   0.117s] the_algorithms_rust general::permutations::tests::test_valid_permutations
+        PASS [   0.124s] the_algorithms_rust general::permutations::tests::test_invalid_permutation_repeat
+        PASS [   0.127s] the_algorithms_rust general::permutations::tests::test_invalid_permutation_2
+        PASS [   0.105s] the_algorithms_rust geometry::closest_points::tests::one_points
+        PASS [   0.115s] the_algorithms_rust general::two_sum::test::test
+        PASS [   0.107s] the_algorithms_rust geometry::closest_points::tests::three_points
+        PASS [   0.114s] the_algorithms_rust geometry::closest_points::tests::list_1
+        PASS [   0.120s] the_algorithms_rust geometry::closest_points::tests::list_2
+        PASS [   0.113s] the_algorithms_rust geometry::closest_points::tests::two_points
+        PASS [   0.117s] the_algorithms_rust geometry::closest_points::tests::vertical_points
+        PASS [   0.110s] the_algorithms_rust geometry::closest_points::tests::zero_points
+        PASS [   0.115s] the_algorithms_rust geometry::graham_scan::tests::duplicate_point
+        PASS [   0.113s] the_algorithms_rust geometry::graham_scan::tests::points_same_line
+        PASS [   0.110s] the_algorithms_rust geometry::graham_scan::tests::rectangle
+        PASS [   0.110s] the_algorithms_rust geometry::graham_scan::tests::rectangle_with_points_in_middle
+        PASS [   0.113s] the_algorithms_rust geometry::graham_scan::tests::rectangle_with_points_on_same_line
+        PASS [   0.114s] the_algorithms_rust geometry::graham_scan::tests::star
+        PASS [   0.112s] the_algorithms_rust geometry::graham_scan::tests::too_few_points
+        PASS [   0.109s] the_algorithms_rust geometry::jarvis_scan::tests::duplicate_point
+        PASS [   0.115s] the_algorithms_rust geometry::graham_scan::tests::triangle
+        PASS [   0.115s] the_algorithms_rust geometry::graham_scan::tests::triangle_with_points_in_middle
+        PASS [   0.112s] the_algorithms_rust geometry::jarvis_scan::tests::points_same_line
+        PASS [   0.111s] the_algorithms_rust geometry::jarvis_scan::tests::rectangle
+        PASS [   0.116s] the_algorithms_rust geometry::jarvis_scan::tests::rectangle_with_points_in_middle
+        PASS [   0.115s] the_algorithms_rust geometry::jarvis_scan::tests::rectangle_with_points_on_same_line
+        PASS [   0.119s] the_algorithms_rust geometry::jarvis_scan::tests::star
+        PASS [   0.114s] the_algorithms_rust geometry::jarvis_scan::tests::too_few_points
+        PASS [   0.102s] the_algorithms_rust geometry::polygon_points::tests::test_gcd_multiple_of_common_factor
+        PASS [   0.108s] the_algorithms_rust geometry::jarvis_scan::tests::triangle_with_points_in_middle
+        PASS [   0.103s] the_algorithms_rust geometry::polygon_points::tests::test_lattice_points
+        PASS [   0.113s] the_algorithms_rust geometry::jarvis_scan::tests::triangle
+        PASS [   0.110s] the_algorithms_rust geometry::polygon_points::tests::test_boundary
+        PASS [   0.103s] the_algorithms_rust geometry::polygon_points::tests::test_polygon_3_coordinates
+        PASS [   0.108s] the_algorithms_rust geometry::polygon_points::tests::test_calculate_cross
+        PASS [   0.103s] the_algorithms_rust geometry::polygon_points::tests::test_polygon_4_coordinates
+        PASS [   0.098s] the_algorithms_rust geometry::segment::tests::colinear
+        PASS [   0.106s] the_algorithms_rust geometry::segment::tests::colinear_vertical
+        PASS [   0.118s] the_algorithms_rust geometry::segment::tests::intersects
+        PASS [   0.115s] the_algorithms_rust geometry::segment::tests::intersects_endpoint_on_segment
+        PASS [   0.115s] the_algorithms_rust geometry::segment::tests::intersects_self
+        PASS [   0.110s] the_algorithms_rust geometry::segment::tests::parallel_segments
+        PASS [   0.110s] the_algorithms_rust geometry::segment::tests::too_short_to_intersect
+        PASS [   0.116s] the_algorithms_rust graph::astar::tests::single_edge
+        PASS [   0.122s] the_algorithms_rust graph::astar::tests::graph_1
+        PASS [   0.117s] the_algorithms_rust graph::bellman_ford::tests::graph_with_negative_loop
+        PASS [   0.118s] the_algorithms_rust graph::bellman_ford::tests::graph_2
+        PASS [   0.123s] the_algorithms_rust graph::astar::tests::single_vertex
+        PASS [   0.125s] the_algorithms_rust graph::bellman_ford::tests::graph_1
+        PASS [   0.124s] the_algorithms_rust graph::bellman_ford::tests::single_edge
+        PASS [   0.111s] the_algorithms_rust graph::bellman_ford::tests::single_vertex
+        PASS [   0.119s] the_algorithms_rust graph::bipartite_matching::tests::only_one_vertex_graph_hopcroft
+        PASS [   0.118s] the_algorithms_rust graph::bipartite_matching::tests::only_one_vertex_graph_kuhn
+        PASS [   0.106s] the_algorithms_rust graph::bipartite_matching::tests::small_graph_kuhn
+        PASS [   0.148s] the_algorithms_rust graph::bellman_ford::tests::tree_1
+        PASS [   0.110s] the_algorithms_rust graph::bipartite_matching::tests::small_graph_hopcroft
+        PASS [   0.103s] the_algorithms_rust graph::bipartite_matching::tests::super_small_graph_kuhn
+        PASS [   0.111s] the_algorithms_rust graph::bipartite_matching::tests::super_small_graph_hopcroft
+        PASS [   0.107s] the_algorithms_rust graph::breadth_first_search::tests::breadth_first_search_graph1_when_target_8_should_evaluate_all_nodes_first
+        PASS [   0.105s] the_algorithms_rust graph::breadth_first_search::tests::breadth_first_search_graph2_when_no_path_to_node_returns_none
+        PASS [   0.113s] the_algorithms_rust graph::breadth_first_search::tests::breadth_first_search_graph1_when_node_not_found_returns_none
+        PASS [   0.113s] the_algorithms_rust graph::breadth_first_search::tests::breadth_first_search_graph2_should_find_path_from_4_to_1
+        PASS [   0.107s] the_algorithms_rust graph::centroid_decomposition::tests::single_path
+        PASS [   0.116s] the_algorithms_rust graph::depth_first_search::tests::find_1_fail
+        PASS [   0.128s] the_algorithms_rust graph::depth_first_search::tests::find_1_sucess
+        PASS [   0.109s] the_algorithms_rust graph::depth_first_search_tic_tac_toe::test::block_win_move
+        PASS [   0.774s] the_algorithms_rust general::permutations::heap::tests::test_some_elements
+        PASS [   0.103s] the_algorithms_rust graph::depth_first_search_tic_tac_toe::test::win_state_check
+        PASS [   0.121s] the_algorithms_rust graph::depth_first_search::tests::find_2_sucess
+        PASS [   0.117s] the_algorithms_rust graph::depth_first_search_tic_tac_toe::test::block_move
+        PASS [   0.109s] the_algorithms_rust graph::depth_first_search_tic_tac_toe::test::expected_loss
+        PASS [   0.106s] the_algorithms_rust graph::depth_first_search_tic_tac_toe::test::win_state_check2
+        PASS [   0.121s] the_algorithms_rust graph::depth_first_search::tests::find_3_sucess
+        PASS [   0.108s] the_algorithms_rust graph::dijkstra::tests::single_edge
+        PASS [   0.105s] the_algorithms_rust graph::dijkstra::tests::single_vertex
+        PASS [   0.106s] the_algorithms_rust graph::dijkstra::tests::tree_1
+        PASS [   0.113s] the_algorithms_rust graph::dijkstra::tests::graph_1
+        PASS [   0.110s] the_algorithms_rust graph::dinic_maxflow::tests::small_graph
+        PASS [   0.798s] the_algorithms_rust general::permutations::naive::tests::test_some_elements
+        PASS [   0.370s] the_algorithms_rust graph::astar::tests::test_heuristic
+        PASS [   0.801s] the_algorithms_rust general::permutations::steinhaus_johnson_trotter::tests::test_some_elements
+        PASS [   0.124s] the_algorithms_rust graph::disjoint_set_union::tests::create_acyclic_graph
+        PASS [   0.121s] the_algorithms_rust graph::eulerian_path::tests::small_path_test
+        PASS [   0.122s] the_algorithms_rust graph::ford_fulkerson::tests::test_example_1
+        PASS [   0.131s] the_algorithms_rust graph::eulerian_path::tests::good_path_test
+        PASS [   0.122s] the_algorithms_rust graph::ford_fulkerson::tests::test_example_3
+        PASS [   0.127s] the_algorithms_rust graph::floyd_warshall::tests::single_edge
+        PASS [   0.130s] the_algorithms_rust graph::floyd_warshall::tests::graph_1
+        PASS [   0.124s] the_algorithms_rust graph::ford_fulkerson::tests::test_example_2
+        PASS [   0.132s] the_algorithms_rust graph::floyd_warshall::tests::single_vertex
+        PASS [   0.123s] the_algorithms_rust graph::ford_fulkerson::tests::test_example_5
+        PASS [   0.123s] the_algorithms_rust graph::ford_fulkerson::tests::test_example_4
+        PASS [   0.129s] the_algorithms_rust graph::graph_enumeration::tests::integer_vertices
+        PASS [   0.128s] the_algorithms_rust graph::graph_enumeration::tests::string_vertices
+        PASS [   0.112s] the_algorithms_rust graph::heavy_light_decomposition::tests::single_path
+        PASS [   0.109s] the_algorithms_rust graph::kosaraju::tests::test_kosaraju_empty_graph
+        PASS [   0.146s] the_algorithms_rust graph::heavy_light_decomposition::tests::random_tree
+        PASS [   0.123s] the_algorithms_rust graph::kosaraju::tests::test_kosaraju_multiple_sccs
+        PASS [   0.122s] the_algorithms_rust graph::kosaraju::tests::test_kosaraju_multiple_sccs1
+        PASS [   0.120s] the_algorithms_rust graph::kosaraju::tests::test_kosaraju_no_scc
+        PASS [   0.116s] the_algorithms_rust graph::lee_breadth_first_search::tests::test_lee_exists
+        PASS [   0.119s] the_algorithms_rust graph::kosaraju::tests::test_kosaraju_single_sccs
+        PASS [   0.119s] the_algorithms_rust graph::lee_breadth_first_search::tests::test_lee_does_not_exist
+        PASS [   0.111s] the_algorithms_rust graph::prim::tests::empty
+        PASS [   0.117s] the_algorithms_rust graph::lee_breadth_first_search::tests::test_lee_exists_2
+        PASS [   0.117s] the_algorithms_rust graph::lee_breadth_first_search::tests::test_source_equals_destination
+        PASS [   0.114s] the_algorithms_rust graph::minimum_spanning_tree::tests::test_ten_vertices_twenty_edges
+        PASS [   0.117s] the_algorithms_rust graph::minimum_spanning_tree::tests::test_seven_vertices_eleven_edges
+        PASS [   0.116s] the_algorithms_rust graph::prim::tests::graph_1
+        PASS [   0.116s] the_algorithms_rust graph::prim::tests::graph_2
+        PASS [   0.141s] the_algorithms_rust graph::lowest_common_ancestor::tests::small_binary_tree
+        PASS [   0.121s] the_algorithms_rust graph::prim::tests::single_edge
+        PASS [   0.122s] the_algorithms_rust graph::prim::tests::graph_3
+        PASS [   0.130s] the_algorithms_rust graph::prim::tests::single_vertex
+        PASS [   0.112s] the_algorithms_rust graph::strongly_connected_components::tests::acyclic
+        PASS [   0.121s] the_algorithms_rust graph::prim::tests::tree_2
+        PASS [   0.127s] the_algorithms_rust graph::prim::tests::tree_1
+        PASS [   0.120s] the_algorithms_rust graph::prim::tests::tree_3
+        PASS [   0.115s] the_algorithms_rust graph::strongly_connected_components::tests::connected_dumbbell
+        PASS [   0.116s] the_algorithms_rust graph::strongly_connected_components::tests::cycle
+        PASS [   0.116s] the_algorithms_rust graph::strongly_connected_components::tests::dumbbell
+        PASS [   0.121s] the_algorithms_rust graph::tarjans_ssc::tests::test_tarjan_scc
+        PASS [   0.119s] the_algorithms_rust graph::topological_sort::tests::test_cyclic_graph
+        PASS [   0.123s] the_algorithms_rust graph::topological_sort::tests::it_works
+        PASS [   0.129s] the_algorithms_rust graph::prufer_code::tests::small_trees
+        PASS [   0.119s] the_algorithms_rust graph::two_satisfiability::tests::basic_test
+        PASS [   0.124s] the_algorithms_rust graph::topological_sort::tests::test_wikipedia_example
+        PASS [   0.114s] the_algorithms_rust machine_learning::cholesky::tests::empty_matrix
+        PASS [   0.114s] the_algorithms_rust machine_learning::cholesky::tests::matrix_with_all_zeros
+        PASS [   0.115s] the_algorithms_rust machine_learning::cholesky::tests::test_cholesky
+        PASS [   0.131s] the_algorithms_rust machine_learning::cholesky::tests::test_matrix_operations
+        PASS [   0.110s] the_algorithms_rust machine_learning::linear_regression::test::test_empty_list_linear_regression
+        PASS [   0.111s] the_algorithms_rust machine_learning::optimization::adam::tests::test_adam_init_all_custom_values
+        PASS [   0.113s] the_algorithms_rust machine_learning::loss_function::mean_absolute_error_loss::tests::test_mae_loss
+        PASS [   0.116s] the_algorithms_rust machine_learning::linear_regression::test::test_linear_regression
+        PASS [   0.117s] the_algorithms_rust machine_learning::loss_function::kl_divergence_loss::tests::test_kld_loss
+        PASS [   0.118s] the_algorithms_rust machine_learning::loss_function::mean_squared_error_loss::tests::test_mse_loss
+        PASS [   0.114s] the_algorithms_rust machine_learning::optimization::adam::tests::test_adam_init_custom_betas_value
+        PASS [   0.114s] the_algorithms_rust machine_learning::optimization::adam::tests::test_adam_init_custom_epsilon_value
+        PASS [   0.112s] the_algorithms_rust machine_learning::optimization::adam::tests::test_adam_init_custom_lr_value
+        PASS [   0.112s] the_algorithms_rust machine_learning::optimization::adam::tests::test_adam_init_default_values
+        PASS [   0.110s] the_algorithms_rust machine_learning::optimization::adam::tests::test_adam_step_custom_params
+        PASS [   0.105s] the_algorithms_rust machine_learning::optimization::adam::tests::test_adam_step_empty_gradients_array
+        PASS [   0.112s] the_algorithms_rust machine_learning::optimization::adam::tests::test_adam_step_default_params
+        PASS [   0.111s] the_algorithms_rust machine_learning::optimization::gradient_descent::test::test_gradient_descent_optimized
+        PASS [   0.112s] the_algorithms_rust machine_learning::optimization::gradient_descent::test::test_gradient_descent_unoptimized
+        PASS [   0.153s] the_algorithms_rust machine_learning::k_means::test::test_k_means
+        PASS [   0.130s] the_algorithms_rust machine_learning::simpson::tests::test_convergence
+        PASS [   0.106s] the_algorithms_rust machine_learning::simpson::tests::test_non_zero_lower_bound
+        PASS [   0.109s] the_algorithms_rust machine_learning::simpson::tests::test_non_zero_lower_and_upper_bound_negative
+        PASS [   0.116s] the_algorithms_rust machine_learning::simpson::tests::test_error
+        PASS [   0.111s] the_algorithms_rust machine_learning::simpson::tests::test_non_zero_lower_and_upper_bound
+        PASS [   0.113s] the_algorithms_rust machine_learning::simpson::tests::test_negative
+        PASS [   0.107s] the_algorithms_rust machine_learning::simpson::tests::test_simpsons_rule
+        PASS [   0.105s] the_algorithms_rust math::abs::test::test_negative_number_i32
+        PASS [   0.106s] the_algorithms_rust math::abs::test::test_negative_number_f64
+        PASS [   0.108s] the_algorithms_rust math::abs::test::positive_number
+        PASS [   0.112s] the_algorithms_rust machine_learning::simpson::tests::test_non_zero_upper_bound
+        PASS [   0.104s] the_algorithms_rust math::abs::test::zero
+        PASS [   0.103s] the_algorithms_rust math::aliquot_sum::tests::test_with_1
+        PASS [   0.112s] the_algorithms_rust math::aliquot_sum::tests::panics_if_input_is_zero
+        PASS [   0.104s] the_algorithms_rust math::aliquot_sum::tests::test_with_15
+        PASS [   0.106s] the_algorithms_rust math::aliquot_sum::tests::test_with_10
+        PASS [   0.113s] the_algorithms_rust math::aliquot_sum::tests::test_with_2
+        PASS [   0.119s] the_algorithms_rust math::aliquot_sum::tests::test_with_3
+        PASS [   0.110s] the_algorithms_rust math::aliquot_sum::tests::test_with_343
+        PASS [   0.107s] the_algorithms_rust math::aliquot_sum::tests::test_with_500
+        PASS [   0.110s] the_algorithms_rust math::aliquot_sum::tests::test_with_344
+        PASS [   0.111s] the_algorithms_rust math::aliquot_sum::tests::test_with_4
+        PASS [   0.112s] the_algorithms_rust math::aliquot_sum::tests::test_with_5
+        PASS [   0.110s] the_algorithms_rust math::aliquot_sum::tests::test_with_6
+        PASS [   0.110s] the_algorithms_rust math::aliquot_sum::tests::test_with_8
+        PASS [   0.112s] the_algorithms_rust math::aliquot_sum::tests::test_with_501
+        PASS [   0.109s] the_algorithms_rust math::aliquot_sum::tests::test_with_9
+        PASS [   0.114s] the_algorithms_rust math::aliquot_sum::tests::test_with_7
+        PASS [   0.114s] the_algorithms_rust math::area_of_polygon::tests::test_area_hexagon
+        PASS [   0.111s] the_algorithms_rust math::area_of_polygon::tests::test_area_square
+        PASS [   0.110s] the_algorithms_rust math::area_of_polygon::tests::test_area_triangle
+        PASS [   0.110s] the_algorithms_rust math::area_under_curve::test::test_linear_func
+        PASS [   0.104s] the_algorithms_rust math::area_under_curve::test::test_quadratic_func
+        PASS [   0.149s] the_algorithms_rust math::amicable_numbers::tests::test_amicable_numbers_below_n
+        PASS [   0.118s] the_algorithms_rust math::area_under_curve::test::test_reverse
+        PASS [   0.111s] the_algorithms_rust math::area_under_curve::test::test_zero_length
+        PASS [   0.109s] the_algorithms_rust math::armstrong_number::tests::three_digit_armstrong_number
+        PASS [   0.112s] the_algorithms_rust math::armstrong_number::tests::one_digit_armstrong_number
+        PASS [   0.107s] the_algorithms_rust math::average::test::median_test
+        PASS [   0.109s] the_algorithms_rust math::armstrong_number::tests::two_digit_numbers_are_not_armstrong_numbers
+        PASS [   0.116s] the_algorithms_rust math::armstrong_number::tests::big_armstrong_number
+        PASS [   0.111s] the_algorithms_rust math::armstrong_number::tests::three_digit_non_armstrong_number
+        PASS [   0.110s] the_algorithms_rust math::average::test::mean_test
+        PASS [   0.122s] the_algorithms_rust math::baby_step_giant_step::tests::no_solution
+        PASS [   0.125s] the_algorithms_rust math::average::test::mode_test
+        PASS [   0.105s] the_algorithms_rust math::bell_numbers::tests::test_choose_zero
+        PASS [   0.118s] the_algorithms_rust math::bell_numbers::tests::test_bell_numbers
+        PASS [   0.121s] the_algorithms_rust math::baby_step_giant_step::tests::small_numbers
+        PASS [   0.140s] the_algorithms_rust math::baby_step_giant_step::tests::random_numbers
+        PASS [   0.111s] the_algorithms_rust math::bell_numbers::tests::test_combination
+        PASS [   0.182s] the_algorithms_rust math::baby_step_giant_step::tests::primitive_root_tests
+        PASS [   0.114s] the_algorithms_rust math::binary_exponentiation::tests::basic
+        PASS [   0.109s] the_algorithms_rust math::binomial_coefficient::tests::test_binom_random_2
+        PASS [   0.112s] the_algorithms_rust math::binomial_coefficient::tests::test_binom_5_2
+        PASS [   0.111s] the_algorithms_rust math::binomial_coefficient::tests::test_binom_large_n_small_k
+        PASS [   0.112s] the_algorithms_rust math::binomial_coefficient::tests::test_binom_0_0
+        PASS [   0.113s] the_algorithms_rust math::binomial_coefficient::tests::test_binom_random_3
+        PASS [   0.117s] the_algorithms_rust math::binomial_coefficient::tests::test_binom_10_5
+        PASS [   0.116s] the_algorithms_rust math::binomial_coefficient::tests::test_binom_random_1
+        PASS [   0.122s] the_algorithms_rust math::binary_exponentiation::tests::up_to_ten
+        PASS [   0.103s] the_algorithms_rust math::ceil::tests::negative_decimal
+        PASS [   0.107s] the_algorithms_rust math::ceil::tests::negative_decimal_with_small_number
+        PASS [   0.109s] the_algorithms_rust math::ceil::tests::negative_integer
+        PASS [   0.111s] the_algorithms_rust math::ceil::tests::positive_decimal
+        PASS [   0.104s] the_algorithms_rust math::ceil::tests::positive_decimal_with_small_number
+        PASS [   0.105s] the_algorithms_rust math::ceil::tests::positive_integer
+        PASS [   0.134s] the_algorithms_rust math::catalan_numbers::tests::test_catalan
+        PASS [   0.120s] the_algorithms_rust math::ceil::tests::zero
+        PASS [   0.108s] the_algorithms_rust math::combinations::tests::test_combinations_6_choose_3
+        PASS [   0.109s] the_algorithms_rust math::combinations::tests::test_combinations_20_choose_5
+        PASS [   0.113s] the_algorithms_rust math::collatz_sequence::tests::validity_check
+        PASS [   0.111s] the_algorithms_rust math::combinations::tests::test_combinations_invalid_input
+        PASS [   0.110s] the_algorithms_rust math::decimal_to_fraction::tests::test_decimal_to_fraction_1
+        PASS [   0.115s] the_algorithms_rust math::combinations::tests::test_combinations_10_choose_5
+        PASS [   0.117s] the_algorithms_rust math::chinese_remainder_theorem::tests::basic
+        PASS [   0.111s] the_algorithms_rust math::decimal_to_fraction::tests::test_decimal_to_fraction_3
+        PASS [   0.117s] the_algorithms_rust math::cross_entropy_loss::tests::test_cross_entropy_loss
+        PASS [   0.118s] the_algorithms_rust math::decimal_to_fraction::tests::test_decimal_to_fraction_2
+        PASS [   0.114s] the_algorithms_rust math::decimal_to_fraction::tests::test_decimal_to_fraction_4
+        PASS [   0.113s] the_algorithms_rust math::decimal_to_fraction::tests::test_decimal_to_fraction_5
+        PASS [   0.116s] the_algorithms_rust math::decimal_to_fraction::tests::test_decimal_to_fraction_6
+        PASS [   0.113s] the_algorithms_rust math::doomsday::tests::doomsday_test
+        PASS [   0.116s] the_algorithms_rust math::elliptic_curve::tests::cardinality
+        PASS [   0.119s] the_algorithms_rust math::elliptic_curve::tests::e_5_1_0_group_table
+        PASS [   0.111s] the_algorithms_rust math::elliptic_curve::tests::test_char_2_panic
+        PASS [   0.108s] the_algorithms_rust math::extended_euclidean_algorithm::tests::basic
+        PASS [   0.116s] the_algorithms_rust math::elliptic_curve::tests::test_char_3_panic
+        PASS [   0.116s] the_algorithms_rust math::elliptic_curve::tests::test_singular_panic
+        PASS [   0.116s] the_algorithms_rust math::exponential_linear_unit::tests::test_exponential_linear_unit
+        PASS [   0.109s] the_algorithms_rust math::factorial::tests::test_factorial
+        PASS [   0.118s] the_algorithms_rust math::euclidean_distance::tests::test_euclidean_distance
+        PASS [   0.111s] the_algorithms_rust math::factorial::tests::test_factorial_recursive
+        PASS [   0.108s] the_algorithms_rust math::factors::tests::composite_number
+        PASS [   0.121s] the_algorithms_rust math::factorial::tests::basic_factorial
+        PASS [   0.129s] the_algorithms_rust math::elliptic_curve::tests::test_points
+        PASS [   0.117s] the_algorithms_rust math::factors::tests::highly_composite_number
+        PASS [   0.115s] the_algorithms_rust math::factors::tests::prime_number
+        PASS [   0.163s] the_algorithms_rust math::elliptic_curve::tests::group_law
+        PASS [   0.116s] the_algorithms_rust math::fast_fourier_transform::tests::small_polynomial_returns_self
+        PASS [   0.121s] the_algorithms_rust math::fast_power::tests::test
+        PASS [   0.129s] the_algorithms_rust math::fast_fourier_transform::tests::square_small_polynomial
+        PASS [   0.107s] the_algorithms_rust math::field::tests::from_integer
+        PASS [   0.115s] the_algorithms_rust math::faster_perfect_numbers::tests::perfect_numbers_till_n
+        PASS [   0.109s] the_algorithms_rust math::field::tests::integer_mul
+        PASS [   0.110s] the_algorithms_rust math::field::tests::inverse
+        PASS [   0.114s] the_algorithms_rust math::field::tests::large_prime_field
+        PASS [   0.115s] the_algorithms_rust math::frizzy_number::tests::test_get_nth_frizzy
+        PASS [   0.120s] the_algorithms_rust math::field::tests::test_mod_inverse
+        PASS [   0.113s] the_algorithms_rust math::gcd_of_n_numbers::tests::it_works
+        PASS [   0.115s] the_algorithms_rust math::gaussian_error_linear_unit::tests::test_gaussian_error_linear_unit
+        PASS [   0.120s] the_algorithms_rust math::gaussian_elimination::tests::test_gauss
+        PASS [   0.109s] the_algorithms_rust math::greatest_common_divisor::tests::mix_iterative
+        PASS [   0.115s] the_algorithms_rust math::geometric_series::tests::test_geometric_series
+        PASS [   0.115s] the_algorithms_rust math::greatest_common_divisor::tests::mix_recursive
+        PASS [   0.108s] the_algorithms_rust math::greatest_common_divisor::tests::negative_number_iterative
+        PASS [   0.145s] the_algorithms_rust math::field::tests::test_field_elements
+        PASS [   0.116s] the_algorithms_rust math::greatest_common_divisor::tests::negative_number_recursive
+        PASS [   0.116s] the_algorithms_rust math::greatest_common_divisor::tests::positive_number_iterative
+        PASS [   0.115s] the_algorithms_rust math::greatest_common_divisor::tests::positive_number_recursive
+        PASS [   0.117s] the_algorithms_rust math::greatest_common_divisor::tests::positive_number_stein
+        PASS [   0.115s] the_algorithms_rust math::interest::tests::test_compounding
+        PASS [   0.121s] the_algorithms_rust math::huber_loss::tests::test_huber_loss
+        PASS [   0.113s] the_algorithms_rust math::interest::tests::test_simple
+        PASS [   0.109s] the_algorithms_rust math::interpolation::tests::test_linear_intepolation
+        PASS [   0.114s] the_algorithms_rust math::interpolation::tests::test_lagrange_polynomial_interpolation
+        PASS [   0.114s] the_algorithms_rust math::interquartile_range::tests::test_find_median
+        PASS [   0.112s] the_algorithms_rust math::interquartile_range::tests::test_interquartile_range
+        PASS [   0.110s] the_algorithms_rust math::karatsuba_multiplication::test::test_1
+        PASS [   0.116s] the_algorithms_rust math::interquartile_range::tests::test_interquartile_range_empty_list
+        PASS [   0.111s] the_algorithms_rust math::lcm_of_n_numbers::tests::it_works
+        PASS [   0.120s] the_algorithms_rust math::karatsuba_multiplication::test::test_2
+        PASS [   0.118s] the_algorithms_rust math::karatsuba_multiplication::test::test_3
+        PASS [   0.113s] the_algorithms_rust math::leaky_relu::tests::test_leaky_relu
+        PASS [   0.131s] the_algorithms_rust math::least_square_approx::tests::eight_points_5th_degree
+        PASS [   0.130s] the_algorithms_rust math::least_square_approx::tests::four_points_2nd_degree
+        PASS [   0.115s] the_algorithms_rust math::linear_sieve::tests::divisible_by_mpf
+        PASS [   0.113s] the_algorithms_rust math::logarithm::test::basic
+        PASS [   0.115s] the_algorithms_rust math::linear_sieve::tests::small_primes_list
+        PASS [   0.122s] the_algorithms_rust math::linear_sieve::tests::check_factorization
+        PASS [   0.110s] the_algorithms_rust math::logarithm::test::test_log_positive_base
+        PASS [   0.113s] the_algorithms_rust math::logarithm::test::test_log_negative_base
+        PASS [   0.110s] the_algorithms_rust math::logarithm::test::test_log_tolerance
+        PASS [   0.130s] the_algorithms_rust math::least_square_approx::tests::ten_points_1st_degree
+        PASS [   0.107s] the_algorithms_rust math::logarithm::test::test_log_zero_base
+        PASS [   0.128s] the_algorithms_rust math::linear_sieve::tests::check_number_of_primes
+        PASS [   0.109s] the_algorithms_rust math::lucas_series::tests::input_0
+        PASS [   0.103s] the_algorithms_rust math::lucas_series::tests::input_10
+        PASS [   0.107s] the_algorithms_rust math::lucas_series::tests::input_1
+        PASS [   0.108s] the_algorithms_rust math::lucas_series::tests::input_15
+        PASS [   0.108s] the_algorithms_rust math::lucas_series::tests::input_2
+        PASS [   0.117s] the_algorithms_rust math::lucas_series::tests::input_25
+        PASS [   0.121s] the_algorithms_rust math::lucas_series::tests::input_20
+        PASS [   0.109s] the_algorithms_rust math::lucas_series::tests::input_4
+        PASS [   0.110s] the_algorithms_rust math::lucas_series::tests::input_6
+        PASS [   0.109s] the_algorithms_rust math::lucas_series::tests::input_7
+        PASS [   0.112s] the_algorithms_rust math::lucas_series::tests::input_5
+        PASS [   0.115s] the_algorithms_rust math::lucas_series::tests::input_3
+        PASS [   0.113s] the_algorithms_rust math::lucas_series::tests::input_8
+        PASS [   0.116s] the_algorithms_rust math::lucas_series::tests::input_9
+        PASS [   0.124s] the_algorithms_rust math::matrix_ops::tests::test_add_f64
+        PASS [   0.122s] the_algorithms_rust math::matrix_ops::tests::test_add_i32
+        PASS [   0.121s] the_algorithms_rust math::matrix_ops::tests::test_invalid_matrix
+        PASS [   0.125s] the_algorithms_rust math::matrix_ops::tests::test_identity_matrix
+        PASS [   0.125s] the_algorithms_rust math::matrix_ops::tests::test_invalid_add
+        PASS [   0.128s] the_algorithms_rust math::matrix_ops::tests::test_empty_matrix
+        PASS [   0.119s] the_algorithms_rust math::matrix_ops::tests::test_invalid_sub
+        PASS [   0.123s] the_algorithms_rust math::matrix_ops::tests::test_invalid_mul
+        PASS [   0.130s] the_algorithms_rust math::matrix_ops::tests::test_matrix_scalar_mul_i32
+        PASS [   0.134s] the_algorithms_rust math::matrix_ops::tests::test_matrix_scalar_mul_f64
+        PASS [   0.121s] the_algorithms_rust math::matrix_ops::tests::test_matrix_scalar_zero_mul
+        PASS [   0.117s] the_algorithms_rust math::matrix_ops::tests::test_subtract_i32
+        PASS [   0.121s] the_algorithms_rust math::matrix_ops::tests::test_mul_f64
+        PASS [   0.119s] the_algorithms_rust math::matrix_ops::tests::test_subtract_f64
+        PASS [   0.122s] the_algorithms_rust math::matrix_ops::tests::test_mul_i32
+        PASS [   0.108s] the_algorithms_rust math::mersenne_primes::tests::validity_check
+        PASS [   0.121s] the_algorithms_rust math::matrix_ops::tests::test_transpose_f64
+        PASS [   0.116s] the_algorithms_rust math::matrix_ops::tests::test_zero_matrix
+        PASS [   0.127s] the_algorithms_rust math::matrix_ops::tests::test_transpose_i32
+        PASS [   0.111s] the_algorithms_rust math::modular_exponential::tests::test_modular_exponential_negative
+        PASS [   0.114s] the_algorithms_rust math::miller_rabin::tests::basic
+        PASS [   0.114s] the_algorithms_rust math::modular_exponential::tests::test_modular_exponential_edge_cases
+        PASS [   0.111s] the_algorithms_rust math::modular_exponential::tests::test_modular_exponential_positive
+        PASS [   0.123s] the_algorithms_rust math::miller_rabin::tests::big_basic
+        PASS [   0.115s] the_algorithms_rust math::newton_raphson::tests::basic
+        PASS [   0.129s] the_algorithms_rust math::nthprime::tests::my_test
+        PASS [   0.130s] the_algorithms_rust math::pascal_triangle::tests::test
+        PASS [   0.114s] the_algorithms_rust math::perfect_cube::tests::num_1_is_a_perfect_cube
+        PASS [   0.114s] the_algorithms_rust math::perfect_cube::tests::num_27_is_a_perfect_cube
+        PASS [   0.118s] the_algorithms_rust math::perfect_cube::tests::num_1001_is_not_a_perfect_cube
+        PASS [   0.119s] the_algorithms_rust math::perfect_cube::tests::num_1000_is_a_perfect_cube
+        PASS [   0.121s] the_algorithms_rust math::perfect_cube::tests::num_0_a_perfect_cube
+        PASS [   0.115s] the_algorithms_rust math::perfect_cube::tests::num_3_is_not_a_perfect_cube
+        PASS [   0.118s] the_algorithms_rust math::perfect_cube::tests::num_2_is_not_a_perfect_cube
+        PASS [   0.114s] the_algorithms_rust math::perfect_cube::tests::num_4_is_not_a_perfect_cube
+        PASS [   0.113s] the_algorithms_rust math::perfect_cube::tests::num_8_is_a_perfect_cube
+        PASS [   0.113s] the_algorithms_rust math::perfect_cube::tests::num_999_is_not_a_perfect_cube
+        PASS [   0.115s] the_algorithms_rust math::perfect_cube::tests::num_64_is_a_perfect_cube
+        PASS [   0.117s] the_algorithms_rust math::perfect_cube::tests::num_5_is_not_a_perfect_cube
+        PASS [   0.119s] the_algorithms_rust math::perfect_numbers::tests::basic
+        PASS [   0.114s] the_algorithms_rust math::perfect_square::tests::test_perfect_square_binary_search
+        PASS [   0.120s] the_algorithms_rust math::perfect_square::tests::test_perfect_square
+        PASS [   0.106s] the_algorithms_rust math::prime_check::tests::basic
+        PASS [   0.107s] the_algorithms_rust math::prime_numbers::tests::basic
+        PASS [   0.110s] the_algorithms_rust math::prime_factors::tests::it_works
+        PASS [   0.110s] the_algorithms_rust math::quadratic_residue::tests::cipolla_small_numbers
+        PASS [   0.112s] the_algorithms_rust math::quadratic_residue::tests::cipolla_random_numbers
+        PASS [   0.112s] the_algorithms_rust math::quadratic_residue::tests::no_answer
+        PASS [   0.116s] the_algorithms_rust math::quadratic_residue::tests::tonelli_shanks_random_numbers
+        PASS [   0.137s] the_algorithms_rust math::pollard_rho::test::big_numbers
+        PASS [   0.138s] the_algorithms_rust math::pollard_rho::test::one_factor
+        PASS [   0.115s] the_algorithms_rust math::quadratic_residue::tests::tonelli_shanks_small_numbers
+        PASS [   0.110s] the_algorithms_rust math::relu::tests::test_relu
+        PASS [   0.113s] the_algorithms_rust math::sieve_of_eratosthenes::tests::basic
+        PASS [   0.115s] the_algorithms_rust math::sigmoid::tests::test_sigmoid
+        PASS [   0.109s] the_algorithms_rust math::signum::tests::negative_integer
+        PASS [   0.108s] the_algorithms_rust math::signum::tests::positive_integer
+        PASS [   0.106s] the_algorithms_rust math::signum::tests::zero
+        PASS [   0.156s] the_algorithms_rust math::random::tests::no_birthday
+        PASS [   0.115s] the_algorithms_rust math::simpson_integration::tests::area_under_cosine
+        PASS [   0.106s] the_algorithms_rust math::square_pyramidal_numbers::tests::test0
+        PASS [   0.114s] the_algorithms_rust math::simpson_integration::tests::parabola_curve_length
+        PASS [   0.110s] the_algorithms_rust math::square_root::tests::test_fast_inv_sqrt
+        PASS [   0.117s] the_algorithms_rust math::softmax::tests::test_softmax
+        PASS [   0.114s] the_algorithms_rust math::sprague_grundy_theorem::tests::calculate_grundy_number_test
+        PASS [   0.107s] the_algorithms_rust math::sum_of_digits::tests::iterative::negative_number
+        PASS [   0.107s] the_algorithms_rust math::square_root::tests::test_sqare_root
+        PASS [   0.109s] the_algorithms_rust math::sum_of_digits::tests::iterative::positive_number
+        PASS [   0.109s] the_algorithms_rust math::sum_of_digits::tests::iterative::trailing_zeros
+        PASS [   0.109s] the_algorithms_rust math::sum_of_digits::tests::iterative::zero
+        PASS [   0.107s] the_algorithms_rust math::sum_of_digits::tests::recursive::trailing_zeros
+        PASS [   0.113s] the_algorithms_rust math::sum_of_digits::tests::recursive::negative_number
+        PASS [   0.110s] the_algorithms_rust math::sum_of_digits::tests::recursive::positive_number
+        PASS [   0.109s] the_algorithms_rust math::sum_of_digits::tests::recursive::zero
+        PASS [   0.109s] the_algorithms_rust math::sum_of_geometric_progression::tests::common_ratio_one
+        PASS [   0.122s] the_algorithms_rust math::sum_of_geometric_progression::tests::regular_input_0
+        PASS [   0.109s] the_algorithms_rust math::sum_of_geometric_progression::tests::regular_input_2
+        PASS [   0.112s] the_algorithms_rust math::sum_of_geometric_progression::tests::regular_input_1
+        PASS [   0.107s] the_algorithms_rust math::sylvester_sequence::tests::test_sylvester
+        PASS [   0.114s] the_algorithms_rust math::sum_of_harmonic_series::tests::test_sum_of_harmonic_progression
+        PASS [   0.108s] the_algorithms_rust math::trapezoidal_integration::tests::basic_0_higher_prec
+        PASS [   0.112s] the_algorithms_rust math::sylvester_sequence::tests::test_sylvester_negative
+        PASS [   0.112s] the_algorithms_rust math::tanh::tests::test_tanh
+        PASS [   0.111s] the_algorithms_rust math::trapezoidal_integration::tests::basic_0
+        PASS [   0.110s] the_algorithms_rust math::trapezoidal_integration::tests::basic_1
+        PASS [   0.110s] the_algorithms_rust math::trapezoidal_integration::tests::empty_range
+        PASS [   0.114s] the_algorithms_rust math::trapezoidal_integration::tests::basic_1_higher_prec
+        PASS [   0.110s] the_algorithms_rust math::trapezoidal_integration::tests::flipped_limits
+        PASS [   0.111s] the_algorithms_rust math::trial_division::tests::basic
+        PASS [   0.112s] the_algorithms_rust math::trig_functions::tests::test_cosine
+        PASS [   0.112s] the_algorithms_rust math::trig_functions::tests::test_cosine_bad_arg
+        PASS [   0.116s] the_algorithms_rust math::trig_functions::tests::test_cotan
+        PASS [   0.128s] the_algorithms_rust math::trig_functions::tests::test_cotan_bad_arg
+        PASS [   0.110s] the_algorithms_rust math::vector_cross_product::tests::test_cross_product_and_magnitude_2
+        PASS [   0.117s] the_algorithms_rust math::trig_functions::tests::test_tan
+        PASS [   0.119s] the_algorithms_rust math::trig_functions::tests::test_sine_bad_arg
+        PASS [   0.110s] the_algorithms_rust math::vector_cross_product::tests::test_cross_product_and_magnitude_4
+        PASS [   0.114s] the_algorithms_rust math::trig_functions::tests::test_tan_bad_arg
+        PASS [   0.111s] the_algorithms_rust math::vector_cross_product::tests::test_cross_product_and_magnitude_3
+        PASS [   0.120s] the_algorithms_rust math::trig_functions::tests::test_sine
+        PASS [   0.115s] the_algorithms_rust math::vector_cross_product::tests::test_cross_product_and_magnitude_1
+        PASS [   0.112s] the_algorithms_rust math::vector_cross_product::tests::test_cross_product_and_magnitude_5
+        PASS [   0.116s] the_algorithms_rust math::zellers_congruence_algorithm::tests::it_works
+        PASS [   0.114s] the_algorithms_rust navigation::bearing::tests::testing
+        PASS [   0.114s] the_algorithms_rust navigation::haversine::tests::testing
+        PASS [   3.804s] the_algorithms_rust data_structures::veb_tree::test::test_100_300
+        PASS [   0.117s] the_algorithms_rust number_theory::compute_totient::tests::test_2
+        PASS [   0.118s] the_algorithms_rust number_theory::compute_totient::tests::test_3
+        PASS [   0.120s] the_algorithms_rust number_theory::compute_totient::tests::test_1
+        PASS [   0.116s] the_algorithms_rust number_theory::kth_factor::tests::test_1
+        PASS [   0.123s] the_algorithms_rust number_theory::kth_factor::tests::test_2
+        PASS [   0.109s] the_algorithms_rust searching::binary_search::tests::search_ints_asc
+        PASS [   0.111s] the_algorithms_rust searching::binary_search::tests::empty
+        PASS [   0.111s] the_algorithms_rust searching::binary_search::tests::search_strings_asc
+        PASS [   0.112s] the_algorithms_rust searching::binary_search::tests::one_item
+        PASS [   0.113s] the_algorithms_rust number_theory::kth_factor::tests::test_4
+        PASS [   0.116s] the_algorithms_rust number_theory::kth_factor::tests::test_3
+        PASS [   0.116s] the_algorithms_rust searching::binary_search::tests::not_found
+        PASS [   0.114s] the_algorithms_rust searching::binary_search::tests::search_ints_desc
+        PASS [   0.115s] the_algorithms_rust searching::binary_search::tests::search_strings_desc
+        PASS [   0.111s] the_algorithms_rust searching::binary_search_recursive::tests::fail_search_integers
+        PASS [   0.115s] the_algorithms_rust searching::binary_search_recursive::tests::fail_empty_list
+        PASS [   0.111s] the_algorithms_rust searching::binary_search_recursive::tests::fail_search_strings_asc
+        PASS [   0.112s] the_algorithms_rust searching::binary_search_recursive::tests::fail_search_strings_desc
+        PASS [   0.107s] the_algorithms_rust searching::binary_search_recursive::tests::success_search_integers_asc
+        PASS [   0.111s] the_algorithms_rust searching::binary_search_recursive::tests::success_search_integer_in_middle_of_unsorted_list
+        PASS [   0.114s] the_algorithms_rust searching::binary_search_recursive::tests::success_one_item
+        PASS [   0.112s] the_algorithms_rust searching::binary_search_recursive::tests::success_search_integers_desc
+        PASS [   0.121s] the_algorithms_rust searching::binary_search_recursive::tests::success_search_string_in_middle_of_unsorted_list
+        PASS [   0.104s] the_algorithms_rust searching::exponential_search::tests::search_ints
+        PASS [   0.108s] the_algorithms_rust searching::exponential_search::tests::one_item
+        PASS [   0.110s] the_algorithms_rust searching::exponential_search::tests::not_found
+        PASS [   0.112s] the_algorithms_rust searching::binary_search_recursive::tests::success_search_strings_desc
+        PASS [   0.111s] the_algorithms_rust searching::exponential_search::tests::empty
+        PASS [   0.117s] the_algorithms_rust searching::binary_search_recursive::tests::success_search_strings_asc
+        PASS [   0.111s] the_algorithms_rust searching::fibonacci_search::tests::empty
+        PASS [   0.113s] the_algorithms_rust searching::exponential_search::tests::search_strings
+        PASS [   0.109s] the_algorithms_rust searching::fibonacci_search::tests::one_item
+        PASS [   0.105s] the_algorithms_rust searching::interpolation_search::tests::returns_err_if_empty_slice
+        PASS [   0.108s] the_algorithms_rust searching::fibonacci_search::tests::search_ints
+        PASS [   0.113s] the_algorithms_rust searching::fibonacci_search::tests::not_found
+        PASS [   0.110s] the_algorithms_rust searching::fibonacci_search::tests::search_strings
+        PASS [   0.108s] the_algorithms_rust searching::interpolation_search::tests::returns_err_if_target_not_found
+        PASS [   0.109s] the_algorithms_rust searching::interpolation_search::tests::returns_last_index
+        PASS [   0.111s] the_algorithms_rust searching::interpolation_search::tests::returns_first_index
+        PASS [   0.112s] the_algorithms_rust searching::interpolation_search::tests::returns_middle_index
+        PASS [   0.117s] the_algorithms_rust searching::jump_search::tests::empty
+        PASS [   0.112s] the_algorithms_rust searching::jump_search::tests::not_found
+        PASS [   0.113s] the_algorithms_rust searching::jump_search::tests::search_ints
+        PASS [   0.116s] the_algorithms_rust searching::jump_search::tests::one_item
+        PASS [   0.118s] the_algorithms_rust searching::kth_smallest::tests::empty
+        PASS [   0.110s] the_algorithms_rust searching::linear_search::tests::search_ints
+        PASS [   0.120s] the_algorithms_rust searching::jump_search::tests::search_strings
+        PASS [   0.118s] the_algorithms_rust searching::kth_smallest::tests::many_elements
+        PASS [   0.112s] the_algorithms_rust searching::linear_search::tests::not_found
+        PASS [   0.118s] the_algorithms_rust searching::kth_smallest::tests::one_element
+        PASS [   0.116s] the_algorithms_rust searching::kth_smallest_heap::tests::many_elements
+        PASS [   0.118s] the_algorithms_rust searching::kth_smallest_heap::tests::empty
+        PASS [   0.119s] the_algorithms_rust searching::linear_search::tests::empty
+        PASS [   0.121s] the_algorithms_rust searching::kth_smallest_heap::tests::one_element
+        PASS [   0.119s] the_algorithms_rust searching::linear_search::tests::search_strings
+        PASS [   0.115s] the_algorithms_rust searching::quick_select::tests::it_works
+        PASS [   0.116s] the_algorithms_rust searching::moore_voting::tests::test_moore_voting
+        PASS [   0.120s] the_algorithms_rust searching::saddleback_search::tests::test_element_at_bottom_left
+        PASS [   0.117s] the_algorithms_rust searching::saddleback_search::tests::test_element_at_bottom_right
+        PASS [   0.118s] the_algorithms_rust searching::saddleback_search::tests::test_element_at_top_left
+        PASS [   0.106s] the_algorithms_rust searching::ternary_search::tests::returns_first_index_if_end_out_of_bounds
+        PASS [   0.118s] the_algorithms_rust searching::saddleback_search::tests::test_element_in_middle
+        PASS [   0.110s] the_algorithms_rust searching::ternary_search::tests::returns_last_index_if_end_out_of_bounds
+        PASS [   0.108s] the_algorithms_rust searching::ternary_search::tests::returns_middle_index_if_end_out_of_bounds
+        PASS [   0.120s] the_algorithms_rust searching::saddleback_search::tests::test_element_at_top_right
+        PASS [   0.111s] the_algorithms_rust searching::ternary_search::tests::returns_index_if_list_has_one_item
+        PASS [   0.113s] the_algorithms_rust searching::ternary_search::tests::returns_first_index
+        PASS [   0.115s] the_algorithms_rust searching::saddleback_search::tests::test_element_not_found
+        PASS [   0.115s] the_algorithms_rust searching::ternary_search::tests::returns_last_index
+        PASS [   0.114s] the_algorithms_rust searching::ternary_search::tests::returns_middle_index
+        PASS [   0.113s] the_algorithms_rust searching::ternary_search::tests::returns_none_if_empty_list
+        PASS [   0.115s] the_algorithms_rust searching::ternary_search::tests::returns_none_if_range_is_invalid
+        PASS [   0.108s] the_algorithms_rust searching::ternary_search_min_max::tests::finds_max_value_2
+        PASS [   0.113s] the_algorithms_rust searching::ternary_search_min_max::tests::finds_max_value
+        PASS [   0.110s] the_algorithms_rust searching::ternary_search_min_max::tests::finds_min_value
+        PASS [   0.108s] the_algorithms_rust searching::ternary_search_min_max::tests::finds_min_value_2
+        PASS [   0.108s] the_algorithms_rust searching::ternary_search_min_max_recursive::tests::finds_max_value_2
+        PASS [   0.112s] the_algorithms_rust searching::ternary_search_min_max_recursive::tests::finds_max_value
+        PASS [   0.109s] the_algorithms_rust searching::ternary_search_min_max_recursive::tests::finds_min_value
+        PASS [   0.108s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_index_if_list_has_one_item
+        PASS [   0.109s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_first_index_if_end_out_of_bounds
+        PASS [   0.109s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_last_index_if_end_out_of_bounds
+        PASS [   0.109s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_middle_index
+        PASS [   0.111s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_last_index
+        PASS [   0.112s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_first_index
+        PASS [   0.112s] the_algorithms_rust searching::ternary_search_min_max_recursive::tests::finds_min_value_2
+        PASS [   0.108s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_none_if_empty_list
+        PASS [   0.108s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_middle_index_if_end_out_of_bounds
+        PASS [   0.107s] the_algorithms_rust searching::ternary_search_recursive::tests::returns_none_if_range_is_invalid
+        PASS [   0.109s] the_algorithms_rust sorting::binary_insertion_sort::tests::test_binary_insertion_sort
+        PASS [   0.114s] the_algorithms_rust sorting::bingo_sort::tests::test_already_sorted
+        PASS [   0.123s] the_algorithms_rust sorting::bead_sort::tests::descending
+        PASS [   0.123s] the_algorithms_rust sorting::bead_sort::tests::mix_values
+        PASS [   0.116s] the_algorithms_rust sorting::bingo_sort::tests::test_bingo_sort
+        PASS [   0.109s] the_algorithms_rust sorting::bogo_sort::tests::sorted_array
+        PASS [   0.119s] the_algorithms_rust sorting::bingo_sort::tests::test_empty_array
+        PASS [   0.122s] the_algorithms_rust sorting::bingo_sort::tests::test_duplicates
+        PASS [   0.116s] the_algorithms_rust sorting::bingo_sort::tests::test_single_element_array
+        PASS [   0.118s] the_algorithms_rust sorting::bingo_sort::tests::test_reverse_sorted
+        PASS [   0.121s] the_algorithms_rust sorting::bingo_sort::tests::test_negative_numbers
+        PASS [   0.118s] the_algorithms_rust sorting::bubble_sort::tests::empty
+        PASS [   0.126s] the_algorithms_rust sorting::bitonic_sort::tests::descending
+        PASS [   0.123s] the_algorithms_rust sorting::bubble_sort::tests::descending
+        PASS [   0.127s] the_algorithms_rust sorting::bubble_sort::tests::ascending
+        PASS [   0.130s] the_algorithms_rust sorting::bitonic_sort::tests::ascending
+        PASS [   0.116s] the_algorithms_rust sorting::bucket_sort::tests::empty
+        PASS [   0.128s] the_algorithms_rust sorting::bucket_sort::tests::already_sorted
+        PASS [   0.128s] the_algorithms_rust sorting::bucket_sort::tests::basic
+        PASS [   0.121s] the_algorithms_rust sorting::bucket_sort::tests::odd_number_of_elements
+        PASS [   0.121s] the_algorithms_rust sorting::bucket_sort::tests::one_element
+        PASS [   0.131s] the_algorithms_rust sorting::bucket_sort::tests::repeated_elements
+        PASS [   0.159s] the_algorithms_rust sorting::bogo_sort::tests::random_array
+        PASS [   0.124s] the_algorithms_rust sorting::cocktail_shaker_sort::tests::empty
+        PASS [   0.129s] the_algorithms_rust sorting::cocktail_shaker_sort::tests::basic
+        PASS [   0.127s] the_algorithms_rust sorting::cocktail_shaker_sort::tests::one_element
+        PASS [   0.125s] the_algorithms_rust sorting::comb_sort::tests::ascending
+        PASS [   0.128s] the_algorithms_rust sorting::cocktail_shaker_sort::tests::pre_sorted
+        PASS [   0.129s] the_algorithms_rust sorting::comb_sort::tests::descending
+        PASS [   0.128s] the_algorithms_rust sorting::comb_sort::tests::duplicates
+        PASS [   0.116s] the_algorithms_rust sorting::dutch_national_flag_sort::tests::random_array
+        PASS [   0.127s] the_algorithms_rust sorting::counting_sort::test::counting_sort_descending
+        PASS [   0.127s] the_algorithms_rust sorting::counting_sort::test::counting_sort_pre_sorted
+        PASS [   0.125s] the_algorithms_rust sorting::counting_sort::test::generic_counting_sort
+        PASS [   0.124s] the_algorithms_rust sorting::cycle_sort::tests::it_works
+        PASS [   0.117s] the_algorithms_rust sorting::dutch_national_flag_sort::tests::sorted_array
+        PASS [   0.129s] the_algorithms_rust sorting::counting_sort::test::presorted_u64_counting_sort
+        PASS [   0.120s] the_algorithms_rust sorting::exchange_sort::tests::it_works
+        PASS [   0.121s] the_algorithms_rust sorting::gnome_sort::tests::already_sorted
+        PASS [   0.118s] the_algorithms_rust sorting::gnome_sort::tests::empty
+        PASS [   0.122s] the_algorithms_rust sorting::gnome_sort::tests::basic
+        PASS [   0.119s] the_algorithms_rust sorting::heap_sort::tests::empty
+        PASS [   0.131s] the_algorithms_rust sorting::gnome_sort::tests::odd_number_of_elements
+        PASS [   0.128s] the_algorithms_rust sorting::heap_sort::tests::odd_number_of_elements
+        PASS [   0.129s] the_algorithms_rust sorting::gnome_sort::tests::one_element
+        PASS [   0.119s] the_algorithms_rust sorting::insertion_sort::tests::empty
+        PASS [   0.129s] the_algorithms_rust sorting::heap_sort::tests::single_element
+        PASS [   0.131s] the_algorithms_rust sorting::heap_sort::tests::repeated_elements
+        PASS [   0.127s] the_algorithms_rust sorting::heap_sort::tests::sorted_array
+        PASS [   0.125s] the_algorithms_rust sorting::insertion_sort::tests::basic
+        PASS [   0.129s] the_algorithms_rust sorting::heap_sort::tests::unsorted_array
+        PASS [   0.125s] the_algorithms_rust sorting::insertion_sort::tests::already_sorted
+        PASS [   0.122s] the_algorithms_rust sorting::insertion_sort::tests::odd_number_of_elements
+        PASS [   0.116s] the_algorithms_rust sorting::intro_sort::tests::test_intro_sort
+        PASS [   0.126s] the_algorithms_rust sorting::insertion_sort::tests::repeated_elements
+        PASS [   0.127s] the_algorithms_rust sorting::insertion_sort::tests::one_element
+        PASS [   0.124s] the_algorithms_rust sorting::merge_sort::tests::bottom_up_merge_sort::basic
+        PASS [   0.119s] the_algorithms_rust sorting::merge_sort::tests::bottom_up_merge_sort::empty
+        PASS [   0.129s] the_algorithms_rust sorting::merge_sort::tests::bottom_up_merge_sort::basic_string
+        PASS [   0.126s] the_algorithms_rust sorting::merge_sort::tests::bottom_up_merge_sort::one_element
+        PASS [   0.123s] the_algorithms_rust sorting::merge_sort::tests::bottom_up_merge_sort::pre_sorted
+        PASS [   0.123s] the_algorithms_rust sorting::merge_sort::tests::bottom_up_merge_sort::reverse_sorted
+        PASS [   0.118s] the_algorithms_rust sorting::merge_sort::tests::top_down_merge_sort::empty
+        PASS [   0.127s] the_algorithms_rust sorting::merge_sort::tests::top_down_merge_sort::basic
+        PASS [   0.119s] the_algorithms_rust sorting::odd_even_sort::tests::empty
+        PASS [   0.124s] the_algorithms_rust sorting::merge_sort::tests::top_down_merge_sort::one_element
+        PASS [   0.126s] the_algorithms_rust sorting::merge_sort::tests::top_down_merge_sort::basic_string
+        PASS [   0.110s] the_algorithms_rust sorting::pancake_sort::tests::empty
+        PASS [   0.123s] the_algorithms_rust sorting::merge_sort::tests::top_down_merge_sort::reverse_sorted
+        PASS [   0.125s] the_algorithms_rust sorting::merge_sort::tests::top_down_merge_sort::pre_sorted
+        PASS [   0.117s] the_algorithms_rust sorting::pancake_sort::tests::basic
+        PASS [   0.119s] the_algorithms_rust sorting::pancake_sort::tests::already_sorted
+        PASS [   0.123s] the_algorithms_rust sorting::odd_even_sort::tests::pre_sorted
+        PASS [   0.126s] the_algorithms_rust sorting::odd_even_sort::tests::one_element
+        PASS [   0.127s] the_algorithms_rust sorting::odd_even_sort::tests::basic
+        PASS [   0.121s] the_algorithms_rust sorting::pancake_sort::tests::odd_number_of_elements
+        PASS [   0.119s] the_algorithms_rust sorting::pancake_sort::tests::one_element
+        PASS [   0.121s] the_algorithms_rust sorting::patience_sort::tests::empty
+        PASS [   0.120s] the_algorithms_rust sorting::pigeonhole_sort::tests::test1
+        PASS [   0.119s] the_algorithms_rust sorting::quick_sort::tests::empty
+        PASS [   0.132s] the_algorithms_rust sorting::patience_sort::tests::one_element
+        PASS [   0.140s] the_algorithms_rust sorting::patience_sort::tests::basic
+        PASS [   0.128s] the_algorithms_rust sorting::quick_sort::tests::basic
+        PASS [   0.125s] the_algorithms_rust sorting::quick_sort::tests::one_element
+        PASS [   0.138s] the_algorithms_rust sorting::patience_sort::tests::pre_sorted
+        PASS [   0.128s] the_algorithms_rust sorting::quick_sort::tests::reverse_sorted
+        PASS [   0.131s] the_algorithms_rust sorting::quick_sort::tests::pre_sorted
+        PASS [   0.136s] the_algorithms_rust sorting::quick_sort::tests::basic_string
+        PASS [   0.132s] the_algorithms_rust sorting::quick_sort_3_ways::tests::basic
+        PASS [   0.118s] the_algorithms_rust sorting::quick_sort_3_ways::tests::empty
+        PASS [   0.132s] the_algorithms_rust sorting::quick_sort_3_ways::tests::basic_string
+        PASS [   0.141s] the_algorithms_rust sorting::quick_sort::tests::nearly_ordered_elements
+        PASS [   0.101s] the_algorithms_rust sorting::selection_sort::tests::empty
+        PASS [   0.120s] the_algorithms_rust sorting::quick_sort_3_ways::tests::one_element
+        PASS [   0.112s] the_algorithms_rust sorting::radix_sort::tests::descending
+        PASS [   0.114s] the_algorithms_rust sorting::radix_sort::tests::ascending
+        PASS [   0.108s] the_algorithms_rust sorting::selection_sort::tests::basic
+        PASS [   0.110s] the_algorithms_rust sorting::radix_sort::tests::empty
+        PASS [   0.108s] the_algorithms_rust sorting::selection_sort::tests::one_element
+        PASS [   0.108s] the_algorithms_rust sorting::selection_sort::tests::pre_sorted
+        PASS [   0.107s] the_algorithms_rust sorting::shell_sort::test::empty
+        PASS [   0.114s] the_algorithms_rust sorting::shell_sort::test::already_sorted
+        PASS [   0.114s] the_algorithms_rust sorting::shell_sort::test::basic
+        PASS [   0.106s] the_algorithms_rust sorting::sleep_sort::tests::empty
+        PASS [   0.112s] the_algorithms_rust sorting::shell_sort::test::reverse
+        PASS [   0.104s] the_algorithms_rust sorting::stooge_sort::test::empty
+        PASS [   0.106s] the_algorithms_rust sorting::stooge_sort::test::already_sorted
+        PASS [   0.107s] the_algorithms_rust sorting::stooge_sort::test::basic
+        PASS [   0.123s] the_algorithms_rust sorting::sleep_sort::tests::repeated_elements
+        PASS [   0.126s] the_algorithms_rust sorting::sleep_sort::tests::single_element
+        PASS [   0.186s] the_algorithms_rust sorting::sleep_sort::tests::sorted_array
+        PASS [   0.183s] the_algorithms_rust sorting::sleep_sort::tests::unsorted_array
+        PASS [   0.088s] the_algorithms_rust sorting::tests::is_sorted
+        PASS [   0.103s] the_algorithms_rust sorting::stooge_sort::test::reverse
+        PASS [   0.094s] the_algorithms_rust sorting::tim_sort::tests::empty
+        PASS [   0.089s] the_algorithms_rust sorting::tree_sort::tests::test_already_sorted
+        PASS [   0.100s] the_algorithms_rust sorting::tim_sort::tests::one_element
+        PASS [   0.095s] the_algorithms_rust sorting::tim_sort::tests::pre_sorted
+        PASS [   0.103s] the_algorithms_rust sorting::tim_sort::tests::basic
+        PASS [   0.245s] the_algorithms_rust sorting::sleep_sort::tests::odd_number_of_elements
+        PASS [   0.092s] the_algorithms_rust sorting::tree_sort::tests::test_random
+        PASS [   0.095s] the_algorithms_rust sorting::tree_sort::tests::test_empty_array
+        PASS [   0.095s] the_algorithms_rust sorting::tree_sort::tests::test_reverse_sorted
+        PASS [   0.090s] the_algorithms_rust sorting::wave_sort::tests::test_case_1
+        PASS [   0.088s] the_algorithms_rust sorting::wave_sort::tests::test_case_2
+        PASS [   0.098s] the_algorithms_rust sorting::tree_sort::tests::test_single_element
+        PASS [   0.306s] the_algorithms_rust sorting::sleep_sort::tests::random_elements
+        PASS [   0.093s] the_algorithms_rust sorting::wave_sort::tests::test_case_5
+        PASS [   0.097s] the_algorithms_rust sorting::wave_sort::tests::test_case_3
+        PASS [   0.104s] the_algorithms_rust sorting::wave_sort::tests::test_case_4
+        PASS [   0.115s] the_algorithms_rust sorting::wiggle_sort::tests::odd_number_of_elements
+        PASS [   0.112s] the_algorithms_rust sorting::wiggle_sort::tests::repeated_elements
+        PASS [   0.114s] the_algorithms_rust sorting::wiggle_sort::tests::wingle_elements
+        PASS [   0.647s] the_algorithms_rust sorting::quick_sort::tests::large_elements
+        PASS [   0.107s] the_algorithms_rust string::anagram::tests::test_check_anagram
+        PASS [   0.108s] the_algorithms_rust string::boyer_moore_search::tests::test_boyer_moore_search
+        PASS [   0.122s] the_algorithms_rust string::aho_corasick::tests::test_aho_corasick
+        PASS [   0.117s] the_algorithms_rust string::aho_corasick::tests::test_aho_corasick_with_utf8
+        PASS [   0.105s] the_algorithms_rust string::burrows_wheeler_transform::tests::empty
+        PASS [   0.108s] the_algorithms_rust string::burrows_wheeler_transform::tests::basic_characters
+        PASS [   0.116s] the_algorithms_rust string::autocomplete_using_trie::tests::test_autocomplete
+        PASS [   0.107s] the_algorithms_rust string::burrows_wheeler_transform::tests::special_characters
+        PASS [   0.113s] the_algorithms_rust string::burrows_wheeler_transform::tests::stand_alone_function
+        PASS [   0.102s] the_algorithms_rust string::duval_algorithm::test::test_duval_all
+        PASS [   0.104s] the_algorithms_rust string::duval_algorithm::test::test_duval_multiple
+        PASS [   0.095s] the_algorithms_rust string::hamming_distance::tests::empty_inputs
+        PASS [   0.100s] the_algorithms_rust string::duval_algorithm::test::test_factorization_with_duval_multiple
+        PASS [   0.106s] the_algorithms_rust string::duval_algorithm::test::test_duval_single
+        PASS [   0.101s] the_algorithms_rust string::hamming_distance::tests::different_case
+        PASS [   0.099s] the_algorithms_rust string::hamming_distance::tests::length_1_inputs
+        PASS [   0.103s] the_algorithms_rust string::hamming_distance::tests::regular_input_1
+        PASS [   0.105s] the_algorithms_rust string::hamming_distance::tests::panic_when_inputs_are_of_different_length
+        PASS [   0.106s] the_algorithms_rust string::hamming_distance::tests::regular_input_0
+        PASS [   0.105s] the_algorithms_rust string::hamming_distance::tests::regular_input_2
+        PASS [   0.117s] the_algorithms_rust string::hamming_distance::tests::same_strings
+        PASS [   0.122s] the_algorithms_rust string::jaro_winkler_distance::tests::test_jaro_winkler_distance
+        PASS [   0.118s] the_algorithms_rust string::knuth_morris_pratt::tests::a_few_separate_matches
+        PASS [   0.109s] the_algorithms_rust string::knuth_morris_pratt::tests::empty_string
+        PASS [   0.110s] the_algorithms_rust string::knuth_morris_pratt::tests::each_letter_matches
+        PASS [   0.109s] the_algorithms_rust string::knuth_morris_pratt::tests::lots_of_intricate_matches
+        PASS [   0.107s] the_algorithms_rust string::knuth_morris_pratt::tests::lots_of_matches
+        PASS [   0.108s] the_algorithms_rust string::knuth_morris_pratt::tests::not_found0
+        PASS [   0.107s] the_algorithms_rust string::knuth_morris_pratt::tests::not_found2
+        PASS [   0.110s] the_algorithms_rust string::knuth_morris_pratt::tests::not_found1
+        PASS [   0.109s] the_algorithms_rust string::knuth_morris_pratt::tests::one_match
+        PASS [   0.110s] the_algorithms_rust string::levenshtein_distance::tests::equal_strings
+        PASS [   0.130s] the_algorithms_rust string::levenshtein_distance::tests::one_edit_difference
+        PASS [   0.111s] the_algorithms_rust string::levenshtein_distance::tests::return_0_with_empty_strings
+        PASS [   0.110s] the_algorithms_rust string::levenshtein_distance::tests::return_1_with_1_2_3
+        PASS [   0.111s] the_algorithms_rust string::levenshtein_distance::tests::return_1_with_2_3_1
+        PASS [   0.111s] the_algorithms_rust string::levenshtein_distance::tests::return_1_with_3_2_1
+        PASS [   0.114s] the_algorithms_rust string::levenshtein_distance::tests::return_0_with_foobar_and_foobar
+        PASS [   0.114s] the_algorithms_rust string::levenshtein_distance::tests::return_1_with_a_and_empty
+        PASS [   0.104s] the_algorithms_rust string::levenshtein_distance::tests::return_1_with_empty_and_a
+        PASS [   0.104s] the_algorithms_rust string::levenshtein_distance::tests::return_1_with_kind_and_bind
+        PASS [   0.118s] the_algorithms_rust string::levenshtein_distance::tests::return_1_with_ab_and_a
+        PASS [   0.113s] the_algorithms_rust string::levenshtein_distance::tests::return_3_with_winner_and_win
+        PASS [   0.110s] the_algorithms_rust string::levenshtein_distance::tests::return_6_with_foobar_and_barfoo
+        PASS [   1.054s] the_algorithms_rust sorting::quick_sort_3_ways::tests::large_elements
+        PASS [   0.106s] the_algorithms_rust string::rabin_karp::tests::bra_hash
+        PASS [   0.123s] the_algorithms_rust string::levenshtein_distance::tests::several_differences
+        PASS [   0.115s] the_algorithms_rust string::levenshtein_distance::tests::test_doc_example
+        PASS [   0.112s] the_algorithms_rust string::rabin_karp::tests::a_few_separate_matches
+        PASS [   0.112s] the_algorithms_rust string::palindrome::tests::palindromes
+        PASS [   0.105s] the_algorithms_rust string::rabin_karp::tests::hi_hash
+        PASS [   0.120s] the_algorithms_rust string::rabin_karp::tests::abr_hash
+        PASS [   0.116s] the_algorithms_rust string::rabin_karp::tests::empty_string
+        PASS [   0.119s] the_algorithms_rust string::rabin_karp::tests::each_letter_matches
+        PASS [   0.126s] the_algorithms_rust string::manacher::tests::get_longest_palindrome_by_manacher
+        PASS [   0.116s] the_algorithms_rust string::rabin_karp::tests::lots_of_intricate_matches
+        PASS [   0.991s] the_algorithms_rust sorting::quick_sort_3_ways::tests::pre_sorted
+        PASS [   0.112s] the_algorithms_rust string::rabin_karp::tests::lots_of_matches
+        PASS [   1.012s] the_algorithms_rust sorting::quick_sort_3_ways::tests::reverse_sorted
+        PASS [   1.041s] the_algorithms_rust sorting::quick_sort_3_ways::tests::nearly_ordered_elements
+        PASS [   0.121s] the_algorithms_rust string::rabin_karp::tests::not_found0
+        PASS [   0.118s] the_algorithms_rust string::rabin_karp::tests::not_found2
+        PASS [   0.121s] the_algorithms_rust string::rabin_karp::tests::not_found1
+        PASS [   0.121s] the_algorithms_rust string::rabin_karp::tests::one_match
+        PASS [   0.120s] the_algorithms_rust string::reverse::tests::test_simple
+        PASS [   0.122s] the_algorithms_rust string::reverse::tests::test_assymetric
+        PASS [   0.124s] the_algorithms_rust string::reverse::tests::test_sentence
+        PASS [   0.115s] the_algorithms_rust string::run_length_encoding::tests::decode_identical_character
+        PASS [   0.118s] the_algorithms_rust string::run_length_encoding::tests::decode_empty
+        PASS [   0.116s] the_algorithms_rust string::run_length_encoding::tests::decode_long_character
+        PASS [   0.121s] the_algorithms_rust string::run_length_encoding::tests::decode_continuous_character
+        PASS [   0.118s] the_algorithms_rust string::run_length_encoding::tests::decode_random_character
+        PASS [   0.113s] the_algorithms_rust string::run_length_encoding::tests::encode_empty
+        PASS [   0.116s] the_algorithms_rust string::run_length_encoding::tests::encode_continuous_character
+        PASS [   0.114s] the_algorithms_rust string::run_length_encoding::tests::encode_identical_character
+        PASS [   0.131s] the_algorithms_rust string::run_length_encoding::tests::encode_long_character
+        PASS [   0.112s] the_algorithms_rust string::suffix_array_manber_myers::tests::test_empty_string
+        PASS [   0.120s] the_algorithms_rust string::run_length_encoding::tests::encode_random_character
+        PASS [   0.120s] the_algorithms_rust string::suffix_array::tests::test_suffix_array
+        PASS [   1.324s] the_algorithms_rust sorting::quick_sort::tests::repeated_elements
+        PASS [   0.121s] the_algorithms_rust string::suffix_array_manber_myers::tests::test_long_string
+        PASS [   0.120s] the_algorithms_rust string::suffix_array_manber_myers::tests::test_repeating_characters
+        PASS [   0.121s] the_algorithms_rust string::suffix_array_manber_myers::tests::test_mix_of_characters
+        PASS [   0.119s] the_algorithms_rust string::suffix_array_manber_myers::tests::test_suffix_array
+        PASS [   0.122s] the_algorithms_rust string::suffix_array_manber_myers::tests::test_single_character
+        PASS [   0.118s] the_algorithms_rust string::suffix_array_manber_myers::tests::test_whitespace_characters
+        PASS [   0.106s] the_algorithms_rust tests::quick_sort
+        PASS [   0.110s] the_algorithms_rust string::z_algorithm::tests::test_z_array
+        PASS [   0.084s] the_algorithms_rust::test_factorial test_factorial_bigmath_basic
+        PASS [   0.120s] the_algorithms_rust string::suffix_tree::tests::test_suffix_tree
+        PASS [   0.113s] the_algorithms_rust string::z_algorithm::tests::pattern_in_text
+        PASS [   0.131s] the_algorithms_rust string::z_algorithm::tests::long_pattern_in_text
+        PASS [   1.269s] the_algorithms_rust sorting::quick_sort_3_ways::tests::repeated_elements
+────────────
+     Summary [   7.950s] 1083 tests run: 1083 passed, 10 skipped
+reward=1 graded=1083 found=1083 failed=0 parsed=1083 framework=cargo exit_code=0

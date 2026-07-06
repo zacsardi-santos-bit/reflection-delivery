@@ -1,0 +1,7 @@
+patching file crates/wast-util/src/lib.rs
+patching file winch/codegen/src/isa/aarch64/masm.rs
+patching file winch/codegen/src/isa/x64/asm.rs
+patching file winch/codegen/src/isa/x64/masm.rs
+patching file winch/codegen/src/masm.rs
+patching file winch/codegen/src/stack.rs
+patching file winch/codegen/src/visitor.rs

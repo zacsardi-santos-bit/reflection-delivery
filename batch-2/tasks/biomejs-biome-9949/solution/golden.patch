@@ -1,0 +1,507 @@
+diff --git a/.changeset/fluffy-ways-punch.md b/.changeset/fluffy-ways-punch.md
+new file mode 100644
+index 0000000000..ad1e74572a
+--- /dev/null
++++ b/.changeset/fluffy-ways-punch.md
+@@ -0,0 +1,11 @@
++---
++"@biomejs/biome": patch
++---
++
++Added the nursery rule [`useIframeSandbox`](https://biomejs.dev/linter/rules/use-iframe-sandbox), which enforces the `sandbox` attribute for `iframe` tags.
++
++**Invalid**:
++
++```html
++<iframe></iframe>
++```
+diff --git a/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs b/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
+index 9c402cb9f1..2ebea85443 100644
+--- a/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
++++ b/crates/biome_cli/src/execute/migrate/eslint_any_rule_to_biome.rs
+@@ -45,6 +45,18 @@ pub(crate) fn migrate_eslint_any_rule(
+                 .get_or_insert(Default::default());
+             rule.set_level(rule.level().max(rule_severity.into()));
+         }
++        "@eslint-react/dom-no-missing-iframe-sandbox" => {
++            if !options.include_nursery {
++                results.add(eslint_name, eslint_to_biome::RuleMigrationResult::Nursery);
++                return false;
++            }
++            let group = rules.nursery.get_or_insert_with(Default::default);
++            let rule = group
++                .unwrap_group_as_mut()
++                .use_iframe_sandbox
++                .get_or_insert(Default::default());
++            rule.set_level(rule.level().max(rule_severity.into()));
++        }
+         "@eslint-react/dom-no-script-url" => {
+             if !options.include_nursery {
+                 results.add(eslint_name, eslint_to_biome::RuleMigrationResult::Nursery);
+@@ -3517,6 +3529,22 @@ pub(crate) fn migrate_eslint_any_rule(
+                 .get_or_insert(Default::default());
+             rule.set_level(rule.level().max(rule_severity.into()));
+         }
++        "react-dom/no-missing-iframe-sandbox" => {
++            if !options.include_inspired {
++                results.add(eslint_name, eslint_to_biome::RuleMigrationResult::Inspired);
++                return false;
++            }
++            if !options.include_nursery {
++                results.add(eslint_name, eslint_to_biome::RuleMigrationResult::Nursery);
++                return false;
++            }
++            let group = rules.nursery.get_or_insert_with(Default::default);
++            let rule = group
++                .unwrap_group_as_mut()
++                .use_iframe_sandbox
++                .get_or_insert(Default::default());
++            rule.set_level(rule.level().max(rule_severity.into()));
++        }
+         "react-dom/no-script-url" => {
+             if !options.include_nursery {
+                 results.add(eslint_name, eslint_to_biome::RuleMigrationResult::Nursery);
+diff --git a/crates/biome_configuration/src/analyzer/linter/rules.rs b/crates/biome_configuration/src/analyzer/linter/rules.rs
+index bfd6aac686..47fb3cfde5 100644
+--- a/crates/biome_configuration/src/analyzer/linter/rules.rs
++++ b/crates/biome_configuration/src/analyzer/linter/rules.rs
+@@ -469,6 +469,7 @@ pub enum RuleName {
+     UseHeadingContent,
+     UseHookAtTopLevel,
+     UseHtmlLang,
++    UseIframeSandbox,
+     UseIframeTitle,
+     UseImageSize,
+     UseImportExtensions,
+@@ -958,6 +959,7 @@ impl RuleName {
+             Self::UseHeadingContent => "useHeadingContent",
+             Self::UseHookAtTopLevel => "useHookAtTopLevel",
+             Self::UseHtmlLang => "useHtmlLang",
++            Self::UseIframeSandbox => "useIframeSandbox",
+             Self::UseIframeTitle => "useIframeTitle",
+             Self::UseImageSize => "useImageSize",
+             Self::UseImportExtensions => "useImportExtensions",
+@@ -1443,6 +1445,7 @@ impl RuleName {
+             Self::UseHeadingContent => RuleGroup::A11y,
+             Self::UseHookAtTopLevel => RuleGroup::Correctness,
+             Self::UseHtmlLang => RuleGroup::A11y,
++            Self::UseIframeSandbox => RuleGroup::Nursery,
+             Self::UseIframeTitle => RuleGroup::A11y,
+             Self::UseImageSize => RuleGroup::Correctness,
+             Self::UseImportExtensions => RuleGroup::Correctness,
+@@ -1937,6 +1940,7 @@ impl std::str::FromStr for RuleName {
+             "useHeadingContent" => Ok(Self::UseHeadingContent),
+             "useHookAtTopLevel" => Ok(Self::UseHookAtTopLevel),
+             "useHtmlLang" => Ok(Self::UseHtmlLang),
++            "useIframeSandbox" => Ok(Self::UseIframeSandbox),
+             "useIframeTitle" => Ok(Self::UseIframeTitle),
+             "useImageSize" => Ok(Self::UseImageSize),
+             "useImportExtensions" => Ok(Self::UseImportExtensions),
+diff --git a/crates/biome_configuration/src/generated/linter_options_check.rs b/crates/biome_configuration/src/generated/linter_options_check.rs
+index c0adb08791..f61b15b54d 100644
+--- a/crates/biome_configuration/src/generated/linter_options_check.rs
++++ b/crates/biome_configuration/src/generated/linter_options_check.rs
+@@ -1805,6 +1805,11 @@ pub fn config_side_rule_options_types() -> Vec<(&'static str, &'static str, Type
+         "useHtmlLang",
+         TypeId::of::<biome_rule_options::use_html_lang::UseHtmlLangOptions>(),
+     ));
++    result.push((
++        "nursery",
++        "useIframeSandbox",
++        TypeId::of::<biome_rule_options::use_iframe_sandbox::UseIframeSandboxOptions>(),
++    ));
+     result.push((
+         "a11y",
+         "useIframeTitle",
+diff --git a/crates/biome_diagnostics_categories/src/categories.rs b/crates/biome_diagnostics_categories/src/categories.rs
+index 53f706983e..fa8f19bf4b 100644
+--- a/crates/biome_diagnostics_categories/src/categories.rs
++++ b/crates/biome_diagnostics_categories/src/categories.rs
+@@ -269,6 +269,7 @@ define_categories! {
+     "lint/nursery/useExplicitType": "https://biomejs.dev/linter/rules/use-explicit-type",
+     "lint/nursery/useFind": "https://biomejs.dev/linter/rules/use-find",
+     "lint/nursery/useGlobalThis": "https://biomejs.dev/linter/rules/use-global-this",
++    "lint/nursery/useIframeSandbox": "https://biomejs.dev/linter/rules/use-iframe-sandbox",
+     "lint/nursery/useImportRestrictions": "https://biomejs.dev/linter/rules/use-import-restrictions",
+     "lint/nursery/useImportsFirst": "https://biomejs.dev/linter/rules/use-imports-first",
+     "lint/nursery/useInlineScriptId": "https://biomejs.dev/linter/rules/use-inline-script-id",
+diff --git a/crates/biome_html_analyze/src/lint/a11y/use_iframe_title.rs b/crates/biome_html_analyze/src/lint/a11y/use_iframe_title.rs
+index 264469bba9..e822513ed1 100644
+--- a/crates/biome_html_analyze/src/lint/a11y/use_iframe_title.rs
++++ b/crates/biome_html_analyze/src/lint/a11y/use_iframe_title.rs
+@@ -3,7 +3,7 @@ use biome_analyze::{
+ };
+ use biome_console::markup;
+ use biome_diagnostics::Severity;
+-use biome_html_syntax::AnyHtmlElement;
++use biome_html_syntax::{AnyHtmlElement, HtmlFileSource};
+ use biome_rowan::{AstNode, TextRange};
+ use biome_rule_options::use_iframe_title::UseIframeTitleOptions;
+ 
+@@ -59,9 +59,8 @@ impl Rule for UseIframeTitle {
+ 
+     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+         let element = ctx.query();
+-        let file_extension = ctx.file_path().extension()?;
+ 
+-        if !is_iframe_element(element, file_extension) {
++        if !is_iframe_element(element, ctx) {
+             return None;
+         }
+ 
+@@ -88,17 +87,19 @@ impl Rule for UseIframeTitle {
+     }
+ }
+ 
+-/// Checks if the element is an iframe element.
+-///
+-/// - In `.html` files, matching is case-insensitive.
+-/// - In component-based frameworks, only lowercase `iframe` is matched to avoid flagging custom components like `<Iframe>`.
+-fn is_iframe_element(element: &AnyHtmlElement, file_extension: &str) -> bool {
+-    element.name().is_some_and(|token_text| {
+-        let is_html_file = file_extension == "html";
+-        if is_html_file {
+-            token_text.eq_ignore_ascii_case("iframe")
+-        } else {
+-            token_text == "iframe"
+-        }
+-    })
++fn is_iframe_element(element: &AnyHtmlElement, ctx: &RuleContext<UseIframeTitle>) -> bool {
++    let Some(element_name) = element.name() else {
++        return false;
++    };
++
++    let source_type = ctx.source_type::<HtmlFileSource>();
++
++    // In HTML files: case-insensitive (IFRAME, Iframe, iframe all match)
++    // In component frameworks (Vue, Svelte, Astro): case-sensitive (only "iframe" matches)
++    // This means <Iframe> in Vue/Svelte is treated as a component and ignored
++    if source_type.is_html() {
++        element_name.text().eq_ignore_ascii_case("iframe")
++    } else {
++        element_name.text() == "iframe"
++    }
+ }
+diff --git a/crates/biome_html_analyze/src/lint/nursery/use_iframe_sandbox.rs b/crates/biome_html_analyze/src/lint/nursery/use_iframe_sandbox.rs
+new file mode 100644
+index 0000000000..4a995171a9
+--- /dev/null
++++ b/crates/biome_html_analyze/src/lint/nursery/use_iframe_sandbox.rs
+@@ -0,0 +1,94 @@
++use biome_analyze::{Ast, Rule, RuleDiagnostic, context::RuleContext, declare_lint_rule};
++use biome_console::markup;
++use biome_diagnostics::Severity;
++use biome_html_syntax::{AnyHtmlElement, HtmlFileSource};
++use biome_rowan::AstNode;
++use biome_rule_options::use_iframe_sandbox::UseIframeSandboxOptions;
++
++declare_lint_rule! {
++    /// Enforce the 'sandbox' attribute for 'iframe' elements.
++    ///
++    /// The sandbox attribute enables an extra set of restrictions for the content in the iframe.
++    /// Using the sandbox attribute is considered a good security practice.
++    ///
++    /// See [the Mozilla docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#sandbox) for details.
++    ///
++    /// ## Examples
++    ///
++    /// ### Invalid
++    ///
++    /// ```html,expect_diagnostic
++    /// <iframe src="https://example.com"></iframe>
++    /// ```
++    ///
++    /// ### Valid
++    ///
++    /// ```html
++    /// <iframe src="https://example.com" sandbox="allow-popups"></iframe>
++    /// ```
++    ///
++    pub UseIframeSandbox {
++        version: "next",
++        name: "useIframeSandbox",
++        language: "html",
++        recommended: false,
++        severity: Severity::Warning,
++    }
++}
++
++impl Rule for UseIframeSandbox {
++    type Query = Ast<AnyHtmlElement>;
++    type State = ();
++    type Signals = Option<Self::State>;
++    type Options = UseIframeSandboxOptions;
++
++    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
++        let element = ctx.query();
++
++        if !is_iframe_element(element, ctx) {
++            return None;
++        }
++
++        if element.find_attribute_by_name("sandbox").is_none() {
++            return Some(());
++        }
++
++        None
++    }
++
++    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
++        let node = ctx.query();
++        Some(
++            RuleDiagnostic::new(
++                rule_category!(),
++                node.range(),
++                markup! {
++                    "Iframe doesn't have the "<Emphasis>"sandbox"</Emphasis>" attribute."
++                }
++            )
++            .note(markup! {
++                "The sandbox attribute enables an extra set of restrictions for the content in the iframe, protecting against malicious scripts and other security threats."
++            })
++            .note(markup! {
++                "Provide a "<Emphasis>"sandbox"</Emphasis>" attribute when using iframe elements."
++            }),
++        )
++    }
++}
++
++fn is_iframe_element(element: &AnyHtmlElement, ctx: &RuleContext<UseIframeSandbox>) -> bool {
++    let Some(element_name) = element.name() else {
++        return false;
++    };
++
++    let source_type = ctx.source_type::<HtmlFileSource>();
++
++    // In HTML files: case-insensitive (IFRAME, Iframe, iframe all match)
++    // In component frameworks (Vue, Svelte, Astro): case-sensitive (only "iframe" matches)
++    // This means <Iframe> in Vue/Svelte is treated as a component and ignored
++    if source_type.is_html() {
++        element_name.text().eq_ignore_ascii_case("iframe")
++    } else {
++        element_name.text() == "iframe"
++    }
++}
+diff --git a/crates/biome_js_analyze/src/lint/nursery/use_iframe_sandbox.rs b/crates/biome_js_analyze/src/lint/nursery/use_iframe_sandbox.rs
+new file mode 100644
+index 0000000000..c7f1b323b5
+--- /dev/null
++++ b/crates/biome_js_analyze/src/lint/nursery/use_iframe_sandbox.rs
+@@ -0,0 +1,89 @@
++use biome_analyze::{
++    Ast, Rule, RuleDiagnostic, RuleSource, context::RuleContext, declare_lint_rule,
++};
++use biome_console::markup;
++use biome_diagnostics::Severity;
++use biome_js_syntax::jsx_ext::AnyJsxElement;
++use biome_rowan::AstNode;
++use biome_rule_options::use_iframe_sandbox::UseIframeSandboxOptions;
++
++declare_lint_rule! {
++    /// Enforce the 'sandbox' attribute for 'iframe' elements.
++    ///
++    /// The sandbox attribute enables an extra set of restrictions for the content in the iframe.
++    /// Using the sandbox attribute is considered a good security practice.
++    ///
++    /// See [the Mozilla docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#sandbox) for details.
++    ///
++    /// ## Examples
++    ///
++    /// ### Invalid
++    ///
++    /// ```jsx,expect_diagnostic
++    /// function MyComponent() {
++    ///   return <iframe src="https://example.com" />;
++    /// }
++    /// ```
++    ///
++    /// ### Valid
++    ///
++    /// ```jsx
++    /// function MyComponent() {
++    ///   return <iframe src="https://example.com" sandbox="allow-popups" />;
++    /// }
++    /// ```
++    ///
++    pub UseIframeSandbox {
++        version: "next",
++        name: "useIframeSandbox",
++        language: "jsx",
++        recommended: false,
++        severity: Severity::Warning,
++        sources: &[RuleSource::EslintReactDom("no-missing-iframe-sandbox").inspired(), RuleSource::EslintReactXyz("dom-no-missing-iframe-sandbox").same()],
++    }
++}
++
++impl Rule for UseIframeSandbox {
++    type Query = Ast<AnyJsxElement>;
++    type State = ();
++    type Signals = Option<Self::State>;
++    type Options = UseIframeSandboxOptions;
++
++    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
++        let element = ctx.query();
++        let name = element.name().ok()?.name_value_token().ok()?;
++
++        if name.text_trimmed() != "iframe" {
++            return None;
++        }
++
++        if element
++            .find_attribute_by_name("sandbox")
++            .is_none_or(|sandbox_attribute| sandbox_attribute.as_static_value().is_none())
++            && !element.has_spread_prop()
++        {
++            return Some(());
++        }
++
++        None
++    }
++
++    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
++        let node = ctx.query();
++        Some(
++            RuleDiagnostic::new(
++                rule_category!(),
++                node.range(),
++                markup! {
++                    "Iframe doesn't have the "<Emphasis>"sandbox"</Emphasis>" attribute."
++                }
++            )
++            .note(markup! {
++                "The sandbox attribute enables an extra set of restrictions for the content in the iframe, protecting against malicious scripts and other security threats."
++            })
++            .note(markup! {
++                "Provide a "<Emphasis>"sandbox"</Emphasis>" attribute when using "<Emphasis>"iframe"</Emphasis>" elements."
++            }),
++        )
++    }
++}
+diff --git a/crates/biome_rule_options/src/lib.rs b/crates/biome_rule_options/src/lib.rs
+index 521437d693..bf1b8b27aa 100644
+--- a/crates/biome_rule_options/src/lib.rs
++++ b/crates/biome_rule_options/src/lib.rs
+@@ -384,6 +384,7 @@ pub mod use_guard_for_in;
+ pub mod use_heading_content;
+ pub mod use_hook_at_top_level;
+ pub mod use_html_lang;
++pub mod use_iframe_sandbox;
+ pub mod use_iframe_title;
+ pub mod use_image_size;
+ pub mod use_import_extensions;
+diff --git a/crates/biome_rule_options/src/use_iframe_sandbox.rs b/crates/biome_rule_options/src/use_iframe_sandbox.rs
+new file mode 100644
+index 0000000000..de32ff0449
+--- /dev/null
++++ b/crates/biome_rule_options/src/use_iframe_sandbox.rs
+@@ -0,0 +1,6 @@
++use biome_deserialize_macros::{Deserializable, Merge};
++use serde::{Deserialize, Serialize};
++#[derive(Default, Clone, Debug, Deserialize, Deserializable, Merge, Eq, PartialEq, Serialize)]
++#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
++#[serde(rename_all = "camelCase", deny_unknown_fields, default)]
++pub struct UseIframeSandboxOptions {}
+diff --git a/packages/@biomejs/backend-jsonrpc/src/workspace.ts b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+index 718af0d681..e3be2dfd46 100644
+--- a/packages/@biomejs/backend-jsonrpc/src/workspace.ts
++++ b/packages/@biomejs/backend-jsonrpc/src/workspace.ts
+@@ -2481,6 +2481,11 @@ See https://biomejs.dev/linter/rules/use-global-this
+ 	 */
+ 	useGlobalThis?: UseGlobalThisConfiguration;
+ 	/**
++	* Enforce the 'sandbox' attribute for 'iframe' elements.
++See https://biomejs.dev/linter/rules/use-iframe-sandbox 
++	 */
++	useIframeSandbox?: UseIframeSandboxConfiguration;
++	/**
+ 	* Enforce that all imports appear at the top of the module.
+ See https://biomejs.dev/linter/rules/use-imports-first 
+ 	 */
+@@ -4442,6 +4447,9 @@ export type UseFindConfiguration =
+ export type UseGlobalThisConfiguration =
+ 	| RulePlainConfiguration
+ 	| RuleWithUseGlobalThisOptions;
++export type UseIframeSandboxConfiguration =
++	| RulePlainConfiguration
++	| RuleWithUseIframeSandboxOptions;
+ export type UseImportsFirstConfiguration =
+ 	| RulePlainConfiguration
+ 	| RuleWithUseImportsFirstOptions;
+@@ -6244,6 +6252,10 @@ export interface RuleWithUseGlobalThisOptions {
+ 	level: RulePlainConfiguration;
+ 	options?: UseGlobalThisOptions;
+ }
++export interface RuleWithUseIframeSandboxOptions {
++	level: RulePlainConfiguration;
++	options?: UseIframeSandboxOptions;
++}
+ export interface RuleWithUseImportsFirstOptions {
+ 	level: RulePlainConfiguration;
+ 	options?: UseImportsFirstOptions;
+@@ -7864,6 +7876,7 @@ When `true`, only declarations (function statements and class methods) are check
+ export type UseExplicitTypeOptions = {};
+ export type UseFindOptions = {};
+ export type UseGlobalThisOptions = {};
++export type UseIframeSandboxOptions = {};
+ export type UseImportsFirstOptions = {};
+ export type UseInlineScriptIdOptions = {};
+ export interface UseInputNameOptions {
+@@ -8901,6 +8914,7 @@ export type Category =
+ 	| "lint/nursery/useExplicitType"
+ 	| "lint/nursery/useFind"
+ 	| "lint/nursery/useGlobalThis"
++	| "lint/nursery/useIframeSandbox"
+ 	| "lint/nursery/useImportRestrictions"
+ 	| "lint/nursery/useImportsFirst"
+ 	| "lint/nursery/useInlineScriptId"
+diff --git a/packages/@biomejs/biome/configuration_schema.json b/packages/@biomejs/biome/configuration_schema.json
+index beba3eda1c..99b7ba4b17 100644
+--- a/packages/@biomejs/biome/configuration_schema.json
++++ b/packages/@biomejs/biome/configuration_schema.json
+@@ -6590,6 +6590,13 @@
+ 						{ "type": "null" }
+ 					]
+ 				},
++				"useIframeSandbox": {
++					"description": "Enforce the 'sandbox' attribute for 'iframe' elements.\nSee https://biomejs.dev/linter/rules/use-iframe-sandbox",
++					"anyOf": [
++						{ "$ref": "#/$defs/UseIframeSandboxConfiguration" },
++						{ "type": "null" }
++					]
++				},
+ 				"useImportsFirst": {
+ 					"description": "Enforce that all imports appear at the top of the module.\nSee https://biomejs.dev/linter/rules/use-imports-first",
+ 					"anyOf": [
+@@ -10977,6 +10984,15 @@
+ 			"additionalProperties": false,
+ 			"required": ["level"]
+ 		},
++		"RuleWithUseIframeSandboxOptions": {
++			"type": "object",
++			"properties": {
++				"level": { "$ref": "#/$defs/RulePlainConfiguration" },
++				"options": { "$ref": "#/$defs/UseIframeSandboxOptions" }
++			},
++			"additionalProperties": false,
++			"required": ["level"]
++		},
+ 		"RuleWithUseIframeTitleOptions": {
+ 			"type": "object",
+ 			"properties": {
+@@ -14359,6 +14375,16 @@
+ 			]
+ 		},
+ 		"UseHtmlLangOptions": { "type": "object", "additionalProperties": false },
++		"UseIframeSandboxConfiguration": {
++			"oneOf": [
++				{ "$ref": "#/$defs/RulePlainConfiguration" },
++				{ "$ref": "#/$defs/RuleWithUseIframeSandboxOptions" }
++			]
++		},
++		"UseIframeSandboxOptions": {
++			"type": "object",
++			"additionalProperties": false
++		},
+ 		"UseIframeTitleConfiguration": {
+ 			"oneOf": [
+ 				{ "$ref": "#/$defs/RulePlainConfiguration" },

@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python/ray/tests/test_runtime_env_packaging.py::test_unzip_package_skips_path_traversal_entries /workspace/repo/python/ray/tests/test_runtime_env_packaging.py::test_unzip_package_skips_nested_path_traversal_entries /workspace/repo/python/ray/tests/test_runtime_env_packaging.py::test_unzip_package_does_not_write_to_sibling_directory /workspace/repo/python/ray/tests/test_runtime_env_packaging.py::test_unzip_package_writes_to_extraction_path_not_resolved_path /workspace/repo/python/ray/tests/test_runtime_env_packaging.py::test_unzip_package_remove_top_level_ignores_unsafe_top_level /workspace/repo/python/ray/tests/test_runtime_env_packaging.py::test_remove_dir_from_filepaths_rejects_unsafe_rdir -v",
+  "test_files": [
+    "python/ray/tests/test_runtime_env_packaging.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_skips_path_traversal_entries",
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_skips_nested_path_traversal_entries",
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_does_not_write_to_sibling_directory",
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_remove_top_level_ignores_unsafe_top_level[../outside.txt]",
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_remove_top_level_ignores_unsafe_top_level[../../outside.txt]",
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_remove_top_level_ignores_unsafe_top_level[C:/absolute/file.txt]",
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_remove_top_level_ignores_unsafe_top_level[C:\\\\absolute\\\\file.txt]",
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_remove_top_level_ignores_unsafe_top_level[dir/../../outside.txt]",
+    "python.ray.tests.test_runtime_env_packaging::test_remove_dir_from_filepaths_rejects_unsafe_rdir[]",
+    "python.ray.tests.test_runtime_env_packaging::test_remove_dir_from_filepaths_rejects_unsafe_rdir[.]",
+    "python.ray.tests.test_runtime_env_packaging::test_remove_dir_from_filepaths_rejects_unsafe_rdir[..]",
+    "python.ray.tests.test_runtime_env_packaging::test_remove_dir_from_filepaths_rejects_unsafe_rdir[/abs]",
+    "python.ray.tests.test_runtime_env_packaging::test_remove_dir_from_filepaths_rejects_unsafe_rdir[C:/abs]",
+    "python.ray.tests.test_runtime_env_packaging::test_remove_dir_from_filepaths_rejects_unsafe_rdir[C:\\\\abs]"
+  ],
+  "PASS_TO_PASS": [
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_writes_to_extraction_path_not_resolved_path",
+    "python.ray.tests.test_runtime_env_packaging::test_unzip_package_remove_top_level_ignores_unsafe_top_level[/absolute/file.txt]"
+  ]
+}

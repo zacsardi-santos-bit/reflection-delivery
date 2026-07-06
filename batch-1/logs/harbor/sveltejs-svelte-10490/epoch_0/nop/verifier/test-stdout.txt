@@ -1,0 +1,504 @@
+patching file packages/svelte/tests/css/samples/child-combinator/expected.css
+patching file packages/svelte/tests/css/samples/descendant-selector-unmatched/expected.css
+patching file packages/svelte/tests/css/samples/descendant-selector-unmatched/input.svelte
+patching file packages/svelte/tests/css/samples/dynamic-element-tag/expected.css
+patching file packages/svelte/tests/css/samples/general-siblings-combinator-star/expected.css
+patching file packages/svelte/tests/css/samples/general-siblings-combinator-star/expected.html
+patching file packages/svelte/tests/css/samples/general-siblings-combinator/expected.css
+patching file packages/svelte/tests/css/samples/global-with-child-combinator-2/_config.js
+patching file packages/svelte/tests/css/samples/global-with-child-combinator-2/expected.css
+patching file packages/svelte/tests/css/samples/global-with-child-combinator-2/expected.html
+patching file packages/svelte/tests/css/samples/global-with-child-combinator-2/input.svelte
+patching file packages/svelte/tests/css/samples/global-with-child-combinator-3/_config.js
+patching file packages/svelte/tests/css/samples/global-with-child-combinator-3/expected.css
+patching file packages/svelte/tests/css/samples/global-with-child-combinator-3/expected.html
+patching file packages/svelte/tests/css/samples/global-with-child-combinator-3/input.svelte
+patching file packages/svelte/tests/css/samples/is/expected.css
+patching file packages/svelte/tests/css/samples/is/input.svelte
+patching file packages/svelte/tests/css/samples/nested-css/expected.css
+patching file packages/svelte/tests/css/samples/nested-css/input.svelte
+patching file packages/svelte/tests/css/samples/omit-scoping-attribute-whitespace-multiple/expected.css
+patching file packages/svelte/tests/css/samples/omit-scoping-attribute-whitespace-multiple/expected.html
+patching file packages/svelte/tests/css/samples/preserve-specificity/expected.css
+patching file packages/svelte/tests/css/samples/preserve-specificity/expected.html
+patching file packages/svelte/tests/css/samples/siblings-combinator-star/expected.css
+patching file packages/svelte/tests/css/samples/siblings-combinator-star/expected.html
+patching file packages/svelte/tests/css/samples/siblings-combinator/expected.css
+patching file packages/svelte/tests/css/samples/special-characters/expected.css
+patching file packages/svelte/tests/css/samples/special-characters/input.svelte
+
+ RUN  v1.2.1 /workspace/repo
+
+ ✓ packages/svelte/tests/css/test.ts > animations
+ ✓ packages/svelte/tests/css/test.ts > at-layer
+ ✓ packages/svelte/tests/css/test.ts > attribute-selector-bind
+ ✓ packages/svelte/tests/css/test.ts > attribute-selector-case-sensitive
+ ✓ packages/svelte/tests/css/test.ts > attribute-selector-details-open
+ ✓ packages/svelte/tests/css/test.ts > attribute-selector-dialog-open
+ ✓ packages/svelte/tests/css/test.ts > attribute-selector-only-name
+ ✓ packages/svelte/tests/css/test.ts > attribute-selector-unquoted
+ ✓ packages/svelte/tests/css/test.ts > attribute-selector-word-arbitrary-whitespace
+ ✓ packages/svelte/tests/css/test.ts > basic
+ × packages/svelte/tests/css/test.ts > child-combinator
+   → expected 'main.svelte-xyz button:where(.svelte-…' to equal 'main.svelte-xyz button:where(.svelte-…'
+ ✓ packages/svelte/tests/css/test.ts > combinator-child
+ ✓ packages/svelte/tests/css/test.ts > comment-html
+ ✓ packages/svelte/tests/css/test.ts > comment-repeated
+ ✓ packages/svelte/tests/css/test.ts > container-query
+ ✓ packages/svelte/tests/css/test.ts > css-vars
+ ✓ packages/svelte/tests/css/test.ts > custom-css-hash
+ ✓ packages/svelte/tests/css/test.ts > descendant-selector-non-top-level-outer
+ × packages/svelte/tests/css/test.ts > descendant-selector-unmatched
+   → expected 'x.svelte-xyz y z:where(.svelte-xyz) {…' to equal '/* (unused) x y z {\n\t\tcolor: red;\…'
+ ✓ packages/svelte/tests/css/test.ts > directive-special-character
+ ✓ packages/svelte/tests/css/test.ts > dynamic-element
+ × packages/svelte/tests/css/test.ts > dynamic-element-tag
+   → expected 'div.svelte-xyz {\n\t\tcolor: red;\n\t…' to equal 'div.svelte-xyz {\n\t\tcolor: red;\n\t…'
+ ✓ packages/svelte/tests/css/test.ts > empty-class
+ ✓ packages/svelte/tests/css/test.ts > empty-rule
+ ✓ packages/svelte/tests/css/test.ts > empty-rule-dev
+ × packages/svelte/tests/css/test.ts > general-siblings-combinator
+   → expected 'div.svelte-xyz ~ article:where(.svelt…' to equal 'div.svelte-xyz ~ article:where(.svelt…'
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-await
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-await-not-exhaustive
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-each
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-each-2
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-each-else
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-each-else-nested
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-each-nested
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-former-element-in-slot
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-if
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-if-not-exhaustive
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-if-not-exhaustive-with-each
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-nested-slots
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-nested-slots-flattened
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-selects-slot-fallback
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-slot
+ ✓ packages/svelte/tests/css/test.ts > general-siblings-combinator-slots-between
+ × packages/svelte/tests/css/test.ts > general-siblings-combinator-star
+   → expected '.match.svelte-xyz > :where(.svelte-xy…' to equal '.match.svelte-xyz > * ~ :where(.svelt…'
+ ✓ packages/svelte/tests/css/test.ts > global
+ ✓ packages/svelte/tests/css/test.ts > global-keyframes
+ ✓ packages/svelte/tests/css/test.ts > global-keyframes-with-no-elements
+ ✓ packages/svelte/tests/css/test.ts > global-with-child-combinator
+ × packages/svelte/tests/css/test.ts > global-with-child-combinator-2
+   → expected '<div class="svelte-xyz"><div class="s…' to deeply equal '<div class="svelte-xyz"><div></div></…'
+ ✓ packages/svelte/tests/css/test.ts > global-with-class
+ ✓ packages/svelte/tests/css/test.ts > global-with-unused-descendant
+ ✓ packages/svelte/tests/css/test.ts > host
+ × packages/svelte/tests/css/test.ts > is
+   → expected 'x.svelte-xyz :where(.svelte-xyz):is(y…' to equal 'x.svelte-xyz :is(y:where(.svelte-xyz)…'
+ ✓ packages/svelte/tests/css/test.ts > keyframes
+ ✓ packages/svelte/tests/css/test.ts > keyframes-autoprefixed
+ ✓ packages/svelte/tests/css/test.ts > keyframes-from-to
+ ✓ packages/svelte/tests/css/test.ts > local-inside-global
+ ✓ packages/svelte/tests/css/test.ts > media-query
+ ✓ packages/svelte/tests/css/test.ts > media-query-word
+ ✓ packages/svelte/tests/css/test.ts > nested
+ × packages/svelte/tests/css/test.ts > nested-css
+   → Expected token ;
+ ✓ packages/svelte/tests/css/test.ts > not-selector
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector-contains
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector-equals
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector-equals-case-insensitive
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector-equals-dynamic
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector-pipe-equals
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector-prefix
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector-suffix
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-attribute-selector-word-equals
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-class-dynamic
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-class-static
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-descendant
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-descendant-global-inner
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-descendant-global-inner-class
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-descendant-global-inner-multiple
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-descendant-global-outer
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-descendant-global-outer-multiple
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-global
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-global-children
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-global-descendants
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-id
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-multiple-descendants
+ ✓ packages/svelte/tests/css/test.ts > omit-scoping-attribute-whitespace
+ × packages/svelte/tests/css/test.ts > omit-scoping-attribute-whitespace-multiple
+   → expected 'div.svelte-xyz section p:where(.svelt…' to equal 'div.svelte-xyz section:where(.svelte-…'
+ × packages/svelte/tests/css/test.ts > preserve-specificity
+   → expected 'a.svelte-xyz b c span:where(.svelte-x…' to equal 'a.svelte-xyz b:where(.svelte-xyz) c:w…'
+ ✓ packages/svelte/tests/css/test.ts > pseudo-element
+ ✓ packages/svelte/tests/css/test.ts > quote-mark-inside-string
+ ✓ packages/svelte/tests/css/test.ts > root
+ × packages/svelte/tests/css/test.ts > siblings-combinator
+   → expected 'div.svelte-xyz + article:where(.svelt…' to equal 'div.svelte-xyz + article:where(.svelt…'
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-await
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-await-not-exhaustive
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-each
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-each-2
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-each-else
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-each-else-nested
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-each-nested
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-former-element-in-slot
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-global
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-if
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-if-not-exhaustive
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-if-not-exhaustive-with-each
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-nested-slots
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-nested-slots-flattened
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-selects-slot-fallback
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-slot
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-slots-between
+ × packages/svelte/tests/css/test.ts > siblings-combinator-star
+   → expected '.match.svelte-xyz > :where(.svelte-xy…' to equal '.match.svelte-xyz > * + :where(.svelt…'
+ ✓ packages/svelte/tests/css/test.ts > siblings-combinator-with-spread
+ ✓ packages/svelte/tests/css/test.ts > special-characters
+ ✓ packages/svelte/tests/css/test.ts > spread
+ ✓ packages/svelte/tests/css/test.ts > supports-charset
+ ✓ packages/svelte/tests/css/test.ts > supports-font-face
+ ✓ packages/svelte/tests/css/test.ts > supports-import
+ ✓ packages/svelte/tests/css/test.ts > supports-namespace
+ ✓ packages/svelte/tests/css/test.ts > supports-page
+ ✓ packages/svelte/tests/css/test.ts > supports-query
+ ✓ packages/svelte/tests/css/test.ts > undefined-with-scope
+ ✓ packages/svelte/tests/css/test.ts > universal-selector
+ ✓ packages/svelte/tests/css/test.ts > unknown-at-rule
+ ✓ packages/svelte/tests/css/test.ts > unknown-at-rule-with-following-rules
+ ✓ packages/svelte/tests/css/test.ts > unused-selector
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-child-combinator
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-empty-attribute
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-leading
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-string-concat
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-ternary
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-ternary-bailed
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-ternary-concat
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-ternary-nested
+ ✓ packages/svelte/tests/css/test.ts > unused-selector-trailing
+ ✓ packages/svelte/tests/css/test.ts > weird-selectors
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > child-combinator
+AssertionError: expected 'main.svelte-xyz button:where(.svelte-…' to equal 'main.svelte-xyz button:where(.svelte-…'
+
+- Expected
++ Received
+
+  main.svelte-xyz button:where(.svelte-xyz) {
+      background-color: red;
+    }
+
+-   main.svelte-xyz div > button:where(.svelte-xyz) {
++   main.svelte-xyz div:where(.svelte-xyz) > button:where(.svelte-xyz) {
+      background-color: blue;
+    }
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > descendant-selector-unmatched
+AssertionError: expected 'x.svelte-xyz y z:where(.svelte-xyz) {…' to equal '/* (unused) x y z {\n\t\tcolor: red;\…'
+
+- Expected
++ Received
+
+- /* (unused) x y z {
++ x.svelte-xyz y z:where(.svelte-xyz) {
+  		color: red;
+- 	}*/
++ 	}
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > dynamic-element-tag
+AssertionError: expected 'div.svelte-xyz {\n\t\tcolor: red;\n\t…' to equal 'div.svelte-xyz {\n\t\tcolor: red;\n\t…'
+
+- Expected
++ Received
+
+  div.svelte-xyz {
+  		color: red;
+  	}
+  	h2.svelte-xyz > p:where(.svelte-xyz) {
+  		color: red;
+  	}
+  	h2.svelte-xyz span:where(.svelte-xyz) {
+  		color: red;
+  	}
+- 	h2.svelte-xyz > span > b:where(.svelte-xyz) {
++ 	h2.svelte-xyz > span:where(.svelte-xyz) > b:where(.svelte-xyz) {
+  		color: red;
+  	}
+- 	h2.svelte-xyz span:where(.svelte-xyz) b:where(.svelte-xyz) {
++ 	h2.svelte-xyz span b:where(.svelte-xyz) {
+  		color: red;
+  	}
+  	h2.svelte-xyz b:where(.svelte-xyz) {
+  		color: red;
+  	}
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > general-siblings-combinator
+AssertionError: expected 'div.svelte-xyz ~ article:where(.svelt…' to equal 'div.svelte-xyz ~ article:where(.svelt…'
+
+- Expected
++ Received
+
+  div.svelte-xyz ~ article:where(.svelte-xyz) { color: green; }
+  	span.svelte-xyz ~ b:where(.svelte-xyz) { color: green; }
+- 	div.svelte-xyz span ~ b:where(.svelte-xyz) { color: green; }
++ 	div.svelte-xyz span:where(.svelte-xyz) ~ b:where(.svelte-xyz) { color: green; }
+  	.a.svelte-xyz ~ article:where(.svelte-xyz) { color: green; }
+  	div.svelte-xyz ~ .b:where(.svelte-xyz) { color: green; }
+  	.a.svelte-xyz ~ .c:where(.svelte-xyz) { color: green; }
+  	article.svelte-xyz ~ details:where(.svelte-xyz) { color: green; }
+  	.a.svelte-xyz ~ details:where(.svelte-xyz) { color: green; }
+
+  	/* no match */
+  	/* (unused) article ~ div { color: green; }*/
+  	/* (unused) span ~ article { color: green; }*/
+  	/* (unused) b ~ article { color: green; }*/
+  	/* (unused) span ~ div { color: green; }*/
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > general-siblings-combinator-star
+AssertionError: expected '.match.svelte-xyz > :where(.svelte-xy…' to equal '.match.svelte-xyz > * ~ :where(.svelt…'
+
+- Expected
++ Received
+
+- .match.svelte-xyz > * ~ :where(.svelte-xyz) {
++ .match.svelte-xyz > :where(.svelte-xyz) ~ :where(.svelte-xyz) {
+  		margin-left: 4px;
+  	}
+  	/* (unused) .not-match > * ~ * {
+  		margin-left: 4px;
+  	}*/
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > global-with-child-combinator-2
+AssertionError: expected '<div class="svelte-xyz"><div class="s…' to deeply equal '<div class="svelte-xyz"><div></div></…'
+
+- Expected
++ Received
+
+- <div class="svelte-xyz"><div></div></div>
++ <div class="svelte-xyz"><div class="svelte-xyz"></div></div>
+
+ ❯ packages/svelte/tests/css/test.ts:64:3
+     62|   fs.writeFileSync(`${cwd}/_output/rendered.html`, html);
+     63| 
+     64|   assert_html_equal(html, expected.html);
+       |   ^
+     65| 
+     66|   $destroy();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > is
+AssertionError: expected 'x.svelte-xyz :where(.svelte-xyz):is(y…' to equal 'x.svelte-xyz :is(y:where(.svelte-xyz)…'
+
+- Expected
++ Received
+
+- x.svelte-xyz :is(y:where(.svelte-xyz) /* (unused) z*/) {
++ x.svelte-xyz :where(.svelte-xyz):is(y, z) {
+  		color: purple;
+  	}
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > nested-css
+CompileError: Expected token ;
+ ❯ Module.error packages/svelte/src/compiler/errors.js:541:8
+    539|  const end = typeof node === 'number' ? node : node?.end;
+    540| 
+    541|  throw new CompileError(
+       |        ^
+    542|   code,
+    543|   message,
+ ❯ Parser.eat packages/svelte/src/compiler/phases/1-parse/index.js:178:5
+ ❯ read_declaration packages/svelte/src/compiler/phases/1-parse/read/style.js:475:10
+ ❯ read_block packages/svelte/src/compiler/phases/1-parse/read/style.js:444:18
+ ❯ read_rule packages/svelte/src/compiler/phases/1-parse/read/style.js:139:10
+ ❯ read_body packages/svelte/src/compiler/phases/1-parse/read/style.js:63:18
+ ❯ Module.read_style [as default] packages/svelte/src/compiler/phases/1-parse/read/style.js:25:19
+ ❯ tag packages/svelte/src/compiler/phases/1-parse/state/element.js:281:30
+ ❯ new Parser packages/svelte/src/compiler/phases/1-parse/index.js:87:12
+ ❯ Module.parse packages/svelte/src/compiler/phases/1-parse/index.js:315:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { filename: '/workspace/repo/packages/svelte/tests/css/samples/nested-css/input.svelte', position: [ 240, 240 ], start: { line: 20, column: 14, character: 240 }, end: { line: 20, column: 14, character: 240 }, code: 'expected-token' }
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > omit-scoping-attribute-whitespace-multiple
+AssertionError: expected 'div.svelte-xyz section p:where(.svelt…' to equal 'div.svelte-xyz section:where(.svelte-…'
+
+- Expected
++ Received
+
+- div.svelte-xyz section:where(.svelte-xyz) p:where(.svelte-xyz) {
++ div.svelte-xyz section p:where(.svelte-xyz) {
+  		color: red;
+  	}
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > preserve-specificity
+AssertionError: expected 'a.svelte-xyz b c span:where(.svelte-x…' to equal 'a.svelte-xyz b:where(.svelte-xyz) c:w…'
+
+- Expected
++ Received
+
+- a.svelte-xyz b:where(.svelte-xyz) c:where(.svelte-xyz) span:where(.svelte-xyz) {
++ a.svelte-xyz b c span:where(.svelte-xyz) {
+      color: red;
+      font-size: 2em;
+      font-family: 'Comic Sans MS';
+    }
+    .foo.svelte-xyz {
+      color: green;
+    }
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > siblings-combinator
+AssertionError: expected 'div.svelte-xyz + article:where(.svelt…' to equal 'div.svelte-xyz + article:where(.svelt…'
+
+- Expected
++ Received
+
+  div.svelte-xyz + article:where(.svelte-xyz) {
+  		color: green;
+  	}
+  	/* (unused) article + div {
+  		color: green;
+  	}*/
+  	/* (unused) span + article {
+  		color: green;
+  	}*/
+  	/* (unused) b + article {
+  		color: green;
+  	}*/
+  	/* (unused) span + div {
+  		color: green;
+  	}*/
+  	span.svelte-xyz + b:where(.svelte-xyz) {
+  		color: green;
+  	}
+- 	div.svelte-xyz span + b:where(.svelte-xyz) {
++ 	div.svelte-xyz span:where(.svelte-xyz) + b:where(.svelte-xyz) {
+  		color: green;
+  	}
+  	.a.svelte-xyz + article:where(.svelte-xyz) {
+  		color: green;
+  	}
+  	div.svelte-xyz + .b:where(.svelte-xyz) {
+  		color: green;
+  	}
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL  packages/svelte/tests/css/test.ts > siblings-combinator-star
+AssertionError: expected '.match.svelte-xyz > :where(.svelte-xy…' to equal '.match.svelte-xyz > * + :where(.svelt…'
+
+- Expected
++ Received
+
+- .match.svelte-xyz > * + :where(.svelte-xyz) {
++ .match.svelte-xyz > :where(.svelte-xyz) + :where(.svelte-xyz) {
+  		margin-left: 4px;
+  	}
+  	/* (unused) .not-match > * + * {
+  		margin-left: 4px;
+  	}*/
+
+ ❯ packages/svelte/tests/css/test.ts:47:9
+     45|  };
+     46| 
+     47|  assert.equal(dom_css.trim().replace(/\r\n/g, '\n'), (expected.css ?? …
+       |         ^
+     48| 
+     49|  // we do this here, rather than in the expected.html !== null
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+ Test Files  1 failed (1)
+      Tests  12 failed | 121 passed | 1 skipped (134)
+   Start at  15:16:08
+   Duration  3.34s (transform 810ms, setup 0ms, collect 784ms, tests 1.22s, environment 404ms, prepare 105ms)
+
+reward=0 graded=133 found=0 failed=0 parsed=0 framework=vitest exit_code=1

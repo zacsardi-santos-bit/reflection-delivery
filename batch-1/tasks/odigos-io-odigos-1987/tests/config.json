@@ -1,0 +1,43 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/common && go test -v . -count=1",
+  "test_files": [
+    "common/instrumentationdevice_test.go",
+    "tests/e2e/workload-lifecycle/01-assert-apps-installed.yaml",
+    "tests/e2e/workload-lifecycle/01-assert-runtime-detected.yaml",
+    "tests/e2e/workload-lifecycle/01-assert-workloads.yaml",
+    "tests/e2e/workload-lifecycle/01-generate-traffic.yaml",
+    "tests/e2e/workload-lifecycle/01-install-test-apps.yaml",
+    "tests/e2e/workload-lifecycle/02-assert-workload-update.yaml",
+    "tests/e2e/workload-lifecycle/02-update-workload-manifests.yaml",
+    "tests/e2e/workload-lifecycle/03-wait-for-trace.yaml",
+    "tests/e2e/workload-lifecycle/chainsaw-test.yaml",
+    "tests/e2e/workload-lifecycle/services/dotnet-musl-server/Dockerfile",
+    "tests/e2e/workload-lifecycle/services/dotnet-musl-server/Program.cs",
+    "tests/e2e/workload-lifecycle/services/dotnet-musl-server/dotnet-musl-server.csproj",
+    "tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/dotnet-musl-server.csproj.nuget.dgspec.json",
+    "tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/dotnet-musl-server.csproj.nuget.g.props",
+    "tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/dotnet-musl-server.csproj.nuget.g.targets",
+    "tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/project.assets.json",
+    "tests/e2e/workload-lifecycle/services/dotnet-musl-server/obj/project.nuget.cache"
+  ],
+  "num_test_files": 18,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/odigos-io/odigos/common::TestInstrumentationPluginName",
+    "github.com/odigos-io/odigos/common::TestInstrumentationPluginNameMusl",
+    "github.com/odigos-io/odigos/common::TestInstrumentationPluginNameGlib",
+    "github.com/odigos-io/odigos/common::TestInstrumentationDeviceName",
+    "github.com/odigos-io/odigos/common::TestInstrumentationDeviceNameGlib",
+    "github.com/odigos-io/odigos/common::TestInstrumentationDeviceNameToComponents",
+    "github.com/odigos-io/odigos/common::TestInstrumentationDeviceNameToComponentsMusl",
+    "github.com/odigos-io/odigos/common::TestSpanKindOdigosToOtel/Client",
+    "github.com/odigos-io/odigos/common::TestSpanKindOdigosToOtel/Server",
+    "github.com/odigos-io/odigos/common::TestSpanKindOdigosToOtel/Producer",
+    "github.com/odigos-io/odigos/common::TestSpanKindOdigosToOtel/Consumer",
+    "github.com/odigos-io/odigos/common::TestSpanKindOdigosToOtel/Internal",
+    "github.com/odigos-io/odigos/common::TestSpanKindOdigosToOtel/Unspecified",
+    "github.com/odigos-io/odigos/common::TestSpanKindOdigosToOtel"
+  ],
+  "PASS_TO_PASS": []
+}

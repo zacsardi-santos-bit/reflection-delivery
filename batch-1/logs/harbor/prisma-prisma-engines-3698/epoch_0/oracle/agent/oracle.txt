@@ -1,0 +1,12 @@
+patching file Cargo.lock
+patching file introspection-engine/connectors/sql-introspection-connector/src/pair/model.rs
+patching file introspection-engine/connectors/sql-introspection-connector/src/rendering/models.rs
+patching file introspection-engine/connectors/sql-introspection-connector/src/warnings/generators.rs
+patching file introspection-engine/connectors/sql-introspection-connector/src/warnings/model.rs
+patching file libs/sql-schema-describer/Cargo.toml
+patching file libs/sql-schema-describer/src/lib.rs
+patching file libs/sql-schema-describer/src/mysql.rs
+patching file libs/sql-schema-describer/src/postgres.rs
+patching file libs/sql-schema-describer/src/postgres/tables_query.sql
+patching file libs/sql-schema-describer/src/postgres/tables_query_simple.sql
+patching file libs/sql-schema-describer/src/walkers/table.rs

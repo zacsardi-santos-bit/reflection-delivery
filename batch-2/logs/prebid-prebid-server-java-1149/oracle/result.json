@@ -1,0 +1,29 @@
+{
+    "id": "619a14f5-976c-4f36-bec7-db534dcedfbb",
+    "started_at": "2026-07-04T15:40:43.780420",
+    "finished_at": "2026-07-04T15:41:30.514894",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__prebid-prebid-server-java-1149": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "prebid-prebid-server-java-1149__AiFtFXZ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

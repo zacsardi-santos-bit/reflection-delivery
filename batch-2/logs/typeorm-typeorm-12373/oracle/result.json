@@ -1,0 +1,29 @@
+{
+    "id": "e3aef68a-916a-4754-89a8-3262a08dda3f",
+    "started_at": "2026-07-06T12:19:15.111478",
+    "finished_at": "2026-07-06T12:19:36.117237",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__typeorm-typeorm-12373": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "typeorm-typeorm-12373__WbudAqa"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

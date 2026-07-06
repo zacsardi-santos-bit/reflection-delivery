@@ -1,0 +1,3 @@
+patching file .changeset/cyan-oranges-wait.md
+patching file __docs__/wonder-blocks-popover/popover.stories.tsx
+patching file packages/wonder-blocks-popover/src/components/focus-manager.tsx

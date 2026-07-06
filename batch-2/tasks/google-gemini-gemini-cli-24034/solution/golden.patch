@@ -1,0 +1,203 @@
+diff --git a/evals/tracker.eval.ts b/evals/tracker.eval.ts
+index 7afb41dbe..49bc903b0 100644
+--- a/evals/tracker.eval.ts
++++ b/evals/tracker.eval.ts
+@@ -113,4 +113,21 @@ describe('tracker_mode', () => {
+       assertModelHasOutput(result);
+     },
+   });
++
++  evalTest('USUALLY_PASSES', {
++    name: 'should correctly identify the task tracker storage location from the system prompt',
++    params: {
++      settings: { experimental: { taskTracker: true } },
++    },
++    prompt:
++      'Where is my task tracker storage located? Please provide the absolute path in your response.',
++    assert: async (rig, result) => {
++      // The rig sets GEMINI_CLI_HOME to rig.homeDir
++      const homeDir = rig.homeDir!;
++      // The response should contain the dynamic path which includes the home directory
++      // and follows the .gemini/tmp/.../tracker structure.
++      expect(result).toContain(homeDir);
++      expect(result).toMatch(/\.gemini\/tmp\/.*\/tracker/);
++    },
++  });
+ });
+diff --git a/packages/core/src/core/__snapshots__/prompts.test.ts.snap b/packages/core/src/core/__snapshots__/prompts.test.ts.snap
+index f95a4cc8d..91e2573e6 100644
+--- a/packages/core/src/core/__snapshots__/prompts.test.ts.snap
++++ b/packages/core/src/core/__snapshots__/prompts.test.ts.snap
+@@ -2899,7 +2899,7 @@ Use 'read_file' to understand context and validate any assumptions you may have.
+ 6. **Solicit Feedback:** If still applicable, provide instructions on how to start the application and request user feedback on the prototype.
+ 
+ # TASK MANAGEMENT PROTOCOL
+-You are operating with a persistent file-based task tracking system located at \`.tracker/tasks/\`. You must adhere to the following rules:
++You are operating with a persistent file-based task tracking system located at \`/mock/.gemini/tmp/session/tracker\`. You must adhere to the following rules:
+ 
+ 1.  **NO IN-MEMORY LISTS**: Do not maintain a mental list of tasks or write markdown checkboxes in the chat. Use the provided tools (\`tracker_create_task\`, \`tracker_list_tasks\`, \`tracker_update_task\`) for all state management.
+ 2.  **IMMEDIATE DECOMPOSITION**: Upon receiving a task, evaluate its functional complexity and scope. If the request involves more than a single atomic modification, or necessitates research before execution, you MUST immediately decompose it into discrete entries using \`tracker_create_task\`.
+@@ -3079,7 +3079,7 @@ Operate using a **Research -> Strategy -> Execution** lifecycle. For the Executi
+ 5. **Solicit Feedback:** Provide instructions on how to start the application and request user feedback on the prototype.
+ 
+ # TASK MANAGEMENT PROTOCOL
+-You are operating with a persistent file-based task tracking system located at \`.tracker/tasks/\`. You must adhere to the following rules:
++You are operating with a persistent file-based task tracking system located at \`/mock/.gemini/tmp/session/tracker\`. You must adhere to the following rules:
+ 
+ 1.  **NO IN-MEMORY LISTS**: Do not maintain a mental list of tasks or write markdown checkboxes in the chat. Use the provided tools (\`tracker_create_task\`, \`tracker_list_tasks\`, \`tracker_update_task\`) for all state management.
+ 2.  **IMMEDIATE DECOMPOSITION**: Upon receiving a task, evaluate its functional complexity and scope. If the request involves more than a single atomic modification, or necessitates research before execution, you MUST immediately decompose it into discrete entries using \`tracker_create_task\`.
+diff --git a/packages/core/src/prompts/promptProvider.ts b/packages/core/src/prompts/promptProvider.ts
+index 342580958..0036dae56 100644
+--- a/packages/core/src/prompts/promptProvider.ts
++++ b/packages/core/src/prompts/promptProvider.ts
+@@ -72,6 +72,16 @@ export class PromptProvider {
+     const activeSnippets = isModernModel ? snippets : legacySnippets;
+     const contextFilenames = getAllGeminiMdFilenames();
+ 
++    let trackerDir = context.config.isTrackerEnabled()
++      ? context.config.storage.getProjectTempTrackerDir()
++      : undefined;
++
++    if (trackerDir) {
++      // Sanitize path to prevent prompt injection
++      trackerDir = trackerDir.replace(/\n/g, ' ').replace(/\]/g, '');
++    }
++
++    // --- Context Gathering ---
+     let planModeToolsList = '';
+     if (isPlanMode) {
+       const allTools = context.toolRegistry.getAllTools();
+@@ -149,7 +159,7 @@ export class PromptProvider {
+             })),
+           skills.length > 0,
+         ),
+-        taskTracker: context.config.isTrackerEnabled(),
++        taskTracker: trackerDir,
+         hookContext: isSectionEnabled('hookContext') || undefined,
+         primaryWorkflows: this.withSection(
+           'primaryWorkflows',
+@@ -167,7 +177,7 @@ export class PromptProvider {
+             approvedPlan: approvedPlanPath
+               ? { path: approvedPlanPath }
+               : undefined,
+-            taskTracker: context.config.isTrackerEnabled(),
++            taskTracker: trackerDir,
+             topicUpdateNarration:
+               context.config.isTopicUpdateNarrationEnabled(),
+           }),
+@@ -180,7 +190,6 @@ export class PromptProvider {
+             planModeToolsList,
+             plansDir: context.config.storage.getPlansDir(),
+             approvedPlanPath: context.config.getApprovedPlanPath(),
+-            taskTracker: context.config.isTrackerEnabled(),
+           }),
+           isPlanMode,
+         ),
+diff --git a/packages/core/src/prompts/snippets.legacy.ts b/packages/core/src/prompts/snippets.legacy.ts
+index 5b9788604..4fea88937 100644
+--- a/packages/core/src/prompts/snippets.legacy.ts
++++ b/packages/core/src/prompts/snippets.legacy.ts
+@@ -37,7 +37,7 @@ export interface SystemPromptOptions {
+   hookContext?: boolean;
+   primaryWorkflows?: PrimaryWorkflowsOptions;
+   planningWorkflow?: PlanningWorkflowOptions;
+-  taskTracker?: boolean;
++  taskTracker?: string;
+   operationalGuidelines?: OperationalGuidelinesOptions;
+   sandbox?: SandboxOptions;
+   interactiveYoloMode?: boolean;
+@@ -63,7 +63,7 @@ export interface PrimaryWorkflowsOptions {
+   enableWriteTodosTool: boolean;
+   enableEnterPlanModeTool: boolean;
+   approvedPlan?: { path: string };
+-  taskTracker?: boolean;
++  taskTracker?: string;
+   topicUpdateNarration?: boolean;
+ }
+ 
+@@ -95,7 +95,6 @@ export interface PlanningWorkflowOptions {
+   planModeToolsList: string;
+   plansDir: string;
+   approvedPlanPath?: string;
+-  taskTracker?: boolean;
+ }
+ 
+ export interface AgentSkillOptions {
+@@ -132,7 +131,7 @@ ${
+     : renderPrimaryWorkflows(options.primaryWorkflows)
+ }
+ 
+-${options.taskTracker ? renderTaskTracker() : ''}
++${options.taskTracker ? renderTaskTracker(options.taskTracker) : ''}
+ 
+ ${renderOperationalGuidelines(options.operationalGuidelines)}
+ 
+@@ -491,10 +490,10 @@ An approved plan is available for this task.
+ `;
+ }
+ 
+-export function renderTaskTracker(): string {
++export function renderTaskTracker(trackerDir: string): string {
+   return `
+ # TASK MANAGEMENT PROTOCOL
+-You are operating with a persistent file-based task tracking system located at \`.tracker/tasks/\`. You must adhere to the following rules:
++You are operating with a persistent file-based task tracking system located at \`${trackerDir}\`. You must adhere to the following rules:
+ 
+ 1.  **NO IN-MEMORY LISTS**: Do not maintain a mental list of tasks or write markdown checkboxes in the chat. Use the provided tools (\`${TRACKER_CREATE_TASK_TOOL_NAME}\`, \`${TRACKER_LIST_TASKS_TOOL_NAME}\`, \`${TRACKER_UPDATE_TASK_TOOL_NAME}\`) for all state management.
+ 2.  **IMMEDIATE DECOMPOSITION**: Upon receiving a task, evaluate its functional complexity and scope. If the request involves more than a single atomic modification, or necessitates research before execution, you MUST immediately decompose it into discrete entries using \`${TRACKER_CREATE_TASK_TOOL_NAME}\`.
+diff --git a/packages/core/src/prompts/snippets.ts b/packages/core/src/prompts/snippets.ts
+index 77e397d5c..544058341 100644
+--- a/packages/core/src/prompts/snippets.ts
++++ b/packages/core/src/prompts/snippets.ts
+@@ -47,7 +47,7 @@ export interface SystemPromptOptions {
+   hookContext?: boolean;
+   primaryWorkflows?: PrimaryWorkflowsOptions;
+   planningWorkflow?: PlanningWorkflowOptions;
+-  taskTracker?: boolean;
++  taskTracker?: string;
+   operationalGuidelines?: OperationalGuidelinesOptions;
+   sandbox?: SandboxOptions;
+   interactiveYoloMode?: boolean;
+@@ -74,7 +74,7 @@ export interface PrimaryWorkflowsOptions {
+   enableGrep: boolean;
+   enableGlob: boolean;
+   approvedPlan?: { path: string };
+-  taskTracker?: boolean;
++  taskTracker?: string;
+   topicUpdateNarration: boolean;
+ }
+ 
+@@ -101,7 +101,6 @@ export interface PlanningWorkflowOptions {
+   planModeToolsList: string;
+   plansDir: string;
+   approvedPlanPath?: string;
+-  taskTracker?: boolean;
+ }
+ 
+ export interface AgentSkillOptions {
+@@ -139,7 +138,7 @@ ${
+     : renderPrimaryWorkflows(options.primaryWorkflows)
+ }
+ 
+-${options.taskTracker ? renderTaskTracker() : ''}
++${options.taskTracker ? renderTaskTracker(options.taskTracker) : ''}
+ 
+ ${renderOperationalGuidelines(options.operationalGuidelines)}
+ 
+@@ -537,14 +536,14 @@ ${trimmed}
+   return `\n---\n\n<loaded_context>\n${sections.join('\n')}\n</loaded_context>`;
+ }
+ 
+-export function renderTaskTracker(): string {
++export function renderTaskTracker(trackerDir: string): string {
+   const trackerCreate = formatToolName(TRACKER_CREATE_TASK_TOOL_NAME);
+   const trackerList = formatToolName(TRACKER_LIST_TASKS_TOOL_NAME);
+   const trackerUpdate = formatToolName(TRACKER_UPDATE_TASK_TOOL_NAME);
+ 
+   return `
+ # TASK MANAGEMENT PROTOCOL
+-You are operating with a persistent file-based task tracking system located at \`.tracker/tasks/\`. You must adhere to the following rules:
++You are operating with a persistent file-based task tracking system located at \`${trackerDir}\`. You must adhere to the following rules:
+ 
+ 1.  **NO IN-MEMORY LISTS**: Do not maintain a mental list of tasks or write markdown checkboxes in the chat. Use the provided tools (${trackerCreate}, ${trackerList}, ${trackerUpdate}) for all state management.
+ 2.  **IMMEDIATE DECOMPOSITION**: Upon receiving a task, evaluate its functional complexity and scope. If the request involves more than a single atomic modification, or necessitates research before execution, you MUST immediately decompose it into discrete entries using ${trackerCreate}.

@@ -1,0 +1,39 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/keras/src/metrics/probabilistic_metrics_test.py -v",
+  "test_files": [
+    "keras/src/metrics/probabilistic_metrics_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "keras.src.metrics.probabilistic_metrics_test.SparseCategoricalCrossentropyTest::test_ignore_class",
+    "keras.src.metrics.probabilistic_metrics_test.SparseCategoricalCrossentropyTest::test_ignore_class_from_logits",
+    "keras.src.metrics.probabilistic_metrics_test.SparseCategoricalCrossentropyTest::test_ignore_class_weighted"
+  ],
+  "PASS_TO_PASS": [
+    "keras.src.metrics.probabilistic_metrics_test.KLDivergenceTest::test_config",
+    "keras.src.metrics.probabilistic_metrics_test.KLDivergenceTest::test_unweighted",
+    "keras.src.metrics.probabilistic_metrics_test.KLDivergenceTest::test_weighted",
+    "keras.src.metrics.probabilistic_metrics_test.PoissonTest::test_config",
+    "keras.src.metrics.probabilistic_metrics_test.PoissonTest::test_unweighted",
+    "keras.src.metrics.probabilistic_metrics_test.PoissonTest::test_weighted",
+    "keras.src.metrics.probabilistic_metrics_test.BinaryCrossentropyTest::test_config",
+    "keras.src.metrics.probabilistic_metrics_test.BinaryCrossentropyTest::test_label_smoothing",
+    "keras.src.metrics.probabilistic_metrics_test.BinaryCrossentropyTest::test_unweighted",
+    "keras.src.metrics.probabilistic_metrics_test.BinaryCrossentropyTest::test_unweighted_with_logits",
+    "keras.src.metrics.probabilistic_metrics_test.BinaryCrossentropyTest::test_weighted",
+    "keras.src.metrics.probabilistic_metrics_test.BinaryCrossentropyTest::test_weighted_from_logits",
+    "keras.src.metrics.probabilistic_metrics_test.CategoricalCrossentropyTest::test_config",
+    "keras.src.metrics.probabilistic_metrics_test.CategoricalCrossentropyTest::test_label_smoothing",
+    "keras.src.metrics.probabilistic_metrics_test.CategoricalCrossentropyTest::test_unweighted",
+    "keras.src.metrics.probabilistic_metrics_test.CategoricalCrossentropyTest::test_unweighted_from_logits",
+    "keras.src.metrics.probabilistic_metrics_test.CategoricalCrossentropyTest::test_weighted",
+    "keras.src.metrics.probabilistic_metrics_test.CategoricalCrossentropyTest::test_weighted_from_logits",
+    "keras.src.metrics.probabilistic_metrics_test.SparseCategoricalCrossentropyTest::test_config",
+    "keras.src.metrics.probabilistic_metrics_test.SparseCategoricalCrossentropyTest::test_unweighted",
+    "keras.src.metrics.probabilistic_metrics_test.SparseCategoricalCrossentropyTest::test_unweighted_from_logits",
+    "keras.src.metrics.probabilistic_metrics_test.SparseCategoricalCrossentropyTest::test_weighted",
+    "keras.src.metrics.probabilistic_metrics_test.SparseCategoricalCrossentropyTest::test_weighted_from_logits"
+  ]
+}

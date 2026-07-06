@@ -1,0 +1,30 @@
+patching file .changeset/config.json
+patching file .github/workflows/README.md
+patching file .github/workflows/c3-e2e-quarantine.yml
+patching file .github/workflows/c3-e2e.yml
+patching file .github/workflows/changesets.yml (renamed from .github/workflows/release.yml)
+patching file .github/workflows/deploy-pages-previews.yml
+patching file .github/workflows/deploy-pages-project.yml
+patching file .github/workflows/deploy-pages-projects.yml
+patching file .github/workflows/prereleases.yml
+patching file .github/workflows/worker-deploy-edge-preview-authenticated-proxy.yml
+patching file .github/workflows/worker-format-errors-deploy.yml
+patching file .github/workflows/worker-playground-preview-deploy-production.yml
+patching file .github/workflows/worker-playground-preview-testing-env-deploy-and-test.yml (renamed from .github/workflows/worker-playground-preview-deploy-testing.yml)
+patching file CONTRIBUTING.md
+patching file packages/prerelease-registry/package.json
+patching file packages/quick-edit/README.md
+patching file packages/workers-playground/README.md
+patching file packages/workers-playground/package.json
+patching file packages/wrangler-devtools/README.md
+patching file packages/wrangler-devtools/package.json
+patching file pnpm-lock.yaml
+patching file pnpm-workspace.yaml
+patching file tools/.eslintrc.js
+patching file tools/README.md
+patching file tools/deployments/deploy-non-npm-packages.ts
+patching file tools/package.json
+patching file tools/tsconfig.json
+patching file tools/turbo.json
+patching file tools/vitest.config.ts
+patching file vitest.workspace.ts

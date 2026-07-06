@@ -1,0 +1,10 @@
+patching file packages/xml/test/decorators.test.ts
+patching file packages/xml/test/encoding.test.ts
+patching file packages/xml/test/test-host.ts
+Scope: all 28 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 2.5s
+error TS5057: Cannot find a tsconfig.json file at the specified directory: '.'.
+reward=0 graded=20 found=0 failed=0 parsed=0 framework=vitest exit_code=1

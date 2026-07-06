@@ -1,0 +1,29 @@
+{
+    "id": "aa90d827-8c81-49b3-9578-ff0470b880e6",
+    "started_at": "2026-07-04T15:40:24.120788",
+    "finished_at": "2026-07-04T15:43:13.241955",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tursodatabase-libsql-939": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tursodatabase-libsql-939__kkpsRqW"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "e8ee211c-046d-4cde-9c6b-f5300e34c7e5",
+    "started_at": "2026-07-06T12:18:40.415115",
+    "finished_at": "2026-07-06T12:19:27.624189",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__montferret-ferret-887": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "montferret-ferret-887__x6CTsm7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,141 @@
+patching file apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java
+patching file apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java
+patching file apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaRpcConsumerInterceptorTest.java
+patching file apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaRpcProviderInterceptorTest.java
+patching file test/plugin/scenarios/sofarpc-scenario/config/expectedData.yaml
+patching file test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/SofaRpcApplication.java
+patching file test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/callback/TestCallback.java
+patching file test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/controller/CaseController.java
+patching file test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/interfaces/SofaRpcDemoService.java
+patching file test/plugin/scenarios/sofarpc-scenario/src/main/java/org/apache/skywalking/apm/testcase/sofarpc/service/SofaRpcDemoServiceImpl.java
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------< org.apache.skywalking:sofa-rpc-plugin >----------------
+[INFO] Building sofarpc-plugin 9.2.0-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.0.0-M2:enforce (enforce-maven-version) @ sofa-rpc-plugin ---
+[INFO] 
+[INFO] --- maven-enforcer-plugin:3.0.0-M2:enforce (enforce-java) @ sofa-rpc-plugin ---
+[INFO] 
+[INFO] --- os-maven-plugin:1.6.2:detect (default) @ sofa-rpc-plugin ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Detecting the operating system and CPU architecture
+[INFO] ------------------------------------------------------------------------
+[INFO] os.detected.name: linux
+[INFO] os.detected.arch: x86_64
+[INFO] os.detected.version: 4.14
+[INFO] os.detected.version.major: 4
+[INFO] os.detected.version.minor: 14
+[INFO] os.detected.release: ubuntu
+[INFO] os.detected.release.version: 24.04
+[INFO] os.detected.release.like.ubuntu: true
+[INFO] os.detected.release.like.debian: true
+[INFO] os.detected.classifier: linux-x86_64
+[INFO] 
+[INFO] --- maven-checkstyle-plugin:3.2.1:check (validate) @ sofa-rpc-plugin ---
+[INFO] 
+[INFO] --- maven-remote-resources-plugin:1.5:process (process-resource-bundles) @ sofa-rpc-plugin ---
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:resources (default-resources) @ sofa-rpc-plugin ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:compile (default-compile) @ sofa-rpc-plugin ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:3.1.0:testResources (default-testResources) @ sofa-rpc-plugin ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.10.1:testCompile (default-testCompile) @ sofa-rpc-plugin ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 4 source files to /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/target/test-classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java:[70,15] cannot find symbol
+  symbol:   class SofaBoltCallbackInvokeInterceptor
+  location: class org.apache.skywalking.apm.plugin.sofarpc.SofaBoltCallbackInvokeInterceptorTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java:[70,67] cannot find symbol
+  symbol:   class SofaBoltCallbackInvokeInterceptor
+  location: class org.apache.skywalking.apm.plugin.sofarpc.SofaBoltCallbackInvokeInterceptorTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java:[72,51] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.SofaBoltCallbackInvokeInterceptorTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java:[73,39] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.SofaBoltCallbackInvokeInterceptorTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[115,9] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[115,45] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[120,23] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[130,9] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[130,45] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[150,9] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[150,45] cannot find symbol
+  symbol:   class InvokeCallbackWrapper
+  location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[INFO] 11 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.099 s
+[INFO] Finished at: 2026-07-01T14:34:59Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.10.1:testCompile (default-testCompile) on project sofa-rpc-plugin: Compilation failure: Compilation failure: 
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java:[70,15] cannot find symbol
+[ERROR]   symbol:   class SofaBoltCallbackInvokeInterceptor
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.SofaBoltCallbackInvokeInterceptorTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java:[70,67] cannot find symbol
+[ERROR]   symbol:   class SofaBoltCallbackInvokeInterceptor
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.SofaBoltCallbackInvokeInterceptorTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java:[72,51] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.SofaBoltCallbackInvokeInterceptorTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/SofaBoltCallbackInvokeInterceptorTest.java:[73,39] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.SofaBoltCallbackInvokeInterceptorTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[115,9] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[115,45] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[120,23] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[130,9] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[130,45] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[150,9] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] /workspace/repo/apm-sniffer/apm-sdk-plugin/sofarpc-plugin/src/test/java/org/apache/skywalking/apm/plugin/sofarpc/InvokeCallbackWrapperTest.java:[150,45] cannot find symbol
+[ERROR]   symbol:   class InvokeCallbackWrapper
+[ERROR]   location: class org.apache.skywalking.apm.plugin.sofarpc.InvokeCallbackWrapperTest
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+reward=0 graded=8 found=0 failed=0 parsed=1 framework=maven exit_code=1

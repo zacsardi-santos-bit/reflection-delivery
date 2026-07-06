@@ -1,7 +1,0 @@
-I'm building a video curation pipeline and I need a stage that writes processed clip data to storage once all the processing is done. Right now, after clips are decoded, scored, captioned, and embedded, there's no way to actually save the output to disk — no MP4 files, no metadata JSON, no embedding vectors, no thumbnail previews.
-
-I need a pipeline stage that handles all of these output tasks concurrently, with configurable paths for each output type (clips, filtered clips, previews, metadata, embeddings). The stage should support a dry-run mode for testing purposes where no files are actually written. When a clip has a buffer, it should write the video file; if not, it should warn and keep going. After writing, the in-memory buffers should be cleared to free up memory.
-
-I also need a set of low-level file utilities that write binary data, JSON (with UUID serialization support), Parquet, and CSV files to local paths. These utilities should create any necessary parent directories, emit consistent log messages during writes, and handle file conflicts gracefully — by default skipping if a file already exists, with options to overwrite or raise an error.
-
-The stage should distinguish between accepted clips and filtered clips, writing them to separate output paths and tracking statistics accordingly. For video-level metadata, the first processing chunk should write both a video summary and a chunk index file, while subsequent chunks write only the chunk index.

@@ -1,6 +1,0 @@
-patching file Cargo.lock
-patching file crates/rolldown_sourcemap/Cargo.toml
-patching file crates/rolldown_sourcemap/src/lib.rs
-patching file crates/rolldown_sourcemap/src/sourcemap_visualizer.rs
-patching file crates/rolldown_testing/src/test_config/mod.rs
-patching file crates/rolldown_testing/test.config.scheme.json

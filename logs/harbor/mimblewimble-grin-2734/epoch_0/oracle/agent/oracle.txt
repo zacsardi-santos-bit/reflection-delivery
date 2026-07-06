@@ -1,7 +1,0 @@
-patching file chain/src/txhashset/txhashset.rs
-patching file core/src/core/block.rs
-patching file core/src/core/pmmr/pmmr.rs
-patching file core/src/ser.rs
-patching file store/src/pmmr.rs
-patching file store/src/prune_list.rs
-patching file store/src/types.rs

@@ -1,0 +1,2 @@
+patching file src/dbnode/storage/index/postings_list_cache.go
+patching file src/dbnode/storage/index/read_through_segment.go

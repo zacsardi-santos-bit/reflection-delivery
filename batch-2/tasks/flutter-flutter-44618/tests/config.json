@@ -1,0 +1,19 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/dev/bots && python3 -c \"\nimport subprocess, json, sys, re\nproc = subprocess.run(['pub', 'run', 'test', 'test/analyze_test.dart', '--reporter', 'json'], capture_output=True, text=True)\ntests = {}\nany_failed = False\nfor line in (proc.stdout + proc.stderr).splitlines():\n    try:\n        e = json.loads(line)\n        if e.get('type') == 'testStart':\n            tests[e['test']['id']] = e['test']['name']\n        elif e.get('type') == 'testDone':\n            name = tests.get(e.get('testID'), 'unknown')\n            safe = re.sub(r'[^a-zA-Z0-9_]', '_', name)\n            action = 'pass' if e.get('result') == 'success' else 'fail'\n            if action == 'fail':\n                any_failed = True\n            print(json.dumps({'Action': action, 'Test': safe, 'Package': 'analyze'}))\n    except:\n        pass\nif not tests:\n    sys.stdout.write(proc.stdout)\n    sys.stdout.write(proc.stderr)\nexit_code = proc.returncode\nif any_failed and exit_code == 0:\n    exit_code = 1\nsys.exit(exit_code)\n\"",
+  "test_files": [
+    "dev/bots/test/analyze-test-input/.dartignore",
+    "dev/bots/test/analyze-test-input/root/packages/foo/deprecation.dart",
+    "dev/bots/test/analyze-test-input/root/packages/foo/foo.dart",
+    "dev/bots/test/analyze_test.dart",
+    "packages/flutter/test/scheduler/scheduler_tester.dart"
+  ],
+  "num_test_files": 5,
+  "language": "dart",
+  "FAIL_TO_PASS": [
+    "analyze::loading_test_analyze_test_dart",
+    "analyze::analyze_dart___verifyDeprecations",
+    "analyze::analyze_dart___verifyNoMissingLicense"
+  ],
+  "PASS_TO_PASS": []
+}

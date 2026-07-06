@@ -1,0 +1,30 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/providers/aws/services/lightsail/lightsail_database_public/lightsail_database_public_test.py /workspace/repo/tests/providers/aws/services/lightsail/lightsail_instance_automated_snapshots/lightsail_instance_automated_snapshots_test.py /workspace/repo/tests/providers/aws/services/lightsail/lightsail_instance_public/lightsail_instance_public_test.py /workspace/repo/tests/providers/aws/services/lightsail/lightsail_service_test.py /workspace/repo/tests/providers/aws/services/lightsail/lightsail_static_ip_unused/lightsail_static_ip_unused_test.py /workspace/repo/tests/providers/aws/utils.py -v",
+  "test_files": [
+    "tests/providers/aws/services/lightsail/lightsail_database_public/lightsail_database_public_test.py",
+    "tests/providers/aws/services/lightsail/lightsail_instance_automated_snapshots/lightsail_instance_automated_snapshots_test.py",
+    "tests/providers/aws/services/lightsail/lightsail_instance_public/lightsail_instance_public_test.py",
+    "tests/providers/aws/services/lightsail/lightsail_service_test.py",
+    "tests/providers/aws/services/lightsail/lightsail_static_ip_unused/lightsail_static_ip_unused_test.py",
+    "tests/providers/aws/utils.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.providers.aws.services.lightsail.lightsail_instance_public.lightsail_instance_public_test.Test_lightsail_instance_public::test_public_instance",
+    "tests.providers.aws.services.lightsail.lightsail_instance_public.lightsail_instance_public_test.Test_lightsail_instance_public::test_no_instances",
+    "tests.providers.aws.services.lightsail.lightsail_instance_public.lightsail_instance_public_test.Test_lightsail_instance_public::test_private_instance",
+    "tests.providers.aws.services.lightsail.lightsail_service_test.TestLightsailService::test_service",
+    "tests.providers.aws.services.lightsail.lightsail_instance_automated_snapshots.lightsail_instance_automated_snapshots_test.Test_lightsail_instance_automated_snapshots::test_no_instances",
+    "tests.providers.aws.services.lightsail.lightsail_instance_automated_snapshots.lightsail_instance_automated_snapshots_test.Test_lightsail_instance_automated_snapshots::test_automated_snapshots",
+    "tests.providers.aws.services.lightsail.lightsail_instance_automated_snapshots.lightsail_instance_automated_snapshots_test.Test_lightsail_instance_automated_snapshots::test_no_automated_snapshots",
+    "tests.providers.aws.services.lightsail.lightsail_static_ip_unused.lightsail_static_ip_unused_test.Test_lightsail_static_ip_unused::test_lightsail_no_statics_ips",
+    "tests.providers.aws.services.lightsail.lightsail_static_ip_unused.lightsail_static_ip_unused_test.Test_lightsail_static_ip_unused::test_lightsail_static_ip_attached",
+    "tests.providers.aws.services.lightsail.lightsail_static_ip_unused.lightsail_static_ip_unused_test.Test_lightsail_static_ip_unused::test_lightsail_static_ip_unused",
+    "tests.providers.aws.services.lightsail.lightsail_database_public.lightsail_database_public_test.Test_lightsail_database_public::test_lightsail_database_public",
+    "tests.providers.aws.services.lightsail.lightsail_database_public.lightsail_database_public_test.Test_lightsail_database_public::test_lightsail_no_databases",
+    "tests.providers.aws.services.lightsail.lightsail_database_public.lightsail_database_public_test.Test_lightsail_database_public::test_lightsail_database_private"
+  ],
+  "PASS_TO_PASS": []
+}

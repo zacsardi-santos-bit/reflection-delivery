@@ -1,0 +1,40 @@
+{
+  "test_framework": "junit",
+  "test_command": "bash -c 'set +e; cd /workspace/repo && ./gradlew :features:dd-sdk-android-rum:testReleaseUnitTest --tests com.datadog.android.rum.internal.net.RumRequestFactoryTest --no-daemon --no-watch-fs; E=$?; find /workspace/repo/features/dd-sdk-android-rum/build/test-results -name \"TEST-*.xml\" -exec cat {} + 2>/dev/null; exit $E'",
+  "test_files": [
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/internal/net/RumRequestFactoryTest.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/internal/utils/RumTagsUtilsTest.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/AccessibilityForgeryFactory.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/AccessibilityInfoForgeryFactory.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/ActionEventForgeryFactory.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/Configurator.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/ErrorEventForgeryFactory.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/ForgeExt.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/LongTaskEventForgeryFactory.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/ResourceEventForgeryFactory.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/ResourceTimingForgeryFactory.kt",
+    "features/dd-sdk-android-rum/src/test/kotlin/com/datadog/android/rum/utils/forge/ViewEventForgeryFactory.kt",
+    "features/dd-sdk-android-webview/src/test/kotlin/com/datadog/android/utils/forge/ActionEventForgeryFactory.kt",
+    "features/dd-sdk-android-webview/src/test/kotlin/com/datadog/android/utils/forge/Configurator.kt",
+    "features/dd-sdk-android-webview/src/test/kotlin/com/datadog/android/utils/forge/ErrorEventForgeryFactory.kt",
+    "features/dd-sdk-android-webview/src/test/kotlin/com/datadog/android/utils/forge/LongTaskEventForgeryFactory.kt",
+    "features/dd-sdk-android-webview/src/test/kotlin/com/datadog/android/utils/forge/ResourceEventForgeryFactory.kt",
+    "features/dd-sdk-android-webview/src/test/kotlin/com/datadog/android/utils/forge/ViewEventForgeryFactory.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/RumConfigurationTest.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/tests/elmyr/ActionEventForgeryFactory.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/tests/elmyr/ErrorEventForgeryFactory.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/tests/elmyr/LongTaskEventForgeryFactory.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/tests/elmyr/ResourceEventForgeryFactory.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/tests/elmyr/ResourceTimingForgeryFactory.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/tests/elmyr/RumEventExt.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/tests/elmyr/RumIntegrationForgeConfigurator.kt",
+    "reliability/single-fit/rum/src/test/kotlin/com/datadog/android/rum/integration/tests/elmyr/ViewEventForgeryFactory.kt"
+  ],
+  "num_test_files": 27,
+  "language": "kotlin",
+  "FAIL_TO_PASS": [
+    "com.datadog.android.rum.internal.net.RumRequestFactoryTest::M create a proper request W create() { custom endpoint }(String, List, String, Forge)",
+    "com.datadog.android.rum.internal.net.RumRequestFactoryTest::M create a proper request W create()(List, String, Forge)"
+  ],
+  "PASS_TO_PASS": []
+}

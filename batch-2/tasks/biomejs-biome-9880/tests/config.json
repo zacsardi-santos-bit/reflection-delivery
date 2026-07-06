@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_js_analyze -E 'binary(spec_tests) and test(/use_array_some/)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/nursery/useArraySome/invalid.js.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/useFind/invalid.ts.snap",
+    "crates/biome_js_analyze/tests/specs/nursery/useRegexpExec/invalid.js.snap"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(2/2) biome_js_analyze::spec_tests specs::nursery::use_array_some::invalid_js"
+  ],
+  "PASS_TO_PASS": [
+    "(1/2) biome_js_analyze::spec_tests specs::nursery::use_array_some::valid_js"
+  ]
+}

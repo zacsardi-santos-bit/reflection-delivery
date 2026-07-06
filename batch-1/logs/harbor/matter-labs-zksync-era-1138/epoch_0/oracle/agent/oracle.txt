@@ -1,0 +1,12 @@
+patching file Cargo.lock
+patching file core/lib/dal/.sqlx/query-de55102189196905a7dadb5a8b599acee63cae615e16007cccb0ed0cbe903467.json
+patching file core/lib/dal/src/events_dal.rs
+patching file core/lib/types/Cargo.toml
+patching file core/lib/types/src/event/mod.rs (renamed from core/lib/types/src/event.rs)
+patching file core/lib/types/src/event/test_vectors/event_with_1_topic_and_long_value.json
+patching file core/lib/types/src/event/test_vectors/event_with_2_topics.json
+patching file core/lib/types/src/event/test_vectors/event_with_3_topics.json
+patching file core/lib/types/src/event/test_vectors/event_with_4_topics.json
+patching file core/lib/types/src/event/test_vectors/event_with_value_len_1.json
+patching file core/lib/zksync_core/src/commitment_generator/mod.rs
+patching file prover/Cargo.lock

@@ -1,0 +1,23 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/controllers ./internal/filter ./internal/nmc ./internal/worker -count=1",
+  "test_files": [
+    "internal/controllers/module_nmc_reconciler_test.go",
+    "internal/controllers/nmc_reconciler_test.go",
+    "internal/filter/filter_test.go",
+    "internal/nmc/helper_test.go",
+    "internal/worker/imagepuller_test.go",
+    "internal/worker/pullsecrets_test.go",
+    "internal/worker/worker_test.go"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kubernetes-sigs/kernel-module-management/internal/nmc::TestSuite",
+    "github.com/kubernetes-sigs/kernel-module-management/internal/controllers::TestAPIs",
+    "github.com/kubernetes-sigs/kernel-module-management/internal/filter::TestSuite",
+    "github.com/kubernetes-sigs/kernel-module-management/internal/worker::TestExecutorHelper",
+    "github.com/kubernetes-sigs/kernel-module-management/internal/worker::TestWorker"
+  ],
+  "PASS_TO_PASS": []
+}

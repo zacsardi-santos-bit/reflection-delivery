@@ -1,0 +1,2164 @@
+diff --git a/packages/cli/src/ui/utils/InlineMarkdownRenderer.tsx b/packages/cli/src/ui/utils/InlineMarkdownRenderer.tsx
+index 430b27eeb..02a34842f 100644
+--- a/packages/cli/src/ui/utils/InlineMarkdownRenderer.tsx
++++ b/packages/cli/src/ui/utils/InlineMarkdownRenderer.tsx
+@@ -6,6 +6,12 @@
+ 
+ import React from 'react';
+ import { Text } from 'ink';
++import chalk from 'chalk';
++import {
++  resolveColor,
++  INK_SUPPORTED_NAMES,
++  INK_NAME_TO_HEX_MAP,
++} from '../themes/color-utils.js';
+ import { theme } from '../semantic-colors.js';
+ import { debugLogger } from '@google/gemini-cli-core';
+ import { stripUnsafeCharacters } from './textUtils.js';
+@@ -23,46 +29,108 @@ interface RenderInlineProps {
+   defaultColor?: string;
+ }
+ 
+-const RenderInlineInternal: React.FC<RenderInlineProps> = ({
+-  text: rawText,
+-  defaultColor,
+-}) => {
+-  const text = stripUnsafeCharacters(rawText);
++/**
++ * Helper to apply color to a string using ANSI escape codes,
++ * consistent with how Ink's colorize works.
++ */
++const ansiColorize = (str: string, color: string | undefined): string => {
++  if (!color) return str;
++  const resolved = resolveColor(color);
++  if (!resolved) return str;
++
++  if (resolved.startsWith('#')) {
++    return chalk.hex(resolved)(str);
++  }
++
++  const mappedHex = INK_NAME_TO_HEX_MAP[resolved];
++  if (mappedHex) {
++    return chalk.hex(mappedHex)(str);
++  }
++
++  if (INK_SUPPORTED_NAMES.has(resolved)) {
++    switch (resolved) {
++      case 'black':
++        return chalk.black(str);
++      case 'red':
++        return chalk.red(str);
++      case 'green':
++        return chalk.green(str);
++      case 'yellow':
++        return chalk.yellow(str);
++      case 'blue':
++        return chalk.blue(str);
++      case 'magenta':
++        return chalk.magenta(str);
++      case 'cyan':
++        return chalk.cyan(str);
++      case 'white':
++        return chalk.white(str);
++      case 'gray':
++      case 'grey':
++        return chalk.gray(str);
++      default:
++        return str;
++    }
++  }
++
++  return str;
++};
++
++/**
++ * Converts markdown text into a string with ANSI escape codes.
++ * This mirrors the parsing logic in InlineMarkdownRenderer.tsx
++ */
++export const parseMarkdownToANSI = (
++  text: string,
++  defaultColor?: string,
++): string => {
+   const baseColor = defaultColor ?? theme.text.primary;
+   // Early return for plain text without markdown or URLs
+   if (!/[*_~`<[https?:]/.test(text)) {
+-    return <Text color={baseColor}>{text}</Text>;
++    return ansiColorize(text, baseColor);
+   }
+ 
+-  const nodes: React.ReactNode[] = [];
+-  let lastIndex = 0;
++  let result = '';
+   const inlineRegex =
+-    /(\*\*.*?\*\*|\*.*?\*|_.*?_|~~.*?~~|\[.*?\]\(.*?\)|`+.+?`+|<u>.*?<\/u>|https?:\/\/\S+)/g;
++    /(\*\*\*.*?\*\*\*|\*\*.*?\*\*|\*.*?\*|_.*?_|~~.*?~~|\[.*?\]\(.*?\)|`+.+?`+|<u>.*?<\/u>|https?:\/\/\S+)/g;
++  let lastIndex = 0;
+   let match;
+ 
+   while ((match = inlineRegex.exec(text)) !== null) {
+     if (match.index > lastIndex) {
+-      nodes.push(
+-        <Text key={`t-${lastIndex}`} color={baseColor}>
+-          {text.slice(lastIndex, match.index)}
+-        </Text>,
+-      );
++      result += ansiColorize(text.slice(lastIndex, match.index), baseColor);
+     }
+ 
+     const fullMatch = match[0];
+-    let renderedNode: React.ReactNode = null;
+-    const key = `m-${match.index}`;
++    let styledPart = '';
+ 
+     try {
+       if (
+-        fullMatch.startsWith('**') &&
++        fullMatch.endsWith('***') &&
++        fullMatch.startsWith('***') &&
++        fullMatch.length > (BOLD_MARKER_LENGTH + ITALIC_MARKER_LENGTH) * 2
++      ) {
++        styledPart = chalk.bold(
++          chalk.italic(
++            parseMarkdownToANSI(
++              fullMatch.slice(
++                BOLD_MARKER_LENGTH + ITALIC_MARKER_LENGTH,
++                -BOLD_MARKER_LENGTH - ITALIC_MARKER_LENGTH,
++              ),
++              baseColor,
++            ),
++          ),
++        );
++      } else if (
+         fullMatch.endsWith('**') &&
++        fullMatch.startsWith('**') &&
+         fullMatch.length > BOLD_MARKER_LENGTH * 2
+       ) {
+-        renderedNode = (
+-          <Text key={key} bold color={baseColor}>
+-            {fullMatch.slice(BOLD_MARKER_LENGTH, -BOLD_MARKER_LENGTH)}
+-          </Text>
++        styledPart = chalk.bold(
++          parseMarkdownToANSI(
++            fullMatch.slice(BOLD_MARKER_LENGTH, -BOLD_MARKER_LENGTH),
++            baseColor,
++          ),
+         );
+       } else if (
+         fullMatch.length > ITALIC_MARKER_LENGTH * 2 &&
+@@ -77,23 +145,25 @@ const RenderInlineInternal: React.FC<RenderInlineProps> = ({
+           text.substring(inlineRegex.lastIndex, inlineRegex.lastIndex + 2),
+         )
+       ) {
+-        renderedNode = (
+-          <Text key={key} italic color={baseColor}>
+-            {fullMatch.slice(ITALIC_MARKER_LENGTH, -ITALIC_MARKER_LENGTH)}
+-          </Text>
++        styledPart = chalk.italic(
++          parseMarkdownToANSI(
++            fullMatch.slice(ITALIC_MARKER_LENGTH, -ITALIC_MARKER_LENGTH),
++            baseColor,
++          ),
+         );
+       } else if (
+         fullMatch.startsWith('~~') &&
+         fullMatch.endsWith('~~') &&
+         fullMatch.length > STRIKETHROUGH_MARKER_LENGTH * 2
+       ) {
+-        renderedNode = (
+-          <Text key={key} strikethrough color={baseColor}>
+-            {fullMatch.slice(
++        styledPart = chalk.strikethrough(
++          parseMarkdownToANSI(
++            fullMatch.slice(
+               STRIKETHROUGH_MARKER_LENGTH,
+               -STRIKETHROUGH_MARKER_LENGTH,
+-            )}
+-          </Text>
++            ),
++            baseColor,
++          ),
+         );
+       } else if (
+         fullMatch.startsWith('`') &&
+@@ -102,11 +172,7 @@ const RenderInlineInternal: React.FC<RenderInlineProps> = ({
+       ) {
+         const codeMatch = fullMatch.match(/^(`+)(.+?)\1$/s);
+         if (codeMatch && codeMatch[2]) {
+-          renderedNode = (
+-            <Text key={key} color={theme.text.accent}>
+-              {codeMatch[2]}
+-            </Text>
+-          );
++          styledPart = ansiColorize(codeMatch[2], theme.text.accent);
+         }
+       } else if (
+         fullMatch.startsWith('[') &&
+@@ -117,58 +183,54 @@ const RenderInlineInternal: React.FC<RenderInlineProps> = ({
+         if (linkMatch) {
+           const linkText = linkMatch[1];
+           const url = linkMatch[2];
+-          renderedNode = (
+-            <Text key={key} color={baseColor}>
+-              {linkText}
+-              <Text color={theme.text.link}> ({url})</Text>
+-            </Text>
+-          );
++          styledPart =
++            parseMarkdownToANSI(linkText, baseColor) +
++            ansiColorize(' (', baseColor) +
++            ansiColorize(url, theme.text.link) +
++            ansiColorize(')', baseColor);
+         }
+       } else if (
+         fullMatch.startsWith('<u>') &&
+         fullMatch.endsWith('</u>') &&
+         fullMatch.length >
+-          UNDERLINE_TAG_START_LENGTH + UNDERLINE_TAG_END_LENGTH - 1 // -1 because length is compared to combined length of start and end tags
++          UNDERLINE_TAG_START_LENGTH + UNDERLINE_TAG_END_LENGTH - 1
+       ) {
+-        renderedNode = (
+-          <Text key={key} underline color={baseColor}>
+-            {fullMatch.slice(
++        styledPart = chalk.underline(
++          parseMarkdownToANSI(
++            fullMatch.slice(
+               UNDERLINE_TAG_START_LENGTH,
+               -UNDERLINE_TAG_END_LENGTH,
+-            )}
+-          </Text>
++            ),
++            baseColor,
++          ),
+         );
+       } else if (fullMatch.match(/^https?:\/\//)) {
+-        renderedNode = (
+-          <Text key={key} color={theme.text.link}>
+-            {fullMatch}
+-          </Text>
+-        );
++        styledPart = ansiColorize(fullMatch, theme.text.link);
+       }
+     } catch (e) {
+       debugLogger.warn('Error parsing inline markdown part:', fullMatch, e);
+-      renderedNode = null;
++      styledPart = '';
+     }
+ 
+-    nodes.push(
+-      renderedNode ?? (
+-        <Text key={key} color={baseColor}>
+-          {fullMatch}
+-        </Text>
+-      ),
+-    );
++    result += styledPart || ansiColorize(fullMatch, baseColor);
+     lastIndex = inlineRegex.lastIndex;
+   }
+ 
+   if (lastIndex < text.length) {
+-    nodes.push(
+-      <Text key={`t-${lastIndex}`} color={baseColor}>
+-        {text.slice(lastIndex)}
+-      </Text>,
+-    );
++    result += ansiColorize(text.slice(lastIndex), baseColor);
+   }
+ 
+-  return <>{nodes.filter((node) => node !== null)}</>;
++  return result;
++};
++
++const RenderInlineInternal: React.FC<RenderInlineProps> = ({
++  text: rawText,
++  defaultColor,
++}) => {
++  const text = stripUnsafeCharacters(rawText);
++  const ansiText = parseMarkdownToANSI(text, defaultColor);
++
++  return <Text>{ansiText}</Text>;
+ };
+ 
+ export const RenderInline = React.memo(RenderInlineInternal);
+diff --git a/packages/cli/src/ui/utils/TableRenderer.tsx b/packages/cli/src/ui/utils/TableRenderer.tsx
+index ab1981762..143b1fe01 100644
+--- a/packages/cli/src/ui/utils/TableRenderer.tsx
++++ b/packages/cli/src/ui/utils/TableRenderer.tsx
+@@ -5,18 +5,19 @@
+  */
+ 
+ import React, { useMemo } from 'react';
+-import { Text, Box } from 'ink';
++import { styledCharsToString } from '@alcalzone/ansi-tokenize';
+ import {
++  Text,
++  Box,
+   type StyledChar,
+   toStyledCharacters,
+-  styledCharsToString,
+   styledCharsWidth,
+   wordBreakStyledChars,
+   wrapStyledChars,
+   widestLineFromStyledChars,
+ } from 'ink';
+ import { theme } from '../semantic-colors.js';
+-import { RenderInline } from './InlineMarkdownRenderer.js';
++import { parseMarkdownToANSI } from './InlineMarkdownRenderer.js';
+ import { stripUnsafeCharacters } from './textUtils.js';
+ 
+ interface TableRendererProps {
+@@ -29,6 +30,19 @@ const MIN_COLUMN_WIDTH = 5;
+ const COLUMN_PADDING = 2;
+ const TABLE_MARGIN = 2;
+ 
++/**
++ * Parses markdown to StyledChar array by first converting to ANSI.
++ * This ensures character counts are accurate (markdown markers are removed
++ * and styles are applied to the character's internal style object).
++ */
++const parseMarkdownToStyledChars = (
++  text: string,
++  defaultColor?: string,
++): StyledChar[] => {
++  const ansi = parseMarkdownToANSI(text, defaultColor);
++  return toStyledCharacters(ansi);
++};
++
+ const calculateWidths = (styledChars: StyledChar[]) => {
+   const contentWidth = styledCharsWidth(styledChars);
+ 
+@@ -53,25 +67,26 @@ export const TableRenderer: React.FC<TableRendererProps> = ({
+   rows,
+   terminalWidth,
+ }) => {
+-  // Clean headers: remove bold markers since we already render headers as bold
+-  // and having them can break wrapping when the markers are split across lines.
+-  const cleanedHeaders = useMemo(
+-    () => headers.map((header) => header.replace(/\*\*(.*?)\*\*/g, '$1')),
+-    [headers],
+-  );
+-
+   const styledHeaders = useMemo(
+     () =>
+-      cleanedHeaders.map((header) =>
+-        toStyledCharacters(stripUnsafeCharacters(header)),
++      headers.map((header) =>
++        parseMarkdownToStyledChars(
++          stripUnsafeCharacters(header),
++          theme.text.link,
++        ),
+       ),
+-    [cleanedHeaders],
++    [headers],
+   );
+ 
+   const styledRows = useMemo(
+     () =>
+       rows.map((row) =>
+-        row.map((cell) => toStyledCharacters(stripUnsafeCharacters(cell))),
++        row.map((cell) =>
++          parseMarkdownToStyledChars(
++            stripUnsafeCharacters(cell),
++            theme.text.primary,
++          ),
++        ),
+       ),
+     [rows],
+   );
+@@ -132,7 +147,7 @@ export const TableRenderer: React.FC<TableRendererProps> = ({
+ 
+       const scale =
+         (availableWidth - finalTotalShortColumnWidth) /
+-        (totalMinWidth - finalTotalShortColumnWidth);
++          (totalMinWidth - finalTotalShortColumnWidth) || 0;
+       finalContentWidths = constraints.map((c) => {
+         if (c.maxWidth <= MIN_COLUMN_WIDTH && finalTotalShortColumnWidth > 0) {
+           return c.minWidth;
+@@ -201,6 +216,7 @@ export const TableRenderer: React.FC<TableRendererProps> = ({
+ 
+     return { wrappedHeaders, wrappedRows, adjustedWidths };
+   }, [styledHeaders, styledRows, terminalWidth]);
++
+   // Helper function to render a cell with proper width
+   const renderCell = (
+     content: ProcessedLine,
+@@ -216,10 +232,10 @@ export const TableRenderer: React.FC<TableRendererProps> = ({
+       <Text>
+         {isHeader ? (
+           <Text bold color={theme.text.link}>
+-            <RenderInline text={content.text} />
++            {content.text}
+           </Text>
+         ) : (
+-          <RenderInline text={content.text} />
++          <Text>{content.text}</Text>
+         )}
+         {' '.repeat(paddingNeeded)}
+       </Text>
+@@ -253,18 +269,18 @@ export const TableRenderer: React.FC<TableRendererProps> = ({
+     });
+ 
+     return (
+-      <Text color={theme.text.primary}>
+-        <Text color={theme.border.default}>│</Text>{' '}
++      <Box flexDirection="row">
++        <Text color={theme.border.default}>│</Text>
+         {renderedCells.map((cell, index) => (
+           <React.Fragment key={index}>
+-            {cell}
++            <Box paddingX={1}>{cell}</Box>
+             {index < renderedCells.length - 1 && (
+-              <Text color={theme.border.default}>{' │ '}</Text>
++              <Text color={theme.border.default}>│</Text>
+             )}
+           </React.Fragment>
+-        ))}{' '}
++        ))}
+         <Text color={theme.border.default}>│</Text>
+-      </Text>
++      </Box>
+     );
+   };
+ 
+@@ -274,7 +290,7 @@ export const TableRenderer: React.FC<TableRendererProps> = ({
+     rowIndex?: number,
+     isHeader = false,
+   ): React.ReactNode => {
+-    const key = isHeader ? 'header' : `${rowIndex}`;
++    const key = rowIndex === -1 ? 'header' : `${rowIndex}`;
+     const maxHeight = Math.max(...wrappedCells.map((lines) => lines.length), 1);
+ 
+     const visualRows: React.ReactNode[] = [];
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-calculates-column-widths-based-on-ren-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-calculates-column-widths-based-on-ren-.snap.svg
+new file mode 100644
+index 000000000..e01d29e15
+--- /dev/null
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-calculates-column-widths-based-on-ren-.snap.svg
+@@ -0,0 +1,39 @@
++<svg xmlns="http://www.w3.org/2000/svg" width="380" height="156" viewBox="0 0 380 156">
++  <style>
++    text { font-family: Consolas, "Courier New", monospace; font-size: 14px; dominant-baseline: text-before-edge; white-space: pre; }
++  </style>
++  <rect width="380" height="156" fill="#000000" />
++  <g transform="translate(10, 10)">
++    <text x="0" y="19" fill="#333333" textLength="252" lengthAdjust="spacingAndGlyphs">┌────────┬────────┬────────┐</text>
++    <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="18" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 1</text>
++    <text x="81" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="99" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 2</text>
++    <text x="162" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="180" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 3</text>
++    <text x="243" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="53" fill="#333333" textLength="252" lengthAdjust="spacingAndGlyphs">├────────┼────────┼────────┤</text>
++    <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> 123456 </text>
++    <text x="81" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="90" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Normal </text>
++    <text x="162" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="171" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Short  </text>
++    <text x="243" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="87" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Short  </text>
++    <text x="81" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="90" y="87" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> 123456 </text>
++    <text x="162" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="171" y="87" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Normal </text>
++    <text x="243" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="104" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Normal </text>
++    <text x="81" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="90" y="104" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Short  </text>
++    <text x="162" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="171" y="104" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> 123456 </text>
++    <text x="243" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="121" fill="#333333" textLength="252" lengthAdjust="spacingAndGlyphs">└────────┴────────┴────────┘</text>
++  </g>
++</svg>
+\ No newline at end of file
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-calculates-width-correctly-for-conten-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-calculates-width-correctly-for-conten-.snap.svg
+new file mode 100644
+index 000000000..f6f83c0cb
+--- /dev/null
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-calculates-width-correctly-for-conten-.snap.svg
+@@ -0,0 +1,45 @@
++<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="156" viewBox="0 0 1100 156">
++  <style>
++    text { font-family: Consolas, "Courier New", monospace; font-size: 14px; dominant-baseline: text-before-edge; white-space: pre; }
++  </style>
++  <rect width="1100" height="156" fill="#000000" />
++  <g transform="translate(10, 10)">
++    <text x="0" y="19" fill="#333333" textLength="927" lengthAdjust="spacingAndGlyphs">┌───────────────────────────────────┬───────────────────────────────┬─────────────────────────────────┐</text>
++    <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="18" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 1</text>
++    <text x="324" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="342" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 2</text>
++    <text x="612" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="630" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 3</text>
++    <text x="918" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="53" fill="#333333" textLength="927" lengthAdjust="spacingAndGlyphs">├───────────────────────────────────┼───────────────────────────────┼─────────────────────────────────┤</text>
++    <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="70" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Visit Google (</text>
++    <text x="144" y="70" fill="#89b4fa" textLength="162" lengthAdjust="spacingAndGlyphs">https://google.com</text>
++    <text x="306" y="70" fill="#ffffff" textLength="18" lengthAdjust="spacingAndGlyphs">) </text>
++    <text x="324" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="333" y="70" fill="#ffffff" textLength="279" lengthAdjust="spacingAndGlyphs"> Plain Text                    </text>
++    <text x="612" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="621" y="70" fill="#ffffff" textLength="297" lengthAdjust="spacingAndGlyphs"> More Info                       </text>
++    <text x="918" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="87" fill="#ffffff" textLength="315" lengthAdjust="spacingAndGlyphs"> Info Here                         </text>
++    <text x="324" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="333" y="87" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> Visit Bing (</text>
++    <text x="450" y="87" fill="#89b4fa" textLength="144" lengthAdjust="spacingAndGlyphs">https://bing.com</text>
++    <text x="594" y="87" fill="#ffffff" textLength="18" lengthAdjust="spacingAndGlyphs">) </text>
++    <text x="612" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="621" y="87" fill="#ffffff" textLength="297" lengthAdjust="spacingAndGlyphs"> Links                           </text>
++    <text x="918" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="104" fill="#ffffff" textLength="315" lengthAdjust="spacingAndGlyphs"> Check This                        </text>
++    <text x="324" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="333" y="104" fill="#ffffff" textLength="279" lengthAdjust="spacingAndGlyphs"> Search                        </text>
++    <text x="612" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="621" y="104" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Visit Yahoo (</text>
++    <text x="747" y="104" fill="#89b4fa" textLength="153" lengthAdjust="spacingAndGlyphs">https://yahoo.com</text>
++    <text x="900" y="104" fill="#ffffff" textLength="18" lengthAdjust="spacingAndGlyphs">) </text>
++    <text x="918" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="121" fill="#333333" textLength="927" lengthAdjust="spacingAndGlyphs">└───────────────────────────────────┴───────────────────────────────┴─────────────────────────────────┘</text>
++  </g>
++</svg>
+\ No newline at end of file
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-does-not-parse-markdown-inside-code-s-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-does-not-parse-markdown-inside-code-s-.snap.svg
+new file mode 100644
+index 000000000..68069bd0a
+--- /dev/null
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-does-not-parse-markdown-inside-code-s-.snap.svg
+@@ -0,0 +1,40 @@
++<svg xmlns="http://www.w3.org/2000/svg" width="920" height="156" viewBox="0 0 920 156">
++  <style>
++    text { font-family: Consolas, "Courier New", monospace; font-size: 14px; dominant-baseline: text-before-edge; white-space: pre; }
++  </style>
++  <rect width="920" height="156" fill="#000000" />
++  <g transform="translate(10, 10)">
++    <text x="0" y="19" fill="#333333" textLength="549" lengthAdjust="spacingAndGlyphs">┌─────────────────┬──────────────────────┬──────────────────┐</text>
++    <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="18" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 1</text>
++    <text x="162" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="180" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 2</text>
++    <text x="369" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="387" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 3</text>
++    <text x="540" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="53" fill="#333333" textLength="549" lengthAdjust="spacingAndGlyphs">├─────────────────┼──────────────────────┼──────────────────┤</text>
++    <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="18" y="70" fill="#cba6f7" textLength="108" lengthAdjust="spacingAndGlyphs">**not bold**</text>
++    <text x="162" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="180" y="70" fill="#cba6f7" textLength="108" lengthAdjust="spacingAndGlyphs">_not italic_</text>
++    <text x="369" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="387" y="70" fill="#cba6f7" textLength="126" lengthAdjust="spacingAndGlyphs">~~not strike~~</text>
++    <text x="540" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="18" y="87" fill="#cba6f7" textLength="135" lengthAdjust="spacingAndGlyphs">[not link](url)</text>
++    <text x="162" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="180" y="87" fill="#cba6f7" textLength="180" lengthAdjust="spacingAndGlyphs">&lt;u&gt;not underline&lt;/u&gt;</text>
++    <text x="369" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="387" y="87" fill="#cba6f7" textLength="144" lengthAdjust="spacingAndGlyphs">https://not.link</text>
++    <text x="540" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="104" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> Normal Text     </text>
++    <text x="162" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="171" y="104" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs"> More Code: </text>
++    <text x="279" y="104" fill="#cba6f7" textLength="54" lengthAdjust="spacingAndGlyphs">*test*</text>
++    <text x="369" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="387" y="104" fill="#cba6f7" textLength="108" lengthAdjust="spacingAndGlyphs">***nested***</text>
++    <text x="540" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="121" fill="#333333" textLength="549" lengthAdjust="spacingAndGlyphs">└─────────────────┴──────────────────────┴──────────────────┘</text>
++  </g>
++</svg>
+\ No newline at end of file
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-nested-markdown-styles-recurs-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-nested-markdown-styles-recurs-.snap.svg
+new file mode 100644
+index 000000000..3269e29f1
+--- /dev/null
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-nested-markdown-styles-recurs-.snap.svg
+@@ -0,0 +1,39 @@
++<svg xmlns="http://www.w3.org/2000/svg" width="920" height="156" viewBox="0 0 920 156">
++  <style>
++    text { font-family: Consolas, "Courier New", monospace; font-size: 14px; dominant-baseline: text-before-edge; white-space: pre; }
++  </style>
++  <rect width="920" height="156" fill="#000000" />
++  <g transform="translate(10, 10)">
++    <text x="0" y="19" fill="#333333" textLength="819" lengthAdjust="spacingAndGlyphs">┌─────────────────────────────┬─────────────────────────────┬─────────────────────────────┐</text>
++    <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="18" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 1</text>
++    <text x="270" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="288" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 2</text>
++    <text x="540" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 3</text>
++    <text x="810" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="53" fill="#333333" textLength="819" lengthAdjust="spacingAndGlyphs">├─────────────────────────────┼─────────────────────────────┼─────────────────────────────┤</text>
++    <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="70" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Bold with Italic and Strike </text>
++    <text x="270" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="70" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Normal                      </text>
++    <text x="540" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="549" y="70" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Short                       </text>
++    <text x="810" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="87" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Short                       </text>
++    <text x="270" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="87" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Bold with Italic and Strike </text>
++    <text x="540" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="549" y="87" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Normal                      </text>
++    <text x="810" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="104" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Normal                      </text>
++    <text x="270" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="104" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Short                       </text>
++    <text x="540" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="549" y="104" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Bold with Italic and Strike </text>
++    <text x="810" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="121" fill="#333333" textLength="819" lengthAdjust="spacingAndGlyphs">└─────────────────────────────┴─────────────────────────────┴─────────────────────────────┘</text>
++  </g>
++</svg>
+\ No newline at end of file
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-non-ASCII-characters-emojis-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-non-ASCII-characters-emojis-.snap.svg
+index d9612cce3..13898e864 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-non-ASCII-characters-emojis-.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-non-ASCII-characters-emojis-.snap.svg
+@@ -7,25 +7,25 @@
+     <text x="0" y="19" fill="#333333" textLength="405" lengthAdjust="spacingAndGlyphs">┌──────────────┬────────────┬───────────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="63" lengthAdjust="spacingAndGlyphs">Emoji 😃</text>
+-    <text x="117" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="126" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="144" y="36" fill="#89b4fa" textLength="90" lengthAdjust="spacingAndGlyphs">Asian 汉字</text>
+-    <text x="234" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="243" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="261" y="36" fill="#89b4fa" textLength="108" lengthAdjust="spacingAndGlyphs">Mixed 🚀 Text</text>
+     <text x="378" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="405" lengthAdjust="spacingAndGlyphs">├──────────────┼────────────┼───────────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs"> Start 🌟 End</text>
+-    <text x="117" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="144" y="70" fill="#ffffff" textLength="90" lengthAdjust="spacingAndGlyphs">你好世界  </text>
+-    <text x="234" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="261" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Rocket 🚀 Man </text>
++    <text x="9" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> Start 🌟 End </text>
++    <text x="126" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="135" y="70" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs"> 你好世界   </text>
++    <text x="243" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="252" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Rocket 🚀 Man </text>
+     <text x="378" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="87" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs"> Thumbs 👍 Up</text>
+-    <text x="117" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="144" y="87" fill="#ffffff" textLength="90" lengthAdjust="spacingAndGlyphs">こんにちは</text>
+-    <text x="234" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="261" y="87" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Fire 🔥       </text>
++    <text x="9" y="87" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> Thumbs 👍 Up </text>
++    <text x="126" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="135" y="87" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs"> こんにちは </text>
++    <text x="243" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="252" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Fire 🔥       </text>
+     <text x="378" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="405" lengthAdjust="spacingAndGlyphs">└──────────────┴────────────┴───────────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-wrapped-bold-headers-without-showing-markers.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-wrapped-bold-headers-without-showing-markers.snap.svg
+index 0118d133c..30d847e86 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-wrapped-bold-headers-without-showing-markers.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-handles-wrapped-bold-headers-without-showing-markers.snap.svg
+@@ -7,40 +7,40 @@
+     <text x="0" y="19" fill="#333333" textLength="297" lengthAdjust="spacingAndGlyphs">┌─────────────┬───────┬─────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="81" lengthAdjust="spacingAndGlyphs">Very Long</text>
+-    <text x="117" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="126" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="144" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Short</text>
+-    <text x="189" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="198" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="216" y="36" fill="#89b4fa" textLength="63" lengthAdjust="spacingAndGlyphs">Another</text>
+     <text x="288" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="53" fill="#89b4fa" textLength="99" lengthAdjust="spacingAndGlyphs">Bold Header</text>
+-    <text x="117" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="189" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="126" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="198" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="216" y="53" fill="#89b4fa" textLength="36" lengthAdjust="spacingAndGlyphs">Long</text>
+     <text x="288" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="70" fill="#89b4fa" textLength="81" lengthAdjust="spacingAndGlyphs">That Will</text>
+-    <text x="117" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="189" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="126" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="198" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="216" y="70" fill="#89b4fa" textLength="54" lengthAdjust="spacingAndGlyphs">Header</text>
+     <text x="288" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="87" fill="#89b4fa" textLength="36" lengthAdjust="spacingAndGlyphs">Wrap</text>
+-    <text x="117" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="189" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="126" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="198" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="297" lengthAdjust="spacingAndGlyphs">├─────────────┼───────┼─────────┤</text>
+     <text x="0" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="121" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs"> Data 1     </text>
+-    <text x="117" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="144" y="121" fill="#ffffff" textLength="45" lengthAdjust="spacingAndGlyphs">Data </text>
+-    <text x="189" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="216" y="121" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs">Data 3  </text>
++    <text x="9" y="121" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> Data 1      </text>
++    <text x="126" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="135" y="121" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs"> Data  </text>
++    <text x="198" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="207" y="121" fill="#ffffff" textLength="81" lengthAdjust="spacingAndGlyphs"> Data 3  </text>
+     <text x="288" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="117" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="144" y="138" fill="#ffffff" textLength="45" lengthAdjust="spacingAndGlyphs">2    </text>
+-    <text x="189" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="126" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="135" y="138" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs"> 2     </text>
++    <text x="198" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="155" fill="#333333" textLength="297" lengthAdjust="spacingAndGlyphs">└─────────────┴───────┴─────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-3x3-table-correctly.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-3x3-table-correctly.snap.svg
+index 84e4d856f..dea907221 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-3x3-table-correctly.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-3x3-table-correctly.snap.svg
+@@ -7,32 +7,32 @@
+     <text x="0" y="19" fill="#333333" textLength="414" lengthAdjust="spacingAndGlyphs">┌──────────────┬──────────────┬──────────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 1</text>
+-    <text x="126" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="135" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="153" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 2</text>
+-    <text x="261" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 3</text>
+     <text x="405" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="414" lengthAdjust="spacingAndGlyphs">├──────────────┼──────────────┼──────────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> Row 1, Col 1</text>
+-    <text x="126" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="153" y="70" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs">Row 1, Col 2</text>
+-    <text x="261" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Row 1, Col 3 </text>
++    <text x="9" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 1, Col 1 </text>
++    <text x="135" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="144" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 1, Col 2 </text>
++    <text x="270" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 1, Col 3 </text>
+     <text x="405" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="87" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> Row 2, Col 1</text>
+-    <text x="126" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="153" y="87" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs">Row 2, Col 2</text>
+-    <text x="261" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="87" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Row 2, Col 3 </text>
++    <text x="9" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 2, Col 1 </text>
++    <text x="135" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="144" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 2, Col 2 </text>
++    <text x="270" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 2, Col 3 </text>
+     <text x="405" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="104" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> Row 3, Col 1</text>
+-    <text x="126" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="153" y="104" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs">Row 3, Col 2</text>
+-    <text x="261" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="104" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Row 3, Col 3 </text>
++    <text x="9" y="104" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 3, Col 1 </text>
++    <text x="135" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="144" y="104" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 3, Col 2 </text>
++    <text x="270" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="104" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Row 3, Col 3 </text>
+     <text x="405" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="121" fill="#333333" textLength="414" lengthAdjust="spacingAndGlyphs">└──────────────┴──────────────┴──────────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-complex-table-with-mixed-content-lengths-correctly.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-complex-table-with-mixed-content-lengths-correctly.snap.svg
+index 95654cb4d..f5a00dbe7 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-complex-table-with-mixed-content-lengths-correctly.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-complex-table-with-mixed-content-lengths-correctly.snap.svg
+@@ -7,394 +7,394 @@
+     <text x="0" y="19" fill="#333333" textLength="1404" lengthAdjust="spacingAndGlyphs">┌─────────────────────────────┬──────────────────────────────┬─────────────────────────────┬──────────────────────────────┬─────┬────────┬─────────┬───────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="243" lengthAdjust="spacingAndGlyphs">Comprehensive Architectural</text>
+-    <text x="261" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="36" fill="#89b4fa" textLength="234" lengthAdjust="spacingAndGlyphs">Implementation Details for</text>
+-    <text x="540" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="549" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="567" y="36" fill="#89b4fa" textLength="216" lengthAdjust="spacingAndGlyphs">Longitudinal Performance</text>
+-    <text x="810" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="819" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="837" y="36" fill="#89b4fa" textLength="252" lengthAdjust="spacingAndGlyphs">Strategic Security Framework</text>
+-    <text x="1089" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="1098" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1116" y="36" fill="#89b4fa" textLength="27" lengthAdjust="spacingAndGlyphs">Key</text>
+-    <text x="1143" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="1152" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1170" y="36" fill="#89b4fa" textLength="54" lengthAdjust="spacingAndGlyphs">Status</text>
+-    <text x="1224" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="1233" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1251" y="36" fill="#89b4fa" textLength="63" lengthAdjust="spacingAndGlyphs">Version</text>
+-    <text x="1314" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="1323" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1341" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Owner</text>
+     <text x="1395" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="53" fill="#89b4fa" textLength="189" lengthAdjust="spacingAndGlyphs">Specification for the</text>
+-    <text x="261" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="53" fill="#89b4fa" textLength="171" lengthAdjust="spacingAndGlyphs">the High-Throughput</text>
+-    <text x="540" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="549" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="567" y="53" fill="#89b4fa" textLength="135" lengthAdjust="spacingAndGlyphs">Analysis Across</text>
+-    <text x="810" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="819" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="837" y="53" fill="#89b4fa" textLength="252" lengthAdjust="spacingAndGlyphs">for Mitigating Sophisticated</text>
+-    <text x="1089" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="1098" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="70" fill="#89b4fa" textLength="234" lengthAdjust="spacingAndGlyphs">Distributed Infrastructure</text>
+-    <text x="261" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="70" fill="#89b4fa" textLength="180" lengthAdjust="spacingAndGlyphs">Asynchronous Message</text>
+-    <text x="540" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="549" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="567" y="70" fill="#89b4fa" textLength="180" lengthAdjust="spacingAndGlyphs">Multi-Regional Cloud</text>
+-    <text x="810" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="819" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="837" y="70" fill="#89b4fa" textLength="180" lengthAdjust="spacingAndGlyphs">Cross-Site Scripting</text>
+-    <text x="1089" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="1098" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="87" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Layer</text>
+-    <text x="261" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="87" fill="#89b4fa" textLength="216" lengthAdjust="spacingAndGlyphs">Processing Pipeline with</text>
+-    <text x="540" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="549" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="567" y="87" fill="#89b4fa" textLength="171" lengthAdjust="spacingAndGlyphs">Deployment Clusters</text>
+-    <text x="810" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="819" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="837" y="87" fill="#89b4fa" textLength="135" lengthAdjust="spacingAndGlyphs">Vulnerabilities</text>
+-    <text x="1089" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="1098" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="261" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="104" fill="#89b4fa" textLength="180" lengthAdjust="spacingAndGlyphs">Extended Scalability</text>
+-    <text x="540" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="810" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1089" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="549" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="819" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1098" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="261" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="121" fill="#89b4fa" textLength="207" lengthAdjust="spacingAndGlyphs">Features and Redundancy</text>
+-    <text x="540" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="810" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1089" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="549" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="819" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1098" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="261" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="138" fill="#89b4fa" textLength="81" lengthAdjust="spacingAndGlyphs">Protocols</text>
+-    <text x="540" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="810" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1089" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="549" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="819" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1098" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="155" fill="#333333" textLength="1404" lengthAdjust="spacingAndGlyphs">├─────────────────────────────┼──────────────────────────────┼─────────────────────────────┼──────────────────────────────┼─────┼────────┼─────────┼───────┤</text>
+     <text x="0" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="172" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> The primary architecture   </text>
+-    <text x="261" y="172" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="172" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">Each message is processed   </text>
+-    <text x="540" y="172" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="172" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">Historical data indicates a</text>
+-    <text x="810" y="172" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="172" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">A multi-layered defense     </text>
+-    <text x="1089" y="172" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1116" y="172" fill="#ffffff" textLength="27" lengthAdjust="spacingAndGlyphs">INF</text>
+-    <text x="1143" y="172" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1170" y="172" fill="#ffffff" textLength="54" lengthAdjust="spacingAndGlyphs">Active</text>
+-    <text x="1224" y="172" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1251" y="172" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs">v2.4   </text>
+-    <text x="1314" y="172" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1341" y="172" fill="#ffffff" textLength="54" lengthAdjust="spacingAndGlyphs">J.    </text>
++    <text x="9" y="172" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> The primary architecture    </text>
++    <text x="270" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="172" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> Each message is processed    </text>
++    <text x="549" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="172" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Historical data indicates a </text>
++    <text x="819" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="172" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> A multi-layered defense      </text>
++    <text x="1098" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1107" y="172" fill="#ffffff" textLength="45" lengthAdjust="spacingAndGlyphs"> INF </text>
++    <text x="1152" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1161" y="172" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Active </text>
++    <text x="1233" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1242" y="172" fill="#ffffff" textLength="81" lengthAdjust="spacingAndGlyphs"> v2.4    </text>
++    <text x="1323" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1332" y="172" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs"> J.    </text>
+     <text x="1395" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="189" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> utilizes a decoupled       </text>
+-    <text x="261" y="189" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="189" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">through a series of         </text>
+-    <text x="540" y="189" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="189" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">significant reduction in   </text>
+-    <text x="810" y="189" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="189" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">strategy incorporates       </text>
+-    <text x="1089" y="189" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="189" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="189" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="189" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1341" y="189" fill="#ffffff" textLength="54" lengthAdjust="spacingAndGlyphs">Doe   </text>
++    <text x="9" y="189" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> utilizes a decoupled        </text>
++    <text x="270" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="189" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> through a series of          </text>
++    <text x="549" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="189" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> significant reduction in    </text>
++    <text x="819" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="189" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> strategy incorporates        </text>
++    <text x="1098" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1332" y="189" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs"> Doe   </text>
+     <text x="1395" y="189" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="206" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> microservices approach,    </text>
+-    <text x="261" y="206" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="206" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">specialized workers that    </text>
+-    <text x="540" y="206" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="206" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">tail latency when utilizing</text>
+-    <text x="810" y="206" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="206" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">content security policies,  </text>
+-    <text x="1089" y="206" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="206" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="206" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="206" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="206" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> microservices approach,     </text>
++    <text x="270" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="206" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> specialized workers that     </text>
++    <text x="549" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="206" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> tail latency when utilizing </text>
++    <text x="819" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="206" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> content security policies,   </text>
++    <text x="1098" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="206" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="223" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> leveraging container       </text>
+-    <text x="261" y="223" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="223" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">handle data transformation, </text>
+-    <text x="540" y="223" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="223" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">edge computing nodes closer</text>
+-    <text x="810" y="223" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="223" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">input sanitization          </text>
+-    <text x="1089" y="223" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="223" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="223" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="223" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="223" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> leveraging container        </text>
++    <text x="270" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="223" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> handle data transformation,  </text>
++    <text x="549" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="223" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> edge computing nodes closer </text>
++    <text x="819" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="223" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> input sanitization           </text>
++    <text x="1098" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="223" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="240" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> orchestration for          </text>
+-    <text x="261" y="240" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="240" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">validation, and persistent  </text>
+-    <text x="540" y="240" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="240" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">to the geographic location </text>
+-    <text x="810" y="240" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="240" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">libraries, and regular      </text>
+-    <text x="1089" y="240" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="240" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="240" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="240" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="240" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> orchestration for           </text>
++    <text x="270" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="240" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> validation, and persistent   </text>
++    <text x="549" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="240" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> to the geographic location  </text>
++    <text x="819" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="240" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> libraries, and regular       </text>
++    <text x="1098" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="240" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="257" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> scalability and fault      </text>
+-    <text x="261" y="257" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="257" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">storage using a persistent  </text>
+-    <text x="540" y="257" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="257" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">of the end-user base.      </text>
+-    <text x="810" y="257" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="257" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">automated penetration       </text>
+-    <text x="1089" y="257" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="257" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="257" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="257" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="257" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> scalability and fault       </text>
++    <text x="270" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="257" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> storage using a persistent   </text>
++    <text x="549" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="257" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> of the end-user base.       </text>
++    <text x="819" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="257" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> automated penetration        </text>
++    <text x="1098" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="257" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="274" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> tolerance in high-load     </text>
+-    <text x="261" y="274" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="274" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">queue.                      </text>
+-    <text x="540" y="274" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="810" y="274" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="274" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">testing routines.           </text>
+-    <text x="1089" y="274" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="274" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="274" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="274" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="274" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> tolerance in high-load      </text>
++    <text x="270" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="274" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> queue.                       </text>
++    <text x="549" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="819" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="274" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> testing routines.            </text>
++    <text x="1098" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="274" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="291" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> scenarios.                 </text>
+-    <text x="261" y="291" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="540" y="291" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="291" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">Monitoring tools have      </text>
+-    <text x="810" y="291" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1089" y="291" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="291" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="291" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="291" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="291" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> scenarios.                  </text>
++    <text x="270" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="549" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="291" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Monitoring tools have       </text>
++    <text x="819" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1098" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="291" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="261" y="308" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="308" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">The pipeline features       </text>
+-    <text x="540" y="308" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="308" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">captured a steady increase </text>
+-    <text x="810" y="308" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="308" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">Developers are required to  </text>
+-    <text x="1089" y="308" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="308" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="308" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="308" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="308" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> The pipeline features        </text>
++    <text x="549" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="308" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> captured a steady increase  </text>
++    <text x="819" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="308" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> Developers are required to   </text>
++    <text x="1098" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="308" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="325" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> This layer provides the    </text>
+-    <text x="261" y="325" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="325" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">built-in retry mechanisms   </text>
+-    <text x="540" y="325" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="325" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">in throughput efficiency   </text>
+-    <text x="810" y="325" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="325" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">undergo mandatory security  </text>
+-    <text x="1089" y="325" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="325" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="325" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="325" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="325" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> This layer provides the     </text>
++    <text x="270" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="325" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> built-in retry mechanisms    </text>
++    <text x="549" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="325" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> in throughput efficiency    </text>
++    <text x="819" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="325" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> undergo mandatory security   </text>
++    <text x="1098" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="325" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="342" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> fundamental building blocks</text>
+-    <text x="261" y="342" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="342" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">with exponential backoff to </text>
+-    <text x="540" y="342" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="342" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">since the introduction of  </text>
+-    <text x="810" y="342" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="342" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">training focusing on the    </text>
+-    <text x="1089" y="342" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="342" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="342" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="342" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="342" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> fundamental building blocks </text>
++    <text x="270" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="342" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> with exponential backoff to  </text>
++    <text x="549" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="342" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> since the introduction of   </text>
++    <text x="819" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="342" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> training focusing on the     </text>
++    <text x="1098" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="342" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="359" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> for service discovery, load</text>
+-    <text x="261" y="359" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="359" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">ensure message delivery     </text>
+-    <text x="540" y="359" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="359" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">the vectorized query engine</text>
+-    <text x="810" y="359" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="359" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">OWASP Top Ten to ensure that</text>
+-    <text x="1089" y="359" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="359" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="359" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="359" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="359" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> for service discovery, load </text>
++    <text x="270" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="359" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> ensure message delivery      </text>
++    <text x="549" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="359" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> the vectorized query engine </text>
++    <text x="819" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="359" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> OWASP Top Ten to ensure that </text>
++    <text x="1098" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="359" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="376" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> balancing, and             </text>
+-    <text x="261" y="376" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="376" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">integrity even during       </text>
+-    <text x="540" y="376" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="376" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">in the primary data        </text>
+-    <text x="810" y="376" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="376" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">security is integrated into </text>
+-    <text x="1089" y="376" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="376" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="376" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="376" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="376" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> balancing, and              </text>
++    <text x="270" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="376" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> integrity even during        </text>
++    <text x="549" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="376" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> in the primary data         </text>
++    <text x="819" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="376" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> security is integrated into  </text>
++    <text x="1098" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="376" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="393" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> inter-service communication</text>
+-    <text x="261" y="393" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="393" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">transient network or service</text>
+-    <text x="540" y="393" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="393" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">warehouse.                 </text>
+-    <text x="810" y="393" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="393" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">the initial design phase.   </text>
+-    <text x="1089" y="393" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="393" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="393" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="393" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="393" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> inter-service communication </text>
++    <text x="270" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="393" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> transient network or service </text>
++    <text x="549" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="393" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> warehouse.                  </text>
++    <text x="819" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="393" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> the initial design phase.    </text>
++    <text x="1098" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="393" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="410" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> via highly efficient       </text>
+-    <text x="261" y="410" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="410" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">failures.                   </text>
+-    <text x="540" y="410" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="810" y="410" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1089" y="410" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="410" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="410" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="410" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="410" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> via highly efficient        </text>
++    <text x="270" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="410" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> failures.                    </text>
++    <text x="549" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="819" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1098" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="410" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="427" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> protocol buffers.          </text>
+-    <text x="261" y="427" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="540" y="427" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="427" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">Resource utilization       </text>
+-    <text x="810" y="427" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="427" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">The implementation of a     </text>
+-    <text x="1089" y="427" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="427" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="427" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="427" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="427" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> protocol buffers.           </text>
++    <text x="270" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="549" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="427" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Resource utilization        </text>
++    <text x="819" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="427" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> The implementation of a      </text>
++    <text x="1098" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="427" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="261" y="444" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="444" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">Horizontal autoscaling is   </text>
+-    <text x="540" y="444" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="444" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">metrics demonstrate that   </text>
+-    <text x="810" y="444" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="444" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">robust Identity and Access  </text>
+-    <text x="1089" y="444" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="444" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="444" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="444" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="444" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> Horizontal autoscaling is    </text>
++    <text x="549" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="444" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> metrics demonstrate that    </text>
++    <text x="819" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="444" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> robust Identity and Access   </text>
++    <text x="1098" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="444" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="461" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> Advanced telemetry and     </text>
+-    <text x="261" y="461" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="461" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">triggered automatically     </text>
+-    <text x="540" y="461" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="461" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">the transition to          </text>
+-    <text x="810" y="461" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="461" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">Management system ensures   </text>
+-    <text x="1089" y="461" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="461" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="461" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="461" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="461" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Advanced telemetry and      </text>
++    <text x="270" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="461" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> triggered automatically      </text>
++    <text x="549" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="461" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> the transition to           </text>
++    <text x="819" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="461" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> Management system ensures    </text>
++    <text x="1098" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="461" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="478" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> logging integrations allow </text>
+-    <text x="261" y="478" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="478" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">based on the depth of the   </text>
+-    <text x="540" y="478" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="478" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">serverless compute for     </text>
+-    <text x="810" y="478" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="478" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">that the principle of least </text>
+-    <text x="1089" y="478" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="478" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="478" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="478" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="478" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> logging integrations allow  </text>
++    <text x="270" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="478" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> based on the depth of the    </text>
++    <text x="549" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="478" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> serverless compute for      </text>
++    <text x="819" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="478" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> that the principle of least  </text>
++    <text x="1098" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="478" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="495" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> for real-time monitoring of</text>
+-    <text x="261" y="495" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="495" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">processing queue, ensuring  </text>
+-    <text x="540" y="495" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="495" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">intermittent tasks has     </text>
+-    <text x="810" y="495" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="495" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">privilege is strictly       </text>
+-    <text x="1089" y="495" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="495" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="495" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="495" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="495" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> for real-time monitoring of </text>
++    <text x="270" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="495" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> processing queue, ensuring   </text>
++    <text x="549" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="495" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> intermittent tasks has      </text>
++    <text x="819" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="495" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> privilege is strictly        </text>
++    <text x="1098" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="495" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="512" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> system health and rapid    </text>
+-    <text x="261" y="512" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="512" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">consistent performance      </text>
+-    <text x="540" y="512" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="512" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">resulted in a thirty       </text>
+-    <text x="810" y="512" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="512" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">enforced across all         </text>
+-    <text x="1089" y="512" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="512" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="512" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="512" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="512" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> system health and rapid     </text>
++    <text x="270" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="512" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> consistent performance       </text>
++    <text x="549" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="512" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> resulted in a thirty        </text>
++    <text x="819" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="512" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> enforced across all          </text>
++    <text x="1098" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="512" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="529" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> identification of          </text>
+-    <text x="261" y="529" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="529" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">during unexpected traffic   </text>
+-    <text x="540" y="529" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="567" y="529" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">percent cost optimization. </text>
+-    <text x="810" y="529" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="837" y="529" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">environments.               </text>
+-    <text x="1089" y="529" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="529" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="529" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="529" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="529" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> identification of           </text>
++    <text x="270" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="529" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> during unexpected traffic    </text>
++    <text x="549" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="558" y="529" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> percent cost optimization.  </text>
++    <text x="819" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="828" y="529" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> environments.                </text>
++    <text x="1098" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="529" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="546" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> bottlenecks within the     </text>
+-    <text x="261" y="546" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="546" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs">spikes.                     </text>
+-    <text x="540" y="546" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="810" y="546" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1089" y="546" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="546" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="546" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="546" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="546" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> bottlenecks within the      </text>
++    <text x="270" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="546" fill="#ffffff" textLength="270" lengthAdjust="spacingAndGlyphs"> spikes.                      </text>
++    <text x="549" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="819" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1098" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="546" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="563" fill="#ffffff" textLength="252" lengthAdjust="spacingAndGlyphs"> service mesh.              </text>
+-    <text x="261" y="563" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="540" y="563" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="810" y="563" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1089" y="563" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1143" y="563" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1224" y="563" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="1314" y="563" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="563" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> service mesh.               </text>
++    <text x="270" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="549" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="819" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1098" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1152" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1233" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="1323" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="1395" y="563" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="580" fill="#333333" textLength="1404" lengthAdjust="spacingAndGlyphs">└─────────────────────────────┴──────────────────────────────┴─────────────────────────────┴──────────────────────────────┴─────┴────────┴─────────┴───────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-long-headers-and-4-columns-correctly.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-long-headers-and-4-columns-correctly.snap.svg
+index b4d6353c3..8da55efa8 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-long-headers-and-4-columns-correctly.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-long-headers-and-4-columns-correctly.snap.svg
+@@ -7,56 +7,56 @@
+     <text x="0" y="19" fill="#333333" textLength="639" lengthAdjust="spacingAndGlyphs">┌───────────────┬───────────────┬──────────────────┬──────────────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="81" lengthAdjust="spacingAndGlyphs">Very Long</text>
+-    <text x="135" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="144" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="162" y="36" fill="#89b4fa" textLength="81" lengthAdjust="spacingAndGlyphs">Very Long</text>
+-    <text x="279" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="288" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="306" y="36" fill="#89b4fa" textLength="144" lengthAdjust="spacingAndGlyphs">Very Long Column</text>
+-    <text x="450" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="459" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="477" y="36" fill="#89b4fa" textLength="144" lengthAdjust="spacingAndGlyphs">Very Long Column</text>
+     <text x="630" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="53" fill="#89b4fa" textLength="117" lengthAdjust="spacingAndGlyphs">Column Header</text>
+-    <text x="135" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="144" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="162" y="53" fill="#89b4fa" textLength="117" lengthAdjust="spacingAndGlyphs">Column Header</text>
+-    <text x="279" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="288" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="306" y="53" fill="#89b4fa" textLength="108" lengthAdjust="spacingAndGlyphs">Header Three</text>
+-    <text x="450" y="53" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="459" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="477" y="53" fill="#89b4fa" textLength="99" lengthAdjust="spacingAndGlyphs">Header Four</text>
+     <text x="630" y="53" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="70" fill="#89b4fa" textLength="27" lengthAdjust="spacingAndGlyphs">One</text>
+-    <text x="135" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="144" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="162" y="70" fill="#89b4fa" textLength="27" lengthAdjust="spacingAndGlyphs">Two</text>
+-    <text x="279" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="450" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="288" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="459" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="630" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="639" lengthAdjust="spacingAndGlyphs">├───────────────┼───────────────┼──────────────────┼──────────────────┤</text>
+     <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="104" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Data 1.1     </text>
+-    <text x="135" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="162" y="104" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Data 1.2     </text>
+-    <text x="279" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="306" y="104" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">Data 1.3        </text>
+-    <text x="450" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="477" y="104" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs">Data 1.4         </text>
++    <text x="9" y="104" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Data 1.1      </text>
++    <text x="144" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="104" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Data 1.2      </text>
++    <text x="288" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="297" y="104" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Data 1.3         </text>
++    <text x="459" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="468" y="104" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Data 1.4         </text>
+     <text x="630" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="121" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Data 2.1     </text>
+-    <text x="135" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="162" y="121" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Data 2.2     </text>
+-    <text x="279" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="306" y="121" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">Data 2.3        </text>
+-    <text x="450" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="477" y="121" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs">Data 2.4         </text>
++    <text x="9" y="121" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Data 2.1      </text>
++    <text x="144" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="121" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Data 2.2      </text>
++    <text x="288" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="297" y="121" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Data 2.3         </text>
++    <text x="459" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="468" y="121" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Data 2.4         </text>
+     <text x="630" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="138" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Data 3.1     </text>
+-    <text x="135" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="162" y="138" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Data 3.2     </text>
+-    <text x="279" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="306" y="138" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">Data 3.3        </text>
+-    <text x="450" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="477" y="138" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs">Data 3.4         </text>
++    <text x="9" y="138" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Data 3.1      </text>
++    <text x="144" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="138" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Data 3.2      </text>
++    <text x="288" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="297" y="138" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Data 3.3         </text>
++    <text x="459" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="468" y="138" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Data 3.4         </text>
+     <text x="630" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="155" fill="#333333" textLength="639" lengthAdjust="spacingAndGlyphs">└───────────────┴───────────────┴──────────────────┴──────────────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-mixed-emojis-As-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-mixed-emojis-As-.snap.svg
+index 707bf53f4..0db46485e 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-mixed-emojis-As-.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-mixed-emojis-As-.snap.svg
+@@ -7,25 +7,25 @@
+     <text x="0" y="19" fill="#333333" textLength="486" lengthAdjust="spacingAndGlyphs">┌───────────────┬───────────────────┬────────────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="108" lengthAdjust="spacingAndGlyphs">Mixed 😃 中文</text>
+-    <text x="126" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="135" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="153" y="36" fill="#89b4fa" textLength="144" lengthAdjust="spacingAndGlyphs">Complex 🚀 日本語</text>
+-    <text x="297" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="306" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="324" y="36" fill="#89b4fa" textLength="117" lengthAdjust="spacingAndGlyphs">Text 📝 한국어</text>
+     <text x="450" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="486" lengthAdjust="spacingAndGlyphs">├───────────────┼───────────────────┼────────────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> 你好 😃      </text>
+-    <text x="126" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="153" y="70" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">こんにちは 🚀    </text>
+-    <text x="297" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="324" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">안녕하세요 📝  </text>
++    <text x="9" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> 你好 😃       </text>
++    <text x="135" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="144" y="70" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> こんにちは 🚀     </text>
++    <text x="306" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="315" y="70" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> 안녕하세요 📝  </text>
+     <text x="450" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="87" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> World 🌍     </text>
+-    <text x="126" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="153" y="87" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">Code 💻          </text>
+-    <text x="297" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="324" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">Pizza 🍕       </text>
++    <text x="9" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> World 🌍      </text>
++    <text x="135" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="144" y="87" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Code 💻           </text>
++    <text x="306" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="315" y="87" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Pizza 🍕       </text>
+     <text x="450" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="486" lengthAdjust="spacingAndGlyphs">└───────────────┴───────────────────┴────────────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-only-Asian-chara-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-only-Asian-chara-.snap.svg
+index 0f51eba24..b808d1e33 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-only-Asian-chara-.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-only-Asian-chara-.snap.svg
+@@ -7,25 +7,25 @@
+     <text x="0" y="19" fill="#333333" textLength="450" lengthAdjust="spacingAndGlyphs">┌──────────────┬─────────────────┬───────────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="108" lengthAdjust="spacingAndGlyphs">Chinese 中文</text>
+-    <text x="126" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="135" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="153" y="36" fill="#89b4fa" textLength="135" lengthAdjust="spacingAndGlyphs">Japanese 日本語</text>
+-    <text x="288" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="297" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="315" y="36" fill="#89b4fa" textLength="117" lengthAdjust="spacingAndGlyphs">Korean 한국어</text>
+     <text x="441" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="450" lengthAdjust="spacingAndGlyphs">├──────────────┼─────────────────┼───────────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> 你好        </text>
+-    <text x="126" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="153" y="70" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs">こんにちは     </text>
+-    <text x="288" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="315" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">안녕하세요    </text>
++    <text x="9" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> 你好         </text>
++    <text x="135" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="144" y="70" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> こんにちは      </text>
++    <text x="297" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="306" y="70" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> 안녕하세요    </text>
+     <text x="441" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="87" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> 世界        </text>
+-    <text x="126" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="153" y="87" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs">世界           </text>
+-    <text x="288" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="315" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">세계          </text>
++    <text x="9" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> 世界         </text>
++    <text x="135" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="144" y="87" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> 世界            </text>
++    <text x="297" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="306" y="87" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> 세계          </text>
+     <text x="441" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="450" lengthAdjust="spacingAndGlyphs">└──────────────┴─────────────────┴───────────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-only-emojis-and-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-only-emojis-and-.snap.svg
+index 1a849696d..927707825 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-only-emojis-and-.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-a-table-with-only-emojis-and-.snap.svg
+@@ -7,25 +7,25 @@
+     <text x="0" y="19" fill="#333333" textLength="315" lengthAdjust="spacingAndGlyphs">┌──────────┬───────────┬──────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="63" lengthAdjust="spacingAndGlyphs">Happy 😀</text>
+-    <text x="81" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="90" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="108" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Rocket 🚀</text>
+-    <text x="180" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="189" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="207" y="36" fill="#89b4fa" textLength="63" lengthAdjust="spacingAndGlyphs">Heart ❤️</text>
+     <text x="279" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="315" lengthAdjust="spacingAndGlyphs">├──────────┼───────────┼──────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Smile 😃</text>
+-    <text x="81" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="108" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs">Fire 🔥  </text>
+-    <text x="180" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="207" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs">Love 💖  </text>
++    <text x="9" y="70" fill="#ffffff" textLength="81" lengthAdjust="spacingAndGlyphs"> Smile 😃 </text>
++    <text x="90" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="99" y="70" fill="#ffffff" textLength="90" lengthAdjust="spacingAndGlyphs"> Fire 🔥   </text>
++    <text x="189" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="198" y="70" fill="#ffffff" textLength="81" lengthAdjust="spacingAndGlyphs"> Love 💖  </text>
+     <text x="279" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="87" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Cool 😎 </text>
+-    <text x="81" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="108" y="87" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs">Star ⭐  </text>
+-    <text x="180" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="207" y="87" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs">Blue 💙  </text>
++    <text x="9" y="87" fill="#ffffff" textLength="81" lengthAdjust="spacingAndGlyphs"> Cool 😎  </text>
++    <text x="90" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="99" y="87" fill="#ffffff" textLength="90" lengthAdjust="spacingAndGlyphs"> Star ⭐   </text>
++    <text x="189" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="198" y="87" fill="#ffffff" textLength="81" lengthAdjust="spacingAndGlyphs"> Blue 💙  </text>
+     <text x="279" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="315" lengthAdjust="spacingAndGlyphs">└──────────┴───────────┴──────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-complex-markdown-in-rows-and-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-complex-markdown-in-rows-and-.snap.svg
+new file mode 100644
+index 000000000..8b251c3ab
+--- /dev/null
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-complex-markdown-in-rows-and-.snap.svg
+@@ -0,0 +1,53 @@
++<svg xmlns="http://www.w3.org/2000/svg" width="740" height="224" viewBox="0 0 740 224">
++  <style>
++    text { font-family: Consolas, "Courier New", monospace; font-size: 14px; dominant-baseline: text-before-edge; white-space: pre; }
++  </style>
++  <rect width="740" height="224" fill="#000000" />
++  <g transform="translate(10, 10)">
++    <text x="0" y="19" fill="#333333" textLength="423" lengthAdjust="spacingAndGlyphs">┌───────────────┬─────────────────────────────┐</text>
++    <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="18" y="36" fill="#89b4fa" textLength="63" lengthAdjust="spacingAndGlyphs">Feature</text>
++    <text x="144" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="162" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Markdown</text>
++    <text x="414" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="53" fill="#333333" textLength="423" lengthAdjust="spacingAndGlyphs">├───────────────┼─────────────────────────────┤</text>
++    <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="70" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Bold          </text>
++    <text x="144" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="70" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Bold Text                   </text>
++    <text x="414" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="87" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Italic        </text>
++    <text x="144" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="87" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Italic Text                 </text>
++    <text x="414" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="104" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Combined      </text>
++    <text x="144" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="104" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Bold and Italic             </text>
++    <text x="414" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="121" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Link          </text>
++    <text x="144" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="121" fill="#ffffff" textLength="81" lengthAdjust="spacingAndGlyphs"> Google (</text>
++    <text x="234" y="121" fill="#89b4fa" textLength="162" lengthAdjust="spacingAndGlyphs">https://google.com</text>
++    <text x="396" y="121" fill="#ffffff" textLength="18" lengthAdjust="spacingAndGlyphs">) </text>
++    <text x="414" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="138" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Code          </text>
++    <text x="144" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="162" y="138" fill="#cba6f7" textLength="99" lengthAdjust="spacingAndGlyphs">const x = 1</text>
++    <text x="414" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="155" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="155" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Strikethrough </text>
++    <text x="144" y="155" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="155" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Strike                      </text>
++    <text x="414" y="155" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="9" y="172" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Underline     </text>
++    <text x="144" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="153" y="172" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> Underline                   </text>
++    <text x="414" y="172" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="0" y="189" fill="#333333" textLength="423" lengthAdjust="spacingAndGlyphs">└───────────────┴─────────────────────────────┘</text>
++  </g>
++</svg>
+\ No newline at end of file
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-correctly-when-headers-are-em-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-correctly-when-headers-are-em-.snap.svg
+index 2cc7b1cad..b2523badc 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-correctly-when-headers-are-em-.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-correctly-when-headers-are-em-.snap.svg
+@@ -6,13 +6,13 @@
+   <g transform="translate(10, 10)">
+     <text x="0" y="19" fill="#333333" textLength="171" lengthAdjust="spacingAndGlyphs">┌────────┬────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="72" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="81" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="162" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="171" lengthAdjust="spacingAndGlyphs">├────────┼────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs"> Data 1</text>
+-    <text x="72" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="99" y="70" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs">Data 2 </text>
++    <text x="9" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Data 1 </text>
++    <text x="81" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="90" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Data 2 </text>
+     <text x="162" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="171" lengthAdjust="spacingAndGlyphs">└────────┴────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-correctly-when-there-are-more-.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-correctly-when-there-are-more-.snap.svg
+index 452bb1fb1..89ad1cfb4 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-correctly-when-there-are-more-.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-renders-correctly-when-there-are-more-.snap.svg
+@@ -7,17 +7,17 @@
+     <text x="0" y="19" fill="#333333" textLength="306" lengthAdjust="spacingAndGlyphs">┌──────────┬──────────┬──────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 1</text>
+-    <text x="90" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="99" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="117" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 2</text>
+-    <text x="189" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="198" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="216" y="36" fill="#89b4fa" textLength="72" lengthAdjust="spacingAndGlyphs">Header 3</text>
+     <text x="297" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="306" lengthAdjust="spacingAndGlyphs">├──────────┼──────────┼──────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="81" lengthAdjust="spacingAndGlyphs"> Data 1  </text>
+-    <text x="90" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="117" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs">Data 2  </text>
+-    <text x="189" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="9" y="70" fill="#ffffff" textLength="90" lengthAdjust="spacingAndGlyphs"> Data 1   </text>
++    <text x="99" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="108" y="70" fill="#ffffff" textLength="90" lengthAdjust="spacingAndGlyphs"> Data 2   </text>
++    <text x="198" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="297" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="306" lengthAdjust="spacingAndGlyphs">└──────────┴──────────┴──────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-strips-bold-markers-from-headers-and-renders-them-correctly.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-strips-bold-markers-from-headers-and-renders-them-correctly.snap.svg
+index 6de776060..717a8803f 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-strips-bold-markers-from-headers-and-renders-them-correctly.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-strips-bold-markers-from-headers-and-renders-them-correctly.snap.svg
+@@ -7,18 +7,18 @@
+     <text x="0" y="19" fill="#333333" textLength="414" lengthAdjust="spacingAndGlyphs">┌─────────────┬───────────────┬──────────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="99" lengthAdjust="spacingAndGlyphs">Bold Header</text>
+-    <text x="117" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="126" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="144" y="36" fill="#89b4fa" textLength="117" lengthAdjust="spacingAndGlyphs">Normal Header</text>
+-    <text x="261" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="270" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="288" y="36" fill="#89b4fa" textLength="108" lengthAdjust="spacingAndGlyphs">Another Bold</text>
+     <text x="405" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="414" lengthAdjust="spacingAndGlyphs">├─────────────┼───────────────┼──────────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="108" lengthAdjust="spacingAndGlyphs"> Data 1     </text>
+-    <text x="117" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="144" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Data 2       </text>
+-    <text x="261" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="288" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Data 3       </text>
++    <text x="9" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs"> Data 1      </text>
++    <text x="126" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="135" y="70" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Data 2        </text>
++    <text x="270" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="279" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs"> Data 3       </text>
+     <text x="405" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="414" lengthAdjust="spacingAndGlyphs">└─────────────┴───────────────┴──────────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-all-long-columns-correctly.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-all-long-columns-correctly.snap.svg
+index 4b459cfea..e59cefbc7 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-all-long-columns-correctly.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-all-long-columns-correctly.snap.svg
+@@ -7,45 +7,45 @@
+     <text x="0" y="19" fill="#333333" textLength="477" lengthAdjust="spacingAndGlyphs">┌────────────────┬────────────────┬─────────────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 1</text>
+-    <text x="144" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="153" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="171" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 2</text>
+-    <text x="297" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="306" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="324" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 3</text>
+     <text x="468" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="477" lengthAdjust="spacingAndGlyphs">├────────────────┼────────────────┼─────────────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> This is a very</text>
+-    <text x="144" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="171" y="70" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">This is also a</text>
+-    <text x="297" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="324" y="70" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">And this is the </text>
++    <text x="9" y="70" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> This is a very </text>
++    <text x="153" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="162" y="70" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> This is also a </text>
++    <text x="306" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="315" y="70" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> And this is the </text>
+     <text x="468" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="87" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> long text that</text>
+-    <text x="144" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="171" y="87" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">very long text</text>
+-    <text x="297" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="324" y="87" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">third long text </text>
++    <text x="9" y="87" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> long text that </text>
++    <text x="153" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="162" y="87" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> very long text </text>
++    <text x="306" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="315" y="87" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> third long text </text>
+     <text x="468" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="104" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> needs wrapping</text>
+-    <text x="144" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="171" y="104" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">that needs    </text>
+-    <text x="297" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="324" y="104" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">that needs      </text>
++    <text x="9" y="104" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> needs wrapping </text>
++    <text x="153" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="162" y="104" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> that needs     </text>
++    <text x="306" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="315" y="104" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> that needs      </text>
+     <text x="468" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="121" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> in column 1   </text>
+-    <text x="144" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="171" y="121" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">wrapping in   </text>
+-    <text x="297" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="324" y="121" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">wrapping in     </text>
++    <text x="9" y="121" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> in column 1    </text>
++    <text x="153" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="162" y="121" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> wrapping in    </text>
++    <text x="306" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="315" y="121" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> wrapping in     </text>
+     <text x="468" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="144" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="171" y="138" fill="#ffffff" textLength="126" lengthAdjust="spacingAndGlyphs">column 2      </text>
+-    <text x="297" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="324" y="138" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">column 3        </text>
++    <text x="153" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="162" y="138" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs"> column 2       </text>
++    <text x="306" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="315" y="138" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> column 3        </text>
+     <text x="468" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="155" fill="#333333" textLength="477" lengthAdjust="spacingAndGlyphs">└────────────────┴────────────────┴─────────────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-columns-with-punctuation-correctly.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-columns-with-punctuation-correctly.snap.svg
+index 7173ce475..42f7b188f 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-columns-with-punctuation-correctly.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-columns-with-punctuation-correctly.snap.svg
+@@ -7,44 +7,44 @@
+     <text x="0" y="19" fill="#333333" textLength="495" lengthAdjust="spacingAndGlyphs">┌───────────────────┬───────────────┬─────────────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="117" lengthAdjust="spacingAndGlyphs">Punctuation 1</text>
+-    <text x="171" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="180" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="198" y="36" fill="#89b4fa" textLength="117" lengthAdjust="spacingAndGlyphs">Punctuation 2</text>
+-    <text x="315" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="324" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="342" y="36" fill="#89b4fa" textLength="117" lengthAdjust="spacingAndGlyphs">Punctuation 3</text>
+     <text x="486" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="495" lengthAdjust="spacingAndGlyphs">├───────────────────┼───────────────┼─────────────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Start. Stop.     </text>
+-    <text x="171" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="198" y="70" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Semi; colon: </text>
+-    <text x="315" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="342" y="70" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">At@ Hash#       </text>
++    <text x="9" y="70" fill="#ffffff" textLength="171" lengthAdjust="spacingAndGlyphs"> Start. Stop.      </text>
++    <text x="180" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="189" y="70" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Semi; colon:  </text>
++    <text x="324" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="333" y="70" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> At@ Hash#       </text>
+     <text x="486" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="87" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Comma, separated.</text>
+-    <text x="171" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="198" y="87" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Pipe| Slash/ </text>
+-    <text x="315" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="342" y="87" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">Dollar$         </text>
++    <text x="9" y="87" fill="#ffffff" textLength="171" lengthAdjust="spacingAndGlyphs"> Comma, separated. </text>
++    <text x="180" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="189" y="87" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Pipe| Slash/  </text>
++    <text x="324" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="333" y="87" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> Dollar$         </text>
+     <text x="486" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="104" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Exclamation!     </text>
+-    <text x="171" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="198" y="104" fill="#ffffff" textLength="117" lengthAdjust="spacingAndGlyphs">Backslash\   </text>
+-    <text x="315" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="342" y="104" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">Percent% Caret^ </text>
++    <text x="9" y="104" fill="#ffffff" textLength="171" lengthAdjust="spacingAndGlyphs"> Exclamation!      </text>
++    <text x="180" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="189" y="104" fill="#ffffff" textLength="135" lengthAdjust="spacingAndGlyphs"> Backslash\    </text>
++    <text x="324" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="333" y="104" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> Percent% Caret^ </text>
+     <text x="486" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="121" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> Question?        </text>
+-    <text x="171" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="315" y="121" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="342" y="121" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">Ampersand&amp;      </text>
++    <text x="9" y="121" fill="#ffffff" textLength="171" lengthAdjust="spacingAndGlyphs"> Question?         </text>
++    <text x="180" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="324" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="333" y="121" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> Ampersand&amp;      </text>
+     <text x="486" y="121" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="138" fill="#ffffff" textLength="162" lengthAdjust="spacingAndGlyphs"> hyphen-ated      </text>
+-    <text x="171" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="315" y="138" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="342" y="138" fill="#ffffff" textLength="144" lengthAdjust="spacingAndGlyphs">Asterisk*       </text>
++    <text x="9" y="138" fill="#ffffff" textLength="171" lengthAdjust="spacingAndGlyphs"> hyphen-ated       </text>
++    <text x="180" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="324" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="333" y="138" fill="#ffffff" textLength="153" lengthAdjust="spacingAndGlyphs"> Asterisk*       </text>
+     <text x="486" y="138" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="155" fill="#333333" textLength="495" lengthAdjust="spacingAndGlyphs">└───────────────────┴───────────────┴─────────────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-long-cell-content-correctly.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-long-cell-content-correctly.snap.svg
+index 7f7b67a7d..2cfd46bc5 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-long-cell-content-correctly.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-long-cell-content-correctly.snap.svg
+@@ -7,28 +7,28 @@
+     <text x="0" y="19" fill="#333333" textLength="423" lengthAdjust="spacingAndGlyphs">┌───────┬─────────────────────────────┬───────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 1</text>
+-    <text x="63" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="72" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="90" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 2</text>
+-    <text x="333" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="342" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="360" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Col 3</text>
+     <text x="414" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="423" lengthAdjust="spacingAndGlyphs">├───────┼─────────────────────────────┼───────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="54" lengthAdjust="spacingAndGlyphs"> Short</text>
+-    <text x="63" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="90" y="70" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">This is a very long cell   </text>
+-    <text x="333" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="360" y="70" fill="#ffffff" textLength="54" lengthAdjust="spacingAndGlyphs">Short </text>
++    <text x="9" y="70" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs"> Short </text>
++    <text x="72" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="81" y="70" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> This is a very long cell    </text>
++    <text x="342" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="351" y="70" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs"> Short </text>
+     <text x="414" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="63" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="90" y="87" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">content that should wrap to</text>
+-    <text x="333" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="72" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="81" y="87" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> content that should wrap to </text>
++    <text x="342" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="414" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="63" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="90" y="104" fill="#ffffff" textLength="243" lengthAdjust="spacingAndGlyphs">multiple lines             </text>
+-    <text x="333" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="72" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="81" y="104" fill="#ffffff" textLength="261" lengthAdjust="spacingAndGlyphs"> multiple lines              </text>
++    <text x="342" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="414" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="121" fill="#333333" textLength="423" lengthAdjust="spacingAndGlyphs">└───────┴─────────────────────────────┴───────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-mixed-long-and-short-columns-correctly.snap.svg b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-mixed-long-and-short-columns-correctly.snap.svg
+index 3ff0542a2..0e5dbcbb3 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-mixed-long-and-short-columns-correctly.snap.svg
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer-TableRenderer-wraps-mixed-long-and-short-columns-correctly.snap.svg
+@@ -7,29 +7,29 @@
+     <text x="0" y="19" fill="#333333" textLength="405" lengthAdjust="spacingAndGlyphs">┌───────┬──────────────────────────┬────────┐</text>
+     <text x="0" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="18" y="36" fill="#89b4fa" textLength="45" lengthAdjust="spacingAndGlyphs">Short</text>
+-    <text x="63" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="72" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="90" y="36" fill="#89b4fa" textLength="36" lengthAdjust="spacingAndGlyphs">Long</text>
+-    <text x="306" y="36" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="315" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="333" y="36" fill="#89b4fa" textLength="54" lengthAdjust="spacingAndGlyphs">Medium</text>
+     <text x="396" y="36" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="53" fill="#333333" textLength="405" lengthAdjust="spacingAndGlyphs">├───────┼──────────────────────────┼────────┤</text>
+     <text x="0" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="9" y="70" fill="#ffffff" textLength="54" lengthAdjust="spacingAndGlyphs"> Tiny </text>
+-    <text x="63" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="90" y="70" fill="#ffffff" textLength="216" lengthAdjust="spacingAndGlyphs">This is a very long text</text>
+-    <text x="306" y="70" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="333" y="70" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs">Not so </text>
++    <text x="9" y="70" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs"> Tiny  </text>
++    <text x="72" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="81" y="70" fill="#ffffff" textLength="234" lengthAdjust="spacingAndGlyphs"> This is a very long text </text>
++    <text x="315" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="324" y="70" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> Not so </text>
+     <text x="396" y="70" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="63" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="90" y="87" fill="#ffffff" textLength="216" lengthAdjust="spacingAndGlyphs">that definitely needs to</text>
+-    <text x="306" y="87" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="333" y="87" fill="#ffffff" textLength="63" lengthAdjust="spacingAndGlyphs">long   </text>
++    <text x="72" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="81" y="87" fill="#ffffff" textLength="234" lengthAdjust="spacingAndGlyphs"> that definitely needs to </text>
++    <text x="315" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="324" y="87" fill="#ffffff" textLength="72" lengthAdjust="spacingAndGlyphs"> long   </text>
+     <text x="396" y="87" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+-    <text x="63" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
+-    <text x="90" y="104" fill="#ffffff" textLength="216" lengthAdjust="spacingAndGlyphs">wrap to the next line   </text>
+-    <text x="306" y="104" fill="#333333" textLength="27" lengthAdjust="spacingAndGlyphs"> │ </text>
++    <text x="72" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
++    <text x="81" y="104" fill="#ffffff" textLength="234" lengthAdjust="spacingAndGlyphs"> wrap to the next line    </text>
++    <text x="315" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="396" y="104" fill="#333333" textLength="9" lengthAdjust="spacingAndGlyphs">│</text>
+     <text x="0" y="121" fill="#333333" textLength="405" lengthAdjust="spacingAndGlyphs">└───────┴──────────────────────────┴────────┘</text>
+   </g>
+diff --git a/packages/cli/src/ui/utils/__snapshots__/TableRenderer.test.tsx.snap b/packages/cli/src/ui/utils/__snapshots__/TableRenderer.test.tsx.snap
+index 48bc00993..9b5c1e875 100644
+--- a/packages/cli/src/ui/utils/__snapshots__/TableRenderer.test.tsx.snap
++++ b/packages/cli/src/ui/utils/__snapshots__/TableRenderer.test.tsx.snap
+@@ -1,5 +1,53 @@
+ // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+ 
++exports[`TableRenderer > 'calculates column widths based on ren…' 1`] = `
++"
++┌────────┬────────┬────────┐
++│ Col 1  │ Col 2  │ Col 3  │
++├────────┼────────┼────────┤
++│ 123456 │ Normal │ Short  │
++│ Short  │ 123456 │ Normal │
++│ Normal │ Short  │ 123456 │
++└────────┴────────┴────────┘
++"
++`;
++
++exports[`TableRenderer > 'calculates width correctly for conten…' 1`] = `
++"
++┌───────────────────────────────────┬───────────────────────────────┬─────────────────────────────────┐
++│ Col 1                             │ Col 2                         │ Col 3                           │
++├───────────────────────────────────┼───────────────────────────────┼─────────────────────────────────┤
++│ Visit Google (https://google.com) │ Plain Text                    │ More Info                       │
++│ Info Here                         │ Visit Bing (https://bing.com) │ Links                           │
++│ Check This                        │ Search                        │ Visit Yahoo (https://yahoo.com) │
++└───────────────────────────────────┴───────────────────────────────┴─────────────────────────────────┘
++"
++`;
++
++exports[`TableRenderer > 'does not parse markdown inside code s…' 1`] = `
++"
++┌─────────────────┬──────────────────────┬──────────────────┐
++│ Col 1           │ Col 2                │ Col 3            │
++├─────────────────┼──────────────────────┼──────────────────┤
++│ **not bold**    │ _not italic_         │ ~~not strike~~   │
++│ [not link](url) │ <u>not underline</u> │ https://not.link │
++│ Normal Text     │ More Code: *test*    │ ***nested***     │
++└─────────────────┴──────────────────────┴──────────────────┘
++"
++`;
++
++exports[`TableRenderer > 'handles nested markdown styles recurs…' 1`] = `
++"
++┌─────────────────────────────┬─────────────────────────────┬─────────────────────────────┐
++│ Header 1                    │ Header 2                    │ Header 3                    │
++├─────────────────────────────┼─────────────────────────────┼─────────────────────────────┤
++│ Bold with Italic and Strike │ Normal                      │ Short                       │
++│ Short                       │ Bold with Italic and Strike │ Normal                      │
++│ Normal                      │ Short                       │ Bold with Italic and Strike │
++└─────────────────────────────┴─────────────────────────────┴─────────────────────────────┘
++"
++`;
++
+ exports[`TableRenderer > 'handles non-ASCII characters (emojis …' 1`] = `
+ "
+ ┌──────────────┬────────────┬───────────────┐
+@@ -44,6 +92,22 @@ exports[`TableRenderer > 'renders a table with only emojis and …' 1`] = `
+ "
+ `;
+ 
++exports[`TableRenderer > 'renders complex markdown in rows and …' 1`] = `
++"
++┌───────────────┬─────────────────────────────┐
++│ Feature       │ Markdown                    │
++├───────────────┼─────────────────────────────┤
++│ Bold          │ Bold Text                   │
++│ Italic        │ Italic Text                 │
++│ Combined      │ Bold and Italic             │
++│ Link          │ Google (https://google.com) │
++│ Code          │ const x = 1                 │
++│ Strikethrough │ Strike                      │
++│ Underline     │ Underline                   │
++└───────────────┴─────────────────────────────┘
++"
++`;
++
+ exports[`TableRenderer > 'renders correctly when headers are em…' 1`] = `
+ "
+ ┌────────┬────────┐

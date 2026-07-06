@@ -1,0 +1,144 @@
+patching file src/test/groovy/graphql/InterfacesImplementingInterfacesTest.groovy
+patching file src/test/groovy/graphql/UnionTest.groovy
+patching file src/test/groovy/graphql/introspection/GoodFaithIntrospectionInstrumentationTest.groovy
+patching file src/test/groovy/graphql/normalized/ExecutableNormalizedOperationFactoryTest.groovy
+patching file src/test/java/benchmark/ENFBenchmarkDeepIntrospection.java
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.6/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+created development version: 0.0.0-HEAD-SNAPSHOT
+
+> Task :generateGrammarSource UP-TO-DATE
+
+> Task :compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+
+> Task :compileGroovy NO-SOURCE
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :generateTestGrammarSource NO-SOURCE
+
+> Task :compileTestJava
+Note: /workspace/repo/src/test/java/graphql/schema/scalars/ObjectScalar.java uses or overrides a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :compileTestGroovy
+warning: Implicitly compiled files were not subject to annotation processing.
+  Use -implicit to specify a policy for implicit compilation.
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: Some input files use unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+> Task :processTestResources UP-TO-DATE
+> Task :testClasses
+> Task :test
+*******************************
+*
+* SUCCESS
+* Version: 0.0.0-HEAD-SNAPSHOT
+*
+*******************************
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.6/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 35s
+7 actionable tasks: 4 executed, 3 up-to-date
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="graphql.InterfacesImplementingInterfacesTest" tests="37" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:32:05" hostname="modal" time="0.938">
+  <properties/>
+  <testcase name="Simple interface implementing interface" classname="graphql.InterfacesImplementingInterfacesTest" time="0.539"/>
+  <testcase name="When implementing interface does not declare required field, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.038"/>
+  <testcase name="Transitively implemented interfaces defined in implementing interface" classname="graphql.InterfacesImplementingInterfacesTest" time="0.008"/>
+  <testcase name="Transitively implemented interfaces defined in implementing type" classname="graphql.InterfacesImplementingInterfacesTest" time="0.01"/>
+  <testcase name="When not all transitively implemented interfaces are defined in implementing interface, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.006"/>
+  <testcase name="When not all transitively implemented interfaces are defined in implementing type, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.003"/>
+  <testcase name="When interface implements itself, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.005"/>
+  <testcase name="When interface extension implements interface and declares required field, then parsing is successful" classname="graphql.InterfacesImplementingInterfacesTest" time="0.011"/>
+  <testcase name="When interface extension implements interface but doesn't declare required field, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.002"/>
+  <testcase name="When object extension implements all transitive interfaces, then parsing is successful" classname="graphql.InterfacesImplementingInterfacesTest" time="0.01"/>
+  <testcase name="When object extension does not implement all transitive interfaces, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.003"/>
+  <testcase name="When interface extension implements all transitive interfaces, then parsing is successful" classname="graphql.InterfacesImplementingInterfacesTest" time="0.005"/>
+  <testcase name="When interface extension does not implement all transitive interfaces, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.002"/>
+  <testcase name="When hierarchy results in circular reference, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.006"/>
+  <testcase name="When interface doesn't implement transitive interface declared in extension, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.004"/>
+  <testcase name="When interface implements transitive interface declared in extension, then parsing succeeds" classname="graphql.InterfacesImplementingInterfacesTest" time="0.006"/>
+  <testcase name="When field required by new extension implementation is declared in original interface type, then parsing succeeds" classname="graphql.InterfacesImplementingInterfacesTest" time="0.004"/>
+  <testcase name="When type declares interface and extension declares required field, then parsing succeeds" classname="graphql.InterfacesImplementingInterfacesTest" time="0.004"/>
+  <testcase name="When interface implements same interface more than once via extensions, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.005"/>
+  <testcase name="When interface implements same interface more than once, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.002"/>
+  <testcase name="When interface implements interface and redefines non-null field as nullable, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.013"/>
+  <testcase name="When interface extension implements interface and redefines non-null field as nullable, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.001"/>
+  <testcase name="When interface implements interface and redefines nullable field as non-null, then parsing succeeds" classname="graphql.InterfacesImplementingInterfacesTest" time="0.004"/>
+  <testcase name="When interface extension implements interface and redefines nullable field as non-null, then parsing succeeds" classname="graphql.InterfacesImplementingInterfacesTest" time="0.005"/>
+  <testcase name="When interface extension implements interface and misses field arguments, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.009"/>
+  <testcase name="When interface implements interface and misses field arguments, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.002"/>
+  <testcase name="When interface implements interface via extension and misses field arguments, then parsing fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.003"/>
+  <testcase name="Test query execution" classname="graphql.InterfacesImplementingInterfacesTest" time="0.126"/>
+  <testcase name="Test introspection query" classname="graphql.InterfacesImplementingInterfacesTest" time="0.027"/>
+  <testcase name="interfaces introspection field is empty list for interfaces" classname="graphql.InterfacesImplementingInterfacesTest" time="0.006"/>
+  <testcase name="interface type has a reference to implemented interfaces" classname="graphql.InterfacesImplementingInterfacesTest" time="0.01"/>
+  <testcase name="GraphQLInterfaceType can can implement interfaces" classname="graphql.InterfacesImplementingInterfacesTest" time="0.026"/>
+  <testcase name="When programmatically created interface does not implement interface correctly, then creation fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.013"/>
+  <testcase name="When programmatically created interface implement interface correctly, then creation succeeds" classname="graphql.InterfacesImplementingInterfacesTest" time="0.003"/>
+  <testcase name="When programmatically created type does not implement all transitive interfaces, then creation fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.003"/>
+  <testcase name="When programmatically created type implement all transitive interfaces, then creation succeeds" classname="graphql.InterfacesImplementingInterfacesTest" time="0.003"/>
+  <testcase name="When interface implementation results in circular reference, then creation fails" classname="graphql.InterfacesImplementingInterfacesTest" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="graphql.UnionTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:32:06" hostname="modal" time="0.027">
+  <properties/>
+  <testcase name="can introspect on union types" classname="graphql.UnionTest" time="0.008"/>
+  <testcase name="can introspect on intersection types" classname="graphql.UnionTest" time="0.003"/>
+  <testcase name="executes union types with inline fragments" classname="graphql.UnionTest" time="0.009"/>
+  <testcase name="allows fragment conditions to be abstract types" classname="graphql.UnionTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" tests="22" skipped="0" failures="0" errors="0" timestamp="2026-06-29T15:32:06" hostname="modal" time="0.249">
+  <properties/>
+  <testcase name="standard introspection query is inside limits just in general" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.023"/>
+  <testcase name="test asking for introspection in good faith" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.045"/>
+  <testcase name="test asking for introspection in bad faith [query: &#10;        query badActor{__schema{types{fields{type{fields{type{fields{type{fields{type{name}}}}}}}}}}}&#10;        , #0]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.003"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                __schema { types { interfaces { fields { type { interfaces { name } } } } } }&#10;            }&#10;        , #1]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.002"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                __schema { types { inputFields { type { inputFields { name }}}}}&#10;            }&#10;        , #2]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.002"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                __schema { types { inputFields { type { inputFields { name }}}}}&#10;            }&#10;        , #3]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.002"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                __schema { types { fields { args { type { name fields { name }}}}}}&#10;            }&#10;        , #4]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.002"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                __schema { types { fields { type { name fields { name }}}}}&#10;            }&#10;        , #5]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.001"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                __type(name : &quot;t&quot;) { name }&#10;                alias1 :  __type(name : &quot;t1&quot;) { name }&#10;            }&#10;        , #6]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.001"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                a1: __type(name : &quot;t&quot;) { name }&#10;                a2 :  __type(name : &quot;t1&quot;) { name }&#10;            }&#10;        , #7]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.001"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                __schema { types { name} }&#10;                alias1 : __schema { types { name} }&#10;            }&#10;        , #8]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.002"/>
+  <testcase name="test asking for introspection in bad faith [query:  query badActor {&#10;                a1: __schema { types { name} }&#10;                a2 : __schema { types { name} }&#10;            }&#10;        , #9]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.002"/>
+  <testcase name="mixed general queries and introspections will be stopped anyway" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.001"/>
+  <testcase name="can be disabled" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.007"/>
+  <testcase name="can be disabled per request" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.007"/>
+  <testcase name="can stop deep queries [depth: 2, targetError: class graphql.introspection.GoodFaithIntrospection$BadFaithIntrospectionError, #0]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.028"/>
+  <testcase name="can stop deep queries [depth: 10, targetError: class graphql.execution.AbortExecutionException, #1]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.011"/>
+  <testcase name="can stop deep queries [depth: 15, targetError: class graphql.execution.AbortExecutionException, #2]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.005"/>
+  <testcase name="can stop deep queries [depth: 20, targetError: class graphql.execution.AbortExecutionException, #3]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.005"/>
+  <testcase name="can stop deep queries [depth: 25, targetError: class graphql.execution.AbortExecutionException, #4]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.004"/>
+  <testcase name="can stop deep queries [depth: 50, targetError: class graphql.execution.AbortExecutionException, #5]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.013"/>
+  <testcase name="can stop deep queries [depth: 100, targetError: class graphql.execution.AbortExecutionException, #6]" classname="graphql.introspection.GoodFaithIntrospectionInstrumentationTest" time="0.035"/>
+  <system-out><![CDATA[Took 1ms
+Took 9ms
+Took 5ms
+Took 4ms
+Took 4ms
+Took 11ms
+Took 33ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
+reward=1 graded=63 found=63 failed=0 parsed=63 framework=junit exit_code=0

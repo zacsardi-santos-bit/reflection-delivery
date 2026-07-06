@@ -1,0 +1,7 @@
+I'm hitting a dumb wall with the Airflow CLI. When I run the remote version check with the `--remote` flag to grab the server's version, it blows up with a credentials error if I'm not logged in. But checking the server version is a public, unauthenticated, read-only endpoint, so making people log in first is silly. A dev who just wants to see what version their remote server is running shouldn't have to authenticate at all.
+
+What I want is a no-auth client mode in the CLI's API client that skips credential loading, keyring access, and token handling entirely. When that mode is active there should be zero keyring lookups and no credential file reads. It still needs to resolve to the standard API base URL, same path the regular CLI mode uses. And it's got to work even when there's no local config file or stored session around, so when credentials get loaded in no-auth mode without any config file present the result should just come back with no token and no URL set, no error raised.
+
+Then wire the remote version command to use this new mode so it works whether or not I'm logged in, and regardless of whether an API token gets passed alongside the flag.
+
+Also, related bug while I'm in there: when a CLI-mode client is used with an explicit token handed in directly at call time, it should succeed even with no local config file present, using that provided token directly without touching the keyring. Right now it still raises a credentials error in that case, which it shouldn't.

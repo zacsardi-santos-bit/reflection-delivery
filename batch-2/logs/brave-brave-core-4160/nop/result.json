@@ -1,0 +1,29 @@
+{
+    "id": "1d3ab789-30bf-44ec-bb35-ee77ce94a2ee",
+    "started_at": "2026-07-04T15:37:13.935933",
+    "finished_at": "2026-07-04T15:41:16.166536",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__brave-brave-core-4160": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "brave-brave-core-4160__Y5zYev7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

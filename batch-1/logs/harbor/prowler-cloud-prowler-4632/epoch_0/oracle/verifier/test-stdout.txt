@@ -1,0 +1,39 @@
+patching file tests/config/config_test.py
+patching file tests/config/fixtures/config.yaml
+patching file tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.3.2, pluggy-1.5.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+Using --randomly-seed=367321412
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: dash-2.17.1, env-1.1.3, anyio-4.4.0, xdist-3.6.1, cov-5.0.0, randomly-3.15.0
+collecting ... collected 24 items
+
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_project_with_sensitive_plaintext_credentials_exluded PASSED [  4%]
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_project_with_no_envvar PASSED [  8%]
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_project_with_sensitive_plaintext_credentials_excluded_and_failed PASSED [ 12%]
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_project_with_sensitive_plaintext_credentials PASSED [ 16%]
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_project_with_multiple_sensitive_credentials PASSED [ 20%]
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_project_with_sensitive_plaintext_credentials_excluded_and_not PASSED [ 25%]
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_project_with_no_plaintext_credentials PASSED [ 29%]
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_project_with_plaintext_credentials_but_not_sensitive PASSED [ 33%]
+tests/providers/aws/services/codebuild/codebuild_project_no_secrets_in_variables/codebuild_project_no_secrets_in_variables_test.py::Test_codebuild_project_no_secrets_in_variables::test_no_project PASSED [ 37%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_fixer_config_gcp PASSED [ 41%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_config_file_old_format PASSED [ 45%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_fixer_config_azure PASSED [ 50%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_fixer_config_kubernetes PASSED [ 54%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_config_file_azure PASSED [ 58%]
+tests/config/config_test.py::Test_Config::test_check_current_version_with_old PASSED [ 62%]
+tests/config/config_test.py::Test_Config::test_check_current_version_with_latest PASSED [ 66%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_fixer_config_aws PASSED [ 70%]
+tests/config/config_test.py::Test_Config::test_get_available_compliance_frameworks PASSED [ 75%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_config_file_gcp PASSED [ 79%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_config_file_aws PASSED [ 83%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_fixer_config_invalid_fixer_config_path PASSED [ 87%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_config_file_kubernetes PASSED [ 91%]
+tests/config/config_test.py::Test_Config::test_get_aws_available_regions PASSED [ 95%]
+tests/config/config_test.py::Test_Config::test_load_and_validate_config_file_invalid_config_file_path PASSED [100%]
+
+============================== 24 passed in 1.23s ==============================
+reward=1 graded=24 found=0 failed=0 parsed=24 framework=pytest exit_code=0

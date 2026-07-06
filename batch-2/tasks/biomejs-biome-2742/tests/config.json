@@ -1,0 +1,33 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast -p biome_cli -E 'test(reports_diagnostics_summary) | test(check_help) | test(ci_help) | test(format_help) | test(lint_help) | test(migrate_help) | test(rage_help)'",
+  "test_files": [
+    "crates/biome_cli/tests/cases/mod.rs",
+    "crates/biome_cli/tests/cases/reporter_summary.rs",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_summary/reports_diagnostics_summary_check_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_summary/reports_diagnostics_summary_ci_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_summary/reports_diagnostics_summary_format_command.snap",
+    "crates/biome_cli/tests/snapshots/main_cases_reporter_summary/reports_diagnostics_summary_lint_command.snap",
+    "crates/biome_cli/tests/snapshots/main_commands_check/check_help.snap",
+    "crates/biome_cli/tests/snapshots/main_commands_ci/ci_help.snap",
+    "crates/biome_cli/tests/snapshots/main_commands_format/format_help.snap",
+    "crates/biome_cli/tests/snapshots/main_commands_lint/lint_help.snap",
+    "crates/biome_cli/tests/snapshots/main_commands_migrate/migrate_help.snap",
+    "crates/biome_cli/tests/snapshots/main_commands_rage/rage_help.snap"
+  ],
+  "num_test_files": 12,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "biome_cli::main cases::reporter_summary::reports_diagnostics_summary_format_command",
+    "biome_cli::main cases::reporter_summary::reports_diagnostics_summary_ci_command",
+    "biome_cli::main cases::reporter_summary::reports_diagnostics_summary_check_command",
+    "biome_cli::main cases::reporter_summary::reports_diagnostics_summary_lint_command",
+    "biome_cli::main commands::check::check_help",
+    "biome_cli::main commands::ci::ci_help",
+    "biome_cli::main commands::format::format_help",
+    "biome_cli::main commands::migrate::migrate_help",
+    "biome_cli::main commands::rage::rage_help",
+    "biome_cli::main commands::lint::lint_help"
+  ],
+  "PASS_TO_PASS": []
+}

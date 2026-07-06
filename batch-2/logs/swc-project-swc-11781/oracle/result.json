@@ -1,0 +1,29 @@
+{
+    "id": "c3ae5b00-c61a-4970-bad9-76bbc98ea043",
+    "started_at": "2026-07-06T12:22:02.048401",
+    "finished_at": "2026-07-06T12:22:28.031273",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__swc-project-swc-11781": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "swc-project-swc-11781__SfFYR7N"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

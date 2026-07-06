@@ -1,0 +1,30 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/code/core && NO_COLOR=1 FORCE_COLOR=0 npx vitest run --no-typecheck --reporter=verbose src/common/js-package-manager/util.test.ts",
+  "test_files": [
+    "code/core/src/common/js-package-manager/BUNProxy.test.ts",
+    "code/core/src/common/js-package-manager/NPMProxy.test.ts",
+    "code/core/src/common/js-package-manager/PNPMProxy.test.ts",
+    "code/core/src/common/js-package-manager/Yarn1Proxy.test.ts",
+    "code/core/src/common/js-package-manager/Yarn2Proxy.test.ts",
+    "code/core/src/common/js-package-manager/util.test.ts",
+    "code/lib/create-storybook/src/commands/DependencyInstallationCommand.test.ts",
+    "code/lib/create-storybook/src/commands/PreflightCheckCommand.test.ts",
+    "code/lib/create-storybook/src/initiate.test.ts"
+  ],
+  "num_test_files": 9,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util parses positive integer config values",
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util parses release times",
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util parses package time maps",
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util computes package age in minutes",
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util finds the latest mature stable version",
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util detects when Storybook minimum-age exclusions are already configured",
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util builds rerun guidance",
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util extracts structured error logs"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/code/core/src/common/js-package-manager/util.test.ts::js package manager util parses package data"
+  ]
+}

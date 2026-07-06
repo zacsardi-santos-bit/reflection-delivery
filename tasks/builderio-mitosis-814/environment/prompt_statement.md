@@ -1,5 +1,0 @@
-I'm using the mitosis React code generator with MobX as the state management type, but the generated output is broken. When I select MobX as the state type, the generated code imports the observable state utility from the MobX React library but is missing the observer wrapper import that MobX components actually need. On top of that, the component is exported directly as a plain function rather than being wrapped with the observer and then exported — which means the component won't actually react to state changes at runtime.
-
-I'd expect the generator to produce a complete, working MobX-compatible component: both the observable state utility and the observer wrapper should be imported from the MobX React library, the component function should be declared without being directly exported, and after the component body there should be code that creates an observer-wrapped version of the component and exports that wrapped version as the default export.
-
-The existing output for other state types (like standard React state) should remain completely unchanged.

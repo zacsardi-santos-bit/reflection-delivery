@@ -1,0 +1,42 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/libs/langchain/tests/unit_tests/agents/test_agent.py /workspace/repo/libs/langchain/tests/unit_tests/agents/test_agent_async.py /workspace/repo/libs/langchain/tests/unit_tests/agents/test_agent_iterator.py -v",
+  "test_files": [
+    "libs/langchain/tests/unit_tests/agents/test_agent.py",
+    "libs/langchain/tests/unit_tests/agents/test_agent_async.py",
+    "libs/langchain/tests/unit_tests/agents/test_agent_iterator.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.unit_tests.agents.test_agent::test_agent_bad_action",
+    "tests.unit_tests.agents.test_agent::test_agent_stopped_early",
+    "tests.unit_tests.agents.test_agent::test_agent_with_callbacks",
+    "tests.unit_tests.agents.test_agent::test_agent_stream",
+    "tests.unit_tests.agents.test_agent::test_agent_tool_return_direct",
+    "tests.unit_tests.agents.test_agent::test_agent_tool_return_direct_in_intermediate_steps",
+    "tests.unit_tests.agents.test_agent::test_agent_with_new_prefix_suffix",
+    "tests.unit_tests.agents.test_agent::test_agent_lookup_tool",
+    "tests.unit_tests.agents.test_agent::test_agent_invalid_tool",
+    "tests.unit_tests.agents.test_agent_async::test_agent_bad_action",
+    "tests.unit_tests.agents.test_agent_async::test_agent_stopped_early",
+    "tests.unit_tests.agents.test_agent_async::test_agent_with_callbacks",
+    "tests.unit_tests.agents.test_agent_async::test_agent_stream",
+    "tests.unit_tests.agents.test_agent_async::test_agent_tool_return_direct",
+    "tests.unit_tests.agents.test_agent_async::test_agent_tool_return_direct_in_intermediate_steps",
+    "tests.unit_tests.agents.test_agent_async::test_agent_invalid_tool",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_bad_action",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_stopped_early",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_async_iterator_stopped_early",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_with_callbacks",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_async_iterator_with_callbacks",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_properties_and_setters",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_reset",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_output_structure",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_async_iterator_output_structure",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_empty_input",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_custom_stopping_condition",
+    "tests.unit_tests.agents.test_agent_iterator::test_agent_iterator_failing_tool"
+  ],
+  "PASS_TO_PASS": []
+}

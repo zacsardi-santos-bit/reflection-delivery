@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p gleam-core --no-fail-fast -E 'test(list_with_tail_used_in_guard)'",
+  "test_files": [
+    "compiler-core/src/erlang/tests/case.rs",
+    "compiler-core/src/erlang/tests/snapshots/gleam_core__erlang__tests__case__list_with_tail_used_in_guard.snap",
+    "compiler-core/src/javascript/tests/case.rs",
+    "compiler-core/src/javascript/tests/snapshots/gleam_core__javascript__tests__case__list_with_tail_used_in_guard.snap",
+    "test/language/test/language/clause_guard_test.gleam"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/2) gleam-core erlang::tests::case::list_with_tail_used_in_guard",
+    "(2/2) gleam-core javascript::tests::case::list_with_tail_used_in_guard"
+  ],
+  "PASS_TO_PASS": []
+}

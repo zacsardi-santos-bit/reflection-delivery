@@ -1,0 +1,1 @@
+cd /workspace/repo && npm install && cd /workspace/repo/src/web/nextui && npm test -- run src/app/components/InfoModal.test.tsx --reporter=verbose

@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p naga --test naga-test --features \"wgsl-in,spv-out,msl-out,hlsl-out,wgsl-out,glsl-out,deserialize\" -E 'test(convert_snapshots_wgsl)'",
+  "test_files": [
+    "naga/tests/in/image.wgsl",
+    "naga/tests/out/glsl/image.main.Compute.glsl",
+    "naga/tests/out/hlsl/image.hlsl",
+    "naga/tests/out/msl/image.msl",
+    "naga/tests/out/spv/image.spvasm",
+    "naga/tests/out/wgsl/image.wgsl"
+  ],
+  "num_test_files": 6,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) naga::naga-test snapshots::convert_snapshots_wgsl"
+  ],
+  "PASS_TO_PASS": []
+}

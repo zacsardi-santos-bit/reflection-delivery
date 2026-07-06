@@ -1,0 +1,22 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo/ghost/core && NODE_ENV=testing ./node_modules/.bin/mocha --reporter json --node-option import=tsx --require=./test/utils/overrides.js --exit --trace-warnings --timeout=60000 test/e2e-api/admin/automations.test.js",
+  "test_files": [
+    "ghost/core/test/e2e-api/admin/__snapshots__/automations.test.js.snap",
+    "ghost/core/test/e2e-api/admin/automations.test.js"
+  ],
+  "num_test_files": 2,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/ghost/core/test/e2e-api/admin/automations.test.js::Automations API edit edits automation status, ignoring name, actions and edges",
+    "/workspace/repo/ghost/core/test/e2e-api/admin/automations.test.js::Automations API edit rejects an invalid automation status",
+    "/workspace/repo/ghost/core/test/e2e-api/admin/automations.test.js::Automations API edit rejects a missing automation status"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/ghost/core/test/e2e-api/admin/automations.test.js::Automations API browse returns automations sourced from the temporary fake database",
+    "/workspace/repo/ghost/core/test/e2e-api/admin/automations.test.js::Automations API read returns the automation, ordered actions, and edges sourced from the temporary fake database",
+    "/workspace/repo/ghost/core/test/e2e-api/admin/automations.test.js::Automations API poll does not poll when request lacks a token",
+    "/workspace/repo/ghost/core/test/e2e-api/admin/automations.test.js::Automations API poll does not poll when request token is invalid",
+    "/workspace/repo/ghost/core/test/e2e-api/admin/automations.test.js::Automations API poll triggers a poll with a valid scheduler integration token"
+  ]
+}

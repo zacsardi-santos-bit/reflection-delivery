@@ -1,0 +1,29 @@
+{
+    "id": "2e8068be-0cc7-409d-ba1b-44174cb0a21e",
+    "started_at": "2026-07-06T12:17:02.253413",
+    "finished_at": "2026-07-06T12:19:44.256333",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__googlechrome-lighthouse-16987": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "googlechrome-lighthouse-16987__VJbA9cK"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

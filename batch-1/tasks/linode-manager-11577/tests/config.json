@@ -1,0 +1,27 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/manager && npx vitest run src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx",
+  "test_files": [
+    "packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx",
+    "packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx",
+    "packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx::Alert Listing should filter the alerts with service filter",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx::Alert Listing should filter the alerts with status filter",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx::Alert Listing should filter the alerts with search text",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx::Alert Row should render the status field in green color if status is enabled",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx::Alert Row alert labels should have hyperlinks to the details page",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx::Alert List Table test should render the alert landing table ",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx::Alert List Table test should render the error message",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListTable.test.tsx::Alert List Table test should render the alert row"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx::Alert Listing should render the alert landing table with items",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertListing.test.tsx::Alert Listing should render the alert row",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx::Alert Row should render an alert row",
+    "/workspace/repo/packages/manager/src/features/CloudPulse/Alerts/AlertsListing/AlertTableRow.test.tsx::Alert Row should have the show details action item present inside action menu"
+  ]
+}

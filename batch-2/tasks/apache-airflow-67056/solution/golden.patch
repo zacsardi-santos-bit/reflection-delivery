@@ -1,0 +1,704 @@
+diff --git a/airflow-core/newsfragments/67056.significant.rst b/airflow-core/newsfragments/67056.significant.rst
+new file mode 100644
+index 0000000000..266cb2c24e
+--- /dev/null
++++ b/airflow-core/newsfragments/67056.significant.rst
+@@ -0,0 +1,101 @@
++Decouple remote logging resolution from ``airflow.logging_config``
++
++Remote task log handler resolution is now owned by the shared
++``airflow_shared.logging.factory`` module and applies a single, well-defined
++precedence rule. ``airflow.logging_config.load_logging_config`` is deprecated:
++loading the ``[logging] logging_config_class`` dict and resolving the remote
++handler are now two independent steps.
++
++**Resolution order (``resolve_remote_task_log``):**
++
++1. **User-defined ``[logging] logging_config_class``** — if the user has set
++   ``logging_config_class`` to a custom module path, and that module exports a
++   ``REMOTE_TASK_LOG`` (or ``DEFAULT_REMOTE_CONN_ID``) attribute, those values
++   win. Existing custom logging configs keep working unchanged.
++2. **ProvidersManager scheme dispatch** — the scheme of ``[logging]
++   remote_base_log_folder`` (e.g. ``s3``, ``gs``, ``wasb``) is looked up in the
++   provider yaml ``remote-logging:`` registry. The matching ``RemoteLogIO``
++   class is imported and instantiated via its ``from_config()`` classmethod.
++   The connection id comes from ``[logging] remote_log_conn_id`` (set
++   explicitly by the user; providers needing a backend default can read it
++   inside ``from_config``).
++3. **Legacy attr-path fallback** — if neither of the above produced a handler,
++   the resolver imports the default logging module
++   (``airflow.config_templates.airflow_local_settings``) and reads its
++   ``REMOTE_TASK_LOG`` / ``DEFAULT_REMOTE_CONN_ID`` attributes. This is the
++   per-scheme ``if/elif`` chain in ``airflow_local_settings.py`` and is
++   transitional — it will be removed once every in-tree provider exposes
++   ``from_config`` in Airflow 4.0.
++
++**``RemoteLogIO.from_config`` contract:**
++
++Provider remote-log handler classes opting into provider dispatch must expose
++a ``from_config`` classmethod. The shape is::
++
++    class MyRemoteLogIO(LoggingMixin):
++        @classmethod
++        def from_config(cls) -> "MyRemoteLogIO":
++            from airflow.providers.common.compat.sdk import conf
++
++            return cls(
++                base_log_folder=conf.get("logging", "base_log_folder"),
++                remote_base=conf.get("logging", "remote_base_log_folder"),
++                delete_local_copy=conf.getboolean("logging", "delete_local_logs"),
++                # backend-specific keys live in the provider's own config section
++                ...,
++            )
++
++Key properties:
++
++- Takes no arguments — the shared factory calls ``cls.from_config()`` with no
++  inputs. Providers read ``airflow.providers.common.compat.sdk.conf`` themselves and pick
++  the keys they care about.
++- Returns a fully instantiated ``RemoteLogIO`` (or ``RemoteLogStreamIO``).
++- Failures inside ``from_config`` are logged and treated as "no remote
++  handler" (the factory returns ``None`` and the legacy fallback runs); under
++  ``PYTEST_CURRENT_TEST`` the exception is re-raised so tests fail loudly.
++- Providers that don't yet implement ``from_config`` continue to work via the
++  legacy ``airflow_local_settings.py`` chain (step 3).
++
++**``airflow.logging_config`` API changes:**
++
++- ``_get_logging_config()`` — new private helper that imports and validates
++  the ``[logging] logging_config_class`` dict only. Does not touch remote
++  logging state.
++- ``_load_logging_config()`` — new private helper that calls
++  ``resolve_remote_task_log`` and caches the result on
++  ``_ActiveLoggingConfig``. Used lazily by ``get_remote_task_log`` and
++  ``get_default_remote_conn_id``.
++- ``load_logging_config()`` — deprecated. Emits ``DeprecationWarning`` and
++  delegates to both helpers; still returns ``(logging_config_dict,
++  logging_class_path)`` so existing callers keep working.
++
++**Behaviour changes:**
++
++- ``configure_logging`` no longer eagerly resolves the remote handler.
++  Resolution is now lazy and happens on the first call to
++  ``get_remote_task_log()`` / ``get_default_remote_conn_id()``.
++- Providers that registered a ``remote-logging:`` block but did not implement
++  ``from_config`` will be skipped with a warning; the legacy fallback path
++  takes over.
++
++* Types of change
++
++  * [ ] Dag changes
++  * [ ] Config changes
++  * [ ] API changes
++  * [ ] CLI changes
++  * [x] Behaviour changes
++  * [ ] Plugin changes
++  * [ ] Dependency changes
++  * [x] Code interface changes
++
++* Migration rules needed
++
++  * Replace direct calls to ``airflow.logging_config.load_logging_config()``
++    with ``_get_logging_config()`` (for the logging dict) and/or
++    ``_load_logging_config()`` (to prime the remote-handler cache).
++  * Provider remote-log handler classes should implement a no-argument
++    ``from_config`` classmethod that reads ``airflow.providers.common.compat.sdk.conf``
++    and returns a configured instance. Until they do, resolution falls
++    through to the legacy ``airflow_local_settings.py`` chain.
+diff --git a/airflow-core/src/airflow/logging_config.py b/airflow-core/src/airflow/logging_config.py
+index 0da017d9b0..7f4ae605cb 100644
+--- a/airflow-core/src/airflow/logging_config.py
++++ b/airflow-core/src/airflow/logging_config.py
+@@ -21,7 +21,7 @@ import logging
+ import warnings
+ from typing import TYPE_CHECKING, Any
+ 
+-from airflow._shared.logging.remote import discover_remote_log_handler
++from airflow._shared.logging.factory import DEFAULT_LOGGING_CONFIG_PATH, resolve_remote_task_log
+ from airflow._shared.module_loading import import_string
+ from airflow.configuration import conf
+ from airflow.exceptions import AirflowConfigException
+@@ -49,25 +49,26 @@ class _ActiveLoggingConfig:
+ 
+ def get_remote_task_log() -> RemoteLogIO | None:
+     if not _ActiveLoggingConfig.logging_config_loaded:
+-        load_logging_config()
++        _load_logging_config()
+     return _ActiveLoggingConfig.remote_task_log
+ 
+ 
+ def get_default_remote_conn_id() -> str | None:
++    if conn_id := conf.get("logging", "remote_log_conn_id", fallback=None):
++        return conn_id
++
+     if not _ActiveLoggingConfig.logging_config_loaded:
+-        load_logging_config()
++        _load_logging_config()
+     return _ActiveLoggingConfig.default_remote_conn_id
+ 
+ 
+-def load_logging_config() -> tuple[dict[str, Any], str]:
+-    """Configure & Validate Airflow Logging."""
+-    fallback = "airflow.config_templates.airflow_local_settings.DEFAULT_LOGGING_CONFIG"
+-    logging_class_path = conf.get("logging", "logging_config_class", fallback=fallback)
+-
+-    # Sometimes we end up with `""` as the value!
+-    logging_class_path = logging_class_path or fallback
+-
+-    user_defined = logging_class_path != fallback
++def _get_logging_config() -> dict[str, Any]:
++    """Import and validate the ``[logging] logging_config_class`` dict."""
++    logging_class_path = (
++        conf.get("logging", "logging_config_class", fallback=DEFAULT_LOGGING_CONFIG_PATH)
++        or DEFAULT_LOGGING_CONFIG_PATH
++    )
++    user_defined = logging_class_path != DEFAULT_LOGGING_CONFIG_PATH
+ 
+     try:
+         logging_config = import_string(logging_class_path)
+@@ -78,27 +79,51 @@ def load_logging_config() -> tuple[dict[str, Any], str]:
+ 
+         if user_defined:
+             log.info("Successfully imported user-defined logging config from %s", logging_class_path)
+-
+     except Exception as err:
+-        # Import default logging configurations.
+         raise ImportError(
+             f"Unable to load {'custom ' if user_defined else ''}logging config from {logging_class_path} due "
+             f"to: {type(err).__name__}:{err}"
+         )
+-    else:
+-        # Load remote logging configuration using shared discovery logic
+-        remote_task_log, default_remote_conn_id = discover_remote_log_handler(
+-            logging_class_path, fallback, import_string
+-        )
+-        _ActiveLoggingConfig.set(remote_task_log, default_remote_conn_id)
+ 
+-    return logging_config, logging_class_path
++    return logging_config
++
++
++def _load_logging_config() -> None:
++    """Load and cache the remote logging configuration from core config."""
++    from airflow.providers_manager import ProvidersManager
++
++    remote_task_log, default_remote_conn_id = resolve_remote_task_log(
++        conf=conf,
++        providers_manager=ProvidersManager(),
++        import_string=import_string,
++    )
++    _ActiveLoggingConfig.set(remote_task_log, default_remote_conn_id)
++
++
++def load_logging_config() -> tuple[dict[str, Any], str]:
++    """
++    Import the logging config dict and load the remote logging handler.
++
++    .. deprecated::
++        Use :func:`_get_logging_config` for the logging dict and
++        :func:`_load_logging_config` for remote handler setup.
++    """
++    warnings.warn(
++        "load_logging_config is deprecated; use _get_logging_config() for the logging dict "
++        "and _load_logging_config() for remote handler setup.",
++        DeprecationWarning,
++        stacklevel=2,
++    )
++    _load_logging_config()
++    return _get_logging_config(), conf.get(
++        "logging", "logging_config_class", fallback=DEFAULT_LOGGING_CONFIG_PATH
++    ) or DEFAULT_LOGGING_CONFIG_PATH
+ 
+ 
+ def configure_logging():
+     from airflow._shared.logging import configure_logging, init_log_folder, translate_config_values
+ 
+-    logging_config, logging_class_path = load_logging_config()
++    logging_config = _get_logging_config()
+     try:
+         level: str = getattr(
+             logging_config, "LOG_LEVEL", conf.get("logging", "logging_level", fallback="INFO")
+diff --git a/airflow-core/src/airflow/provider.yaml.schema.json b/airflow-core/src/airflow/provider.yaml.schema.json
+index 5714b8db65..648aedc1a5 100644
+--- a/airflow-core/src/airflow/provider.yaml.schema.json
++++ b/airflow-core/src/airflow/provider.yaml.schema.json
+@@ -529,6 +529,25 @@
+                 "type": "string"
+             }
+         },
++        "remote-logging": {
++            "type": "array",
++            "description": "Remote logging IO handlers contributed by the provider. Each entry registers a RemoteLogIO implementation that ProvidersManager dispatches by URL scheme.",
++            "items": {
++                "type": "object",
++                "required": ["classpath", "scheme"],
++                "additionalProperties": false,
++                "properties": {
++                    "classpath": {
++                        "type": "string",
++                        "description": "Fully-qualified class name of the RemoteLogIO implementation."
++                    },
++                    "scheme": {
++                        "type": "string",
++                        "description": "URL scheme (without ://) of [logging] remote_base_log_folder that this handler claims."
++                    }
++                }
++            }
++        },
+         "auth-backends": {
+             "type": "array",
+             "description": "API Auth Backend module names",
+diff --git a/airflow-core/src/airflow/provider_info.schema.json b/airflow-core/src/airflow/provider_info.schema.json
+index 86fc726a05..b3e9bf74b6 100644
+--- a/airflow-core/src/airflow/provider_info.schema.json
++++ b/airflow-core/src/airflow/provider_info.schema.json
+@@ -331,6 +331,25 @@
+                 "type": "string"
+             }
+         },
++        "remote-logging": {
++            "type": "array",
++            "description": "Remote logging IO handlers contributed by the provider. Each entry registers a RemoteLogIO implementation that ProvidersManager dispatches by URL scheme.",
++            "items": {
++                "type": "object",
++                "required": ["classpath", "scheme"],
++                "additionalProperties": false,
++                "properties": {
++                    "classpath": {
++                        "type": "string",
++                        "description": "Fully-qualified class name of the RemoteLogIO implementation."
++                    },
++                    "scheme": {
++                        "type": "string",
++                        "description": "URL scheme (without ://) of [logging] remote_base_log_folder that this handler claims."
++                    }
++                }
++            }
++        },
+         "auth-backends": {
+             "type": "array",
+             "description": "API Auth Backend module names",
+diff --git a/airflow-core/src/airflow/providers_manager.py b/airflow-core/src/airflow/providers_manager.py
+index 6fefcbc39b..8e270209a8 100644
+--- a/airflow-core/src/airflow/providers_manager.py
++++ b/airflow-core/src/airflow/providers_manager.py
+@@ -223,6 +223,14 @@ class NotificationInfo(NamedTuple):
+     package_name: str
+ 
+ 
++class RemoteLoggingInfo(NamedTuple):
++    """Remote logging IO handler registered by a provider."""
++
++    classpath: str
++    scheme: str
++    package_name: str
++
++
+ class PluginInfo(NamedTuple):
+     """Plugin class, name and provider it comes from."""
+ 
+@@ -432,6 +440,8 @@ class ProvidersManager(LoggingMixin):
+         self._cli_command_provider_name_set: set[str] = set()
+         self._extra_link_class_name_set: set[str] = set()
+         self._logging_class_name_set: set[str] = set()
++        self._remote_logging_info_list: list[RemoteLoggingInfo] = []
++        self._remote_logging_by_scheme: dict[str, RemoteLoggingInfo] = {}
+         self._auth_manager_class_name_set: set[str] = set()
+         self._auth_manager_without_check_set: set[tuple[str, str]] = set()
+         self._secrets_backend_class_name_set: set[str] = set()
+@@ -571,6 +581,12 @@ class ProvidersManager(LoggingMixin):
+         self.initialize_providers_list()
+         self._discover_logging()
+ 
++    @provider_info_cache("remote_logging")
++    def initialize_providers_remote_logging(self):
++        """Lazy initialization of providers remote logging IO handlers."""
++        self.initialize_providers_list()
++        self._discover_remote_logging()
++
+     @provider_info_cache("secrets_backends")
+     def initialize_providers_secrets_backends(self):
+         """Lazy initialization of providers secrets_backends information."""
+@@ -1240,6 +1256,31 @@ class ProvidersManager(LoggingMixin):
+                     if _correctness_check(provider_package, logging_class_name, provider):
+                         self._logging_class_name_set.add(logging_class_name)
+ 
++    def _discover_remote_logging(self) -> None:
++        """Retrieve all remote logging IO handlers defined in the providers."""
++        for provider_package, provider in self._provider_dict.items():
++            entries = provider.data.get("remote-logging") or []
++            for entry in entries:
++                classpath = entry["classpath"]
++                if not _correctness_check(provider_package, classpath, provider):
++                    continue
++                info = RemoteLoggingInfo(
++                    classpath=classpath,
++                    scheme=entry["scheme"],
++                    package_name=provider_package,
++                )
++                if (existing := self._remote_logging_by_scheme.get(info.scheme)) is not None:
++                    log.warning(
++                        "Remote logging scheme '%s' is already registered by %s; ignoring "
++                        "duplicate registration from %s.",
++                        info.scheme,
++                        existing.package_name,
++                        info.package_name,
++                    )
++                    continue
++                self._remote_logging_info_list.append(info)
++                self._remote_logging_by_scheme[info.scheme] = info
++
+     def _discover_secrets_backends(self) -> None:
+         """Retrieve all secrets backends defined in the providers."""
+         for provider_package, provider in self._provider_dict.items():
+@@ -1450,6 +1491,17 @@ class ProvidersManager(LoggingMixin):
+         self.initialize_providers_logging()
+         return sorted(self._logging_class_name_set)
+ 
++    @property
++    def remote_logging_handlers(self) -> list[RemoteLoggingInfo]:
++        """Return all remote logging IO handlers contributed by providers."""
++        self.initialize_providers_remote_logging()
++        return list(self._remote_logging_info_list)
++
++    def remote_logging_handler_by_scheme(self, scheme: str) -> RemoteLoggingInfo | None:
++        """Return the remote logging IO handler registered for the given URL scheme, if any."""
++        self.initialize_providers_remote_logging()
++        return self._remote_logging_by_scheme.get(scheme)
++
+     @property
+     def secrets_backend_class_names(self) -> list[str]:
+         """Returns set of secret backend class names."""
+@@ -1532,6 +1584,8 @@ class ProvidersManager(LoggingMixin):
+         self._field_behaviours.clear()
+         self._extra_link_class_name_set.clear()
+         self._logging_class_name_set.clear()
++        self._remote_logging_info_list.clear()
++        self._remote_logging_by_scheme.clear()
+         self._auth_manager_class_name_set.clear()
+         self._auth_manager_without_check_set.clear()
+         self._secrets_backend_class_name_set.clear()
+diff --git a/shared/logging/src/airflow_shared/logging/factory.py b/shared/logging/src/airflow_shared/logging/factory.py
+new file mode 100644
+index 0000000000..acd016d627
+--- /dev/null
++++ b/shared/logging/src/airflow_shared/logging/factory.py
+@@ -0,0 +1,182 @@
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#   http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++"""
++Build a remote logging IO handler from a provider-supplied registry.
++
++This module owns the runtime-independent logic for resolving and instantiating
++``RemoteLogIO`` handlers. Both ``airflow.logging_config`` (core) and
++``airflow.sdk.log._load_logging_config`` (Task SDK) call
++:func:`resolve_remote_task_log` with their own ``ProvidersManager`` instance and
++``import_string`` implementation; that function in turn delegates to
++:func:`_build_remote_task_log_from_provider` for the provider-dispatch step and to
++:func:`airflow._shared.logging.remote.discover_remote_log_handler` for the
++user-defined ``logging_config_class`` and legacy fallbacks.
++"""
++
++from __future__ import annotations
++
++import logging
++import os
++from collections.abc import Callable
++from typing import TYPE_CHECKING, Any
++from urllib.parse import urlsplit
++
++from .remote import discover_remote_log_handler
++
++if TYPE_CHECKING:
++    from airflow.configuration import AirflowConfigParser
++    from airflow.logging.remote import RemoteLogIO
++    from airflow.providers_manager import ProvidersManager, RemoteLoggingInfo as _CoreRemoteLoggingInfo
++    from airflow.sdk.configuration import AirflowSDKConfigParser
++    from airflow.sdk.providers_manager_runtime import (
++        ProvidersManagerTaskRuntime,
++        RemoteLoggingInfo as _SDKRemoteLoggingInfo,
++    )
++
++log = logging.getLogger(__name__)
++
++DEFAULT_LOGGING_CONFIG_PATH = "airflow.config_templates.airflow_local_settings.DEFAULT_LOGGING_CONFIG"
++# Default ``[logging] logging_config_class`` value when the user has not overridden it.
++
++
++def _instantiate_handler(
++    info: _CoreRemoteLoggingInfo | _SDKRemoteLoggingInfo,
++    *,
++    import_string: Callable[[str], Any],
++) -> Any | None:
++    try:
++        cls = import_string(info.classpath)
++    except Exception as err:
++        log.info(
++            "Remote task logs will not be available; failed to import %s: %s",
++            info.classpath,
++            err,
++        )
++        if "PYTEST_CURRENT_TEST" in os.environ:
++            raise
++        return None
++
++    factory = getattr(cls, "from_config", None)
++    if factory is None:
++        log.warning(
++            "Provider %s registered %s as a remote logging handler, but the class does not "
++            "implement classmethod 'from_config'. The handler will be skipped.",
++            info.package_name,
++            info.classpath,
++        )
++        return None
++
++    try:
++        return factory()
++    except Exception as err:
++        log.info(
++            "Remote task logs will not be available; %s.from_config raised: %s",
++            info.classpath,
++            err,
++        )
++        if "PYTEST_CURRENT_TEST" in os.environ:
++            raise
++        return None
++
++
++def _build_remote_task_log_from_provider(
++    *,
++    remote_base_log_folder: str | None,
++    providers_manager: ProvidersManager | ProvidersManagerTaskRuntime,
++    import_string: Callable[[str], Any],
++) -> RemoteLogIO | None:
++    """
++    Resolve a remote logging IO handler from its URL scheme.
++
++    The shared layer only routes to the right provider class; each provider's
++    ``from_config`` classmethod imports ``conf`` itself and reads its own
++    backend-specific keys.
++
++    Provider dispatch does not produce a default conn id. Users who need one
++    set ``[logging] remote_log_conn_id`` explicitly; providers that want a
++    backend-specific default can read from their own hook inside ``from_config``.
++
++    :param remote_base_log_folder: Value of ``[logging] remote_base_log_folder``.
++        Its URL scheme is the dispatch key.
++    :param providers_manager: The ``ProvidersManager`` (core) or
++        ``ProvidersManagerTaskRuntime`` (Task SDK) whose
++        ``remote_logging_handler_by_scheme`` method resolves the scheme.
++    :param import_string: ``import_string`` callable from the caller's runtime.
++    :returns: The instantiated handler, or ``None`` when no provider claims the
++        scheme.
++    """
++    if not remote_base_log_folder:
++        return None
++
++    if not (scheme := urlsplit(remote_base_log_folder).scheme):
++        return None
++
++    if (info := providers_manager.remote_logging_handler_by_scheme(scheme)) is None:
++        return None
++
++    return _instantiate_handler(info, import_string=import_string)
++
++
++def resolve_remote_task_log(
++    *,
++    conf: AirflowConfigParser | AirflowSDKConfigParser,
++    providers_manager: ProvidersManager | ProvidersManagerTaskRuntime,
++    import_string: Callable[[str], Any],
++) -> tuple[RemoteLogIO | None, str | None]:
++    """
++    Resolve the active remote log handler via the three-tier precedence rule.
++
++    Order:
++
++    1. A user-defined ``logging_config_class`` module that exports
++       ``REMOTE_TASK_LOG`` (or ``DEFAULT_REMOTE_CONN_ID``) wins — preserves
++       existing custom configs unchanged.
++    2. ProvidersManager dispatch (provider yaml ``remote-logging:`` blocks).
++    3. Legacy attr-path against the default logging module. Transitional while
++       ``airflow_local_settings.py`` still carries the per-scheme if/elif chain;
++       removed when every provider has migrated.
++
++    :param conf: AirflowConfigParser-like object exposing ``get``.
++    :param providers_manager: Caller's ``ProvidersManager`` /
++        ``ProvidersManagerTaskRuntime``.
++    :param import_string: ``import_string`` callable from the caller's runtime.
++    :returns: ``(remote_task_log, default_remote_conn_id)``. Either element may
++        be ``None`` when no path produces a result.
++    """
++    logging_class_path = (
++        conf.get("logging", "logging_config_class", fallback=DEFAULT_LOGGING_CONFIG_PATH)
++        or DEFAULT_LOGGING_CONFIG_PATH
++    )
++    user_defined = logging_class_path != DEFAULT_LOGGING_CONFIG_PATH
++
++    if user_defined:
++        remote_task_log, default_remote_conn_id = discover_remote_log_handler(
++            logging_class_path, DEFAULT_LOGGING_CONFIG_PATH, import_string
++        )
++        if remote_task_log is not None or default_remote_conn_id is not None:
++            return remote_task_log, default_remote_conn_id
++
++    if conf.getboolean("logging", "remote_logging", fallback=False):
++        remote_task_log = _build_remote_task_log_from_provider(
++            remote_base_log_folder=conf.get("logging", "remote_base_log_folder", fallback=None),
++            providers_manager=providers_manager,
++            import_string=import_string,
++        )
++        if remote_task_log is not None:
++            return remote_task_log, conf.get("logging", "remote_log_conn_id", fallback=None)
++
++    return discover_remote_log_handler(logging_class_path, DEFAULT_LOGGING_CONFIG_PATH, import_string)
+diff --git a/task-sdk/src/airflow/sdk/log.py b/task-sdk/src/airflow/sdk/log.py
+index f93abe1a72..f16d35fae5 100644
+--- a/task-sdk/src/airflow/sdk/log.py
++++ b/task-sdk/src/airflow/sdk/log.py
+@@ -173,16 +173,15 @@ def init_log_file(local_relative_path: str) -> Path:
+ 
+ def _load_logging_config() -> None:
+     """Load and cache the remote logging configuration from SDK config."""
+-    from airflow.sdk._shared.logging.remote import discover_remote_log_handler
++    from airflow.sdk._shared.logging.factory import resolve_remote_task_log
+     from airflow.sdk._shared.module_loading import import_string
+     from airflow.sdk.configuration import conf
++    from airflow.sdk.providers_manager_runtime import ProvidersManagerTaskRuntime
+ 
+-    fallback = "airflow.config_templates.airflow_local_settings.DEFAULT_LOGGING_CONFIG"
+-    logging_class_path = conf.get("logging", "logging_config_class", fallback=fallback)
+-
+-    # Load remote logging configuration using shared discovery logic
+-    remote_task_log, default_remote_conn_id = discover_remote_log_handler(
+-        logging_class_path, fallback, import_string
++    remote_task_log, default_remote_conn_id = resolve_remote_task_log(
++        conf=conf,
++        providers_manager=ProvidersManagerTaskRuntime(),
++        import_string=import_string,
+     )
+     _ActiveLoggingConfig.set(remote_task_log, default_remote_conn_id)
+ 
+diff --git a/task-sdk/src/airflow/sdk/providers_manager_runtime.py b/task-sdk/src/airflow/sdk/providers_manager_runtime.py
+index e28ed3fe14..ca4d4a9473 100644
+--- a/task-sdk/src/airflow/sdk/providers_manager_runtime.py
++++ b/task-sdk/src/airflow/sdk/providers_manager_runtime.py
+@@ -24,7 +24,7 @@ import inspect
+ import traceback
+ import warnings
+ from collections.abc import Callable, MutableMapping
+-from typing import TYPE_CHECKING, Any
++from typing import TYPE_CHECKING, Any, NamedTuple
+ from urllib.parse import SplitResult
+ 
+ import structlog
+@@ -55,6 +55,14 @@ if TYPE_CHECKING:
+ log = structlog.getLogger(__name__)
+ 
+ 
++class RemoteLoggingInfo(NamedTuple):
++    """Remote logging IO handler registered by a provider."""
++
++    classpath: str
++    scheme: str
++    package_name: str
++
++
+ def _correctness_check(provider_package: str, class_name: str, provider_info: ProviderInfo) -> Any:
+     """
+     Perform coherence check on provider classes.
+@@ -150,6 +158,8 @@ class ProvidersManagerTaskRuntime(LoggingMixin):
+         # Keeps dict of hooks keyed by connection type. They are lazy evaluated at access time
+         self._hooks_lazy_dict: LazyDictWithCache[str, HookInfo | Callable] = LazyDictWithCache()
+         self._plugins_set: set[PluginInfo] = set()
++        self._remote_logging_info_list: list[RemoteLoggingInfo] = []
++        self._remote_logging_by_scheme: dict[str, RemoteLoggingInfo] = {}
+         self._provider_schema_validator = _create_provider_info_schema_validator()
+         self._init_airflow_core_hooks()
+         # Populated by initialize_provider_configs(); holds provider-contributed config sections.
+@@ -214,6 +224,12 @@ class ProvidersManagerTaskRuntime(LoggingMixin):
+         self.initialize_providers_list()
+         self._discover_plugins()
+ 
++    @provider_info_cache("remote_logging")
++    def initialize_providers_remote_logging(self):
++        """Lazy initialization of providers remote logging IO handlers."""
++        self.initialize_providers_list()
++        self._discover_remote_logging()
++
+     @provider_info_cache("taskflow_decorators")
+     def initialize_providers_taskflow_decorator(self):
+         """Lazy initialization of providers taskflow decorators."""
+@@ -534,6 +550,31 @@ class ProvidersManagerTaskRuntime(LoggingMixin):
+                     )
+                 )
+ 
++    def _discover_remote_logging(self) -> None:
++        """Retrieve all remote logging IO handlers defined in the providers."""
++        for provider_package, provider in self._provider_dict.items():
++            entries = provider.data.get("remote-logging") or []
++            for entry in entries:
++                classpath = entry["classpath"]
++                if not _correctness_check(provider_package, classpath, provider):
++                    continue
++                info = RemoteLoggingInfo(
++                    classpath=classpath,
++                    scheme=entry["scheme"],
++                    package_name=provider_package,
++                )
++                if (existing := self._remote_logging_by_scheme.get(info.scheme)) is not None:
++                    log.warning(
++                        "Remote logging scheme '%s' is already registered by %s; ignoring "
++                        "duplicate registration from %s.",
++                        info.scheme,
++                        existing.package_name,
++                        info.package_name,
++                    )
++                    continue
++                self._remote_logging_info_list.append(info)
++                self._remote_logging_by_scheme[info.scheme] = info
++
+     def _discover_taskflow_decorators(self) -> None:
+         for name, info in self._provider_dict.items():
+             for taskflow_decorator in info.data.get("task-decorators", []):
+@@ -611,6 +652,17 @@ class ProvidersManagerTaskRuntime(LoggingMixin):
+         self.initialize_providers_plugins()
+         return sorted(self._plugins_set, key=lambda x: x.plugin_class)
+ 
++    @property
++    def remote_logging_handlers(self) -> list[RemoteLoggingInfo]:
++        """Return all remote logging IO handlers contributed by providers."""
++        self.initialize_providers_remote_logging()
++        return list(self._remote_logging_info_list)
++
++    def remote_logging_handler_by_scheme(self, scheme: str) -> RemoteLoggingInfo | None:
++        """Return the remote logging IO handler registered for the given URL scheme, if any."""
++        self.initialize_providers_remote_logging()
++        return self._remote_logging_by_scheme.get(scheme)
++
+     @property
+     def provider_configs(self) -> list[tuple[str, dict[str, Any]]]:
+         self.initialize_provider_configs()
+@@ -640,6 +692,8 @@ class ProvidersManagerTaskRuntime(LoggingMixin):
+         self._hook_provider_dict.clear()
+         self._hooks_lazy_dict.clear()
+         self._plugins_set.clear()
++        self._remote_logging_info_list.clear()
++        self._remote_logging_by_scheme.clear()
+         self._asset_uri_handlers.clear()
+         self._asset_factories.clear()
+         self._asset_to_openlineage_converters.clear()

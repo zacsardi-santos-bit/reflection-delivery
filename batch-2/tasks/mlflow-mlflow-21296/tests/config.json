@@ -1,0 +1,23 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/mlflow/server/js && yarn test --testPathPattern=dspy.test.ts --watchAll=false",
+  "test_files": [
+    "mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::normalizeConversation should handle dspy input",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::normalizeConversation should handle dspy output",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::normalizeConversation should render JSON output as a formatted code block",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::formatDspySections should convert standalone markers to markdown headings",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::formatDspySections should handle markers with leading/trailing whitespace on the line",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::formatDspySections should remove the completed marker entirely",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::formatDspySections should leave inline references unchanged",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::formatDspySections should title-case snake_case variable names",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::formatDspySections should handle multiple sections",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::formatDspySections should return text unchanged when there are no markers",
+    "/workspace/repo/mlflow/server/js/src/shared/web-shared/model-trace-explorer/chat-utils/dspy.test.ts::formatDspySections should return empty string unchanged"
+  ],
+  "PASS_TO_PASS": []
+}

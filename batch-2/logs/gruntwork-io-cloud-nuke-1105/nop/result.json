@@ -1,0 +1,29 @@
+{
+    "id": "638b680e-776e-4c8e-8418-d536dc2ab58c",
+    "started_at": "2026-07-06T12:17:12.730058",
+    "finished_at": "2026-07-06T12:18:40.692039",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__gruntwork-io-cloud-nuke-1105": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "gruntwork-io-cloud-nuke-1105__WxbcSkk"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

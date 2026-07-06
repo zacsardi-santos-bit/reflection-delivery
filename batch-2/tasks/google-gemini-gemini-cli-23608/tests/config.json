@@ -1,0 +1,40 @@
+{
+  "test_framework": "vitest",
+  "test_command": "npm run build --workspace @google/gemini-cli-core 2>&1 | tail -20; cd packages/core && npx vitest run --coverage=false src/agents/generalist-agent.test.ts src/agents/local-executor.test.ts; cd /workspace/repo/packages/cli && npx vitest run --coverage=false src/ui/components/MainContent.test.tsx",
+  "test_files": [
+    "packages/cli/src/ui/components/MainContent.test.tsx",
+    "packages/core/src/agents/generalist-agent.test.ts",
+    "packages/core/src/agents/local-executor.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders a ToolConfirmationQueue without an extra line when preceded by hidden tools"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::getToolGroupBorderAppearance returns default empty values for non-tool_group items",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::getToolGroupBorderAppearance inspects only the last pending tool_group item if current has no tools",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::getToolGroupBorderAppearance returns default border for completed normal tools",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::getToolGroupBorderAppearance returns warning border for pending normal tools",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::getToolGroupBorderAppearance returns active border for executing shell commands",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::getToolGroupBorderAppearance returns focus border for focused executing shell commands",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::getToolGroupBorderAppearance returns active border and dims color for background executing shell command when another shell is active",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::getToolGroupBorderAppearance handles empty tools with active shell turn (isCurrentlyInShellTurn)",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders in normal buffer mode",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders in alternate buffer mode",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders minimal header in minimal mode (alternate buffer)",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent restores full header details after toggle in alternate buffer mode",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent always renders full header details in normal buffer mode",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent does not constrain height in alternate buffer mode",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders multiple history items with single line padding between them",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders mixed history items (user + gemini) with single line padding between them",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders a subagent with a complete box including bottom border",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders a split tool group without a gap between static and pending areas",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders a spurious line when a tool group has only hidden tools and borderBottom true",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent renders multiple thinking messages sequentially correctly",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent MainContent Tool Output Height Logic 'ASB mode - Focused shell should expand'",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent MainContent Tool Output Height Logic 'ASB mode - Unfocused shell'",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent MainContent Tool Output Height Logic 'Normal mode - Constrained height'",
+    "/workspace/repo/packages/cli/src/ui/components/MainContent.test.tsx::MainContent MainContent Tool Output Height Logic 'Normal mode - Unconstrained height'"
+  ]
+}

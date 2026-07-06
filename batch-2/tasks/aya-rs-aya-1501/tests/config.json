@@ -1,0 +1,16 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p aya -p aya-obj --no-fail-fast --no-tests=fail -E 'test(test_contains_passes_value_bytes) | test(test_bloom_filter_btf_map_create_uses_void_key_type) | test(test_parse_map_info_keyless_btf_map)'",
+  "test_files": [
+    "test/integration-ebpf/src/bloom_filter.rs",
+    "test/integration-test/src/tests/bloom_filter.rs"
+  ],
+  "num_test_files": 2,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/3) aya-obj obj::tests::test_parse_map_info_keyless_btf_map",
+    "(2/3) aya sys::bpf::tests::test_bloom_filter_btf_map_create_uses_void_key_type",
+    "(3/3) aya maps::bloom_filter::tests::test_contains_passes_value_bytes"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,5 +1,0 @@
-patching file sdk/metric/instrumentkind.go
-patching file sdk/metric/manual_reader.go
-patching file sdk/metric/periodic_reader.go
-patching file sdk/metric/reader.go
-patching file sdk/metric/temporality.go

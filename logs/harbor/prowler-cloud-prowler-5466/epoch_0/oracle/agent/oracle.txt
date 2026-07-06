@@ -1,9 +1,0 @@
-patching file permissions/create_role_to_assume_cfn.yaml
-patching file permissions/prowler-additions-policy.json
-patching file prowler/providers/aws/aws_regions_by_service.json
-patching file prowler/providers/aws/services/stepfunctions/__init__.py
-patching file prowler/providers/aws/services/stepfunctions/stepfunctions_client.py
-patching file prowler/providers/aws/services/stepfunctions/stepfunctions_service.py
-patching file prowler/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/__init__.py
-patching file prowler/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled.metadata.json
-patching file prowler/providers/aws/services/stepfunctions/stepfunctions_statemachine_logging_enabled/stepfunctions_statemachine_logging_enabled.py

@@ -1,0 +1,7 @@
+I'm working on adding quota management to Kafka's remote log storage subsystem. Right now, the component that copies log segments to remote storage and fetches them back has no way to limit how much bandwidth it uses, so it can interfere with regular broker operations.
+
+I need to introduce byte-rate quotas for both the copy (upload) and fetch (download) paths. There should be separate configurable limits for each operation, with a rolling time window for tracking the rate. When no limit is configured the default should effectively allow unlimited throughput. The quota should be checkable at any point to see whether it's currently exceeded, and it should automatically clear once the rolling window has moved past the period when the bytes were recorded.
+
+I also need to be able to update the quota at runtime. When a quota is updated, only the metrics specifically associated with the byte-rate quota should be reconfigured — other internal metrics tracked by the system must not be affected.
+
+The remote log manager's configuration object needs to be extended to carry these quota settings (copy and fetch separately), and the manager itself needs to accept the metrics infrastructure as a constructor argument so it can register quota tracking metrics internally. Static helper methods on the manager should produce the appropriate quota configuration objects from the overall remote log manager config, reading from the relevant configuration properties and falling back to unlimited defaults if the properties are not set.

@@ -1,0 +1,32 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/apps/studio && pnpm exec vitest run --reporter=verbose components/ui/Charts/useChartHoverState.test.tsx",
+  "test_files": [
+    "apps/studio/components/ui/Charts/useChartHoverState.test.tsx",
+    "apps/studio/components/ui/Charts/useChartSync.test.tsx"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState initialization should initialize with default state",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState initialization should load sync settings from localStorage on initialization",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState initialization should handle corrupted localStorage data gracefully",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState hover functionality should set hover state locally when sync is disabled",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState hover functionality should clear hover state locally when sync is disabled",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState hover functionality should sync hover state globally when sync is enabled",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState hover functionality should clear synced hover state globally",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState sync settings should enable hover sync and save to localStorage",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState sync settings should disable hover sync and automatically disable tooltip sync",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState sync settings should enable tooltip sync and automatically enable hover sync",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState sync settings should handle localStorage errors gracefully when saving sync settings",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState state synchronization between multiple hooks should synchronize state changes between multiple hook instances",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState state synchronization between multiple hooks should correctly identify current chart vs synced charts",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState edge cases should handle setting hover to null",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState edge cases should handle rapid state changes",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState edge cases should not trigger unnecessary state updates when state is the same",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState helper functions should correctly calculate isHovered for current chart",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState helper functions should correctly calculate isHovered for synced charts",
+    "/workspace/repo/apps/studio/components/ui/Charts/useChartHoverState.test.tsx::useChartHoverState helper functions should correctly identify current chart"
+  ],
+  "PASS_TO_PASS": []
+}

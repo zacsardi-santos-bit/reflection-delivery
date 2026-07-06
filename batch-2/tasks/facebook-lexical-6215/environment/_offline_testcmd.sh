@@ -1,0 +1,1 @@
+cd /workspace/repo && npm install 2>/dev/null && npx jest scripts/__tests__/unit/stackblitz.test.js --coverage=false --verbose --json

@@ -1,0 +1,80 @@
+patching file spanner/test/opentelemetry/test/ot_traces_test.go
+patching file spanner/trace_test.go
+# cloud.google.com/go/spanner [cloud.google.com/go/spanner.test]
+./trace_test.go:47:40: undefined: gcpClientRepo
+./trace_test.go:48:44: undefined: gcpClientArtifact
+./trace_test.go:54:15: undefined: startSpan
+./trace_test.go:56:2: undefined: endSpan
+./trace_test.go:81:9: undefined: prependPackageName
+./trace_test.go:84:40: undefined: gcpClientRepo
+./trace_test.go:85:44: undefined: gcpClientArtifact
+./trace_test.go:191:6: undefined: setSpanAttributes
+./trace_test.go:219:6: undefined: setSpanAttributes
+{"Time":"2026-06-29T15:21:25.695225583Z","Action":"start","Package":"cloud.google.com/go/spanner"}
+{"Time":"2026-06-29T15:21:25.695311828Z","Action":"output","Package":"cloud.google.com/go/spanner","Output":"FAIL\tcloud.google.com/go/spanner [build failed]\n"}
+{"Time":"2026-06-29T15:21:25.695343349Z","Action":"fail","Package":"cloud.google.com/go/spanner","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.945727748Z","Action":"start","Package":"cloud.google.com/go/spanner/test"}
+{"Time":"2026-06-29T15:21:25.97439778Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_InstrumentationScope"}
+{"Time":"2026-06-29T15:21:25.974495637Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_InstrumentationScope","Output":"=== RUN   TestOTMetrics_InstrumentationScope\n"}
+{"Time":"2026-06-29T15:21:25.989230593Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_InstrumentationScope","Output":"--- PASS: TestOTMetrics_InstrumentationScope (0.01s)\n"}
+{"Time":"2026-06-29T15:21:25.989284004Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_InstrumentationScope","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:25.989296671Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool"}
+{"Time":"2026-06-29T15:21:25.989305157Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool","Output":"=== RUN   TestOTMetrics_SessionPool\n"}
+{"Time":"2026-06-29T15:21:25.995637402Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/OpenSessionCount"}
+{"Time":"2026-06-29T15:21:25.995681167Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/OpenSessionCount","Output":"=== RUN   TestOTMetrics_SessionPool/OpenSessionCount\n"}
+{"Time":"2026-06-29T15:21:25.995861196Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/OpenSessionCount","Output":"--- PASS: TestOTMetrics_SessionPool/OpenSessionCount (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.995899159Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/OpenSessionCount","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.995912882Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/MaxAllowedSessionsCount"}
+{"Time":"2026-06-29T15:21:25.995930379Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/MaxAllowedSessionsCount","Output":"=== RUN   TestOTMetrics_SessionPool/MaxAllowedSessionsCount\n"}
+{"Time":"2026-06-29T15:21:25.995950619Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/MaxAllowedSessionsCount","Output":"--- PASS: TestOTMetrics_SessionPool/MaxAllowedSessionsCount (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.995959385Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/MaxAllowedSessionsCount","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.995967073Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/MaxInUseSessionsCount"}
+{"Time":"2026-06-29T15:21:25.995974098Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/MaxInUseSessionsCount","Output":"=== RUN   TestOTMetrics_SessionPool/MaxInUseSessionsCount\n"}
+{"Time":"2026-06-29T15:21:25.996026095Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/MaxInUseSessionsCount","Output":"--- PASS: TestOTMetrics_SessionPool/MaxInUseSessionsCount (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.996052766Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/MaxInUseSessionsCount","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.996067065Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/AcquiredSessionsCount"}
+{"Time":"2026-06-29T15:21:25.996086521Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/AcquiredSessionsCount","Output":"=== RUN   TestOTMetrics_SessionPool/AcquiredSessionsCount\n"}
+{"Time":"2026-06-29T15:21:25.996116012Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/AcquiredSessionsCount","Output":"--- PASS: TestOTMetrics_SessionPool/AcquiredSessionsCount (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.996143179Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/AcquiredSessionsCount","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.99615554Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/ReleasedSessionsCount"}
+{"Time":"2026-06-29T15:21:25.996167236Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/ReleasedSessionsCount","Output":"=== RUN   TestOTMetrics_SessionPool/ReleasedSessionsCount\n"}
+{"Time":"2026-06-29T15:21:25.996248686Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/ReleasedSessionsCount","Output":"--- PASS: TestOTMetrics_SessionPool/ReleasedSessionsCount (0.00s)\n"}
+{"Time":"2026-06-29T15:21:25.99626935Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool/ReleasedSessionsCount","Elapsed":0}
+{"Time":"2026-06-29T15:21:25.997241589Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool","Output":"--- PASS: TestOTMetrics_SessionPool (0.01s)\n"}
+{"Time":"2026-06-29T15:21:25.997282162Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:25.997310182Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool_SessionsCount"}
+{"Time":"2026-06-29T15:21:25.997319784Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool_SessionsCount","Output":"=== RUN   TestOTMetrics_SessionPool_SessionsCount\n"}
+{"Time":"2026-06-29T15:21:26.015144146Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool_SessionsCount","Output":"--- PASS: TestOTMetrics_SessionPool_SessionsCount (0.02s)\n"}
+{"Time":"2026-06-29T15:21:26.01519799Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool_SessionsCount","Elapsed":0.02}
+{"Time":"2026-06-29T15:21:26.015218884Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool_GetSessionTimeoutsCount"}
+{"Time":"2026-06-29T15:21:26.015227147Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool_GetSessionTimeoutsCount","Output":"=== RUN   TestOTMetrics_SessionPool_GetSessionTimeoutsCount\n"}
+{"Time":"2026-06-29T15:21:26.024243587Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool_GetSessionTimeoutsCount","Output":"--- PASS: TestOTMetrics_SessionPool_GetSessionTimeoutsCount (0.01s)\n"}
+{"Time":"2026-06-29T15:21:26.024315669Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_SessionPool_GetSessionTimeoutsCount","Elapsed":0.01}
+{"Time":"2026-06-29T15:21:26.024398997Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_GFELatency"}
+{"Time":"2026-06-29T15:21:26.024412789Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_GFELatency","Output":"=== RUN   TestOTMetrics_GFELatency\n"}
+{"Time":"2026-06-29T15:21:26.027991059Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_GFELatency","Output":"--- PASS: TestOTMetrics_GFELatency (0.00s)\n"}
+{"Time":"2026-06-29T15:21:26.028023746Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestOTMetrics_GFELatency","Elapsed":0}
+{"Time":"2026-06-29T15:21:26.028039816Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry"}
+{"Time":"2026-06-29T15:21:26.028047557Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"=== RUN   TestSpannerTracesWithOpenTelemetry\n"}
+{"Time":"2026-06-29T15:21:26.047059864Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"    ot_traces_test.go:144: span \"cloud.google.com/go/spanner.ReadWriteTransactionWithOptions\" was missing attribute \"gcp.client.artifact\" with value \"cloud.google.com/go/spanner\"\n"}
+{"Time":"2026-06-29T15:21:26.047103263Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"    ot_traces_test.go:144: span \"cloud.google.com/go/spanner.ReadWriteTransactionWithOptions\" was missing attribute \"transaction.tag\" with value \"tx-tag\"\n"}
+{"Time":"2026-06-29T15:21:26.047127408Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"    ot_traces_test.go:144: span \"cloud.google.com/go/spanner.ReadWriteTransactionWithOptions\" was missing attribute \"db.name\" with value \"[DATABASE]\"\n"}
+{"Time":"2026-06-29T15:21:26.04714112Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"    ot_traces_test.go:144: span \"cloud.google.com/go/spanner.ReadWriteTransactionWithOptions\" was missing attribute \"instance.name\" with value \"[INSTANCE]\"\n"}
+{"Time":"2026-06-29T15:21:26.047155801Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"    ot_traces_test.go:144: span \"cloud.google.com/go/spanner.ReadWriteTransactionWithOptions\" was missing attribute \"cloud.region\" with value \"global\"\n"}
+{"Time":"2026-06-29T15:21:26.04717389Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"    ot_traces_test.go:144: span \"cloud.google.com/go/spanner.ReadWriteTransactionWithOptions\" was missing attribute \"gcp.client.version\" with value \"1.83.0\"\n"}
+{"Time":"2026-06-29T15:21:26.047188626Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"    ot_traces_test.go:144: span \"cloud.google.com/go/spanner.ReadWriteTransactionWithOptions\" was missing attribute \"gcp.client.repo\" with value \"googleapis/google-cloud-go\"\n"}
+{"Time":"2026-06-29T15:21:26.047198239Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"    ot_traces_test.go:160: did not find a RowIterator span with the specified statement.tag \"req-tag\"\n"}
+{"Time":"2026-06-29T15:21:26.047874116Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Output":"--- FAIL: TestSpannerTracesWithOpenTelemetry (0.02s)\n"}
+{"Time":"2026-06-29T15:21:26.047901105Z","Action":"fail","Package":"cloud.google.com/go/spanner/test","Test":"TestSpannerTracesWithOpenTelemetry","Elapsed":0.02}
+{"Time":"2026-06-29T15:21:26.047921672Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestSpanAnnotatedWithXGoogSpannerRequestID_unary"}
+{"Time":"2026-06-29T15:21:26.04793302Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpanAnnotatedWithXGoogSpannerRequestID_unary","Output":"=== RUN   TestSpanAnnotatedWithXGoogSpannerRequestID_unary\n"}
+{"Time":"2026-06-29T15:21:26.063491385Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpanAnnotatedWithXGoogSpannerRequestID_unary","Output":"--- PASS: TestSpanAnnotatedWithXGoogSpannerRequestID_unary (0.02s)\n"}
+{"Time":"2026-06-29T15:21:26.063541587Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestSpanAnnotatedWithXGoogSpannerRequestID_unary","Elapsed":0.02}
+{"Time":"2026-06-29T15:21:26.063553978Z","Action":"run","Package":"cloud.google.com/go/spanner/test","Test":"TestSpanAnnotatedWithXGoogSpannerRequestID_streaming"}
+{"Time":"2026-06-29T15:21:26.063561697Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpanAnnotatedWithXGoogSpannerRequestID_streaming","Output":"=== RUN   TestSpanAnnotatedWithXGoogSpannerRequestID_streaming\n"}
+{"Time":"2026-06-29T15:21:26.080544952Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Test":"TestSpanAnnotatedWithXGoogSpannerRequestID_streaming","Output":"--- PASS: TestSpanAnnotatedWithXGoogSpannerRequestID_streaming (0.02s)\n"}
+{"Time":"2026-06-29T15:21:26.080608799Z","Action":"pass","Package":"cloud.google.com/go/spanner/test","Test":"TestSpanAnnotatedWithXGoogSpannerRequestID_streaming","Elapsed":0.02}
+{"Time":"2026-06-29T15:21:26.080620228Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Output":"FAIL\n"}
+{"Time":"2026-06-29T15:21:26.085655494Z","Action":"output","Package":"cloud.google.com/go/spanner/test","Output":"FAIL\tcloud.google.com/go/spanner/test\t0.140s\n"}
+{"Time":"2026-06-29T15:21:26.085705508Z","Action":"fail","Package":"cloud.google.com/go/spanner/test","Elapsed":0.14}
+reward=0 graded=667 found=13 failed=1 parsed=15 framework=go exit_code=1

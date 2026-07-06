@@ -1,0 +1,323 @@
+patching file otelcol/config_test.go
+patching file otelcol/otelcoltest/go.mod
+patching file otelcol/otelcoltest/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 succeeded at 130 (offset 52 lines).
+Hunk #3 FAILED at 111.
+Hunk #4 FAILED at 204.
+3 out of 4 hunks FAILED -- saving rejects to file otelcol/otelcoltest/go.sum.rej
+patching file service/attributes_test.go
+patching file service/config_test.go
+patching file service/internal/promtest/server_util.go
+patching file service/service_test.go
+patching file service/telemetry/config_test.go
+patching file service/telemetry/factory_test.go
+patching file service/telemetry/internal/migration/v0.2.0_test.go
+patching file service/telemetry/logger_test.go
+patching file service/telemetry/metrics_test.go
+patching file service/telemetry/tracer_test.go
+patching file otelcol/config_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file otelcol/config_test.go.rej
+patching file otelcol/otelcoltest/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file otelcol/otelcoltest/go.mod.rej
+patching file otelcol/otelcoltest/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 78.
+Hunk #3 FAILED at 111.
+Hunk #4 succeeded at 283 with fuzz 3 (offset 79 lines).
+3 out of 4 hunks FAILED -- saving rejects to file otelcol/otelcoltest/go.sum.rej
+patching file service/attributes_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/attributes_test.go.rej
+patching file service/config_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/config_test.go.rej
+patching file service/internal/promtest/server_util.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/internal/promtest/server_util.go.rej
+patching file service/service_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/service_test.go.rej
+patching file service/telemetry/config_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/config_test.go.rej
+patching file service/telemetry/factory_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/factory_test.go.rej
+patching file service/telemetry/internal/migration/v0.2.0_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/internal/migration/v0.2.0_test.go.rej
+patching file service/telemetry/logger_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/logger_test.go.rej
+patching file service/telemetry/metrics_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/metrics_test.go.rej
+patching file service/telemetry/tracer_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/tracer_test.go.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/otelcol/config_test.go b/otelcol/config_test.go
+|index d9adc5ce5..199700609 100644
+|--- a/otelcol/config_test.go
+|+++ b/otelcol/config_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 18
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/otelcol/otelcoltest/go.mod b/otelcol/otelcoltest/go.mod
+|index 3bd0e6d18..8e5a8136b 100644
+|--- a/otelcol/otelcoltest/go.mod
+|+++ b/otelcol/otelcoltest/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 100
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/otelcol/otelcoltest/go.sum b/otelcol/otelcoltest/go.sum
+|index 7c996a906..905212962 100644
+|--- a/otelcol/otelcoltest/go.sum
+|+++ b/otelcol/otelcoltest/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 247
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/attributes_test.go b/service/attributes_test.go
+|index c463917b3..1e19732d1 100644
+|--- a/service/attributes_test.go
+|+++ b/service/attributes_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 260
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/config_test.go b/service/config_test.go
+|index c72ab78f9..187deb4da 100644
+|--- a/service/config_test.go
+|+++ b/service/config_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 273
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/internal/promtest/server_util.go b/service/internal/promtest/server_util.go
+|index 4c04ba7a7..c50616580 100644
+|--- a/service/internal/promtest/server_util.go
+|+++ b/service/internal/promtest/server_util.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 286
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/service_test.go b/service/service_test.go
+|index 2abb433fa..68466a0e0 100644
+|--- a/service/service_test.go
+|+++ b/service/service_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 299
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/config_test.go b/service/telemetry/config_test.go
+|index fb2cfbfc0..75dc4869d 100644
+|--- a/service/telemetry/config_test.go
+|+++ b/service/telemetry/config_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 312
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/factory_test.go b/service/telemetry/factory_test.go
+|index 8b8d20bc1..09ad25a3b 100644
+|--- a/service/telemetry/factory_test.go
+|+++ b/service/telemetry/factory_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 325
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/internal/migration/v0.2.0_test.go b/service/telemetry/internal/migration/v0.2.0_test.go
+|index 1d4626444..868becfa4 100644
+|--- a/service/telemetry/internal/migration/v0.2.0_test.go
+|+++ b/service/telemetry/internal/migration/v0.2.0_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 338
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/logger_test.go b/service/telemetry/logger_test.go
+|index 6544ca060..5682bd355 100644
+|--- a/service/telemetry/logger_test.go
+|+++ b/service/telemetry/logger_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 351
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/metrics_test.go b/service/telemetry/metrics_test.go
+|index 47f41e92f..05035e9a2 100644
+|--- a/service/telemetry/metrics_test.go
+|+++ b/service/telemetry/metrics_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 364
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/service/telemetry/tracer_test.go b/service/telemetry/tracer_test.go
+|index 929c2385d..a6749f33f 100644
+|--- a/service/telemetry/tracer_test.go
+|+++ b/service/telemetry/tracer_test.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file otelcol/config_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file otelcol/config_test.go.rej
+patching file otelcol/otelcoltest/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file otelcol/otelcoltest/go.mod.rej
+patching file otelcol/otelcoltest/go.sum
+Hunk #1 FAILED at 30.
+Hunk #2 FAILED at 78.
+Hunk #3 FAILED at 111.
+Hunk #4 FAILED at 204.
+4 out of 4 hunks FAILED -- saving rejects to file otelcol/otelcoltest/go.sum.rej
+patching file service/attributes_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/attributes_test.go.rej
+patching file service/config_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/config_test.go.rej
+patching file service/internal/promtest/server_util.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/internal/promtest/server_util.go.rej
+patching file service/service_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/service_test.go.rej
+patching file service/telemetry/config_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/config_test.go.rej
+patching file service/telemetry/factory_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/factory_test.go.rej
+patching file service/telemetry/internal/migration/v0.2.0_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/internal/migration/v0.2.0_test.go.rej
+patching file service/telemetry/logger_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/logger_test.go.rej
+patching file service/telemetry/metrics_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/metrics_test.go.rej
+patching file service/telemetry/tracer_test.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file service/telemetry/tracer_test.go.rej
+WARN: test.patch did not apply cleanly
+go: finding module for package go.opentelemetry.io/contrib/otelconf/v0.3.0
+internal/promtest/server_util.go:11:2: cannot find module providing package go.opentelemetry.io/contrib/otelconf/v0.3.0: module lookup disabled by GOPROXY=off
+reward=0 graded=68 found=0 failed=0 parsed=0 framework=go exit_code=1

@@ -1,0 +1,31 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./conformance/utils/suite -count=1",
+  "test_files": [
+    "conformance/utils/suite/suite_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestGetAPIVersionAndChannel/properly_installed_Gateway_API_CRDs",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestGetAPIVersionAndChannel/properly_installed_Gateway_API_CRDs,_with_additional_CRDs",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestGetAPIVersionAndChannel"
+  ],
+  "PASS_TO_PASS": [
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestParseSupportedFeatures",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestParseKeyValuePairs",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestBuildSummary/core_tests_failed,_no_extended_tests",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestBuildSummary/core_tests_succeeded,_extended_tests_failed",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestBuildSummary/core_tests_partially_succeeded,_extended_tests_succeeded",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestBuildSummary/core_tests_succeeded,_extended_tests_partially_succeeded",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestBuildSummary",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestGetAPIVersionAndChannel/no_Gateway_API_CRDs",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestGetAPIVersionAndChannel/installed_Gateway_API_CRDs_having_multiple_versions",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestGetAPIVersionAndChannel/installed_Gateway_API__CRDs_having_multiple_channels",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestGetAPIVersionAndChannel/installed_Gateway_API_CRDs_having_partial_annotations",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestSuiteReport/all_tests_succeeded",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestSuiteReport/mixed_results",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestSuiteReport/skip_provisional_tests",
+    "sigs.k8s.io/gateway-api/conformance/utils/suite::TestSuiteReport"
+  ]
+}

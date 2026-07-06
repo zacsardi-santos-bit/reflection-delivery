@@ -1,0 +1,76 @@
+patching file pkg/filter/stream/flowcontrol/data_source/nacos_data_source_factory_test.go
+patching file pkg/filter/stream/flowcontrol/stream_filter_test.go
+{"Time":"2026-07-01T14:59:44.772080409Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestDefaultCallbacks"}
+{"Time":"2026-07-01T14:59:44.77258658Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestDefaultCallbacks","Output":"=== RUN   TestDefaultCallbacks\n"}
+{"Time":"2026-07-01T14:59:44.772647412Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestDefaultCallbacks","Output":"--- PASS: TestDefaultCallbacks (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.77265769Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestDefaultCallbacks","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.772664225Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestCallbacksRegistry"}
+{"Time":"2026-07-01T14:59:44.772668697Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestCallbacksRegistry","Output":"=== RUN   TestCallbacksRegistry\n"}
+{"Time":"2026-07-01T14:59:44.772674017Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestCallbacksRegistry","Output":"--- PASS: TestCallbacksRegistry (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.772678718Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestCallbacksRegistry","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.772683131Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestAfterBlock"}
+{"Time":"2026-07-01T14:59:44.772695435Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestAfterBlock","Output":"=== RUN   TestAfterBlock\n"}
+{"Time":"2026-07-01T14:59:44.772702771Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestAfterBlock","Output":"--- PASS: TestAfterBlock (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.772707953Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestAfterBlock","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.772711695Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestDefaultCallbacks_SetConfig"}
+{"Time":"2026-07-01T14:59:44.772715671Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestDefaultCallbacks_SetConfig","Output":"=== RUN   TestDefaultCallbacks_SetConfig\n"}
+{"Time":"2026-07-01T14:59:44.772722107Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestDefaultCallbacks_SetConfig","Output":"--- PASS: TestDefaultCallbacks_SetConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.772729661Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestDefaultCallbacks_SetConfig","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.772733704Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilterFactory"}
+{"Time":"2026-07-01T14:59:44.772738263Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilterFactory","Output":"=== RUN   TestStreamFilterFactory\n"}
+{"Time":"2026-07-01T14:59:44.772748301Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilterFactory","Output":"{\"timestamp\":\"2026-07-01 14:59:44.4410\",\"caller\":\"rule_manager.go:173\",\"logLevel\":\"INFO\",\"msg\":\"[FlowRuleManager] Flow rules were loaded\",\"rules\":[{\"resource\":\"/http\",\"tokenCalculateStrategy\":0,\"controlBehavior\":0,\"threshold\":1,\"relationStrategy\":0,\"refResource\":\"\",\"maxQueueingTimeMs\":0,\"warmUpPeriodSec\":0,\"warmUpColdFactor\":0,\"statIntervalInMs\":0,\"lowMemUsageThreshold\":0,\"highMemUsageThreshold\":0,\"memLowWaterMarkBytes\":0,\"memHighWaterMarkBytes\":0}]}\n"}
+{"Time":"2026-07-01T14:59:44.780638035Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilterFactory","Output":"--- PASS: TestStreamFilterFactory (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780661665Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilterFactory","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780675532Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestIsValidCfg"}
+{"Time":"2026-07-01T14:59:44.780680529Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestIsValidCfg","Output":"=== RUN   TestIsValidCfg\n"}
+{"Time":"2026-07-01T14:59:44.780687383Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestIsValidCfg","Output":"--- PASS: TestIsValidCfg (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780692365Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestIsValidCfg","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780696567Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType"}
+{"Time":"2026-07-01T14:59:44.780700803Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType","Output":"=== RUN   Test_parseTrafficType\n"}
+{"Time":"2026-07-01T14:59:44.780705575Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/default-inbound"}
+{"Time":"2026-07-01T14:59:44.780709905Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/default-inbound","Output":"=== RUN   Test_parseTrafficType/default-inbound\n"}
+{"Time":"2026-07-01T14:59:44.78071505Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/outbound"}
+{"Time":"2026-07-01T14:59:44.780719576Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/outbound","Output":"=== RUN   Test_parseTrafficType/outbound\n"}
+{"Time":"2026-07-01T14:59:44.780724771Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/inbound"}
+{"Time":"2026-07-01T14:59:44.780728988Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/inbound","Output":"=== RUN   Test_parseTrafficType/inbound\n"}
+{"Time":"2026-07-01T14:59:44.780734571Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType","Output":"--- PASS: Test_parseTrafficType (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780740458Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/default-inbound","Output":"    --- PASS: Test_parseTrafficType/default-inbound (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780748223Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/default-inbound","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780752831Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/outbound","Output":"    --- PASS: Test_parseTrafficType/outbound (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780757779Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/outbound","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780762355Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/inbound","Output":"    --- PASS: Test_parseTrafficType/inbound (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780768832Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType/inbound","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780773012Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_parseTrafficType","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.78077701Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig"}
+{"Time":"2026-07-01T14:59:44.780781239Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig","Output":"=== RUN   Test_loadConfig\n"}
+{"Time":"2026-07-01T14:59:44.780786432Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig/nil_config_return_default_config"}
+{"Time":"2026-07-01T14:59:44.780793849Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig/nil_config_return_default_config","Output":"=== RUN   Test_loadConfig/nil_config_return_default_config\n"}
+{"Time":"2026-07-01T14:59:44.780799844Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig/nil_config_return_default_config#01"}
+{"Time":"2026-07-01T14:59:44.78080443Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig/nil_config_return_default_config#01","Output":"=== RUN   Test_loadConfig/nil_config_return_default_config#01\n"}
+{"Time":"2026-07-01T14:59:44.780809728Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig","Output":"--- PASS: Test_loadConfig (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780815012Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig/nil_config_return_default_config","Output":"    --- PASS: Test_loadConfig/nil_config_return_default_config (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780820658Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig/nil_config_return_default_config","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780824997Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig/nil_config_return_default_config#01","Output":"    --- PASS: Test_loadConfig/nil_config_return_default_config#01 (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780830124Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig/nil_config_return_default_config#01","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780834335Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"Test_loadConfig","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780838356Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilter"}
+{"Time":"2026-07-01T14:59:44.780842821Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilter","Output":"=== RUN   TestStreamFilter\n"}
+{"Time":"2026-07-01T14:59:44.780848277Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilter","Output":"--- PASS: TestStreamFilter (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780853136Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilter","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780857392Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilter_Append"}
+{"Time":"2026-07-01T14:59:44.780861998Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilter_Append","Output":"=== RUN   TestStreamFilter_Append\n"}
+{"Time":"2026-07-01T14:59:44.780867448Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilter_Append","Output":"--- PASS: TestStreamFilter_Append (0.00s)\n"}
+{"Time":"2026-07-01T14:59:44.780871745Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Test":"TestStreamFilter_Append","Elapsed":0}
+{"Time":"2026-07-01T14:59:44.780876438Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Output":"PASS\n"}
+{"Time":"2026-07-01T14:59:44.878518711Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Output":"ok  \tmosn.io/mosn/pkg/filter/stream/flowcontrol\t0.203s\n"}
+{"Time":"2026-07-01T14:59:44.878553951Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol","Elapsed":0.204}
+{"Time":"2026-07-01T14:59:47.457904476Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Output":"2026/07/01 14:59:47 reading /tmp/go-build4148765191/b379/data_source.test: no symbol section\n"}
+{"Time":"2026-07-01T14:59:47.457958021Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Output":"2026/07/01 14:59:47 reading /tmp/go-build4148765191/b379/data_source.test: no symbols\n"}
+{"Time":"2026-07-01T14:59:47.457978423Z","Action":"run","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Test":"TestNacosDataSourceFactory"}
+{"Time":"2026-07-01T14:59:47.457983171Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Test":"TestNacosDataSourceFactory","Output":"=== RUN   TestNacosDataSourceFactory\n"}
+{"Time":"2026-07-01T14:59:47.458201458Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Test":"TestNacosDataSourceFactory","Output":"--- PASS: TestNacosDataSourceFactory (0.00s)\n"}
+{"Time":"2026-07-01T14:59:47.458209648Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Test":"TestNacosDataSourceFactory","Elapsed":0}
+{"Time":"2026-07-01T14:59:47.458216349Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Output":"PASS\n"}
+{"Time":"2026-07-01T14:59:47.45873404Z","Action":"output","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Output":"ok  \tmosn.io/mosn/pkg/filter/stream/flowcontrol/data_source\t0.030s\n"}
+{"Time":"2026-07-01T14:59:47.458751754Z","Action":"pass","Package":"mosn.io/mosn/pkg/filter/stream/flowcontrol/data_source","Elapsed":0.03}
+reward=1 graded=16 found=16 failed=0 parsed=16 framework=go exit_code=0

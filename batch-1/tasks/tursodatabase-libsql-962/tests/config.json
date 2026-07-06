@@ -1,0 +1,32 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/bindings/go && go test -json . -count=1",
+  "test_files": [
+    "bindings/go/libsql_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/libsql/go-libsql::TestErrorNonUtf8URL",
+    "github.com/libsql/go-libsql::TestExecWithQuery/Memory",
+    "github.com/libsql/go-libsql::TestErrorQuery/Memory",
+    "github.com/libsql/go-libsql::TestExecWithQuery/File",
+    "github.com/libsql/go-libsql::TestExecWithQuery",
+    "github.com/libsql/go-libsql::TestErrorExec/Memory",
+    "github.com/libsql/go-libsql::TestErrorExec/File",
+    "github.com/libsql/go-libsql::TestErrorExec",
+    "github.com/libsql/go-libsql::TestErrorQuery/File",
+    "github.com/libsql/go-libsql::TestErrorQuery",
+    "github.com/libsql/go-libsql::TestExec/Memory",
+    "github.com/libsql/go-libsql::TestQueryWithEmptyResult/Memory",
+    "github.com/libsql/go-libsql::TestQuery/Memory",
+    "github.com/libsql/go-libsql::TestQueryWithEmptyResult/File",
+    "github.com/libsql/go-libsql::TestQueryWithEmptyResult",
+    "github.com/libsql/go-libsql::TestExec/File",
+    "github.com/libsql/go-libsql::TestExec",
+    "github.com/libsql/go-libsql::TestQuery/File",
+    "github.com/libsql/go-libsql::TestQuery",
+    "github.com/libsql/go-libsql::TestErrorRowsNext"
+  ],
+  "PASS_TO_PASS": []
+}

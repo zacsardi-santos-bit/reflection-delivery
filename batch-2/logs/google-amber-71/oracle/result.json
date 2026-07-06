@@ -1,0 +1,29 @@
+{
+    "id": "ac2ee1e2-ea17-417f-8264-d6ba48973f62",
+    "started_at": "2026-07-04T15:40:34.240298",
+    "finished_at": "2026-07-04T15:42:43.822661",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__google-amber-71": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "google-amber-71__pERkjC9"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

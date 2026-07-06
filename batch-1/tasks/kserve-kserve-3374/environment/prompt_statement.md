@@ -1,0 +1,5 @@
+I'm working on adding compatibility for two major versions of a data validation library in a model serving framework. The data models module currently only supports the older major version, but we need to also support the newer major version (2.x).
+
+The issue is that the data models module has no exported flag indicating which version of the library is installed. Other parts of the codebase — including tests — need to branch on this to handle differences in serialization behavior. For example, with the newer major version, boolean fields in server responses are emitted as native JSON booleans, while with the older version they come out as Python string representations.
+
+I'd like the data models module to expose a boolean that is true when version 2 of the library is active and false otherwise. This would let test code and application code check this flag rather than each re-implementing version detection on their own. Once this flag exists, the health check endpoint test can use it to assert the correct response format for whichever version happens to be installed in the environment.

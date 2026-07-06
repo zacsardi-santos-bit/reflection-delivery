@@ -1,0 +1,37 @@
+patching file charger/eebus_test.go
+patching file core/coordinator/coordinator_test.go
+patching file core/loadpoint_effective_test.go
+patching file core/loadpoint_phases_test.go
+patching file core/loadpoint_session_test.go
+patching file core/loadpoint_sync_test.go
+patching file core/loadpoint_test.go
+patching file core/loadpoint_vehicle_test.go
+patching file core/planner/planner_test.go
+patching file core/prioritizer/prioritizer_test.go
+patching file core/site_battery_test.go
+patching file core/soc/estimator_test.go
+patching file core/wrapper/chargemeter_test.go
+patching file core/wrapper/chargerater_test.go
+go: finding module for package go.uber.org/mock/gomock
+# github.com/evcc-io/evcc/charger
+charger/eebus_test.go:6:2: cannot find module providing package go.uber.org/mock/gomock: module lookup disabled by GOPROXY=off
+FAIL	github.com/evcc-io/evcc/charger [setup failed]
+# github.com/evcc-io/evcc/core
+charger/eebus_test.go:6:2: cannot find module providing package go.uber.org/mock/gomock: module lookup disabled by GOPROXY=off
+FAIL	github.com/evcc-io/evcc/core [setup failed]
+# github.com/evcc-io/evcc/core/coordinator
+charger/eebus_test.go:6:2: cannot find module providing package go.uber.org/mock/gomock: module lookup disabled by GOPROXY=off
+FAIL	github.com/evcc-io/evcc/core/coordinator [setup failed]
+# github.com/evcc-io/evcc/core/planner
+charger/eebus_test.go:6:2: cannot find module providing package go.uber.org/mock/gomock: module lookup disabled by GOPROXY=off
+FAIL	github.com/evcc-io/evcc/core/planner [setup failed]
+# github.com/evcc-io/evcc/core/prioritizer
+charger/eebus_test.go:6:2: cannot find module providing package go.uber.org/mock/gomock: module lookup disabled by GOPROXY=off
+FAIL	github.com/evcc-io/evcc/core/prioritizer [setup failed]
+# github.com/evcc-io/evcc/core/soc
+charger/eebus_test.go:6:2: cannot find module providing package go.uber.org/mock/gomock: module lookup disabled by GOPROXY=off
+FAIL	github.com/evcc-io/evcc/core/soc [setup failed]
+# github.com/evcc-io/evcc/core/wrapper
+charger/eebus_test.go:6:2: cannot find module providing package go.uber.org/mock/gomock: module lookup disabled by GOPROXY=off
+FAIL	github.com/evcc-io/evcc/core/wrapper [setup failed]
+reward=0 graded=118 found=0 failed=0 parsed=0 framework=go exit_code=1

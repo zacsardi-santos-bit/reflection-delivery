@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 -m pytest /tmp/test_ch_fix.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/04240_80087_clickhouse_local_logs_on_exception.reference",
+    "tests/queries/0_stateless/04240_80087_clickhouse_local_logs_on_exception.sh"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test_ch_fix::test_flush_logs_before_exception_fix"
+  ],
+  "PASS_TO_PASS": []
+}

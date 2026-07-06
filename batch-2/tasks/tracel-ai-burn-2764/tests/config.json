@@ -1,0 +1,25 @@
+{
+  "test_framework": "cargo",
+  "test_command": "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.x86_64.json WGPU_BACKEND=vulkan cargo nextest run -p burn-wgpu --features vulkan -E 'test(should_apply_bitwise_left_shift_2d)' --no-fail-fast",
+  "test_files": [
+    "crates/burn-tensor/src/tests/ops/bitwise.rs"
+  ],
+  "num_test_files": 1,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "( 3/12) burn-wgpu tests::jit::tensor::u32_bool_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "(11/12) burn-wgpu tests::jit_fusion::tensor::u32_bool_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "(12/12) burn-wgpu tests::jit_fusion::tensor::i16_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "( 4/12) burn-wgpu tests::jit::tensor::i32_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "( 5/12) burn-wgpu tests::jit::tensor::i16_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "( 6/12) burn-wgpu tests::jit_fusion::tensor::u8_bool_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "( 7/12) burn-wgpu tests::jit_fusion::tensor::i64_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "( 8/12) burn-wgpu tests::jit::tensor::i64_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "( 9/12) burn-wgpu tests::jit::tensor::u8_bool_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "(10/12) burn-wgpu tests::jit_fusion::tensor::i32_ty::bitwise::tests::should_apply_bitwise_left_shift_2d"
+  ],
+  "PASS_TO_PASS": [
+    "( 1/12) burn-wgpu tests::jit_fusion::tensor::i8_ty::bitwise::tests::should_apply_bitwise_left_shift_2d",
+    "( 2/12) burn-wgpu tests::jit::tensor::i8_ty::bitwise::tests::should_apply_bitwise_left_shift_2d"
+  ]
+}

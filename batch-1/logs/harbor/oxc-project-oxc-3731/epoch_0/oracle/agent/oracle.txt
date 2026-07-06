@@ -1,0 +1,5 @@
+patching file crates/oxc_codegen/src/gen.rs
+patching file tasks/coverage/codegen_runtime_test262.snap
+patching file tasks/coverage/codegen_sourcemap.snap
+patching file tasks/coverage/src/runtime/v8_test262.status
+patching file tasks/coverage/transpile.snap

@@ -1,0 +1,14 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/run_tests.py -v",
+  "test_files": [
+    "tests/queries/0_stateless/04092_view_filter_type_mismatch_crash.reference",
+    "tests/queries/0_stateless/04092_view_filter_type_mismatch_crash.sql"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "run_tests::test_04092_view_filter_type_mismatch_crash"
+  ],
+  "PASS_TO_PASS": []
+}

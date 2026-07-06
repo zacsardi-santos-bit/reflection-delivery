@@ -1,0 +1,19 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/app/client && node_modules/.bin/jest --watchAll=false --no-cache packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx src/IDE/Components/EditableName/EditableName.test.tsx src/pages/Editor/IDE/LeftPane/DataSidePane.test.tsx",
+  "test_files": [
+    "app/client/packages/design-system/ads/src/Templates/EntityExplorer/Editable/useEditableText.test.tsx",
+    "app/client/src/IDE/Components/EditableName/EditableName.test.tsx",
+    "app/client/src/pages/Editor/IDE/LeftPane/DataSidePane.test.tsx"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/app/client/src/pages/Editor/IDE/LeftPane/DataSidePane.test.tsx::DataSidePane renders the ds and count by using the default selector if dsUsageSelector not passed as a props",
+    "/workspace/repo/app/client/src/pages/Editor/IDE/LeftPane/DataSidePane.test.tsx::DataSidePane it uses the selector dsUsageSelector passed as prop"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/app/client/src/IDE/Components/EditableName/EditableName.test.tsx::EditableName renders component",
+    "/workspace/repo/app/client/src/IDE/Components/EditableName/EditableName.test.tsx::EditableName renders input when editing"
+  ]
+}

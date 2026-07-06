@@ -1,0 +1,40 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/python_modules/libraries/dagster-soda/dagster_soda_tests/test_component.py /workspace/repo/python_modules/libraries/dagster-soda/dagster_soda_tests/test_integration.py -v",
+  "test_files": [
+    "python_modules/libraries/dagster-soda/dagster_soda_tests/__init__.py",
+    "python_modules/libraries/dagster-soda/dagster_soda_tests/test_component.py",
+    "python_modules/libraries/dagster-soda/dagster_soda_tests/test_integration.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_sanitize_check_name[row_count-row_count]",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_sanitize_check_name[row_count > 0-row_count___0]",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_sanitize_check_name[my-check-my_check]",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_sanitize_check_name[schema:-schema]",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_sanitize_check_name[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_sanitize_check_name[  leading_trailing  -leading_trailing]",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_sanitize_check_name[-check]",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_parse_check_identifiers_from_yaml_simple",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_parse_check_identifiers_from_yaml_named_checks",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_parse_check_identifiers_from_yaml_wrong_dataset",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_parse_check_identifiers_from_yaml_empty_file",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_collect_check_identifiers_for_dataset_multiple_files",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_build_defs_produces_expected_asset_check_specs",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_build_defs_respects_asset_key_map",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_get_outcome",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_get_check_name",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_get_severity",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_to_dagster_severity",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_filter_results_for_dataset",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_execution_yields_asset_check_results_pass_and_fail",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_execution_warn_outcome_yields_failed_warn_severity",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_execution_uses_default_severity_when_missing",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_execution_missing_check_yields_specific_failure",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_component::test_execution_scan_exception_yields_failed_for_all",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_integration::test_load_soda_scan_component_from_defs_yaml",
+    "python_modules.libraries.dagster-soda.dagster_soda_tests.test_integration::test_load_soda_scan_component_scaffold_default_defs"
+  ],
+  "PASS_TO_PASS": []
+}

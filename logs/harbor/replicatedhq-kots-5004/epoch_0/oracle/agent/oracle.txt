@@ -1,8 +1,0 @@
-patching file pkg/apiserver/server.go
-patching file pkg/embeddedcluster/node_join.go
-patching file pkg/handlers/app.go
-patching file pkg/handlers/dashboard.go
-patching file pkg/handlers/embedded_cluster_get.go
-patching file pkg/handlers/embedded_cluster_node_join_command.go
-patching file pkg/handlers/handlers.go
-patching file pkg/handlers/kubeclient/kubeclient.go

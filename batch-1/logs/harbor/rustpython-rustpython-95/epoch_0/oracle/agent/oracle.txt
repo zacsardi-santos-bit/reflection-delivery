@@ -1,0 +1,8 @@
+patching file vm/src/builtins.rs
+patching file vm/src/bytecode.rs
+patching file vm/src/compile.rs
+patching file vm/src/lib.rs
+patching file vm/src/macros.rs
+patching file vm/src/objlist.rs
+patching file vm/src/stdlib/json.rs
+patching file vm/src/vm.rs

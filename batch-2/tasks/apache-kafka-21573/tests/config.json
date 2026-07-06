@@ -1,0 +1,19 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :storage:test --tests \"*DelayedRemoteListOffsetsTest\" --no-daemon --no-watch-fs; find /workspace/repo/storage/build/test-results/test -name 'TEST-*.xml' -exec cat {} \\;",
+  "test_files": [
+    "core/src/test/scala/unit/kafka/server/DelayedProduceTest.scala",
+    "storage/src/test/java/org/apache/kafka/server/purgatory/DelayedRemoteListOffsetsTest.java"
+  ],
+  "num_test_files": 2,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "org.apache.kafka.server.purgatory.DelayedRemoteListOffsetsTest::testRemovePartitionMetrics()",
+    "org.apache.kafka.server.purgatory.DelayedRemoteListOffsetsTest::testRemovePartitionMetricsForNonExistentPartition()",
+    "org.apache.kafka.server.purgatory.DelayedRemoteListOffsetsTest::testResponseOnSuccess()",
+    "org.apache.kafka.server.purgatory.DelayedRemoteListOffsetsTest::testResponseOnPartialError()",
+    "org.apache.kafka.server.purgatory.DelayedRemoteListOffsetsTest::testPartialResponseWhenNotLeaderOrFollowerExceptionOnOnePartition()",
+    "org.apache.kafka.server.purgatory.DelayedRemoteListOffsetsTest::testResponseOnRequestExpiration()"
+  ],
+  "PASS_TO_PASS": []
+}

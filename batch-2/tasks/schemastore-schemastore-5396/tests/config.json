@@ -1,0 +1,37 @@
+{
+  "test_framework": "go",
+  "test_command": "node --input-type=module -e \"import Ajv from 'ajv'; import {readFileSync,existsSync} from 'fs'; import {parse} from 'yaml'; import {basename} from 'path'; const j=process.argv.includes('-json'); const s=JSON.parse(readFileSync('./src/schemas/json/bamboo-spec.json','utf8')); const a=new Ajv({strict:false,allErrors:false}); let v; try{v=a.compile(s);}catch(e){console.error(e.message);process.exit(2);} const f=['src/test/bamboo-spec/bamboo-spec-11.0.8-plan.yaml','src/test/bamboo-spec/bamboo-spec-12.1.2-plan.yaml','src/test/bamboo-spec/bamboo-spec-6.10.6-plan-permissions.yaml','src/test/bamboo-spec/bamboo-spec-6.10.6-plan.yaml','src/test/bamboo-spec/bamboo-spec-6.10.6-project-permissions.yaml','src/test/bamboo-spec/bamboo-spec-6.10.6-project.yaml','src/test/bamboo-spec/bamboo-spec-7.2.10-12.1.2-plan-permissions.yaml','src/test/bamboo-spec/bamboo-spec-7.2.10-12.1.2-project-permissions.yaml','src/test/bamboo-spec/bamboo-spec-7.2.10-8.0.13-project.yaml','src/test/bamboo-spec/bamboo-spec-7.2.10-plan.yaml','src/test/bamboo-spec/bamboo-spec-8.0.13-plan.yaml','src/test/bamboo-spec/bamboo-spec-9.6.23-10.2.15-plan.yaml','src/test/bamboo-spec/bamboo-spec-9.6.23-12.1.2-project.yaml']; let x=false; for(const p of f){if(!existsSync(p))continue; const n=basename(p,'.yaml'); try{const d=parse(readFileSync(p,'utf8')); const ok=v(d); if(j){console.log(JSON.stringify({Action:'run',Test:n}));console.log(JSON.stringify({Action:ok?'pass':'fail',Test:n,Elapsed:0}));}else{console.log((ok?'PASS ':'FAIL ')+n);} if(!ok)x=true;}catch(e){if(j){console.log(JSON.stringify({Action:'run',Test:n}));console.log(JSON.stringify({Action:'fail',Test:n,Elapsed:0}));}else{console.log('FAIL '+n);}x=true;}} if(j)console.log(JSON.stringify({Action:x?'fail':'pass',Elapsed:0})); if(x)process.exit(1);\" --",
+  "test_files": [
+    "src/test/bamboo-spec/bamboo-spec-11.0.8-plan.yaml",
+    "src/test/bamboo-spec/bamboo-spec-12.1.2-plan.yaml",
+    "src/test/bamboo-spec/bamboo-spec-6.10.6-plan-permissions.yaml",
+    "src/test/bamboo-spec/bamboo-spec-6.10.6-plan.yaml",
+    "src/test/bamboo-spec/bamboo-spec-6.10.6-project-permissions.yaml",
+    "src/test/bamboo-spec/bamboo-spec-6.10.6-project.yaml",
+    "src/test/bamboo-spec/bamboo-spec-7.2.10-12.1.2-plan-permissions.yaml",
+    "src/test/bamboo-spec/bamboo-spec-7.2.10-12.1.2-project-permissions.yaml",
+    "src/test/bamboo-spec/bamboo-spec-7.2.10-8.0.13-project.yaml",
+    "src/test/bamboo-spec/bamboo-spec-7.2.10-plan.yaml",
+    "src/test/bamboo-spec/bamboo-spec-8.0.13-plan.yaml",
+    "src/test/bamboo-spec/bamboo-spec-9.6.23-10.2.15-plan.yaml",
+    "src/test/bamboo-spec/bamboo-spec-9.6.23-12.1.2-project.yaml"
+  ],
+  "num_test_files": 13,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "bamboo-spec-11.0.8-plan",
+    "bamboo-spec-12.1.2-plan",
+    "bamboo-spec-6.10.6-plan-permissions",
+    "bamboo-spec-6.10.6-plan",
+    "bamboo-spec-6.10.6-project-permissions",
+    "bamboo-spec-6.10.6-project",
+    "bamboo-spec-7.2.10-12.1.2-plan-permissions",
+    "bamboo-spec-7.2.10-12.1.2-project-permissions",
+    "bamboo-spec-7.2.10-8.0.13-project",
+    "bamboo-spec-7.2.10-plan",
+    "bamboo-spec-8.0.13-plan",
+    "bamboo-spec-9.6.23-10.2.15-plan",
+    "bamboo-spec-9.6.23-12.1.2-project"
+  ],
+  "PASS_TO_PASS": []
+}

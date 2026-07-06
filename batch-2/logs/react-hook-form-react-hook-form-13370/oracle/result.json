@@ -1,0 +1,29 @@
+{
+    "id": "3d6a9048-c8ba-4655-a437-cde754e5565e",
+    "started_at": "2026-07-06T12:19:13.057772",
+    "finished_at": "2026-07-06T12:19:35.391977",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__react-hook-form-react-hook-form-13370": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "react-hook-form-react-hook-form__K8vREnK"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

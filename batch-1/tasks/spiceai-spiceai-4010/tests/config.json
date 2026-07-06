@@ -1,0 +1,20 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p runtime --test integration -E 'test(endpoint_auth) | test(do_put)' --no-fail-fast",
+  "test_files": [
+    "crates/runtime/tests/endpoint_auth/flight.rs",
+    "crates/runtime/tests/endpoint_auth/http.rs",
+    "crates/runtime/tests/flight/do_put.rs"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/6) runtime::integration flight::do_put::test_flight_do_put_ro_key",
+    "(2/6) runtime::integration flight::do_put::test_flight_do_put_no_auth",
+    "(3/6) runtime::integration endpoint_auth::flight::test_flight_auth",
+    "(4/6) runtime::integration endpoint_auth::http::test_http_auth",
+    "(5/6) runtime::integration flight::do_put::test_flight_do_put_basic",
+    "(6/6) runtime::integration flight::do_put::test_do_put_stream_error"
+  ],
+  "PASS_TO_PASS": []
+}

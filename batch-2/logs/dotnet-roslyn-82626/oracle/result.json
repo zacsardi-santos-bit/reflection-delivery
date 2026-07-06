@@ -1,0 +1,29 @@
+{
+    "id": "603c0d9e-cb4a-45a2-9e0d-894dd6a01bb4",
+    "started_at": "2026-07-06T12:18:59.105729",
+    "finished_at": "2026-07-06T12:21:24.271340",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__dotnet-roslyn-82626": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "dotnet-roslyn-82626__bfHoL9K"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

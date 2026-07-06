@@ -1,0 +1,29 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_plasmate.py -v --deselect tests/test_plasmate.py::test_fallback_to_chrome_on_empty --deselect tests/test_plasmate.py::test_no_fallback_when_content_present",
+  "test_files": [
+    "tests/test_plasmate.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_plasmate::test_init_defaults",
+    "tests.test_plasmate::test_init_custom_params",
+    "tests.test_plasmate::test_init_invalid_format",
+    "tests.test_plasmate::test_build_cmd_defaults",
+    "tests.test_plasmate::test_build_cmd_with_selector",
+    "tests.test_plasmate::test_build_cmd_with_headers",
+    "tests.test_plasmate::test_lazy_load_yields_document",
+    "tests.test_plasmate::test_lazy_load_multiple_urls",
+    "tests.test_plasmate::test_lazy_load_markdown_format",
+    "tests.test_plasmate::test_lazy_load_skips_empty_content",
+    "tests.test_plasmate::test_lazy_load_nonzero_returncode_skips",
+    "tests.test_plasmate::test_lazy_load_timeout_skips",
+    "tests.test_plasmate::test_lazy_load_no_binary_raises",
+    "tests.test_plasmate::test_alazy_load_yields_documents",
+    "tests.test_plasmate::test_alazy_load_skips_empty",
+    "tests.test_plasmate::test_lazy_load_empty_urls",
+    "tests.test_plasmate::test_alazy_load_empty_urls"
+  ],
+  "PASS_TO_PASS": []
+}

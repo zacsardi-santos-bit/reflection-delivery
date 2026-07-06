@@ -1,0 +1,433 @@
+diff --git a/client/container_opts_unix.go b/client/container_opts_unix.go
+index 2e8554190..fc5629239 100644
+--- a/client/container_opts_unix.go
++++ b/client/container_opts_unix.go
+@@ -27,32 +27,55 @@ import (
+ 
+ 	"github.com/containerd/containerd/v2/core/containers"
+ 	"github.com/containerd/containerd/v2/core/mount"
++	"github.com/containerd/containerd/v2/internal/userns"
++
+ 	"github.com/containerd/errdefs"
+ 	"github.com/opencontainers/image-spec/identity"
++	"github.com/opencontainers/runtime-spec/specs-go"
+ )
+ 
+ // WithRemappedSnapshot creates a new snapshot and remaps the uid/gid for the
+ // filesystem to be used by a container with user namespaces
+ func WithRemappedSnapshot(id string, i Image, uid, gid uint32) NewContainerOpts {
+-	return withRemappedSnapshotBase(id, i, uid, gid, false)
++	uidmaps := []specs.LinuxIDMapping{{ContainerID: 0, HostID: uid, Size: 65536}}
++	gidmaps := []specs.LinuxIDMapping{{ContainerID: 0, HostID: gid, Size: 65536}}
++	return withRemappedSnapshotBase(id, i, uidmaps, gidmaps, false)
++}
++
++// WithUserNSRemappedSnapshot creates a new snapshot and remaps the uid/gid for the
++// filesystem to be used by a container with user namespaces
++func WithUserNSRemappedSnapshot(id string, i Image, uidmaps, gidmaps []specs.LinuxIDMapping) NewContainerOpts {
++	return withRemappedSnapshotBase(id, i, uidmaps, gidmaps, false)
+ }
+ 
+ // WithRemappedSnapshotView is similar to WithRemappedSnapshot but rootfs is mounted as read-only.
+ func WithRemappedSnapshotView(id string, i Image, uid, gid uint32) NewContainerOpts {
+-	return withRemappedSnapshotBase(id, i, uid, gid, true)
++	uidmaps := []specs.LinuxIDMapping{{ContainerID: 0, HostID: uid, Size: 65536}}
++	gidmaps := []specs.LinuxIDMapping{{ContainerID: 0, HostID: gid, Size: 65536}}
++	return withRemappedSnapshotBase(id, i, uidmaps, gidmaps, true)
+ }
+ 
+-func withRemappedSnapshotBase(id string, i Image, uid, gid uint32, readonly bool) NewContainerOpts {
++// WithUserNSRemappedSnapshotView is similar to WithUserNSRemappedSnapshot but rootfs is mounted as read-only.
++func WithUserNSRemappedSnapshotView(id string, i Image, uidmaps, gidmaps []specs.LinuxIDMapping) NewContainerOpts {
++	return withRemappedSnapshotBase(id, i, uidmaps, gidmaps, true)
++}
++
++func withRemappedSnapshotBase(id string, i Image, uidmaps, gidmaps []specs.LinuxIDMapping, readonly bool) NewContainerOpts {
+ 	return func(ctx context.Context, client *Client, c *containers.Container) error {
+ 		diffIDs, err := i.(*image).i.RootFS(ctx, client.ContentStore(), client.platform)
+ 		if err != nil {
+ 			return err
+ 		}
+ 
+-		var (
+-			parent   = identity.ChainID(diffIDs).String()
+-			usernsID = fmt.Sprintf("%s-%d-%d", parent, uid, gid)
+-		)
++		rsn := remappedSnapshot{
++			Parent: identity.ChainID(diffIDs).String(),
++			IDMap:  userns.IDMap{UidMap: uidmaps, GidMap: gidmaps},
++		}
++		usernsID, err := rsn.ID()
++		if err != nil {
++			return fmt.Errorf("failed to remap snapshot: %w", err)
++		}
++
+ 		c.Snapshotter, err = client.resolveSnapshotterName(ctx, c.Snapshotter)
+ 		if err != nil {
+ 			return err
+@@ -70,11 +93,11 @@ func withRemappedSnapshotBase(id string, i Image, uid, gid uint32, readonly bool
+ 				return err
+ 			}
+ 		}
+-		mounts, err := snapshotter.Prepare(ctx, usernsID+"-remap", parent)
++		mounts, err := snapshotter.Prepare(ctx, usernsID+"-remap", rsn.Parent)
+ 		if err != nil {
+ 			return err
+ 		}
+-		if err := remapRootFS(ctx, mounts, uid, gid); err != nil {
++		if err := remapRootFS(ctx, mounts, rsn.IDMap); err != nil {
+ 			snapshotter.Remove(ctx, usernsID)
+ 			return err
+ 		}
+@@ -95,22 +118,30 @@ func withRemappedSnapshotBase(id string, i Image, uid, gid uint32, readonly bool
+ 	}
+ }
+ 
+-func remapRootFS(ctx context.Context, mounts []mount.Mount, uid, gid uint32) error {
++func remapRootFS(ctx context.Context, mounts []mount.Mount, idMap userns.IDMap) error {
+ 	return mount.WithTempMount(ctx, mounts, func(root string) error {
+-		return filepath.Walk(root, incrementFS(root, uid, gid))
++		return filepath.Walk(root, chown(root, idMap))
+ 	})
+ }
+ 
+-func incrementFS(root string, uidInc, gidInc uint32) filepath.WalkFunc {
++func chown(root string, idMap userns.IDMap) filepath.WalkFunc {
+ 	return func(path string, info os.FileInfo, err error) error {
+ 		if err != nil {
+ 			return err
+ 		}
+-		var (
+-			stat = info.Sys().(*syscall.Stat_t)
+-			u, g = int(stat.Uid + uidInc), int(stat.Gid + gidInc)
+-		)
++		stat := info.Sys().(*syscall.Stat_t)
++		h, cerr := idMap.ToHost(userns.User{Uid: stat.Uid, Gid: stat.Gid})
++		if cerr != nil {
++			return cerr
++		}
+ 		// be sure the lchown the path as to not de-reference the symlink to a host file
+-		return os.Lchown(path, u, g)
++		if cerr = os.Lchown(path, int(h.Uid), int(h.Gid)); cerr != nil {
++			return cerr
++		}
++		// we must retain special permissions such as setuid, setgid and sticky bits
++		if mode := info.Mode(); mode&os.ModeSymlink == 0 && mode&(os.ModeSetuid|os.ModeSetgid|os.ModeSticky) != 0 {
++			return os.Chmod(path, mode)
++		}
++		return nil
+ 	}
+ }
+diff --git a/client/snapshotter_opts_unix.go b/client/snapshotter_opts_unix.go
+index 0e71ef6cc..5984b2176 100644
+--- a/client/snapshotter_opts_unix.go
++++ b/client/snapshotter_opts_unix.go
+@@ -20,9 +20,14 @@ package client
+ 
+ import (
+ 	"context"
++	"encoding/json"
+ 	"fmt"
++	"slices"
+ 
+ 	"github.com/containerd/containerd/v2/core/snapshots"
++	"github.com/containerd/containerd/v2/internal/userns"
++	"github.com/opencontainers/go-digest"
++	"github.com/opencontainers/runtime-spec/specs-go"
+ )
+ 
+ const (
+@@ -58,15 +63,15 @@ func resolveSnapshotOptions(ctx context.Context, client *Client, snapshotterName
+ 	}
+ 
+ 	needsRemap := false
+-	var uidMap, gidMap string
++	var uidMapLabel, gidMapLabel string
+ 
+ 	if value, ok := local.Labels[snapshots.LabelSnapshotUIDMapping]; ok {
+ 		needsRemap = true
+-		uidMap = value
++		uidMapLabel = value
+ 	}
+ 	if value, ok := local.Labels[snapshots.LabelSnapshotGIDMapping]; ok {
+ 		needsRemap = true
+-		gidMap = value
++		gidMapLabel = value
+ 	}
+ 
+ 	if !needsRemap {
+@@ -84,24 +89,32 @@ func resolveSnapshotOptions(ctx context.Context, client *Client, snapshotterName
+ 		return "", fmt.Errorf("snapshotter %q doesn't support idmap mounts on this host, configure `slow_chown` to allow a slower and expensive fallback", snapshotterName)
+ 	}
+ 
+-	var ctrUID, hostUID, length uint32
+-	_, err = fmt.Sscanf(uidMap, "%d:%d:%d", &ctrUID, &hostUID, &length)
++	var uidMap, gidMap specs.LinuxIDMapping
++	_, err = fmt.Sscanf(uidMapLabel, "%d:%d:%d", &uidMap.ContainerID, &uidMap.HostID, &uidMap.Size)
+ 	if err != nil {
+-		return "", fmt.Errorf("uidMap unparsable: %w", err)
++		return "", fmt.Errorf("uidMapLabel unparsable: %w", err)
+ 	}
+-
+-	var ctrGID, hostGID, lengthGID uint32
+-	_, err = fmt.Sscanf(gidMap, "%d:%d:%d", &ctrGID, &hostGID, &lengthGID)
++	_, err = fmt.Sscanf(gidMapLabel, "%d:%d:%d", &gidMap.ContainerID, &gidMap.HostID, &gidMap.Size)
+ 	if err != nil {
+-		return "", fmt.Errorf("gidMap unparsable: %w", err)
++		return "", fmt.Errorf("gidMapLabel unparsable: %w", err)
++	}
++
++	if uidMap.ContainerID != 0 || gidMap.ContainerID != 0 {
++		return "", fmt.Errorf("Container UID/GID of 0 only supported currently (%d/%d)", uidMap.ContainerID, gidMap.ContainerID)
+ 	}
+ 
+-	if ctrUID != 0 || ctrGID != 0 {
+-		return "", fmt.Errorf("Container UID/GID of 0 only supported currently (%d/%d)", ctrUID, ctrGID)
++	rsn := remappedSnapshot{
++		Parent: parent,
++		IDMap: userns.IDMap{
++			UidMap: []specs.LinuxIDMapping{uidMap},
++			GidMap: []specs.LinuxIDMapping{gidMap},
++		},
++	}
++	usernsID, err := rsn.ID()
++	if err != nil {
++		return "", fmt.Errorf("failed to remap snapshot: %w", err)
+ 	}
+ 
+-	// TODO(dgl): length isn't taken into account for the intermediate snapshot id.
+-	usernsID := fmt.Sprintf("%s-%d-%d", parent, hostUID, hostGID)
+ 	if _, err := snapshotter.Stat(ctx, usernsID); err == nil {
+ 		return usernsID, nil
+ 	}
+@@ -109,8 +122,8 @@ func resolveSnapshotOptions(ctx context.Context, client *Client, snapshotterName
+ 	if err != nil {
+ 		return "", err
+ 	}
+-	// TODO(dgl): length isn't taken into account here yet either.
+-	if err := remapRootFS(ctx, mounts, hostUID, hostGID); err != nil {
++
++	if err := remapRootFS(ctx, mounts, rsn.IDMap); err != nil {
+ 		snapshotter.Remove(ctx, usernsID+"-remap")
+ 		return "", err
+ 	}
+@@ -120,3 +133,27 @@ func resolveSnapshotOptions(ctx context.Context, client *Client, snapshotterName
+ 
+ 	return usernsID, nil
+ }
++
++type remappedSnapshot struct {
++	Parent string       `json:"Parent"`
++	IDMap  userns.IDMap `json:"IDMap"`
++}
++
++func (s *remappedSnapshot) ID() (string, error) {
++	compare := func(a, b specs.LinuxIDMapping) int {
++		if a.ContainerID < b.ContainerID {
++			return -1
++		} else if a.ContainerID == b.ContainerID {
++			return 0
++		}
++		return 1
++	}
++	slices.SortStableFunc(s.IDMap.UidMap, compare)
++	slices.SortStableFunc(s.IDMap.GidMap, compare)
++
++	buf, err := json.Marshal(s)
++	if err != nil {
++		return "", err
++	}
++	return digest.FromBytes(buf).String(), nil
++}
+diff --git a/cmd/ctr/commands/run/run_unix.go b/cmd/ctr/commands/run/run_unix.go
+index 1ac2e6ee4..af58ed1c3 100644
+--- a/cmd/ctr/commands/run/run_unix.go
++++ b/cmd/ctr/commands/run/run_unix.go
+@@ -37,6 +37,7 @@ import (
+ 	"github.com/containerd/containerd/v2/pkg/oci"
+ 	"github.com/containerd/log"
+ 	"github.com/containerd/platforms"
++
+ 	"github.com/intel/goresctrl/pkg/blockio"
+ 	"github.com/opencontainers/runtime-spec/specs-go"
+ 	"github.com/urfave/cli/v2"
+@@ -45,13 +46,13 @@ import (
+ )
+ 
+ var platformRunFlags = []cli.Flag{
+-	&cli.StringFlag{
++	&cli.StringSliceFlag{
+ 		Name:  "uidmap",
+-		Usage: "Run inside a user namespace with the specified UID mapping range; specified with the format `container-uid:host-uid:length`",
++		Usage: "Run inside a user namespace with the specified UID mapping ranges; specified with the format `container-uid:host-uid:length`",
+ 	},
+-	&cli.StringFlag{
++	&cli.StringSliceFlag{
+ 		Name:  "gidmap",
+-		Usage: "Run inside a user namespace with the specified GID mapping range; specified with the format `container-gid:host-gid:length`",
++		Usage: "Run inside a user namespace with the specified GID mapping ranges; specified with the format `container-gid:host-gid:length`",
+ 	},
+ 	&cli.BoolFlag{
+ 		Name:  "remap-labels",
+@@ -159,26 +160,28 @@ func NewContainer(ctx context.Context, client *containerd.Client, cliContext *cl
+ 				containerd.WithImageConfigLabels(image),
+ 				containerd.WithAdditionalContainerLabels(labels),
+ 				containerd.WithSnapshotter(snapshotter))
+-			if uidmap, gidmap := cliContext.String("uidmap"), cliContext.String("gidmap"); uidmap != "" && gidmap != "" {
+-				uidMap, err := parseIDMapping(uidmap)
+-				if err != nil {
++
++			if uidmaps, gidmaps := cliContext.StringSlice("uidmap"), cliContext.StringSlice("gidmap"); len(uidmaps) > 0 && len(gidmaps) > 0 {
++				var uidSpec, gidSpec []specs.LinuxIDMapping
++				if uidSpec, err = parseIDMappingOption(uidmaps); err != nil {
+ 					return nil, err
+ 				}
+-				gidMap, err := parseIDMapping(gidmap)
+-				if err != nil {
++				if gidSpec, err = parseIDMappingOption(gidmaps); err != nil {
+ 					return nil, err
+ 				}
+-				opts = append(opts,
+-					oci.WithUserNamespace([]specs.LinuxIDMapping{uidMap}, []specs.LinuxIDMapping{gidMap}))
++				opts = append(opts, oci.WithUserNamespace(uidSpec, gidSpec))
+ 				// use snapshotter opts or the remapped snapshot support to shift the filesystem
+ 				// currently the snapshotters known to support the labels are:
+ 				// fuse-overlayfs - https://github.com/containerd/fuse-overlayfs-snapshotter
+ 				// overlay - in case of idmapped mount points are supported by host kernel (Linux kernel 5.19)
+ 				if cliContext.Bool("remap-labels") {
+-					cOpts = append(cOpts, containerd.WithNewSnapshot(id, image,
+-						containerd.WithRemapperLabels(0, uidMap.HostID, 0, gidMap.HostID, uidMap.Size)))
++					// TODO: the optimization code path on id mapped mounts only supports single mapping entry today.
++					if len(uidSpec) > 1 || len(gidSpec) > 1 {
++						return nil, errors.New("'remap-labels' option does not support multiple mappings")
++					}
++					cOpts = append(cOpts, containerd.WithNewSnapshot(id, image, containerd.WithRemapperLabels(0, uidSpec[0].HostID, 0, gidSpec[0].HostID, uidSpec[0].Size)))
+ 				} else {
+-					cOpts = append(cOpts, containerd.WithRemappedSnapshot(id, image, uidMap.HostID, gidMap.HostID))
++					cOpts = append(cOpts, containerd.WithUserNSRemappedSnapshot(id, image, uidSpec, gidSpec))
+ 				}
+ 			} else {
+ 				// Even when "read-only" is set, we don't use KindView snapshot here. (#1495)
+@@ -415,6 +418,18 @@ func NewContainer(ctx context.Context, client *containerd.Client, cliContext *cl
+ 	return client.NewContainer(ctx, id, cOpts...)
+ }
+ 
++func parseIDMappingOption(stringSlices []string) ([]specs.LinuxIDMapping, error) {
++	var res []specs.LinuxIDMapping
++	for _, str := range stringSlices {
++		m, err := parseIDMapping(str)
++		if err != nil {
++			return nil, err
++		}
++		res = append(res, m)
++	}
++	return res, nil
++}
++
+ func parseIDMapping(mapping string) (specs.LinuxIDMapping, error) {
+ 	// We expect 3 parts, but limit to 4 to allow detection of invalid values.
+ 	parts := strings.SplitN(mapping, ":", 4)
+diff --git a/internal/userns/idmap.go b/internal/userns/idmap.go
+new file mode 100644
+index 000000000..e547419a8
+--- /dev/null
++++ b/internal/userns/idmap.go
+@@ -0,0 +1,98 @@
++/*
++   Copyright The containerd Authors.
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++       http://www.apache.org/licenses/LICENSE-2.0
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an "AS IS" BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
++*/
++
++/*
++   This file is copied and customized based on
++   https://github.com/moby/moby/blob/master/pkg/idtools/idtools.go
++*/
++
++package userns
++
++import (
++	"errors"
++	"fmt"
++
++	"github.com/opencontainers/runtime-spec/specs-go"
++)
++
++const invalidID = 1<<32 - 1
++
++var invalidUser = User{Uid: invalidID, Gid: invalidID}
++
++// User is a Uid and Gid pair of a user
++//
++//nolint:revive
++type User struct {
++	Uid uint32
++	Gid uint32
++}
++
++// IDMap contains the mappings of Uids and Gids.
++//
++//nolint:revive
++type IDMap struct {
++	UidMap []specs.LinuxIDMapping `json:"UidMap"`
++	GidMap []specs.LinuxIDMapping `json:"GidMap"`
++}
++
++// ToHost returns the host user ID pair for the container ID pair.
++func (i IDMap) ToHost(pair User) (User, error) {
++	var (
++		target User
++		err    error
++	)
++	target.Uid, err = toHost(pair.Uid, i.UidMap)
++	if err != nil {
++		return invalidUser, err
++	}
++	target.Gid, err = toHost(pair.Gid, i.GidMap)
++	if err != nil {
++		return invalidUser, err
++	}
++	return target, nil
++}
++
++// toHost takes an id mapping and a remapped ID, and translates the
++// ID to the mapped host ID. If no map is provided, then the translation
++// assumes a 1-to-1 mapping and returns the passed in id #
++func toHost(contID uint32, idMap []specs.LinuxIDMapping) (uint32, error) {
++	if idMap == nil {
++		return contID, nil
++	}
++	for _, m := range idMap {
++		high, err := safeSum(m.ContainerID, m.Size)
++		if err != nil {
++			break
++		}
++		if contID >= m.ContainerID && contID < high {
++			hostID, err := safeSum(m.HostID, contID-m.ContainerID)
++			if err != nil || hostID == invalidID {
++				break
++			}
++			return hostID, nil
++		}
++	}
++	return invalidID, fmt.Errorf("container ID %d cannot be mapped to a host ID", contID)
++}
++
++// safeSum returns the sum of x and y. or an error if the result overflows
++func safeSum(x, y uint32) (uint32, error) {
++	z := x + y
++	if z < x || z < y {
++		return invalidID, errors.New("ID overflow")
++	}
++	return z, nil
++}

@@ -1,0 +1,108 @@
+patching file tracing-subscriber/tests/filter.rs
+patching file tracing-subscriber/tests/same_len_filters.rs
+warning: /workspace/repo/tracing-core/Cargo.toml: Found `feature = ...` in `target.'cfg(...)'.dependencies`. This key is not supported for selecting dependencies and will not work as expected. Use the [features] section instead: https://doc.rust-lang.org/cargo/reference/features.html
+warning: /workspace/repo/tracing/Cargo.toml: Found `feature = ...` in `target.'cfg(...)'.dependencies`. This key is not supported for selecting dependencies and will not work as expected. Use the [features] section instead: https://doc.rust-lang.org/cargo/reference/features.html
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling pin-project-lite v0.2.17
+   Compiling tracing-subscriber v0.1.1 (/workspace/repo/tracing-subscriber)
+warning: `#[macro_use]` only has an effect on `extern crate` and modules
+  --> tracing-subscriber/src/lib.rs:53:1
+   |
+53 | #[macro_use]
+   | ^^^^^^^^^^^^
+   |
+   = note: `#[warn(unused_attributes)]` on by default
+
+warning: use of deprecated function `std::sync::atomic::spin_loop_hint`: use hint::spin_loop instead
+   --> tracing-subscriber/src/fmt/span.rs:318:29
+    |
+318 |                     atomic::spin_loop_hint();
+    |                             ^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `std::sync::atomic::spin_loop_hint`: use hint::spin_loop instead
+   --> tracing-subscriber/src/fmt/span.rs:338:21
+    |
+338 |             atomic::spin_loop_hint();
+    |                     ^^^^^^^^^^^^^^
+
+warning: use of deprecated function `std::sync::atomic::spin_loop_hint`: use hint::spin_loop instead
+   --> tracing-subscriber/src/fmt/span.rs:572:21
+    |
+572 |             atomic::spin_loop_hint();
+    |                     ^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> tracing-subscriber/src/reload.rs:227:23
+    |
+227 |         error::Error::description(self).fmt(f)
+    |                       ^^^^^^^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> tracing-subscriber/src/filter/mod.rs:309:42
+    |
+309 |             ErrorKind::Parse(ref p) => p.description(),
+    |                                          ^^^^^^^^^^^
+
+warning: use of deprecated method `std::error::Error::description`: use the Display impl or to_string()
+   --> tracing-subscriber/src/filter/mod.rs:310:40
+    |
+310 |             ErrorKind::Env(ref e) => e.description(),
+    |                                        ^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tracing-subscriber/src/fmt/span.rs:309:42
+    |
+309 | ...                   if self.next.compare_and_swap(head, next, Ordering::Release) == head {
+    |                                    ^^^^^^^^^^^^^^^^
+
+warning: use of deprecated method `std::sync::atomic::AtomicUsize::compare_and_swap`: Use `compare_exchange` or `compare_exchange_weak` instead
+   --> tracing-subscriber/src/fmt/span.rs:565:21
+    |
+565 |             if next.compare_and_swap(head, idx, Ordering::Release) == head {
+    |                     ^^^^^^^^^^^^^^^^
+
+   Compiling syn v2.0.118
+warning: field `settings` is never read
+  --> tracing-subscriber/src/fmt/mod.rs:36:5
+   |
+28 | pub struct Subscriber<
+   |            ---------- field in this struct
+...
+36 |     settings: Settings,
+   |     ^^^^^^^^
+   |
+   = note: `Subscriber` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
+
+warning: field `inherit_fields` is never read
+  --> tracing-subscriber/src/fmt/mod.rs:57:5
+   |
+56 | struct Settings {
+   |        -------- field in this struct
+57 |     inherit_fields: bool,
+   |     ^^^^^^^^^^^^^^
+   |
+   = note: `Settings` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: `tracing-subscriber` (lib) generated 11 warnings
+   Compiling tracing-attributes v0.1.31
+   Compiling tracing v0.1.44
+    Finished test [unoptimized + debuginfo] target(s) in 7.76s
+────────────
+ Nextest run ID 44824de9-df7a-4796-bcf2-93b6bf1d3353 with nextest profile: default
+    Starting 8 tests across 2 binaries
+        PASS [   0.011s] (1/8) tracing-subscriber::filter level_filter_event
+        PASS [   0.026s] (2/8) tracing-subscriber::filter field_filter_events
+        PASS [   0.016s] (3/8) tracing-subscriber::filter level_filter_event_with_target
+        PASS [   0.020s] (4/8) tracing-subscriber::filter span_name_filter_is_dynamic
+        PASS [   0.021s] (5/8) tracing-subscriber::filter same_name_spans
+        PASS [   0.014s] (6/8) tracing-subscriber::same_len_filters same_length_targets
+        PASS [   0.025s] (7/8) tracing-subscriber::same_len_filters same_num_fields_and_name_len
+        PASS [   0.020s] (8/8) tracing-subscriber::same_len_filters same_num_fields_event
+────────────
+     Summary [   0.081s] 8 tests run: 8 passed, 0 skipped
+reward=1 graded=8 found=2 failed=0 parsed=8 framework=cargo exit_code=0

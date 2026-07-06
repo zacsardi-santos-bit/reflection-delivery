@@ -1,0 +1,18 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p pixi_spec --no-fail-fast",
+  "test_files": [
+    "crates/pixi_spec/src/detailed.rs",
+    "crates/pixi_spec/src/lib.rs",
+    "crates/pixi_spec/src/toml.rs",
+    "tests/integration_rust/common/package_database.rs"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/3) pixi_spec test::test_is_binary",
+    "(2/3) pixi_spec test::test_into_nameless_match_spec",
+    "(3/3) pixi_spec toml::test::test_round_trip"
+  ],
+  "PASS_TO_PASS": []
+}

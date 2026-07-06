@@ -1,0 +1,21 @@
+patching file src/filters/FilterSystem.ts
+patching file src/rendering/batcher/gpu/BatchGeometry.ts
+patching file src/rendering/renderers/gl/GlBackBufferSystem.ts
+patching file src/rendering/renderers/gl/geometry/GlGeometrySystem.ts
+patching file src/rendering/renderers/gl/shader/GlProgram.ts
+patching file src/rendering/renderers/gl/shader/program/ensureAttributes.ts
+patching file src/rendering/renderers/gl/shader/program/generateProgram.ts
+patching file src/rendering/renderers/gl/shader/program/getAttributeData.ts
+patching file src/rendering/renderers/gl/shader/program/getTestContext.ts
+patching file src/rendering/renderers/gl/shader/program/mapType.ts
+patching file src/rendering/renderers/gpu/GpuEncoderSystem.ts
+patching file src/rendering/renderers/gpu/pipeline/PipelineSystem.ts
+patching file src/rendering/renderers/gpu/shader/GpuProgram.ts
+patching file src/rendering/renderers/gpu/shader/utils/extractAttributesFromGpuProgram.ts
+patching file src/rendering/renderers/gpu/shader/utils/extractStructAndGroups.ts (renamed from src/rendering/renderers/gpu/shader/extractStructAndGroups.ts)
+patching file src/rendering/renderers/gpu/shader/utils/generateGpuLayoutGroups.ts (renamed from src/rendering/renderers/gpu/shader/generateGpuLayoutGroups.ts)
+patching file src/rendering/renderers/gpu/shader/utils/generateLayoutHash.ts (renamed from src/rendering/renderers/gpu/shader/generateLayoutHash.ts)
+patching file src/rendering/renderers/gpu/shader/utils/removeStructAndGroupDuplicates.ts (renamed from src/rendering/renderers/gpu/shader/removeStructAndGroupDuplicates.ts)
+patching file src/rendering/renderers/shared/geometry/Geometry.ts
+patching file src/rendering/renderers/shared/shader/utils/extractAttributesFromGlProgram.ts
+patching file src/scene/mesh/shared/MeshGeometry.ts

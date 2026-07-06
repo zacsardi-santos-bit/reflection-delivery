@@ -1,0 +1,206 @@
+patching file ghost/core/test/e2e-api/admin/__snapshots__/emails.test.js.snap
+patching file ghost/core/test/integration/services/email-service/email-event-storage.test.js
+patching file ghost/core/test/integration/services/mailgun-email-suppression-list.test.js
+patching file ghost/core/test/utils/fixtures/data-generator.js
+patching file ghost/email-analytics-provider-mailgun/test/provider-mailgun.test.js
+patching file ghost/email-analytics-service/test/email-analytics-service.test.js
+
+
+  EmailAnalyticsService
+    getStatus
+      1) returns status object
+    getLastNonOpenedEventTimestamp
+      2) returns the queried timestamp before the fallback
+      3) returns the fallback if nothing is found
+    getLastSeenOpenedEventTimestamp
+      4) returns the queried timestamp before the fallback
+      5) returns the fallback if nothing is found
+      - returns the cached value before the fallback
+    Fetching events
+      fetchLatestOpenedEvents
+        6) fetches only opened events
+        7) quits if the end is before the begin
+      fetchLatestNonOpenedEvents
+        8) fetches only non-opened events
+        9) quits if the end is before the begin
+      fetchScheduled
+        ✔ returns 0 when nothing is scheduled
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Scheduling fetch from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z
+        ✔ returns 0 when fetch is canceled
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Scheduling fetch from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Fetching from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z (maxEvents: 100)
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Fetching finished
+        10) fetches events with correct parameters
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Scheduling fetch from 2023-01-02T00:00:00.000Z until 2023-01-01T00:00:00.000Z
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Ending fetchScheduled because end is before begin
+        ✔ bails when end date is before begin date
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Scheduling fetch from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Fetching from 2023-01-01T00:00:00.000Z until 2023-01-02T00:00:00.000Z (maxEvents: 100)
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Fetching finished
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Aggregating for 0 emails
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Aggregating for 0 members
+        ✔ resets fetchScheduledData when no events are fetched
+      fetchMissing
+        11) fetches missing events
+    processEventBatch
+      with functional processor
+        ✔ uses passed-in event processor
+        ✔ handles opened
+        ✔ handles delivered
+        ✔ handles failed (permanent)
+        ✔ handles failed (temporary)
+        ✔ handles unsubscribed
+        ✔ handles complained
+        ✔ doens't handle other event types
+      with null processor results
+        ✔ delivered returns unprocessable
+        ✔ opened returns unprocessable
+        ✔ failed (permanent) returns unprocessable
+        ✔ failed (temporary) returns unprocessable
+        ✔ unsubscribed returns unprocessable
+        ✔ complained returns unprocessable
+    aggregateStats
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Aggregating for 2 emails
+[2026-06-29 15:23:09] [36mINFO[39m [EmailAnalytics] Aggregating for 2 members
+      ✔ calls appropriate query for each email id and member id
+    aggregateEmailStats
+      ✔ returns the query result
+    aggregateMemberStats
+      ✔ returns the query result
+
+  EventProcessingResult
+    ✔ has expected initial state
+    ✔ has expected populated initial state
+    ✔ has correct totalEvents value
+    merge()
+      ✔ adds counts and merges id arrays
+      ✔ deduplicates id arrays
+
+
+  26 passing (61ms)
+  1 pending
+  11 failing
+
+  1) EmailAnalyticsService
+       getStatus
+         returns status object:
+
+      AssertionError: expected Object { latest: null, missing: null, scheduled: null } to equal Object {
+  latest: Object { jobName: 'email-analytics-latest-others', running: false },
+  latestOpened: Object { jobName: 'email-analytics-latest-opened', running: false },
+  missing: Object { jobName: 'email-analytics-missing', running: false },
+  scheduled: Object { jobName: 'email-analytics-scheduled', running: false }
+} (at latest, A has null and B has Object { jobName: 'email-analytics-latest-others', running: false })
+      + expected - actual
+
+       {
+      -  "latest": [null]
+      -  "missing": [null]
+      -  "scheduled": [null]
+      +  "latest": {
+      +    "jobName": "email-analytics-latest-others"
+      +    "running": false
+      +  }
+      +  "latestOpened": {
+      +    "jobName": "email-analytics-latest-opened"
+      +    "running": false
+      +  }
+      +  "missing": {
+      +    "jobName": "email-analytics-missing"
+      +    "running": false
+      +  }
+      +  "scheduled": {
+      +    "jobName": "email-analytics-scheduled"
+      +    "running": false
+      +  }
+       }
+      
+      at Assertion.fail (/workspace/repo/node_modules/should/cjs/should.js:275:17)
+      at Assertion.value (/workspace/repo/node_modules/should/cjs/should.js:356:19)
+      at Context.<anonymous> (test/email-analytics-service.test.js:18:27)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  2) EmailAnalyticsService
+       getLastNonOpenedEventTimestamp
+         returns the queried timestamp before the fallback:
+     TypeError: service.getLastNonOpenedEventTimestamp is not a function
+      at Context.<anonymous> (test/email-analytics-service.test.js:47:42)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  3) EmailAnalyticsService
+       getLastNonOpenedEventTimestamp
+         returns the fallback if nothing is found:
+     TypeError: service.getLastNonOpenedEventTimestamp is not a function
+      at Context.<anonymous> (test/email-analytics-service.test.js:58:42)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  4) EmailAnalyticsService
+       getLastSeenOpenedEventTimestamp
+         returns the queried timestamp before the fallback:
+     TypeError: service.getLastOpenedEventTimestamp is not a function
+      at Context.<anonymous> (test/email-analytics-service.test.js:71:42)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  5) EmailAnalyticsService
+       getLastSeenOpenedEventTimestamp
+         returns the fallback if nothing is found:
+     TypeError: service.getLastOpenedEventTimestamp is not a function
+      at Context.<anonymous> (test/email-analytics-service.test.js:82:42)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  6) EmailAnalyticsService
+       Fetching events
+         fetchLatestOpenedEvents
+           fetches only opened events:
+     TypeError: service.fetchLatestOpenedEvents is not a function
+      at Context.<anonymous> (test/email-analytics-service.test.js:107:31)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  7) EmailAnalyticsService
+       Fetching events
+         fetchLatestOpenedEvents
+           quits if the end is before the begin:
+     TypeError: service.fetchLatestOpenedEvents is not a function
+      at Context.<anonymous> (test/email-analytics-service.test.js:124:31)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  8) EmailAnalyticsService
+       Fetching events
+         fetchLatestNonOpenedEvents
+           fetches only non-opened events:
+     TypeError: service.fetchLatestNonOpenedEvents is not a function
+      at Context.<anonymous> (test/email-analytics-service.test.js:142:31)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  9) EmailAnalyticsService
+       Fetching events
+         fetchLatestNonOpenedEvents
+           quits if the end is before the begin:
+     TypeError: service.fetchLatestNonOpenedEvents is not a function
+      at Context.<anonymous> (test/email-analytics-service.test.js:159:31)
+      at process.processImmediate (node:internal/timers:483:21)
+
+  10) EmailAnalyticsService
+       Fetching events
+         fetchScheduled
+           fetches events with correct parameters:
+     AssertionError: expected false to be true
+      at Assertion.fail (/workspace/repo/node_modules/should/cjs/should.js:275:17)
+      at Assertion.value (/workspace/repo/node_modules/should/cjs/should.js:356:19)
+      at Context.<anonymous> (test/email-analytics-service.test.js:221:59)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  11) EmailAnalyticsService
+       Fetching events
+         fetchMissing
+           fetches missing events:
+     RangeError: Invalid time value
+      at Date.toISOString (<anonymous>)
+      at #fetchEvents (lib/EmailAnalyticsService.js:206:96)
+      at EmailAnalyticsService.fetchMissing (lib/EmailAnalyticsService.js:125:39)
+      at Context.<anonymous> (test/email-analytics-service.test.js:269:31)
+      at process.processImmediate (node:internal/timers:483:21)
+
+
+
+reward=0 graded=6 found=0 failed=0 parsed=38 framework=mocha exit_code=11

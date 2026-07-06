@@ -1,0 +1,29 @@
+{
+    "id": "b6cbcca0-797e-4c86-83c5-f1d4d6972051",
+    "started_at": "2026-07-04T15:38:18.629684",
+    "finished_at": "2026-07-04T15:40:03.023469",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-trafficserver-11951": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-trafficserver-11951__KNijKKb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

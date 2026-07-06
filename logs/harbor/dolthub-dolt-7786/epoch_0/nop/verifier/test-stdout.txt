@@ -1,6 +1,0 @@
-patching file integration-tests/DataDumpLoadDockerfile
-patching file integration-tests/bats/zstd.bats
-{"Action":"run","Test":"zstd_admin_zstd_works"}
-{"Action":"fail","Test":"zstd_admin_zstd_works","Elapsed":0.001}
-{"Action":"fail","Elapsed":0.001}
-reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

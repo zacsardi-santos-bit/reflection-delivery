@@ -1,0 +1,7 @@
+patching file docs/docs/20-usage/60-services.md
+patching file pipeline/backend/kubernetes/pod.go
+patching file pipeline/backend/kubernetes/service.go
+patching file pipeline/backend/types/network.go
+patching file pipeline/backend/types/step.go
+patching file pipeline/frontend/yaml/compiler/convert.go
+patching file pipeline/frontend/yaml/types/container.go

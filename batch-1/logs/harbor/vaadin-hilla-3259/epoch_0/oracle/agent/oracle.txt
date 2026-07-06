@@ -1,0 +1,6 @@
+patching file .eslintrc.json
+patching file package-lock.json
+patching file package.json
+patching file packages/java/endpoint/src/main/java/com/vaadin/hilla/route/RouteUnifyingIndexHtmlRequestListener.java
+patching file packages/ts/file-router/src/runtime/createMenuItems.ts
+patching file scripts/vite/browser.vitest.config.ts

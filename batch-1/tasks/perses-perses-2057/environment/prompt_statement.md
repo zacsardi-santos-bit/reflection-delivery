@@ -1,0 +1,5 @@
+I'm building dashboards using the Perses Dashboard-as-Code SDKs and running into a problem with multi-select variables. The SDKs have a utility that automatically generates PromQL label filter expressions from template variables, but it generates exact match operators. When my users select multiple values from a list variable, the combined value pattern only works with regex match operators — so the auto-generated queries break silently for any multi-value selection.
+
+I need the filter auto-generation utilities in both the Go SDK and the CUE SDK to use regex match operators instead of exact equality operators when building label matchers for template variables. This affects the Go SDK's variable builders that apply filters to their metric selectors, and the CUE SDK's filter composition utility.
+
+Additionally, I'd like the example dashboard definitions to be updated to show how panel builders can accept an optional aggregation grouping parameter so that the same panel template can be reused with or without grouping — making the panel definitions more flexible and reusable.

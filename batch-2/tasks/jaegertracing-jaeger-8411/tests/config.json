@@ -1,0 +1,37 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/storage/v2/clickhouse/metricstore -count=1",
+  "test_files": [
+    "internal/storage/v2/clickhouse/metricstore/package_test.go",
+    "internal/storage/v2/clickhouse/metricstore/reader_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetLatencies",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetLatencies_MultipleServicesAndBuckets",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetLatencies_GroupByOperation",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetLatencies_Errors/query_error",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetLatencies_Errors/scan_error",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetLatencies_Errors/rows_error",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetLatencies_Errors",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetCallRates",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetErrorRates",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestGetMinStepDuration",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestStepSeconds/nil_step_returns_default",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestStepSeconds/normal_step",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestStepSeconds/sub-second_step_clamped_to_1",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestStepSeconds/zero_step_returns_default",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestStepSeconds/negative_step_returns_default",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestStepSeconds/one_second_step",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestStepSeconds/fractional_seconds_truncated",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestStepSeconds",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestConvertSpanKinds/server",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestConvertSpanKinds/multiple_kinds",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestConvertSpanKinds/unspecified_maps_to_empty_string",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestConvertSpanKinds/empty_input",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestConvertSpanKinds/unknown_kind_is_skipped",
+    "github.com/jaegertracing/jaeger/internal/storage/v2/clickhouse/metricstore::TestConvertSpanKinds"
+  ],
+  "PASS_TO_PASS": []
+}

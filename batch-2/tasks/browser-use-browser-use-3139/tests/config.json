@@ -1,0 +1,23 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/ci/test_cloud_browser.py -v",
+  "test_files": [
+    "tests/ci/test_cloud_browser.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.ci.test_cloud_browser.TestCloudBrowserClient::test_create_browser_success",
+    "tests.ci.test_cloud_browser.TestCloudBrowserClient::test_create_browser_auth_error",
+    "tests.ci.test_cloud_browser.TestCloudBrowserClient::test_create_browser_http_401",
+    "tests.ci.test_cloud_browser.TestCloudBrowserClient::test_create_browser_with_env_var",
+    "tests.ci.test_cloud_browser.TestCloudBrowserClient::test_stop_browser_success",
+    "tests.ci.test_cloud_browser.TestCloudBrowserClient::test_stop_browser_session_not_found",
+    "tests.ci.test_cloud_browser.TestBrowserSessionCloudIntegration::test_cloud_browser_profile_property",
+    "tests.ci.test_cloud_browser.TestBrowserSessionCloudIntegration::test_browser_session_cloud_browser_logic",
+    "tests.ci.test_cloud_browser::test_get_cloud_browser_cdp_url_function",
+    "tests.ci.test_cloud_browser::test_cloud_browser_auth_error_no_fallback",
+    "tests.ci.test_cloud_browser::test_stop_cloud_browser_session_function"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,5 +1,0 @@
-I'm working on a command-line tool that interfaces with a remote coding agent. When the agent completes a task, it produces code changes as a diff. I need a way to apply that diff to the local git repository directly from the tool, without manually extracting and running patch commands.
-
-The feature I need should accept the agent's task response data, find the diff embedded in it, and apply it to the current working tree using a 3-way merge. If the local repository already has conflicting content for the affected files, the apply should fail and leave standard conflict markers in place so I can resolve them manually. If the task response doesn't include a valid diff (e.g., no completed turn or no code-change output), it should return an error.
-
-The task response data is delivered as a JSON structure with an optional current turn field, which contains a list of output items. Code-change items carry a diff text field; other item types in the list should be skipped. This needs to be implemented as a new library crate within the existing workspace, with the apply functionality and response types exposed publicly.

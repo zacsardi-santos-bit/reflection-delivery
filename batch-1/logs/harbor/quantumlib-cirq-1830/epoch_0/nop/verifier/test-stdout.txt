@@ -1,0 +1,1946 @@
+patching file cirq/circuits/qasm_output_test.py
+patching file cirq/contrib/qasm_import/_parser_test.py
+patching file cirq/contrib/qasm_import/qasm_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.7.17, pytest-7.4.4, pluggy-1.2.0 -- /usr/local/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+collecting ... collected 149 items
+
+cirq/circuits/qasm_output_test.py::test_u_gate_repr PASSED               [  0%]
+cirq/circuits/qasm_output_test.py::test_u_gate_eq PASSED                 [  1%]
+cirq/circuits/qasm_output_test.py::test_qasm_two_qubit_gate_repr PASSED  [  2%]
+cirq/circuits/qasm_output_test.py::test_qasm_u_qubit_gate_unitary PASSED [  2%]
+cirq/circuits/qasm_output_test.py::test_qasm_two_qubit_gate_unitary PASSED [  3%]
+cirq/circuits/qasm_output_test.py::test_empty_circuit_one_qubit PASSED   [  4%]
+cirq/circuits/qasm_output_test.py::test_empty_circuit_no_qubits PASSED   [  4%]
+cirq/circuits/qasm_output_test.py::test_header PASSED                    [  5%]
+cirq/circuits/qasm_output_test.py::test_single_gate_no_parameter PASSED  [  6%]
+cirq/circuits/qasm_output_test.py::test_single_gate_with_parameter PASSED [  6%]
+cirq/circuits/qasm_output_test.py::test_h_gate_with_parameter PASSED     [  7%]
+cirq/circuits/qasm_output_test.py::test_precision PASSED                 [  8%]
+cirq/circuits/qasm_output_test.py::test_version PASSED                   [  8%]
+cirq/circuits/qasm_output_test.py::test_save_to_file PASSED              [  9%]
+cirq/circuits/qasm_output_test.py::test_unsupported_operation PASSED     [ 10%]
+cirq/circuits/qasm_output_test.py::test_output_unitary_same_as_qiskit FAILED [ 10%]
+cirq/circuits/qasm_output_test.py::test_fails_on_big_unknowns PASSED     [ 11%]
+cirq/circuits/qasm_output_test.py::test_output_format PASSED             [ 12%]
+cirq/contrib/qasm_import/_parser_test.py::test_format_header_circuit PASSED [ 12%]
+cirq/contrib/qasm_import/_parser_test.py::test_unsupported_format PASSED [ 13%]
+cirq/contrib/qasm_import/_parser_test.py::test_format_header_with_quelibinc_circuit PASSED [ 14%]
+cirq/contrib/qasm_import/_parser_test.py::test_error_not_starting_with_format[include "qelib1.inc";] PASSED [ 14%]
+cirq/contrib/qasm_import/_parser_test.py::test_error_not_starting_with_format[] PASSED [ 15%]
+cirq/contrib/qasm_import/_parser_test.py::test_error_not_starting_with_format[qreg q[3];] PASSED [ 16%]
+cirq/contrib/qasm_import/_parser_test.py::test_comments PASSED           [ 16%]
+cirq/contrib/qasm_import/_parser_test.py::test_multiple_qreg_declaration PASSED [ 17%]
+cirq/contrib/qasm_import/_parser_test.py::test_already_defined_error[OPENQASM 2.0;\n           qreg q[2];\n           creg q[3];\n               ] PASSED [ 18%]
+cirq/contrib/qasm_import/_parser_test.py::test_already_defined_error[OPENQASM 2.0;\n           creg q[2];\n           qreg q[3];\n               ] PASSED [ 18%]
+cirq/contrib/qasm_import/_parser_test.py::test_zero_length_register[OPENQASM 2.0;\n           qreg q[0];\n               ] PASSED [ 19%]
+cirq/contrib/qasm_import/_parser_test.py::test_zero_length_register[OPENQASM 2.0;\n           creg q[0];\n               ] PASSED [ 20%]
+cirq/contrib/qasm_import/_parser_test.py::test_unexpected_end_of_file PASSED [ 20%]
+cirq/contrib/qasm_import/_parser_test.py::test_multiple_creg_declaration PASSED [ 21%]
+cirq/contrib/qasm_import/_parser_test.py::test_syntax_error PASSED       [ 22%]
+cirq/contrib/qasm_import/_parser_test.py::test_CX_gate PASSED            [ 22%]
+cirq/contrib/qasm_import/_parser_test.py::test_CX_gate_not_enough_args PASSED [ 23%]
+cirq/contrib/qasm_import/_parser_test.py::test_CX_gate_mismatched_registers PASSED [ 24%]
+cirq/contrib/qasm_import/_parser_test.py::test_CX_gate_bounds PASSED     [ 24%]
+cirq/contrib/qasm_import/_parser_test.py::test_CX_gate_arg_overlap PASSED [ 25%]
+cirq/contrib/qasm_import/_parser_test.py::test_U_gate PASSED             [ 26%]
+cirq/contrib/qasm_import/_parser_test.py::test_U_angles PASSED           [ 26%]
+cirq/contrib/qasm_import/_parser_test.py::test_U_gate_zero_params_error PASSED [ 27%]
+cirq/contrib/qasm_import/_parser_test.py::test_U_gate_too_much_params_error PASSED [ 28%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[.333 + 4] PASSED [ 28%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[1.0 * 2] PASSED [ 29%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[0.1 ^ pi] PASSED [ 30%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[0.1 / pi] PASSED [ 30%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[2.0e-05 ^ (1/2)] PASSED [ 31%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[1.2E+05 * (3 + 2)] PASSED [ 32%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[123123.2132312 * cos(pi)] PASSED [ 32%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[123123.2132312 * sin(2 * pi)] PASSED [ 33%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[3 - 4 * 2] PASSED [ 34%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[3 * 4 + 2] PASSED [ 34%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[3 * 4 ^ 2] PASSED [ 35%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[3 - 4 ^ 2] PASSED [ 36%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[3^2^(-2)] PASSED [ 36%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[(-1) * pi] PASSED [ 37%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[(+1) * pi] PASSED [ 38%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[-3 * 5 + 2] PASSED [ 38%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[(+4 * (-3) ^ 5 - 2)] PASSED [ 39%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[tan(123123.2132312)] PASSED [ 40%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[ln(pi)] PASSED [ 40%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[exp(2*pi)] PASSED [ 41%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[sqrt(4)] PASSED [ 42%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[acos(1)] PASSED [ 42%]
+cirq/contrib/qasm_import/_parser_test.py::test_expressions[atan(0.2)] PASSED [ 43%]
+cirq/contrib/qasm_import/_parser_test.py::test_unknown_function PASSED   [ 44%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates[rx-Rx] PASSED [ 44%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates[ry-Ry] PASSED [ 45%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates[rz-Rz] PASSED [ 46%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates_wrong_number_of_args[rx] PASSED [ 46%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates_wrong_number_of_args[ry] PASSED [ 47%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates_wrong_number_of_args[rz] PASSED [ 48%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates_zero_params_error[rx] PASSED [ 48%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates_zero_params_error[ry] PASSED [ 49%]
+cirq/contrib/qasm_import/_parser_test.py::test_rotation_gates_zero_params_error[rz] PASSED [ 50%]
+cirq/contrib/qasm_import/_parser_test.py::test_qelib_gate_without_include_statement PASSED [ 51%]
+cirq/contrib/qasm_import/_parser_test.py::test_undefined_register_from_qubit_arg PASSED [ 51%]
+cirq/contrib/qasm_import/_parser_test.py::test_undefined_register_from_register_arg PASSED [ 52%]
+cirq/contrib/qasm_import/_parser_test.py::test_measure_individual_bits PASSED [ 53%]
+cirq/contrib/qasm_import/_parser_test.py::test_measure_registers PASSED  [ 53%]
+cirq/contrib/qasm_import/_parser_test.py::test_measure_mismatched_register_size PASSED [ 54%]
+cirq/contrib/qasm_import/_parser_test.py::test_measure_to_quantum_register PASSED [ 55%]
+cirq/contrib/qasm_import/_parser_test.py::test_measure_undefined_classical_bit PASSED [ 55%]
+cirq/contrib/qasm_import/_parser_test.py::test_measure_from_classical_register PASSED [ 56%]
+cirq/contrib/qasm_import/_parser_test.py::test_measurement_bounds PASSED [ 57%]
+cirq/contrib/qasm_import/_parser_test.py::test_u2_gate PASSED            [ 57%]
+cirq/contrib/qasm_import/_parser_test.py::test_id_gate PASSED            [ 58%]
+cirq/contrib/qasm_import/_parser_test.py::test_u3_gate PASSED            [ 59%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[id] PASSED [ 59%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[u2] PASSED [ 60%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[u3] PASSED [ 61%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[rx] PASSED [ 61%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[ry] PASSED [ 62%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[rz] PASSED [ 63%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[x] PASSED [ 63%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[y] PASSED [ 64%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[z] PASSED [ 65%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[h] PASSED [ 65%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[s] PASSED [ 66%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[t] PASSED [ 67%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[sdg] PASSED [ 67%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_single_qubit_gates_wrong_number_of_args[tdg] PASSED [ 68%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[id-0] PASSED [ 69%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[u2-2] PASSED [ 69%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[u3-3] PASSED [ 70%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[rx-1] PASSED [ 71%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[ry-1] PASSED [ 71%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[rz-1] PASSED [ 72%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[x-0] PASSED [ 73%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[y-0] PASSED [ 73%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[z-0] PASSED [ 74%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[h-0] PASSED [ 75%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[s-0] PASSED [ 75%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[t-0] PASSED [ 76%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[sdg-0] PASSED [ 77%]
+cirq/contrib/qasm_import/_parser_test.py::test_standard_gates_wrong_params_error[tdg-0] PASSED [ 77%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[cx-cirq_gate0] FAILED [ 78%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[CX-cirq_gate1] FAILED [ 79%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[cz-cirq_gate2] FAILED [ 79%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[cy-cirq_gate3] FAILED [ 80%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[swap-cirq_gate4] FAILED [ 81%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[ch-cirq_gate5] FAILED [ 81%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[cx] FAILED [ 82%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[CX] FAILED [ 83%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[cz] FAILED [ 83%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[cy] FAILED [ 84%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[swap] FAILED [ 85%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[ch] FAILED [ 85%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[cx] FAILED [ 86%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[CX] FAILED [ 87%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[cz] FAILED [ 87%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[cy] FAILED [ 88%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[swap] FAILED [ 89%]
+cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[ch] FAILED [ 89%]
+cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates[ccx-cirq_gate0] FAILED [ 90%]
+cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates[cswap-cirq_gate1] FAILED [ 91%]
+cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates_not_enough_args[ccx] FAILED [ 91%]
+cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates_not_enough_args[cswap] FAILED [ 92%]
+cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates_with_too_much_parameters[ccx] FAILED [ 93%]
+cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates_with_too_much_parameters[cswap] FAILED [ 93%]
+cirq/contrib/qasm_import/_parser_test.py::test_single_qubit_gates[x-cirq_gate0] PASSED [ 94%]
+cirq/contrib/qasm_import/_parser_test.py::test_single_qubit_gates[y-cirq_gate1] PASSED [ 95%]
+cirq/contrib/qasm_import/_parser_test.py::test_single_qubit_gates[z-cirq_gate2] PASSED [ 95%]
+cirq/contrib/qasm_import/_parser_test.py::test_single_qubit_gates[h-cirq_gate3] PASSED [ 96%]
+cirq/contrib/qasm_import/_parser_test.py::test_single_qubit_gates[s-cirq_gate4] PASSED [ 97%]
+cirq/contrib/qasm_import/_parser_test.py::test_single_qubit_gates[t-cirq_gate5] PASSED [ 97%]
+cirq/contrib/qasm_import/_parser_test.py::test_single_qubit_gates[sdg-cirq_gate6] PASSED [ 98%]
+cirq/contrib/qasm_import/_parser_test.py::test_single_qubit_gates[tdg-cirq_gate7] PASSED [ 99%]
+cirq/contrib/qasm_import/qasm_test.py::test_consistency_with_qasm_output_and_qiskit FAILED [100%]
+
+=================================== FAILURES ===================================
+______________________ test_output_unitary_same_as_qiskit ______________________
+
+    def test_output_unitary_same_as_qiskit():
+        qubits = tuple(_make_qubits(5))
+        operations = _all_operations(*qubits, include_measurements=False)
+        output = cirq.QasmOutput(operations, qubits,
+                                 header='Generated from Cirq',
+                                 precision=10)
+        text = str(output)
+    
+        circuit = cirq.Circuit.from_ops(operations)
+        cirq_unitary = circuit.unitary(qubit_order=qubits)
+>       cq.assert_qiskit_parsed_qasm_consistent_with_unitary(text, cirq_unitary)
+E       AttributeError: module 'cirq.testing.consistent_qasm' has no attribute 'assert_qiskit_parsed_qasm_consistent_with_unitary'
+
+cirq/circuits/qasm_output_test.py:289: AttributeError
+_____________________ test_two_qubit_gates[cx-cirq_gate0] ______________________
+
+qasm_gate = 'cx', cirq_gate = cirq.CNOT
+
+    @pytest.mark.parametrize('qasm_gate,cirq_gate', two_qubit_gates)
+    def test_two_qubit_gates(qasm_gate: str, cirq_gate: cirq.TwoQubitGate):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q1[2];
+         qreg q2[2];
+         {0} q1[0], q1[1];
+         {0} q1, q2[0];
+         {0} q2, q1;
+    """.format(qasm_gate)
+        parser = QasmParser()
+    
+        q1_0 = cirq.NamedQubit('q1_0')
+        q1_1 = cirq.NamedQubit('q1_1')
+        q2_0 = cirq.NamedQubit('q2_0')
+        q2_1 = cirq.NamedQubit('q2_1')
+    
+        expected_circuit = Circuit()
+        # CX q1[0], q1[1];
+        expected_circuit.append(cirq_gate(q1_0, q1_1))
+        # CX q1, q2[0];
+        expected_circuit.append(cirq_gate(q1_0, q2_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_0))
+        # CX q2, q1;
+        expected_circuit.append(cirq_gate(q2_0, q1_0))
+        expected_circuit.append(cirq_gate(q2_1, q1_1))
+    
+>       parsed_qasm = parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:809: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cfc71510>
+args = [[cirq.NamedQubit('q1_0')], [cirq.NamedQubit('q1_1')]], gate = 'cx'
+p = <ply.yacc.YaccProduction object at 0x2b25cf911d90>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cx" at line 6
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+_____________________ test_two_qubit_gates[CX-cirq_gate1] ______________________
+
+qasm_gate = 'CX', cirq_gate = cirq.CNOT
+
+    @pytest.mark.parametrize('qasm_gate,cirq_gate', two_qubit_gates)
+    def test_two_qubit_gates(qasm_gate: str, cirq_gate: cirq.TwoQubitGate):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q1[2];
+         qreg q2[2];
+         {0} q1[0], q1[1];
+         {0} q1, q2[0];
+         {0} q2, q1;
+    """.format(qasm_gate)
+        parser = QasmParser()
+    
+        q1_0 = cirq.NamedQubit('q1_0')
+        q1_1 = cirq.NamedQubit('q1_1')
+        q2_0 = cirq.NamedQubit('q2_0')
+        q2_1 = cirq.NamedQubit('q2_1')
+    
+        expected_circuit = Circuit()
+        # CX q1[0], q1[1];
+        expected_circuit.append(cirq_gate(q1_0, q1_1))
+        # CX q1, q2[0];
+        expected_circuit.append(cirq_gate(q1_0, q2_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_0))
+        # CX q2, q1;
+        expected_circuit.append(cirq_gate(q2_0, q1_0))
+        expected_circuit.append(cirq_gate(q2_1, q1_1))
+    
+>       parsed_qasm = parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:809: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce8eba50>
+args = [[cirq.NamedQubit('q1_0')], [cirq.NamedQubit('q1_1')]], gate = 'CX'
+p = <ply.yacc.YaccProduction object at 0x2b25ce8eb5d0>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "CX" at line 6
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+_____________________ test_two_qubit_gates[cz-cirq_gate2] ______________________
+
+qasm_gate = 'cz', cirq_gate = cirq.CZ
+
+    @pytest.mark.parametrize('qasm_gate,cirq_gate', two_qubit_gates)
+    def test_two_qubit_gates(qasm_gate: str, cirq_gate: cirq.TwoQubitGate):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q1[2];
+         qreg q2[2];
+         {0} q1[0], q1[1];
+         {0} q1, q2[0];
+         {0} q2, q1;
+    """.format(qasm_gate)
+        parser = QasmParser()
+    
+        q1_0 = cirq.NamedQubit('q1_0')
+        q1_1 = cirq.NamedQubit('q1_1')
+        q2_0 = cirq.NamedQubit('q2_0')
+        q2_1 = cirq.NamedQubit('q2_1')
+    
+        expected_circuit = Circuit()
+        # CX q1[0], q1[1];
+        expected_circuit.append(cirq_gate(q1_0, q1_1))
+        # CX q1, q2[0];
+        expected_circuit.append(cirq_gate(q1_0, q2_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_0))
+        # CX q2, q1;
+        expected_circuit.append(cirq_gate(q2_0, q1_0))
+        expected_circuit.append(cirq_gate(q2_1, q1_1))
+    
+>       parsed_qasm = parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:809: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cf5af590>
+args = [[cirq.NamedQubit('q1_0')], [cirq.NamedQubit('q1_1')]], gate = 'cz'
+p = <ply.yacc.YaccProduction object at 0x2b25cf5afb10>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cz" at line 6
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+_____________________ test_two_qubit_gates[cy-cirq_gate3] ______________________
+
+qasm_gate = 'cy', cirq_gate = cirq.ControlledGate(sub_gate=cirq.Y)
+
+    @pytest.mark.parametrize('qasm_gate,cirq_gate', two_qubit_gates)
+    def test_two_qubit_gates(qasm_gate: str, cirq_gate: cirq.TwoQubitGate):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q1[2];
+         qreg q2[2];
+         {0} q1[0], q1[1];
+         {0} q1, q2[0];
+         {0} q2, q1;
+    """.format(qasm_gate)
+        parser = QasmParser()
+    
+        q1_0 = cirq.NamedQubit('q1_0')
+        q1_1 = cirq.NamedQubit('q1_1')
+        q2_0 = cirq.NamedQubit('q2_0')
+        q2_1 = cirq.NamedQubit('q2_1')
+    
+        expected_circuit = Circuit()
+        # CX q1[0], q1[1];
+        expected_circuit.append(cirq_gate(q1_0, q1_1))
+        # CX q1, q2[0];
+        expected_circuit.append(cirq_gate(q1_0, q2_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_0))
+        # CX q2, q1;
+        expected_circuit.append(cirq_gate(q2_0, q1_0))
+        expected_circuit.append(cirq_gate(q2_1, q1_1))
+    
+>       parsed_qasm = parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:809: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce8413d0>
+args = [[cirq.NamedQubit('q1_0')], [cirq.NamedQubit('q1_1')]], gate = 'cy'
+p = <ply.yacc.YaccProduction object at 0x2b25cedacd10>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cy" at line 6
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+____________________ test_two_qubit_gates[swap-cirq_gate4] _____________________
+
+qasm_gate = 'swap', cirq_gate = cirq.SWAP
+
+    @pytest.mark.parametrize('qasm_gate,cirq_gate', two_qubit_gates)
+    def test_two_qubit_gates(qasm_gate: str, cirq_gate: cirq.TwoQubitGate):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q1[2];
+         qreg q2[2];
+         {0} q1[0], q1[1];
+         {0} q1, q2[0];
+         {0} q2, q1;
+    """.format(qasm_gate)
+        parser = QasmParser()
+    
+        q1_0 = cirq.NamedQubit('q1_0')
+        q1_1 = cirq.NamedQubit('q1_1')
+        q2_0 = cirq.NamedQubit('q2_0')
+        q2_1 = cirq.NamedQubit('q2_1')
+    
+        expected_circuit = Circuit()
+        # CX q1[0], q1[1];
+        expected_circuit.append(cirq_gate(q1_0, q1_1))
+        # CX q1, q2[0];
+        expected_circuit.append(cirq_gate(q1_0, q2_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_0))
+        # CX q2, q1;
+        expected_circuit.append(cirq_gate(q2_0, q1_0))
+        expected_circuit.append(cirq_gate(q2_1, q1_1))
+    
+>       parsed_qasm = parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:809: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cf597c90>
+args = [[cirq.NamedQubit('q1_0')], [cirq.NamedQubit('q1_1')]], gate = 'swap'
+p = <ply.yacc.YaccProduction object at 0x2b25cecaba50>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "swap" at line 6
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+_____________________ test_two_qubit_gates[ch-cirq_gate5] ______________________
+
+qasm_gate = 'ch', cirq_gate = cirq.ControlledGate(sub_gate=cirq.H)
+
+    @pytest.mark.parametrize('qasm_gate,cirq_gate', two_qubit_gates)
+    def test_two_qubit_gates(qasm_gate: str, cirq_gate: cirq.TwoQubitGate):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q1[2];
+         qreg q2[2];
+         {0} q1[0], q1[1];
+         {0} q1, q2[0];
+         {0} q2, q1;
+    """.format(qasm_gate)
+        parser = QasmParser()
+    
+        q1_0 = cirq.NamedQubit('q1_0')
+        q1_1 = cirq.NamedQubit('q1_1')
+        q2_0 = cirq.NamedQubit('q2_0')
+        q2_1 = cirq.NamedQubit('q2_1')
+    
+        expected_circuit = Circuit()
+        # CX q1[0], q1[1];
+        expected_circuit.append(cirq_gate(q1_0, q1_1))
+        # CX q1, q2[0];
+        expected_circuit.append(cirq_gate(q1_0, q2_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_0))
+        # CX q2, q1;
+        expected_circuit.append(cirq_gate(q2_0, q1_0))
+        expected_circuit.append(cirq_gate(q2_1, q1_1))
+    
+>       parsed_qasm = parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:809: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cf8a8b10>
+args = [[cirq.NamedQubit('q1_0')], [cirq.NamedQubit('q1_1')]], gate = 'ch'
+p = <ply.yacc.YaccProduction object at 0x2b25ced3d290>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "ch" at line 6
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+___________________ test_two_qubit_gates_not_enough_args[cx] ___________________
+
+qasm_gate = 'cx'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:832: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce5a7d90>
+args = [[cirq.NamedQubit('q_0')]], gate = 'cx'
+p = <ply.yacc.YaccProduction object at 0x2b25cf1fabd0>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cx" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'cx'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*cx.* takes 2 arg\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "cx" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:832: AssertionError
+___________________ test_two_qubit_gates_not_enough_args[CX] ___________________
+
+qasm_gate = 'CX'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:832: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce8e1250>
+args = [[cirq.NamedQubit('q_0')]], gate = 'CX'
+p = <ply.yacc.YaccProduction object at 0x2b25ce5ad5d0>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "CX" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'CX'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*CX.* takes 2 arg\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "CX" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:832: AssertionError
+___________________ test_two_qubit_gates_not_enough_args[cz] ___________________
+
+qasm_gate = 'cz'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:832: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cedac810>
+args = [[cirq.NamedQubit('q_0')]], gate = 'cz'
+p = <ply.yacc.YaccProduction object at 0x2b25ced5e310>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cz" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'cz'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*cz.* takes 2 arg\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "cz" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:832: AssertionError
+___________________ test_two_qubit_gates_not_enough_args[cy] ___________________
+
+qasm_gate = 'cy'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:832: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce1606d0>
+args = [[cirq.NamedQubit('q_0')]], gate = 'cy'
+p = <ply.yacc.YaccProduction object at 0x2b25ce99dad0>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cy" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'cy'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*cy.* takes 2 arg\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "cy" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:832: AssertionError
+__________________ test_two_qubit_gates_not_enough_args[swap] __________________
+
+qasm_gate = 'swap'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:832: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cf5492d0>
+args = [[cirq.NamedQubit('q_0')]], gate = 'swap'
+p = <ply.yacc.YaccProduction object at 0x2b25cf4fe390>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "swap" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'swap'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*swap.* takes 2 arg\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "swap" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:832: AssertionError
+___________________ test_two_qubit_gates_not_enough_args[ch] ___________________
+
+qasm_gate = 'ch'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:832: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce5ce110>
+args = [[cirq.NamedQubit('q_0')]], gate = 'ch'
+p = <ply.yacc.YaccProduction object at 0x2b25cf911bd0>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "ch" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'ch'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 2 arg\(s\).*got.*1.*line 5".format(qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*ch.* takes 2 arg\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "ch" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:832: AssertionError
+______________ test_two_qubit_gates_with_too_much_parameters[cx] _______________
+
+qasm_gate = 'cx'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:850: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:338: in p_gate_op_with_params
+    self._resolve_gate_operation(args=p[5], gate=p[1], p=p, params=p[3])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce494890>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')]], gate = 'cx'
+p = <ply.yacc.YaccProduction object at 0x2b25ce494a10>
+params = [3.141592653589793]
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cx" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'cx'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*cx.* takes 0 parameter\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "cx" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:850: AssertionError
+______________ test_two_qubit_gates_with_too_much_parameters[CX] _______________
+
+qasm_gate = 'CX'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:850: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:338: in p_gate_op_with_params
+    self._resolve_gate_operation(args=p[5], gate=p[1], p=p, params=p[3])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce49f950>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')]], gate = 'CX'
+p = <ply.yacc.YaccProduction object at 0x2b25cf8ad8d0>
+params = [3.141592653589793]
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "CX" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'CX'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*CX.* takes 0 parameter\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "CX" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:850: AssertionError
+______________ test_two_qubit_gates_with_too_much_parameters[cz] _______________
+
+qasm_gate = 'cz'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:850: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:338: in p_gate_op_with_params
+    self._resolve_gate_operation(args=p[5], gate=p[1], p=p, params=p[3])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce44ad90>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')]], gate = 'cz'
+p = <ply.yacc.YaccProduction object at 0x2b25ced65410>
+params = [3.141592653589793]
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cz" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'cz'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*cz.* takes 0 parameter\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "cz" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:850: AssertionError
+______________ test_two_qubit_gates_with_too_much_parameters[cy] _______________
+
+qasm_gate = 'cy'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:850: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:338: in p_gate_op_with_params
+    self._resolve_gate_operation(args=p[5], gate=p[1], p=p, params=p[3])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cf5493d0>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')]], gate = 'cy'
+p = <ply.yacc.YaccProduction object at 0x2b25ce967290>
+params = [3.141592653589793]
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cy" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'cy'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*cy.* takes 0 parameter\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "cy" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:850: AssertionError
+_____________ test_two_qubit_gates_with_too_much_parameters[swap] ______________
+
+qasm_gate = 'swap'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:850: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:338: in p_gate_op_with_params
+    self._resolve_gate_operation(args=p[5], gate=p[1], p=p, params=p[3])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce5b8ad0>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')]], gate = 'swap'
+p = <ply.yacc.YaccProduction object at 0x2b25cf4dea50>
+params = [3.141592653589793]
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "swap" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'swap'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*swap.* takes 0 parameter\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "swap" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:850: AssertionError
+______________ test_two_qubit_gates_with_too_much_parameters[ch] _______________
+
+qasm_gate = 'ch'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:850: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:338: in p_gate_op_with_params
+    self._resolve_gate_operation(args=p[5], gate=p[1], p=p, params=p[3])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cf15e210>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')]], gate = 'ch'
+p = <ply.yacc.YaccProduction object at 0x2b25cf163910>
+params = [3.141592653589793]
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "ch" at line 5
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'ch'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in two_qubit_gates])
+    def test_two_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {}(pi) q[0],q[1];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r".*{}.* takes 0 parameter\(s\).*got.*1.*line 5".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*ch.* takes 0 parameter\\(s\\).*got.*1.*line 5'
+E            Input: 'Unknown gate "ch" at line 5'
+
+cirq/contrib/qasm_import/_parser_test.py:850: AssertionError
+____________________ test_three_qubit_gates[ccx-cirq_gate0] ____________________
+
+qasm_gate = 'ccx', cirq_gate = cirq.TOFFOLI
+
+    @pytest.mark.parametrize('qasm_gate,cirq_gate', three_qubit_gates)
+    def test_three_qubit_gates(qasm_gate: str, cirq_gate: cirq.TwoQubitGate):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q1[2];
+         qreg q2[2];
+         qreg q3[2];
+         {0} q1[0], q1[1], q2[0];
+         {0} q1, q2[0], q3[0];
+         {0} q1, q2, q3;
+    """.format(qasm_gate)
+        parser = QasmParser()
+    
+        q1_0 = cirq.NamedQubit('q1_0')
+        q1_1 = cirq.NamedQubit('q1_1')
+        q2_0 = cirq.NamedQubit('q2_0')
+        q2_1 = cirq.NamedQubit('q2_1')
+        q3_0 = cirq.NamedQubit('q3_0')
+        q3_1 = cirq.NamedQubit('q3_1')
+    
+        expected_circuit = Circuit()
+    
+        expected_circuit.append(cirq_gate(q1_0, q1_1, q2_0))
+    
+        expected_circuit.append(cirq_gate(q1_0, q2_0, q3_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_0, q3_0))
+    
+        expected_circuit.append(cirq_gate(q1_0, q2_0, q3_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_1, q3_1))
+    
+>       parsed_qasm = parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:887: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce87d150>
+args = [[cirq.NamedQubit('q1_0')], [cirq.NamedQubit('q1_1')], [cirq.NamedQubit('q2_0')]]
+gate = 'ccx', p = <ply.yacc.YaccProduction object at 0x2b25ce4680d0>
+params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "ccx" at line 7
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+___________________ test_three_qubit_gates[cswap-cirq_gate1] ___________________
+
+qasm_gate = 'cswap', cirq_gate = cirq.FREDKIN
+
+    @pytest.mark.parametrize('qasm_gate,cirq_gate', three_qubit_gates)
+    def test_three_qubit_gates(qasm_gate: str, cirq_gate: cirq.TwoQubitGate):
+        qasm = """
+         OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q1[2];
+         qreg q2[2];
+         qreg q3[2];
+         {0} q1[0], q1[1], q2[0];
+         {0} q1, q2[0], q3[0];
+         {0} q1, q2, q3;
+    """.format(qasm_gate)
+        parser = QasmParser()
+    
+        q1_0 = cirq.NamedQubit('q1_0')
+        q1_1 = cirq.NamedQubit('q1_1')
+        q2_0 = cirq.NamedQubit('q2_0')
+        q2_1 = cirq.NamedQubit('q2_1')
+        q3_0 = cirq.NamedQubit('q3_0')
+        q3_1 = cirq.NamedQubit('q3_1')
+    
+        expected_circuit = Circuit()
+    
+        expected_circuit.append(cirq_gate(q1_0, q1_1, q2_0))
+    
+        expected_circuit.append(cirq_gate(q1_0, q2_0, q3_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_0, q3_0))
+    
+        expected_circuit.append(cirq_gate(q1_0, q2_0, q3_0))
+        expected_circuit.append(cirq_gate(q1_1, q2_1, q3_1))
+    
+>       parsed_qasm = parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:887: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ced7e590>
+args = [[cirq.NamedQubit('q1_0')], [cirq.NamedQubit('q1_1')], [cirq.NamedQubit('q2_0')]]
+gate = 'cswap', p = <ply.yacc.YaccProduction object at 0x2b25cf910650>
+params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cswap" at line 7
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+_________________ test_three_qubit_gates_not_enough_args[ccx] __________________
+
+qasm_gate = 'ccx'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in three_qubit_gates])
+    def test_three_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r""".*{}.* takes 3 arg\(s\).*got.*1.*line 4""".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:910: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce45ead0>
+args = [[cirq.NamedQubit('q_0')]], gate = 'ccx'
+p = <ply.yacc.YaccProduction object at 0x2b25ced3d850>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "ccx" at line 4
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'ccx'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in three_qubit_gates])
+    def test_three_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r""".*{}.* takes 3 arg\(s\).*got.*1.*line 4""".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*ccx.* takes 3 arg\\(s\\).*got.*1.*line 4'
+E            Input: 'Unknown gate "ccx" at line 4'
+
+cirq/contrib/qasm_import/_parser_test.py:910: AssertionError
+________________ test_three_qubit_gates_not_enough_args[cswap] _________________
+
+qasm_gate = 'cswap'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in three_qubit_gates])
+    def test_three_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r""".*{}.* takes 3 arg\(s\).*got.*1.*line 4""".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:910: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce9bd950>
+args = [[cirq.NamedQubit('q_0')]], gate = 'cswap'
+p = <ply.yacc.YaccProduction object at 0x2b25cec94610>, params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cswap" at line 4
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'cswap'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in three_qubit_gates])
+    def test_three_qubit_gates_not_enough_args(qasm_gate: str):
+        qasm = """OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[2];
+         {} q[0];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r""".*{}.* takes 3 arg\(s\).*got.*1.*line 4""".format(
+                    qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*cswap.* takes 3 arg\\(s\\).*got.*1.*line 4'
+E            Input: 'Unknown gate "cswap" at line 4'
+
+cirq/contrib/qasm_import/_parser_test.py:910: AssertionError
+_____________ test_three_qubit_gates_with_too_much_parameters[ccx] _____________
+
+qasm_gate = 'ccx'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in three_qubit_gates])
+    def test_three_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[3];
+         {}(pi) q[0],q[1],q[2];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r""".*{}.*parameter.*line 4.*""".format(qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:926: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:338: in p_gate_op_with_params
+    self._resolve_gate_operation(args=p[5], gate=p[1], p=p, params=p[3])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cf8ade10>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')], [cirq.NamedQubit('q_2')]]
+gate = 'ccx', p = <ply.yacc.YaccProduction object at 0x2b25ce915550>
+params = [3.141592653589793]
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "ccx" at line 4
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'ccx'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in three_qubit_gates])
+    def test_three_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[3];
+         {}(pi) q[0],q[1],q[2];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r""".*{}.*parameter.*line 4.*""".format(qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*ccx.*parameter.*line 4.*'
+E            Input: 'Unknown gate "ccx" at line 4'
+
+cirq/contrib/qasm_import/_parser_test.py:926: AssertionError
+____________ test_three_qubit_gates_with_too_much_parameters[cswap] ____________
+
+qasm_gate = 'cswap'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in three_qubit_gates])
+    def test_three_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[3];
+         {}(pi) q[0],q[1],q[2];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r""".*{}.*parameter.*line 4.*""".format(qasm_gate)):
+>           parser.parse(qasm)
+
+cirq/contrib/qasm_import/_parser_test.py:926: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:338: in p_gate_op_with_params
+    self._resolve_gate_operation(args=p[5], gate=p[1], p=p, params=p[3])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25ce43e890>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')], [cirq.NamedQubit('q_2')]]
+gate = 'cswap', p = <ply.yacc.YaccProduction object at 0x2b25cf5d0d10>
+params = [3.141592653589793]
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "cswap" at line 4
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+
+During handling of the above exception, another exception occurred:
+
+qasm_gate = 'cswap'
+
+    @pytest.mark.parametrize('qasm_gate', [g[0] for g in three_qubit_gates])
+    def test_three_qubit_gates_with_too_much_parameters(qasm_gate: str):
+        qasm = """OPENQASM 2.0;
+         include "qelib1.inc";
+         qreg q[3];
+         {}(pi) q[0],q[1],q[2];
+    """.format(qasm_gate)
+    
+        parser = QasmParser()
+    
+        with pytest.raises(
+                QasmException,
+                match=r""".*{}.*parameter.*line 4.*""".format(qasm_gate)):
+>           parser.parse(qasm)
+E           AssertionError: Regex pattern did not match.
+E            Regex: '.*cswap.*parameter.*line 4.*'
+E            Input: 'Unknown gate "cswap" at line 4'
+
+cirq/contrib/qasm_import/_parser_test.py:926: AssertionError
+_________________ test_consistency_with_qasm_output_and_qiskit _________________
+
+    def test_consistency_with_qasm_output_and_qiskit():
+        qubits = [cirq.NamedQubit('q_{}'.format(i)) for i in range(4)]
+        a, b, c, d = qubits
+        circuit1 = cirq.Circuit.from_ops(
+            cirq.Rx(np.pi / 2).on(a),
+            cirq.Ry(np.pi / 2).on(b),
+            cirq.Rz(np.pi / 2).on(b),
+            cirq.X.on(a),
+            cirq.Y.on(b),
+            cirq.Z.on(c),
+            cirq.H.on(d),
+            cirq.S.on(a),
+            cirq.T.on(b),
+            cirq.S.on(c)**-1,
+            cirq.T.on(d)**-1,
+            cirq.X.on(d)**0.125,
+            cirq.TOFFOLI.on(a, b, c),
+            cirq.CSWAP.on(d, a, b),
+            cirq.SWAP.on(c, d),
+            cirq.CX.on(a, b),
+            cirq.ControlledGate(cirq.Y).on(c, d),
+            cirq.CZ.on(a, b),
+            cirq.ControlledGate(cirq.H).on(b, c),
+            cirq.IdentityGate(1).on(c),
+            cirq.circuits.qasm_output.QasmUGate(1.0, 2.0, 3.0).on(d),
+        )
+    
+        qasm = cirq.qasm(circuit1)
+    
+>       circuit2 = cirq.contrib.qasm_import.qasm.QasmCircuitParser().parse(qasm)
+
+cirq/contrib/qasm_import/qasm_test.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+cirq/contrib/qasm_import/qasm.py:29: in parse
+    return QasmParser().parse(qasm).circuit
+cirq/contrib/qasm_import/_parser.py:524: in parse
+    self.parsedQasm = self.parser.parse(lexer=self.lexer)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:265: in parse
+    return self.parseopt_notrack(input,lexer,debug,tracking,tokenfunc)
+/usr/local/lib/python3.7/site-packages/ply/yacc.py:971: in parseopt_notrack
+    p.callable(pslice)
+cirq/contrib/qasm_import/_parser.py:334: in p_gate_op_no_params
+    self._resolve_gate_operation(p[2], gate=p[1], p=p, params=[])
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cirq.contrib.qasm_import._parser.QasmParser object at 0x2b25cec62250>
+args = [[cirq.NamedQubit('q_0')], [cirq.NamedQubit('q_1')], [cirq.NamedQubit('q_2')]]
+gate = 'ccx', p = <ply.yacc.YaccProduction object at 0x2b25ce912750>
+params = []
+
+    def _resolve_gate_operation(self, args: List[List[ops.Qid]], gate: str,
+                                p: Any, params: List[float]):
+        gate_set = (self.basic_gates if not self.qelibinc else self.qelib_gates)
+        if gate not in gate_set.keys():
+            msg = 'Unknown gate "{}" at line {}{}'.format(
+                gate, p.lineno(1), ", did you forget to include qelib1.inc?"
+                if not self.qelibinc else "")
+>           raise QasmException(msg)
+E           cirq.contrib.qasm_import.exception.QasmException: Unknown gate "ccx" at line 23
+
+cirq/contrib/qasm_import/_parser.py:347: QasmException
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.7/site-packages/google/api_core/_python_version_support.py:246
+  /usr/local/lib/python3.7/site-packages/google/api_core/_python_version_support.py:246: FutureWarning: You are using a non-supported Python version (3.7.17). Google will not post any further updates to google.api_core supporting this Python version. Please upgrade to the latest Python version, or at least Python 3.10, and then update google.api_core.
+    warnings.warn(message, FutureWarning)
+
+../../usr/local/lib/python3.7/site-packages/google/auth/__init__.py:50
+  /usr/local/lib/python3.7/site-packages/google/auth/__init__.py:50: Python37DeprecationWarning: After January 1, 2024, new releases of this library will drop support for Python 3.7.
+    warnings.warn(message, Python37DeprecationWarning)
+
+../../usr/local/lib/python3.7/site-packages/google/oauth2/__init__.py:36
+  /usr/local/lib/python3.7/site-packages/google/oauth2/__init__.py:36: Python37DeprecationWarning: After January 1, 2024, new releases of this library will drop support for Python 3.7.
+    warnings.warn(message, Python37DeprecationWarning)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED cirq/circuits/qasm_output_test.py::test_output_unitary_same_as_qiskit
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[cx-cirq_gate0]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[CX-cirq_gate1]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[cz-cirq_gate2]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[cy-cirq_gate3]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[swap-cirq_gate4]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates[ch-cirq_gate5]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[cx]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[CX]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[cz]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[cy]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[swap]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_not_enough_args[ch]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[cx]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[CX]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[cz]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[cy]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[swap]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_two_qubit_gates_with_too_much_parameters[ch]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates[ccx-cirq_gate0]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates[cswap-cirq_gate1]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates_not_enough_args[ccx]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates_not_enough_args[cswap]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates_with_too_much_parameters[ccx]
+FAILED cirq/contrib/qasm_import/_parser_test.py::test_three_qubit_gates_with_too_much_parameters[cswap]
+FAILED cirq/contrib/qasm_import/qasm_test.py::test_consistency_with_qasm_output_and_qiskit
+================== 26 failed, 123 passed, 3 warnings in 8.09s ==================
+reward=0 graded=149 found=0 failed=0 parsed=50 framework=pytest exit_code=1

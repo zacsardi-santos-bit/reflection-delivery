@@ -1,7 +1,0 @@
-I'm working on adding configuration file support to the Cloudflare Pages local development command. Right now, Pages dev doesn't read any configuration file — you have to pass everything (bindings, variables, etc.) through command line flags every time. I'd like it to automatically read the project configuration file from the project root when running local development, applying all the bindings and settings defined there to the running worker.
-
-The merged behavior should be that command line arguments take precedence over config file values, while config file values that aren't overridden by the command line are preserved. This should work for both Pages Functions projects and Pages Advanced Mode projects, including proper handling of custom routing rules.
-
-There are also a few error messages that need to be updated to reflect this new capability. When no directory, command, or proxy port is given on the command line, the error should now hint that users can configure the build output directory in the configuration file as an alternative. When someone tries to specify a custom path for the configuration file (which isn't supported), the error message should be clearer that it's the custom path that's unsupported, not configuration files in general.
-
-Finally, the error messages produced when validating a Pages configuration file need some formatting fixes: the error for unsupported environment names should quote each name individually and use proper indentation; the error for conflicting configuration keys should also have its indentation corrected.

@@ -1,0 +1,7 @@
+I'm working on the s2n-quic library and need to add application-level configuration support for the BBR and CUBIC congestion controllers. Right now, both controllers use fixed built-in defaults for important parameters like the initial congestion window, and BBR additionally has fixed internal values for loss detection sensitivity and bandwidth probing aggressiveness. There's no way to tune these without changing the library source.
+
+I'd like to introduce a settings structure for each controller that an application can populate with optional overrides at construction time. When a field is set, the controller uses the provided value (with appropriate clamping to a safe minimum). When a field is not set, the controller falls back to its existing default behavior — so nothing changes for code that doesn't use the new settings.
+
+For BBR, the settings should cover at least: initial congestion window, loss threshold, and congestion window gain during bandwidth probing. For CUBIC, the initial congestion window should be configurable. The default loss threshold constant and the default congestion window gain used in bandwidth probing should also be made accessible publicly so they can be referenced by callers.
+
+The constructors for both controllers need to be updated to accept these settings, and several internal methods need to accept and thread through the settings so that the overrides actually take effect during operation.

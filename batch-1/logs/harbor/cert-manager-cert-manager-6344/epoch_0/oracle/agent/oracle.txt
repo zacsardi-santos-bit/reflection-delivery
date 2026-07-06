@@ -1,0 +1,694 @@
+patching file LICENSES
+patching file cmd/acmesolver/LICENSES
+patching file cmd/acmesolver/go.mod
+patching file cmd/acmesolver/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file cmd/acmesolver/go.sum.rej
+patching file cmd/cainjector/LICENSES
+patching file cmd/cainjector/go.mod
+patching file cmd/cainjector/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file cmd/cainjector/go.sum.rej
+patching file cmd/controller/LICENSES
+patching file cmd/controller/go.mod
+patching file cmd/controller/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+21 out of 21 hunks ignored -- saving rejects to file cmd/controller/go.sum.rej
+patching file cmd/ctl/LICENSES
+patching file cmd/ctl/go.mod
+patching file cmd/ctl/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+35 out of 35 hunks ignored -- saving rejects to file cmd/ctl/go.sum.rej
+patching file cmd/webhook/LICENSES
+patching file cmd/webhook/go.mod
+patching file cmd/webhook/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 71.
+Hunk #3 FAILED at 97.
+Hunk #4 succeeded at 209 with fuzz 3.
+Hunk #5 FAILED at 217.
+Hunk #6 FAILED at 239.
+Hunk #7 FAILED at 286.
+Hunk #8 succeeded at 847 (offset 484 lines).
+Hunk #9 FAILED at 393.
+Hunk #10 FAILED at 598.
+8 out of 10 hunks FAILED -- saving rejects to file cmd/webhook/go.sum.rej
+patching file go.mod
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+25 out of 25 hunks ignored -- saving rejects to file go.sum.rej
+patching file make/tools.mk
+patching file pkg/controller/certificaterequests/venafi/venafi.go
+patching file pkg/controller/certificatesigningrequests/venafi/venafi.go
+patching file pkg/issuer/venafi/client/fake/connector.go
+patching file pkg/issuer/venafi/client/fake/venafi.go
+patching file pkg/issuer/venafi/client/instrumentedvenaficlient.go
+patching file pkg/issuer/venafi/client/request.go
+patching file pkg/issuer/venafi/client/venaficlient.go
+patching file pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml
+patching file LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file LICENSES.rej
+patching file cmd/acmesolver/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file cmd/acmesolver/LICENSES.rej
+patching file cmd/acmesolver/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file cmd/acmesolver/go.mod.rej
+patching file cmd/acmesolver/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file cmd/acmesolver/go.sum.rej
+patching file cmd/cainjector/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/cainjector/LICENSES.rej
+patching file cmd/cainjector/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file cmd/cainjector/go.mod.rej
+patching file cmd/cainjector/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file cmd/cainjector/go.sum.rej
+patching file cmd/controller/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file cmd/controller/LICENSES.rej
+patching file cmd/controller/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file cmd/controller/go.mod.rej
+patching file cmd/controller/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+21 out of 21 hunks ignored -- saving rejects to file cmd/controller/go.sum.rej
+patching file cmd/ctl/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file cmd/ctl/LICENSES.rej
+patching file cmd/ctl/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file cmd/ctl/go.mod.rej
+patching file cmd/ctl/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+35 out of 35 hunks ignored -- saving rejects to file cmd/ctl/go.sum.rej
+patching file cmd/webhook/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/webhook/LICENSES.rej
+patching file cmd/webhook/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file cmd/webhook/go.mod.rej
+patching file cmd/webhook/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 71.
+Hunk #3 FAILED at 97.
+Hunk #4 succeeded at 209 with fuzz 3.
+Hunk #5 FAILED at 217.
+Hunk #6 FAILED at 239.
+Hunk #7 FAILED at 286.
+Hunk #8 FAILED at 363.
+Hunk #9 FAILED at 427.
+Hunk #10 FAILED at 632.
+9 out of 10 hunks FAILED -- saving rejects to file cmd/webhook/go.sum.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+10 out of 10 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+25 out of 25 hunks ignored -- saving rejects to file go.sum.rej
+patching file make/tools.mk
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file make/tools.mk.rej
+patching file pkg/controller/certificaterequests/venafi/venafi.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificaterequests/venafi/venafi.go.rej
+patching file pkg/controller/certificatesigningrequests/venafi/venafi.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificatesigningrequests/venafi/venafi.go.rej
+patching file pkg/issuer/venafi/client/fake/connector.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/fake/connector.go.rej
+patching file pkg/issuer/venafi/client/fake/venafi.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/fake/venafi.go.rej
+patching file pkg/issuer/venafi/client/instrumentedvenaficlient.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/instrumentedvenaficlient.go.rej
+patching file pkg/issuer/venafi/client/request.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/request.go.rej
+patching file pkg/issuer/venafi/client/venaficlient.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/venaficlient.go.rej
+patching file pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml.rej
+can't find file to patch at input line 5
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/LICENSES b/LICENSES
+|index b7cbfc15c..cf6d6a99b 100644
+|--- a/LICENSES
+|+++ b/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 170
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/acmesolver/LICENSES b/cmd/acmesolver/LICENSES
+|index 76195ba4e..2aa6cd458 100644
+|--- a/cmd/acmesolver/LICENSES
+|+++ b/cmd/acmesolver/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 191
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/acmesolver/go.mod b/cmd/acmesolver/go.mod
+|index 682b4b2aa..074072bda 100644
+|--- a/cmd/acmesolver/go.mod
+|+++ b/cmd/acmesolver/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+2 out of 2 hunks ignored
+can't find file to patch at input line 212
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/acmesolver/go.sum b/cmd/acmesolver/go.sum
+|index 42792a488..078194aa5 100644
+|--- a/cmd/acmesolver/go.sum
+|+++ b/cmd/acmesolver/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 286
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/cainjector/LICENSES b/cmd/cainjector/LICENSES
+|index 3051933d0..19f559bab 100644
+|--- a/cmd/cainjector/LICENSES
+|+++ b/cmd/cainjector/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 337
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/cainjector/go.mod b/cmd/cainjector/go.mod
+|index c76efb5f2..12e767863 100644
+|--- a/cmd/cainjector/go.mod
+|+++ b/cmd/cainjector/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+6 out of 6 hunks ignored
+can't find file to patch at input line 401
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/cainjector/go.sum b/cmd/cainjector/go.sum
+|index 11f954884..71d4cabfc 100644
+|--- a/cmd/cainjector/go.sum
+|+++ b/cmd/cainjector/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+13 out of 13 hunks ignored
+can't find file to patch at input line 615
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/controller/LICENSES b/cmd/controller/LICENSES
+|index 57229b218..0428f3706 100644
+|--- a/cmd/controller/LICENSES
+|+++ b/cmd/controller/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+9 out of 9 hunks ignored
+can't find file to patch at input line 755
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/controller/go.mod b/cmd/controller/go.mod
+|index 4af02c4fa..b5b9e4510 100644
+|--- a/cmd/controller/go.mod
+|+++ b/cmd/controller/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 891
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/controller/go.sum b/cmd/controller/go.sum
+|index 1e5539e77..d178f3843 100644
+|--- a/cmd/controller/go.sum
+|+++ b/cmd/controller/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+21 out of 21 hunks ignored
+can't find file to patch at input line 1885
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/ctl/LICENSES b/cmd/ctl/LICENSES
+|index 9d3530a88..96406d383 100644
+|--- a/cmd/ctl/LICENSES
+|+++ b/cmd/ctl/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+8 out of 8 hunks ignored
+can't find file to patch at input line 1992
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/ctl/go.mod b/cmd/ctl/go.mod
+|index cc3430adc..e35cdbc3d 100644
+|--- a/cmd/ctl/go.mod
+|+++ b/cmd/ctl/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+9 out of 9 hunks ignored
+can't find file to patch at input line 2105
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/ctl/go.sum b/cmd/ctl/go.sum
+|index cb17fa8e2..6adaef7bf 100644
+|--- a/cmd/ctl/go.sum
+|+++ b/cmd/ctl/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+35 out of 35 hunks ignored
+can't find file to patch at input line 2511
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/webhook/LICENSES b/cmd/webhook/LICENSES
+|index 1567998e4..39ea4a40a 100644
+|--- a/cmd/webhook/LICENSES
+|+++ b/cmd/webhook/LICENSES
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+4 out of 4 hunks ignored
+can't find file to patch at input line 2590
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/webhook/go.mod b/cmd/webhook/go.mod
+|index 08bb8b728..4c8745d66 100644
+|--- a/cmd/webhook/go.mod
+|+++ b/cmd/webhook/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+5 out of 5 hunks ignored
+can't find file to patch at input line 2675
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/cmd/webhook/go.sum b/cmd/webhook/go.sum
+|index cce99c2f0..4bfeb46ac 100644
+|--- a/cmd/webhook/go.sum
+|+++ b/cmd/webhook/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+10 out of 10 hunks ignored
+can't find file to patch at input line 3333
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.mod b/go.mod
+|index e695c783d..f9523c232 100644
+|--- a/go.mod
+|+++ b/go.mod
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+10 out of 10 hunks ignored
+can't find file to patch at input line 3499
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/go.sum b/go.sum
+|index 2d71852b4..a9a5b1de5 100644
+|--- a/go.sum
+|+++ b/go.sum
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+25 out of 25 hunks ignored
+can't find file to patch at input line 4528
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/make/tools.mk b/make/tools.mk
+|index 968ec9f2f..733eb95f1 100644
+|--- a/make/tools.mk
+|+++ b/make/tools.mk
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+7 out of 7 hunks ignored
+can't find file to patch at input line 4640
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controller/certificaterequests/venafi/venafi.go b/pkg/controller/certificaterequests/venafi/venafi.go
+|index 4a8231c23..d75537fa3 100644
+|--- a/pkg/controller/certificaterequests/venafi/venafi.go
+|+++ b/pkg/controller/certificaterequests/venafi/venafi.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4653
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/controller/certificatesigningrequests/venafi/venafi.go b/pkg/controller/certificatesigningrequests/venafi/venafi.go
+|index 28ffc6a78..fa7ce524e 100644
+|--- a/pkg/controller/certificatesigningrequests/venafi/venafi.go
+|+++ b/pkg/controller/certificatesigningrequests/venafi/venafi.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4666
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/fake/connector.go b/pkg/issuer/venafi/client/fake/connector.go
+|index 0c07794ff..3999c0334 100644
+|--- a/pkg/issuer/venafi/client/fake/connector.go
+|+++ b/pkg/issuer/venafi/client/fake/connector.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4683
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/fake/venafi.go b/pkg/issuer/venafi/client/fake/venafi.go
+|index 45ca05d2c..fb9e2688f 100644
+|--- a/pkg/issuer/venafi/client/fake/venafi.go
+|+++ b/pkg/issuer/venafi/client/fake/venafi.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4696
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/instrumentedvenaficlient.go b/pkg/issuer/venafi/client/instrumentedvenaficlient.go
+|index 70ce2b2c9..39524e707 100644
+|--- a/pkg/issuer/venafi/client/instrumentedvenaficlient.go
+|+++ b/pkg/issuer/venafi/client/instrumentedvenaficlient.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4711
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/request.go b/pkg/issuer/venafi/client/request.go
+|index 73731503a..298000bb5 100644
+|--- a/pkg/issuer/venafi/client/request.go
+|+++ b/pkg/issuer/venafi/client/request.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4727
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/issuer/venafi/client/venaficlient.go b/pkg/issuer/venafi/client/venaficlient.go
+|index fd9d5ee2f..33b78ef76 100644
+|--- a/pkg/issuer/venafi/client/venaficlient.go
+|+++ b/pkg/issuer/venafi/client/venaficlient.go
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+can't find file to patch at input line 4748
+Perhaps you used the wrong -p or --strip option?
+The text leading up to this was:
+--------------------------
+|diff --git a/pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml b/pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml
+|index f34f66757..ba47eb8a4 100644
+|--- a/pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml
+|+++ b/pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml
+--------------------------
+File to patch: 
+Skip this patch? [y] 
+Skipping patch.
+1 out of 1 hunk ignored
+patching file LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file LICENSES.rej
+patching file cmd/acmesolver/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file cmd/acmesolver/LICENSES.rej
+patching file cmd/acmesolver/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+2 out of 2 hunks ignored -- saving rejects to file cmd/acmesolver/go.mod.rej
+patching file cmd/acmesolver/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file cmd/acmesolver/go.sum.rej
+patching file cmd/cainjector/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/cainjector/LICENSES.rej
+patching file cmd/cainjector/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+6 out of 6 hunks ignored -- saving rejects to file cmd/cainjector/go.mod.rej
+patching file cmd/cainjector/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+13 out of 13 hunks ignored -- saving rejects to file cmd/cainjector/go.sum.rej
+patching file cmd/controller/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file cmd/controller/LICENSES.rej
+patching file cmd/controller/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file cmd/controller/go.mod.rej
+patching file cmd/controller/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+21 out of 21 hunks ignored -- saving rejects to file cmd/controller/go.sum.rej
+patching file cmd/ctl/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+8 out of 8 hunks ignored -- saving rejects to file cmd/ctl/LICENSES.rej
+patching file cmd/ctl/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+9 out of 9 hunks ignored -- saving rejects to file cmd/ctl/go.mod.rej
+patching file cmd/ctl/go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+35 out of 35 hunks ignored -- saving rejects to file cmd/ctl/go.sum.rej
+patching file cmd/webhook/LICENSES
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+4 out of 4 hunks ignored -- saving rejects to file cmd/webhook/LICENSES.rej
+patching file cmd/webhook/go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+5 out of 5 hunks ignored -- saving rejects to file cmd/webhook/go.mod.rej
+patching file cmd/webhook/go.sum
+Hunk #1 FAILED at 1.
+Hunk #2 FAILED at 71.
+Hunk #3 FAILED at 97.
+Hunk #4 succeeded at 209 with fuzz 3.
+Hunk #5 FAILED at 217.
+Hunk #6 FAILED at 239.
+Hunk #7 FAILED at 286.
+Hunk #8 FAILED at 363.
+Hunk #9 FAILED at 427.
+Hunk #10 FAILED at 632.
+9 out of 10 hunks FAILED -- saving rejects to file cmd/webhook/go.sum.rej
+patching file go.mod
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+10 out of 10 hunks ignored -- saving rejects to file go.mod.rej
+patching file go.sum
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+25 out of 25 hunks ignored -- saving rejects to file go.sum.rej
+patching file make/tools.mk
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+7 out of 7 hunks ignored -- saving rejects to file make/tools.mk.rej
+patching file pkg/controller/certificaterequests/venafi/venafi.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificaterequests/venafi/venafi.go.rej
+patching file pkg/controller/certificatesigningrequests/venafi/venafi.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/controller/certificatesigningrequests/venafi/venafi.go.rej
+patching file pkg/issuer/venafi/client/fake/connector.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/fake/connector.go.rej
+patching file pkg/issuer/venafi/client/fake/venafi.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/fake/venafi.go.rej
+patching file pkg/issuer/venafi/client/instrumentedvenaficlient.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/instrumentedvenaficlient.go.rej
+patching file pkg/issuer/venafi/client/request.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/request.go.rej
+patching file pkg/issuer/venafi/client/venaficlient.go
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/issuer/venafi/client/venaficlient.go.rej
+patching file pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml
+Reversed (or previously applied) patch detected!  Assume -R? [n] 
+Apply anyway? [n] 
+Skipping patch.
+1 out of 1 hunk ignored -- saving rejects to file pkg/webhook/handlers/testdata/apis/testgroup/crds/testgroup.testing.cert-manager.io_testtypes.yaml.rej
+ERROR: golden patch failed to apply by all strategies

@@ -1,0 +1,29 @@
+{
+    "id": "a99e4120-657c-4e97-bd30-aa4d40a221a3",
+    "started_at": "2026-07-04T15:39:49.049418",
+    "finished_at": "2026-07-04T15:40:11.931967",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__paddlepaddle-paddle-29904": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "paddlepaddle-paddle-29904__is8m78F"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

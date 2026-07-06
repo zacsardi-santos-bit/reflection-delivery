@@ -1,4 +1,0 @@
-patching file doc/releases/changelog-dev.md
-patching file pennylane/debugging/snapshot.py
-patching file pennylane/devices/__init__.py
-patching file pennylane/devices/legacy_facade.py

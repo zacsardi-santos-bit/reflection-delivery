@@ -1,4 +1,0 @@
-patching file py-polars/polars/convert.py
-patching file py-polars/polars/interchange/column.py
-patching file py-polars/polars/interchange/from_dataframe.py
-patching file py-polars/polars/interchange/utils.py

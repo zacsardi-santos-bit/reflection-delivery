@@ -1,9 +1,0 @@
-patching file internal/fs/caching_test.go
-patching file internal/gcloud/gcs/gcscaching/fast_stat_bucket_test.go
-patching file internal/gcloud/gcs/gcscaching/integration_test.go
-patching file internal/gcloud/gcs/gcscaching/stat_cache_test.go
-# github.com/googlecloudplatform/gcsfuse/internal/gcloud/gcs/gcscaching
-internal/gcloud/gcs/gcscaching/fast_stat_bucket_test.go:23:2: no required module provides package github.com/googlecloudplatform/gcsfuse/internal/gcloud/gcs/gcscaching/mock_gcscaching; to add it:
-	go get github.com/googlecloudplatform/gcsfuse/internal/gcloud/gcs/gcscaching/mock_gcscaching
-FAIL	github.com/googlecloudplatform/gcsfuse/internal/gcloud/gcs/gcscaching [setup failed]
-reward=0 graded=3 found=0 failed=0 parsed=0 framework=go exit_code=1

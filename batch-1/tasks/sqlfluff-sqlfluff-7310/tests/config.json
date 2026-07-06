@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest test/dialects/dialects_test.py -v -k \"select_with_cast\"",
+  "test_files": [
+    "test/fixtures/dialects/bigquery/select_with_cast.sql",
+    "test/fixtures/dialects/bigquery/select_with_cast.yml"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "test.dialects.dialects_test::test__dialect__base_parse_struct[bigquery-select_with_cast.sql-True-select_with_cast.yml]"
+  ],
+  "PASS_TO_PASS": [
+    "test.dialects.dialects_test::test__dialect__base_file_parse[bigquery-select_with_cast.sql]",
+    "test.dialects.dialects_test::test__dialect__base_broad_fix[bigquery-select_with_cast.sql]"
+  ]
+}

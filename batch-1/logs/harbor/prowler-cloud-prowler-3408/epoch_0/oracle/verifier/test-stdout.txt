@@ -1,0 +1,42 @@
+patching file tests/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed_test.py
+patching file tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py
+patching file tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py
+patching file tests/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks_test.py
+patching file tests/providers/azure/services/vm/vm_service_test.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-8.0.1, pluggy-1.4.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+Using --randomly-seed=3553164716
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: anyio-4.2.0, cov-4.1.0, randomly-3.15.0, env-1.1.3, xdist-3.5.0
+collecting ... collected 25 items
+
+tests/providers/azure/services/vm/vm_service_test.py::Test_AppInsights_Service::test__get_virtual_machines PASSED [  4%]
+tests/providers/azure/services/vm/vm_service_test.py::Test_AppInsights_Service::test__get_client__ PASSED [  8%]
+tests/providers/azure/services/vm/vm_service_test.py::Test_AppInsights_Service::test__get_disks PASSED [ 12%]
+tests/providers/azure/services/vm/vm_service_test.py::Test_AppInsights_Service::test__get_subscriptions__ PASSED [ 16%]
+tests/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed_test.py::Test_defender_assessments_vm_endpoint_protection_installed::test_defender_subscriptions_with_unhealthy_assessments PASSED [ 20%]
+tests/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed_test.py::Test_defender_assessments_vm_endpoint_protection_installed::test_defender_no_subscriptions PASSED [ 24%]
+tests/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed_test.py::Test_defender_assessments_vm_endpoint_protection_installed::test_defender_subscriptions_with_healthy_assessments PASSED [ 28%]
+tests/providers/azure/services/defender/defender_assessments_vm_endpoint_protection_installed/defender_assessments_vm_endpoint_protection_installed_test.py::Test_defender_assessments_vm_endpoint_protection_installed::test_defender_subscriptions_with_no_assessments PASSED [ 32%]
+tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_subscription_empty PASSED [ 36%]
+tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_one_unattached_disk_encrypt_pk PASSED [ 40%]
+tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_one_unattached_disk_encrypt_cmk PASSED [ 44%]
+tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_attached_disk_encrypt_cmk PASSED [ 48%]
+tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_subscription_two_unattached_disk_encrypt_cmk_and_pk PASSED [ 52%]
+tests/providers/azure/services/vm/vm_ensure_unattached_disks_encrypted_with_cmk/vm_ensure_unattached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_unattached_disks_encrypted_with_cmk::test_vm_no_subscriptions PASSED [ 56%]
+tests/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks_test.py::Test_vm_ensure_using_managed_disks::test_vm_using_not_managed_data_disks PASSED [ 60%]
+tests/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks_test.py::Test_vm_ensure_using_managed_disks::test_vm_ensure_using_managed_disks PASSED [ 64%]
+tests/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks_test.py::Test_vm_ensure_using_managed_disks::test_vm_no_subscriptions PASSED [ 68%]
+tests/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks_test.py::Test_vm_ensure_using_managed_disks::test_vm_subscriptions PASSED [ 72%]
+tests/providers/azure/services/vm/vm_ensure_using_managed_disks/vm_ensure_using_managed_disks_test.py::Test_vm_ensure_using_managed_disks::test_vm_using_not_managed_os_disk PASSED [ 76%]
+tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_subscription_empty PASSED [ 80%]
+tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_unattached_disk_encrypt_cmk PASSED [ 84%]
+tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_subscription_two_disk_attached_encrypt_cmk_and_pk PASSED [ 88%]
+tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_subscription_one_disk_attached_encrypt_cmk PASSED [ 92%]
+tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_subscription_one_disk_attached_encrypt_pk PASSED [ 96%]
+tests/providers/azure/services/vm/vm_ensure_attached_disks_encrypted_with_cmk/vm_ensure_attached_disks_encrypted_with_cmk_test.py::Test_vm_ensure_attached_disks_encrypted_with_cmk::test_vm_no_subscriptions PASSED [100%]
+
+============================== 25 passed in 0.79s ==============================
+reward=1 graded=25 found=0 failed=0 parsed=25 framework=pytest exit_code=0

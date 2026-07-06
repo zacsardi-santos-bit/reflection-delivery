@@ -1,0 +1,53 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./api/v1alpha2 ./pkg/controllers/ipam -count=1",
+  "test_files": [
+    "api/v1alpha2/types_test.go",
+    "pkg/controllers/ipam/ipam_test.go",
+    "test/e2e/controller/ipam.go"
+  ],
+  "num_test_files": 3,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/svc_is_nil",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/clusterIP_service",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/clusterIP_service_-_svc_status_ingress_has_ip",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/loadbalcer_service_but_no_specify_openelb_annotions_completely",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/loadbalcer_service_with_openelb_annotions_completely,_but_eip_has_no_corresponding_record",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/loadbalcer_service_with_openelb_annotions_completely._eip_has_corresponding_records",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/specify_service_spec.loadbalanceIP,_but_eip_has_no_corresponding_record",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/specify_service_spec.loadbalanceIP,_but_eip_has_corresponding_records",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/specify_service_annotation.loadbalanceIP_1",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/specify_service_annotation.loadbalanceIP_2",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/no_eip",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/service_is_deleting_-_no_eip_record",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/service_is_deleting_-_eip_has_records",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/service_is_not_specify_openelb_-_eip_has_records",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/normal_service_update",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/normal_service_update_eip",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/eip_bind_default_namespace_by_spec.namespace",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/eip_bind_default_namespace_by_spec.namespaceSelector",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/multi-eip_bind_default_namespace_with_different_priority",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate/default_eip",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ConstructAllocate",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/allocate_is_nil",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/eip_not_found",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/allocate_from_eip_1_-_static_ip",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/allocate_from_eip_2_-_auto",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/no_avliable_eip_1_-_eip_is_deleting",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/no_avliable_eip_2_-_eip_is_disabled",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/no_avliable_eip_3_-_out_of_range",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/no_avliable_eip_4_-_ippool_is_full",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/Allocation_records_that_already_exist_-_share_address",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP/Allocation_records_that_already_exist_-_return_records",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_AssignIP",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ReleaseIP/release_is_nil",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ReleaseIP/eip_is_not_exist_-_service_no_record",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ReleaseIP/eip_is_not_exist_-_service_has_record",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ReleaseIP/release_ip_from_eip",
+    "github.com/openelb/openelb/pkg/controllers/ipam::TestManager_ReleaseIP"
+  ],
+  "PASS_TO_PASS": [
+    "github.com/openelb/openelb/api/v1alpha2::TestTypes"
+  ]
+}

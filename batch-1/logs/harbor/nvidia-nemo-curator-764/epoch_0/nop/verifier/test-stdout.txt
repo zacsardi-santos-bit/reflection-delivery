@@ -1,0 +1,293 @@
+patching file ray-curator/tests/backends/utils.py
+patching file ray-curator/tests/stages/test_base.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/ray-curator
+configfile: pyproject.toml
+collecting ... collected 16 items / 1 deselected / 15 selected
+
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_all FAILED [  6%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_batch_size_override FAILED [ 13%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_multiple_parameters FAILED [ 20%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_none_parameters_preserve_original FAILED [ 26%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_chained_with_calls FAILED [ 33%]
+ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_class_variable_vs_instance_variable_isolation FAILED [ 40%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_single_operation FAILED [ 46%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations[configs0] FAILED [ 53%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations[configs1] FAILED [ 60%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations_with_name_changed[configs0-True] FAILED [ 66%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations_with_name_changed[configs1-False] FAILED [ 73%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_non_unique_stage_names_error FAILED [ 80%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_unknown_stage_name_error FAILED [ 86%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_empty_operations FAILED [ 93%]
+ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_composite_stage_inputs_and_outputs FAILED [100%]
+
+=================================== FAILURES ===================================
+_______________________ TestProcessingStageWith.test_all _______________________
+
+self = <tests.stages.test_base.TestProcessingStageWith object at 0x2b1caaf93b10>
+
+    def test_all(self):
+>       stage = ConcreteProcessingStage()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteProcessingStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:46: TypeError
+_______________ TestProcessingStageWith.test_batch_size_override _______________
+
+self = <tests.stages.test_base.TestProcessingStageWith object at 0x2b1cab821f50>
+
+    def test_batch_size_override(self):
+        """Test overriding batch_size parameter."""
+>       stage = ConcreteProcessingStage()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteProcessingStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:61: TypeError
+_______________ TestProcessingStageWith.test_multiple_parameters _______________
+
+self = <tests.stages.test_base.TestProcessingStageWith object at 0x2b1cab8225d0>
+
+    def test_multiple_parameters(self):
+        """Test overriding multiple parameters at once."""
+>       stage = ConcreteProcessingStage()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteProcessingStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:70: TypeError
+________ TestProcessingStageWith.test_none_parameters_preserve_original ________
+
+self = <tests.stages.test_base.TestProcessingStageWith object at 0x2b1cab821d10>
+
+    def test_none_parameters_preserve_original(self):
+        """Test that None parameters preserve original values."""
+>       stage = ConcreteProcessingStage()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteProcessingStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:85: TypeError
+_______________ TestProcessingStageWith.test_chained_with_calls ________________
+
+self = <tests.stages.test_base.TestProcessingStageWith object at 0x2b1cab822cd0>
+
+    def test_chained_with_calls(self):
+        """Test that with_ can be chained and returns new instances."""
+>       stage = ConcreteProcessingStage()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteProcessingStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:105: TypeError
+__ TestProcessingStageWith.test_class_variable_vs_instance_variable_isolation __
+
+self = <tests.stages.test_base.TestProcessingStageWith object at 0x2b1cab823690>
+
+    def test_class_variable_vs_instance_variable_isolation(self):
+        """Test that instances created with with_ are isolated from class-level changes."""
+    
+        # Create a stage that uses class-level defaults (no instance variables set)
+        class MinimalStage(ProcessingStage[MockTask, MockTask]):
+            _name = "MinimalStage"
+            # Note: _resources is not set, so it falls back to ProcessingStage._resources
+            _batch_size = 1
+    
+            def process(self, task: MockTask) -> MockTask:
+                return task
+    
+        # Create an instance that relies on class-level defaults
+>       stage = MinimalStage()
+                ^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class MinimalStage with abstract methods inputs, name, outputs
+
+ray-curator/tests/stages/test_base.py:217: TypeError
+_________________ TestCompositeStageWith.test_single_operation _________________
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab823cd0>
+
+    def test_single_operation(self):
+        """Test basic with_ functionality for composite stages."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:323: TypeError
+__________ TestCompositeStageWith.test_multiple_operations[configs0] ___________
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab838b90>
+configs = {'MockStageA': {'name': 'CustomStageA', 'resources': Resources(cpus=6.0, gpu_memory_gb=0.0, nvdecs=0, nvencs=0, entire...'resources': Resources(cpus=9.0, gpu_memory_gb=0.0, nvdecs=0, nvencs=0, entire_gpu=False, gpus=0.0), 'batch_size': 10}}
+
+    @pytest.mark.parametrize(
+        "configs",
+        [
+            {
+                "MockStageA": {"name": "CustomStageA", "resources": Resources(cpus=6.0)},
+                "MockStageB": {"resources": Resources(cpus=10.0), "batch_size": 8},
+                "MockStageC": {"name": "CustomStageC", "resources": Resources(cpus=9.0), "batch_size": 10},
+            },
+            [
+                {"MockStageA": {"name": "CustomStageA", "resources": Resources(cpus=6.0)}},
+                {"MockStageB": {"resources": Resources(cpus=10.0), "batch_size": 8}},
+                {"MockStageC": {"name": "CustomStageC", "resources": Resources(cpus=9.0), "batch_size": 10}},
+            ],
+        ],
+    )
+    def test_multiple_operations(self, configs: dict | list[dict]):
+        """Test _apply_with_ with multiple stages configured in single operation and multiple operations."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:369: TypeError
+__________ TestCompositeStageWith.test_multiple_operations[configs1] ___________
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab838dd0>
+configs = [{'MockStageA': {'name': 'CustomStageA', 'resources': Resources(cpus=6.0, gpu_memory_gb=0.0, nvdecs=0, nvencs=0, entir...resources': Resources(cpus=9.0, gpu_memory_gb=0.0, nvdecs=0, nvencs=0, entire_gpu=False, gpus=0.0), 'batch_size': 10}}]
+
+    @pytest.mark.parametrize(
+        "configs",
+        [
+            {
+                "MockStageA": {"name": "CustomStageA", "resources": Resources(cpus=6.0)},
+                "MockStageB": {"resources": Resources(cpus=10.0), "batch_size": 8},
+                "MockStageC": {"name": "CustomStageC", "resources": Resources(cpus=9.0), "batch_size": 10},
+            },
+            [
+                {"MockStageA": {"name": "CustomStageA", "resources": Resources(cpus=6.0)}},
+                {"MockStageB": {"resources": Resources(cpus=10.0), "batch_size": 8}},
+                {"MockStageC": {"name": "CustomStageC", "resources": Resources(cpus=9.0), "batch_size": 10}},
+            ],
+        ],
+    )
+    def test_multiple_operations(self, configs: dict | list[dict]):
+        """Test _apply_with_ with multiple stages configured in single operation and multiple operations."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:369: TypeError
+_ TestCompositeStageWith.test_multiple_operations_with_name_changed[configs0-True] _
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab839b10>
+configs = {'MockStageA': {'name': 'CustomStageA'}, 'CustomStageA': {'name': 'CustomStageA_2', 'resources': Resources(cpus=7.0, gpu_memory_gb=0.0, nvdecs=0, nvencs=0, entire_gpu=False, gpus=0.0)}}
+should_fail = True
+
+    @pytest.mark.parametrize(
+        ("configs", "should_fail"),
+        [
+            (
+                {
+                    "MockStageA": {"name": "CustomStageA"},
+                    "CustomStageA": {"name": "CustomStageA_2", "resources": Resources(cpus=7.0)},
+                },
+                True,
+            ),
+            (
+                [
+                    {"MockStageA": {"name": "CustomStageA"}},
+                    {"CustomStageA": {"name": "CustomStageA_2", "resources": Resources(cpus=7.0)}},
+                ],
+                False,
+            ),
+        ],
+    )
+    def test_multiple_operations_with_name_changed(self, configs: dict | list[dict], should_fail: bool):
+        """Test _apply_with_ with multiple stages with name changed."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:422: TypeError
+_ TestCompositeStageWith.test_multiple_operations_with_name_changed[configs1-False] _
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab839d50>
+configs = [{'MockStageA': {'name': 'CustomStageA'}}, {'CustomStageA': {'name': 'CustomStageA_2', 'resources': Resources(cpus=7.0, gpu_memory_gb=0.0, nvdecs=0, nvencs=0, entire_gpu=False, gpus=0.0)}}]
+should_fail = False
+
+    @pytest.mark.parametrize(
+        ("configs", "should_fail"),
+        [
+            (
+                {
+                    "MockStageA": {"name": "CustomStageA"},
+                    "CustomStageA": {"name": "CustomStageA_2", "resources": Resources(cpus=7.0)},
+                },
+                True,
+            ),
+            (
+                [
+                    {"MockStageA": {"name": "CustomStageA"}},
+                    {"CustomStageA": {"name": "CustomStageA_2", "resources": Resources(cpus=7.0)}},
+                ],
+                False,
+            ),
+        ],
+    )
+    def test_multiple_operations_with_name_changed(self, configs: dict | list[dict], should_fail: bool):
+        """Test _apply_with_ with multiple stages with name changed."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:422: TypeError
+_____ TestCompositeStageWith.test_apply_with_non_unique_stage_names_error ______
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab83a1d0>
+
+    def test_apply_with_non_unique_stage_names_error(self):
+        """Test that _apply_with_ raises error for non-unique stage names."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:457: TypeError
+_______ TestCompositeStageWith.test_apply_with_unknown_stage_name_error ________
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab83a850>
+
+    def test_apply_with_unknown_stage_name_error(self):
+        """Test that _apply_with_ raises error for unknown stage names."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:473: TypeError
+___________ TestCompositeStageWith.test_apply_with_empty_operations ____________
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab83aed0>
+
+    def test_apply_with_empty_operations(self):
+        """Test _apply_with_ with no operations."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:488: TypeError
+________ TestCompositeStageWith.test_composite_stage_inputs_and_outputs ________
+
+self = <tests.stages.test_base.TestCompositeStageWith object at 0x2b1cab83b550>
+
+    def test_composite_stage_inputs_and_outputs(self):
+        """Test that inputs() and outputs() delegate to the decomposed stages."""
+>       composite = ConcreteCompositeStage()
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: Can't instantiate abstract class ConcreteCompositeStage with abstract method name
+
+ray-curator/tests/stages/test_base.py:502: TypeError
+=========================== short test summary info ============================
+FAILED ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_all
+FAILED ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_batch_size_override
+FAILED ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_multiple_parameters
+FAILED ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_none_parameters_preserve_original
+FAILED ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_chained_with_calls
+FAILED ray-curator/tests/stages/test_base.py::TestProcessingStageWith::test_class_variable_vs_instance_variable_isolation
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_single_operation
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations[configs0]
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations[configs1]
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations_with_name_changed[configs0-True]
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_multiple_operations_with_name_changed[configs1-False]
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_non_unique_stage_names_error
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_unknown_stage_name_error
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_apply_with_empty_operations
+FAILED ray-curator/tests/stages/test_base.py::TestCompositeStageWith::test_composite_stage_inputs_and_outputs
+======================= 15 failed, 1 deselected in 1.69s =======================
+reward=0 graded=15 found=0 failed=0 parsed=0 framework=pytest exit_code=1

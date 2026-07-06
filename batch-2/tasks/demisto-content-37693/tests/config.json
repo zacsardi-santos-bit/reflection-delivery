@@ -1,0 +1,11 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/Packs/FeedAzureADConnectHealth/Integrations/AzureADConnectHealthFeed && pytest AzureADConnectHealthFeed_test.py -v",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "Packs.FeedAzureADConnectHealth.Integrations.AzureADConnectHealthFeed.AzureADConnectHealthFeed_test::test_build_iterator"
+  ],
+  "PASS_TO_PASS": []
+}

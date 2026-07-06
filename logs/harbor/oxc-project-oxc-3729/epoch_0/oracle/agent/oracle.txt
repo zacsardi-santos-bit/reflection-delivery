@@ -1,4 +1,0 @@
-patching file crates/oxc_codegen/src/gen.rs
-patching file crates/oxc_codegen/src/lib.rs
-patching file tasks/coverage/codegen_sourcemap.snap
-patching file tasks/coverage/transpile.snap

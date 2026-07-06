@@ -1,0 +1,29 @@
+{
+    "id": "b24273e4-247c-45ce-8103-a73904f54333",
+    "started_at": "2026-07-06T12:19:06.667924",
+    "finished_at": "2026-07-06T12:19:55.127815",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__delta-io-delta-5885": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "delta-io-delta-5885__cXg5vBH"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

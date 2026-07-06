@@ -1,0 +1,1610 @@
+diff --git a/docs/reference/configuration.md b/docs/reference/configuration.md
+index 01aaea676..8ef25767c 100644
+--- a/docs/reference/configuration.md
++++ b/docs/reference/configuration.md
+@@ -677,141 +677,6 @@ their corresponding top-level category object in your `settings.json` file.
+     used.
+   - **Default:** `[]`
+ 
+-- **`modelConfigs.modelDefinitions`** (object):
+-  - **Description:** Registry of model metadata, including tier, family, and
+-    features.
+-  - **Default:**
+-
+-    ```json
+-    {
+-      "gemini-3.1-pro-preview": {
+-        "tier": "pro",
+-        "family": "gemini-3",
+-        "isPreview": true,
+-        "dialogLocation": "manual",
+-        "features": {
+-          "thinking": true,
+-          "multimodalToolUse": true
+-        }
+-      },
+-      "gemini-3.1-pro-preview-customtools": {
+-        "tier": "pro",
+-        "family": "gemini-3",
+-        "isPreview": true,
+-        "features": {
+-          "thinking": true,
+-          "multimodalToolUse": true
+-        }
+-      },
+-      "gemini-3-pro-preview": {
+-        "tier": "pro",
+-        "family": "gemini-3",
+-        "isPreview": true,
+-        "dialogLocation": "manual",
+-        "features": {
+-          "thinking": true,
+-          "multimodalToolUse": true
+-        }
+-      },
+-      "gemini-3-flash-preview": {
+-        "tier": "flash",
+-        "family": "gemini-3",
+-        "isPreview": true,
+-        "dialogLocation": "manual",
+-        "features": {
+-          "thinking": false,
+-          "multimodalToolUse": true
+-        }
+-      },
+-      "gemini-2.5-pro": {
+-        "tier": "pro",
+-        "family": "gemini-2.5",
+-        "isPreview": false,
+-        "dialogLocation": "manual",
+-        "features": {
+-          "thinking": false,
+-          "multimodalToolUse": false
+-        }
+-      },
+-      "gemini-2.5-flash": {
+-        "tier": "flash",
+-        "family": "gemini-2.5",
+-        "isPreview": false,
+-        "dialogLocation": "manual",
+-        "features": {
+-          "thinking": false,
+-          "multimodalToolUse": false
+-        }
+-      },
+-      "gemini-2.5-flash-lite": {
+-        "tier": "flash-lite",
+-        "family": "gemini-2.5",
+-        "isPreview": false,
+-        "dialogLocation": "manual",
+-        "features": {
+-          "thinking": false,
+-          "multimodalToolUse": false
+-        }
+-      },
+-      "auto": {
+-        "tier": "auto",
+-        "isPreview": true,
+-        "features": {
+-          "thinking": true,
+-          "multimodalToolUse": false
+-        }
+-      },
+-      "pro": {
+-        "tier": "pro",
+-        "isPreview": false,
+-        "features": {
+-          "thinking": true,
+-          "multimodalToolUse": false
+-        }
+-      },
+-      "flash": {
+-        "tier": "flash",
+-        "isPreview": false,
+-        "features": {
+-          "thinking": false,
+-          "multimodalToolUse": false
+-        }
+-      },
+-      "flash-lite": {
+-        "tier": "flash-lite",
+-        "isPreview": false,
+-        "features": {
+-          "thinking": false,
+-          "multimodalToolUse": false
+-        }
+-      },
+-      "auto-gemini-3": {
+-        "displayName": "Auto (Gemini 3)",
+-        "tier": "auto",
+-        "isPreview": true,
+-        "dialogLocation": "main",
+-        "dialogDescription": "Let Gemini CLI decide the best model for the task: gemini-3.1-pro, gemini-3-flash",
+-        "features": {
+-          "thinking": true,
+-          "multimodalToolUse": false
+-        }
+-      },
+-      "auto-gemini-2.5": {
+-        "displayName": "Auto (Gemini 2.5)",
+-        "tier": "auto",
+-        "isPreview": false,
+-        "dialogLocation": "main",
+-        "dialogDescription": "Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash",
+-        "features": {
+-          "thinking": false,
+-          "multimodalToolUse": false
+-        }
+-      }
+-    }
+-    ```
+-
+-  - **Requires restart:** Yes
+-
+ #### `agents`
+ 
+ - **`agents.overrides`** (object):
+@@ -1226,12 +1091,6 @@ their corresponding top-level category object in your `settings.json` file.
+   - **Default:** `false`
+   - **Requires restart:** Yes
+ 
+-- **`experimental.dynamicModelConfiguration`** (boolean):
+-  - **Description:** Enable dynamic model configuration (definitions,
+-    resolutions, and chains) via settings.
+-  - **Default:** `false`
+-  - **Requires restart:** Yes
+-
+ - **`experimental.gemmaModelRouter.enabled`** (boolean):
+   - **Description:** Enable the Gemma Model Router (experimental). Requires a
+     local endpoint serving Gemma via the Gemini API using LiteRT-LM shim.
+diff --git a/docs/tools/mcp-server.md b/docs/tools/mcp-server.md
+index 6b8cd22ac..5cdbbacf1 100644
+--- a/docs/tools/mcp-server.md
++++ b/docs/tools/mcp-server.md
+@@ -729,6 +729,43 @@ tools. The model will automatically:
+ 
+ The MCP integration tracks several states:
+ 
++#### Overriding extension configurations
++
++If an MCP server is provided by an extension (for example, the
++`google-workspace` extension), you can still override its settings in your local
++`settings.json`. Gemini CLI merges your local configuration with the extension's
++defaults:
++
++- **Tool lists:** Tool lists are merged securely to ensure the most restrictive
++  policy wins:
++  - **Exclusions (`excludeTools`):** Arrays are combined (unioned). If either
++    source blocks a tool, it remains disabled.
++  - **Inclusions (`includeTools`):** Arrays are intersected. If both sources
++    provide an allowlist, only tools present in **both** lists are enabled. If
++    only one source provides an allowlist, that list is respected.
++  - **Precedence:** `excludeTools` always takes precedence over `includeTools`.
++
++  This ensures you always have veto power over tools provided by an extension
++  and that an extension cannot re-enable tools you have omitted from your
++  personal allowlist.
++
++- **Environment variables:** The `env` objects are merged. If the same variable
++  is defined in both places, your local value takes precedence.
++- **Scalar properties:** Properties like `command`, `url`, and `timeout` are
++  replaced by your local values if provided.
++
++**Example override:**
++
++```json
++{
++  "mcpServers": {
++    "google-workspace": {
++      "excludeTools": ["gmail.send"]
++    }
++  }
++}
++```
++
+ #### Server status (`MCPServerStatus`)
+ 
+ - **`DISCONNECTED`:** Server is not connected or has errors
+diff --git a/packages/cli/src/acp/acpClient.ts b/packages/cli/src/acp/acpClient.ts
+index 072d91c20..db2d04dab 100644
+--- a/packages/cli/src/acp/acpClient.ts
++++ b/packages/cli/src/acp/acpClient.ts
+@@ -1004,7 +1004,6 @@ export class Session {
+               callId,
+               toolResult.llmContent,
+               this.config.getActiveModel(),
+-              this.config,
+             ),
+             resultDisplay: toolResult.returnDisplay,
+             error: undefined,
+@@ -1018,7 +1017,6 @@ export class Session {
+         callId,
+         toolResult.llmContent,
+         this.config.getActiveModel(),
+-        this.config,
+       );
+     } catch (e) {
+       const error = e instanceof Error ? e : new Error(String(e));
+diff --git a/packages/cli/src/config/config.ts b/packages/cli/src/config/config.ts
+index ab6a22fb6..f89f464ba 100755
+--- a/packages/cli/src/config/config.ts
++++ b/packages/cli/src/config/config.ts
+@@ -849,7 +849,6 @@ export async function loadCliConfig(
+     disableLLMCorrection: settings.tools?.disableLLMCorrection,
+     rawOutput: argv.rawOutput,
+     acceptRawOutputRisk: argv.acceptRawOutputRisk,
+-    dynamicModelConfiguration: settings.experimental?.dynamicModelConfiguration,
+     modelConfigServiceConfig: settings.modelConfigs,
+     // TODO: loading of hooks based on workspace trust
+     enableHooks: settings.hooksConfig.enabled,
+diff --git a/packages/cli/src/config/settingsSchema.ts b/packages/cli/src/config/settingsSchema.ts
+index 87fbe98fc..657d7f61d 100644
+--- a/packages/cli/src/config/settingsSchema.ts
++++ b/packages/cli/src/config/settingsSchema.ts
+@@ -1039,20 +1039,6 @@ const SETTINGS_SCHEMA = {
+           'Apply specific configuration overrides based on matches, with a primary key of model (or alias). The most specific match will be used.',
+         showInDialog: false,
+       },
+-      modelDefinitions: {
+-        type: 'object',
+-        label: 'Model Definitions',
+-        category: 'Model',
+-        requiresRestart: true,
+-        default: DEFAULT_MODEL_CONFIGS.modelDefinitions,
+-        description:
+-          'Registry of model metadata, including tier, family, and features.',
+-        showInDialog: false,
+-        additionalProperties: {
+-          type: 'object',
+-          ref: 'ModelDefinition',
+-        },
+-      },
+     },
+   },
+ 
+@@ -1957,16 +1943,6 @@ const SETTINGS_SCHEMA = {
+           'Enable web fetch behavior that bypasses LLM summarization.',
+         showInDialog: true,
+       },
+-      dynamicModelConfiguration: {
+-        type: 'boolean',
+-        label: 'Dynamic Model Configuration',
+-        category: 'Experimental',
+-        requiresRestart: true,
+-        default: false,
+-        description:
+-          'Enable dynamic model configuration (definitions, resolutions, and chains) via settings.',
+-        showInDialog: false,
+-      },
+       gemmaModelRouter: {
+         type: 'object',
+         label: 'Gemma Model Router',
+@@ -2793,25 +2769,6 @@ export const SETTINGS_SCHEMA_DEFINITIONS: Record<
+       },
+     },
+   },
+-  ModelDefinition: {
+-    type: 'object',
+-    description: 'Model metadata registry entry.',
+-    properties: {
+-      displayName: { type: 'string' },
+-      tier: { enum: ['pro', 'flash', 'flash-lite', 'custom', 'auto'] },
+-      family: { type: 'string' },
+-      isPreview: { type: 'boolean' },
+-      dialogLocation: { enum: ['main', 'manual'] },
+-      dialogDescription: { type: 'string' },
+-      features: {
+-        type: 'object',
+-        properties: {
+-          thinking: { type: 'boolean' },
+-          multimodalToolUse: { type: 'boolean' },
+-        },
+-      },
+-    },
+-  },
+ };
+ 
+ export function getSettingsSchema(): SettingsSchemaType {
+diff --git a/packages/cli/src/ui/components/StatsDisplay.tsx b/packages/cli/src/ui/components/StatsDisplay.tsx
+index 9effb39b5..320203f3d 100644
+--- a/packages/cli/src/ui/components/StatsDisplay.tsx
++++ b/packages/cli/src/ui/components/StatsDisplay.tsx
+@@ -27,7 +27,6 @@ import {
+ } from '../utils/displayUtils.js';
+ import { computeSessionStats } from '../utils/computeStats.js';
+ import {
+-  type Config,
+   type RetrieveUserQuotaResponse,
+   isActiveModel,
+   getDisplayString,
+@@ -89,16 +88,13 @@ const Section: React.FC<SectionProps> = ({ title, children }) => (
+ // Logic for building the unified list of table rows
+ const buildModelRows = (
+   models: Record<string, ModelMetrics>,
+-  config: Config,
+   quotas?: RetrieveUserQuotaResponse,
+   useGemini3_1 = false,
+   useCustomToolModel = false,
+ ) => {
+   const getBaseModelName = (name: string) => name.replace('-001', '');
+   const usedModelNames = new Set(
+-    Object.keys(models)
+-      .map(getBaseModelName)
+-      .map((name) => getDisplayString(name, config)),
++    Object.keys(models).map(getBaseModelName).map(getDisplayString),
+   );
+ 
+   // 1. Models with active usage
+@@ -108,7 +104,7 @@ const buildModelRows = (
+     const inputTokens = metrics.tokens.input;
+     return {
+       key: name,
+-      modelName: getDisplayString(modelName, config),
++      modelName: getDisplayString(modelName),
+       requests: metrics.api.totalRequests,
+       cachedTokens: cachedTokens.toLocaleString(),
+       inputTokens: inputTokens.toLocaleString(),
+@@ -125,11 +121,11 @@ const buildModelRows = (
+         (b) =>
+           b.modelId &&
+           isActiveModel(b.modelId, useGemini3_1, useCustomToolModel) &&
+-          !usedModelNames.has(getDisplayString(b.modelId, config)),
++          !usedModelNames.has(getDisplayString(b.modelId)),
+       )
+       .map((bucket) => ({
+         key: bucket.modelId!,
+-        modelName: getDisplayString(bucket.modelId!, config),
++        modelName: getDisplayString(bucket.modelId!),
+         requests: '-',
+         cachedTokens: '-',
+         inputTokens: '-',
+@@ -143,7 +139,6 @@ const buildModelRows = (
+ 
+ const ModelUsageTable: React.FC<{
+   models: Record<string, ModelMetrics>;
+-  config: Config;
+   quotas?: RetrieveUserQuotaResponse;
+   cacheEfficiency: number;
+   totalCachedTokens: number;
+@@ -155,7 +150,6 @@ const ModelUsageTable: React.FC<{
+   useCustomToolModel?: boolean;
+ }> = ({
+   models,
+-  config,
+   quotas,
+   cacheEfficiency,
+   totalCachedTokens,
+@@ -168,13 +162,7 @@ const ModelUsageTable: React.FC<{
+ }) => {
+   const { stdout } = useStdout();
+   const terminalWidth = stdout?.columns ?? 84;
+-  const rows = buildModelRows(
+-    models,
+-    config,
+-    quotas,
+-    useGemini3_1,
+-    useCustomToolModel,
+-  );
++  const rows = buildModelRows(models, quotas, useGemini3_1, useCustomToolModel);
+ 
+   if (rows.length === 0) {
+     return null;
+@@ -688,7 +676,6 @@ export const StatsDisplay: React.FC<StatsDisplayProps> = ({
+       </Section>
+       <ModelUsageTable
+         models={models}
+-        config={config}
+         quotas={quotas}
+         cacheEfficiency={computed.cacheEfficiency}
+         totalCachedTokens={computed.totalCachedTokens}
+diff --git a/packages/core/src/agents/browser/browserAgentDefinition.ts b/packages/core/src/agents/browser/browserAgentDefinition.ts
+index 0d0f86383..629019ece 100644
+--- a/packages/core/src/agents/browser/browserAgentDefinition.ts
++++ b/packages/core/src/agents/browser/browserAgentDefinition.ts
+@@ -122,7 +122,7 @@ export const BrowserAgentDefinition = (
+ ): LocalAgentDefinition<typeof BrowserTaskResultSchema> => {
+   // Use Preview Flash model if the main model is any of the preview models.
+   // If the main model is not a preview model, use the default flash model.
+-  const model = isPreviewModel(config.getModel(), config)
++  const model = isPreviewModel(config.getModel())
+     ? PREVIEW_GEMINI_FLASH_MODEL
+     : DEFAULT_GEMINI_FLASH_MODEL;
+ 
+diff --git a/packages/core/src/availability/policyHelpers.ts b/packages/core/src/availability/policyHelpers.ts
+index 290c47d89..406abde5e 100644
+--- a/packages/core/src/availability/policyHelpers.ts
++++ b/packages/core/src/availability/policyHelpers.ts
+@@ -54,21 +54,19 @@ export function resolvePolicyChain(
+     useCustomToolModel,
+     hasAccessToPreview,
+   );
+-  const isAutoPreferred = preferredModel
+-    ? isAutoModel(preferredModel, config)
+-    : false;
+-  const isAutoConfigured = isAutoModel(configuredModel, config);
++  const isAutoPreferred = preferredModel ? isAutoModel(preferredModel) : false;
++  const isAutoConfigured = isAutoModel(configuredModel);
+ 
+   if (resolvedModel === DEFAULT_GEMINI_FLASH_LITE_MODEL) {
+     chain = getFlashLitePolicyChain();
+   } else if (
+-    isGemini3Model(resolvedModel, config) ||
++    isGemini3Model(resolvedModel) ||
+     isAutoPreferred ||
+     isAutoConfigured
+   ) {
+     if (hasAccessToPreview) {
+       const previewEnabled =
+-        isGemini3Model(resolvedModel, config) ||
++        isGemini3Model(resolvedModel) ||
+         preferredModel === PREVIEW_GEMINI_MODEL_AUTO ||
+         configuredModel === PREVIEW_GEMINI_MODEL_AUTO;
+       chain = getModelPolicyChain({
+diff --git a/packages/core/src/config/config.ts b/packages/core/src/config/config.ts
+index 31c2128f3..077e13101 100644
+--- a/packages/core/src/config/config.ts
++++ b/packages/core/src/config/config.ts
+@@ -609,7 +609,6 @@ export interface ConfigParameters {
+   disableAlwaysAllow?: boolean;
+   rawOutput?: boolean;
+   acceptRawOutputRisk?: boolean;
+-  dynamicModelConfiguration?: boolean;
+   modelConfigServiceConfig?: ModelConfigServiceConfig;
+   enableHooks?: boolean;
+   enableHooksUI?: boolean;
+@@ -811,7 +810,6 @@ export class Config implements McpContext, AgentLoopContext {
+   private readonly disableAlwaysAllow: boolean;
+   private readonly rawOutput: boolean;
+   private readonly acceptRawOutputRisk: boolean;
+-  private readonly dynamicModelConfiguration: boolean;
+   private pendingIncludeDirectories: string[];
+   private readonly enableHooks: boolean;
+   private readonly enableHooksUI: boolean;
+@@ -959,40 +957,6 @@ export class Config implements McpContext, AgentLoopContext {
+     this.disabledSkills = params.disabledSkills ?? [];
+     this.adminSkillsEnabled = params.adminSkillsEnabled ?? true;
+     this.modelAvailabilityService = new ModelAvailabilityService();
+-    this.dynamicModelConfiguration = params.dynamicModelConfiguration ?? false;
+-
+-    // HACK: The settings loading logic doesn't currently merge the default
+-    // generation config with the user's settings. This means if a user provides
+-    // any `generation` settings (e.g., just `overrides`), the default `aliases`
+-    // are lost. This hack manually merges the default aliases back in if they
+-    // are missing from the user's config.
+-    // TODO(12593): Fix the settings loading logic to properly merge defaults and
+-    // remove this hack.
+-    let modelConfigServiceConfig = params.modelConfigServiceConfig;
+-    if (modelConfigServiceConfig) {
+-      // Ensure user-defined model definitions augment, not replace, the defaults.
+-      const mergedModelDefinitions = {
+-        ...DEFAULT_MODEL_CONFIGS.modelDefinitions,
+-        ...modelConfigServiceConfig.modelDefinitions,
+-      };
+-
+-      modelConfigServiceConfig = {
+-        // Preserve other user settings like customAliases
+-        ...modelConfigServiceConfig,
+-        // Apply defaults for aliases and overrides if they are not provided
+-        aliases:
+-          modelConfigServiceConfig.aliases ?? DEFAULT_MODEL_CONFIGS.aliases,
+-        overrides:
+-          modelConfigServiceConfig.overrides ?? DEFAULT_MODEL_CONFIGS.overrides,
+-        // Use the merged model definitions
+-        modelDefinitions: mergedModelDefinitions,
+-      };
+-    }
+-
+-    this.modelConfigService = new ModelConfigService(
+-      modelConfigServiceConfig ?? DEFAULT_MODEL_CONFIGS,
+-    );
+-
+     this.experimentalJitContext = params.experimentalJitContext ?? false;
+     this.topicUpdateNarration = params.topicUpdateNarration ?? false;
+     this.modelSteering = params.modelSteering ?? false;
+@@ -1049,7 +1013,7 @@ export class Config implements McpContext, AgentLoopContext {
+     this.truncateToolOutputThreshold =
+       params.truncateToolOutputThreshold ??
+       DEFAULT_TRUNCATE_TOOL_OUTPUT_THRESHOLD;
+-    this.useWriteTodos = isPreviewModel(this.model, this)
++    this.useWriteTodos = isPreviewModel(this.model)
+       ? false
+       : (params.useWriteTodos ?? true);
+     this.workspacePoliciesDir = params.workspacePoliciesDir;
+@@ -1167,6 +1131,33 @@ export class Config implements McpContext, AgentLoopContext {
+     this._sandboxManager = createSandboxManager(params.toolSandboxing ?? false);
+     this.shellExecutionConfig.sandboxManager = this._sandboxManager;
+     this.modelRouterService = new ModelRouterService(this);
++
++    // HACK: The settings loading logic doesn't currently merge the default
++    // generation config with the user's settings. This means if a user provides
++    // any `generation` settings (e.g., just `overrides`), the default `aliases`
++    // are lost. This hack manually merges the default aliases back in if they
++    // are missing from the user's config.
++    // TODO(12593): Fix the settings loading logic to properly merge defaults and
++    // remove this hack.
++    let modelConfigServiceConfig = params.modelConfigServiceConfig;
++    if (modelConfigServiceConfig) {
++      if (!modelConfigServiceConfig.aliases) {
++        modelConfigServiceConfig = {
++          ...modelConfigServiceConfig,
++          aliases: DEFAULT_MODEL_CONFIGS.aliases,
++        };
++      }
++      if (!modelConfigServiceConfig.overrides) {
++        modelConfigServiceConfig = {
++          ...modelConfigServiceConfig,
++          overrides: DEFAULT_MODEL_CONFIGS.overrides,
++        };
++      }
++    }
++
++    this.modelConfigService = new ModelConfigService(
++      modelConfigServiceConfig ?? DEFAULT_MODEL_CONFIGS,
++    );
+   }
+ 
+   get config(): Config {
+@@ -1364,10 +1355,7 @@ export class Config implements McpContext, AgentLoopContext {
+ 
+     // Only reset when we have explicit "no access" (hasAccessToPreviewModel === false).
+     // When null (quota not fetched) or true, we preserve the saved model.
+-    if (
+-      isPreviewModel(this.model, this) &&
+-      this.hasAccessToPreviewModel === false
+-    ) {
++    if (isPreviewModel(this.model) && this.hasAccessToPreviewModel === false) {
+       this.setModel(DEFAULT_GEMINI_MODEL_AUTO);
+     }
+ 
+@@ -1639,7 +1627,7 @@ export class Config implements McpContext, AgentLoopContext {
+ 
+     const isPreview =
+       model === PREVIEW_GEMINI_MODEL_AUTO ||
+-      isPreviewModel(this.getActiveModel(), this);
++      isPreviewModel(this.getActiveModel());
+     const proModel = isPreview ? PREVIEW_GEMINI_MODEL : DEFAULT_GEMINI_MODEL;
+     const flashModel = isPreview
+       ? PREVIEW_GEMINI_FLASH_MODEL
+@@ -1837,9 +1825,8 @@ export class Config implements McpContext, AgentLoopContext {
+       }
+ 
+       const hasAccess =
+-        quota.buckets?.some(
+-          (b) => b.modelId && isPreviewModel(b.modelId, this),
+-        ) ?? false;
++        quota.buckets?.some((b) => b.modelId && isPreviewModel(b.modelId)) ??
++        false;
+       this.setHasAccessToPreviewModel(hasAccess);
+       return quota;
+     } catch (e) {
+@@ -2239,10 +2226,6 @@ export class Config implements McpContext, AgentLoopContext {
+     return this.acceptRawOutputRisk;
+   }
+ 
+-  getExperimentalDynamicModelConfiguration(): boolean {
+-    return this.dynamicModelConfiguration;
+-  }
+-
+   getPendingIncludeDirectories(): string[] {
+     return this.pendingIncludeDirectories;
+   }
+diff --git a/packages/core/src/config/defaultModelConfigs.ts b/packages/core/src/config/defaultModelConfigs.ts
+index c0e8b6c6b..5344aa442 100644
+--- a/packages/core/src/config/defaultModelConfigs.ts
++++ b/packages/core/src/config/defaultModelConfigs.ts
+@@ -249,94 +249,4 @@ export const DEFAULT_MODEL_CONFIGS: ModelConfigServiceConfig = {
+       },
+     },
+   ],
+-  modelDefinitions: {
+-    // Concrete Models
+-    'gemini-3.1-pro-preview': {
+-      tier: 'pro',
+-      family: 'gemini-3',
+-      isPreview: true,
+-      dialogLocation: 'manual',
+-      features: { thinking: true, multimodalToolUse: true },
+-    },
+-    'gemini-3.1-pro-preview-customtools': {
+-      tier: 'pro',
+-      family: 'gemini-3',
+-      isPreview: true,
+-      features: { thinking: true, multimodalToolUse: true },
+-    },
+-    'gemini-3-pro-preview': {
+-      tier: 'pro',
+-      family: 'gemini-3',
+-      isPreview: true,
+-      dialogLocation: 'manual',
+-      features: { thinking: true, multimodalToolUse: true },
+-    },
+-    'gemini-3-flash-preview': {
+-      tier: 'flash',
+-      family: 'gemini-3',
+-      isPreview: true,
+-      dialogLocation: 'manual',
+-      features: { thinking: false, multimodalToolUse: true },
+-    },
+-    'gemini-2.5-pro': {
+-      tier: 'pro',
+-      family: 'gemini-2.5',
+-      isPreview: false,
+-      dialogLocation: 'manual',
+-      features: { thinking: false, multimodalToolUse: false },
+-    },
+-    'gemini-2.5-flash': {
+-      tier: 'flash',
+-      family: 'gemini-2.5',
+-      isPreview: false,
+-      dialogLocation: 'manual',
+-      features: { thinking: false, multimodalToolUse: false },
+-    },
+-    'gemini-2.5-flash-lite': {
+-      tier: 'flash-lite',
+-      family: 'gemini-2.5',
+-      isPreview: false,
+-      dialogLocation: 'manual',
+-      features: { thinking: false, multimodalToolUse: false },
+-    },
+-    // Aliases
+-    auto: {
+-      tier: 'auto',
+-      isPreview: true,
+-      features: { thinking: true, multimodalToolUse: false },
+-    },
+-    pro: {
+-      tier: 'pro',
+-      isPreview: false,
+-      features: { thinking: true, multimodalToolUse: false },
+-    },
+-    flash: {
+-      tier: 'flash',
+-      isPreview: false,
+-      features: { thinking: false, multimodalToolUse: false },
+-    },
+-    'flash-lite': {
+-      tier: 'flash-lite',
+-      isPreview: false,
+-      features: { thinking: false, multimodalToolUse: false },
+-    },
+-    'auto-gemini-3': {
+-      displayName: 'Auto (Gemini 3)',
+-      tier: 'auto',
+-      isPreview: true,
+-      dialogLocation: 'main',
+-      dialogDescription:
+-        'Let Gemini CLI decide the best model for the task: gemini-3.1-pro, gemini-3-flash',
+-      features: { thinking: true, multimodalToolUse: false },
+-    },
+-    'auto-gemini-2.5': {
+-      displayName: 'Auto (Gemini 2.5)',
+-      tier: 'auto',
+-      isPreview: false,
+-      dialogLocation: 'main',
+-      dialogDescription:
+-        'Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash',
+-      features: { thinking: false, multimodalToolUse: false },
+-    },
+-  },
+ };
+diff --git a/packages/core/src/config/models.test.ts b/packages/core/src/config/models.test.ts
+index 26da6ca1c..d62827ed9 100644
+--- a/packages/core/src/config/models.test.ts
++++ b/packages/core/src/config/models.test.ts
+@@ -31,96 +31,6 @@ import {
+   isPreviewModel,
+   isProModel,
+ } from './models.js';
+-import type { Config } from './config.js';
+-import { ModelConfigService } from '../services/modelConfigService.js';
+-import { DEFAULT_MODEL_CONFIGS } from './defaultModelConfigs.js';
+-
+-const modelConfigService = new ModelConfigService(DEFAULT_MODEL_CONFIGS);
+-
+-const dynamicConfig = {
+-  getExperimentalDynamicModelConfiguration: () => true,
+-  modelConfigService,
+-} as unknown as Config;
+-
+-const legacyConfig = {
+-  getExperimentalDynamicModelConfiguration: () => false,
+-  modelConfigService,
+-} as unknown as Config;
+-
+-describe('Dynamic Configuration Parity', () => {
+-  const modelsToTest = [
+-    GEMINI_MODEL_ALIAS_AUTO,
+-    GEMINI_MODEL_ALIAS_PRO,
+-    GEMINI_MODEL_ALIAS_FLASH,
+-    PREVIEW_GEMINI_MODEL_AUTO,
+-    DEFAULT_GEMINI_MODEL_AUTO,
+-    PREVIEW_GEMINI_MODEL,
+-    DEFAULT_GEMINI_MODEL,
+-    'custom-model',
+-  ];
+-
+-  it('getDisplayString should match legacy behavior', () => {
+-    for (const model of modelsToTest) {
+-      const legacy = getDisplayString(model, legacyConfig);
+-      const dynamic = getDisplayString(model, dynamicConfig);
+-      expect(dynamic).toBe(legacy);
+-    }
+-  });
+-
+-  it('isPreviewModel should match legacy behavior', () => {
+-    const allModels = [
+-      ...modelsToTest,
+-      PREVIEW_GEMINI_3_1_MODEL,
+-      PREVIEW_GEMINI_3_1_CUSTOM_TOOLS_MODEL,
+-      PREVIEW_GEMINI_FLASH_MODEL,
+-    ];
+-    for (const model of allModels) {
+-      const legacy = isPreviewModel(model, legacyConfig);
+-      const dynamic = isPreviewModel(model, dynamicConfig);
+-      expect(dynamic).toBe(legacy);
+-    }
+-  });
+-
+-  it('isProModel should match legacy behavior', () => {
+-    for (const model of modelsToTest) {
+-      const legacy = isProModel(model, legacyConfig);
+-      const dynamic = isProModel(model, dynamicConfig);
+-      expect(dynamic).toBe(legacy);
+-    }
+-  });
+-
+-  it('isGemini3Model should match legacy behavior', () => {
+-    for (const model of modelsToTest) {
+-      const legacy = isGemini3Model(model, legacyConfig);
+-      const dynamic = isGemini3Model(model, dynamicConfig);
+-      expect(dynamic).toBe(legacy);
+-    }
+-  });
+-
+-  it('isCustomModel should match legacy behavior', () => {
+-    for (const model of modelsToTest) {
+-      const legacy = isCustomModel(model, legacyConfig);
+-      const dynamic = isCustomModel(model, dynamicConfig);
+-      expect(dynamic).toBe(legacy);
+-    }
+-  });
+-
+-  it('supportsModernFeatures should match legacy behavior', () => {
+-    for (const model of modelsToTest) {
+-      const legacy = supportsModernFeatures(model);
+-      const dynamic = supportsModernFeatures(model);
+-      expect(dynamic).toBe(legacy);
+-    }
+-  });
+-
+-  it('supportsMultimodalFunctionResponse should match legacy behavior', () => {
+-    for (const model of modelsToTest) {
+-      const legacy = supportsMultimodalFunctionResponse(model, legacyConfig);
+-      const dynamic = supportsMultimodalFunctionResponse(model, dynamicConfig);
+-      expect(dynamic).toBe(legacy);
+-    }
+-  });
+-});
+ 
+ describe('isPreviewModel', () => {
+   it('should return true for preview models', () => {
+diff --git a/packages/core/src/config/models.ts b/packages/core/src/config/models.ts
+index 73eab4633..ffbf59779 100644
+--- a/packages/core/src/config/models.ts
++++ b/packages/core/src/config/models.ts
+@@ -4,33 +4,6 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-/**
+- * Interface for the ModelConfigService to break circular dependencies.
+- */
+-export interface IModelConfigService {
+-  getModelDefinition(modelId: string):
+-    | {
+-        tier?: string;
+-        family?: string;
+-        isPreview?: boolean;
+-        displayName?: string;
+-        features?: {
+-          thinking?: boolean;
+-          multimodalToolUse?: boolean;
+-        };
+-      }
+-    | undefined;
+-}
+-
+-/**
+- * Interface defining the minimal configuration required for model capability checks.
+- * This helps break circular dependencies between Config and models.ts.
+- */
+-export interface ModelCapabilityContext {
+-  readonly modelConfigService: IModelConfigService;
+-  getExperimentalDynamicModelConfiguration(): boolean;
+-}
+-
+ export const PREVIEW_GEMINI_MODEL = 'gemini-3-pro-preview';
+ export const PREVIEW_GEMINI_3_1_MODEL = 'gemini-3.1-pro-preview';
+ export const PREVIEW_GEMINI_3_1_CUSTOM_TOOLS_MODEL =
+@@ -166,17 +139,7 @@ export function resolveClassifierModel(
+   }
+   return resolveModel(requestedModel, useGemini3_1, useCustomToolModel);
+ }
+-export function getDisplayString(
+-  model: string,
+-  config?: ModelCapabilityContext,
+-) {
+-  if (config?.getExperimentalDynamicModelConfiguration?.() === true) {
+-    const definition = config.modelConfigService.getModelDefinition(model);
+-    if (definition?.displayName) {
+-      return definition.displayName;
+-    }
+-  }
+-
++export function getDisplayString(model: string) {
+   switch (model) {
+     case PREVIEW_GEMINI_MODEL_AUTO:
+       return 'Auto (Gemini 3)';
+@@ -197,19 +160,9 @@ export function getDisplayString(
+  * Checks if the model is a preview model.
+  *
+  * @param model The model name to check.
+- * @param config Optional config object for dynamic model configuration.
+  * @returns True if the model is a preview model.
+  */
+-export function isPreviewModel(
+-  model: string,
+-  config?: ModelCapabilityContext,
+-): boolean {
+-  if (config?.getExperimentalDynamicModelConfiguration?.() === true) {
+-    return (
+-      config.modelConfigService.getModelDefinition(model)?.isPreview === true
+-    );
+-  }
+-
++export function isPreviewModel(model: string): boolean {
+   return (
+     model === PREVIEW_GEMINI_MODEL ||
+     model === PREVIEW_GEMINI_3_1_MODEL ||
+@@ -224,16 +177,9 @@ export function isPreviewModel(
+  * Checks if the model is a Pro model.
+  *
+  * @param model The model name to check.
+- * @param config Optional config object for dynamic model configuration.
+  * @returns True if the model is a Pro model.
+  */
+-export function isProModel(
+-  model: string,
+-  config?: ModelCapabilityContext,
+-): boolean {
+-  if (config?.getExperimentalDynamicModelConfiguration?.() === true) {
+-    return config.modelConfigService.getModelDefinition(model)?.tier === 'pro';
+-  }
++export function isProModel(model: string): boolean {
+   return model.toLowerCase().includes('pro');
+ }
+ 
+@@ -241,22 +187,9 @@ export function isProModel(
+  * Checks if the model is a Gemini 3 model.
+  *
+  * @param model The model name to check.
+- * @param config Optional config object for dynamic model configuration.
+  * @returns True if the model is a Gemini 3 model.
+  */
+-export function isGemini3Model(
+-  model: string,
+-  config?: ModelCapabilityContext,
+-): boolean {
+-  if (config?.getExperimentalDynamicModelConfiguration?.() === true) {
+-    // Legacy behavior resolves the model first.
+-    const resolved = resolveModel(model);
+-    return (
+-      config.modelConfigService.getModelDefinition(resolved)?.family ===
+-      'gemini-3'
+-    );
+-  }
+-
++export function isGemini3Model(model: string): boolean {
+   const resolved = resolveModel(model);
+   return /^gemini-3(\.|-|$)/.test(resolved);
+ }
+@@ -268,8 +201,6 @@ export function isGemini3Model(
+  * @returns True if the model is a Gemini-2.x model.
+  */
+ export function isGemini2Model(model: string): boolean {
+-  // This is legacy behavior, will remove this when gemini 2 models are no
+-  // longer needed.
+   return /^gemini-2(\.|$)/.test(model);
+ }
+ 
+@@ -277,20 +208,9 @@ export function isGemini2Model(model: string): boolean {
+  * Checks if the model is a "custom" model (not Gemini branded).
+  *
+  * @param model The model name to check.
+- * @param config Optional config object for dynamic model configuration.
+  * @returns True if the model is not a Gemini branded model.
+  */
+-export function isCustomModel(
+-  model: string,
+-  config?: ModelCapabilityContext,
+-): boolean {
+-  if (config?.getExperimentalDynamicModelConfiguration?.() === true) {
+-    const resolved = resolveModel(model);
+-    return (
+-      config.modelConfigService.getModelDefinition(resolved)?.tier ===
+-        'custom' || !resolved.startsWith('gemini-')
+-    );
+-  }
++export function isCustomModel(model: string): boolean {
+   const resolved = resolveModel(model);
+   return !resolved.startsWith('gemini-');
+ }
+@@ -311,16 +231,9 @@ export function supportsModernFeatures(model: string): boolean {
+  * Checks if the model is an auto model.
+  *
+  * @param model The model name to check.
+- * @param config Optional config object for dynamic model configuration.
+  * @returns True if the model is an auto model.
+  */
+-export function isAutoModel(
+-  model: string,
+-  config?: ModelCapabilityContext,
+-): boolean {
+-  if (config?.getExperimentalDynamicModelConfiguration?.() === true) {
+-    return config.modelConfigService.getModelDefinition(model)?.tier === 'auto';
+-  }
++export function isAutoModel(model: string): boolean {
+   return (
+     model === GEMINI_MODEL_ALIAS_AUTO ||
+     model === PREVIEW_GEMINI_MODEL_AUTO ||
+@@ -335,16 +248,7 @@ export function isAutoModel(
+  * @param model The model name to check.
+  * @returns True if the model supports multimodal function responses.
+  */
+-export function supportsMultimodalFunctionResponse(
+-  model: string,
+-  config?: ModelCapabilityContext,
+-): boolean {
+-  if (config?.getExperimentalDynamicModelConfiguration?.() === true) {
+-    return (
+-      config.modelConfigService.getModelDefinition(model)?.features
+-        ?.multimodalToolUse === true
+-    );
+-  }
++export function supportsMultimodalFunctionResponse(model: string): boolean {
+   return model.startsWith('gemini-3-');
+ }
+ 
+diff --git a/packages/core/src/routing/strategies/approvalModeStrategy.ts b/packages/core/src/routing/strategies/approvalModeStrategy.ts
+index b7565f6dc..403a4c317 100644
+--- a/packages/core/src/routing/strategies/approvalModeStrategy.ts
++++ b/packages/core/src/routing/strategies/approvalModeStrategy.ts
+@@ -36,7 +36,7 @@ export class ApprovalModeStrategy implements RoutingStrategy {
+     const model = context.requestedModel ?? config.getModel();
+ 
+     // This strategy only applies to "auto" models.
+-    if (!isAutoModel(model, config)) {
++    if (!isAutoModel(model)) {
+       return null;
+     }
+ 
+diff --git a/packages/core/src/routing/strategies/classifierStrategy.ts b/packages/core/src/routing/strategies/classifierStrategy.ts
+index 3532e34c6..2040e7ecc 100644
+--- a/packages/core/src/routing/strategies/classifierStrategy.ts
++++ b/packages/core/src/routing/strategies/classifierStrategy.ts
+@@ -139,7 +139,7 @@ export class ClassifierStrategy implements RoutingStrategy {
+       const model = context.requestedModel ?? config.getModel();
+       if (
+         (await config.getNumericalRoutingEnabled()) &&
+-        isGemini3Model(model, config)
++        isGemini3Model(model)
+       ) {
+         return null;
+       }
+diff --git a/packages/core/src/routing/strategies/numericalClassifierStrategy.ts b/packages/core/src/routing/strategies/numericalClassifierStrategy.ts
+index a97180c8e..c86576d6c 100644
+--- a/packages/core/src/routing/strategies/numericalClassifierStrategy.ts
++++ b/packages/core/src/routing/strategies/numericalClassifierStrategy.ts
+@@ -109,7 +109,7 @@ export class NumericalClassifierStrategy implements RoutingStrategy {
+         return null;
+       }
+ 
+-      if (!isGemini3Model(model, config)) {
++      if (!isGemini3Model(model)) {
+         return null;
+       }
+ 
+diff --git a/packages/core/src/routing/strategies/overrideStrategy.ts b/packages/core/src/routing/strategies/overrideStrategy.ts
+index 37e23e188..9a89d2af7 100644
+--- a/packages/core/src/routing/strategies/overrideStrategy.ts
++++ b/packages/core/src/routing/strategies/overrideStrategy.ts
+@@ -29,7 +29,7 @@ export class OverrideStrategy implements RoutingStrategy {
+     const overrideModel = context.requestedModel ?? config.getModel();
+ 
+     // If the model is 'auto' we should pass to the next strategy.
+-    if (isAutoModel(overrideModel, config)) {
++    if (isAutoModel(overrideModel)) {
+       return null;
+     }
+ 
+diff --git a/packages/core/src/scheduler/tool-executor.ts b/packages/core/src/scheduler/tool-executor.ts
+index 83d77c5a0..4c7ef2ee0 100644
+--- a/packages/core/src/scheduler/tool-executor.ts
++++ b/packages/core/src/scheduler/tool-executor.ts
+@@ -296,7 +296,6 @@ export class ToolExecutor {
+         call.request.callId,
+         output,
+         this.config.getActiveModel(),
+-        this.config,
+       );
+ 
+       // Inject the cancellation error into the response object
+@@ -353,7 +352,6 @@ export class ToolExecutor {
+       callId,
+       content,
+       this.config.getActiveModel(),
+-      this.config,
+     );
+ 
+     const successResponse: ToolCallResponseInfo = {
+diff --git a/packages/core/src/services/modelConfigService.ts b/packages/core/src/services/modelConfigService.ts
+index 299912911..5142411be 100644
+--- a/packages/core/src/services/modelConfigService.ts
++++ b/packages/core/src/services/modelConfigService.ts
+@@ -51,34 +51,11 @@ export interface ModelConfigAlias {
+   modelConfig: ModelConfig;
+ }
+ 
+-// A model definition is a mapping from a model name to a list of features
+-// that the model supports. Model names can be either direct model IDs
+-// (gemini-2.5-pro) or aliases (auto).
+-export interface ModelDefinition {
+-  displayName?: string;
+-  tier?: string; // 'pro' | 'flash' | 'flash-lite' | 'custom' | 'auto'
+-  family?: string; // The gemini family, e.g. 'gemini-3' | 'gemini-2'
+-  isPreview?: boolean;
+-  // Specifies which view the model should appear in. If unset, the model will
+-  // not appear in the dialog.
+-  dialogLocation?: 'main' | 'manual';
+-  /** A short description of the model for the dialog. */
+-  dialogDescription?: string;
+-  features?: {
+-    // Whether the model supports thinking.
+-    thinking?: boolean;
+-    // Whether the model supports mutlimodal function responses. This is
+-    // supported in Gemini 3.
+-    multimodalToolUse?: boolean;
+-  };
+-}
+-
+ export interface ModelConfigServiceConfig {
+   aliases?: Record<string, ModelConfigAlias>;
+   customAliases?: Record<string, ModelConfigAlias>;
+   overrides?: ModelConfigOverride[];
+   customOverrides?: ModelConfigOverride[];
+-  modelDefinitions?: Record<string, ModelDefinition>;
+ }
+ 
+ const MAX_ALIAS_CHAIN_DEPTH = 100;
+@@ -99,28 +76,6 @@ export class ModelConfigService {
+   // TODO(12597): Process config to build a typed alias hierarchy.
+   constructor(private readonly config: ModelConfigServiceConfig) {}
+ 
+-  getModelDefinition(modelId: string): ModelDefinition | undefined {
+-    const definition = this.config.modelDefinitions?.[modelId];
+-    if (definition) {
+-      return definition;
+-    }
+-
+-    // For unknown models, return an implicit custom definition to match legacy behavior.
+-    if (!modelId.startsWith('gemini-')) {
+-      return {
+-        tier: 'custom',
+-        family: 'custom',
+-        features: {},
+-      };
+-    }
+-
+-    return undefined;
+-  }
+-
+-  getModelDefinitions(): Record<string, ModelDefinition> {
+-    return this.config.modelDefinitions ?? {};
+-  }
+-
+   registerRuntimeModelConfig(aliasName: string, alias: ModelConfigAlias): void {
+     this.runtimeAliases[aliasName] = alias;
+   }
+diff --git a/packages/core/src/tools/mcp-client-manager.ts b/packages/core/src/tools/mcp-client-manager.ts
+index 43ea9715b..b1b5cd5af 100644
+--- a/packages/core/src/tools/mcp-client-manager.ts
++++ b/packages/core/src/tools/mcp-client-manager.ts
+@@ -257,14 +257,62 @@ export class McpClientManager {
+     }
+   }
+ 
++  /**
++   * Merges two MCP configurations. The second configuration (override)
++   * takes precedence for scalar properties, but array properties are
++   * merged securely (exclude = union, include = intersection) and
++   * environment objects are merged.
++   */
++  private mergeMcpConfigs(
++    base: MCPServerConfig,
++    override: MCPServerConfig,
++  ): MCPServerConfig {
++    // For allowlists (includeTools), use intersection to ensure the most
++    // restrictive policy wins. A tool must be allowed by BOTH parties.
++    let includeTools: string[] | undefined;
++    if (base.includeTools && override.includeTools) {
++      includeTools = base.includeTools.filter((t) =>
++        override.includeTools!.includes(t),
++      );
++      // If the intersection is empty, we must keep an empty array to indicate
++      // that NO tools are allowed (undefined would allow everything).
++    } else {
++      // If only one provides an allowlist, use that.
++      includeTools = override.includeTools ?? base.includeTools;
++    }
++
++    // For blocklists (excludeTools), use union so if ANY party blocks it,
++    // it stays blocked.
++    const excludeTools = [
++      ...new Set([
++        ...(base.excludeTools ?? []),
++        ...(override.excludeTools ?? []),
++      ]),
++    ];
++
++    const env = { ...(base.env ?? {}), ...(override.env ?? {}) };
++
++    return {
++      ...base,
++      ...override,
++      includeTools,
++      excludeTools: excludeTools.length > 0 ? excludeTools : undefined,
++      env: Object.keys(env).length > 0 ? env : undefined,
++      extension: override.extension ?? base.extension,
++    };
++  }
++
+   async maybeDiscoverMcpServer(
+     name: string,
+     config: MCPServerConfig,
+   ): Promise<void> {
+     const existing = this.clients.get(name);
++    const existingConfig = existing?.getServerConfig();
+     if (
+       existing &&
+-      existing.getServerConfig().extension?.id !== config.extension?.id
++      existingConfig?.extension?.id &&
++      config.extension?.id &&
++      existingConfig.extension.id !== config.extension.id
+     ) {
+       const extensionText = config.extension
+         ? ` from extension "${config.extension.name}"`
+@@ -275,15 +323,28 @@ export class McpClientManager {
+       return;
+     }
+ 
++    let finalConfig = config;
++    if (existing && existingConfig) {
++      // If we're merging an extension config into a user config,
++      // the user config should be the override.
++      if (config.extension && !existingConfig.extension) {
++        finalConfig = this.mergeMcpConfigs(config, existingConfig);
++      } else {
++        // Otherwise (User over Extension, or User over User),
++        // the incoming config is the override.
++        finalConfig = this.mergeMcpConfigs(existingConfig, config);
++      }
++    }
++
+     // Always track server config for UI display
+-    this.allServerConfigs.set(name, config);
++    this.allServerConfigs.set(name, finalConfig);
+ 
+     // Check if blocked by admin settings (allowlist/excludelist)
+     if (this.isBlockedBySettings(name)) {
+       if (!this.blockedMcpServers.find((s) => s.name === name)) {
+         this.blockedMcpServers?.push({
+           name,
+-          extensionName: config.extension?.name ?? '',
++          extensionName: finalConfig.extension?.name ?? '',
+         });
+       }
+       return;
+@@ -298,7 +359,7 @@ export class McpClientManager {
+     if (!this.cliConfig.isTrustedFolder()) {
+       return;
+     }
+-    if (config.extension && !config.extension.isActive) {
++    if (finalConfig.extension && !finalConfig.extension.isActive) {
+       return;
+     }
+ 
+@@ -312,7 +373,7 @@ export class McpClientManager {
+ 
+           const client = new McpClient(
+             name,
+-            config,
++            finalConfig,
+             this.toolRegistry,
+             this.cliConfig.getPromptRegistry(),
+             this.cliConfig.getResourceRegistry(),
+diff --git a/packages/core/src/utils/generateContentResponseUtilities.ts b/packages/core/src/utils/generateContentResponseUtilities.ts
+index 3b27dd372..fdd5dff81 100644
+--- a/packages/core/src/utils/generateContentResponseUtilities.ts
++++ b/packages/core/src/utils/generateContentResponseUtilities.ts
+@@ -13,7 +13,6 @@ import type {
+ import { getResponseText } from './partUtils.js';
+ import { supportsMultimodalFunctionResponse } from '../config/models.js';
+ import { debugLogger } from './debugLogger.js';
+-import type { Config } from '../config/config.js';
+ 
+ /**
+  * Formats tool output for a Gemini FunctionResponse.
+@@ -49,7 +48,6 @@ export function convertToFunctionResponse(
+   callId: string,
+   llmContent: PartListUnion,
+   model: string,
+-  config?: Config,
+ ): Part[] {
+   if (typeof llmContent === 'string') {
+     return [createFunctionResponsePart(callId, toolName, llmContent)];
+@@ -98,10 +96,7 @@ export function convertToFunctionResponse(
+     },
+   };
+ 
+-  const isMultimodalFRSupported = supportsMultimodalFunctionResponse(
+-    model,
+-    config,
+-  );
++  const isMultimodalFRSupported = supportsMultimodalFunctionResponse(model);
+   const siblingParts: Part[] = [...fileDataParts];
+ 
+   if (inlineDataParts.length > 0) {
+diff --git a/schemas/settings.schema.json b/schemas/settings.schema.json
+index f482053d9..aeed9af41 100644
+--- a/schemas/settings.schema.json
++++ b/schemas/settings.schema.json
+@@ -629,7 +629,7 @@
+     "modelConfigs": {
+       "title": "Model Configs",
+       "description": "Model configurations.",
+-      "markdownDescription": "Model configurations.\n\n- Category: `Model`\n- Requires restart: `no`\n- Default: `{\n  \"aliases\": {\n    \"base\": {\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"temperature\": 0,\n          \"topP\": 1\n        }\n      }\n    },\n    \"chat-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"includeThoughts\": true\n          },\n          \"temperature\": 1,\n          \"topP\": 0.95,\n          \"topK\": 64\n        }\n      }\n    },\n    \"chat-base-2.5\": {\n      \"extends\": \"chat-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 8192\n          }\n        }\n      }\n    },\n    \"chat-base-3\": {\n      \"extends\": \"chat-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingLevel\": \"HIGH\"\n          }\n        }\n      }\n    },\n    \"gemini-3-pro-preview\": {\n      \"extends\": \"chat-base-3\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"gemini-3-flash-preview\": {\n      \"extends\": \"chat-base-3\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"gemini-2.5-pro\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-pro\"\n      }\n    },\n    \"gemini-2.5-flash\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"gemini-2.5-flash-lite\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\"\n      }\n    },\n    \"gemini-2.5-flash-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"gemini-3-flash-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"classifier\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 1024,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 512\n          }\n        }\n      }\n    },\n    \"prompt-completion\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"temperature\": 0.3,\n          \"maxOutputTokens\": 16000,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"fast-ack-helper\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"temperature\": 0.2,\n          \"maxOutputTokens\": 120,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"edit-corrector\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"summarizer-default\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 2000\n        }\n      }\n    },\n    \"summarizer-shell\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 2000\n        }\n      }\n    },\n    \"web-search\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"tools\": [\n            {\n              \"googleSearch\": {}\n            }\n          ]\n        }\n      }\n    },\n    \"web-fetch\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"tools\": [\n            {\n              \"urlContext\": {}\n            }\n          ]\n        }\n      }\n    },\n    \"web-fetch-fallback\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"loop-detection\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"loop-detection-double-check\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"llm-edit-fixer\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"next-speaker-checker\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"chat-compression-3-pro\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"chat-compression-3-flash\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"chat-compression-2.5-pro\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-pro\"\n      }\n    },\n    \"chat-compression-2.5-flash\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"chat-compression-2.5-flash-lite\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\"\n      }\n    },\n    \"chat-compression-default\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    }\n  },\n  \"overrides\": [\n    {\n      \"match\": {\n        \"model\": \"chat-base\",\n        \"isRetry\": true\n      },\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"temperature\": 1\n        }\n      }\n    }\n  ],\n  \"modelDefinitions\": {\n    \"gemini-3.1-pro-preview\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"dialogLocation\": \"manual\",\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3.1-pro-preview-customtools\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3-pro-preview\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"dialogLocation\": \"manual\",\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3-flash-preview\": {\n      \"tier\": \"flash\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"dialogLocation\": \"manual\",\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-2.5-pro\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"dialogLocation\": \"manual\",\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"gemini-2.5-flash\": {\n      \"tier\": \"flash\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"dialogLocation\": \"manual\",\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"gemini-2.5-flash-lite\": {\n      \"tier\": \"flash-lite\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"dialogLocation\": \"manual\",\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto\": {\n      \"tier\": \"auto\",\n      \"isPreview\": true,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"pro\": {\n      \"tier\": \"pro\",\n      \"isPreview\": false,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"flash\": {\n      \"tier\": \"flash\",\n      \"isPreview\": false,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"flash-lite\": {\n      \"tier\": \"flash-lite\",\n      \"isPreview\": false,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto-gemini-3\": {\n      \"displayName\": \"Auto (Gemini 3)\",\n      \"tier\": \"auto\",\n      \"isPreview\": true,\n      \"dialogLocation\": \"main\",\n      \"dialogDescription\": \"Let Gemini CLI decide the best model for the task: gemini-3.1-pro, gemini-3-flash\",\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto-gemini-2.5\": {\n      \"displayName\": \"Auto (Gemini 2.5)\",\n      \"tier\": \"auto\",\n      \"isPreview\": false,\n      \"dialogLocation\": \"main\",\n      \"dialogDescription\": \"Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash\",\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    }\n  }\n}`",
++      "markdownDescription": "Model configurations.\n\n- Category: `Model`\n- Requires restart: `no`\n- Default: `{\n  \"aliases\": {\n    \"base\": {\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"temperature\": 0,\n          \"topP\": 1\n        }\n      }\n    },\n    \"chat-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"includeThoughts\": true\n          },\n          \"temperature\": 1,\n          \"topP\": 0.95,\n          \"topK\": 64\n        }\n      }\n    },\n    \"chat-base-2.5\": {\n      \"extends\": \"chat-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 8192\n          }\n        }\n      }\n    },\n    \"chat-base-3\": {\n      \"extends\": \"chat-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingLevel\": \"HIGH\"\n          }\n        }\n      }\n    },\n    \"gemini-3-pro-preview\": {\n      \"extends\": \"chat-base-3\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"gemini-3-flash-preview\": {\n      \"extends\": \"chat-base-3\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"gemini-2.5-pro\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-pro\"\n      }\n    },\n    \"gemini-2.5-flash\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"gemini-2.5-flash-lite\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\"\n      }\n    },\n    \"gemini-2.5-flash-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"gemini-3-flash-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"classifier\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 1024,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 512\n          }\n        }\n      }\n    },\n    \"prompt-completion\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"temperature\": 0.3,\n          \"maxOutputTokens\": 16000,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"fast-ack-helper\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"temperature\": 0.2,\n          \"maxOutputTokens\": 120,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"edit-corrector\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"summarizer-default\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 2000\n        }\n      }\n    },\n    \"summarizer-shell\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 2000\n        }\n      }\n    },\n    \"web-search\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"tools\": [\n            {\n              \"googleSearch\": {}\n            }\n          ]\n        }\n      }\n    },\n    \"web-fetch\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"tools\": [\n            {\n              \"urlContext\": {}\n            }\n          ]\n        }\n      }\n    },\n    \"web-fetch-fallback\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"loop-detection\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"loop-detection-double-check\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"llm-edit-fixer\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"next-speaker-checker\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"chat-compression-3-pro\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"chat-compression-3-flash\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"chat-compression-2.5-pro\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-pro\"\n      }\n    },\n    \"chat-compression-2.5-flash\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"chat-compression-2.5-flash-lite\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\"\n      }\n    },\n    \"chat-compression-default\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    }\n  },\n  \"overrides\": [\n    {\n      \"match\": {\n        \"model\": \"chat-base\",\n        \"isRetry\": true\n      },\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"temperature\": 1\n        }\n      }\n    }\n  ]\n}`",
+       "default": {
+         "aliases": {
+           "base": {
+@@ -871,132 +871,7 @@
+               }
+             }
+           }
+-        ],
+-        "modelDefinitions": {
+-          "gemini-3.1-pro-preview": {
+-            "tier": "pro",
+-            "family": "gemini-3",
+-            "isPreview": true,
+-            "dialogLocation": "manual",
+-            "features": {
+-              "thinking": true,
+-              "multimodalToolUse": true
+-            }
+-          },
+-          "gemini-3.1-pro-preview-customtools": {
+-            "tier": "pro",
+-            "family": "gemini-3",
+-            "isPreview": true,
+-            "features": {
+-              "thinking": true,
+-              "multimodalToolUse": true
+-            }
+-          },
+-          "gemini-3-pro-preview": {
+-            "tier": "pro",
+-            "family": "gemini-3",
+-            "isPreview": true,
+-            "dialogLocation": "manual",
+-            "features": {
+-              "thinking": true,
+-              "multimodalToolUse": true
+-            }
+-          },
+-          "gemini-3-flash-preview": {
+-            "tier": "flash",
+-            "family": "gemini-3",
+-            "isPreview": true,
+-            "dialogLocation": "manual",
+-            "features": {
+-              "thinking": false,
+-              "multimodalToolUse": true
+-            }
+-          },
+-          "gemini-2.5-pro": {
+-            "tier": "pro",
+-            "family": "gemini-2.5",
+-            "isPreview": false,
+-            "dialogLocation": "manual",
+-            "features": {
+-              "thinking": false,
+-              "multimodalToolUse": false
+-            }
+-          },
+-          "gemini-2.5-flash": {
+-            "tier": "flash",
+-            "family": "gemini-2.5",
+-            "isPreview": false,
+-            "dialogLocation": "manual",
+-            "features": {
+-              "thinking": false,
+-              "multimodalToolUse": false
+-            }
+-          },
+-          "gemini-2.5-flash-lite": {
+-            "tier": "flash-lite",
+-            "family": "gemini-2.5",
+-            "isPreview": false,
+-            "dialogLocation": "manual",
+-            "features": {
+-              "thinking": false,
+-              "multimodalToolUse": false
+-            }
+-          },
+-          "auto": {
+-            "tier": "auto",
+-            "isPreview": true,
+-            "features": {
+-              "thinking": true,
+-              "multimodalToolUse": false
+-            }
+-          },
+-          "pro": {
+-            "tier": "pro",
+-            "isPreview": false,
+-            "features": {
+-              "thinking": true,
+-              "multimodalToolUse": false
+-            }
+-          },
+-          "flash": {
+-            "tier": "flash",
+-            "isPreview": false,
+-            "features": {
+-              "thinking": false,
+-              "multimodalToolUse": false
+-            }
+-          },
+-          "flash-lite": {
+-            "tier": "flash-lite",
+-            "isPreview": false,
+-            "features": {
+-              "thinking": false,
+-              "multimodalToolUse": false
+-            }
+-          },
+-          "auto-gemini-3": {
+-            "displayName": "Auto (Gemini 3)",
+-            "tier": "auto",
+-            "isPreview": true,
+-            "dialogLocation": "main",
+-            "dialogDescription": "Let Gemini CLI decide the best model for the task: gemini-3.1-pro, gemini-3-flash",
+-            "features": {
+-              "thinking": true,
+-              "multimodalToolUse": false
+-            }
+-          },
+-          "auto-gemini-2.5": {
+-            "displayName": "Auto (Gemini 2.5)",
+-            "tier": "auto",
+-            "isPreview": false,
+-            "dialogLocation": "main",
+-            "dialogDescription": "Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash",
+-            "features": {
+-              "thinking": false,
+-              "multimodalToolUse": false
+-            }
+-          }
+-        }
++        ]
+       },
+       "type": "object",
+       "properties": {
+@@ -1258,140 +1133,6 @@
+           "default": [],
+           "type": "array",
+           "items": {}
+-        },
+-        "modelDefinitions": {
+-          "title": "Model Definitions",
+-          "description": "Registry of model metadata, including tier, family, and features.",
+-          "markdownDescription": "Registry of model metadata, including tier, family, and features.\n\n- Category: `Model`\n- Requires restart: `yes`\n- Default: `{\n  \"gemini-3.1-pro-preview\": {\n    \"tier\": \"pro\",\n    \"family\": \"gemini-3\",\n    \"isPreview\": true,\n    \"dialogLocation\": \"manual\",\n    \"features\": {\n      \"thinking\": true,\n      \"multimodalToolUse\": true\n    }\n  },\n  \"gemini-3.1-pro-preview-customtools\": {\n    \"tier\": \"pro\",\n    \"family\": \"gemini-3\",\n    \"isPreview\": true,\n    \"features\": {\n      \"thinking\": true,\n      \"multimodalToolUse\": true\n    }\n  },\n  \"gemini-3-pro-preview\": {\n    \"tier\": \"pro\",\n    \"family\": \"gemini-3\",\n    \"isPreview\": true,\n    \"dialogLocation\": \"manual\",\n    \"features\": {\n      \"thinking\": true,\n      \"multimodalToolUse\": true\n    }\n  },\n  \"gemini-3-flash-preview\": {\n    \"tier\": \"flash\",\n    \"family\": \"gemini-3\",\n    \"isPreview\": true,\n    \"dialogLocation\": \"manual\",\n    \"features\": {\n      \"thinking\": false,\n      \"multimodalToolUse\": true\n    }\n  },\n  \"gemini-2.5-pro\": {\n    \"tier\": \"pro\",\n    \"family\": \"gemini-2.5\",\n    \"isPreview\": false,\n    \"dialogLocation\": \"manual\",\n    \"features\": {\n      \"thinking\": false,\n      \"multimodalToolUse\": false\n    }\n  },\n  \"gemini-2.5-flash\": {\n    \"tier\": \"flash\",\n    \"family\": \"gemini-2.5\",\n    \"isPreview\": false,\n    \"dialogLocation\": \"manual\",\n    \"features\": {\n      \"thinking\": false,\n      \"multimodalToolUse\": false\n    }\n  },\n  \"gemini-2.5-flash-lite\": {\n    \"tier\": \"flash-lite\",\n    \"family\": \"gemini-2.5\",\n    \"isPreview\": false,\n    \"dialogLocation\": \"manual\",\n    \"features\": {\n      \"thinking\": false,\n      \"multimodalToolUse\": false\n    }\n  },\n  \"auto\": {\n    \"tier\": \"auto\",\n    \"isPreview\": true,\n    \"features\": {\n      \"thinking\": true,\n      \"multimodalToolUse\": false\n    }\n  },\n  \"pro\": {\n    \"tier\": \"pro\",\n    \"isPreview\": false,\n    \"features\": {\n      \"thinking\": true,\n      \"multimodalToolUse\": false\n    }\n  },\n  \"flash\": {\n    \"tier\": \"flash\",\n    \"isPreview\": false,\n    \"features\": {\n      \"thinking\": false,\n      \"multimodalToolUse\": false\n    }\n  },\n  \"flash-lite\": {\n    \"tier\": \"flash-lite\",\n    \"isPreview\": false,\n    \"features\": {\n      \"thinking\": false,\n      \"multimodalToolUse\": false\n    }\n  },\n  \"auto-gemini-3\": {\n    \"displayName\": \"Auto (Gemini 3)\",\n    \"tier\": \"auto\",\n    \"isPreview\": true,\n    \"dialogLocation\": \"main\",\n    \"dialogDescription\": \"Let Gemini CLI decide the best model for the task: gemini-3.1-pro, gemini-3-flash\",\n    \"features\": {\n      \"thinking\": true,\n      \"multimodalToolUse\": false\n    }\n  },\n  \"auto-gemini-2.5\": {\n    \"displayName\": \"Auto (Gemini 2.5)\",\n    \"tier\": \"auto\",\n    \"isPreview\": false,\n    \"dialogLocation\": \"main\",\n    \"dialogDescription\": \"Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash\",\n    \"features\": {\n      \"thinking\": false,\n      \"multimodalToolUse\": false\n    }\n  }\n}`",
+-          "default": {
+-            "gemini-3.1-pro-preview": {
+-              "tier": "pro",
+-              "family": "gemini-3",
+-              "isPreview": true,
+-              "dialogLocation": "manual",
+-              "features": {
+-                "thinking": true,
+-                "multimodalToolUse": true
+-              }
+-            },
+-            "gemini-3.1-pro-preview-customtools": {
+-              "tier": "pro",
+-              "family": "gemini-3",
+-              "isPreview": true,
+-              "features": {
+-                "thinking": true,
+-                "multimodalToolUse": true
+-              }
+-            },
+-            "gemini-3-pro-preview": {
+-              "tier": "pro",
+-              "family": "gemini-3",
+-              "isPreview": true,
+-              "dialogLocation": "manual",
+-              "features": {
+-                "thinking": true,
+-                "multimodalToolUse": true
+-              }
+-            },
+-            "gemini-3-flash-preview": {
+-              "tier": "flash",
+-              "family": "gemini-3",
+-              "isPreview": true,
+-              "dialogLocation": "manual",
+-              "features": {
+-                "thinking": false,
+-                "multimodalToolUse": true
+-              }
+-            },
+-            "gemini-2.5-pro": {
+-              "tier": "pro",
+-              "family": "gemini-2.5",
+-              "isPreview": false,
+-              "dialogLocation": "manual",
+-              "features": {
+-                "thinking": false,
+-                "multimodalToolUse": false
+-              }
+-            },
+-            "gemini-2.5-flash": {
+-              "tier": "flash",
+-              "family": "gemini-2.5",
+-              "isPreview": false,
+-              "dialogLocation": "manual",
+-              "features": {
+-                "thinking": false,
+-                "multimodalToolUse": false
+-              }
+-            },
+-            "gemini-2.5-flash-lite": {
+-              "tier": "flash-lite",
+-              "family": "gemini-2.5",
+-              "isPreview": false,
+-              "dialogLocation": "manual",
+-              "features": {
+-                "thinking": false,
+-                "multimodalToolUse": false
+-              }
+-            },
+-            "auto": {
+-              "tier": "auto",
+-              "isPreview": true,
+-              "features": {
+-                "thinking": true,
+-                "multimodalToolUse": false
+-              }
+-            },
+-            "pro": {
+-              "tier": "pro",
+-              "isPreview": false,
+-              "features": {
+-                "thinking": true,
+-                "multimodalToolUse": false
+-              }
+-            },
+-            "flash": {
+-              "tier": "flash",
+-              "isPreview": false,
+-              "features": {
+-                "thinking": false,
+-                "multimodalToolUse": false
+-              }
+-            },
+-            "flash-lite": {
+-              "tier": "flash-lite",
+-              "isPreview": false,
+-              "features": {
+-                "thinking": false,
+-                "multimodalToolUse": false
+-              }
+-            },
+-            "auto-gemini-3": {
+-              "displayName": "Auto (Gemini 3)",
+-              "tier": "auto",
+-              "isPreview": true,
+-              "dialogLocation": "main",
+-              "dialogDescription": "Let Gemini CLI decide the best model for the task: gemini-3.1-pro, gemini-3-flash",
+-              "features": {
+-                "thinking": true,
+-                "multimodalToolUse": false
+-              }
+-            },
+-            "auto-gemini-2.5": {
+-              "displayName": "Auto (Gemini 2.5)",
+-              "tier": "auto",
+-              "isPreview": false,
+-              "dialogLocation": "main",
+-              "dialogDescription": "Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash",
+-              "features": {
+-                "thinking": false,
+-                "multimodalToolUse": false
+-              }
+-            }
+-          },
+-          "type": "object",
+-          "additionalProperties": {
+-            "$ref": "#/$defs/ModelDefinition"
+-          }
+         }
+       },
+       "additionalProperties": false
+@@ -2059,13 +1800,6 @@
+           "default": false,
+           "type": "boolean"
+         },
+-        "dynamicModelConfiguration": {
+-          "title": "Dynamic Model Configuration",
+-          "description": "Enable dynamic model configuration (definitions, resolutions, and chains) via settings.",
+-          "markdownDescription": "Enable dynamic model configuration (definitions, resolutions, and chains) via settings.\n\n- Category: `Experimental`\n- Requires restart: `yes`\n- Default: `false`",
+-          "default": false,
+-          "type": "boolean"
+-        },
+         "gemmaModelRouter": {
+           "title": "Gemma Model Router",
+           "description": "Enable Gemma model router (experimental).",
+@@ -2827,41 +2561,6 @@
+           }
+         }
+       }
+-    },
+-    "ModelDefinition": {
+-      "type": "object",
+-      "description": "Model metadata registry entry.",
+-      "properties": {
+-        "displayName": {
+-          "type": "string"
+-        },
+-        "tier": {
+-          "enum": ["pro", "flash", "flash-lite", "custom", "auto"]
+-        },
+-        "family": {
+-          "type": "string"
+-        },
+-        "isPreview": {
+-          "type": "boolean"
+-        },
+-        "dialogLocation": {
+-          "enum": ["main", "manual"]
+-        },
+-        "dialogDescription": {
+-          "type": "string"
+-        },
+-        "features": {
+-          "type": "object",
+-          "properties": {
+-            "thinking": {
+-              "type": "boolean"
+-            },
+-            "multimodalToolUse": {
+-              "type": "boolean"
+-            }
+-          }
+-        }
+-      }
+     }
+   }
+ }

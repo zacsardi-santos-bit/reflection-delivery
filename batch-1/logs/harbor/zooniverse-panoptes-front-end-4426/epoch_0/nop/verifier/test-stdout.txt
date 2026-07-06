@@ -1,0 +1,73 @@
+patching file app/pages/project/classify.spec.js
+/workspace/repo/node_modules/coffee-react/lib/coffee-react-script.js:53
+      throw helpers.updateSyntaxError(err, stripped, filename);
+      ^
+
+[Error: Parse Error: Line 18: Illegal import declaration
+  at throwError (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:16723:21)
+  at throwErrorTolerant (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:16735:24)
+  at parseSourceElement (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:20300:17)
+  at parseFunctionSourceElements (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:19648:29)
+  at parseFunctionExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:19931:16)
+  at parsePrimaryExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17430:24)
+  at parseLeftHandSideExpressionAllowCall (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17566:61)
+  at parsePostfixExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17606:20)
+  at parseUnaryExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17673:16)
+  at parseBinaryExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17763:16)
+  at parseConditionalExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17823:16)
+  at parseAssignmentExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:18076:16)
+  at parseExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:18133:16)
+  at parseGroupExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17374:16)
+  at parsePrimaryExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17467:20)
+  at parseLeftHandSideExpressionAllowCall (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17566:61)
+  at parsePostfixExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17606:20)
+  at parseUnaryExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17673:16)
+  at parseBinaryExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17763:16)
+  at parseConditionalExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:17823:16)
+  at parseAssignmentExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:18076:16)
+  at parseExpression (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:18133:16)
+  at parseExpressionStatement (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:19029:45)
+  at parseStatement (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:19522:24)
+  at parseSourceElement (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:20340:20)
+  at parseProgramElement (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:20356:16)
+  at parseProgramElements (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:20388:29)
+  at parseProgram (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:20401:16)
+  at Object.parse (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:21563:23)
+  at getAstForSource (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:24081:21)
+  at transform (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:24104:11)
+  at jsSyntaxTransform (/workspace/repo/node_modules/coffee-react-jstransform/dist/js-syntax-transform.js:27304:10)
+  at Object.CoffeeScript.compile (/workspace/repo/node_modules/coffee-react/lib/coffee-react-script.js:32:14)
+  at Object.CoffeeScript._compileFile (/workspace/repo/node_modules/coffee-react/lib/coffee-react-script.js:46:29)
+  at Object.loadFile (/workspace/repo/node_modules/coffee-react/lib/register.js:14:25)
+  at Module.load (/workspace/repo/node_modules/coffee-react/lib/register.js:44:34)
+  at Function.Module._load (node:internal/modules/cjs/loader:1019:12)
+  at Module.require (node:internal/modules/cjs/loader:1231:19)
+  at require (node:internal/modules/helpers:177:18)
+  at Object.<anonymous> (/workspace/repo/app/pages/project/classify.spec.js:22:17)
+  at Module._compile (node:internal/modules/cjs/loader:1364:14)
+  at loader (/workspace/repo/node_modules/babel-register/lib/node.js:144:5)
+  at Object.require.extensions.<computed> [as .js] (/workspace/repo/node_modules/babel-register/lib/node.js:154:7)
+  at Module.load (/workspace/repo/node_modules/coffee-react/lib/register.js:44:34)
+  at Function.Module._load (node:internal/modules/cjs/loader:1019:12)
+  at Module.require (node:internal/modules/cjs/loader:1231:19)
+  at require (node:internal/modules/helpers:177:18)
+  at /workspace/repo/node_modules/mocha/lib/mocha.js:231:27
+  at Array.forEach (<anonymous>:null:null)
+  at Mocha.loadFiles (/workspace/repo/node_modules/mocha/lib/mocha.js:228:14)
+  at Mocha.run (/workspace/repo/node_modules/mocha/lib/mocha.js:536:10)
+  at Object.<anonymous> (/workspace/repo/node_modules/mocha/bin/_mocha:582:18)
+  at Module._compile (node:internal/modules/cjs/loader:1364:14)
+  at Object.Module._extensions..js (node:internal/modules/cjs/loader:1422:10)
+  at Module.load (node:internal/modules/cjs/loader:1203:32)
+  at Function.Module._load (node:internal/modules/cjs/loader:1019:12)
+  at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)
+  at node:internal/main/run_main_module:28:49
+] {
+  index: 655,
+  lineNumber: 18,
+  column: 40,
+  description: 'Illegal import declaration'
+}
+
+Node.js v18.20.8
+reward=0 graded=2 found=0 failed=0 parsed=0 framework=mocha exit_code=1

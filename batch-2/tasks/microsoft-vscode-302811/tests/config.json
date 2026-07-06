@@ -1,0 +1,24 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && NODE_OPTIONS=--experimental-strip-types npm run gulp transpile-client-esbuild && npm run test-browser-no-install -- --browser chromium --run src/vs/workbench/contrib/update/test/browser/releaseNotesRenderer.test.ts",
+  "test_files": [
+    "src/vs/workbench/contrib/update/test/browser/releaseNotesRenderer.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "::Release notes renderer Should render TOC",
+    "::Release notes renderer Should render code settings",
+    "::Conditional blocks IN_PRODUCT block is revealed when IN_PRODUCT is active",
+    "::Conditional blocks WEB block is removed when only IN_PRODUCT is active",
+    "::Conditional blocks STABLE block is revealed when STABLE is active",
+    "::Conditional blocks STABLE block is removed when INSIDERS is active",
+    "::Conditional blocks INSIDERS block is revealed when INSIDERS is active",
+    "::Conditional blocks INSIDERS block is removed when STABLE is active",
+    "::Conditional blocks Conditions are case-insensitive",
+    "::Conditional blocks Multiple conditional blocks in same document",
+    "::Conditional blocks renderReleaseNotesMarkdown passes stable quality correctly",
+    "::Conditional blocks renderReleaseNotesMarkdown passes insider quality correctly"
+  ],
+  "PASS_TO_PASS": []
+}

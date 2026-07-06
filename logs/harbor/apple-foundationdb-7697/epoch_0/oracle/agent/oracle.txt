@@ -1,2 +1,0 @@
-patching file fdbkubernetesmonitor/api/config.go
-patching file fdbkubernetesmonitor/kubernetes.go

@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/cilium/cilium/pull/46236"
+source_type = "pr"
+
+[task]
+name = "cilium/cilium"
+description = "I'm chasing a bug in the network driver that handles pod resource claims and static IP annotations. When a pod annotation specifies both an IPv4 and an IPv6 address for a network device, but the cl..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["go", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:cilium-cilium-46236"
+os = "linux"
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "medium"
+difficulty_explanation = "medium: solvable by a frontier model (opus-4.8 pass@8>0)"
+pass_at_k_opus_4_8 = "3/13"
+category = "Systems, Infrastructure, and Operations"
+subcategory = "Networking configuration"
+objective_labels = ["Fix", "Implement", "Configure"]
+artifact_type_labels = ["Codebase", "Service or daemon", "Configuration file"]
+expert_time_estimate = 3600
+junior_time_estimate = 10800

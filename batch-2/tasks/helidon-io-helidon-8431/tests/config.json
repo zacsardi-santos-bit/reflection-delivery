@@ -1,0 +1,19 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn test -pl integrations/oci/metrics/cdi",
+  "test_files": [
+    "integrations/oci/metrics/cdi/src/test/java/io/helidon/integrations/oci/metrics/cdi/OciMetricsCdiExtensionTest.java",
+    "integrations/oci/metrics/cdi/src/test/java/io/helidon/integrations/oci/metrics/cdi/OverridingOciMetricsBean.java",
+    "integrations/oci/metrics/cdi/src/test/java/io/helidon/integrations/oci/metrics/cdi/TestObserverPriorities.java",
+    "integrations/oci/metrics/cdi/src/test/java/io/helidon/integrations/oci/metrics/cdi/TestOverridingBean.java"
+  ],
+  "num_test_files": 4,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "Helidon::test_1",
+    "Helidon::test_2",
+    "Helidon::test_3",
+    "Helidon::test_4"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,42 @@
+patching file tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py
+patching file tests/test_sagemaker/test_sagemaker_cluster.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: cov-7.1.0
+collecting ... collected 32 items / 3 deselected / 29 selected
+
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_cloudformation PASSED [  3%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_acm PASSED [  6%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_backup PASSED [ 10%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ecs PASSED [ 13%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ec2 PASSED [ 17%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ec2_vpc PASSED [ 20%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_tag_keys_ec2 PASSED [ 24%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_tag_values_ec2 PASSED [ 27%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_many_resources PASSED [ 31%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_target_group PASSED [ 34%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_s3 PASSED [ 37%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_multiple_tag_filters PASSED [ 41%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_lambda PASSED [ 44%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sqs PASSED [ 48%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sns PASSED [ 51%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_ssm PASSED [ 55%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_tag_resources_for_unknown_service PASSED [ 58%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_elb PASSED [ 62%]
+tests/test_resourcegroupstaggingapi/test_resourcegroupstaggingapi.py::test_get_resources_sagemaker_cluster PASSED [ 65%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_create_cluster PASSED [ 68%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_describe_cluster PASSED [ 72%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_delete_cluster PASSED [ 75%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_describe_cluster_node PASSED [ 79%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_list_clusters PASSED [ 82%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_list_clusters_filters_sorting PASSED [ 86%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_list_cluster_nodes PASSED [ 89%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_tag_cluster PASSED  [ 93%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_create_cluster_duplicate_name PASSED [ 96%]
+tests/test_sagemaker/test_sagemaker_cluster.py::test_create_cluster_bad_source_s3_uri PASSED [100%]
+
+======================= 29 passed, 3 deselected in 5.95s =======================
+reward=1 graded=29 found=0 failed=0 parsed=29 framework=pytest exit_code=0

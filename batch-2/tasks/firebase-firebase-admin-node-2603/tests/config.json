@@ -1,0 +1,41 @@
+{
+  "test_framework": "mocha",
+  "test_command": "cd /workspace/repo && npm install --no-audit --no-fund 2>&1 | tail -5 && npx mocha test/unit/remote-config/condition-evaluator.spec.ts --require ts-node/register",
+  "test_files": [
+    "test/unit/remote-config/condition-evaluator.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions should evaluate empty OR condition to false",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions should evaluate empty OR.AND condition to true",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions should evaluate OR.AND.TRUE condition to true",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions should evaluate OR.AND.FALSE condition to false",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions should evaluate non-OR top-level condition",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate an unknown operator to false",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate less or equal to max to true",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate less or equal to min to false",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should use zero for undefined microPercent",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should use zeros for undefined microPercentRange",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should use zero for undefined microPercentUpperBound",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should use zero for undefined microPercentLowerBound",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate 9 as less or equal to 10",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate 10 as less or equal to 10",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate 11 as not less or equal to 10",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should negate -11 to 11 and evaluate as not less or equal to 10",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate greater than min to true",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate 11M as greater than 10M",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate 9 as not greater than 10",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate greater than max to false",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate between min and max to true",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate 10 as between 9 and 11",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate between equal bounds to false",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate 12 as not between 9 and 11",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate less or equal to 10% to approx 10%",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate between 0 to 10% to approx 10%",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate greater than 10% to approx 90%",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate between 40% to 60% to approx 20%",
+    "/workspace/repo/test/unit/remote-config/condition-evaluator.spec.ts::ConditionEvaluator evaluateConditions percentCondition should evaluate between interquartile range to approx 50%"
+  ],
+  "PASS_TO_PASS": []
+}

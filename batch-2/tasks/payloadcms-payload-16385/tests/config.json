@@ -1,0 +1,24 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/codemod && cp -r /opt/codemod-deps/node_modules ./node_modules 2>/dev/null; npx vitest run src/cli.parseFlags.test.ts src/runner.test.ts src/transforms/example-noop/index.test.ts",
+  "test_files": [
+    "packages/codemod/src/cli.parseFlags.test.ts",
+    "packages/codemod/src/runner.test.ts",
+    "packages/codemod/src/transforms/example-noop/index.test.ts"
+  ],
+  "num_test_files": 3,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/codemod/src/cli.parseFlags.test.ts::parseFlags defaults path to cwd when no positional arg is given",
+    "/workspace/repo/packages/codemod/src/cli.parseFlags.test.ts::parseFlags reads positional path",
+    "/workspace/repo/packages/codemod/src/cli.parseFlags.test.ts::parseFlags parses flags",
+    "/workspace/repo/packages/codemod/src/cli.parseFlags.test.ts::parseFlags parses --transform",
+    "/workspace/repo/packages/codemod/src/cli.parseFlags.test.ts::parseFlags parses --list",
+    "/workspace/repo/packages/codemod/src/cli.parseFlags.test.ts::parseFlags treats --dry-run as an alias for --dry",
+    "/workspace/repo/packages/codemod/src/runner.test.ts::runTransforms applies each transform in order and aggregates results",
+    "/workspace/repo/packages/codemod/src/runner.test.ts::runTransforms continues past a throwing transform and marks the run failed",
+    "/workspace/repo/packages/codemod/src/transforms/example-noop/index.test.ts::example-noop leaves matching input unchanged",
+    "/workspace/repo/packages/codemod/src/transforms/example-noop/index.test.ts::example-noop is idempotent"
+  ],
+  "PASS_TO_PASS": []
+}

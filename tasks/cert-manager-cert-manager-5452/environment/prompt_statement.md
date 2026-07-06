@@ -1,7 +1,0 @@
-I'm working on the Azure DNS provider in cert-manager and need to migrate it away from the deprecated Azure authentication library to the current Azure SDK. The old library is being phased out and we need to update the authentication layer to use the modern approach.
-
-As part of this migration, I also need to drop support for the Azure German Cloud environment since Microsoft has retired it — any attempt to use that environment name should now return an error. Additionally, the provider should validate the tenant ID at initialization time and return an error immediately if the value is invalid, rather than discovering the problem at runtime.
-
-The updated authentication should support workload identity: when the environment indicates a federated token file is available and no client ID is explicitly set, the provider should use workload identity credentials. These credentials should automatically acquire a fresh token when the current one expires by re-exchanging the federated token with the authorization server. The client ID from the managed identity configuration should override any ambient client ID for token requests. The tenant ID should appear in lowercase in token endpoint URIs.
-
-The credential initialization function should accept the new SDK's client options type instead of the old environment type, and the subscription ID should no longer be a parameter to that function.

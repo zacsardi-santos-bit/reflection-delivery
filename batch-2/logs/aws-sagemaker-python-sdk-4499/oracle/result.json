@@ -1,0 +1,29 @@
+{
+    "id": "b8c8d369-39bd-4e3f-81b2-5d0dbc6efd19",
+    "started_at": "2026-07-04T15:38:06.391605",
+    "finished_at": "2026-07-04T15:39:01.357713",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__aws-sagemaker-python-sdk-4499": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "aws-sagemaker-python-sdk-4499__PXyLUrM"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

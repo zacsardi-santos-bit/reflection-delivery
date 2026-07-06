@@ -1,5 +1,0 @@
-patching file internal/provider/utils/utils_test.go
-# github.com/envoyproxy/gateway/internal/provider/utils [github.com/envoyproxy/gateway/internal/provider/utils.test]
-internal/provider/utils/utils_test.go:52:14: undefined: ContainsAllLabels
-FAIL	github.com/envoyproxy/gateway/internal/provider/utils [build failed]
-reward=0 graded=9 found=9 failed=9 parsed=1 framework=go exit_code=1

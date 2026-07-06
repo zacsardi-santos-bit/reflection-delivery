@@ -1,0 +1,98 @@
+{
+    "id": "ab9687c5-2712-4af9-a296-9e54874b7840",
+    "task_name": "pnpm-pnpm-11258",
+    "trial_name": "pnpm-pnpm-11258__ZU7rYEe",
+    "trial_uri": "file:///tmp/oracle/2026-07-02__19-12-13/pnpm-pnpm-11258__ZU7rYEe",
+    "task_id": {
+        "path": "pnpm-pnpm-11258"
+    },
+    "source": "src",
+    "task_checksum": "d0b97f9993784efb4c097d5dbf87e8fca6932cf3a339672d09ef0ea90661cf62",
+    "config": {
+        "task": {
+            "path": "pnpm-pnpm-11258",
+            "git_url": null,
+            "git_commit_id": null,
+            "name": null,
+            "ref": null,
+            "overwrite": false,
+            "download_dir": null,
+            "source": "src"
+        },
+        "trial_name": "pnpm-pnpm-11258__ZU7rYEe",
+        "trials_dir": "/tmp/oracle/2026-07-02__19-12-13",
+        "timeout_multiplier": 1.0,
+        "agent_timeout_multiplier": null,
+        "verifier_timeout_multiplier": null,
+        "agent_setup_timeout_multiplier": null,
+        "environment_build_timeout_multiplier": null,
+        "agent": {
+            "name": "oracle",
+            "import_path": null,
+            "model_name": null,
+            "override_timeout_sec": null,
+            "override_setup_timeout_sec": null,
+            "max_timeout_sec": null,
+            "kwargs": {},
+            "env": {}
+        },
+        "environment": {
+            "type": "docker",
+            "import_path": null,
+            "force_build": false,
+            "delete": true,
+            "override_cpus": null,
+            "override_memory_mb": null,
+            "override_storage_mb": null,
+            "override_gpus": null,
+            "suppress_override_warnings": false,
+            "mounts_json": null,
+            "env": {},
+            "kwargs": {}
+        },
+        "verifier": {
+            "override_timeout_sec": null,
+            "max_timeout_sec": null,
+            "disable": false
+        },
+        "artifacts": [],
+        "job_id": "2bb8588b-af33-4b27-860d-2076ed326ee5"
+    },
+    "agent_info": {
+        "name": "oracle",
+        "version": "1.0.0",
+        "model_info": null
+    },
+    "agent_result": {
+        "n_input_tokens": null,
+        "n_cache_tokens": null,
+        "n_output_tokens": null,
+        "cost_usd": null,
+        "rollout_details": null,
+        "metadata": null
+    },
+    "verifier_result": {
+        "rewards": {
+            "reward": 1.0
+        }
+    },
+    "exception_info": null,
+    "started_at": "2026-07-02T19:12:22.318437Z",
+    "finished_at": "2026-07-02T19:15:14.400924Z",
+    "environment_setup": {
+        "started_at": "2026-07-02T19:12:22.319347Z",
+        "finished_at": "2026-07-02T19:14:53.234090Z"
+    },
+    "agent_setup": {
+        "started_at": "2026-07-02T19:14:53.234127Z",
+        "finished_at": "2026-07-02T19:14:53.234170Z"
+    },
+    "agent_execution": {
+        "started_at": "2026-07-02T19:14:53.234220Z",
+        "finished_at": "2026-07-02T19:14:53.483390Z"
+    },
+    "verifier": {
+        "started_at": "2026-07-02T19:14:53.483525Z",
+        "finished_at": "2026-07-02T19:15:03.987101Z"
+    }
+}

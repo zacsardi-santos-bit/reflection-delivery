@@ -1,0 +1,166 @@
+diff --git a/crates/core/src/error/mod.rs b/crates/core/src/error/mod.rs
+index 44cb531a19..f33751e89d 100644
+--- a/crates/core/src/error/mod.rs
++++ b/crates/core/src/error/mod.rs
+@@ -12,7 +12,6 @@ mod context;
+ mod error;
+ mod oom;
+ mod ptr;
+-#[cfg(feature = "anyhow")]
+ mod to_wasmtime_result;
+ mod vtable;
+ 
+@@ -25,7 +24,6 @@ pub use backtrace::disable_backtrace;
+ pub use context::Context;
+ pub use error::*;
+ pub use oom::OutOfMemory;
+-#[cfg(feature = "anyhow")]
+ pub use to_wasmtime_result::ToWasmtimeResult;
+ 
+ /// A result of either `Ok(T)` or an [`Err(Error)`][Error].
+diff --git a/crates/core/src/error/to_wasmtime_result.rs b/crates/core/src/error/to_wasmtime_result.rs
+index 13b33d63de..4ccb5b3456 100644
+--- a/crates/core/src/error/to_wasmtime_result.rs
++++ b/crates/core/src/error/to_wasmtime_result.rs
+@@ -1,4 +1,4 @@
+-use crate::error::{Error, Result};
++use crate::error::Result;
+ 
+ /// Extension trait for easily converting `anyhow::Result`s into
+ /// `wasmtime::Result`s.
+@@ -40,12 +40,20 @@ pub trait ToWasmtimeResult<T> {
+     fn to_wasmtime_result(self) -> Result<T>;
+ }
+ 
++#[cfg(feature = "anyhow")]
+ impl<T> ToWasmtimeResult<T> for anyhow::Result<T> {
+     #[inline]
+     fn to_wasmtime_result(self) -> Result<T> {
+         match self {
+             Ok(x) => Ok(x),
+-            Err(e) => Err(Error::from_anyhow(e)),
++            Err(e) => Err(crate::error::Error::from_anyhow(e)),
+         }
+     }
+ }
++
++impl<T> ToWasmtimeResult<T> for Result<T> {
++    #[inline]
++    fn to_wasmtime_result(self) -> Result<T> {
++        self
++    }
++}
+diff --git a/crates/environ/src/lib.rs b/crates/environ/src/lib.rs
+index 2ff579a09b..7375834dd8 100644
+--- a/crates/environ/src/lib.rs
++++ b/crates/environ/src/lib.rs
+@@ -85,12 +85,10 @@ pub mod fact;
+ pub use cranelift_entity::*;
+ 
+ // Reexport the error module for convenience.
++pub use self::error::ToWasmtimeResult;
+ #[doc(inline)]
+ pub use wasmtime_core::error;
+ 
+-#[cfg(feature = "anyhow")]
+-pub use self::error::ToWasmtimeResult;
+-
+ pub use wasmtime_core::{alloc::PanicOnOom, non_max, undo::Undo};
+ 
+ // Only for use with `bindgen!`-generated code.
+diff --git a/crates/wasmtime/src/lib.rs b/crates/wasmtime/src/lib.rs
+index d01b0fd8c8..51dc8e2537 100644
+--- a/crates/wasmtime/src/lib.rs
++++ b/crates/wasmtime/src/lib.rs
+@@ -510,12 +510,10 @@ mod sync_nostd;
+ use sync_nostd as sync;
+ 
+ pub use wasmtime_environ::OperatorCost;
++pub use wasmtime_environ::ToWasmtimeResult;
+ #[doc(inline)]
+ pub use wasmtime_environ::error;
+ 
+-#[cfg(feature = "anyhow")]
+-pub use wasmtime_environ::ToWasmtimeResult;
+-
+ // Only for use in `bindgen!`-generated code.
+ #[doc(hidden)]
+ #[cfg(feature = "anyhow")]
+diff --git a/crates/wit-bindgen/src/lib.rs b/crates/wit-bindgen/src/lib.rs
+index d0210633e5..8ca36d819e 100644
+--- a/crates/wit-bindgen/src/lib.rs
++++ b/crates/wit-bindgen/src/lib.rs
+@@ -1534,7 +1534,9 @@ impl Wasmtime {
+                         move |caller: &{wt}::component::Accessor::<T>, rep| {{
+                             {wt}::component::__internal::Box::pin(async move {{
+                                 let accessor = &caller.with_getter(host_getter);
+-                                Host{camel}WithStore::drop(accessor, {wt}::component::Resource::new_own(rep)).await
++                                {wt}::ToWasmtimeResult::to_wasmtime_result(
++                                    Host{camel}WithStore::drop(accessor, {wt}::component::Resource::new_own(rep)).await
++                                )
+                             }})
+                         }},
+                     )?;"
+@@ -1547,7 +1549,9 @@ impl Wasmtime {
+                         {wt}::component::ResourceType::host::<{camel}>(),
+                         move |mut store, rep| {{
+                             {wt}::component::__internal::Box::new(async move {{
+-                                Host{camel}::drop(&mut host_getter(store.data_mut()), {wt}::component::Resource::new_own(rep)).await
++                                {wt}::ToWasmtimeResult::to_wasmtime_result(
++                                    Host{camel}::drop(&mut host_getter(store.data_mut()), {wt}::component::Resource::new_own(rep)).await
++                                )
+                             }})
+                         }},
+                     )?;"
+@@ -1570,7 +1574,9 @@ impl Wasmtime {
+                     move |mut store, rep| -> {wt}::Result<()> {{
+ 
+                         let resource = {wt}::component::Resource::new_own(rep);
+-                        Host{camel}{trait_suffix}::drop({first_arg}, resource)
++                        {wt}::ToWasmtimeResult::to_wasmtime_result(
++                            Host{camel}{trait_suffix}::drop({first_arg}, resource)
++                        )
+                     }},
+                 )?;",
+             )
+@@ -2589,31 +2595,27 @@ impl<'a> InterfaceGenerator<'a> {
+             let convert = format!("{}::convert_{}", convert_trait, err_name.to_snake_case());
+             let convert = if flags.contains(FunctionFlags::STORE) {
+                 if flags.contains(FunctionFlags::ASYNC) {
+-                    format!("caller.with(|mut host| {convert}(&mut host_getter(host.get()), e))?")
++                    format!("caller.with(|mut host| {convert}(&mut host_getter(host.get()), e))")
+                 } else {
+-                    format!("{convert}(&mut host_getter(caller.data_mut()), e)?")
++                    format!("{convert}(&mut host_getter(caller.data_mut()), e)")
+                 }
+             } else {
+-                format!("{convert}(host, e)?")
++                format!("{convert}(host, e)")
+             };
+             uwrite!(
+                 self.src,
+                 "Ok((match r {{
+                     Ok(a) => Ok(a),
+-                    Err(e) => Err({convert}),
++                    Err(e) => Err({wt}::ToWasmtimeResult::to_wasmtime_result({convert})?),
+                 }},))"
+             );
+         } else if func.result.is_some() {
+-            if self.generator.opts.anyhow {
+-                uwrite!(
+-                    self.src,
+-                    "Ok(({wt}::ToWasmtimeResult::to_wasmtime_result(r)?,))\n"
+-                );
+-            } else {
+-                uwrite!(self.src, "Ok((r?,))\n");
+-            }
++            uwrite!(
++                self.src,
++                "Ok(({wt}::ToWasmtimeResult::to_wasmtime_result(r)?,))\n"
++            );
+         } else {
+-            uwrite!(self.src, "r\n");
++            uwrite!(self.src, "{wt}::ToWasmtimeResult::to_wasmtime_result(r)\n");
+         }
+ 
+         if flags.contains(FunctionFlags::ASYNC) {

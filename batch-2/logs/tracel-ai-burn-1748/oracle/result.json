@@ -1,0 +1,29 @@
+{
+    "id": "501ba1b3-c51f-407f-9030-37bb6696380c",
+    "started_at": "2026-07-04T15:38:11.887406",
+    "finished_at": "2026-07-04T15:39:11.366010",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__tracel-ai-burn-1748": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "tracel-ai-burn-1748__RkY5BGu"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

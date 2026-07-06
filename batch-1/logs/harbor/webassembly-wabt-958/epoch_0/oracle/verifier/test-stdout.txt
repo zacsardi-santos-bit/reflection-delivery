@@ -1,0 +1,186 @@
+patching file test/dump/atomic.txt
+patching file test/dump/bulk-memory.txt
+patching file test/dump/const.txt
+patching file test/dump/convert-sat.txt
+patching file test/dump/simd-basic.txt
+patching file test/dump/simd-binary.txt
+patching file test/dump/simd-bitselect.txt
+patching file test/dump/simd-compare.txt
+patching file test/dump/simd-lane.txt
+patching file test/dump/simd-load-store.txt
+patching file test/dump/simd-shift.txt
+patching file test/dump/simd-splat.txt
+patching file test/dump/simd-unary.txt
+CMake Deprecation Warning at CMakeLists.txt:17 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Looking for alloca.h
+-- Looking for alloca.h - found
+-- Looking for unistd.h
+-- Looking for unistd.h - found
+-- Looking for snprintf
+-- Looking for snprintf - found
+-- Looking for sysconf
+-- Looking for sysconf - found
+-- Looking for strcasecmp
+-- Looking for strcasecmp - found
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of ssize_t
+-- Check size of ssize_t - done
+-- Check size of size_t
+-- Check size of size_t - done
+CMake Warning at CMakeLists.txt:149 (message):
+  Error running file on dummy executable
+
+
+CMake Deprecation Warning at cmake/FindRE2C.cmake:54 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+Call Stack (most recent call first):
+  CMakeLists.txt:197 (find_package)
+
+
+-- Using prebuilt re2c lexer
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE  
+-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.11.2", minimum required is "2.7") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /workspace/repo/build
+[  1%] Building CXX object CMakeFiles/wabt.dir/src/apply-names.cc.o
+[  3%] Building CXX object CMakeFiles/wabt.dir/src/binary.cc.o
+[  4%] Building CXX object CMakeFiles/wabt.dir/src/binary-reader.cc.o
+[  6%] Building CXX object CMakeFiles/wabt.dir/src/binary-reader-ir.cc.o
+[  7%] Building CXX object CMakeFiles/wabt.dir/src/binary-reader-logging.cc.o
+[  9%] Building CXX object CMakeFiles/wabt.dir/src/binary-writer.cc.o
+[ 10%] Building CXX object CMakeFiles/wabt.dir/src/binary-writer-spec.cc.o
+[ 12%] Building CXX object CMakeFiles/wabt.dir/src/binding-hash.cc.o
+[ 13%] Building CXX object CMakeFiles/wabt.dir/src/color.cc.o
+[ 15%] Building CXX object CMakeFiles/wabt.dir/src/common.cc.o
+[ 16%] Building CXX object CMakeFiles/wabt.dir/src/config.cc.o
+[ 18%] Building CXX object CMakeFiles/wabt.dir/src/error-formatter.cc.o
+[ 19%] Building CXX object CMakeFiles/wabt.dir/src/expr-visitor.cc.o
+[ 21%] Building CXX object CMakeFiles/wabt.dir/src/feature.cc.o
+[ 22%] Building CXX object CMakeFiles/wabt.dir/src/filenames.cc.o
+[ 24%] Building CXX object CMakeFiles/wabt.dir/src/generate-names.cc.o
+[ 25%] Building CXX object CMakeFiles/wabt.dir/src/hash-util.cc.o
+[ 27%] Building CXX object CMakeFiles/wabt.dir/src/ir.cc.o
+[ 28%] Building CXX object CMakeFiles/wabt.dir/src/leb128.cc.o
+[ 30%] Building CXX object CMakeFiles/wabt.dir/src/lexer-source.cc.o
+[ 31%] Building CXX object CMakeFiles/wabt.dir/src/lexer-source-line-finder.cc.o
+[ 33%] Building CXX object CMakeFiles/wabt.dir/src/literal.cc.o
+[ 34%] Building CXX object CMakeFiles/wabt.dir/src/opcode.cc.o
+[ 36%] Building C object CMakeFiles/wabt.dir/src/opcode-code-table.c.o
+[ 37%] Building CXX object CMakeFiles/wabt.dir/src/option-parser.cc.o
+[ 39%] Building CXX object CMakeFiles/wabt.dir/src/resolve-names.cc.o
+[ 40%] Building CXX object CMakeFiles/wabt.dir/src/stream.cc.o
+[ 42%] Building CXX object CMakeFiles/wabt.dir/src/string-view.cc.o
+[ 43%] Building CXX object CMakeFiles/wabt.dir/src/token.cc.o
+[ 45%] Building CXX object CMakeFiles/wabt.dir/src/tracing.cc.o
+[ 46%] Building CXX object CMakeFiles/wabt.dir/src/type-checker.cc.o
+[ 48%] Building CXX object CMakeFiles/wabt.dir/src/utf8.cc.o
+[ 50%] Building CXX object CMakeFiles/wabt.dir/src/validator.cc.o
+[ 51%] Building CXX object CMakeFiles/wabt.dir/src/wast-parser.cc.o
+[ 53%] Building CXX object CMakeFiles/wabt.dir/src/wat-writer.cc.o
+[ 54%] Building CXX object CMakeFiles/wabt.dir/src/prebuilt/wast-lexer-gen.cc.o
+[ 56%] Building CXX object CMakeFiles/wabt.dir/src/interp/binary-reader-interp.cc.o
+[ 57%] Building CXX object CMakeFiles/wabt.dir/src/interp/interp.cc.o
+[ 59%] Building CXX object CMakeFiles/wabt.dir/src/interp/interp-disassemble.cc.o
+[ 60%] Building CXX object CMakeFiles/wabt.dir/src/interp/interp-trace.cc.o
+[ 62%] Linking CXX static library libwabt.a
+[ 62%] Built target wabt
+[ 63%] Building CXX object CMakeFiles/wat2wasm.dir/src/tools/wat2wasm.cc.o
+[ 65%] Linking CXX executable wat2wasm
+[ 65%] Built target wat2wasm
+[ 65%] Built target wat2wasm-copy-to-bin
+[ 66%] Building CXX object CMakeFiles/wast2json.dir/src/tools/wast2json.cc.o
+[ 68%] Linking CXX executable wast2json
+[ 68%] Built target wast2json
+[ 68%] Built target wast2json-copy-to-bin
+[ 69%] Building CXX object CMakeFiles/wasm2wat.dir/src/tools/wasm2wat.cc.o
+[ 71%] Linking CXX executable wasm2wat
+[ 71%] Built target wasm2wat
+[ 71%] Built target wasm2wat-copy-to-bin
+[ 72%] Building CXX object CMakeFiles/wasm2c.dir/src/tools/wasm2c.cc.o
+[ 74%] Building CXX object CMakeFiles/wasm2c.dir/src/c-writer.cc.o
+[ 75%] Linking CXX executable wasm2c
+[ 75%] Built target wasm2c
+[ 75%] Built target wasm2c-copy-to-bin
+[ 77%] Building CXX object CMakeFiles/wasm-opcodecnt.dir/src/tools/wasm-opcodecnt.cc.o
+[ 78%] Building CXX object CMakeFiles/wasm-opcodecnt.dir/src/binary-reader-opcnt.cc.o
+[ 80%] Linking CXX executable wasm-opcodecnt
+[ 80%] Built target wasm-opcodecnt
+[ 80%] Built target wasm-opcodecnt-copy-to-bin
+[ 81%] Building CXX object CMakeFiles/wasm-objdump.dir/src/tools/wasm-objdump.cc.o
+[ 83%] Building CXX object CMakeFiles/wasm-objdump.dir/src/binary-reader-objdump.cc.o
+[ 84%] Linking CXX executable wasm-objdump
+[ 84%] Built target wasm-objdump
+[ 84%] Built target wasm-objdump-copy-to-bin
+[ 86%] Building CXX object CMakeFiles/wasm-interp.dir/src/tools/wasm-interp.cc.o
+[ 87%] Linking CXX executable wasm-interp
+[ 87%] Built target wasm-interp
+[ 87%] Built target wasm-interp-copy-to-bin
+[ 89%] Building CXX object CMakeFiles/spectest-interp.dir/src/tools/spectest-interp.cc.o
+[ 90%] Linking CXX executable spectest-interp
+[ 90%] Built target spectest-interp
+[ 90%] Built target spectest-interp-copy-to-bin
+[ 92%] Building CXX object CMakeFiles/wat-desugar.dir/src/tools/wat-desugar.cc.o
+[ 93%] Linking CXX executable wat-desugar
+[ 93%] Built target wat-desugar
+[ 93%] Built target wat-desugar-copy-to-bin
+[ 95%] Building CXX object CMakeFiles/wasm-validate.dir/src/tools/wasm-validate.cc.o
+[ 96%] Linking CXX executable wasm-validate
+[ 96%] Built target wasm-validate
+[ 96%] Built target wasm-validate-copy-to-bin
+[ 98%] Building CXX object CMakeFiles/wasm-strip.dir/src/tools/wasm-strip.cc.o
+[100%] Linking CXX executable wasm-strip
+[100%] Built target wasm-strip
+[100%] Built target wasm-strip-copy-to-bin
+============================= test session starts ==============================
+platform linux -- Python 3.11.2, pytest-7.2.1, pluggy-1.0.0+repack -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /workspace
+collecting ... collected 13 items
+
+../test_dump.py::test_dump[dump/atomic] PASSED                           [  7%]
+../test_dump.py::test_dump[dump/bulk-memory] PASSED                      [ 15%]
+../test_dump.py::test_dump[dump/const] PASSED                            [ 23%]
+../test_dump.py::test_dump[dump/convert-sat] PASSED                      [ 30%]
+../test_dump.py::test_dump[dump/simd-basic] PASSED                       [ 38%]
+../test_dump.py::test_dump[dump/simd-binary] PASSED                      [ 46%]
+../test_dump.py::test_dump[dump/simd-bitselect] PASSED                   [ 53%]
+../test_dump.py::test_dump[dump/simd-compare] PASSED                     [ 61%]
+../test_dump.py::test_dump[dump/simd-lane] PASSED                        [ 69%]
+../test_dump.py::test_dump[dump/simd-load-store] PASSED                  [ 76%]
+../test_dump.py::test_dump[dump/simd-shift] PASSED                       [ 84%]
+../test_dump.py::test_dump[dump/simd-splat] PASSED                       [ 92%]
+../test_dump.py::test_dump[dump/simd-unary] PASSED                       [100%]
+
+============================== 13 passed in 2.02s ==============================
+reward=1 graded=13 found=0 failed=0 parsed=13 framework=pytest exit_code=0

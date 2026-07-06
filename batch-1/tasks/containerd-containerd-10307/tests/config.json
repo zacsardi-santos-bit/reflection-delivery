@@ -1,0 +1,15 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/userns -count=1",
+  "test_files": [
+    "integration/client/container_linux_test.go",
+    "internal/userns/idmap_test.go"
+  ],
+  "num_test_files": 2,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/containerd/containerd/v2/internal/userns::TestToHost",
+    "github.com/containerd/containerd/v2/internal/userns::TestToHostOverflow"
+  ],
+  "PASS_TO_PASS": []
+}

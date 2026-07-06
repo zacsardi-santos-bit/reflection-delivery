@@ -1,0 +1,31 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn install -pl hudi-client/hudi-client-common -am -DskipTests -q 2>&1 | tail -5 && mvn test -pl hudi-client/hudi-client-common -Dtest=\"TestBaseRollbackHelper,TestMarkerBasedRollbackStrategy,TestRollbackUtils\" -DfailIfNoTests=false",
+  "test_files": [
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/table/action/rollback/HoodieRollbackTestBase.java",
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/table/action/rollback/TestBaseRollbackHelper.java",
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/table/action/rollback/TestMarkerBasedRollbackStrategy.java",
+    "hudi-client/hudi-client-common/src/test/java/org/apache/hudi/table/action/rollback/TestRollbackUtils.java",
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/table/functional/TestMarkerBasedRollbackStrategy.java",
+    "hudi-common/src/test/java/org/apache/hudi/common/testutils/FileCreateUtils.java",
+    "hudi-hadoop-common/src/test/java/org/apache/hudi/common/testutils/HoodieTestTable.java"
+  ],
+  "num_test_files": 7,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "HoodieLogFormat::test_1",
+    "HoodieLogFormat::test_2",
+    "HoodieLogFormat::test_3",
+    "HoodieLogFormat::test_4",
+    "HoodieLogFormat::test_5",
+    "HoodieLogFormat::test_6",
+    "HoodieLogFormat::test_7",
+    "HoodieLogFormat::test_8",
+    "HoodieLogFormat::test_9",
+    "HoodieLogFormat::test_10",
+    "HoodieLogFormat::test_11",
+    "HoodieLogFormat::test_12",
+    "HoodieLogFormat::test_13"
+  ],
+  "PASS_TO_PASS": []
+}

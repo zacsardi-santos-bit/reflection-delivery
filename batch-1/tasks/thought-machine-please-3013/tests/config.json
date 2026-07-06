@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./src/parse/asp -count=1 -run TestOctal",
+  "test_files": [
+    "src/parse/asp/lexer_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/thought-machine/please/src/parse/asp::TestOctal"
+  ],
+  "PASS_TO_PASS": []
+}

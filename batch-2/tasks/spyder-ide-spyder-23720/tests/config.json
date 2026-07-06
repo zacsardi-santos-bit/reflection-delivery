@@ -1,0 +1,21 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest spyder/plugins/ipythonconsole/widgets/tests/test_kernelconnect.py spyder/plugins/remoteclient/tests/test_files.py spyder/plugins/remoteclient/tests/test_plugin.py -v",
+  "test_files": [
+    "spyder/plugins/ipythonconsole/widgets/tests/conftest.py",
+    "spyder/plugins/ipythonconsole/widgets/tests/test_remotekernels.py",
+    "spyder/plugins/remoteclient/tests/conftest.py",
+    "spyder/plugins/remoteclient/tests/fixtures.py",
+    "spyder/plugins/remoteclient/tests/test_files.py",
+    "spyder/plugins/remoteclient/tests/test_plugin.py"
+  ],
+  "num_test_files": 6,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "spyder.plugins.ipythonconsole.widgets.tests.test_kernelconnect::test_connection_dialog_remembers_input_with_ssh_passphrase",
+    "spyder.plugins.ipythonconsole.widgets.tests.test_kernelconnect::test_connection_dialog_doesnt_remember_input_with_ssh_passphrase",
+    "spyder.plugins.ipythonconsole.widgets.tests.test_kernelconnect::test_connection_dialog_remembers_input_with_password",
+    "spyder.plugins.ipythonconsole.widgets.tests.test_kernelconnect::test_connection_dialog_doesnt_remember_input_with_password"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,1 +1,0 @@
-patching file packages/core/src/generators/react/generator.ts

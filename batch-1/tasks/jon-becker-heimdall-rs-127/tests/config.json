@@ -1,0 +1,34 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --package heimdall-common -E 'test(test_memory) | test(test_storage)' --no-fail-fast",
+  "test_files": [
+    "common/src/ether/evm/core/tests.rs",
+    "heimdall/tests/test_decompile.rs",
+    "heimdall/tests/test_snapshot.rs"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "heimdall-common ether::evm::core::tests::test_memory::test_expansion_cost",
+    "heimdall-common ether::evm::core::tests::test_memory::test_expansion_cost_2",
+    "heimdall-common ether::evm::core::tests::test_memory::test_memory_cost",
+    "heimdall-common ether::evm::core::tests::test_memory::test_memory_cost_2",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mload_pad_large",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mload_pad_one",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mload_simple",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mstore8",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mstore_extend",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mstore_large_offser",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mstore_large_nonstandard_offset",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mstore_simple",
+    "heimdall-common ether::evm::core::tests::test_memory::test_mstore_offset",
+    "heimdall-common ether::evm::core::tests::test_storage::test_sstore_sload",
+    "heimdall-common ether::evm::core::tests::test_storage::test_storage_access_cost_cold",
+    "heimdall-common ether::evm::core::tests::test_storage::test_storage_access_cost_warm",
+    "heimdall-common ether::evm::core::tests::test_storage::test_storage_storage_cost_cold",
+    "heimdall-common ether::evm::core::tests::test_storage::test_storage_storage_cost_cold_zero",
+    "heimdall-common ether::evm::core::tests::test_storage::test_storage_storage_cost_warm",
+    "heimdall-common ether::evm::core::tests::test_storage::test_storage_storage_cost_warm_zero"
+  ],
+  "PASS_TO_PASS": []
+}

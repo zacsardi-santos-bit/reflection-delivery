@@ -1,5 +1,0 @@
-patching file checks/evaluation/pinned_dependencies.go
-patching file checks/pinned_dependencies.go
-patching file probes/entries.go
-patching file probes/pinsDependencies/def.yml
-patching file probes/pinsDependencies/impl.go

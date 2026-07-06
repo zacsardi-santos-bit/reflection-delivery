@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "bash /workspace/setup_stubs.sh && pytest /workspace/repo/python/paddle/fluid/tests/unittests/dygraph_to_static/test_ifelse_basic.py -v",
+  "test_files": [
+    "python/paddle/fluid/tests/unittests/dygraph_to_static/ifelse_simple_func.py",
+    "python/paddle/fluid/tests/unittests/dygraph_to_static/test_basic.py",
+    "python/paddle/fluid/tests/unittests/dygraph_to_static/test_ifelse_basic.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestGetNameIds::test_get_name_ids",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestGetNameIds2::test_get_name_ids",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestGetNameIds3::test_get_name_ids",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_expr",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_expr2",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_if",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_if_with_and",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_if_with_or",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_is_None",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_is_None2",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_is_None3",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_is_None4",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_paddle_api",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_paddle_api_with_andOr",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_raise_error",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_shape",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_shape_with_andOr",
+    "python.paddle.fluid.tests.unittests.dygraph_to_static.test_ifelse_basic.TestIsControlFlowIf::test_with_node_var_type_map"
+  ],
+  "PASS_TO_PASS": []
+}

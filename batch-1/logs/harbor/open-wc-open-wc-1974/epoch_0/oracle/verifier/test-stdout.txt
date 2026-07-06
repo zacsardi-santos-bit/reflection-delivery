@@ -1,0 +1,29 @@
+patching file packages/storybook-addon-markdown-docs/test-node/createStoriesCode.test.js
+patching file packages/storybook-addon-markdown-docs/test-node/mdToJsx.test.js
+patching file packages/storybook-addon-markdown-docs/test-node/mdjsToCsf.test.js
+
+
+  createStoriesCode
+    ✓ returns a single stories as js string
+    ✓ returns multiple stories as js string
+    ✓ sets the story name if it is different from the key
+    ✓ handles a multiline story
+    ✓ throws when given invalid input
+
+  compileMdToJsx
+    ✓ turns MD into JSX (166ms)
+    ✓ turns HTML into JSX
+    ✓ turns MD with HTML into JSX
+
+  createDocsPage()
+    ✓ creates a docs page default export
+    ✓ registers the story name to key mappings
+
+  mdjsToCsf
+    ✓ transforms a mdjs file to csf (107ms)
+    ✓ passes on filePath and options to mdjsToMd
+
+
+  12 passing (362ms)
+
+reward=1 graded=12 found=12 failed=0 parsed=12 framework=mocha exit_code=0

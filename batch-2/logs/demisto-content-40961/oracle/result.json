@@ -1,0 +1,29 @@
+{
+    "id": "f0012267-4c17-47df-a5c1-4649cdc4fe9b",
+    "started_at": "2026-07-06T12:17:59.827970",
+    "finished_at": "2026-07-06T12:18:35.566093",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__demisto-content-40961": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "demisto-content-40961__aqJuDog"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

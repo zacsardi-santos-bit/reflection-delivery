@@ -1,6 +1,0 @@
-patching file Cargo.lock
-patching file crates/cairo-lang-doc/Cargo.toml
-patching file crates/cairo-lang-doc/src/db.rs
-patching file crates/cairo-lang-doc/src/documentable_formatter.rs
-patching file crates/cairo-lang-doc/src/lib.rs
-patching file crates/cairo-lang-semantic/src/items/modifiers.rs

@@ -1,0 +1,418 @@
+patching file query-engine/connector-test-kit-rs/query-engine-tests/Cargo.toml
+patching file query-engine/connector-test-kit-rs/query-engine-tests/tests/new/mod.rs
+patching file query-engine/connector-test-kit-rs/query-engine-tests/tests/new/relation_load_strategy.rs
+patching file query-engine/core-tests/tests/query_validation_tests/unknown_argument.expected.json
+   Compiling core-tests v0.1.0 (/workspace/repo/query-engine/core-tests)
+warning: unused variable: `adapter`
+  --> query-engine/request-handlers/src/load_executor.rs:28:29
+   |
+28 |         ConnectorKind::Js { adapter, _phantom } => {
+   |                             ^^^^^^^ help: try ignoring the field: `adapter: _`
+   |
+   = note: `#[warn(unused_variables)]` on by default
+
+warning: `request-handlers` (lib) generated 1 warning (run `cargo fix --lib -p request-handlers` to apply 1 suggestion)
+    Finished test [unoptimized + debuginfo] target(s) in 24.97s
+────────────
+ Nextest run ID 69a333cf-77df-40d7-a3ef-c0d60a8be4dc with nextest profile: default
+    Starting 1 test across 2 binaries (11 tests skipped)
+        FAIL [   0.022s] (1/1) core-tests::query_validation_tests postgres_basic_unknown_argument
+  stdout ───
+
+    running 1 test
+    test postgres_basic_unknown_argument ... FAILED
+
+    failures:
+
+    failures:
+        postgres_basic_unknown_argument
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+
+  stderr ───
+    thread 'postgres_basic_unknown_argument' panicked at query-engine/core-tests/tests/query_validation_tests.rs:59:5:
+
+    Snapshot comparison failed. Run the test again with UPDATE_EXPECT=1 in the environment to update the snapshot.
+
+    ===== EXPECTED ====
+    {
+      "is_panic": false,
+      "message": "Argument does not exist in enclosing type",
+      "meta": {
+        "kind": "UnknownArgument",
+        "argumentPath": [
+          "foo"
+        ],
+        "arguments": [
+          {
+            "name": "where",
+            "typeNames": [
+              "UserWhereInput"
+            ]
+          },
+          {
+            "name": "orderBy",
+            "typeNames": [
+              "UserOrderByWithRelationAndSearchRelevanceInput[]",
+              "UserOrderByWithRelationAndSearchRelevanceInput"
+            ]
+          },
+          {
+            "name": "cursor",
+            "typeNames": [
+              "UserWhereUniqueInput"
+            ]
+          },
+          {
+            "name": "take",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "skip",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "distinct",
+            "typeNames": [
+              "UserScalarFieldEnum",
+              "UserScalarFieldEnum[]"
+            ]
+          },
+          {
+            "name": "relationLoadStrategy",
+            "typeNames": [
+              "RelationLoadStrategy"
+            ]
+          }
+        ],
+        "selectionPath": [
+          "findManyUser"
+        ]
+      },
+      "error_code": "P2009"
+    }
+    ====== FOUND ======
+    {
+      "is_panic": false,
+      "message": "Argument does not exist in enclosing type",
+      "meta": {
+        "kind": "UnknownArgument",
+        "argumentPath": [
+          "foo"
+        ],
+        "arguments": [
+          {
+            "name": "where",
+            "typeNames": [
+              "UserWhereInput"
+            ]
+          },
+          {
+            "name": "orderBy",
+            "typeNames": [
+              "UserOrderByWithRelationAndSearchRelevanceInput[]",
+              "UserOrderByWithRelationAndSearchRelevanceInput"
+            ]
+          },
+          {
+            "name": "cursor",
+            "typeNames": [
+              "UserWhereUniqueInput"
+            ]
+          },
+          {
+            "name": "take",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "skip",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "distinct",
+            "typeNames": [
+              "UserScalarFieldEnum",
+              "UserScalarFieldEnum[]"
+            ]
+          }
+        ],
+        "selectionPath": [
+          "findManyUser"
+        ]
+      },
+      "error_code": "P2009"
+    }
+    ======= DIFF ======
+    {
+      "is_panic": false,
+      "message": "Argument does not exist in enclosing type",
+      "meta": {
+        "kind": "UnknownArgument",
+        "argumentPath": [
+          "foo"
+        ],
+        "arguments": [
+          {
+            "name": "where",
+            "typeNames": [
+              "UserWhereInput"
+            ]
+          },
+          {
+            "name": "orderBy",
+            "typeNames": [
+              "UserOrderByWithRelationAndSearchRelevanceInput[]",
+              "UserOrderByWithRelationAndSearchRelevanceInput"
+            ]
+          },
+          {
+            "name": "cursor",
+            "typeNames": [
+              "UserWhereUniqueInput"
+            ]
+          },
+          {
+            "name": "take",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "skip",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "distinct",
+            "typeNames": [
+              "UserScalarFieldEnum",
+              "UserScalarFieldEnum[]"
+            ]
+          },
+          {
+            "name": "relationLoadStrategy",
+            "typeNames": [
+              "RelationLoadStrategy"
+            ]
+          }
+        ],
+        "selectionPath": [
+          "findManyUser"
+        ]
+      },
+      "error_code": "P2009"
+    }
+            
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+────────────
+     Summary [   0.024s] 1 test run: 0 passed, 1 failed, 11 skipped
+        FAIL [   0.022s] (1/1) core-tests::query_validation_tests postgres_basic_unknown_argument
+  stdout ───
+
+    running 1 test
+    test postgres_basic_unknown_argument ... FAILED
+
+    failures:
+
+    failures:
+        postgres_basic_unknown_argument
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 0.00s
+
+  stderr ───
+    thread 'postgres_basic_unknown_argument' panicked at query-engine/core-tests/tests/query_validation_tests.rs:59:5:
+
+    Snapshot comparison failed. Run the test again with UPDATE_EXPECT=1 in the environment to update the snapshot.
+
+    ===== EXPECTED ====
+    {
+      "is_panic": false,
+      "message": "Argument does not exist in enclosing type",
+      "meta": {
+        "kind": "UnknownArgument",
+        "argumentPath": [
+          "foo"
+        ],
+        "arguments": [
+          {
+            "name": "where",
+            "typeNames": [
+              "UserWhereInput"
+            ]
+          },
+          {
+            "name": "orderBy",
+            "typeNames": [
+              "UserOrderByWithRelationAndSearchRelevanceInput[]",
+              "UserOrderByWithRelationAndSearchRelevanceInput"
+            ]
+          },
+          {
+            "name": "cursor",
+            "typeNames": [
+              "UserWhereUniqueInput"
+            ]
+          },
+          {
+            "name": "take",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "skip",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "distinct",
+            "typeNames": [
+              "UserScalarFieldEnum",
+              "UserScalarFieldEnum[]"
+            ]
+          },
+          {
+            "name": "relationLoadStrategy",
+            "typeNames": [
+              "RelationLoadStrategy"
+            ]
+          }
+        ],
+        "selectionPath": [
+          "findManyUser"
+        ]
+      },
+      "error_code": "P2009"
+    }
+    ====== FOUND ======
+    {
+      "is_panic": false,
+      "message": "Argument does not exist in enclosing type",
+      "meta": {
+        "kind": "UnknownArgument",
+        "argumentPath": [
+          "foo"
+        ],
+        "arguments": [
+          {
+            "name": "where",
+            "typeNames": [
+              "UserWhereInput"
+            ]
+          },
+          {
+            "name": "orderBy",
+            "typeNames": [
+              "UserOrderByWithRelationAndSearchRelevanceInput[]",
+              "UserOrderByWithRelationAndSearchRelevanceInput"
+            ]
+          },
+          {
+            "name": "cursor",
+            "typeNames": [
+              "UserWhereUniqueInput"
+            ]
+          },
+          {
+            "name": "take",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "skip",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "distinct",
+            "typeNames": [
+              "UserScalarFieldEnum",
+              "UserScalarFieldEnum[]"
+            ]
+          }
+        ],
+        "selectionPath": [
+          "findManyUser"
+        ]
+      },
+      "error_code": "P2009"
+    }
+    ======= DIFF ======
+    {
+      "is_panic": false,
+      "message": "Argument does not exist in enclosing type",
+      "meta": {
+        "kind": "UnknownArgument",
+        "argumentPath": [
+          "foo"
+        ],
+        "arguments": [
+          {
+            "name": "where",
+            "typeNames": [
+              "UserWhereInput"
+            ]
+          },
+          {
+            "name": "orderBy",
+            "typeNames": [
+              "UserOrderByWithRelationAndSearchRelevanceInput[]",
+              "UserOrderByWithRelationAndSearchRelevanceInput"
+            ]
+          },
+          {
+            "name": "cursor",
+            "typeNames": [
+              "UserWhereUniqueInput"
+            ]
+          },
+          {
+            "name": "take",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "skip",
+            "typeNames": [
+              "Int"
+            ]
+          },
+          {
+            "name": "distinct",
+            "typeNames": [
+              "UserScalarFieldEnum",
+              "UserScalarFieldEnum[]"
+            ]
+          },
+          {
+            "name": "relationLoadStrategy",
+            "typeNames": [
+              "RelationLoadStrategy"
+            ]
+          }
+        ],
+        "selectionPath": [
+          "findManyUser"
+        ]
+      },
+      "error_code": "P2009"
+    }
+            
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+error: test run failed
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=cargo exit_code=100

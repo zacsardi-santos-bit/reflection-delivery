@@ -1,0 +1,46 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --reporter=verbose --coverage.enabled=false src/agents/a2aUtils.test.ts src/config/config-agents-reload.test.ts",
+  "test_files": [
+    "packages/core/src/agents/a2aUtils.test.ts",
+    "packages/core/src/config/config-agents-reload.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils A2AResultReassembler should return message log as activity items",
+    "/workspace/repo/packages/core/src/config/config-agents-reload.test.ts::Config Agents Reload Integration should register agents in the agent registry when they are enabled after being disabled"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils isTerminalState should return true for completed, failed, canceled, and rejected",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils isTerminalState should return false for working, submitted, input-required, auth-required, and unknown",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractIdsFromResponse should extract IDs from a message response",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractIdsFromResponse should extract IDs from an in-progress task response",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractIdsFromResponse should set clearTaskId true for terminal task response",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractIdsFromResponse should set clearTaskId true for terminal status update",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractIdsFromResponse should extract IDs from an artifact-update event",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractIdsFromResponse should extract taskId from status update event",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractMessageText should extract text from simple text parts",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractMessageText should extract data from data parts",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractMessageText should extract file info from file parts",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractMessageText should handle mixed parts",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractMessageText should return empty string for undefined or empty message",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils extractMessageText should handle file parts with neither name nor uri",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils normalizeAgentCard should throw if input is not an object",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils normalizeAgentCard should preserve unknown fields while providing defaults for mandatory ones",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils normalizeAgentCard should map supportedInterfaces to additionalInterfaces with protocolBinding \u2192 transport",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils normalizeAgentCard should not overwrite additionalInterfaces if already present",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils normalizeAgentCard should NOT override existing transport if protocolBinding is also present",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils normalizeAgentCard should not mutate the original card object",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils A2AResultReassembler should reassemble sequential messages and incremental artifacts",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils A2AResultReassembler should handle auth-required state with a message",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils A2AResultReassembler should handle auth-required state without relying on metadata",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils A2AResultReassembler should not duplicate the auth instruction OR agent message if multiple identical auth-required chunks arrive",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils A2AResultReassembler should fallback to history in a task chunk if no message or artifacts exist and task is terminal",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils A2AResultReassembler should NOT fallback to history in a task chunk if task is not terminal",
+    "/workspace/repo/packages/core/src/agents/a2aUtils.test.ts::a2aUtils A2AResultReassembler should not fallback to history if artifacts exist",
+    "/workspace/repo/packages/core/src/config/config-agents-reload.test.ts::Config Agents Reload Integration should unregister agents from the agent registry when they are disabled after being enabled",
+    "/workspace/repo/packages/core/src/config/config-agents-reload.test.ts::Config Agents Reload Integration should not register agents in the agent registry when agents are disabled from the start",
+    "/workspace/repo/packages/core/src/config/config-agents-reload.test.ts::Config Agents Reload Integration should register agents in the agent registry even when they are not in allowedTools"
+  ]
+}

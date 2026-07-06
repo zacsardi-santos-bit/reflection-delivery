@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo-nextest",
+  "test_command": "cargo nextest run -p wasmer-journal -E 'test(test_record_create_pipe)'",
+  "test_files": [
+    "lib/journal/src/concrete/tests.rs",
+    "tests/wasix/pipes/main.c",
+    "tests/wasix/pipes/run.sh",
+    "tests/wasix/socket_pair/main.c",
+    "tests/wasix/socket_pair/run.sh"
+  ],
+  "num_test_files": 5,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) wasmer-journal concrete::tests::test_record_create_pipe"
+  ],
+  "PASS_TO_PASS": []
+}

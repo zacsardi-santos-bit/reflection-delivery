@@ -1,0 +1,29 @@
+{
+    "id": "14e03c23-861f-41ca-8dd5-3aba5dc2410c",
+    "started_at": "2026-07-04T15:37:33.953702",
+    "finished_at": "2026-07-04T15:39:22.928281",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__prisma-prisma-engines-4734": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "prisma-prisma-engines-4734__z7ncVQm"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+patching file cmd/gf/internal/cmd/cmd_z_unit_gen_dao_test.go
+Starting MariaDB database server: mariadbd ..
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+=== RUN   Test_Gen_Dao_Issue2616
+generated: /tmp/00000003g90djlmsakoewsn100vga1t6/dao/internal/user_1.go
+generated: /tmp/00000003g90djlmsakoewsn100vga1t6/model/do/user_1.go
+generated: /tmp/00000003g90djlmsakoewsn100vga1t6/model/entity/user_1.go
+generated: /tmp/00000003g90djlmsakoewsn100vga1t6/dao/user_2.go
+generated: /tmp/00000003g90djlmsakoewsn100vga1t6/dao/internal/user_2.go
+generated: /tmp/00000003g90djlmsakoewsn100vga1t6/model/do/user_2.go
+generated: /tmp/00000003g90djlmsakoewsn100vga1t6/model/entity/user_2.go
+done!
+--- PASS: Test_Gen_Dao_Issue2616 (0.07s)
+PASS
+ok  	github.com/gogf/gf/cmd/gf/v2/internal/cmd	0.141s
+reward=1 graded=1 found=0 failed=0 parsed=0 framework=go exit_code=0

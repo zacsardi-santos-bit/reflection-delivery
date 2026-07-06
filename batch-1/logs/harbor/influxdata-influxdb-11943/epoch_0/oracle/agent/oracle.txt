@@ -1,0 +1,3 @@
+patching file authorizer/auth.go
+patching file http/task_service.go
+patching file query/preauthorizer.go

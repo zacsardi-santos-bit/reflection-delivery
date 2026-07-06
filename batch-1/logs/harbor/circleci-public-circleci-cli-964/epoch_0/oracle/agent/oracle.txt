@@ -1,0 +1,9 @@
+patching file cmd/config.go
+patching file cmd/policy/policy.go
+patching file cmd/policy/testdata/policy/decide-expected-usage.txt
+patching file cmd/policy/testdata/policy/eval-expected-usage.txt
+patching file cmd/policy/testdata/test4/config.yml
+patching file cmd/policy/testdata/test5/config.yml
+patching file cmd/policy/testdata/test5/parameters.yml
+patching file config/commands.go
+patching file go.sum

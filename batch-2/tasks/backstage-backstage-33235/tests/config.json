@@ -1,0 +1,35 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/plugins/mcp-actions-backend && yarn backstage-cli package test --no-coverage --watchAll=false --json src/plugin.test.ts src/services/McpService.test.ts",
+  "test_files": [
+    "plugins/mcp-actions-backend/src/plugin.test.ts",
+    "plugins/mcp-actions-backend/src/services/McpService.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/plugins/mcp-actions-backend/src/plugin.test.ts::Mcp Backend should support streamable spec",
+    "/workspace/repo/plugins/mcp-actions-backend/src/plugin.test.ts::Mcp Backend should support sse spec",
+    "/workspace/repo/plugins/mcp-actions-backend/src/plugin.test.ts::Mcp Backend multi-server routing should route to per-server endpoints when mcpActions.servers is configured",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService should list the available actions as tools in the mcp backend",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService should record metrics with error.type when tools/list fails",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService should call the action when the tool is invoked",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService should return an error when the action is not found",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService should record metrics with error.type when tool invocation throws",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService should forward the original InputError when an action throws one",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService should forward the original NotFoundError when an action throws one",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService per-server filtering should return all actions when no filter rules are set",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService per-server filtering should scope actions using include filter rules",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService per-server filtering should apply exclude filter rules to remove destructive actions",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService per-server filtering should apply include filter rules with glob patterns",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService per-server filtering should reject tool calls for actions outside the filtered set",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService namespaced tool names should use action ID as tool name by default",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService namespaced tool names should use short action name when namespacing is disabled",
+    "/workspace/repo/plugins/mcp-actions-backend/src/services/McpService.test.ts::McpService namespaced tool names should match tool calls using the namespaced name"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/plugins/mcp-actions-backend/src/plugin.test.ts::Mcp Backend OAuth well-known endpoints should not expose oauth endpoints when neither DCR nor CIMD is enabled",
+    "/workspace/repo/plugins/mcp-actions-backend/src/plugin.test.ts::Mcp Backend OAuth well-known endpoints should expose oauth-protected-resource when DCR is enabled",
+    "/workspace/repo/plugins/mcp-actions-backend/src/plugin.test.ts::Mcp Backend OAuth well-known endpoints should expose oauth-protected-resource when CIMD is enabled"
+  ]
+}

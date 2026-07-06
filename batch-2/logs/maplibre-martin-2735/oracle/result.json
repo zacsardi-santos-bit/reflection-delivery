@@ -1,0 +1,29 @@
+{
+    "id": "79805354-55cb-4fa3-add4-4a9a08766b9f",
+    "started_at": "2026-07-06T12:18:32.708669",
+    "finished_at": "2026-07-06T12:19:07.739606",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__maplibre-martin-2735": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "maplibre-martin-2735__FjXvnfj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

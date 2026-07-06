@@ -1,0 +1,76 @@
+patching file tests/DebugCodeLens/DebugCodeLensProvider.test.ts
+patching file tests/TestResults/TestResult.test.ts
+patching file tests/TestResults/TestResultProvider.test.ts (renamed from tests/TestResultProvider.test.ts)
+patching file tests/TestResults/__snapshots__/index.test.ts.snap
+patching file tests/TestResults/index.test.ts
+PASS tests/TestResults/TestResult.test.ts
+  TestResult
+    resultsWithLowerCaseWindowsDriveLetters
+      on POSIX systems
+        ✓ should return the results unchanged (3ms)
+      on Windows systems
+        ✓ should normalize paths in the coverage map (1ms)
+        ✓ should normalize paths in the test results
+    testResultsWithLowerCaseWindowsDriveLetters
+      ✓ should return nothing the test results when the results are undefined (1ms)
+      ✓ should return the test results when no tests were run (1ms)
+      ✓ should normalizes paths in the test results when provided (1ms)
+    coverageMapWithLowerCaseWindowsDriveLetters
+      ✓ should return nothing when coverage was not collected (1ms)
+      ✓ should normalizes paths in the coverage map when collected
+    withLowerCaseDriveLetter
+      ✓ should return a new file path when provided a path with an upper case drive letter (1ms)
+      ✓ should indicate no change is required otherwise
+
+PASS tests/TestResults/index.test.ts
+  TestResults
+    module.exports
+      ✓ should match the snapshot (170ms)
+
+PASS tests/TestResults/TestResultProvider.test.ts
+  TestResultProvider
+    getResults()
+      ✓ should return the cached results if possible (3ms)
+      ✓ should re-index the line and column number to zero-based (2ms)
+      ✓ should look up the test result by test name (1ms)
+      ✓ should use default values for unmatched assertions (1ms)
+    getSortedResults()
+      ✓ should return cached results if possible (1ms)
+      ✓ should return the sorted test results (2ms)
+    updateTestResults()
+      ✓ should reset the cache (1ms)
+      ✓ should update the cached file status (1ms)
+
+PASS tests/DebugCodeLens/DebugCodeLensProvider.test.ts
+  DebugCodeLensProvider
+    constructor()
+      ✓ should set the test result provider (1ms)
+      ✓ should set the enabled value (1ms)
+      ✓ should initialize the onChange event emitter
+    enabled
+      get
+        ✓ should return if the provider is enabled
+      set
+        ✓ should set if the provider is enabled (5ms)
+        ✓ should fire an onDidChange event (1ms)
+    onDidChangeCodeLenses
+      ✓ should return the onDidChange event
+    provideCodeLenses()
+      ✓ should return an empty array when the provider is disabled
+      ✓ should return an empty array when the document is untitled (1ms)
+      ✓ should get the test results for the current document (1ms)
+      ✓ should not show DebugCodeLenses for successful test results
+      ✓ should not show DebugCodeLenses for skipped test results
+      ✓ should create the CodeLens at the start of the `test`/`it` block (1ms)
+      ✓ should create the CodeLens specifying the document filename (1ms)
+      ✓ should create the CodeLens specifying the test name
+    resolveCodeLenses()
+      ✓ should add the command to a DebugCodeLenses
+      ✓ should leave other CodeLenses unchanged (1ms)
+
+Test Suites: 4 passed, 4 total
+Tests:       36 passed, 36 total
+Snapshots:   1 passed, 1 total
+Time:        1.957s
+Ran all test suites matching /tests\/DebugCodeLens\/DebugCodeLensProvider.test.ts|tests\/TestResults\/TestResult.test.ts|tests\/TestResults\/TestResultProvider.test.ts|tests\/TestResults\/index.test.ts/i.
+{"numFailedTestSuites":0,"numFailedTests":0,"numPassedTestSuites":4,"numPassedTests":36,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":0,"numTotalTestSuites":4,"numTotalTests":36,"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesUnmatched":0,"filesUpdated":0,"matched":1,"total":1,"unchecked":0,"unmatched":0,"updated":0},"startTime":1782746987359,"success":true,"testResults":[{"assertionResults":[{"ancestorTitles":["TestResult","resultsWithLowerCaseWindowsDriveLetters","on POSIX systems"],"failureMessages":[],"fullName":"TestResult resultsWithLowerCaseWindowsDriveLetters on POSIX systems should return the results unchanged","status":"passed","title":"should return the results unchanged"},{"ancestorTitles":["TestResult","resultsWithLowerCaseWindowsDriveLetters","on Windows systems"],"failureMessages":[],"fullName":"TestResult resultsWithLowerCaseWindowsDriveLetters on Windows systems should normalize paths in the coverage map","status":"passed","title":"should normalize paths in the coverage map"},{"ancestorTitles":["TestResult","resultsWithLowerCaseWindowsDriveLetters","on Windows systems"],"failureMessages":[],"fullName":"TestResult resultsWithLowerCaseWindowsDriveLetters on Windows systems should normalize paths in the test results","status":"passed","title":"should normalize paths in the test results"},{"ancestorTitles":["TestResult","testResultsWithLowerCaseWindowsDriveLetters"],"failureMessages":[],"fullName":"TestResult testResultsWithLowerCaseWindowsDriveLetters should return nothing the test results when the results are undefined","status":"passed","title":"should return nothing the test results when the results are undefined"},{"ancestorTitles":["TestResult","testResultsWithLowerCaseWindowsDriveLetters"],"failureMessages":[],"fullName":"TestResult testResultsWithLowerCaseWindowsDriveLetters should return the test results when no tests were run","status":"passed","title":"should return the test results when no tests were run"},{"ancestorTitles":["TestResult","testResultsWithLowerCaseWindowsDriveLetters"],"failureMessages":[],"fullName":"TestResult testResultsWithLowerCaseWindowsDriveLetters should normalizes paths in the test results when provided","status":"passed","title":"should normalizes paths in the test results when provided"},{"ancestorTitles":["TestResult","coverageMapWithLowerCaseWindowsDriveLetters"],"failureMessages":[],"fullName":"TestResult coverageMapWithLowerCaseWindowsDriveLetters should return nothing when coverage was not collected","status":"passed","title":"should return nothing when coverage was not collected"},{"ancestorTitles":["TestResult","coverageMapWithLowerCaseWindowsDriveLetters"],"failureMessages":[],"fullName":"TestResult coverageMapWithLowerCaseWindowsDriveLetters should normalizes paths in the coverage map when collected","status":"passed","title":"should normalizes paths in the coverage map when collected"},{"ancestorTitles":["TestResult","withLowerCaseDriveLetter"],"failureMessages":[],"fullName":"TestResult withLowerCaseDriveLetter should return a new file path when provided a path with an upper case drive letter","status":"passed","title":"should return a new file path when provided a path with an upper case drive letter"},{"ancestorTitles":["TestResult","withLowerCaseDriveLetter"],"failureMessages":[],"fullName":"TestResult withLowerCaseDriveLetter should indicate no change is required otherwise","status":"passed","title":"should indicate no change is required otherwise"}],"endTime":1782746989180,"message":"","name":"/workspace/repo/tests/TestResults/TestResult.test.ts","startTime":1782746988606,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["TestResults","module.exports"],"failureMessages":[],"fullName":"TestResults module.exports should match the snapshot","status":"passed","title":"should match the snapshot"}],"endTime":1782746989223,"message":"","name":"/workspace/repo/tests/TestResults/index.test.ts","startTime":1782746988606,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["TestResultProvider","getResults()"],"failureMessages":[],"fullName":"TestResultProvider getResults() should return the cached results if possible","status":"passed","title":"should return the cached results if possible"},{"ancestorTitles":["TestResultProvider","getResults()"],"failureMessages":[],"fullName":"TestResultProvider getResults() should re-index the line and column number to zero-based","status":"passed","title":"should re-index the line and column number to zero-based"},{"ancestorTitles":["TestResultProvider","getResults()"],"failureMessages":[],"fullName":"TestResultProvider getResults() should look up the test result by test name","status":"passed","title":"should look up the test result by test name"},{"ancestorTitles":["TestResultProvider","getResults()"],"failureMessages":[],"fullName":"TestResultProvider getResults() should use default values for unmatched assertions","status":"passed","title":"should use default values for unmatched assertions"},{"ancestorTitles":["TestResultProvider","getSortedResults()"],"failureMessages":[],"fullName":"TestResultProvider getSortedResults() should return cached results if possible","status":"passed","title":"should return cached results if possible"},{"ancestorTitles":["TestResultProvider","getSortedResults()"],"failureMessages":[],"fullName":"TestResultProvider getSortedResults() should return the sorted test results","status":"passed","title":"should return the sorted test results"},{"ancestorTitles":["TestResultProvider","updateTestResults()"],"failureMessages":[],"fullName":"TestResultProvider updateTestResults() should reset the cache","status":"passed","title":"should reset the cache"},{"ancestorTitles":["TestResultProvider","updateTestResults()"],"failureMessages":[],"fullName":"TestResultProvider updateTestResults() should update the cached file status","status":"passed","title":"should update the cached file status"}],"endTime":1782746989229,"message":"","name":"/workspace/repo/tests/TestResults/TestResultProvider.test.ts","startTime":1782746988605,"status":"passed","summary":""},{"assertionResults":[{"ancestorTitles":["DebugCodeLensProvider","constructor()"],"failureMessages":[],"fullName":"DebugCodeLensProvider constructor() should set the test result provider","status":"passed","title":"should set the test result provider"},{"ancestorTitles":["DebugCodeLensProvider","constructor()"],"failureMessages":[],"fullName":"DebugCodeLensProvider constructor() should set the enabled value","status":"passed","title":"should set the enabled value"},{"ancestorTitles":["DebugCodeLensProvider","constructor()"],"failureMessages":[],"fullName":"DebugCodeLensProvider constructor() should initialize the onChange event emitter","status":"passed","title":"should initialize the onChange event emitter"},{"ancestorTitles":["DebugCodeLensProvider","enabled","get"],"failureMessages":[],"fullName":"DebugCodeLensProvider enabled get should return if the provider is enabled","status":"passed","title":"should return if the provider is enabled"},{"ancestorTitles":["DebugCodeLensProvider","enabled","set"],"failureMessages":[],"fullName":"DebugCodeLensProvider enabled set should set if the provider is enabled","status":"passed","title":"should set if the provider is enabled"},{"ancestorTitles":["DebugCodeLensProvider","enabled","set"],"failureMessages":[],"fullName":"DebugCodeLensProvider enabled set should fire an onDidChange event","status":"passed","title":"should fire an onDidChange event"},{"ancestorTitles":["DebugCodeLensProvider","onDidChangeCodeLenses"],"failureMessages":[],"fullName":"DebugCodeLensProvider onDidChangeCodeLenses should return the onDidChange event","status":"passed","title":"should return the onDidChange event"},{"ancestorTitles":["DebugCodeLensProvider","provideCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider provideCodeLenses() should return an empty array when the provider is disabled","status":"passed","title":"should return an empty array when the provider is disabled"},{"ancestorTitles":["DebugCodeLensProvider","provideCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider provideCodeLenses() should return an empty array when the document is untitled","status":"passed","title":"should return an empty array when the document is untitled"},{"ancestorTitles":["DebugCodeLensProvider","provideCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider provideCodeLenses() should get the test results for the current document","status":"passed","title":"should get the test results for the current document"},{"ancestorTitles":["DebugCodeLensProvider","provideCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider provideCodeLenses() should not show DebugCodeLenses for successful test results","status":"passed","title":"should not show DebugCodeLenses for successful test results"},{"ancestorTitles":["DebugCodeLensProvider","provideCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider provideCodeLenses() should not show DebugCodeLenses for skipped test results","status":"passed","title":"should not show DebugCodeLenses for skipped test results"},{"ancestorTitles":["DebugCodeLensProvider","provideCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider provideCodeLenses() should create the CodeLens at the start of the `test`/`it` block","status":"passed","title":"should create the CodeLens at the start of the `test`/`it` block"},{"ancestorTitles":["DebugCodeLensProvider","provideCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider provideCodeLenses() should create the CodeLens specifying the document filename","status":"passed","title":"should create the CodeLens specifying the document filename"},{"ancestorTitles":["DebugCodeLensProvider","provideCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider provideCodeLenses() should create the CodeLens specifying the test name","status":"passed","title":"should create the CodeLens specifying the test name"},{"ancestorTitles":["DebugCodeLensProvider","resolveCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider resolveCodeLenses() should add the command to a DebugCodeLenses","status":"passed","title":"should add the command to a DebugCodeLenses"},{"ancestorTitles":["DebugCodeLensProvider","resolveCodeLenses()"],"failureMessages":[],"fullName":"DebugCodeLensProvider resolveCodeLenses() should leave other CodeLenses unchanged","status":"passed","title":"should leave other CodeLenses unchanged"}],"endTime":1782746989264,"message":"","name":"/workspace/repo/tests/DebugCodeLens/DebugCodeLensProvider.test.ts","startTime":1782746988605,"status":"passed","summary":""}],"wasInterrupted":false}reward=1 graded=36 found=36 failed=0 parsed=36 framework=jest exit_code=0

@@ -1,0 +1,17 @@
+{
+  "test_framework": "pytest",
+  "test_command": "python3 /usr/local/bin/run_ch_tests.py",
+  "test_files": [
+    "tests/queries/0_stateless/04101_any_right_join_bug.reference",
+    "tests/queries/0_stateless/04101_any_right_join_bug.sql",
+    "tests/queries/0_stateless/04102_hash_join_stress_test.reference",
+    "tests/queries/0_stateless/04102_hash_join_stress_test.sql"
+  ],
+  "num_test_files": 4,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests/queries/0_stateless/04101_any_right_join_bug.sql::run",
+    "tests/queries/0_stateless/04102_hash_join_stress_test.sql::run"
+  ],
+  "PASS_TO_PASS": []
+}

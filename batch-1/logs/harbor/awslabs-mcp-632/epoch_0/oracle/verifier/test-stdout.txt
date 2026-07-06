@@ -1,0 +1,59 @@
+patching file src/aurora-dsql-mcp-server/tests/test_readonly_enforcement.py
+patching file src/aurora-dsql-mcp-server/tests/test_server.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/src/aurora-dsql-mcp-server
+configfile: pyproject.toml
+plugins: cov-7.1.0, anyio-4.14.1, mock-3.15.1, asyncio-1.4.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=function, asyncio_default_test_loop_scope=function
+collecting ... collected 45 items
+
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_detect_transaction_bypass_complex_query PASSED [  2%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_detect_mutating_keywords_create_table PASSED [  4%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_detect_mutating_keywords_insert PASSED [  6%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_detect_mutating_keywords_update PASSED [  8%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_detect_mutating_keywords_delete PASSED [ 11%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_detect_mutating_keywords_drop PASSED [ 13%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_safe_select_queries PASSED [ 15%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_sql_injection_patterns PASSED [ 17%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_transaction_bypass_variations PASSED [ 20%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_permission_statements PASSED [ 22%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_system_statements PASSED [ 24%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_case_insensitive_detection PASSED [ 26%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_postgresql_specific_patterns PASSED [ 28%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_comment_handling PASSED [ 31%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_empty_and_whitespace_sql_handling PASSED [ 33%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_mutating_keywords_combinations PASSED [ 35%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_transaction_bypass_edge_cases PASSED [ 37%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_blocks_mutating_keywords PASSED [ 40%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_blocks_injection_risks PASSED [ 42%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_blocks_transaction_bypass_server_level PASSED [ 44%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_allows_safe_queries PASSED [ 46%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_security_checks_order PASSED [ 48%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_complex_bypass_attempt PASSED [ 51%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_case_insensitive_detection PASSED [ 53%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_with_comments PASSED [ 55%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_postgresql_specific_patterns PASSED [ 57%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_permission_statements PASSED [ 60%]
+tests/test_readonly_enforcement.py::TestReadonlyEnforcement::test_readonly_query_system_statements PASSED [ 62%]
+tests/test_server.py::test_readonly_query_throws_exception_on_empty_input PASSED [ 64%]
+tests/test_server.py::test_transact_throws_exception_on_empty_input PASSED [ 66%]
+tests/test_server.py::test_transact_throws_exception_when_read_only PASSED [ 68%]
+tests/test_server.py::test_get_schema_throws_exception_on_empty_input PASSED [ 71%]
+tests/test_server.py::test_get_password_token_for_admin_user PASSED      [ 73%]
+tests/test_server.py::test_get_password_token_for_non_admin_user PASSED  [ 75%]
+tests/test_server.py::test_get_connection PASSED                         [ 77%]
+tests/test_server.py::test_get_connection_failure PASSED                 [ 80%]
+tests/test_server.py::test_get_schema PASSED                             [ 82%]
+tests/test_server.py::test_get_schema_failure PASSED                     [ 84%]
+tests/test_server.py::test_readonly_query_commit_on_success PASSED       [ 86%]
+tests/test_server.py::test_readonly_query_rollback_on_failure PASSED     [ 88%]
+tests/test_server.py::test_readonly_query_internal_error_on_failed_begin PASSED [ 91%]
+tests/test_server.py::test_readonly_query_error_on_write_sql PASSED      [ 93%]
+tests/test_server.py::test_transact_commit_on_success PASSED             [ 95%]
+tests/test_server.py::test_transact_rollback_on_failure PASSED           [ 97%]
+tests/test_server.py::test_transact_error_on_failed_begin PASSED         [100%]
+
+============================== 45 passed in 2.48s ==============================
+reward=1 graded=45 found=0 failed=0 parsed=45 framework=pytest exit_code=0

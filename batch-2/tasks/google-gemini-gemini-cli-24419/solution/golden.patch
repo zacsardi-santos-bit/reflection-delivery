@@ -1,0 +1,187 @@
+diff --git a/docs/core/subagents.md b/docs/core/subagents.md
+index 21de2b493..70c6f9d7e 100644
+--- a/docs/core/subagents.md
++++ b/docs/core/subagents.md
+@@ -222,6 +222,61 @@ the `click_at` tool for precise, coordinate-based interactions.
+ > The visual agent requires API key or Vertex AI authentication. It is
+ > not available when using "Sign in with Google".
+ 
++#### Sandbox support
++
++The browser agent adjusts its behavior automatically when running inside a
++sandbox.
++
++##### macOS seatbelt (`sandbox-exec`)
++
++When the CLI runs under the macOS seatbelt sandbox, `persistent` and `isolated`
++session modes are forced to `isolated` with `headless` enabled. This avoids
++permission errors caused by seatbelt file-system restrictions on persistent
++browser profiles. If `sessionMode` is set to `existing`, no override is applied.
++
++##### Container sandboxes (Docker / Podman)
++
++Chrome is not available inside the container, so the browser agent is
++**disabled** unless `sessionMode` is set to `"existing"`. When enabled with
++`existing` mode, the agent automatically connects to Chrome on the host via the
++resolved IP of `host.docker.internal:9222` instead of using local pipe
++discovery. Port `9222` is currently hardcoded and cannot be customized.
++
++To use the browser agent in a Docker sandbox:
++
++1. Start Chrome on the host with remote debugging enabled:
++
++   ```bash
++   # Option A: Launch Chrome from the command line
++   google-chrome --remote-debugging-port=9222
++
++   # Option B: Enable in Chrome settings
++   # Navigate to chrome://inspect/#remote-debugging and enable
++   ```
++
++2. Configure `sessionMode` and allowed domains in your project's
++   `.gemini/settings.json`:
++
++   ```json
++   {
++     "agents": {
++       "overrides": {
++         "browser_agent": { "enabled": true }
++       },
++       "browser": {
++         "sessionMode": "existing",
++         "allowedDomains": ["example.com"]
++       }
++     }
++   }
++   ```
++
++3. Launch the CLI with port forwarding:
++
++   ```bash
++   GEMINI_SANDBOX=docker SANDBOX_PORTS=9222 gemini
++   ```
++
+ ## Creating custom subagents
+ 
+ You can create your own subagents to automate specific workflows or enforce
+diff --git a/packages/core/src/agents/browser/browserManager.ts b/packages/core/src/agents/browser/browserManager.ts
+index d95327a40..b4b690e5c 100644
+--- a/packages/core/src/agents/browser/browserManager.ts
++++ b/packages/core/src/agents/browser/browserManager.ts
+@@ -481,7 +481,32 @@ export class BrowserManager {
+ 
+     // Build args for chrome-devtools-mcp
+     const browserConfig = this.config.getBrowserAgentConfig();
+-    const sessionMode = browserConfig.customConfig.sessionMode ?? 'persistent';
++    let sessionMode = browserConfig.customConfig.sessionMode ?? 'persistent';
++
++    // Detect sandbox environment.
++    // SANDBOX env var is set to 'sandbox-exec' (seatbelt) or the container
++    // name (Docker/Podman/gVisor/LXC) when running inside a sandbox.
++    // CI uses 'sandbox:none' as a metadata label — not a real sandbox.
++    const sandboxType = process.env['SANDBOX'];
++    const isContainerSandbox =
++      !!sandboxType &&
++      sandboxType !== 'sandbox-exec' &&
++      sandboxType !== 'sandbox:none';
++    const isSeatbeltSandbox =
++      sandboxType === 'sandbox-exec' && sessionMode !== 'existing';
++
++    // Seatbelt sandbox: force isolated + headless for filesystem compatibility.
++    // Chrome exists on the host, but persistent profiles may conflict with
++    // seatbelt restrictions. Isolated mode uses tmpdir (always writable).
++    if (isSeatbeltSandbox) {
++      if (sessionMode !== 'isolated') {
++        sessionMode = 'isolated';
++        coreEvents.emitFeedback(
++          'info',
++          '🔒 Sandbox: Using isolated browser session for compatibility.',
++        );
++      }
++    }
+ 
+     const mcpArgs = ['--experimental-vision'];
+ 
+@@ -493,15 +518,42 @@ export class BrowserManager {
+     if (sessionMode === 'isolated') {
+       mcpArgs.push('--isolated');
+     } else if (sessionMode === 'existing') {
+-      mcpArgs.push('--autoConnect');
+-      const message =
+-        '🔒 Browsing with your signed-in Chrome profile — cookies and saved logins will be visible to the agent.';
+-      coreEvents.emitFeedback('info', message);
+-      coreEvents.emitConsoleLog('info', message);
++      if (isContainerSandbox) {
++        // In container sandboxes, --autoConnect can't discover Chrome on the
++        // host (it uses local pipes/sockets). Use --browser-url with the
++        // resolved IP of host.docker.internal instead of the hostname, because
++        // Chrome's DevTools protocol rejects HTTP requests where the Host
++        // header is not 'localhost' or an IP address.
++        const dns = await import('node:dns');
++        let browserHost = 'host.docker.internal';
++        try {
++          const { address } = await dns.promises.lookup(browserHost);
++          browserHost = address;
++        } catch {
++          // Fallback: use hostname as-is if DNS resolution fails
++          debugLogger.log(
++            `Could not resolve host.docker.internal, using hostname directly`,
++          );
++        }
++        const browserUrl = `http://${browserHost}:9222`;
++        mcpArgs.push('--browser-url', browserUrl);
++        coreEvents.emitFeedback(
++          'info',
++          `🔒 Container sandbox: Connecting to Chrome via ${browserHost}:9222.`,
++        );
++      } else {
++        mcpArgs.push('--autoConnect');
++        const message =
++          '🔒 Browsing with your signed-in Chrome profile — cookies and saved logins will be visible to the agent.';
++        coreEvents.emitFeedback('info', message);
++        coreEvents.emitConsoleLog('info', message);
++      }
+     }
+ 
+-    // Add optional settings from config
+-    if (browserConfig.customConfig.headless) {
++    // Add optional settings from config.
++    // Force headless in seatbelt sandbox since Chrome profile/display access
++    // may be restricted, and the user is running in a sandboxed environment.
++    if (browserConfig.customConfig.headless || isSeatbeltSandbox) {
+       mcpArgs.push('--headless');
+     }
+     if (browserConfig.customConfig.profilePath) {
+diff --git a/packages/core/src/agents/registry.ts b/packages/core/src/agents/registry.ts
+index 625302a6c..36fe970cd 100644
+--- a/packages/core/src/agents/registry.ts
++++ b/packages/core/src/agents/registry.ts
+@@ -257,7 +257,27 @@ export class AgentRegistry {
+     // Tools are configured dynamically at invocation time via browserAgentFactory.
+     const browserConfig = this.config.getBrowserAgentConfig();
+     if (browserConfig.enabled) {
+-      this.registerLocalAgent(BrowserAgentDefinition(this.config));
++      // In container sandboxes (Docker/Podman/gVisor/LXC), Chrome is not
++      // available inside the container. The browser agent can only work with
++      // sessionMode "existing" (connecting to a host Chrome instance).
++      const sandboxType = process.env['SANDBOX'];
++      const isContainerSandbox =
++        !!sandboxType &&
++        sandboxType !== 'sandbox-exec' &&
++        sandboxType !== 'sandbox:none';
++      const sessionMode =
++        browserConfig.customConfig.sessionMode ?? 'persistent';
++
++      if (isContainerSandbox && sessionMode !== 'existing') {
++        coreEvents.emitFeedback(
++          'info',
++          'Browser agent disabled in container sandbox. ' +
++            'To use it, set sessionMode to "existing" in settings and start Chrome ' +
++            'with --remote-debugging-port=9222 on the host.',
++        );
++      } else {
++        this.registerLocalAgent(BrowserAgentDefinition(this.config));
++      }
+     }
+ 
+     // Register the memory manager agent as a replacement for the save_memory tool.

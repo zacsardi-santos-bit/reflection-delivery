@@ -1,0 +1,8 @@
+patching file changelog/issue-5577.md
+patching file docker-compose.yml
+patching file infrastructure/tooling/src/generate/generators/docker-compose.js
+patching file ui/.neutrinorc.js
+patching file ui/docs/manual/deploying/ui.mdx
+patching file ui/src/utils/constants.js
+patching file ui/src/utils/validateTaskPayloadSchemas.js
+patching file ui/src/views/Tasks/CreateTask/index.jsx

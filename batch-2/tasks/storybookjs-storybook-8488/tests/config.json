@@ -1,0 +1,31 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest lib/api/src/tests/versions.test.js --coverage=false --verbose --json",
+  "test_files": [
+    "lib/api/src/tests/versions.test.js"
+  ],
+  "num_test_files": 1,
+  "language": "javascript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API sets initial state with latest version",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API sets initial state with next version",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API sets versions in the init function",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API notifications sets an update notification right away in the init function",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API notifications persists a dismissed notification",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API getLatestVersion works",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API versionUpdateAvailable new patch version",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API versionUpdateAvailable new prerelease version"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API sets initial state with current version",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API notifications does not set an update notification if it has been dismissed",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API notifications does not set an update notification if the latest version is a patch",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API notifications does not set an update notification in production mode",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API getCurrentVersion works",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API versionUpdateAvailable matching version",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API versionUpdateAvailable new minor version",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API versionUpdateAvailable new major version",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API versionUpdateAvailable from older prerelease version",
+    "/workspace/repo/lib/api/src/tests/versions.test.js::versions API versionUpdateAvailable from newer prerelease version"
+  ]
+}

@@ -1,0 +1,66 @@
+patching file python/kserve/test/test_server.py
+============================= test session starts ==============================
+platform linux -- Python 3.10.20, pytest-7.4.4, pluggy-1.4.0 -- /workspace/repo/python/kserve/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+plugins: xdist-3.5.0, cov-4.1.0, asyncio-0.20.3, anyio-4.3.0
+asyncio: mode=strict
+collecting ... collected 39 items
+
+python/kserve/test/test_server.py::TestStreamPredict::test_predict_stream PASSED [  2%]
+python/kserve/test/test_server.py::TestModel::test_validate PASSED       [  5%]
+python/kserve/test/test_server.py::TestV1Endpoints::test_liveness_v1 PASSED [  7%]
+python/kserve/test/test_server.py::TestV1Endpoints::test_model_v1 PASSED [ 10%]
+python/kserve/test/test_server.py::TestV1Endpoints::test_unknown_model_v1 PASSED [ 12%]
+python/kserve/test/test_server.py::TestV1Endpoints::test_list_models_v1 PASSED [ 15%]
+python/kserve/test/test_server.py::TestV1Endpoints::test_predict_v1 PASSED [ 17%]
+python/kserve/test/test_server.py::TestV1Endpoints::test_explain_v1 PASSED [ 20%]
+python/kserve/test/test_server.py::TestV1Endpoints::test_unknown_path_v1 PASSED [ 23%]
+python/kserve/test/test_server.py::TestV1Endpoints::test_metrics_v1 PASSED [ 25%]
+python/kserve/test/test_server.py::TestV2Endpoints::test_list_models_v2 PASSED [ 28%]
+python/kserve/test/test_server.py::TestV2Endpoints::test_infer_v2 PASSED [ 30%]
+python/kserve/test/test_server.py::TestV2Endpoints::test_explain_v2 PASSED [ 33%]
+python/kserve/test/test_server.py::TestV2Endpoints::test_infer_parameters_v2 PASSED [ 35%]
+python/kserve/test/test_server.py::TestRayServer::test_liveness_handler PASSED [ 38%]
+python/kserve/test/test_server.py::TestRayServer::test_list_handler PASSED [ 41%]
+python/kserve/test/test_server.py::TestRayServer::test_health_handler PASSED [ 43%]
+python/kserve/test/test_server.py::TestRayServer::test_predict PASSED    [ 46%]
+python/kserve/test/test_server.py::TestRayServer::test_infer PASSED      [ 48%]
+python/kserve/test/test_server.py::TestRayServer::test_explain [36m(ServeReplica:TestModel:DummyServeModel pid=1203)[0m INFO 2026-06-29 15:29:43,615 TestModel_DummyServeModel iYZHFg replica.py:772 - LOAD OK 0.0ms
+[36m(ServeReplica:TestModel:DummyServeModel pid=1203)[0m INFO 2026-06-29 15:29:43,649 TestModel_DummyServeModel iYZHFg replica.py:772 - __CALL__ OK 0.3ms
+[36m(ServeReplica:TestModel:DummyServeModel pid=1203)[0m INFO 2026-06-29 15:29:43,657 TestModel_DummyServeModel iYZHFg replica.py:772 - __CALL__ OK 0.2ms
+[36m(ServeReplica:TestModel:DummyServeModel pid=1203)[0m INFO 2026-06-29 15:29:43,665 TestModel_DummyServeModel iYZHFg replica.py:772 - __CALL__ OK 0.1ms
+PASSED    [ 51%]
+python/kserve/test/test_server.py::TestTFHttpServerModelNotLoaded::test_model_not_ready_error PASSED [ 53%]
+python/kserve/test/test_server.py::TestTFHttpServerCloudEvent::test_predict_ce_structured PASSED [ 56%]
+python/kserve/test/test_server.py::TestTFHttpServerCloudEvent::test_predict_custom_ce_attributes PASSED [ 58%]
+python/kserve/test/test_server.py::TestTFHttpServerCloudEvent::test_predict_merge_structured_ce_attributes PASSED [ 61%]
+python/kserve/test/test_server.py::TestTFHttpServerCloudEvent::test_predict_merge_binary_ce_attributes PASSED [ 64%]
+python/kserve/test/test_server.py::TestTFHttpServerCloudEvent::test_predict_ce_binary_dict PASSED [ 66%]
+python/kserve/test/test_server.py::TestTFHttpServerCloudEvent::test_predict_ce_binary_bytes PASSED [ 69%]
+python/kserve/test/test_server.py::TestTFHttpServerCloudEvent::test_predict_ce_bytes_bad_format_exception PASSED [ 71%]
+python/kserve/test/test_server.py::TestTFHttpServerCloudEvent::test_predict_ce_bytes_bad_hex_format_exception PASSED [ 74%]
+python/kserve/test/test_server.py::TestTFHttpServerAvroCloudEvent::test_predict_ce_avro_binary PASSED [ 76%]
+python/kserve/test/test_server.py::TestTFHttpServerLoadAndUnLoad::test_load PASSED [ 79%]
+python/kserve/test/test_server.py::TestTFHttpServerLoadAndUnLoad::test_unload PASSED [ 82%]
+python/kserve/test/test_server.py::TestTFHttpServerLoadAndUnLoadFailure::test_load_fail PASSED [ 84%]
+python/kserve/test/test_server.py::TestTFHttpServerLoadAndUnLoadFailure::test_unload_fail PASSED [ 87%]
+python/kserve/test/test_server.py::TestTFHttpServerModelNotReady::test_model_not_ready_v1 PASSED [ 89%]
+python/kserve/test/test_server.py::TestTFHttpServerModelNotReady::test_model_not_ready_v2 PASSED [ 92%]
+python/kserve/test/test_server.py::TestTFHttpServerModelNotReady::test_predict PASSED [ 94%]
+python/kserve/test/test_server.py::TestTFHttpServerModelNotReady::test_infer PASSED [ 97%]
+python/kserve/test/test_server.py::TestTFHttpServerModelNotReady::test_explain PASSED [100%]
+
+=============================== warnings summary ===============================
+python/kserve/.venv/lib/python3.10/site-packages/ray/_private/pydantic_compat.py:2
+  /workspace/repo/python/kserve/.venv/lib/python3.10/site-packages/ray/_private/pydantic_compat.py:2: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+    from pkg_resources import packaging
+
+../../usr/local/lib/python3.10/site-packages/pkg_resources/__init__.py:3147
+  /usr/local/lib/python3.10/site-packages/pkg_resources/__init__.py:3147: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('google')`.
+  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages
+    declare_namespace(pkg)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 39 passed, 2 warnings in 18.29s ========================
+reward=1 graded=39 found=0 failed=0 parsed=38 framework=pytest exit_code=0

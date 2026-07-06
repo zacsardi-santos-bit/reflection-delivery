@@ -1,7 +1,0 @@
-patching file services-custom/dynamodb-enhanced/src/main/java/software/amazon/awssdk/enhanced/dynamodb/DynamoDbEnhancedAsyncClient.java
-patching file services-custom/dynamodb-enhanced/src/main/java/software/amazon/awssdk/enhanced/dynamodb/DynamoDbEnhancedClient.java
-patching file services-custom/dynamodb-enhanced/src/main/java/software/amazon/awssdk/enhanced/dynamodb/internal/client/DefaultDynamoDbEnhancedAsyncClient.java
-patching file services-custom/dynamodb-enhanced/src/main/java/software/amazon/awssdk/enhanced/dynamodb/internal/client/DefaultDynamoDbEnhancedClient.java
-patching file services-custom/dynamodb-enhanced/src/main/java/software/amazon/awssdk/enhanced/dynamodb/internal/operations/TransactWriteItemsOperation.java
-patching file services-custom/dynamodb-enhanced/src/main/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedRequest.java
-patching file services-custom/dynamodb-enhanced/src/main/java/software/amazon/awssdk/enhanced/dynamodb/model/TransactWriteItemsEnhancedResponse.java

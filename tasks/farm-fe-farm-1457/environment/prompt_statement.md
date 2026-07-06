@@ -1,5 +1,0 @@
-I'm working on the module resolution system and need to extend the main resolution method to accept per-call options in addition to the global compilation context. Right now, every call to the resolver uses the same global settings, and there's no way for a caller to pass in-call configuration (like a custom list of file extensions to try) without changing the global state.
-
-I'd like to introduce a new options type that callers can pass directly to the resolution method. Callers that don't need any special behavior should be able to pass a default value without any extra setup. The options parameter should sit between the resolve kind and the compilation context in the method signature.
-
-Additionally, the package metadata cache currently uses only the file path as a key, which means two resolution calls for the same path but with different configurations could share a cached result incorrectly. The cache should be updated to use a key that incorporates the options, and a public method should be exposed on the loader to compute this combined key — so the cache internals and any callers can use the same key derivation logic.

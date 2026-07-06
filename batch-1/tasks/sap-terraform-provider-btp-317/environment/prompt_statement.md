@@ -1,0 +1,7 @@
+I'm working with the SAP BTP Terraform provider and I need to add import support for the subaccount environment instance resource. Right now, if someone has an existing environment instance that wasn't created through Terraform, there's no way to bring it into the Terraform state — you can't run an import on it.
+
+There's also a bug in the existing import logic: the wrong attribute name is being used when restoring the subaccount information during import, so even if you tried to use it, it would fail. The error message for malformed identifiers also mentions the wrong attribute name.
+
+I'd like the import to accept a composite identifier made up of the subaccount ID and the environment instance ID, joined by a comma. After importing, the state should be consistent with what a normal apply would produce — no unexpected diffs on the next plan. One specific thing to handle: the API returns some internally-managed fields in the parameters (like a status field) that aren't something a user would specify when creating the resource. When creating normally, we preserve the user-provided parameters. But when importing, since we don't have that original state, we need to strip those internal fields from the parameters so the imported state stays consistent with what Terraform would have recorded if it had created the resource itself.
+
+Could you implement import support for this resource, fix the attribute name bug in the import handler, and make sure that after importing the state matches what a normal apply would produce?

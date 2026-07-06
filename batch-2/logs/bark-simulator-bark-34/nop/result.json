@@ -1,0 +1,29 @@
+{
+    "id": "aa7f5fde-43d7-4fa2-84b1-e76d6d3ea2d5",
+    "started_at": "2026-07-04T15:36:21.626007",
+    "finished_at": "2026-07-04T15:37:05.884529",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__bark-simulator-bark-34": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "bark-simulator-bark-34__yNdmQ4m"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

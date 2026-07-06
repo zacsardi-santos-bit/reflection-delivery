@@ -1,0 +1,19 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && pnpm install --no-frozen-lockfile 2>&1 | tail -5 ; npx jest tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts --config tools/workspace-plugin/jest.config.ts --coverage=false --verbose --json",
+  "test_files": [
+    "tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts::project-package-json validateProjectPackageJson() should return no violations for a valid project package.json",
+    "/workspace/repo/tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts::project-package-json validateProjectPackageJson() should return a violation if the name is not a string",
+    "/workspace/repo/tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts::project-package-json validateProjectPackageJson() should return a violation if the name is not scoped an org that is not @nx",
+    "/workspace/repo/tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts::project-package-json validateProjectPackageJson() should return a violation if a public package does not have publishConfig.access set to public",
+    "/workspace/repo/tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts::project-package-json validateProjectPackageJson() should return a violation if the project has an executors.json but does not reference it in the package.json",
+    "/workspace/repo/tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts::project-package-json validateProjectPackageJson() should return a violation if the project has an generators.json but does not reference it in the package.json",
+    "/workspace/repo/tools/workspace-plugin/src/conformance-rules/project-package-json/index.spec.ts::project-package-json validateProjectPackageJson() should return a violation if the project does not specify an exports object in the package.json"
+  ],
+  "PASS_TO_PASS": []
+}

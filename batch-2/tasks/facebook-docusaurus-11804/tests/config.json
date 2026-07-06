@@ -1,0 +1,52 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts --coverage=false --verbose --json",
+  "test_files": [
+    "packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::VSC strategies VSC Git Eager Strategy can read repo file info",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::VSC strategies VSC Git Eager Strategy can read submodule file",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::VSC strategies VSC Git Eager Strategy when site is not using git throws on read attempts"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs getFileCommitDate returns latest commit date with author",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs getFileCommitDate returns earliest commit date with author",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs getFileCommitDate throws custom error when file is not tracked",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs getFileCommitDate throws when file not found",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs commit info APIs returns creation info for test.txt",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs commit info APIs returns creation info for dest.txt",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs commit info APIs returns creation info for untracked.txt",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs commit info APIs returns creation info for non-existing.txt",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::commit info APIs commit info APIs returns files info",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::getGitRepoRoot returns repoDir for cwd=repoDir",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::getGitRepoRoot returns repoDir for cwd=repoDir/subDir",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::getGitRepoRoot returns Docusaurus repo for cwd=__dirname",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::getGitRepoRoot rejects for cwd=repoDir/doesNotExist",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSuperProjectRoot returns superproject dir for cwd=superproject",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSuperProjectRoot returns superproject dir for cwd=superproject/submodules",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSuperProjectRoot returns superproject dir for cwd=superproject/website/docs",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSuperProjectRoot returns superproject dir for cwd=submodule1",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSuperProjectRoot returns superproject dir for cwd=submodule2",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSuperProjectRoot returns superproject dir for cwd=submodule2/subDir",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSuperProjectRoot rejects for cwd of untracked dir",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSubmodulePaths returns submodules for cwd=superproject",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSubmodulePaths returns submodules for cwd=superproject/website/docs",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSubmodulePaths returns [] for cwd=submodules/submodule1",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSubmodulePaths returns [] for cwd=submodules/submodule2/subDir",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSubmodulePaths rejects for cwd=doesNotExist",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitSubmodulePaths rejects for cwd=notTracked",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitAllRepoRoots returns root paths for cwd=superproject",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitAllRepoRoots returns root paths for cwd=superproject/website/docs",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitAllRepoRoots returns root paths for cwd=superproject/submodules",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitAllRepoRoots returns root paths for cwd=superproject/submodules/submodule1",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitAllRepoRoots returns root paths for cwd=superproject/submodules/submodule2/subDir",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitAllRepoRoots rejects for cwd=doesNotExist",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitAllRepoRoots rejects for cwd=notTracked",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitRepositoryFilesInfo for superproject",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitRepositoryFilesInfo for submodule1",
+    "/workspace/docusaurus/packages/docusaurus-utils/src/vcs/__tests__/gitUtils.test.ts::submodules APIs getGitRepositoryFilesInfo for submodule2"
+  ]
+}

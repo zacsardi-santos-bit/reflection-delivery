@@ -1,0 +1,42 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tasks/unit-tests/gitlab_api_tests.py tasks/unit-tests/notify_tests.py -v",
+  "test_files": [
+    "tasks/unit-tests/gitlab_api_tests.py",
+    "tasks/unit-tests/notify_tests.py",
+    "tasks/unit-tests/testdata/fake_gitlab-ci.yml"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tasks.unit-tests.gitlab_api_tests.TestReadIncludes::test_with_includes",
+    "tasks.unit-tests.gitlab_api_tests.TestReadIncludes::test_without_includes",
+    "tasks.unit-tests.gitlab_api_tests.TestGenerateGitlabFullConfiguration::test_nominal",
+    "tasks.unit-tests.gitlab_api_tests.TestGenerateGitlabFullConfiguration::test_yaml_with_reference",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_merge",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_merge_with_get_failed_call",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_merge_without_get_failed_call",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_author1",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_author2",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_author3",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_author4",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_author5",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_channel1",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_channel2",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_channel3",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_post_to_channel4",
+    "tasks.unit-tests.notify_tests.TestSendMessage::test_route_e2e_internal_error",
+    "tasks.unit-tests.notify_tests.TestSendStats::test_nominal",
+    "tasks.unit-tests.notify_tests.TestCheckConsistentFailures::test_nominal",
+    "tasks.unit-tests.notify_tests.TestRetrieveJobExecutionsCreated::test_retrieved",
+    "tasks.unit-tests.notify_tests.TestRetrieveJobExecutions::test_not_found",
+    "tasks.unit-tests.notify_tests.TestRetrieveJobExecutions::test_other_error",
+    "tasks.unit-tests.notify_tests.TestUpdateStatistics::test_multiple_failures",
+    "tasks.unit-tests.notify_tests.TestUpdateStatistics::test_nominal",
+    "tasks.unit-tests.notify_tests.TestSendNotification::test_both",
+    "tasks.unit-tests.notify_tests.TestSendNotification::test_consecutive",
+    "tasks.unit-tests.notify_tests.TestSendNotification::test_cumulative",
+    "tasks.unit-tests.notify_tests.TestSendNotification::test_none"
+  ],
+  "PASS_TO_PASS": []
+}

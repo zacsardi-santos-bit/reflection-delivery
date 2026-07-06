@@ -1,0 +1,33 @@
+patching file e2e/playwright/regression/@embedded-airgapped-install/test.spec.ts
+patching file e2e/playwright/regression/@embedded-online-install/test.spec.ts
+patching file e2e/playwright/regression/@existing-airgapped-install-admin/test.spec.ts
+patching file e2e/playwright/regression/@existing-airgapped-install-minimal/test.spec.ts
+patching file e2e/playwright/regression/@existing-airgapped-upgrade-admin/test.spec.ts
+patching file e2e/playwright/regression/@existing-airgapped-upgrade-minimal/test.spec.ts
+patching file e2e/playwright/regression/@existing-online-install-admin/test.spec.ts
+patching file e2e/playwright/regression/@existing-online-install-minimal/test.spec.ts
+patching file e2e/playwright/regression/@existing-online-upgrade-admin/test.spec.ts
+patching file e2e/playwright/regression/@existing-online-upgrade-minimal/test.spec.ts
+regression/@embedded-airgapped-install/test.spec.ts(2,28): error TS2307: Cannot find module './constants' or its corresponding type declarations.
+regression/@embedded-airgapped-install/test.spec.ts(18,3): error TS2305: Module '"../shared"' has no exported member 'validateImageGarbageCollection'.
+regression/@embedded-airgapped-install/test.spec.ts(22,3): error TS2305: Module '"../shared"' has no exported member 'validateInitialPreflightsSkipped'.
+regression/@embedded-airgapped-install/test.spec.ts(27,3): error TS2724: '"../shared"' has no exported member named 'kurlCliAirgapInstall'. Did you mean 'cliAirgapInstall'?
+regression/@embedded-airgapped-install/test.spec.ts(28,3): error TS2305: Module '"../shared"' has no exported member 'joinWorkerNode'.
+regression/@embedded-airgapped-install/test.spec.ts(42,3): error TS2724: '"../shared"' has no exported member named 'validateSnapshotsInternalConfig'. Did you mean 'validateSnapshotsAWSConfig'?
+regression/@embedded-airgapped-install/test.spec.ts(53,3): error TS2305: Module '"../shared"' has no exported member 'validateClusterManagement'.
+regression/@embedded-airgapped-install/test.spec.ts(131,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@embedded-online-install/test.spec.ts(2,28): error TS2307: Cannot find module './constants' or its corresponding type declarations.
+regression/@embedded-online-install/test.spec.ts(12,3): error TS2305: Module '"../shared"' has no exported member 'joinWorkerNode'.
+regression/@embedded-online-install/test.spec.ts(29,3): error TS2305: Module '"../shared"' has no exported member 'configureSnapshotsAWSInstanceRole'.
+regression/@embedded-online-install/test.spec.ts(42,3): error TS2305: Module '"../shared"' has no exported member 'validateClusterManagement'.
+regression/@embedded-online-install/test.spec.ts(43,3): error TS2305: Module '"../shared"' has no exported member 'validateIdentityService'.
+regression/@embedded-online-install/test.spec.ts(69,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@existing-airgapped-install-admin/test.spec.ts(147,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@existing-airgapped-install-minimal/test.spec.ts(150,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@existing-airgapped-upgrade-admin/test.spec.ts(102,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@existing-airgapped-upgrade-minimal/test.spec.ts(104,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@existing-online-install-admin/test.spec.ts(70,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@existing-online-install-minimal/test.spec.ts(69,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@existing-online-upgrade-admin/test.spec.ts(77,47): error TS2554: Expected 2 arguments, but got 3.
+regression/@existing-online-upgrade-minimal/test.spec.ts(76,47): error TS2554: Expected 2 arguments, but got 3.
+reward=0 graded=1 found=1 failed=1 parsed=1 framework=jest exit_code=1

@@ -1,0 +1,29 @@
+{
+    "id": "2334ea15-f459-4373-b14b-e1fb21c600a9",
+    "started_at": "2026-07-06T12:18:43.801702",
+    "finished_at": "2026-07-06T12:19:18.103883",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__rqlite-rqlite-2628": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "rqlite-rqlite-2628__DF2TLDj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

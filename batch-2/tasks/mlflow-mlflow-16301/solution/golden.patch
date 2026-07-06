@@ -1,0 +1,440 @@
+diff --git a/packages/typescript/src/core/entities/span.ts b/packages/typescript/src/core/entities/span.ts
+index 46e65d97b..ce3e4fbf9 100644
+--- a/packages/typescript/src/core/entities/span.ts
++++ b/packages/typescript/src/core/entities/span.ts
+@@ -56,8 +56,7 @@ export interface ISpan {
+    * Convert this span to JSON format
+    * @returns JSON object representation of the span
+    */
+-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+-  toJson(): Record<string, any>;
++  toJson(): SerializedSpan;
+ }
+ 
+ /**
+diff --git a/packages/typescript/src/core/entities/trace.ts b/packages/typescript/src/core/entities/trace.ts
+new file mode 100644
+index 000000000..a3fbf7cd5
+--- /dev/null
++++ b/packages/typescript/src/core/entities/trace.ts
+@@ -0,0 +1,54 @@
++import { SerializedTraceInfo, TraceInfo } from './trace_info';
++import { SerializedTraceData, TraceData } from './trace_data';
++
++/**
++ * Represents a complete trace with metadata and span data
++ */
++export class Trace {
++  /**
++   * Trace metadata
++   */
++  info: TraceInfo;
++
++  /**
++   * Trace data containing spans
++   */
++  data: TraceData;
++
++  /**
++   * Create a new Trace instance
++   * @param info Trace metadata
++   * @param data Trace data containing spans
++   */
++  constructor(info: TraceInfo, data: TraceData) {
++    this.info = info;
++    this.data = data;
++  }
++
++  /**
++   * Convert this Trace instance to JSON format
++   * @returns JSON object representation of the Trace
++   */
++  toJson(): SerializedTrace {
++    return {
++      info: this.info.toJson(),
++      data: this.data.toJson()
++    };
++  }
++
++  /**
++   * Create a Trace instance from JSON data
++   * @param json JSON object containing trace data
++   * @returns Trace instance
++   */
++  static fromJson(json: SerializedTrace): Trace {
++    const info = TraceInfo.fromJson(json.info);
++    const data = TraceData.fromJson(json.data);
++    return new Trace(info, data);
++  }
++}
++
++interface SerializedTrace {
++  info: SerializedTraceInfo;
++  data: SerializedTraceData;
++}
+diff --git a/packages/typescript/src/core/entities/trace_data.ts b/packages/typescript/src/core/entities/trace_data.ts
+new file mode 100644
+index 000000000..4bf8b6e34
+--- /dev/null
++++ b/packages/typescript/src/core/entities/trace_data.ts
+@@ -0,0 +1,44 @@
++import { ISpan, SerializedSpan, Span } from './span';
++
++/**
++ * Represents the spans and associated data for a trace
++ */
++export class TraceData {
++  /**
++   * The spans that make up this trace
++   */
++  spans: ISpan[];
++
++  /**
++   * Create a new TraceData instance
++   * @param spans List of spans
++   */
++  constructor(spans: ISpan[] = []) {
++    this.spans = spans;
++  }
++
++  /**
++   * Convert this TraceData instance to JSON format
++   * @returns JSON object representation of the TraceData
++   */
++  toJson(): SerializedTraceData {
++    return {
++      spans: this.spans.map((span) => span.toJson())
++    };
++  }
++
++  /**
++   * Create a TraceData instance from JSON data (following Python implementation)
++   * @param json JSON object containing trace data
++   * @returns TraceData instance
++   */
++  static fromJson(json: SerializedTraceData): TraceData {
++    const spans: ISpan[] = json.spans.map((spanData) => Span.fromJson(spanData));
++    return new TraceData(spans);
++  }
++}
++
++
++export interface SerializedTraceData {
++  spans: SerializedSpan[];
++}
+diff --git a/packages/typescript/src/core/entities/trace_info.ts b/packages/typescript/src/core/entities/trace_info.ts
+new file mode 100644
+index 000000000..b06244b0b
+--- /dev/null
++++ b/packages/typescript/src/core/entities/trace_info.ts
+@@ -0,0 +1,183 @@
++import type { TraceLocation, TraceLocationType } from './trace_location';
++import type { TraceState } from './trace_state';
++
++/**
++ * Metadata about a trace, such as its ID, location, timestamp, etc.
++ */
++export class TraceInfo {
++  /**
++   * The primary identifier for the trace
++   */
++  traceId: string;
++
++  /**
++   * The location where the trace is stored
++   */
++  traceLocation: TraceLocation;
++
++  /**
++   * Start time of the trace, in milliseconds
++   */
++  requestTime: number;
++
++  /**
++   * State of the trace
++   */
++  state: TraceState;
++
++  /**
++   * Request to the model/agent (JSON-encoded, may be truncated)
++   */
++  requestPreview?: string;
++
++  /**
++   * Response from the model/agent (JSON-encoded, may be truncated)
++   */
++  responsePreview?: string;
++
++  /**
++   * Client supplied request ID associated with the trace
++   */
++  clientRequestId?: string;
++
++  /**
++   * Duration of the trace, in milliseconds
++   */
++  executionDuration?: number;
++
++  /**
++   * Key-value pairs associated with the trace (immutable)
++   */
++  traceMetadata: Record<string, string>;
++
++  /**
++   * Tags associated with the trace (mutable)
++   */
++  tags: Record<string, string>;
++
++  /**
++   * List of assessments associated with the trace.
++   * TODO: Assessments are not yet supported in the TypeScript SDK.
++   */
++  assessments: any[];
++
++  /**
++   * Create a new TraceInfo instance
++   * @param params TraceInfo parameters
++   */
++  constructor(params: {
++    traceId: string;
++    traceLocation: TraceLocation;
++    requestTime: number;
++    state: TraceState;
++    requestPreview?: string;
++    responsePreview?: string;
++    clientRequestId?: string;
++    executionDuration?: number;
++    traceMetadata?: Record<string, string>;
++    tags?: Record<string, string>;
++    assessments?: any[];
++  }) {
++    this.traceId = params.traceId;
++    this.traceLocation = params.traceLocation;
++    this.requestTime = params.requestTime;
++    this.state = params.state;
++    this.requestPreview = params.requestPreview;
++    this.responsePreview = params.responsePreview;
++    this.clientRequestId = params.clientRequestId;
++    this.executionDuration = params.executionDuration;
++    this.traceMetadata = params.traceMetadata || {};
++    this.tags = params.tags || {};
++    // TODO: Assessments are not yet supported in the TypeScript SDK.
++    this.assessments = [];
++  }
++
++  /**
++   * Convert this TraceInfo instance to JSON format
++   * @returns JSON object representation of the TraceInfo
++   */
++  toJson(): SerializedTraceInfo {
++    return {
++      trace_id: this.traceId,
++      client_request_id: this.clientRequestId,
++      trace_location: {
++        type: this.traceLocation.type,
++        mlflow_experiment: this.traceLocation.mlflowExperiment
++          ? {
++              experiment_id: this.traceLocation.mlflowExperiment.experimentId
++            }
++          : undefined,
++        inference_table: this.traceLocation.inferenceTable
++          ? {
++              full_table_name: this.traceLocation.inferenceTable.fullTableName
++            }
++          : undefined
++      },
++      request_preview: this.requestPreview,
++      response_preview: this.responsePreview,
++      request_time: new Date(this.requestTime).toISOString(),
++      execution_duration: this.executionDuration ? `${this.executionDuration / 1000}s` : undefined,
++      state: this.state,
++      trace_metadata: this.traceMetadata,
++      tags: this.tags,
++      assessments: this.assessments
++    };
++  }
++
++  /**
++   * Create a TraceInfo instance from JSON data
++   * @param json JSON object containing trace info data
++   * @returns TraceInfo instance
++   */
++  static fromJson(json: SerializedTraceInfo): TraceInfo {
++    /* eslint-disable @typescript-eslint/no-unsafe-member-access */
++    return new TraceInfo({
++      traceId: json.trace_id,
++      clientRequestId: json.client_request_id,
++      traceLocation: {
++        type: json.trace_location?.type as TraceLocationType,
++        mlflowExperiment: json.trace_location?.mlflow_experiment
++          ? { experimentId: json.trace_location.mlflow_experiment.experiment_id }
++          : undefined,
++        inferenceTable: json.trace_location?.inference_table
++          ? { fullTableName: json.trace_location.inference_table.full_table_name }
++          : undefined
++      },
++      requestPreview: json.request_preview,
++      responsePreview: json.response_preview,
++      requestTime: json.request_time ? new Date(json.request_time).getTime() : Date.now(),
++      executionDuration: json.execution_duration
++        ? parseFloat((json.execution_duration).replace('s', '')) * 1000
++        : undefined,
++      state: json.state,
++      traceMetadata: json.trace_metadata || {},
++      tags: json.tags || {},
++      assessments: json.assessments || []
++    });
++    /* eslint-enable @typescript-eslint/no-unsafe-member-access */
++  }
++}
++
++export interface SerializedTraceInfo {
++  trace_id: string;
++  client_request_id?: string;
++  trace_location: {
++    type: TraceLocationType;
++    mlflow_experiment?: {
++      experiment_id: string;
++    },
++    inference_table?: {
++      full_table_name: string;
++    }
++  }
++  request_preview?: string;
++  response_preview?: string;
++  // "request_time": "2025-06-15T14:07:41.282Z"
++  request_time: string;
++  execution_duration?: string;
++  state: TraceState;
++  trace_metadata: Record<string, string>;
++  tags: Record<string, string>;
++  // TODO: Define proper type for assessments once supported
++  assessments: any[];
++}
+diff --git a/packages/typescript/src/core/entities/trace_location.ts b/packages/typescript/src/core/entities/trace_location.ts
+new file mode 100644
+index 000000000..2028ebd06
+--- /dev/null
++++ b/packages/typescript/src/core/entities/trace_location.ts
+@@ -0,0 +1,74 @@
++/**
++ * Types of trace locations
++ */
++export enum TraceLocationType {
++  /**
++   * Unspecified trace location type
++   */
++  TRACE_LOCATION_TYPE_UNSPECIFIED = 'TRACE_LOCATION_TYPE_UNSPECIFIED',
++
++  /**
++   * Trace is stored in an MLflow experiment
++   */
++  MLFLOW_EXPERIMENT = 'MLFLOW_EXPERIMENT',
++
++  /**
++   * Trace is stored in a Databricks inference table
++   */
++  INFERENCE_TABLE = 'INFERENCE_TABLE'
++}
++
++/**
++ * Interface representing an MLflow experiment location
++ */
++export interface MlflowExperimentLocation {
++  /**
++   * The ID of the MLflow experiment where the trace is stored
++   */
++  experimentId: string;
++}
++
++/**
++ * Interface representing a Databricks inference table location
++ */
++export interface InferenceTableLocation {
++  /**
++   * The fully qualified name of the inference table where the trace is stored
++   */
++  fullTableName: string;
++}
++
++/**
++ * Interface representing the location where the trace is stored
++ */
++export interface TraceLocation {
++  /**
++   * The type of the trace location
++   */
++  type: TraceLocationType;
++
++  /**
++   * The MLflow experiment location
++   * Set this when the location type is MLflow experiment
++   */
++  mlflowExperiment?: MlflowExperimentLocation;
++
++  /**
++   * The inference table location
++   * Set this when the location type is Databricks Inference table
++   */
++  inferenceTable?: InferenceTableLocation;
++}
++
++/**
++ * Create a TraceLocation from an experiment ID
++ * @param experimentId The ID of the MLflow experiment
++ */
++export function createTraceLocationFromExperimentId(experimentId: string): TraceLocation {
++  return {
++    type: TraceLocationType.MLFLOW_EXPERIMENT,
++    mlflowExperiment: {
++      experimentId: experimentId
++    }
++  };
++}
+diff --git a/packages/typescript/src/core/entities/trace_state.ts b/packages/typescript/src/core/entities/trace_state.ts
+new file mode 100644
+index 000000000..148a66de2
+--- /dev/null
++++ b/packages/typescript/src/core/entities/trace_state.ts
+@@ -0,0 +1,41 @@
++import { SpanStatusCode } from '@opentelemetry/api';
++
++/**
++ * Enum representing the state of a trace
++ */
++export enum TraceState {
++  /**
++   * Unspecified trace state
++   */
++  STATE_UNSPECIFIED = 'STATE_UNSPECIFIED',
++
++  /**
++   * Trace successfully completed
++   */
++  OK = 'OK',
++
++  /**
++   * Trace encountered an error
++   */
++  ERROR = 'ERROR',
++
++  /**
++   * Trace is currently in progress
++   */
++  IN_PROGRESS = 'IN_PROGRESS'
++}
++
++/**
++ * Convert OpenTelemetry status code to MLflow TraceState
++ * @param statusCode OpenTelemetry status code
++ */
++export function fromOtelStatus(statusCode: SpanStatusCode): TraceState {
++  switch (statusCode) {
++    case SpanStatusCode.OK:
++      return TraceState.OK;
++    case SpanStatusCode.ERROR:
++      return TraceState.ERROR;
++    default:
++      return TraceState.STATE_UNSPECIFIED;
++  }
++}

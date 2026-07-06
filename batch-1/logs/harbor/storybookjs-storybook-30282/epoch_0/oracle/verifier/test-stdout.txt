@@ -1,0 +1,14 @@
+patching file code/lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts
+patching file code/lib/codemod/src/transforms/__tests__/csf-3-to-4.test.ts
+[?25l
+ RUN  v3.0.0-beta.4 /workspace/repo/code
+
+ ✓ lib/cli-storybook/src/automigrate/fixes/csf-factories.test.ts (14 tests) 1455ms
+   ✓ csf-factories > stories codemod > javascript > should wrap const declared meta 1006ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  15:17:18
+   Duration  4.94s (transform 1.43s, setup 168ms, collect 1.98s, tests 1.46s, environment 0ms, prepare 93ms)
+
+[?25hreward=1 graded=12 found=0 failed=0 parsed=0 framework=vitest exit_code=0

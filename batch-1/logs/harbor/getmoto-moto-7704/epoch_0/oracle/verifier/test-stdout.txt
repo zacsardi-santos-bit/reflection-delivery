@@ -1,0 +1,25 @@
+patching file tests/test_networkmanager/__init__.py
+patching file tests/test_networkmanager/test_networkmanager.py
+patching file tests/test_networkmanager/test_server.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo
+configfile: setup.cfg
+plugins: order-1.5.0, cov-7.1.0
+collecting ... collected 11 items
+
+tests/test_networkmanager/test_networkmanager.py::test_create_global_network PASSED [  9%]
+tests/test_networkmanager/test_networkmanager.py::test_create_core_network PASSED [ 18%]
+tests/test_networkmanager/test_networkmanager.py::test_delete_core_network PASSED [ 27%]
+tests/test_networkmanager/test_networkmanager.py::test_tag_resource PASSED [ 36%]
+tests/test_networkmanager/test_networkmanager.py::test_untag_resource PASSED [ 45%]
+tests/test_networkmanager/test_networkmanager.py::test_list_core_networks PASSED [ 54%]
+tests/test_networkmanager/test_networkmanager.py::test_get_core_network PASSED [ 63%]
+tests/test_networkmanager/test_networkmanager.py::test_describe_global_networks PASSED [ 72%]
+tests/test_networkmanager/test_server.py::test_list_global_networks PASSED [ 81%]
+tests/test_networkmanager/test_server.py::test_list_core_networks PASSED [ 90%]
+tests/test_networkmanager/test_server.py::test_tag_resource PASSED       [100%]
+
+============================== 11 passed in 1.49s ==============================
+reward=1 graded=11 found=0 failed=0 parsed=11 framework=pytest exit_code=0

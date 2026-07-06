@@ -1,0 +1,48 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/entrypoints/anthropic/test_anthropic_messages_conversion.py -v --noconftest",
+  "test_files": [
+    "tests/entrypoints/anthropic/test_anthropic_messages_conversion.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestInlineSystemMessageInMessagesArray::test_inline_system_merged_with_top_level_system",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestInlineSystemMessageInMessagesArray::test_inline_system_string_only",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestInlineSystemMessageInMessagesArray::test_inline_system_list_content",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestInlineSystemMessageInMessagesArray::test_multiple_inline_system_messages",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestInlineSystemMessageInMessagesArray::test_inline_system_with_top_level_string",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestInlineSystemMessageInMessagesArray::test_inline_system_billing_header_stripped",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestInlineSystemMessageInMessagesArray::test_inline_system_billing_header_mixed_with_content"
+  ],
+  "PASS_TO_PASS": [
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestConvertImageSourceToUrl::test_base64_source",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestConvertImageSourceToUrl::test_base64_png",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestConvertImageSourceToUrl::test_url_source",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestConvertImageSourceToUrl::test_missing_type_defaults_to_base64",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestConvertImageSourceToUrl::test_missing_media_type_defaults_to_jpeg",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestConvertImageSourceToUrl::test_url_source_missing_url_returns_empty",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestConvertImageSourceToUrl::test_empty_source_returns_data_uri_shell",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestImageContentBlocks::test_base64_image_in_user_message",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestImageContentBlocks::test_url_image_in_user_message",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestToolResultContent::test_tool_result_string_content",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestToolResultContent::test_tool_result_text_blocks",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestToolResultContent::test_tool_result_with_image",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestToolResultContent::test_tool_result_with_text_and_image",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestToolResultContent::test_tool_result_with_multiple_images",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestToolResultContent::test_tool_result_none_content",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestToolResultContent::test_tool_result_no_follow_up_when_no_images",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestAttributionHeaderStripping::test_billing_header_stripped_from_system",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestAttributionHeaderStripping::test_system_without_billing_header_unchanged",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestAttributionHeaderStripping::test_system_string_unchanged",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestThinkingBlockConversion::test_thinking_plus_text_in_assistant_message",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestThinkingBlockConversion::test_thinking_only_in_assistant_message",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestThinkingBlockConversion::test_thinking_plus_tool_use_in_assistant_message",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestThinkingBlockConversion::test_multiple_thinking_blocks_concatenated",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestThinkingBlockConversion::test_no_thinking_blocks_unchanged",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestThinkingBlockConversion::test_multi_turn_with_thinking_blocks",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestThinkingBlockConversion::test_redacted_thinking_block_is_accepted",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestMessageStreamConverterToolUseContentBuffering::test_tool_use_args_not_dropped_when_content_in_same_chunk",
+    "tests.entrypoints.anthropic.test_anthropic_messages_conversion.TestMessageStreamConverterToolUseContentBuffering::test_buffered_content_flushed_on_done_without_usage_chunk"
+  ]
+}

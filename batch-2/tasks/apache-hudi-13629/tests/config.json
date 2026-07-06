@@ -1,0 +1,41 @@
+{
+  "test_framework": "maven",
+  "test_command": "cd /workspace/repo && mvn -pl hudi-common -am test -Dtest=\"TestHoodieDataCleanupManager,TestHoodieBackedTableMetadataDataCleanup\" -DfailIfNoTests=false -Drat.skip=true -Dcheckstyle.skip=true",
+  "test_files": [
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/data/TestHoodieJavaPairRDD.java",
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/data/TestHoodieJavaRDD.java",
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/testutils/HoodieSparkClientTestHarness.java",
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/testutils/SparkClientFunctionalTestHarness.java",
+    "hudi-client/hudi-spark-client/src/test/java/org/apache/hudi/testutils/SparkRDDValidationUtils.java",
+    "hudi-common/src/test/java/org/apache/hudi/metadata/TestHoodieBackedTableMetadataDataCleanup.java",
+    "hudi-common/src/test/java/org/apache/hudi/metadata/TestHoodieDataCleanupManager.java",
+    "hudi-spark-datasource/hudi-spark/src/test/java/org/apache/hudi/functional/TestHoodieBackedMetadata.java",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/TestHoodieFileIndex.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/functional/TestColumnStatsIndex.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/hudi/functional/TestMetadataRecordIndex.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/spark/sql/hudi/common/HoodieSparkSqlTestBase.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/spark/sql/hudi/feature/index/TestExpressionIndex.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/spark/sql/hudi/feature/index/TestSecondaryIndex.scala",
+    "hudi-spark-datasource/hudi-spark/src/test/scala/org/apache/spark/sql/hudi/feature/index/testHoodieBackedTableMetadataIndexLookup.scala",
+    "hudi-utilities/src/test/java/org/apache/hudi/utilities/TestHoodieMetadataTableValidator.java"
+  ],
+  "num_test_files": 16,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "jar:::test_1",
+    "jar:::test_2",
+    "jar:::test_3",
+    "jar:::test_4",
+    "jar:::test_5",
+    "jar:::test_6",
+    "jar:::test_7",
+    "jar:::test_8",
+    "jar:::test_9",
+    "jar:::test_10",
+    "jar:::test_11",
+    "jar:::test_12",
+    "jar:::test_13",
+    "jar:::test_14"
+  ],
+  "PASS_TO_PASS": []
+}

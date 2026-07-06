@@ -1,0 +1,21 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts --coverage=false --watchAll=false --forceExit",
+  "test_files": [
+    "packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts",
+    "test/collections-rest/int.spec.ts",
+    "test/database/config.ts",
+    "test/database/int.spec.ts",
+    "test/helpers/seed.ts",
+    "test/package.json",
+    "test/relationships/config.ts",
+    "test/relationships/int.spec.ts",
+    "test/relationships/payload-types.ts"
+  ],
+  "num_test_files": 9,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/db-mongodb/src/utilities/sanitizeRelationshipIDs.spec.ts::sanitizeRelationshipIDs should sanitize relationships"
+  ],
+  "PASS_TO_PASS": []
+}

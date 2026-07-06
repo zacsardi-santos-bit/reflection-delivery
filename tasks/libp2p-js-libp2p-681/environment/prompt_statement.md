@@ -1,7 +1,0 @@
-I'm working on js-libp2p and need to add support for cryptographically signed records that can be distributed and verified across the network. Right now there's no way to prove that a piece of routing data — like a set of listen addresses — actually came from the peer it claims to be from, or that it hasn't been tampered with by an intermediary.
-
-I'd like to implement a general-purpose signed data container that can wrap any record along with a cryptographic signature from the originating peer. It should be possible to seal a record into the container (signing it with the peer's private key), serialize it to bytes for transmission, and then later deserialize and verify it on the receiving end. Verification should check that the signature is valid for a specific domain string — if the domain doesn't match, the operation should fail with a recognizable error code. The container should also support equality comparison between two instances.
-
-Alongside this, I need a concrete implementation of a peer routing record that holds a peer's listen addresses and a monotonically-increasing sequence number. This record should serialize to and from bytes, support equality checks across peer identity, sequence number, and addresses, and work seamlessly with the signed container so that a full seal-and-verify round trip is possible.
-
-The error codes in the errors module should also be updated to include a code for invalid signatures, since this will be thrown when verification fails due to a domain mismatch.

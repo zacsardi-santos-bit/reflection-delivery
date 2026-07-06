@@ -1,0 +1,29 @@
+{
+    "id": "6e347228-2481-4f45-bb20-d3c059099afb",
+    "started_at": "2026-07-06T12:19:31.470801",
+    "finished_at": "2026-07-06T12:21:15.369744",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__rustpython-rustpython-7453": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "rustpython-rustpython-7453__oCBVEGC"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

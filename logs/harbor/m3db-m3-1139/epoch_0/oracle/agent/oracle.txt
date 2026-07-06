@@ -1,4 +1,0 @@
-patching file src/dbnode/persist/fs/commitlog/commit_log.go
-patching file src/dbnode/persist/fs/commitlog/commit_log_mock.go
-patching file src/dbnode/persist/fs/commitlog/types.go
-patching file src/dbnode/persist/fs/commitlog/writer.go

@@ -1,0 +1,29 @@
+{
+    "id": "7e8d6e39-1474-4d44-91c4-ef025da1680c",
+    "started_at": "2026-07-06T12:17:24.465243",
+    "finished_at": "2026-07-06T12:17:58.464128",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__doctrine-persistence-510": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "doctrine-persistence-510__ZSzAxyi"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,6 +1,0 @@
-patching file internal/tasks/tasks_test.go
-# d7y.io/dragonfly/v2/internal/tasks [d7y.io/dragonfly/v2/internal/tasks.test]
-internal/tasks/tasks_test.go:17:20: undefined: MarshalTaskArg
-internal/tasks/tasks_test.go:22:8: undefined: UnmarshalTaskResult
-FAIL	d7y.io/dragonfly/v2/internal/tasks [build failed]
-reward=0 graded=1 found=1 failed=1 parsed=1 framework=go exit_code=1

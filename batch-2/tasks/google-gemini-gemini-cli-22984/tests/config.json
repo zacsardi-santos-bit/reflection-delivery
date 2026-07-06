@@ -1,0 +1,40 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run src/agent/content-utils.test.ts --coverage.enabled=false",
+  "test_files": [
+    "packages/core/src/agent/content-utils.test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts converts text parts",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts converts thought parts",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts converts thought parts without signature",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts converts inlineData parts to media",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts converts fileData parts to media",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts skips functionCall parts",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts skips functionResponse parts",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts serializes unknown part types to text with _meta",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts handles empty array",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::geminiPartsToContentParts handles mixed parts",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts converts text ContentParts",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts converts thought ContentParts",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts converts thought ContentParts without signature",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts converts media ContentParts with data to inlineData",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts converts media ContentParts with uri to fileData",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts converts reference ContentParts to text",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts handles empty array",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts skips media parts with no data or uri",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts defaults mimeType for media with data but no mimeType",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::contentPartsToGeminiParts serializes unknown ContentPart variants",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::toolResultDisplayToContentParts returns undefined for undefined",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::toolResultDisplayToContentParts returns undefined for null",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::toolResultDisplayToContentParts handles string resultDisplay as-is",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::toolResultDisplayToContentParts stringifies object resultDisplay",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::buildToolResponseData preserves outputFile and contentLength",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::buildToolResponseData returns undefined for empty response",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::buildToolResponseData includes errorType when present",
+    "/workspace/repo/packages/core/src/agent/content-utils.test.ts::buildToolResponseData merges data with other fields"
+  ],
+  "PASS_TO_PASS": []
+}

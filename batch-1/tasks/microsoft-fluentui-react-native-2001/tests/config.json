@@ -1,0 +1,19 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/components/Button && /workspace/repo/node_modules/.bin/jest src/FAB/FAB.test.tsx --watchAll=false --ci",
+  "test_files": [
+    "packages/components/Button/src/FAB/FAB.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/components/Button/src/FAB/FAB.test.tsx::Custom FAB with no shadow(iOS)"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/components/Button/src/FAB/FAB.test.tsx::Default FAB (iOS)",
+    "/workspace/repo/packages/components/Button/src/FAB/FAB.test.tsx::Button simple rendering does not invalidate styling",
+    "/workspace/repo/packages/components/Button/src/FAB/FAB.test.tsx::FAB re-renders correctly",
+    "/workspace/repo/packages/components/Button/src/FAB/FAB.test.tsx::FAB shares produced styles across multiple renders",
+    "/workspace/repo/packages/components/Button/src/FAB/FAB.test.tsx::FAB re-renders correctly with style"
+  ]
+}

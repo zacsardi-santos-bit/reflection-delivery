@@ -1,7 +1,0 @@
-patching file .github/workflows/java-pr.yml
-patching file .github/workflows/kafka-pr.yml
-patching file .github/workflows/spanner-pr.yml
-patching file cicd/internal/flags/common-flags.go
-patching file v2/kafka-common/pom.xml
-patching file v2/pom.xml
-patching file v2/streaming-data-generator/pom.xml

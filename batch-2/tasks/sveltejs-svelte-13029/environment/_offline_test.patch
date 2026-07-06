@@ -1,0 +1,297 @@
+diff --git a/packages/svelte/tests/preprocess/test.ts b/packages/svelte/tests/preprocess/test.ts
+index 0018acf30..08f237e28 100644
+--- a/packages/svelte/tests/preprocess/test.ts
++++ b/packages/svelte/tests/preprocess/test.ts
+@@ -30,6 +30,7 @@ const { test, run } = suite<PreprocessTest>(async (config, cwd) => {
+ 	expect(result.dependencies).toEqual(config.dependencies || []);
+ 
+ 	if (fs.existsSync(`${cwd}/expected_map.json`)) {
++		delete (result.map as any).ignoreList;
+ 		const expected_map = JSON.parse(fs.readFileSync(`${cwd}/expected_map.json`, 'utf-8'));
+ 		// You can use https://sokra.github.io/source-map-visualization/#custom to visualize the source map
+ 		expect(JSON.parse(JSON.stringify(result.map))).toEqual(expected_map);
+diff --git a/packages/svelte/tests/runtime-legacy/samples/css-comments/_config.js b/packages/svelte/tests/runtime-legacy/samples/css-comments/_config.js
+index 251397d79..947b1bc48 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/css-comments/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/css-comments/_config.js
+@@ -6,6 +6,6 @@ export default test({
+ 		const p = target.querySelector('p');
+ 		ok(p);
+ 
+-		assert.equal(window.getComputedStyle(p).color, 'red');
++		assert.equal(window.getComputedStyle(p).color, 'rgb(255, 0, 0)');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/css-space-in-attribute/_config.js b/packages/svelte/tests/runtime-legacy/samples/css-space-in-attribute/_config.js
+index 9092739b7..80b8ed5d2 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/css-space-in-attribute/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/css-space-in-attribute/_config.js
+@@ -5,9 +5,9 @@ export default test({
+ 		const [control, test] = target.querySelectorAll('p');
+ 
+ 		assert.equal(window.getComputedStyle(control).color, '');
+-		assert.equal(window.getComputedStyle(control).backgroundColor, '');
++		assert.equal(window.getComputedStyle(control).backgroundColor, 'rgba(0, 0, 0, 0)');
+ 
+-		assert.equal(window.getComputedStyle(test).color, 'red');
+-		assert.equal(window.getComputedStyle(test).backgroundColor, 'black');
++		assert.equal(window.getComputedStyle(test).color, 'rgb(255, 0, 0)');
++		assert.equal(window.getComputedStyle(test).backgroundColor, 'rgb(0, 0, 0)');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-and-style-attr-merged/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-and-style-attr-merged/_config.js
+index 57a0797f1..e7af775da 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-and-style-attr-merged/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-and-style-attr-merged/_config.js
+@@ -9,7 +9,7 @@ export default test({
+ 		const p = target.querySelector('p');
+ 		ok(p);
+ 		const styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'red');
++		assert.equal(styles.color, 'rgb(255, 0, 0)');
+ 		assert.equal(styles.height, '40px');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-and-style-attr/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-and-style-attr/_config.js
+index 222442faf..b667e43a7 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-and-style-attr/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-and-style-attr/_config.js
+@@ -10,7 +10,7 @@ export default test({
+ 		ok(p);
+ 
+ 		const styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'red');
++		assert.equal(styles.color, 'rgb(255, 0, 0)');
+ 		assert.equal(styles.height, '40px');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-multiple/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-multiple/_config.js
+index c98128cd2..1d8964275 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-multiple/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-multiple/_config.js
+@@ -10,7 +10,7 @@ export default test({
+ 		ok(p);
+ 
+ 		let styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'red');
++		assert.equal(styles.color, 'rgb(255, 0, 0)');
+ 
+ 		component.myColor = 'pink';
+ 		component.width = '100vh';
+@@ -22,7 +22,7 @@ export default test({
+ 			target.innerHTML,
+ 			'<p style="color: pink; width: 100vh; font-weight: 100; position: absolute;"></p>'
+ 		);
+-		assert.equal(styles.color, 'pink');
++		assert.equal(styles.color, 'rgb(255, 192, 203)');
+ 		assert.equal(styles.width, '100vh');
+ 		assert.equal(styles.fontWeight, '100');
+ 		assert.equal(styles.position, 'absolute');
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-shorthand-declaration-only/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-shorthand-declaration-only/_config.js
+index 06e71cae2..c62f2ad3b 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-shorthand-declaration-only/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-shorthand-declaration-only/_config.js
+@@ -11,8 +11,8 @@ export default test({
+ 	test({ assert, target, window }) {
+ 		const [p1, p2] = target.querySelectorAll('p');
+ 
+-		assert.equal(window.getComputedStyle(p1).color, 'red');
+-		assert.equal(window.getComputedStyle(p2).color, 'red');
++		assert.equal(window.getComputedStyle(p1).color, 'rgb(255, 0, 0)');
++		assert.equal(window.getComputedStyle(p2).color, 'rgb(255, 0, 0)');
+ 
+ 		const btn = target.querySelector('button');
+ 		btn?.click();
+@@ -27,7 +27,7 @@ export default test({
+ 		`
+ 		);
+ 
+-		assert.equal(window.getComputedStyle(p1).color, 'green');
+-		assert.equal(window.getComputedStyle(p2).color, 'green');
++		assert.equal(window.getComputedStyle(p1).color, 'rgb(0, 128, 0)');
++		assert.equal(window.getComputedStyle(p2).color, 'rgb(0, 128, 0)');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-shorthand/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-shorthand/_config.js
+index 32c45bb26..f657bc59e 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-shorthand/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-shorthand/_config.js
+@@ -9,8 +9,8 @@ export default test({
+ 	test({ assert, component, target, window }) {
+ 		const [p1, p2] = target.querySelectorAll('p');
+ 
+-		assert.equal(window.getComputedStyle(p1).color, 'red');
+-		assert.equal(window.getComputedStyle(p2).color, 'red');
++		assert.equal(window.getComputedStyle(p1).color, 'rgb(255, 0, 0)');
++		assert.equal(window.getComputedStyle(p2).color, 'rgb(255, 0, 0)');
+ 
+ 		component.color = 'blue';
+ 		assert.htmlEqual(
+@@ -21,7 +21,7 @@ export default test({
+ 		`
+ 		);
+ 
+-		assert.equal(window.getComputedStyle(p1).color, 'blue');
+-		assert.equal(window.getComputedStyle(p2).color, 'blue');
++		assert.equal(window.getComputedStyle(p1).color, 'rgb(0, 0, 255)');
++		assert.equal(window.getComputedStyle(p2).color, 'rgb(0, 0, 255)');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread-and-attr/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread-and-attr/_config.js
+index 4f70a13f6..626a11990 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread-and-attr/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread-and-attr/_config.js
+@@ -10,7 +10,7 @@ export default test({
+ 		ok(p);
+ 
+ 		let styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'green');
++		assert.equal(styles.color, 'rgb(0, 128, 0)');
+ 
+ 		component.color = null;
+ 		assert.htmlEqual(target.innerHTML, '<p style=""></p>');
+@@ -29,12 +29,12 @@ export default test({
+ 		assert.htmlEqual(target.innerHTML, '<p style="background-color: green;"></p>');
+ 		styles = window.getComputedStyle(p);
+ 		assert.equal(styles.color, '');
+-		assert.equal(styles.backgroundColor, 'green');
++		assert.equal(styles.backgroundColor, 'rgb(0, 128, 0)');
+ 
+ 		component.color = 'purple';
+ 		assert.htmlEqual(target.innerHTML, '<p style="background-color: green; color: purple;"></p>');
+ 		styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'purple');
+-		assert.equal(styles.backgroundColor, 'green');
++		assert.equal(styles.color, 'rgb(128, 0, 128)');
++		assert.equal(styles.backgroundColor, 'rgb(0, 128, 0)');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread-dynamic/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread-dynamic/_config.js
+index 06f506485..87c725ee0 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread-dynamic/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread-dynamic/_config.js
+@@ -10,7 +10,7 @@ export default test({
+ 		ok(p);
+ 
+ 		const styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'blue');
++		assert.equal(styles.color, 'rgb(0, 0, 255)');
+ 		assert.equal(styles.width, '65px');
+ 		assert.equal(p.id, 'my-id');
+ 
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread/_config.js
+index c0fc95fb9..8d2626f70 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-spread/_config.js
+@@ -10,7 +10,7 @@ export default test({
+ 		ok(p);
+ 
+ 		const styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'blue');
++		assert.equal(styles.color, 'rgb(0, 0, 255)');
+ 		assert.equal(styles.width, '65px');
+ 		assert.equal(p.id, 'my-id');
+ 	}
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-string-variable/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-string-variable/_config.js
+index b287bf7f8..b8b76f020 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-string-variable/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-string-variable/_config.js
+@@ -10,7 +10,7 @@ export default test({
+ 		ok(p);
+ 
+ 		const styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'green');
++		assert.equal(styles.color, 'rgb(0, 128, 0)');
+ 		assert.equal(styles.transform, 'translateX(45px)');
+ 		assert.equal(styles.border, '100px solid pink');
+ 
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-string/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-string/_config.js
+index 588086a2d..0b3c3b537 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-string/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-string/_config.js
+@@ -10,6 +10,6 @@ export default test({
+ 		ok(p);
+ 
+ 		const styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'red');
++		assert.equal(styles.color, 'rgb(255, 0, 0)');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-update-object-property/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-update-object-property/_config.js
+index a9dc94687..0b0b332ee 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-update-object-property/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive-update-object-property/_config.js
+@@ -9,7 +9,7 @@ export default test({
+ 		const p = target.querySelector('p');
+ 		ok(p);
+ 		const styles = window.getComputedStyle(p);
+-		assert.equal(styles.backgroundColor, 'green');
++		assert.equal(styles.backgroundColor, 'rgb(0, 128, 0)');
+ 		assert.equal(styles.fontSize, '12px');
+ 
+ 		{
+@@ -17,7 +17,7 @@ export default test({
+ 			const p = target.querySelector('p');
+ 			ok(p);
+ 			const styles = window.getComputedStyle(p);
+-			assert.equal(styles.backgroundColor, 'green');
++			assert.equal(styles.backgroundColor, 'rgb(0, 128, 0)');
+ 			assert.equal(styles.fontSize, '50px');
+ 		}
+ 	}
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive/_config.js
+index 48943cfe7..3c8300e38 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-directive/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-directive/_config.js
+@@ -12,6 +12,6 @@ export default test({
+ 		ok(p);
+ 
+ 		const styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'red');
++		assert.equal(styles.color, 'rgb(255, 0, 0)');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-important/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-important/_config.js
+index 4b2467f18..e29afb537 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-important/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-important/_config.js
+@@ -10,12 +10,12 @@ export default test({
+ 		ok(p);
+ 
+ 		let styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'red');
++		assert.equal(styles.color, 'rgb(255, 0, 0)');
+ 		assert.equal(styles.fontSize, '20px');
+ 
+ 		component.color = 'green';
+ 
+ 		styles = window.getComputedStyle(p);
+-		assert.equal(styles.color, 'green');
++		assert.equal(styles.color, 'rgb(0, 128, 0)');
+ 	}
+ });
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style-optimisation-bailout/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style-optimisation-bailout/_config.js
+index 83ca2bf88..adcdc4706 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style-optimisation-bailout/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style-optimisation-bailout/_config.js
+@@ -11,7 +11,7 @@ export default test({
+ 
+ 		let styles = window.getComputedStyle(p);
+ 		assert.equal(styles.opacity, '0.5');
+-		assert.equal(styles.color, 'red');
++		assert.equal(styles.color, 'rgb(255, 0, 0)');
+ 
+ 		component.styles = 'font-size: 20px';
+ 
+diff --git a/packages/svelte/tests/runtime-legacy/samples/inline-style/_config.js b/packages/svelte/tests/runtime-legacy/samples/inline-style/_config.js
+index 68227025f..b8910cd8f 100644
+--- a/packages/svelte/tests/runtime-legacy/samples/inline-style/_config.js
++++ b/packages/svelte/tests/runtime-legacy/samples/inline-style/_config.js
+@@ -10,6 +10,6 @@ export default test({
+ 		ok(div);
+ 
+ 		const styles = window.getComputedStyle(div);
+-		assert.equal(styles.color, 'red');
++		assert.equal(styles.color, 'rgb(255, 0, 0)');
+ 	}
+ });

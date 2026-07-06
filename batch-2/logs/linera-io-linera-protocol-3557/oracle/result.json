@@ -1,0 +1,29 @@
+{
+    "id": "8ef0e0af-2ad5-4ccb-99b6-0f768b72ba41",
+    "started_at": "2026-07-04T15:40:56.959054",
+    "finished_at": "2026-07-04T15:44:04.828885",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__linera-io-linera-protocol-3557": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "linera-io-linera-protocol-3557__TwVrBri"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

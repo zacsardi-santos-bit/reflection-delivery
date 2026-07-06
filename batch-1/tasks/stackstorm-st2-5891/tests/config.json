@@ -1,0 +1,19 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/pants-plugins/release/rules_test.py -v",
+  "test_files": [
+    "pants-plugins/release/rules_test.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "pants-plugins.release.rules_test::test_setup_kwargs_plugin_no_description_kwarg",
+    "pants-plugins.release.rules_test::test_setup_kwargs_plugin_no_version_file_kwarg",
+    "pants-plugins.release.rules_test::test_setup_kwargs_plugin_no_version_file",
+    "pants-plugins.release.rules_test::test_setup_kwargs_plugin_no_version",
+    "pants-plugins.release.rules_test::test_setup_kwargs_plugin_conflicting_kwargs",
+    "pants-plugins.release.rules_test::test_setup_kwargs_plugin",
+    "pants-plugins.release.rules_test::test_setup_kwargs_plugin_with_readme"
+  ],
+  "PASS_TO_PASS": []
+}

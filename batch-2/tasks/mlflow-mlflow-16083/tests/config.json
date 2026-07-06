@@ -1,0 +1,26 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/openai/test_openai_autolog.py::test_parse_tools_handles_openai_not_given_sentinel /workspace/repo/tests/tracing/export/test_async_export_queue.py::test_async_queue_complete_task_process_finished /workspace/repo/tests/utils/test_logging_utils.py::test_mlflow_configure_logging_env_var /workspace/repo/tests/store/_unity_catalog/model_registry/test_unity_catalog_rest_store.py::test_create_model_version_with_resources -v",
+  "test_files": [
+    "tests/openai/test_openai_autolog.py",
+    "tests/pyfunc/docker/test_docker.py",
+    "tests/store/_unity_catalog/model_registry/test_unity_catalog_rest_store.py",
+    "tests/tracing/export/test_async_export_queue.py",
+    "tests/utils/test_logging_utils.py"
+  ],
+  "num_test_files": 5,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.openai.test_openai_autolog::test_parse_tools_handles_openai_not_given_sentinel[None]",
+    "tests.openai.test_openai_autolog::test_parse_tools_handles_openai_not_given_sentinel[42]",
+    "tests.openai.test_openai_autolog::test_parse_tools_handles_openai_not_given_sentinel[sentinel2]",
+    "tests.tracing.export.test_async_export_queue::test_async_queue_complete_task_process_finished",
+    "tests.utils.test_logging_utils::test_mlflow_configure_logging_env_var[0-MLFLOW_CONFIGURE_LOGGING]",
+    "tests.utils.test_logging_utils::test_mlflow_configure_logging_env_var[0-MLFLOW_LOGGING_CONFIGURE_LOGGING]",
+    "tests.utils.test_logging_utils::test_mlflow_configure_logging_env_var[1-MLFLOW_CONFIGURE_LOGGING]",
+    "tests.utils.test_logging_utils::test_mlflow_configure_logging_env_var[1-MLFLOW_LOGGING_CONFIGURE_LOGGING]",
+    "tests.store._unity_catalog.model_registry.test_unity_catalog_rest_store::test_create_model_version_with_resources[True]",
+    "tests.store._unity_catalog.model_registry.test_unity_catalog_rest_store::test_create_model_version_with_resources[False]"
+  ],
+  "PASS_TO_PASS": []
+}

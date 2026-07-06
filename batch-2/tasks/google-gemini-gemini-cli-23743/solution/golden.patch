@@ -1,0 +1,1155 @@
+diff --git a/docs/reference/configuration.md b/docs/reference/configuration.md
+index 8b38dc1af..f8382ee28 100644
+--- a/docs/reference/configuration.md
++++ b/docs/reference/configuration.md
+@@ -849,12 +849,6 @@ their corresponding top-level category object in your `settings.json` file.
+               "hasAccessToPreview": false
+             },
+             "target": "gemini-2.5-pro"
+-          },
+-          {
+-            "condition": {
+-              "useCustomTools": true
+-            },
+-            "target": "gemini-3.1-pro-preview-customtools"
+           }
+         ]
+       },
+diff --git a/packages/cli/src/ui/hooks/useCommandCompletion.test.tsx b/packages/cli/src/ui/hooks/useCommandCompletion.test.tsx
+index 982991bf9..51aeb0bf4 100644
+--- a/packages/cli/src/ui/hooks/useCommandCompletion.test.tsx
++++ b/packages/cli/src/ui/hooks/useCommandCompletion.test.tsx
+@@ -1,6 +1,6 @@
+ /**
+  * @license
+- * Copyright 2026 Google LLC
++ * Copyright 2025 Google LLC
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+@@ -20,7 +20,7 @@ import {
+   useCommandCompletion,
+   CompletionMode,
+ } from './useCommandCompletion.js';
+-import type { CommandContext, SlashCommand } from '../commands/types.js';
++import type { CommandContext } from '../commands/types.js';
+ import type { Config } from '@google/gemini-cli-core';
+ import { useTextBuffer } from '../components/shared/text-buffer.js';
+ import type { Suggestion } from '../components/SuggestionsDisplay.js';
+@@ -72,11 +72,7 @@ const setupMocks = ({
+   shellSuggestions = [],
+   isLoading = false,
+   isPerfectMatch = false,
+-  slashCompletionRange = {
+-    completionStart: 0,
+-    completionEnd: 0,
+-    getCommandFromSuggestion: () => undefined,
+-  },
++  slashCompletionRange = { completionStart: 0, completionEnd: 0 },
+   shellCompletionRange = {
+     completionStart: 0,
+     completionEnd: 0,
+@@ -89,13 +85,7 @@ const setupMocks = ({
+   shellSuggestions?: Suggestion[];
+   isLoading?: boolean;
+   isPerfectMatch?: boolean;
+-  slashCompletionRange?: {
+-    completionStart: number;
+-    completionEnd: number;
+-    getCommandFromSuggestion: (
+-      suggestion: Suggestion,
+-    ) => SlashCommand | undefined;
+-  };
++  slashCompletionRange?: { completionStart: number; completionEnd: number };
+   shellCompletionRange?: {
+     completionStart: number;
+     completionEnd: number;
+@@ -481,15 +471,10 @@ describe('useCommandCompletion', () => {
+   });
+ 
+   describe('handleAutocomplete', () => {
+-    it('should complete a partial command and NOT add a space if it has an action', async () => {
++    it('should complete a partial command', async () => {
+       setupMocks({
+         slashSuggestions: [{ label: 'memory', value: 'memory' }],
+-        slashCompletionRange: {
+-          completionStart: 1,
+-          completionEnd: 4,
+-          getCommandFromSuggestion: () =>
+-            ({ action: vi.fn() }) as unknown as SlashCommand,
+-        },
++        slashCompletionRange: { completionStart: 1, completionEnd: 4 },
+       });
+ 
+       const { result } = await renderCommandCompletionHook('/mem');
+@@ -502,40 +487,12 @@ describe('useCommandCompletion', () => {
+         result.current.handleAutocomplete(0);
+       });
+ 
+-      expect(result.current.textBuffer.text).toBe('/memory');
+-    });
+-
+-    it('should complete a partial command and ADD a space if it has NO action (e.g. just a parent)', async () => {
+-      setupMocks({
+-        slashSuggestions: [{ label: 'chat', value: 'chat' }],
+-        slashCompletionRange: {
+-          completionStart: 1,
+-          completionEnd: 5,
+-          getCommandFromSuggestion: () => ({}) as unknown as SlashCommand, // No action
+-        },
+-      });
+-
+-      const { result } = await renderCommandCompletionHook('/chat');
+-
+-      await waitFor(() => {
+-        expect(result.current.suggestions.length).toBe(1);
+-      });
+-
+-      act(() => {
+-        result.current.handleAutocomplete(0);
+-      });
+-
+-      expect(result.current.textBuffer.text).toBe('/chat ');
++      expect(result.current.textBuffer.text).toBe('/memory ');
+     });
+ 
+     it('should complete a file path', async () => {
+       setupMocks({
+         atSuggestions: [{ label: 'src/file1.txt', value: 'src/file1.txt' }],
+-        slashCompletionRange: {
+-          completionStart: 0,
+-          completionEnd: 0,
+-          getCommandFromSuggestion: () => undefined,
+-        },
+       });
+ 
+       const { result } = await renderCommandCompletionHook('@src/fi');
+@@ -560,11 +517,7 @@ describe('useCommandCompletion', () => {
+             insertValue: 'resume list',
+           },
+         ],
+-        slashCompletionRange: {
+-          completionStart: 1,
+-          completionEnd: 5,
+-          getCommandFromSuggestion: () => undefined,
+-        },
++        slashCompletionRange: { completionStart: 1, completionEnd: 5 },
+       });
+ 
+       const { result } = await renderCommandCompletionHook('/resu');
+@@ -586,11 +539,6 @@ describe('useCommandCompletion', () => {
+ 
+       setupMocks({
+         atSuggestions: [{ label: 'src/file1.txt', value: 'src/file1.txt' }],
+-        slashCompletionRange: {
+-          completionStart: 0,
+-          completionEnd: 0,
+-          getCommandFromSuggestion: () => undefined,
+-        },
+       });
+ 
+       const { result } = await renderCommandCompletionHook(text, cursorOffset);
+@@ -611,11 +559,6 @@ describe('useCommandCompletion', () => {
+     it('should complete a directory path ending with / without a trailing space', async () => {
+       setupMocks({
+         atSuggestions: [{ label: 'src/components/', value: 'src/components/' }],
+-        slashCompletionRange: {
+-          completionStart: 0,
+-          completionEnd: 0,
+-          getCommandFromSuggestion: () => undefined,
+-        },
+       });
+ 
+       const { result } = await renderCommandCompletionHook('@src/comp');
+@@ -636,11 +579,6 @@ describe('useCommandCompletion', () => {
+         atSuggestions: [
+           { label: 'src\\components\\', value: 'src\\components\\' },
+         ],
+-        slashCompletionRange: {
+-          completionStart: 0,
+-          completionEnd: 0,
+-          getCommandFromSuggestion: () => undefined,
+-        },
+       });
+ 
+       const { result } = await renderCommandCompletionHook('@src\\comp');
+@@ -656,33 +594,6 @@ describe('useCommandCompletion', () => {
+       expect(result.current.textBuffer.text).toBe('@src\\components\\');
+     });
+ 
+-    it('should ADD a space for AT completion even if name matches a command with an action', async () => {
+-      // Setup a mock where getCommandFromSuggestion WOULD return a command with an action
+-      // if it were in SLASH mode.
+-      setupMocks({
+-        atSuggestions: [{ label: 'memory', value: 'memory' }],
+-        slashCompletionRange: {
+-          completionStart: 0,
+-          completionEnd: 0,
+-          getCommandFromSuggestion: () =>
+-            ({ action: vi.fn() }) as unknown as SlashCommand,
+-        },
+-      });
+-
+-      const { result } = await renderCommandCompletionHook('@mem');
+-
+-      await waitFor(() => {
+-        expect(result.current.suggestions.length).toBe(1);
+-      });
+-
+-      act(() => {
+-        result.current.handleAutocomplete(0);
+-      });
+-
+-      // Should have a space because it's AT mode, not SLASH mode
+-      expect(result.current.textBuffer.text).toBe('@memory ');
+-    });
+-
+     it('should show ghost text for a single shell completion', async () => {
+       const text = 'l';
+       setupMocks({
+@@ -994,11 +905,6 @@ describe('useCommandCompletion', () => {
+     it('should complete file path and add trailing space', async () => {
+       setupMocks({
+         atSuggestions: [{ label: 'src/file.txt', value: 'src/file.txt' }],
+-        slashCompletionRange: {
+-          completionStart: 0,
+-          completionEnd: 0,
+-          getCommandFromSuggestion: () => undefined,
+-        },
+       });
+ 
+       const { result } = await renderCommandCompletionHook('/cmd @src/fi');
+diff --git a/packages/cli/src/ui/hooks/useCommandCompletion.tsx b/packages/cli/src/ui/hooks/useCommandCompletion.tsx
+index 4f89d69ff..2f964306f 100644
+--- a/packages/cli/src/ui/hooks/useCommandCompletion.tsx
++++ b/packages/cli/src/ui/hooks/useCommandCompletion.tsx
+@@ -1,17 +1,16 @@
+ /**
+  * @license
+- * Copyright 2026 Google LLC
++ * Copyright 2025 Google LLC
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+-import type React from 'react';
+ import { useCallback, useMemo, useEffect, useState } from 'react';
+ import type { Suggestion } from '../components/SuggestionsDisplay.js';
+ import type { CommandContext, SlashCommand } from '../commands/types.js';
+ import type { TextBuffer } from '../components/shared/text-buffer.js';
+ import { logicalPosToOffset } from '../components/shared/text-buffer.js';
+-import { toCodePoints } from '../utils/textUtils.js';
+ import { isSlashCommand } from '../utils/commandUtils.js';
++import { toCodePoints } from '../utils/textUtils.js';
+ import { useAtCompletion } from './useAtCompletion.js';
+ import { useSlashCompletion } from './useSlashCompletion.js';
+ import { useShellCompletion } from './useShellCompletion.js';
+@@ -437,23 +436,10 @@ export function useCommandCompletion({
+ 
+       const lineCodePoints = toCodePoints(buffer.lines[cursorRow] || '');
+       const charAfterCompletion = lineCodePoints[end];
+-
+-      let shouldAddSpace = true;
+-      if (completionMode === CompletionMode.SLASH) {
+-        const command =
+-          slashCompletionRange.getCommandFromSuggestion(suggestion);
+-        // Don't add a space if the command has an action (can be executed)
+-        // and doesn't have a completion function (doesn't REQUIRE more arguments)
+-        const isExecutableCommand = !!(command && command.action);
+-        const requiresArguments = !!(command && command.completion);
+-        shouldAddSpace = !isExecutableCommand || requiresArguments;
+-      }
+-
+       if (
+         charAfterCompletion !== ' ' &&
+         !suggestionText.endsWith('/') &&
+-        !suggestionText.endsWith('\\') &&
+-        shouldAddSpace
++        !suggestionText.endsWith('\\')
+       ) {
+         suggestionText += ' ';
+       }
+diff --git a/packages/cli/src/ui/hooks/useSlashCompletion.test.ts b/packages/cli/src/ui/hooks/useSlashCompletion.test.ts
+index 575202ce9..47935c8c6 100644
+--- a/packages/cli/src/ui/hooks/useSlashCompletion.test.ts
++++ b/packages/cli/src/ui/hooks/useSlashCompletion.test.ts
+@@ -1,6 +1,6 @@
+ /**
+  * @license
+- * Copyright 2026 Google LLC
++ * Copyright 2025 Google LLC
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+@@ -464,7 +464,7 @@ describe('useSlashCompletion', () => {
+         () =>
+           useTestHarnessForSlashCompletion(
+             true,
+-            '/chat ',
++            '/chat',
+             slashCommands,
+             mockCommandContext,
+           ),
+@@ -484,7 +484,7 @@ describe('useSlashCompletion', () => {
+         () =>
+           useTestHarnessForSlashCompletion(
+             true,
+-            '/resume ',
++            '/resume',
+             slashCommands,
+             mockCommandContext,
+           ),
+@@ -513,25 +513,31 @@ describe('useSlashCompletion', () => {
+       unmountResume();
+     });
+ 
+-    it('should sort exact altName matches to the top', async () => {
++    it('should show the grouped /resume menu for unique /resum prefix input', async () => {
+       const slashCommands = [
+         createTestCommand({
+-          name: 'help',
+-          altNames: ['?'],
+-          description: 'Show help',
+-          action: vi.fn(),
+-        }),
+-        createTestCommand({
+-          name: 'question-mark',
+-          description: 'Alternative name for help',
++          name: 'resume',
++          description: 'Resume command',
+           action: vi.fn(),
++          subCommands: [
++            createTestCommand({
++              name: 'list',
++              description: 'List checkpoints',
++              suggestionGroup: 'checkpoints',
++            }),
++            createTestCommand({
++              name: 'save',
++              description: 'Save checkpoint',
++              suggestionGroup: 'checkpoints',
++            }),
++          ],
+         }),
+       ];
+ 
+       const { result, unmount } = await renderHook(() =>
+         useTestHarnessForSlashCompletion(
+           true,
+-          '/?',
++          '/resum',
+           slashCommands,
+           mockCommandContext,
+         ),
+@@ -540,29 +546,39 @@ describe('useSlashCompletion', () => {
+       await resolveMatch();
+ 
+       await waitFor(() => {
+-        // 'help' should be first because '?' is an exact altName match
+-        expect(result.current.suggestions[0].label).toBe('help');
+-        expect(result.current.isPerfectMatch).toBe(true);
++        expect(result.current.suggestions[0]).toMatchObject({
++          label: 'list',
++          sectionTitle: 'auto',
++          submitValue: '/resume',
++        });
++        expect(result.current.isPerfectMatch).toBe(false);
++        expect(result.current.suggestions.slice(1).map((s) => s.label)).toEqual(
++          expect.arrayContaining(['list', 'save']),
++        );
+       });
++
+       unmount();
+     });
+ 
+-    it('should suggest the command itself instead of subcommands when a parent command is fully typed without a trailing space', async () => {
++    it('should sort exact altName matches to the top', async () => {
+       const slashCommands = [
+         createTestCommand({
+-          name: 'chat',
+-          description: 'Manage chat history',
+-          subCommands: [
+-            createTestCommand({ name: 'list', description: 'List chats' }),
+-            createTestCommand({ name: 'save', description: 'Save chat' }),
+-          ],
++          name: 'help',
++          altNames: ['?'],
++          description: 'Show help',
++          action: vi.fn(),
++        }),
++        createTestCommand({
++          name: 'question-mark',
++          description: 'Alternative name for help',
++          action: vi.fn(),
+         }),
+       ];
+ 
+       const { result, unmount } = await renderHook(() =>
+         useTestHarnessForSlashCompletion(
+           true,
+-          '/chat',
++          '/?',
+           slashCommands,
+           mockCommandContext,
+         ),
+@@ -571,26 +587,21 @@ describe('useSlashCompletion', () => {
+       await resolveMatch();
+ 
+       await waitFor(() => {
+-        // Should show 'chat' as the suggestion, NOT its subcommands
+-        expect(result.current.suggestions).toHaveLength(1);
+-        expect(result.current.suggestions[0].label).toBe('chat');
+-        // completionStart should be at 1 (to replace 'chat')
+-        expect(result.current.completionStart).toBe(1);
++        // 'help' should be first because '?' is an exact altName match
++        expect(result.current.suggestions[0].label).toBe('help');
++        expect(result.current.isPerfectMatch).toBe(true);
+       });
+       unmount();
+     });
+ 
+-    it('should NOT suggest subcommands when a parent command is fully typed without a trailing space (fix for over-eager completion)', async () => {
++    it('should suggest subcommands when a parent command is fully typed without a trailing space', async () => {
+       const slashCommands = [
+         createTestCommand({
+-          name: 'stats',
+-          description: 'Check session stats',
+-          action: vi.fn(), // Has action
++          name: 'chat',
++          description: 'Manage chat history',
+           subCommands: [
+-            createTestCommand({
+-              name: 'session',
+-              description: 'Show session-specific usage statistics',
+-            }),
++            createTestCommand({ name: 'list', description: 'List chats' }),
++            createTestCommand({ name: 'save', description: 'Save chat' }),
+           ],
+         }),
+       ];
+@@ -598,7 +609,7 @@ describe('useSlashCompletion', () => {
+       const { result, unmount } = await renderHook(() =>
+         useTestHarnessForSlashCompletion(
+           true,
+-          '/stats',
++          '/chat',
+           slashCommands,
+           mockCommandContext,
+         ),
+@@ -607,11 +618,18 @@ describe('useSlashCompletion', () => {
+       await resolveMatch();
+ 
+       await waitFor(() => {
+-        // Should show 'stats' as the suggestion, NOT 'session'
+-        expect(result.current.suggestions).toHaveLength(1);
+-        expect(result.current.suggestions[0].label).toBe('stats');
+-        // isPerfectMatch should be true because it has an action
+-        expect(result.current.isPerfectMatch).toBe(true);
++        // Should show the auto-session entry plus subcommands of 'chat'
++        expect(result.current.suggestions).toHaveLength(3);
++        expect(result.current.suggestions[0]).toMatchObject({
++          label: 'list',
++          sectionTitle: 'auto',
++          submitValue: '/chat',
++        });
++        expect(result.current.suggestions.map((s) => s.label)).toEqual(
++          expect.arrayContaining(['list', 'save']),
++        );
++        // completionStart should be at the end of '/chat' to append subcommands
++        expect(result.current.completionStart).toBe(5);
+       });
+       unmount();
+     });
+diff --git a/packages/cli/src/ui/hooks/useSlashCompletion.ts b/packages/cli/src/ui/hooks/useSlashCompletion.ts
+index 4afa8e224..054845161 100644
+--- a/packages/cli/src/ui/hooks/useSlashCompletion.ts
++++ b/packages/cli/src/ui/hooks/useSlashCompletion.ts
+@@ -1,6 +1,6 @@
+ /**
+  * @license
+- * Copyright 2026 Google LLC
++ * Copyright 2025 Google LLC
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
+@@ -54,6 +54,8 @@ interface CommandParserResult {
+   partial: string;
+   currentLevel: readonly SlashCommand[] | undefined;
+   leafCommand: SlashCommand | null;
++  exactMatchAsParent: SlashCommand | undefined;
++  usedPrefixParentDescent: boolean;
+   isArgumentCompletion: boolean;
+ }
+ 
+@@ -69,6 +71,8 @@ function useCommandParser(
+         partial: '',
+         currentLevel: slashCommands,
+         leafCommand: null,
++        exactMatchAsParent: undefined,
++        usedPrefixParentDescent: false,
+         isArgumentCompletion: false,
+       };
+     }
+@@ -86,6 +90,7 @@ function useCommandParser(
+ 
+     let currentLevel: readonly SlashCommand[] | undefined = slashCommands;
+     let leafCommand: SlashCommand | null = null;
++    let usedPrefixParentDescent = false;
+ 
+     for (const part of commandPathParts) {
+       if (!currentLevel) {
+@@ -110,6 +115,60 @@ function useCommandParser(
+       }
+     }
+ 
++    let exactMatchAsParent: SlashCommand | undefined;
++    if (!hasTrailingSpace && currentLevel) {
++      exactMatchAsParent = currentLevel.find(
++        (cmd) => matchesCommand(cmd, partial) && cmd.subCommands,
++      );
++
++      if (exactMatchAsParent) {
++        // Only descend if there are NO other matches for the partial at this level.
++        // This ensures that typing "/memory" still shows "/memory-leak" if it exists.
++        const otherMatches = currentLevel.filter(
++          (cmd) =>
++            cmd !== exactMatchAsParent &&
++            (cmd.name.toLowerCase().startsWith(partial.toLowerCase()) ||
++              cmd.altNames?.some((alt) =>
++                alt.toLowerCase().startsWith(partial.toLowerCase()),
++              )),
++        );
++
++        if (otherMatches.length === 0) {
++          leafCommand = exactMatchAsParent;
++          currentLevel = exactMatchAsParent.subCommands as
++            | readonly SlashCommand[]
++            | undefined;
++          partial = '';
++        }
++      }
++
++      // Phase-one alias UX: allow unique prefix descent for /chat and /resume
++      // so `/cha` and `/resum` expose the same grouped menu immediately.
++      if (!exactMatchAsParent && partial && currentLevel) {
++        const prefixParentMatches = currentLevel.filter(
++          (cmd) =>
++            !!cmd.subCommands &&
++            (cmd.name.toLowerCase().startsWith(partial.toLowerCase()) ||
++              cmd.altNames?.some((alt) =>
++                alt.toLowerCase().startsWith(partial.toLowerCase()),
++              )),
++        );
++
++        if (prefixParentMatches.length === 1) {
++          const candidate = prefixParentMatches[0];
++          if (candidate.name === 'chat' || candidate.name === 'resume') {
++            exactMatchAsParent = candidate;
++            leafCommand = candidate;
++            usedPrefixParentDescent = true;
++            currentLevel = candidate.subCommands as
++              | readonly SlashCommand[]
++              | undefined;
++            partial = '';
++          }
++        }
++      }
++    }
++
+     const depth = commandPathParts.length;
+     const isArgumentCompletion = !!(
+       leafCommand?.completion &&
+@@ -123,6 +182,8 @@ function useCommandParser(
+       partial,
+       currentLevel,
+       leafCommand,
++      exactMatchAsParent,
++      usedPrefixParentDescent,
+       isArgumentCompletion,
+     };
+   }, [query, slashCommands]);
+@@ -282,9 +343,19 @@ function useCommandSuggestions(
+           });
+ 
+           const finalSuggestions = sortedSuggestions.map((cmd) => {
++            const canonicalParentName =
++              parserResult.usedPrefixParentDescent &&
++              leafCommand &&
++              (leafCommand.name === 'chat' || leafCommand.name === 'resume')
++                ? leafCommand.name
++                : undefined;
++
+             const suggestion: Suggestion = {
+               label: cmd.name,
+               value: cmd.name,
++              insertValue: canonicalParentName
++                ? `${canonicalParentName} ${cmd.name}`
++                : undefined,
+               description: cmd.description,
+               commandKind: cmd.kind,
+             };
+@@ -313,7 +384,7 @@ function useCommandSuggestions(
+               description: 'Browse auto-saved chats',
+               commandKind: CommandKind.BUILT_IN,
+               sectionTitle: 'auto',
+-              submitValue: `/${canonicalParentName}`,
++              submitValue: `/${leafCommand.name}`,
+             };
+             setSuggestions([autoSectionSuggestion, ...finalSuggestions]);
+             return;
+@@ -356,10 +427,12 @@ function useCompletionPositions(
+       return { start: -1, end: -1 };
+     }
+ 
+-    const { hasTrailingSpace, partial } = parserResult;
++    const { hasTrailingSpace, partial, exactMatchAsParent } = parserResult;
+ 
+     // Set completion start/end positions
+-    if (hasTrailingSpace) {
++    if (parserResult.usedPrefixParentDescent) {
++      return { start: 1, end: query.length };
++    } else if (hasTrailingSpace || exactMatchAsParent) {
+       return { start: query.length, end: query.length };
+     } else if (partial) {
+       if (parserResult.isArgumentCompletion) {
+@@ -388,7 +461,12 @@ function usePerfectMatch(
+       return { isPerfectMatch: false };
+     }
+ 
+-    if (leafCommand && partial === '' && leafCommand.action) {
++    if (
++      leafCommand &&
++      partial === '' &&
++      leafCommand.action &&
++      !parserResult.usedPrefixParentDescent
++    ) {
+       return { isPerfectMatch: true };
+     }
+ 
+diff --git a/packages/core/src/agents/a2a-client-manager.ts b/packages/core/src/agents/a2a-client-manager.ts
+index c15d34179..a40e39f2f 100644
+--- a/packages/core/src/agents/a2a-client-manager.ts
++++ b/packages/core/src/agents/a2a-client-manager.ts
+@@ -26,6 +26,7 @@ import * as grpc from '@grpc/grpc-js';
+ import { v4 as uuidv4 } from 'uuid';
+ import { Agent as UndiciAgent, ProxyAgent } from 'undici';
+ import { normalizeAgentCard } from './a2aUtils.js';
++import type { AgentCardLoadOptions } from './types.js';
+ import type { Config } from '../config/config.js';
+ import { debugLogger } from '../utils/debugLogger.js';
+ import { classifyAgentError } from './a2a-errors.js';
+@@ -85,7 +86,7 @@ export class A2AClientManager {
+    */
+   async loadAgent(
+     name: string,
+-    agentCardUrl: string,
++    options: AgentCardLoadOptions,
+     authHandler?: AuthenticationHandler,
+   ): Promise<AgentCard> {
+     if (this.clients.has(name) && this.agentCards.has(name)) {
+@@ -119,7 +120,24 @@ export class A2AClientManager {
+     };
+ 
+     const resolver = new DefaultAgentCardResolver({ fetchImpl: cardFetch });
+-    const rawCard = await resolver.resolve(agentCardUrl, '');
++
++    let rawCard: unknown;
++    let urlIdentifier = 'inline JSON';
++
++    if (options.type === 'json') {
++      try {
++        rawCard = JSON.parse(options.json);
++      } catch (error) {
++        const msg = error instanceof Error ? error.message : String(error);
++        throw new Error(
++          `Failed to parse inline agent card JSON for agent '${name}': ${msg}`,
++        );
++      }
++    } else {
++      urlIdentifier = options.url;
++      rawCard = await resolver.resolve(options.url, '');
++    }
++
+     // TODO: Remove normalizeAgentCard once @a2a-js/sdk handles
+     // proto field name aliases (supportedInterfaces → additionalInterfaces,
+     // protocolBinding → transport).
+@@ -153,12 +171,12 @@ export class A2AClientManager {
+       this.agentCards.set(name, agentCard);
+ 
+       debugLogger.debug(
+-        `[A2AClientManager] Loaded agent '${name}' from ${agentCardUrl}`,
++        `[A2AClientManager] Loaded agent '${name}' from ${urlIdentifier}`,
+       );
+ 
+       return agentCard;
+     } catch (error: unknown) {
+-      throw classifyAgentError(name, agentCardUrl, error);
++      throw classifyAgentError(name, urlIdentifier, error);
+     }
+   }
+ 
+diff --git a/packages/core/src/agents/agentLoader.ts b/packages/core/src/agents/agentLoader.ts
+index eac0985f2..d34d0e974 100644
+--- a/packages/core/src/agents/agentLoader.ts
++++ b/packages/core/src/agents/agentLoader.ts
+@@ -12,6 +12,7 @@ import * as crypto from 'node:crypto';
+ import { z } from 'zod';
+ import {
+   type AgentDefinition,
++  type RemoteAgentDefinition,
+   DEFAULT_MAX_TURNS,
+   DEFAULT_MAX_TIME_MINUTES,
+ } from './types.js';
+@@ -171,17 +172,43 @@ const authConfigSchema = z
+ 
+ type FrontmatterAuthConfig = z.infer<typeof authConfigSchema>;
+ 
+-const remoteAgentSchema = z
+-  .object({
+-    kind: z.literal('remote').optional().default('remote'),
+-    name: nameSchema,
+-    description: z.string().optional(),
+-    display_name: z.string().optional(),
++const baseRemoteAgentSchema = z.object({
++  kind: z.literal('remote').optional().default('remote'),
++  name: nameSchema,
++  description: z.string().optional(),
++  display_name: z.string().optional(),
++  auth: authConfigSchema.optional(),
++});
++
++const remoteAgentUrlSchema = baseRemoteAgentSchema
++  .extend({
+     agent_card_url: z.string().url(),
+-    auth: authConfigSchema.optional(),
++    agent_card_json: z.undefined().optional(),
+   })
+   .strict();
+ 
++const remoteAgentJsonSchema = baseRemoteAgentSchema
++  .extend({
++    agent_card_url: z.undefined().optional(),
++    agent_card_json: z.string().refine(
++      (val) => {
++        try {
++          JSON.parse(val);
++          return true;
++        } catch {
++          return false;
++        }
++      },
++      { message: 'agent_card_json must be valid JSON' },
++    ),
++  })
++  .strict();
++
++const remoteAgentSchema = z.union([
++  remoteAgentUrlSchema,
++  remoteAgentJsonSchema,
++]);
++
+ type FrontmatterRemoteAgentDefinition = z.infer<typeof remoteAgentSchema>;
+ 
+ type FrontmatterAgentDefinition =
+@@ -189,15 +216,17 @@ type FrontmatterAgentDefinition =
+   | FrontmatterRemoteAgentDefinition;
+ 
+ const agentUnionOptions = [
+-  { schema: localAgentSchema, label: 'Local Agent' },
+-  { schema: remoteAgentSchema, label: 'Remote Agent' },
+-] as const;
++  { label: 'Local Agent' },
++  { label: 'Remote Agent' },
++  { label: 'Remote Agent' },
++];
+ 
+ const remoteAgentsListSchema = z.array(remoteAgentSchema);
+ 
+ const markdownFrontmatterSchema = z.union([
+-  agentUnionOptions[0].schema,
+-  agentUnionOptions[1].schema,
++  localAgentSchema,
++  remoteAgentUrlSchema,
++  remoteAgentJsonSchema,
+ ]);
+ 
+ function guessIntendedKind(rawInput: unknown): 'local' | 'remote' | undefined {
+@@ -215,7 +244,8 @@ function guessIntendedKind(rawInput: unknown): 'local' | 'remote' | undefined {
+     'temperature' in input ||
+     'max_turns' in input ||
+     'timeout_mins' in input;
+-  const hasRemoteKeys = 'agent_card_url' in input || 'auth' in input;
++  const hasRemoteKeys =
++    'agent_card_url' in input || 'auth' in input || 'agent_card_json' in input;
+ 
+   if (hasLocalKeys && !hasRemoteKeys) return 'local';
+   if (hasRemoteKeys && !hasLocalKeys) return 'remote';
+@@ -230,35 +260,29 @@ function formatZodError(
+ ): string {
+   const intendedKind = rawInput ? guessIntendedKind(rawInput) : undefined;
+ 
+-  const issues = error.issues
+-    .map((i) => {
++  const formatIssues = (issues: z.ZodIssue[], unionPrefix?: string): string[] =>
++    issues.flatMap((i) => {
++      // Handle union errors specifically to give better context
+       if (i.code === z.ZodIssueCode.invalid_union) {
+-        return i.unionErrors
+-          .map((unionError, index) => {
+-            const label =
+-              agentUnionOptions[index]?.label ?? `Agent type #${index + 1}`;
+-
+-            if (intendedKind === 'local' && label === 'Remote Agent')
+-              return null;
+-            if (intendedKind === 'remote' && label === 'Local Agent')
+-              return null;
+-
+-            const unionIssues = unionError.issues
+-              .map((u) => {
+-                const pathStr = u.path.join('.');
+-                return pathStr ? `${pathStr}: ${u.message}` : u.message;
+-              })
+-              .join(', ');
+-            return `(${label}) ${unionIssues}`;
+-          })
+-          .filter(Boolean)
+-          .join('\n');
++        return i.unionErrors.flatMap((unionError, index) => {
++          const label = unionPrefix
++            ? unionPrefix
++            : ((agentUnionOptions[index] as { label?: string })?.label ??
++              `Branch #${index + 1}`);
++
++          if (intendedKind === 'local' && label === 'Remote Agent') return [];
++          if (intendedKind === 'remote' && label === 'Local Agent') return [];
++
++          return formatIssues(unionError.issues, label);
++        });
+       }
+-      const pathStr = i.path.join('.');
+-      return pathStr ? `${pathStr}: ${i.message}` : i.message;
+-    })
+-    .join('\n');
+-  return `${context}:\n${issues}`;
++      const prefix = unionPrefix ? `(${unionPrefix}) ` : '';
++      const path = i.path.length > 0 ? `${i.path.join('.')}: ` : '';
++      return `${prefix}${path}${i.message}`;
++    });
++
++  const formatted = Array.from(new Set(formatIssues(error.issues))).join('\n');
++  return `${context}:\n${formatted}`;
+ }
+ 
+ /**
+@@ -397,9 +421,7 @@ function convertFrontmatterAuthToConfig(
+           return {
+             type: 'http',
+             scheme: 'Basic',
+-
+             username: frontmatter.username!,
+-
+             password: frontmatter.password!,
+           };
+         default:
+@@ -453,18 +475,34 @@ export function markdownToAgentDefinition(
+   };
+ 
+   if (markdown.kind === 'remote') {
+-    return {
++    const base: RemoteAgentDefinition = {
+       kind: 'remote',
+       name: markdown.name,
+       description: markdown.description || '',
+       displayName: markdown.display_name,
+-      agentCardUrl: markdown.agent_card_url,
+       auth: markdown.auth
+         ? convertFrontmatterAuthToConfig(markdown.auth)
+         : undefined,
+       inputConfig,
+       metadata,
+     };
++
++    if (
++      'agent_card_json' in markdown &&
++      markdown.agent_card_json !== undefined
++    ) {
++      base.agentCardJson = markdown.agent_card_json;
++      return base;
++    }
++    if ('agent_card_url' in markdown && markdown.agent_card_url !== undefined) {
++      base.agentCardUrl = markdown.agent_card_url;
++      return base;
++    }
++
++    throw new AgentLoadError(
++      metadata?.filePath || 'unknown',
++      'Unexpected state: neither agent_card_json nor agent_card_url present on remote agent',
++    );
+   }
+ 
+   // If a model is specified, use it. Otherwise, inherit
+diff --git a/packages/core/src/agents/registry.ts b/packages/core/src/agents/registry.ts
+index 619f1dd71..625302a6c 100644
+--- a/packages/core/src/agents/registry.ts
++++ b/packages/core/src/agents/registry.ts
+@@ -4,10 +4,12 @@
+  * SPDX-License-Identifier: Apache-2.0
+  */
+ 
++import * as crypto from 'node:crypto';
+ import { Storage } from '../config/storage.js';
+ import { CoreEvent, coreEvents } from '../utils/events.js';
+ import type { AgentOverride, Config } from '../config/config.js';
+ import type { AgentDefinition, LocalAgentDefinition } from './types.js';
++import { getAgentCardLoadOptions, getRemoteAgentTargetUrl } from './types.js';
+ import { loadAgentsFromDirectory } from './agentLoader.js';
+ import { CodebaseInvestigatorAgent } from './codebase-investigator.js';
+ import { CliHelpAgent } from './cli-help-agent.js';
+@@ -162,7 +164,14 @@ export class AgentRegistry {
+           if (!agent.metadata) {
+             agent.metadata = {};
+           }
+-          agent.metadata.hash = agent.agentCardUrl;
++          agent.metadata.hash =
++            agent.agentCardUrl ??
++            (agent.agentCardJson
++              ? crypto
++                  .createHash('sha256')
++                  .update(agent.agentCardJson)
++                  .digest('hex')
++              : undefined);
+         }
+ 
+         if (!agent.metadata?.hash) {
+@@ -443,12 +452,13 @@ export class AgentRegistry {
+         );
+         return;
+       }
++      const targetUrl = getRemoteAgentTargetUrl(remoteDef);
+       let authHandler: AuthenticationHandler | undefined;
+       if (definition.auth) {
+         const provider = await A2AAuthProviderFactory.create({
+           authConfig: definition.auth,
+           agentName: definition.name,
+-          targetUrl: definition.agentCardUrl,
++          targetUrl,
+           agentCardUrl: remoteDef.agentCardUrl,
+         });
+         if (!provider) {
+@@ -461,7 +471,7 @@ export class AgentRegistry {
+ 
+       const agentCard = await clientManager.loadAgent(
+         remoteDef.name,
+-        remoteDef.agentCardUrl,
++        getAgentCardLoadOptions(remoteDef),
+         authHandler,
+       );
+ 
+@@ -515,7 +525,7 @@ export class AgentRegistry {
+ 
+       if (this.config.getDebugMode()) {
+         debugLogger.log(
+-          `[AgentRegistry] Registered remote agent '${definition.name}' with card: ${definition.agentCardUrl}`,
++          `[AgentRegistry] Registered remote agent '${definition.name}' with card: ${definition.agentCardUrl ?? 'inline JSON'}`,
+         );
+       }
+       this.agents.set(definition.name, definition);
+diff --git a/packages/core/src/agents/remote-invocation.ts b/packages/core/src/agents/remote-invocation.ts
+index 130f0f1a3..7dda4b0ee 100644
+--- a/packages/core/src/agents/remote-invocation.ts
++++ b/packages/core/src/agents/remote-invocation.ts
+@@ -16,6 +16,8 @@ import {
+   type RemoteAgentDefinition,
+   type AgentInputs,
+   type SubagentProgress,
++  getAgentCardLoadOptions,
++  getRemoteAgentTargetUrl,
+ } from './types.js';
+ import { type AgentLoopContext } from '../config/agent-loop-context.js';
+ import type { MessageBus } from '../confirmation-bus/message-bus.js';
+@@ -92,10 +94,11 @@ export class RemoteAgentInvocation extends BaseToolInvocation<
+     }
+ 
+     if (this.definition.auth) {
++      const targetUrl = getRemoteAgentTargetUrl(this.definition);
+       const provider = await A2AAuthProviderFactory.create({
+         authConfig: this.definition.auth,
+         agentName: this.definition.name,
+-        targetUrl: this.definition.agentCardUrl,
++        targetUrl,
+         agentCardUrl: this.definition.agentCardUrl,
+       });
+       if (!provider) {
+@@ -162,7 +165,7 @@ export class RemoteAgentInvocation extends BaseToolInvocation<
+       if (!this.clientManager.getClient(this.definition.name)) {
+         await this.clientManager.loadAgent(
+           this.definition.name,
+-          this.definition.agentCardUrl,
++          getAgentCardLoadOptions(this.definition),
+           authHandler,
+         );
+       }
+diff --git a/packages/core/src/agents/types.ts b/packages/core/src/agents/types.ts
+index e36d8f0cc..456f4cfdb 100644
+--- a/packages/core/src/agents/types.ts
++++ b/packages/core/src/agents/types.ts
+@@ -13,6 +13,7 @@ import type { AnyDeclarativeTool } from '../tools/tools.js';
+ import { type z } from 'zod';
+ import type { ModelConfig } from '../services/modelConfigService.js';
+ import type { AnySchema } from 'ajv';
++import type { AgentCard } from '@a2a-js/sdk';
+ import type { A2AAuthConfig } from './auth-provider/types.js';
+ import type { MCPServerConfig } from '../config/config.js';
+ 
+@@ -128,6 +129,62 @@ export function isToolActivityError(data: unknown): boolean {
+  * The base definition for an agent.
+  * @template TOutput The specific Zod schema for the agent's final output object.
+  */
++export type AgentCardLoadOptions =
++  | { type: 'url'; url: string }
++  | { type: 'json'; json: string };
++
++/** Minimal shape needed by helper functions, avoids generic TOutput constraints. */
++interface RemoteAgentRef {
++  name: string;
++  agentCardUrl?: string;
++  agentCardJson?: string;
++}
++
++/**
++ * Derives the AgentCardLoadOptions from a RemoteAgentDefinition.
++ * Throws if neither agentCardUrl nor agentCardJson is present.
++ */
++export function getAgentCardLoadOptions(
++  def: RemoteAgentRef,
++): AgentCardLoadOptions {
++  if (def.agentCardJson) {
++    return { type: 'json', json: def.agentCardJson };
++  }
++  if (def.agentCardUrl) {
++    return { type: 'url', url: def.agentCardUrl };
++  }
++  throw new Error(
++    `Remote agent '${def.name}' has neither agentCardUrl nor agentCardJson`,
++  );
++}
++
++/**
++ * Extracts a target URL for auth providers from a RemoteAgentDefinition.
++ * For URL-based agents, returns the agentCardUrl.
++ * For JSON-based agents, attempts to parse the URL from the inline card JSON.
++ * Returns undefined if no URL can be determined.
++ */
++export function getRemoteAgentTargetUrl(
++  def: RemoteAgentRef,
++): string | undefined {
++  if (def.agentCardUrl) {
++    return def.agentCardUrl;
++  }
++  if (def.agentCardJson) {
++    try {
++      const parsed: unknown = JSON.parse(def.agentCardJson);
++      // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
++      const card = parsed as AgentCard;
++      if (card.url) {
++        return card.url;
++      }
++    } catch {
++      // JSON parse will fail properly later in loadAgent
++    }
++  }
++  return undefined;
++}
++
+ export interface BaseAgentDefinition<
+   TOutput extends z.ZodTypeAny = z.ZodUnknown,
+ > {
+@@ -172,11 +229,10 @@ export interface LocalAgentDefinition<
+   processOutput?: (output: z.infer<TOutput>) => string;
+ }
+ 
+-export interface RemoteAgentDefinition<
++export interface BaseRemoteAgentDefinition<
+   TOutput extends z.ZodTypeAny = z.ZodUnknown,
+ > extends BaseAgentDefinition<TOutput> {
+   kind: 'remote';
+-  agentCardUrl: string;
+   /** The user-provided description, before any remote card merging. */
+   originalDescription?: string;
+   /**
+@@ -187,6 +243,13 @@ export interface RemoteAgentDefinition<
+   auth?: A2AAuthConfig;
+ }
+ 
++export interface RemoteAgentDefinition<
++  TOutput extends z.ZodTypeAny = z.ZodUnknown,
++> extends BaseRemoteAgentDefinition<TOutput> {
++  agentCardUrl?: string;
++  agentCardJson?: string;
++}
++
+ export type AgentDefinition<TOutput extends z.ZodTypeAny = z.ZodUnknown> =
+   | LocalAgentDefinition<TOutput>
+   | RemoteAgentDefinition<TOutput>;
+diff --git a/packages/core/src/config/defaultModelConfigs.ts b/packages/core/src/config/defaultModelConfigs.ts
+index 1ee30a8c8..3e18ee187 100644
+--- a/packages/core/src/config/defaultModelConfigs.ts
++++ b/packages/core/src/config/defaultModelConfigs.ts
+@@ -356,10 +356,6 @@ export const DEFAULT_MODEL_CONFIGS: ModelConfigServiceConfig = {
+       default: 'gemini-3.1-pro-preview',
+       contexts: [
+         { condition: { hasAccessToPreview: false }, target: 'gemini-2.5-pro' },
+-        {
+-          condition: { useCustomTools: true },
+-          target: 'gemini-3.1-pro-preview-customtools',
+-        },
+       ],
+     },
+     'gemini-3.1-pro-preview-customtools': {
+diff --git a/schemas/settings.schema.json b/schemas/settings.schema.json
+index f023d17dd..93bd8fc89 100644
+--- a/schemas/settings.schema.json
++++ b/schemas/settings.schema.json
+@@ -636,7 +636,7 @@
+     "modelConfigs": {
+       "title": "Model Configs",
+       "description": "Model configurations.",
+-      "markdownDescription": "Model configurations.\n\n- Category: `Model`\n- Requires restart: `no`\n- Default: `{\n  \"aliases\": {\n    \"base\": {\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"temperature\": 0,\n          \"topP\": 1\n        }\n      }\n    },\n    \"chat-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"includeThoughts\": true\n          },\n          \"temperature\": 1,\n          \"topP\": 0.95,\n          \"topK\": 64\n        }\n      }\n    },\n    \"chat-base-2.5\": {\n      \"extends\": \"chat-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 8192\n          }\n        }\n      }\n    },\n    \"chat-base-3\": {\n      \"extends\": \"chat-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingLevel\": \"HIGH\"\n          }\n        }\n      }\n    },\n    \"gemini-3-pro-preview\": {\n      \"extends\": \"chat-base-3\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"gemini-3-flash-preview\": {\n      \"extends\": \"chat-base-3\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"gemini-2.5-pro\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-pro\"\n      }\n    },\n    \"gemini-2.5-flash\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"gemini-2.5-flash-lite\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\"\n      }\n    },\n    \"gemini-2.5-flash-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"gemini-3-flash-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"classifier\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 1024,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 512\n          }\n        }\n      }\n    },\n    \"prompt-completion\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"temperature\": 0.3,\n          \"maxOutputTokens\": 16000,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"fast-ack-helper\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"temperature\": 0.2,\n          \"maxOutputTokens\": 120,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"edit-corrector\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"summarizer-default\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 2000\n        }\n      }\n    },\n    \"summarizer-shell\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 2000\n        }\n      }\n    },\n    \"web-search\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"tools\": [\n            {\n              \"googleSearch\": {}\n            }\n          ]\n        }\n      }\n    },\n    \"web-fetch\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"tools\": [\n            {\n              \"urlContext\": {}\n            }\n          ]\n        }\n      }\n    },\n    \"web-fetch-fallback\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"loop-detection\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"loop-detection-double-check\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"llm-edit-fixer\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"next-speaker-checker\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"chat-compression-3-pro\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"chat-compression-3-flash\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"chat-compression-2.5-pro\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-pro\"\n      }\n    },\n    \"chat-compression-2.5-flash\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"chat-compression-2.5-flash-lite\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\"\n      }\n    },\n    \"chat-compression-default\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    }\n  },\n  \"overrides\": [\n    {\n      \"match\": {\n        \"model\": \"chat-base\",\n        \"isRetry\": true\n      },\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"temperature\": 1\n        }\n      }\n    }\n  ],\n  \"modelDefinitions\": {\n    \"gemini-3.1-flash-lite-preview\": {\n      \"tier\": \"flash-lite\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3.1-pro-preview\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3.1-pro-preview-customtools\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3-pro-preview\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3-flash-preview\": {\n      \"tier\": \"flash\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-2.5-pro\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"gemini-2.5-flash\": {\n      \"tier\": \"flash\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"gemini-2.5-flash-lite\": {\n      \"tier\": \"flash-lite\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto\": {\n      \"tier\": \"auto\",\n      \"isPreview\": true,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"pro\": {\n      \"tier\": \"pro\",\n      \"isPreview\": false,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"flash\": {\n      \"tier\": \"flash\",\n      \"isPreview\": false,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"flash-lite\": {\n      \"tier\": \"flash-lite\",\n      \"isPreview\": false,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto-gemini-3\": {\n      \"displayName\": \"Auto (Gemini 3)\",\n      \"tier\": \"auto\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"dialogDescription\": \"Let Gemini CLI decide the best model for the task: gemini-3-pro, gemini-3-flash\",\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto-gemini-2.5\": {\n      \"displayName\": \"Auto (Gemini 2.5)\",\n      \"tier\": \"auto\",\n      \"isPreview\": false,\n      \"isVisible\": true,\n      \"dialogDescription\": \"Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash\",\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    }\n  },\n  \"modelIdResolutions\": {\n    \"gemini-3.1-pro-preview\": {\n      \"default\": \"gemini-3.1-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        }\n      ]\n    },\n    \"gemini-3.1-pro-preview-customtools\": {\n      \"default\": \"gemini-3.1-pro-preview-customtools\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        }\n      ]\n    },\n    \"gemini-3-flash-preview\": {\n      \"default\": \"gemini-3-flash-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-flash\"\n        }\n      ]\n    },\n    \"gemini-3-pro-preview\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    },\n    \"auto-gemini-3\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    },\n    \"auto\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    },\n    \"pro\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    },\n    \"auto-gemini-2.5\": {\n      \"default\": \"gemini-2.5-pro\"\n    },\n    \"flash\": {\n      \"default\": \"gemini-3-flash-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-flash\"\n        }\n      ]\n    },\n    \"flash-lite\": {\n      \"default\": \"gemini-2.5-flash-lite\"\n    }\n  },\n  \"classifierIdResolutions\": {\n    \"flash\": {\n      \"default\": \"gemini-3-flash-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"requestedModels\": [\n              \"auto-gemini-2.5\",\n              \"gemini-2.5-pro\"\n            ]\n          },\n          \"target\": \"gemini-2.5-flash\"\n        },\n        {\n          \"condition\": {\n            \"requestedModels\": [\n              \"auto-gemini-3\",\n              \"gemini-3-pro-preview\"\n            ]\n          },\n          \"target\": \"gemini-3-flash-preview\"\n        }\n      ]\n    },\n    \"pro\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"requestedModels\": [\n              \"auto-gemini-2.5\",\n              \"gemini-2.5-pro\"\n            ]\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    }\n  },\n  \"modelChains\": {\n    \"preview\": [\n      {\n        \"model\": \"gemini-3-pro-preview\",\n        \"actions\": {\n          \"terminal\": \"prompt\",\n          \"transient\": \"prompt\",\n          \"not_found\": \"prompt\",\n          \"unknown\": \"prompt\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      },\n      {\n        \"model\": \"gemini-3-flash-preview\",\n        \"isLastResort\": true,\n        \"actions\": {\n          \"terminal\": \"prompt\",\n          \"transient\": \"prompt\",\n          \"not_found\": \"prompt\",\n          \"unknown\": \"prompt\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      }\n    ],\n    \"default\": [\n      {\n        \"model\": \"gemini-2.5-pro\",\n        \"actions\": {\n          \"terminal\": \"prompt\",\n          \"transient\": \"prompt\",\n          \"not_found\": \"prompt\",\n          \"unknown\": \"prompt\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      },\n      {\n        \"model\": \"gemini-2.5-flash\",\n        \"isLastResort\": true,\n        \"actions\": {\n          \"terminal\": \"prompt\",\n          \"transient\": \"prompt\",\n          \"not_found\": \"prompt\",\n          \"unknown\": \"prompt\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      }\n    ],\n    \"lite\": [\n      {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"actions\": {\n          \"terminal\": \"silent\",\n          \"transient\": \"silent\",\n          \"not_found\": \"silent\",\n          \"unknown\": \"silent\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      },\n      {\n        \"model\": \"gemini-2.5-flash\",\n        \"actions\": {\n          \"terminal\": \"silent\",\n          \"transient\": \"silent\",\n          \"not_found\": \"silent\",\n          \"unknown\": \"silent\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      },\n      {\n        \"model\": \"gemini-2.5-pro\",\n        \"isLastResort\": true,\n        \"actions\": {\n          \"terminal\": \"silent\",\n          \"transient\": \"silent\",\n          \"not_found\": \"silent\",\n          \"unknown\": \"silent\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      }\n    ]\n  }\n}`",
++      "markdownDescription": "Model configurations.\n\n- Category: `Model`\n- Requires restart: `no`\n- Default: `{\n  \"aliases\": {\n    \"base\": {\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"temperature\": 0,\n          \"topP\": 1\n        }\n      }\n    },\n    \"chat-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"includeThoughts\": true\n          },\n          \"temperature\": 1,\n          \"topP\": 0.95,\n          \"topK\": 64\n        }\n      }\n    },\n    \"chat-base-2.5\": {\n      \"extends\": \"chat-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 8192\n          }\n        }\n      }\n    },\n    \"chat-base-3\": {\n      \"extends\": \"chat-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingLevel\": \"HIGH\"\n          }\n        }\n      }\n    },\n    \"gemini-3-pro-preview\": {\n      \"extends\": \"chat-base-3\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"gemini-3-flash-preview\": {\n      \"extends\": \"chat-base-3\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"gemini-2.5-pro\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-pro\"\n      }\n    },\n    \"gemini-2.5-flash\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"gemini-2.5-flash-lite\": {\n      \"extends\": \"chat-base-2.5\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\"\n      }\n    },\n    \"gemini-2.5-flash-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"gemini-3-flash-base\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"classifier\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 1024,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 512\n          }\n        }\n      }\n    },\n    \"prompt-completion\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"temperature\": 0.3,\n          \"maxOutputTokens\": 16000,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"fast-ack-helper\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"temperature\": 0.2,\n          \"maxOutputTokens\": 120,\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"edit-corrector\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"thinkingConfig\": {\n            \"thinkingBudget\": 0\n          }\n        }\n      }\n    },\n    \"summarizer-default\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 2000\n        }\n      }\n    },\n    \"summarizer-shell\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"generateContentConfig\": {\n          \"maxOutputTokens\": 2000\n        }\n      }\n    },\n    \"web-search\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"tools\": [\n            {\n              \"googleSearch\": {}\n            }\n          ]\n        }\n      }\n    },\n    \"web-fetch\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"tools\": [\n            {\n              \"urlContext\": {}\n            }\n          ]\n        }\n      }\n    },\n    \"web-fetch-fallback\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"loop-detection\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"loop-detection-double-check\": {\n      \"extends\": \"base\",\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"llm-edit-fixer\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"next-speaker-checker\": {\n      \"extends\": \"gemini-3-flash-base\",\n      \"modelConfig\": {}\n    },\n    \"chat-compression-3-pro\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    },\n    \"chat-compression-3-flash\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-flash-preview\"\n      }\n    },\n    \"chat-compression-2.5-pro\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-pro\"\n      }\n    },\n    \"chat-compression-2.5-flash\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash\"\n      }\n    },\n    \"chat-compression-2.5-flash-lite\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-2.5-flash-lite\"\n      }\n    },\n    \"chat-compression-default\": {\n      \"modelConfig\": {\n        \"model\": \"gemini-3-pro-preview\"\n      }\n    }\n  },\n  \"overrides\": [\n    {\n      \"match\": {\n        \"model\": \"chat-base\",\n        \"isRetry\": true\n      },\n      \"modelConfig\": {\n        \"generateContentConfig\": {\n          \"temperature\": 1\n        }\n      }\n    }\n  ],\n  \"modelDefinitions\": {\n    \"gemini-3.1-flash-lite-preview\": {\n      \"tier\": \"flash-lite\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3.1-pro-preview\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3.1-pro-preview-customtools\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3-pro-preview\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-3-flash-preview\": {\n      \"tier\": \"flash\",\n      \"family\": \"gemini-3\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": true\n      }\n    },\n    \"gemini-2.5-pro\": {\n      \"tier\": \"pro\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"gemini-2.5-flash\": {\n      \"tier\": \"flash\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"gemini-2.5-flash-lite\": {\n      \"tier\": \"flash-lite\",\n      \"family\": \"gemini-2.5\",\n      \"isPreview\": false,\n      \"isVisible\": true,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto\": {\n      \"tier\": \"auto\",\n      \"isPreview\": true,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"pro\": {\n      \"tier\": \"pro\",\n      \"isPreview\": false,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"flash\": {\n      \"tier\": \"flash\",\n      \"isPreview\": false,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"flash-lite\": {\n      \"tier\": \"flash-lite\",\n      \"isPreview\": false,\n      \"isVisible\": false,\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto-gemini-3\": {\n      \"displayName\": \"Auto (Gemini 3)\",\n      \"tier\": \"auto\",\n      \"isPreview\": true,\n      \"isVisible\": true,\n      \"dialogDescription\": \"Let Gemini CLI decide the best model for the task: gemini-3-pro, gemini-3-flash\",\n      \"features\": {\n        \"thinking\": true,\n        \"multimodalToolUse\": false\n      }\n    },\n    \"auto-gemini-2.5\": {\n      \"displayName\": \"Auto (Gemini 2.5)\",\n      \"tier\": \"auto\",\n      \"isPreview\": false,\n      \"isVisible\": true,\n      \"dialogDescription\": \"Let Gemini CLI decide the best model for the task: gemini-2.5-pro, gemini-2.5-flash\",\n      \"features\": {\n        \"thinking\": false,\n        \"multimodalToolUse\": false\n      }\n    }\n  },\n  \"modelIdResolutions\": {\n    \"gemini-3.1-pro-preview\": {\n      \"default\": \"gemini-3.1-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        }\n      ]\n    },\n    \"gemini-3.1-pro-preview-customtools\": {\n      \"default\": \"gemini-3.1-pro-preview-customtools\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        }\n      ]\n    },\n    \"gemini-3-flash-preview\": {\n      \"default\": \"gemini-3-flash-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-flash\"\n        }\n      ]\n    },\n    \"gemini-3-pro-preview\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    },\n    \"auto-gemini-3\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    },\n    \"auto\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    },\n    \"pro\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    },\n    \"auto-gemini-2.5\": {\n      \"default\": \"gemini-2.5-pro\"\n    },\n    \"flash\": {\n      \"default\": \"gemini-3-flash-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"hasAccessToPreview\": false\n          },\n          \"target\": \"gemini-2.5-flash\"\n        }\n      ]\n    },\n    \"flash-lite\": {\n      \"default\": \"gemini-2.5-flash-lite\"\n    }\n  },\n  \"classifierIdResolutions\": {\n    \"flash\": {\n      \"default\": \"gemini-3-flash-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"requestedModels\": [\n              \"auto-gemini-2.5\",\n              \"gemini-2.5-pro\"\n            ]\n          },\n          \"target\": \"gemini-2.5-flash\"\n        },\n        {\n          \"condition\": {\n            \"requestedModels\": [\n              \"auto-gemini-3\",\n              \"gemini-3-pro-preview\"\n            ]\n          },\n          \"target\": \"gemini-3-flash-preview\"\n        }\n      ]\n    },\n    \"pro\": {\n      \"default\": \"gemini-3-pro-preview\",\n      \"contexts\": [\n        {\n          \"condition\": {\n            \"requestedModels\": [\n              \"auto-gemini-2.5\",\n              \"gemini-2.5-pro\"\n            ]\n          },\n          \"target\": \"gemini-2.5-pro\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true,\n            \"useCustomTools\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview-customtools\"\n        },\n        {\n          \"condition\": {\n            \"useGemini3_1\": true\n          },\n          \"target\": \"gemini-3.1-pro-preview\"\n        }\n      ]\n    }\n  },\n  \"modelChains\": {\n    \"preview\": [\n      {\n        \"model\": \"gemini-3-pro-preview\",\n        \"actions\": {\n          \"terminal\": \"prompt\",\n          \"transient\": \"prompt\",\n          \"not_found\": \"prompt\",\n          \"unknown\": \"prompt\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      },\n      {\n        \"model\": \"gemini-3-flash-preview\",\n        \"isLastResort\": true,\n        \"actions\": {\n          \"terminal\": \"prompt\",\n          \"transient\": \"prompt\",\n          \"not_found\": \"prompt\",\n          \"unknown\": \"prompt\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      }\n    ],\n    \"default\": [\n      {\n        \"model\": \"gemini-2.5-pro\",\n        \"actions\": {\n          \"terminal\": \"prompt\",\n          \"transient\": \"prompt\",\n          \"not_found\": \"prompt\",\n          \"unknown\": \"prompt\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      },\n      {\n        \"model\": \"gemini-2.5-flash\",\n        \"isLastResort\": true,\n        \"actions\": {\n          \"terminal\": \"prompt\",\n          \"transient\": \"prompt\",\n          \"not_found\": \"prompt\",\n          \"unknown\": \"prompt\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      }\n    ],\n    \"lite\": [\n      {\n        \"model\": \"gemini-2.5-flash-lite\",\n        \"actions\": {\n          \"terminal\": \"silent\",\n          \"transient\": \"silent\",\n          \"not_found\": \"silent\",\n          \"unknown\": \"silent\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      },\n      {\n        \"model\": \"gemini-2.5-flash\",\n        \"actions\": {\n          \"terminal\": \"silent\",\n          \"transient\": \"silent\",\n          \"not_found\": \"silent\",\n          \"unknown\": \"silent\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      },\n      {\n        \"model\": \"gemini-2.5-pro\",\n        \"isLastResort\": true,\n        \"actions\": {\n          \"terminal\": \"silent\",\n          \"transient\": \"silent\",\n          \"not_found\": \"silent\",\n          \"unknown\": \"silent\"\n        },\n        \"stateTransitions\": {\n          \"terminal\": \"terminal\",\n          \"transient\": \"terminal\",\n          \"not_found\": \"terminal\",\n          \"unknown\": \"terminal\"\n        }\n      }\n    ]\n  }\n}`",
+       "default": {
+         "aliases": {
+           "base": {
+@@ -1028,12 +1028,6 @@
+                   "hasAccessToPreview": false
+                 },
+                 "target": "gemini-2.5-pro"
+-              },
+-              {
+-                "condition": {
+-                  "useCustomTools": true
+-                },
+-                "target": "gemini-3.1-pro-preview-customtools"
+               }
+             ]
+           },
+@@ -1746,7 +1740,7 @@
+         "modelIdResolutions": {
+           "title": "Model ID Resolutions",
+           "description": "Rules for resolving requested model names to concrete model IDs based on context.",
+-          "markdownDescription": "Rules for resolving requested model names to concrete model IDs based on context.\n\n- Category: `Model`\n- Requires restart: `yes`\n- Default: `{\n  \"gemini-3.1-pro-preview\": {\n    \"default\": \"gemini-3.1-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      }\n    ]\n  },\n  \"gemini-3.1-pro-preview-customtools\": {\n    \"default\": \"gemini-3.1-pro-preview-customtools\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      }\n    ]\n  },\n  \"gemini-3-flash-preview\": {\n    \"default\": \"gemini-3-flash-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-flash\"\n      }\n    ]\n  },\n  \"gemini-3-pro-preview\": {\n    \"default\": \"gemini-3-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true,\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview\"\n      }\n    ]\n  },\n  \"auto-gemini-3\": {\n    \"default\": \"gemini-3-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true,\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview\"\n      }\n    ]\n  },\n  \"auto\": {\n    \"default\": \"gemini-3-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true,\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview\"\n      }\n    ]\n  },\n  \"pro\": {\n    \"default\": \"gemini-3-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true,\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview\"\n      }\n    ]\n  },\n  \"auto-gemini-2.5\": {\n    \"default\": \"gemini-2.5-pro\"\n  },\n  \"flash\": {\n    \"default\": \"gemini-3-flash-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-flash\"\n      }\n    ]\n  },\n  \"flash-lite\": {\n    \"default\": \"gemini-2.5-flash-lite\"\n  }\n}`",
++          "markdownDescription": "Rules for resolving requested model names to concrete model IDs based on context.\n\n- Category: `Model`\n- Requires restart: `yes`\n- Default: `{\n  \"gemini-3.1-pro-preview\": {\n    \"default\": \"gemini-3.1-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      }\n    ]\n  },\n  \"gemini-3.1-pro-preview-customtools\": {\n    \"default\": \"gemini-3.1-pro-preview-customtools\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      }\n    ]\n  },\n  \"gemini-3-flash-preview\": {\n    \"default\": \"gemini-3-flash-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-flash\"\n      }\n    ]\n  },\n  \"gemini-3-pro-preview\": {\n    \"default\": \"gemini-3-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true,\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview\"\n      }\n    ]\n  },\n  \"auto-gemini-3\": {\n    \"default\": \"gemini-3-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true,\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview\"\n      }\n    ]\n  },\n  \"auto\": {\n    \"default\": \"gemini-3-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true,\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview\"\n      }\n    ]\n  },\n  \"pro\": {\n    \"default\": \"gemini-3-pro-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-pro\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true,\n          \"useCustomTools\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview-customtools\"\n      },\n      {\n        \"condition\": {\n          \"useGemini3_1\": true\n        },\n        \"target\": \"gemini-3.1-pro-preview\"\n      }\n    ]\n  },\n  \"auto-gemini-2.5\": {\n    \"default\": \"gemini-2.5-pro\"\n  },\n  \"flash\": {\n    \"default\": \"gemini-3-flash-preview\",\n    \"contexts\": [\n      {\n        \"condition\": {\n          \"hasAccessToPreview\": false\n        },\n        \"target\": \"gemini-2.5-flash\"\n      }\n    ]\n  },\n  \"flash-lite\": {\n    \"default\": \"gemini-2.5-flash-lite\"\n  }\n}`",
+           "default": {
+             "gemini-3.1-pro-preview": {
+               "default": "gemini-3.1-pro-preview",
+@@ -1756,12 +1750,6 @@
+                     "hasAccessToPreview": false
+                   },
+                   "target": "gemini-2.5-pro"
+-                },
+-                {
+-                  "condition": {
+-                    "useCustomTools": true
+-                  },
+-                  "target": "gemini-3.1-pro-preview-customtools"
+                 }
+               ]
+             },

@@ -1,0 +1,18 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && npx jest components/test/brave_rewards/extension/brave_rewards/background/browserAction_test.ts --coverage=false --verbose --json",
+  "test_files": [
+    "components/test/brave_rewards/extension/brave_rewards/background/browserAction_test.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/components/test/brave_rewards/extension/brave_rewards/background/browserAction_test.ts::Rewards Panel extension - Browser Action setBadgeText publisher is verified, pending notifications"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/components/test/brave_rewards/extension/brave_rewards/background/browserAction_test.ts::Rewards Panel extension - Browser Action setBadgeText publisher is not verified, no pending notifications",
+    "/workspace/repo/components/test/brave_rewards/extension/brave_rewards/background/browserAction_test.ts::Rewards Panel extension - Browser Action setBadgeText publisher is not verified, pending notifications",
+    "/workspace/repo/components/test/brave_rewards/extension/brave_rewards/background/browserAction_test.ts::Rewards Panel extension - Browser Action setBadgeText publisher is verified, no pending notifications",
+    "/workspace/repo/components/test/brave_rewards/extension/brave_rewards/background/browserAction_test.ts::Rewards Panel extension - Browser Action setBadgeText publisher is not verified with tabId, pending notifications"
+  ]
+}

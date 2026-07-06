@@ -1,0 +1,29 @@
+{
+    "id": "142a6433-1cc2-477b-80e9-7990809a4823",
+    "started_at": "2026-07-04T15:39:02.655768",
+    "finished_at": "2026-07-04T15:39:47.410964",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__appsmithorg-appsmith-30347": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "appsmithorg-appsmith-30347__LLy79v6"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

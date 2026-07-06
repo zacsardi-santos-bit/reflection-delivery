@@ -1,0 +1,37 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/components/xthings_cloud/test_light.py /workspace/repo/tests/components/xthings_cloud/test_switch.py -v",
+  "test_files": [
+    "tests/components/xthings_cloud/conftest.py",
+    "tests/components/xthings_cloud/fixtures/XT-PL100.json",
+    "tests/components/xthings_cloud/fixtures/XT-PL50.json",
+    "tests/components/xthings_cloud/snapshots/test_init.ambr",
+    "tests/components/xthings_cloud/snapshots/test_switch.ambr",
+    "tests/components/xthings_cloud/test_light.py",
+    "tests/components/xthings_cloud/test_switch.py"
+  ],
+  "num_test_files": 7,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.xthings_cloud.test_switch::test_switches",
+    "tests.components.xthings_cloud.test_switch::test_turn_on_off[switch.smart_plug_50-dev_plug_001-plug-turn_on-async_plug_on]",
+    "tests.components.xthings_cloud.test_switch::test_turn_on_off[switch.smart_plug_50-dev_plug_001-plug-turn_off-async_plug_off]",
+    "tests.components.xthings_cloud.test_switch::test_turn_on_off[switch.smart_plug_100-dev_plug_002-switch-turn_on-async_switch_on]",
+    "tests.components.xthings_cloud.test_switch::test_turn_on_off[switch.smart_plug_100-dev_plug_002-switch-turn_off-async_switch_off]",
+    "tests.components.xthings_cloud.test_switch::test_plug_unavailable_when_offline",
+    "tests.components.xthings_cloud.test_switch::test_updating_state"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.xthings_cloud.test_light::test_lights",
+    "tests.components.xthings_cloud.test_light::test_light_turn_on_off[turn_on-async_brite_on]",
+    "tests.components.xthings_cloud.test_light::test_light_turn_on_off[turn_off-async_brite_off]",
+    "tests.components.xthings_cloud.test_light::test_light_turn_on_brightness",
+    "tests.components.xthings_cloud.test_light::test_light_turn_on_hs_color",
+    "tests.components.xthings_cloud.test_light::test_light_turn_on_color_temp",
+    "tests.components.xthings_cloud.test_light::test_light_turn_on_hs_color_with_brightness",
+    "tests.components.xthings_cloud.test_light::test_light_color_temp_with_brightness",
+    "tests.components.xthings_cloud.test_light::test_light_unavailable_when_offline",
+    "tests.components.xthings_cloud.test_light::test_light_color_mode_color_temp",
+    "tests.components.xthings_cloud.test_light::test_updating_state"
+  ]
+}

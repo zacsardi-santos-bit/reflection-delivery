@@ -1,0 +1,29 @@
+{
+    "id": "e85048cb-cf4a-4042-a3d0-24188ddfaa16",
+    "started_at": "2026-07-06T12:17:34.428820",
+    "finished_at": "2026-07-06T12:18:58.017289",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__pulumi-pulumi-23153": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "pulumi-pulumi-23153__uikaq3N"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

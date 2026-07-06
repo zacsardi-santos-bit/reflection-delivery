@@ -1,7 +1,0 @@
-I'm working on improving the performance of authorization checks in OpenFGA for userset relationships that include set operations. Currently, the system has an optimized fast-path for tuple-to-userset relationships with set operations, but there's no equivalent optimization for plain userset relationships. I'd like to add that capability.
-
-Specifically, I need a new analysis method on the type system that determines whether a given userset relationship qualifies for fast-path evaluation. This method should accept the object type, relation, user type, and the list of directly related userset types, and return a boolean indicating eligibility. It should return true for userset patterns involving direct assignments, computed relations, union, intersection, and exclusion/difference set operations, as well as conditional relations. It should return false for recursive or self-referencing usersets, patterns involving wildcards or public membership, tuple-to-userset chains, or cases where the userset itself contains another nested userset as a member.
-
-I also need the actual check resolver to use this new fast-path when the conditions are met, correctly evaluating access through multiple parent userset types and producing the right allow/deny decisions for complex algebraic relation combinations.
-
-Finally, there's a naming inconsistency in the internal tuple mapper code — an older name for a userset mapper kind and its corresponding struct should be updated to use a cleaner, consistent name throughout the graph resolution package.

@@ -1,0 +1,7 @@
+I'd like to add a new DNS provider to the lego ACME client for ManageEngine CloudDNS. Right now, users who manage their DNS through ManageEngine have no way to use lego for automated certificate challenges, so I want to implement the full provider integration.
+
+The provider should authenticate with ManageEngine's API using client credentials supplied through environment variables. When the required credentials are missing at initialization time, the error message should clearly identify which environment variable names are absent. When credentials are provided through a configuration object directly and one of them is empty, a concise error indicating the credentials are absent should be returned.
+
+The core of the integration is an internal API client that can list all DNS zones, list all SPF/TXT records within a specific zone, and create, update, or delete individual records. All of these operations target specific URL paths under the ManageEngine REST API. When the API responds with a non-success status, the error returned to the caller should include the HTTP status code and the error message extracted from the response body.
+
+The provider also needs accompanying JSON fixture files for the internal client tests, since those tests use a mock HTTP server and load response payloads from the filesystem. The fixture content should be consistent with the data structures used in the implementation so the JSON parses correctly into the expected Go types.

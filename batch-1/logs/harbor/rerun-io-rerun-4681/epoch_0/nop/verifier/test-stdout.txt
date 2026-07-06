@@ -1,0 +1,12 @@
+patching file crates/re_space_view_spatial/src/space_view_2d.rs
+   Compiling re_space_view_spatial v0.13.0-alpha.1+dev (/workspace/repo/crates/re_space_view_spatial)
+error[E0412]: cannot find type `Points3DComponentData` in module `crate::visualizers`
+   --> crates/re_space_view_spatial/src/space_view_2d.rs:224:59
+    |
+224 |         let _ = std::any::type_name::<crate::visualizers::Points3DComponentData<'_>>();
+    |                                                           ^^^^^^^^^^^^^^^^^^^^^ not found in `crate::visualizers`
+
+For more information about this error, try `rustc --explain E0412`.
+error: could not compile `re_space_view_spatial` (lib test) due to previous error
+error: command `/usr/local/rustup/toolchains/1.74.0-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package re_space_view_spatial` exited with code 101
+reward=0 graded=1 found=0 failed=0 parsed=0 framework=cargo exit_code=101

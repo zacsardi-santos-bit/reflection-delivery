@@ -1,0 +1,29 @@
+{
+    "id": "de21356e-3af8-4255-838d-f9ba7450bc4c",
+    "started_at": "2026-07-04T15:40:26.134607",
+    "finished_at": "2026-07-04T15:41:39.823256",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__ntex-rs-ntex-592": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "ntex-rs-ntex-592__dyi3Upn"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

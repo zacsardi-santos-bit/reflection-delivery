@@ -1,0 +1,85 @@
+patching file codex-rs/chatgpt/tests/apply_command_e2e.rs
+patching file codex-rs/chatgpt/tests/task_turn_fixture.json
+   Compiling shlex v1.3.0
+   Compiling libc v0.2.174
+   Compiling hashbrown v0.15.4
+   Compiling serde v1.0.219
+   Compiling aho-corasick v1.1.3
+   Compiling regex-syntax v0.8.5
+   Compiling crossbeam-utils v0.8.21
+   Compiling futures-util v0.3.31
+   Compiling serde_json v1.0.140
+   Compiling num-traits v0.2.19
+   Compiling nom v7.1.3
+   Compiling time-macros v0.2.22
+   Compiling url v2.5.4
+   Compiling cc v1.2.29
+   Compiling indexmap v2.10.0
+   Compiling parking_lot_core v0.9.11
+   Compiling mio v1.0.4
+   Compiling socket2 v0.5.10
+   Compiling signal-hook-registry v1.4.5
+   Compiling getrandom v0.3.3
+   Compiling dirs-sys v0.5.0
+   Compiling parking_lot v0.12.4
+   Compiling concurrent-queue v2.5.0
+   Compiling rand_core v0.9.3
+   Compiling dirs v6.0.0
+   Compiling uuid v1.17.0
+   Compiling event-listener v5.4.0
+   Compiling tokio v1.46.1
+   Compiling rand_chacha v0.9.0
+   Compiling fs2 v0.4.3
+   Compiling seccompiler v0.5.0
+   Compiling landlock v0.4.2
+   Compiling tempfile v3.20.0
+   Compiling event-listener-strategy v0.5.4
+   Compiling rand v0.9.1
+   Compiling mcp-types v0.0.0 (/workspace/repo/codex-rs/mcp-types)
+   Compiling openssl-sys v0.9.109
+   Compiling tree-sitter-bash v0.25.0
+   Compiling eventsource-stream v0.2.3
+   Compiling async-channel v2.5.0
+   Compiling chrono v0.4.41
+   Compiling regex-automata v0.4.9
+   Compiling time v0.3.41
+   Compiling futures-executor v0.3.31
+   Compiling futures v0.3.31
+   Compiling openssl v0.10.73
+   Compiling native-tls v0.2.14
+   Compiling regex v1.11.1
+   Compiling tree-sitter v0.25.6
+   Compiling tracing-subscriber v0.3.19
+   Compiling tokio-util v0.7.15
+   Compiling tower v0.5.2
+   Compiling codex-mcp-client v0.0.0 (/workspace/repo/codex-rs/mcp-client)
+   Compiling tower-http v0.6.6
+   Compiling h2 v0.4.11
+   Compiling codex-apply-patch v0.0.0 (/workspace/repo/codex-rs/apply-patch)
+   Compiling tokio-native-tls v0.3.1
+   Compiling hyper v1.6.0
+   Compiling hyper-util v0.1.15
+   Compiling hyper-tls v0.6.0
+   Compiling reqwest v0.12.22
+   Compiling codex-core v0.0.0 (/workspace/repo/codex-rs/core)
+   Compiling codex-login v0.0.0 (/workspace/repo/codex-rs/login)
+   Compiling codex-common v0.0.0 (/workspace/repo/codex-rs/common)
+warning: function `summarize_sandbox_policy` is never used
+ --> common/src/sandbox_summary.rs:3:8
+  |
+3 | pub fn summarize_sandbox_policy(sandbox_policy: &SandboxPolicy) -> String {
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(dead_code)]` on by default
+
+   Compiling codex-chatgpt v0.0.0 (/workspace/repo/codex-rs/chatgpt)
+warning: `codex-common` (lib) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 21.86s
+────────────
+ Nextest run ID 834797dc-6451-4a83-a036-c8f013da4ee7 with nextest profile: default
+    Starting 2 tests across 2 binaries
+        PASS [   0.352s] (1/2) codex-chatgpt::apply_command_e2e test_apply_command_creates_fibonacci_file
+        PASS [   0.791s] (2/2) codex-chatgpt::apply_command_e2e test_apply_command_with_merge_conflicts
+────────────
+     Summary [   0.812s] 2 tests run: 2 passed, 0 skipped
+reward=1 graded=2 found=2 failed=0 parsed=2 framework=cargo exit_code=0

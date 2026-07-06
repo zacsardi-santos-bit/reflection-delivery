@@ -1,0 +1,42 @@
+patching file crates/ruff_python_parser/tests/fixtures.rs
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_class.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_function.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_import.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_match.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_try.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_type_alias.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@debug_shadow_with.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@del_debug_py39.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/invalid_syntax@write_to_debug_expr.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/valid_syntax@debug_rename_import.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/valid_syntax@del_debug_py38.py.snap
+patching file crates/ruff_python_parser/tests/snapshots/valid_syntax@read_from_debug.py.snap
+   Compiling ruff_python_parser v0.0.0 (/workspace/repo/crates/ruff_python_parser)
+error[E0599]: no method named `target_version` found for struct `ParseOptions` in the current scope
+  --> crates/ruff_python_parser/tests/fixtures.rs:92:60
+   |
+92 |         TestContext::default().with_python_version(options.target_version()),
+   |                                                            ^^^^^^^^^^^^^^ private field, not a method
+   |
+help: there is a method `with_target_version` with a similar name, but with different arguments
+  --> /workspace/repo/crates/ruff_python_parser/src/parser/options.rs:33:5
+   |
+33 |     pub fn with_target_version(mut self, target_version: PythonVersion) -> Self {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0599]: no method named `target_version` found for struct `ParseOptions` in the current scope
+   --> crates/ruff_python_parser/tests/fixtures.rs:188:60
+    |
+188 |         TestContext::default().with_python_version(options.target_version()),
+    |                                                            ^^^^^^^^^^^^^^ private field, not a method
+    |
+help: there is a method `with_target_version` with a similar name, but with different arguments
+   --> /workspace/repo/crates/ruff_python_parser/src/parser/options.rs:33:5
+    |
+33  |     pub fn with_target_version(mut self, target_version: PythonVersion) -> Self {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `ruff_python_parser` (test "fixtures") due to 2 previous errors
+error: command `/usr/local/rustup/toolchains/1.85-x86_64-unknown-linux-gnu/bin/cargo test --no-run --message-format json-render-diagnostics --package ruff_python_parser` exited with code 101
+reward=0 graded=160 found=0 failed=0 parsed=0 framework=cargo exit_code=101

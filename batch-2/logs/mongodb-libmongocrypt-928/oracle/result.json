@@ -1,0 +1,29 @@
+{
+    "id": "962bccdb-06c1-4a91-b5fa-9f69abcd08b5",
+    "started_at": "2026-07-04T15:38:30.221838",
+    "finished_at": "2026-07-04T15:39:29.962431",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__mongodb-libmongocrypt-928": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "mongodb-libmongocrypt-928__KUjmXgz"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

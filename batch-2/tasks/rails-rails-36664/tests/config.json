@@ -1,0 +1,17 @@
+{
+  "test_framework": "junit",
+  "test_command": "cp /workspace/Gemfile.lock.fixed /workspace/repo/Gemfile.lock && mkdir -p /workspace/test-reports && cd /workspace/repo/activerecord && ARCONN=sqlite3_mem bundle exec ruby -r /workspace/minitest_junit_setup.rb -Itest test/cases/validations/numericality_validation_test.rb; cat /workspace/test-reports/*.xml 2>/dev/null",
+  "test_files": [
+    "activerecord/test/cases/validations/numericality_validation_test.rb",
+    "activerecord/test/schema/schema.rb"
+  ],
+  "num_test_files": 2,
+  "language": "ruby",
+  "FAIL_TO_PASS": [
+    "NumericalityValidationTest::test_column_with_precision"
+  ],
+  "PASS_TO_PASS": [
+    "NumericalityValidationTest::test_no_column_precision",
+    "NumericalityValidationTest::test_virtual_attribute"
+  ]
+}

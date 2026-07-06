@@ -1,0 +1,266 @@
+diff --git a/.changeset/.released/README.md b/.changeset/.released/README.md
+new file mode 100644
+index 0000000000..72c61a3562
+--- /dev/null
++++ b/.changeset/.released/README.md
+@@ -0,0 +1,25 @@
++# Released changesets ledger
++
++This directory holds a per-branch record of which changesets have already been released. Each file is named after a release branch (with `/` replaced by `-`, e.g. `main.txt`, `release-10.0.txt`) and contains one consumed changeset id per line.
++
++## Why this exists
++
++Fixes are cherry-picked between `main` and `release/*` branches, so the same changeset file can end up on both. The release branch's release consumes its copy and deletes it, but the cherry-picked copy on `main` would otherwise survive the merge back and be applied a second time on the next `main` release.
++
++The ledger prevents that double-application. Each branch only writes to its own file, so cross-branch merges are conflict-free; the wrapper around `changeset version` reads the union of every file when deciding what to skip.
++
++## How it gets updated
++
++`pnpm bump` runs the wrapper at `__utils__/scripts/src/bump.ts`, which:
++
++1. Reads every `*.txt` in this directory and unions the ids.
++2. Hides any `.changeset/<id>.md` whose id is in that union (renames to `<id>.md.released`) so `changeset version` does not see it.
++3. Runs `changeset version`, which consumes the remaining `.md` files.
++4. Appends the newly-consumed ids to `<current-branch>.txt`.
++5. Deletes the hidden files (their consumption is already on record).
++
++If `changeset version` fails, hidden files are renamed back to their original `.md` names so the working tree is left clean. The current branch is detected from `git rev-parse --abbrev-ref HEAD`; set `RELEASE_BRANCH` to override.
++
++## Workflow requirement
++
++Release branches must be merged back into `main` between releases, so that `main` sees the release branch's ledger entries before its own next release runs.
+diff --git a/__utils__/scripts/package.json b/__utils__/scripts/package.json
+index 9217e48989..caf32fe9eb 100644
+--- a/__utils__/scripts/package.json
++++ b/__utils__/scripts/package.json
+@@ -3,6 +3,10 @@
+   "version": "1100.0.5",
+   "private": true,
+   "type": "module",
++  "scripts": {
++    "test": "pn .test",
++    ".test": "cross-env NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules --disable-warning=ExperimentalWarning --disable-warning=DEP0169\" jest"
++  },
+   "dependencies": {
+     "@pnpm/workspace.projects-reader": "workspace:*",
+     "@pnpm/workspace.workspace-manifest-reader": "workspace:*",
+@@ -14,10 +18,16 @@
+     "tinyglobby": "catalog:"
+   },
+   "devDependencies": {
++    "@jest/globals": "catalog:",
++    "@pnpm/jest-config": "workspace:*",
+     "@pnpm/logger": "catalog:",
+     "@pnpm/scripts": "workspace:*",
+     "@types/normalize-path": "catalog:",
+-    "@types/tar": "catalog:"
++    "@types/tar": "catalog:",
++    "cross-env": "catalog:"
++  },
++  "jest": {
++    "preset": "@pnpm/jest-config"
+   },
+   "keywords": [
+     "pnpm",
+diff --git a/__utils__/scripts/src/bump.ts b/__utils__/scripts/src/bump.ts
+new file mode 100644
+index 0000000000..e7e12e1fc1
+--- /dev/null
++++ b/__utils__/scripts/src/bump.ts
+@@ -0,0 +1,156 @@
++// Wrapper around `changeset version` that prevents cherry-picked changesets
++// from being applied twice when a release branch is merged back into main.
++// Maintains a per-branch ledger at .changeset/.released/<branch>.txt of
++// consumed changeset ids; before running `changeset version` it hides any
++// changeset whose id is already in the union of those files. See
++// .changeset/.released/README.md for the full explanation.
++
++import { execSync } from 'node:child_process'
++import fs from 'node:fs'
++import path from 'node:path'
++import url from 'node:url'
++
++import glob from 'fast-glob'
++
++export interface HiddenFile {
++  id: string
++  from: string
++  to: string
++}
++
++export function branchToFilename (branch: string): string {
++  return `${branch.replace(/\//g, '-')}.txt`
++}
++
++export function readReleased (releasedDir: string): Set<string> {
++  const ids = new Set<string>()
++  if (!fs.existsSync(releasedDir)) return ids
++  for (const file of fs.readdirSync(releasedDir)) {
++    if (!file.endsWith('.txt')) continue
++    const content = fs.readFileSync(path.join(releasedDir, file), 'utf8')
++    for (const line of content.split('\n')) {
++      const id = line.trim()
++      if (id !== '' && !id.startsWith('#')) ids.add(id)
++    }
++  }
++  return ids
++}
++
++export function appendReleased (
++  releasedDir: string,
++  branch: string,
++  ids: readonly string[]
++): void {
++  if (ids.length === 0) return
++  fs.mkdirSync(releasedDir, { recursive: true })
++  const file = path.join(releasedDir, branchToFilename(branch))
++  const merged = new Set<string>()
++  if (fs.existsSync(file)) {
++    for (const line of fs.readFileSync(file, 'utf8').split('\n')) {
++      const id = line.trim()
++      if (id !== '' && !id.startsWith('#')) merged.add(id)
++    }
++  }
++  for (const id of ids) merged.add(id)
++  const sorted = [...merged].sort()
++  fs.writeFileSync(file, `${sorted.join('\n')}\n`)
++}
++
++export function listChangesetIds (changesetDir: string): string[] {
++  const files = glob.sync('*.md', { cwd: changesetDir, ignore: ['README.md'] })
++  return files.map(f => path.basename(f, '.md')).sort()
++}
++
++export function hideReleased (changesetDir: string, released: Set<string>): HiddenFile[] {
++  const hidden: HiddenFile[] = []
++  try {
++    for (const id of listChangesetIds(changesetDir)) {
++      if (!released.has(id)) continue
++      const from = path.join(changesetDir, `${id}.md`)
++      const to = path.join(changesetDir, `${id}.md.released`)
++      fs.renameSync(from, to)
++      hidden.push({ id, from, to })
++    }
++  } catch (err) {
++    restoreHidden(hidden)
++    throw err
++  }
++  return hidden
++}
++
++export function restoreHidden (hidden: readonly HiddenFile[]): void {
++  for (const h of hidden) {
++    if (fs.existsSync(h.to)) fs.renameSync(h.to, h.from)
++  }
++}
++
++export function deleteHidden (hidden: readonly HiddenFile[]): void {
++  for (const h of hidden) {
++    if (fs.existsSync(h.to)) fs.unlinkSync(h.to)
++  }
++}
++
++function detectCurrentBranch (cwd: string): string {
++  const override = process.env.RELEASE_BRANCH?.trim()
++  if (override !== undefined && override !== '') return override
++  const out = execSync('git rev-parse --abbrev-ref HEAD', { cwd, encoding: 'utf8' }).trim()
++  if (out === 'HEAD') {
++    throw new Error(
++      'Detached HEAD; set RELEASE_BRANCH to override the current branch name.'
++    )
++  }
++  return out
++}
++
++function main (): void {
++  const repoRoot = path.resolve(import.meta.dirname, '../../..')
++  const changesetDir = path.join(repoRoot, '.changeset')
++  const releasedDir = path.join(changesetDir, '.released')
++  const branch = detectCurrentBranch(repoRoot)
++
++  console.log(`Branch: ${branch}`)
++  const released = readReleased(releasedDir)
++  console.log(`Already-released changeset IDs: ${released.size}`)
++
++  const hidden = hideReleased(changesetDir, released)
++  if (hidden.length > 0) {
++    console.log(
++      `Hiding ${hidden.length} stale changeset(s) already released elsewhere: ${hidden.map(h => h.id).join(', ')}`
++    )
++  }
++
++  const before = listChangesetIds(changesetDir)
++  let success = false
++  try {
++    execSync('changeset version', { cwd: repoRoot, stdio: 'inherit' })
++    success = true
++  } finally {
++    if (!success) restoreHidden(hidden)
++  }
++
++  try {
++    const after = new Set(listChangesetIds(changesetDir))
++    const newlyConsumed = before.filter(id => !after.has(id))
++    if (newlyConsumed.length > 0) {
++      console.log(`Recording newly-released: ${newlyConsumed.join(', ')}`)
++      appendReleased(releasedDir, branch, newlyConsumed)
++    }
++  } finally {
++    // Stale (cherry-picked, already released elsewhere) changesets get dropped
++    // from the working tree — the released-list already prevents re-application.
++    deleteHidden(hidden)
++  }
++}
++
++function isDirectInvocation (): boolean {
++  if (process.argv[1] === undefined) return false
++  try {
++    return import.meta.url === url.pathToFileURL(fs.realpathSync(process.argv[1])).href
++  } catch {
++    return false
++  }
++}
++
++if (isDirectInvocation()) {
++  main()
++}
+diff --git a/package.json b/package.json
+index 6289690351..7e05696087 100644
+--- a/package.json
++++ b/package.json
+@@ -2,7 +2,7 @@
+   "name": "monorepo-root",
+   "private": true,
+   "scripts": {
+-    "bump": "changeset version && pn update-manifests",
++    "bump": "node __utils__/scripts/src/bump.ts && pn update-manifests",
+     "changeset": "changeset",
+     "prepare": "husky",
+     "pretest": "pn compile-only && pn prepare-fixtures",
+diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml
+index 6681000cb1..c8d0ae46a4 100644
+--- a/pnpm-lock.yaml
++++ b/pnpm-lock.yaml
+@@ -1390,6 +1390,12 @@ importers:
+         specifier: 'catalog:'
+         version: 0.2.16
+     devDependencies:
++      '@jest/globals':
++        specifier: 'catalog:'
++        version: 30.3.0
++      '@pnpm/jest-config':
++        specifier: workspace:*
++        version: link:../jest-config
+       '@pnpm/logger':
+         specifier: 'catalog:'
+         version: 1001.0.1
+@@ -1402,6 +1408,9 @@ importers:
+       '@types/tar':
+         specifier: 'catalog:'
+         version: 7.0.87
++      cross-env:
++        specifier: 'catalog:'
++        version: 10.1.0
+ 
+   __utils__/test-fixtures:
+     dependencies:

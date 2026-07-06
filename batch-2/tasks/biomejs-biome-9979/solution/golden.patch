@@ -1,0 +1,485 @@
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/fenced_code_block.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/fenced_code_block.rs
+index 7a700c23e2..cc6229fe70 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/fenced_code_block.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/fenced_code_block.rs
+@@ -3,6 +3,7 @@ use crate::prelude::*;
+ use crate::shared::TextPrintMode;
+ use biome_formatter::write;
+ use biome_markdown_syntax::{MdFencedCodeBlock, MdFencedCodeBlockFields};
++use biome_rowan::TextSize;
+ 
+ #[derive(Debug, Clone, Default)]
+ pub(crate) struct FormatMdFencedCodeBlock;
+@@ -18,18 +19,15 @@ impl FormatNodeRule<MdFencedCodeBlock> for FormatMdFencedCodeBlock {
+         } = node.as_fields();
+ 
+         let l_fence = l_fence?;
+-        let fence_text = l_fence.text();
+-        // SAFETY: fence_text has at least one character.
+-        let fence_char = fence_text.as_bytes()[0] as char;
+ 
+         // Compute the minimum fence length needed (CommonMark §4.5).
+         // The fence must be strictly longer than any same-character sequence
+         // in the content, otherwise the inner sequence would be parsed as a
+         // closing fence. E.g. if the content contains ``` (3 backticks),
+         // the outer fence needs at least 4.
+-        let max_inner = longest_fence_char_sequence(node, fence_char);
++        let max_inner = longest_fence_char_sequence(node, '`');
+         let fence_len = (max_inner + 1).max(3);
+-        let normalized_fence: String = std::iter::repeat_n(fence_char, fence_len).collect();
++        let normalized_fence: String = std::iter::repeat_n('`', fence_len).collect();
+ 
+         write!(
+             f,
+@@ -60,6 +58,8 @@ impl FormatNodeRule<MdFencedCodeBlock> for FormatMdFencedCodeBlock {
+                     &text(&normalized_fence, r_fence.text_trimmed_range().start())
+                 )]
+             )?;
++        } else {
++            write!(f, [text(&normalized_fence, TextSize::default())])?;
+         }
+ 
+         Ok(())
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/hard_line.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/hard_line.rs
+index 912e6f4d3f..8ed479eae9 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/hard_line.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/hard_line.rs
+@@ -14,7 +14,7 @@ impl FormatNodeRule<MdHardLine> for FormatMdHardLine {
+ 
+         if self.print_mode.is_pristine() {
+             // We intentionally format this code as is
+-            return format_verbatim_node(node.syntax()).fmt(f);
++            return token.format().fmt(f);
+         }
+ 
+         let text_content = token.text();
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/header.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/header.rs
+index 7989bd6309..1f9d3fe74b 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/header.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/header.rs
+@@ -1,7 +1,6 @@
+ use crate::markdown::auxiliary::paragraph::FormatMdParagraphOptions;
+ use crate::prelude::*;
+ use crate::shared::{TextPrintMode, TrimMode};
+-use crate::verbatim::format_verbatim_node;
+ use biome_formatter::write;
+ use biome_markdown_syntax::{MdHeader, MdHeaderFields};
+ use biome_rowan::AstNode;
+@@ -17,9 +16,7 @@ impl FormatNodeRule<MdHeader> for FormatMdHeader {
+             after,
+         } = node.as_fields();
+ 
+-        write!(f, [format_verbatim_node(indent.syntax())])?;
+-
+-        write!(f, [before.format()])?;
++        write!(f, [indent.format(), before.format()])?;
+ 
+         if let Some(content) = content {
+             write!(
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/indent_token.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/indent_token.rs
+index ea08f5a0cf..b48067c470 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/indent_token.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/indent_token.rs
+@@ -1,10 +1,10 @@
+ use crate::prelude::*;
+ use biome_markdown_syntax::MdIndentToken;
+-use biome_rowan::AstNode;
++
+ #[derive(Debug, Clone, Default)]
+ pub(crate) struct FormatMdIndentToken;
+ impl FormatNodeRule<MdIndentToken> for FormatMdIndentToken {
+     fn fmt_fields(&self, node: &MdIndentToken, f: &mut MarkdownFormatter) -> FormatResult<()> {
+-        format_verbatim_node(node.syntax()).fmt(f)
++        node.md_indent_char_token().format().fmt(f)
+     }
+ }
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/inline_image.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/inline_image.rs
+index 28e1146aaf..5d6129f287 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/inline_image.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/inline_image.rs
+@@ -26,7 +26,7 @@ impl FormatNodeRule<MdInlineImage> for FormatMdInlineImage {
+                 l_brack_token.format(),
+                 alt.format()
+                     .with_options(FormatMdFormatInlineItemListOptions {
+-                        print_mode: TextPrintMode::Trim(TrimMode::All),
++                        print_mode: TextPrintMode::trim_all(),
+                         keep_fences_in_italics: false
+                     }),
+                 r_brack_token.format(),
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/inline_link.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/inline_link.rs
+index fd8d74f954..1c9f0a9e2f 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/inline_link.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/inline_link.rs
+@@ -1,6 +1,6 @@
+ use crate::markdown::lists::inline_item_list::FormatMdFormatInlineItemListOptions;
+ use crate::prelude::*;
+-use crate::shared::{TextPrintMode, TrimMode};
++use crate::shared::TextPrintMode;
+ use biome_formatter::write;
+ use biome_markdown_syntax::{MdInlineLink, MdInlineLinkFields};
+ 
+@@ -24,7 +24,7 @@ impl FormatNodeRule<MdInlineLink> for FormatMdInlineLink {
+                 l_brack_token.format(),
+                 text.format()
+                     .with_options(FormatMdFormatInlineItemListOptions {
+-                        print_mode: TextPrintMode::Trim(TrimMode::All),
++                        print_mode: TextPrintMode::trim_all(),
+                         keep_fences_in_italics: false
+                     }),
+                 r_brack_token.format(),
+@@ -32,7 +32,7 @@ impl FormatNodeRule<MdInlineLink> for FormatMdInlineLink {
+                 destination
+                     .format()
+                     .with_options(FormatMdFormatInlineItemListOptions {
+-                        print_mode: TextPrintMode::Trim(TrimMode::All),
++                        print_mode: TextPrintMode::trim_all(),
+                         keep_fences_in_italics: false
+                     })
+             ]
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/link_destination.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/link_destination.rs
+index 2e09460947..bc87ff24d3 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/link_destination.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/link_destination.rs
+@@ -1,6 +1,6 @@
+ use crate::markdown::lists::inline_item_list::FormatMdFormatInlineItemListOptions;
+ use crate::prelude::*;
+-use crate::shared::{TextPrintMode, TrimMode};
++use crate::shared::TextPrintMode;
+ use biome_markdown_syntax::{MdLinkDestination, MdLinkDestinationFields};
+ 
+ #[derive(Debug, Clone, Default)]
+@@ -12,7 +12,7 @@ impl FormatNodeRule<MdLinkDestination> for FormatMdLinkDestination {
+         content
+             .format()
+             .with_options(FormatMdFormatInlineItemListOptions {
+-                print_mode: TextPrintMode::Trim(TrimMode::All),
++                print_mode: TextPrintMode::trim_all(),
+                 keep_fences_in_italics: false,
+             })
+             .fmt(f)
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/link_title.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/link_title.rs
+index 9d0536db7b..699c0d078e 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/link_title.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/link_title.rs
+@@ -1,6 +1,6 @@
+ use crate::markdown::lists::inline_item_list::FormatMdFormatInlineItemListOptions;
+ use crate::prelude::*;
+-use crate::shared::{TextPrintMode, TrimMode};
++use crate::shared::TextPrintMode;
+ use biome_formatter::write;
+ use biome_markdown_syntax::{MdLinkTitle, MdLinkTitleFields};
+ 
+@@ -15,7 +15,7 @@ impl FormatNodeRule<MdLinkTitle> for FormatMdLinkTitle {
+             [content
+                 .format()
+                 .with_options(FormatMdFormatInlineItemListOptions {
+-                    print_mode: TextPrintMode::Trim(TrimMode::All),
++                    print_mode: TextPrintMode::trim_all(),
+                     keep_fences_in_italics: false
+                 })]
+         )
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/reference_link.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/reference_link.rs
+index 621fd6e59d..82e487afd6 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/reference_link.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/reference_link.rs
+@@ -1,6 +1,6 @@
+ use crate::markdown::lists::inline_item_list::FormatMdFormatInlineItemListOptions;
+ use crate::prelude::*;
+-use crate::shared::{TextPrintMode, TrimMode};
++use crate::shared::TextPrintMode;
+ use biome_formatter::write;
+ use biome_markdown_syntax::{MdReferenceLink, MdReferenceLinkFields};
+ 
+@@ -21,7 +21,7 @@ impl FormatNodeRule<MdReferenceLink> for FormatMdReferenceLink {
+                 l_brack_token.format(),
+                 text.format()
+                     .with_options(FormatMdFormatInlineItemListOptions {
+-                        print_mode: TextPrintMode::Trim(TrimMode::All),
++                        print_mode: TextPrintMode::trim_all(),
+                         keep_fences_in_italics: true
+                     }),
+                 r_brack_token.format(),
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/setext_header.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/setext_header.rs
+index 3f9fd288e3..103953bb86 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/setext_header.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/setext_header.rs
+@@ -1,6 +1,6 @@
+ use crate::markdown::lists::inline_item_list::FormatMdFormatInlineItemListOptions;
+ use crate::prelude::*;
+-use crate::shared::{TextPrintMode, TrimMode};
++use crate::shared::TextPrintMode;
+ use biome_formatter::write;
+ use biome_markdown_syntax::{MdSetextHeader, MdSetextHeaderFields};
+ 
+@@ -31,7 +31,7 @@ impl FormatNodeRule<MdSetextHeader> for FormatMdSetextHeader {
+                 content
+                     .format()
+                     .with_options(FormatMdFormatInlineItemListOptions {
+-                        print_mode: TextPrintMode::Trim(TrimMode::All),
++                        print_mode: TextPrintMode::trim_all(),
+                         keep_fences_in_italics: false
+                     }),
+                 format_removed(&underline_token)
+diff --git a/crates/biome_markdown_formatter/src/markdown/auxiliary/textual.rs b/crates/biome_markdown_formatter/src/markdown/auxiliary/textual.rs
+index 1c59c885d0..6a139c79dd 100644
+--- a/crates/biome_markdown_formatter/src/markdown/auxiliary/textual.rs
++++ b/crates/biome_markdown_formatter/src/markdown/auxiliary/textual.rs
+@@ -6,7 +6,6 @@ use biome_markdown_syntax::{MdTextual, MdTextualFields};
+ #[derive(Debug, Clone, Default)]
+ pub(crate) struct FormatMdTextual {
+     should_remove: bool,
+-    trim_start: bool,
+     print_mode: TextPrintMode,
+ }
+ impl FormatNodeRule<MdTextual> for FormatMdTextual {
+@@ -70,7 +69,16 @@ impl FormatNodeRule<MdTextual> for FormatMdTextual {
+                     )]
+                 )
+             }
+-        } else if self.trim_start {
++        } else if self.print_mode.is_all() {
++            let trimmed_text = value_token.text().trim_start().trim_end();
++            write!(
++                f,
++                [format_replaced(
++                    &value_token,
++                    &text(trimmed_text, value_token.text_trimmed_range().start())
++                )]
++            )
++        } else if self.print_mode.is_start() {
+             let trimmed_text = value_token.text().trim_start();
+             write!(
+                 f,
+@@ -88,7 +96,6 @@ impl FormatNodeRule<MdTextual> for FormatMdTextual {
+ #[derive(Debug, Clone, Copy, Default)]
+ pub(crate) struct FormatMdTextualOptions {
+     pub(crate) should_remove: bool,
+-    pub(crate) trim_start: bool,
+     pub(crate) print_mode: TextPrintMode,
+ }
+ 
+@@ -97,7 +104,6 @@ impl FormatRuleWithOptions<MdTextual> for FormatMdTextual {
+ 
+     fn with_options(mut self, options: Self::Options) -> Self {
+         self.should_remove = options.should_remove;
+-        self.trim_start = options.trim_start;
+         self.print_mode = options.print_mode;
+         self
+     }
+diff --git a/crates/biome_markdown_formatter/src/markdown/lists/code_name_list.rs b/crates/biome_markdown_formatter/src/markdown/lists/code_name_list.rs
+index b7a76f9ef8..97ab200967 100644
+--- a/crates/biome_markdown_formatter/src/markdown/lists/code_name_list.rs
++++ b/crates/biome_markdown_formatter/src/markdown/lists/code_name_list.rs
+@@ -1,10 +1,22 @@
++use crate::markdown::auxiliary::textual::FormatMdTextualOptions;
+ use crate::prelude::*;
++use crate::shared::TextPrintMode;
+ use biome_markdown_syntax::MdCodeNameList;
++
+ #[derive(Debug, Clone, Default)]
+ pub(crate) struct FormatMdCodeNameList;
+ impl FormatRule<MdCodeNameList> for FormatMdCodeNameList {
+     type Context = MarkdownFormatContext;
+     fn fmt(&self, node: &MdCodeNameList, f: &mut MarkdownFormatter) -> FormatResult<()> {
+-        format_verbatim_node(node.syntax()).fmt(f)
++        let mut joiner = f.join();
++
++        for entry in node.iter() {
++            joiner.entry(&entry.format().with_options(FormatMdTextualOptions {
++                print_mode: TextPrintMode::trim_all(),
++                should_remove: false,
++            }));
++        }
++
++        joiner.finish()
+     }
+ }
+diff --git a/crates/biome_markdown_formatter/src/markdown/lists/inline_item_list.rs b/crates/biome_markdown_formatter/src/markdown/lists/inline_item_list.rs
+index 5ec44e0159..09a8c2f73d 100644
+--- a/crates/biome_markdown_formatter/src/markdown/lists/inline_item_list.rs
++++ b/crates/biome_markdown_formatter/src/markdown/lists/inline_item_list.rs
+@@ -40,7 +40,6 @@ impl FormatRule<MdInlineItemList> for FormatMdInlineItemList {
+                                 f,
+                                 [text.format().with_options(FormatMdTextualOptions {
+                                     should_remove: true,
+-                                    trim_start: false,
+                                     ..Default::default()
+                                 })]
+                             )
+@@ -53,7 +52,6 @@ impl FormatRule<MdInlineItemList> for FormatMdInlineItemList {
+                                 [
+                                     text.format().with_options(FormatMdTextualOptions {
+                                         should_remove: true,
+-                                        trim_start: false,
+                                         ..Default::default()
+                                     }),
+                                     hard_line_break()
+@@ -65,8 +63,11 @@ impl FormatRule<MdInlineItemList> for FormatMdInlineItemList {
+                     } else {
+                         joiner.entry(&text.format().with_options(FormatMdTextualOptions {
+                             should_remove: false,
+-                            trim_start: self.print_mode.is_start() && index == 0,
+-                            ..Default::default()
++                            print_mode: if self.print_mode.is_start() && index == 0 {
++                                self.print_mode
++                            } else {
++                                TextPrintMode::default()
++                            },
+                         }));
+                     }
+                 }
+@@ -178,14 +179,13 @@ impl FormatMdInlineItemList {
+                     AnyMdInline::MdTextual(text) => {
+                         joiner.entry(&text.format().with_options(FormatMdTextualOptions {
+                             should_remove: true,
+-                            trim_start: true,
+-                            ..Default::default()
++                            print_mode: TextPrintMode::trim_start(),
+                         }));
+                     }
+                     AnyMdInline::MdHardLine(hard_line) => {
+                         joiner.entry(&hard_line.format().with_options(
+                             FormatMdFormatHardLineOptions {
+-                                print_mode: TextPrintMode::Trim(TrimMode::All),
++                                print_mode: TextPrintMode::trim_all(),
+                             },
+                         ));
+                     }
+diff --git a/crates/biome_markdown_formatter/src/shared.rs b/crates/biome_markdown_formatter/src/shared.rs
+index 1d42eceb50..a08fba6a18 100644
+--- a/crates/biome_markdown_formatter/src/shared.rs
++++ b/crates/biome_markdown_formatter/src/shared.rs
+@@ -70,4 +70,12 @@ impl TextPrintMode {
+     pub(crate) const fn is_clean(&self) -> bool {
+         matches!(self, Self::Clean)
+     }
++
++    pub(crate) const fn trim_start() -> Self {
++        Self::Trim(TrimMode::Start)
++    }
++
++    pub(crate) const fn trim_all() -> Self {
++        Self::Trim(TrimMode::All)
++    }
+ }
+diff --git a/crates/biome_markdown_parser/src/lexer/mod.rs b/crates/biome_markdown_parser/src/lexer/mod.rs
+index c932558fea..e9f2437ed7 100644
+--- a/crates/biome_markdown_parser/src/lexer/mod.rs
++++ b/crates/biome_markdown_parser/src/lexer/mod.rs
+@@ -24,6 +24,8 @@ pub enum MarkdownLexContext {
+     /// Inside fenced code block - no markdown parsing.
+     #[expect(dead_code)]
+     FencedCodeBlock,
++    /// Inside code info strings. Newlines end them.
++    CodeInfoString,
+     /// Inside HTML block - minimal markdown parsing.
+     #[expect(dead_code)]
+     HtmlBlock,
+@@ -69,6 +71,8 @@ pub enum MarkdownReLexContext {
+     /// directly, but kept for symmetry with the lex context enum.
+     #[expect(dead_code)]
+     ThematicBreakParts,
++    /// Inside the code block list, where strings doesn't have particular meaning
++    CodeInfoString,
+ }
+ 
+ /// An extremely fast, lookup table based, lossless Markdown lexer
+@@ -235,6 +239,14 @@ impl<'src> MarkdownLexer<'src> {
+         context: MarkdownLexContext,
+     ) -> MarkdownSyntaxKind {
+         let dispatched = lookup_byte(current);
++        // Info strings are plain text (CommonMark https://spec.commonmark.org/0.31.2/#info-string) — only newlines end them.
++        if matches!(context, MarkdownLexContext::CodeInfoString) {
++            return if current == b'\n' || current == b'\r' {
++                self.consume_newline()
++            } else {
++                self.consume_code_info_string()
++            };
++        }
+         match dispatched {
+             // Whitespace handling is context-sensitive and order-dependent:
+             // 1. Check newline first (highest priority - block separator)
+@@ -610,6 +622,21 @@ impl<'src> MarkdownLexer<'src> {
+         MD_TEXTUAL_LITERAL
+     }
+ 
++    /// Consumes the tokens of a code info string
++    fn consume_code_info_string(&mut self) -> MarkdownSyntaxKind {
++        self.assert_at_char_boundary();
++
++        while let Some(byte) = self.current_byte() {
++            if byte == b'\n' || byte == b'\r' {
++                break;
++            } else {
++                self.advance(1);
++            }
++        }
++
++        MD_TEXTUAL_LITERAL
++    }
++
+     /// Consume a single whitespace character at line start as text.
+     fn consume_single_whitespace_as_text(&mut self) -> MarkdownSyntaxKind {
+         self.assert_at_char_boundary();
+@@ -1253,6 +1280,7 @@ impl<'src> ReLexer<'src> for MarkdownLexer<'src> {
+             MarkdownReLexContext::LinkDefinition => MarkdownLexContext::LinkDefinition,
+             MarkdownReLexContext::EmphasisInline => MarkdownLexContext::EmphasisInline,
+             MarkdownReLexContext::ThematicBreakParts => MarkdownLexContext::ThematicBreakParts,
++            MarkdownReLexContext::CodeInfoString => MarkdownLexContext::CodeInfoString,
+         };
+ 
+         let re_lexed_kind = match self.current_byte() {
+diff --git a/crates/biome_markdown_parser/src/parser.rs b/crates/biome_markdown_parser/src/parser.rs
+index a1ba88d682..53a3127e07 100644
+--- a/crates/biome_markdown_parser/src/parser.rs
++++ b/crates/biome_markdown_parser/src/parser.rs
+@@ -240,6 +240,12 @@ impl<'source> MarkdownParser<'source> {
+             .force_relex_in_context(MarkdownLexContext::CodeSpan);
+     }
+ 
++    /// Re-lexes the current token in the specified context. Returns the kind
++    /// of the re-lexed token (can be the same as before if the context doesn't make a difference for the current token)
++    pub fn re_lex(&mut self, context: MarkdownReLexContext) -> MarkdownSyntaxKind {
++        self.source_mut().re_lex(context)
++    }
++
+     /// Re-lex the current token as single-char emphasis delimiter.
+     ///
+     /// Use this when the emphasis matching algorithm needs to partially consume
+diff --git a/crates/biome_markdown_parser/src/syntax/fenced_code_block.rs b/crates/biome_markdown_parser/src/syntax/fenced_code_block.rs
+index b7408bc112..f5201cdc2a 100644
+--- a/crates/biome_markdown_parser/src/syntax/fenced_code_block.rs
++++ b/crates/biome_markdown_parser/src/syntax/fenced_code_block.rs
+@@ -22,7 +22,11 @@
+ //! The opening fence may be followed by an info string (language identifier)
+ //! that can be used for syntax highlighting.
+ 
++use crate::lexer::MarkdownReLexContext;
+ use crate::parser::MarkdownParser;
++use crate::syntax::parse_error::unterminated_fenced_code;
++use crate::syntax::quote::try_bump_quote_marker;
++use crate::syntax::{MAX_BLOCK_PREFIX_INDENT, TAB_STOP_SPACES};
+ use crate::token_source::find_line_start;
+ use biome_markdown_syntax::{T, kind::MarkdownSyntaxKind::*};
+ use biome_parser::{
+@@ -33,10 +37,6 @@ use biome_parser::{
+     },
+ };
+ 
+-use crate::syntax::parse_error::unterminated_fenced_code;
+-use crate::syntax::quote::try_bump_quote_marker;
+-use crate::syntax::{MAX_BLOCK_PREFIX_INDENT, TAB_STOP_SPACES};
+-
+ /// Minimum number of fence characters required per CommonMark §4.5.
+ const MIN_FENCE_LENGTH: usize = 3;
+ 
+@@ -234,6 +234,9 @@ fn parse_fenced_code_block_impl(p: &mut MarkdownParser, force: bool) -> ParsedSy
+ /// The language name is on the same line as the opening fence.
+ /// If the current token has a preceding line break or is NEWLINE, the code block has no language.
+ fn parse_code_name_list(p: &mut MarkdownParser) {
++    // Relexing
++    p.re_lex(MarkdownReLexContext::CodeInfoString);
++
+     let m = p.start();
+ 
+     // If the current token is already on a new line, there's no language name

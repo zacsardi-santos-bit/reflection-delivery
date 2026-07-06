@@ -1,0 +1,33 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && ./gradlew :core:test --tests \"*FlowServiceTest\" --no-daemon --no-watch-fs; GRADLE_EXIT=$?; find /workspace/repo/core/build/test-results -name \"TEST-*.xml\" 2>/dev/null | xargs cat 2>/dev/null; exit $GRADLE_EXIT",
+  "test_files": [
+    "core/src/test/java/io/kestra/core/services/FlowServiceTest.java"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "io.kestra.core.services.FlowServiceTest::importFlow_DryRun()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnEmptyWhenFindUnchangedTriggersGivenNewTrigger()",
+    "io.kestra.core.services.FlowServiceTest::create()",
+    "io.kestra.core.services.FlowServiceTest::findByNamespacePrefix()",
+    "io.kestra.core.services.FlowServiceTest::delete()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnCheckWhenConditionEvaluatesFalse()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnValidationForRunnablePropsOnFlowable()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnValidationErrorForReservedFlowId()",
+    "io.kestra.core.services.FlowServiceTest::update()",
+    "io.kestra.core.services.FlowServiceTest::findById()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnEmptyListGivenFlowWithNoChecks()",
+    "io.kestra.core.services.FlowServiceTest::shouldFindUnchangedTriggersGivenIdenticalTriggersInBothRevisions()",
+    "io.kestra.core.services.FlowServiceTest::shouldEmitTriggerUpdatedForUnchangedTriggersWhenFlowTasksChange()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnEmptyWhenFindUnchangedTriggersGivenModifiedTrigger()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnEmptyListWhenConditionEvaluatesTrue()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnTrueWhenValidatingFlowWithFilenameGivenDefaults()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnCheckWithErrorMessageWhenExceptionThrown()",
+    "io.kestra.core.services.FlowServiceTest::shouldAcceptExpressionWithFlowWhenRenderingChecks()",
+    "io.kestra.core.services.FlowServiceTest::shouldHandleMultipleChecksWithMixedResults()",
+    "io.kestra.core.services.FlowServiceTest::shouldReturnTrueWhenValidatingFlowGivenDefaults()",
+    "io.kestra.core.services.FlowServiceTest::importFlow()"
+  ],
+  "PASS_TO_PASS": []
+}

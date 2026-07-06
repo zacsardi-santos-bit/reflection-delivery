@@ -1,3 +1,0 @@
-patching file src/test/gematik-tiger/tiger.yaml
-test_gematik_tiger.py::test_tiger_schema PASSED
-reward=1 graded=1 found=1 failed=0 parsed=1 framework=pytest exit_code=0

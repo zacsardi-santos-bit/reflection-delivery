@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/pulumi/pulumi/pull/22120"
+source_type = "pr"
+
+[task]
+name = "pulumi/pulumi"
+description = "I'm hitting a bug in how Pulumi serializes resource state into a snapshot (the checkpoint file). When an output value gets written out during serialization, it's always stored as a computed/unknown..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["go", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:pulumi-pulumi-22120"
+os = "linux"
+cpus = 2
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "medium"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/13"
+category = "Data Processing and ETL"
+subcategory = "File format parsing and serialization"
+objective_labels = ["Fix", "Implement"]
+artifact_type_labels = ["Codebase", "Generated output artifact"]
+expert_time_estimate = 3600
+junior_time_estimate = 10800

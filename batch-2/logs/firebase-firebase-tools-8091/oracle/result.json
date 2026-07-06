@@ -1,0 +1,29 @@
+{
+    "id": "f665fdba-0dfb-4419-8711-77290cbdf086",
+    "started_at": "2026-07-04T15:39:26.444051",
+    "finished_at": "2026-07-04T15:41:07.522903",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__firebase-firebase-tools-8091": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "firebase-firebase-tools-8091__FNnkgbG"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

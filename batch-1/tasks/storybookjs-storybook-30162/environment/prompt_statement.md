@@ -1,0 +1,9 @@
+I'm working on extending an automated migration tool that sets up the integration between the accessibility addon and the test addon. Right now the tool updates the Vitest setup file to import the accessibility addon annotations, but it completely ignores the project preview configuration file — yet the preview file also needs to have a specific tag added so that accessibility tests actually run in CI.
+
+I need the migration tool to also check for and transform the preview configuration file. The transformation should add the accessibility test tag in a way that makes it easy for users to opt stories in or out. When the tag is added to a preview file that already has a tags array, it should be appended as a commented-out entry (so the user can consciously decide to enable it). When there's no tags property at all, the tag should be added in a commented-out form with an explanatory comment. If there's no default export, the tag should be added as a named export. If the tag is already present in the file, nothing should change.
+
+The tool should also be smarter about detecting what's already done: if the Vitest setup file already has the accessibility addon import, that transformation should be skipped; if the preview file already has the tag, that transformation should be skipped. Only if both files are fully configured should the overall check return "nothing to do."
+
+The user-facing prompt messages need updating too — they should be numbered steps, and each step should show either "we'll update this automatically" or manual instructions depending on whether the transformation could be computed. The "for more information" documentation link should appear when any step requires manual action. When a step is entirely skipped (because the file is already correct), it should be omitted from the prompt entirely.
+
+Finally, the run phase should write the transformed preview code to disk the same way it already writes the transformed setup code.

@@ -1,0 +1,11 @@
+I'm chasing down a cluster of bugs in KubeVirt live migration, mostly around decentralized (non-shared-state) migrations that keep failing or leaving VMs stranded. First one: the connection transport type the source uses never makes it to the target. The sync controller copies a bunch of fields from the source VMI status over to the target VMI, but it skips the transport type, so the target can't figure out how to set up its migration proxy. Copy that field across during migration synchronization too.
+
+Second, when we mark a migration failed we always slam the start timestamp to now, which nukes valid timing data. If a start time was already recorded earlier in the lifecycle, keep it, and only touch the end timestamp and the failure flags.
+
+Third, during cleanup of a failed migration target we're deleting an annotation that signals the VM needs to be re-initialized from scratch, which kills the recovery path. Only strip that annotation on successful cleanup, failed cleanup should leave it in place so recovery can proceed.
+
+Fourth, a target VMI sitting in the scheduled phase should move to the waiting-for-synchronization state whenever its pod has terminated (failed or completed, and this should fire even when a pod object still exists), or when the migration itself has definitively failed even if the pod's still running. Right now some of those conditions don't trigger the transition and the VMI gets stuck in scheduled.
+
+Also I want the logic that picks which key to use for the migration proxy pulled out into its own dedicated function. For decentralized migrations over a socket-based transport the proxy has to use the source VMI's identifier, not the target's, because the QEMU process on the destination builds its socket paths off the source identifier. Everything else keeps using the local VMI's own identifier.
+
+And last thing, instead of replacing the whole migration state object in one patch (which conflicts with concurrent updates from other controllers), patch each changed field on its own: an add op when the field is new, a test-then-replace when it already has a value, skip unchanged fields, and a test-then-remove when the migration state is going away entirely. Without all this, decentralized migrations fail silently, lose timing data, or block recovery.

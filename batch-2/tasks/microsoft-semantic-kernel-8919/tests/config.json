@@ -1,0 +1,13 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo/dotnet/samples/Concepts && mkdir -p /tmp/test-results && dotnet test --filter \"FullyQualifiedName~ChatCompletion.ConceptsTests\" --results-directory /tmp/test-results --logger trx -v minimal 2>&1; trx2junit /tmp/test-results/*.trx 2>/dev/null; cat /tmp/test-results/*.xml 2>/dev/null",
+  "test_files": [
+    "dotnet/samples/Concepts/ChatCompletion/ConceptsTests.cs"
+  ],
+  "num_test_files": 1,
+  "language": "java",
+  "FAIL_TO_PASS": [
+    "ChatCompletion.ConceptsTests::AzureOpenAI_CustomClientClassExists"
+  ],
+  "PASS_TO_PASS": []
+}

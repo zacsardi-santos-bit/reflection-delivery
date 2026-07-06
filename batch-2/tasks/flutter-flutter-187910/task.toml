@@ -1,0 +1,43 @@
+schema_version = "1.3"
+source = "https://github.com/flutter/flutter/pull/187910"
+source_type = "pr"
+
+[task]
+name = "flutter/flutter"
+description = "I'm poking at Flutter's Xcode integration tooling, specifically how we resolve the path to the simulator or device management app inside an Xcode install, and I need to update the lookup logic. Rig..."
+authors = [{ name = "Mercor", email = "delivery@mercor.com" }]
+keywords = ["dart", "swe"]
+metadata = { vendor = "Mercor" }
+
+[environment]
+docker_image = "us-east1-docker.pkg.dev/mercor-dashboard/swe-bench-gcp/harbor-batch-2:flutter-flutter-187910"
+os = "linux"
+cpus = 1
+memory_mb = 4096
+storage_mb = 10240
+build_timeout_sec = 1800
+gpus = 0
+gpu_types = []
+workdir = "/workspace"
+network_mode = "no-network"
+allowed_hosts = []
+allow_internet = false
+
+[agent]
+timeout_sec = 3000
+
+[verifier]
+timeout_sec = 3000
+
+[solution]
+
+[metadata]
+difficulty = "hard"
+difficulty_explanation = "hard: not solved by opus-4.8 (pass@8=0)"
+pass_at_k_opus_4_8 = "0/8"
+category = "Systems, Infrastructure, and Operations"
+subcategory = "OS, process, and service management"
+objective_labels = ["Implement"]
+artifact_type_labels = ["Codebase", "Single script or program"]
+expert_time_estimate = 1800
+junior_time_estimate = 5400

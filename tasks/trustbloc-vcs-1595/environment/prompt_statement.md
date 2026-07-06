@@ -1,7 +1,0 @@
-I'm working on an OIDC4VCI credential issuance system and I need to add support for scope-based credential requests in the authorization code flow. Right now, if a wallet client doesn't include authorization details in the request, the system returns an error. But the specification allows clients to request a credential type using OAuth scopes instead of authorization details. I need the system to handle both cases.
-
-Specifically, when authorization details are not supplied but scopes are provided, the service should look up the issuer's credential configuration metadata and find a matching configuration based on the scope value. It should validate that the credential format and type in the matched configuration are consistent with the active transaction. Valid scopes should be returned in the response, while duplicate or unknown scopes should be ignored.
-
-Also, the credential configuration identifiers in the issuer profile metadata are supposed to be distinct identifiers, not just the credential type name. Some existing configuration and tests use the credential type name as the identifier, which needs to be updated to use a proper separate identifier value.
-
-Additionally, when pushing authorization details and the credential configuration ID doesn't match any supported configuration, a proper validation error should be returned to the caller. And when authorization details are supplied but contain neither a credential format nor a credential configuration ID, a descriptive error should be returned.

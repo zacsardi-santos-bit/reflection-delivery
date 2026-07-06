@@ -1,0 +1,235 @@
+patching file packages/cli/src/ui/hooks/useSlashCompletion.test.ts
+
+ RUN  v3.2.4 /workspace/repo/packages/cli
+      Coverage enabled with v8
+
+ ❯ src/ui/hooks/useSlashCompletion.test.ts (27 tests | 6 failed) 5422ms
+   ✓ useSlashCompletion > Top-Level Commands > should suggest all top-level commands for the root slash 19ms
+   ✓ useSlashCompletion > Top-Level Commands > should filter commands based on partial input 5ms
+   ✓ useSlashCompletion > Top-Level Commands > should suggest commands based on partial altNames 3ms
+   ✓ useSlashCompletion > Top-Level Commands > should NOT provide suggestions for a perfectly typed command that is a leaf node 3ms
+   ✓ useSlashCompletion > Top-Level Commands > should not suggest commands when altNames is fully typed 1ms
+   ✓ useSlashCompletion > Top-Level Commands > should not suggest commands when altNames is fully typed 1ms
+   ✓ useSlashCompletion > Top-Level Commands > should not provide suggestions for a fully typed command that has no sub-commands or argument completion 2ms
+   ✓ useSlashCompletion > Top-Level Commands > should not provide suggestions for an unknown command 2ms
+   ✓ useSlashCompletion > Sub-Commands > should suggest sub-commands for a parent command 2ms
+   ✓ useSlashCompletion > Sub-Commands > should suggest all sub-commands when the query ends with the parent command and a space 2ms
+   ✓ useSlashCompletion > Sub-Commands > should filter sub-commands by prefix 6ms
+   ✓ useSlashCompletion > Sub-Commands > should provide no suggestions for an invalid sub-command 2ms
+   ✓ useSlashCompletion > Argument Completion > should call the command.completion function for argument suggestions 58ms
+   ✓ useSlashCompletion > Argument Completion > should call command.completion with an empty string when args start with a space 8ms
+   ✓ useSlashCompletion > Argument Completion > should handle completion function that returns null 3ms
+   ✓ useSlashCompletion > Fuzzy Matching > should match commands with fuzzy search for partial queries 4ms
+   × useSlashCompletion > Fuzzy Matching > should handle case-insensitive fuzzy matching 1021ms
+     → expected 0 to be greater than 0
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × useSlashCompletion > Fuzzy Matching > should provide typo-tolerant matching 1005ms
+     → expected 0 to be greater than 0
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+   ✓ useSlashCompletion > Fuzzy Matching > should match against alternative names with fuzzy search 3ms
+   × useSlashCompletion > Fuzzy Matching > should fallback to prefix matching when AsyncFzf find fails 1030ms
+     → expected "error" to be called with arguments: [ …(2) ][90m
+
+Number of calls: [1m0[22m
+[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+   ✓ useSlashCompletion > Fuzzy Matching > should show all commands for empty partial query 2ms
+   × useSlashCompletion > Fuzzy Matching > should handle AsyncFzf errors gracefully and fallback to prefix matching 1005ms
+     → expected "error" to be called with arguments: [ …(2) ][90m
+
+Number of calls: [1m0[22m
+[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+   × useSlashCompletion > Fuzzy Matching > should cache AsyncFzf instances for performance 8ms
+     → expected 0 to be greater than 0
+   ✓ useSlashCompletion > Fuzzy Matching > should not return duplicate suggestions when query matches both name and altNames 4ms
+   ✓ useSlashCompletion > Race Condition Handling > should handle rapid input changes without race conditions 107ms
+   ✓ useSlashCompletion > Race Condition Handling > should not update suggestions if component unmounts during async operation 105ms
+   × useSlashCompletion > Error Logging > should log errors to the console 1008ms
+     → expected "error" to be called with arguments: [ …(2) ][90m
+
+Number of calls: [1m0[22m
+[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/ui/hooks/useSlashCompletion.test.ts > useSlashCompletion > Fuzzy Matching > should handle case-insensitive fuzzy matching
+AssertionError: expected 0 to be greater than 0
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/ui/hooks/useSlashCompletion.test.ts:626:51
+    624| 
+    625|       await waitFor(() => {
+    626|         expect(result.current.suggestions.length).toBeGreaterThan(0);
+       |                                                   ^
+    627|       });
+    628| 
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/ui/hooks/useSlashCompletion.test.ts > useSlashCompletion > Fuzzy Matching > should provide typo-tolerant matching
+AssertionError: expected 0 to be greater than 0
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/ui/hooks/useSlashCompletion.test.ts:644:51
+    642| 
+    643|       await waitFor(() => {
+    644|         expect(result.current.suggestions.length).toBeGreaterThan(0);
+       |                                                   ^
+    645|       });
+    646| 
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  src/ui/hooks/useSlashCompletion.test.ts > useSlashCompletion > Fuzzy Matching > should fallback to prefix matching when AsyncFzf find fails
+AssertionError: expected "error" to be called with arguments: [ …(2) ][90m
+
+Number of calls: [1m0[22m
+[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/ui/hooks/useSlashCompletion.test.ts:723:33
+    721|       // Verify the error was logged
+    722|       await waitFor(() => {
+    723|         expect(consoleErrorSpy).toHaveBeenCalledWith(
+       |                                 ^
+    724|           '[Fuzzy search - falling back to prefix matching]',
+    725|           expect.any(Error),
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  src/ui/hooks/useSlashCompletion.test.ts > useSlashCompletion > Fuzzy Matching > should handle AsyncFzf errors gracefully and fallback to prefix matching
+AssertionError: expected "error" to be called with arguments: [ …(2) ][90m
+
+Number of calls: [1m0[22m
+[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/ui/hooks/useSlashCompletion.test.ts:796:33
+    794|       // Verify the error was logged
+    795|       await waitFor(() => {
+    796|         expect(consoleErrorSpy).toHaveBeenCalledWith(
+       |                                 ^
+    797|           '[Fuzzy search - falling back to prefix matching]',
+    798|           expect.any(Error),
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL  src/ui/hooks/useSlashCompletion.test.ts > useSlashCompletion > Fuzzy Matching > should cache AsyncFzf instances for performance
+AssertionError: expected 0 to be greater than 0
+ ❯ src/ui/hooks/useSlashCompletion.test.ts:833:35
+    831|       const firstResults = result.current.suggestions.map((s) => s.lab…
+    832|       const callCountAfterFirst = getConstructorCallCount();
+    833|       expect(callCountAfterFirst).toBeGreaterThan(0);
+       |                                   ^
+    834| 
+    835|       // Rerender with same query - should use cached instance
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+ FAIL  src/ui/hooks/useSlashCompletion.test.ts > useSlashCompletion > Error Logging > should log errors to the console
+AssertionError: expected "error" to be called with arguments: [ …(2) ][90m
+
+Number of calls: [1m0[22m
+[39m
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+ ❯ src/ui/hooks/useSlashCompletion.test.ts:1034:33
+    1032|       // Verify error logging occurred
+    1033|       await waitFor(() => {
+    1034|         expect(consoleErrorSpy).toHaveBeenCalledWith(
+       |                                 ^
+    1035|           '[Fuzzy search - falling back to prefix matching]',
+    1036|           sensitiveError,
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 21 passed (27)
+   Start at  15:28:46
+   Duration  12.42s (transform 295ms, setup 80ms, collect 773ms, tests 5.42s, environment 1.57s, prepare 779ms)
+
+JUNIT report written to /workspace/repo/packages/cli/junit.xml
+reward=0 graded=26 found=0 failed=0 parsed=0 framework=vitest exit_code=1

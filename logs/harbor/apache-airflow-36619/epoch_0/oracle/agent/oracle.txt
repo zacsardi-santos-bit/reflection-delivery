@@ -1,5 +1,0 @@
-patching file airflow/providers/amazon/aws/auth_manager/avp/entities.py
-patching file airflow/providers/amazon/aws/auth_manager/avp/facade.py
-patching file airflow/providers/amazon/aws/auth_manager/aws_auth_manager.py
-patching file airflow/providers/amazon/aws/auth_manager/constants.py
-patching file airflow/providers/amazon/provider.yaml

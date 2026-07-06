@@ -1,0 +1,29 @@
+{
+    "id": "fcfcb456-0035-4fbb-8528-56c4faa0e511",
+    "started_at": "2026-07-04T15:37:04.627802",
+    "finished_at": "2026-07-04T15:38:49.750455",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__unionlabs-union-4124": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "unionlabs-union-4124__U8mCsgB"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

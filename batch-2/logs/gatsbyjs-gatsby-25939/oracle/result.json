@@ -1,0 +1,29 @@
+{
+    "id": "b21970d2-ac9c-4b1c-8a80-41c8a6a4c589",
+    "started_at": "2026-07-04T15:37:54.971088",
+    "finished_at": "2026-07-04T15:38:13.872337",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__gatsbyjs-gatsby-25939": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "gatsbyjs-gatsby-25939__u8Ecgh2"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,321 @@
+patching file crates/cubecl-linalg/src/matmul/tests/test_macros/cmma/matmul_algorithm.rs
+warning: /workspace/repo/crates/cubecl-hip/Cargo.toml: unused manifest key: dependencies.cubecl-common.dev-dependencies
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling cfg-if v1.0.4
+   Compiling libc v0.2.186
+   Compiling zerocopy v0.8.52
+   Compiling serde v1.0.228
+   Compiling cfg_aliases v0.1.1
+   Compiling crossbeam-utils v0.8.21
+   Compiling scopeguard v1.2.0
+   Compiling pin-project-lite v0.2.17
+   Compiling bitflags v2.13.0
+   Compiling serde_core v1.0.228
+   Compiling parking v2.2.1
+   Compiling log v0.4.33
+   Compiling once_cell v1.21.4
+   Compiling lock_api v0.4.14
+   Compiling version_check v0.9.5
+   Compiling cfg_aliases v0.2.1
+   Compiling libm v0.2.16
+   Compiling autocfg v1.5.1
+   Compiling ident_case v1.0.1
+   Compiling zmij v1.0.21
+   Compiling strsim v0.11.1
+   Compiling regex-syntax v0.8.11
+   Compiling futures-core v0.3.32
+   Compiling rand_core v0.6.4
+   Compiling fnv v1.0.7
+   Compiling ahash v0.8.12
+   Compiling serde_json v1.0.150
+   Compiling parking_lot_core v0.9.12
+   Compiling num-traits v0.2.19
+   Compiling cubecl-common v0.4.0 (/workspace/repo/crates/cubecl-common)
+   Compiling option-ext v0.2.0
+   Compiling fastrand v2.4.1
+   Compiling prettyplease v0.2.37
+   Compiling futures-io v0.3.32
+   Compiling thiserror v1.0.69
+   Compiling concurrent-queue v2.5.0
+   Compiling futures-lite v2.6.1
+   Compiling spin v0.9.8
+   Compiling cubecl-runtime v0.4.0 (/workspace/repo/crates/cubecl-runtime)
+   Compiling naga v22.1.0
+   Compiling event-listener v5.4.1
+   Compiling libloading v0.8.9
+   Compiling bit-vec v0.7.0
+   Compiling unicode-xid v0.2.6
+   Compiling equivalent v1.0.2
+   Compiling khronos-egl v6.0.0
+   Compiling lazy_static v1.5.0
+   Compiling syn v2.0.118
+   Compiling event-listener-strategy v0.5.4
+   Compiling embassy-futures v0.1.2
+   Compiling hashbrown v0.17.1
+   Compiling ash v0.38.0+1.3.281
+   Compiling foldhash v0.1.5
+   Compiling allocator-api2 v0.2.21
+   Compiling unicode-width v0.1.14
+   Compiling paste v1.0.15
+   Compiling regex-automata v0.4.14
+   Compiling smallvec v1.15.2
+   Compiling termcolor v1.4.1
+   Compiling getrandom v0.2.17
+   Compiling dirs-sys v0.4.1
+   Compiling memchr v2.8.2
+   Compiling itoa v1.0.18
+   Compiling codespan-reporting v0.11.1
+   Compiling dirs v5.0.1
+   Compiling hashbrown v0.15.5
+   Compiling async-channel v2.5.0
+   Compiling indexmap v2.14.0
+   Compiling async-lock v3.4.2
+   Compiling bit-set v0.6.0
+   Compiling spirv v0.3.0+sdk-1.3.268.0
+   Compiling gpu-descriptor-types v0.2.0
+   Compiling gpu-alloc-types v0.3.0
+   Compiling wgpu-hal v22.0.0
+   Compiling md5 v0.7.0
+   Compiling rustc-hash v1.1.0
+   Compiling arrayvec v0.7.7
+   Compiling hexf-parse v0.2.1
+   Compiling gpu-descriptor v0.3.2
+   Compiling gpu-alloc v0.6.0
+   Compiling parking_lot v0.12.5
+   Compiling wgpu-types v22.0.0
+   Compiling wgpu-core v22.1.0
+   Compiling profiling v1.0.18
+   Compiling raw-window-handle v0.6.2
+   Compiling glow v0.13.1
+   Compiling litrs v1.0.0
+   Compiling regex v1.12.4
+   Compiling renderdoc-sys v1.1.0
+   Compiling wgpu v22.1.0
+   Compiling cubecl-wgpu v0.4.0 (/workspace/repo/crates/cubecl-wgpu)
+   Compiling diff v0.1.13
+   Compiling yansi v1.0.1
+   Compiling static_assertions v1.1.0
+   Compiling sanitize-filename v0.5.0
+   Compiling document-features v0.2.12
+   Compiling web-time v1.1.0
+   Compiling ppv-lite86 v0.2.21
+   Compiling pretty_assertions v1.4.1
+   Compiling darling_core v0.20.11
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.6
+   Compiling zerocopy-derive v0.8.52
+   Compiling serde_derive v1.0.228
+   Compiling derive-new v0.6.0
+   Compiling thiserror-impl v1.0.69
+   Compiling bytemuck_derive v1.10.2
+   Compiling derive_more-impl v1.0.0
+   Compiling darling_macro v0.20.11
+   Compiling bytemuck v1.25.0
+   Compiling darling v0.20.11
+   Compiling derive_more v1.0.0
+   Compiling cubecl-macros v0.4.0 (/workspace/repo/crates/cubecl-macros)
+   Compiling half v2.7.1
+   Compiling hashbrown v0.14.5
+   Compiling cubecl-core v0.4.0 (/workspace/repo/crates/cubecl-core)
+   Compiling cubecl-std v0.4.0 (/workspace/repo/crates/cubecl-std)
+   Compiling cubecl-linalg v0.4.0 (/workspace/repo/crates/cubecl-linalg)
+    Finished `test` profile [optimized + debuginfo] target(s) in 51.86s
+────────────
+ Nextest run ID 6348d9d2-5ed5-4d05-af95-c14a4dcca222 with nextest profile: default
+    Starting 191 tests across 3 binaries (1 test skipped)
+        PASS [   0.384s] (  1/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo1_gpc16x16x128_s1x1x2_t16x16x16_rr_ln4
+        PASS [   0.386s] (  2/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo3_gh16x16x16_s1x1x1_t16x16x16_R
+        PASS [   0.389s] (  3/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo1_gpc16x16x32_s1x1x2_t16x16x16_rr_ln4
+        PASS [   0.391s] (  4/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo3_gh16x16x16_s1x1x1_t16x16x16_cc_ln4
+        PASS [   0.392s] (  5/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm2_gh160x256x16_s1x1x1_t16x16x16_rr_ln4_swizzle_x_dispatch
+        PASS [   0.395s] (  6/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo1_gpc32x16x32_s2x1x2_t16x16x16_rr_ln4
+        PASS [   0.399s] (  7/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm5_gh16x16x16_s1x1x1_t16x16x16_rr_ln4_cubez2
+        PASS [   0.400s] (  8/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo1_gpc16x32x32_s1x2x2_t16x16x16_rr_ln4
+        PASS [   0.402s] (  9/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm1_gh32x16x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.401s] ( 10/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm6_gh16x16x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.403s] ( 11/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm1_gh16x32x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.404s] ( 12/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm2_gh160x256x16_s1x1x1_t16x16x16_rr_ln4_swizzle_y_dispatch
+        PASS [   0.403s] ( 13/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm1_gh16x16x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.403s] ( 14/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm2_gh32x32x32_s1x1x1_t16x16x16_rr_ln4_transposed_dispatch
+        PASS [   0.403s] ( 15/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm1_gh16x16x32_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.403s] ( 16/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo1_gh1000x16x16_s1x1x1_t16x16x16_rr_ln4_transposed_dispatch
+        PASS [   0.404s] ( 17/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm2_gh32x32x32_s1x1x1_t16x16x16_rr_ln4_swizzlespan
+        PASS [   0.407s] ( 18/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bm2_gh32x32x32_s1x1x1_t16x16x16_rr_ln4_colspan
+        PASS [   0.246s] ( 19/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo3x4_gh256x256x256_s4x4x2_t16x16x16_cr_ln2x2x4
+        PASS [   0.257s] ( 20/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo3_gh256x256x256_s4x4x2_t16x16x16_rc_ln4
+        PASS [   0.257s] ( 21/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo3x4_gh108x108x243_s4x4x2_t16x16x16_cr_ln4
+        PASS [   0.252s] ( 22/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo3x4_gh300x300x300_s4x4x2_t16x16x16_cc_ln4
+        PASS [   0.251s] ( 23/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo3x4_gpc300x300x300_s4x4x2_t16x16x16_cc_ln4
+        PASS [   0.245s] ( 24/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh12x12x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.248s] ( 25/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x12x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.245s] ( 26/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln1
+        PASS [   0.253s] ( 27/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rc_ln4_rhs_row_enforced
+        PASS [   0.250s] ( 28/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.256s] ( 29/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln2
+        PASS [   0.259s] ( 30/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x14x16_s1x1x1_t16x16x16_rc_ln4x4x2
+        PASS [   0.257s] ( 31/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_cc_ln4
+        PASS [   0.257s] ( 32/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_cr_ln4
+        PASS [   0.263s] ( 33/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh128x16x16_s8x1x1_t16x16x16_rr_ln1
+        PASS [   0.260s] ( 34/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x128_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.260s] ( 35/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x12_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.263s] ( 36/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rc_ln4
+        PASS [   0.227s] ( 37/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh256x256x256_s4x4x2_t16x16x16_cr_ln2x2x4_lhs_row_rhs_col_enforced
+        PASS [   0.226s] ( 38/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x32_s1x1x1_t16x16x16_R
+        PASS [   0.247s] ( 39/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x32_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.233s] ( 40/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x16_s2x2x1_t16x16x16_rr_ln4
+        PASS [   0.250s] ( 41/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln4_rhs_col_enforced
+        PASS [   0.258s] ( 42/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln4_lhs_col_enforced
+        PASS [   0.252s] ( 43/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x32x16_s1x2x1_t16x16x16_rr_ln4
+        PASS [   0.253s] ( 44/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh16x16x36_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.249s] ( 45/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh256x256x256_s4x4x2_t16x16x16_rc_ln4_ColMajor
+        PASS [   0.243s] ( 46/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x16x16_s2x1x1_t16x16x16_rr_ln4
+        PASS [   0.251s] ( 47/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x16x128_s2x1x1_t16x16x16_rr_ln4
+        PASS [   0.240s] ( 48/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_cc_ln4
+        PASS [   0.245s] ( 49/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_cr_ln4
+        PASS [   0.241s] ( 50/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_rr_ln4_ColMajor
+        PASS [   0.250s] ( 51/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x32_s1x1x1_t16x16x16_cc_ln4_ColMajor
+        PASS [   0.250s] ( 52/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_rc_ln4
+        PASS [   0.255s] ( 53/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x224_s2x2x2_t16x16x16_rr_ln4
+        PASS [   0.260s] ( 54/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_rr_ln4
+        PASS [   0.256s] ( 55/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rc_ln1
+        PASS [   0.262s] ( 56/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_cc_ln4
+        PASS [   0.265s] ( 57/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_cr_ln4
+        PASS [   0.262s] ( 58/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rc_ln4_rhs_row_enforced
+        PASS [   0.259s] ( 59/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh60x60x120_s4x4x2_t16x16x16_rr_ln4
+        PASS [   0.269s] ( 60/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_cr_ln4_lhs_row_enforced
+        PASS [   0.254s] ( 61/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_cr_ln4
+        PASS [   0.258s] ( 62/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_cc_ln4
+        PASS [   0.267s] ( 63/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rr_ln4_rhs_col_enforced
+        PASS [   0.293s] ( 64/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_cc_ln1
+        PASS [   0.270s] ( 65/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rr_ln4_lhs_col_enforced
+        PASS [   0.267s] ( 66/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh64x64x32_s4x4x2_t16x16x16_rr_ln4
+        PASS [   0.255s] ( 67/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rc_ln4_rhs_row_enforced
+        PASS [   0.271s] ( 68/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh64x64x16_s4x4x1_t16x16x16_rr_ln4
+        PASS [   0.280s] ( 69/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rr_ln4
+        PASS [   0.266s] ( 70/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_cr_ln4_lhs_row_enforced
+        PASS [   0.268s] ( 71/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rc_ln4
+        PASS [   0.261s] ( 72/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rr_ln4
+        PASS [   0.247s] ( 73/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rr_ln4_lhs_col_enforced
+        PASS [   0.240s] ( 74/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm2_gh32x32x32_s1x1x1_t16x16x16_rr_ln4_colspan
+        PASS [   0.261s] ( 75/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rr_ln4_rhs_col_enforced
+        PASS [   0.239s] ( 76/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo1_gpc16x16x128_s1x1x2_t16x16x16_rr_ln4
+        PASS [   0.257s] ( 77/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm1_gh16x32x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.248s] ( 78/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm5_gh16x16x16_s1x1x1_t16x16x16_rr_ln4_cubez2
+        PASS [   0.248s] ( 79/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm6_gh16x16x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.258s] ( 80/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm1_gh32x16x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.261s] ( 81/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm2_gh160x256x16_s1x1x1_t16x16x16_rr_ln4_swizzle_y_dispatch
+        PASS [   0.270s] ( 82/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm1_gh16x16x32_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.247s] ( 83/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo1_gpc16x32x32_s1x2x2_t16x16x16_rr_ln4
+        PASS [   0.276s] ( 84/191) cubecl-wgpu tests::plane_mma_matmul_f32_f32::test_launch_matmul
+        PASS [   0.267s] ( 85/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm2_gh160x256x16_s1x1x1_t16x16x16_rr_ln4_swizzle_x_dispatch
+        PASS [   0.276s] ( 86/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm1_gh16x16x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.265s] ( 87/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm2_gh32x32x32_s1x1x1_t16x16x16_rr_ln4_transposed_dispatch
+        PASS [   0.265s] ( 88/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bm2_gh32x32x32_s1x1x1_t16x16x16_rr_ln4_swizzlespan
+        PASS [   0.253s] ( 89/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo1_gpc16x16x32_s1x1x2_t16x16x16_rr_ln4
+        PASS [   0.271s] ( 90/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo1_gh1000x16x16_s1x1x1_t16x16x16_rr_ln4_transposed_dispatch
+        PASS [   0.239s] ( 91/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo1_gpc32x16x32_s2x1x2_t16x16x16_rr_ln4
+        PASS [   0.234s] ( 92/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo3x4_gh256x256x256_s4x4x2_t16x16x16_cr_ln2x2x4
+        PASS [   0.238s] ( 93/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo3x4_gh108x108x243_s4x4x2_t16x16x16_cr_ln4
+        PASS [   0.240s] ( 94/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo3_gh256x256x256_s4x4x2_t16x16x16_rc_ln4
+        PASS [   0.236s] ( 95/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo3x4_gpc300x300x300_s4x4x2_t16x16x16_cc_ln4
+        PASS [   0.234s] ( 96/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh128x16x16_s8x1x1_t16x16x16_rr_ln1
+        PASS [   0.256s] ( 97/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo3_gh16x16x16_s1x1x1_t16x16x16_cc_ln4
+        PASS [   0.265s] ( 98/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo3_gh16x16x16_s1x1x1_t16x16x16_R
+        PASS [   0.242s] ( 99/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh12x12x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.252s] (100/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo3x4_gh300x300x300_s4x4x2_t16x16x16_cc_ln4
+        PASS [   0.239s] (101/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rc_ln4
+        PASS [   0.248s] (102/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_cr_ln4
+        PASS [   0.250s] (103/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x12_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.250s] (104/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x14x16_s1x1x1_t16x16x16_rc_ln4x4x2
+        PASS [   0.251s] (105/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x128_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.255s] (106/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x12x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.254s] (107/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_cc_ln4
+        PASS [   0.291s] (108/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rc_ln4_rhs_row_enforced
+        PASS [   0.248s] (109/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln1
+        PASS [   0.243s] (110/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln2
+        PASS [   0.247s] (111/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln4_rhs_col_enforced
+        PASS [   0.255s] (112/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x32_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.262s] (113/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.248s] (114/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh256x256x256_s4x4x2_t16x16x16_cr_ln2x2x4_lhs_row_rhs_col_enforced
+        PASS [   0.265s] (115/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x16_s1x1x1_t16x16x16_rr_ln4_lhs_col_enforced
+        PASS [   0.258s] (116/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x32x16_s1x2x1_t16x16x16_rr_ln4
+        PASS [   0.267s] (117/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh16x16x36_s1x1x1_t16x16x16_rr_ln4
+        PASS [   0.259s] (118/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x224_s2x2x2_t16x16x16_rr_ln4
+        PASS [   0.271s] (119/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh256x256x256_s4x4x2_t16x16x16_rc_ln4_ColMajor
+        PASS [   0.274s] (120/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x16x128_s2x1x1_t16x16x16_rr_ln4
+        PASS [   0.261s] (121/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x32_s1x1x1_t16x16x16_cc_ln4_ColMajor
+        PASS [   0.267s] (122/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x16_s2x2x1_t16x16x16_rr_ln4
+        PASS [   0.269s] (123/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x16x16_s2x1x1_t16x16x16_rr_ln4
+        PASS [   0.268s] (124/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x32_s1x1x1_t16x16x16_R
+        PASS [   0.264s] (125/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_cc_ln4
+        PASS [   0.261s] (126/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_cr_ln4
+        PASS [   0.253s] (127/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_rc_ln4
+        PASS [   0.230s] (128/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_cc_ln1
+        PASS [   0.255s] (129/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_rr_ln4
+        PASS [   0.239s] (130/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_cc_ln4
+        PASS [   0.252s] (131/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x32x32_s2x2x2_t16x16x16_rr_ln4_ColMajor
+        PASS [   0.243s] (132/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rc_ln1
+        PASS [   0.258s] (133/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_cr_ln4
+        PASS [   0.245s] (134/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rc_ln4_rhs_row_enforced
+        PASS [   0.258s] (135/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_cr_ln4_lhs_row_enforced
+        PASS [   0.246s] (136/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rr_ln4_lhs_col_enforced
+        PASS [   0.244s] (137/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rr_ln4_rhs_col_enforced
+        PASS [   0.243s] (138/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh64x64x32_s4x4x2_t16x16x16_rr_ln4
+        PASS [   0.251s] (139/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_cr_ln4
+        PASS [   0.262s] (140/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh32x8x16_s1x1x1_t32x8x16_rr_ln4
+        PASS [   0.256s] (141/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_cc_ln4
+        PASS [   0.260s] (142/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh64x64x16_s4x4x1_t16x16x16_rr_ln4
+        PASS [   0.264s] (143/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh60x60x120_s4x4x2_t16x16x16_rr_ln4
+        PASS [   0.267s] (144/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_cr_ln4_lhs_row_enforced
+        PASS [   0.233s] (145/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rc_ln4
+        PASS [   0.219s] (146/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rr_ln4_lhs_col_enforced
+        PASS [   0.231s] (147/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rr_ln4
+        PASS [   0.238s] (148/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rc_ln4_rhs_row_enforced
+        PASS [   0.232s] (149/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::bo_gh8x32x16_s1x1x1_t8x32x16_rr_ln4_rhs_col_enforced
+        PASS [   0.228s] (150/191) cubecl-wgpu tests::reduce_sum_long_vector_four_planes
+        PASS [   0.227s] (151/191) cubecl-wgpu tests::reduce_sum_vector_f32_eight_planes
+        PASS [   0.241s] (152/191) cubecl-wgpu tests::plane_mma_matmul_flex32_f32::test_launch_matmul
+        PASS [   0.221s] (153/191) cubecl-wgpu tests::test_cmma_simple_1
+        PASS [   0.251s] (154/191) cubecl-wgpu tests::reduce_sum_vector_f32_too_many_planes
+        PASS [   0.249s] (155/191) cubecl-wgpu tests::reduce_sum_vector_single_plane
+        PASS [   0.252s] (156/191) cubecl-wgpu tests::reduce_sum_vector_long_single_plane
+        PASS [   0.249s] (157/191) cubecl-wgpu tests::reduce_sum_vector_single_plane_line_size_four
+        PASS [   0.250s] (158/191) cubecl-wgpu tests::reduce_sum_vector_with_remainder_four_planes
+        PASS [   0.253s] (159/191) cubecl-wgpu tests::reduce_sum_vector_with_remainder_single_plane
+        PASS [   0.236s] (160/191) cubecl-wgpu tests::test_cmma_simple_tf32
+        PASS [   0.305s] (161/191) cubecl-wgpu tests::test_assign_scalar
+        PASS [   0.336s] (162/191) cubecl-wgpu tests::test_buffer_len
+        PASS [   0.281s] (163/191) cubecl-wgpu tests::test_const_match
+        PASS [   0.299s] (164/191) cubecl-wgpu tests::test_kernel_different_rank_last_biggest
+        PASS [   0.301s] (165/191) cubecl-wgpu tests::test_launch_with_generics
+        PASS [   0.319s] (166/191) cubecl-wgpu tests::test_kernel_different_rank_first_biggest
+        PASS [   0.284s] (167/191) cubecl-wgpu tests::test_select_true
+        PASS [   0.298s] (168/191) cubecl-wgpu tests::test_select_false
+        PASS [   0.315s] (169/191) cubecl-wgpu tests::test_launch_without_generics
+        PASS [   0.303s] (170/191) cubecl-wgpu tests::test_len
+        PASS [   0.283s] (171/191) cubecl-wgpu tests::test_switch_default
+        PASS [   0.290s] (172/191) cubecl-wgpu tests::test_switch_or_branch
+        PASS [   0.287s] (173/191) cubecl-wgpu tests::test_switch_used_as_value
+        PASS [   0.303s] (174/191) cubecl-wgpu tests::test_switch_statement
+        PASS [   0.296s] (175/191) cubecl-wgpu tests::test_topology_scalar
+        PASS [   0.051s] (176/191) cubecl-wgpu::main constant_array
+        PASS [   0.326s] (177/191) cubecl-wgpu tests::test_stride
+        PASS [   0.055s] (178/191) cubecl-wgpu::main plane_elect
+        PASS [   0.051s] (179/191) cubecl-wgpu::main plane_sum
+        PASS [   0.054s] (180/191) cubecl-wgpu::main sequence_for_loop
+        PASS [   0.054s] (181/191) cubecl-wgpu::main slice_assign
+        PASS [   0.050s] (182/191) cubecl-wgpu::main unary_bench
+        PASS [   0.397s] (183/191) cubecl-wgpu tests::test_shape
+        PASS [   0.466s] (184/191) cubecl-wgpu tests::tiling2d::f32_ty::test_matmul_tiling2d_one_cube
+        PASS [   0.443s] (185/191) cubecl-wgpu tests::tiling2d::f32_ty::test_matmul_tiling2d_with_batches
+        PASS [   0.497s] (186/191) cubecl-wgpu tests::tiling2d::f32_ty::test_matmul_tiling2d_several_cubes
+        PASS [   0.388s] (187/191) cubecl-wgpu tests::tiling2d::f32_ty::test_matmul_tiling2d_with_check_bounds
+        PASS [   0.352s] (188/191) cubecl-wgpu tests::tiling2d::flex32_ty::test_matmul_tiling2d_with_check_bounds
+        PASS [   0.386s] (189/191) cubecl-wgpu tests::tiling2d::flex32_ty::test_matmul_tiling2d_one_cube
+        PASS [   0.378s] (190/191) cubecl-wgpu tests::tiling2d::flex32_ty::test_matmul_tiling2d_with_batches
+        PASS [   0.427s] (191/191) cubecl-wgpu tests::tiling2d::flex32_ty::test_matmul_tiling2d_several_cubes
+────────────
+     Summary [   3.116s] 191 tests run: 191 passed, 1 skipped
+reward=1 graded=191 found=17 failed=0 parsed=191 framework=cargo exit_code=0

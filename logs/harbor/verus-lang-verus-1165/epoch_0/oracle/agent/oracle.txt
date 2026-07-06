@@ -1,5 +1,0 @@
-patching file source/vstd/hash_map.rs
-patching file source/vstd/std_specs/core.rs
-patching file source/vstd/std_specs/hash.rs
-patching file source/vstd/std_specs/mod.rs
-patching file source/vstd/vstd.rs

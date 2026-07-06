@@ -1,0 +1,36 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./pkg/extract ./pkg/objectkinds ./pkg/templates/volumeclaimtemplates ./pkg/templates/volumeclaimtemplates/internal/params -count=1",
+  "test_files": [
+    "e2etests/bats-tests.sh",
+    "e2etests/testdata/statefulset-volumeclaimtemplate-annotation-config.yaml",
+    "pkg/extract/sts_spec_test.go",
+    "pkg/objectkinds/pvc_test.go",
+    "pkg/templates/volumeclaimtemplates/internal/params/gen-params_test.go",
+    "pkg/templates/volumeclaimtemplates/template_test.go",
+    "tests/checks/statefulset-volumeclaimtemplate-annotation.yml"
+  ],
+  "num_test_files": 7,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "golang.stackrox.io/kube-linter/pkg/objectkinds::TestGetPersistentVolumeClaimAPIVersion",
+    "golang.stackrox.io/kube-linter/pkg/extract::TestStatefulSetSpec/nil_object",
+    "golang.stackrox.io/kube-linter/pkg/extract::TestStatefulSetSpec/typed_StatefulSet",
+    "golang.stackrox.io/kube-linter/pkg/extract::TestStatefulSetSpec/fallback_via_reflection",
+    "golang.stackrox.io/kube-linter/pkg/extract::TestStatefulSetSpec/wrong_kind",
+    "golang.stackrox.io/kube-linter/pkg/extract::TestStatefulSetSpec",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates::TestStatefulSetVolumeClaimTemplateAnnotation/Annotation_searched_for_exists_on_template,_returns_no_diagnostics",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates::TestStatefulSetVolumeClaimTemplateAnnotation/Annotation_searched_for_does_not_exist_on_template_with_annotations,_returns_a_diagnostic",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates::TestStatefulSetVolumeClaimTemplateAnnotation/Annotation_searched_for_does_not_exist_on_template_without_annotations,_returns_a_diagnostic",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates::TestStatefulSetVolumeClaimTemplateAnnotation",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates/internal/params::TestValidate/valid_annotation",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates/internal/params::TestValidate/missing_annotation",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates/internal/params::TestValidate",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates/internal/params::TestParseAndValidate/valid_map_input",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates/internal/params::TestParseAndValidate/missing_annotation_in_map",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates/internal/params::TestParseAndValidate",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates/internal/params::TestWrapInstantiateFunc/wrapped_function_works",
+    "golang.stackrox.io/kube-linter/pkg/templates/volumeclaimtemplates/internal/params::TestWrapInstantiateFunc"
+  ],
+  "PASS_TO_PASS": []
+}

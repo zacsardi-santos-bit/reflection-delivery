@@ -1,0 +1,658 @@
+diff --git a/.github/ISSUE_TEMPLATE/2_bug_report.yml b/.github/ISSUE_TEMPLATE/2_bug_report.yml
+index d67aeb9fc..7a4e1ff98 100644
+--- a/.github/ISSUE_TEMPLATE/2_bug_report.yml
++++ b/.github/ISSUE_TEMPLATE/2_bug_report.yml
+@@ -14,7 +14,7 @@ body:
+         ---
+         > [!IMPORTANT]
+         > 🙏 Please **go check *right now before filling this out* that you are *actually* on the [⬆️ LATEST VERSION](https://github.com/browser-use/browser-use/releases)**.
+-        > 🚀 We ship changes every hour and we might've already fixed your issue today!  
++        > 🚀 We ship changes every hour and we might've already fixed your issue today!
+         > <a href="https://github.com/browser-use/browser-use/releases"><img src="https://github.com/user-attachments/assets/4cd34ee6-bafb-4f24-87e2-27a31dc5b9a4" width="500px"/></a>
+         > If you are running an old version, the **first thing we will ask you to do is *upgrade to the latest version* and try again**:
+         > - 🆕 [`beta`](https://docs.browser-use.com/development/local-setup):   `uv pip install --upgrade git+https://github.com/browser-use/browser-use.git@main`
+@@ -25,7 +25,7 @@ body:
+     attributes:
+       label: Browser Use Version
+       description: |
+-        What exact version of `browser-use` are you using? (Run `uv pip show browser-use` or `git log -n 1`)  
++        What exact version of `browser-use` are you using? (Run `uv pip show browser-use` or `git log -n 1`)
+         **DO NOT WRITE `latest release` or `main` or a very old version or we will close your issue!**
+       placeholder: "e.g. 0.4.45 or 62760baaefd"
+     validations:
+@@ -58,7 +58,7 @@ body:
+ 
+         agent = Agent(
+             task='...',
+-            llm=ChatOpenAI(model="gpt-4o"),
++            llm=ChatOpenAI(model="gpt-4.1-mini"),
+             browser_session=BrowserSession(headless=False),
+         )
+         ...
+@@ -70,8 +70,6 @@ body:
+       description: Which LLM model(s) are you using?
+       multiple: true
+       options:
+-        - gpt-4o
+-        - gpt-4o-mini
+         - gpt-4
+         - gpt-4.1
+         - gpt-4.1-mini
+diff --git a/README.md b/README.md
+index e9169ba69..304b0d51b 100644
+--- a/README.md
++++ b/README.md
+@@ -15,20 +15,20 @@
+ [![Weave Badge](https://img.shields.io/endpoint?url=https%3A%2F%2Fapp.workweave.ai%2Fapi%2Frepository%2Fbadge%2Forg_T5Pvn3UBswTHIsN1dWS3voPg%2F881458615&labelColor=#EC6341)](https://app.workweave.ai/reports/repository/org_T5Pvn3UBswTHIsN1dWS3voPg/881458615)
+ 
+ <!-- Keep these links. Translations will automatically update with the README. -->
+-[Deutsch](https://www.readme-i18n.com/browser-use/browser-use?lang=de) | 
+-[Español](https://www.readme-i18n.com/browser-use/browser-use?lang=es) | 
+-[français](https://www.readme-i18n.com/browser-use/browser-use?lang=fr) | 
+-[日本語](https://www.readme-i18n.com/browser-use/browser-use?lang=ja) | 
+-[한국어](https://www.readme-i18n.com/browser-use/browser-use?lang=ko) | 
+-[Português](https://www.readme-i18n.com/browser-use/browser-use?lang=pt) | 
+-[Русский](https://www.readme-i18n.com/browser-use/browser-use?lang=ru) | 
++[Deutsch](https://www.readme-i18n.com/browser-use/browser-use?lang=de) |
++[Español](https://www.readme-i18n.com/browser-use/browser-use?lang=es) |
++[français](https://www.readme-i18n.com/browser-use/browser-use?lang=fr) |
++[日本語](https://www.readme-i18n.com/browser-use/browser-use?lang=ja) |
++[한국어](https://www.readme-i18n.com/browser-use/browser-use?lang=ko) |
++[Português](https://www.readme-i18n.com/browser-use/browser-use?lang=pt) |
++[Русский](https://www.readme-i18n.com/browser-use/browser-use?lang=ru) |
+ [中文](https://www.readme-i18n.com/browser-use/browser-use?lang=zh)
+ 
+ 🌤️ Want to skip the setup? Use our <b>[cloud](https://cloud.browser-use.com)</b> for faster, scalable, stealth-enabled browser automation!
+ 
+-**🚀 Use the latest version!** 
++**🚀 Use the latest version!**
+ 
+-> We ship every day improvements for **speed**, **accuracy**, and **UX**. 
++> We ship every day improvements for **speed**, **accuracy**, and **UX**.
+ > ```bash
+ > uv pip install --upgrade browser-use
+ > ```
+@@ -74,6 +74,22 @@ OPENAI_API_KEY=
+ 
+ For other settings, models, and more, check out the [documentation 📕](https://docs.browser-use.com).
+ 
++**🌤️ Want to use cloud browsers?** Simply add `cloud_browser=True` to your Browser config:
++
++```python
++from browser_use import Agent, Browser, ChatOpenAI
++
++agent = Agent(
++    task="Find the number of stars of the browser-use repo",
++    llm=ChatOpenAI(model="gpt-4.1-mini"),
++    browser=Browser(cloud_browser=True),  # Uses Browser-Use cloud service
++)
++```
++
++First Set BROWSER_USE_API_KEY environment variable. You can get your API key from [here](https://cloud.browser-use.com).
++
++For other settings, models, and more, check out the [Cloud documentation 📕](https://docs.cloud.browser-use.com).
++
+ # Demos
+ 
+ <br/><br/>
+@@ -254,11 +270,11 @@ If you use Browser Use in your research or project, please cite:
+ }
+ ```
+ 
+- <div align="center"> <img src="https://github.com/user-attachments/assets/06fa3078-8461-4560-b434-445510c1766f" width="400"/> 
+- 
++ <div align="center"> <img src="https://github.com/user-attachments/assets/06fa3078-8461-4560-b434-445510c1766f" width="400"/>
++
+ [![Twitter Follow](https://img.shields.io/twitter/follow/Gregor?style=social)](https://x.com/intent/user?screen_name=gregpr07)
+ [![Twitter Follow](https://img.shields.io/twitter/follow/Magnus?style=social)](https://x.com/intent/user?screen_name=mamagnus00)
+- 
++
+  </div>
+ 
+ <div align="center">
+diff --git a/browser_use/browser/cloud.py b/browser_use/browser/cloud.py
+new file mode 100644
+index 000000000..f15bb910e
+--- /dev/null
++++ b/browser_use/browser/cloud.py
+@@ -0,0 +1,286 @@
++"""Cloud browser service integration for browser-use.
++
++This module provides integration with the browser-use cloud browser service.
++When cloud_browser=True, it automatically creates a cloud browser instance
++and returns the CDP URL for connection.
++"""
++
++import logging
++import os
++
++import httpx
++from pydantic import BaseModel, Field
++
++from browser_use.sync.auth import CloudAuthConfig
++
++logger = logging.getLogger(__name__)
++
++
++class CloudBrowserResponse(BaseModel):
++	"""Response from cloud browser API."""
++
++	id: str
++	status: str
++	liveUrl: str = Field(alias='liveUrl')
++	cdpUrl: str = Field(alias='cdpUrl')
++	timeoutAt: str = Field(alias='timeoutAt')
++	startedAt: str = Field(alias='startedAt')
++	finishedAt: str | None = Field(alias='finishedAt', default=None)
++
++
++class CloudBrowserError(Exception):
++	"""Exception raised when cloud browser operations fail."""
++
++	pass
++
++
++class CloudBrowserAuthError(CloudBrowserError):
++	"""Exception raised when cloud browser authentication fails."""
++
++	pass
++
++
++class CloudBrowserClient:
++	"""Client for browser-use cloud browser service."""
++
++	def __init__(self, api_base_url: str = 'https://api.browser-use.com'):
++		self.api_base_url = api_base_url
++		self.client = httpx.AsyncClient(timeout=30.0)
++		self.current_session_id: str | None = None
++
++	async def create_browser(self) -> CloudBrowserResponse:
++		"""Create a new cloud browser instance.
++
++		Returns:
++			CloudBrowserResponse: Contains CDP URL and other browser info
++
++		Raises:
++			CloudBrowserAuthError: If authentication fails
++			CloudBrowserError: If browser creation fails
++		"""
++		url = f'{self.api_base_url}/api/v2/browsers'
++
++		# Try to get API key from environment variable first, then auth config
++		api_token = os.getenv('BROWSER_USE_API_KEY')
++
++		if not api_token:
++			# Fallback to auth config file
++			try:
++				auth_config = CloudAuthConfig.load_from_file()
++				api_token = auth_config.api_token
++			except Exception:
++				pass
++
++		if not api_token:
++			raise CloudBrowserAuthError(
++				'No authentication token found. Please set BROWSER_USE_API_KEY environment variable to authenticate with the cloud service.'
++			)
++
++		headers = {'X-Browser-Use-API-Key': api_token, 'Content-Type': 'application/json'}
++
++		# Empty request body as per API specification
++		request_body = {}
++
++		try:
++			logger.info('🌤️ Creating cloud browser instance...')
++
++			response = await self.client.post(url, headers=headers, json=request_body)
++
++			if response.status_code == 401:
++				raise CloudBrowserAuthError(
++					'Authentication failed. Please make sure you have set BROWSER_USE_API_KEY environment variable to authenticate with the cloud service.'
++				)
++			elif response.status_code == 403:
++				raise CloudBrowserAuthError('Access forbidden. Please check your browser-use cloud subscription status.')
++			elif not response.is_success:
++				error_msg = f'Failed to create cloud browser: HTTP {response.status_code}'
++				try:
++					error_data = response.json()
++					if 'detail' in error_data:
++						error_msg += f' - {error_data["detail"]}'
++				except Exception:
++					pass
++				raise CloudBrowserError(error_msg)
++
++			browser_data = response.json()
++			browser_response = CloudBrowserResponse(**browser_data)
++
++			# Store session ID for cleanup
++			self.current_session_id = browser_response.id
++
++			logger.info(f'🌤️ Cloud browser created successfully: {browser_response.id}')
++			logger.debug(f'🌤️ CDP URL: {browser_response.cdpUrl}')
++			logger.debug(f'🌤️ Live URL: {browser_response.liveUrl}')
++
++			return browser_response
++
++		except httpx.TimeoutException:
++			raise CloudBrowserError('Timeout while creating cloud browser. Please try again.')
++		except httpx.ConnectError:
++			raise CloudBrowserError('Failed to connect to cloud browser service. Please check your internet connection.')
++		except Exception as e:
++			if isinstance(e, (CloudBrowserError, CloudBrowserAuthError)):
++				raise
++			raise CloudBrowserError(f'Unexpected error creating cloud browser: {e}')
++
++	async def stop_browser(self, session_id: str | None = None) -> CloudBrowserResponse:
++		"""Stop a cloud browser session.
++
++		Args:
++			session_id: Session ID to stop. If None, uses current session.
++
++		Returns:
++			CloudBrowserResponse: Updated browser info with stopped status
++
++		Raises:
++			CloudBrowserAuthError: If authentication fails
++			CloudBrowserError: If stopping fails
++		"""
++		if session_id is None:
++			session_id = self.current_session_id
++
++		if not session_id:
++			raise CloudBrowserError('No session ID provided and no current session available')
++
++		url = f'{self.api_base_url}/api/v2/browsers/{session_id}'
++
++		# Try to get API key from environment variable first, then auth config
++		api_token = os.getenv('BROWSER_USE_API_KEY')
++
++		if not api_token:
++			# Fallback to auth config file
++			try:
++				auth_config = CloudAuthConfig.load_from_file()
++				api_token = auth_config.api_token
++			except Exception:
++				pass
++
++		if not api_token:
++			raise CloudBrowserAuthError(
++				'No authentication token found. Please set BROWSER_USE_API_KEY environment variable to authenticate with the cloud service.'
++			)
++
++		headers = {'X-Browser-Use-API-Key': api_token, 'Content-Type': 'application/json'}
++
++		request_body = {'action': 'stop'}
++
++		try:
++			logger.info(f'🌤️ Stopping cloud browser session: {session_id}')
++
++			response = await self.client.patch(url, headers=headers, json=request_body)
++
++			if response.status_code == 401:
++				raise CloudBrowserAuthError(
++					'Authentication failed. Please make sure you have set the BROWSER_USE_API_KEY environment variable to authenticate with the cloud service.'
++				)
++			elif response.status_code == 404:
++				# Session already stopped or doesn't exist - treating as error and clearing session
++				logger.debug(f'🌤️ Cloud browser session {session_id} not found (already stopped)')
++				# Clear current session if it was this one
++				if session_id == self.current_session_id:
++					self.current_session_id = None
++				raise CloudBrowserError(f'Cloud browser session {session_id} not found')
++			elif not response.is_success:
++				error_msg = f'Failed to stop cloud browser: HTTP {response.status_code}'
++				try:
++					error_data = response.json()
++					if 'detail' in error_data:
++						error_msg += f' - {error_data["detail"]}'
++				except Exception:
++					pass
++				raise CloudBrowserError(error_msg)
++
++			browser_data = response.json()
++			browser_response = CloudBrowserResponse(**browser_data)
++
++			# Clear current session if it was this one
++			if session_id == self.current_session_id:
++				self.current_session_id = None
++
++			logger.info(f'🌤️ Cloud browser session stopped: {browser_response.id}')
++			logger.debug(f'🌤️ Status: {browser_response.status}')
++
++			return browser_response
++
++		except httpx.TimeoutException:
++			raise CloudBrowserError('Timeout while stopping cloud browser. Please try again.')
++		except httpx.ConnectError:
++			raise CloudBrowserError('Failed to connect to cloud browser service. Please check your internet connection.')
++		except Exception as e:
++			if isinstance(e, (CloudBrowserError, CloudBrowserAuthError)):
++				raise
++			raise CloudBrowserError(f'Unexpected error stopping cloud browser: {e}')
++
++	async def close(self):
++		"""Close the HTTP client and cleanup any active sessions."""
++		# Try to stop current session if active
++		if self.current_session_id:
++			try:
++				await self.stop_browser()
++			except Exception as e:
++				logger.debug(f'Failed to stop cloud browser session during cleanup: {e}')
++
++		await self.client.aclose()
++
++
++# Global client instance
++_cloud_client: CloudBrowserClient | None = None
++
++
++async def get_cloud_browser_cdp_url() -> str:
++	"""Get a CDP URL for a new cloud browser instance.
++
++	Returns:
++		str: CDP URL for connecting to the cloud browser
++
++	Raises:
++		CloudBrowserAuthError: If authentication fails
++		CloudBrowserError: If browser creation fails
++	"""
++	global _cloud_client
++
++	if _cloud_client is None:
++		_cloud_client = CloudBrowserClient()
++
++	try:
++		browser_response = await _cloud_client.create_browser()
++		return browser_response.cdpUrl
++	except Exception:
++		# Clean up client on error
++		if _cloud_client:
++			await _cloud_client.close()
++			_cloud_client = None
++		raise
++
++
++async def stop_cloud_browser_session(session_id: str | None = None) -> CloudBrowserResponse:
++	"""Stop a cloud browser session.
++
++	Args:
++		session_id: Session ID to stop. If None, uses current session from global client.
++
++	Returns:
++		CloudBrowserResponse: Updated browser info with stopped status
++
++	Raises:
++		CloudBrowserAuthError: If authentication fails
++		CloudBrowserError: If stopping fails
++	"""
++	global _cloud_client
++
++	if _cloud_client is None:
++		_cloud_client = CloudBrowserClient()
++
++	try:
++		return await _cloud_client.stop_browser(session_id)
++	except Exception:
++		# Don't clean up client on stop errors - session might still be valid
++		raise
++
++
++async def cleanup_cloud_client():
++	"""Clean up the global cloud client."""
++	global _cloud_client
++	if _cloud_client:
++		await _cloud_client.close()
++		_cloud_client = None
+diff --git a/browser_use/browser/profile.py b/browser_use/browser/profile.py
+index e227aefef..daf7494e8 100644
+--- a/browser_use/browser/profile.py
++++ b/browser_use/browser/profile.py
+@@ -1,3 +1,4 @@
++import os
+ import sys
+ import tempfile
+ from collections.abc import Iterable
+@@ -550,7 +551,15 @@ class BrowserProfile(BrowserConnectArgs, BrowserLaunchPersistentContextArgs, Bro
+ 	# Session/connection configuration
+ 	cdp_url: str | None = Field(default=None, description='CDP URL for connecting to existing browser instance')
+ 	is_local: bool = Field(default=False, description='Whether this is a local browser instance')
+-	# label: str = 'default'
++	use_cloud: bool = Field(
++		default_factory=lambda: bool(os.getenv('BROWSER_USE_API_KEY')),
++		description='Use browser-use cloud browser service instead of local browser',
++	)
++
++	@property
++	def cloud_browser(self) -> bool:
++		"""Alias for use_cloud field for compatibility."""
++		return self.use_cloud
+ 
+ 	# custom options we provide that aren't native playwright kwargs
+ 	disable_security: bool = Field(default=False, description='Disable browser security features.')
+diff --git a/browser_use/browser/session.py b/browser_use/browser/session.py
+index 6075448ad..4056929f9 100644
+--- a/browser_use/browser/session.py
++++ b/browser_use/browser/session.py
+@@ -15,6 +15,8 @@ from cdp_use.cdp.target import AttachedToTargetEvent, SessionID, TargetID
+ from pydantic import BaseModel, ConfigDict, Field, PrivateAttr
+ from uuid_extensions import uuid7str
+ 
++from browser_use.browser.cloud import CloudBrowserAuthError, CloudBrowserError, get_cloud_browser_cdp_url
++
+ # CDP logging is now handled by setup_logging() in logging_config.py
+ # It automatically sets CDP logs to the same level as browser_use logs
+ from browser_use.browser.events import (
+@@ -251,6 +253,8 @@ class BrowserSession(BaseModel):
+ 		# From BrowserNewContextArgs
+ 		storage_state: str | Path | dict[str, Any] | None = None,
+ 		# BrowserProfile specific fields
++		use_cloud: bool | None = None,
++		cloud_browser: bool | None = None,  # Backward compatibility alias
+ 		disable_security: bool | None = None,
+ 		deterministic_rendering: bool | None = None,
+ 		allowed_domains: list[str] | None = None,
+@@ -278,6 +282,10 @@ class BrowserSession(BaseModel):
+ 		# Only pass non-None values to avoid validation errors
+ 		profile_kwargs = {k: v for k, v in locals().items() if k not in ['self', 'browser_profile', 'id'] and v is not None}
+ 
++		# Handle backward compatibility: map cloud_browser to use_cloud
++		if 'cloud_browser' in profile_kwargs:
++			profile_kwargs['use_cloud'] = profile_kwargs.pop('cloud_browser')
++
+ 		# if is_local is False but executable_path is provided, set is_local to True
+ 		if is_local is False and executable_path is not None:
+ 			profile_kwargs['is_local'] = True
+@@ -318,6 +326,11 @@ class BrowserSession(BaseModel):
+ 		"""Whether this is a local browser instance from browser profile."""
+ 		return self.browser_profile.is_local
+ 
++	@property
++	def cloud_browser(self) -> bool:
++		"""Whether to use cloud browser service from browser profile."""
++		return self.browser_profile.use_cloud
++
+ 	# Main shared event bus for all browser session + all watchdogs
+ 	event_bus: EventBus = Field(default_factory=EventBus)
+ 
+@@ -496,9 +509,22 @@ class BrowserSession(BaseModel):
+ 		await self.attach_all_watchdogs()
+ 
+ 		try:
+-			# If no CDP URL, launch local browser
++			# If no CDP URL, launch local browser or cloud browser
+ 			if not self.cdp_url:
+-				if self.is_local:
++				if self.browser_profile.use_cloud:
++					# Use cloud browser service
++					try:
++						cloud_cdp_url = await get_cloud_browser_cdp_url()
++						self.browser_profile.cdp_url = cloud_cdp_url
++						self.browser_profile.is_local = False
++						self.logger.info('🌤️ Successfully connected to cloud browser service')
++					except CloudBrowserAuthError:
++						raise CloudBrowserAuthError(
++							'Authentication failed for cloud browser service. Set BROWSER_USE_API_KEY environment variable'
++						)
++					except CloudBrowserError as e:
++						raise CloudBrowserError(f'Failed to create cloud browser: {e}')
++				elif self.is_local:
+ 					# Launch local browser using event-driven approach
+ 					launch_event = self.event_bus.dispatch(BrowserLaunchEvent())
+ 					await launch_event
+@@ -813,6 +839,16 @@ class BrowserSession(BaseModel):
+ 				self.event_bus.dispatch(BrowserStoppedEvent(reason='Kept alive due to keep_alive=True'))
+ 				return
+ 
++			# Clean up cloud browser session if using cloud browser
++			if self.browser_profile.use_cloud:
++				try:
++					from browser_use.browser.cloud import cleanup_cloud_client
++
++					await cleanup_cloud_client()
++					self.logger.info('🌤️ Cloud browser session cleaned up')
++				except Exception as e:
++					self.logger.debug(f'Failed to cleanup cloud browser session: {e}')
++
+ 			# Clear CDP session cache before stopping
+ 			await self.reset()
+ 
+@@ -1616,18 +1652,18 @@ class BrowserSession(BaseModel):
+ 				const highlights = document.querySelectorAll('[data-browser-use-highlight]');
+ 				console.log('Removing', highlights.length, 'browser-use highlight elements');
+ 				highlights.forEach(el => el.remove());
+-				
++
+ 				// Also remove by ID in case selector missed anything
+ 				const highlightContainer = document.getElementById('browser-use-debug-highlights');
+ 				if (highlightContainer) {
+ 					console.log('Removing highlight container by ID');
+ 					highlightContainer.remove();
+ 				}
+-				
++
+ 				// Final cleanup - remove any orphaned tooltips
+ 				const orphanedTooltips = document.querySelectorAll('[data-browser-use-highlight="tooltip"]');
+ 				orphanedTooltips.forEach(el => el.remove());
+-				
++
+ 				return { removed: highlights.length };
+ 			})();
+ 			"""
+diff --git a/browser_use/config.py b/browser_use/config.py
+index e2a3b4194..02c13136e 100644
+--- a/browser_use/config.py
++++ b/browser_use/config.py
+@@ -287,7 +287,7 @@ def create_default_config() -> DBStyleConfigJSON:
+ 	new_config.browser_profile[profile_id] = BrowserProfileEntry(id=profile_id, default=True, headless=False, user_data_dir=None)
+ 
+ 	# Create default LLM entry
+-	new_config.llm[llm_id] = LLMEntry(id=llm_id, default=True, model='gpt-4o', api_key='your-openai-api-key-here')
++	new_config.llm[llm_id] = LLMEntry(id=llm_id, default=True, model='gpt-4.1-mini', api_key='your-openai-api-key-here')
+ 
+ 	# Create default agent entry
+ 	new_config.agent[agent_id] = AgentEntry(id=agent_id, default=True)
+diff --git a/browser_use/dom/playground/extraction.py b/browser_use/dom/playground/extraction.py
+index b526dc749..b1d4f9225 100644
+--- a/browser_use/dom/playground/extraction.py
++++ b/browser_use/dom/playground/extraction.py
+@@ -176,7 +176,7 @@ async def test_focus_vs_all_elements():
+ 				# copy the user message to the clipboard
+ 				# pyperclip.copy(text_to_save)
+ 
+-				encoding = tiktoken.encoding_for_model('gpt-4o')
++				encoding = tiktoken.encoding_for_model('gpt-4.1-mini')
+ 				token_count = len(encoding.encode(text_to_save))
+ 				print(f'Token count: {token_count}')
+ 
+diff --git a/docs/customize/browser/remote.mdx b/docs/customize/browser/remote.mdx
+index 2cef0807e..aa21115b9 100644
+--- a/docs/customize/browser/remote.mdx
++++ b/docs/customize/browser/remote.mdx
+@@ -23,8 +23,39 @@ agent = Agent(
+ 
+ 
+ ## Get a CDP URL
+-### Cloud Browser
+-Get a cdp url from your favorite browser provider like AnchorBorwser, HyperBrowser, BrowserBase, Steel.dev, etc.
++
++### Browser-Use Cloud Browser
++
++The easiest way to use a cloud browser is with the built-in Browser-Use cloud service:
++
++```python
++from browser_use import Agent, Browser, ChatOpenAI
++
++# Use Browser-Use cloud browser service
++browser = Browser(
++    cloud_browser=True  # Automatically provisions a cloud browser
++)
++
++agent = Agent(
++    task="Your task here",
++    llm=ChatOpenAI(model='gpt-4.1-mini'),
++    browser=browser,
++)
++```
++
++**Prerequisites:**
++1. Get an API key from [cloud.browser-use.com](https://cloud.browser-use.com)
++2. Set BROWSER_USE_API_KEY environment variable
++
++**Benefits:**
++- ✅ No local browser setup required
++- ✅ Scalable and fast cloud infrastructure
++- ✅ Automatic provisioning and teardown
++- ✅ Built-in authentication handling
++- ✅ Optimized for browser automation
++
++### Third-Party Cloud Browsers
++Get a CDP URL from your favorite browser provider like AnchorBrowser, HyperBrowser, BrowserBase, Steel.dev, etc.
+ 
+ 
+ 
+diff --git a/examples/browser/cloud_browser.py b/examples/browser/cloud_browser.py
+new file mode 100644
+index 000000000..15d397690
+--- /dev/null
++++ b/examples/browser/cloud_browser.py
+@@ -0,0 +1,41 @@
++"""
++Simple example of using Browser-Use cloud browser service.
++
++Prerequisites:
++1. Set BROWSER_USE_API_KEY environment variable
++2. Active subscription at https://cloud.browser-use.com
++"""
++
++import asyncio
++
++from dotenv import load_dotenv
++
++# Load environment variables
++load_dotenv()
++
++from browser_use import Agent, Browser, ChatOpenAI
++
++
++async def main():
++	"""Basic cloud browser example."""
++
++	print('🌤️ Using Browser-Use Cloud Browser')
++
++	# Create agent with cloud browser enabled
++	agent = Agent(
++		task='Go to https://github.com/browser-use/browser-use and find the number of stars',
++		llm=ChatOpenAI(model='gpt-4.1-mini'),
++		browser=Browser(use_cloud=True),  # Enable cloud browser
++	)
++
++	try:
++		result = await agent.run()
++		print(f'✅ Result: {result}')
++	except Exception as e:
++		print(f'❌ Error: {e}')
++		if 'Authentication' in str(e):
++			print('💡 Set BROWSER_USE_API_KEY environment variable')
++
++
++if __name__ == '__main__':
++	asyncio.run(main())

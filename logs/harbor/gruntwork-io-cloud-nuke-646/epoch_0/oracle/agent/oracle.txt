@@ -1,9 +1,0 @@
-patching file README.md
-patching file aws/resource_registry.go
-patching file aws/resources/route53_cidr_collection.go
-patching file aws/resources/route53_cidr_collection_types.go
-patching file aws/resources/route53_hostedzone.go
-patching file aws/resources/route53_hostedzone_types.go
-patching file aws/resources/route53_traffic_policy.go
-patching file aws/resources/route53_traffic_policy_types.go
-patching file config/config.go

@@ -1,5 +1,0 @@
-patching file crates/utils/re_video/src/decode/ffmpeg_h264/ffmpeg.rs
-patching file crates/utils/re_video/src/decode/mod.rs
-patching file crates/utils/re_video/src/decode/webcodecs.rs
-patching file crates/viewer/re_renderer/src/video/chunk_decoder.rs
-patching file crates/viewer/re_renderer/src/video/player.rs

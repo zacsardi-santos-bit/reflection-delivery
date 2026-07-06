@@ -1,0 +1,707 @@
+patching file sdks/java/extensions/sql/src/test/java/org/apache/beam/sdk/extensions/sql/BeamSqlDslAggregationVarianceTest.java
+patching file sdks/java/extensions/sql/src/test/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/BigDecimalConverterTest.java
+patching file sdks/java/extensions/sql/src/test/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceAccumulatorTest.java
+patching file sdks/java/extensions/sql/src/test/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceFnTest.java
+patching file sdks/java/extensions/sql/src/test/java/org/apache/beam/sdk/extensions/sql/utils/BeamRecordAsserts.java
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] Detecting the operating system and CPU architecture
+[[1;34mINFO[m] ------------------------------------------------------------------------
+[[1;34mINFO[m] os.detected.name: linux
+[[1;34mINFO[m] os.detected.arch: x86_64
+[[1;34mINFO[m] os.detected.version: 4.19
+[[1;34mINFO[m] os.detected.version.major: 4
+[[1;34mINFO[m] os.detected.version.minor: 19
+[[1;34mINFO[m] os.detected.release: ubuntu
+[[1;34mINFO[m] os.detected.release.version: 24.04
+[[1;34mINFO[m] os.detected.release.like.ubuntu: true
+[[1;34mINFO[m] os.detected.release.like.debian: true
+[[1;34mINFO[m] os.detected.classifier: linux-x86_64
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Build Order:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Apache Beam :: Parent                                              [pom]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Build Tools                         [jar]
+[[1;34mINFO[m] Apache Beam :: Model                                               [pom]
+[[1;34mINFO[m] Apache Beam :: Model :: Pipeline                                   [jar]
+[[1;34mINFO[m] Apache Beam :: Model :: Job Management                             [jar]
+[[1;34mINFO[m] Apache Beam :: Model :: Fn Execution                               [jar]
+[[1;34mINFO[m] Apache Beam :: SDKs                                                [pom]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java                                        [pom]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Core                                [jar]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Extensions                          [pom]
+[[1;34mINFO[m] Apache Beam :: Runners                                             [pom]
+[[1;34mINFO[m] Apache Beam :: Runners :: Core Construction Java                   [jar]
+[[1;34mINFO[m] Apache Beam :: Runners :: Core Java                                [jar]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: IO                                  [pom]
+[[1;34mINFO[m] Apache Beam :: Runners :: Local Java Core                          [jar]
+[[1;34mINFO[m] Apache Beam :: Runners :: Direct Java                              [jar]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: IO :: Kafka                         [jar]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Extensions :: Join library          [jar]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Extensions :: SQL                   [jar]
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36morg.apache.beam:beam-parent[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Parent 2.4.0-SNAPSHOT                     [1/19][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.beam:beam-sdks-java-build-tools[0;1m >-------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs :: Java :: Build Tools 2.4.0-SNAPSHOT [2/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 9 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mformatter-maven-plugin:2.0.1:format[m [1m(test-code-style)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to format source files.
+[[1;34mINFO[m] Number of files to be formatted: 1
+[[1;34mINFO[m] Successfully formatted:          0 file(s)
+[[1;34mINFO[m] Fail to format:                  0 file(s)
+[[1;34mINFO[m] Skipped:                         1 file(s)
+[[1;34mINFO[m] Read only skipped:               0 file(s)
+[[1;34mINFO[m] Approximate time taken:          0s
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/sdks/java/build-tools/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-sdks-java-build-tools[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------------< [0;36morg.apache.beam:beam-model-parent[0;1m >------------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Model 2.4.0-SNAPSHOT                      [3/19][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-model-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-model-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-model-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-model-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.beam:beam-model-pipeline[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Model :: Pipeline 2.4.0-SNAPSHOT          [4/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.5.1:compile[m [1m(default)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] Compiling 3 proto file(s) to /workspace/repo/model/pipeline/target/generated-sources/protobuf/java
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.5.1:compile-custom[m [1m(default)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] Compiling 3 proto file(s) to /workspace/repo/model/pipeline/target/generated-sources/protobuf/grpc-java
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/model/pipeline/src/main/resources
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/model/pipeline/target/original_sources_to_package
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 3 source files to /workspace/repo/model/pipeline/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/model/pipeline/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[0;1m > [0;1m:findbugs[m @ [36mbeam-model-pipeline[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfindbugs-maven-plugin:3.0.5:findbugs[m [1m(findbugs)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[0;1m < [0;1m:findbugs[m @ [36mbeam-model-pipeline[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-model-pipeline[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------------< [0;36morg.apache.beam:beam-model-job-management[0;1m >--------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Model :: Job Management 2.4.0-SNAPSHOT    [5/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.5.1:compile[m [1m(default)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] Compiling 2 proto file(s) to /workspace/repo/model/job-management/target/generated-sources/protobuf/java
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.5.1:compile-custom[m [1m(default)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] Compiling 2 proto file(s) to /workspace/repo/model/job-management/target/generated-sources/protobuf/grpc-java
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper-maven-plugin:3.0.0:add-source[m [1m(add-grpc-source)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] Source directory: /workspace/repo/model/job-management/target/generated-sources/protobuf/java/grpc-java added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/model/job-management/src/main/resources
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/model/job-management/target/original_sources_to_package
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 5 source files to /workspace/repo/model/job-management/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/model/job-management/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[0;1m > [0;1m:findbugs[m @ [36mbeam-model-job-management[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfindbugs-maven-plugin:3.0.5:findbugs[m [1m(findbugs)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[0;1m < [0;1m:findbugs[m @ [36mbeam-model-job-management[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-model-job-management[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.beam:beam-model-fn-execution[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Model :: Fn Execution 2.4.0-SNAPSHOT      [6/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.5.1:compile[m [1m(default)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] Compiling 2 proto file(s) to /workspace/repo/model/fn-execution/target/generated-sources/protobuf/java
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mprotobuf-maven-plugin:0.5.1:compile-custom[m [1m(default)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] Compiling 2 proto file(s) to /workspace/repo/model/fn-execution/target/generated-sources/protobuf/grpc-java
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/model/fn-execution/target/original_sources_to_package
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] Changes detected - recompiling the module!
+[[1;34mINFO[m] Compiling 7 source files to /workspace/repo/model/fn-execution/target/classes
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] No sources to compile
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[0;1m > [0;1m:findbugs[m @ [36mbeam-model-fn-execution[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfindbugs-maven-plugin:3.0.5:findbugs[m [1m(findbugs)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[0;1m < [0;1m:findbugs[m @ [36mbeam-model-fn-execution[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfindbugs-maven-plugin:3.0.5:check[m [1m(default)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-model-fn-execution[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------< [0;36morg.apache.beam:beam-sdks-parent[0;1m >------------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs 2.4.0-SNAPSHOT                       [7/19][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-parent[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.beam:beam-sdks-java-parent[0;1m >----------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs :: Java 2.4.0-SNAPSHOT               [8/19][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-java-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-java-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-java-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-java-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-java-parent[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.beam:beam-sdks-java-core[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs :: Java :: Core 2.4.0-SNAPSHOT       [9/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.7.9:prepare-agent[m [1m(default)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar=destfile=/workspace/repo/sdks/java/core/target/jacoco.exec,excludes=**/AutoValue_*.class,dumponexit=true,output=file
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mavro-maven-plugin:1.8.2:schema[m [1m(schemas)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 1 resource
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper-maven-plugin:3.0.0:add-test-source[m [1m(add-test-source)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] Test Source directory: /workspace/repo/sdks/java/core/target/generated-test-sources/java added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/sdks/java/core/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-sdks-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------< [0;36morg.apache.beam:beam-sdks-java-extensions-parent[0;1m >----------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs :: Java :: Extensions 2.4.0-SNAPSHOT [10/19][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-java-extensions-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-java-extensions-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-java-extensions-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-java-extensions-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-java-extensions-parent[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m----------------< [0;36morg.apache.beam:beam-runners-parent[0;1m >-----------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Runners 2.4.0-SNAPSHOT                   [11/19][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-runners-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-runners-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-runners-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-runners-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-runners-parent[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------< [0;36morg.apache.beam:beam-runners-core-construction-java[0;1m >---------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Runners :: Core Construction Java 2.4.0-SNAPSHOT [12/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/runners/core-construction-java/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/runners/core-construction-java/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-runners-core-construction-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------< [0;36morg.apache.beam:beam-runners-core-java[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Runners :: Core Java 2.4.0-SNAPSHOT      [13/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.7.9:prepare-agent[m [1m(default)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar=destfile=/workspace/repo/runners/core-java/target/jacoco.exec,excludes=**/AutoValue_*.class,dumponexit=true,output=file
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/runners/core-java/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/runners/core-java/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-runners-core-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.beam:beam-sdks-java-io-parent[0;1m >--------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs :: Java :: IO 2.4.0-SNAPSHOT        [14/19][m
+[[1;34mINFO[m] [1m--------------------------------[ pom ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-java-io-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-java-io-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-java-io-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-java-io-parent[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-java-io-parent[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------< [0;36morg.apache.beam:beam-runners-local-java-core[0;1m >------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Runners :: Local Java Core 2.4.0-SNAPSHOT [15/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/runners/local-java/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/runners/local-java/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-runners-local-java-core[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.beam:beam-runners-direct-java[0;1m >--------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: Runners :: Direct Java 2.4.0-SNAPSHOT    [16/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.7.9:prepare-agent[m [1m(default)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar=destfile=/workspace/repo/runners/direct-java/target/jacoco.exec,excludes=**/AutoValue_*.class,dumponexit=true,output=file
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/runners/direct-java/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/runners/direct-java/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-runners-direct-java[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------< [0;36morg.apache.beam:beam-sdks-java-io-kafka[0;1m >---------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs :: Java :: IO :: Kafka 2.4.0-SNAPSHOT [17/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/sdks/java/io/kafka/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/sdks/java/io/kafka/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-sdks-java-io-kafka[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-------< [0;36morg.apache.beam:beam-sdks-java-extensions-join-library[0;1m >-------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs :: Java :: Extensions :: Join library 2.4.0-SNAPSHOT [18/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/sdks/java/extensions/join-library/src/main/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/sdks/java/extensions/join-library/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] Nothing to compile - all classes are up to date
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-sdks-java-extensions-join-library[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m-----------< [0;36morg.apache.beam:beam-sdks-java-extensions-sql[0;1m >------------[m
+[[1;34mINFO[m] [1mBuilding Apache Beam :: SDKs :: Java :: Extensions :: SQL 2.4.0-SNAPSHOT [19/19][m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-maven-version)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-enforcer-plugin:3.0.0-M1:enforce[m [1m(enforce-banned-dependencies)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-dependency-plugin:3.0.2:unpack[m [1m(unpack-parser-template)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] Configured Artifact: org.apache.calcite:calcite-core:?:jar
+[[1;34mINFO[m] Unpacking /root/.m2/repository/org/apache/calcite/calcite-core/1.13.0/calcite-core-1.13.0.jar to /workspace/repo/sdks/java/extensions/sql/target with includes "**/Parser.jj" and excludes ""
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:copy-resources[m [1m(copy-fmpp-resources)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 4 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjacoco-maven-plugin:0.7.9:prepare-agent[m [1m(default)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] argLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.7.9/org.jacoco.agent-0.7.9-runtime.jar=destfile=/workspace/repo/sdks/java/extensions/sql/target/jacoco.exec,excludes=**/AutoValue_*.class,dumponexit=true,output=file
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mfmpp-maven-plugin:1.0:generate[m [1m(generate-fmpp-sources)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+- Executing: Parser.jj
+log4j:WARN No appenders could be found for logger (freemarker.cache).
+log4j:WARN Please initialize the log4j system properly.
+[[1;34mINFO[m] Done
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mjavacc-maven-plugin:2.4:javacc[m [1m(javacc)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+Java Compiler Compiler Version 4.0 (Parser Generator)
+(type "javacc" with no arguments for help)
+Reading from file /workspace/repo/sdks/java/extensions/sql/target/generated-sources/fmpp/javacc/Parser.jj . . .
+Note: UNICODE_INPUT option is specified. Please make sure you create the parser/lexer using a Reader with the correct character encoding.
+Warning: Lookahead adequacy checking not being performed since option LOOKAHEAD is more than 1.  Set option FORCE_LA_CHECK to true to force checking.
+Parser generated with 0 errors and 1 warnings.
+[[1;34mINFO[m] Processed 1 grammar
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mbuild-helper-maven-plugin:3.0.0:add-source[m [1m(add-generated-sources)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] Source directory: /workspace/repo/sdks/java/extensions/sql/target/generated-sources/java added.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-remote-resources-plugin:1.5:process[m [1m(process-resource-bundles)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:resources[m [1m(default-resources)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] Copying 2 resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:compile[m [1m(default-compile)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] Compiling 9 source files to /workspace/repo/sdks/java/extensions/sql/target/classes
+[[1;34mINFO[m] /workspace/repo/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamAggregationTransforms.java: Some input files use unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/sdks/java/extensions/sql/src/main/java/org/apache/beam/sdk/extensions/sql/impl/transform/BeamAggregationTransforms.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-resources-plugin:3.0.2:testResources[m [1m(default-testResources)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] Using 'UTF-8' encoding to copy filtered resources.
+[[1;34mINFO[m] skip non existing resourceDirectory /workspace/repo/sdks/java/extensions/sql/src/test/resources
+[[1;34mINFO[m] Copying 3 resources
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-compiler-plugin:3.7.0:testCompile[m [1m(default-testCompile)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] Compiling 5 source files to /workspace/repo/sdks/java/extensions/sql/target/test-classes
+[[1;34mINFO[m] /workspace/repo/sdks/java/extensions/sql/src/test/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceFnTest.java: /workspace/repo/sdks/java/extensions/sql/src/test/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceFnTest.java uses unchecked or unsafe operations.
+[[1;34mINFO[m] /workspace/repo/sdks/java/extensions/sql/src/test/java/org/apache/beam/sdk/extensions/sql/impl/transform/agg/VarianceFnTest.java: Recompile with -Xlint:unchecked for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-checkstyle-plugin:2.17:check[m [1m(default)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] Starting audit...
+Audit done.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mmaven-surefire-plugin:2.20.1:test[m [1m(default-test)[m @ [36mbeam-sdks-java-extensions-sql[0;1m ---[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m]  T E S T S
+[[1;34mINFO[m] -------------------------------------------------------
+[[1;34mINFO[m] Running org.apache.beam.sdk.extensions.sql.impl.transform.agg.[1mBigDecimalConverterTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m2[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in org.apache.beam.sdk.extensions.sql.impl.transform.agg.[1mBigDecimalConverterTest[m
+[[1;34mINFO[m] Running org.apache.beam.sdk.extensions.sql.impl.transform.agg.[1mVarianceAccumulatorTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m7[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in org.apache.beam.sdk.extensions.sql.impl.transform.agg.[1mVarianceAccumulatorTest[m
+[[1;34mINFO[m] Running org.apache.beam.sdk.extensions.sql.impl.transform.agg.[1mVarianceFnTest[m
+[[1;34mINFO[m] [1;32mTests run: [0;1;32m10[m, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.081 s - in org.apache.beam.sdk.extensions.sql.impl.transform.agg.[1mVarianceFnTest[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Results:
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1;32mTests run: 19, Failures: 0, Errors: 0, Skipped: 0[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1mReactor Summary for Apache Beam :: Parent 2.4.0-SNAPSHOT:[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] Apache Beam :: Parent .............................. [1;32mSUCCESS[m [  1.049 s]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Build Tools ......... [1;32mSUCCESS[m [  2.704 s]
+[[1;34mINFO[m] Apache Beam :: Model ............................... [1;32mSUCCESS[m [  0.023 s]
+[[1;34mINFO[m] Apache Beam :: Model :: Pipeline ................... [1;32mSUCCESS[m [  4.540 s]
+[[1;34mINFO[m] Apache Beam :: Model :: Job Management ............. [1;32mSUCCESS[m [  1.236 s]
+[[1;34mINFO[m] Apache Beam :: Model :: Fn Execution ............... [1;32mSUCCESS[m [  1.698 s]
+[[1;34mINFO[m] Apache Beam :: SDKs ................................ [1;32mSUCCESS[m [  0.274 s]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java ........................ [1;32mSUCCESS[m [  0.246 s]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Core ................ [1;32mSUCCESS[m [ 15.571 s]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Extensions .......... [1;32mSUCCESS[m [  0.267 s]
+[[1;34mINFO[m] Apache Beam :: Runners ............................. [1;32mSUCCESS[m [  0.244 s]
+[[1;34mINFO[m] Apache Beam :: Runners :: Core Construction Java ... [1;32mSUCCESS[m [  1.725 s]
+[[1;34mINFO[m] Apache Beam :: Runners :: Core Java ................ [1;32mSUCCESS[m [  4.024 s]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: IO .................. [1;32mSUCCESS[m [  0.243 s]
+[[1;34mINFO[m] Apache Beam :: Runners :: Local Java Core .......... [1;32mSUCCESS[m [  0.952 s]
+[[1;34mINFO[m] Apache Beam :: Runners :: Direct Java .............. [1;32mSUCCESS[m [  2.866 s]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: IO :: Kafka ......... [1;32mSUCCESS[m [  1.671 s]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Extensions :: Join library [1;32mSUCCESS[m [  1.255 s]
+[[1;34mINFO[m] Apache Beam :: SDKs :: Java :: Extensions :: SQL ... [1;32mSUCCESS[m [  8.436 s]
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  50.250 s
+[[1;34mINFO[m] Finished at: 2026-06-29T15:22:57Z
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+reward=1 graded=19 found=19 failed=0 parsed=19 framework=maven exit_code=0

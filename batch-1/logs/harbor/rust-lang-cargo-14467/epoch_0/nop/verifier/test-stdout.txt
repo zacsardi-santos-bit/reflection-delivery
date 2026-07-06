@@ -1,0 +1,81 @@
+patching file tests/testsuite/open_namespaces.rs
+   Compiling cargo v0.83.0 (/workspace/repo)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 44.48s
+────────────
+ Nextest run ID b59e4c1c-5c39-4bf6-9db3-e0aee4c7e9c9 with nextest profile: default
+    Starting 9 tests across 1 binary (3460 tests skipped)
+        PASS [   0.229s] (1/9) cargo::testsuite open_namespaces::explicit_bin_within_namespace
+        PASS [   0.547s] (2/9) cargo::testsuite open_namespaces::generate_pkgid_with_namespace
+        PASS [   0.394s] (3/9) cargo::testsuite open_namespaces::implicit_bin_within_namespace
+        PASS [   0.266s] (4/9) cargo::testsuite open_namespaces::implicit_lib_within_namespace
+        PASS [   0.275s] (5/9) cargo::testsuite open_namespaces::namespaced_script_name
+        PASS [   1.172s] (6/9) cargo::testsuite open_namespaces::publish_namespaced
+        FAIL [   0.585s] (7/9) cargo::testsuite open_namespaces::update_spec_accepts_namespaced_name
+  stdout ───
+
+    running 1 test
+    running `/workspace/repo/target/debug/cargo generate-lockfile`
+    running `/workspace/repo/target/debug/cargo update 'foo::bar'`
+    test open_namespaces::update_spec_accepts_namespaced_name ... FAILED
+
+    failures:
+
+    failures:
+        open_namespaces::update_spec_accepts_namespaced_name
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3468 filtered out; finished in 0.55s
+
+  stderr ───
+    thread 'open_namespaces::update_spec_accepts_namespaced_name' panicked at tests/testsuite/open_namespaces.rs:387:10:
+
+    test failed running `/workspace/repo/target/debug/cargo update 'foo::bar'`
+    error: process exited with code 101 (expected 0)
+    --- stdout
+
+    --- stderr
+    error: invalid package ID specification: `foo::bar`
+
+    Did you mean `foo::bar`?
+
+    Caused by:
+      expected a version like "1.32"
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        FAIL [   0.410s] (8/9) cargo::testsuite open_namespaces::update_spec_accepts_namespaced_pkgid
+  stdout ───
+
+    running 1 test
+    running `/workspace/repo/target/debug/cargo generate-lockfile`
+    running `/workspace/repo/target/debug/cargo update 'path+file:///workspace/repo/target/tmp/cit/t0/foo#foo::bar@0.0.1'`
+    test open_namespaces::update_spec_accepts_namespaced_pkgid ... FAILED
+
+    failures:
+
+    failures:
+        open_namespaces::update_spec_accepts_namespaced_pkgid
+
+    test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3468 filtered out; finished in 0.38s
+
+  stderr ───
+    thread 'open_namespaces::update_spec_accepts_namespaced_pkgid' panicked at tests/testsuite/open_namespaces.rs:417:10:
+
+    test failed running `/workspace/repo/target/debug/cargo update 'path+file:///workspace/repo/target/tmp/cit/t0/foo#foo::bar@0.0.1'`
+    error: process exited with code 101 (expected 0)
+    --- stdout
+
+    --- stderr
+    error: invalid package ID specification: `path+file:///workspace/repo/target/tmp/cit/t0/foo#foo::bar@0.0.1`
+
+    Caused by:
+      expected a version like "1.32"
+
+    note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+        PASS [   0.304s] (9/9) cargo::testsuite open_namespaces::within_namespace_requires_feature
+────────────
+     Summary [   4.189s] 9 tests run: 7 passed, 2 failed, 3460 skipped
+        FAIL [   0.585s] (7/9) cargo::testsuite open_namespaces::update_spec_accepts_namespaced_name
+        FAIL [   0.410s] (8/9) cargo::testsuite open_namespaces::update_spec_accepts_namespaced_pkgid
+error: test run failed
+reward=0 graded=9 found=9 failed=2 parsed=9 framework=cargo exit_code=100

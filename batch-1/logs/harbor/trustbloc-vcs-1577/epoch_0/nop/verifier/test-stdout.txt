@@ -1,0 +1,26 @@
+patching file api/spec/openapi.gen.go
+patching file pkg/restapi/v1/issuer/controller_test.go
+patching file pkg/service/wellknown/provider/wellknown_service_test.go
+patching file test/bdd/fixtures/profile/profiles.json
+patching file test/bdd/pkg/v1/oidc4vc/oidc4vci.go
+# github.com/trustbloc/vcs/pkg/service/wellknown/provider [github.com/trustbloc/vcs/pkg/service/wellknown/provider.test]
+pkg/service/wellknown/provider/wellknown_service_test.go:201:84: type string of res.CredentialIssuer does not match *T (cannot infer T)
+pkg/service/wellknown/provider/wellknown_service_test.go:202:67: type string of res.AuthorizationEndpoint does not match *T (cannot infer T)
+pkg/service/wellknown/provider/wellknown_service_test.go:203:68: type string of res.CredentialEndpoint does not match *T (cannot infer T)
+pkg/service/wellknown/provider/wellknown_service_test.go:205:20: res.DeferredCredentialEndpoint undefined (type *"github.com/trustbloc/vcs/pkg/restapi/v1/issuer".WellKnownOpenIDIssuerConfiguration has no field or method DeferredCredentialEndpoint)
+pkg/service/wellknown/provider/wellknown_service_test.go:206:20: res.NotificationEndpoint undefined (type *"github.com/trustbloc/vcs/pkg/restapi/v1/issuer".WellKnownOpenIDIssuerConfiguration has no field or method NotificationEndpoint)
+pkg/service/wellknown/provider/wellknown_service_test.go:207:20: res.CredentialResponseEncryption undefined (type *"github.com/trustbloc/vcs/pkg/restapi/v1/issuer".WellKnownOpenIDIssuerConfiguration has no field or method CredentialResponseEncryption)
+pkg/service/wellknown/provider/wellknown_service_test.go:208:20: res.CredentialIdentifiersSupported undefined (type *"github.com/trustbloc/vcs/pkg/restapi/v1/issuer".WellKnownOpenIDIssuerConfiguration has no field or method CredentialIdentifiersSupported)
+pkg/service/wellknown/provider/wellknown_service_test.go:209:20: res.SignedMetadata undefined (type *"github.com/trustbloc/vcs/pkg/restapi/v1/issuer".WellKnownOpenIDIssuerConfiguration has no field or method SignedMetadata)
+pkg/service/wellknown/provider/wellknown_service_test.go:211:20: res.CredentialConfigurationsSupported undefined (type *"github.com/trustbloc/vcs/pkg/restapi/v1/issuer".WellKnownOpenIDIssuerConfiguration has no field or method CredentialConfigurationsSupported)
+pkg/service/wellknown/provider/wellknown_service_test.go:213:68: res.CredentialConfigurationsSupported undefined (type *"github.com/trustbloc/vcs/pkg/restapi/v1/issuer".WellKnownOpenIDIssuerConfiguration has no field or method CredentialConfigurationsSupported)
+pkg/service/wellknown/provider/wellknown_service_test.go:213:68: too many errors
+# github.com/trustbloc/vcs/pkg/restapi/v1/issuer [github.com/trustbloc/vcs/pkg/restapi/v1/issuer.test]
+pkg/restapi/v1/issuer/controller_test.go:1585:40: undefined: profileapi.CredentialsSupported
+pkg/restapi/v1/issuer/controller_test.go:1631:23: cannot use lo.ToPtr("https://example.com") (value of type *string) as string value in struct literal
+pkg/restapi/v1/issuer/controller_test.go:1803:44: invalid operation: cannot indirect resp.CredentialAckEndpoint (variable of type string)
+pkg/restapi/v1/issuer/controller_test.go:1804:43: invalid operation: cannot indirect resp.GrantTypesSupported (variable of type []string)
+pkg/restapi/v1/issuer/controller_test.go:1805:39: invalid operation: cannot indirect resp.ScopesSupported (variable of type []string)
+FAIL	github.com/trustbloc/vcs/pkg/restapi/v1/issuer [build failed]
+FAIL	github.com/trustbloc/vcs/pkg/service/wellknown/provider [build failed]
+reward=0 graded=98 found=98 failed=98 parsed=2 framework=go exit_code=1

@@ -1,0 +1,29 @@
+{
+    "id": "ab7d8f13-714e-4872-8c00-07a4cbbbd717",
+    "started_at": "2026-07-04T15:36:55.440288",
+    "finished_at": "2026-07-04T15:37:20.886767",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__pixijs-pixijs-8864": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "pixijs-pixijs-8864__BeRCPps"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+patching file pkg/provider/vault/vault_test.go
+# github.com/external-secrets/external-secrets/pkg/provider/vault [github.com/external-secrets/external-secrets/pkg/provider/vault.test]
+pkg/provider/vault/vault_test.go:528:28: s.Spec.Provider.Vault.ClientTLS undefined (type *"github.com/external-secrets/external-secrets/apis/externalsecrets/v1beta1".VaultProvider has no field or method ClientTLS)
+pkg/provider/vault/vault_test.go:528:50: undefined: esv1beta1.VaultClientTLS
+pkg/provider/vault/vault_test.go:559:28: s.Spec.Provider.Vault.ClientTLS undefined (type *"github.com/external-secrets/external-secrets/apis/externalsecrets/v1beta1".VaultProvider has no field or method ClientTLS)
+pkg/provider/vault/vault_test.go:559:50: undefined: esv1beta1.VaultClientTLS
+pkg/provider/vault/vault_test.go:1551:23: undefined: esv1beta1.VaultClientTLS
+pkg/provider/vault/vault_test.go:1725:26: undefined: esv1beta1.VaultClientTLS
+pkg/provider/vault/vault_test.go:1746:26: undefined: esv1beta1.VaultClientTLS
+pkg/provider/vault/vault_test.go:1764:26: undefined: esv1beta1.VaultClientTLS
+pkg/provider/vault/vault_test.go:1783:8: unknown field ClientTLS in struct literal of type "github.com/external-secrets/external-secrets/apis/externalsecrets/v1beta1".VaultProvider
+FAIL	github.com/external-secrets/external-secrets/pkg/provider/vault [build failed]
+reward=0 graded=111 found=111 failed=111 parsed=1 framework=go exit_code=1

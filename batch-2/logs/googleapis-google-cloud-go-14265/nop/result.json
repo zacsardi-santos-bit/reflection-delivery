@@ -1,0 +1,29 @@
+{
+    "id": "3a5abbd7-5318-473b-a986-2920f38baf31",
+    "started_at": "2026-07-06T12:17:16.851042",
+    "finished_at": "2026-07-06T12:17:44.957926",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__googleapis-google-cloud-go-14265": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "googleapis-google-cloud-go-14265__gTqpZXb"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

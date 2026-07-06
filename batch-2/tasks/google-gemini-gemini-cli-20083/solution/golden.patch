@@ -1,0 +1,414 @@
+diff --git a/docs/cli/plan-mode.md b/docs/cli/plan-mode.md
+index de7f1200a..8e309f2a3 100644
+--- a/docs/cli/plan-mode.md
++++ b/docs/cli/plan-mode.md
+@@ -143,13 +143,27 @@ based on the task description.
+ 
+ ### Customizing Policies
+ 
+-Plan Mode is designed to be read-only by default to ensure safety during the
+-research phase. However, you may occasionally need to allow specific tools to
+-assist in your planning.
++Plan Mode's default tool restrictions are managed by the [policy engine] and
++defined in the built-in [`plan.toml`] file. The built-in policy (Tier 1)
++enforces the read-only state, but you can customize these rules by creating your
++own policies in your `~/.gemini/policies/` directory (Tier 2).
+ 
+-Because user policies (Tier 2) have a higher base priority than built-in
+-policies (Tier 1), you can override Plan Mode's default restrictions by creating
+-a rule in your `~/.gemini/policies/` directory.
++#### Example: Automatically approve read-only MCP tools
++
++By default, read-only MCP tools require user confirmation in Plan Mode. You can
++use `toolAnnotations` and the `mcpName` wildcard to customize this behavior for
++your specific environment.
++
++`~/.gemini/policies/mcp-read-only.toml`
++
++```toml
++[[rule]]
++mcpName = "*"
++toolAnnotations = { readOnlyHint = true }
++decision = "allow"
++priority = 100
++modes = ["plan"]
++```
+ 
+ #### Example: Allow git commands in Plan Mode
+ 
+@@ -243,3 +257,5 @@ argsPattern = "\"file_path\":\"[^\"]+[\\\\/]+\\.gemini[\\\\/]+plans[\\\\/]+[\\w-
+ [`exit_plan_mode`]: /docs/tools/planning.md#2-exit_plan_mode-exitplanmode
+ [`ask_user`]: /docs/tools/ask-user.md
+ [YOLO mode]: /docs/reference/configuration.md#command-line-arguments
++[`plan.toml`]:
++  https://github.com/google-gemini/gemini-cli/blob/main/packages/core/src/policy/policies/plan.toml
+diff --git a/docs/reference/policy-engine.md b/docs/reference/policy-engine.md
+index 894bdcdad..a12363458 100644
+--- a/docs/reference/policy-engine.md
++++ b/docs/reference/policy-engine.md
+@@ -205,6 +205,10 @@ toolName = "run_shell_command"
+ # to form a composite name like "mcpName__toolName".
+ mcpName = "my-custom-server"
+ 
++# (Optional) Metadata hints provided by the tool. A rule matches if all
++# key-value pairs provided here are present in the tool's annotations.
++toolAnnotations = { readOnlyHint = true }
++
+ # (Optional) A regex to match against the tool's arguments.
+ argsPattern = '"command":"(git|npm)'
+ 
+diff --git a/packages/core/src/config/config.ts b/packages/core/src/config/config.ts
+index 45a5f5fd7..d20d7c716 100644
+--- a/packages/core/src/config/config.ts
++++ b/packages/core/src/config/config.ts
+@@ -1597,7 +1597,9 @@ export class Config {
+    *
+    * May change over time.
+    */
+-  getExcludeTools(): Set<string> | undefined {
++  getExcludeTools(
++    toolMetadata?: Map<string, Record<string, unknown>>,
++  ): Set<string> | undefined {
+     // Right now this is present for backward compatibility with settings.json exclude
+     const excludeToolsSet = new Set([...(this.excludeTools ?? [])]);
+     for (const extension of this.getExtensionLoader().getExtensions()) {
+@@ -1609,7 +1611,7 @@ export class Config {
+       }
+     }
+ 
+-    const policyExclusions = this.policyEngine.getExcludedTools();
++    const policyExclusions = this.policyEngine.getExcludedTools(toolMetadata);
+     for (const tool of policyExclusions) {
+       excludeToolsSet.add(tool);
+     }
+diff --git a/packages/core/src/confirmation-bus/message-bus.ts b/packages/core/src/confirmation-bus/message-bus.ts
+index 1600f2f5b..3dd61995a 100644
+--- a/packages/core/src/confirmation-bus/message-bus.ts
++++ b/packages/core/src/confirmation-bus/message-bus.ts
+@@ -55,6 +55,7 @@ export class MessageBus extends EventEmitter {
+         const { decision } = await this.policyEngine.check(
+           message.toolCall,
+           message.serverName,
++          message.toolAnnotations,
+         );
+ 
+         switch (decision) {
+diff --git a/packages/core/src/confirmation-bus/types.ts b/packages/core/src/confirmation-bus/types.ts
+index e02c77307..aefafe0fa 100644
+--- a/packages/core/src/confirmation-bus/types.ts
++++ b/packages/core/src/confirmation-bus/types.ts
+@@ -34,6 +34,10 @@ export interface ToolConfirmationRequest {
+   toolCall: FunctionCall;
+   correlationId: string;
+   serverName?: string;
++  /**
++   * Optional tool annotations (e.g., readOnlyHint, destructiveHint) from MCP.
++   */
++  toolAnnotations?: Record<string, unknown>;
+   /**
+    * Optional rich details for the confirmation UI (diffs, counts, etc.)
+    */
+diff --git a/packages/core/src/core/coreToolScheduler.ts b/packages/core/src/core/coreToolScheduler.ts
+index ea2cdb701..c2381e4b4 100644
+--- a/packages/core/src/core/coreToolScheduler.ts
++++ b/packages/core/src/core/coreToolScheduler.ts
+@@ -624,10 +624,11 @@ export class CoreToolScheduler {
+           toolCall.tool instanceof DiscoveredMCPTool
+             ? toolCall.tool.serverName
+             : undefined;
++        const toolAnnotations = toolCall.tool.toolAnnotations;
+ 
+         const { decision, rule } = await this.config
+           .getPolicyEngine()
+-          .check(toolCallForPolicy, serverName);
++          .check(toolCallForPolicy, serverName, toolAnnotations);
+ 
+         if (decision === PolicyDecision.DENY) {
+           const { errorMessage, errorType } = getPolicyDenialError(
+diff --git a/packages/core/src/policy/policies/plan.toml b/packages/core/src/policy/policies/plan.toml
+index e40e31643..1aff9259f 100644
+--- a/packages/core/src/policy/policies/plan.toml
++++ b/packages/core/src/policy/policies/plan.toml
+@@ -36,6 +36,13 @@ deny_message = "You are in Plan Mode with access to read-only tools. Execution o
+ 
+ # Explicitly Allow Read-Only Tools in Plan mode.
+ 
++[[rule]]
++mcpName = "*"
++toolAnnotations = { readOnlyHint = true }
++decision = "ask_user"
++priority = 70
++modes = ["plan"]
++
+ [[rule]]
+ toolName = ["glob", "grep_search", "list_directory", "read_file", "google_web_search", "activate_skill"]
+ decision = "allow"
+diff --git a/packages/core/src/policy/policy-engine.ts b/packages/core/src/policy/policy-engine.ts
+index 10cf46894..b8050d2c1 100644
+--- a/packages/core/src/policy/policy-engine.ts
++++ b/packages/core/src/policy/policy-engine.ts
+@@ -627,8 +627,15 @@ export class PolicyEngine {
+    * 1. Global rules (no argsPattern)
+    * 2. Priority order (higher priority wins)
+    * 3. Non-interactive mode (ASK_USER becomes DENY)
++   * 4. Annotation-based rules (when toolMetadata is provided)
++   *
++   * @param toolMetadata Optional map of tool names to their annotations.
++   *   When provided, annotation-based rules can match tools by their metadata.
++   *   When not provided, rules with toolAnnotations are skipped (conservative fallback).
+    */
+-  getExcludedTools(): Set<string> {
++  getExcludedTools(
++    toolMetadata?: Map<string, Record<string, unknown>>,
++  ): Set<string> {
+     const excludedTools = new Set<string>();
+     const processedTools = new Set<string>();
+     let globalVerdict: PolicyDecision | undefined;
+@@ -648,6 +655,53 @@ export class PolicyEngine {
+         }
+       }
+ 
++      // Handle annotation-based rules
++      if (rule.toolAnnotations) {
++        if (!toolMetadata) {
++          // Without metadata, we can't evaluate annotation rules — skip (conservative fallback)
++          continue;
++        }
++        // Iterate over all known tools and check if their annotations match this rule
++        for (const [toolName, annotations] of toolMetadata) {
++          if (processedTools.has(toolName)) {
++            continue;
++          }
++          // Check if annotations match the rule's toolAnnotations (partial match)
++          let annotationsMatch = true;
++          for (const [key, value] of Object.entries(rule.toolAnnotations)) {
++            if (annotations[key] !== value) {
++              annotationsMatch = false;
++              break;
++            }
++          }
++          if (!annotationsMatch) {
++            continue;
++          }
++          // Check if the tool name matches the rule's toolName pattern (if any)
++          if (rule.toolName) {
++            if (isWildcardPattern(rule.toolName)) {
++              if (!matchesWildcard(rule.toolName, toolName, undefined)) {
++                continue;
++              }
++            } else if (toolName !== rule.toolName) {
++              continue;
++            }
++          }
++          // Determine decision considering global verdict
++          let decision: PolicyDecision;
++          if (globalVerdict !== undefined) {
++            decision = globalVerdict;
++          } else {
++            decision = rule.decision;
++          }
++          if (decision === PolicyDecision.DENY) {
++            excludedTools.add(toolName);
++          }
++          processedTools.add(toolName);
++        }
++        continue;
++      }
++
+       // Handle Global Rules
+       if (!rule.toolName) {
+         if (globalVerdict === undefined) {
+diff --git a/packages/core/src/scheduler/policy.ts b/packages/core/src/scheduler/policy.ts
+index 579f081d2..ad4aa745b 100644
+--- a/packages/core/src/scheduler/policy.ts
++++ b/packages/core/src/scheduler/policy.ts
+@@ -54,11 +54,14 @@ export async function checkPolicy(
+       ? toolCall.tool.serverName
+       : undefined;
+ 
++  const toolAnnotations = toolCall.tool.toolAnnotations;
++
+   const result = await config
+     .getPolicyEngine()
+     .check(
+       { name: toolCall.request.name, args: toolCall.request.args },
+       serverName,
++      toolAnnotations,
+     );
+ 
+   const { decision } = result;
+diff --git a/packages/core/src/tools/mcp-client.ts b/packages/core/src/tools/mcp-client.ts
+index 58b211f46..f0a9a6be8 100644
+--- a/packages/core/src/tools/mcp-client.ts
++++ b/packages/core/src/tools/mcp-client.ts
+@@ -33,7 +33,6 @@ import {
+   PromptListChangedNotificationSchema,
+   ProgressNotificationSchema,
+ } from '@modelcontextprotocol/sdk/types.js';
+-import { ApprovalMode, PolicyDecision } from '../policy/types.js';
+ import { parse } from 'shell-quote';
+ import type { Config, MCPServerConfig } from '../config/config.js';
+ import { AuthProviderType } from '../config/config.js';
+@@ -1078,8 +1077,9 @@ export async function discoverTools(
+           options?.progressReporter,
+         );
+ 
+-        // Extract readOnlyHint from annotations
+-        const isReadOnly = toolDef.annotations?.readOnlyHint === true;
++        // Extract annotations from the tool definition
++        const annotations = toolDef.annotations;
++        const isReadOnly = annotations?.readOnlyHint === true;
+ 
+         const tool = new DiscoveredMCPTool(
+           mcpCallableTool,
+@@ -1094,19 +1094,9 @@ export async function discoverTools(
+           cliConfig,
+           mcpServerConfig.extension?.name,
+           mcpServerConfig.extension?.id,
++          annotations as Record<string, unknown> | undefined,
+         );
+ 
+-        // If the tool is read-only, allow it in Plan mode
+-        if (isReadOnly) {
+-          cliConfig.getPolicyEngine().addRule({
+-            toolName: tool.getFullyQualifiedName(),
+-            decision: PolicyDecision.ASK_USER,
+-            priority: 50, // Match priority of built-in plan tools
+-            modes: [ApprovalMode.PLAN],
+-            source: `MCP Annotation (readOnlyHint) - ${mcpServerName}`,
+-          });
+-        }
+-
+         discoveredTools.push(tool);
+       } catch (error) {
+         coreEvents.emitFeedback(
+diff --git a/packages/core/src/tools/mcp-tool.ts b/packages/core/src/tools/mcp-tool.ts
+index f80eebe27..e0bd04dd2 100644
+--- a/packages/core/src/tools/mcp-tool.ts
++++ b/packages/core/src/tools/mcp-tool.ts
+@@ -82,6 +82,7 @@ export class DiscoveredMCPToolInvocation extends BaseToolInvocation<
+     private readonly cliConfig?: Config,
+     private readonly toolDescription?: string,
+     private readonly toolParameterSchema?: unknown,
++    toolAnnotationsData?: Record<string, unknown>,
+   ) {
+     // Use composite format for policy checks: serverName__toolName
+     // This enables server wildcards (e.g., "google-workspace__*")
+@@ -93,6 +94,7 @@ export class DiscoveredMCPToolInvocation extends BaseToolInvocation<
+       `${serverName}${MCP_QUALIFIED_NAME_SEPARATOR}${serverToolName}`,
+       displayName,
+       serverName,
++      toolAnnotationsData,
+     );
+   }
+ 
+@@ -257,6 +259,7 @@ export class DiscoveredMCPTool extends BaseDeclarativeTool<
+     private readonly cliConfig?: Config,
+     override readonly extensionName?: string,
+     override readonly extensionId?: string,
++    private readonly _toolAnnotations?: Record<string, unknown>,
+   ) {
+     super(
+       nameOverride ?? generateValidName(serverToolName),
+@@ -282,6 +285,10 @@ export class DiscoveredMCPTool extends BaseDeclarativeTool<
+     return super.isReadOnly;
+   }
+ 
++  override get toolAnnotations(): Record<string, unknown> | undefined {
++    return this._toolAnnotations;
++  }
++
+   getFullyQualifiedPrefix(): string {
+     return `${this.serverName}${MCP_QUALIFIED_NAME_SEPARATOR}`;
+   }
+@@ -304,6 +311,7 @@ export class DiscoveredMCPTool extends BaseDeclarativeTool<
+       this.cliConfig,
+       this.extensionName,
+       this.extensionId,
++      this._toolAnnotations,
+     );
+   }
+ 
+@@ -324,6 +332,7 @@ export class DiscoveredMCPTool extends BaseDeclarativeTool<
+       this.cliConfig,
+       this.description,
+       this.parameterSchema,
++      this._toolAnnotations,
+     );
+   }
+ }
+diff --git a/packages/core/src/tools/tool-registry.ts b/packages/core/src/tools/tool-registry.ts
+index 95bac200b..f3a509fec 100644
+--- a/packages/core/src/tools/tool-registry.ts
++++ b/packages/core/src/tools/tool-registry.ts
+@@ -441,13 +441,25 @@ export class ToolRegistry {
+     }
+   }
+ 
++  private buildToolMetadata(): Map<string, Record<string, unknown>> {
++    const toolMetadata = new Map<string, Record<string, unknown>>();
++    for (const [name, tool] of this.allKnownTools) {
++      if (tool.toolAnnotations) {
++        toolMetadata.set(name, tool.toolAnnotations);
++      }
++    }
++    return toolMetadata;
++  }
++
+   /**
+    * @returns All the tools that are not excluded.
+    */
+   private getActiveTools(): AnyDeclarativeTool[] {
++    const toolMetadata = this.buildToolMetadata();
+     const excludedTools =
+-      this.expandExcludeToolsWithAliases(this.config.getExcludeTools()) ??
+-      new Set([]);
++      this.expandExcludeToolsWithAliases(
++        this.config.getExcludeTools(toolMetadata),
++      ) ?? new Set([]);
+     const activeTools: AnyDeclarativeTool[] = [];
+     for (const tool of this.allKnownTools.values()) {
+       if (this.isActiveTool(tool, excludedTools)) {
+@@ -487,8 +499,9 @@ export class ToolRegistry {
+     excludeTools?: Set<string>,
+   ): boolean {
+     excludeTools ??=
+-      this.expandExcludeToolsWithAliases(this.config.getExcludeTools()) ??
+-      new Set([]);
++      this.expandExcludeToolsWithAliases(
++        this.config.getExcludeTools(this.buildToolMetadata()),
++      ) ?? new Set([]);
+ 
+     // Filter tools in Plan Mode to only allow approved read-only tools.
+     const isPlanMode =
+diff --git a/packages/core/src/tools/tools.ts b/packages/core/src/tools/tools.ts
+index e06dff160..d847b596e 100644
+--- a/packages/core/src/tools/tools.ts
++++ b/packages/core/src/tools/tools.ts
+@@ -91,6 +91,7 @@ export abstract class BaseToolInvocation<
+     readonly _toolName?: string,
+     readonly _toolDisplayName?: string,
+     readonly _serverName?: string,
++    readonly _toolAnnotations?: Record<string, unknown>,
+   ) {}
+ 
+   abstract getDescription(): string;
+@@ -199,6 +200,7 @@ export abstract class BaseToolInvocation<
+         args: this.params as Record<string, unknown>,
+       },
+       serverName: this._serverName,
++      toolAnnotations: this._toolAnnotations,
+     };
+ 
+     return new Promise<'ALLOW' | 'DENY' | 'ASK_USER'>((resolve) => {
+@@ -372,6 +374,10 @@ export abstract class DeclarativeTool<
+     return READ_ONLY_KINDS.includes(this.kind);
+   }
+ 
++  get toolAnnotations(): Record<string, unknown> | undefined {
++    return undefined;
++  }
++
+   getSchema(_modelId?: string): FunctionDeclaration {
+     return {
+       name: this.name,

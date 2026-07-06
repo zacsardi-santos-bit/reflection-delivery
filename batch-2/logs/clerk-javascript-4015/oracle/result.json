@@ -1,0 +1,29 @@
+{
+    "id": "4139200a-70c5-487f-ae89-8b2bf8f75dc2",
+    "started_at": "2026-07-04T15:37:43.201441",
+    "finished_at": "2026-07-04T15:38:09.898021",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__clerk-javascript-4015": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "clerk-javascript-4015__yYqBoEL"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

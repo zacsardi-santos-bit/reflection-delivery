@@ -1,0 +1,33 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/providers/airbyte/tests/unit/airbyte/operators/test_airbyte.py /workspace/repo/providers/airbyte/tests/unit/airbyte/triggers/test_airbyte.py -v --skip-db-tests",
+  "test_files": [
+    "providers/airbyte/tests/unit/airbyte/operators/test_airbyte.py",
+    "providers/airbyte/tests/unit/airbyte/triggers/test_airbyte.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "providers.airbyte.tests.unit.airbyte.operators.test_airbyte.TestAirbyteTriggerSyncOp::test_execute_complete[cancelled-True-Job Cancelled]",
+    "providers.airbyte.tests.unit.airbyte.operators.test_airbyte.TestAirbyteTriggerSyncOp::test_on_kill_cancel_failure",
+    "providers.airbyte.tests.unit.airbyte.operators.test_airbyte.TestAirbyteTriggerSyncOp::test_execute_complete_timeout_cancels_job",
+    "providers.airbyte.tests.unit.airbyte.operators.test_airbyte.TestAirbyteTriggerSyncOp::test_execute_complete_timeout_cancel_job_does_not_mask_original_error",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_serialization",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_run_sync_trigger",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_job_timeout",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_job_run_execution_timeout"
+  ],
+  "PASS_TO_PASS": [
+    "providers.airbyte.tests.unit.airbyte.operators.test_airbyte.TestAirbyteTriggerSyncOp::test_execute",
+    "providers.airbyte.tests.unit.airbyte.operators.test_airbyte.TestAirbyteTriggerSyncOp::test_execute_complete[succeeded-False-Job Succeeded]",
+    "providers.airbyte.tests.unit.airbyte.operators.test_airbyte.TestAirbyteTriggerSyncOp::test_execute_complete[error-True-Job failed]",
+    "providers.airbyte.tests.unit.airbyte.operators.test_airbyte.TestAirbyteTriggerSyncOp::test_on_kill",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_job_for_terminal_status_success[succeeded-success-Job run 1234 has completed successfully.]",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_job_for_terminal_status_cancelled[cancelled-cancelled-Job run 1234 has been cancelled.]",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_job_for_terminal_status_error[failed-error-Job run 1234 has failed.]",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_job_exception",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_terminal_yields_only_once",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_job_is_still_running_success[succeeded-False]",
+    "providers.airbyte.tests.unit.airbyte.triggers.test_airbyte.TestAirbyteSyncTrigger::test_airbyte_sync_run_is_still_running[running-True]"
+  ]
+}

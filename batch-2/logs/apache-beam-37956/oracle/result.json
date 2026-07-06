@@ -1,0 +1,29 @@
+{
+    "id": "2c774ce9-f480-44cb-bf3e-947ad501ed2d",
+    "started_at": "2026-07-06T12:18:20.564480",
+    "finished_at": "2026-07-06T12:18:55.674945",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__apache-beam-37956": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "apache-beam-37956__r7i5on2"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

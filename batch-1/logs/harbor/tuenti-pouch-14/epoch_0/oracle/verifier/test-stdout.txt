@@ -1,0 +1,40 @@
+patching file pouchfile_test.go
+patching file state_test.go
+{"Time":"2026-06-29T15:28:47.755537761Z","Action":"start","Package":"github.com/tuenti/pouch"}
+{"Time":"2026-06-29T15:28:47.791568984Z","Action":"run","Package":"github.com/tuenti/pouch","Test":"TestPouchRun"}
+{"Time":"2026-06-29T15:28:47.791661657Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestPouchRun","Output":"=== RUN   TestPouchRun\n"}
+{"Time":"2026-06-29T15:28:47.796510384Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestPouchRun","Output":"2026/06/29 15:28:47 No secret to update\n"}
+{"Time":"2026-06-29T15:28:47.797038337Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestPouchRun","Output":"--- PASS: TestPouchRun (0.01s)\n"}
+{"Time":"2026-06-29T15:28:47.79716072Z","Action":"pass","Package":"github.com/tuenti/pouch","Test":"TestPouchRun","Elapsed":0.01}
+{"Time":"2026-06-29T15:28:47.797237722Z","Action":"run","Package":"github.com/tuenti/pouch","Test":"TestPouchWatch"}
+{"Time":"2026-06-29T15:28:47.797250502Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestPouchWatch","Output":"=== RUN   TestPouchWatch\n"}
+{"Time":"2026-06-29T15:28:47.798911592Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestPouchWatch","Output":"--- PASS: TestPouchWatch (0.00s)\n"}
+{"Time":"2026-06-29T15:28:47.798964274Z","Action":"pass","Package":"github.com/tuenti/pouch","Test":"TestPouchWatch","Elapsed":0}
+{"Time":"2026-06-29T15:28:47.798979164Z","Action":"run","Package":"github.com/tuenti/pouch","Test":"TestDirPerms"}
+{"Time":"2026-06-29T15:28:47.798989744Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestDirPerms","Output":"=== RUN   TestDirPerms\n"}
+{"Time":"2026-06-29T15:28:47.799149168Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestDirPerms","Output":"--- PASS: TestDirPerms (0.00s)\n"}
+{"Time":"2026-06-29T15:28:47.799268711Z","Action":"pass","Package":"github.com/tuenti/pouch","Test":"TestDirPerms","Elapsed":0}
+{"Time":"2026-06-29T15:28:47.799300162Z","Action":"run","Package":"github.com/tuenti/pouch","Test":"TestResolveDataTemplates"}
+{"Time":"2026-06-29T15:28:47.799314322Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestResolveDataTemplates","Output":"=== RUN   TestResolveDataTemplates\n"}
+{"Time":"2026-06-29T15:28:47.799960528Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestResolveDataTemplates","Output":"--- PASS: TestResolveDataTemplates (0.00s)\n"}
+{"Time":"2026-06-29T15:28:47.799989289Z","Action":"pass","Package":"github.com/tuenti/pouch","Test":"TestResolveDataTemplates","Elapsed":0}
+{"Time":"2026-06-29T15:28:47.800080371Z","Action":"run","Package":"github.com/tuenti/pouch","Test":"TestLoadPouchfile"}
+{"Time":"2026-06-29T15:28:47.800115132Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestLoadPouchfile","Output":"=== RUN   TestLoadPouchfile\n"}
+{"Time":"2026-06-29T15:28:47.801905915Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestLoadPouchfile","Output":"--- PASS: TestLoadPouchfile (0.00s)\n"}
+{"Time":"2026-06-29T15:28:47.801947226Z","Action":"pass","Package":"github.com/tuenti/pouch","Test":"TestLoadPouchfile","Elapsed":0}
+{"Time":"2026-06-29T15:28:47.801972367Z","Action":"run","Package":"github.com/tuenti/pouch","Test":"TestWrongPouchfile"}
+{"Time":"2026-06-29T15:28:47.802032448Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestWrongPouchfile","Output":"=== RUN   TestWrongPouchfile\n"}
+{"Time":"2026-06-29T15:28:47.80336796Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestWrongPouchfile","Output":"--- PASS: TestWrongPouchfile (0.00s)\n"}
+{"Time":"2026-06-29T15:28:47.803398101Z","Action":"pass","Package":"github.com/tuenti/pouch","Test":"TestWrongPouchfile","Elapsed":0}
+{"Time":"2026-06-29T15:28:47.803421842Z","Action":"run","Package":"github.com/tuenti/pouch","Test":"TestSortingFilesUsing"}
+{"Time":"2026-06-29T15:28:47.803470113Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestSortingFilesUsing","Output":"=== RUN   TestSortingFilesUsing\n"}
+{"Time":"2026-06-29T15:28:47.803496914Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestSortingFilesUsing","Output":"--- PASS: TestSortingFilesUsing (0.00s)\n"}
+{"Time":"2026-06-29T15:28:47.803596146Z","Action":"pass","Package":"github.com/tuenti/pouch","Test":"TestSortingFilesUsing","Elapsed":0}
+{"Time":"2026-06-29T15:28:47.803649727Z","Action":"run","Package":"github.com/tuenti/pouch","Test":"TestFilesUsingBySecrets"}
+{"Time":"2026-06-29T15:28:47.803667038Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestFilesUsingBySecrets","Output":"=== RUN   TestFilesUsingBySecrets\n"}
+{"Time":"2026-06-29T15:28:47.804940849Z","Action":"output","Package":"github.com/tuenti/pouch","Test":"TestFilesUsingBySecrets","Output":"--- PASS: TestFilesUsingBySecrets (0.00s)\n"}
+{"Time":"2026-06-29T15:28:47.805043211Z","Action":"pass","Package":"github.com/tuenti/pouch","Test":"TestFilesUsingBySecrets","Elapsed":0}
+{"Time":"2026-06-29T15:28:47.805097693Z","Action":"output","Package":"github.com/tuenti/pouch","Output":"PASS\n"}
+{"Time":"2026-06-29T15:28:47.806135738Z","Action":"output","Package":"github.com/tuenti/pouch","Output":"ok  \tgithub.com/tuenti/pouch\t0.050s\n"}
+{"Time":"2026-06-29T15:28:47.806168898Z","Action":"pass","Package":"github.com/tuenti/pouch","Elapsed":0.051}
+reward=1 graded=8 found=8 failed=0 parsed=8 framework=go exit_code=0

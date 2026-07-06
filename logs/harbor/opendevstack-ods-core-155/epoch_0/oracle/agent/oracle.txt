@@ -1,3 +1,0 @@
-patching file .travis.yml
-patching file jenkins/webhook-proxy/Makefile
-patching file jenkins/webhook-proxy/main.go

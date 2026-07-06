@@ -1,0 +1,7 @@
+I'm worried about prompt injection in my AI CLI. Whenever the model calls a tool that reaches outside my control, like fetching a web page, running a shell command, or hitting some external service, the raw response text flows straight into the model's context. A hostile page or API reply could smuggle in something that reads like a system instruction and hijack the model's behavior, telling it to ignore its original directives and do whatever the attacker wants.
+
+So I want a protection layer that wraps all content coming back from external tools in special marker tags before it goes to the model, so there's a clear boundary between my trusted system instructions and the untrusted external stuff. Alongside that I need the system prompt updated to explicitly tell the model to ignore any commands or directives it finds inside those marker tags.
+
+One thing to keep straight: only the content headed to the model gets wrapped. The display output the user actually sees should stay exactly as-is, don't touch that.
+
+Also the wrapping has to be injection-safe against adversarial content, so if the external data itself contains the closing marker tag, that occurrence needs to be escaped so it can't be used to break out of the untrusted boundary and pretend to be trusted context again. I'd rather this live in one shared utility function that does the wrapping plus the escaping, and gets reused consistently across every tool type that pulls in external data (web fetch, shell, external calls) instead of each one reinventing it.

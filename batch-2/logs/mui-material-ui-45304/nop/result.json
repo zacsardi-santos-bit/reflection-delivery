@@ -1,0 +1,29 @@
+{
+    "id": "f515dcdc-834f-46b5-98bc-ad88f02417bf",
+    "started_at": "2026-07-04T15:37:29.231926",
+    "finished_at": "2026-07-04T15:37:47.296757",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__mui-material-ui-45304": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "mui-material-ui-45304__HvTDcPJ"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

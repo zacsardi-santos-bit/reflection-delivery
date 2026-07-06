@@ -1,0 +1,23 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/src/backend/tests/unit/services/database/test_vertex_builds.py -v",
+  "test_files": [
+    "src/backend/tests/unit/services/database/__init__.py",
+    "src/backend/tests/unit/services/database/test_vertex_builds.py",
+    "src/backend/tests/unit/test_chat_endpoint.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_log_vertex_build_basic",
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_log_vertex_build_max_global_limit",
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_log_vertex_build_max_per_vertex_limit",
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_log_vertex_build_integrity_error",
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_log_vertex_build_ordering",
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_log_vertex_build_with_different_limits[1-1]",
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_log_vertex_build_with_different_limits[5-3]",
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_log_vertex_build_with_different_limits[100-50]",
+    "src.backend.tests.unit.services.database.test_vertex_builds::test_concurrent_log_vertex_build"
+  ],
+  "PASS_TO_PASS": []
+}

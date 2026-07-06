@@ -1,5 +1,0 @@
-I'm working on the mesh service in our blockchain node and I've noticed that the layer data returned to API clients is inaccurate. When a client queries layer information, they get all blocks that were part of the layer instead of just the one block that was actually verified and applied. I need the service to surface only the single effective (applied) block per layer.
-
-On top of that, our account mesh data API is returning ATX activation events mixed in with transaction data, even when clients are only querying for account transactions. These activation events should not appear in account mesh data queries or streams at all.
-
-To support this, the mesh layer component needs a way to look up the specific block that was applied for a given layer ID. If no block has been applied yet, it should return nothing rather than an error. The service that uses this lookup should surface a clear error if the layer data itself can't be read, or if transaction data is incomplete — but it should tolerate a missing state root and still return a valid response in that case.

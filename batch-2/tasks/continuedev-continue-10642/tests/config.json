@@ -1,0 +1,37 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/openai-adapters && npx vitest run src/test/convertToolsToVercel.test.ts src/test/vercelStreamConverter.test.ts",
+  "test_files": [
+    "packages/openai-adapters/src/test/convertToolsToVercel.test.ts",
+    "packages/openai-adapters/src/test/vercelStreamConverter.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/openai-adapters/src/test/convertToolsToVercel.test.ts::convertToolsToVercelFormat converts single function tool",
+    "/workspace/repo/packages/openai-adapters/src/test/convertToolsToVercel.test.ts::convertToolsToVercelFormat preserves parameter schema structure",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart converts text-delta to chat chunk",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart converts reasoning-delta to chat chunk",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart converts tool-call to chat chunk",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart converts tool-input-delta to chat chunk",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart converts finish to usage chunk",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStream converts stream of mixed events"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/openai-adapters/src/test/convertToolsToVercel.test.ts::convertToolsToVercelFormat returns undefined for undefined tools",
+    "/workspace/repo/packages/openai-adapters/src/test/convertToolsToVercel.test.ts::convertToolsToVercelFormat returns undefined for empty tools array",
+    "/workspace/repo/packages/openai-adapters/src/test/convertToolsToVercel.test.ts::convertToolsToVercelFormat converts multiple function tools",
+    "/workspace/repo/packages/openai-adapters/src/test/convertToolsToVercel.test.ts::convertToolsToVercelFormat handles tool without description",
+    "/workspace/repo/packages/openai-adapters/src/test/convertToolsToVercel.test.ts::convertToolsToVercelFormat filters out non-function tools",
+    "/workspace/repo/packages/openai-adapters/src/test/convertToolsToVercel.test.ts::convertToolsToVercelFormat returns undefined if all tools are filtered out",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart throws error for error event",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart returns null for start-step (no OpenAI equivalent)",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart returns null for finish-step (no OpenAI equivalent)",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart returns null for tool-result (no OpenAI equivalent)",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart returns null for source",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart returns null for file",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStreamPart returns null for tool-input-start",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStream throws error when stream contains error event",
+    "/workspace/repo/packages/openai-adapters/src/test/vercelStreamConverter.test.ts::convertVercelStream filters out all non-convertible events"
+  ]
+}

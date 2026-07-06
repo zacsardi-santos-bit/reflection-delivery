@@ -1,0 +1,257 @@
+diff --git a/derive/src/rpc_trait.rs b/derive/src/rpc_trait.rs
+index 30516d6..3caf22c 100644
+--- a/derive/src/rpc_trait.rs
++++ b/derive/src/rpc_trait.rs
+@@ -3,7 +3,7 @@ use crate::rpc_attr::{AttributeKind, PubSubMethodKind, RpcMethodAttribute};
+ use crate::to_client::generate_client_module;
+ use crate::to_delegate::{generate_trait_item_method, MethodRegistration, RpcMethod};
+ use proc_macro2::{Span, TokenStream};
+-use quote::quote;
++use quote::{quote, ToTokens};
+ use std::collections::HashMap;
+ use syn::{
+ 	fold::{self, Fold},
+@@ -74,7 +74,7 @@ fn compute_method_registrations(item_trait: &syn::ItemTrait) -> Result<(Vec<Meth
+ 		.collect();
+ 	let methods = methods_result?;
+ 
+-	let mut pubsub_method_pairs: HashMap<String, (Option<RpcMethod>, Option<RpcMethod>)> = HashMap::new();
++	let mut pubsub_method_pairs: HashMap<String, (Vec<RpcMethod>, Option<RpcMethod>)> = HashMap::new();
+ 	let mut method_registrations: Vec<MethodRegistration> = Vec::new();
+ 
+ 	for method in methods.iter() {
+@@ -102,21 +102,9 @@ fn compute_method_registrations(item_trait: &syn::ItemTrait) -> Result<(Vec<Meth
+ 			} => {
+ 				let (ref mut sub, ref mut unsub) = pubsub_method_pairs
+ 					.entry(subscription_name.clone())
+-					.or_insert((None, None));
++					.or_insert((vec![], None));
+ 				match kind {
+-					PubSubMethodKind::Subscribe => {
+-						if sub.is_none() {
+-							*sub = Some(method.clone())
+-						} else {
+-							return Err(syn::Error::new_spanned(
+-								&method.trait_item,
+-								format!(
+-									"Subscription '{}' subscribe method is already defined",
+-									subscription_name
+-								),
+-							));
+-						}
+-					}
++					PubSubMethodKind::Subscribe => sub.push(method.clone()),
+ 					PubSubMethodKind::Unsubscribe => {
+ 						if unsub.is_none() {
+ 							*unsub = Some(method.clone())
+@@ -137,24 +125,42 @@ fn compute_method_registrations(item_trait: &syn::ItemTrait) -> Result<(Vec<Meth
+ 
+ 	for (name, pair) in pubsub_method_pairs {
+ 		match pair {
+-			(Some(subscribe), Some(unsubscribe)) => method_registrations.push(MethodRegistration::PubSub {
+-				name: name.clone(),
+-				subscribe: subscribe.clone(),
+-				unsubscribe: unsubscribe.clone(),
+-			}),
+-			(Some(method), None) => {
+-				return Err(syn::Error::new_spanned(
+-					&method.trait_item,
+-					format!("subscription '{}'. {}", name, MISSING_UNSUBSCRIBE_METHOD_ERR),
+-				));
++			(subscribers, Some(unsubscribe)) => {
++				if subscribers.is_empty() {
++					return Err(syn::Error::new_spanned(
++						&unsubscribe.trait_item,
++						format!("subscription '{}'. {}", name, MISSING_SUBSCRIBE_METHOD_ERR),
++					));
++				}
++
++				let mut subscriber_args = subscribers.iter().filter_map(|s| s.subscriber_arg());
++				if let Some(subscriber_arg) = subscriber_args.next() {
++					for next_method_arg in subscriber_args {
++						if next_method_arg != subscriber_arg {
++							return Err(syn::Error::new_spanned(
++								&next_method_arg,
++								format!(
++									"Inconsistent signature for 'Subscriber' argument: {}, previously defined: {}",
++									next_method_arg.clone().into_token_stream(),
++									subscriber_arg.clone().into_token_stream()
++								),
++							));
++						}
++					}
++				}
++
++				method_registrations.push(MethodRegistration::PubSub {
++					name: name.clone(),
++					subscribes: subscribers.clone(),
++					unsubscribe: unsubscribe.clone(),
++				});
+ 			}
+-			(None, Some(method)) => {
++			(_, None) => {
+ 				return Err(syn::Error::new_spanned(
+-					&method.trait_item,
+-					format!("subscription '{}'. {}", name, MISSING_SUBSCRIBE_METHOD_ERR),
++					&item_trait,
++					format!("subscription '{}'. {}", name, MISSING_UNSUBSCRIBE_METHOD_ERR),
+ 				));
+ 			}
+-			(None, None) => unreachable!(),
+ 		}
+ 	}
+ 
+diff --git a/derive/src/to_client.rs b/derive/src/to_client.rs
+index 4de04ac..f622a3b 100644
+--- a/derive/src/to_client.rs
++++ b/derive/src/to_client.rs
+@@ -111,26 +111,28 @@ fn generate_client_methods(methods: &[MethodRegistration]) -> Result<Vec<syn::Im
+ 			}
+ 			MethodRegistration::PubSub {
+ 				name: subscription,
+-				subscribe,
++				subscribes,
+ 				unsubscribe,
+ 			} => {
+-				let attrs = get_doc_comments(&subscribe.trait_item.attrs);
+-				let name = &subscribe.trait_item.sig.ident;
+-				let mut args = compute_args(&subscribe.trait_item).into_iter();
+-				let returns = compute_subscription_type(&args.next().unwrap());
+-				let returns_str = quote!(#returns).to_string();
+-				let args = args.collect();
+-				let arg_names = compute_arg_identifiers(&args)?;
+-				let subscribe = subscribe.name();
+-				let unsubscribe = unsubscribe.name();
+-				let client_method = syn::parse_quote!(
+-					#(#attrs)*
+-					pub fn #name(&self, #args) -> impl Future<Item=TypedSubscriptionStream<#returns>, Error=RpcError> {
+-						let args_tuple = (#(#arg_names,)*);
+-						self.inner.subscribe(#subscribe, args_tuple, #subscription, #unsubscribe, #returns_str)
+-					}
+-				);
+-				client_methods.push(client_method);
++				for subscribe in subscribes {
++					let attrs = get_doc_comments(&subscribe.trait_item.attrs);
++					let name = &subscribe.trait_item.sig.ident;
++					let mut args = compute_args(&subscribe.trait_item).into_iter();
++					let returns = compute_subscription_type(&args.next().unwrap());
++					let returns_str = quote!(#returns).to_string();
++					let args = args.collect();
++					let arg_names = compute_arg_identifiers(&args)?;
++					let subscribe = subscribe.name();
++					let unsubscribe = unsubscribe.name();
++					let client_method = syn::parse_quote!(
++						#(#attrs)*
++						pub fn #name(&self, #args) -> impl Future<Item=TypedSubscriptionStream<#returns>, Error=RpcError> {
++							let args_tuple = (#(#arg_names,)*);
++							self.inner.subscribe(#subscribe, args_tuple, #subscription, #unsubscribe, #returns_str)
++						}
++					);
++					client_methods.push(client_method);
++				}
+ 			}
+ 			MethodRegistration::Notification { method, .. } => {
+ 				let attrs = get_doc_comments(&method.trait_item.attrs);
+diff --git a/derive/src/to_delegate.rs b/derive/src/to_delegate.rs
+index 9ee396c..81e8016 100644
+--- a/derive/src/to_delegate.rs
++++ b/derive/src/to_delegate.rs
+@@ -16,7 +16,7 @@ pub enum MethodRegistration {
+ 	},
+ 	PubSub {
+ 		name: String,
+-		subscribe: RpcMethod,
++		subscribes: Vec<RpcMethod>,
+ 		unsubscribe: RpcMethod,
+ 	},
+ 	Notification {
+@@ -45,13 +45,9 @@ impl MethodRegistration {
+ 			}
+ 			MethodRegistration::PubSub {
+ 				name,
+-				subscribe,
++				subscribes,
+ 				unsubscribe,
+ 			} => {
+-				let sub_name = subscribe.name();
+-				let sub_closure = subscribe.generate_delegate_closure(true)?;
+-				let sub_aliases = subscribe.generate_add_aliases();
+-
+ 				let unsub_name = unsubscribe.name();
+ 				let unsub_method_ident = unsubscribe.ident();
+ 				let unsub_closure = quote! {
+@@ -63,15 +59,29 @@ impl MethodRegistration {
+ 							.map_err(Into::into)
+ 					}
+ 				};
++
++				let mut add_subscriptions = proc_macro2::TokenStream::new();
++
++				for subscribe in subscribes.iter() {
++					let sub_name = subscribe.name();
++					let sub_closure = subscribe.generate_delegate_closure(true)?;
++					let sub_aliases = subscribe.generate_add_aliases();
++
++					add_subscriptions = quote! {
++						#add_subscriptions
++						del.add_subscription(
++							#name,
++							(#sub_name, #sub_closure),
++							(#unsub_name, #unsub_closure),
++						);
++						#sub_aliases
++					};
++				}
++
+ 				let unsub_aliases = unsubscribe.generate_add_aliases();
+ 
+ 				Ok(quote! {
+-					del.add_subscription(
+-						#name,
+-						(#sub_name, #sub_closure),
+-						(#unsub_name, #unsub_closure),
+-					);
+-					#sub_aliases
++					#add_subscriptions
+ 					#unsub_aliases
+ 				})
+ 			}
+@@ -173,6 +183,25 @@ impl RpcMethod {
+ 		self.attr.is_pubsub()
+ 	}
+ 
++	pub fn subscriber_arg(&self) -> Option<syn::Type> {
++		self.trait_item
++			.sig
++			.inputs
++			.iter()
++			.filter_map(|arg| match arg {
++				syn::FnArg::Typed(ty) => Some(*ty.ty.clone()),
++				_ => None,
++			})
++			.find(|ty| {
++				if let syn::Type::Path(path) = ty {
++					if path.path.segments.iter().any(|s| s.ident == SUBSCRIBER_TYPE_IDENT) {
++						return true;
++					}
++				}
++				false
++			})
++	}
++
+ 	fn generate_delegate_closure(&self, is_subscribe: bool) -> Result<proc_macro2::TokenStream> {
+ 		let mut param_types: Vec<_> = self
+ 			.trait_item
+@@ -289,10 +318,10 @@ impl RpcMethod {
+ 		});
+ 
+ 		let mut special_args = Vec::new();
+-		if let Some(ref meta) = meta_arg {
++		if let Some(meta) = meta_arg {
+ 			special_args.push((ident(METADATA_CLOSURE_ARG), meta.clone()));
+ 		}
+-		if let Some(ref subscriber) = subscriber_arg {
++		if let Some(subscriber) = subscriber_arg {
+ 			special_args.push((ident(SUBSCRIBER_CLOSURE_ARG), subscriber.clone()));
+ 		}
+ 		special_args

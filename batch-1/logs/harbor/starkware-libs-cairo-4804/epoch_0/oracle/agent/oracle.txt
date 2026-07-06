@@ -1,0 +1,5 @@
+patching file crates/cairo-lang-lowering/src/db.rs
+patching file crates/cairo-lang-lowering/src/optimizations/test_data/option
+patching file crates/cairo-lang-lowering/src/reorganize_blocks.rs
+patching file crates/cairo-lang-lowering/src/test.rs
+patching file crates/cairo-lang-lowering/src/test_data/lowering_phases

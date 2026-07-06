@@ -1,0 +1,51 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/core && npx vitest run --coverage.enabled=false src/agents/browser/browserManager.test.ts src/utils/browserConsent.test.ts",
+  "test_files": [
+    "packages/core/src/agents/browser/browserManager.test.ts",
+    "packages/core/src/utils/browserConsent.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should pass --no-usage-statistics and --no-performance-crux when privacy is disabled",
+    "/workspace/repo/packages/core/src/utils/browserConsent.test.ts::browserConsent should return true if consent file already exists",
+    "/workspace/repo/packages/core/src/utils/browserConsent.test.ts::browserConsent should auto-accept in non-interactive mode (no listeners)",
+    "/workspace/repo/packages/core/src/utils/browserConsent.test.ts::browserConsent should request consent interactively and return true when accepted",
+    "/workspace/repo/packages/core/src/utils/browserConsent.test.ts::browserConsent should return false when user declines consent",
+    "/workspace/repo/packages/core/src/utils/browserConsent.test.ts::browserConsent should include privacy policy link in the prompt"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP bundled path resolution should use bundled path if it exists (handles bundled CLI)",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP bundled path resolution should fall back to development path if bundled path does not exist",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager getRawMcpClient should ensure connection and return raw MCP client",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager getRawMcpClient should return cached client if already connected",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager getDiscoveredTools should return tools discovered from MCP server including visual tools",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager callTool should call tool on MCP client and return result",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager callTool should block navigate_page to disallowed domain",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager callTool should allow navigate_page to allowed domain",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager callTool should allow navigate_page to subdomain when wildcard is used",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager callTool should block new_page to disallowed domain",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should spawn npx chrome-devtools-mcp with --experimental-vision (persistent mode by default)",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should pass --host-rules when allowedDomains is configured",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should throw error when invalid domain is configured in allowedDomains",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should pass headless flag when configured",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should pass profilePath as --userDataDir when configured",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should pass --isolated when sessionMode is isolated",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should pass --autoConnect when sessionMode is existing",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should throw actionable error when existing mode connection fails",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should throw profile-lock remediation when persistent mode hits \"already running\"",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should throw timeout-specific remediation for persistent mode",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should include sessionMode in generic fallback error",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP connection should NOT pass privacy flags when usage statistics are enabled",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP isolation should use raw MCP SDK Client, not McpClient wrapper",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager MCP isolation should not use McpClientManager from config",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager close should close MCP connections",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager overlay re-injection in callTool should re-inject overlay after click in non-headless mode",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager overlay re-injection in callTool should re-inject overlay after navigate_page in non-headless mode",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager overlay re-injection in callTool should re-inject overlay after click_at, new_page, press_key, handle_dialog",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager overlay re-injection in callTool should NOT re-inject overlay after read-only tools",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager overlay re-injection in callTool should NOT re-inject overlay when headless is true",
+    "/workspace/repo/packages/core/src/agents/browser/browserManager.test.ts::BrowserManager overlay re-injection in callTool should NOT re-inject overlay when tool returns an error result"
+  ]
+}

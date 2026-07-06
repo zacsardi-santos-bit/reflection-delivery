@@ -1,0 +1,29 @@
+{
+    "id": "8104b464-2306-4c05-b004-6c1bda4a86df",
+    "started_at": "2026-07-04T15:39:38.912075",
+    "finished_at": "2026-07-04T15:40:04.436966",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__twosigma-beakerx-8148": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "twosigma-beakerx-8148__JcQSgWL"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

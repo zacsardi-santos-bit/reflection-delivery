@@ -1,8 +1,0 @@
-patching file component/wallet-cli/pkg/oidc4vci/oidc4vci_flow.go
-patching file pkg/kms/aws/service_mocks.go
-patching file pkg/kms/mocks/kms_mocks.go
-patching file pkg/restapi/v1/common/common.go
-patching file pkg/restapi/v1/issuer/controller.go
-patching file pkg/restapi/v1/oidc4ci/controller.go
-patching file pkg/service/oidc4ci/oidc4ci_service.go
-patching file pkg/service/wellknown/provider/wellknown_service.go

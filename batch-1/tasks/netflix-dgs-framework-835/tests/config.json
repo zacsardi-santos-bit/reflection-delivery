@@ -1,0 +1,32 @@
+{
+  "test_framework": "junit",
+  "test_command": "cd /workspace/repo && sed -i 's/id(\"nebula.netflixoss\") version \"10.5.1\"/\\/\\/ id(\"nebula.netflixoss\") version \"10.5.1\"/g' build.gradle.kts && sed -i 's/apply(plugin = \"nebula.netflixoss\")/\\/\\/ apply(plugin = \"nebula.netflixoss\")/g' build.gradle.kts && sed -i '86,92s/^/\\/\\/ /' build.gradle.kts && GRADLE_OPTS='-Xmx512m' ./gradlew :graphql-dgs:test --tests \"*DefaultDgsQueryExecutorTest\" --no-daemon --no-watch-fs --max-workers=1; for f in /workspace/repo/graphql-dgs/build/test-results/test/*.xml; do echo 'START_JUNIT_XML'; grep -E \"<testcase|<failure|</testcase|<testsuite|</testsuite\" \"$f\" || cat \"$f\" | head -100; done",
+  "test_files": [
+    "graphql-dgs-spring-webflux-autoconfigure/src/test/kotlin/com/netflix/graphql/dgs/webflux/MalformedQueryContentTest.kt",
+    "graphql-dgs-spring-webmvc-autoconfigure/src/test/kotlin/com/netflix/graphql/dgs/webmvc/MalformedQueryContentTest.kt",
+    "graphql-dgs-spring-webmvc/src/test/kotlin/com/netflix/graphql/dgs/mvc/DgsRestControllerTest.kt",
+    "graphql-dgs/src/test/kotlin/com/netflix/graphql/dgs/internal/DefaultDgsQueryExecutorTest.kt"
+  ],
+  "num_test_files": 4,
+  "language": "kotlin",
+  "FAIL_TO_PASS": [
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonWithString()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsObjectTypeRefWithVariables()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsObjectTypeRefWithHeadersNotThrow()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsObjectAsMap()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsObjectError()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsObjectClazzWithVariables()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::documentContext()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsObjectClazzWithHeadersNotThrow()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractError()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsObject()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonWithObjectListAsMap()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::documentContextWithTypename()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsObjectWithTypeRef()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::withFieldNamedErrors()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonWithListOfString()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::extractJsonAsTypeRefError()",
+    "com.netflix.graphql.dgs.internal.DefaultDgsQueryExecutorTest::Returns a GraphQL Error wth BAD_REQUEST described in the extensions()"
+  ],
+  "PASS_TO_PASS": []
+}

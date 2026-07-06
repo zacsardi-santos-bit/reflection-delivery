@@ -1,5 +1,0 @@
-patching file broker/query_compiler.go
-patching file broker/query_plan_agg.go
-patching file broker/query_plan_non_agg.go
-patching file datanode/client/query_client.go
-patching file query/expr/ast.go

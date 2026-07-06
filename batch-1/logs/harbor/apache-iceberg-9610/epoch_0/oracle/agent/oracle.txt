@@ -1,0 +1,8 @@
+patching file spark/v3.4/spark-extensions/src/main/scala/org/apache/spark/sql/catalyst/analysis/ResolveViews.scala
+patching file spark/v3.4/spark-extensions/src/main/scala/org/apache/spark/sql/catalyst/analysis/RewriteViewCommands.scala
+patching file spark/v3.4/spark-extensions/src/main/scala/org/apache/spark/sql/catalyst/analysis/ViewUtil.scala
+patching file spark/v3.4/spark-extensions/src/main/scala/org/apache/spark/sql/execution/datasources/v2/AlterV2ViewSetPropertiesExec.scala
+patching file spark/v3.4/spark-extensions/src/main/scala/org/apache/spark/sql/execution/datasources/v2/AlterV2ViewUnsetPropertiesExec.scala
+patching file spark/v3.4/spark-extensions/src/main/scala/org/apache/spark/sql/execution/datasources/v2/ExtendedDataSourceV2Strategy.scala
+patching file spark/v3.4/spark/src/main/java/org/apache/iceberg/spark/SparkCatalog.java
+patching file spark/v3.4/spark/src/main/java/org/apache/iceberg/spark/source/SparkView.java

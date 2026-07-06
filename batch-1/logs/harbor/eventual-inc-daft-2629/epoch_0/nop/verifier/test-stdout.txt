@@ -1,0 +1,699 @@
+patching file tests/dataframe/test_wildcard.py
+🍹 Building a mixed python/rust project
+🐍 Found CPython 3.11 at /opt/venv/bin/python
+🔗 Found pyo3 bindings with abi3-py3.8 support
+📡 Using build options features from pyproject.toml
+Ignoring typing-extensions: markers 'python_full_version < "3.10"' don't match your environment
+Ignoring getdaft: markers 'extra == "all"' don't match your environment
+Ignoring boto3: markers 'extra == "aws"' don't match your environment
+Ignoring deltalake: markers 'extra == "deltalake"' don't match your environment
+Ignoring pyarrow: markers 'extra == "hudi"' don't match your environment
+Ignoring pyiceberg: markers 'extra == "iceberg"' don't match your environment
+Ignoring packaging: markers 'extra == "iceberg"' don't match your environment
+Ignoring lancedb: markers 'extra == "lance"' don't match your environment
+Ignoring numpy: markers 'extra == "numpy"' don't match your environment
+Ignoring pandas: markers 'extra == "pandas"' don't match your environment
+Ignoring ray: markers 'platform_system != "Windows" and extra == "ray"' don't match your environment
+Ignoring ray: markers 'platform_system == "Windows" and extra == "ray"' don't match your environment
+Ignoring packaging: markers 'extra == "ray"' don't match your environment
+Ignoring connectorx: markers 'extra == "sql"' don't match your environment
+Ignoring sqlalchemy: markers 'extra == "sql"' don't match your environment
+Ignoring sqlglot: markers 'extra == "sql"' don't match your environment
+Ignoring unitycatalog: markers 'extra == "unity"' don't match your environment
+Requirement already satisfied: pyarrow>=7.0.0 in /opt/venv/lib/python3.11/site-packages (24.0.0)
+Requirement already satisfied: fsspec in /opt/venv/lib/python3.11/site-packages (2026.6.0)
+Requirement already satisfied: tqdm in /opt/venv/lib/python3.11/site-packages (4.68.3)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.27s
+📦 Built wheel for abi3 Python ≥ 3.8 to /tmp/.tmpfPFMCm/getdaft-0.2.0.dev0-cp38-abi3-linux_x86_64.whl
+✏️ Setting installed package as editable
+🛠 Installed getdaft-0.2.0.dev0
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /opt/venv/bin/python
+cachedir: .pytest_cache
+benchmark: 5.2.3 (defaults: timer=time.perf_counter disable_gc=False min_rounds=5 min_time=0.000005 max_time=1.0 calibration_precision=10 warmup=False warmup_iterations=100000)
+rootdir: /workspace/repo
+configfile: pyproject.toml
+plugins: benchmark-5.2.3
+collecting ... collected 16 items
+
+tests/dataframe/test_wildcard.py::test_wildcard_select FAILED            [  6%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_expr FAILED       [ 12%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_with_structs FAILED [ 18%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_struct_flatten FAILED [ 25%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_multiple_wildcards_different_expr FAILED [ 31%]
+tests/dataframe/test_wildcard.py::test_wildcard_select_prevent_multiple_wildcards FAILED [ 37%]
+tests/dataframe/test_wildcard.py::test_wildcard_unsupported_pattern FAILED [ 43%]
+tests/dataframe/test_wildcard.py::test_wildcard_nonexistent_struct FAILED [ 50%]
+tests/dataframe/test_wildcard.py::test_wildcard_not_a_struct FAILED      [ 56%]
+tests/dataframe/test_wildcard.py::test_wildcard_star_in_name FAILED      [ 62%]
+tests/dataframe/test_wildcard.py::test_wildcard_left_associative FAILED  [ 68%]
+tests/dataframe/test_wildcard.py::test_wildcard_multiple_matches_one_struct FAILED [ 75%]
+tests/dataframe/test_wildcard.py::test_wildcard_sort SKIPPED (Sortin...) [ 81%]
+tests/dataframe/test_wildcard.py::test_wildcard_explode FAILED           [ 87%]
+tests/dataframe/test_wildcard.py::test_wildcard_agg FAILED               [ 93%]
+tests/dataframe/test_wildcard.py::test_wildcard_struct_agg FAILED        [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_wildcard_select _____________________________
+
+    def test_wildcard_select():
+        df = daft.from_pydict(
+            {
+                "a": [1, 2, 3],
+                "b": [4, 5, 6],
+            }
+        )
+    
+>       res = df.select("*").to_pydict()
+              ^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1056: in select
+    builder = self._builder.select(self.__column_input_to_expression(columns))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#Int64, b#Int64
+
+to_select = [col(*)]
+
+    def select(
+        self,
+        to_select: list[Expression],
+    ) -> LogicalPlanBuilder:
+        to_select_pyexprs = [expr._expr for expr in to_select]
+>       builder = self._builder.select(to_select_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: *
+
+daft/logical/builder.py:123: DaftCoreException
+__________________________ test_wildcard_select_expr ___________________________
+
+    def test_wildcard_select_expr():
+        df = daft.from_pydict(
+            {
+                "a": [1, 2, 3],
+                "b": [4, 5, 6],
+            }
+        )
+    
+>       res = df.select(col("*") * 2).to_pydict()
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1056: in select
+    builder = self._builder.select(self.__column_input_to_expression(columns))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#Int64, b#Int64
+
+to_select = [col(*) * lit(2)]
+
+    def select(
+        self,
+        to_select: list[Expression],
+    ) -> LogicalPlanBuilder:
+        to_select_pyexprs = [expr._expr for expr in to_select]
+>       builder = self._builder.select(to_select_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: *
+
+daft/logical/builder.py:123: DaftCoreException
+______________________ test_wildcard_select_with_structs _______________________
+
+    def test_wildcard_select_with_structs():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"x": 1, "y": 2},
+                    {"x": 3, "y": 4},
+                ],
+                "b": [5, 6],
+            }
+        )
+    
+>       res = df.select("*").to_pydict()
+              ^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1056: in select
+    builder = self._builder.select(self.__column_input_to_expression(columns))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#Struct([Field { name: "x", dtype: Int64, metadata: {} }, Field
+|     { name: "y", dtype: Int64, metadata: {} }]), b#Int64
+
+to_select = [col(*)]
+
+    def select(
+        self,
+        to_select: list[Expression],
+    ) -> LogicalPlanBuilder:
+        to_select_pyexprs = [expr._expr for expr in to_select]
+>       builder = self._builder.select(to_select_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: *
+
+daft/logical/builder.py:123: DaftCoreException
+_____________________ test_wildcard_select_struct_flatten ______________________
+
+    def test_wildcard_select_struct_flatten():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"x": 1, "y": 2},
+                    {"x": 3, "y": 4},
+                ],
+                "b": [5, 6],
+            }
+        )
+    
+>       res = df.select("a.*", "b").to_pydict()
+              ^^^^^^^^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1056: in select
+    builder = self._builder.select(self.__column_input_to_expression(columns))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#Struct([Field { name: "x", dtype: Int64, metadata: {} }, Field
+|     { name: "y", dtype: Int64, metadata: {} }]), b#Int64
+
+to_select = [col(a.*), col(b)]
+
+    def select(
+        self,
+        to_select: list[Expression],
+    ) -> LogicalPlanBuilder:
+        to_select_pyexprs = [expr._expr for expr in to_select]
+>       builder = self._builder.select(to_select_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: a.*
+
+daft/logical/builder.py:123: DaftCoreException
+____________ test_wildcard_select_multiple_wildcards_different_expr ____________
+
+    def test_wildcard_select_multiple_wildcards_different_expr():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"x": 1, "y": 2},
+                    {"x": 3, "y": 4},
+                ],
+            }
+        )
+    
+>       res = df.select("*", "a.*").to_pydict()
+              ^^^^^^^^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1056: in select
+    builder = self._builder.select(self.__column_input_to_expression(columns))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#Struct([Field { name: "x", dtype: Int64, metadata: {} }, Field
+|     { name: "y", dtype: Int64, metadata: {} }])
+
+to_select = [col(*), col(a.*)]
+
+    def select(
+        self,
+        to_select: list[Expression],
+    ) -> LogicalPlanBuilder:
+        to_select_pyexprs = [expr._expr for expr in to_select]
+>       builder = self._builder.select(to_select_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: *
+
+daft/logical/builder.py:123: DaftCoreException
+_______________ test_wildcard_select_prevent_multiple_wildcards ________________
+
+    def test_wildcard_select_prevent_multiple_wildcards():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"x": 1, "y": 2},
+                    {"x": 3, "y": 4},
+                ],
+                "b": [5, 6],
+            }
+        )
+    
+>       with pytest.raises(
+            DaftCoreException,
+            match="cannot have multiple wildcard columns in one expression tree",
+        ):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'cannot have multiple wildcard columns in one expression tree'
+E         Actual message: 'DaftError::External Unable to create logical plan node.\nDue to: DaftError::ValueError Column not found in schema: *'
+
+tests/dataframe/test_wildcard.py:110: AssertionError
+______________________ test_wildcard_unsupported_pattern _______________________
+
+    def test_wildcard_unsupported_pattern():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"x": 1, "y": 2},
+                    {"x": 3, "y": 4},
+                ],
+                "b": [5, 6],
+            }
+        )
+    
+>       with pytest.raises(DaftCoreException, match="Unsupported wildcard format"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Unsupported wildcard format'
+E         Actual message: 'DaftError::External Unable to create logical plan node.\nDue to: DaftError::ValueError Column not found in schema: a*'
+
+tests/dataframe/test_wildcard.py:134: AssertionError
+_______________________ test_wildcard_nonexistent_struct _______________________
+
+    def test_wildcard_nonexistent_struct():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"x": 1, "y": 2},
+                    {"x": 3, "y": 4},
+                ],
+                "b": [5, 6],
+            }
+        )
+    
+>       with pytest.raises(DaftCoreException, match="struct c not found"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'struct c not found'
+E         Actual message: 'DaftError::External Unable to create logical plan node.\nDue to: DaftError::ValueError Column not found in schema: c.*'
+
+tests/dataframe/test_wildcard.py:152: AssertionError
+__________________________ test_wildcard_not_a_struct __________________________
+
+    def test_wildcard_not_a_struct():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"x": 1, "y": 2},
+                    {"x": 3, "y": 4},
+                ],
+                "b": [5, 6],
+                "a.y": [7, 8],
+            }
+        )
+    
+>       with pytest.raises(DaftCoreException, match="no column matching b is a struct"):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'no column matching b is a struct'
+E         Actual message: 'DaftError::External Unable to create logical plan node.\nDue to: DaftError::ValueError Column not found in schema: b.*'
+
+tests/dataframe/test_wildcard.py:171: AssertionError
+__________________________ test_wildcard_star_in_name __________________________
+
+    def test_wildcard_star_in_name():
+        df = daft.from_pydict(
+            {
+                "*": [1, 2],
+                "a": [
+                    {"*": 3, "b.*": 4, "c": 9},
+                    {"*": 5, "b.*": 6, "c": 10},
+                ],
+                "d": [7, 8],
+                "b.*": [
+                    {"e": 11},
+                    {"e": 12},
+                ],
+                "c.*": [
+                    {"*": 13},
+                    {"*": 14},
+                ],
+                "*.*": [
+                    {"f": 17},
+                    {"f": 18},
+                ],
+                "*h*..e.*l.*p.*": [15, 16],
+            }
+        )
+    
+>       res = df.select(
+            "*",
+            col("a.*").alias("a*"),
+            "a.b.*",
+            "b.*.*",
+            col("c.*.*").alias("c*"),
+            "*h*..e.*l.*p.*",
+            "*.*.*",
+        ).to_pydict()
+
+tests/dataframe/test_wildcard.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1056: in select
+    builder = self._builder.select(self.__column_input_to_expression(columns))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = *#Int64, a#Struct([Field { name: "*", dtype: Int64, metadat...t64,
+|     metadata: {} }]), *.*#Struct([Field { name: "f", dtype: Int64, metadata: {} }]),
+|     *h*..e.*l.*p.*#Int64
+
+to_select = [col(*), col(a.*) AS a*, col(a.b.*), col(b.*.*), col(c.*.*) AS c*, col(*h*..e.*l.*p.*), ...]
+
+    def select(
+        self,
+        to_select: list[Expression],
+    ) -> LogicalPlanBuilder:
+        to_select_pyexprs = [expr._expr for expr in to_select]
+>       builder = self._builder.select(to_select_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: b.*.*
+
+daft/logical/builder.py:123: DaftCoreException
+________________________ test_wildcard_left_associative ________________________
+
+    def test_wildcard_left_associative():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"b": {"c": 1, "d": 2}},
+                    {"b": {"c": 3, "d": 4}},
+                ],
+                "a.b": [
+                    {"e": 5},
+                    {"e": 6},
+                ],
+            }
+        )
+    
+>       res = df.select("a.b.*").to_pydict()
+              ^^^^^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:241: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1056: in select
+    builder = self._builder.select(self.__column_input_to_expression(columns))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#Struct([Field { name: "b", dtype: Struct([Field { name: "... dtype: Int64, metadata: {} }]),
+|     metadata: {} }]), a.b#Struct([Field { name: "e", dtype: Int64, metadata: {} }])
+
+to_select = [col(a.b.*)]
+
+    def select(
+        self,
+        to_select: list[Expression],
+    ) -> LogicalPlanBuilder:
+        to_select_pyexprs = [expr._expr for expr in to_select]
+>       builder = self._builder.select(to_select_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: a.b.*
+
+daft/logical/builder.py:123: DaftCoreException
+__________________ test_wildcard_multiple_matches_one_struct ___________________
+
+    def test_wildcard_multiple_matches_one_struct():
+        df = daft.from_pydict(
+            {
+                "a.b": [1, 2],
+                "a": [
+                    {"b": {"c": 3}},
+                    {"b": {"c": 4}},
+                ],
+                "d.e": [
+                    {"f": 5},
+                    {"f": 6},
+                ],
+                "d": [
+                    {"e": 7},
+                    {"e": 8},
+                ],
+            }
+        )
+    
+>       res = df.select("a.b.*").to_pydict()
+              ^^^^^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:264: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1056: in select
+    builder = self._builder.select(self.__column_input_to_expression(columns))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a.b#Int64, a#Struct([Field { name: "b", dtype: Struct([Fiel...d
+|     { name: "f", dtype: Int64, metadata: {} }]), d#Struct([Field { name: "e", dtype:
+|     Int64, metadata: {} }])
+
+to_select = [col(a.b.*)]
+
+    def select(
+        self,
+        to_select: list[Expression],
+    ) -> LogicalPlanBuilder:
+        to_select_pyexprs = [expr._expr for expr in to_select]
+>       builder = self._builder.select(to_select_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: a.b.*
+
+daft/logical/builder.py:123: DaftCoreException
+____________________________ test_wildcard_explode _____________________________
+
+    def test_wildcard_explode():
+        df = daft.from_pydict(
+            {
+                "a": [[1, 2], [3, 4, 5]],
+                "b": [[6, 7], [8, 9, 10]],
+            }
+        )
+    
+>       res = df.explode("*").to_pydict()
+              ^^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:295: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1680: in explode
+    builder = self._builder.explode(parsed_exprs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#List(Int64), b#List(Int64)
+
+explode_expressions = [col(*)]
+
+    def explode(self, explode_expressions: list[Expression]) -> LogicalPlanBuilder:
+        explode_pyexprs = [expr._expr for expr in explode_expressions]
+>       builder = self._builder.explode(explode_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: *
+
+daft/logical/builder.py:145: DaftCoreException
+______________________________ test_wildcard_agg _______________________________
+
+    def test_wildcard_agg():
+        df = daft.from_pydict(
+            {
+                "a": [1, 2, 3],
+                "b": [4, 5, 6],
+            }
+        )
+    
+>       res = df.sum("*").to_pydict()
+              ^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:310: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1883: in sum
+    return self._apply_agg_fn(Expression.sum, cols)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1868: in _apply_agg_fn
+    return self._agg([fn(c) for c in exprs], group_by)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1804: in _agg
+    builder = self._builder.agg(to_agg, list(group_by) if group_by is not None else None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#Int64, b#Int64
+
+to_agg = [sum(col(*))], group_by = None
+
+    def agg(
+        self,
+        to_agg: list[Expression],
+        group_by: list[Expression] | None,
+    ) -> LogicalPlanBuilder:
+        group_by_pyexprs = [expr._expr for expr in group_by] if group_by is not None else []
+>       builder = self._builder.aggregate([expr._expr for expr in to_agg], group_by_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: *
+
+daft/logical/builder.py:201: DaftCoreException
+___________________________ test_wildcard_struct_agg ___________________________
+
+    def test_wildcard_struct_agg():
+        df = daft.from_pydict(
+            {
+                "a": [
+                    {"x": 1, "y": 2},
+                    {"x": 3, "y": 4},
+                ],
+                "b": [5, 6],
+            }
+        )
+    
+>       res = df.sum("a.*", "b").to_pydict()
+              ^^^^^^^^^^^^^^^^^^
+
+tests/dataframe/test_wildcard.py:334: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+daft/api_annotations.py:26: in _wrap
+    return timed_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/analytics.py:185: in tracked_method
+    return method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1883: in sum
+    return self._apply_agg_fn(Expression.sum, cols)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1868: in _apply_agg_fn
+    return self._agg([fn(c) for c in exprs], group_by)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+daft/dataframe/dataframe.py:1804: in _agg
+    builder = self._builder.agg(to_agg, list(group_by) if group_by is not None else None)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = * Source:
+|   Number of partitions = 1
+|   Output schema = a#Struct([Field { name: "x", dtype: Int64, metadata: {} }, Field
+|     { name: "y", dtype: Int64, metadata: {} }]), b#Int64
+
+to_agg = [sum(col(a.*)), sum(col(b))], group_by = None
+
+    def agg(
+        self,
+        to_agg: list[Expression],
+        group_by: list[Expression] | None,
+    ) -> LogicalPlanBuilder:
+        group_by_pyexprs = [expr._expr for expr in group_by] if group_by is not None else []
+>       builder = self._builder.aggregate([expr._expr for expr in to_agg], group_by_pyexprs)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       daft.exceptions.DaftCoreException: DaftError::External Unable to create logical plan node.
+E       Due to: DaftError::ValueError Column not found in schema: a.*
+
+daft/logical/builder.py:201: DaftCoreException
+=========================== short test summary info ============================
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_select - daft.exceptio...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_select_expr - daft.exc...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_select_with_structs - ...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_select_struct_flatten
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_select_multiple_wildcards_different_expr
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_select_prevent_multiple_wildcards
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_unsupported_pattern - ...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_nonexistent_struct - A...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_not_a_struct - Asserti...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_star_in_name - daft.ex...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_left_associative - daf...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_multiple_matches_one_struct
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_explode - daft.excepti...
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_agg - daft.exceptions....
+FAILED tests/dataframe/test_wildcard.py::test_wildcard_struct_agg - daft.exce...
+======================== 15 failed, 1 skipped in 1.44s =========================
+reward=0 graded=15 found=0 failed=0 parsed=16 framework=pytest exit_code=1

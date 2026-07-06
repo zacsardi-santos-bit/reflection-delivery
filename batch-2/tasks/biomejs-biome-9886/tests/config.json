@@ -1,0 +1,17 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run -p biome_js_analyze --test spec_tests -E 'test(~svelte_snippet_defaults)'",
+  "test_files": [
+    "crates/biome_js_analyze/tests/specs/correctness/noUndeclaredVariables/invalid_svelte_snippet_defaults.svelte",
+    "crates/biome_js_analyze/tests/specs/correctness/noUndeclaredVariables/invalid_svelte_snippet_defaults.svelte.snap",
+    "crates/biome_js_analyze/tests/specs/correctness/noUndeclaredVariables/valid_svelte_snippet_defaults.svelte",
+    "crates/biome_js_analyze/tests/specs/correctness/noUndeclaredVariables/valid_svelte_snippet_defaults.svelte.snap"
+  ],
+  "num_test_files": 4,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "biome_js_analyze::spec_tests specs::correctness::no_undeclared_variables::valid_svelte_snippet_defaults_svelte",
+    "biome_js_analyze::spec_tests specs::correctness::no_undeclared_variables::invalid_svelte_snippet_defaults_svelte"
+  ],
+  "PASS_TO_PASS": []
+}

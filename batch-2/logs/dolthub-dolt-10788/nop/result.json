@@ -1,0 +1,29 @@
+{
+    "id": "ae79b369-d8d9-4879-a0f3-5ba6f67be28d",
+    "started_at": "2026-07-06T12:16:49.080471",
+    "finished_at": "2026-07-06T12:18:19.269672",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__dolthub-dolt-10788": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "dolthub-dolt-10788__BzzSiTV"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "id": "390862da-3dfe-423d-9acc-6f28f8e1ef9a",
+    "started_at": "2026-07-04T15:39:01.051481",
+    "finished_at": "2026-07-04T15:39:50.510088",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__deepchem-deepchem-1594": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "deepchem-deepchem-1594__czh5JW7"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

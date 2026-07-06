@@ -1,0 +1,27 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo/go && make proto && go test -json ./pkg/sysdb/coordinator -count=1 -skip TestAPIsTestSuite",
+  "test_files": [
+    "go/pkg/sysdb/coordinator/table_catalog_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestAPIs",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestConvertCollectionMetadataToModel",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestConvertCollectionMetadataToDB",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestConvertSegmentToModel",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestConvertSegmentMetadataToModel",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestConvertCollectionToModel",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_CreateCollection",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_GetCollections",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_GetCollectionSize",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_FlushCollectionCompactionForVersionedCollection",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_DeleteCollectionVersion",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_DeleteCollectionVersion_CollectionNotFound",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_MarkVersionForDeletion",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_MarkVersionForDeletion_CollectionNotFound",
+    "github.com/chroma-core/chroma/go/pkg/sysdb/coordinator::TestCatalog_MarkVersionForDeletion_VersionNotFound"
+  ],
+  "PASS_TO_PASS": []
+}

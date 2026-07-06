@@ -1,0 +1,29 @@
+{
+    "id": "ca748dbe-a718-4500-b91b-6ef28061b90a",
+    "started_at": "2026-07-06T12:19:09.286333",
+    "finished_at": "2026-07-06T12:20:49.075543",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__boa-dev-boa-4891": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "boa-dev-boa-4891__RwGSpGj"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo/packages/theming/android-theme && /workspace/repo/node_modules/.bin/jest --watchAll=false",
+  "test_files": [
+    "packages/theming/android-theme/src/__tests__/__snapshots__/android-theme.test.ts.snap"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/theming/android-theme/src/__tests__/android-theme.test.ts::getAndroidTheme light appearance test",
+    "/workspace/repo/packages/theming/android-theme/src/__tests__/android-theme.test.ts::getAndroidTheme dark appearance test",
+    "/workspace/repo/packages/theming/android-theme/src/__tests__/android-theme.test.ts::createAndroidTheme test option { appearance: 'light', defaultAppearance: 'light' }",
+    "/workspace/repo/packages/theming/android-theme/src/__tests__/android-theme.test.ts::createAndroidTheme test option { appearance: 'dark', defaultAppearance: 'light' }",
+    "/workspace/repo/packages/theming/android-theme/src/__tests__/android-theme.test.ts::createAndroidTheme test option { appearance: 'highContrast', defaultAppearance: 'light' }",
+    "/workspace/repo/packages/theming/android-theme/src/__tests__/android-theme.test.ts::createAndroidTheme test option { appearance: 'dynamic', defaultAppearance: 'light' }"
+  ],
+  "PASS_TO_PASS": []
+}

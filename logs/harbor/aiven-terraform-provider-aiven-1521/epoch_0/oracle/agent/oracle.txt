@@ -1,5 +1,0 @@
-patching file CHANGELOG.md
-patching file go.mod
-patching file go.sum
-Hunk #1 succeeded at 464 with fuzz 3 (offset 267 lines).
-patching file internal/sdkprovider/service/kafkatopic/kafka_topic.go

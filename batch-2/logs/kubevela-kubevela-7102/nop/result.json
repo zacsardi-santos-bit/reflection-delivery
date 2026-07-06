@@ -1,0 +1,29 @@
+{
+    "id": "4441025b-4387-40f8-b874-2310aeed3f7a",
+    "started_at": "2026-07-06T12:17:27.084605",
+    "finished_at": "2026-07-06T12:18:20.800114",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__kubevela-kubevela-7102": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "kubevela-kubevela-7102__XArGZwx"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

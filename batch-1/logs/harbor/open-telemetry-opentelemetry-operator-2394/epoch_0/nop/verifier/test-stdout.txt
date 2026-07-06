@@ -1,0 +1,57 @@
+patching file apis/v1alpha2/collector_webhook_test.go
+patching file internal/manifests/collector/adapters/config_to_rbac_test.go
+patching file internal/manifests/collector/rbac_test.go
+{"Time":"2026-07-01T15:05:38.008232921Z","Action":"start","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2"}
+{"Time":"2026-07-01T15:05:38.134932991Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestValidate"}
+{"Time":"2026-07-01T15:05:38.134960577Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestValidate","Output":"=== RUN   TestValidate\n"}
+{"Time":"2026-07-01T15:05:38.135051385Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestValidate/Test_"}
+{"Time":"2026-07-01T15:05:38.135062632Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestValidate/Test_","Output":"=== RUN   TestValidate/Test_\n"}
+{"Time":"2026-07-01T15:05:38.139698132Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestValidate/Test_","Output":"--- PASS: TestValidate/Test_ (0.00s)\n"}
+{"Time":"2026-07-01T15:05:38.139764742Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestValidate/Test_","Elapsed":0}
+{"Time":"2026-07-01T15:05:38.139794135Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestValidate","Output":"--- PASS: TestValidate (0.00s)\n"}
+{"Time":"2026-07-01T15:05:38.13985649Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestValidate","Elapsed":0}
+{"Time":"2026-07-01T15:05:38.139895807Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles"}
+{"Time":"2026-07-01T15:05:38.139901831Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles","Output":"=== RUN   TestConfigFiles\n"}
+{"Time":"2026-07-01T15:05:38.1400413Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-connectors.yaml"}
+{"Time":"2026-07-01T15:05:38.140052379Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-connectors.yaml","Output":"=== RUN   TestConfigFiles/testdata/otelcol-connectors.yaml\n"}
+{"Time":"2026-07-01T15:05:38.141057467Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-connectors.yaml","Output":"--- PASS: TestConfigFiles/testdata/otelcol-connectors.yaml (0.00s)\n"}
+{"Time":"2026-07-01T15:05:38.141119682Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-connectors.yaml","Elapsed":0}
+{"Time":"2026-07-01T15:05:38.141153544Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-couchbase.yaml"}
+{"Time":"2026-07-01T15:05:38.141168892Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-couchbase.yaml","Output":"=== RUN   TestConfigFiles/testdata/otelcol-couchbase.yaml\n"}
+{"Time":"2026-07-01T15:05:38.145346143Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-couchbase.yaml","Output":"--- PASS: TestConfigFiles/testdata/otelcol-couchbase.yaml (0.00s)\n"}
+{"Time":"2026-07-01T15:05:38.145451161Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-couchbase.yaml","Elapsed":0}
+{"Time":"2026-07-01T15:05:38.145499786Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-demo.yaml"}
+{"Time":"2026-07-01T15:05:38.145505916Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-demo.yaml","Output":"=== RUN   TestConfigFiles/testdata/otelcol-demo.yaml\n"}
+{"Time":"2026-07-01T15:05:38.213381066Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-demo.yaml","Output":"--- PASS: TestConfigFiles/testdata/otelcol-demo.yaml (0.07s)\n"}
+{"Time":"2026-07-01T15:05:38.213434044Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-demo.yaml","Elapsed":0.07}
+{"Time":"2026-07-01T15:05:38.213468132Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-extensions.yaml"}
+{"Time":"2026-07-01T15:05:38.213486855Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-extensions.yaml","Output":"=== RUN   TestConfigFiles/testdata/otelcol-extensions.yaml\n"}
+{"Time":"2026-07-01T15:05:38.214397459Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-extensions.yaml","Output":"--- PASS: TestConfigFiles/testdata/otelcol-extensions.yaml (0.00s)\n"}
+{"Time":"2026-07-01T15:05:38.214441055Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-extensions.yaml","Elapsed":0}
+{"Time":"2026-07-01T15:05:38.214468034Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-filelog.yaml"}
+{"Time":"2026-07-01T15:05:38.214472863Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-filelog.yaml","Output":"=== RUN   TestConfigFiles/testdata/otelcol-filelog.yaml\n"}
+{"Time":"2026-07-01T15:05:38.216950137Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-filelog.yaml","Output":"--- PASS: TestConfigFiles/testdata/otelcol-filelog.yaml (0.00s)\n"}
+{"Time":"2026-07-01T15:05:38.219894063Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-filelog.yaml","Elapsed":0}
+{"Time":"2026-07-01T15:05:38.219949823Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-null-values.yaml"}
+{"Time":"2026-07-01T15:05:38.219958433Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-null-values.yaml","Output":"=== RUN   TestConfigFiles/testdata/otelcol-null-values.yaml\n"}
+{"Time":"2026-07-01T15:05:38.220564079Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-null-values.yaml","Output":"--- PASS: TestConfigFiles/testdata/otelcol-null-values.yaml (0.00s)\n"}
+{"Time":"2026-07-01T15:05:38.220613446Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles/testdata/otelcol-null-values.yaml","Elapsed":0}
+{"Time":"2026-07-01T15:05:38.220644552Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles","Output":"--- PASS: TestConfigFiles (0.08s)\n"}
+{"Time":"2026-07-01T15:05:38.220683076Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestConfigFiles","Elapsed":0.08}
+{"Time":"2026-07-01T15:05:38.220721214Z","Action":"run","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestNullObjects"}
+{"Time":"2026-07-01T15:05:38.220726728Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestNullObjects","Output":"=== RUN   TestNullObjects\n"}
+{"Time":"2026-07-01T15:05:38.220981632Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestNullObjects","Output":"--- PASS: TestNullObjects (0.00s)\n"}
+{"Time":"2026-07-01T15:05:38.221022752Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Test":"TestNullObjects","Elapsed":0}
+{"Time":"2026-07-01T15:05:38.221050896Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Output":"PASS\n"}
+{"Time":"2026-07-01T15:05:38.222510905Z","Action":"output","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Output":"ok  \tgithub.com/open-telemetry/opentelemetry-operator/apis/v1alpha2\t0.214s\n"}
+{"Time":"2026-07-01T15:05:38.222528471Z","Action":"pass","Package":"github.com/open-telemetry/opentelemetry-operator/apis/v1alpha2","Elapsed":0.214}
+# github.com/open-telemetry/opentelemetry-operator/internal/manifests/collector [github.com/open-telemetry/opentelemetry-operator/internal/manifests/collector.test]
+internal/manifests/collector/rbac_test.go:30:8: undefined: ClusterRole
+internal/manifests/collector/rbac_test.go:66:9: undefined: ClusterRole
+internal/manifests/collector/rbac_test.go:77:9: undefined: ClusterRoleBinding
+internal/manifests/collector/rbac_test.go:84:8: undefined: ClusterRoleBinding
+# github.com/open-telemetry/opentelemetry-operator/internal/manifests/collector/adapters [github.com/open-telemetry/opentelemetry-operator/internal/manifests/collector/adapters.test]
+internal/manifests/collector/adapters/config_to_rbac_test.go:95:13: undefined: ConfigToRBAC
+FAIL	github.com/open-telemetry/opentelemetry-operator/internal/manifests/collector [build failed]
+FAIL	github.com/open-telemetry/opentelemetry-operator/internal/manifests/collector/adapters [build failed]
+reward=0 graded=172 found=172 failed=162 parsed=12 framework=go exit_code=1

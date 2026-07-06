@@ -1,0 +1,32 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/providers/google/tests/unit/google/ads/hooks/test_ads.py -v --noconftest",
+  "test_files": [
+    "providers/google/tests/unit/google/ads/hooks/test_ads.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_get_customer_service[flat_developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_get_service[flat_developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_search[flat_developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_list_accessible_customers[flat_developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_determine_authentication_method[flat_developer_token]"
+  ],
+  "PASS_TO_PASS": [
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_get_customer_service[developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_get_customer_service[service_account]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_get_service[developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_get_service[service_account]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_search[developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_search[service_account]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_extract_rows[developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_extract_rows[service_account]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_extract_rows[flat_developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_list_accessible_customers[developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_list_accessible_customers[service_account]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_determine_authentication_method[developer_token]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_determine_authentication_method[service_account]",
+    "providers.google.tests.unit.google.ads.hooks.test_ads.TestGoogleAdsHook::test_determine_authentication_method[empty]"
+  ]
+}

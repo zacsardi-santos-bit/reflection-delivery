@@ -1,0 +1,36 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cargo nextest run --no-fail-fast --features \"ron redactions\" --test test_inline --test test_basic --test test_settings",
+  "test_files": [
+    "tests/test_basic.rs",
+    "tests/test_inline.rs",
+    "tests/test_settings.rs"
+  ],
+  "num_test_files": 3,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(22/22) insta::test_settings test_simple",
+    "( 1/22) insta::test_basic test_unnamed_display",
+    "( 2/22) insta::test_basic test_yaml_vector",
+    "( 3/22) insta::test_basic test_display",
+    "( 4/22) insta::test_basic test_unnamed_debug_vector",
+    "( 5/22) insta::test_basic test_json_vector",
+    "( 6/22) insta::test_basic test_unnamed_json_vector",
+    "( 7/22) insta::test_basic test_debug_vector",
+    "( 8/22) insta::test_basic test_unnamed_yaml_vector",
+    "( 9/22) insta::test_inline test_newline",
+    "(10/22) insta::test_inline test_unnamed_thread_single_line",
+    "(11/22) insta::test_settings test_bound_to_thread",
+    "(12/22) insta::test_settings test_settings_macro",
+    "(13/22) insta::test_inline test_yaml_inline_redacted",
+    "(14/22) insta::test_inline test_simple",
+    "(15/22) insta::test_inline test_yaml_inline",
+    "(16/22) insta::test_inline test_ron_inline",
+    "(17/22) insta::test_inline test_unnamed_single_line",
+    "(18/22) insta::test_inline test_non_basic_plane",
+    "(19/22) insta::test_inline test_single_line",
+    "(20/22) insta::test_inline test_json_inline",
+    "(21/22) insta::test_settings test_snapshot_path"
+  ],
+  "PASS_TO_PASS": []
+}

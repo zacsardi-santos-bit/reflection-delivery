@@ -1,0 +1,45 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/frontend && npx vitest run src/components/SideNav.test.tsx",
+  "test_files": [
+    "frontend/src/components/SideNav.test.tsx"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders sidebar nav buttons without primary button styling"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders expanded state",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders collapsed state",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders Pipelines as active page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders Pipelines as active when on PipelineDetails page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders experiments as active page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders experiments as active when on ExperimentDetails page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders experiments as active page when on NewExperiment page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders experiments as active page when on Compare page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders experiments as active page when on AllRuns page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders experiments as active page when on RunDetails page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders experiments as active page when on RecurringRunDetails page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders experiments as active page when on NewRun page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders recurring runs as active page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav renders jobs as active page when on JobDetails page",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav show jupyterhub link if accessible",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav collapses if collapse state is true localStorage",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav expands if collapse state is false in localStorage",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav collapses if no collapse state in localStorage, and window is too narrow",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav expands if no collapse state in localStorage, and window is wide",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav collapses if no collapse state in localStorage, and window goes from wide to narrow",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav expands if no collapse state in localStorage, and window goes from narrow to wide",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav saves state in localStorage if chevron is clicked",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav does not collapse if collapse state is saved in localStorage, and window resizes",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav populates the display build information using the default props",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav display the correct GKE metadata",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav displays the frontend tag name if the api server hash is not returned",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav uses the frontend commit hash for the link URL if the api server hash is not returned",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav displays 'unknown' if the frontend and api server tag names/commit hashes are not returned",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav links to the github repo root if the frontend and api server commit hashes are not returned",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav displays 'unknown' if the date is not returned",
+    "/workspace/repo/frontend/src/components/SideNav.test.tsx::SideNav auto-collapses on first load when localStorage key is missing and window is narrow"
+  ]
+}

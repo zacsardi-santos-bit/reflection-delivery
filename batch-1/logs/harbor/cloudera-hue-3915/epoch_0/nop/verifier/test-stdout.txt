@@ -1,0 +1,443 @@
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx
+patching file desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx
+patching file desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx
+FAIL desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx
+  ● Test suite failed to run
+
+    Cannot find module './CreateAndUploadAction' from 'desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx'
+
+    However, Jest was able to find:
+    	'./CreateAndUploadAction.test.tsx'
+
+    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'].
+
+    See https://jestjs.io/docs/configuration#modulefileextensions-arraystring
+
+      2 | import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+      3 | import '@testing-library/jest-dom';
+    > 4 | import CreateAndUploadAction from './CreateAndUploadAction';
+        | ^
+      5 | import {
+      6 |   CREATE_DIRECTORY_API_URL,
+      7 |   CREATE_FILE_API_URL
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx:4:1)
+
+FAIL desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx (7.172 s)
+  DragAndDrop
+    ✕ should render the initial message when not dragging and children not present (32 ms)
+    ✓ should render children when provided and not dragging (6 ms)
+    ✓ should not display the default message when children are passed (3 ms)
+    ✕ should display the dragging message when dragging files (1019 ms)
+    ✓ should call onDrop when files are dropped (11 ms)
+
+  ● DragAndDrop › should render the initial message when not dragging and children not present
+
+    TestingLibraryElementError: Unable to find an element with the text: Drag and Drop files or browse. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"drag-drop"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"drag-drop__dropzone"[39m
+            [33mrole[39m=[32m"presentation"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"drag-drop__input"[39m
+              [33mdata-testid[39m=[32m"drag-drop__input"[39m
+              [33mmultiple[39m=[32m""[39m
+              [33mstyle[39m=[32m"border: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"file"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"drag-drop__message"[39m
+            [36m>[39m
+              [0mDrag 'n' drop some files here, or click to select files[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      30 |     const { getByText } = render(<DragAndDrop onDrop={mockOnFilesDrop} />);
+      31 |
+    > 32 |     expect(getByText('Drag and Drop files or browse')).toBeInTheDocument();
+         |            ^
+      33 |   });
+      34 |
+      35 |   it('should render children when provided and not dragging', () => {
+
+      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:37:19)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+      at node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+      at node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+      at Object.getByText (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:32:12)
+
+  ● DragAndDrop › should display the dragging message when dragging files
+
+    Unable to find an element with the text: Drop files here. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"drag-drop"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"drag-drop__dropzone"[39m
+            [33mrole[39m=[32m"presentation"[39m
+            [33mtabindex[39m=[32m"0"[39m
+          [36m>[39m
+            [36m<input[39m
+              [33mclass[39m=[32m"drag-drop__input"[39m
+              [33mdata-testid[39m=[32m"drag-drop__input"[39m
+              [33mmultiple[39m=[32m""[39m
+              [33mstyle[39m=[32m"border: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;"[39m
+              [33mtabindex[39m=[32m"-1"[39m
+              [33mtype[39m=[32m"file"[39m
+            [36m/>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"drag-drop__message"[39m
+            [36m>[39m
+              [0mDrop files here to upload[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      59 |     await act(async () => fireEvent.dragEnter(getByTestId('drag-drop__input')));
+      60 |
+    > 61 |     await waitFor(() => {
+         |                  ^
+      62 |       expect(getByText('Drop files here')).toBeInTheDocument();
+      63 |     });
+      64 |   });
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at _callee2$ (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:61:18)
+      at call (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)
+      at Generator.tryCatch (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)
+      at Generator._invoke [as next] (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)
+      at asyncGeneratorStep (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)
+      at asyncGeneratorStep (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)
+
+FAIL desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx (12.846 s)
+  StorageBrowserRowActions
+    Summary option
+      ✓ does not render view summary option when there are multiple records selected (106 ms)
+      ✓ renders view summary option when record is a hdfs file (112 ms)
+      ✓ renders view summary option when record is a ofs file (44 ms)
+      ✓ does not render view summary option when record is a hdfs folder (49 ms)
+      ✓ does not render view summary option when record is a an abfs file (51 ms)
+      ✓ renders summary modal when view summary option is clicked (135 ms)
+    Rename option
+      ✓ does not render rename option when there are multiple records selected (20 ms)
+      ✓ does not render rename option when selected record is a abfs root folder (17 ms)
+      ✓ does not render rename option when selected record is a gs root folder (17 ms)
+      ✓ does not render rename option when selected record is a s3 root folder (16 ms)
+      ✓ does not render rename option when selected record is a ofs root folder (17 ms)
+      ✓ does not render rename option when selected record is a ofs service ID folder (17 ms)
+      ✓ does not render rename option when selected record is a ofs volume folder (17 ms)
+      ✓ renders rename option when selected record is a file or a folder (50 ms)
+      ✕ renders rename modal when rename option is clicked (1101 ms)
+    Set replication option
+      ✓ does not render set replication option when there are multiple records selected (17 ms)
+      ✓ renders set replication option when selected record is a hdfs file (62 ms)
+      ✓ does not render set replication option when selected record is a hdfs folder (45 ms)
+      ✓ does not render set replication option when selected record is a gs file/folder (20 ms)
+      ✓ does not render set replication option when selected record is a s3 file/folder (17 ms)
+      ✓ does not render set replication option when selected record is a ofs file/folder (17 ms)
+      ✓ renders set replication modal when set replication option is clicked (98 ms)
+
+  ● StorageBrowserRowActions › Rename option › renders rename modal when rename option is clicked
+
+    Unable to find an element with the text: Enter new name. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+    Ignored nodes: comments, script, style
+    [36m<body>[39m
+      [36m<div>[39m
+        [36m<button[39m
+          [33mant-click-animating-without-extra-node[39m=[32m"true"[39m
+          [33mclass[39m=[32m"ant-btn ant-btn-default ant-dropdown-trigger"[39m
+          [33mdata-event[39m=[32m""[39m
+          [33mdata-event-category[39m=[32m"User Action"[39m
+          [33mtype[39m=[32m"button"[39m
+        [36m>[39m
+          [36m<span>[39m
+            [0mActions[0m
+          [36m</span>[39m
+          [36m<svg[39m
+            [33mclass[39m=[32m"cdp-icon-dropdown"[39m
+            [33mfill[39m=[32m"none"[39m
+            [33mheight[39m=[32m"1em"[39m
+            [33mviewBox[39m=[32m"0 0 24 24"[39m
+            [33mwidth[39m=[32m"1em"[39m
+          [36m>[39m
+            [36m<path[39m
+              [33mclip-rule[39m=[32m"evenodd"[39m
+              [33md[39m=[32m"M6 9l6 6 6-6H6z"[39m
+              [33mfill[39m=[32m"currentColor"[39m
+              [33mfill-rule[39m=[32m"evenodd"[39m
+            [36m/>[39m
+          [36m</svg>[39m
+        [36m</button>[39m
+      [36m</div>[39m
+      [36m<div[39m
+        [33mstyle[39m=[32m"position: absolute; top: 0px; left: 0px; width: 100%;"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"ant-dropdown hue-storage-browser__table-actions-dropdown ant-dropdown-hidden"[39m
+            [33mstyle[39m=[32m"pointer-events: none;"[39m
+          [36m>[39m
+            [36m<ul[39m
+              [33mclass[39m=[32m"ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-vertical ant-dropdown-menu-light hue-storage-browser__table-actions-menu"[39m
+              [33mdata-menu-list[39m=[32m"true"[39m
+              [33mrole[39m=[32m"menu"[39m
+              [33mtabindex[39m=[32m"0"[39m
+            [36m>[39m
+              [36m<li[39m
+                [33mclass[39m=[32m"ant-dropdown-menu-item"[39m
+                [33mdata-menu-id[39m=[32m"rc-menu-uuid-test-copy"[39m
+                [33mrole[39m=[32m"menuitem"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33mclass[39m=[32m"ant-dropdown-menu-item-icon"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"1em"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"1em"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33mclip-rule[39m=[32m"evenodd"[39m
+                    [33md[39m=[32m"M19 6.5h-1.07c-.22.86-1 1.5-1.93 1.5h-4c-.93 0-1.71-.64-1.93-1.5H9V15h10V6.5zM11.5 6c0 .28.22.5.5.5h4c.28 0 .5-.22.5-.5V4.5h-5V6zM21 4.5V17H7V4.5h3V3h8v1.5h3zM16 19v2H3V6h2v13h11z"[39m
+                    [33mfill[39m=[32m"currentColor"[39m
+                    [33mfill-rule[39m=[32m"evenodd"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ant-dropdown-menu-title-content"[39m
+                [36m>[39m
+                  [0mCopy[0m
+                [36m</span>[39m
+              [36m</li>[39m
+              [36m<li[39m
+                [33mclass[39m=[32m"ant-dropdown-menu-item"[39m
+                [33mdata-menu-id[39m=[32m"rc-menu-uuid-test-move"[39m
+                [33mrole[39m=[32m"menuitem"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33mclass[39m=[32m"ant-dropdown-menu-item-icon"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"1em"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"1em"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33mclip-rule[39m=[32m"evenodd"[39m
+                    [33md[39m=[32m"M19 6.5h-1.07c-.22.86-1 1.5-1.93 1.5h-4c-.93 0-1.71-.64-1.93-1.5H9V15h10V6.5zM11.5 6c0 .28.22.5.5.5h4c.28 0 .5-.22.5-.5V4.5h-5V6zM21 4.5V17H7V4.5h3V3h8v1.5h3zM16 19v2H3V6h2v13h11z"[39m
+                    [33mfill[39m=[32m"currentColor"[39m
+                    [33mfill-rule[39m=[32m"evenodd"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ant-dropdown-menu-title-content"[39m
+                [36m>[39m
+                  [0mMove[0m
+                [36m</span>[39m
+              [36m</li>[39m
+              [36m<li[39m
+                [33mclass[39m=[32m"ant-dropdown-menu-item ant-dropdown-menu-item-active"[39m
+                [33mdata-menu-id[39m=[32m"rc-menu-uuid-test-rename"[39m
+                [33mrole[39m=[32m"menuitem"[39m
+                [33mtabindex[39m=[32m"-1"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33mclass[39m=[32m"ant-dropdown-menu-item-icon"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"1em"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"1em"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33mclip-rule[39m=[32m"evenodd"[39m
+                    [33md[39m=[32m"M12 6.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5zM11 17h2v-6h-2v6zm1-13c-4.411 0-8 3.589-8 8s3.589 8 8 8 8-3.589 8-8-3.589-8-8-8zm0 18C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"[39m
+                    [33mfill[39m=[32m"currentColor"[39m
+                    [33mfill-rule[39m=[32m"evenodd"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<span[39m
+                  [33mclass[39m=[32m"ant-dropdown-menu-title-content"[39m
+                [36m>[39m
+                  [0mRename[0m
+                [36m</span>[39m
+              [36m</li>[39m
+            [36m</ul>[39m
+            [36m<div[39m
+              [33maria-hidden[39m=[32m"true"[39m
+              [33mstyle[39m=[32m"display: none;"[39m
+            [36m/>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+      [36m<div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"ant-modal-root"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"ant-modal-mask"[39m
+          [36m/>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"ant-modal-wrap"[39m
+            [33mtabindex[39m=[32m"-1"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33maria-labelledby[39m=[32m"test-id"[39m
+              [33maria-modal[39m=[32m"true"[39m
+              [33mclass[39m=[32m"ant-modal sc-dmyDmy iCJVrv hue-input-modal cuix antd"[39m
+              [33mrole[39m=[32m"dialog"[39m
+              [33mstyle[39m=[32m"width: 520px;"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mstyle[39m=[32m"width: 0px; height: 0px; overflow: hidden; outline: none;"[39m
+                [33mtabindex[39m=[32m"0"[39m
+              [36m/>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"ant-modal-content"[39m
+              [36m>[39m
+                [36m<button[39m
+                  [33maria-label[39m=[32m"Close"[39m
+                  [33mclass[39m=[32m"ant-modal-close"[39m
+                  [33mtype[39m=[32m"button"[39m
+                [36m>[39m
+                  [36m<span[39m
+                    [33mclass[39m=[32m"ant-modal-close-x"[39m
+                  [36m>[39m
+                    [36m<svg[39m
+                      [33mclass[39m=[32m"sc-hLQTFJ dwtSfR"[39m
+                      [33mfill[39m=[32m"none"[39m
+                      [33mheight[39m=[32m"1em"[39m
+                      [33mviewBox[39m=[32m"0 0 24 24"[39m
+                      [33mwidth[39m=[32m"1em"[39m
+                    [36m>[39m
+                      [36m<path[39m
+                        [33mclip-rule[39m=[32m"evenodd"[39m
+                        [33md[39m=[32m"M18.532 4L12 10.532 5.468 4 4 5.468 10.532 12 4 18.532 5.468 20 12 13.468 18.532 20 20 18.532 13.468 12 20 5.468 18.532 4z"[39m
+                        [33mfill[39m=[32m"currentColor"[39m
+                        [33mfill-rule[39m=[32m"evenodd"[39m
+                      [36m/>[39m
+                    [36m</svg>[39m
+                  [36m</span>[39m
+                [36m</button>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-modal-header"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-modal-title"[39m
+                    [33mid[39m=[32m"test-id"[39m
+                  [36m>[39m
+                    [0mRename[0m
+                  [36m</div>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-modal-body"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"hue-input-modal__input-label"[39m
+                  [36m>[39m
+                    [0mEnter new name here[0m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"ant-input hue-input-modal__input"[39m
+                    [33mtype[39m=[32m"text"[39m
+                    [33mvalue[39m=[32m"test"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"ant-modal-footer"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"ant-row sc-guDMob iExxFO"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-col"[39m
+                      [33mstyle[39m=[32m"flex: 1 1 auto;"[39m
+                    [36m>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"ant-btn ant-btn-primary"[39m
+                        [33mdata-event[39m=[32m"Modal primary action"[39m
+                        [33mdata-event-category[39m=[32m"User Action"[39m
+                        [33mdata-test[39m=[32m"ModalOkBtn"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [36m<span>[39m
+                          [0mRename[0m
+                        [36m</span>[39m
+                      [36m</button>[39m
+                    [36m</div>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"ant-col"[39m
+                    [36m>[39m
+                      [36m<button[39m
+                        [33mclass[39m=[32m"ant-btn ant-btn-link"[39m
+                        [33mdata-event[39m=[32m"Modal cancel action"[39m
+                        [33mdata-event-category[39m=[32m"User Action"[39m
+                        [33mdata-test[39m=[32m"ModalCancelBtn"[39m
+                        [33mtype[39m=[32m"button"[39m
+                      [36m>[39m
+                        [36m<span>[39m
+                          [0mCancel[0m
+                        [36m</span>[39m
+                      [36m</button>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33maria-hidden[39m=[32m"true"[39m
+                [33mstyle[39m=[32m"width: 0px; height: 0px; overflow: hidden; outline: none;"[39m
+                [33mtabindex[39m=[32m"0"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</body>[39m
+
+      195 |       await setUpActionMenu([mockRecord], 'abfs://test', 'dir');
+      196 |       await user.click(screen.queryByRole('menuitem', { name: 'Rename' }));
+    > 197 |       expect(await screen.findByText('Enter new name')).toBeInTheDocument();
+          |                           ^
+      198 |     });
+      199 |   });
+      200 |
+
+      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)
+      at node_modules/@testing-library/dom/dist/query-helpers.js:86:33
+      at findByText (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:197:27)
+      at call (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)
+      at Generator.tryCatch (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)
+      at Generator._invoke [as next] (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)
+      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)
+      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)
+
+Test Suites: 3 failed, 3 total
+Tests:       3 failed, 24 passed, 27 total
+Snapshots:   0 total
+Time:        14.971 s
+Ran all test suites matching /desktop\/core\/src\/desktop\/js\/apps\/storageBrowser\/StorageDirectoryPage\/CreateAndUploadAction\/CreateAndUploadAction.test.tsx|desktop\/core\/src\/desktop\/js\/apps\/storageBrowser\/StorageDirectoryPage\/StorageBrowserActions\/StorageBrowserActions.test.tsx|desktop\/core\/src\/desktop\/js\/reactComponents\/DragAndDrop\/DragAndDrop.test.tsx/i.
+{"numFailedTestSuites":3,"numFailedTests":3,"numPassedTestSuites":0,"numPassedTests":24,"numPendingTestSuites":0,"numPendingTests":0,"numRuntimeErrorTestSuites":1,"numTodoTests":0,"numTotalTestSuites":3,"numTotalTests":27,"openHandles":[],"snapshot":{"added":0,"didUpdate":false,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0},"startTime":1782746207108,"success":false,"testResults":[{"assertionResults":[],"coverage":{},"endTime":1782746222083,"message":"  ● Test suite failed to run\n\n    Cannot find module './CreateAndUploadAction' from 'desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx'\n\n    However, Jest was able to find:\n    \t'./CreateAndUploadAction.test.tsx'\n\n    You might want to include a file extension in your import, or update your 'moduleFileExtensions', which is currently ['js', 'jsx', 'ts', 'tsx', 'json', 'vue'].\n\n    See https://jestjs.io/docs/configuration#modulefileextensions-arraystring\n\n      2 | import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';\n      3 | import '@testing-library/jest-dom';\n    > 4 | import CreateAndUploadAction from './CreateAndUploadAction';\n        | ^\n      5 | import {\n      6 |   CREATE_DIRECTORY_API_URL,\n      7 |   CREATE_FILE_API_URL\n\n      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)\n      at Object.require (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx:4:1)\n","name":"/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/CreateAndUploadAction/CreateAndUploadAction.test.tsx","startTime":1782746222083,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["DragAndDrop"],"duration":32,"failureDetails":[{"name":"TestingLibraryElementError"}],"failureMessages":["TestingLibraryElementError: Unable to find an element with the text: Drag and Drop files or browse. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__dropzone\"\u001b[39m\n        \u001b[33mrole\u001b[39m=\u001b[32m\"presentation\"\u001b[39m\n        \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<input\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__input\"\u001b[39m\n          \u001b[33mdata-testid\u001b[39m=\u001b[32m\"drag-drop__input\"\u001b[39m\n          \u001b[33mmultiple\u001b[39m=\u001b[32m\"\"\u001b[39m\n          \u001b[33mstyle\u001b[39m=\u001b[32m\"border: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;\"\u001b[39m\n          \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n          \u001b[33mtype\u001b[39m=\u001b[32m\"file\"\u001b[39m\n        \u001b[36m/>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__message\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[0mDrag 'n' drop some files here, or click to select files\u001b[0m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at Object.getElementError (/workspace/repo/node_modules/@testing-library/dom/dist/config.js:37:19)\n    at /workspace/repo/node_modules/@testing-library/dom/dist/query-helpers.js:76:38\n    at /workspace/repo/node_modules/@testing-library/dom/dist/query-helpers.js:52:17\n    at /workspace/repo/node_modules/@testing-library/dom/dist/query-helpers.js:95:19\n    at Object.getByText (/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:32:12)\n    at Promise.then.completed (/workspace/repo/node_modules/jest-circus/build/utils.js:298:28)\n    at new Promise (<anonymous>)\n    at callAsyncCircusFn (/workspace/repo/node_modules/jest-circus/build/utils.js:231:10)\n    at _callCircusTest (/workspace/repo/node_modules/jest-circus/build/run.js:316:40)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at _runTest (/workspace/repo/node_modules/jest-circus/build/run.js:252:3)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:126:9)\n    at _runTestsForDescribeBlock (/workspace/repo/node_modules/jest-circus/build/run.js:121:9)\n    at run (/workspace/repo/node_modules/jest-circus/build/run.js:71:3)\n    at runAndTransformResultsToJestFormat (/workspace/repo/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n    at jestAdapter (/workspace/repo/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n    at runTestInternal (/workspace/repo/node_modules/jest-runner/build/runTest.js:367:16)\n    at runTest (/workspace/repo/node_modules/jest-runner/build/runTest.js:444:34)\n    at Object.worker (/workspace/repo/node_modules/jest-runner/build/testWorker.js:106:12)"],"fullName":"DragAndDrop should render the initial message when not dragging and children not present","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"failed","title":"should render the initial message when not dragging and children not present"},{"ancestorTitles":["DragAndDrop"],"duration":6,"failureDetails":[],"failureMessages":[],"fullName":"DragAndDrop should render children when provided and not dragging","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should render children when provided and not dragging"},{"ancestorTitles":["DragAndDrop"],"duration":3,"failureDetails":[],"failureMessages":[],"fullName":"DragAndDrop should not display the default message when children are passed","invocations":1,"location":null,"numPassingAsserts":2,"retryReasons":[],"status":"passed","title":"should not display the default message when children are passed"},{"ancestorTitles":["DragAndDrop"],"duration":1019,"failureDetails":[{"name":"TestingLibraryElementError"}],"failureMessages":["Error: Unable to find an element with the text: Drop files here. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__dropzone\"\u001b[39m\n        \u001b[33mrole\u001b[39m=\u001b[32m\"presentation\"\u001b[39m\n        \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<input\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__input\"\u001b[39m\n          \u001b[33mdata-testid\u001b[39m=\u001b[32m\"drag-drop__input\"\u001b[39m\n          \u001b[33mmultiple\u001b[39m=\u001b[32m\"\"\u001b[39m\n          \u001b[33mstyle\u001b[39m=\u001b[32m\"border: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;\"\u001b[39m\n          \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n          \u001b[33mtype\u001b[39m=\u001b[32m\"file\"\u001b[39m\n        \u001b[36m/>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__message\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[0mDrop files here to upload\u001b[0m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at waitForWrapper (/workspace/repo/node_modules/@testing-library/dom/dist/wait-for.js:163:27)\n    at _callee2$ (/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:61:18)\n    at call (/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n    at Generator.tryCatch (/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n    at Generator._invoke [as next] (/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n    at asyncGeneratorStep (/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n    at asyncGeneratorStep (/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)"],"fullName":"DragAndDrop should display the dragging message when dragging files","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"failed","title":"should display the dragging message when dragging files"},{"ancestorTitles":["DragAndDrop"],"duration":11,"failureDetails":[],"failureMessages":[],"fullName":"DragAndDrop should call onDrop when files are dropped","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"should call onDrop when files are dropped"}],"endTime":1782746216222,"message":"  ● DragAndDrop › should render the initial message when not dragging and children not present\n\n    TestingLibraryElementError: Unable to find an element with the text: Drag and Drop files or browse. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\n    Ignored nodes: comments, script, style\n    \u001b[36m<body>\u001b[39m\n      \u001b[36m<div>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__dropzone\"\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"presentation\"\u001b[39m\n            \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<input\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__input\"\u001b[39m\n              \u001b[33mdata-testid\u001b[39m=\u001b[32m\"drag-drop__input\"\u001b[39m\n              \u001b[33mmultiple\u001b[39m=\u001b[32m\"\"\u001b[39m\n              \u001b[33mstyle\u001b[39m=\u001b[32m\"border: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;\"\u001b[39m\n              \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n              \u001b[33mtype\u001b[39m=\u001b[32m\"file\"\u001b[39m\n            \u001b[36m/>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__message\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mDrag 'n' drop some files here, or click to select files\u001b[0m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</body>\u001b[39m\n\n      30 |     const { getByText } = render(<DragAndDrop onDrop={mockOnFilesDrop} />);\n      31 |\n    > 32 |     expect(getByText('Drag and Drop files or browse')).toBeInTheDocument();\n         |            ^\n      33 |   });\n      34 |\n      35 |   it('should render children when provided and not dragging', () => {\n\n      at Object.getElementError (node_modules/@testing-library/dom/dist/config.js:37:19)\n      at node_modules/@testing-library/dom/dist/query-helpers.js:76:38\n      at node_modules/@testing-library/dom/dist/query-helpers.js:52:17\n      at node_modules/@testing-library/dom/dist/query-helpers.js:95:19\n      at Object.getByText (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:32:12)\n\n  ● DragAndDrop › should display the dragging message when dragging files\n\n    Unable to find an element with the text: Drop files here. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\n    Ignored nodes: comments, script, style\n    \u001b[36m<body>\u001b[39m\n      \u001b[36m<div>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__dropzone\"\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"presentation\"\u001b[39m\n            \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<input\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__input\"\u001b[39m\n              \u001b[33mdata-testid\u001b[39m=\u001b[32m\"drag-drop__input\"\u001b[39m\n              \u001b[33mmultiple\u001b[39m=\u001b[32m\"\"\u001b[39m\n              \u001b[33mstyle\u001b[39m=\u001b[32m\"border: 0px; clip: rect(0px, 0px, 0px, 0px); clip-path: inset(50%); height: 1px; margin: 0px -1px -1px 0px; overflow: hidden; padding: 0px; position: absolute; width: 1px; white-space: nowrap;\"\u001b[39m\n              \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n              \u001b[33mtype\u001b[39m=\u001b[32m\"file\"\u001b[39m\n            \u001b[36m/>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"drag-drop__message\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mDrop files here to upload\u001b[0m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</body>\u001b[39m\n\n      59 |     await act(async () => fireEvent.dragEnter(getByTestId('drag-drop__input')));\n      60 |\n    > 61 |     await waitFor(() => {\n         |                  ^\n      62 |       expect(getByText('Drop files here')).toBeInTheDocument();\n      63 |     });\n      64 |   });\n\n      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)\n      at _callee2$ (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:61:18)\n      at call (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n      at Generator.tryCatch (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n      at Generator._invoke [as next] (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n      at asyncGeneratorStep (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n      at asyncGeneratorStep (desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx:2:1)\n","name":"/workspace/repo/desktop/core/src/desktop/js/reactComponents/DragAndDrop/DragAndDrop.test.tsx","startTime":1782746209050,"status":"failed","summary":""},{"assertionResults":[{"ancestorTitles":["StorageBrowserRowActions","Summary option"],"duration":106,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Summary option does not render view summary option when there are multiple records selected","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render view summary option when there are multiple records selected"},{"ancestorTitles":["StorageBrowserRowActions","Summary option"],"duration":112,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Summary option renders view summary option when record is a hdfs file","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"renders view summary option when record is a hdfs file"},{"ancestorTitles":["StorageBrowserRowActions","Summary option"],"duration":44,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Summary option renders view summary option when record is a ofs file","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"renders view summary option when record is a ofs file"},{"ancestorTitles":["StorageBrowserRowActions","Summary option"],"duration":49,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Summary option does not render view summary option when record is a hdfs folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render view summary option when record is a hdfs folder"},{"ancestorTitles":["StorageBrowserRowActions","Summary option"],"duration":51,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Summary option does not render view summary option when record is a an abfs file","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render view summary option when record is a an abfs file"},{"ancestorTitles":["StorageBrowserRowActions","Summary option"],"duration":135,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Summary option renders summary modal when view summary option is clicked","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"renders summary modal when view summary option is clicked"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":20,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Rename option does not render rename option when there are multiple records selected","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render rename option when there are multiple records selected"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Rename option does not render rename option when selected record is a abfs root folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render rename option when selected record is a abfs root folder"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Rename option does not render rename option when selected record is a gs root folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render rename option when selected record is a gs root folder"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":16,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Rename option does not render rename option when selected record is a s3 root folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render rename option when selected record is a s3 root folder"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Rename option does not render rename option when selected record is a ofs root folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render rename option when selected record is a ofs root folder"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Rename option does not render rename option when selected record is a ofs service ID folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render rename option when selected record is a ofs service ID folder"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Rename option does not render rename option when selected record is a ofs volume folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render rename option when selected record is a ofs volume folder"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":50,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Rename option renders rename option when selected record is a file or a folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"renders rename option when selected record is a file or a folder"},{"ancestorTitles":["StorageBrowserRowActions","Rename option"],"duration":1101,"failureDetails":[{"name":"TestingLibraryElementError"}],"failureMessages":["Error: Unable to find an element with the text: Enter new name. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\nIgnored nodes: comments, script, style\n\u001b[36m<body>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<button\u001b[39m\n      \u001b[33mant-click-animating-without-extra-node\u001b[39m=\u001b[32m\"true\"\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-btn ant-btn-default ant-dropdown-trigger\"\u001b[39m\n      \u001b[33mdata-event\u001b[39m=\u001b[32m\"\"\u001b[39m\n      \u001b[33mdata-event-category\u001b[39m=\u001b[32m\"User Action\"\u001b[39m\n      \u001b[33mtype\u001b[39m=\u001b[32m\"button\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<span>\u001b[39m\n        \u001b[0mActions\u001b[0m\n      \u001b[36m</span>\u001b[39m\n      \u001b[36m<svg\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n        \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n        \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n        \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n        \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<path\u001b[39m\n          \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n          \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n          \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n          \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n        \u001b[36m/>\u001b[39m\n      \u001b[36m</svg>\u001b[39m\n    \u001b[36m</button>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n  \u001b[36m<div\u001b[39m\n    \u001b[33mstyle\u001b[39m=\u001b[32m\"position: absolute; top: 0px; left: 0px; width: 100%;\"\u001b[39m\n  \u001b[36m>\u001b[39m\n    \u001b[36m<div>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown hue-storage-browser__table-actions-dropdown ant-dropdown-hidden\"\u001b[39m\n        \u001b[33mstyle\u001b[39m=\u001b[32m\"pointer-events: none;\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<ul\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-vertical ant-dropdown-menu-light hue-storage-browser__table-actions-menu\"\u001b[39m\n          \u001b[33mdata-menu-list\u001b[39m=\u001b[32m\"true\"\u001b[39m\n          \u001b[33mrole\u001b[39m=\u001b[32m\"menu\"\u001b[39m\n          \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item\"\u001b[39m\n            \u001b[33mdata-menu-id\u001b[39m=\u001b[32m\"rc-menu-uuid-test-copy\"\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<svg\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item-icon\"\u001b[39m\n              \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n              \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n              \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n              \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<path\u001b[39m\n                \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                \u001b[33md\u001b[39m=\u001b[32m\"M19 6.5h-1.07c-.22.86-1 1.5-1.93 1.5h-4c-.93 0-1.71-.64-1.93-1.5H9V15h10V6.5zM11.5 6c0 .28.22.5.5.5h4c.28 0 .5-.22.5-.5V4.5h-5V6zM21 4.5V17H7V4.5h3V3h8v1.5h3zM16 19v2H3V6h2v13h11z\"\u001b[39m\n                \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</svg>\u001b[39m\n            \u001b[36m<span\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-title-content\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mCopy\u001b[0m\n            \u001b[36m</span>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item\"\u001b[39m\n            \u001b[33mdata-menu-id\u001b[39m=\u001b[32m\"rc-menu-uuid-test-move\"\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<svg\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item-icon\"\u001b[39m\n              \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n              \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n              \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n              \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<path\u001b[39m\n                \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                \u001b[33md\u001b[39m=\u001b[32m\"M19 6.5h-1.07c-.22.86-1 1.5-1.93 1.5h-4c-.93 0-1.71-.64-1.93-1.5H9V15h10V6.5zM11.5 6c0 .28.22.5.5.5h4c.28 0 .5-.22.5-.5V4.5h-5V6zM21 4.5V17H7V4.5h3V3h8v1.5h3zM16 19v2H3V6h2v13h11z\"\u001b[39m\n                \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</svg>\u001b[39m\n            \u001b[36m<span\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-title-content\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mMove\u001b[0m\n            \u001b[36m</span>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n          \u001b[36m<li\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item ant-dropdown-menu-item-active\"\u001b[39m\n            \u001b[33mdata-menu-id\u001b[39m=\u001b[32m\"rc-menu-uuid-test-rename\"\u001b[39m\n            \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n            \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<svg\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item-icon\"\u001b[39m\n              \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n              \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n              \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n              \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<path\u001b[39m\n                \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                \u001b[33md\u001b[39m=\u001b[32m\"M12 6.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5zM11 17h2v-6h-2v6zm1-13c-4.411 0-8 3.589-8 8s3.589 8 8 8 8-3.589 8-8-3.589-8-8-8zm0 18C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z\"\u001b[39m\n                \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</svg>\u001b[39m\n            \u001b[36m<span\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-title-content\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[0mRename\u001b[0m\n            \u001b[36m</span>\u001b[39m\n          \u001b[36m</li>\u001b[39m\n        \u001b[36m</ul>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n          \u001b[33mstyle\u001b[39m=\u001b[32m\"display: none;\"\u001b[39m\n        \u001b[36m/>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n  \u001b[36m<div>\u001b[39m\n    \u001b[36m<div\u001b[39m\n      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-root\"\u001b[39m\n    \u001b[36m>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-mask\"\u001b[39m\n      \u001b[36m/>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-wrap\"\u001b[39m\n        \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33maria-labelledby\u001b[39m=\u001b[32m\"test-id\"\u001b[39m\n          \u001b[33maria-modal\u001b[39m=\u001b[32m\"true\"\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal sc-dmyDmy iCJVrv hue-input-modal cuix antd\"\u001b[39m\n          \u001b[33mrole\u001b[39m=\u001b[32m\"dialog\"\u001b[39m\n          \u001b[33mstyle\u001b[39m=\u001b[32m\"width: 520px;\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n            \u001b[33mstyle\u001b[39m=\u001b[32m\"width: 0px; height: 0px; overflow: hidden; outline: none;\"\u001b[39m\n            \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n          \u001b[36m/>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-content\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<button\u001b[39m\n              \u001b[33maria-label\u001b[39m=\u001b[32m\"Close\"\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-close\"\u001b[39m\n              \u001b[33mtype\u001b[39m=\u001b[32m\"button\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<span\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-close-x\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<svg\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"sc-hLQTFJ dwtSfR\"\u001b[39m\n                  \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                  \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                  \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<path\u001b[39m\n                    \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                    \u001b[33md\u001b[39m=\u001b[32m\"M18.532 4L12 10.532 5.468 4 4 5.468 10.532 12 4 18.532 5.468 20 12 13.468 18.532 20 20 18.532 13.468 12 20 5.468 18.532 4z\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                    \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</svg>\u001b[39m\n              \u001b[36m</span>\u001b[39m\n            \u001b[36m</button>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-header\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-title\"\u001b[39m\n                \u001b[33mid\u001b[39m=\u001b[32m\"test-id\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[0mRename\u001b[0m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-body\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"hue-input-modal__input-label\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[0mEnter new name here\u001b[0m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<input\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input hue-input-modal__input\"\u001b[39m\n                \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                \u001b[33mvalue\u001b[39m=\u001b[32m\"test\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-footer\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-row sc-guDMob iExxFO\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-col\"\u001b[39m\n                  \u001b[33mstyle\u001b[39m=\u001b[32m\"flex: 1 1 auto;\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<button\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-btn ant-btn-primary\"\u001b[39m\n                    \u001b[33mdata-event\u001b[39m=\u001b[32m\"Modal primary action\"\u001b[39m\n                    \u001b[33mdata-event-category\u001b[39m=\u001b[32m\"User Action\"\u001b[39m\n                    \u001b[33mdata-test\u001b[39m=\u001b[32m\"ModalOkBtn\"\u001b[39m\n                    \u001b[33mtype\u001b[39m=\u001b[32m\"button\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<span>\u001b[39m\n                      \u001b[0mRename\u001b[0m\n                    \u001b[36m</span>\u001b[39m\n                  \u001b[36m</button>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-col\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<button\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-btn ant-btn-link\"\u001b[39m\n                    \u001b[33mdata-event\u001b[39m=\u001b[32m\"Modal cancel action\"\u001b[39m\n                    \u001b[33mdata-event-category\u001b[39m=\u001b[32m\"User Action\"\u001b[39m\n                    \u001b[33mdata-test\u001b[39m=\u001b[32m\"ModalCancelBtn\"\u001b[39m\n                    \u001b[33mtype\u001b[39m=\u001b[32m\"button\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<span>\u001b[39m\n                      \u001b[0mCancel\u001b[0m\n                    \u001b[36m</span>\u001b[39m\n                  \u001b[36m</button>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n            \u001b[33mstyle\u001b[39m=\u001b[32m\"width: 0px; height: 0px; overflow: hidden; outline: none;\"\u001b[39m\n            \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n          \u001b[36m/>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</div>\u001b[39m\n  \u001b[36m</div>\u001b[39m\n\u001b[36m</body>\u001b[39m\n    at waitForWrapper (/workspace/repo/node_modules/@testing-library/dom/dist/wait-for.js:163:27)\n    at /workspace/repo/node_modules/@testing-library/dom/dist/query-helpers.js:86:33\n    at findByText (/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:197:27)\n    at call (/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n    at Generator.tryCatch (/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n    at Generator._invoke [as next] (/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n    at asyncGeneratorStep (/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n    at asyncGeneratorStep (/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)"],"fullName":"StorageBrowserRowActions Rename option renders rename modal when rename option is clicked","invocations":1,"location":null,"numPassingAsserts":0,"retryReasons":[],"status":"failed","title":"renders rename modal when rename option is clicked"},{"ancestorTitles":["StorageBrowserRowActions","Set replication option"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Set replication option does not render set replication option when there are multiple records selected","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render set replication option when there are multiple records selected"},{"ancestorTitles":["StorageBrowserRowActions","Set replication option"],"duration":62,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Set replication option renders set replication option when selected record is a hdfs file","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"renders set replication option when selected record is a hdfs file"},{"ancestorTitles":["StorageBrowserRowActions","Set replication option"],"duration":45,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Set replication option does not render set replication option when selected record is a hdfs folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render set replication option when selected record is a hdfs folder"},{"ancestorTitles":["StorageBrowserRowActions","Set replication option"],"duration":20,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Set replication option does not render set replication option when selected record is a gs file/folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render set replication option when selected record is a gs file/folder"},{"ancestorTitles":["StorageBrowserRowActions","Set replication option"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Set replication option does not render set replication option when selected record is a s3 file/folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render set replication option when selected record is a s3 file/folder"},{"ancestorTitles":["StorageBrowserRowActions","Set replication option"],"duration":17,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Set replication option does not render set replication option when selected record is a ofs file/folder","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"does not render set replication option when selected record is a ofs file/folder"},{"ancestorTitles":["StorageBrowserRowActions","Set replication option"],"duration":98,"failureDetails":[],"failureMessages":[],"fullName":"StorageBrowserRowActions Set replication option renders set replication modal when set replication option is clicked","invocations":1,"location":null,"numPassingAsserts":1,"retryReasons":[],"status":"passed","title":"renders set replication modal when set replication option is clicked"}],"endTime":1782746221896,"message":"  ● StorageBrowserRowActions › Rename option › renders rename modal when rename option is clicked\n\n    Unable to find an element with the text: Enter new name. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.\n\n    Ignored nodes: comments, script, style\n    \u001b[36m<body>\u001b[39m\n      \u001b[36m<div>\u001b[39m\n        \u001b[36m<button\u001b[39m\n          \u001b[33mant-click-animating-without-extra-node\u001b[39m=\u001b[32m\"true\"\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-btn ant-btn-default ant-dropdown-trigger\"\u001b[39m\n          \u001b[33mdata-event\u001b[39m=\u001b[32m\"\"\u001b[39m\n          \u001b[33mdata-event-category\u001b[39m=\u001b[32m\"User Action\"\u001b[39m\n          \u001b[33mtype\u001b[39m=\u001b[32m\"button\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<span>\u001b[39m\n            \u001b[0mActions\u001b[0m\n          \u001b[36m</span>\u001b[39m\n          \u001b[36m<svg\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"cdp-icon-dropdown\"\u001b[39m\n            \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n            \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n            \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n            \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<path\u001b[39m\n              \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n              \u001b[33md\u001b[39m=\u001b[32m\"M6 9l6 6 6-6H6z\"\u001b[39m\n              \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n              \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n            \u001b[36m/>\u001b[39m\n          \u001b[36m</svg>\u001b[39m\n        \u001b[36m</button>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n      \u001b[36m<div\u001b[39m\n        \u001b[33mstyle\u001b[39m=\u001b[32m\"position: absolute; top: 0px; left: 0px; width: 100%;\"\u001b[39m\n      \u001b[36m>\u001b[39m\n        \u001b[36m<div>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown hue-storage-browser__table-actions-dropdown ant-dropdown-hidden\"\u001b[39m\n            \u001b[33mstyle\u001b[39m=\u001b[32m\"pointer-events: none;\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<ul\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu ant-dropdown-menu-root ant-dropdown-menu-vertical ant-dropdown-menu-light hue-storage-browser__table-actions-menu\"\u001b[39m\n              \u001b[33mdata-menu-list\u001b[39m=\u001b[32m\"true\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"menu\"\u001b[39m\n              \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<li\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item\"\u001b[39m\n                \u001b[33mdata-menu-id\u001b[39m=\u001b[32m\"rc-menu-uuid-test-copy\"\u001b[39m\n                \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n                \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<svg\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item-icon\"\u001b[39m\n                  \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                  \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                  \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<path\u001b[39m\n                    \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                    \u001b[33md\u001b[39m=\u001b[32m\"M19 6.5h-1.07c-.22.86-1 1.5-1.93 1.5h-4c-.93 0-1.71-.64-1.93-1.5H9V15h10V6.5zM11.5 6c0 .28.22.5.5.5h4c.28 0 .5-.22.5-.5V4.5h-5V6zM21 4.5V17H7V4.5h3V3h8v1.5h3zM16 19v2H3V6h2v13h11z\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                    \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</svg>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-title-content\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[0mCopy\u001b[0m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</li>\u001b[39m\n              \u001b[36m<li\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item\"\u001b[39m\n                \u001b[33mdata-menu-id\u001b[39m=\u001b[32m\"rc-menu-uuid-test-move\"\u001b[39m\n                \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n                \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<svg\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item-icon\"\u001b[39m\n                  \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                  \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                  \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<path\u001b[39m\n                    \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                    \u001b[33md\u001b[39m=\u001b[32m\"M19 6.5h-1.07c-.22.86-1 1.5-1.93 1.5h-4c-.93 0-1.71-.64-1.93-1.5H9V15h10V6.5zM11.5 6c0 .28.22.5.5.5h4c.28 0 .5-.22.5-.5V4.5h-5V6zM21 4.5V17H7V4.5h3V3h8v1.5h3zM16 19v2H3V6h2v13h11z\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                    \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</svg>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-title-content\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[0mMove\u001b[0m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</li>\u001b[39m\n              \u001b[36m<li\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item ant-dropdown-menu-item-active\"\u001b[39m\n                \u001b[33mdata-menu-id\u001b[39m=\u001b[32m\"rc-menu-uuid-test-rename\"\u001b[39m\n                \u001b[33mrole\u001b[39m=\u001b[32m\"menuitem\"\u001b[39m\n                \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<svg\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-item-icon\"\u001b[39m\n                  \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                  \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                  \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                  \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<path\u001b[39m\n                    \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                    \u001b[33md\u001b[39m=\u001b[32m\"M12 6.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5zM11 17h2v-6h-2v6zm1-13c-4.411 0-8 3.589-8 8s3.589 8 8 8 8-3.589 8-8-3.589-8-8-8zm0 18C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z\"\u001b[39m\n                    \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                    \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</svg>\u001b[39m\n                \u001b[36m<span\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-dropdown-menu-title-content\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[0mRename\u001b[0m\n                \u001b[36m</span>\u001b[39m\n              \u001b[36m</li>\u001b[39m\n            \u001b[36m</ul>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n              \u001b[33mstyle\u001b[39m=\u001b[32m\"display: none;\"\u001b[39m\n            \u001b[36m/>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n      \u001b[36m<div>\u001b[39m\n        \u001b[36m<div\u001b[39m\n          \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-root\"\u001b[39m\n        \u001b[36m>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-mask\"\u001b[39m\n          \u001b[36m/>\u001b[39m\n          \u001b[36m<div\u001b[39m\n            \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-wrap\"\u001b[39m\n            \u001b[33mtabindex\u001b[39m=\u001b[32m\"-1\"\u001b[39m\n          \u001b[36m>\u001b[39m\n            \u001b[36m<div\u001b[39m\n              \u001b[33maria-labelledby\u001b[39m=\u001b[32m\"test-id\"\u001b[39m\n              \u001b[33maria-modal\u001b[39m=\u001b[32m\"true\"\u001b[39m\n              \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal sc-dmyDmy iCJVrv hue-input-modal cuix antd\"\u001b[39m\n              \u001b[33mrole\u001b[39m=\u001b[32m\"dialog\"\u001b[39m\n              \u001b[33mstyle\u001b[39m=\u001b[32m\"width: 520px;\"\u001b[39m\n            \u001b[36m>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                \u001b[33mstyle\u001b[39m=\u001b[32m\"width: 0px; height: 0px; overflow: hidden; outline: none;\"\u001b[39m\n                \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-content\"\u001b[39m\n              \u001b[36m>\u001b[39m\n                \u001b[36m<button\u001b[39m\n                  \u001b[33maria-label\u001b[39m=\u001b[32m\"Close\"\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-close\"\u001b[39m\n                  \u001b[33mtype\u001b[39m=\u001b[32m\"button\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<span\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-close-x\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<svg\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"sc-hLQTFJ dwtSfR\"\u001b[39m\n                      \u001b[33mfill\u001b[39m=\u001b[32m\"none\"\u001b[39m\n                      \u001b[33mheight\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                      \u001b[33mviewBox\u001b[39m=\u001b[32m\"0 0 24 24\"\u001b[39m\n                      \u001b[33mwidth\u001b[39m=\u001b[32m\"1em\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<path\u001b[39m\n                        \u001b[33mclip-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                        \u001b[33md\u001b[39m=\u001b[32m\"M18.532 4L12 10.532 5.468 4 4 5.468 10.532 12 4 18.532 5.468 20 12 13.468 18.532 20 20 18.532 13.468 12 20 5.468 18.532 4z\"\u001b[39m\n                        \u001b[33mfill\u001b[39m=\u001b[32m\"currentColor\"\u001b[39m\n                        \u001b[33mfill-rule\u001b[39m=\u001b[32m\"evenodd\"\u001b[39m\n                      \u001b[36m/>\u001b[39m\n                    \u001b[36m</svg>\u001b[39m\n                  \u001b[36m</span>\u001b[39m\n                \u001b[36m</button>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-header\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-title\"\u001b[39m\n                    \u001b[33mid\u001b[39m=\u001b[32m\"test-id\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[0mRename\u001b[0m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-body\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"hue-input-modal__input-label\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[0mEnter new name here\u001b[0m\n                  \u001b[36m</div>\u001b[39m\n                  \u001b[36m<input\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-input hue-input-modal__input\"\u001b[39m\n                    \u001b[33mtype\u001b[39m=\u001b[32m\"text\"\u001b[39m\n                    \u001b[33mvalue\u001b[39m=\u001b[32m\"test\"\u001b[39m\n                  \u001b[36m/>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n                \u001b[36m<div\u001b[39m\n                  \u001b[33mclass\u001b[39m=\u001b[32m\"ant-modal-footer\"\u001b[39m\n                \u001b[36m>\u001b[39m\n                  \u001b[36m<div\u001b[39m\n                    \u001b[33mclass\u001b[39m=\u001b[32m\"ant-row sc-guDMob iExxFO\"\u001b[39m\n                  \u001b[36m>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-col\"\u001b[39m\n                      \u001b[33mstyle\u001b[39m=\u001b[32m\"flex: 1 1 auto;\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<button\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-btn ant-btn-primary\"\u001b[39m\n                        \u001b[33mdata-event\u001b[39m=\u001b[32m\"Modal primary action\"\u001b[39m\n                        \u001b[33mdata-event-category\u001b[39m=\u001b[32m\"User Action\"\u001b[39m\n                        \u001b[33mdata-test\u001b[39m=\u001b[32m\"ModalOkBtn\"\u001b[39m\n                        \u001b[33mtype\u001b[39m=\u001b[32m\"button\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<span>\u001b[39m\n                          \u001b[0mRename\u001b[0m\n                        \u001b[36m</span>\u001b[39m\n                      \u001b[36m</button>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                    \u001b[36m<div\u001b[39m\n                      \u001b[33mclass\u001b[39m=\u001b[32m\"ant-col\"\u001b[39m\n                    \u001b[36m>\u001b[39m\n                      \u001b[36m<button\u001b[39m\n                        \u001b[33mclass\u001b[39m=\u001b[32m\"ant-btn ant-btn-link\"\u001b[39m\n                        \u001b[33mdata-event\u001b[39m=\u001b[32m\"Modal cancel action\"\u001b[39m\n                        \u001b[33mdata-event-category\u001b[39m=\u001b[32m\"User Action\"\u001b[39m\n                        \u001b[33mdata-test\u001b[39m=\u001b[32m\"ModalCancelBtn\"\u001b[39m\n                        \u001b[33mtype\u001b[39m=\u001b[32m\"button\"\u001b[39m\n                      \u001b[36m>\u001b[39m\n                        \u001b[36m<span>\u001b[39m\n                          \u001b[0mCancel\u001b[0m\n                        \u001b[36m</span>\u001b[39m\n                      \u001b[36m</button>\u001b[39m\n                    \u001b[36m</div>\u001b[39m\n                  \u001b[36m</div>\u001b[39m\n                \u001b[36m</div>\u001b[39m\n              \u001b[36m</div>\u001b[39m\n              \u001b[36m<div\u001b[39m\n                \u001b[33maria-hidden\u001b[39m=\u001b[32m\"true\"\u001b[39m\n                \u001b[33mstyle\u001b[39m=\u001b[32m\"width: 0px; height: 0px; overflow: hidden; outline: none;\"\u001b[39m\n                \u001b[33mtabindex\u001b[39m=\u001b[32m\"0\"\u001b[39m\n              \u001b[36m/>\u001b[39m\n            \u001b[36m</div>\u001b[39m\n          \u001b[36m</div>\u001b[39m\n        \u001b[36m</div>\u001b[39m\n      \u001b[36m</div>\u001b[39m\n    \u001b[36m</body>\u001b[39m\n\n      195 |       await setUpActionMenu([mockRecord], 'abfs://test', 'dir');\n      196 |       await user.click(screen.queryByRole('menuitem', { name: 'Rename' }));\n    > 197 |       expect(await screen.findByText('Enter new name')).toBeInTheDocument();\n          |                           ^\n      198 |     });\n      199 |   });\n      200 |\n\n      at waitForWrapper (node_modules/@testing-library/dom/dist/wait-for.js:163:27)\n      at node_modules/@testing-library/dom/dist/query-helpers.js:86:33\n      at findByText (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:197:27)\n      at call (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n      at Generator.tryCatch (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n      at Generator._invoke [as next] (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n      at asyncGeneratorStep (desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx:2:1)\n","name":"/workspace/repo/desktop/core/src/desktop/js/apps/storageBrowser/StorageDirectoryPage/StorageBrowserActions/StorageBrowserActions.test.tsx","startTime":1782746209050,"status":"failed","summary":""}],"wasInterrupted":false}
+  File "/tests/grade.py", line 1989
+    from __future__ import annotations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: from __future__ imports must occur at the beginning of the file

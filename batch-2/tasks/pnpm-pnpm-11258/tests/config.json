@@ -1,0 +1,25 @@
+{
+  "test_framework": "jest",
+  "test_command": "cd /workspace/repo && pnpm install --no-frozen-lockfile --prefer-offline 2>&1 | tail -5 && node_modules/.bin/tsgo --build registry-access/commands 2>&1 | tail -10 && cd /workspace/repo/registry-access/commands && NODE_OPTIONS=\"--experimental-vm-modules --disable-warning=ExperimentalWarning --disable-warning=DEP0169\" npx jest test/ping.ts --config='{\"preset\":\"@pnpm/jest-config\"}' --coverage=false --verbose",
+  "test_files": [
+    "registry-access/commands/test/ping.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should have correct command names",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should have a help function",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should have cliOptionsTypes function",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should have rcOptionsTypes function",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should return PING/PONG output for reachable registry",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should include details when the registry returns a non-empty JSON body",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should use default registry when not specified",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should throw error on non-2xx registry response (401)",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should throw error on non-2xx registry response (403)",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should throw error on non-2xx registry response (404)",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should throw error on non-2xx registry response (500)",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should preserve a registry path prefix when the URL has no trailing slash",
+    "/workspace/repo/registry-access/commands/test/ping.ts::ping command should throw error on network failure"
+  ],
+  "PASS_TO_PASS": []
+}

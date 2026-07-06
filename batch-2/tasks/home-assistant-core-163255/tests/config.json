@@ -1,0 +1,20 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && pytest tests/components/smarla/test_update.py -v",
+  "test_files": [
+    "tests/components/smarla/conftest.py",
+    "tests/components/smarla/snapshots/test_update.ambr",
+    "tests/components/smarla/test_update.py"
+  ],
+  "num_test_files": 3,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.smarla.test_update::test_update",
+    "tests.components.smarla.test_update::test_update_available",
+    "tests.components.smarla.test_update::test_update_install",
+    "tests.components.smarla.test_update::test_update_in_progress[1]",
+    "tests.components.smarla.test_update::test_update_in_progress[2]",
+    "tests.components.smarla.test_update::test_update_unknown"
+  ],
+  "PASS_TO_PASS": []
+}

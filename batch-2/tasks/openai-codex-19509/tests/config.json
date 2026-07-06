@@ -1,0 +1,14 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run --color never -p codex-core -E 'test(mcp_result_telemetry) or test(truncates_strings_on_char_boundaries)' 2>&1",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/4) codex-core mcp_tool_call::tests::truncates_strings_on_char_boundaries",
+    "(2/4) codex-core mcp_tool_call::tests::mcp_result_telemetry_records_allowlisted_span_fields",
+    "(3/4) codex-core mcp_tool_call::tests::mcp_result_telemetry_truncates_long_target_id",
+    "(4/4) codex-core mcp_tool_call::tests::mcp_result_telemetry_ignores_invalid_and_missing_values"
+  ],
+  "PASS_TO_PASS": []
+}

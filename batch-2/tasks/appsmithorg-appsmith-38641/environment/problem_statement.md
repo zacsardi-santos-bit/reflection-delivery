@@ -1,0 +1,7 @@
+I'm pulling our IDE sidebar nav button out of the application layer and into the shared design system package so other parts of the codebase (and other packages) can use it without dragging in app-specific deps. Right now it's tightly coupled to application utilities and its prop types live bundled with the implementation, which is annoying.
+
+What I want: the component should land as a named export under the Sidebar templates directory in the design system library, with its prop types pulled out into a separate types file sitting in that same directory. I also need a shared enums file in that same Sidebar templates directory that exports the condition states, including the warning condition used to flag buttons.
+
+Behavior-wise the component renders a button that gets a data test identifier derived from an `id` prop so it's queryable. When a warning condition is set on the button it should render a condition indicator element whose test identifier incorporates the condition name (predictable, so something like the condition value baked into the id). Clicking the button should call the provided callback with the button's URL suffix, but only if the button isn't already selected. If it's already in the selected state, clicks get ignored and the callback doesn't fire.
+
+Oh, and our test infra moved to standard testing library `screen` queries instead of the old destructured render helpers, so make sure the component plays nice with querying by test id through `screen` rather than return values from render.

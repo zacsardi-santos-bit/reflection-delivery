@@ -1,0 +1,11 @@
+{
+  "test_framework": "cargo",
+  "test_command": "cd /workspace/repo/codex-rs && cargo nextest run -p codex-analytics -E 'test(subagent_thread_started_inherits_parent_connection_for_new_thread)'",
+  "test_files": [],
+  "num_test_files": 0,
+  "language": "rust",
+  "FAIL_TO_PASS": [
+    "(1/1) codex-analytics analytics_client_tests::subagent_thread_started_inherits_parent_connection_for_new_thread"
+  ],
+  "PASS_TO_PASS": []
+}

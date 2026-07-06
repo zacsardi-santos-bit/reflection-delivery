@@ -1,7 +1,0 @@
-I'm working with the LangChain MongoDB partner library and I need to add LLM caching support. Right now there's no cache module at all, so every language model call hits the API even when I've already seen the same prompt before.
-
-I need two cache implementations that can be plugged in as the global LLM cache: one that returns stored responses for exact prompt matches, and one that uses MongoDB Atlas vector search to return cached responses for semantically similar prompts (inheriting from the existing MongoDB Atlas vector store class). Both should integrate transparently with the standard LangChain LLM and chat model call paths, so that once the cache is set, repeated or similar prompts are served from MongoDB without any additional code changes.
-
-The exact-match cache should connect to MongoDB and store and retrieve responses keyed by the prompt and model identifier. The semantic cache should store prompt embeddings alongside the responses and query by vector similarity filtered on the model identifier. Both should support clearing the cache, optionally with filter criteria.
-
-The caches also need to work correctly across all the typical prompt formats: plain string prompts, lists of chat messages, and multiple generations per prompt. Responses must survive a round-trip through serialization so that all generation types, including chat generations, are restored correctly on retrieval.

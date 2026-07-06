@@ -1,0 +1,91 @@
+patching file test/component/LabelList.spec.tsx
+patching file test/state/selectors/scatterSelectors.spec.tsx
+
+ RUN  v2.1.9 /workspace/repo
+
+stderr | test/component/LabelList.spec.tsx > <LabelList /> > Render labels in ScatterChart
+Warning: A props object containing a "key" prop is being spread into JSX:
+  let props = {key: someKey, option: ..., isActive: ..., name: ..., x: ..., y: ..., z: ..., cx: ..., cy: ..., width: ..., height: ..., size: ..., node: ..., tooltipPayload: ..., tooltipPosition: ..., payload: ...};
+  <ScatterSymbol {...props} />
+React keys must be passed directly to JSX without using spread:
+  let props = {option: ..., isActive: ..., name: ..., x: ..., y: ..., z: ..., cx: ..., cy: ..., width: ..., height: ..., size: ..., node: ..., tooltipPayload: ..., tooltipPosition: ..., payload: ...};
+  <ScatterSymbol key={someKey} {...props} />
+    at ScatterSymbols (/workspace/repo/src/cartesian/Scatter.tsx:69:11)
+    at g
+    at /workspace/repo/src/container/Layer.tsx:10:11
+    at g
+    at /workspace/repo/src/container/Layer.tsx:10:11
+    at ScatterWithState (/workspace/repo/src/cartesian/Scatter.tsx:274:5)
+    at ScatterImpl (/workspace/repo/src/cartesian/Scatter.tsx:433:66)
+    at CartesianGraphicalItemContext (/workspace/repo/src/context/CartesianGraphicalItemContext.tsx:35:3)
+    at Scatter (/workspace/repo/src/cartesian/Scatter.tsx:506:1)
+    at svg
+    at Surface (/workspace/repo/src/container/Surface.tsx:8:11)
+    at div
+    at /workspace/repo/src/chart/RechartsWrapper.tsx:25:5
+    at ChartLayoutContextProvider (/workspace/repo/src/context/chartLayoutContext.tsx:21:11)
+    at CategoricalChartWrapper (/workspace/repo/src/chart/generateCategoricalChart.tsx:63:7)
+    at Provider (/workspace/repo/node_modules/react-redux/lib/components/Provider.js:19:3)
+    at RechartsStoreProvider (/workspace/repo/src/state/RechartsStoreProvider.tsx:13:34)
+    at CategoricalChart2 (/workspace/repo/src/chart/generateCategoricalChart.tsx:243:13)
+
+ ✓ test/component/LabelList.spec.tsx (2 tests) 122ms
+stderr | test/state/selectors/scatterSelectors.spec.tsx > selectScatterPoints > should return computed scatter points when data is defined on Scatter child
+Warning: A props object containing a "key" prop is being spread into JSX:
+  let props = {key: someKey, option: ..., isActive: ..., name: ..., uv: ..., pv: ..., amt: ..., cx: ..., cy: ..., x: ..., y: ..., width: ..., height: ..., size: ..., node: ..., tooltipPayload: ..., tooltipPosition: ..., payload: ...};
+  <ScatterSymbol {...props} />
+React keys must be passed directly to JSX without using spread:
+  let props = {option: ..., isActive: ..., name: ..., uv: ..., pv: ..., amt: ..., cx: ..., cy: ..., x: ..., y: ..., width: ..., height: ..., size: ..., node: ..., tooltipPayload: ..., tooltipPosition: ..., payload: ...};
+  <ScatterSymbol key={someKey} {...props} />
+    at ScatterSymbols (/workspace/repo/src/cartesian/Scatter.tsx:69:11)
+    at g
+    at /workspace/repo/src/container/Layer.tsx:10:11
+    at Animate (/workspace/repo/node_modules/react-smooth/lib/Animate.js:47:5)
+    at g
+    at /workspace/repo/src/container/Layer.tsx:10:11
+    at g
+    at /workspace/repo/src/container/Layer.tsx:10:11
+    at ScatterWithState (/workspace/repo/src/cartesian/Scatter.tsx:274:5)
+    at ScatterImpl (/workspace/repo/src/cartesian/Scatter.tsx:433:66)
+    at CartesianGraphicalItemContext (/workspace/repo/src/context/CartesianGraphicalItemContext.tsx:35:3)
+    at Scatter (/workspace/repo/src/cartesian/Scatter.tsx:506:1)
+    at svg
+    at Surface (/workspace/repo/src/container/Surface.tsx:8:11)
+    at div
+    at /workspace/repo/src/chart/RechartsWrapper.tsx:25:5
+    at ChartLayoutContextProvider (/workspace/repo/src/context/chartLayoutContext.tsx:21:11)
+    at CategoricalChartWrapper (/workspace/repo/src/chart/generateCategoricalChart.tsx:63:7)
+    at Provider (/workspace/repo/node_modules/react-redux/lib/components/Provider.js:19:3)
+    at RechartsStoreProvider (/workspace/repo/src/state/RechartsStoreProvider.tsx:13:34)
+    at CategoricalChart2 (/workspace/repo/src/chart/generateCategoricalChart.tsx:243:13)
+
+ ❯ test/state/selectors/scatterSelectors.spec.tsx (5 tests | 2 failed) 113ms
+   × selectScatterPoints > should return computed scatter points when data is defined on Scatter child 44ms
+     → expected "spy" to be called 3 times, but got 1 times
+   × selectScatterPoints > should be stable 15ms
+     → expected number of assertions to be 3, but got 1
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/state/selectors/scatterSelectors.spec.tsx > selectScatterPoints > should return computed scatter points when data is defined on Scatter child
+AssertionError: expected "spy" to be called 3 times, but got 1 times
+ ❯ test/state/selectors/scatterSelectors.spec.tsx:432:30
+    430|       </ScatterChart>,
+    431|     );
+    432|     expect(scatterPointsSpy).toHaveBeenCalledTimes(3);
+       |                              ^
+    433|     expect(scatterPointsSpy).toHaveBeenNthCalledWith(1, undefined);
+    434|     expect(scatterPointsSpy).toHaveBeenNthCalledWith(2, expectedPoints…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/state/selectors/scatterSelectors.spec.tsx > selectScatterPoints > should be stable
+Error: expected number of assertions to be 3, but got 1
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 5 passed (7)
+   Start at  15:19:47
+   Duration  3.19s (transform 1.21s, setup 633ms, collect 3.34s, tests 236ms, environment 1.34s, prepare 249ms)
+
+reward=0 graded=7 found=0 failed=0 parsed=0 framework=vitest exit_code=1

@@ -1,0 +1,219 @@
+patching file app/actions/remote/user.test.ts
+patching file app/client/rest/custom_profile_attributes.test.ts
+patching file app/hooks/field_refs.test.ts
+patching file app/screens/edit_profile/components/form.test.tsx
+PASS app/hooks/field_refs.test.ts
+  useFieldRefs
+    ✓ should initialize with empty refs (12 ms)
+    ✓ should set and get refs (1 ms)
+    ✓ should track number of refs (1 ms)
+    ✓ should remove refs when cleanup function is called (1 ms)
+    ✓ should handle multiple refs independently (1 ms)
+
+PASS app/screens/edit_profile/components/form.test.tsx (14.54 s)
+  ProfileForm
+    ✓ should render without custom attributes when disabled (951 ms)
+    ✓ should render custom attributes when enabled (19 ms)
+    ✓ should call onUpdateField when custom attribute is changed (8 ms)
+    ✓ should handle empty custom attributes (6 ms)
+
+PASS app/client/rest/custom_profile_attributes.test.ts (16.044 s)
+  CustomAttributes
+    ✓ getCustomProfileAttributeFields (11 ms)
+    ✓ getCustomProfileAttributeValues (1 ms)
+    ✓ updateCustomProfileAttributeValues
+
+  console.debug
+    error on fetchMe foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchMe User not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesInChannel foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesInGroupChannels foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesPerChannels foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchUserOrGroupsByMentionNames foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchUsersByUsernames foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchUsersByIds foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfiles foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesInTeam foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchProfilesNotInChannel foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on searchProfiles foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on searchUsers foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchCustomAttributes Sample error
+
+      at apply (app/utils/log.ts:28:18)
+          at Generator.throw (<anonymous>)
+
+  console.debug
+    error on fetchCustomAttributes Sample error
+
+      at apply (app/utils/log.ts:28:18)
+          at Generator.throw (<anonymous>)
+
+  console.debug
+    error on updateCustomAttributes Test Error
+
+      at apply (app/utils/log.ts:28:18)
+          at Generator.throw (<anonymous>)
+
+  console.debug
+    error on updateMe foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchRolesIfNeeded Invalid "fieldName" or "tableName" has been passed to the processRecords method for tableName Role fieldName id
+
+      at apply (app/utils/log.ts:28:18)
+          at Generator.throw (<anonymous>)
+
+  console.debug
+    error on updateAllUsersSince foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on updateUsersNoLongerVisible foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on uploadUserProfileImage foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+  console.debug
+    error on fetchRolesIfNeeded Invalid "fieldName" or "tableName" has been passed to the processRecords method for tableName Role fieldName id
+
+      at apply (app/utils/log.ts:28:18)
+          at Generator.throw (<anonymous>)
+
+  console.debug
+    error on fetchStatusByIds foo database not found
+
+      at apply (app/utils/log.ts:28:18)
+
+PASS app/actions/remote/user.test.ts (17.784 s)
+  get users
+    ✓ fetchMe - handle not found database (1561 ms)
+    ✓ fetchMe - handle bad user (4 ms)
+    ✓ fetchMe - base case (4 ms)
+    ✓ fetchProfilesInChannel - handle not found database (4 ms)
+    ✓ fetchProfilesInChannel - base case (4 ms)
+    ✓ fetchProfilesInChannel - exclude user id (3 ms)
+    ✓ fetchProfilesInGroupChannels - handle not found database (3 ms)
+    ✓ fetchProfilesInGroupChannels - base case (3 ms)
+    ✓ fetchProfilesInGroupChannels - profiles already exist (3 ms)
+    ✓ fetchProfilesPerChannels - handle not found database (4 ms)
+    ✓ fetchProfilesPerChannels - base case (2 ms)
+    ✓ fetchUserOrGroupsByMentionNames - handle not found database (3 ms)
+    ✓ fetchUserOrGroupsByMentionNames - base case (2 ms)
+    ✓ fetchUsersByUsernames - handle not found database (3 ms)
+    ✓ fetchUsersByUsernames - no usernames (2 ms)
+    ✓ fetchUsersByUsernames - base case (2 ms)
+    ✓ fetchUsersByIds - handle not found database (8 ms)
+    ✓ fetchUsersByIds - no ids (2 ms)
+    ✓ fetchUsersByIds - base case (3 ms)
+    ✓ fetchProfiles - handle not found database (3 ms)
+    ✓ fetchProfiles - base case (2 ms)
+    ✓ fetchProfilesInTeam - handle not found database (3 ms)
+    ✓ fetchProfilesInTeam - base case (2 ms)
+    ✓ fetchProfilesNotInChannel - handle not found database (3 ms)
+    ✓ fetchProfilesNotInChannel - base case (2 ms)
+    ✓ searchProfiles - handle not found database (3 ms)
+    ✓ searchProfiles - base case (2 ms)
+    ✓ fetchMissingProfilesByIds - base case (3 ms)
+    ✓ fetchMissingProfilesByUsernames - base case (2 ms)
+    ✓ searchUsers - base case (2 ms)
+    ✓ buildProfileImageUrlFromUser - base case (1 ms)
+    ✓ fetchTeamAndChannelMembership - handle not found database (3 ms)
+    ✓ fetchTeamAndChannelMembership - base case (6 ms)
+    ✓ getAllSupportedTimezones - base case (2 ms)
+  Custom Profile Attributes
+    ✓ fetchCustomAttributes - base case (2 ms)
+    ✓ fetchCustomAttributes - no fields (2 ms)
+    ✓ fetchCustomAttributes - error on fields (3 ms)
+    ✓ fetchCustomAttributes - error on values (2 ms)
+    ✓ updateCustomAttributes - base case (2 ms)
+    ✓ updateCustomAttributes - error (2 ms)
+  update users
+    ✓ updateMe - handle not found database (3 ms)
+    ✓ updateMe - handle base case (3 ms)
+    ✓ updateAllUsersSince - handle not found database (3 ms)
+    ✓ updateAllUsersSince - no time (2 ms)
+    ✓ updateAllUsersSince - handle base case (3 ms)
+    ✓ updateUsersNoLongerVisible - handle not found database (3 ms)
+    ✓ updateUsersNoLongerVisible - handle base case (2 ms)
+    ✓ setDefaultProfileImage - base case (2 ms)
+    ✓ uploadUserProfileImage - handle not found database (2 ms)
+    ✓ uploadUserProfileImage - handle base case (2 ms)
+    ✓ autoUpdateTimezone - handle not found database (2 ms)
+    ✓ autoUpdateTimezone - no current user (1 ms)
+    ✓ autoUpdateTimezone - handle base case (7 ms)
+  user status
+    ✓ fetchStatusByIds - handle not found database (2 ms)
+    ✓ fetchStatusByIds - no ids (2 ms)
+    ✓ fetchStatusByIds - base case (2 ms)
+    ✓ setStatus - base case (1 ms)
+    ✓ updateCustomStatus - base case (2 ms)
+    ✓ removeRecentCustomStatus - base case (2 ms)
+    ✓ unsetCustomStatus - base case (1 ms)
+
+A worker process has failed to exit gracefully and has been force exited. This is likely caused by tests leaking due to improper teardown. Try running with --detectOpenHandles to find leaks. Active timers can also cause this, ensure that .unref() was called on them.
+Test Suites: 4 passed, 4 total
+Tests:       72 passed, 72 total
+Snapshots:   0 total
+Time:        19.608 s
+Ran all test suites matching /app\/actions\/remote\/user.test.ts|app\/client\/rest\/custom_profile_attributes.test.ts|app\/hooks\/field_refs.test.ts|app\/screens\/edit_profile\/components\/form.test.tsx/i.
+Force exiting Jest: Have you considered using `--detectOpenHandles` to detect async operations that kept running after all tests finished?
+reward=1 graded=72 found=0 failed=0 parsed=0 framework=jest exit_code=0

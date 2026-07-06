@@ -1,0 +1,29 @@
+{
+    "id": "286bc209-97e6-4f1a-b2e5-6a8d52d4cdb5",
+    "started_at": "2026-07-04T15:40:50.221483",
+    "finished_at": "2026-07-04T15:41:27.434598",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__microcks-microcks-1754": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "microcks-microcks-1754__eHwkhCf"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

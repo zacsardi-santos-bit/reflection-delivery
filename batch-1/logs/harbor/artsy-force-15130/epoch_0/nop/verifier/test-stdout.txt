@@ -1,0 +1,23 @@
+patching file src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx
+FAIL src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx
+  ● Test suite failed to run
+
+    Cannot find module 'Components/ArtsyShippingEstimate' from 'src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx'
+
+      13 |
+      14 | const MockArtsyShippingEstimate = ArtsyShippingEstimate as jest.Mock
+    > 15 | jest.mock("Components/ArtsyShippingEstimate", () => ({
+         |      ^
+      16 |   ArtsyShippingEstimate: jest.fn(() => <div>ArtsyShippingEstimate</div>),
+      17 | }))
+      18 |
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.mock (src/Apps/Artwork/Components/ArtworkSidebar/__tests__/ArtworkSidebar.jest.tsx:15:6)
+
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        3.4 s
+Ran all test suites matching /src\/Apps\/Artwork\/Components\/ArtworkSidebar\/__tests__\/ArtworkSidebar.jest.tsx/i.
+reward=0 graded=14 found=0 failed=0 parsed=0 framework=jest exit_code=1

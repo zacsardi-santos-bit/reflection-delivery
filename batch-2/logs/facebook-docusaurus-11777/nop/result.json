@@ -1,0 +1,29 @@
+{
+    "id": "8dfca3dd-5255-41a7-a968-0e390bae02fa",
+    "started_at": "2026-07-06T12:17:19.209592",
+    "finished_at": "2026-07-06T12:17:56.571244",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__facebook-docusaurus-11777": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "facebook-docusaurus-11777__2vhRjne"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

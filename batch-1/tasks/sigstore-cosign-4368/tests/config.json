@@ -1,0 +1,28 @@
+{
+  "test_framework": "go",
+  "test_command": "go test -json ./internal/key -count=1",
+  "test_files": [
+    "cmd/cosign/cli/attest/attest.go",
+    "cmd/cosign/cli/attest/attest_blob.go",
+    "internal/key/svkeypair_test.go",
+    "test/e2e_test.go"
+  ],
+  "num_test_files": 4,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/sigstore/cosign/v2/internal/key::TestNewKMSKeypair/ECDSA_key",
+    "github.com/sigstore/cosign/v2/internal/key::TestNewKMSKeypair/RSA_key",
+    "github.com/sigstore/cosign/v2/internal/key::TestNewKMSKeypair/ED25519_key",
+    "github.com/sigstore/cosign/v2/internal/key::TestNewKMSKeypair/Unsupported_key_type",
+    "github.com/sigstore/cosign/v2/internal/key::TestNewKMSKeypair/PublicKey_returns_error",
+    "github.com/sigstore/cosign/v2/internal/key::TestNewKMSKeypair",
+    "github.com/sigstore/cosign/v2/internal/key::TestKMSKeypair_Methods/GetHashAlgorithm",
+    "github.com/sigstore/cosign/v2/internal/key::TestKMSKeypair_Methods/GetHint",
+    "github.com/sigstore/cosign/v2/internal/key::TestKMSKeypair_Methods/GetKeyAlgorithm",
+    "github.com/sigstore/cosign/v2/internal/key::TestKMSKeypair_Methods/GetPublicKeyPem",
+    "github.com/sigstore/cosign/v2/internal/key::TestKMSKeypair_Methods/SignData",
+    "github.com/sigstore/cosign/v2/internal/key::TestKMSKeypair_Methods/SignData_with_error",
+    "github.com/sigstore/cosign/v2/internal/key::TestKMSKeypair_Methods"
+  ],
+  "PASS_TO_PASS": []
+}

@@ -1,0 +1,29 @@
+{
+    "id": "f4bfc3a4-2efa-4092-8a67-f47bbc01c660",
+    "started_at": "2026-07-04T15:37:37.183387",
+    "finished_at": "2026-07-04T15:40:49.903122",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__kubernetes-test-infra-6468": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "kubernetes-test-infra-6468__WfVufaY"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

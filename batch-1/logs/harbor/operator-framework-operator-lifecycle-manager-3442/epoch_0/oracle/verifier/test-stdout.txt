@@ -1,0 +1,20 @@
+patching file pkg/controller/operators/catalog/operator_test.go
+=== RUN   TestValidateV1Beta1CRDCompatibility
+=== RUN   TestValidateV1Beta1CRDCompatibility/label_validation
+=== RUN   TestValidateV1Beta1CRDCompatibility/fail_validation
+=== RUN   TestValidateV1Beta1CRDCompatibility/backwards_incompatible_change
+=== RUN   TestValidateV1Beta1CRDCompatibility/unserved_version
+=== RUN   TestValidateV1Beta1CRDCompatibility/cr_not_validated_against_currently_unserved_version
+=== RUN   TestValidateV1Beta1CRDCompatibility/crd_with_no_versions_list
+=== RUN   TestValidateV1Beta1CRDCompatibility/crd_with_incorrect_comparison
+--- PASS: TestValidateV1Beta1CRDCompatibility (0.03s)
+    --- PASS: TestValidateV1Beta1CRDCompatibility/label_validation (0.00s)
+    --- PASS: TestValidateV1Beta1CRDCompatibility/fail_validation (0.00s)
+    --- PASS: TestValidateV1Beta1CRDCompatibility/backwards_incompatible_change (0.00s)
+    --- PASS: TestValidateV1Beta1CRDCompatibility/unserved_version (0.00s)
+    --- PASS: TestValidateV1Beta1CRDCompatibility/cr_not_validated_against_currently_unserved_version (0.00s)
+    --- PASS: TestValidateV1Beta1CRDCompatibility/crd_with_no_versions_list (0.00s)
+    --- PASS: TestValidateV1Beta1CRDCompatibility/crd_with_incorrect_comparison (0.00s)
+PASS
+ok  	github.com/operator-framework/operator-lifecycle-manager/pkg/controller/operators/catalog	0.061s
+reward=1 graded=8 found=0 failed=0 parsed=0 framework=go exit_code=0

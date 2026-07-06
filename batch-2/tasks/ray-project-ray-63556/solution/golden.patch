@@ -1,0 +1,399 @@
+diff --git a/doc/source/serve/advanced-guides/performance.md b/doc/source/serve/advanced-guides/performance.md
+index f4bf378129..55e8d23903 100644
+--- a/doc/source/serve/advanced-guides/performance.md
++++ b/doc/source/serve/advanced-guides/performance.md
+@@ -335,3 +335,5 @@ you can tune the following environment variables:
+ - `RAY_SERVE_CONTROL_LOOP_INTERVAL_S`: The interval between cycles of the control loop (defaults to `0.1` seconds). Increasing this value gives the Controller more time to process requests and may help alleviate overload.
+ - `RAY_SERVE_CONTROLLER_MAX_CONCURRENCY`: The maximum number of concurrent requests the Controller can handle (defaults to `15000`). The Controller accepts one long poll request per handle, so its concurrency needs scale with the number of handles. Increase this value if you have a large number of deployment handles.
+ - `RAY_SERVE_MAX_CACHED_HANDLES`: The maximum number of cached deployment handles (defaults to `100`). Each handle maintains a long poll connection to the controller, so limiting the cache size reduces controller overhead. Decrease this value if you're experiencing controller overload due to many handles.
++
++To get a quantitative view of controller health, query the GET `/api/serve/applications/` endpoint and inspect the [`controller_health_metrics`](../api/doc/ray.serve.schema.ControllerHealthMetrics.rst) field on the response. It exposes rolling-window statistics ([`DurationStats`](../api/doc/ray.serve.schema.DurationStats.rst): mean, std, min, max) for control-loop duration and component update latencies (deployment, application, proxy, and node state managers), along with the event-loop delay (actual vs. expected sleep — positive values indicate the loop is falling behind), the count of pending asyncio tasks, and the delay between when autoscaling metrics are generated and when they reach the controller. High `event_loop_delay_s` or growing `loop_duration_s.mean` are the clearest signals that the Controller is overloaded and the tuning knobs above should be applied.
+diff --git a/doc/source/serve/api/index.md b/doc/source/serve/api/index.md
+index f92095bfc5..bf55e692e8 100644
+--- a/doc/source/serve/api/index.md
++++ b/doc/source/serve/api/index.md
+@@ -446,6 +446,8 @@ Content-Type: application/json
+    schema.Target
+    schema.DeploymentNode
+    schema.DeploymentTopology
++   schema.ControllerHealthMetrics
++   schema.DurationStats
+ 
+ .. autosummary::
+    :nosignatures:
+diff --git a/python/ray/data/tests/datasource/test_parquet.py b/python/ray/data/tests/datasource/test_parquet.py
+index e96133cda0..030a792c27 100644
+--- a/python/ray/data/tests/datasource/test_parquet.py
++++ b/python/ray/data/tests/datasource/test_parquet.py
+@@ -1748,28 +1748,60 @@ def test_read_null_data_in_first_file(
+     ]
+ 
+ 
+-def test_read_parquet_does_not_call_infer_schema(
+-    tmp_path, monkeypatch, ray_start_regular_shared
+-):
+-    """read_parquet should not call _infer_schema, which can cause O(N) metadata reads."""
++def test_read_parquet_memory_growth(tmp_path, ray_start_regular_shared):
++    """Memory used by read_parquet should not grow linearly with file count.
+ 
+-    num_files = 10
+-    for i in range(num_files):
+-        cols = {"data": [0]}
+-        if i == 0:
+-            cols["null_col"] = pa.nulls(1)
+-        else:
+-            cols["null_col"] = [1]
+-        pq.write_table(pa.table(cols), tmp_path / f"part_{i:05d}.parquet")
++    Regression test for a bug where _infer_schema fell back to reading every
++    fragment's physical_schema when the sampled fragment had a pa.null() column
++    (PyArrow < 22.0), causing O(N) metadata reads and memory usage.
++    """
++    import gc
++
++    import psutil
++
++    num_cols = 50
++    small_n = 100
++    large_n = 1000
++
++    def _write_files(directory, n_files):
++        directory.mkdir(exist_ok=True)
++        for i in range(n_files):
++            cols = {f"col_{j}": [0] for j in range(num_cols)}
++            # First file has a column of all nulls, which triggers the schema inference fallback.
++            if i == 0:
++                cols["null_col"] = pa.nulls(1)
++            else:
++                cols["null_col"] = [1]
++            pq.write_table(pa.table(cols), directory / f"part_{i:05d}.parquet")
++
++    _write_files(tmp_path / "small", small_n)
++    _write_files(tmp_path / "large", large_n)
++
++    proc = psutil.Process()
++
++    rss_before_small = proc.memory_info().rss
++    ds = ray.data.read_parquet(str(tmp_path / "small"))
++    ds.schema()
++    rss_after_small = proc.memory_info().rss
++    del ds
++    gc.collect()
++
++    rss_before_large = proc.memory_info().rss
++    ds = ray.data.read_parquet(str(tmp_path / "large"))
++    ds.schema()
++    rss_after_large = proc.memory_info().rss
++    del ds
++    gc.collect()
++
++    delta_small = max(rss_after_small - rss_before_small, 1)
++    delta_large = max(rss_after_large - rss_before_large, 0)
++    ratio = delta_large / delta_small
+ 
+-    mock = MagicMock()
+-    monkeypatch.setattr(
+-        "ray.data._internal.datasource.parquet_datasource._infer_schema",
+-        mock,
++    assert ratio < 2, (
++        f"Memory grew too much with more files: ratio={ratio:.1f}\n"
++        f"delta_small={delta_small / 1024 / 1024:.1f} MiB, "
++        f"delta_large={delta_large / 1024 / 1024:.1f} MiB"
+     )
+-    mock.return_value = pa.schema({"data": pa.int64()})
+-    ray.data.read_parquet(str(tmp_path))
+-    mock.assert_not_called()
+ 
+ 
+ def test_parquet_row_group_size_001(ray_start_regular_shared, tmp_path):
+diff --git a/python/ray/serve/_private/controller.py b/python/ray/serve/_private/controller.py
+index f5327355e9..fed7627062 100644
+--- a/python/ray/serve/_private/controller.py
++++ b/python/ray/serve/_private/controller.py
+@@ -537,6 +537,7 @@ class ServeController:
+             num_loops += 1
+             self.num_control_loops_gauge.set(num_loops)
+             self._health_metrics_tracker.num_control_loops = num_loops
++            self._health_metrics_tracker.last_control_loop_time = time.time()
+ 
+             sleep_start_time = time.time()
+             await asyncio.sleep(CONTROL_LOOP_INTERVAL_S)
+@@ -1348,6 +1349,7 @@ class ServeController:
+             ),
+             applications=applications,
+             target_groups=self.get_target_groups(),
++            controller_health_metrics=self._health_metrics_tracker.collect_metrics(),
+         )._get_user_facing_json_serializable_dict(exclude_unset=True)
+ 
+     def _get_proxy_target_groups(self) -> List[TargetGroup]:
+diff --git a/python/ray/serve/_private/controller_health_metrics_tracker.py b/python/ray/serve/_private/controller_health_metrics_tracker.py
+index 7d839617f1..5b262253ef 100644
+--- a/python/ray/serve/_private/controller_health_metrics_tracker.py
++++ b/python/ray/serve/_private/controller_health_metrics_tracker.py
+@@ -1,90 +1,17 @@
+ import asyncio
+-import math
+ import sys
+ import time
+ from collections import deque
+ from dataclasses import dataclass, field
+-from typing import Deque, List, Optional
+-
+-from pydantic import BaseModel
++from typing import Deque
+ 
+ from ray.serve._private.constants import CONTROL_LOOP_INTERVAL_S
++from ray.serve.schema import ControllerHealthMetrics, DurationStats
+ 
+ # Number of recent loop iterations to track for rolling averages
+ _HEALTH_METRICS_HISTORY_SIZE = 100
+ 
+ 
+-class DurationStats(BaseModel):
+-    """Statistics for a collection of duration/latency measurements."""
+-
+-    mean: float = 0.0
+-    std: float = 0.0
+-    min: float = 0.0
+-    max: float = 0.0
+-
+-    @classmethod
+-    def from_values(cls, values: List[float]) -> "DurationStats":
+-        """Compute statistics from a list of values."""
+-        if not values:
+-            return cls()
+-
+-        n = len(values)
+-        mean = sum(values) / n
+-        min_val = min(values)
+-        max_val = max(values)
+-
+-        # Compute standard deviation
+-        if n > 1:
+-            variance = sum((x - mean) ** 2 for x in values) / n
+-            std = math.sqrt(variance)
+-        else:
+-            std = 0.0
+-
+-        return cls(mean=mean, std=std, min=min_val, max=max_val)
+-
+-
+-class ControllerHealthMetrics(BaseModel):
+-    """Health metrics for the Ray Serve controller.
+-
+-    These metrics help diagnose controller performance issues, especially
+-    as cluster size increases.
+-    """
+-
+-    # Timestamps
+-    timestamp: float = 0.0  # When these metrics were collected
+-    controller_start_time: float = 0.0  # When the controller started
+-    uptime_s: float = 0.0  # Controller uptime in seconds
+-
+-    # Control loop metrics
+-    num_control_loops: int = 0  # Total number of control loops executed
+-    loop_duration_s: Optional[
+-        DurationStats
+-    ] = None  # Loop duration stats (rolling window)
+-    loops_per_second: float = 0.0  # Control loop iterations per second
+-
+-    # Sleep/scheduling metrics
+-    last_sleep_duration_s: float = 0.0  # Actual sleep duration of last iteration
+-    expected_sleep_duration_s: float = 0.0  # Expected sleep (CONTROL_LOOP_INTERVAL_S)
+-    event_loop_delay_s: float = 0.0  # Delay = actual - expected (positive = overloaded)
+-
+-    # Event loop health
+-    num_asyncio_tasks: int = 0  # Number of pending asyncio tasks
+-
+-    # Component update durations (rolling window stats)
+-    deployment_state_update_duration_s: Optional[DurationStats] = None
+-    application_state_update_duration_s: Optional[DurationStats] = None
+-    proxy_state_update_duration_s: Optional[DurationStats] = None
+-    node_update_duration_s: Optional[DurationStats] = None
+-
+-    # Autoscaling metrics latency tracking (rolling window stats)
+-    # These track the delay between when metrics are generated and when they reach controller
+-    handle_metrics_delay_ms: Optional[DurationStats] = None
+-    replica_metrics_delay_ms: Optional[DurationStats] = None
+-
+-    # Memory usage (in MB)
+-    process_memory_mb: float = 0.0
+-
+-
+ @dataclass
+ class ControllerHealthMetricsTracker:
+     """Tracker for collecting controller health metrics over time."""
+@@ -121,6 +48,7 @@ class ControllerHealthMetricsTracker:
+     # Latest values (used in collect_metrics)
+     last_sleep_duration_s: float = 0.0
+     num_control_loops: int = 0
++    last_control_loop_time: float = 0.0
+ 
+     def record_loop_duration(self, duration: float):
+         self.loop_durations.append(duration)
+@@ -201,6 +129,7 @@ class ControllerHealthMetricsTracker:
+             timestamp=now,
+             controller_start_time=self.controller_start_time,
+             uptime_s=uptime,
++            last_control_loop_time=self.last_control_loop_time,
+             num_control_loops=self.num_control_loops,
+             loop_duration_s=loop_duration_stats,
+             loops_per_second=loops_per_second,
+diff --git a/python/ray/serve/schema.py b/python/ray/serve/schema.py
+index 5d2489d89c..2b9e417550 100644
+--- a/python/ray/serve/schema.py
++++ b/python/ray/serve/schema.py
+@@ -1,4 +1,5 @@
+ import logging
++import math
+ from abc import ABC, abstractmethod
+ from collections import Counter
+ from dataclasses import dataclass, field
+@@ -1575,6 +1576,136 @@ class TargetGroup(BaseModel):
+     )
+ 
+ 
++@PublicAPI(stability="alpha")
++class DurationStats(BaseModel):
++    """Statistics for a collection of duration/latency measurements."""
++
++    mean: float = Field(default=0.0, description="Mean value over the rolling window.")
++    std: float = Field(
++        default=0.0, description="Standard deviation over the rolling window."
++    )
++    min: float = Field(
++        default=0.0, description="Minimum value over the rolling window."
++    )
++    max: float = Field(
++        default=0.0, description="Maximum value over the rolling window."
++    )
++
++    @classmethod
++    def from_values(cls, values: List[float]) -> "DurationStats":
++        """Compute statistics from a list of values."""
++        if not values:
++            return cls()
++
++        n = len(values)
++        mean = sum(values) / n
++        min_val = min(values)
++        max_val = max(values)
++
++        # Compute standard deviation
++        if n > 1:
++            variance = sum((x - mean) ** 2 for x in values) / n
++            std = math.sqrt(variance)
++        else:
++            std = 0.0
++
++        return cls(mean=mean, std=std, min=min_val, max=max_val)
++
++
++@PublicAPI(stability="alpha")
++class ControllerHealthMetrics(BaseModel):
++    """Health metrics for the Ray Serve controller.
++
++    These metrics help diagnose controller performance issues, especially
++    as cluster size increases.
++    """
++
++    # Timestamps
++    timestamp: float = Field(
++        default=0.0, description="When these metrics were collected (epoch seconds)."
++    )
++    controller_start_time: float = Field(
++        default=0.0, description="When the controller started (epoch seconds)."
++    )
++    uptime_s: float = Field(default=0.0, description="Controller uptime in seconds.")
++    last_control_loop_time: float = Field(
++        default=0.0,
++        description="Time of the last control loop execution (epoch seconds).",
++    )
++
++    # Control loop metrics
++    num_control_loops: int = Field(
++        default=0, description="Total number of control loops executed."
++    )
++    loop_duration_s: Optional[DurationStats] = Field(
++        default=None,
++        description="Control loop duration statistics over a rolling window.",
++    )
++    loops_per_second: float = Field(
++        default=0.0, description="Control loop iterations per second."
++    )
++
++    # Sleep/scheduling metrics
++    last_sleep_duration_s: float = Field(
++        default=0.0, description="Actual sleep duration of the last iteration."
++    )
++    expected_sleep_duration_s: float = Field(
++        default=0.0,
++        description="Expected sleep duration (CONTROL_LOOP_INTERVAL_S).",
++    )
++    event_loop_delay_s: float = Field(
++        default=0.0,
++        description=(
++            "Difference between actual and expected sleep duration. "
++            "Positive values indicate an overloaded event loop."
++        ),
++    )
++
++    # Event loop health
++    num_asyncio_tasks: int = Field(
++        default=0, description="Number of pending asyncio tasks."
++    )
++
++    # Component update durations (rolling window stats)
++    deployment_state_update_duration_s: Optional[DurationStats] = Field(
++        default=None,
++        description="Deployment state update duration statistics over a rolling window.",
++    )
++    application_state_update_duration_s: Optional[DurationStats] = Field(
++        default=None,
++        description="Application state update duration statistics over a rolling window.",
++    )
++    proxy_state_update_duration_s: Optional[DurationStats] = Field(
++        default=None,
++        description="Proxy state update duration statistics over a rolling window.",
++    )
++    node_update_duration_s: Optional[DurationStats] = Field(
++        default=None,
++        description="Node update duration statistics over a rolling window.",
++    )
++
++    # Autoscaling metrics latency tracking (rolling window stats)
++    handle_metrics_delay_ms: Optional[DurationStats] = Field(
++        default=None,
++        description=(
++            "Delay between when handle metrics are generated and when they "
++            "reach the controller (rolling window, milliseconds)."
++        ),
++    )
++    replica_metrics_delay_ms: Optional[DurationStats] = Field(
++        default=None,
++        description=(
++            "Delay between when replica metrics are generated and when they "
++            "reach the controller (rolling window, milliseconds)."
++        ),
++    )
++
++    # Memory usage
++    process_memory_mb: float = Field(
++        default=0.0, description="Controller process memory usage in MB."
++    )
++
++
+ @PublicAPI(stability="stable")
+ class ServeInstanceDetails(BaseModel):
+     """
+@@ -1630,6 +1761,11 @@ class ServeInstanceDetails(BaseModel):
+         ),
+     )
+ 
++    controller_health_metrics: ControllerHealthMetrics = Field(
++        default_factory=ControllerHealthMetrics,
++        description="Health metrics for the Ray Serve controller.",
++    )
++
+     @staticmethod
+     def get_empty_schema_dict() -> Dict:
+         """Empty Serve instance details dictionary.

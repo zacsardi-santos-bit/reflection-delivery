@@ -1,0 +1,3 @@
+patching file UPDATING.md
+patching file airflow/contrib/hooks/gcp_api_base_hook.py
+patching file airflow/gcp/operators/kubernetes_engine.py

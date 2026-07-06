@@ -1,0 +1,37 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo/packages/cli && npx vitest run src/utils/processUtils.test.ts src/utils/relaunch.test.ts --coverage.enabled=false",
+  "test_files": [
+    "packages/cli/src/utils/processUtils.test.ts",
+    "packages/cli/src/utils/relaunch.test.ts"
+  ],
+  "num_test_files": 2,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities isStandardSea returns false if argv[0] === argv[1]",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities isStandardSea returns true if IS_BINARY is true and argv[0] !== argv[1]",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities isStandardSea returns true if process.isSea() is true and argv[0] !== argv[1]",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities isStandardSea returns false in standard node environment",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities getScriptArgs slices from index 1 if isStandardSea is true",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities getScriptArgs slices from index 2 if isStandardSea is false (relaunch SEA or standard node)",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities isSeaEnvironment returns true if IS_BINARY is true",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities isSeaEnvironment returns true if process.isSea() is true",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities isSeaEnvironment returns true if argv[0] === argv[1]",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities isSeaEnvironment returns false otherwise",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities getSpawnConfig handles standard node mode",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities getSpawnConfig handles SEA binary mode with new nodeArgs",
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::SEA handling utilities getSpawnConfig throws error for complex nodeArgs in SEA mode",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchAppInChildProcess when GEMINI_CLI_NO_RELAUNCH is not set should handle SEA binary mode (IS_BINARY=true) correctly using NODE_OPTIONS",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchAppInChildProcess when GEMINI_CLI_NO_RELAUNCH is not set should append new nodeArgs to NODE_OPTIONS in SEA mode without escaping"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/packages/cli/src/utils/processUtils.test.ts::processUtils should wait for updates, run cleanup, and exit with the relaunch code",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchOnExitCode should exit with non-RELAUNCH_EXIT_CODE",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchOnExitCode should continue running when RELAUNCH_EXIT_CODE is returned",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchOnExitCode should handle runner errors",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchAppInChildProcess when GEMINI_CLI_NO_RELAUNCH is set should return early without spawning a child process",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchAppInChildProcess when GEMINI_CLI_NO_RELAUNCH is not set should construct correct spawn arguments and use command line for node arguments in standard Node mode",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchAppInChildProcess when GEMINI_CLI_NO_RELAUNCH is not set should handle empty additional arguments correctly in Node mode",
+    "/workspace/repo/packages/cli/src/utils/relaunch.test.ts::relaunchAppInChildProcess when GEMINI_CLI_NO_RELAUNCH is not set should handle null exit code from child process"
+  ]
+}

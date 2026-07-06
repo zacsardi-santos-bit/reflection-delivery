@@ -1,0 +1,36 @@
+{
+  "test_framework": "vitest",
+  "test_command": "cd /workspace/repo && ([ -d playground/glob-import/root/import-meta-glob-pkg ] && [ ! -e playground/glob-import/import-meta-glob-pkg ] && ln -sf /workspace/repo/playground/glob-import/root/import-meta-glob-pkg /workspace/repo/playground/glob-import/import-meta-glob-pkg || true) && CI=true node_modules/.bin/vitest run -c vitest.config.e2e.ts playground/glob-import/__tests__/glob-import.spec.ts --reporter=verbose",
+  "test_files": [
+    "playground/glob-import/__tests__/glob-import.spec.ts"
+  ],
+  "num_test_files": 1,
+  "language": "typescript",
+  "FAIL_TO_PASS": [
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::hmr for adding/removing files",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::hmr for adding/removing files in package",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::hmr for adding/removing files with array patterns and exclusions",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::escapes special chars in globs without mangling user supplied glob suffix"
+  ],
+  "PASS_TO_PASS": [
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::should work",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::import glob raw",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::import property access",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::import relative glob raw",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::unassigned import processes",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::import glob in package",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::no hmr for adding/removing files",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::follow symlinks",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::follow symlinks same reference",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::alias exclusion",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::array pattern with exclusions",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::array pattern with sibling directories sharing a prefix",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::tree-shake eager css",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::escape literal parenthesis in glob pattern",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::subpath imports",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::subpath imports (sub dir)",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::#alias imports",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::import base glob raw",
+    "/workspace/repo/playground/glob-import/__tests__/glob-import.spec.ts::import.meta.glob and dynamic import vars transformations should be visible to post transform plugins"
+  ]
+}

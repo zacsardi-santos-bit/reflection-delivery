@@ -1,0 +1,16 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo/scripts && pytest tests/ci/prek/test_breeze_cmd_line.py -v",
+  "test_files": [
+    "scripts/tests/ci/prek/test_breeze_cmd_line.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.ci.prek.test_breeze_cmd_line.TestBreezeEnvWithLocalSources::test_sets_pythonpath_to_breeze_sources_when_unset",
+    "tests.ci.prek.test_breeze_cmd_line.TestBreezeEnvWithLocalSources::test_prepends_breeze_sources_before_existing_pythonpath",
+    "tests.ci.prek.test_breeze_cmd_line.TestBreezeEnvWithLocalSources::test_does_not_mutate_the_process_environment",
+    "tests.ci.prek.test_breeze_cmd_line.TestBreezeEnvWithLocalSources::test_preserves_other_environment_variables"
+  ],
+  "PASS_TO_PASS": []
+}

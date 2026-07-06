@@ -1,0 +1,89 @@
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y git curl wget tar && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget -q "https://github.com/adoptium/temurin8-binaries/releases/download/jdk8u392-b08/OpenJDK8U-jdk_x64_linux_hotspot_8u392b08.tar.gz" -O /tmp/jdk8.tar.gz && \
+    mkdir -p /opt/java/jdk8 && \
+    tar xz -C /opt/java/jdk8 --strip-components=1 -f /tmp/jdk8.tar.gz && \
+    rm /tmp/jdk8.tar.gz
+
+ENV JAVA_HOME=/opt/java/jdk8
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+RUN wget -q "https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz" -O /tmp/maven.tar.gz && \
+    tar xz -C /opt -f /tmp/maven.tar.gz && \
+    rm /tmp/maven.tar.gz && \
+    ln -sf /opt/apache-maven-3.6.3/bin/mvn /usr/local/bin/mvn
+
+RUN git config --global user.email "build@example.com" && \
+    git config --global user.name "Build"
+
+WORKDIR /workspace
+
+RUN git init /workspace/repo && cd /workspace/repo && \
+    git remote add origin https://github.com/eugenp/tutorials.git && \
+    git fetch --depth 30 origin 5aecdeb0211c9dc44e3e5138d4a30bf837d19204 && \
+    git checkout --detach FETCH_HEAD && \
+    git submodule update --init --recursive --depth 1 2>/dev/null || true && \
+    git remote remove origin && \
+    git tag -l | xargs -r git tag -d && \
+    git for-each-ref --format='%(refname)' refs/remotes refs/tags 2>/dev/null | xargs -r -n1 git update-ref -d && \
+    git reflog expire --expire=now --all && \
+    git gc --prune=now --aggressive && \
+    rm -rf .git/logs
+
+WORKDIR /workspace/repo
+
+RUN mvn -N install -q -DskipTests 2>/dev/null || true
+
+RUN cd parent-boot-2 && mvn -N install -q -DskipTests 2>/dev/null || true
+
+RUN cd spring-5-reactive-2 && mvn dependency:resolve -q 2>/dev/null || true
+
+WORKDIR /workspace
+
+# --- offline-harbor: ensure grading(python3) + patch(patch/git) deps (build-time) ---
+RUN (command -v python3 >/dev/null 2>&1 && command -v patch >/dev/null 2>&1 && command -v git >/dev/null 2>&1) \
+    || (apt-get update && apt-get install -y --no-install-recommends python3 patch git ca-certificates) \
+    || (apk add --no-cache python3 patch git ca-certificates) \
+    || (dnf install -y python3 patch git ca-certificates) \
+    || (yum install -y python3 patch git ca-certificates) \
+    || true
+
+# --- terminal-bench eval harness deps (tmux + asciinema), baked for offline eval ---
+RUN (command -v tmux >/dev/null 2>&1 && command -v asciinema >/dev/null 2>&1) \
+    || (apt-get update && apt-get install -y --no-install-recommends tmux asciinema) \
+    || (apt-get update && apt-get install -y --no-install-recommends tmux python3-pip && pip3 install --no-cache-dir asciinema) \
+    || (apk add --no-cache tmux asciinema) || (dnf install -y tmux asciinema) || (yum install -y tmux asciinema) || true
+
+# OFFLINE-M2-BAKE: warm ~/.m2 at build so the test runs offline (apply golden+test, warm, revert)
+RUN set -e; \
+    H="${HOME:-/root}"; \
+    for hn in $(hostname) $(hostname -s 2>/dev/null) localhost; do \
+      grep -qE "[[:space:]]$hn(\s|$)" /etc/hosts 2>/dev/null || echo "127.0.0.1 $hn" >> /etc/hosts; \
+    done; \
+    grep -q '::1' /etc/hosts 2>/dev/null || echo "::1 localhost ip6-localhost" >> /etc/hosts; \
+    cd /workspace/repo; \
+    echo "ZGlmZiAtLWdpdCBhL3NwcmluZy01LXJlYWN0aXZlLTIvcG9tLnhtbCBiL3NwcmluZy01LXJlYWN0aXZlLTIvcG9tLnhtbAppbmRleCA2NjhlMGU1Y2Y5Li5mMTQwN2VlMWFkIDEwMDY0NAotLS0gYS9zcHJpbmctNS1yZWFjdGl2ZS0yL3BvbS54bWwKKysrIGIvc3ByaW5nLTUtcmVhY3RpdmUtMi9wb20ueG1sCkBAIC0zMiw2ICszMiwxMyBAQAogICAgICAgICAgICAgPHZlcnNpb24+JHtsb21ib2sudmVyc2lvbn08L3ZlcnNpb24+CiAgICAgICAgICAgICA8c2NvcGU+cHJvdmlkZWQ8L3Njb3BlPgogICAgICAgICA8L2RlcGVuZGVuY3k+CisgICAgICAgIAorICAgICAgICAgPGRlcGVuZGVuY3k+CisgICAgICAgIAk8Z3JvdXBJZD5jb20uZ2l0aHViLnRvbWFrZWh1cnN0PC9ncm91cElkPgorICAgICAgICAJPGFydGlmYWN0SWQ+d2lyZW1vY2stanJlODwvYXJ0aWZhY3RJZD4KKyAgICAgICAgCTx2ZXJzaW9uPiR7d2lyZW1vY2sudmVyc2lvbn08L3ZlcnNpb24+CisgICAgICAgIAk8c2NvcGU+dGVzdDwvc2NvcGU+CisgICAgICAgIDwvZGVwZW5kZW5jeT4KICAgICA8L2RlcGVuZGVuY2llcz4KIAogICAgIDxidWlsZD4KQEAgLTQ2LDUgKzUzLDkgQEAKICAgICAgICAgICAgIDwvcGx1Z2luPgogICAgICAgICA8L3BsdWdpbnM+CiAgICAgPC9idWlsZD4KKyAgICAKKyAgICA8cHJvcGVydGllcz4KKyAgICAJPHdpcmVtb2NrLnZlcnNpb24+Mi4yNC4wPC93aXJlbW9jay52ZXJzaW9uPgorICAgIDwvcHJvcGVydGllcz4KIAogPC9wcm9qZWN0PgpkaWZmIC0tZ2l0IGEvc3ByaW5nLTUtcmVhY3RpdmUtMi9zcmMvbWFpbi9qYXZhL2NvbS9iYWVsZHVuZy93ZWJjbGllbnQvZmlsdGVyL1dlYkNsaWVudEZpbHRlcnMuamF2YSBiL3NwcmluZy01LXJlYWN0aXZlLTIvc3JjL21haW4vamF2YS9jb20vYmFlbGR1bmcvd2ViY2xpZW50L2ZpbHRlci9XZWJDbGllbnRGaWx0ZXJzLmphdmEKbmV3IGZpbGUgbW9kZSAxMDA2NDQKaW5kZXggMDAwMDAwMDAwMC4uYzk4Y2FmNjdiNAotLS0gL2Rldi9udWxsCisrKyBiL3NwcmluZy01LXJlYWN0aXZlLTIvc3JjL21haW4vamF2YS9jb20vYmFlbGR1bmcvd2ViY2xpZW50L2ZpbHRlci9XZWJDbGllbnRGaWx0ZXJzLmphdmEKQEAgLTAsMCArMSw1NyBAQAorcGFja2FnZSBjb20uYmFlbGR1bmcud2ViY2xpZW50LmZpbHRlcjsKKworaW1wb3J0IGphdmEuaW8uUHJpbnRTdHJlYW07CitpbXBvcnQgamF2YS5uZXQuVVJJOworaW1wb3J0IGphdmEudXRpbC5jb25jdXJyZW50LmF0b21pYy5BdG9taWNJbnRlZ2VyOworCitpbXBvcnQgb3JnLnNsZjRqLkxvZ2dlcjsKK2ltcG9ydCBvcmcuc2xmNGouTG9nZ2VyRmFjdG9yeTsKK2ltcG9ydCBvcmcuc3ByaW5nZnJhbWV3b3JrLmh0dHAuSHR0cE1ldGhvZDsKK2ltcG9ydCBvcmcuc3ByaW5nZnJhbWV3b3JrLndlYi5yZWFjdGl2ZS5mdW5jdGlvbi5jbGllbnQuQ2xpZW50UmVxdWVzdDsKK2ltcG9ydCBvcmcuc3ByaW5nZnJhbWV3b3JrLndlYi5yZWFjdGl2ZS5mdW5jdGlvbi5jbGllbnQuRXhjaGFuZ2VGaWx0ZXJGdW5jdGlvbjsKKworcHVibGljIGNsYXNzIFdlYkNsaWVudEZpbHRlcnMgeworCisgICAgcHJpdmF0ZSBzdGF0aWMgZmluYWwgTG9nZ2VyIExPRyA9IExvZ2dlckZhY3RvcnkuZ2V0TG9nZ2VyKFdlYkNsaWVudEZpbHRlcnMuY2xhc3MpOworCisgICAgcHVibGljIHN0YXRpYyBFeGNoYW5nZUZpbHRlckZ1bmN0aW9uIGRlbW9GaWx0ZXIoKSB7CisgICAgICAgIEV4Y2hhbmdlRmlsdGVyRnVuY3Rpb24gZmlsdGVyRnVuY3Rpb24gPSAoY2xpZW50UmVxdWVzdCwgbmV4dEZpbHRlcikgLT4geworICAgICAgICAgICAgTE9HLmluZm8oIldlYkNsaWVudCBmaXRsZXIgZXhlY3V0ZWQiKTsKKyAgICAgICAgICAgIHJldHVybiBuZXh0RmlsdGVyLmV4Y2hhbmdlKGNsaWVudFJlcXVlc3QpOworICAgICAgICB9OworICAgICAgICByZXR1cm4gZmlsdGVyRnVuY3Rpb247CisgICAgfQorCisgICAgcHVibGljIHN0YXRpYyBFeGNoYW5nZUZpbHRlckZ1bmN0aW9uIGNvdW50aW5nRmlsdGVyKEF0b21pY0ludGVnZXIgZ2V0Q291bnRlcikgeworICAgICAgICBFeGNoYW5nZUZpbHRlckZ1bmN0aW9uIGNvdW50aW5nRmlsdGVyID0gKGNsaWVudFJlcXVlc3QsIG5leHRGaWx0ZXIpIC0+IHsKKyAgICAgICAgICAgIEh0dHBNZXRob2QgaHR0cE1ldGhvZCA9IGNsaWVudFJlcXVlc3QubWV0aG9kKCk7CisgICAgICAgICAgICBpZiAoaHR0cE1ldGhvZCA9PSBIdHRwTWV0aG9kLkdFVCkgeworICAgICAgICAgICAgICAgIGdldENvdW50ZXIuaW5jcmVtZW50QW5kR2V0KCk7CisgICAgICAgICAgICB9CisgICAgICAgICAgICByZXR1cm4gbmV4dEZpbHRlci5leGNoYW5nZShjbGllbnRSZXF1ZXN0KTsKKyAgICAgICAgfTsKKyAgICAgICAgcmV0dXJuIGNvdW50aW5nRmlsdGVyOworICAgIH0KKworICAgIHB1YmxpYyBzdGF0aWMgRXhjaGFuZ2VGaWx0ZXJGdW5jdGlvbiB1cmxNb2RpZnlpbmdGaWx0ZXIoU3RyaW5nIHZlcnNpb24pIHsKKyAgICAgICAgRXhjaGFuZ2VGaWx0ZXJGdW5jdGlvbiB1cmxNb2RpZnlpbmdGaWx0ZXIgPSAoY2xpZW50UmVxdWVzdCwgbmV4dEZpbHRlcikgLT4geworICAgICAgICAgICAgU3RyaW5nIG9sZFVybCA9IGNsaWVudFJlcXVlc3QudXJsKCkKKyAgICAgICAgICAgICAgICAudG9TdHJpbmcoKTsKKyAgICAgICAgICAgIFVSSSBuZXdVcmwgPSBVUkkuY3JlYXRlKG9sZFVybCArICIvIiArIHZlcnNpb24pOworICAgICAgICAgICAgQ2xpZW50UmVxdWVzdCBmaWx0ZXJlZFJlcXVlc3QgPSBDbGllbnRSZXF1ZXN0LmZyb20oY2xpZW50UmVxdWVzdCkKKyAgICAgICAgICAgICAgICAudXJsKG5ld1VybCkKKyAgICAgICAgICAgICAgICAuYnVpbGQoKTsKKyAgICAgICAgICAgIHJldHVybiBuZXh0RmlsdGVyLmV4Y2hhbmdlKGZpbHRlcmVkUmVxdWVzdCk7CisgICAgICAgIH07CisgICAgICAgIHJldHVybiB1cmxNb2RpZnlpbmdGaWx0ZXI7CisgICAgfQorCisgICAgcHVibGljIHN0YXRpYyBFeGNoYW5nZUZpbHRlckZ1bmN0aW9uIGxvZ2dpbmdGaWx0ZXIoUHJpbnRTdHJlYW0gcHJpbnRTdHJlYW0pIHsKKyAgICAgICAgRXhjaGFuZ2VGaWx0ZXJGdW5jdGlvbiBsb2dnaW5nRmlsdGVyID0gKGNsaWVudFJlcXVlc3QsIG5leHRGaWx0ZXIpIC0+IHsKKyAgICAgICAgICAgIHByaW50U3RyZWFtLnByaW50KCJTZW5kaW5nIHJlcXVlc3QgIiArIGNsaWVudFJlcXVlc3QubWV0aG9kKCkgKyAiICIgKyBjbGllbnRSZXF1ZXN0LnVybCgpKTsKKyAgICAgICAgICAgIHJldHVybiBuZXh0RmlsdGVyLmV4Y2hhbmdlKGNsaWVudFJlcXVlc3QpOworICAgICAgICB9OworICAgICAgICByZXR1cm4gbG9nZ2luZ0ZpbHRlcjsKKyAgICB9CisKK30K" | base64 -d > /tmp/_m2_golden.patch; \
+    echo "ZGlmZiAtLWdpdCBhL3NwcmluZy01LXJlYWN0aXZlLTIvc3JjL3Rlc3QvamF2YS9jb20vYmFlbGR1bmcvd2ViY2xpZW50L2ZpbHRlci9GaWx0ZXJlZFdlYkNsaWVudFVuaXRUZXN0LmphdmEgYi9zcHJpbmctNS1yZWFjdGl2ZS0yL3NyYy90ZXN0L2phdmEvY29tL2JhZWxkdW5nL3dlYmNsaWVudC9maWx0ZXIvRmlsdGVyZWRXZWJDbGllbnRVbml0VGVzdC5qYXZhCm5ldyBmaWxlIG1vZGUgMTAwNjQ0CmluZGV4IDAwMDAwMDAwMDAuLjY3NWNkMDNkMTAKLS0tIC9kZXYvbnVsbAorKysgYi9zcHJpbmctNS1yZWFjdGl2ZS0yL3NyYy90ZXN0L2phdmEvY29tL2JhZWxkdW5nL3dlYmNsaWVudC9maWx0ZXIvRmlsdGVyZWRXZWJDbGllbnRVbml0VGVzdC5qYXZhCkBAIC0wLDAgKzEsMTQ1IEBACitwYWNrYWdlIGNvbS5iYWVsZHVuZy53ZWJjbGllbnQuZmlsdGVyOworCitpbXBvcnQgc3RhdGljIGNvbS5iYWVsZHVuZy53ZWJjbGllbnQuZmlsdGVyLldlYkNsaWVudEZpbHRlcnMuY291bnRpbmdGaWx0ZXI7CitpbXBvcnQgc3RhdGljIGNvbS5iYWVsZHVuZy53ZWJjbGllbnQuZmlsdGVyLldlYkNsaWVudEZpbHRlcnMubG9nZ2luZ0ZpbHRlcjsKK2ltcG9ydCBzdGF0aWMgY29tLmJhZWxkdW5nLndlYmNsaWVudC5maWx0ZXIuV2ViQ2xpZW50RmlsdGVycy51cmxNb2RpZnlpbmdGaWx0ZXI7CitpbXBvcnQgc3RhdGljIGNvbS5naXRodWIudG9tYWtlaHVyc3Qud2lyZW1vY2suY2xpZW50LldpcmVNb2NrLmFSZXNwb25zZTsKK2ltcG9ydCBzdGF0aWMgY29tLmdpdGh1Yi50b21ha2VodXJzdC53aXJlbW9jay5jbGllbnQuV2lyZU1vY2suY29udGFpbmluZzsKK2ltcG9ydCBzdGF0aWMgY29tLmdpdGh1Yi50b21ha2VodXJzdC53aXJlbW9jay5jbGllbnQuV2lyZU1vY2suZ2V0OworaW1wb3J0IHN0YXRpYyBjb20uZ2l0aHViLnRvbWFrZWh1cnN0LndpcmVtb2NrLmNsaWVudC5XaXJlTW9jay5nZXRSZXF1ZXN0ZWRGb3I7CitpbXBvcnQgc3RhdGljIGNvbS5naXRodWIudG9tYWtlaHVyc3Qud2lyZW1vY2suY2xpZW50LldpcmVNb2NrLnBvc3Q7CitpbXBvcnQgc3RhdGljIGNvbS5naXRodWIudG9tYWtlaHVyc3Qud2lyZW1vY2suY2xpZW50LldpcmVNb2NrLnN0dWJGb3I7CitpbXBvcnQgc3RhdGljIGNvbS5naXRodWIudG9tYWtlaHVyc3Qud2lyZW1vY2suY2xpZW50LldpcmVNb2NrLnVybFBhdGhFcXVhbFRvOworaW1wb3J0IHN0YXRpYyBjb20uZ2l0aHViLnRvbWFrZWh1cnN0LndpcmVtb2NrLmNsaWVudC5XaXJlTW9jay52ZXJpZnk7CitpbXBvcnQgc3RhdGljIGNvbS5naXRodWIudG9tYWtlaHVyc3Qud2lyZW1vY2suY29yZS5XaXJlTW9ja0NvbmZpZ3VyYXRpb24ud2lyZU1vY2tDb25maWc7CitpbXBvcnQgc3RhdGljIG9yZy5hc3NlcnRqLmNvcmUuYXBpLkFzc2VydGlvbnMuYXNzZXJ0VGhhdDsKKworaW1wb3J0IGphdmEuaW8uQnl0ZUFycmF5T3V0cHV0U3RyZWFtOworaW1wb3J0IGphdmEuaW8uSU9FeGNlcHRpb247CitpbXBvcnQgamF2YS5pby5QcmludFN0cmVhbTsKK2ltcG9ydCBqYXZhLm5ldC5VUkk7CitpbXBvcnQgamF2YS51dGlsLmNvbmN1cnJlbnQuYXRvbWljLkF0b21pY0ludGVnZXI7CisKK2ltcG9ydCBvcmcuanVuaXQuUnVsZTsKK2ltcG9ydCBvcmcuanVuaXQuVGVzdDsKK2ltcG9ydCBvcmcuc3ByaW5nZnJhbWV3b3JrLndlYi5yZWFjdGl2ZS5mdW5jdGlvbi5jbGllbnQuRXhjaGFuZ2VGaWx0ZXJGdW5jdGlvbnM7CitpbXBvcnQgb3JnLnNwcmluZ2ZyYW1ld29yay53ZWIucmVhY3RpdmUuZnVuY3Rpb24uY2xpZW50LldlYkNsaWVudDsKKworaW1wb3J0IGNvbS5naXRodWIudG9tYWtlaHVyc3Qud2lyZW1vY2suanVuaXQuV2lyZU1vY2tSdWxlOworCitwdWJsaWMgY2xhc3MgRmlsdGVyZWRXZWJDbGllbnRVbml0VGVzdCB7CisKKyAgICBwcml2YXRlIHN0YXRpYyBmaW5hbCBTdHJpbmcgUEFUSCA9ICIvZmlsdGVyL3Rlc3QiOworCisgICAgQFJ1bGUKKyAgICBwdWJsaWMgV2lyZU1vY2tSdWxlIHdpcmVNb2NrUnVsZSA9IG5ldyBXaXJlTW9ja1J1bGUod2lyZU1vY2tDb25maWcoKS5keW5hbWljUG9ydCgpCisgICAgICAgIC5keW5hbWljSHR0cHNQb3J0KCkpOworCisgICAgQFRlc3QKKyAgICBwdWJsaWMgdm9pZCB3aGVuTm9VcmxNb2RpZnlpbmdGaWx0ZXJfdGhlblBhdGhVbmNoYW5nZWQoKSB7CisgICAgICAgIHN0dWJGb3IoZ2V0KHVybFBhdGhFcXVhbFRvKFBBVEgpKS53aWxsUmV0dXJuKGFSZXNwb25zZSgpLndpdGhTdGF0dXMoMjAwKQorICAgICAgICAgICAgLndpdGhCb2R5KCJkb25lIikpKTsKKworICAgICAgICBXZWJDbGllbnQgd2ViQ2xpZW50ID0gV2ViQ2xpZW50LmNyZWF0ZSgpOworICAgICAgICBTdHJpbmcgYWN0dWFsID0gc2VuZEdldFJlcXVlc3Qod2ViQ2xpZW50KTsKKworICAgICAgICBhc3NlcnRUaGF0KGFjdHVhbCkuaXNFcXVhbFRvKCJkb25lIik7CisgICAgICAgIHZlcmlmeShnZXRSZXF1ZXN0ZWRGb3IodXJsUGF0aEVxdWFsVG8oUEFUSCkpKTsKKyAgICB9CisKKyAgICBAVGVzdAorICAgIHB1YmxpYyB2b2lkIHdoZW5VcmxNb2RpZnlpbmdGaWx0ZXJfdGhlblBhdGhNb2RpZmllZCgpIHsKKyAgICAgICAgc3R1YkZvcihnZXQodXJsUGF0aEVxdWFsVG8oUEFUSCArICIvMS4wIikpLndpbGxSZXR1cm4oYVJlc3BvbnNlKCkud2l0aFN0YXR1cygyMDApCisgICAgICAgICAgICAud2l0aEJvZHkoImRvbmUiKSkpOworCisgICAgICAgIFdlYkNsaWVudCB3ZWJDbGllbnQgPSBXZWJDbGllbnQuYnVpbGRlcigpCisgICAgICAgICAgICAuZmlsdGVyKHVybE1vZGlmeWluZ0ZpbHRlcigiMS4wIikpCisgICAgICAgICAgICAuYnVpbGQoKTsKKyAgICAgICAgU3RyaW5nIGFjdHVhbCA9IHNlbmRHZXRSZXF1ZXN0KHdlYkNsaWVudCk7CisKKyAgICAgICAgYXNzZXJ0VGhhdChhY3R1YWwpLmlzRXF1YWxUbygiZG9uZSIpOworICAgICAgICB2ZXJpZnkoZ2V0UmVxdWVzdGVkRm9yKHVybFBhdGhFcXVhbFRvKFBBVEggKyAiLzEuMCIpKSk7CisgICAgfQorCisgICAgQFRlc3QKKyAgICBwdWJsaWMgdm9pZCBnaXZlbkNvdW50aW5nRmlsdGVyX3doZW5HZXRfdGhlbkluY3JlYXNlQ291bnRlcigpIHsKKyAgICAgICAgc3R1YkZvcihnZXQodXJsUGF0aEVxdWFsVG8oUEFUSCkpLndpbGxSZXR1cm4oYVJlc3BvbnNlKCkud2l0aFN0YXR1cygyMDApCisgICAgICAgICAgICAud2l0aEJvZHkoImRvbmUiKSkpOworICAgICAgICBBdG9taWNJbnRlZ2VyIGNvdW50ZXIgPSBuZXcgQXRvbWljSW50ZWdlcigxMCk7CisKKyAgICAgICAgV2ViQ2xpZW50IHdlYkNsaWVudCA9IFdlYkNsaWVudC5idWlsZGVyKCkKKyAgICAgICAgICAgIC5maWx0ZXIoY291bnRpbmdGaWx0ZXIoY291bnRlcikpCisgICAgICAgICAgICAuYnVpbGQoKTsKKyAgICAgICAgU3RyaW5nIGFjdHVhbCA9IHNlbmRHZXRSZXF1ZXN0KHdlYkNsaWVudCk7CisKKyAgICAgICAgYXNzZXJ0VGhhdChhY3R1YWwpLmlzRXF1YWxUbygiZG9uZSIpOworICAgICAgICBhc3NlcnRUaGF0KGNvdW50ZXIuZ2V0KCkpLmlzRXF1YWxUbygxMSk7CisgICAgfQorCisgICAgQFRlc3QKKyAgICBwdWJsaWMgdm9pZCBnaXZlbkNvdW50aW5nRmlsdGVyX3doZW5Qb3N0X3RoZW5Eb05vdEluY3JlYXNlQ291bnRlcigpIHsKKyAgICAgICAgc3R1YkZvcihwb3N0KHVybFBhdGhFcXVhbFRvKFBBVEgpKS53aWxsUmV0dXJuKGFSZXNwb25zZSgpLndpdGhTdGF0dXMoMjAwKQorICAgICAgICAgICAgLndpdGhCb2R5KCJkb25lIikpKTsKKyAgICAgICAgQXRvbWljSW50ZWdlciBjb3VudGVyID0gbmV3IEF0b21pY0ludGVnZXIoMTApOworCisgICAgICAgIFdlYkNsaWVudCB3ZWJDbGllbnQgPSBXZWJDbGllbnQuYnVpbGRlcigpCisgICAgICAgICAgICAuZmlsdGVyKGNvdW50aW5nRmlsdGVyKGNvdW50ZXIpKQorICAgICAgICAgICAgLmJ1aWxkKCk7CisgICAgICAgIFN0cmluZyBhY3R1YWwgPSBzZW5kUG9zdFJlcXVlc3Qod2ViQ2xpZW50KTsKKworICAgICAgICBhc3NlcnRUaGF0KGFjdHVhbCkuaXNFcXVhbFRvKCJkb25lIik7CisgICAgICAgIGFzc2VydFRoYXQoY291bnRlci5nZXQoKSkuaXNFcXVhbFRvKDEwKTsKKyAgICB9CisKKyAgICBAVGVzdAorICAgIHB1YmxpYyB2b2lkIHRlc3RMb2dnaW5nRmlsdGVyKCkgdGhyb3dzIElPRXhjZXB0aW9uIHsKKyAgICAgICAgc3R1YkZvcihnZXQodXJsUGF0aEVxdWFsVG8oUEFUSCkpLndpbGxSZXR1cm4oYVJlc3BvbnNlKCkud2l0aFN0YXR1cygyMDApCisgICAgICAgICAgICAud2l0aEJvZHkoImRvbmUiKSkpOworCisgICAgICAgIHRyeSAoQnl0ZUFycmF5T3V0cHV0U3RyZWFtIGJhb3MgPSBuZXcgQnl0ZUFycmF5T3V0cHV0U3RyZWFtKCk7IFByaW50U3RyZWFtIHBzID0gbmV3IFByaW50U3RyZWFtKGJhb3MpOykgeworICAgICAgICAgICAgV2ViQ2xpZW50IHdlYkNsaWVudCA9IFdlYkNsaWVudC5idWlsZGVyKCkKKyAgICAgICAgICAgICAgICAuZmlsdGVyKGxvZ2dpbmdGaWx0ZXIocHMpKQorICAgICAgICAgICAgICAgIC5idWlsZCgpOworICAgICAgICAgICAgU3RyaW5nIGFjdHVhbCA9IHNlbmRHZXRSZXF1ZXN0KHdlYkNsaWVudCk7CisKKyAgICAgICAgICAgIGFzc2VydFRoYXQoYWN0dWFsKS5pc0VxdWFsVG8oImRvbmUiKTsKKyAgICAgICAgICAgIGFzc2VydFRoYXQoYmFvcy50b1N0cmluZygpKS5pc0VxdWFsVG8oIlNlbmRpbmcgcmVxdWVzdCBHRVQgIiArIGdldFVybCgpKTsKKyAgICAgICAgfQorICAgIH0KKworICAgIEBUZXN0CisgICAgcHVibGljIHZvaWQgdGVzdEJhc2ljQXV0aEZpbHRlcigpIHsKKyAgICAgICAgc3R1YkZvcihnZXQodXJsUGF0aEVxdWFsVG8oUEFUSCkpLndpbGxSZXR1cm4oYVJlc3BvbnNlKCkud2l0aFN0YXR1cygyMDApCisgICAgICAgICAgICAud2l0aEJvZHkoImF1dGhvcml6ZWQiKSkpOworCisgICAgICAgIFdlYkNsaWVudCB3ZWJDbGllbnQgPSBXZWJDbGllbnQuYnVpbGRlcigpCisgICAgICAgICAgICAuZmlsdGVyKEV4Y2hhbmdlRmlsdGVyRnVuY3Rpb25zLmJhc2ljQXV0aGVudGljYXRpb24oInVzZXIiLCAicGFzc3dvcmQiKSkKKyAgICAgICAgICAgIC5idWlsZCgpOworICAgICAgICBTdHJpbmcgYWN0dWFsID0gc2VuZEdldFJlcXVlc3Qod2ViQ2xpZW50KTsKKworICAgICAgICBhc3NlcnRUaGF0KGFjdHVhbCkuaXNFcXVhbFRvKCJhdXRob3JpemVkIik7CisgICAgICAgIHZlcmlmeShnZXRSZXF1ZXN0ZWRGb3IodXJsUGF0aEVxdWFsVG8oUEFUSCkpLndpdGhIZWFkZXIoIkF1dGhvcml6YXRpb24iLCBjb250YWluaW5nKCJCYXNpYyIpKSk7CisgICAgfQorCisgICAgcHJpdmF0ZSBTdHJpbmcgc2VuZEdldFJlcXVlc3QoV2ViQ2xpZW50IHdlYkNsaWVudCkgeworICAgICAgICByZXR1cm4gd2ViQ2xpZW50LmdldCgpCisgICAgICAgICAgICAudXJpKGdldFVybCgpKQorICAgICAgICAgICAgLnJldHJpZXZlKCkKKyAgICAgICAgICAgIC5ib2R5VG9Nb25vKFN0cmluZy5jbGFzcykKKyAgICAgICAgICAgIC5ibG9jaygpOworICAgIH0KKworICAgIHByaXZhdGUgU3RyaW5nIHNlbmRQb3N0UmVxdWVzdChXZWJDbGllbnQgd2ViQ2xpZW50KSB7CisgICAgICAgIHJldHVybiB3ZWJDbGllbnQucG9zdCgpCisgICAgICAgICAgICAudXJpKFVSSS5jcmVhdGUoZ2V0VXJsKCkpKQorICAgICAgICAgICAgLnJldHJpZXZlKCkKKyAgICAgICAgICAgIC5ib2R5VG9Nb25vKFN0cmluZy5jbGFzcykKKyAgICAgICAgICAgIC5ibG9jaygpOworICAgIH0KKworICAgIHByaXZhdGUgU3RyaW5nIGdldFVybCgpIHsKKyAgICAgICAgcmV0dXJuICJodHRwOi8vbG9jYWxob3N0OiIgKyB3aXJlTW9ja1J1bGUucG9ydCgpICsgUEFUSDsKKworICAgIH0KKworfQo=" | base64 -d > /tmp/_m2_test.patch; \
+    echo "Y2QgL3dvcmtzcGFjZS9yZXBvL3NwcmluZy01LXJlYWN0aXZlLTIgJiYgbXZuIHRlc3QgLURzdXJlZmlyZS5mYWlsSWZOb1NwZWNpZmllZFRlc3RzPWZhbHNl" | base64 -d > /tmp/_m2_testcmd.sh; \
+    (git apply --3way --ignore-whitespace /tmp/_m2_golden.patch 2>/dev/null \
+      || git apply --ignore-whitespace --whitespace=nowarn /tmp/_m2_golden.patch 2>/dev/null \
+      || patch -p1 --fuzz=5 -i /tmp/_m2_golden.patch 2>/dev/null || true); \
+    (git apply --3way --ignore-whitespace /tmp/_m2_test.patch 2>/dev/null \
+      || git apply --ignore-whitespace --whitespace=nowarn /tmp/_m2_test.patch 2>/dev/null \
+      || patch -p1 --fuzz=5 -i /tmp/_m2_test.patch 2>/dev/null || true); \
+    (timeout 1500 bash /tmp/_m2_testcmd.sh 2>&1 | tail -20 || true); \
+    cd /workspace/repo; \
+    git checkout -- . 2>/dev/null || true; \
+    git clean -fdq 2>/dev/null || true; \
+    rm -f /tmp/_m2_golden.patch /tmp/_m2_test.patch /tmp/_m2_testcmd.sh
+
+# OFFLINE-SIZE: drop submodule git-metadata + logs (after all build/submodule steps)
+RUN cd /workspace/repo 2>/dev/null && (git gc --prune=now --aggressive 2>/dev/null || true) && rm -rf .git/modules .git/logs 2>/dev/null || true
+
+# offline login-shell toolchain fix: bake $PATH into /etc/profile.d so `bash -lc` keeps toolchain on PATH
+RUN printf 'export PATH="%s"\n' "$PATH" > /etc/profile.d/zzz_offline_path.sh && chmod 0644 /etc/profile.d/zzz_offline_path.sh

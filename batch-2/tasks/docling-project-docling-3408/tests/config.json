@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/test_cli.py::test_cli_help -v",
+  "test_files": [
+    "tests/test_cli.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.test_cli::test_cli_help"
+  ],
+  "PASS_TO_PASS": []
+}

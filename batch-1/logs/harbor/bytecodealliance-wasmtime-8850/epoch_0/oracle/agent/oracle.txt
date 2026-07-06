@@ -1,0 +1,4 @@
+patching file cranelift/codegen/src/isa/riscv64/abi.rs
+patching file cranelift/codegen/src/isa/riscv64/inst/emit.rs
+patching file cranelift/codegen/src/isa/riscv64/inst/emit_tests.rs
+patching file cranelift/codegen/src/isa/riscv64/inst/mod.rs

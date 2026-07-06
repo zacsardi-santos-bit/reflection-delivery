@@ -1,0 +1,29 @@
+{
+    "id": "e602cd8f-3172-4548-9d6b-4d99d0e50af6",
+    "started_at": "2026-07-06T12:16:38.493535",
+    "finished_at": "2026-07-06T12:17:33.253206",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__gitoxidelabs-gitoxide-2436": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "gitoxidelabs-gitoxide-2436__Yo2jp8E"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

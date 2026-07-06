@@ -1,0 +1,104 @@
+diff --git a/homeassistant/components/androidtv/config_flow.py b/homeassistant/components/androidtv/config_flow.py
+index 12bd65da9b4..c8d28a31727 100644
+--- a/homeassistant/components/androidtv/config_flow.py
++++ b/homeassistant/components/androidtv/config_flow.py
+@@ -15,6 +15,7 @@ from homeassistant.config_entries import (
+ )
+ from homeassistant.const import CONF_DEVICE_CLASS, CONF_HOST, CONF_PORT
+ from homeassistant.core import callback
++from homeassistant.data_entry_flow import SectionConfig, section
+ from homeassistant.helpers import config_validation as cv
+ from homeassistant.helpers.selector import (
+     ObjectSelector,
+@@ -32,6 +33,7 @@ from .const import (
+     CONF_APPS,
+     CONF_EXCLUDE_UNNAMED_APPS,
+     CONF_GET_SOURCES,
++    CONF_MORE_OPTIONS,
+     CONF_SCREENCAP_INTERVAL,
+     CONF_STATE_DETECTION_RULES,
+     CONF_TURN_OFF_COMMAND,
+@@ -97,20 +99,22 @@ class AndroidTVFlowHandler(ConfigFlow, domain=DOMAIN):
+                     )
+                 ),
+                 vol.Required(CONF_PORT, default=DEFAULT_PORT): cv.port,
++                vol.Required(CONF_MORE_OPTIONS): section(
++                    vol.Schema(
++                        {
++                            vol.Optional(CONF_ADBKEY): str,
++                            vol.Optional(CONF_ADB_SERVER_IP): str,
++                            vol.Optional(
++                                CONF_ADB_SERVER_PORT,
++                                default=DEFAULT_ADB_SERVER_PORT,
++                            ): cv.port,
++                        }
++                    ),
++                    SectionConfig(collapsed=True),
++                ),
+             },
+         )
+ 
+-        if self.show_advanced_options:
+-            data_schema = data_schema.extend(
+-                {
+-                    vol.Optional(CONF_ADBKEY): str,
+-                    vol.Optional(CONF_ADB_SERVER_IP): str,
+-                    vol.Required(
+-                        CONF_ADB_SERVER_PORT, default=DEFAULT_ADB_SERVER_PORT
+-                    ): cv.port,
+-                }
+-            )
+-
+         return self.async_show_form(
+             step_id="user",
+             data_schema=data_schema,
+@@ -155,6 +159,10 @@ class AndroidTVFlowHandler(ConfigFlow, domain=DOMAIN):
+         error = None
+ 
+         if user_input is not None:
++            user_input = user_input.copy()
++            more_options = user_input.pop(CONF_MORE_OPTIONS, {})
++            user_input.update(more_options)
++
+             host = user_input[CONF_HOST]
+             adb_key = user_input.get(CONF_ADBKEY)
+             if CONF_ADB_SERVER_IP in user_input:
+diff --git a/homeassistant/components/androidtv/const.py b/homeassistant/components/androidtv/const.py
+index 1aa743ec66f..4e05e80290b 100644
+--- a/homeassistant/components/androidtv/const.py
++++ b/homeassistant/components/androidtv/const.py
+@@ -3,6 +3,7 @@
+ DOMAIN = "androidtv"
+ 
+ CONF_ADB_SERVER_IP = "adb_server_ip"
++CONF_MORE_OPTIONS = "more_options"
+ CONF_ADB_SERVER_PORT = "adb_server_port"
+ CONF_ADBKEY = "adbkey"
+ CONF_APPS = "apps"
+diff --git a/homeassistant/components/androidtv/strings.json b/homeassistant/components/androidtv/strings.json
+index fee894fc4c3..ab856e91e5f 100644
+--- a/homeassistant/components/androidtv/strings.json
++++ b/homeassistant/components/androidtv/strings.json
+@@ -14,12 +14,19 @@
+     "step": {
+       "user": {
+         "data": {
+-          "adb_server_ip": "IP address of the ADB server (leave empty to not use)",
+-          "adb_server_port": "Port of the ADB server",
+-          "adbkey": "Path to your ADB key file (leave empty to auto generate)",
+           "device_class": "The type of device",
+           "host": "[%key:common::config_flow::data::host%]",
+           "port": "[%key:common::config_flow::data::port%]"
++        },
++        "sections": {
++          "more_options": {
++            "data": {
++              "adb_server_ip": "IP address of the ADB server (leave empty to not use)",
++              "adb_server_port": "Port of the ADB server",
++              "adbkey": "Path to your ADB key file (leave empty to auto generate)"
++            },
++            "name": "More options"
++          }
+         }
+       }
+     }

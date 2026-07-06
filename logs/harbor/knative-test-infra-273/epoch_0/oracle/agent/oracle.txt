@@ -1,3 +1,0 @@
-patching file Gopkg.toml
-patching file tools/dep-collector/imports.go
-patching file tools/testgrid/testgrid.go

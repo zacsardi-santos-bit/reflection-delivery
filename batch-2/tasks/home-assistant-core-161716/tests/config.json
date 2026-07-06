@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "cd /workspace/repo && python3 -c \"import json, pathlib; s=json.loads(pathlib.Path('homeassistant/components/ecobee/strings.json').read_text()); p=pathlib.Path('homeassistant/components/ecobee/translations'); p.mkdir(exist_ok=True); (p/'en.json').write_text(json.dumps(s))\" && pytest tests/components/ecobee/test_config_flow.py -v",
+  "test_files": [
+    "tests/components/ecobee/test_config_flow.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.ecobee.test_config_flow::test_password_login_succeeds",
+    "tests.components.ecobee.test_config_flow::test_password_login_error_recovers[first_user_input0-login_failed]",
+    "tests.components.ecobee.test_config_flow::test_password_login_error_recovers[first_user_input1-invalid_auth]"
+  ],
+  "PASS_TO_PASS": [
+    "tests.components.ecobee.test_config_flow::test_abort_if_already_setup",
+    "tests.components.ecobee.test_config_flow::test_user_step_without_user_input",
+    "tests.components.ecobee.test_config_flow::test_pin_request_succeeds",
+    "tests.components.ecobee.test_config_flow::test_pin_request_fails",
+    "tests.components.ecobee.test_config_flow::test_token_request_succeeds",
+    "tests.components.ecobee.test_config_flow::test_token_request_fails"
+  ]
+}

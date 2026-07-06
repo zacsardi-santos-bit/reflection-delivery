@@ -1,3 +1,0 @@
-patching file cli/src/pcluster/config/config_patch.py
-patching file cli/src/pcluster/config/update_policy.py
-patching file cli/src/pcluster/schemas/cluster_schema.py

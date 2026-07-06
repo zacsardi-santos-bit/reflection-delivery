@@ -1,0 +1,13 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/server/auth/test_auth.py::test_gateway_budget_policy_admin_only -v",
+  "test_files": [
+    "tests/server/auth/test_auth.py"
+  ],
+  "num_test_files": 1,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.server.auth.test_auth::test_gateway_budget_policy_admin_only"
+  ],
+  "PASS_TO_PASS": []
+}

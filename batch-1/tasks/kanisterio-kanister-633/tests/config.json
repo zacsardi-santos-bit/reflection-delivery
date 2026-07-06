@@ -1,0 +1,13 @@
+{
+  "test_framework": "go",
+  "test_command": "cd /workspace/repo && (/usr/local/bin/mockk8s &>/tmp/mockk8s.log &) ; sleep 2 && go test -json ./pkg/kube/snapshot -count=1",
+  "test_files": [
+    "pkg/kube/snapshot/snapshot_test.go"
+  ],
+  "num_test_files": 1,
+  "language": "go",
+  "FAIL_TO_PASS": [
+    "github.com/kanisterio/kanister/pkg/kube/snapshot::Test"
+  ],
+  "PASS_TO_PASS": []
+}

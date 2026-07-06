@@ -1,0 +1,29 @@
+{
+    "id": "37446bd4-943c-44fd-a321-a08a5db41a0e",
+    "started_at": "2026-07-04T15:43:55.502585",
+    "finished_at": "2026-07-04T15:44:25.921643",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "oracle__fabric8io-kubernetes-client-4918": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 1.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "1.0": [
+                            "fabric8io-kubernetes-client-4918__YeacnNR"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

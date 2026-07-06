@@ -1,0 +1,64 @@
+patching file packages/components/Notification/src/__tests__/Notification.test.tsx
+patching file packages/components/Notification/src/__tests__/__snapshots__/Notification.test.tsx.snap
+PASS src/__tests__/Notification.test.tsx
+  ● Console
+
+    console.error
+      Warning: React does not recognize the `ellipsizeMode` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `ellipsizemode` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at Text
+          at Text (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at View (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at Notification (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/src/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+    console.error
+      Warning: React does not recognize the `numberOfLines` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `numberoflines` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+          at Text
+          at Text (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at View
+          at View (/workspace/repo/node_modules/react-native/jest/mockComponent.js:28:18)
+          at Notification (/workspace/repo/packages/framework/use-slot/src/stagedComponent.ts:47:13)
+          at WrapperComponent (/workspace/repo/node_modules/@wojtekmaj/enzyme-adapter-utils/src/createMountWrapper.jsx:46:26)
+
+      39 |   const blockExpr = /.*(react-dom.development.js|Use PascalCase for React|is unrecognized in this browser)/i;
+      40 |   if (!blockExpr.test(message)) {
+    > 41 |     consoleErrorHandler(message, ...args);
+         |                        ^
+      42 |   }
+      43 | };
+      44 |
+
+      at console.Object.<anonymous>.console.error (../../../scripts/src/configs/jest/setupEnzyme.js:41:24)
+      at printWarning (../../../node_modules/react-dom/cjs/react-dom.development.js:67:30)
+      at error (../../../node_modules/react-dom/cjs/react-dom.development.js:43:5)
+      at validateProperty$1 (../../../node_modules/react-dom/cjs/react-dom.development.js:3513:7)
+      at warnUnknownProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:3559:21)
+      at validateProperties$2 (../../../node_modules/react-dom/cjs/react-dom.development.js:3583:3)
+      at validatePropertiesInDevelopment (../../../node_modules/react-dom/cjs/react-dom.development.js:8765:5)
+      at setInitialProperties (../../../node_modules/react-dom/cjs/react-dom.development.js:9041:5)
+
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   1 passed, 1 total
+Time:        4.995 s
+Ran all test suites.
+reward=1 graded=3 found=0 failed=0 parsed=0 framework=jest exit_code=0

@@ -1,7 +1,0 @@
-patching file checks/code_review.go
-patching file probes/codeApproved/def.yml
-patching file probes/codeApproved/impl.go
-patching file probes/codeReviewOneReviewers/def.yml
-patching file probes/codeReviewOneReviewers/impl.go
-patching file probes/entries.go
-patching file probes/utils/codeReview.go

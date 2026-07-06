@@ -1,0 +1,29 @@
+{
+    "id": "2549e79d-406f-4a1f-81b5-614f5f69b28b",
+    "started_at": "2026-07-06T12:17:18.555809",
+    "finished_at": "2026-07-06T12:18:15.471138",
+    "n_total_trials": 1,
+    "stats": {
+        "n_trials": 1,
+        "n_errors": 0,
+        "evals": {
+            "nop__gohugoio-hugo-14877": {
+                "n_trials": 1,
+                "n_errors": 0,
+                "metrics": [
+                    {
+                        "mean": 0.0
+                    }
+                ],
+                "reward_stats": {
+                    "reward": {
+                        "0.0": [
+                            "gohugoio-hugo-14877__4t8NC8d"
+                        ]
+                    }
+                },
+                "exception_stats": {}
+            }
+        }
+    }
+}

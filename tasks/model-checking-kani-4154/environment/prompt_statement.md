@@ -1,3 +1,0 @@
-I'm working with a benchmarking comparison tool that generates markdown reports comparing benchmark results across multiple variants. Right now, the reports display all the per-harness benchmark data tables fully expanded and flat in the output. When there are many benchmarks and metrics, this makes the reports really long and hard to navigate.
-
-I'd like each metric's benchmark breakdown table to be wrapped in a collapsible section so readers can expand only the parts they care about. The collapsible section should have a visible label indicating it shows a breakdown by harness. This should apply to every metric section in the output, whether it's a ratio-type metric or a pass/fail success metric.

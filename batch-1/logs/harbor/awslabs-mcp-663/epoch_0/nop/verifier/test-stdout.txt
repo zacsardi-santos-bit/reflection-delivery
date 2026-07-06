@@ -1,0 +1,332 @@
+patching file src/iam-mcp-server/tests/test_errors.py
+patching file src/iam-mcp-server/tests/test_server.py
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /usr/local/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /workspace/repo/src/iam-mcp-server
+configfile: pyproject.toml
+plugins: mock-3.15.1, anyio-4.14.1, asyncio-1.4.0, cov-7.1.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 96 items
+
+tests/test_errors.py::test_iam_validation_error PASSED                   [  1%]
+tests/test_errors.py::test_handle_iam_error_entity_already_exists PASSED [  2%]
+tests/test_errors.py::test_handle_iam_error_entity_already_exists_exception PASSED [  3%]
+tests/test_errors.py::test_handle_iam_error_invalid_input PASSED         [  4%]
+tests/test_errors.py::test_handle_iam_error_invalid_input_exception PASSED [  5%]
+tests/test_errors.py::test_handle_iam_error_validation_exception PASSED  [  6%]
+tests/test_errors.py::test_handle_iam_error_limit_exceeded PASSED        [  7%]
+tests/test_errors.py::test_handle_iam_error_limit_exceeded_exception PASSED [  8%]
+tests/test_errors.py::test_handle_iam_error_service_failure PASSED       [  9%]
+tests/test_errors.py::test_handle_iam_error_service_failure_exception PASSED [ 10%]
+tests/test_errors.py::test_handle_iam_error_throttling PASSED            [ 11%]
+tests/test_errors.py::test_handle_iam_error_throttling_exception PASSED  [ 12%]
+tests/test_errors.py::test_handle_iam_error_incomplete_signature PASSED  [ 13%]
+tests/test_errors.py::test_handle_iam_error_invalid_action PASSED        [ 14%]
+tests/test_errors.py::test_handle_iam_error_invalid_client_token_id PASSED [ 15%]
+tests/test_errors.py::test_handle_iam_error_not_authorized PASSED        [ 16%]
+tests/test_errors.py::test_handle_iam_error_request_expired PASSED       [ 17%]
+tests/test_errors.py::test_handle_iam_error_signature_does_not_match PASSED [ 18%]
+tests/test_errors.py::test_handle_iam_error_token_refresh_required PASSED [ 19%]
+tests/test_errors.py::test_handle_iam_error_group_already_exists PASSED  [ 20%]
+tests/test_errors.py::test_handle_iam_error_group_not_found PASSED       [ 21%]
+tests/test_errors.py::test_handle_iam_error_group_delete_conflict PASSED [ 22%]
+tests/test_errors.py::test_handle_iam_error_group_policy_attachment PASSED [ 23%]
+tests/test_errors.py::test_handle_iam_error_user_not_in_group PASSED     [ 25%]
+tests/test_server.py::test_get_iam_client PASSED                         [ 26%]
+tests/test_server.py::test_get_iam_client_with_region PASSED             [ 27%]
+tests/test_server.py::test_handle_iam_error_access_denied PASSED         [ 28%]
+tests/test_server.py::test_handle_iam_error_no_such_entity PASSED        [ 29%]
+tests/test_server.py::test_context_initialization PASSED                 [ 30%]
+tests/test_server.py::test_context_readonly_mode PASSED                  [ 31%]
+tests/test_server.py::test_list_users_mock PASSED                        [ 32%]
+tests/test_server.py::test_create_user_readonly_mode PASSED              [ 33%]
+tests/test_server.py::test_create_user_success PASSED                    [ 34%]
+tests/test_server.py::test_get_iam_client_error PASSED                   [ 35%]
+tests/test_server.py::test_get_aws_client PASSED                         [ 36%]
+tests/test_server.py::test_get_aws_client_with_region PASSED             [ 37%]
+tests/test_server.py::test_get_aws_client_error PASSED                   [ 38%]
+tests/test_server.py::test_context_get_region PASSED                     [ 39%]
+tests/test_server.py::test_handle_iam_error_throttling PASSED            [ 40%]
+tests/test_server.py::test_handle_iam_error_invalid_user_type PASSED     [ 41%]
+tests/test_server.py::test_handle_iam_error_generic PASSED               [ 42%]
+tests/test_server.py::test_list_roles PASSED                             [ 43%]
+tests/test_server.py::test_list_policies PASSED                          [ 44%]
+tests/test_server.py::test_create_role PASSED                            [ 45%]
+tests/test_server.py::test_create_role_invalid_json PASSED               [ 46%]
+tests/test_server.py::test_create_role_readonly PASSED                   [ 47%]
+tests/test_server.py::test_get_user PASSED                               [ 48%]
+tests/test_server.py::test_get_user_not_found PASSED                     [ 50%]
+tests/test_server.py::test_delete_user PASSED                            [ 51%]
+tests/test_server.py::test_list_users_with_exception PASSED              [ 52%]
+tests/test_server.py::test_get_user_with_exception PASSED                [ 53%]
+tests/test_server.py::test_create_user_with_exception PASSED             [ 54%]
+tests/test_server.py::test_delete_user_with_exception PASSED             [ 55%]
+tests/test_server.py::test_list_roles_with_exception PASSED              [ 56%]
+tests/test_server.py::test_create_role_with_exception PASSED             [ 57%]
+tests/test_server.py::test_list_policies_with_exception PASSED           [ 58%]
+tests/test_server.py::test_attach_user_policy_with_exception PASSED      [ 59%]
+tests/test_server.py::test_detach_user_policy_with_exception PASSED      [ 60%]
+tests/test_server.py::test_create_access_key_with_exception PASSED       [ 61%]
+tests/test_server.py::test_delete_access_key_with_exception PASSED       [ 62%]
+tests/test_server.py::test_simulate_principal_policy_success PASSED      [ 63%]
+tests/test_server.py::test_simulate_principal_policy_with_exception PASSED [ 64%]
+tests/test_server.py::test_delete_user_success PASSED                    [ 65%]
+tests/test_server.py::test_delete_user_readonly PASSED                   [ 66%]
+tests/test_server.py::test_delete_user_force PASSED                      [ 67%]
+tests/test_server.py::test_attach_user_policy PASSED                     [ 68%]
+tests/test_server.py::test_attach_user_policy_readonly PASSED            [ 69%]
+tests/test_server.py::test_detach_user_policy PASSED                     [ 70%]
+tests/test_server.py::test_detach_user_policy_readonly PASSED            [ 71%]
+tests/test_server.py::test_create_access_key PASSED                      [ 72%]
+tests/test_server.py::test_create_access_key_readonly PASSED             [ 73%]
+tests/test_server.py::test_delete_access_key PASSED                      [ 75%]
+tests/test_server.py::test_delete_access_key_readonly PASSED             [ 76%]
+tests/test_server.py::test_main_function PASSED                          [ 77%]
+tests/test_server.py::test_list_groups FAILED                            [ 78%]
+tests/test_server.py::test_list_groups_with_path_prefix FAILED           [ 79%]
+tests/test_server.py::test_get_group FAILED                              [ 80%]
+tests/test_server.py::test_create_group FAILED                           [ 81%]
+tests/test_server.py::test_create_group_readonly FAILED                  [ 82%]
+tests/test_server.py::test_delete_group FAILED                           [ 83%]
+tests/test_server.py::test_delete_group_force FAILED                     [ 84%]
+tests/test_server.py::test_delete_group_readonly FAILED                  [ 85%]
+tests/test_server.py::test_add_user_to_group FAILED                      [ 86%]
+tests/test_server.py::test_add_user_to_group_readonly FAILED             [ 87%]
+tests/test_server.py::test_remove_user_from_group FAILED                 [ 88%]
+tests/test_server.py::test_remove_user_from_group_readonly FAILED        [ 89%]
+tests/test_server.py::test_attach_group_policy FAILED                    [ 90%]
+tests/test_server.py::test_attach_group_policy_readonly FAILED           [ 91%]
+tests/test_server.py::test_detach_group_policy FAILED                    [ 92%]
+tests/test_server.py::test_detach_group_policy_readonly FAILED           [ 93%]
+tests/test_server.py::test_list_groups_with_exception FAILED             [ 94%]
+tests/test_server.py::test_get_group_with_exception FAILED               [ 95%]
+tests/test_server.py::test_create_group_with_exception FAILED            [ 96%]
+tests/test_server.py::test_delete_group_with_exception FAILED            [ 97%]
+tests/test_server.py::test_add_user_to_group_with_exception FAILED       [ 98%]
+tests/test_server.py::test_attach_group_policy_with_exception FAILED     [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_list_groups _______________________________
+
+    @pytest.mark.asyncio
+    async def test_list_groups():
+        """Test listing IAM groups."""
+>       from awslabs.iam_mcp_server.server import list_groups
+E       ImportError: cannot import name 'list_groups' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1000: ImportError
+______________________ test_list_groups_with_path_prefix _______________________
+
+    @pytest.mark.asyncio
+    async def test_list_groups_with_path_prefix():
+        """Test listing IAM groups with path prefix filter."""
+>       from awslabs.iam_mcp_server.server import list_groups
+E       ImportError: cannot import name 'list_groups' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1040: ImportError
+________________________________ test_get_group ________________________________
+
+    @pytest.mark.asyncio
+    async def test_get_group():
+        """Test getting detailed group information."""
+>       from awslabs.iam_mcp_server.server import get_group
+E       ImportError: cannot import name 'get_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1070: ImportError
+______________________________ test_create_group _______________________________
+
+    @pytest.mark.asyncio
+    async def test_create_group():
+        """Test creating a new IAM group."""
+>       from awslabs.iam_mcp_server.server import create_group
+E       ImportError: cannot import name 'create_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1119: ImportError
+__________________________ test_create_group_readonly __________________________
+
+    @pytest.mark.asyncio
+    async def test_create_group_readonly():
+        """Test creating group in readonly mode raises error."""
+>       from awslabs.iam_mcp_server.server import create_group
+E       ImportError: cannot import name 'create_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1146: ImportError
+______________________________ test_delete_group _______________________________
+
+    @pytest.mark.asyncio
+    async def test_delete_group():
+        """Test deleting an IAM group."""
+>       from awslabs.iam_mcp_server.server import delete_group
+E       ImportError: cannot import name 'delete_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1157: ImportError
+___________________________ test_delete_group_force ____________________________
+
+    @pytest.mark.asyncio
+    async def test_delete_group_force():
+        """Test force deleting an IAM group with cleanup."""
+>       from awslabs.iam_mcp_server.server import delete_group
+E       ImportError: cannot import name 'delete_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1172: ImportError
+__________________________ test_delete_group_readonly __________________________
+
+    @pytest.mark.asyncio
+    async def test_delete_group_readonly():
+        """Test deleting group in readonly mode raises error."""
+>       from awslabs.iam_mcp_server.server import delete_group
+E       ImportError: cannot import name 'delete_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1207: ImportError
+____________________________ test_add_user_to_group ____________________________
+
+    @pytest.mark.asyncio
+    async def test_add_user_to_group():
+        """Test adding a user to a group."""
+>       from awslabs.iam_mcp_server.server import add_user_to_group
+E       ImportError: cannot import name 'add_user_to_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1218: ImportError
+_______________________ test_add_user_to_group_readonly ________________________
+
+    @pytest.mark.asyncio
+    async def test_add_user_to_group_readonly():
+        """Test adding user to group in readonly mode raises error."""
+>       from awslabs.iam_mcp_server.server import add_user_to_group
+E       ImportError: cannot import name 'add_user_to_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1237: ImportError
+_________________________ test_remove_user_from_group __________________________
+
+    @pytest.mark.asyncio
+    async def test_remove_user_from_group():
+        """Test removing a user from a group."""
+>       from awslabs.iam_mcp_server.server import remove_user_from_group
+E       ImportError: cannot import name 'remove_user_from_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1248: ImportError
+_____________________ test_remove_user_from_group_readonly _____________________
+
+    @pytest.mark.asyncio
+    async def test_remove_user_from_group_readonly():
+        """Test removing user from group in readonly mode raises error."""
+>       from awslabs.iam_mcp_server.server import remove_user_from_group
+E       ImportError: cannot import name 'remove_user_from_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1267: ImportError
+___________________________ test_attach_group_policy ___________________________
+
+    @pytest.mark.asyncio
+    async def test_attach_group_policy():
+        """Test attaching a policy to a group."""
+>       from awslabs.iam_mcp_server.server import attach_group_policy
+E       ImportError: cannot import name 'attach_group_policy' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1278: ImportError
+______________________ test_attach_group_policy_readonly _______________________
+
+    @pytest.mark.asyncio
+    async def test_attach_group_policy_readonly():
+        """Test attaching policy to group in readonly mode raises error."""
+>       from awslabs.iam_mcp_server.server import attach_group_policy
+E       ImportError: cannot import name 'attach_group_policy' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1299: ImportError
+___________________________ test_detach_group_policy ___________________________
+
+    @pytest.mark.asyncio
+    async def test_detach_group_policy():
+        """Test detaching a policy from a group."""
+>       from awslabs.iam_mcp_server.server import detach_group_policy
+E       ImportError: cannot import name 'detach_group_policy' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1312: ImportError
+______________________ test_detach_group_policy_readonly _______________________
+
+    @pytest.mark.asyncio
+    async def test_detach_group_policy_readonly():
+        """Test detaching policy from group in readonly mode raises error."""
+>       from awslabs.iam_mcp_server.server import detach_group_policy
+E       ImportError: cannot import name 'detach_group_policy' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1333: ImportError
+_______________________ test_list_groups_with_exception ________________________
+
+    @pytest.mark.asyncio
+    async def test_list_groups_with_exception():
+        """Test list_groups with exception handling."""
+>       from awslabs.iam_mcp_server.server import list_groups
+E       ImportError: cannot import name 'list_groups' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1349: ImportError
+________________________ test_get_group_with_exception _________________________
+
+    @pytest.mark.asyncio
+    async def test_get_group_with_exception():
+        """Test get_group with exception handling."""
+>       from awslabs.iam_mcp_server.server import get_group
+E       ImportError: cannot import name 'get_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1366: ImportError
+_______________________ test_create_group_with_exception _______________________
+
+    @pytest.mark.asyncio
+    async def test_create_group_with_exception():
+        """Test create_group with exception handling."""
+>       from awslabs.iam_mcp_server.server import create_group
+E       ImportError: cannot import name 'create_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1383: ImportError
+_______________________ test_delete_group_with_exception _______________________
+
+    @pytest.mark.asyncio
+    async def test_delete_group_with_exception():
+        """Test delete_group with exception handling."""
+>       from awslabs.iam_mcp_server.server import delete_group
+E       ImportError: cannot import name 'delete_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1402: ImportError
+____________________ test_add_user_to_group_with_exception _____________________
+
+    @pytest.mark.asyncio
+    async def test_add_user_to_group_with_exception():
+        """Test add_user_to_group with exception handling."""
+>       from awslabs.iam_mcp_server.server import add_user_to_group
+E       ImportError: cannot import name 'add_user_to_group' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1419: ImportError
+___________________ test_attach_group_policy_with_exception ____________________
+
+    @pytest.mark.asyncio
+    async def test_attach_group_policy_with_exception():
+        """Test attach_group_policy with exception handling."""
+>       from awslabs.iam_mcp_server.server import attach_group_policy
+E       ImportError: cannot import name 'attach_group_policy' from 'awslabs.iam_mcp_server.server' (/workspace/repo/src/iam-mcp-server/awslabs/iam_mcp_server/server.py)
+
+tests/test_server.py:1436: ImportError
+=========================== short test summary info ============================
+FAILED tests/test_server.py::test_list_groups - ImportError: cannot import na...
+FAILED tests/test_server.py::test_list_groups_with_path_prefix - ImportError:...
+FAILED tests/test_server.py::test_get_group - ImportError: cannot import name...
+FAILED tests/test_server.py::test_create_group - ImportError: cannot import n...
+FAILED tests/test_server.py::test_create_group_readonly - ImportError: cannot...
+FAILED tests/test_server.py::test_delete_group - ImportError: cannot import n...
+FAILED tests/test_server.py::test_delete_group_force - ImportError: cannot im...
+FAILED tests/test_server.py::test_delete_group_readonly - ImportError: cannot...
+FAILED tests/test_server.py::test_add_user_to_group - ImportError: cannot imp...
+FAILED tests/test_server.py::test_add_user_to_group_readonly - ImportError: c...
+FAILED tests/test_server.py::test_remove_user_from_group - ImportError: canno...
+FAILED tests/test_server.py::test_remove_user_from_group_readonly - ImportErr...
+FAILED tests/test_server.py::test_attach_group_policy - ImportError: cannot i...
+FAILED tests/test_server.py::test_attach_group_policy_readonly - ImportError:...
+FAILED tests/test_server.py::test_detach_group_policy - ImportError: cannot i...
+FAILED tests/test_server.py::test_detach_group_policy_readonly - ImportError:...
+FAILED tests/test_server.py::test_list_groups_with_exception - ImportError: c...
+FAILED tests/test_server.py::test_get_group_with_exception - ImportError: can...
+FAILED tests/test_server.py::test_create_group_with_exception - ImportError: ...
+FAILED tests/test_server.py::test_delete_group_with_exception - ImportError: ...
+FAILED tests/test_server.py::test_add_user_to_group_with_exception - ImportEr...
+FAILED tests/test_server.py::test_attach_group_policy_with_exception - Import...
+======================== 22 failed, 74 passed in 1.47s =========================
+reward=0 graded=96 found=0 failed=0 parsed=96 framework=pytest exit_code=1

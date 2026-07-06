@@ -1,0 +1,22 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/_ai/tools/tools/test_dependency_graph.py /workspace/repo/tests/_utils/test_msgspec_basestruct.py -v",
+  "test_files": [
+    "tests/_ai/tools/tools/test_dependency_graph.py",
+    "tests/_utils/test_msgspec_basestruct.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests._ai.tools.tools.test_dependency_graph::test_full_graph_basic",
+    "tests._ai.tools.tools.test_dependency_graph::test_cell_id_with_depth_1",
+    "tests._ai.tools.tools.test_dependency_graph::test_cell_id_with_depth_none",
+    "tests._ai.tools.tools.test_dependency_graph::test_cell_id_not_found",
+    "tests._ai.tools.tools.test_dependency_graph::test_multiply_defined_variables",
+    "tests._ai.tools.tools.test_dependency_graph::test_variable_kind_info",
+    "tests._ai.tools.tools.test_dependency_graph::test_variable_owners_always_global",
+    "tests._ai.tools.tools.test_dependency_graph::test_empty_graph",
+    "tests._utils.test_msgspec_basestruct::test_tool_msgspec_structs_expose_pydantic_hook"
+  ],
+  "PASS_TO_PASS": []
+}

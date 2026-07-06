@@ -1,0 +1,15 @@
+{
+  "test_framework": "pytest",
+  "test_command": "pytest /workspace/repo/tests/components/surepetcare/test_sensor.py -v",
+  "test_files": [
+    "tests/components/surepetcare/__init__.py",
+    "tests/components/surepetcare/test_sensor.py"
+  ],
+  "num_test_files": 2,
+  "language": "python",
+  "FAIL_TO_PASS": [
+    "tests.components.surepetcare.test_sensor::test_sensors",
+    "tests.components.surepetcare.test_sensor::test_default_disabled_sensors"
+  ],
+  "PASS_TO_PASS": []
+}

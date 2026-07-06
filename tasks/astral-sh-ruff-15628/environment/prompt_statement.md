@@ -1,7 +1,0 @@
-I'm running into a frustrating conflict between two linting rules in my project. I have certain modules configured as banned from being imported at the top level of a file — they should only be imported lazily inside functions, for performance reasons. But I also have the rule enabled that flags imports placed outside the module's top level.
-
-The result is that for these lazily-imported modules, both rules fire at the same time and give me opposite advice: one says "move this import to the top level," and the other says "this module is not allowed at the top level." There's literally no way to satisfy both rules simultaneously, so I end up having to suppress one of them entirely, which defeats the purpose.
-
-I'd expect the linter to be smart enough to recognize this situation: if an import is inside a function body but every module or name being imported is already on the "banned from top level" list, then the "should be at top level" warning should be suppressed. There's no point in reporting it since moving the import would just trigger a different violation.
-
-The suppression should work consistently whether the import is inside a regular function or inside a class body or method. However, if a single import statement imports a mix of banned and non-banned names, the warning should still appear — because at least some of those names could be moved to the top level without conflict.
